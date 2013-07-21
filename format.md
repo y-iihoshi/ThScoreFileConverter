@@ -59,6 +59,7 @@ table td pre { margin: 0 0 0 2em; }
     * [スペルカード蒐集率](#T10CRG)
     * [クリア達成度](#T10CLEAR)
     * [キャラごとの個別データ](#T10CHARA)
+    * [キャラごとの個別データ（詳細版）](#T10CHARAEX)
 
 ----------------------------------------
 
@@ -1619,6 +1620,63 @@ SpellName: %T95CARD122" border=0&gt;
 <ul>
  <li>プレイ時間は時分秒が「h:mm:ss」の形式で出力されます。<br />
   なお、スコアファイルにはフレーム数単位で保存されているため、60fps 固定と見なして換算した結果を出力しています。</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+<table>
+ <caption id="T10CHARAEX">キャラごとの個別データ（詳細版）</caption>
+ <tr>
+  <td class="header" rowspan="4">書式</td>
+  <td colspan="2"><code>%T10CHARAEX[x][yy][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   難易度<br />
+   [E]: Easy [N]: Normal [H]: Hard [L]: Lunatic [X]: Extra<br />
+   （総プレイ回数とプレイ時間ではこの指定は無視されます。）
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[yy]</code></td>
+  <td>
+   キャラの名前など<br />
+   [TL]: 全主人公合計
+   [RA]: 霊夢 (A) [RB]: 霊夢 (B) [RC]: 霊夢 (C)
+   [MA]: 魔理沙 (A) [MB]: 魔理沙 (B) [MC]: 魔理沙 (C)
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目<br />
+   [1]: 総プレイ回数 [2]: プレイ時間 [3]: クリア回数
+  </td>
+ </tr>
+ <tr>
+  <td class="header">例</td>
+  <td colspan="2">
+   <code>%T10CHARAEXETL2</code> … 全主人公合計のプレイ時間<br />
+   <code>%T10CHARAEXERA1</code> … 霊夢 (A) の総プレイ回数<br />
+   <code>%T10CHARAEXNMC3</code> … Normal 魔理沙 (C) のクリア回数
+  </td>
+ </tr>
+ <tr>
+  <td class="header">補足</td>
+  <td colspan="2">
+<ul>
+ <li>プレイ時間は時分秒が「h:mm:ss」の形式で出力されます。<br />
+  なお、スコアファイルにはフレーム数単位で保存されているため、60fps 固定と見なして換算した結果を出力しています。</li>
+</ul>
+  </td>
+ </tr>
+ <tr>
+  <td class="header">相違点</td>
+  <td colspan="2">
+<ul>
+ <li>このテンプレート書式は本ツール独自のものです。</li>
 </ul>
   </td>
  </tr>

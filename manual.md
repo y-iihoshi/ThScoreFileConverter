@@ -14,6 +14,10 @@
 * [License](#License)
 * [ChangeLog](#ChangeLog)
 
+<ul>
+ <li><a href="manual/format.html">テンプレート書式</a></li>
+</ul>
+
 ----------------------------------------
 
 ## <a id="Introduction">Introduction</a>
@@ -161,6 +165,12 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ----------------------------------------
 
 ## <a id="ChangeLog">ChangeLog</a>
+
+2013/07/21 ver.1.0.1.0
+
+* 東方風神録
+    * Easy 以外のクリア回数が出力に含まれていなかった不具合を修正
+    * [キャラごとの個別データ（詳細版）](manual/format.html#T10CHARAEX)を新規追加
 
 2013/07/08 ver.1.0.0.0
 
