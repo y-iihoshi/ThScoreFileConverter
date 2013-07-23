@@ -1,0 +1,64 @@
+/*
+ * style.css
+ *  Cascading style sheet for Touhou Project result files
+ */
+
+body {
+	background-color: #fff;
+	color: #000;
+	font-size: 10pt;
+	line-height: 120%;
+	margin-bottom: 300px;
+}
+
+a:link {
+	background-color: inherit;
+	color: #8fa8ef;
+}
+
+a:visited {
+	background-color: inherit;
+	color: #8fa8ef;
+}
+
+div.section {
+	padding: 5px 0;
+}
+
+hr {
+	clear: both;
+}
+
+table {
+	border: 1px solid #000;
+	margin: 5px;
+}
+
+caption {
+	font-weight: bold;
+	padding: 5px;
+}
+
+thead {
+	background-color: #8fa8ef;
+	color: inherit;
+}
+
+td {
+	text-align: center;
+	border: 1px solid #8fa8ef;
+	padding: 0.1em 0.5em;
+}
+
+td.column_head {
+	background-color: #8fa8ef;
+	color: inherit;
+}
+
+td.vertical {
+	width: 1em;
+}
+
+tbody td.score {
+	text-align: right;
+}

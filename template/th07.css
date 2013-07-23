@@ -1,0 +1,32 @@
+/*
+ * th07.css
+ *	Cascading style sheet for TH07 result files
+ */
+
+td.character {
+	min-width: 100px;
+}
+
+td.name {
+	min-width: 70px;
+}
+
+td.score {
+	min-width: 70px;
+}
+
+td.level {
+	min-width: 70px;
+}
+
+td.stage {
+	min-width: 70px;
+}
+
+td.date {
+	min-width: 50px;
+}
+
+td.slow {
+	min-width: 50px;
+}
