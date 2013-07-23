@@ -24,6 +24,7 @@ table td pre { margin: 0 0 0 2em; }
     * [スペルカード基本情報](#T06CARD)
     * [スペルカード蒐集率](#T06CRG)
     * [クリア達成度](#T06CLEAR)
+    * [プラクティススコア](#T06PRAC)
 * [東方妖々夢用テンプレート書式](#Th07Formats)
     * [スコアランキング](#T07SCR)
     * [御札戦歴](#T07C)
@@ -279,6 +280,58 @@ table td pre { margin: 0 0 0 2em; }
   </p>
  </li>
  <li>本ツールでは、ランキングを基にクリア達成度を算出しているため、実際はクリア済みでもランキング上に存在していなければ未クリア扱いになってしまいます。</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+<table>
+ <caption id="T06PRAC">プラクティススコア</caption>
+ <tr>
+  <td class="header" rowspan="4">書式</td>
+  <td colspan="2"><code>%T06PRAC[x][yy][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   難易度<br />
+   [E]: Easy [N]: Normal [H]: Hard [L]: Lunatic
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[yy]</code></td>
+  <td>
+   キャラの名前<br />
+   [RA]: 霊夢（霊） [RB]: 霊夢（夢） [MA]: 魔理沙（魔） [MB]: 魔理沙（恋）
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   ステージ<br />
+   [1～6]: Stage1～6
+  </td>
+ </tr>
+ <tr>
+  <td class="header">例</td>
+  <td colspan="2">
+   <code>%T06PRACEMA1</code> … Easy 魔理沙（魔）の Stage 1 のプラクティススコア<br />
+   <code>%T06PRACNRA4</code> … Normal 霊夢（霊）の Stage 4 のプラクティススコア
+  </td>
+ </tr>
+ <tr>
+  <td class="header">補足</td>
+  <td colspan="2">
+<ul>
+ <li>存在しない難易度とステージの組み合わせ（つまり Easy の Stage6）は無視されます。</li>
+</ul>
+  </td>
+ </tr>
+ <tr>
+  <td class="header">相違点</td>
+  <td colspan="2">
+<ul>
+ <li>このテンプレート書式は本ツール独自のものです。</li>
 </ul>
   </td>
  </tr>
