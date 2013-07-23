@@ -632,26 +632,29 @@ namespace ThScoreFileConverter
                                 case 1:     // clear count
                                     return Utils.Accumulate<CardAttack>(
                                         this.allScoreData.cardAttacks, new Converter<CardAttack, int>(
-                                            attack => attack.ClearCount)).ToString();
+                                            attack => ((attack != null) ? attack.ClearCount : 0))).ToString();
                                 case 2:     // trial count
                                     return Utils.Accumulate<CardAttack>(
                                         this.allScoreData.cardAttacks, new Converter<CardAttack, int>(
-                                            attack => attack.TrialCount)).ToString();
+                                            attack => ((attack != null) ? attack.TrialCount : 0))).ToString();
                                 default:    // unreachable
                                     return match.ToString();
                             }
                         else if ((0 < number) && (number <= NumCards))
                         {
-                            var cardAttack = this.allScoreData.cardAttacks[number - 1];
-                            switch (type)
-                            {
-                                case 1:     // clear count
-                                    return cardAttack.ClearCount.ToString();
-                                case 2:     // trial count
-                                    return cardAttack.TrialCount.ToString();
-                                default:    // unreachable
-                                    return cardAttack.ToString();
-                            }
+                            var attack = this.allScoreData.cardAttacks[number - 1];
+                            if (attack != null)
+                                switch (type)
+                                {
+                                    case 1:     // clear count
+                                        return attack.ClearCount.ToString();
+                                    case 2:     // trial count
+                                        return attack.TrialCount.ToString();
+                                    default:    // unreachable
+                                        return attack.ToString();
+                                }
+                            else
+                                return "0";
                         }
                         else
                             return match.ToString();
@@ -676,16 +679,16 @@ namespace ThScoreFileConverter
 
                         if ((0 < number) && (number <= NumCards))
                         {
-                            var cardAttack = this.allScoreData.cardAttacks[number - 1];
+                            var attack = this.allScoreData.cardAttacks[number - 1];
                             if (type == "N")
-                                return cardAttack.hasTried()
-                                    ? Encoding.Default.GetString(cardAttack.CardName).Split('\0')[0]
+                                return ((attack != null) && attack.hasTried())
+                                    ? Encoding.Default.GetString(attack.CardName).Split('\0')[0]
                                     : "??????????";
                             else
                             {
-                                if (cardAttack.hasTried())
+                                if ((attack != null) && attack.hasTried())
                                     return string.Join(", ", Array.ConvertAll<Level, string>(
-                                        CardLevelTable[cardAttack.Number],
+                                        CardLevelTable[attack.Number],
                                         new Converter<Level, string>(elem => elem.ToString())));
                                 else
                                     return "?????";
@@ -708,31 +711,40 @@ namespace ThScoreFileConverter
             return new Regex(@"%T06CRG([0-6X])([12])", RegexOptions.IgnoreCase)
                 .Replace(input, new MatchEvaluator(match =>
                 {
-                    var stage = Array.FindIndex<string>(stageShortWithTotalArray,
-                        new Predicate<string>(elem => (elem == match.Groups[1].Value.ToUpper())));
-                    var type = int.Parse(match.Groups[2].Value);
-
-                    Predicate<CardAttack> findCard = (attack => false);
-
-                    if (stage == 0)     // total
+                    try
                     {
-                        if (type == 1)
-                            findCard = (attack => (attack.ClearCount > 0));
-                        else
-                            findCard = (attack => (attack.TrialCount > 0));
-                    }
-                    else
-                    {
-                        var st = (Stage)(stage - 1);
-                        if (type == 1)
-                            findCard = (attack =>
-                                (StageCardTable[st].Contains(attack.Number) && (attack.ClearCount > 0)));
-                        else
-                            findCard = (attack =>
-                                (StageCardTable[st].Contains(attack.Number) && (attack.TrialCount > 0)));
-                    }
+                        var stage = Array.FindIndex<string>(stageShortWithTotalArray,
+                            new Predicate<string>(elem => (elem == match.Groups[1].Value.ToUpper())));
+                        var type = int.Parse(match.Groups[2].Value);
 
-                    return Utils.CountIf<CardAttack>(this.allScoreData.cardAttacks, findCard).ToString();
+                        Predicate<CardAttack> findCard = (attack => false);
+
+                        if (stage == 0)     // total
+                        {
+                            if (type == 1)
+                                findCard = (attack => ((attack != null) && (attack.ClearCount > 0)));
+                            else
+                                findCard = (attack => ((attack != null) && (attack.TrialCount > 0)));
+                        }
+                        else
+                        {
+                            var st = (Stage)(stage - 1);
+                            if (type == 1)
+                                findCard = (attack =>
+                                    ((attack != null) &&
+                                    StageCardTable[st].Contains(attack.Number) && (attack.ClearCount > 0)));
+                            else
+                                findCard = (attack =>
+                                    ((attack != null) &&
+                                    StageCardTable[st].Contains(attack.Number) && (attack.TrialCount > 0)));
+                        }
+
+                        return Utils.CountIf<CardAttack>(this.allScoreData.cardAttacks, findCard).ToString();
+                    }
+                    catch
+                    {
+                        return match.ToString();
+                    }
                 }));
         }
 
