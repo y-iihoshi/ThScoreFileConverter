@@ -34,6 +34,7 @@ table td pre { margin: 0 0 0 2em; }
     * [プレイ回数](#T07PLAY)
     * [総起動時間](#T07TIMEALL)
     * [総プレイ時間](#T07TIMEPLY)
+    * [プラクティススコア](#T07PRAC)
 * [東方永夜抄用テンプレート書式](#Th08Formats)
     * [スコアランキング](#T08SCR)
     * [御札戦歴](#T08C)
@@ -651,6 +652,58 @@ table td pre { margin: 0 0 0 2em; }
   <td>
 <ul>
  <li>秒とミリ秒の間は「:」ではなく「.」で出力されます。</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+<table>
+ <caption id="T07PRAC">プラクティススコア</caption>
+ <tr>
+  <td class="header" rowspan="5">書式</td>
+  <td colspan="2"><code>%T07PRAC[w][xx][y][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[w]</code></td>
+  <td>
+   難易度<br />
+   [E]: Easy [N]: Normal [H]: Hard [L]: Lunatic
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[xx]</code></td>
+  <td>
+   キャラの名前<br />
+   [RA]: 霊夢（霊） [RB]: 霊夢（夢） [MA]: 魔理沙（魔） [MB]: 魔理沙（恋）
+   [SA]: 咲夜（幻） [SB]: 咲夜（時）
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[y]</code></td>
+  <td>
+   ステージ<br />
+   [1～6]: Stage1～6
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目<br />
+   [1]: スコア [2]: プレイ回数
+  </td>
+ </tr>
+ <tr>
+  <td class="header">例</td>
+  <td colspan="2">
+   <code>%T07PRACESB11</code> … Easy 咲夜（時）の Stage 1 のプラクティスプレイ回数<br />
+   <code>%T07PRACNRA42</code> … Normal 霊夢（霊）の Stage 4 のプラクティススコア
+  </td>
+ </tr>
+ <tr>
+  <td class="header">相違点</td>
+  <td colspan="2">
+<ul>
+ <li>このテンプレート書式は本ツール独自のものです。</li>
 </ul>
   </td>
  </tr>

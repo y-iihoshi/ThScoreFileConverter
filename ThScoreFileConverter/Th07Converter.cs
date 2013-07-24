@@ -108,7 +108,7 @@ namespace ThScoreFileConverter
             public Dictionary<CharaLevelPair, List<HighScore>> rankings;
             public Dictionary<Chara, ClearData> clearData;
             public CardAttack[] cardAttacks;
-            public Dictionary<Chara, PracticeScore> practiceScores;
+            public Dictionary<CharaLevelPair, Dictionary<Stage, PracticeScore>> practiceScores;
             public PlayList playList;
             public LastName lastName;
             public VersionInfo versionInfo;
@@ -119,7 +119,7 @@ namespace ThScoreFileConverter
                 this.rankings = new Dictionary<CharaLevelPair, List<HighScore>>();
                 this.clearData = new Dictionary<Chara, ClearData>(numCharas);
                 this.cardAttacks = new CardAttack[NumCards];
-                this.practiceScores = new Dictionary<Chara, PracticeScore>(numCharas);
+                this.practiceScores = new Dictionary<CharaLevelPair, Dictionary<Stage, PracticeScore>>();
             }
         }
 
@@ -147,8 +147,7 @@ namespace ThScoreFileConverter
 
         private class Header : Chapter
         {
-            public byte Unknown1 { get; private set; }      // always 0x01?
-            public byte[] Unknown2 { get; private set; }    // .Length = 3
+            public uint Unknown { get; private set; }   // always 0x00000001?
 
             public Header(Chapter ch)
                 : base(ch)
@@ -163,8 +162,7 @@ namespace ThScoreFileConverter
 
             public override void ReadFrom(BinaryReader reader)
             {
-                this.Unknown1 = reader.ReadByte();
-                this.Unknown2 = reader.ReadBytes(3);
+                this.Unknown = reader.ReadUInt32();
             }
         }
 
@@ -298,7 +296,7 @@ namespace ThScoreFileConverter
             public Chara Chara { get; private set; }        // size: 1Byte
             public Level Level { get; private set; }        // size: 1Byte
             public Stage Stage { get; private set; }        // size: 1Byte
-            public byte Unknown2 { get; private set; }
+            public byte Unknown2 { get; private set; }      // always 0x00?
 
             public PracticeScore(Chapter ch)
                 : base(ch)
@@ -607,60 +605,81 @@ namespace ThScoreFileConverter
                     switch (chapter.Signature)
                     {
                         case "TH7K":
-                            var header = new Header(chapter);
-                            header.ReadFrom(reader);
-                            allScoreData.header = header;
+                            {
+                                var header = new Header(chapter);
+                                header.ReadFrom(reader);
+                                allScoreData.header = header;
+                            }
                             break;
 
                         case "HSCR":
-                            var score = new HighScore(chapter);
-                            score.ReadFrom(reader);
-                            var key = new CharaLevelPair(score.Chara, score.Level);
-                            if (!allScoreData.rankings.ContainsKey(key))
-                                allScoreData.rankings.Add(key, new List<HighScore>(InitialRanking));
-                            var ranking = allScoreData.rankings[key];
-                            ranking.Add(score);
-                            ranking.Sort(
-                                new Comparison<HighScore>((lhs, rhs) => rhs.Score.CompareTo(lhs.Score)));
-                            ranking.RemoveAt(ranking.Count - 1);
+                            {
+                                var score = new HighScore(chapter);
+                                score.ReadFrom(reader);
+                                var key = new CharaLevelPair(score.Chara, score.Level);
+                                if (!allScoreData.rankings.ContainsKey(key))
+                                    allScoreData.rankings.Add(key, new List<HighScore>(InitialRanking));
+                                var ranking = allScoreData.rankings[key];
+                                ranking.Add(score);
+                                ranking.Sort(
+                                    new Comparison<HighScore>((lhs, rhs) => rhs.Score.CompareTo(lhs.Score)));
+                                ranking.RemoveAt(ranking.Count - 1);
+                            }
                             break;
 
                         case "CLRD":
-                            var clearData = new ClearData(chapter);
-                            clearData.ReadFrom(reader);
-                            if (!allScoreData.clearData.ContainsKey(clearData.Chara))
-                                allScoreData.clearData.Add(clearData.Chara, clearData);
+                            {
+                                var clearData = new ClearData(chapter);
+                                clearData.ReadFrom(reader);
+                                if (!allScoreData.clearData.ContainsKey(clearData.Chara))
+                                    allScoreData.clearData.Add(clearData.Chara, clearData);
+                            }
                             break;
 
                         case "CATK":
-                            var cardAttack = new CardAttack(chapter);
-                            cardAttack.ReadFrom(reader);
-                            allScoreData.cardAttacks[cardAttack.Number] = cardAttack;
+                            {
+                                var attack = new CardAttack(chapter);
+                                attack.ReadFrom(reader);
+                                allScoreData.cardAttacks[attack.Number] = attack;
+                            }
                             break;
 
                         case "PSCR":
-                            var practiceScore = new PracticeScore(chapter);
-                            practiceScore.ReadFrom(reader);
-                            if (!allScoreData.practiceScores.ContainsKey(practiceScore.Chara))
-                                allScoreData.practiceScores.Add(practiceScore.Chara, practiceScore);
+                            {
+                                var score = new PracticeScore(chapter);
+                                score.ReadFrom(reader);
+                                var key = new CharaLevelPair(score.Chara, score.Level);
+                                if (!allScoreData.practiceScores.ContainsKey(key))
+                                    allScoreData.practiceScores.Add(
+                                        key, new Dictionary<Stage, PracticeScore>());
+                                var scores = allScoreData.practiceScores[key];
+                                if (!scores.ContainsKey(score.Stage))
+                                    scores.Add(score.Stage, score);
+                            }
                             break;
 
                         case "PLST":
-                            var playList = new PlayList(chapter);
-                            playList.ReadFrom(reader);
-                            allScoreData.playList = playList;
+                            {
+                                var playList = new PlayList(chapter);
+                                playList.ReadFrom(reader);
+                                allScoreData.playList = playList;
+                            }
                             break;
 
                         case "LSNM":
-                            var lastName = new LastName(chapter);
-                            lastName.ReadFrom(reader);
-                            allScoreData.lastName = lastName;
+                            {
+                                var lastName = new LastName(chapter);
+                                lastName.ReadFrom(reader);
+                                allScoreData.lastName = lastName;
+                            }
                             break;
 
                         case "VRSM":
-                            var versionInfo = new VersionInfo(chapter);
-                            versionInfo.ReadFrom(reader);
-                            allScoreData.versionInfo = versionInfo;
+                            {
+                                var versionInfo = new VersionInfo(chapter);
+                                versionInfo.ReadFrom(reader);
+                                allScoreData.versionInfo = versionInfo;
+                            }
                             break;
 
                         default:
@@ -701,6 +720,7 @@ namespace ThScoreFileConverter
             allLine = this.ReplaceClear(allLine);
             allLine = this.ReplacePlay(allLine);
             allLine = this.ReplaceTime(allLine);
+            allLine = this.ReplacePractice(allLine);
             writer.Write(allLine);
 
             writer.Flush();
@@ -1045,6 +1065,43 @@ namespace ThScoreFileConverter
                     return (kind == "ALL")
                         ? this.allScoreData.playList.TotalRunningTime.ToLongString()
                         : this.allScoreData.playList.TotalPlayTime.ToLongString();
+                }));
+        }
+
+        // %T07PRAC[w][xx][y][z]
+        private string ReplacePractice(string input)
+        {
+            var pattern = string.Format(
+                @"%T07PRAC([{0}])({1})([1-6])([12])",
+                Utils.JoinEnumNames<LevelShort>(""),
+                Utils.JoinEnumNames<CharaShort>("|"));
+            return new Regex(pattern, RegexOptions.IgnoreCase)
+                .Replace(input, new MatchEvaluator(match =>
+                {
+                    try
+                    {
+                        var level = Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
+                        var chara = Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
+                        var stage = (Stage)(int.Parse(match.Groups[3].Value) - 1);
+                        var type = int.Parse(match.Groups[4].Value);
+
+                        var key = new CharaLevelPair(chara, level);
+                        if (this.allScoreData.practiceScores.ContainsKey(key))
+                        {
+                            var scores = this.allScoreData.practiceScores[key];
+                            if (type == 1)
+                                return (scores.ContainsKey(stage)
+                                    ? (scores[stage].HighScore * 10) : 0).ToString();
+                            else
+                                return (scores.ContainsKey(stage) ? scores[stage].TrialCount : 0).ToString();
+                        }
+                        else
+                            return "0";
+                    }
+                    catch
+                    {
+                        return match.ToString();
+                    }
                 }));
         }
     }
