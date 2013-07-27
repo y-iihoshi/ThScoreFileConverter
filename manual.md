@@ -166,6 +166,20 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 ## <a id="ChangeLog">ChangeLog</a>
 
+2013/07/28 ver.1.0.2.0
+
+* 東方紅魔郷
+    * score.dat が初期状態の場合に変換失敗する不具合を修正
+    * [プラクティススコア](manual/format.html#T06PRAC)を新規追加
+* 東方妖々夢
+    * score.dat が初期状態の場合に変換失敗する不具合を修正
+    * [プラクティススコア](manual/format.html#T07PRAC)を新規追加
+* 東方永夜抄
+    * score.dat が初期状態の場合に変換失敗する不具合を修正
+    * [プラクティススコア](manual/format.html#T08PRAC)を新規追加
+* 東方風神録
+    * [プラクティススコア](manual/format.html#T10PRAC)を新規追加
+
 2013/07/21 ver.1.0.1.0
 
 * 東方風神録
