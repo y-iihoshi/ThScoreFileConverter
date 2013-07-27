@@ -454,6 +454,7 @@ namespace ThScoreFileConverter
 
             if ((allScoreData.header != null) &&
                 (allScoreData.rankings.Count == (charas.Length * levels.Length)) &&
+                (allScoreData.playList != null) &&
                 (allScoreData.lastName != null) &&
                 (allScoreData.versionInfo != null))
                 return allScoreData;
