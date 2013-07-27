@@ -818,6 +818,9 @@ namespace ThScoreFileConverter
                         var chara = Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
                         var stage = (Stage)(int.Parse(match.Groups[3].Value) - 1);
 
+                        if (level == LevelShort.X)
+                            return match.ToString();
+
                         var key = new CharaLevelPair(chara, level);
                         if (this.allScoreData.practiceScores.ContainsKey(key))
                         {

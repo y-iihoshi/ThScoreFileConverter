@@ -1085,6 +1085,9 @@ namespace ThScoreFileConverter
                         var stage = (Stage)(int.Parse(match.Groups[3].Value) - 1);
                         var type = int.Parse(match.Groups[4].Value);
 
+                        if ((level == LevelShort.X) || (level == LevelShort.P))
+                            return match.ToString();
+
                         var key = new CharaLevelPair(chara, level);
                         if (this.allScoreData.practiceScores.ContainsKey(key))
                         {
