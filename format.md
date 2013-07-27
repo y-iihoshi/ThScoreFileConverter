@@ -44,6 +44,7 @@ table td pre { margin: 0 0 0 2em; }
     * [プレイ回数](#T08PLAY)
     * [総起動時間](#T08TIMEALL)
     * [総プレイ時間](#T08TIMEPLY)
+    * [プラクティススコア](#T08PRAC)
 * [東方花映塚用テンプレート書式](#Th09Formats)
     * [スコアランキング](#T09SCR)
     * [クリア達成度](#T09CLEAR)
@@ -695,8 +696,8 @@ table td pre { margin: 0 0 0 2em; }
  <tr>
   <td class="header">例</td>
   <td colspan="2">
-   <code>%T07PRACESB11</code> … Easy 咲夜（時）の Stage 1 のプラクティスプレイ回数<br />
-   <code>%T07PRACNRA42</code> … Normal 霊夢（霊）の Stage 4 のプラクティススコア
+   <code>%T07PRACESB11</code> … Easy 咲夜（時）の Stage 1 のプラクティススコア<br />
+   <code>%T07PRACNRA42</code> … Normal 霊夢（霊）の Stage 4 のプラクティスプレイ回数
   </td>
  </tr>
  <tr>
@@ -902,8 +903,9 @@ table td pre { margin: 0 0 0 2em; }
   <td class="format"><code>[yy]</code></td>
   <td>
    ステージ<br />
-   [00]: 全ステージ合計 [1A]: Stage1 [2A]: Stage2 [3A]: Stage3 [4A]: Stage4A
-   [4B]: Stage4B [5A]: Stage5 [6A]: Stage6A [6B]: Stage6B<br />
+   [00]: 全ステージ合計
+   [1A]: Stage1 [2A]: Stage2 [3A]: Stage3 [4A]: Stage4A [4B]: Stage4B
+   [5A]: Stage5 [6A]: Stage6A [6B]: Stage6B<br />
    （Extra, Last Word ではこの指定は無視され、Total ではそのステージの
    Easy～Lunatic の合計が出力されます。）
   </td>
@@ -1058,6 +1060,60 @@ table td pre { margin: 0 0 0 2em; }
   <td>
 <ul>
  <li>秒とミリ秒の間は「:」ではなく「.」で出力されます。</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+<table>
+ <caption id="T08PRAC">プラクティススコア</caption>
+ <tr>
+  <td class="header" rowspan="5">書式</td>
+  <td colspan="2"><code>%T08PRAC[w][xx][yy][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[w]</code></td>
+  <td>
+   難易度<br />
+   [E]: Easy [N]: Normal [H]: Hard [L]: Lunatic
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[xx]</code></td>
+  <td>
+   キャラの名前<br />
+   [RY]: 霊夢 &amp; 紫 [MA]: 魔理沙 &amp; アリス [SR]: 咲夜 &amp; レミリア
+   [YY]: 妖夢 &amp; 幽々子 [RM]: 霊夢 [YK]: 紫 [MR]: 魔理沙 [AL]: アリス
+   [SK]: 咲夜 [RL]: レミリア [YM]: 妖夢 [YU]: 幽々子
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[yy]</code></td>
+  <td>
+   ステージ<br />
+   [1A]: Stage1 [2A]: Stage2 [3A]: Stage3 [4A]: Stage4A [4B]: Stage4B
+   [5A]: Stage5 [6A]: Stage6A [6B]: Stage6B
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目<br />
+   [1]: スコア [2]: プレイ回数
+  </td>
+ </tr>
+ <tr>
+  <td class="header">例</td>
+  <td colspan="2">
+   <code>%T08PRACEYM1A1</code> … Easy 妖夢の Stage 1 のプラクティススコア<br />
+   <code>%T08PRACNRY4B2</code> … Normal 霊夢 &amp; 紫の Stage 4B のプラクティスプレイ回数
+  </td>
+ </tr>
+ <tr>
+  <td class="header">相違点</td>
+  <td colspan="2">
+<ul>
+ <li>このテンプレート書式は本ツール独自のものです。</li>
 </ul>
   </td>
  </tr>
