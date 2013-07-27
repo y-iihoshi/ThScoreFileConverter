@@ -380,7 +380,7 @@ namespace ThScoreFileConverter
             public uint Unknown1 { get; private set; }      // always 0x00000002?
             public Dictionary<StageLevelPair, int> PlayCounts { get; private set; }
             public Dictionary<StageLevelPair, int> HighScores { get; private set; }     // * 10
-            public Chara Chara { get; private set; }
+            public Chara Chara { get; private set; }        // size: 1Byte
             public byte[] Unknown2 { get; private set; }    // .Length = 3, always 0x000001?
 
             public PracticeScore(Chapter ch)
@@ -399,6 +399,8 @@ namespace ThScoreFileConverter
 
             public override void ReadFrom(BinaryReader reader)
             {
+                // The fields for Stage.Extra and Level.Extra actually exist...
+
                 var stages = Enum.GetValues(typeof(Stage));
                 var levels = Enum.GetValues(typeof(Level));
                 this.Unknown1 = reader.ReadUInt32();

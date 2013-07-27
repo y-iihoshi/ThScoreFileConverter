@@ -288,7 +288,7 @@ namespace ThScoreFileConverter
             }
         }
 
-        private class PracticeScore : Chapter   // per character
+        private class PracticeScore : Chapter   // per character, level, stage
         {
             public uint Unknown1 { get; private set; }      // always 0x00000001?
             public int TrialCount { get; private set; }     // really...?
@@ -648,13 +648,17 @@ namespace ThScoreFileConverter
                             {
                                 var score = new PracticeScore(chapter);
                                 score.ReadFrom(reader);
-                                var key = new CharaLevelPair(score.Chara, score.Level);
-                                if (!allScoreData.practiceScores.ContainsKey(key))
-                                    allScoreData.practiceScores.Add(
-                                        key, new Dictionary<Stage, PracticeScore>());
-                                var scores = allScoreData.practiceScores[key];
-                                if (!scores.ContainsKey(score.Stage))
-                                    scores.Add(score.Stage, score);
+                                if ((score.Level != Level.Extra) && (score.Level != Level.Phantasm) &&
+                                    (score.Stage != Stage.Extra) && (score.Stage != Stage.Phantasm))
+                                {
+                                    var key = new CharaLevelPair(score.Chara, score.Level);
+                                    if (!allScoreData.practiceScores.ContainsKey(key))
+                                        allScoreData.practiceScores.Add(
+                                            key, new Dictionary<Stage, PracticeScore>());
+                                    var scores = allScoreData.practiceScores[key];
+                                    if (!scores.ContainsKey(score.Stage))
+                                        scores.Add(score.Stage, score);
+                                }
                             }
                             break;
 
