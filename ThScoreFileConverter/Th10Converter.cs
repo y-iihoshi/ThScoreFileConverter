@@ -41,6 +41,14 @@ namespace ThScoreFileConverter
                 { Stage.Extra,  new Range<int>{ Min = 97, Max = 109 } }
             };
 
+        private class LevelStagePair : Pair<Level, Stage>
+        {
+            public Level Level { get { return this.First; } }
+            public Stage Stage { get { return this.Second; } }
+
+            public LevelStagePair(Level level, Stage stage) : base(level, stage) { }
+        }
+
         private class AllScoreData
         {
             public Header header;
@@ -110,7 +118,7 @@ namespace ThScoreFileConverter
             public int TotalPlayCount { get; private set; }
             public int PlayTime { get; private set; }           // = seconds * 60fps
             public Dictionary<Level, int> ClearCounts { get; private set; }
-            public Practice[,] Practices { get; private set; }  // [Easy..Lunatic, Stage1..6]
+            public Dictionary<LevelStagePair, Practice> Practices { get; private set; }
             public SpellCard[] Cards { get; private set; }      // [0..109]
 
             public ClearData(Chapter ch)
@@ -124,10 +132,9 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Size");
 
                 var numLevels = Enum.GetValues(typeof(Level)).Length;
-                var numStages = Enum.GetValues(typeof(Stage)).Length;
                 this.Rankings = new Dictionary<Level, ScoreData[]>(numLevels);
                 this.ClearCounts = new Dictionary<Level, int>(numLevels);
-                this.Practices = new Practice[numLevels - 1, numStages - 1];    // except Extra
+                this.Practices = new Dictionary<LevelStagePair, Practice>();
                 this.Cards = new SpellCard[NumCards];
             }
 
@@ -154,14 +161,16 @@ namespace ThScoreFileConverter
                     if (!this.ClearCounts.ContainsKey(level))
                         this.ClearCounts.Add(level, clearCount);
                 }
-                foreach (int level in levels)
-                    if (level != (int)Level.Extra)
-                        foreach (int stage in Enum.GetValues(typeof(Stage)))
-                            if (stage != (int)Stage.Extra)
+                foreach (Level level in levels)
+                    if (level != Level.Extra)
+                        foreach (Stage stage in Enum.GetValues(typeof(Stage)))
+                            if (stage != Stage.Extra)
                             {
                                 var practice = new Practice();
                                 practice.ReadFrom(reader);
-                                this.Practices[level, stage] = practice;
+                                var key = new LevelStagePair(level, stage);
+                                if (!this.Practices.ContainsKey(key))
+                                    this.Practices.Add(key, practice);
                             }
                 for (var number = 0; number < NumCards; number++)
                 {
@@ -423,6 +432,7 @@ namespace ThScoreFileConverter
             allLines = this.ReplaceClear(allLines);
             allLines = this.ReplaceChara(allLines);
             allLines = this.ReplaceCharaEx(allLines);
+            allLines = this.ReplacePractice(allLines);
             writer.Write(allLines);
 
             writer.Flush();
@@ -791,6 +801,41 @@ namespace ThScoreFileConverter
                             default:    // unreachable
                                 return match.ToString();
                         }
+                    }
+                    catch
+                    {
+                        return match.ToString();
+                    }
+                }));
+        }
+
+        // %T10PRAC[x][yy][z]
+        private string ReplacePractice(string input)
+        {
+            var pattern = string.Format(
+                @"%T10PRAC([{0}])({1})([1-6])",
+                Utils.JoinEnumNames<LevelShort>(""),
+                Utils.JoinEnumNames<CharaShort>("|"));
+            return new Regex(pattern, RegexOptions.IgnoreCase)
+                .Replace(input, new MatchEvaluator(match =>
+                {
+                    try
+                    {
+                        var level = (Level)Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
+                        var chara = (CharaWithTotal)Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
+                        var stage = (Stage)(int.Parse(match.Groups[3].Value) - 1);
+
+                        if (level == Level.Extra)
+                            return match.ToString();
+
+                        if (this.allScoreData.clearData.ContainsKey(chara))
+                        {
+                            var key = new LevelStagePair(level, stage);
+                            var practices = this.allScoreData.clearData[chara].Practices;
+                            return (practices.ContainsKey(key) ? (practices[key].Score * 10) : 0).ToString();
+                        }
+                        else
+                            return "0";
                     }
                     catch
                     {

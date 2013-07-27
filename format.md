@@ -63,6 +63,7 @@ table td pre { margin: 0 0 0 2em; }
     * [クリア達成度](#T10CLEAR)
     * [キャラごとの個別データ](#T10CHARA)
     * [キャラごとの個別データ（詳細版）](#T10CHARAEX)
+    * [プラクティススコア](#T10PRAC)
 
 ----------------------------------------
 
@@ -1832,6 +1833,51 @@ SpellName: %T95CARD122" border=0&gt;
  <li>プレイ時間は時分秒が「h:mm:ss」の形式で出力されます。<br />
   なお、スコアファイルにはフレーム数単位で保存されているため、60fps 固定と見なして換算した結果を出力しています。</li>
 </ul>
+  </td>
+ </tr>
+ <tr>
+  <td class="header">相違点</td>
+  <td colspan="2">
+<ul>
+ <li>このテンプレート書式は本ツール独自のものです。</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+<table>
+ <caption id="T10PRAC">プラクティススコア</caption>
+ <tr>
+  <td class="header" rowspan="4">書式</td>
+  <td colspan="2"><code>%T10PRAC[x][yy][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   難易度<br />
+   [E]: Easy [N]: Normal [H]: Hard [L]: Lunatic
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[yy]</code></td>
+  <td>
+   キャラの名前<br />
+   [RA]: 霊夢 (A) [RB]: 霊夢 (B) [RC]: 霊夢 (C)
+   [MA]: 魔理沙 (A) [MB]: 魔理沙 (B) [MC]: 魔理沙 (C)
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   ステージ<br />
+   [1～6]: Stage1～6
+  </td>
+ </tr>
+ <tr>
+  <td class="header">例</td>
+  <td colspan="2">
+   <code>%T10PRACEMC1</code> … Easy 魔理沙 (C) の Stage 1 のプラクティススコア<br />
+   <code>%T10PRACNRA4</code> … Normal 霊夢 (A) の Stage 4 のプラクティススコア
   </td>
  </tr>
  <tr>
