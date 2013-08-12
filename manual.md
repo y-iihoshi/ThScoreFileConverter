@@ -166,7 +166,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 ## <a id="ChangeLog">ChangeLog</a>
 
-2013/08/1x ver.1.1.0.0
+2013/08/12 ver.1.1.0.0
 
 * 東方地霊殿に対応
 
