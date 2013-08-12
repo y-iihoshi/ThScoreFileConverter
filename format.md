@@ -64,6 +64,15 @@ table td pre { margin: 0 0 0 2em; }
     * [キャラごとの個別データ](#T10CHARA)
     * [キャラごとの個別データ（詳細版）](#T10CHARAEX)
     * [プラクティススコア](#T10PRAC)
+* [東方地霊殿用テンプレート書式](#Th11Formats)
+    * [スコアランキング](#T11SCR)
+    * [御札戦歴](#T11C)
+    * [スペルカード基本情報](#T11CARD)
+    * [スペルカード蒐集率](#T11CRG)
+    * [クリア達成度](#T11CLEAR)
+    * [キャラごとの個別データ](#T11CHARA)
+    * [キャラごとの個別データ（詳細版）](#T11CHARAEX)
+    * [プラクティススコア](#T11PRAC)
 
 ----------------------------------------
 
@@ -1683,7 +1692,8 @@ SpellName: %T95CARD122" border=0&gt;
   <td>
    ステージ<br />
    [0]: 全ステージ合計 [1～6]: Stage1～6<br />
-   （Extra ではこの指定は無視され、Total ではそのステージの Easy～Lunatic の合計が出力されます。）
+   （Extra ではこの指定は無視され、Total ではそのステージの
+   Easy～Lunatic の合計が出力されます。）
   </td>
  </tr>
  <tr>
@@ -1727,7 +1737,7 @@ SpellName: %T95CARD122" border=0&gt;
  <tr>
   <td class="header">例</td>
   <td colspan="2">
-   <code>%T10CLEARXMA</code> … Extra 魔理沙 (A)のクリア達成度<br />
+   <code>%T10CLEARXMA</code> … Extra 魔理沙 (A) のクリア達成度<br />
    <code>%T10CLEARNRB</code> … Normal 霊夢 (B) のクリア達成度
   </td>
  </tr>
@@ -1781,8 +1791,10 @@ SpellName: %T95CARD122" border=0&gt;
   <td class="header">補足</td>
   <td colspan="2">
 <ul>
- <li>プレイ時間は時分秒が「h:mm:ss」の形式で出力されます。<br />
-  なお、スコアファイルにはフレーム数単位で保存されているため、60fps 固定と見なして換算した結果を出力しています。</li>
+ <li>
+  プレイ時間は時分秒が「h:mm:ss」の形式で出力されます。<br />
+  なお、スコアファイルにはフレーム数単位で保存されているため、60fps 固定と見なして換算した結果を出力しています。
+ </li>
 </ul>
   </td>
  </tr>
@@ -1830,8 +1842,10 @@ SpellName: %T95CARD122" border=0&gt;
   <td class="header">補足</td>
   <td colspan="2">
 <ul>
- <li>プレイ時間は時分秒が「h:mm:ss」の形式で出力されます。<br />
-  なお、スコアファイルにはフレーム数単位で保存されているため、60fps 固定と見なして換算した結果を出力しています。</li>
+ <li>
+  プレイ時間は時分秒が「h:mm:ss」の形式で出力されます。<br />
+  なお、スコアファイルにはフレーム数単位で保存されているため、60fps 固定と見なして換算した結果を出力しています。
+ </li>
 </ul>
   </td>
  </tr>
@@ -1876,8 +1890,10 @@ SpellName: %T95CARD122" border=0&gt;
  <tr>
   <td class="header">例</td>
   <td colspan="2">
-   <code>%T10PRACEMC1</code> … Easy 魔理沙 (C) の Stage 1 のプラクティススコア<br />
-   <code>%T10PRACNRA4</code> … Normal 霊夢 (A) の Stage 4 のプラクティススコア
+   <code>%T10PRACEMC1</code> …
+   Easy 魔理沙 (C) の Stage 1 のプラクティススコア<br />
+   <code>%T10PRACNRA4</code> …
+   Normal 霊夢 (A) の Stage 4 のプラクティススコア
   </td>
  </tr>
  <tr>
@@ -1886,6 +1902,378 @@ SpellName: %T95CARD122" border=0&gt;
 <ul>
  <li>このテンプレート書式は本ツール独自のものです。</li>
 </ul>
+  </td>
+ </tr>
+</table>
+
+----------------------------------------
+
+## <a id="Th11Formats">東方地霊殿用テンプレート書式</a>
+
+<table>
+ <caption id="T11SCR">スコアランキング</caption>
+ <tr>
+  <td class="header" rowspan="5">書式</td>
+  <td colspan="2"><code>%T11SCR[w][xx][y][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[w]</code></td>
+  <td>
+   難易度<br />
+   [E]: Easy [N]: Normal [H]: Hard [L]: Lunatic [X]: Extra
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[xx]</code></td>
+  <td>
+   キャラの名前<br />
+   [RY]: 霊夢 &amp; 紫 [RS]: 霊夢 &amp; 萃香 [RA]: 霊夢 &amp; 文
+   [MA]: 魔理沙 &amp; アリス [MP]: 魔理沙 &amp; パチュリー
+   [MN]: 魔理沙 &amp; にとり
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[y]</code></td>
+  <td>
+   順位<br />
+   [1～9]: 1～9 位 [0]: 10 位
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目<br />
+   [1]: 登録名 [2]: スコア [3]: 到達ステージ [4]: 日時 [5]: 処理落ち率
+  </td>
+ </tr>
+ <tr>
+  <td class="header">例</td>
+  <td colspan="2">
+   <code>%T11SCRNMN12</code> … Normal 魔理沙 &amp; にとりの 1 位のスコア<br />
+   <code>%T11SCRXRY44</code> … Extra 霊夢 &amp; 紫の 4 位の日時
+  </td>
+ </tr>
+ <tr>
+  <td class="header">補足</td>
+  <td colspan="2">
+<ul>
+ <li>スコアの 1 の位には、原作と同様にコンティニュー回数が出力されます。</li>
+ <li>日時は年月日及び時分秒が「yyyy/mm/dd hh:mm:ss」の形式で出力されます。</li>
+ <li>処理落ち率はとりあえず小数点以下第 3 位まで（% 記号付きで）出力されます。今後、この桁数を設定可能にするかも知れません。</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+<table>
+ <caption id="T11C">御札戦歴</caption>
+ <tr>
+  <td class="header" rowspan="4">書式</td>
+  <td colspan="2"><code>%T11C[xxx][yy][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[xxx]</code></td>
+  <td>
+   スペルカードの番号など<br />
+   [001～175]: スペルカードの番号 [000]: 全スペルカードの合計値
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[yy]</code></td>
+  <td>
+   キャラの名前など<br />
+   [TL]: 全主人公合計
+   [RY]: 霊夢 &amp; 紫 [RS]: 霊夢 &amp; 萃香 [RA]: 霊夢 &amp; 文
+   [MA]: 魔理沙 &amp; アリス [MP]: 魔理沙 &amp; パチュリー
+   [MN]: 魔理沙 &amp; にとり
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目<br />
+   [1]: 取得回数（勝率の分子） [2]: 挑戦回数（勝率の分母）
+  </td>
+ </tr>
+ <tr>
+  <td class="header">例</td>
+  <td colspan="2">
+   <code>%T11C003TL1</code> …
+   全主人公合計の罠符「キャプチャーウェブ」(Easy) の取得回数<br />
+   <code>%T11C003MN2</code> …
+   魔理沙 &amp; にとりの罠符「キャプチャーウェブ」(Easy) の挑戦回数
+  </td>
+ </tr>
+</table>
+
+<table>
+ <caption id="T11CARD">スペルカード基本情報</caption>
+ <tr>
+  <td class="header" rowspan="3">書式</td>
+  <td colspan="2"><code>%T11CARD[xxx][y]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[xxx]</code></td>
+  <td>
+   スペルカードの番号<br />
+   [001～175]: スペルカードの番号
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[y]</code></td>
+  <td>
+   項目<br />
+   [N]: スペルカードの名前
+   [R]: スペルカードの難易度 (Easy, Normal, Hard, Lunatic, Extra)
+  </td>
+ </tr>
+ <tr>
+  <td class="header">例</td>
+  <td colspan="2">
+   <code>%T11CARD003N</code> … 罠符「キャプチャーウェブ」<br />
+   <code>%T11CARD003R</code> … Easy
+  </td>
+ </tr>
+ <tr>
+  <td class="header">補足</td>
+  <td colspan="2">
+<ul>
+ <li>未挑戦のスペルカードの名前は「?????」のように出力されます。（一応ネタバレ防止のため。）今後、このように隠すかどうかを設定可能にするかも知れません。</li>
+ <li>一方、スペルカードの難易度は、未挑戦かどうかにかかわらず常に出力されます。原作でも Result 画面を見れば難易度はバレるので、このような仕様にしています。</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+<table>
+ <caption id="T11CRG">スペルカード蒐集率</caption>
+ <tr>
+  <td class="header" rowspan="5">書式</td>
+  <td colspan="2"><code>%T11CRG[w][xx][y][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[w]</code></td>
+  <td>
+   難易度など<br />
+   [E]: Easy [N]: Normal [H]: Hard [L]: Lunatic [X]: Extra [T]: Total
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[xx]</code></td>
+  <td>
+   キャラの名前など<br />
+   [TL]: 全主人公合計
+   [RY]: 霊夢 &amp; 紫 [RS]: 霊夢 &amp; 萃香 [RA]: 霊夢 &amp; 文
+   [MA]: 魔理沙 &amp; アリス [MP]: 魔理沙 &amp; パチュリー
+   [MN]: 魔理沙 &amp; にとり
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[y]</code></td>
+  <td>
+   ステージ<br />
+   [0]: 全ステージ合計 [1～6]: Stage1～6<br />
+   （Extra ではこの指定は無視され、Total ではそのステージの
+   Easy～Lunatic の合計が出力されます。）
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目<br />
+   [1]: 取得数（勝率の分子） [2]: 挑戦数（勝率の分母）
+  </td>
+ </tr>
+ <tr>
+  <td class="header">例</td>
+  <td colspan="2">
+   <code>%T11CRGERY01</code> …
+   Easy 霊夢 &amp; 紫の全ステージ合計の取得数<br />
+   <code>%T11CRGTMN41</code> …
+   魔理沙 &amp; にとりの Stage4 の全難易度合計の取得数<br />
+   <code>%T11CRGTTL02</code> …
+   全難易度・全キャラ・全ステージ合計の挑戦数
+  </td>
+ </tr>
+</table>
+
+<table>
+ <caption id="T11CLEAR">クリア達成度</caption>
+ <tr>
+  <td class="header" rowspan="3">書式</td>
+  <td colspan="2"><code>%T11CLEAR[x][yy]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   難易度<br />
+   [E]: Easy [N]: Normal [H]: Hard [L]: Lunatic [X]: Extra
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[yy]</code></td>
+  <td>
+   キャラの名前<br />
+   [RY]: 霊夢 &amp; 紫 [RS]: 霊夢 &amp; 萃香 [RA]: 霊夢 &amp; 文
+   [MA]: 魔理沙 &amp; アリス [MP]: 魔理沙 &amp; パチュリー
+   [MN]: 魔理沙 &amp; にとり
+  </td>
+ </tr>
+ <tr>
+  <td class="header">例</td>
+  <td colspan="2">
+   <code>%T11CLEARXMA</code> … Extra 魔理沙 &amp; アリスのクリア達成度<br />
+   <code>%T11CLEARNRS</code> … Normal 霊夢 &amp; 萃香のクリア達成度
+  </td>
+ </tr>
+ <tr>
+  <td class="header">補足</td>
+  <td colspan="2">
+<ul>
+ <li>
+  クリア達成度（ゲームの進行状況）に応じて以下の文字列が出力されます。
+  <p class="legends">
+   -------（未プレイ）, Stage 1, Stage 2, Stage 3, Stage 4, Stage 5, Stage 6,
+   All Clear, Not Clear（Extra 未クリア）
+  </p>
+ </li>
+ <li>本ツールでは、ランキングを基にクリア達成度を算出しているため、実際はクリア済みでもランキング上に存在していなければ未クリア扱いになってしまいます。</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+<table>
+ <caption id="T11CHARA">キャラごとの個別データ</caption>
+ <tr>
+  <td class="header" rowspan="3">書式</td>
+  <td colspan="2"><code>%T11CHARA[xx][y]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[xx]</code></td>
+  <td>
+   キャラの名前など<br />
+   [TL]: 全主人公合計
+   [RY]: 霊夢 &amp; 紫 [RS]: 霊夢 &amp; 萃香 [RA]: 霊夢 &amp; 文
+   [MA]: 魔理沙 &amp; アリス [MP]: 魔理沙 &amp; パチュリー
+   [MN]: 魔理沙 &amp; にとり
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[y]</code></td>
+  <td>
+   項目<br />
+   [1]: 総プレイ回数 [2]: プレイ時間 [3]: クリア回数
+  </td>
+ </tr>
+ <tr>
+  <td class="header">例</td>
+  <td colspan="2">
+   <code>%T11CHARATL2</code> … 全主人公合計のプレイ時間<br />
+   <code>%T11CHARARY1</code> … 霊夢 &amp; 紫の総プレイ回数
+  </td>
+ </tr>
+ <tr>
+  <td class="header">補足</td>
+  <td colspan="2">
+<ul>
+ <li>
+  プレイ時間は時分秒が「h:mm:ss」の形式で出力されます。<br />
+  なお、スコアファイルにはフレーム数単位で保存されているため、60fps 固定と見なして換算した結果を出力しています。
+ </li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+<table>
+ <caption id="T11CHARAEX">キャラごとの個別データ（詳細版）</caption>
+ <tr>
+  <td class="header" rowspan="4">書式</td>
+  <td colspan="2"><code>%T11CHARAEX[x][yy][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   難易度<br />
+   [E]: Easy [N]: Normal [H]: Hard [L]: Lunatic [X]: Extra<br />
+   （総プレイ回数とプレイ時間ではこの指定は無視されます。）
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[yy]</code></td>
+  <td>
+   キャラの名前など<br />
+   [TL]: 全主人公合計
+   [RY]: 霊夢 &amp; 紫 [RS]: 霊夢 &amp; 萃香 [RA]: 霊夢 &amp; 文
+   [MA]: 魔理沙 &amp; アリス [MP]: 魔理沙 &amp; パチュリー
+   [MN]: 魔理沙 &amp; にとり
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目<br />
+   [1]: 総プレイ回数 [2]: プレイ時間 [3]: クリア回数
+  </td>
+ </tr>
+ <tr>
+  <td class="header">例</td>
+  <td colspan="2">
+   <code>%T11CHARAEXETL2</code> … 全主人公合計のプレイ時間<br />
+   <code>%T11CHARAEXERY1</code> … 霊夢 &amp; 紫の総プレイ回数<br />
+   <code>%T11CHARAEXNMN3</code> … Normal 魔理沙 &amp; にとりのクリア回数
+  </td>
+ </tr>
+ <tr>
+  <td class="header">補足</td>
+  <td colspan="2">
+<ul>
+ <li>
+  プレイ時間は時分秒が「h:mm:ss」の形式で出力されます。<br />
+  なお、スコアファイルにはフレーム数単位で保存されているため、60fps 固定と見なして換算した結果を出力しています。
+ </li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+<table>
+ <caption id="T11PRAC">プラクティススコア</caption>
+ <tr>
+  <td class="header" rowspan="4">書式</td>
+  <td colspan="2"><code>%T11PRAC[x][yy][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   難易度<br />
+   [E]: Easy [N]: Normal [H]: Hard [L]: Lunatic
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[yy]</code></td>
+  <td>
+   キャラの名前<br />
+   [RY]: 霊夢 &amp; 紫 [RS]: 霊夢 &amp; 萃香 [RA]: 霊夢 &amp; 文
+   [MA]: 魔理沙 &amp; アリス [MP]: 魔理沙 &amp; パチュリー
+   [MN]: 魔理沙 &amp; にとり
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   ステージ<br />
+   [1～6]: Stage1～6
+  </td>
+ </tr>
+ <tr>
+  <td class="header">例</td>
+  <td colspan="2">
+   <code>%T11PRACEMN1</code> …
+   Easy 魔理沙 &amp; にとりの Stage 1 のプラクティススコア<br />
+   <code>%T11PRACNRY4</code> …
+   Normal 霊夢 &amp; 紫の Stage 4 のプラクティススコア
   </td>
  </tr>
 </table>

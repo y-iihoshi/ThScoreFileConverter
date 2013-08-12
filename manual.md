@@ -69,10 +69,10 @@ ThScoreFileConverter （以下、本ツール）は、東方 Project の各作�
 * 東方花映塚 ver. 1.50a
 * 東方文花帖 ver. 1.02a
 * 東方風神録 ver. 1.00a
+* 東方地霊殿 ver. 1.00a
 
 以下作品については、本ツール作者の原作プレイ進捗状況に伴って今後対応予定です：
 
-* 東方地霊殿
 * 東方星蓮船
 * ダブルスポイラー
 * 妖精大戦争
@@ -165,6 +165,10 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ----------------------------------------
 
 ## <a id="ChangeLog">ChangeLog</a>
+
+2013/08/1x ver.1.1.0.0
+
+* 東方地霊殿に対応
 
 2013/07/28 ver.1.0.2.0
 
