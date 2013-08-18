@@ -1,18 +1,14 @@
-# ThScoreFileConverter User's Manual
+<style type="text/css">
+<!--
+	div.toc ul ul ul li { display: inline; }
+-->
+</style>
 
+# ThScoreFileConverter User's Manual {: #UsersManual }
 
-## <a id="ToC">Table of Contents</a>
+## Table of Contents {: #ToC }
 
-* [Introduction](#Introduction)
-* [Disclaimer](#Disclaimer)
-* [Environments](#Environments)
-* [Supported Titles](#SupportedTitles)
-* [Installation](#Installation)
-* [How to Use](#HowToUse)
-* [Notes](#Notes)
-* [Copyrights](#Copyrights)
-* [License](#License)
-* [ChangeLog](#ChangeLog)
+[TOC]
 
 <ul>
  <li><a href="manual/format.html">テンプレート書式</a></li>
@@ -20,15 +16,17 @@
 
 ----------------------------------------
 
-## <a id="Introduction">Introduction</a>
+## Introduction {: #Introduction }
 
 ThScoreFileConverter （以下、本ツール）は、東方 Project の各作品のスコアファイルからランキングや御札戦歴などのデータを読み込み、任意のテキストファイルに書き出すことのできるツールです。
 
-「[東方メモリマネージャー](http://www.sue445.net/downloads/ThMemoryManager.html)」の代替ツールとなることを目指して開発中です。
+「[東方メモリマネージャー][ThMM]」の代替ツールとなることを目指して開発中です。
+
+  [ThMM]: http://www.sue445.net/downloads/ThMemoryManager.html
 
 ----------------------------------------
 
-## <a id="Disclaimer">Disclaimer</a>
+## Disclaimer {: #Disclaimer }
 
 **本ツールの利用は自己責任の下で実施して下さい。**
 
@@ -36,17 +34,17 @@ ThScoreFileConverter （以下、本ツール）は、東方 Project の各作�
 
 ----------------------------------------
 
-## <a id="Environments">Environments</a>
+## Environments {: #Environments }
 
 .NET Framework 3.0 以上がインストールされている環境（[参考記事][@IT]）であれば動作すると思います。
 
   [@IT]: http://www.atmarkit.co.jp/ait/articles/1211/16/news093.html "Windows TIPS: .NET Frameworkのバージョンを整理する - @IT"
 
-### ビルド環境
+### ビルド環境 {: #BuiltEnv }
 
 * Windows 7 Professional SP1 (64bit) + .NET Framework 3.0
 
-### 動作確認済み環境
+### 動作確認済み環境 {: #TestedEnv }
 
 * Windows XP Home Edition SP3 (32bit)  
 以下をインストール済み。実際どれで動いているのかはよく分かっていない…（もちろん、ちゃんと調べれば分かるだろうけど、面倒）
@@ -59,7 +57,7 @@ ThScoreFileConverter （以下、本ツール）は、東方 Project の各作�
 
 ----------------------------------------
 
-## <a id="SupportedTitles">Supported Titles</a>
+## Supported Titles {: #SupportedTitles }
 
 対応している東方 Project の作品名・バージョン：
 
@@ -88,19 +86,19 @@ ThScoreFileConverter （以下、本ツール）は、東方 Project の各作�
 
 ----------------------------------------
 
-## <a id="Installation">Installation</a>
+## Installation {: #Instllation }
 
-### インストール
+### インストール {: #Install }
 
 Web からダウンロードした zip ファイルを任意の場所に展開して下さい。
 
-### アンインストール
+### アンインストール {: #Uninstall }
 
 展開したフォルダごと削除して下さい。本ツールはレジストリの書き換えをしません。
 
 ----------------------------------------
 
-## <a id="HowToUse">How to Use</a>
+## How to Use {: #HowToUse }
 
 ![ThScoreFileConverter のスクリーンショット](manual/screenshot.png)
 
@@ -124,7 +122,7 @@ Web からダウンロードした zip ファイルを任意の場所に展開�
 
 ----------------------------------------
 
-## <a id="Notes">Notes</a>
+## Notes {: #Notes }
 
 以下の注意点は、本ツールの今後の更新により変更される可能性があります。
 
@@ -136,7 +134,7 @@ Web からダウンロードした zip ファイルを任意の場所に展開�
 
 ----------------------------------------
 
-## <a id="Copyrights">Copyrights</a>
+## Copyrights {: #Copyrights }
 
 * 東方 Project の各作品の著作権は[上海アリス幻樂団][ZUN]様にあります。本ツール作者とは一切関係がありません。
 * 東方メモリマネージャーの著作権は [sue445][sue445] 様にあります。本ツール作者とは一切関係がありません。
@@ -149,7 +147,7 @@ Web からダウンロードした zip ファイルを任意の場所に展開�
 
 ----------------------------------------
 
-## <a id="License">License</a>
+## License {: #License }
 
 Copyright (c) 2013, IIHOSHI Yoshinori  
 All rights reserved.
@@ -164,7 +162,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 ----------------------------------------
 
-## <a id="ChangeLog">ChangeLog</a>
+## ChangeLog {: #ChangeLog }
 
 2013/08/12 ver.1.1.0.0
 
