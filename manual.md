@@ -164,6 +164,15 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 ## ChangeLog {: #ChangeLog }
 
+2013/08/24 ver.1.1.1.0
+
+* 東方風神録
+    * 全主人公合計のプレイ時間などがテンプレートファイルから漏れていたため修正
+    * [キャラごとの個別データ（詳細版）](manual/format.html#T10CHARAEX)にて、全難易度合計のクリア回数の出力に対応
+* 東方地霊殿
+    * 全主人公合計のプレイ時間などがテンプレートファイルから漏れていたため修正
+    * [キャラごとの個別データ（詳細版）](manual/format.html#T11CHARAEX)にて、全難易度合計のクリア回数の出力に対応
+
 2013/08/12 ver.1.1.0.0
 
 * 東方地霊殿に対応

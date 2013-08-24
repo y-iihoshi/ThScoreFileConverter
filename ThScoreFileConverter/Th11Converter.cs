@@ -765,14 +765,15 @@ namespace ThScoreFileConverter
         {
             var pattern = string.Format(
                 @"%T11CHARAEX([{0}])({1})([1-3])",
-                Utils.JoinEnumNames<LevelShort>(""),
+                Utils.JoinEnumNames<LevelShortWithTotal>(""),
                 Utils.JoinEnumNames<CharaShortWithTotal>("|"));
             return new Regex(pattern, RegexOptions.IgnoreCase)
                 .Replace(input, new MatchEvaluator(match =>
                 {
                     try
                     {
-                        var level = (Level)Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
+                        var level =
+                            (LevelWithTotal)Utils.ParseEnum<LevelShortWithTotal>(match.Groups[1].Value, true);
                         var chara =
                             (CharaWithTotal)Utils.ParseEnum<CharaShortWithTotal>(match.Groups[2].Value, true);
                         var type = int.Parse(match.Groups[3].Value);
@@ -800,12 +801,30 @@ namespace ThScoreFileConverter
                                 }
                             case 3:     // clear count
                                 if (chara == CharaWithTotal.Total)
-                                    return Utils.Accumulate<ClearData>(
-                                        this.allScoreData.clearData.Values, new Converter<ClearData, int>(
-                                            data => ((data.Chara != chara)
-                                                ? data.ClearCounts[level] : 0))).ToString();
+                                {
+                                    if (level == LevelWithTotal.Total)
+                                        return Utils.Accumulate<ClearData>(
+                                            this.allScoreData.clearData.Values, new Converter<ClearData, int>(
+                                                data => ((data.Chara != chara)
+                                                    ? (int)Utils.Accumulate<int>(data.ClearCounts.Values,
+                                                        new Converter<int, int>(count => count))
+                                                    : 0))).ToString();
+                                    else
+                                        return Utils.Accumulate<ClearData>(
+                                            this.allScoreData.clearData.Values, new Converter<ClearData, int>(
+                                                data => ((data.Chara != chara)
+                                                    ? data.ClearCounts[(Level)level] : 0))).ToString();
+                                }
                                 else
-                                    return this.allScoreData.clearData[chara].ClearCounts[level].ToString();
+                                {
+                                    if (level == LevelWithTotal.Total)
+                                        return Utils.Accumulate<int>(
+                                            this.allScoreData.clearData[chara].ClearCounts.Values,
+                                            new Converter<int, int>(count => count)).ToString();
+                                    else
+                                        return this.allScoreData.
+                                            clearData[chara].ClearCounts[(Level)level].ToString();
+                                }
                             default:    // unreachable
                                 return match.ToString();
                         }
