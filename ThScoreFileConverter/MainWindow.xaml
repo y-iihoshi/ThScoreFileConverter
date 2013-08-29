@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:p="clr-namespace:ThScoreFileConverter.Properties"
         xmlns:Specialized="clr-namespace:System.Collections.Specialized;assembly=System" x:Name="wndMain" x:Class="ThScoreFileConverter.MainWindow"
-        Title="ThScoreFileConverter" Height="485" Width="505" ResizeMode="CanMinimize" Closing="wndMain_Closing" Background="#FFEEEEEE">
-    <Grid Margin="10">
+        Title="ThScoreFileConverter" Height="538" Width="505" ResizeMode="CanMinimize" Closing="wndMain_Closing" Background="#FFEEEEEE" Style="{DynamicResource WindowStyleKey}">
+    <Grid Margin="10,10,10,0" VerticalAlignment="Top">
         <Grid.RowDefinitions>
             <RowDefinition Height="45"/>
             <RowDefinition Height="45"/>
@@ -13,6 +13,7 @@
             <RowDefinition Height="45"/>
             <RowDefinition Height="45"/>
             <RowDefinition Height="90"/>
+            <RowDefinition Height="45"/>
         </Grid.RowDefinitions>
 
         <ComboBox x:Name="cmbTitle" HorizontalAlignment="Left" Margin="10,10,0,10" Width="150" Height="25" MaxDropDownHeight="296" IsReadOnly="True" SelectionChanged="cmbTitle_SelectionChanged">
@@ -29,23 +30,23 @@
             <ComboBoxItem Name="TH13" Content="東方神霊廟" IsEnabled="False"/>
             <ComboBoxItem Name="TH14" Content="東方輝針城" IsEnabled="False"/>
         </ComboBox>
-        <Label x:Name="lblSupportedVersion" Content="" HorizontalAlignment="Left" Margin="165,10,0,10" Width="200"/>
+        <Label x:Name="lblSupportedVersion" Content="" HorizontalAlignment="Left" Margin="165,10,0,10" Width="239"/>
 
-        <Label Content="スコア(_S):" Grid.Row="1" HorizontalAlignment="Left" Margin="10,10,0,10" Target="{Binding ElementName=txtScore, Mode=OneWay}" Width="90" Height="25"/>
+        <Label Content="スコア(_S):" Grid.Row="1" HorizontalAlignment="Left" Margin="10,10,0,10" Target="{Binding ElementName=txtScore, Mode=OneWay}" Width="120" Height="25"/>
         <TextBox x:Name="txtScore" Grid.Row="1" HorizontalAlignment="Right" Margin="0,10,95,10" Width="245" Drop="txtScore_Drop" IsReadOnly="True" TextChanged="txtScore_TextChanged" PreviewDragEnter="txtScore_Dragging" PreviewDragOver="txtScore_Dragging" Height="25"/>
         <Button x:Name="btnScore" Content="開く(_O)..." Grid.Row="1" HorizontalAlignment="Right" Margin="0,10,10,10" Width="75" Click="btnScore_Click" Height="25"/>
 
         <Label x:Name="lblBestShot" Content="ベストショット(_B):" HorizontalAlignment="Left" Margin="10" Grid.Row="2" Height="25" Width="120" IsEnabled="False"/>
         <TextBox x:Name="txtBestShot" HorizontalAlignment="Right" Height="25" Margin="0,10,95,10" Grid.Row="2" Width="245" IsEnabled="False" TextChanged="txtBestShot_TextChanged" IsReadOnly="True" Drop="txtBestShot_Drop" PreviewDragEnter="txtBestShot_Dragging" PreviewDragOver="txtBestShot_Dragging"/>
-        <Button x:Name="btnBestShot" Content="開く(_O)..." Margin="0,10,10,10" Grid.Row="2" Width="75" HorizontalAlignment="Right" IsEnabled="False" Click="btnBestShot_Click"/>
+        <Button x:Name="btnBestShot" Content="開く(_O)..." Margin="0,10,10,10" Grid.Row="2" Width="75" HorizontalAlignment="Right" IsEnabled="False" Click="btnBestShot_Click" Height="25"/>
 
-        <Label Content="テンプレート(_T):" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="3" VerticalAlignment="Top" Width="105" Target="{Binding ElementName=lstTemplate, Mode=OneWay}" Height="25"/>
+        <Label Content="テンプレート(_T):" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="3" VerticalAlignment="Top" Width="120" Target="{Binding ElementName=lstTemplate, Mode=OneWay}" Height="25"/>
         <ListBox x:Name="lstTemplate" Margin="0,10,95,10" Grid.Row="3" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionMode="Multiple" Drop="lstTemplate_Drop" SelectionChanged="lstTemplate_SelectionChanged" PreviewDragEnter="lstTemplate_Dragging" PreviewDragOver="lstTemplate_Dragging" HorizontalAlignment="Right" Width="245" Height="100" AllowDrop="True"/>
         <Button x:Name="btnTemplateAdd" Content="追加(_A)..." HorizontalAlignment="Right" Margin="0,10,10,0" Grid.Row="3" VerticalAlignment="Top" Width="75" Click="btnTemplateAdd_Click" Height="25"/>
         <Button x:Name="btnTemplateClear" Content="削除(_C)" HorizontalAlignment="Right" Margin="0,40,10,0" Grid.Row="3" VerticalAlignment="Top" Width="75" Click="btnTemplateClear_Click" IsEnabled="False" Height="25"/>
         <Button x:Name="btnTemplateClearAll" Content="全て削除(_L)" Margin="0,70,10,10" Grid.Row="3" IsEnabled="{Binding HasItems, ElementName=lstTemplate}" Click="btnTemplateClearAll_Click" HorizontalAlignment="Right" Width="75" VerticalAlignment="Top" Height="25"/>
 
-        <Label Content="出力先(_O):" HorizontalAlignment="Left" Margin="10,10,0,10" Grid.Row="4" Width="90" Target="{Binding ElementName=txtOutput, Mode=OneWay}" Height="25"/>
+        <Label Content="出力先(_O):" HorizontalAlignment="Left" Margin="10,10,0,10" Grid.Row="4" Width="120" Target="{Binding ElementName=txtOutput, Mode=OneWay}" Height="25"/>
         <TextBox x:Name="txtOutput" HorizontalAlignment="Right" Margin="0,10,95,10" Grid.Row="4" Width="245" IsReadOnly="True" TextChanged="txtOutput_TextChanged" PreviewDragEnter="txtOutput_Dragging" PreviewDragOver="txtOutput_Dragging" Drop="txtOutput_Drop" Height="25"/>
         <Button x:Name="btnOutput" Content="開く(_O)..." Margin="0,10,10,10" Grid.Row="4" Click="btnOutput_Click" HorizontalAlignment="Right" Width="75" Height="25"/>
 
@@ -53,6 +54,11 @@
 
         <TextBox x:Name="txtLog" Margin="10" Grid.Row="6" TextWrapping="Wrap" IsUndoEnabled="False" IsReadOnly="True" VerticalScrollBarVisibility="Visible" AllowDrop="False" FontSize="10"/>
 
-        <Button x:Name="btnAbout" Content="_About..." Margin="0,10,10,10" Click="btnAbout_Click" HorizontalAlignment="Right" Width="50" FontSize="10" Height="20" VerticalAlignment="Top"/>
+        <Label Content="フォント設定:" HorizontalAlignment="Left" Margin="10,10,0,10" Grid.Row="7" Width="120" Height="25"/>
+        <TextBox x:Name="txtFontInfo" Text="{DynamicResource FontInfoKey}" Margin="0,10,170,10" Grid.Row="7" TextWrapping="Wrap" Height="25" HorizontalAlignment="Right" Width="170" IsReadOnly="True"/>
+        <Button x:Name="btnFontChange" Content="変更(C)..." Margin="0,10,90,10" Height="25" RenderTransformOrigin="0.093,0.28" Grid.Row="7" HorizontalAlignment="Right" Width="75" Click="btnFontChange_Click"/>
+        <Button x:Name="btnFontReset" Content="リセット(_R)" Margin="0,10,10,10" Width="75" Height="25" HorizontalAlignment="Right" Grid.Row="7" Click="btnFontReset_Click"/>
+
+        <Button x:Name="btnAbout" Content="_About..." Margin="0,10,10,10" Click="btnAbout_Click" HorizontalAlignment="Right" Width="60" Height="25"/>
     </Grid>
 </Window>

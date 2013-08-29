@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
+using System.Windows;
 using System.Xml;
 
 namespace ThScoreFileConverter
@@ -51,14 +52,26 @@ namespace ThScoreFileConverter
         /// <summary>
         /// 前回終了時に選択していた作品
         /// </summary>
-        [DataMember(Order=0)]
+        [DataMember(Order = 0)]
         public string LastTitle { get; set; }
 
         /// <summary>
         /// 作品毎の設定を保持する dictionary
         /// </summary>
-        [DataMember(Order=1)]
+        [DataMember(Order = 1)]
         public Dictionary<string, SettingsPerTitle> Dictionary { get; set; }
+
+        /// <summary>
+        /// UI に使うフォントの名前
+        /// </summary>
+        [DataMember(Order = 2)]
+        public string FontFamilyName { get; set; }
+
+        /// <summary>
+        /// UI に使うフォントのサイズ
+        /// </summary>
+        [DataMember(Order = 3)]
+        public double? FontSize { get; set; }
 
         /// <summary>
         /// コンストラクタ
@@ -67,6 +80,8 @@ namespace ThScoreFileConverter
         {
             this.LastTitle = "";
             this.Dictionary = new Dictionary<string, SettingsPerTitle>();
+            this.FontFamilyName = SystemFonts.MessageFontFamily.Source;
+            this.FontSize = SystemFonts.MessageFontSize;
         }
 
         /// <summary>
@@ -85,6 +100,8 @@ namespace ThScoreFileConverter
                     var settings = (Settings)serializer.ReadObject(reader);
                     this.LastTitle = settings.LastTitle;
                     this.Dictionary = settings.Dictionary;
+                    this.FontFamilyName = settings.FontFamilyName ?? SystemFonts.MessageFontFamily.Source;
+                    this.FontSize = settings.FontSize ?? SystemFonts.MessageFontSize;
                 }
             }
             catch (FileNotFoundException)

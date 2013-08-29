@@ -3,10 +3,12 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Xml;
+using SysDraw = System.Drawing;
 using WinForms = System.Windows.Forms;
 
 namespace ThScoreFileConverter
@@ -25,6 +27,11 @@ namespace ThScoreFileConverter
         /// 変換処理を行うクラスインスタンス
         /// </summary>
         private ThConverter converter = null;
+
+        /// <summary>
+        /// フォント設定ダイアログのインスタンス
+        /// </summary>
+        private WinForms.FontDialog fontDialog = null;
 
         /// <summary>
         /// コンストラクタ
@@ -67,6 +74,13 @@ namespace ThScoreFileConverter
                     if (firstEnabledItem != null)
                         firstEnabledItem.IsSelected = true;
                 }
+                ((App)App.Current).UpdateResources(settings.FontFamilyName, settings.FontSize);
+
+                this.fontDialog = new WinForms.FontDialog();
+                this.fontDialog.ShowApply = true;
+                this.fontDialog.Apply += fontDialog_Apply;
+                this.fontDialog.FontMustExist = true;
+                this.fontDialog.ShowEffects = false;
             }
             catch (Exception ex)
             {
@@ -84,6 +98,8 @@ namespace ThScoreFileConverter
             try
             {
                 this.UpdateSettingsFromControls((ComboBoxItem)this.cmbTitle.SelectedItem);
+                this.settings.FontFamilyName = App.Current.Resources["FontFamilyKey"].ToString();
+                this.settings.FontSize = Convert.ToDouble(App.Current.Resources["FontSizeKey"]);
                 this.settings.Save(Properties.Resources.strSettingFile);
             }
             catch (Exception ex)
@@ -555,6 +571,55 @@ namespace ThScoreFileConverter
             this.ChangeCursor(null);
         }
 
+        #region フォント設定
+
+        /// <summary>
+        /// フォントの変更
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnFontChange_Click(object sender, RoutedEventArgs e)
+        {
+            this.fontDialog.Font = new SysDraw.Font(
+                App.Current.Resources["FontFamilyKey"].ToString(),
+                Convert.ToSingle(App.Current.Resources["FontSizeKey"]));
+
+            var oldFont = this.fontDialog.Font;
+            var result = this.fontDialog.ShowDialog(new Win32Window(this));
+
+            switch (result)
+            {
+                case WinForms.DialogResult.OK:
+                    fontDialog_Apply(sender, e);
+                    break;
+                case WinForms.DialogResult.Cancel:
+                    ((App)App.Current).UpdateResources(oldFont);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// フォント変更ダイアログによるフォント設定の一時適用
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void fontDialog_Apply(object sender, EventArgs e)
+        {
+            ((App)App.Current).UpdateResources(this.fontDialog.Font);
+        }
+
+        /// <summary>
+        /// フォント設定のリセット
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnFontReset_Click(object sender, RoutedEventArgs e)
+        {
+            ((App)App.Current).UpdateResources(SystemFonts.MessageFontFamily, SystemFonts.MessageFontSize);
+        }
+
+        #endregion
+
         /// <summary>
         /// About ダイアログの表示
         /// </summary>
@@ -687,6 +752,8 @@ namespace ThScoreFileConverter
                     this.lstTemplate.Items.Add(template);
             if (Directory.Exists(entry.OutputDirectory))
                 this.txtOutput.Text = entry.OutputDirectory;
+
+            ((App)App.Current).UpdateResources(this.settings.FontFamilyName, this.settings.FontSize);
         }
 
         /// <summary>
