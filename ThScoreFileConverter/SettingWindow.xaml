@@ -1,0 +1,26 @@
+﻿<Window x:Class="ThScoreFileConverter.SettingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Settings" Height="230" Width="420" Style="{DynamicResource WindowStyleKey}" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" PreviewKeyDown="Window_PreviewKeyDown">
+    <Grid Margin="10,10,10,0" Height="180" VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="65"/>
+            <RowDefinition Height="45"/>
+        </Grid.RowDefinitions>
+
+        <GroupBox Header="フォント設定">
+            <Grid>
+                <TextBox x:Name="txtFontInfo" Text="{DynamicResource FontInfoKey}" Margin="10,10,0,0" HorizontalAlignment="Left" Width="190" IsReadOnly="True" Height="25" VerticalAlignment="Top"/>
+                <Button x:Name="btnFontChange" Content="変更(_C)..." Margin="0,10,90,0" Click="btnFontChange_Click" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75"/>
+                <Button x:Name="btnFontReset" Content="リセット(_R)" Margin="0,10,10,0" Click="btnFontReset_Click" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="出力書式設定" Grid.Row="1">
+            <Grid>
+                <CheckBox x:Name="chkOutputNumberGroupSeparator" Content="数値を桁区切り形式で出力する(_S)" HorizontalAlignment="Left" Margin="10,10,0,0" Height="18" VerticalAlignment="Top" IsChecked="True"/>
+            </Grid>
+        </GroupBox>
+        <Button x:Name="btnOK" Content="OK" Margin="0,10,0,0" Grid.Row="2" Height="25" VerticalAlignment="Top" IsDefault="True" Click="btnOK_Click" HorizontalAlignment="Center" Width="75"/>
+    </Grid>
+</Window>

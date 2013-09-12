@@ -614,7 +614,7 @@ namespace ThScoreFileConverter
                             case 1:     // name
                                 return Encoding.Default.GetString(score.Name).Split('\0')[0];
                             case 2:     // score
-                                return score.Score.ToString();
+                                return this.ToNumberString(score.Score);
                             case 3:     // stage
                                 if (score.StageProgress == 99)
                                     return "All Clear";
@@ -648,13 +648,13 @@ namespace ThScoreFileConverter
                             switch (type)
                             {
                                 case 1:     // clear count
-                                    return Utils.Accumulate<CardAttack>(
+                                    return this.ToNumberString(Utils.Accumulate<CardAttack>(
                                         this.allScoreData.cardAttacks, new Converter<CardAttack, int>(
-                                            attack => ((attack != null) ? attack.ClearCount : 0))).ToString();
+                                            attack => ((attack != null) ? attack.ClearCount : 0))));
                                 case 2:     // trial count
-                                    return Utils.Accumulate<CardAttack>(
+                                    return this.ToNumberString(Utils.Accumulate<CardAttack>(
                                         this.allScoreData.cardAttacks, new Converter<CardAttack, int>(
-                                            attack => ((attack != null) ? attack.TrialCount : 0))).ToString();
+                                            attack => ((attack != null) ? attack.TrialCount : 0))));
                                 default:    // unreachable
                                     return match.ToString();
                             }
@@ -665,11 +665,11 @@ namespace ThScoreFileConverter
                                 switch (type)
                                 {
                                     case 1:     // clear count
-                                        return attack.ClearCount.ToString();
+                                        return this.ToNumberString(attack.ClearCount);
                                     case 2:     // trial count
-                                        return attack.TrialCount.ToString();
+                                        return this.ToNumberString(attack.TrialCount);
                                     default:    // unreachable
-                                        return attack.ToString();
+                                        return match.ToString();
                                 }
                             else
                                 return "0";
@@ -829,7 +829,8 @@ namespace ThScoreFileConverter
                         if (this.allScoreData.practiceScores.ContainsKey(key))
                         {
                             var scores = this.allScoreData.practiceScores[key];
-                            return (scores.ContainsKey(stage) ? scores[stage].HighScore : 0).ToString();
+                            return this.ToNumberString(
+                                scores.ContainsKey(stage) ? scores[stage].HighScore : 0);
                         }
                         else
                             return "0";

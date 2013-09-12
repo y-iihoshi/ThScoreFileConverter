@@ -539,11 +539,11 @@ namespace ThScoreFileConverter
                         switch (type)
                         {
                             case 1:     // high score
-                                return (score != null) ? score.HighScore.ToString() : "0";
+                                return this.ToNumberString((score != null) ? score.HighScore : 0);
                             case 2:     // bestshot score
-                                return (score != null) ? score.BestshotScore.ToString() : "0";
+                                return this.ToNumberString((score != null) ? score.BestshotScore : 0);
                             case 3:     // num of shots
-                                return (score != null) ? score.TrialCount.ToString() : "0";
+                                return this.ToNumberString((score != null) ? score.TrialCount : 0);
                             case 4:     // slow rate
                                 return (score != null) ? (score.SlowRate2.ToString("F3") + "%") : "-----%";
                             default:    // unreachable
@@ -570,17 +570,17 @@ namespace ThScoreFileConverter
                         switch (type)
                         {
                             case 1:     // total score
-                                return Utils.Accumulate<Score>(
+                                return this.ToNumberString(Utils.Accumulate<Score>(
                                     this.allScoreData.scores, new Converter<Score, int>(
-                                        score => ((score != null) ? score.HighScore : 0))).ToString();
+                                        score => ((score != null) ? score.HighScore : 0))));
                             case 2:     // total of bestshot scores
-                                return Utils.Accumulate<Score>(
+                                return this.ToNumberString(Utils.Accumulate<Score>(
                                     this.allScoreData.scores, new Converter<Score, int>(
-                                        score => ((score != null) ? score.BestshotScore : 0))).ToString();
+                                        score => ((score != null) ? score.BestshotScore : 0))));
                             case 3:     // total of num of shots
-                                return Utils.Accumulate<Score>(
+                                return this.ToNumberString(Utils.Accumulate<Score>(
                                     this.allScoreData.scores, new Converter<Score, int>(
-                                        score => ((score != null) ? score.TrialCount : 0))).ToString();
+                                        score => ((score != null) ? score.TrialCount : 0))));
                             case 4:     // num of succeeded scenes
                                 return Utils.CountIf<Score>(
                                     this.allScoreData.scores, new Predicate<Score>(
@@ -654,7 +654,8 @@ namespace ThScoreFileConverter
                                 scene,
                                 Properties.Resources.strBestShotExtension,
                                 string.Format("ClearData: {0}\nSlow: {1:F6}%\nSpellName: {2}",
-                                    bestshotHeaders[key].Score, bestshotHeaders[key].SlowRate,
+                                    this.ToNumberString(bestshotHeaders[key].Score),
+                                    bestshotHeaders[key].SlowRate,
                                     Encoding.Default.GetString(bestshotHeaders[key].CardName).TrimEnd('\0')));
                         else
                             return "";
@@ -697,7 +698,7 @@ namespace ThScoreFileConverter
                                 case 3:     // height
                                     return this.bestshotHeaders[key].Height.ToString();
                                 case 4:     // score
-                                    return this.bestshotHeaders[key].Score.ToString();
+                                    return this.ToNumberString(this.bestshotHeaders[key].Score);
                                 case 5:     // slow rate
                                     return this.bestshotHeaders[key].SlowRate.ToString("F6") + "%";
                                 case 6:     // date & time

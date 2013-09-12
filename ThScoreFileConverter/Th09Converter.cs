@@ -500,7 +500,7 @@ namespace ThScoreFileConverter
                             case 1:     // name
                                 return Encoding.Default.GetString(score.Name).Split('\0')[0];
                             case 2:     // score
-                                return (score.Score * 10 + score.ContinueCount).ToString();
+                                return this.ToNumberString(score.Score * 10 + score.ContinueCount);
                             case 3:     // date
                                 var date = Encoding.Default.GetString(score.Date).Split('\0')[0];
                                 return (date != "--/--") ? date : "--/--/--";
@@ -543,7 +543,7 @@ namespace ThScoreFileConverter
                     switch (type)
                     {
                         case 1:     // clear count
-                            return count.ToString();
+                            return this.ToNumberString(count);
                         case 2:     // clear flag
                             if (count > 0)
                                 return "Cleared";

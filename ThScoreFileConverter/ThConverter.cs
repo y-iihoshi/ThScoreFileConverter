@@ -108,6 +108,11 @@ namespace ThScoreFileConverter
         public virtual bool HasBestShotConverter { get { return false; } }
 
         /// <summary>
+        /// 数値を桁区切り形式で出力する場合 true
+        /// </summary>
+        public bool OutputNumberGroupSeparator { protected get; set; }
+
+        /// <summary>
         /// ファイル毎の変換処理の完了を示すイベント
         /// </summary>
         public event EventHandler<ThConverterEventArgs> ConvertFinished;
@@ -228,6 +233,17 @@ namespace ThScoreFileConverter
         protected virtual void ConvertBestShot(Stream input, Stream output)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 数値から文字列への変換（桁区切り形式での出力設定が反映される）
+        /// </summary>
+        /// <typeparam name="T">数値の型</typeparam>
+        /// <param name="number">数値</param>
+        /// <returns>変換後の文字列</returns>
+        protected string ToNumberString<T>(T number) where T : struct
+        {
+            return Utils.ToNumberString(number, this.OutputNumberGroupSeparator);
         }
 
         /// <summary>

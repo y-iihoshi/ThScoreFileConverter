@@ -91,6 +91,18 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
+        /// 数値から文字列への変換
+        /// </summary>
+        /// <typeparam name="T">数値の型</typeparam>
+        /// <param name="number">数値</param>
+        /// <param name="outputSeparator">桁区切り形式に変換する場合 true</param>
+        /// <returns>変換後の文字列</returns>
+        public static string ToNumberString<T>(T number, bool outputSeparator) where T : struct
+        {
+            return outputSeparator ? string.Format("{0:N0}", number) : number.ToString();
+        }
+
+        /// <summary>
         /// バイナリーからの読み込みが可能なクラス向けのインターフェース
         /// </summary>
         public interface IBinaryReadable

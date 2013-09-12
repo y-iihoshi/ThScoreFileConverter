@@ -892,7 +892,7 @@ namespace ThScoreFileConverter
                             case "1":   // name
                                 return Encoding.Default.GetString(score.Name).Split('\0')[0];
                             case "2":   // score
-                                return (score.Score * 10 + score.ContinueCount).ToString();
+                                return this.ToNumberString(score.Score * 10 + score.ContinueCount);
                             case "3":   // stage
                                 if ((level == LevelShort.X) &&
                                     (Encoding.Default.GetString(score.Date).TrimEnd('\0') == "--/--"))
@@ -910,9 +910,9 @@ namespace ThScoreFileConverter
                             case "7":   // initial number of players
                                 return (score.PlayerNum + 1).ToString();
                             case "8":   // point items
-                                return score.PointItem.ToString();
+                                return this.ToNumberString(score.PointItem);
                             case "9":   // time point
-                                return score.TimePoint.ToString();
+                                return this.ToNumberString(score.TimePoint);
                             case "0":   // miss count
                                 return score.MissCount.ToString();
                             case "A":   // bomb count
@@ -920,7 +920,7 @@ namespace ThScoreFileConverter
                             case "B":   // last spell count
                                 return score.LastSpellCount.ToString();
                             case "C":   // pause count
-                                return score.PauseCount.ToString();
+                                return this.ToNumberString(score.PauseCount);
                             case "D":   // continue count
                                 return score.ContinueCount.ToString();
                             case "E":   // human rate
@@ -972,43 +972,37 @@ namespace ThScoreFileConverter
                             {
                                 case 1:     // MaxBonus
                                     if (kind == "S")
-                                        return Utils.Accumulate<CardAttack>(
+                                        return this.ToNumberString(Utils.Accumulate<CardAttack>(
                                             this.allScoreData.cardAttacks, new Converter<CardAttack, uint>(
                                                 attack => ((attack != null)
-                                                    ? attack.StoryCareer.MaxBonuses[chara] : 0)))
-                                                    .ToString();
+                                                    ? attack.StoryCareer.MaxBonuses[chara] : 0))));
                                     else
-                                        return Utils.Accumulate<CardAttack>(
+                                        return this.ToNumberString(Utils.Accumulate<CardAttack>(
                                             this.allScoreData.cardAttacks, new Converter<CardAttack, uint>(
                                                 attack => ((attack != null)
-                                                    ? attack.PracticeCareer.MaxBonuses[chara] : 0)))
-                                                    .ToString();
+                                                    ? attack.PracticeCareer.MaxBonuses[chara] : 0))));
                                 case 2:     // clear count
                                     if (kind == "S")
-                                        return Utils.Accumulate<CardAttack>(
+                                        return this.ToNumberString(Utils.Accumulate<CardAttack>(
                                             this.allScoreData.cardAttacks, new Converter<CardAttack, int>(
                                                 attack => ((attack != null)
-                                                    ? attack.StoryCareer.ClearCounts[chara] : 0)))
-                                                    .ToString();
+                                                    ? attack.StoryCareer.ClearCounts[chara] : 0))));
                                     else
-                                        return Utils.Accumulate<CardAttack>(
+                                        return this.ToNumberString(Utils.Accumulate<CardAttack>(
                                             this.allScoreData.cardAttacks, new Converter<CardAttack, int>(
                                                 attack => ((attack != null)
-                                                    ? attack.PracticeCareer.ClearCounts[chara] : 0)))
-                                                    .ToString();
+                                                    ? attack.PracticeCareer.ClearCounts[chara] : 0))));
                                 case 3:     // trial count
                                     if (kind == "S")
-                                        return Utils.Accumulate<CardAttack>(
+                                        return this.ToNumberString(Utils.Accumulate<CardAttack>(
                                             this.allScoreData.cardAttacks, new Converter<CardAttack, int>(
                                                 attack => ((attack != null)
-                                                    ? attack.StoryCareer.TrialCounts[chara] : 0)))
-                                                    .ToString();
+                                                    ? attack.StoryCareer.TrialCounts[chara] : 0))));
                                     else
-                                        return Utils.Accumulate<CardAttack>(
+                                        return this.ToNumberString(Utils.Accumulate<CardAttack>(
                                             this.allScoreData.cardAttacks, new Converter<CardAttack, int>(
                                                 attack => ((attack != null)
-                                                    ? attack.PracticeCareer.TrialCounts[chara] : 0)))
-                                                    .ToString();
+                                                    ? attack.PracticeCareer.TrialCounts[chara] : 0))));
                                 default:    // unreachable
                                     return match.ToString();
                             }
@@ -1021,11 +1015,11 @@ namespace ThScoreFileConverter
                                 switch (type)
                                 {
                                     case 1:     // MaxBonus
-                                        return career.MaxBonuses[chara].ToString();
+                                        return this.ToNumberString(career.MaxBonuses[chara]);
                                     case 2:     // clear count
-                                        return career.ClearCounts[chara].ToString();
+                                        return this.ToNumberString(career.ClearCounts[chara]);
                                     case 3:     // trial count
-                                        return career.TrialCounts[chara].ToString();
+                                        return this.ToNumberString(career.TrialCounts[chara]);
                                     default:    // unreachable
                                         return match.ToString();
                                 }
@@ -1336,16 +1330,15 @@ namespace ThScoreFileConverter
                         switch (charaAndMore)
                         {
                             case "CL":  // clear count
-                                return playCount.TotalClear.ToString();
+                                return this.ToNumberString(playCount.TotalClear);
                             case "CN":  // continue count
-                                return playCount.TotalContinue.ToString();
+                                return this.ToNumberString(playCount.TotalContinue);
                             case "PR":  // practice count
-                                return playCount.TotalPractice.ToString();
+                                return this.ToNumberString(playCount.TotalPractice);
                             default:
                                 var chara = Utils.ParseEnum<CharaShortWithTotal>(match.Groups[2].Value, true);
-                                return (chara == CharaShortWithTotal.TL)
-                                    ? playCount.TotalTrial.ToString()
-                                    : playCount.Trials[(Chara)chara].ToString();
+                                return this.ToNumberString((chara == CharaShortWithTotal.TL)
+                                    ? playCount.TotalTrial : playCount.Trials[(Chara)chara]);
                         }
                     }
                     catch
@@ -1396,11 +1389,11 @@ namespace ThScoreFileConverter
                             var scores = this.allScoreData.practiceScores[chara];
                             var key = new StageLevelPair(stage, level);
                             if (type == 1)
-                                return (scores.HighScores.ContainsKey(key)
-                                    ? (scores.HighScores[key] * 10) : 0).ToString();
+                                return this.ToNumberString(
+                                    scores.HighScores.ContainsKey(key) ? (scores.HighScores[key] * 10) : 0);
                             else
-                                return (scores.PlayCounts.ContainsKey(key)
-                                    ? scores.PlayCounts[key] : 0).ToString();
+                                return this.ToNumberString(
+                                    scores.PlayCounts.ContainsKey(key) ? scores.PlayCounts[key] : 0);
                         }
                         else
                             return "0";

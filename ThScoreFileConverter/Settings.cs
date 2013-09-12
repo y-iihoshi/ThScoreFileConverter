@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Globalization;
 using System.Runtime.Serialization;
 using System.Windows;
 using System.Xml;
@@ -74,6 +75,12 @@ namespace ThScoreFileConverter
         public double? FontSize { get; set; }
 
         /// <summary>
+        /// 数値を桁区切り形式で出力する場合 true
+        /// </summary>
+        [DataMember(Order = 4)]
+        public bool? OutputNumberGroupSeparator { get; set; }
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         public Settings()
@@ -82,6 +89,7 @@ namespace ThScoreFileConverter
             this.Dictionary = new Dictionary<string, SettingsPerTitle>();
             this.FontFamilyName = SystemFonts.MessageFontFamily.Source;
             this.FontSize = SystemFonts.MessageFontSize;
+            this.OutputNumberGroupSeparator = true;
         }
 
         /// <summary>
@@ -102,6 +110,7 @@ namespace ThScoreFileConverter
                     this.Dictionary = settings.Dictionary;
                     this.FontFamilyName = settings.FontFamilyName ?? SystemFonts.MessageFontFamily.Source;
                     this.FontSize = settings.FontSize ?? SystemFonts.MessageFontSize;
+                    this.OutputNumberGroupSeparator = settings.OutputNumberGroupSeparator ?? true;
                 }
             }
             catch (FileNotFoundException)

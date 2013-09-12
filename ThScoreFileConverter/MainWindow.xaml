@@ -30,7 +30,7 @@
             <ComboBoxItem Name="TH13" Content="東方神霊廟" IsEnabled="False"/>
             <ComboBoxItem Name="TH14" Content="東方輝針城" IsEnabled="False"/>
         </ComboBox>
-        <Label x:Name="lblSupportedVersion" Content="" HorizontalAlignment="Left" Margin="165,10,0,10" Width="239"/>
+        <Label x:Name="lblSupportedVersion" Content="" Margin="165,10,10,10"/>
 
         <Label Content="スコア(_S):" Grid.Row="1" HorizontalAlignment="Left" Margin="10,10,0,10" Target="{Binding ElementName=txtScore, Mode=OneWay}" Width="120" Height="25"/>
         <TextBox x:Name="txtScore" Grid.Row="1" HorizontalAlignment="Right" Margin="0,10,95,10" Width="245" Drop="txtScore_Drop" IsReadOnly="True" TextChanged="txtScore_TextChanged" PreviewDragEnter="txtScore_Dragging" PreviewDragOver="txtScore_Dragging" Height="25"/>
@@ -54,11 +54,7 @@
 
         <TextBox x:Name="txtLog" Margin="10" Grid.Row="6" TextWrapping="Wrap" IsUndoEnabled="False" IsReadOnly="True" VerticalScrollBarVisibility="Visible" AllowDrop="False" FontSize="10"/>
 
-        <Label Content="フォント設定:" HorizontalAlignment="Left" Margin="10,10,0,10" Grid.Row="7" Width="120" Height="25"/>
-        <TextBox x:Name="txtFontInfo" Text="{DynamicResource FontInfoKey}" Margin="0,10,170,10" Grid.Row="7" TextWrapping="Wrap" Height="25" HorizontalAlignment="Right" Width="170" IsReadOnly="True"/>
-        <Button x:Name="btnFontChange" Content="変更(_C)..." Margin="0,10,90,10" Height="25" RenderTransformOrigin="0.093,0.28" Grid.Row="7" HorizontalAlignment="Right" Width="75" Click="btnFontChange_Click"/>
-        <Button x:Name="btnFontReset" Content="リセット(_R)" Margin="0,10,10,10" Width="75" Height="25" HorizontalAlignment="Right" Grid.Row="7" Click="btnFontReset_Click"/>
-
-        <Button x:Name="btnAbout" Content="_About..." Margin="0,10,10,10" Click="btnAbout_Click" HorizontalAlignment="Right" Width="60" Height="25"/>
+        <Button x:Name="btnSetting" Content="設定(_S)..." HorizontalAlignment="Right" Margin="0,10,75,0" Grid.Row="7" Width="75" Click="btnSetting_Click" Height="25" VerticalAlignment="Top"/>
+        <Button x:Name="btnAbout" Content="_About..." Margin="0,10,10,10" Click="btnAbout_Click" HorizontalAlignment="Right" Width="60" Height="25" Grid.Row="7"/>
     </Grid>
 </Window>

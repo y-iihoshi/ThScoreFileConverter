@@ -1,14 +1,9 @@
 ﻿using System;
 using System.IO;
-using System.Text;
 using System.Threading;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Interop;
-using System.Xml;
-using SysDraw = System.Drawing;
 using WinForms = System.Windows.Forms;
 
 namespace ThScoreFileConverter
@@ -29,9 +24,23 @@ namespace ThScoreFileConverter
         private ThConverter converter = null;
 
         /// <summary>
-        /// フォント設定ダイアログのインスタンス
+        /// 数値を桁区切り形式で出力する場合 true
         /// </summary>
-        private WinForms.FontDialog fontDialog = null;
+        public bool OutputNumberGroupSeparator
+        {
+            get
+            {
+                return ((this.settings != null) && this.settings.OutputNumberGroupSeparator.HasValue)
+                    ? this.settings.OutputNumberGroupSeparator.Value : true;
+            }
+            set
+            {
+                if (this.settings != null)
+                    this.settings.OutputNumberGroupSeparator = value;
+                if (this.converter != null)
+                    this.converter.OutputNumberGroupSeparator = value;
+            }
+        }
 
         /// <summary>
         /// コンストラクタ
@@ -75,12 +84,6 @@ namespace ThScoreFileConverter
                         firstEnabledItem.IsSelected = true;
                 }
                 ((App)App.Current).UpdateResources(settings.FontFamilyName, settings.FontSize);
-
-                this.fontDialog = new WinForms.FontDialog();
-                this.fontDialog.ShowApply = true;
-                this.fontDialog.Apply += fontDialog_Apply;
-                this.fontDialog.FontMustExist = true;
-                this.fontDialog.ShowEffects = false;
             }
             catch (Exception ex)
             {
@@ -125,6 +128,7 @@ namespace ThScoreFileConverter
                 var item = (ComboBoxItem)e.AddedItems[0];
 
                 this.converter = ThConverterFactory.Create(item.Name);
+                this.converter.OutputNumberGroupSeparator = this.settings.OutputNumberGroupSeparator.Value;
                 this.converter.ConvertFinished += ThConverter_ConvertFinished;
                 this.converter.ConvertAllFinished += ThConverter_ConvertAllFinished;
                 this.converter.ExceptionOccurred += ThConverter_ExceptionOccurred;
@@ -571,54 +575,15 @@ namespace ThScoreFileConverter
             this.ChangeCursor(null);
         }
 
-        #region フォント設定
-
         /// <summary>
-        /// フォントの変更
+        /// 設定ダイアログの表示
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnFontChange_Click(object sender, RoutedEventArgs e)
+        private void btnSetting_Click(object sender, RoutedEventArgs e)
         {
-            this.fontDialog.Font = new SysDraw.Font(
-                App.Current.Resources["FontFamilyKey"].ToString(),
-                Convert.ToSingle(App.Current.Resources["FontSizeKey"]));
-
-            var oldFont = this.fontDialog.Font;
-            var result = this.fontDialog.ShowDialog(new Win32Window(this));
-
-            switch (result)
-            {
-                case WinForms.DialogResult.OK:
-                    fontDialog_Apply(sender, e);
-                    break;
-                case WinForms.DialogResult.Cancel:
-                    ((App)App.Current).UpdateResources(oldFont);
-                    break;
-            }
+            new SettingWindow(this).ShowDialog();
         }
-
-        /// <summary>
-        /// フォント変更ダイアログによるフォント設定の一時適用
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void fontDialog_Apply(object sender, EventArgs e)
-        {
-            ((App)App.Current).UpdateResources(this.fontDialog.Font);
-        }
-
-        /// <summary>
-        /// フォント設定のリセット
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnFontReset_Click(object sender, RoutedEventArgs e)
-        {
-            ((App)App.Current).UpdateResources(SystemFonts.MessageFontFamily, SystemFonts.MessageFontSize);
-        }
-
-        #endregion
 
         /// <summary>
         /// About ダイアログの表示

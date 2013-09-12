@@ -757,7 +757,7 @@ namespace ThScoreFileConverter
                             case 1:     // name
                                 return Encoding.Default.GetString(score.Name).Split('\0')[0];
                             case 2:     // score
-                                return (score.Score * 10 + score.ContinueCount).ToString();
+                                return this.ToNumberString(score.Score * 10 + score.ContinueCount);
                             case 3:     // stage
                                 if (score.StageProgress == 99)
                                     return "All Clear";
@@ -800,20 +800,17 @@ namespace ThScoreFileConverter
                             switch (type)
                             {
                                 case 1:     // MaxBonus
-                                    return Utils.Accumulate<CardAttack>(
+                                    return this.ToNumberString(Utils.Accumulate<CardAttack>(
                                         this.allScoreData.cardAttacks, new Converter<CardAttack, uint>(
-                                            attack => ((attack != null) ? attack.MaxBonuses[chara] : 0)))
-                                            .ToString();
+                                            attack => ((attack != null) ? attack.MaxBonuses[chara] : 0))));
                                 case 2:     // clear count
-                                    return Utils.Accumulate<CardAttack>(
+                                    return this.ToNumberString(Utils.Accumulate<CardAttack>(
                                         this.allScoreData.cardAttacks, new Converter<CardAttack, int>(
-                                            attack => ((attack != null) ? attack.ClearCounts[chara] : 0)))
-                                            .ToString();
+                                            attack => ((attack != null) ? attack.ClearCounts[chara] : 0))));
                                 case 3:     // trial count
-                                    return Utils.Accumulate<CardAttack>(
+                                    return this.ToNumberString(Utils.Accumulate<CardAttack>(
                                         this.allScoreData.cardAttacks, new Converter<CardAttack, int>(
-                                            attack => ((attack != null) ? attack.TrialCounts[chara] : 0)))
-                                            .ToString();
+                                            attack => ((attack != null) ? attack.TrialCounts[chara] : 0))));
                                 default:    // unreachable
                                     return match.ToString();
                             }
@@ -824,11 +821,11 @@ namespace ThScoreFileConverter
                                 switch (type)
                                 {
                                     case 1:     // MaxBonus
-                                        return attack.MaxBonuses[chara].ToString();
+                                        return this.ToNumberString(attack.MaxBonuses[chara]);
                                     case 2:     // clear count
-                                        return attack.ClearCounts[chara].ToString();
+                                        return this.ToNumberString(attack.ClearCounts[chara]);
                                     case 3:     // trial count
-                                        return attack.TrialCounts[chara].ToString();
+                                        return this.ToNumberString(attack.TrialCounts[chara]);
                                     default:    // unreachable
                                         return match.ToString();
                                 }
@@ -1037,18 +1034,17 @@ namespace ThScoreFileConverter
                         switch (charaAndMore)
                         {
                             case "CL":  // clear count
-                                return playCount.TotalClear.ToString();
+                                return this.ToNumberString(playCount.TotalClear);
                             case "CN":  // continue count
-                                return playCount.TotalContinue.ToString();
+                                return this.ToNumberString(playCount.TotalContinue);
                             case "PR":  // practice count
-                                return playCount.TotalPractice.ToString();
+                                return this.ToNumberString(playCount.TotalPractice);
                             case "RT":  // retry count
-                                return playCount.TotalRetry.ToString();
+                                return this.ToNumberString(playCount.TotalRetry);
                             default:
                                 var chara = Utils.ParseEnum<CharaShortWithTotal>(match.Groups[2].Value, true);
-                                return (chara == CharaShortWithTotal.TL)
-                                    ? playCount.TotalTrial.ToString()
-                                    : playCount.Trials[(Chara)chara].ToString();
+                                return this.ToNumberString((chara == CharaShortWithTotal.TL)
+                                    ? playCount.TotalTrial : playCount.Trials[(Chara)chara]);
                         }
                     }
                     catch
@@ -1097,10 +1093,11 @@ namespace ThScoreFileConverter
                         {
                             var scores = this.allScoreData.practiceScores[key];
                             if (type == 1)
-                                return (scores.ContainsKey(stage)
-                                    ? (scores[stage].HighScore * 10) : 0).ToString();
+                                return this.ToNumberString(
+                                    scores.ContainsKey(stage) ? (scores[stage].HighScore * 10) : 0);
                             else
-                                return (scores.ContainsKey(stage) ? scores[stage].TrialCount : 0).ToString();
+                                return this.ToNumberString(
+                                    scores.ContainsKey(stage) ? scores[stage].TrialCount : 0);
                         }
                         else
                             return "0";
