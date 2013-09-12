@@ -902,7 +902,7 @@ namespace ThScoreFileConverter
                                 else
                                     return StageArray[score.StageProgress];
                             case "4":   // date
-                                return Encoding.Default.GetString(score.Date);
+                                return Encoding.Default.GetString(score.Date).TrimEnd('\0');
                             case "5":   // slow rate
                                 return score.SlowRate.ToString("F3") + "%";
                             case "6":   // play time
@@ -1059,7 +1059,7 @@ namespace ThScoreFileConverter
                             var attack = this.allScoreData.cardAttacks[number - 1];
                             if (type == "N")
                                 return ((attack != null) && attack.hasTried())
-                                    ? Encoding.Default.GetString(attack.CardName) : "??????????";
+                                    ? Encoding.Default.GetString(attack.CardName).TrimEnd('\0') : "??????????";
                             else
                             {
                                 if ((attack != null) && attack.hasTried())

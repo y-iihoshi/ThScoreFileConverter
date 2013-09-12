@@ -550,7 +550,7 @@ namespace ThScoreFileConverter
                             else
                             {
                                 var score = this.allScoreData.rankings[new CharaLevelPair(chara, level)][0];
-                                var date = Encoding.Default.GetString(score.Date).Split('\0')[0];
+                                var date = Encoding.Default.GetString(score.Date).TrimEnd('\0');
                                 return (date != "--/--") ? "Not Cleared" : "-------";
                             }
                         default:    // unreachable

@@ -766,7 +766,7 @@ namespace ThScoreFileConverter
                                 else
                                     return StageProgressArray[0];
                             case 4:     // date
-                                return Encoding.Default.GetString(score.Date);
+                                return Encoding.Default.GetString(score.Date).TrimEnd('\0');
                             case 5:     // slow rate
                                 return score.SlowRate.ToString("F3") + "%";
                             default:    // unreachable
@@ -861,7 +861,7 @@ namespace ThScoreFileConverter
                             var attack = this.allScoreData.cardAttacks[number - 1];
                             if (type == "N")
                                 return ((attack != null) && attack.hasTried())
-                                    ? Encoding.Default.GetString(attack.CardName) : "??????????";
+                                    ? Encoding.Default.GetString(attack.CardName).TrimEnd('\0') : "??????????";
                             else
                                 return ((attack != null) && attack.hasTried())
                                     ? CardLevelTable[attack.Number].ToString() : "?????";
