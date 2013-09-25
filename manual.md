@@ -68,10 +68,10 @@ ThScoreFileConverter （以下、本ツール）は、東方 Project の各作�
 * 東方文花帖 ver. 1.02a
 * 東方風神録 ver. 1.00a
 * 東方地霊殿 ver. 1.00a
+* 東方星蓮船 ver. 1.00b
 
 以下作品については、本ツール作者の原作プレイ進捗状況に伴って今後対応予定です：
 
-* 東方星蓮船
 * ダブルスポイラー
 * 妖精大戦争
 * 東方神霊廟
@@ -127,7 +127,7 @@ Web からダウンロードした zip ファイルを任意の場所に展開�
 ![設定画面のスクリーンショット](manual/screenshot-settings.png)
 
 * フォント設定
-    1. 「設定(C)...」ボタンを押してフォント選択ダイアログを表示する。
+    1. 「変更(C)...」ボタンを押してフォント選択ダイアログを表示する。
     2. 好みのフォントとサイズを選択する。
     3. 「OK」「キャンセル」「適用(A)」ボタンのどれかを押す。
         * 「OK」ボタン: 選択内容が即座に反映されフォント選択ダイアログが閉じる。
@@ -186,7 +186,11 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 ## ChangeLog {: #ChangeLog }
 
-2013/09/12 ver.1.1.3.0
+2013/09/26 ver. 1.2.0.0
+
+* 東方星蓮船に対応
+
+2013/09/12 ver. 1.1.3.0
 
 * 数値を桁区切り形式で出力するかどうか選択可能にした
 * 東方妖々夢
@@ -194,11 +198,11 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 * 東方永夜抄
     * [スコアランキング](manual/format.html#T08SCR)の日付と[スペルカード基本情報](manual/format.html#T08CARD)のスペルカード名において、余計な null 文字を出力していたため修正
 
-2013/08/30 ver.1.1.2.0
+2013/08/30 ver. 1.1.2.0
 
 * UI のフォントを変更可能にした
 
-2013/08/24 ver.1.1.1.0
+2013/08/24 ver. 1.1.1.0
 
 * 東方風神録
     * 全主人公合計のプレイ時間などがテンプレートファイルから漏れていたため修正
@@ -207,11 +211,11 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
     * 全主人公合計のプレイ時間などがテンプレートファイルから漏れていたため修正
     * [キャラごとの個別データ（詳細版）](manual/format.html#T11CHARAEX)にて、全難易度合計のクリア回数の出力に対応
 
-2013/08/12 ver.1.1.0.0
+2013/08/12 ver. 1.1.0.0
 
 * 東方地霊殿に対応
 
-2013/07/28 ver.1.0.2.0
+2013/07/28 ver. 1.0.2.0
 
 * 東方紅魔郷
     * score.dat が初期状態の場合に変換失敗する不具合を修正
@@ -225,13 +229,13 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 * 東方風神録
     * [プラクティススコア](manual/format.html#T10PRAC)を新規追加
 
-2013/07/21 ver.1.0.1.0
+2013/07/21 ver. 1.0.1.0
 
 * 東方風神録
     * Easy 以外のクリア回数が出力に含まれていなかった不具合を修正
     * [キャラごとの個別データ（詳細版）](manual/format.html#T10CHARAEX)を新規追加
 
-2013/07/08 ver.1.0.0.0
+2013/07/08 ver. 1.0.0.0
 
 * 公開開始
 * 東方紅魔郷～東方風神録に対応

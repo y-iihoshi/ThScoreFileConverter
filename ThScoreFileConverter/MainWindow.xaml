@@ -24,7 +24,7 @@
             <ComboBoxItem Name="TH095" Content="東方文花帖"/>
             <ComboBoxItem Name="TH10" Content="東方風神録"/>
             <ComboBoxItem Name="TH11" Content="東方地霊殿"/>
-            <ComboBoxItem Name="TH12" Content="東方星蓮船" IsEnabled="False"/>
+            <ComboBoxItem Name="TH12" Content="東方星蓮船"/>
             <ComboBoxItem Name="TH125" Content="ダブルスポイラー" IsEnabled="False"/>
             <ComboBoxItem Name="TH128" Content="妖精大戦争" IsEnabled="False"/>
             <ComboBoxItem Name="TH13" Content="東方神霊廟" IsEnabled="False"/>

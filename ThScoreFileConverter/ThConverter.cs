@@ -20,7 +20,8 @@ namespace ThScoreFileConverter
             { Properties.Resources.keyTh09,  typeof(Th09Converter)  },
             { Properties.Resources.keyTh095, typeof(Th095Converter) },
             { Properties.Resources.keyTh10,  typeof(Th10Converter)  },
-            { Properties.Resources.keyTh11,  typeof(Th11Converter)  }
+            { Properties.Resources.keyTh11,  typeof(Th11Converter)  },
+            { Properties.Resources.keyTh12,  typeof(Th12Converter)  }
         };
 
         /// <summary>
