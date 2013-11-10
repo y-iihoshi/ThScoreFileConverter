@@ -72,6 +72,14 @@ namespace ThScoreFileConverter
             public EnemyCardPair(Enemy enemy, string card) : base(enemy, card) { }
         }
 
+        private class BestShotPair : Pair<string, BestShotHeader>
+        {
+            public string FileName { get { return this.First; } }
+            public BestShotHeader Header { get { return this.Second; } }
+
+            public BestShotPair(string name, BestShotHeader header) : base(name, header) { }
+        }
+
         // Thanks to thwiki.info
         private static readonly Dictionary<LevelScenePair, EnemyCardPair> SpellCards =
             new Dictionary<LevelScenePair, EnemyCardPair>()
@@ -332,7 +340,7 @@ namespace ThScoreFileConverter
         }
 
         private AllScoreData allScoreData = null;
-        private Dictionary<LevelScenePair, BestShotHeader> bestshotHeaders = null;
+        private Dictionary<LevelScenePair, BestShotPair> bestshots = null;
 
         public override string SupportedVersions
         {
@@ -646,17 +654,15 @@ namespace ThScoreFileConverter
                             LevelShortArray, new Predicate<string>(elem => (elem == level)));
                         var key = new LevelScenePair(levelIndex + 1, scene);
 
-                        if ((this.bestshotHeaders != null) && this.bestshotHeaders.ContainsKey(key))
-                            return string.Format(
-                                "<img src=\"./{0}/bs_{1}_{2}{3}\" alt=\"{4}\" title=\"{4}\" border=0>",
+                        if ((this.bestshots != null) && this.bestshots.ContainsKey(key))
+                            return string.Format("<img src=\"./{0}/{1}\" alt=\"{2}\" title=\"{2}\" border=0>",
                                 Properties.Resources.strBestShotDirectory,
-                                LevelArray[levelIndex],
-                                scene,
-                                Properties.Resources.strBestShotExtension,
+                                this.bestshots[key].FileName,
                                 string.Format("ClearData: {0}\nSlow: {1:F6}%\nSpellName: {2}",
-                                    this.ToNumberString(bestshotHeaders[key].Score),
-                                    bestshotHeaders[key].SlowRate,
-                                    Encoding.Default.GetString(bestshotHeaders[key].CardName).TrimEnd('\0')));
+                                    this.ToNumberString(this.bestshots[key].Header.Score),
+                                    this.bestshots[key].Header.SlowRate,
+                                    Encoding.Default.GetString(
+                                        this.bestshots[key].Header.CardName).TrimEnd('\0')));
                         else
                             return "";
                     }
@@ -667,7 +673,7 @@ namespace ThScoreFileConverter
                 }));
         }
 
-        // %T95SHOTEX[x][y]
+        // %T95SHOTEX[x][y][z]
         private string ReplaceShotEx(string input)
         {
             return new Regex(@"%T95SHOTEX([\dX])([1-9])([1-6])", RegexOptions.IgnoreCase)
@@ -683,24 +689,21 @@ namespace ThScoreFileConverter
                             LevelShortArray, new Predicate<string>(elem => (elem == level)));
                         var key = new LevelScenePair(levelIndex + 1, scene);
 
-                        if ((this.bestshotHeaders != null) && this.bestshotHeaders.ContainsKey(key))
+                        if ((this.bestshots != null) && this.bestshots.ContainsKey(key))
                             switch (type)
                             {
                                 case 1:     // relative path to the bestshot file
-                                    return string.Format(
-                                        "./{0}/bs_{1}_{2}{3}",
+                                    return string.Format("./{0}/{1}",
                                         Properties.Resources.strBestShotDirectory,
-                                        LevelArray[levelIndex],
-                                        scene,
-                                        Properties.Resources.strBestShotExtension);
+                                        this.bestshots[key].FileName);
                                 case 2:     // width
-                                    return this.bestshotHeaders[key].Width.ToString();
+                                    return this.bestshots[key].Header.Width.ToString();
                                 case 3:     // height
-                                    return this.bestshotHeaders[key].Height.ToString();
+                                    return this.bestshots[key].Header.Height.ToString();
                                 case 4:     // score
-                                    return this.ToNumberString(this.bestshotHeaders[key].Score);
+                                    return this.ToNumberString(this.bestshots[key].Header.Score);
                                 case 5:     // slow rate
-                                    return this.bestshotHeaders[key].SlowRate.ToString("F6") + "%";
+                                    return this.bestshots[key].Header.SlowRate.ToString("F6") + "%";
                                 case 6:     // date & time
                                     var score = this.allScoreData.scores.Find(new Predicate<Score>(
                                         elem => ((elem != null) && elem.LevelScene.Equals(key))));
@@ -731,19 +734,35 @@ namespace ThScoreFileConverter
                 }));
         }
 
+        protected override string[] FilterBestShotFiles(string[] files)
+        {
+            var bestshots = new List<string>();
+            var pattern = string.Format(@"bs_({0})_[1-9].dat", string.Join("|", LevelArray));
+            var regex = new Regex(pattern, RegexOptions.IgnoreCase);
+
+            foreach (var file in files)
+                if (regex.IsMatch(Path.GetFileName(file)))
+                    bestshots.Add(file);
+
+            return bestshots.ToArray();
+        }
+
         protected override void ConvertBestShot(Stream input, Stream output)
         {
             using (var decoded = new MemoryStream())
             {
+                var outputFile = output as FileStream;
+                var outputFileName = Path.GetFileName(outputFile.Name);
+
                 var reader = new BinaryReader(input);
                 var header = new BestShotHeader();
                 header.ReadFrom(reader);
 
                 var key = new LevelScenePair(header.Level, header.Scene);
-                if (this.bestshotHeaders == null)
-                    this.bestshotHeaders = new Dictionary<LevelScenePair, BestShotHeader>(SpellCards.Count);
-                if (!this.bestshotHeaders.ContainsKey(key))
-                    this.bestshotHeaders.Add(key, header);
+                if (this.bestshots == null)
+                    this.bestshots = new Dictionary<LevelScenePair, BestShotPair>(SpellCards.Count);
+                if (!this.bestshots.ContainsKey(key))
+                    this.bestshots.Add(key, new BestShotPair(outputFileName, header));
 
                 Lzss.Extract(input, decoded);
 

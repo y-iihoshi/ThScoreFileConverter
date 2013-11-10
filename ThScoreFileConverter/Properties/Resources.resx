@@ -188,7 +188,7 @@
     <value>警告</value>
   </data>
   <data name="ptnBestShot" xml:space="preserve">
-    <value>bs_??_?.dat</value>
+    <value>*.dat</value>
   </data>
   <data name="strBackupFileExtension" xml:space="preserve">
     <value>.bak</value>

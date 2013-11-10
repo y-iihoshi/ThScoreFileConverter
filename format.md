@@ -1755,7 +1755,7 @@
 <dl class="format">
  <dt><code>[1～9]</code></dt><dd>Level 1～9</dd>
  <dt><code>[0]</code></dt><dd>Level 10</dd>
- <dt><code>[X]</code></dt><dd>Level Extra</dd>
+ <dt><code>[X]</code></dt><dd>Level EX</dd>
 </dl>
   </td>
  </tr>
@@ -1855,7 +1855,7 @@
 <dl class="format">
  <dt><code>[1～9]</code></dt><dd>Level 1～9</dd>
  <dt><code>[0]</code></dt><dd>Level 10</dd>
- <dt><code>[X]</code></dt><dd>Level Extra</dd>
+ <dt><code>[X]</code></dt><dd>Level EX</dd>
 </dl>
   </td>
  </tr>
@@ -1921,7 +1921,7 @@
 <dl class="format">
  <dt><code>[1～9]</code></dt><dd>Level 1～9</dd>
  <dt><code>[0]</code></dt><dd>Level 10</dd>
- <dt><code>[X]</code></dt><dd>Level Extra</dd>
+ <dt><code>[X]</code></dt><dd>Level EX</dd>
 </dl>
   </td>
  </tr>
@@ -1987,7 +1987,7 @@
 <dl class="format">
  <dt><code>[1～9]</code></dt><dd>Level 1～9</dd>
  <dt><code>[0]</code></dt><dd>Level 10</dd>
- <dt><code>[X]</code></dt><dd>Level Extra</dd>
+ <dt><code>[X]</code></dt><dd>Level EX</dd>
 </dl>
   </td>
  </tr>
@@ -2030,11 +2030,11 @@
  <li>存在しないレベルとシーンの組み合わせ（1-9 など）は無視されます。</li>
  <li>
   このテンプレート書式を使って、例えば <code>%T95SHOT12</code> と同等の出力結果を得るには、テンプレートファイルに以下の通りに記載します。
-<pre><code>&amp;lt;img src="%T95SHOTEX121" alt="Score: %T95SHOTEX124
+<pre><code>&lt;img src="%T95SHOTEX121" alt="Score: %T95SHOTEX124
 Slow: %T95SHOTEX125
 SpellName: %T95CARD122" title="Score: %T95SHOTEX124
 Slow: %T95SHOTEX125
-SpellName: %T95CARD122" border=0&amp;gt;
+SpellName: %T95CARD122" border=0&gt;
 </code></pre>
  </li>
 </ul>
@@ -3606,6 +3606,373 @@ SpellName: %T95CARD122" border=0&amp;gt;
  <dt><code>%T12PMACNRA4</code></dt>
  <dd>Normal 霊夢（夢）の Stage 4 のプラクティススコア</dd>
 </dl>
+  </td>
+ </tr>
+</table>
+
+----------------------------------------
+
+## ダブルスポイラー用テンプレート書式 {: #Th125Formats }
+
+### スコア一覧 {: #T125SCR }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="5">書式</td>
+  <td colspan="2"><code>%T125SCR[w][x][y][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[w]</code></td>
+  <td>
+   キャラの名前
+<dl class="format">
+ <dt><code>[A]</code></dt><dd>文</dd>
+ <dt><code>[H]</code></dt><dd>はたて</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   レベル
+<dl class="format">
+ <dt><code>[1～9]</code></dt><dd>Level 1～9</dd>
+ <dt><code>[A～C]</code></dt><dd>Level 10～12</dd>
+ <dt><code>[X]</code></dt><dd>Level EX</dd>
+ <dt><code>[S]</code></dt><dd>SPOILER</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[y]</code></td>
+  <td>
+   シーン
+<dl class="format">
+ <dt><code>[1～9]</code></dt><dd>1～9</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[1]</code></dt><dd>得点</dd>
+ <dt><code>[2]</code></dt><dd>登録してあるベストショットの得点</dd>
+ <dt><code>[3]</code></dt><dd>撮影枚数</dd>
+ <dt><code>[4]</code></dt><dd>初成功時枚数</dd>
+ <dt><code>[5]</code></dt><dd>日時</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T125SCRA111</code></dt><dd>文の 1-1 の得点</dd>
+ <dt><code>%T125SCRH233</code></dt><dd>はたての 2-3 の撮影枚数</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>存在しないレベルとシーンの組み合わせ（1-7 など）は無視されます。</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+### スコア合計 {: #T125SCRTL }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="4">書式</td>
+  <td colspan="2"><code>%T125SCRTL[x][y][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   キャラの名前
+<dl class="format">
+ <dt><code>[A]</code></dt><dd>文</dd>
+ <dt><code>[H]</code></dt><dd>はたて</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[y]</code></td>
+  <td>
+   集計方法
+<dl class="format">
+ <dt><code>[1]</code></dt><dd>ゲーム内表示準拠</dd>
+ <dt><code>[2]</code></dt><dd>自機準拠</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[1]</code></dt><dd>総撮影得点</dd>
+ <dt><code>[2]</code></dt><dd>登録してあるベストショットの得点の合計</dd>
+ <dt><code>[3]</code></dt><dd>総撮影枚数</dd>
+ <dt><code>[4]</code></dt><dd>初成功時枚数の合計</dd>
+ <dt><code>[5]</code></dt><dd>クリアシーン数</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T125SCRTLA11</code></dt><dd>文の総撮影得点（ゲーム内表示準拠）</dd>
+ <dt><code>%T125SCRTLH23</code></dt><dd>はたての総撮影枚数（自機準拠）</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>集計方法を変えると、SPOILER の ??-5～??-9 の得点などが、文とはたてのどちらの集計結果に含まれるかが変わります。「ゲーム内表示準拠」では文の方に、「自機準拠」でははたての方に含まれます。</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+### 被写体 &amp; スペルカード情報 {: #T125CARD }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="4">書式</td>
+  <td colspan="2"><code>%T125CARD[x][y][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   レベル
+<dl class="format">
+ <dt><code>[1～9]</code></dt><dd>Level 1～9</dd>
+ <dt><code>[A～C]</code></dt><dd>Level 10～12</dd>
+ <dt><code>[X]</code></dt><dd>Level EX</dd>
+ <dt><code>[S]</code></dt><dd>SPOILER</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[y]</code></td>
+  <td>
+   シーン
+<dl class="format">
+ <dt><code>[1～9]</code></dt><dd>1～9</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[1]</code></dt><dd>被写体の名前</dd>
+ <dt><code>[2]</code></dt><dd>スペルカード名</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T125CARD111</code></dt><dd>1-1 の被写体の名前</dd>
+ <dt><code>%T125CARD232</code></dt><dd>2-3 のスペルカード名</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>存在しないレベルとシーンの組み合わせ（1-7 など）は無視されます。</li>
+ <li>未挑戦のものについては、被写体の名前・スペルカード名ともに「<samp>?????</samp>」のように出力されます。（一応ネタバレ防止のため。）今後、このように隠すかどうかを設定可能にするかも知れません。</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+### 総プレイ時間 {: #T125TIMEPLY }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td>書式</td>
+  <td><code>%T125TIMEPLY</code></td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td>
+<ul>
+ <li>時分秒およびミリ秒が「<samp>h:mm:ss.ddd</samp>」の形式で出力されます。</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+### ベストショット出力 {: #T125SHOT }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="4">書式</td>
+  <td colspan="2"><code>%T125SHOT[x][y][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   キャラの名前
+<dl class="format">
+ <dt><code>[A]</code></dt><dd>文</dd>
+ <dt><code>[H]</code></dt><dd>はたて</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[y]</code></td>
+  <td>
+   レベル
+<dl class="format">
+ <dt><code>[1～9]</code></dt><dd>Level 1～9</dd>
+ <dt><code>[A～C]</code></dt><dd>Level 10～12</dd>
+ <dt><code>[X]</code></dt><dd>Level EX</dd>
+ <dt><code>[S]</code></dt><dd>SPOILER</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   シーン
+<dl class="format">
+ <dt><code>[1～9]</code></dt><dd>1～9</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T125SHOTA12</code></dt><dd>文の 1-2 のベストショット</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>存在しないレベルとシーンの組み合わせ（1-7 など）は無視されます。</li>
+ <li>
+  このテンプレート書式は「<samp>&lt;img src="./bestshot/bs_01_1.png" alt="～" title="～" border=0&gt;</samp>」のような HTML の IMG タグに置換されます。<br />
+  同時に、対象となるベストショットファイル (bs_??_?.dat や bs2_??_?.dat) を PNG 形式に変換した画像ファイルが出力されます。
+ </li>
+ <li>IMG タグの alt 属性と title 属性には、ベストショット撮影時の得点と処理落ち率、及びスペルカード名が出力されます。</li>
+ <li>画像ファイルは、「出力先(O):」欄で指定されたフォルダ内の「bestshot」フォルダに出力されます。</li>
+ <li>画像ファイルの出力先フォルダが存在しない場合、本ツールが自動で作成します。</li>
+ <li>画像ファイルの出力先フォルダの変更はできません。今後対応するかも知れません。</li>
+ <li>ベストショットファイルが存在しない場合、IMG タグや画像ファイルは出力されません。</li>
+ <li>ベストショットファイルの変換は、このテンプレート書式がテンプレートファイル内に無くても実行されます。</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+### ベストショット出力（詳細版） {: #T125SHOTEX }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="5">書式</td>
+  <td colspan="2"><code>%T125SHOTEX[w][x][y][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[w]</code></td>
+  <td>
+   キャラの名前
+<dl class="format">
+ <dt><code>[A]</code></dt><dd>文</dd>
+ <dt><code>[H]</code></dt><dd>はたて</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   レベル
+<dl class="format">
+ <dt><code>[1～9]</code></dt><dd>Level 1～9</dd>
+ <dt><code>[A～C]</code></dt><dd>Level 10～12</dd>
+ <dt><code>[X]</code></dt><dd>Level EX</dd>
+ <dt><code>[S]</code></dt><dd>SPOILER</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[y]</code></td>
+  <td>
+   シーン
+<dl class="format">
+ <dt><code>[1～9]</code></dt><dd>1～9</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[1]</code></dt><dd>画像ファイルへの相対パス</dd>
+ <dt><code>[2]</code></dt><dd>画像ファイルの幅 (px)</dd>
+ <dt><code>[3]</code></dt><dd>画像ファイルの高さ (px)</dd>
+ <dt><code>[4]</code></dt><dd>ベストショット撮影時の得点</dd>
+ <dt><code>[5]</code></dt><dd>ベストショット撮影時の処理落ち率</dd>
+ <dt><code>[6]</code></dt><dd>ベストショット撮影日時</dd>
+ <dt><code>[7]</code></dt><dd>詳細情報（獲得ボーナスなど）</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T125SHOTEXA121</code></dt><dd>文の 1-2 の画像ファイルへの相対パス</dd>
+ <dt><code>%T125SHOTEXH236</code></dt><dd>はたての 2-3 のベストショット撮影日時</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>存在しないレベルとシーンの組み合わせ（1-7 など）は無視されます。</li>
+ <li>
+  このテンプレート書式を使って、例えば <code>%T125SHOTA12</code> と同等の出力結果を得るには、テンプレートファイルに以下の通りに記載します。
+<pre><code>&lt;img src="%T125SHOTEXA121" alt="Score: %T125SHOTEXA124
+Slow: %T125SHOTEXA125
+SpellName: %T125CARD122" title="Score: %T125SHOTEXA124
+Slow: %T125SHOTEXA125
+SpellName: %T125CARD122" border=0&gt;
+</code></pre>
+ </li>
+</ul>
   </td>
  </tr>
 </table>

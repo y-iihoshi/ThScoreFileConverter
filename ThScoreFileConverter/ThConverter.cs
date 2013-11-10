@@ -21,7 +21,8 @@ namespace ThScoreFileConverter
             { Properties.Resources.keyTh095, typeof(Th095Converter) },
             { Properties.Resources.keyTh10,  typeof(Th10Converter)  },
             { Properties.Resources.keyTh11,  typeof(Th11Converter)  },
-            { Properties.Resources.keyTh12,  typeof(Th12Converter)  }
+            { Properties.Resources.keyTh12,  typeof(Th12Converter)  },
+            { Properties.Resources.keyTh125, typeof(Th125Converter) }
         };
 
         /// <summary>
@@ -176,7 +177,8 @@ namespace ThScoreFileConverter
                     var dir = Path.Combine(output, Properties.Resources.strBestShotDirectory);
                     if (!Directory.Exists(dir))
                         Directory.CreateDirectory(dir);
-                    var files = Directory.GetFiles(bestshot, Properties.Resources.ptnBestShot);
+                    var files = this.FilterBestShotFiles(
+                        Directory.GetFiles(bestshot, Properties.Resources.ptnBestShot));
                     for (var index = 0; index < files.Length; index++)
                     {
                         var result = GetBestShotFilePath(files[index], dir);
@@ -232,6 +234,17 @@ namespace ThScoreFileConverter
         /// <param Name="input">変換前のベストショットファイル</param>
         /// <param Name="output">変換後のベストショットファイル</param>
         protected virtual void ConvertBestShot(Stream input, Stream output)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// ベストショットファイル群を抽出するフィルタリング処理
+        /// ベストショットファイルの変換処理を実装するサブクラスでは override が必要
+        /// </summary>
+        /// <param name="files">任意のファイルのパスの配列</param>
+        /// <returns>ベストショットファイルのパスの配列</returns>
+        protected virtual string[] FilterBestShotFiles(string[] files)
         {
             throw new NotImplementedException();
         }

@@ -80,6 +80,7 @@
     <Compile Include="Th08Converter.cs" />
     <Compile Include="Th095Converter.cs" />
     <Compile Include="Th09Converter.cs" />
+    <Compile Include="Th125Converter.cs" />
     <Compile Include="Th12Converter.cs" />
     <Compile Include="Time.cs" />
     <Compile Include="Utils.cs" />
