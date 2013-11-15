@@ -83,7 +83,7 @@ namespace ThScoreFileConverter
 
         private class BestShotPair : Pair<string, BestShotHeader>
         {
-            public string FileName { get { return this.First; } }
+            public string Path { get { return this.First; } }
             public BestShotHeader Header { get { return this.Second; } }
 
             public BestShotPair(string name, BestShotHeader header) : base(name, header) { }
@@ -649,14 +649,18 @@ namespace ThScoreFileConverter
         {
             var reader = new StreamReader(input, Encoding.GetEncoding("shift_jis"));
             var writer = new StreamWriter(output, Encoding.GetEncoding("shift_jis"));
+            var outputFile = output as FileStream;
 
             var allLine = reader.ReadToEnd();
             allLine = this.ReplaceScore(allLine);
             allLine = this.ReplaceScoreTotal(allLine);
             allLine = this.ReplaceCard(allLine);
             allLine = this.ReplaceTime(allLine);
-            allLine = this.ReplaceShot(allLine);
-            allLine = this.ReplaceShotEx(allLine);
+            if (outputFile != null)
+            {
+                allLine = this.ReplaceShot(allLine, outputFile.Name);
+                allLine = this.ReplaceShotEx(allLine, outputFile.Name);
+            }
             writer.Write(allLine);
 
             writer.Flush();
@@ -836,7 +840,7 @@ namespace ThScoreFileConverter
         }
 
         // %T125SHOT[x][y][z]
-        private string ReplaceShot(string input)
+        private string ReplaceShot(string input, string outputFilePath)
         {
             var pattern = string.Format(@"%T125SHOT([{0}])([{1}])([1-9])",
                 Utils.JoinEnumNames<CharaShort>(""),
@@ -856,9 +860,9 @@ namespace ThScoreFileConverter
                         var key = new LevelScenePair(levelIndex + 1, scene);
 
                         if ((bestshots != null) && bestshots.ContainsKey(key))
-                            return string.Format("<img src=\"./{0}/{1}\" alt=\"{2}\" title=\"{2}\" border=0>",
-                                Properties.Resources.strBestShotDirectory,
-                                bestshots[key].FileName,
+                            return string.Format("<img src=\"{0}\" alt=\"{1}\" title=\"{1}\" border=0>",
+                                new Uri(outputFilePath)
+                                    .MakeRelativeUri(new Uri(bestshots[key].Path)).OriginalString,
                                 string.Format("ClearData: {0}\nSlow: {1:F6}%\nSpellName: {2}",
                                     this.ToNumberString(bestshots[key].Header.ResultScore),
                                     bestshots[key].Header.SlowRate,
@@ -874,7 +878,7 @@ namespace ThScoreFileConverter
         }
 
         // %T125SHOTEX[w][x][y][z]
-        private string ReplaceShotEx(string input)
+        private string ReplaceShotEx(string input, string outputFilePath)
         {
             var pattern = string.Format(@"%T125SHOTEX([{0}])([{1}])([1-9])([1-7])",
                 Utils.JoinEnumNames<CharaShort>(""),
@@ -898,9 +902,8 @@ namespace ThScoreFileConverter
                             switch (type)
                             {
                                 case 1:     // relative path to the bestshot file
-                                    return string.Format("./{0}/{1}",
-                                        Properties.Resources.strBestShotDirectory,
-                                        bestshots[key].FileName);
+                                    return new Uri(outputFilePath)
+                                        .MakeRelativeUri(new Uri(bestshots[key].Path)).OriginalString;
                                 case 2:     // width
                                     return bestshots[key].Header.Width.ToString();
                                 case 3:     // height
@@ -1024,8 +1027,7 @@ namespace ThScoreFileConverter
             using (var decoded = new MemoryStream())
             {
                 var outputFile = output as FileStream;
-                var outputFileName = Path.GetFileName(outputFile.Name);
-                var chara = outputFileName.StartsWith("bs2_") ? Chara.Hatate : Chara.Aya;
+                var chara = Path.GetFileName(outputFile.Name).StartsWith("bs2_") ? Chara.Hatate : Chara.Aya;
 
                 var reader = new BinaryReader(input);
                 var header = new BestShotHeader();
@@ -1040,7 +1042,7 @@ namespace ThScoreFileConverter
 
                 var key = new LevelScenePair(header.Level, header.Scene);
                 if (!this.bestshots[chara].ContainsKey(key))
-                    this.bestshots[chara].Add(key, new BestShotPair(outputFileName, header));
+                    this.bestshots[chara].Add(key, new BestShotPair(outputFile.Name, header));
 
                 Lzss.Extract(input, decoded);
 

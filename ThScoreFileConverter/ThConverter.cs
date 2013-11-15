@@ -143,12 +143,7 @@ namespace ThScoreFileConverter
         {
             try
             {
-                if (obj is SettingsPerTitle)
-                {
-                    var args = (SettingsPerTitle)obj;
-                    this.Convert(
-                        args.ScoreFile, args.BestShotDirectory, args.TemplateFiles, args.OutputDirectory);
-                }
+                this.Convert(obj as SettingsPerTitle);
             }
             catch (Exception e)
             {
@@ -159,13 +154,10 @@ namespace ThScoreFileConverter
         /// <summary>
         /// スコアファイルの変換処理
         /// </summary>
-        /// <param Name="score">スコアファイルのパス</param>
-        /// <param Name="bestshot">ベストショットディレクトリのパス</param>
-        /// <param Name="templates">テンプレートファイル群のパス</param>
-        /// <param Name="output">変換後の出力ファイル群のパス</param>
-        private void Convert(string score, string bestshot, string[] templates, string output)
+        /// <param Name="settings">作品毎の設定</param>
+        private void Convert(SettingsPerTitle settings)
         {
-            using (var scr = new FileStream(score, FileMode.Open, FileAccess.Read))
+            using (var scr = new FileStream(settings.ScoreFile, FileMode.Open, FileAccess.Read))
             using (var reader = new BinaryReader(scr))
             {
                 scr.Seek(0, SeekOrigin.Begin);
@@ -174,11 +166,11 @@ namespace ThScoreFileConverter
 
                 if (this.HasBestShotConverter)
                 {
-                    var dir = Path.Combine(output, Properties.Resources.strBestShotDirectory);
+                    var dir = Path.Combine(settings.OutputDirectory, settings.ImageOutputDirectory);
                     if (!Directory.Exists(dir))
                         Directory.CreateDirectory(dir);
                     var files = this.FilterBestShotFiles(
-                        Directory.GetFiles(bestshot, Properties.Resources.ptnBestShot));
+                        Directory.GetFiles(settings.BestShotDirectory, Properties.Resources.ptnBestShot));
                     for (var index = 0; index < files.Length; index++)
                     {
                         var result = GetBestShotFilePath(files[index], dir);
@@ -191,14 +183,16 @@ namespace ThScoreFileConverter
                     }
                 }
 
-                for (var index = 0; index < templates.Length; index++)
+                for (var index = 0; index < settings.TemplateFiles.Length; index++)
                 {
-                    var result = GetOutputFilePath(templates[index], output);
-                    using (var tmpl = new FileStream(templates[index], FileMode.Open, FileAccess.Read))
+                    var result = GetOutputFilePath(settings.TemplateFiles[index], settings.OutputDirectory);
+                    using (var tmpl =
+                        new FileStream(settings.TemplateFiles[index], FileMode.Open, FileAccess.Read))
                     using (var rslt = new FileStream(result, FileMode.OpenOrCreate, FileAccess.Write))
                     {
                         this.Convert(tmpl, rslt);
-                        this.OnConvertFinished(new ThConverterEventArgs(result, index + 1, templates.Length));
+                        this.OnConvertFinished(
+                            new ThConverterEventArgs(result, index + 1, settings.TemplateFiles.Length));
                     }
                 }
 

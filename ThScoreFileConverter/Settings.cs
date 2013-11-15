@@ -33,6 +33,11 @@ namespace ThScoreFileConverter
         public string OutputDirectory { get; set; }
 
         /// <summary>
+        /// 画像ファイル出力先ディレクトリのパス
+        /// </summary>
+        public string ImageOutputDirectory { get; set; }
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         public SettingsPerTitle()
@@ -41,6 +46,7 @@ namespace ThScoreFileConverter
             this.BestShotDirectory = "";
             this.TemplateFiles = new string[] { };
             this.OutputDirectory = "";
+            this.ImageOutputDirectory = "";
         }
     }
 

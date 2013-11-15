@@ -672,6 +672,7 @@ namespace ThScoreFileConverter
             entry.BestShotDirectory = this.txtBestShot.Text;
             entry.TemplateFiles = new string[this.lstTemplate.Items.Count];
             entry.OutputDirectory = this.txtOutput.Text;
+            entry.ImageOutputDirectory = this.txtImageOutput.Text;
             this.lstTemplate.Items.CopyTo(entry.TemplateFiles, 0);
         }
 
@@ -689,6 +690,7 @@ namespace ThScoreFileConverter
             this.txtBestShot.Clear();
             this.lstTemplate.Items.Clear();
             this.txtOutput.Clear();
+            this.txtImageOutput.Clear();
             this.txtLog.Clear();
 
             if (this.converter.HasBestShotConverter)
@@ -696,12 +698,16 @@ namespace ThScoreFileConverter
                 this.lblBestShot.IsEnabled = true;
                 this.txtBestShot.IsEnabled = true;
                 this.btnBestShot.IsEnabled = true;
+                this.lblImageOutput.IsEnabled = true;
+                this.txtImageOutput.IsEnabled = true;
             }
             else
             {
                 this.lblBestShot.IsEnabled = false;
                 this.txtBestShot.IsEnabled = false;
                 this.btnBestShot.IsEnabled = false;
+                this.lblImageOutput.IsEnabled = false;
+                this.txtImageOutput.IsEnabled = false;
             }
 
             var entry = this.settings.Dictionary[item.Name];
@@ -710,13 +716,16 @@ namespace ThScoreFileConverter
             if (this.converter != null)
                 this.lblSupportedVersion.Content =
                     Properties.Resources.strSupportedVersions + this.converter.SupportedVersions;
-            if (Directory.Exists(entry.BestShotDirectory))
+            if (this.txtBestShot.IsEnabled && Directory.Exists(entry.BestShotDirectory))
                 this.txtBestShot.Text = entry.BestShotDirectory;
             foreach (var template in entry.TemplateFiles)
                 if (File.Exists(template))
                     this.lstTemplate.Items.Add(template);
             if (Directory.Exists(entry.OutputDirectory))
                 this.txtOutput.Text = entry.OutputDirectory;
+            if (this.txtImageOutput.IsEnabled)
+                this.txtImageOutput.Text = (entry.ImageOutputDirectory != "")
+                    ? entry.ImageOutputDirectory : Properties.Resources.strBestShotDirectory;
 
             ((App)App.Current).UpdateResources(this.settings.FontFamilyName, this.settings.FontSize);
         }
@@ -730,7 +739,8 @@ namespace ThScoreFileConverter
                 (this.txtScore.Text.Length > 0) &&
                 this.lstTemplate.HasItems &&
                 (this.txtOutput.Text.Length > 0) &&
-                (!this.txtBestShot.IsEnabled || (this.txtBestShot.Text.Length > 0)));
+                (!this.txtBestShot.IsEnabled || (this.txtBestShot.Text.Length > 0)) &&
+                (!this.txtImageOutput.IsEnabled || (this.txtImageOutput.Text.Length > 0)));
         }
 
         #endregion
