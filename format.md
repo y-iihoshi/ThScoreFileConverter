@@ -3422,14 +3422,14 @@ SpellName: %T95CARD122" border=0&gt;
  </tr>
 </table>
 
-### キャラごとの個別データ {: #T12CHAMA }
+### キャラごとの個別データ {: #T12CHARA }
 
 <table>
  <colgroup class="header"></colgroup>
  <colgroup span="2"></colgroup>
  <tr>
   <td rowspan="3">書式</td>
-  <td colspan="2"><code>%T12CHAMA[xx][y]</code></td>
+  <td colspan="2"><code>%T12CHARA[xx][y]</code></td>
  </tr>
  <tr>
   <td class="format"><code>[xx]</code></td>
@@ -3461,8 +3461,8 @@ SpellName: %T95CARD122" border=0&gt;
   <td>例</td>
   <td colspan="2">
 <dl class="example">
- <dt><code>%T12CHAMATL2</code></dt><dd>全主人公合計のプレイ時間</dd>
- <dt><code>%T12CHAMARA1</code></dt><dd>霊夢（夢）の総プレイ回数</dd>
+ <dt><code>%T12CHARATL2</code></dt><dd>全主人公合計のプレイ時間</dd>
+ <dt><code>%T12CHARARA1</code></dt><dd>霊夢（夢）の総プレイ回数</dd>
 </dl>
   </td>
  </tr>
@@ -3479,14 +3479,14 @@ SpellName: %T95CARD122" border=0&gt;
  </tr>
 </table>
 
-### キャラごとの個別データ（詳細版） {: #T12CHAMAEX }
+### キャラごとの個別データ（詳細版） {: #T12CHARAEX }
 
 <table>
  <colgroup class="header"></colgroup>
  <colgroup span="2"></colgroup>
  <tr>
   <td rowspan="4">書式</td>
-  <td colspan="2"><code>%T12CHAMAEX[x][yy][z]</code></td>
+  <td colspan="2"><code>%T12CHARAEX[x][yy][z]</code></td>
  </tr>
  <tr>
   <td class="format"><code>[x]</code></td>
@@ -3533,9 +3533,9 @@ SpellName: %T95CARD122" border=0&gt;
   <td>例</td>
   <td colspan="2">
 <dl class="example">
- <dt><code>%T12CHAMAEXETL2</code></dt><dd>全主人公合計のプレイ時間</dd>
- <dt><code>%T12CHAMAEXERA1</code></dt><dd>霊夢（夢）の総プレイ回数</dd>
- <dt><code>%T12CHAMAEXTSB3</code></dt><dd>早苗（蛙）の全難易度合計のクリア回数</dd>
+ <dt><code>%T12CHARAEXETL2</code></dt><dd>全主人公合計のプレイ時間</dd>
+ <dt><code>%T12CHARAEXERA1</code></dt><dd>霊夢（夢）の総プレイ回数</dd>
+ <dt><code>%T12CHARAEXTSB3</code></dt><dd>早苗（蛙）の全難易度合計のクリア回数</dd>
 </dl>
   </td>
  </tr>
@@ -3552,14 +3552,14 @@ SpellName: %T95CARD122" border=0&gt;
  </tr>
 </table>
 
-### プラクティススコア {: #T12PMAC }
+### プラクティススコア {: #T12PRAC }
 
 <table>
  <colgroup class="header"></colgroup>
  <colgroup span="2"></colgroup>
  <tr>
   <td rowspan="4">書式</td>
-  <td colspan="2"><code>%T12PMAC[x][yy][z]</code></td>
+  <td colspan="2"><code>%T12PRAC[x][yy][z]</code></td>
  </tr>
  <tr>
   <td class="format"><code>[x]</code></td>
@@ -3600,9 +3600,9 @@ SpellName: %T95CARD122" border=0&gt;
   <td>例</td>
   <td colspan="2">
 <dl class="example">
- <dt><code>%T12PMACESB1</code></dt>
+ <dt><code>%T12PRACESB1</code></dt>
  <dd>Easy 早苗（蛙）の Stage 1 のプラクティススコア</dd>
- <dt><code>%T12PMACNRA4</code></dt>
+ <dt><code>%T12PRACNRA4</code></dt>
  <dd>Normal 霊夢（夢）の Stage 4 のプラクティススコア</dd>
 </dl>
   </td>
@@ -3970,6 +3970,493 @@ Slow: %T125SHOTEXA125
 SpellName: %T125CARD122" border=0&gt;
 </code></pre>
  </li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+----------------------------------------
+
+## 妖精大戦争テンプレート書式 {: #Th128Formats }
+
+### スコアランキング {: #T128SCR }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="5">書式</td>
+  <td colspan="2"><code>%T128SCR[w][xx][y][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[w]</code></td>
+  <td>
+   難易度
+<dl class="format">
+ <dt><code>[E]</code></dt><dd>Easy</dd>
+ <dt><code>[N]</code></dt><dd>Normal</dd>
+ <dt><code>[H]</code></dt><dd>Hard</dd>
+ <dt><code>[L]</code></dt><dd>Lunatic</dd>
+ <dt><code>[X]</code></dt><dd>Extra</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[xx]</code></td>
+  <td>
+   ルート
+<dl class="format">
+ <dt><code>[A1]</code></dt><dd>ルート A1</dd>
+ <dt><code>[A2]</code></dt><dd>ルート A2</dd>
+ <dt><code>[B1]</code></dt><dd>ルート B1</dd>
+ <dt><code>[B2]</code></dt><dd>ルート B2</dd>
+ <dt><code>[C1]</code></dt><dd>ルート C1</dd>
+ <dt><code>[C2]</code></dt><dd>ルート C2</dd>
+ <dt><code>[EX]</code></dt><dd>ルート EX</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[y]</code></td>
+  <td>
+   順位
+<dl class="format">
+ <dt><code>[1～9]</code></dt><dd>1～9 位</dd>
+ <dt><code>[0]</code></dt><dd>10 位</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[1]</code></dt><dd>登録名</dd>
+ <dt><code>[2]</code></dt><dd>スコア</dd>
+ <dt><code>[3]</code></dt><dd>到達ステージ</dd>
+ <dt><code>[4]</code></dt><dd>日時</dd>
+ <dt><code>[5]</code></dt><dd>処理落ち率</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T128SCRNC212</code></dt><dd>Normal ルート C2 の 1 位のスコア</dd>
+ <dt><code>%T128SCRXEX44</code></dt><dd>Extra の 4 位の日時</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>存在しない難易度とルートの組み合わせ（Easy のルート EX や Extra のルート A1 など）は無視されます。</li>
+ <li>スコアの 1 の位には、原作と同様にコンティニュー回数が出力されます。</li>
+ <li>日時は年月日及び時分秒が「<samp>yyyy/mm/dd hh:mm:ss</samp>」の形式で出力されます。</li>
+ <li>処理落ち率は小数点以下第 3 位まで（% 記号付きで）出力されます。今後、この桁数を設定可能にするかも知れません。</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+### 御札戦歴 {: #T128C }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="4">書式</td>
+  <td colspan="2"><code>%T128C[xxx][y]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[xxx]</code></td>
+  <td>
+   スペルカードの番号など
+<dl class="format">
+ <dt><code>[000]</code></dt><dd>全スペルカードの合計値</dd>
+ <dt><code>[001～250]</code></dt><dd>スペルカードの番号</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[y]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[1]</code></dt><dd>ノーアイス勝利回数</dd>
+ <dt><code>[2]</code></dt><dd>ノーミス勝利回数</dd>
+ <dt><code>[3]</code></dt><dd>挑戦回数</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T128C0011</code></dt>
+ <dd>月符「ルナティックレイン」(Easy) のノーアイス処理回数</dd>
+ <dt><code>%T128C0053</code></dt>
+ <dd>月符「ルナサイクロン」(Easy) の挑戦回数</dd>
+</dl>
+  </td>
+ </tr>
+</table>
+
+### スペルカード基本情報 {: #T128CARD }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="3">書式</td>
+  <td colspan="2"><code>%T128CARD[xxx][y]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[xxx]</code></td>
+  <td>
+   スペルカードの番号
+<dl class="format">
+ <dt><code>[001～250]</code></dt><dd>スペルカードの番号</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[y]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[N]</code></dt><dd>スペルカードの名前</dd>
+ <dt><code>[R]</code></dt>
+ <dd>スペルカードの難易度 (Easy, Normal, Hard, Lunatic, Extra)</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T128CARD001N</code></dt><dd>月符「ルナティックレイン」</dd>
+ <dt><code>%T128CARD001R</code></dt><dd>Easy</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>未挑戦のスペルカードの名前は「<samp>?????</samp>」のように出力されます。（一応ネタバレ防止のため。）今後、このように隠すかどうかを設定可能にするかも知れません。</li>
+ <li>一方、スペルカードの難易度は、未挑戦かどうかにかかわらず常に出力されます。原作でも Result 画面を見れば難易度はバレるので、このような仕様にしています。</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+### スペルカード蒐集率 {: #T128CRG }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="5">書式</td>
+  <td colspan="2"><code>%T128CRG[x][yyy][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   難易度など
+<dl class="format">
+ <dt><code>[E]</code></dt><dd>Easy</dd>
+ <dt><code>[N]</code></dt><dd>Normal</dd>
+ <dt><code>[H]</code></dt><dd>Hard</dd>
+ <dt><code>[L]</code></dt><dd>Lunatic</dd>
+ <dt><code>[X]</code></dt><dd>Extra</dd>
+ <dt><code>[T]</code></dt><dd>Total</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[y]</code></td>
+  <td>
+   ステージなど
+<dl class="format">
+ <dt><code>[TTL]</code></dt><dd>全ステージ合計</dd>
+ <dt><code>[A11]</code></dt><dd>Stage A-1</dd>
+ <dt><code>[A12]</code></dt><dd>Stage A1-2</dd>
+ <dt><code>[A13]</code></dt><dd>Stage A1-3</dd>
+ <dt><code>[A22]</code></dt><dd>Stage A2-2</dd>
+ <dt><code>[A23]</code></dt><dd>Stage A2-3</dd>
+ <dt><code>[B11]</code></dt><dd>Stage B-1</dd>
+ <dt><code>[B12]</code></dt><dd>Stage B1-2</dd>
+ <dt><code>[B13]</code></dt><dd>Stage B1-3</dd>
+ <dt><code>[B22]</code></dt><dd>Stage B2-2</dd>
+ <dt><code>[B23]</code></dt><dd>Stage B2-3</dd>
+ <dt><code>[C11]</code></dt><dd>Stage C-1</dd>
+ <dt><code>[C12]</code></dt><dd>Stage C1-2</dd>
+ <dt><code>[C13]</code></dt><dd>Stage C1-3</dd>
+ <dt><code>[C22]</code></dt><dd>Stage C2-2</dd>
+ <dt><code>[C23]</code></dt><dd>Stage C2-3</dd>
+</dl>
+   （Extra ではこの指定は無視され、Total ではそのステージの
+   Easy～Lunatic の合計が出力されます。）
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[1]</code></dt><dd>ノーアイス勝利数</dd>
+ <dt><code>[2]</code></dt><dd>ノーミス勝利数</dd>
+ <dt><code>[3]</code></dt><dd>挑戦数</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T128CRGETTL1</code></dt>
+ <dd>Easy の全ステージ合計のノーアイス勝利数</dd>
+ <dt><code>%T128CRGTC232</code></dt>
+ <dd>Stage C2-3 の全難易度合計のノーミス勝利数</dd>
+ <dt><code>%T128CRGTTTL3</code></dt>
+ <dd>全難易度・全ステージ合計の挑戦数</dd>
+</dl>
+  </td>
+ </tr>
+</table>
+
+### クリア達成度 {: #T128CLEAR }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="3">書式</td>
+  <td colspan="2"><code>%T128CLEAR[x][yy]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   難易度
+<dl class="format">
+ <dt><code>[E]</code></dt><dd>Easy</dd>
+ <dt><code>[N]</code></dt><dd>Normal</dd>
+ <dt><code>[H]</code></dt><dd>Hard</dd>
+ <dt><code>[L]</code></dt><dd>Lunatic</dd>
+ <dt><code>[X]</code></dt><dd>Extra</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[yy]</code></td>
+  <td>
+   ルート
+<dl class="format">
+ <dt><code>[A1]</code></dt><dd>ルート A1</dd>
+ <dt><code>[A2]</code></dt><dd>ルート A2</dd>
+ <dt><code>[B1]</code></dt><dd>ルート B1</dd>
+ <dt><code>[B2]</code></dt><dd>ルート B2</dd>
+ <dt><code>[C1]</code></dt><dd>ルート C1</dd>
+ <dt><code>[C2]</code></dt><dd>ルート C2</dd>
+ <dt><code>[EX]</code></dt><dd>ルート EX</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T128CLEARXEX</code></dt><dd>Extra のクリア達成度</dd>
+ <dt><code>%T128CLEARNA2</code></dt><dd>Normal ルート A2 のクリア達成度</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>存在しない難易度とルートの組み合わせ（Easy のルート EX や Extra のルート A1 など）は無視されます。</li>
+ <li>
+  クリア達成度（ゲームの進行状況）に応じて以下の文字列が出力されます。
+  <p class="legends">
+   <samp>-------</samp>（未プレイ）,
+   <samp>Stage A-1</samp>, <samp>Stage A1-2</samp>, <samp>Stage A1-3</samp>,
+   <samp>Stage A2-2</samp>, <samp>Stage A2-3</samp>,
+   <samp>A1 Clear</samp>, <samp>A2 Clear</samp>,
+   <samp>Stage B-1</samp>, <samp>Stage B1-2</samp>, <samp>Stage B1-3</samp>,
+   <samp>Stage B2-2</samp>, <samp>Stage B2-3</samp>,
+   <samp>B1 Clear</samp>, <samp>B2 Clear</samp>,
+   <samp>Stage C-1</samp>, <samp>Stage C1-2</samp>, <samp>Stage C1-3</samp>,
+   <samp>Stage C2-2</samp>, <samp>Stage C2-3</samp>,
+   <samp>C1 Clear</samp>, <samp>C2 Clear</samp>,
+   <samp>Extra Stage</samp>, <samp>Extra Clear</samp>
+  </p>
+ </li>
+ <li>本ツールでは、ランキングを基にクリア達成度を算出しているため、実際はクリア済みでもランキング上に存在していなければ未クリア扱いになってしまいます。</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+### ルートごとの個別データ {: #T128ROUTE }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="3">書式</td>
+  <td colspan="2"><code>%T128ROUTE[xx][y]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[xx]</code></td>
+  <td>
+   ルートなど
+<dl class="format">
+ <dt><code>[TL]</code></dt><dd>全ルート合計</dd>
+ <dt><code>[A1]</code></dt><dd>ルート A1</dd>
+ <dt><code>[A2]</code></dt><dd>ルート A2</dd>
+ <dt><code>[B1]</code></dt><dd>ルート B1</dd>
+ <dt><code>[B2]</code></dt><dd>ルート B2</dd>
+ <dt><code>[C1]</code></dt><dd>ルート C1</dd>
+ <dt><code>[C2]</code></dt><dd>ルート C2</dd>
+ <dt><code>[EX]</code></dt><dd>ルート EX</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[y]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[1]</code></dt><dd>総プレイ回数</dd>
+ <dt><code>[2]</code></dt><dd>プレイ時間</dd>
+ <dt><code>[3]</code></dt><dd>クリア回数</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T128ROUTETL2</code></dt><dd>全ルート合計のプレイ時間</dd>
+ <dt><code>%T128ROUTEA11</code></dt><dd>ルート A1 の総プレイ回数</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>
+  プレイ時間は時分秒が「<samp>h:mm:ss</samp>」の形式で出力されます。<br />
+  なお、スコアファイルにはフレーム数単位で保存されているため、60fps 固定と見なして換算した結果を出力しています。
+ </li>
+ <li>
+  総プレイ回数は、ゲーム内部ではルート A1～C2 毎ではなくルート A, B, C 毎にカウントされているようです。この書式での出力結果は参考程度としてください。
+ </li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+### ルートごとの個別データ（詳細版） {: #T128ROUTEEX }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="4">書式</td>
+  <td colspan="2"><code>%T128ROUTEEX[x][yy][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   難易度など
+<dl class="format">
+ <dt><code>[E]</code></dt><dd>Easy</dd>
+ <dt><code>[N]</code></dt><dd>Normal</dd>
+ <dt><code>[H]</code></dt><dd>Hard</dd>
+ <dt><code>[L]</code></dt><dd>Lunatic</dd>
+ <dt><code>[X]</code></dt><dd>Extra</dd>
+ <dt><code>[T]</code></dt><dd>Total</dd>
+</dl>
+   （総プレイ回数とプレイ時間ではこの指定は無視されます。）
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[yy]</code></td>
+  <td>
+   ルートなど
+<dl class="format">
+ <dt><code>[TL]</code></dt><dd>全ルート合計</dd>
+ <dt><code>[A1]</code></dt><dd>ルート A1</dd>
+ <dt><code>[A2]</code></dt><dd>ルート A2</dd>
+ <dt><code>[B1]</code></dt><dd>ルート B1</dd>
+ <dt><code>[B2]</code></dt><dd>ルート B2</dd>
+ <dt><code>[C1]</code></dt><dd>ルート C1</dd>
+ <dt><code>[C2]</code></dt><dd>ルート C2</dd>
+ <dt><code>[EX]</code></dt><dd>ルート EX</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[1]</code></dt><dd>総プレイ回数</dd>
+ <dt><code>[2]</code></dt><dd>プレイ時間</dd>
+ <dt><code>[3]</code></dt><dd>クリア回数</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T128ROUTEEXETL2</code></dt><dd>全ルート合計のプレイ時間</dd>
+ <dt><code>%T128ROUTEEXEA11</code></dt><dd>ルート A1 の総プレイ回数</dd>
+ <dt><code>%T128ROUTEEXTC23</code></dt><dd>ルート C2 の全難易度合計のクリア回数</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>存在しない難易度とルートの組み合わせ（Easy のルート EX や Extra のルート A1 など）は無視されます。</li>
+ <li>
+  プレイ時間は時分秒が「<samp>h:mm:ss</samp>」の形式で出力されます。<br />
+  なお、スコアファイルにはフレーム数単位で保存されているため、60fps 固定と見なして換算した結果を出力しています。
+ </li>
+ <li>
+  総プレイ回数は、ゲーム内部ではルート A1～C2 毎ではなくルート A, B, C 毎にカウントされているようです。この書式での出力結果は参考程度としてください。
+ </li>
+ <li>
+  この書式で出力される全ルート合計のプレイ時間は、ゲーム内で表示される時間と一致しません。代わりに <a href="#T128TIMEPLY">総プレイ時間</a> の書式を使ってください。
+ </li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+### 総プレイ時間 {: #T128TIMEPLY }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td>書式</td>
+  <td><code>%T128TIMEPLY</code></td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td>
+<ul>
+ <li>時分秒およびミリ秒が「<samp>h:mm:ss.ddd</samp>」の形式で出力されます。</li>
 </ul>
   </td>
  </tr>

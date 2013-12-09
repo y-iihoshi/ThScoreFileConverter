@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja">
+
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+  <meta http-equiv="Content-Stype-Type" content="text/css" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <title>妖精大戦争スコアデータ</title>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <link rel="stylesheet" type="text/css" href="th128.css" />
+<style type="text/css">
+<!--
+    table.count td.count { min-width: 80px; }
+    table.count td.time { min-width: 80px; }
+-->
+</style>
+ </head>
+
+ <body>
+  <h1>妖精大戦争スコアデータ</h1>
+
+  <hr />
+
+  <div class="section">
+   <p>
+    スコアデータ全般 /
+    <a href="th128score2.html">個別ランキング</a> /
+    <a href="th128card.html">御札戦歴</a><br />
+    <a href="#Easy">Easy</a>
+    <a href="#Normal">Normal</a>
+    <a href="#Hard">Hard</a>
+    <a href="#Lunatic">Lunatic</a>
+    <a href="#Extra">Extra</a>
+    <a href="#Other">その他の状態一覧</a>
+    <a href="#Clear">クリア達成度</a>
+   </p>
+  </div>
+
+  <hr />
+
+  <div class="section">
+   <h2>難易度別スコア</h2>
+
+   <table class="score_per_level">
+    <caption id="Easy">Easy</caption>
+    <thead>
+     <tr>
+      <td class="route">Route</td>
+      <td class="name">Name</td>
+      <td class="score">Score</td>
+      <td class="date">Date</td>
+      <td class="stage">Stage</td>
+      <td class="slow">Slow</td>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td class="route">ルート A1</td>
+      <td class="name">%T128SCREA111</td>
+      <td class="score">%T128SCREA112</td>
+      <td class="date">%T128SCREA114</td>
+      <td class="stage">%T128SCREA113</td>
+      <td class="slow">%T128SCREA115</td>
+     </tr>
+     <tr>
+      <td class="route">ルート A2</td>
+      <td class="name">%T128SCREA211</td>
+      <td class="score">%T128SCREA212</td>
+      <td class="date">%T128SCREA214</td>
+      <td class="stage">%T128SCREA213</td>
+      <td class="slow">%T128SCREA215</td>
+     </tr>
+     <tr>
+      <td class="route">ルート B1</td>
+      <td class="name">%T128SCREB111</td>
+      <td class="score">%T128SCREB112</td>
+      <td class="date">%T128SCREB114</td>
+      <td class="stage">%T128SCREB113</td>
+      <td class="slow">%T128SCREB115</td>
+     </tr>
+     <tr>
+      <td class="route">ルート B2</td>
+      <td class="name">%T128SCREB211</td>
+      <td class="score">%T128SCREB212</td>
+      <td class="date">%T128SCREB214</td>
+      <td class="stage">%T128SCREB213</td>
+      <td class="slow">%T128SCREB215</td>
+     </tr>
+     <tr>
+      <td class="route">ルート C1</td>
+      <td class="name">%T128SCREC111</td>
+      <td class="score">%T128SCREC112</td>
+      <td class="date">%T128SCREC114</td>
+      <td class="stage">%T128SCREC113</td>
+      <td class="slow">%T128SCREC115</td>
+     </tr>
+     <tr>
+      <td class="route">ルート C2</td>
+      <td class="name">%T128SCREC211</td>
+      <td class="score">%T128SCREC212</td>
+      <td class="date">%T128SCREC214</td>
+      <td class="stage">%T128SCREC213</td>
+      <td class="slow">%T128SCREC215</td>
+     </tr>
+    </tbody>
+   </table>
+
+   <table class="score_per_level">
+    <caption id="Normal">Normal</caption>
+    <thead>
+     <tr>
+      <td class="route">Route</td>
+      <td class="name">Name</td>
+      <td class="score">Score</td>
+      <td class="date">Date</td>
+      <td class="stage">Stage</td>
+      <td class="slow">Slow</td>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td class="route">ルート A1</td>
+      <td class="name">%T128SCRNA111</td>
+      <td class="score">%T128SCRNA112</td>
+      <td class="date">%T128SCRNA114</td>
+      <td class="stage">%T128SCRNA113</td>
+      <td class="slow">%T128SCRNA115</td>
+     </tr>
+     <tr>
+      <td class="route">ルート A2</td>
+      <td class="name">%T128SCRNA211</td>
+      <td class="score">%T128SCRNA212</td>
+      <td class="date">%T128SCRNA214</td>
+      <td class="stage">%T128SCRNA213</td>
+      <td class="slow">%T128SCRNA215</td>
+     </tr>
+     <tr>
+      <td class="route">ルート B1</td>
+      <td class="name">%T128SCRNB111</td>
+      <td class="score">%T128SCRNB112</td>
+      <td class="date">%T128SCRNB114</td>
+      <td class="stage">%T128SCRNB113</td>
+      <td class="slow">%T128SCRNB115</td>
+     </tr>
+     <tr>
+      <td class="route">ルート B2</td>
+      <td class="name">%T128SCRNB211</td>
+      <td class="score">%T128SCRNB212</td>
+      <td class="date">%T128SCRNB214</td>
+      <td class="stage">%T128SCRNB213</td>
+      <td class="slow">%T128SCRNB215</td>
+     </tr>
+     <tr>
+      <td class="route">ルート C1</td>
+      <td class="name">%T128SCRNC111</td>
+      <td class="score">%T128SCRNC112</td>
+      <td class="date">%T128SCRNC114</td>
+      <td class="stage">%T128SCRNC113</td>
+      <td class="slow">%T128SCRNC115</td>
+     </tr>
+     <tr>
+      <td class="route">ルート C2</td>
+      <td class="name">%T128SCRNC211</td>
+      <td class="score">%T128SCRNC212</td>
+      <td class="date">%T128SCRNC214</td>
+      <td class="stage">%T128SCRNC213</td>
+      <td class="slow">%T128SCRNC215</td>
+     </tr>
+    </tbody>
+   </table>
+
+   <table class="score_per_level">
+    <caption id="Hard">Hard</caption>
+    <thead>
+     <tr>
+      <td class="route">Route</td>
+      <td class="name">Name</td>
+      <td class="score">Score</td>
+      <td class="date">Date</td>
+      <td class="stage">Stage</td>
+      <td class="slow">Slow</td>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td class="route">ルート A1</td>
+      <td class="name">%T128SCRHA111</td>
+      <td class="score">%T128SCRHA112</td>
+      <td class="date">%T128SCRHA114</td>
+      <td class="stage">%T128SCRHA113</td>
+      <td class="slow">%T128SCRHA115</td>
+     </tr>
+     <tr>
+      <td class="route">ルート A2</td>
+      <td class="name">%T128SCRHA211</td>
+      <td class="score">%T128SCRHA212</td>
+      <td class="date">%T128SCRHA214</td>
+      <td class="stage">%T128SCRHA213</td>
+      <td class="slow">%T128SCRHA215</td>
+     </tr>
+     <tr>
+      <td class="route">ルート B1</td>
+      <td class="name">%T128SCRHB111</td>
+      <td class="score">%T128SCRHB112</td>
+      <td class="date">%T128SCRHB114</td>
+      <td class="stage">%T128SCRHB113</td>
+      <td class="slow">%T128SCRHB115</td>
+     </tr>
+     <tr>
+      <td class="route">ルート B2</td>
+      <td class="name">%T128SCRHB211</td>
+      <td class="score">%T128SCRHB212</td>
+      <td class="date">%T128SCRHB214</td>
+      <td class="stage">%T128SCRHB213</td>
+      <td class="slow">%T128SCRHB215</td>
+     </tr>
+     <tr>
+      <td class="route">ルート C1</td>
+      <td class="name">%T128SCRHC111</td>
+      <td class="score">%T128SCRHC112</td>
+      <td class="date">%T128SCRHC114</td>
+      <td class="stage">%T128SCRHC113</td>
+      <td class="slow">%T128SCRHC115</td>
+     </tr>
+     <tr>
+      <td class="route">ルート C2</td>
+      <td class="name">%T128SCRHC211</td>
+      <td class="score">%T128SCRHC212</td>
+      <td class="date">%T128SCRHC214</td>
+      <td class="stage">%T128SCRHC213</td>
+      <td class="slow">%T128SCRHC215</td>
+     </tr>
+    </tbody>
+   </table>
+
+   <table class="score_per_level">
+    <caption id="Lunatic">Lunatic</caption>
+    <thead>
+     <tr>
+      <td class="route">Route</td>
+      <td class="name">Name</td>
+      <td class="score">Score</td>
+      <td class="date">Date</td>
+      <td class="stage">Stage</td>
+      <td class="slow">Slow</td>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td class="route">ルート A1</td>
+      <td class="name">%T128SCRLA111</td>
+      <td class="score">%T128SCRLA112</td>
+      <td class="date">%T128SCRLA114</td>
+      <td class="stage">%T128SCRLA113</td>
+      <td class="slow">%T128SCRLA115</td>
+     </tr>
+     <tr>
+      <td class="route">ルート A2</td>
+      <td class="name">%T128SCRLA211</td>
+      <td class="score">%T128SCRLA212</td>
+      <td class="date">%T128SCRLA214</td>
+      <td class="stage">%T128SCRLA213</td>
+      <td class="slow">%T128SCRLA215</td>
+     </tr>
+     <tr>
+      <td class="route">ルート B1</td>
+      <td class="name">%T128SCRLB111</td>
+      <td class="score">%T128SCRLB112</td>
+      <td class="date">%T128SCRLB114</td>
+      <td class="stage">%T128SCRLB113</td>
+      <td class="slow">%T128SCRLB115</td>
+     </tr>
+     <tr>
+      <td class="route">ルート B2</td>
+      <td class="name">%T128SCRLB211</td>
+      <td class="score">%T128SCRLB212</td>
+      <td class="date">%T128SCRLB214</td>
+      <td class="stage">%T128SCRLB213</td>
+      <td class="slow">%T128SCRLB215</td>
+     </tr>
+     <tr>
+      <td class="route">ルート C1</td>
+      <td class="name">%T128SCRLC111</td>
+      <td class="score">%T128SCRLC112</td>
+      <td class="date">%T128SCRLC114</td>
+      <td class="stage">%T128SCRLC113</td>
+      <td class="slow">%T128SCRLC115</td>
+     </tr>
+     <tr>
+      <td class="route">ルート C2</td>
+      <td class="name">%T128SCRLC211</td>
+      <td class="score">%T128SCRLC212</td>
+      <td class="date">%T128SCRLC214</td>
+      <td class="stage">%T128SCRLC213</td>
+      <td class="slow">%T128SCRLC215</td>
+     </tr>
+    </tbody>
+   </table>
+
+   <table class="score_per_level">
+    <caption id="Extra">Extra</caption>
+    <thead>
+     <tr>
+      <td class="route">Route</td>
+      <td class="name">Name</td>
+      <td class="score">Score</td>
+      <td class="date">Date</td>
+      <td class="stage">Stage</td>
+      <td class="slow">Slow</td>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td class="route">ルート EX</td>
+      <td class="name">%T128SCRXEX11</td>
+      <td class="score">%T128SCRXEX12</td>
+      <td class="date">%T128SCRXEX14</td>
+      <td class="stage">%T128SCRXEX13</td>
+      <td class="slow">%T128SCRXEX15</td>
+     </tr>
+    </tbody>
+   </table>
+  </div>
+
+  <hr />
+
+  <div class="section">
+   <h2 id="Other">その他の状態一覧</h2>
+
+   <table class="count">
+    <thead>
+     <tr>
+      <td rowspan="2" class="route">Route</td>
+      <td rowspan="2" class="count">総プレイ回数</td>
+      <td rowspan="2" class="time">プレイ時間</td>
+      <td colspan="6">クリア回数</td>
+     </tr>
+     <tr>
+      <td class="level">Easy</td>
+      <td class="level">Normal</td>
+      <td class="level">Hard</td>
+      <td class="level">Lunatic</td>
+      <td class="level">Extra</td>
+      <td class="level">Total</td>
+     </tr>
+    </thead>
+    <tfoot>
+     <tr>
+      <td class="route">全ルート合計</td>
+      <td class="count">%T128ROUTETL1</td>
+	  <!-- <td class="time">%T128ROUTETL2</td> -->
+      <td class="time">%T128TIMEPLY</td>
+      <td class="level">%T128ROUTEEXETL3</td>
+      <td class="level">%T128ROUTEEXNTL3</td>
+      <td class="level">%T128ROUTEEXHTL3</td>
+      <td class="level">%T128ROUTEEXLTL3</td>
+      <td class="level">%T128ROUTEEXXTL3</td>
+      <td class="level">%T128ROUTEEXTTL3</td>
+     </tr>
+    </tfoot>
+    <tbody>
+     <tr>
+      <td class="route">ルート A1</td>
+      <td class="count">%T128ROUTEA11</td>
+      <td class="time">%T128ROUTEA12</td>
+      <td class="level">%T128ROUTEEXEA13</td>
+      <td class="level">%T128ROUTEEXNA13</td>
+      <td class="level">%T128ROUTEEXHA13</td>
+      <td class="level">%T128ROUTEEXLA13</td>
+      <td class="level">N/A</td>
+      <td class="level">%T128ROUTEEXTA13</td>
+     </tr>
+     <tr>
+      <td class="route">ルート A2</td>
+      <td class="count">%T128ROUTEA21</td>
+      <td class="time">%T128ROUTEA22</td>
+      <td class="level">%T128ROUTEEXEA23</td>
+      <td class="level">%T128ROUTEEXNA23</td>
+      <td class="level">%T128ROUTEEXHA23</td>
+      <td class="level">%T128ROUTEEXLA23</td>
+      <td class="level">N/A</td>
+      <td class="level">%T128ROUTEEXTA23</td>
+     </tr>
+     <tr>
+      <td class="route">ルート B1</td>
+      <td class="count">%T128ROUTEB11</td>
+      <td class="time">%T128ROUTEB12</td>
+      <td class="level">%T128ROUTEEXEB13</td>
+      <td class="level">%T128ROUTEEXNB13</td>
+      <td class="level">%T128ROUTEEXHB13</td>
+      <td class="level">%T128ROUTEEXLB13</td>
+      <td class="level">N/A</td>
+      <td class="level">%T128ROUTEEXTB13</td>
+     </tr>
+     <tr>
+      <td class="route">ルート B2</td>
+      <td class="count">%T128ROUTEB21</td>
+      <td class="time">%T128ROUTEB22</td>
+      <td class="level">%T128ROUTEEXEB23</td>
+      <td class="level">%T128ROUTEEXNB23</td>
+      <td class="level">%T128ROUTEEXHB23</td>
+      <td class="level">%T128ROUTEEXLB23</td>
+      <td class="level">N/A</td>
+      <td class="level">%T128ROUTEEXTB23</td>
+     </tr>
+     <tr>
+      <td class="route">ルート C1</td>
+      <td class="count">%T128ROUTEC11</td>
+      <td class="time">%T128ROUTEC12</td>
+      <td class="level">%T128ROUTEEXEC13</td>
+      <td class="level">%T128ROUTEEXNC13</td>
+      <td class="level">%T128ROUTEEXHC13</td>
+      <td class="level">%T128ROUTEEXLC13</td>
+      <td class="level">N/A</td>
+      <td class="level">%T128ROUTEEXTC13</td>
+     </tr>
+     <tr>
+      <td class="route">ルート C2</td>
+      <td class="count">%T128ROUTEC21</td>
+      <td class="time">%T128ROUTEC22</td>
+      <td class="level">%T128ROUTEEXEC23</td>
+      <td class="level">%T128ROUTEEXNC23</td>
+      <td class="level">%T128ROUTEEXHC23</td>
+      <td class="level">%T128ROUTEEXLC23</td>
+      <td class="level">N/A</td>
+      <td class="level">%T128ROUTEEXTC23</td>
+     </tr>
+     <tr>
+      <td class="route">ルート EX</td>
+      <td class="count">%T128ROUTEEX1</td>
+      <td class="time">%T128ROUTEEX2</td>
+      <td class="level">N/A</td>
+      <td class="level">N/A</td>
+      <td class="level">N/A</td>
+      <td class="level">N/A</td>
+      <td class="level">%T128ROUTEEXXEX3</td>
+      <td class="level">%T128ROUTEEXTEX3</td>
+     </tr>
+    </tbody>
+   </table>
+  </div>
+
+  <hr />
+
+  <div class="section">
+   <h2 id="Clear">クリア達成度</h2>
+
+   <table class="clear">
+    <thead>
+     <tr>
+      <td class="route">Route</td>
+      <td class="level">Easy</td>
+      <td class="level">Normal</td>
+      <td class="level">Hard</td>
+      <td class="level">Lunatic</td>
+      <td class="level">Extra</td>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td class="route">ルート A1</td>
+      <td class="stage">%T128CLEAREA1</td>
+      <td class="stage">%T128CLEARNA1</td>
+      <td class="stage">%T128CLEARHA1</td>
+      <td class="stage">%T128CLEARLA1</td>
+      <td class="stage">N/A</td>
+     </tr>
+     <tr>
+      <td class="route">ルート A2</td>
+      <td class="stage">%T128CLEAREA2</td>
+      <td class="stage">%T128CLEARNA2</td>
+      <td class="stage">%T128CLEARHA2</td>
+      <td class="stage">%T128CLEARLA2</td>
+      <td class="stage">N/A</td>
+     </tr>
+     <tr>
+      <td class="route">ルート B1</td>
+      <td class="stage">%T128CLEAREB1</td>
+      <td class="stage">%T128CLEARNB1</td>
+      <td class="stage">%T128CLEARHB1</td>
+      <td class="stage">%T128CLEARLB1</td>
+      <td class="stage">N/A</td>
+     </tr>
+     <tr>
+      <td class="route">ルート B2</td>
+      <td class="stage">%T128CLEAREB2</td>
+      <td class="stage">%T128CLEARNB2</td>
+      <td class="stage">%T128CLEARHB2</td>
+      <td class="stage">%T128CLEARLB2</td>
+      <td class="stage">N/A</td>
+     </tr>
+     <tr>
+      <td class="route">ルート C1</td>
+      <td class="stage">%T128CLEAREC1</td>
+      <td class="stage">%T128CLEARNC1</td>
+      <td class="stage">%T128CLEARHC1</td>
+      <td class="stage">%T128CLEARLC1</td>
+      <td class="stage">N/A</td>
+     </tr>
+     <tr>
+      <td class="route">ルート C2</td>
+      <td class="stage">%T128CLEAREC2</td>
+      <td class="stage">%T128CLEARNC2</td>
+      <td class="stage">%T128CLEARHC2</td>
+      <td class="stage">%T128CLEARLC2</td>
+      <td class="stage">N/A</td>
+     </tr>
+     <tr>
+      <td class="route">ルート EX</td>
+      <td class="stage">N/A</td>
+      <td class="stage">N/A</td>
+      <td class="stage">N/A</td>
+      <td class="stage">N/A</td>
+      <td class="stage">%T128CLEARXEX</td>
+     </tr>
+    </tbody>
+   </table>
+  </div>
+
+  <hr />
+
+  <div class="section">
+   <p>
+    Data outputted by <a href="http://www.colorless-sight.jp/">ThScoreFileConverter</a>.
+<script type="text/javascript">
+<!--
+    document.write("Last updated: ", document.lastModified, ".");
+//-->
+</script>
+   </p>
+  </div>
+
+ </body>
+</html>

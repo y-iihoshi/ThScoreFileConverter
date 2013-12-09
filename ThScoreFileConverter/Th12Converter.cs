@@ -222,7 +222,7 @@ namespace ThScoreFileConverter
             public byte[] Name { get; private set; }        // .Length = 10 (The last 2 bytes are always 0x00 ?)
             public uint DateTime { get; private set; }      // UNIX time (unit: [s])
             public float SlowRate { get; private set; }     // really...?
-            public uint Unknown { get; private set; }
+            public uint Unknown1 { get; private set; }
 
             public void ReadFrom(BinaryReader reader)
             {
@@ -232,7 +232,7 @@ namespace ThScoreFileConverter
                 this.Name = reader.ReadBytes(10);
                 this.DateTime = reader.ReadUInt32();
                 this.SlowRate = reader.ReadSingle();
-                this.Unknown = reader.ReadUInt32();
+                this.Unknown1 = reader.ReadUInt32();
             }
         }
 
