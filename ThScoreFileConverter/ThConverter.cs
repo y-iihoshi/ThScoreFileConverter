@@ -23,7 +23,8 @@ namespace ThScoreFileConverter
             { Properties.Resources.keyTh11,  typeof(Th11Converter)  },
             { Properties.Resources.keyTh12,  typeof(Th12Converter)  },
             { Properties.Resources.keyTh125, typeof(Th125Converter) },
-            { Properties.Resources.keyTh128, typeof(Th128Converter) }
+            { Properties.Resources.keyTh128, typeof(Th128Converter) },
+            { Properties.Resources.keyTh13,  typeof(Th13Converter)  }
         };
 
         /// <summary>
@@ -70,7 +71,7 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// コンストラクタ
+        /// インスタンスを生成する
         /// </summary>
         /// <param Name="path">最後に出力したファイルのパス</param>
         /// <param Name="current">出力済みファイル数</param>

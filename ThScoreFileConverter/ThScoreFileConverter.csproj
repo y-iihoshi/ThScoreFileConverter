@@ -83,6 +83,7 @@
     <Compile Include="Th125Converter.cs" />
     <Compile Include="Th128Converter.cs" />
     <Compile Include="Th12Converter.cs" />
+    <Compile Include="Th13Converter.cs" />
     <Compile Include="Time.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Win32Window.cs" />

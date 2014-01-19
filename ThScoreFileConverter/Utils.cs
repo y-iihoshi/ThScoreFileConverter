@@ -109,5 +109,32 @@ namespace ThScoreFileConverter
         {
             void ReadFrom(BinaryReader reader);
         }
+
+        /// <summary>
+        /// http://www.atmarkit.co.jp/fdotnet/special/cs20review01/cs20review01_03.html
+        /// </summary>
+        /// <typeparam name="T">Type of the object to compare</typeparam>
+        public class And<T>
+        {
+            private Predicate<T>[] preds;
+
+            public And(params Predicate<T>[] preds)
+            {
+                this.preds = preds;
+            }
+
+            private bool Pred(T t)
+            {
+                foreach (var pred in this.preds)
+                    if (!pred(t))
+                        return false;
+                return true;
+            }
+
+            public static implicit operator Predicate<T>(And<T> from)
+            {
+                return from.Pred;
+            }
+        }
     }
 }
