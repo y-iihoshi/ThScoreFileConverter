@@ -683,11 +683,10 @@ namespace ThScoreFileConverter
                     var scene = int.Parse(match.Groups[3].Value);
                     var type = int.Parse(match.Groups[4].Value);
 
-                    var levelIndex = Array.FindIndex<string>(
-                        LevelShortArray, new Predicate<string>(elem => (elem == level)));
+                    var levelIndex = Array.IndexOf(LevelShortArray, level);
                     var levelScene = new LevelScenePair(levelIndex + 1, scene);
-                    var score = this.allScoreData.scores.Find(new Predicate<Score>(elem => (
-                        (elem != null) && (elem.Chara == chara) && elem.LevelScene.Equals(levelScene))));
+                    var score = this.allScoreData.scores.Find(elem =>
+                        (elem != null) && (elem.Chara == chara) && elem.LevelScene.Equals(levelScene));
 
                     switch (type)
                     {
@@ -722,9 +721,9 @@ namespace ThScoreFileConverter
                     var method = int.Parse(match.Groups[2].Value);
                     var type = int.Parse(match.Groups[3].Value);
 
-                    var triedAndSucceeded = new Predicate<Score>(
-                        score => (score.TrialCount > 0) && (score.FirstSuccess > 0));
-                    var isTarget = new Predicate<Score>(score =>
+                    Func<Score, bool> triedAndSucceeded = (score =>
+                        (score.TrialCount > 0) && (score.FirstSuccess > 0));
+                    Func<Score, bool> isTarget = (score =>
                     {
                         if (score == null)
                             return false;
@@ -790,11 +789,10 @@ namespace ThScoreFileConverter
                     var scene = int.Parse(match.Groups[2].Value);
                     var type = int.Parse(match.Groups[3].Value);
 
-                    var levelIndex = Array.FindIndex<string>(
-                        LevelShortArray, new Predicate<string>(elem => (elem == level)));
+                    var levelIndex = Array.IndexOf(LevelShortArray, level);
                     var key = new LevelScenePair(levelIndex + 1, scene);
                     var score = this.allScoreData.scores.Find(
-                        new Predicate<Score>(elem => ((elem != null) && elem.LevelScene.Equals(key))));
+                        elem => (elem != null) && elem.LevelScene.Equals(key));
 
                     switch (type)
                     {
@@ -832,8 +830,7 @@ namespace ThScoreFileConverter
                     var scene = int.Parse(match.Groups[3].Value);
 
                     var bestshots = this.bestshots.ContainsKey(chara) ? this.bestshots[chara] : null;
-                    var levelIndex = Array.FindIndex<string>(
-                        LevelShortArray, new Predicate<string>(elem => (elem == level)));
+                    var levelIndex = Array.IndexOf(LevelShortArray, level);
                     var key = new LevelScenePair(levelIndex + 1, scene);
 
                     if ((bestshots != null) && bestshots.ContainsKey(key))
@@ -864,8 +861,7 @@ namespace ThScoreFileConverter
                     var type = int.Parse(match.Groups[4].Value);
 
                     var bestshots = this.bestshots.ContainsKey(chara) ? this.bestshots[chara] : null;
-                    var levelIndex = Array.FindIndex<string>(
-                        LevelShortArray, new Predicate<string>(elem => (elem == level)));
+                    var levelIndex = Array.IndexOf(LevelShortArray, level);
                     var key = new LevelScenePair(levelIndex + 1, scene);
 
                     if ((bestshots != null) && bestshots.ContainsKey(key))
@@ -884,8 +880,8 @@ namespace ThScoreFileConverter
                                 return bestshots[key].Header.SlowRate.ToString("F6") + "%";
                             case 6:     // date & time
                                 {
-                                    var score = this.allScoreData.scores.Find(new Predicate<Score>(
-                                        elem => ((elem != null) && (elem.Chara == chara) && elem.LevelScene.Equals(key))));
+                                    var score = this.allScoreData.scores.Find(elem =>
+                                        (elem != null) && (elem.Chara == chara) && elem.LevelScene.Equals(key));
                                     if (score != null)
                                         return new DateTime(1970, 1, 1).AddSeconds(score.DateTime)
                                             .ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");

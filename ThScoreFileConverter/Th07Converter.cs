@@ -622,8 +622,7 @@ namespace ThScoreFileConverter
                                     allScoreData.rankings.Add(key, new List<HighScore>(InitialRanking));
                                 var ranking = allScoreData.rankings[key];
                                 ranking.Add(score);
-                                ranking.Sort(
-                                    new Comparison<HighScore>((lhs, rhs) => rhs.Score.CompareTo(lhs.Score)));
+                                ranking.Sort((lhs, rhs) => rhs.Score.CompareTo(lhs.Score));
                                 ranking.RemoveAt(ranking.Count - 1);
                             }
                             break;
@@ -877,25 +876,23 @@ namespace ThScoreFileConverter
                         if (stage == 0)     // total
                         {
                             if (type == 1)
-                                findCard = (attack =>
-                                    ((attack != null) && (attack.ClearCounts[chara] > 0)));
+                                findCard = (attack => (attack != null) && (attack.ClearCounts[chara] > 0));
                             else
-                                findCard = (attack =>
-                                    ((attack != null) && (attack.TrialCounts[chara] > 0)));
+                                findCard = (attack => (attack != null) && (attack.TrialCounts[chara] > 0));
                         }
                         else
                         {
                             var st = (Stage)(stage - 1);
                             if (type == 1)
                                 findCard = (attack =>
-                                    ((attack != null) &&
+                                    (attack != null) &&
                                     StageCardTable[st].Contains(attack.Number) &&
-                                    (attack.ClearCounts[chara] > 0)));
+                                    (attack.ClearCounts[chara] > 0));
                             else
                                 findCard = (attack =>
-                                    ((attack != null) &&
+                                    (attack != null) &&
                                     StageCardTable[st].Contains(attack.Number) &&
-                                    (attack.TrialCounts[chara] > 0)));
+                                    (attack.TrialCounts[chara] > 0));
                         }
                     }
                     else if ((level == LevelWithTotal.Extra) || (level == LevelWithTotal.Phantasm))
@@ -903,14 +900,14 @@ namespace ThScoreFileConverter
                         var st = (level == LevelWithTotal.Extra) ? Stage.Extra : Stage.Phantasm;
                         if (type == 1)
                             findCard = (attack =>
-                                ((attack != null) &&
+                                (attack != null) &&
                                 StageCardTable[st].Contains(attack.Number) &&
-                                (attack.ClearCounts[chara] > 0)));
+                                (attack.ClearCounts[chara] > 0));
                         else
                             findCard = (attack =>
-                                ((attack != null) &&
+                                (attack != null) &&
                                 StageCardTable[st].Contains(attack.Number) &&
-                                (attack.TrialCounts[chara] > 0)));
+                                (attack.TrialCounts[chara] > 0));
                     }
                     else
                     {
@@ -919,27 +916,27 @@ namespace ThScoreFileConverter
                         {
                             if (type == 1)
                                 findCard = (attack =>
-                                    ((attack != null) &&
+                                    (attack != null) &&
                                     (CardLevelTable[attack.Number] == lv) &&
-                                    (attack.ClearCounts[chara] > 0)));
+                                    (attack.ClearCounts[chara] > 0));
                             else
                                 findCard = (attack =>
-                                    ((attack != null) &&
+                                    (attack != null) &&
                                     (CardLevelTable[attack.Number] == lv) &&
-                                    (attack.TrialCounts[chara] > 0)));
+                                    (attack.TrialCounts[chara] > 0));
                         }
                         else
                         {
                             if (type == 1)
                                 findCard = (attack =>
-                                    ((attack != null) &&
+                                    (attack != null) &&
                                     (CardLevelTable[attack.Number] == lv) &&
-                                    (attack.ClearCounts[chara] > 0)));
+                                    (attack.ClearCounts[chara] > 0));
                             else
                                 findCard = (attack =>
-                                    ((attack != null) &&
+                                    (attack != null) &&
                                     (CardLevelTable[attack.Number] == lv) &&
-                                    (attack.TrialCounts[chara] > 0)));
+                                    (attack.TrialCounts[chara] > 0));
                         }
                     }
 

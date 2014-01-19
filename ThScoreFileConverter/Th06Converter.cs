@@ -508,8 +508,7 @@ namespace ThScoreFileConverter
                                     allScoreData.rankings.Add(key, new List<HighScore>(InitialRanking));
                                 var ranking = allScoreData.rankings[key];
                                 ranking.Add(score);
-                                ranking.Sort(
-                                    new Comparison<HighScore>((lhs, rhs) => rhs.Score.CompareTo(lhs.Score)));
+                                ranking.Sort((lhs, rhs) => rhs.Score.CompareTo(lhs.Score));
                                 ranking.RemoveAt(ranking.Count - 1);
                             }
                             break;
@@ -691,8 +690,7 @@ namespace ThScoreFileConverter
                         {
                             if ((attack != null) && attack.hasTried())
                                 return string.Join(", ", Array.ConvertAll<Level, string>(
-                                    CardLevelTable[attack.Number],
-                                    new Converter<Level, string>(elem => elem.ToString())));
+                                    CardLevelTable[attack.Number], (elem => elem.ToString())));
                             else
                                 return "?????";
                         }
@@ -709,8 +707,7 @@ namespace ThScoreFileConverter
             return new Regex(@"%T06CRG([0-6X])([12])", RegexOptions.IgnoreCase)
                 .Replace(input, Utils.ToNothrowEvaluator(match =>
                 {
-                    var stage = Array.FindIndex<string>(stageShortWithTotalArray,
-                        new Predicate<string>(elem => (elem == match.Groups[1].Value.ToUpper())));
+                    var stage = Array.IndexOf(stageShortWithTotalArray, match.Groups[1].Value.ToUpper());
                     var type = int.Parse(match.Groups[2].Value);
 
                     Func<CardAttack, bool> findCard = (attack => false);
@@ -718,21 +715,21 @@ namespace ThScoreFileConverter
                     if (stage == 0)     // total
                     {
                         if (type == 1)
-                            findCard = (attack => ((attack != null) && (attack.ClearCount > 0)));
+                            findCard = (attack => (attack != null) && (attack.ClearCount > 0));
                         else
-                            findCard = (attack => ((attack != null) && (attack.TrialCount > 0)));
+                            findCard = (attack => (attack != null) && (attack.TrialCount > 0));
                     }
                     else
                     {
                         var st = (Stage)(stage - 1);
                         if (type == 1)
                             findCard = (attack =>
-                                ((attack != null) &&
-                                StageCardTable[st].Contains(attack.Number) && (attack.ClearCount > 0)));
+                                (attack != null) &&
+                                StageCardTable[st].Contains(attack.Number) && (attack.ClearCount > 0));
                         else
                             findCard = (attack =>
-                                ((attack != null) &&
-                                StageCardTable[st].Contains(attack.Number) && (attack.TrialCount > 0)));
+                                (attack != null) &&
+                                StageCardTable[st].Contains(attack.Number) && (attack.TrialCount > 0));
                     }
 
                     return this.allScoreData.cardAttacks.Count(findCard).ToString();

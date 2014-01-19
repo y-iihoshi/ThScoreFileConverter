@@ -640,13 +640,13 @@ namespace ThScoreFileConverter
                             switch (type)
                             {
                                 case 1:
-                                    findCard = (card => (card.NoIceCount > 0));
+                                    findCard = (card => card.NoIceCount > 0);
                                     break;
                                 case 2:
-                                    findCard = (card => (card.NoMissCount > 0));
+                                    findCard = (card => card.NoMissCount > 0);
                                     break;
                                 case 3:
-                                    findCard = (card => (card.TrialCount > 0));
+                                    findCard = (card => card.TrialCount > 0);
                                     break;
                                 default:    // unreachable
                                     break;
@@ -658,18 +658,15 @@ namespace ThScoreFileConverter
                             {
                                 case 1:
                                     findCard = (card =>
-                                        (StageCardTable[st].Contains(card.Number) &&
-                                        (card.NoIceCount > 0)));
+                                        StageCardTable[st].Contains(card.Number) && (card.NoIceCount > 0));
                                     break;
                                 case 2:
                                     findCard = (card =>
-                                        (StageCardTable[st].Contains(card.Number) &&
-                                        (card.NoMissCount > 0)));
+                                        StageCardTable[st].Contains(card.Number) && (card.NoMissCount > 0));
                                     break;
                                 case 3:
                                     findCard = (card =>
-                                        (StageCardTable[st].Contains(card.Number) &&
-                                        (card.TrialCount > 0)));
+                                        StageCardTable[st].Contains(card.Number) && (card.TrialCount > 0));
                                     break;
                                 default:    // unreachable
                                     break;
@@ -681,18 +678,15 @@ namespace ThScoreFileConverter
                         {
                             case 1:
                                 findCard = (card =>
-                                    (StageCardTable[Stage.Extra].Contains(card.Number) &&
-                                    (card.NoIceCount > 0)));
+                                    StageCardTable[Stage.Extra].Contains(card.Number) && (card.NoIceCount > 0));
                                 break;
                             case 2:
                                 findCard = (card =>
-                                    (StageCardTable[Stage.Extra].Contains(card.Number) &&
-                                    (card.NoMissCount > 0)));
+                                    StageCardTable[Stage.Extra].Contains(card.Number) && (card.NoMissCount > 0));
                                 break;
                             case 3:
                                 findCard = (card =>
-                                    (StageCardTable[Stage.Extra].Contains(card.Number) &&
-                                    (card.TrialCount > 0)));
+                                    StageCardTable[Stage.Extra].Contains(card.Number) && (card.TrialCount > 0));
                                 break;
                             default:    // unreachable
                                 break;
@@ -704,13 +698,13 @@ namespace ThScoreFileConverter
                             switch (type)
                             {
                                 case 1:
-                                    findCard = (card => ((card.Level == lv) && (card.NoIceCount > 0)));
+                                    findCard = (card => (card.Level == lv) && (card.NoIceCount > 0));
                                     break;
                                 case 2:
-                                    findCard = (card => ((card.Level == lv) && (card.NoMissCount > 0)));
+                                    findCard = (card => (card.Level == lv) && (card.NoMissCount > 0));
                                     break;
                                 case 3:
-                                    findCard = (card => ((card.Level == lv) && (card.TrialCount > 0)));
+                                    findCard = (card => (card.Level == lv) && (card.TrialCount > 0));
                                     break;
                                 default:    // unreachable
                                     break;
@@ -722,21 +716,18 @@ namespace ThScoreFileConverter
                             {
                                 case 1:
                                     findCard = (card =>
-                                        (StageCardTable[st].Contains(card.Number) &&
-                                        (card.Level == lv) &&
-                                        (card.NoIceCount > 0)));
+                                        StageCardTable[st].Contains(card.Number) &&
+                                        (card.Level == lv) && (card.NoIceCount > 0));
                                     break;
                                 case 2:
                                     findCard = (card =>
-                                        (StageCardTable[st].Contains(card.Number) &&
-                                        (card.Level == lv) &&
-                                        (card.NoMissCount > 0)));
+                                        StageCardTable[st].Contains(card.Number) &&
+                                        (card.Level == lv) && (card.NoMissCount > 0));
                                     break;
                                 case 3:
                                     findCard = (card =>
-                                        (StageCardTable[st].Contains(card.Number) &&
-                                        (card.Level == lv) &&
-                                        (card.TrialCount > 0)));
+                                        StageCardTable[st].Contains(card.Number) &&
+                                        (card.Level == lv) && (card.TrialCount > 0));
                                     break;
                                 default:    // unreachable
                                     break;
@@ -815,10 +806,10 @@ namespace ThScoreFileConverter
                                 return this.ToNumberString(
                                     this.allScoreData.clearData.Values.Sum(
                                         data => (data.Route != route)
-                                            ? data.ClearCounts.Values.Sum(count => count) : 0));
+                                            ? data.ClearCounts.Values.Sum() : 0));
                             else
                                 return this.ToNumberString(
-                                    this.allScoreData.clearData[route].ClearCounts.Values.Sum(count => count));
+                                    this.allScoreData.clearData[route].ClearCounts.Values.Sum());
                         default:    // unreachable
                             return match.ToString();
                     }
@@ -872,7 +863,7 @@ namespace ThScoreFileConverter
                                     return this.ToNumberString(
                                         this.allScoreData.clearData.Values.Sum(
                                             data => (data.Route != route)
-                                                ? data.ClearCounts.Values.Sum(count => count) : 0));
+                                                ? data.ClearCounts.Values.Sum() : 0));
                                 else
                                     return this.ToNumberString(
                                         this.allScoreData.clearData.Values.Sum(
@@ -883,7 +874,7 @@ namespace ThScoreFileConverter
                             {
                                 if (level == LevelWithTotal.Total)
                                     return this.ToNumberString(
-                                        this.allScoreData.clearData[route].ClearCounts.Values.Sum(count => count));
+                                        this.allScoreData.clearData[route].ClearCounts.Values.Sum());
                                 else
                                     return this.ToNumberString(this.allScoreData.
                                         clearData[route].ClearCounts[(Level)level]);

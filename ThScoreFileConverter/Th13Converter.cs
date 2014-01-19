@@ -616,16 +616,16 @@ namespace ThScoreFileConverter
                     if (kind == "S")
                     {
                         if (type == 1)
-                            findByKindType = (card => (card.ClearCount > 0));
+                            findByKindType = (card => card.ClearCount > 0);
                         else
-                            findByKindType = (card => (card.TrialCount > 0));
+                            findByKindType = (card => card.TrialCount > 0);
                     }
                     else
                     {
                         if (type == 1)
-                            findByKindType = (card => (card.PracticeClearCount > 0));
+                            findByKindType = (card => card.PracticeClearCount > 0);
                         else
-                            findByKindType = (card => (card.PracticeTrialCount > 0));
+                            findByKindType = (card => card.PracticeTrialCount > 0);
                     }
 
                     if (stage == 0)
@@ -650,7 +650,7 @@ namespace ThScoreFileConverter
                                 StageCardTable[StagePractice.OverDrive].Contains(card.Number));
                             break;
                         default:
-                            findByLevel = (card => (card.Level == (LevelPractice)level));
+                            findByLevel = (card => card.Level == (LevelPractice)level);
                             break;
                     }
 
@@ -729,11 +729,10 @@ namespace ThScoreFileConverter
                             if (chara == CharaWithTotal.Total)
                                 return this.ToNumberString(
                                     this.allScoreData.clearData.Values.Sum(
-                                        data => (data.Chara != chara)
-                                            ? data.ClearCounts.Values.Sum(count => count) : 0));
+                                        data => (data.Chara != chara) ? data.ClearCounts.Values.Sum() : 0));
                             else
                                 return this.ToNumberString(
-                                    this.allScoreData.clearData[chara].ClearCounts.Values.Sum(count => count));
+                                    this.allScoreData.clearData[chara].ClearCounts.Values.Sum());
                         default:    // unreachable
                             return match.ToString();
                     }
@@ -780,7 +779,7 @@ namespace ThScoreFileConverter
                                     return this.ToNumberString(
                                         this.allScoreData.clearData.Values.Sum(
                                             data => (data.Chara != chara)
-                                                ? data.ClearCounts.Values.Sum(count => count) : 0));
+                                                ? data.ClearCounts.Values.Sum() : 0));
                                 else
                                     return this.ToNumberString(
                                         this.allScoreData.clearData.Values.Sum(
@@ -791,7 +790,7 @@ namespace ThScoreFileConverter
                             {
                                 if (level == LevelWithTotal.Total)
                                     return this.ToNumberString(
-                                        this.allScoreData.clearData[chara].ClearCounts.Values.Sum(count => count));
+                                        this.allScoreData.clearData[chara].ClearCounts.Values.Sum());
                                 else
                                     return this.ToNumberString(this.allScoreData.
                                         clearData[chara].ClearCounts[(LevelPractice)level]);

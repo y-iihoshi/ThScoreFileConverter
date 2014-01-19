@@ -198,11 +198,13 @@ namespace ThScoreFileConverter
         {
             try
             {
-                var scorePath = Array.Find<string>(
-                    (string[])e.Data.GetData(DataFormats.FileDrop),
-                    new Predicate<string>(path => File.Exists(path)));
-                if (scorePath != null)
-                    this.txtScore.Text = scorePath;
+                if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                {
+                    var droppedPaths = (string[])e.Data.GetData(DataFormats.FileDrop);
+                    var scorePath = droppedPaths.FirstOrDefault(path => File.Exists(path));
+                    if (scorePath != null)
+                        this.txtScore.Text = scorePath;
+                }
             }
             catch (Exception ex)
             {
@@ -280,11 +282,13 @@ namespace ThScoreFileConverter
         {
             try
             {
-                var bestShotPath = Array.Find<string>(
-                    (string[])e.Data.GetData(DataFormats.FileDrop),
-                    new Predicate<string>(path => Directory.Exists(path)));
-                if (bestShotPath != null)
-                    this.txtBestShot.Text = bestShotPath;
+                if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                {
+                    var droppedPaths = (string[])e.Data.GetData(DataFormats.FileDrop);
+                    var bestShotPath = droppedPaths.FirstOrDefault(path => Directory.Exists(path));
+                    if (bestShotPath != null)
+                        this.txtBestShot.Text = bestShotPath;
+                }
             }
             catch (Exception ex)
             {
@@ -490,11 +494,13 @@ namespace ThScoreFileConverter
         {
             try
             {
-                var outputPath = Array.Find<string>(
-                    (string[])e.Data.GetData(DataFormats.FileDrop),
-                    new Predicate<string>(path => Directory.Exists(path)));
-                if (outputPath != null)
-                    this.txtOutput.Text = outputPath;
+                if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                {
+                    var droppedPaths = (string[])e.Data.GetData(DataFormats.FileDrop);
+                    var outputPath = droppedPaths.FirstOrDefault(path => Directory.Exists(path));
+                    if (outputPath != null)
+                        this.txtOutput.Text = outputPath;
+                }
             }
             catch (Exception ex)
             {
