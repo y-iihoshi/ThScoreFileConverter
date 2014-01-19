@@ -29,7 +29,7 @@ namespace ThScoreFileConverter
         private byte mask;
 
         /// <summary>
-        /// コンストラクタ
+        /// インスタンスを生成する
         /// </summary>
         /// <param Name="stream">読み出し対象のストリーム</param>
         public BitReader(Stream stream)
@@ -46,7 +46,7 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// 破棄処理
+        /// 破棄処理（Dispose パターン参照）
         /// </summary>
         public void Dispose()
         {
@@ -55,7 +55,7 @@ namespace ThScoreFileConverter
         }
         
         /// <summary>
-        /// FIXME: 破棄処理
+        /// 破棄処理（Dispose パターン参照）
         /// </summary>
         /// <param Name="disposing"></param>
         protected virtual void Dispose(bool disposing)
@@ -69,7 +69,7 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// デストラクタ
+        /// デストラクター（Dispose パターン参照）
         /// </summary>
         ~BitReader()
         {

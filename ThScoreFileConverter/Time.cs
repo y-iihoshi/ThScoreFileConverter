@@ -20,7 +20,7 @@ namespace ThScoreFileConverter
         public bool IsFrames { get; private set; }
 
         /// <summary>
-        /// コンストラクタ
+        /// インスタンスを生成する
         /// </summary>
         /// <param name="framesOrMilliseconds">ミリ秒またはフレーム数/秒 (fps)</param>
         /// <param name="isFrames">秒未満の値を fps で扱う場合 true、ミリ秒で扱う場合 false</param>
@@ -47,7 +47,7 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// コンストラクタ
+        /// インスタンスを生成する
         /// </summary>
         /// <param name="hours">時</param>
         /// <param name="minutes">分</param>

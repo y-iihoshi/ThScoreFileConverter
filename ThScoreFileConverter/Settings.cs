@@ -38,7 +38,7 @@ namespace ThScoreFileConverter
         public string ImageOutputDirectory { get; set; }
 
         /// <summary>
-        /// コンストラクタ
+        /// インスタンスを生成する
         /// </summary>
         public SettingsPerTitle()
         {
@@ -87,7 +87,7 @@ namespace ThScoreFileConverter
         public bool? OutputNumberGroupSeparator { get; set; }
 
         /// <summary>
-        /// コンストラクタ
+        /// インスタンスを生成する
         /// </summary>
         public Settings()
         {

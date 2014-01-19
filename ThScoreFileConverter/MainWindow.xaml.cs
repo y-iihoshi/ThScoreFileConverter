@@ -43,7 +43,7 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// コンストラクタ
+        /// インスタンスを生成する
         /// </summary>
         public MainWindow()
         {

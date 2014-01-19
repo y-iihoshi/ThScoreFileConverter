@@ -13,7 +13,7 @@ namespace ThScoreFileConverter
         public IntPtr Handle { get; private set; }
 
         /// <summary>
-        /// コンストラクタ
+        /// インスタンスを生成する
         /// </summary>
         /// <param Name="window">変換元の System.Windows.Window インスタンス</param>
         public Win32Window(Window window)
