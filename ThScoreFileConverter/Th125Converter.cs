@@ -676,44 +676,37 @@ namespace ThScoreFileConverter
                 Utils.JoinEnumNames<CharaShort>(""),
                 string.Join("", LevelShortArray));
             return new Regex(pattern, RegexOptions.IgnoreCase)
-                .Replace(input, new MatchEvaluator(match =>
+                .Replace(input, Utils.ToNothrowEvaluator(match =>
                 {
-                    try
-                    {
-                        var chara = (Chara)Utils.ParseEnum<CharaShort>(match.Groups[1].Value, true);
-                        var level = match.Groups[2].Value.ToUpper();
-                        var scene = int.Parse(match.Groups[3].Value);
-                        var type = int.Parse(match.Groups[4].Value);
+                    var chara = (Chara)Utils.ParseEnum<CharaShort>(match.Groups[1].Value, true);
+                    var level = match.Groups[2].Value.ToUpper();
+                    var scene = int.Parse(match.Groups[3].Value);
+                    var type = int.Parse(match.Groups[4].Value);
 
-                        var levelIndex = Array.FindIndex<string>(
-                            LevelShortArray, new Predicate<string>(elem => (elem == level)));
-                        var levelScene = new LevelScenePair(levelIndex + 1, scene);
-                        var score = this.allScoreData.scores.Find(new Predicate<Score>(elem => (
-                            (elem != null) && (elem.Chara == chara) && elem.LevelScene.Equals(levelScene))));
+                    var levelIndex = Array.FindIndex<string>(
+                        LevelShortArray, new Predicate<string>(elem => (elem == level)));
+                    var levelScene = new LevelScenePair(levelIndex + 1, scene);
+                    var score = this.allScoreData.scores.Find(new Predicate<Score>(elem => (
+                        (elem != null) && (elem.Chara == chara) && elem.LevelScene.Equals(levelScene))));
 
-                        switch (type)
-                        {
-                            case 1:     // high score
-                                return this.ToNumberString((score != null) ? score.HighScore : 0);
-                            case 2:     // bestshot score
-                                return this.ToNumberString((score != null) ? score.BestshotScore : 0);
-                            case 3:     // num of shots
-                                return this.ToNumberString((score != null) ? score.TrialCount : 0);
-                            case 4:     // num of shots for the first success
-                                return this.ToNumberString((score != null) ? score.FirstSuccess : 0);
-                            case 5:     // date & time
-                                if (score != null)
-                                    return new DateTime(1970, 1, 1).AddSeconds(score.DateTime)
-                                        .ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
-                                else
-                                    return "----/--/-- --:--:--";
-                            default:    // unreachable
-                                return match.ToString();
-                        }
-                    }
-                    catch
+                    switch (type)
                     {
-                        return match.ToString();
+                        case 1:     // high score
+                            return this.ToNumberString((score != null) ? score.HighScore : 0);
+                        case 2:     // bestshot score
+                            return this.ToNumberString((score != null) ? score.BestshotScore : 0);
+                        case 3:     // num of shots
+                            return this.ToNumberString((score != null) ? score.TrialCount : 0);
+                        case 4:     // num of shots for the first success
+                            return this.ToNumberString((score != null) ? score.FirstSuccess : 0);
+                        case 5:     // date & time
+                            if (score != null)
+                                return new DateTime(1970, 1, 1).AddSeconds(score.DateTime)
+                                    .ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
+                            else
+                                return "----/--/-- --:--:--";
+                        default:    // unreachable
+                            return match.ToString();
                     }
                 }));
         }
@@ -723,73 +716,66 @@ namespace ThScoreFileConverter
         {
             var pattern = string.Format(@"%T125SCRTL([{0}])([12])([1-5])", Utils.JoinEnumNames<CharaShort>(""));
             return new Regex(pattern, RegexOptions.IgnoreCase)
-                .Replace(input, new MatchEvaluator(match =>
+                .Replace(input, Utils.ToNothrowEvaluator(match =>
                 {
-                    try
+                    var chara = (Chara)Utils.ParseEnum<CharaShort>(match.Groups[1].Value, true);
+                    var method = int.Parse(match.Groups[2].Value);
+                    var type = int.Parse(match.Groups[3].Value);
+
+                    var triedAndSucceeded = new Predicate<Score>(
+                        score => (score.TrialCount > 0) && (score.FirstSuccess > 0));
+                    var isTarget = new Predicate<Score>(score =>
                     {
-                        var chara = (Chara)Utils.ParseEnum<CharaShort>(match.Groups[1].Value, true);
-                        var method = int.Parse(match.Groups[2].Value);
-                        var type = int.Parse(match.Groups[3].Value);
+                        if (score == null)
+                            return false;
 
-                        var triedAndSucceeded = new Predicate<Score>(
-                            score => (score.TrialCount > 0) && (score.FirstSuccess > 0));
-                        var isTarget = new Predicate<Score>(score =>
+                        if (method == 1)
                         {
-                            if (score == null)
-                                return false;
-
-                            if (method == 1)
+                            if (LevelArray[score.LevelScene.Level - 1] == "sp")
                             {
-                                if (LevelArray[score.LevelScene.Level - 1] == "sp")
+                                if (chara == Chara.Aya)
                                 {
-                                    if (chara == Chara.Aya)
-                                    {
-                                        if (score.LevelScene.Scene <= 4)
-                                            return (score.Chara == Chara.Aya);
-                                        else
-                                            return (score.Chara == Chara.Hatate);
-                                    }
+                                    if (score.LevelScene.Scene <= 4)
+                                        return (score.Chara == Chara.Aya);
                                     else
-                                        return false;
+                                        return (score.Chara == Chara.Hatate);
                                 }
                                 else
-                                    return (score.Chara == chara);
+                                    return false;
                             }
                             else
                                 return (score.Chara == chara);
-                        });
-
-                        switch (type)
-                        {
-                            case 1:     // total score
-                                return this.ToNumberString(
-                                    this.allScoreData.scores.Sum(
-                                        score => (isTarget(score) && triedAndSucceeded(score))
-                                            ? (long)score.HighScore : 0L));
-                            case 2:     // total of bestshot scores
-                                return this.ToNumberString(
-                                    this.allScoreData.scores.Sum(
-                                        score => isTarget(score) ? (long)score.BestshotScore : 0L));
-                            case 3:     // total of num of shots
-                                return this.ToNumberString(
-                                    this.allScoreData.scores.Sum(
-                                        score => isTarget(score) ? score.TrialCount : 0));
-                            case 4:     // total of num of shots for the first success
-                                return this.ToNumberString(
-                                    this.allScoreData.scores.Sum(
-                                        score => (isTarget(score) && triedAndSucceeded(score))
-                                            ? (long)score.FirstSuccess : 0L));
-                            case 5:     // num of succeeded scenes
-                                return Utils.CountIf<Score>(
-                                    this.allScoreData.scores, new Predicate<Score>(
-                                        score => (isTarget(score) && triedAndSucceeded(score)))).ToString();
-                            default:    // unreachable
-                                return match.ToString();
                         }
-                    }
-                    catch
+                        else
+                            return (score.Chara == chara);
+                    });
+
+                    switch (type)
                     {
-                        return match.ToString();
+                        case 1:     // total score
+                            return this.ToNumberString(
+                                this.allScoreData.scores.Sum(
+                                    score => (isTarget(score) && triedAndSucceeded(score))
+                                        ? (long)score.HighScore : 0L));
+                        case 2:     // total of bestshot scores
+                            return this.ToNumberString(
+                                this.allScoreData.scores.Sum(
+                                    score => isTarget(score) ? (long)score.BestshotScore : 0L));
+                        case 3:     // total of num of shots
+                            return this.ToNumberString(
+                                this.allScoreData.scores.Sum(
+                                    score => isTarget(score) ? score.TrialCount : 0));
+                        case 4:     // total of num of shots for the first success
+                            return this.ToNumberString(
+                                this.allScoreData.scores.Sum(
+                                    score => (isTarget(score) && triedAndSucceeded(score))
+                                        ? (long)score.FirstSuccess : 0L));
+                        case 5:     // num of succeeded scenes
+                            return Utils.CountIf<Score>(
+                                this.allScoreData.scores, new Predicate<Score>(
+                                    score => (isTarget(score) && triedAndSucceeded(score)))).ToString();
+                        default:    // unreachable
+                            return match.ToString();
                     }
                 }));
         }
@@ -799,33 +785,26 @@ namespace ThScoreFileConverter
         {
             var pattern = string.Format(@"%T125CARD([{0}])([1-9])([12])", string.Join("", LevelShortArray));
             return new Regex(pattern, RegexOptions.IgnoreCase)
-                .Replace(input, new MatchEvaluator(match =>
+                .Replace(input, Utils.ToNothrowEvaluator(match =>
                 {
-                    try
-                    {
-                        var level = match.Groups[1].Value.ToUpper();
-                        var scene = int.Parse(match.Groups[2].Value);
-                        var type = int.Parse(match.Groups[3].Value);
+                    var level = match.Groups[1].Value.ToUpper();
+                    var scene = int.Parse(match.Groups[2].Value);
+                    var type = int.Parse(match.Groups[3].Value);
 
-                        var levelIndex = Array.FindIndex<string>(
-                            LevelShortArray, new Predicate<string>(elem => (elem == level)));
-                        var key = new LevelScenePair(levelIndex + 1, scene);
-                        var score = this.allScoreData.scores.Find(
-                            new Predicate<Score>(elem => ((elem != null) && elem.LevelScene.Equals(key))));
+                    var levelIndex = Array.FindIndex<string>(
+                        LevelShortArray, new Predicate<string>(elem => (elem == level)));
+                    var key = new LevelScenePair(levelIndex + 1, scene);
+                    var score = this.allScoreData.scores.Find(
+                        new Predicate<Score>(elem => ((elem != null) && elem.LevelScene.Equals(key))));
 
-                        switch (type)
-                        {
-                            case 1:     // target Name
-                                return (score != null) ? EnemyNames[SpellCards[key].Enemy] : "??????????";
-                            case 2:     // spell card Name
-                                return (score != null) ? SpellCards[key].Card : "??????????";
-                            default:    // unreachable
-                                return match.ToString();
-                        }
-                    }
-                    catch
+                    switch (type)
                     {
-                        return match.ToString();
+                        case 1:     // target Name
+                            return (score != null) ? EnemyNames[SpellCards[key].Enemy] : "??????????";
+                        case 2:     // spell card Name
+                            return (score != null) ? SpellCards[key].Card : "??????????";
+                        default:    // unreachable
+                            return match.ToString();
                     }
                 }));
         }
@@ -834,7 +813,7 @@ namespace ThScoreFileConverter
         private string ReplaceTime(string input)
         {
             return new Regex(@"%T125TIMEPLY", RegexOptions.IgnoreCase)
-                .Replace(input, new MatchEvaluator(match =>
+                .Replace(input, Utils.ToNothrowEvaluator(match =>
                 {
                     return new Time(this.allScoreData.status.TotalPlayTime * 10, false).ToLongString();
                 }));
@@ -847,34 +826,27 @@ namespace ThScoreFileConverter
                 Utils.JoinEnumNames<CharaShort>(""),
                 string.Join("", LevelShortArray));
             return new Regex(pattern, RegexOptions.IgnoreCase)
-                .Replace(input, new MatchEvaluator(match =>
+                .Replace(input, Utils.ToNothrowEvaluator(match =>
                 {
-                    try
-                    {
-                        var chara = (Chara)Utils.ParseEnum<CharaShort>(match.Groups[1].Value, true);
-                        var level = match.Groups[2].Value.ToUpper();
-                        var scene = int.Parse(match.Groups[3].Value);
+                    var chara = (Chara)Utils.ParseEnum<CharaShort>(match.Groups[1].Value, true);
+                    var level = match.Groups[2].Value.ToUpper();
+                    var scene = int.Parse(match.Groups[3].Value);
 
-                        var bestshots = this.bestshots.ContainsKey(chara) ? this.bestshots[chara] : null;
-                        var levelIndex = Array.FindIndex<string>(
-                            LevelShortArray, new Predicate<string>(elem => (elem == level)));
-                        var key = new LevelScenePair(levelIndex + 1, scene);
+                    var bestshots = this.bestshots.ContainsKey(chara) ? this.bestshots[chara] : null;
+                    var levelIndex = Array.FindIndex<string>(
+                        LevelShortArray, new Predicate<string>(elem => (elem == level)));
+                    var key = new LevelScenePair(levelIndex + 1, scene);
 
-                        if ((bestshots != null) && bestshots.ContainsKey(key))
-                            return string.Format("<img src=\"{0}\" alt=\"{1}\" title=\"{1}\" border=0>",
-                                new Uri(outputFilePath)
-                                    .MakeRelativeUri(new Uri(bestshots[key].Path)).OriginalString,
-                                string.Format("ClearData: {0}\nSlow: {1:F6}%\nSpellName: {2}",
-                                    this.ToNumberString(bestshots[key].Header.ResultScore),
-                                    bestshots[key].Header.SlowRate,
-                                    Encoding.Default.GetString(bestshots[key].Header.CardName).TrimEnd('\0')));
-                        else
-                            return "";
-                    }
-                    catch
-                    {
+                    if ((bestshots != null) && bestshots.ContainsKey(key))
+                        return string.Format("<img src=\"{0}\" alt=\"{1}\" title=\"{1}\" border=0>",
+                            new Uri(outputFilePath)
+                                .MakeRelativeUri(new Uri(bestshots[key].Path)).OriginalString,
+                            string.Format("ClearData: {0}\nSlow: {1:F6}%\nSpellName: {2}",
+                                this.ToNumberString(bestshots[key].Header.ResultScore),
+                                bestshots[key].Header.SlowRate,
+                                Encoding.Default.GetString(bestshots[key].Header.CardName).TrimEnd('\0')));
+                    else
                         return "";
-                    }
                 }));
         }
 
@@ -885,128 +857,121 @@ namespace ThScoreFileConverter
                 Utils.JoinEnumNames<CharaShort>(""),
                 string.Join("", LevelShortArray));
             return new Regex(pattern, RegexOptions.IgnoreCase)
-                .Replace(input, new MatchEvaluator(match =>
+                .Replace(input, Utils.ToNothrowEvaluator(match =>
                 {
-                    try
-                    {
-                        var chara = (Chara)Utils.ParseEnum<CharaShort>(match.Groups[1].Value, true);
-                        var level = match.Groups[2].Value.ToUpper();
-                        var scene = int.Parse(match.Groups[3].Value);
-                        var type = int.Parse(match.Groups[4].Value);
+                    var chara = (Chara)Utils.ParseEnum<CharaShort>(match.Groups[1].Value, true);
+                    var level = match.Groups[2].Value.ToUpper();
+                    var scene = int.Parse(match.Groups[3].Value);
+                    var type = int.Parse(match.Groups[4].Value);
 
-                        var bestshots = this.bestshots.ContainsKey(chara) ? this.bestshots[chara] : null;
-                        var levelIndex = Array.FindIndex<string>(
-                            LevelShortArray, new Predicate<string>(elem => (elem == level)));
-                        var key = new LevelScenePair(levelIndex + 1, scene);
+                    var bestshots = this.bestshots.ContainsKey(chara) ? this.bestshots[chara] : null;
+                    var levelIndex = Array.FindIndex<string>(
+                        LevelShortArray, new Predicate<string>(elem => (elem == level)));
+                    var key = new LevelScenePair(levelIndex + 1, scene);
 
-                        if ((bestshots != null) && bestshots.ContainsKey(key))
-                            switch (type)
-                            {
-                                case 1:     // relative path to the bestshot file
-                                    return new Uri(outputFilePath)
-                                        .MakeRelativeUri(new Uri(bestshots[key].Path)).OriginalString;
-                                case 2:     // width
-                                    return bestshots[key].Header.Width.ToString();
-                                case 3:     // height
-                                    return bestshots[key].Header.Height.ToString();
-                                case 4:     // score
-                                    return this.ToNumberString(bestshots[key].Header.ResultScore);
-                                case 5:     // slow rate
-                                    return bestshots[key].Header.SlowRate.ToString("F6") + "%";
-                                case 6:     // date & time
-                                    {
-                                        var score = this.allScoreData.scores.Find(new Predicate<Score>(
-                                            elem => ((elem != null) && (elem.Chara == chara) && elem.LevelScene.Equals(key))));
-                                        if (score != null)
-                                            return new DateTime(1970, 1, 1).AddSeconds(score.DateTime)
-                                                .ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
-                                        else
-                                            return "----/--/-- --:--:--";
-                                    }
-                                case 7:     // detail info
-                                    {
-                                        var header = bestshots[key].Header;
-                                        var info = new List<string>();
-                                        info.Add(string.Format("Base Point    {0,9}",
-                                            this.ToNumberString<int>(header.BasePoint)));
-                                        if (header.Fields.ClearShot)
-                                            info.Add(string.Format("Clear Shot!   {0,9}",
-                                                string.Format("+ {0}", header.ClearShot)));
-                                        if (header.Fields.SoloShot)
-                                            info.Add(string.Format("Solo Shot     {0,9}", "+ 100"));
-                                        if (header.Fields.RedShot)
-                                            info.Add(string.Format("Red Shot      {0,9}", "+ 300"));
-                                        if (header.Fields.PurpleShot)
-                                            info.Add(string.Format("Purple Shot   {0,9}", "+ 300"));
-                                        if (header.Fields.BlueShot)
-                                            info.Add(string.Format("Blue Shot     {0,9}", "+ 300"));
-                                        if (header.Fields.CyanShot)
-                                            info.Add(string.Format("Cyan Shot     {0,9}", "+ 300"));
-                                        if (header.Fields.GreenShot)
-                                            info.Add(string.Format("Green Shot    {0,9}", "+ 300"));
-                                        if (header.Fields.YellowShot)
-                                            info.Add(string.Format("Yellow Shot   {0,9}", "+ 300"));
-                                        if (header.Fields.OrangeShot)
-                                            info.Add(string.Format("Orange Shot   {0,9}", "+ 300"));
-                                        if (header.Fields.ColorfulShot)
-                                            info.Add(string.Format("Colorful Shot {0,9}", "+ 900"));
-                                        if (header.Fields.RainbowShot)
-                                            info.Add(string.Format("Rainbow Shot  {0,9}",
-                                                string.Format("+ {0}", this.ToNumberString<int>(2100))));
-                                        if (header.Fields.RiskBonus)
-                                            info.Add(string.Format("Risk Bonus    {0,9}",
-                                                string.Format("+ {0}",
-                                                    this.ToNumberString<int>(header.RiskBonus))));
-                                        if (header.Fields.MacroBonus)
-                                            info.Add(string.Format("Macro Bonus   {0,9}",
-                                                string.Format("+ {0}",
-                                                    this.ToNumberString<int>(header.MacroBonus))));
-                                        if (header.Fields.FrontShot)
-                                            info.Add(string.Format("Front Shot    {0,9}",
-                                                string.Format("+ {0}", header.FrontSideBackShot)));
-                                        if (header.Fields.SideShot)
-                                            info.Add(string.Format("Side Shot     {0,9}",
-                                                string.Format("+ {0}", header.FrontSideBackShot)));
-                                        if (header.Fields.BackShot)
-                                            info.Add(string.Format("Back Shot     {0,9}",
-                                                string.Format("+ {0}", header.FrontSideBackShot)));
-                                        if (header.Fields.CatBonus)
-                                            info.Add(string.Format("Cat Bonus     {0,9}", "+ 666"));
-                                        info.Add("");
-                                        info.Add(string.Format("Boss Shot!    {0,9}",
-                                            string.Format("* {0:F2}", header.BossShot)));
-                                        if (header.Fields.TwoShot)
-                                            info.Add(string.Format("Two Shot!     {0,9}", "* 1.50"));
-                                        if (header.Fields.NiceShot)
-                                            info.Add(string.Format("Nice Shot!    {0,9}",
-                                                string.Format("* {0:F2}", header.NiceShot)));
-                                        info.Add(string.Format("Angle Bonus   {0,9}",
-                                            string.Format("* {0:F2}", header.AngleBonus)));
-                                        info.Add("");
-                                        info.Add(string.Format("Result Score  {0,9}",
-                                            this.ToNumberString<int>(header.ResultScore)));
-                                        return string.Join("\r\n", info.ToArray());
-                                    }
-                                default:    // unreachable
-                                    return match.ToString();
-                            }
-                        else
-                            switch (type)
-                            {
-                                case 1: return "";
-                                case 2: return "0";
-                                case 3: return "0";
-                                case 4: return "--------";
-                                case 5: return "-----%";
-                                case 6: return "----/--/-- --:--:--";
-                                case 7: return "";
-                                default: return match.ToString();
-                            }
-                    }
-                    catch
-                    {
-                        return match.ToString();
-                    }
+                    if ((bestshots != null) && bestshots.ContainsKey(key))
+                        switch (type)
+                        {
+                            case 1:     // relative path to the bestshot file
+                                return new Uri(outputFilePath)
+                                    .MakeRelativeUri(new Uri(bestshots[key].Path)).OriginalString;
+                            case 2:     // width
+                                return bestshots[key].Header.Width.ToString();
+                            case 3:     // height
+                                return bestshots[key].Header.Height.ToString();
+                            case 4:     // score
+                                return this.ToNumberString(bestshots[key].Header.ResultScore);
+                            case 5:     // slow rate
+                                return bestshots[key].Header.SlowRate.ToString("F6") + "%";
+                            case 6:     // date & time
+                                {
+                                    var score = this.allScoreData.scores.Find(new Predicate<Score>(
+                                        elem => ((elem != null) && (elem.Chara == chara) && elem.LevelScene.Equals(key))));
+                                    if (score != null)
+                                        return new DateTime(1970, 1, 1).AddSeconds(score.DateTime)
+                                            .ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
+                                    else
+                                        return "----/--/-- --:--:--";
+                                }
+                            case 7:     // detail info
+                                {
+                                    var header = bestshots[key].Header;
+                                    var info = new List<string>();
+                                    info.Add(string.Format("Base Point    {0,9}",
+                                        this.ToNumberString<int>(header.BasePoint)));
+                                    if (header.Fields.ClearShot)
+                                        info.Add(string.Format("Clear Shot!   {0,9}",
+                                            string.Format("+ {0}", header.ClearShot)));
+                                    if (header.Fields.SoloShot)
+                                        info.Add(string.Format("Solo Shot     {0,9}", "+ 100"));
+                                    if (header.Fields.RedShot)
+                                        info.Add(string.Format("Red Shot      {0,9}", "+ 300"));
+                                    if (header.Fields.PurpleShot)
+                                        info.Add(string.Format("Purple Shot   {0,9}", "+ 300"));
+                                    if (header.Fields.BlueShot)
+                                        info.Add(string.Format("Blue Shot     {0,9}", "+ 300"));
+                                    if (header.Fields.CyanShot)
+                                        info.Add(string.Format("Cyan Shot     {0,9}", "+ 300"));
+                                    if (header.Fields.GreenShot)
+                                        info.Add(string.Format("Green Shot    {0,9}", "+ 300"));
+                                    if (header.Fields.YellowShot)
+                                        info.Add(string.Format("Yellow Shot   {0,9}", "+ 300"));
+                                    if (header.Fields.OrangeShot)
+                                        info.Add(string.Format("Orange Shot   {0,9}", "+ 300"));
+                                    if (header.Fields.ColorfulShot)
+                                        info.Add(string.Format("Colorful Shot {0,9}", "+ 900"));
+                                    if (header.Fields.RainbowShot)
+                                        info.Add(string.Format("Rainbow Shot  {0,9}",
+                                            string.Format("+ {0}", this.ToNumberString<int>(2100))));
+                                    if (header.Fields.RiskBonus)
+                                        info.Add(string.Format("Risk Bonus    {0,9}",
+                                            string.Format("+ {0}",
+                                                this.ToNumberString<int>(header.RiskBonus))));
+                                    if (header.Fields.MacroBonus)
+                                        info.Add(string.Format("Macro Bonus   {0,9}",
+                                            string.Format("+ {0}",
+                                                this.ToNumberString<int>(header.MacroBonus))));
+                                    if (header.Fields.FrontShot)
+                                        info.Add(string.Format("Front Shot    {0,9}",
+                                            string.Format("+ {0}", header.FrontSideBackShot)));
+                                    if (header.Fields.SideShot)
+                                        info.Add(string.Format("Side Shot     {0,9}",
+                                            string.Format("+ {0}", header.FrontSideBackShot)));
+                                    if (header.Fields.BackShot)
+                                        info.Add(string.Format("Back Shot     {0,9}",
+                                            string.Format("+ {0}", header.FrontSideBackShot)));
+                                    if (header.Fields.CatBonus)
+                                        info.Add(string.Format("Cat Bonus     {0,9}", "+ 666"));
+                                    info.Add("");
+                                    info.Add(string.Format("Boss Shot!    {0,9}",
+                                        string.Format("* {0:F2}", header.BossShot)));
+                                    if (header.Fields.TwoShot)
+                                        info.Add(string.Format("Two Shot!     {0,9}", "* 1.50"));
+                                    if (header.Fields.NiceShot)
+                                        info.Add(string.Format("Nice Shot!    {0,9}",
+                                            string.Format("* {0:F2}", header.NiceShot)));
+                                    info.Add(string.Format("Angle Bonus   {0,9}",
+                                        string.Format("* {0:F2}", header.AngleBonus)));
+                                    info.Add("");
+                                    info.Add(string.Format("Result Score  {0,9}",
+                                        this.ToNumberString<int>(header.ResultScore)));
+                                    return string.Join("\r\n", info.ToArray());
+                                }
+                            default:    // unreachable
+                                return match.ToString();
+                        }
+                    else
+                        switch (type)
+                        {
+                            case 1: return "";
+                            case 2: return "0";
+                            case 3: return "0";
+                            case 4: return "--------";
+                            case 5: return "-----%";
+                            case 6: return "----/--/-- --:--:--";
+                            case 7: return "";
+                            default: return match.ToString();
+                        }
                 }));
         }
 

@@ -485,32 +485,25 @@ namespace ThScoreFileConverter
                 Utils.JoinEnumNames<LevelShort>(""),
                 Utils.JoinEnumNames<CharaShort>("|"));
             return new Regex(pattern, RegexOptions.IgnoreCase)
-                .Replace(input, new MatchEvaluator(match =>
+                .Replace(input, Utils.ToNothrowEvaluator(match =>
                 {
-                    try
-                    {
-                        var level = (Level)Enum.Parse(typeof(LevelShort), match.Groups[1].Value, true);
-                        var chara = (Chara)Enum.Parse(typeof(CharaShort), match.Groups[2].Value, true);
-                        var rank = int.Parse(match.Groups[3].Value) - 1;
-                        var type = int.Parse(match.Groups[4].Value);
-                        var score = this.allScoreData.rankings[new CharaLevelPair(chara, level)][rank];
+                    var level = (Level)Enum.Parse(typeof(LevelShort), match.Groups[1].Value, true);
+                    var chara = (Chara)Enum.Parse(typeof(CharaShort), match.Groups[2].Value, true);
+                    var rank = int.Parse(match.Groups[3].Value) - 1;
+                    var type = int.Parse(match.Groups[4].Value);
+                    var score = this.allScoreData.rankings[new CharaLevelPair(chara, level)][rank];
 
-                        switch (type)
-                        {
-                            case 1:     // name
-                                return Encoding.Default.GetString(score.Name).Split('\0')[0];
-                            case 2:     // score
-                                return this.ToNumberString(score.Score * 10 + score.ContinueCount);
-                            case 3:     // date
-                                var date = Encoding.Default.GetString(score.Date).Split('\0')[0];
-                                return (date != "--/--") ? date : "--/--/--";
-                            default:    // unreachable
-                                return match.ToString();
-                        }
-                    }
-                    catch
+                    switch (type)
                     {
-                        return match.ToString();
+                        case 1:     // name
+                            return Encoding.Default.GetString(score.Name).Split('\0')[0];
+                        case 2:     // score
+                            return this.ToNumberString(score.Score * 10 + score.ContinueCount);
+                        case 3:     // date
+                            var date = Encoding.Default.GetString(score.Date).Split('\0')[0];
+                            return (date != "--/--") ? date : "--/--/--";
+                        default:    // unreachable
+                            return match.ToString();
                     }
                 }));
         }
@@ -519,7 +512,7 @@ namespace ThScoreFileConverter
         private string ReplaceTime(string input)
         {
             return new Regex(@"%T09TIMEALL", RegexOptions.IgnoreCase)
-                .Replace(input, new MatchEvaluator(match =>
+                .Replace(input, Utils.ToNothrowEvaluator(match =>
                 {
                     return this.allScoreData.playList.TotalRunningTime.ToLongString();
                 }));
@@ -533,7 +526,7 @@ namespace ThScoreFileConverter
                 Utils.JoinEnumNames<LevelShort>(""),
                 Utils.JoinEnumNames<CharaShort>("|"));
             return new Regex(pattern, RegexOptions.IgnoreCase)
-                .Replace(input, new MatchEvaluator(match =>
+                .Replace(input, Utils.ToNothrowEvaluator(match =>
                 {
                     var level = (Level)Enum.Parse(typeof(LevelShort), match.Groups[1].Value, true);
                     var chara = (Chara)Enum.Parse(typeof(CharaShort), match.Groups[2].Value, true);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Windows.Controls;
 
 namespace ThScoreFileConverter
@@ -70,6 +71,21 @@ namespace ThScoreFileConverter
         public static string ToNumberString<T>(T number, bool outputSeparator) where T : struct
         {
             return outputSeparator ? string.Format("{0:N0}", number) : number.ToString();
+        }
+
+        /// <summary>
+        /// 例外を throw しない MatchEvaluator デリゲートへの変換
+        /// <paramref name="evaluator"/> で例外が発生した場合は正規表現に一致した文字列がそのまま返る
+        /// </summary>
+        /// <param name="evaluator">変換元の MatchEvaluator デリゲート</param>
+        /// <returns>変換後の MatchEvaluator デリゲート</returns>
+        public static MatchEvaluator ToNothrowEvaluator(MatchEvaluator evaluator)
+        {
+            return match =>
+            {
+                try { return evaluator(match); }
+                catch { return match.ToString(); }
+            };
         }
 
         /// <summary>

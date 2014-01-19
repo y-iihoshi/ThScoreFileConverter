@@ -535,37 +535,30 @@ namespace ThScoreFileConverter
         private string ReplaceScore(string input)
         {
             return new Regex(@"%T95SCR([\dX])([1-9])([1-4])", RegexOptions.IgnoreCase)
-                .Replace(input, new MatchEvaluator(match =>
+                .Replace(input, Utils.ToNothrowEvaluator(match =>
                 {
-                    try
-                    {
-                        var level = match.Groups[1].Value.ToUpper();
-                        var scene = int.Parse(match.Groups[2].Value);
-                        var type = int.Parse(match.Groups[3].Value);
+                    var level = match.Groups[1].Value.ToUpper();
+                    var scene = int.Parse(match.Groups[2].Value);
+                    var type = int.Parse(match.Groups[3].Value);
 
-                        var levelIndex = Array.FindIndex<string>(
-                            LevelShortArray, new Predicate<string>(elem => (elem == level)));
-                        var levelScene = new LevelScenePair(levelIndex + 1, scene);
-                        var score = this.allScoreData.scores.Find(new Predicate<Score>(
-                            elem => ((elem != null) && elem.LevelScene.Equals(levelScene))));
+                    var levelIndex = Array.FindIndex<string>(
+                        LevelShortArray, new Predicate<string>(elem => (elem == level)));
+                    var levelScene = new LevelScenePair(levelIndex + 1, scene);
+                    var score = this.allScoreData.scores.Find(new Predicate<Score>(
+                        elem => ((elem != null) && elem.LevelScene.Equals(levelScene))));
 
-                        switch (type)
-                        {
-                            case 1:     // high score
-                                return this.ToNumberString((score != null) ? score.HighScore : 0);
-                            case 2:     // bestshot score
-                                return this.ToNumberString((score != null) ? score.BestshotScore : 0);
-                            case 3:     // num of shots
-                                return this.ToNumberString((score != null) ? score.TrialCount : 0);
-                            case 4:     // slow rate
-                                return (score != null) ? (score.SlowRate2.ToString("F3") + "%") : "-----%";
-                            default:    // unreachable
-                                return match.ToString();
-                        }
-                    }
-                    catch
+                    switch (type)
                     {
-                        return match.ToString();
+                        case 1:     // high score
+                            return this.ToNumberString((score != null) ? score.HighScore : 0);
+                        case 2:     // bestshot score
+                            return this.ToNumberString((score != null) ? score.BestshotScore : 0);
+                        case 3:     // num of shots
+                            return this.ToNumberString((score != null) ? score.TrialCount : 0);
+                        case 4:     // slow rate
+                            return (score != null) ? (score.SlowRate2.ToString("F3") + "%") : "-----%";
+                        default:    // unreachable
+                            return match.ToString();
                     }
                 }));
         }
@@ -574,37 +567,30 @@ namespace ThScoreFileConverter
         private string ReplaceScoreTotal(string input)
         {
             return new Regex(@"%T95SCRTL([1-4])", RegexOptions.IgnoreCase)
-                .Replace(input, new MatchEvaluator(match =>
+                .Replace(input, Utils.ToNothrowEvaluator(match =>
                 {
-                    try
-                    {
-                        var type = int.Parse(match.Groups[1].Value);
+                    var type = int.Parse(match.Groups[1].Value);
 
-                        switch (type)
-                        {
-                            case 1:     // total score
-                                return this.ToNumberString(
-                                    this.allScoreData.scores.Sum(
-                                        score => (score != null) ? (long)score.HighScore : 0L));
-                            case 2:     // total of bestshot scores
-                                return this.ToNumberString(
-                                    this.allScoreData.scores.Sum(
-                                        score => (score != null) ? (long)score.BestshotScore : 0L));
-                            case 3:     // total of num of shots
-                                return this.ToNumberString(
-                                    this.allScoreData.scores.Sum(
-                                        score => (score != null) ? score.TrialCount : 0));
-                            case 4:     // num of succeeded scenes
-                                return Utils.CountIf<Score>(
-                                    this.allScoreData.scores, new Predicate<Score>(
-                                        score => ((score != null) && (score.HighScore > 0)))).ToString();
-                            default:    // unreachable
-                                return match.ToString();
-                        }
-                    }
-                    catch
+                    switch (type)
                     {
-                        return match.ToString();
+                        case 1:     // total score
+                            return this.ToNumberString(
+                                this.allScoreData.scores.Sum(
+                                    score => (score != null) ? (long)score.HighScore : 0L));
+                        case 2:     // total of bestshot scores
+                            return this.ToNumberString(
+                                this.allScoreData.scores.Sum(
+                                    score => (score != null) ? (long)score.BestshotScore : 0L));
+                        case 3:     // total of num of shots
+                            return this.ToNumberString(
+                                this.allScoreData.scores.Sum(
+                                    score => (score != null) ? score.TrialCount : 0));
+                        case 4:     // num of succeeded scenes
+                            return Utils.CountIf<Score>(
+                                this.allScoreData.scores, new Predicate<Score>(
+                                    score => ((score != null) && (score.HighScore > 0)))).ToString();
+                        default:    // unreachable
+                            return match.ToString();
                     }
                 }));
         }
@@ -613,33 +599,26 @@ namespace ThScoreFileConverter
         private string ReplaceCard(string input)
         {
             return new Regex(@"%T95CARD([\dX])([1-9])([12])", RegexOptions.IgnoreCase)
-                .Replace(input, new MatchEvaluator(match =>
+                .Replace(input, Utils.ToNothrowEvaluator(match =>
                 {
-                    try
-                    {
-                        var level = match.Groups[1].Value.ToUpper();
-                        var scene = int.Parse(match.Groups[2].Value);
-                        var type = int.Parse(match.Groups[3].Value);
+                    var level = match.Groups[1].Value.ToUpper();
+                    var scene = int.Parse(match.Groups[2].Value);
+                    var type = int.Parse(match.Groups[3].Value);
 
-                        var levelIndex = Array.FindIndex<string>(
-                            LevelShortArray, new Predicate<string>(elem => (elem == level)));
-                        var key = new LevelScenePair(levelIndex + 1, scene);
-                        var score = this.allScoreData.scores.Find(
-                            new Predicate<Score>(elem => ((elem != null) && elem.LevelScene.Equals(key))));
+                    var levelIndex = Array.FindIndex<string>(
+                        LevelShortArray, new Predicate<string>(elem => (elem == level)));
+                    var key = new LevelScenePair(levelIndex + 1, scene);
+                    var score = this.allScoreData.scores.Find(
+                        new Predicate<Score>(elem => ((elem != null) && elem.LevelScene.Equals(key))));
 
-                        switch (type)
-                        {
-                            case 1:     // target Name
-                                return (score != null) ? EnemyNames[SpellCards[key].Enemy] : "??????????";
-                            case 2:     // spell card Name
-                                return (score != null) ? SpellCards[key].Card : "??????????";
-                            default:    // unreachable
-                                return match.ToString();
-                        }
-                    }
-                    catch
+                    switch (type)
                     {
-                        return match.ToString();
+                        case 1:     // target Name
+                            return (score != null) ? EnemyNames[SpellCards[key].Enemy] : "??????????";
+                        case 2:     // spell card Name
+                            return (score != null) ? SpellCards[key].Card : "??????????";
+                        default:    // unreachable
+                            return match.ToString();
                     }
                 }));
         }
@@ -648,33 +627,26 @@ namespace ThScoreFileConverter
         private string ReplaceShot(string input, string outputFilePath)
         {
             return new Regex(@"%T95SHOT([\dX])([1-9])", RegexOptions.IgnoreCase)
-                .Replace(input, new MatchEvaluator(match =>
+                .Replace(input, Utils.ToNothrowEvaluator(match =>
                 {
-                    try
-                    {
-                        var level = match.Groups[1].Value.ToUpper();
-                        var scene = int.Parse(match.Groups[2].Value);
+                    var level = match.Groups[1].Value.ToUpper();
+                    var scene = int.Parse(match.Groups[2].Value);
 
-                        var levelIndex = Array.FindIndex<string>(
-                            LevelShortArray, new Predicate<string>(elem => (elem == level)));
-                        var key = new LevelScenePair(levelIndex + 1, scene);
+                    var levelIndex = Array.FindIndex<string>(
+                        LevelShortArray, new Predicate<string>(elem => (elem == level)));
+                    var key = new LevelScenePair(levelIndex + 1, scene);
 
-                        if ((this.bestshots != null) && this.bestshots.ContainsKey(key))
-                            return string.Format("<img src=\"{0}\" alt=\"{1}\" title=\"{1}\" border=0>",
-                                new Uri(outputFilePath)
-                                    .MakeRelativeUri(new Uri(this.bestshots[key].Path)).OriginalString,
-                                string.Format("ClearData: {0}\nSlow: {1:F6}%\nSpellName: {2}",
-                                    this.ToNumberString(this.bestshots[key].Header.Score),
-                                    this.bestshots[key].Header.SlowRate,
-                                    Encoding.Default.GetString(
-                                        this.bestshots[key].Header.CardName).TrimEnd('\0')));
-                        else
-                            return "";
-                    }
-                    catch
-                    {
+                    if ((this.bestshots != null) && this.bestshots.ContainsKey(key))
+                        return string.Format("<img src=\"{0}\" alt=\"{1}\" title=\"{1}\" border=0>",
+                            new Uri(outputFilePath)
+                                .MakeRelativeUri(new Uri(this.bestshots[key].Path)).OriginalString,
+                            string.Format("ClearData: {0}\nSlow: {1:F6}%\nSpellName: {2}",
+                                this.ToNumberString(this.bestshots[key].Header.Score),
+                                this.bestshots[key].Header.SlowRate,
+                                Encoding.Default.GetString(
+                                    this.bestshots[key].Header.CardName).TrimEnd('\0')));
+                    else
                         return "";
-                    }
                 }));
         }
 
@@ -682,59 +654,52 @@ namespace ThScoreFileConverter
         private string ReplaceShotEx(string input, string outputFilePath)
         {
             return new Regex(@"%T95SHOTEX([\dX])([1-9])([1-6])", RegexOptions.IgnoreCase)
-                .Replace(input, new MatchEvaluator(match =>
+                .Replace(input, Utils.ToNothrowEvaluator(match =>
                 {
-                    try
-                    {
-                        var level = match.Groups[1].Value.ToUpper();
-                        var scene = int.Parse(match.Groups[2].Value);
-                        var type = int.Parse(match.Groups[3].Value);
+                    var level = match.Groups[1].Value.ToUpper();
+                    var scene = int.Parse(match.Groups[2].Value);
+                    var type = int.Parse(match.Groups[3].Value);
 
-                        var levelIndex = Array.FindIndex<string>(
-                            LevelShortArray, new Predicate<string>(elem => (elem == level)));
-                        var key = new LevelScenePair(levelIndex + 1, scene);
+                    var levelIndex = Array.FindIndex<string>(
+                        LevelShortArray, new Predicate<string>(elem => (elem == level)));
+                    var key = new LevelScenePair(levelIndex + 1, scene);
 
-                        if ((this.bestshots != null) && this.bestshots.ContainsKey(key))
-                            switch (type)
-                            {
-                                case 1:     // relative path to the bestshot file
-                                    return new Uri(outputFilePath)
-                                        .MakeRelativeUri(new Uri(this.bestshots[key].Path)).OriginalString;
-                                case 2:     // width
-                                    return this.bestshots[key].Header.Width.ToString();
-                                case 3:     // height
-                                    return this.bestshots[key].Header.Height.ToString();
-                                case 4:     // score
-                                    return this.ToNumberString(this.bestshots[key].Header.Score);
-                                case 5:     // slow rate
-                                    return this.bestshots[key].Header.SlowRate.ToString("F6") + "%";
-                                case 6:     // date & time
-                                    var score = this.allScoreData.scores.Find(new Predicate<Score>(
-                                        elem => ((elem != null) && elem.LevelScene.Equals(key))));
-                                    if (score != null)
-                                        return new DateTime(1970, 1, 1).AddSeconds(score.DateTime)
-                                            .ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
-                                    else
-                                        return "----/--/-- --:--:--";
-                                default:    // unreachable
-                                    return match.ToString();
-                            }
-                        else
-                            switch (type)
-                            {
-                                case 1: return "";
-                                case 2: return "0";
-                                case 3: return "0";
-                                case 4: return "--------";
-                                case 5: return "-----%";
-                                case 6: return "----/--/-- --:--:--";
-                                default: return match.ToString();
-                            }
-                    }
-                    catch
-                    {
-                        return match.ToString();
-                    }
+                    if ((this.bestshots != null) && this.bestshots.ContainsKey(key))
+                        switch (type)
+                        {
+                            case 1:     // relative path to the bestshot file
+                                return new Uri(outputFilePath)
+                                    .MakeRelativeUri(new Uri(this.bestshots[key].Path)).OriginalString;
+                            case 2:     // width
+                                return this.bestshots[key].Header.Width.ToString();
+                            case 3:     // height
+                                return this.bestshots[key].Header.Height.ToString();
+                            case 4:     // score
+                                return this.ToNumberString(this.bestshots[key].Header.Score);
+                            case 5:     // slow rate
+                                return this.bestshots[key].Header.SlowRate.ToString("F6") + "%";
+                            case 6:     // date & time
+                                var score = this.allScoreData.scores.Find(new Predicate<Score>(
+                                    elem => ((elem != null) && elem.LevelScene.Equals(key))));
+                                if (score != null)
+                                    return new DateTime(1970, 1, 1).AddSeconds(score.DateTime)
+                                        .ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
+                                else
+                                    return "----/--/-- --:--:--";
+                            default:    // unreachable
+                                return match.ToString();
+                        }
+                    else
+                        switch (type)
+                        {
+                            case 1: return "";
+                            case 2: return "0";
+                            case 3: return "0";
+                            case 4: return "--------";
+                            case 5: return "-----%";
+                            case 6: return "----/--/-- --:--:--";
+                            default: return match.ToString();
+                        }
                 }));
         }
 

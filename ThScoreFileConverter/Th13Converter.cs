@@ -489,47 +489,40 @@ namespace ThScoreFileConverter
                 Utils.JoinEnumNames<LevelShort>(""),
                 Utils.JoinEnumNames<CharaShort>("|"));
             return new Regex(pattern, RegexOptions.IgnoreCase)
-                .Replace(input, new MatchEvaluator(match =>
+                .Replace(input, Utils.ToNothrowEvaluator(match =>
                 {
-                    try
-                    {
-                        var level = (LevelPractice)Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
-                        var chara = (CharaWithTotal)Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
-                        var rank = (int.Parse(match.Groups[3].Value) + 9) % 10;     // from [1..9, 0] to [0..9]
-                        var type = int.Parse(match.Groups[4].Value);
+                    var level = (LevelPractice)Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
+                    var chara = (CharaWithTotal)Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
+                    var rank = (int.Parse(match.Groups[3].Value) + 9) % 10;     // from [1..9, 0] to [0..9]
+                    var type = int.Parse(match.Groups[4].Value);
 
-                        var ranking = this.allScoreData.clearData[chara].Rankings[level][rank];
-                        switch (type)
-                        {
-                            case 1:     // name
-                                return Encoding.Default.GetString(ranking.Name).Split('\0')[0];
-                            case 2:     // score
-                                return this.ToNumberString(ranking.Score * 10 + ranking.ContinueCount);
-                            case 3:     // stage
-                                if (ranking.DateTime > 0)
-                                    return (ranking.StageProgress < StageProgressArray.Length)
-                                        ? StageProgressArray[ranking.StageProgress]
-                                        : StageProgressArray[0];
-                                else
-                                    return StageProgressArray[0];
-                            case 4:     // date & time
-                                if (ranking.DateTime > 0)
-                                    return new DateTime(1970, 1, 1).AddSeconds(ranking.DateTime)
-                                        .ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
-                                else
-                                    return "----/--/-- --:--:--";
-                            case 5:     // slow
-                                if (ranking.DateTime > 0)
-                                    return ranking.SlowRate.ToString("F3") + "%";
-                                else
-                                    return "-----%";
-                            default:    // unreachable
-                                return match.ToString();
-                        }
-                    }
-                    catch
+                    var ranking = this.allScoreData.clearData[chara].Rankings[level][rank];
+                    switch (type)
                     {
-                        return match.ToString();
+                        case 1:     // name
+                            return Encoding.Default.GetString(ranking.Name).Split('\0')[0];
+                        case 2:     // score
+                            return this.ToNumberString(ranking.Score * 10 + ranking.ContinueCount);
+                        case 3:     // stage
+                            if (ranking.DateTime > 0)
+                                return (ranking.StageProgress < StageProgressArray.Length)
+                                    ? StageProgressArray[ranking.StageProgress]
+                                    : StageProgressArray[0];
+                            else
+                                return StageProgressArray[0];
+                        case 4:     // date & time
+                            if (ranking.DateTime > 0)
+                                return new DateTime(1970, 1, 1).AddSeconds(ranking.DateTime)
+                                    .ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
+                            else
+                                return "----/--/-- --:--:--";
+                        case 5:     // slow
+                            if (ranking.DateTime > 0)
+                                return ranking.SlowRate.ToString("F3") + "%";
+                            else
+                                return "-----%";
+                        default:    // unreachable
+                            return match.ToString();
                     }
                 }));
         }
@@ -541,43 +534,36 @@ namespace ThScoreFileConverter
                 @"%T13C([SP])(\d\d\d)({0})([12])",
                 Utils.JoinEnumNames<CharaShortWithTotal>("|"));
             return new Regex(pattern, RegexOptions.IgnoreCase)
-                .Replace(input, new MatchEvaluator(match =>
+                .Replace(input, Utils.ToNothrowEvaluator(match =>
                 {
-                    try
-                    {
-                        var kind = match.Groups[1].Value.ToUpper();
-                        var number = int.Parse(match.Groups[2].Value);
-                        var chara = Utils.ParseEnum<CharaShortWithTotal>(match.Groups[3].Value, true);
-                        var type = int.Parse(match.Groups[4].Value);
+                    var kind = match.Groups[1].Value.ToUpper();
+                    var number = int.Parse(match.Groups[2].Value);
+                    var chara = Utils.ParseEnum<CharaShortWithTotal>(match.Groups[3].Value, true);
+                    var type = int.Parse(match.Groups[4].Value);
 
-                        var cards = this.allScoreData.clearData[(CharaWithTotal)chara].Cards;
-                        if (number == 0)
-                        {
-                            if (type == 1)
-                                return this.ToNumberString((kind == "S")
-                                    ? cards.Sum(card => card.ClearCount)
-                                    : cards.Sum(card => card.PracticeClearCount));
-                            else
-                                return this.ToNumberString((kind == "S")
-                                    ? cards.Sum(card => card.TrialCount)
-                                    : cards.Sum(card => card.PracticeTrialCount));
-                        }
-                        else if ((0 < number) && (number <= NumCards))
-                        {
-                            if (type == 1)
-                                return this.ToNumberString((kind == "S")
-                                    ? cards[number - 1].ClearCount : cards[number - 1].PracticeClearCount);
-                            else
-                                return this.ToNumberString((kind == "S")
-                                    ? cards[number - 1].TrialCount : cards[number - 1].PracticeTrialCount);
-                        }
-                        else
-                            return match.ToString();
-                    }
-                    catch
+                    var cards = this.allScoreData.clearData[(CharaWithTotal)chara].Cards;
+                    if (number == 0)
                     {
-                        return match.ToString();
+                        if (type == 1)
+                            return this.ToNumberString((kind == "S")
+                                ? cards.Sum(card => card.ClearCount)
+                                : cards.Sum(card => card.PracticeClearCount));
+                        else
+                            return this.ToNumberString((kind == "S")
+                                ? cards.Sum(card => card.TrialCount)
+                                : cards.Sum(card => card.PracticeTrialCount));
                     }
+                    else if ((0 < number) && (number <= NumCards))
+                    {
+                        if (type == 1)
+                            return this.ToNumberString((kind == "S")
+                                ? cards[number - 1].ClearCount : cards[number - 1].PracticeClearCount);
+                        else
+                            return this.ToNumberString((kind == "S")
+                                ? cards[number - 1].TrialCount : cards[number - 1].PracticeTrialCount);
+                    }
+                    else
+                        return match.ToString();
                 }));
         }
 
@@ -585,32 +571,25 @@ namespace ThScoreFileConverter
         private string ReplaceCard(string input)
         {
             return new Regex(@"%T13CARD(\d{3})([NR])", RegexOptions.IgnoreCase)
-                .Replace(input, new MatchEvaluator(match =>
+                .Replace(input, Utils.ToNothrowEvaluator(match =>
                 {
-                    try
-                    {
-                        var number = int.Parse(match.Groups[1].Value);
-                        var type = match.Groups[2].Value.ToUpper();
+                    var number = int.Parse(match.Groups[1].Value);
+                    var type = match.Groups[2].Value.ToUpper();
 
-                        if ((0 < number) && (number <= NumCards))
+                    if ((0 < number) && (number <= NumCards))
+                    {
+                        var card = this.allScoreData.clearData[CharaWithTotal.Total].Cards[number - 1];
+                        if (type == "N")
                         {
-                            var card = this.allScoreData.clearData[CharaWithTotal.Total].Cards[number - 1];
-                            if (type == "N")
-                            {
-                                var name = Encoding.Default.GetString(card.Name).TrimEnd('\0');
-                                return (name.Length > 0) ? name : "??????????";
-                            }
-                            else
-                                return (card.Level == LevelPractice.OverDrive)
-                                    ? "Over Drive" : card.Level.ToString();
+                            var name = Encoding.Default.GetString(card.Name).TrimEnd('\0');
+                            return (name.Length > 0) ? name : "??????????";
                         }
                         else
-                            return match.ToString();
+                            return (card.Level == LevelPractice.OverDrive)
+                                ? "Over Drive" : card.Level.ToString();
                     }
-                    catch
-                    {
+                    else
                         return match.ToString();
-                    }
                 }));
         }
 
@@ -622,69 +601,62 @@ namespace ThScoreFileConverter
                 Utils.JoinEnumNames<LevelShortPracticeWithTotal>(""),
                 Utils.JoinEnumNames<CharaShortWithTotal>("|"));
             return new Regex(pattern, RegexOptions.IgnoreCase)
-                .Replace(input, new MatchEvaluator(match =>
+                .Replace(input, Utils.ToNothrowEvaluator(match =>
                 {
-                    try
+                    var kind = match.Groups[1].Value.ToUpper();
+                    var level = Utils.ParseEnum<LevelShortPracticeWithTotal>(match.Groups[2].Value, true);
+                    var chara = Utils.ParseEnum<CharaShortWithTotal>(match.Groups[3].Value, true);
+                    var stage = int.Parse(match.Groups[4].Value);   // 0: total of all stages
+                    var type = int.Parse(match.Groups[5].Value);
+
+                    Predicate<SpellCard> findByKindType = (card => true);
+                    Predicate<SpellCard> findByLevel = (card => true);
+                    Predicate<SpellCard> findByStage = (card => true);
+
+                    if (kind == "S")
                     {
-                        var kind = match.Groups[1].Value.ToUpper();
-                        var level = Utils.ParseEnum<LevelShortPracticeWithTotal>(match.Groups[2].Value, true);
-                        var chara = Utils.ParseEnum<CharaShortWithTotal>(match.Groups[3].Value, true);
-                        var stage = int.Parse(match.Groups[4].Value);   // 0: total of all stages
-                        var type = int.Parse(match.Groups[5].Value);
-
-                        Predicate<SpellCard> findByKindType = (card => true);
-                        Predicate<SpellCard> findByLevel = (card => true);
-                        Predicate<SpellCard> findByStage = (card => true);
-
-                        if (kind == "S")
-                        {
-                            if (type == 1)
-                                findByKindType = (card => (card.ClearCount > 0));
-                            else
-                                findByKindType = (card => (card.TrialCount > 0));
-                        }
+                        if (type == 1)
+                            findByKindType = (card => (card.ClearCount > 0));
                         else
-                        {
-                            if (type == 1)
-                                findByKindType = (card => (card.PracticeClearCount > 0));
-                            else
-                                findByKindType = (card => (card.PracticeTrialCount > 0));
-                        }
+                            findByKindType = (card => (card.TrialCount > 0));
+                    }
+                    else
+                    {
+                        if (type == 1)
+                            findByKindType = (card => (card.PracticeClearCount > 0));
+                        else
+                            findByKindType = (card => (card.PracticeTrialCount > 0));
+                    }
 
-                        if (stage == 0)
-                        {
+                    if (stage == 0)
+                    {
+                        // Do nothing
+                    }
+                    else
+                        findByStage = (card =>
+                            StageCardTable[(StagePractice)(stage - 1)].Contains(card.Number));
+
+                    switch (level)
+                    {
+                        case LevelShortPracticeWithTotal.T:
                             // Do nothing
-                        }
-                        else
+                            break;
+                        case LevelShortPracticeWithTotal.X:
                             findByStage = (card =>
-                                StageCardTable[(StagePractice)(stage - 1)].Contains(card.Number));
-
-                        switch (level)
-                        {
-                            case LevelShortPracticeWithTotal.T:
-                                // Do nothing
-                                break;
-                            case LevelShortPracticeWithTotal.X:
-                                findByStage = (card =>
-                                    StageCardTable[StagePractice.Extra].Contains(card.Number));
-                                break;
-                            case LevelShortPracticeWithTotal.D:
-                                findByStage = (card =>
-                                    StageCardTable[StagePractice.OverDrive].Contains(card.Number));
-                                break;
-                            default:
-                                findByLevel = (card => (card.Level == (LevelPractice)level));
-                                break;
-                        }
-
-                        return Utils.CountIf<SpellCard>(
-                            this.allScoreData.clearData[(CharaWithTotal)chara].Cards,
-                            new Utils.And<SpellCard>(findByKindType, findByLevel, findByStage)).ToString();
+                                StageCardTable[StagePractice.Extra].Contains(card.Number));
+                            break;
+                        case LevelShortPracticeWithTotal.D:
+                            findByStage = (card =>
+                                StageCardTable[StagePractice.OverDrive].Contains(card.Number));
+                            break;
+                        default:
+                            findByLevel = (card => (card.Level == (LevelPractice)level));
+                            break;
                     }
-                    catch
-                    {
-                        return match.ToString();
-                    }
+
+                    return Utils.CountIf<SpellCard>(
+                        this.allScoreData.clearData[(CharaWithTotal)chara].Cards,
+                        new Utils.And<SpellCard>(findByKindType, findByLevel, findByStage)).ToString();
                 }));
         }
 
@@ -696,37 +668,30 @@ namespace ThScoreFileConverter
                 Utils.JoinEnumNames<LevelShort>(""),
                 Utils.JoinEnumNames<CharaShort>("|"));
             return new Regex(pattern, RegexOptions.IgnoreCase)
-                .Replace(input, new MatchEvaluator(match =>
+                .Replace(input, Utils.ToNothrowEvaluator(match =>
                 {
-                    try
+                    var level = (LevelPractice)Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
+                    var chara = (CharaWithTotal)Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
+
+                    var stageProgress = 0;
+                    for (var rank = 0; rank < 10; rank++)
                     {
-                        var level = (LevelPractice)Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
-                        var chara = (CharaWithTotal)Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
+                        var ranking = this.allScoreData.clearData[chara].Rankings[level][rank];
+                        if (ranking.DateTime > 0)
+                            stageProgress = Math.Max(stageProgress, ranking.StageProgress);
+                    }
 
-                        var stageProgress = 0;
-                        for (var rank = 0; rank < 10; rank++)
-                        {
-                            var ranking = this.allScoreData.clearData[chara].Rankings[level][rank];
-                            if (ranking.DateTime > 0)
-                                stageProgress = Math.Max(stageProgress, ranking.StageProgress);
-                        }
-
-                        if (stageProgress < StageProgressArray.Length)
-                        {
-                            if (level != LevelPractice.Extra)
-                                return (stageProgress != 7)
-                                    ? StageProgressArray[stageProgress] : StageProgressArray[0];
-                            else
-                                return (stageProgress >= 7)
-                                    ? StageProgressArray[stageProgress] : StageProgressArray[0];
-                        }
+                    if (stageProgress < StageProgressArray.Length)
+                    {
+                        if (level != LevelPractice.Extra)
+                            return (stageProgress != 7)
+                                ? StageProgressArray[stageProgress] : StageProgressArray[0];
                         else
-                            return StageProgressArray[0];
+                            return (stageProgress >= 7)
+                                ? StageProgressArray[stageProgress] : StageProgressArray[0];
                     }
-                    catch
-                    {
-                        return match.ToString();
-                    }
+                    else
+                        return StageProgressArray[0];
                 }));
         }
 
@@ -737,48 +702,41 @@ namespace ThScoreFileConverter
                 @"%T13CHARA({0})([1-3])",
                 Utils.JoinEnumNames<CharaShortWithTotal>("|"));
             return new Regex(pattern, RegexOptions.IgnoreCase)
-                .Replace(input, new MatchEvaluator(match =>
+                .Replace(input, Utils.ToNothrowEvaluator(match =>
                 {
-                    try
-                    {
-                        var chara =
-                            (CharaWithTotal)Utils.ParseEnum<CharaShortWithTotal>(match.Groups[1].Value, true);
-                        var type = int.Parse(match.Groups[2].Value);
+                    var chara =
+                        (CharaWithTotal)Utils.ParseEnum<CharaShortWithTotal>(match.Groups[1].Value, true);
+                    var type = int.Parse(match.Groups[2].Value);
 
-                        switch (type)
-                        {
-                            case 1:     // total play count
-                                if (chara == CharaWithTotal.Total)
-                                    return this.ToNumberString(
-                                        this.allScoreData.clearData.Values.Sum(
-                                            data => (data.Chara != chara) ? data.TotalPlayCount : 0));
-                                else
-                                    return this.ToNumberString(
-                                        this.allScoreData.clearData[chara].TotalPlayCount);
-                            case 2:     // play times
-                                {
-                                    var frames = (chara == CharaWithTotal.Total)
-                                        ? this.allScoreData.clearData.Values.Sum(
-                                            data => (data.Chara != chara) ? (long)data.PlayTime : 0L)
-                                        : (long)this.allScoreData.clearData[chara].PlayTime;
-                                    return new Time(frames).ToString();
-                                }
-                            case 3:     // clear count
-                                if (chara == CharaWithTotal.Total)
-                                    return this.ToNumberString(
-                                        this.allScoreData.clearData.Values.Sum(
-                                            data => (data.Chara != chara)
-                                                ? data.ClearCounts.Values.Sum(count => count) : 0));
-                                else
-                                    return this.ToNumberString(
-                                        this.allScoreData.clearData[chara].ClearCounts.Values.Sum(count => count));
-                            default:    // unreachable
-                                return match.ToString();
-                        }
-                    }
-                    catch
+                    switch (type)
                     {
-                        return match.ToString();
+                        case 1:     // total play count
+                            if (chara == CharaWithTotal.Total)
+                                return this.ToNumberString(
+                                    this.allScoreData.clearData.Values.Sum(
+                                        data => (data.Chara != chara) ? data.TotalPlayCount : 0));
+                            else
+                                return this.ToNumberString(
+                                    this.allScoreData.clearData[chara].TotalPlayCount);
+                        case 2:     // play times
+                            {
+                                var frames = (chara == CharaWithTotal.Total)
+                                    ? this.allScoreData.clearData.Values.Sum(
+                                        data => (data.Chara != chara) ? (long)data.PlayTime : 0L)
+                                    : (long)this.allScoreData.clearData[chara].PlayTime;
+                                return new Time(frames).ToString();
+                            }
+                        case 3:     // clear count
+                            if (chara == CharaWithTotal.Total)
+                                return this.ToNumberString(
+                                    this.allScoreData.clearData.Values.Sum(
+                                        data => (data.Chara != chara)
+                                            ? data.ClearCounts.Values.Sum(count => count) : 0));
+                            else
+                                return this.ToNumberString(
+                                    this.allScoreData.clearData[chara].ClearCounts.Values.Sum(count => count));
+                        default:    // unreachable
+                            return match.ToString();
                     }
                 }));
         }
@@ -791,63 +749,56 @@ namespace ThScoreFileConverter
                 Utils.JoinEnumNames<LevelShortWithTotal>(""),
                 Utils.JoinEnumNames<CharaShortWithTotal>("|"));
             return new Regex(pattern, RegexOptions.IgnoreCase)
-                .Replace(input, new MatchEvaluator(match =>
+                .Replace(input, Utils.ToNothrowEvaluator(match =>
                 {
-                    try
-                    {
-                        var level =
-                            (LevelWithTotal)Utils.ParseEnum<LevelShortWithTotal>(match.Groups[1].Value, true);
-                        var chara =
-                            (CharaWithTotal)Utils.ParseEnum<CharaShortWithTotal>(match.Groups[2].Value, true);
-                        var type = int.Parse(match.Groups[3].Value);
+                    var level =
+                        (LevelWithTotal)Utils.ParseEnum<LevelShortWithTotal>(match.Groups[1].Value, true);
+                    var chara =
+                        (CharaWithTotal)Utils.ParseEnum<CharaShortWithTotal>(match.Groups[2].Value, true);
+                    var type = int.Parse(match.Groups[3].Value);
 
-                        switch (type)
-                        {
-                            case 1:     // total play count
-                                if (chara == CharaWithTotal.Total)
+                    switch (type)
+                    {
+                        case 1:     // total play count
+                            if (chara == CharaWithTotal.Total)
+                                return this.ToNumberString(
+                                    this.allScoreData.clearData.Values.Sum(
+                                        data => (data.Chara != chara) ? data.TotalPlayCount : 0));
+                            else
+                                return this.allScoreData.clearData[chara].TotalPlayCount.ToString();
+                        case 2:     // play times
+                            {
+                                var frames = (chara == CharaWithTotal.Total)
+                                    ? this.allScoreData.clearData.Values.Sum(
+                                        data => (data.Chara != chara) ? (long)data.PlayTime : 0L)
+                                    : (long)this.allScoreData.clearData[chara].PlayTime;
+                                return new Time(frames).ToString();
+                            }
+                        case 3:     // clear count
+                            if (chara == CharaWithTotal.Total)
+                            {
+                                if (level == LevelWithTotal.Total)
                                     return this.ToNumberString(
                                         this.allScoreData.clearData.Values.Sum(
-                                            data => (data.Chara != chara) ? data.TotalPlayCount : 0));
+                                            data => (data.Chara != chara)
+                                                ? data.ClearCounts.Values.Sum(count => count) : 0));
                                 else
-                                    return this.allScoreData.clearData[chara].TotalPlayCount.ToString();
-                            case 2:     // play times
-                                {
-                                    var frames = (chara == CharaWithTotal.Total)
-                                        ? this.allScoreData.clearData.Values.Sum(
-                                            data => (data.Chara != chara) ? (long)data.PlayTime : 0L)
-                                        : (long)this.allScoreData.clearData[chara].PlayTime;
-                                    return new Time(frames).ToString();
-                                }
-                            case 3:     // clear count
-                                if (chara == CharaWithTotal.Total)
-                                {
-                                    if (level == LevelWithTotal.Total)
-                                        return this.ToNumberString(
-                                            this.allScoreData.clearData.Values.Sum(
-                                                data => (data.Chara != chara)
-                                                    ? data.ClearCounts.Values.Sum(count => count) : 0));
-                                    else
-                                        return this.ToNumberString(
-                                            this.allScoreData.clearData.Values.Sum(
-                                                data => (data.Chara != chara)
-                                                    ? data.ClearCounts[(LevelPractice)level] : 0));
-                                }
+                                    return this.ToNumberString(
+                                        this.allScoreData.clearData.Values.Sum(
+                                            data => (data.Chara != chara)
+                                                ? data.ClearCounts[(LevelPractice)level] : 0));
+                            }
+                            else
+                            {
+                                if (level == LevelWithTotal.Total)
+                                    return this.ToNumberString(
+                                        this.allScoreData.clearData[chara].ClearCounts.Values.Sum(count => count));
                                 else
-                                {
-                                    if (level == LevelWithTotal.Total)
-                                        return this.ToNumberString(
-                                            this.allScoreData.clearData[chara].ClearCounts.Values.Sum(count => count));
-                                    else
-                                        return this.ToNumberString(this.allScoreData.
-                                            clearData[chara].ClearCounts[(LevelPractice)level]);
-                                }
-                            default:    // unreachable
-                                return match.ToString();
-                        }
-                    }
-                    catch
-                    {
-                        return match.ToString();
+                                    return this.ToNumberString(this.allScoreData.
+                                        clearData[chara].ClearCounts[(LevelPractice)level]);
+                            }
+                        default:    // unreachable
+                            return match.ToString();
                     }
                 }));
         }
@@ -860,31 +811,24 @@ namespace ThScoreFileConverter
                 Utils.JoinEnumNames<LevelShort>(""),
                 Utils.JoinEnumNames<CharaShort>("|"));
             return new Regex(pattern, RegexOptions.IgnoreCase)
-                .Replace(input, new MatchEvaluator(match =>
+                .Replace(input, Utils.ToNothrowEvaluator(match =>
                 {
-                    try
-                    {
-                        var level = (LevelPractice)Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
-                        var chara = (CharaWithTotal)Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
-                        var stage = (StagePractice)(int.Parse(match.Groups[3].Value) - 1);
+                    var level = (LevelPractice)Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
+                    var chara = (CharaWithTotal)Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
+                    var stage = (StagePractice)(int.Parse(match.Groups[3].Value) - 1);
 
-                        if (level == LevelPractice.Extra)
-                            return match.ToString();
-
-                        if (this.allScoreData.clearData.ContainsKey(chara))
-                        {
-                            var key = new LevelStagePair(level, stage);
-                            var practices = this.allScoreData.clearData[chara].Practices;
-                            return this.ToNumberString(
-                                practices.ContainsKey(key) ? (practices[key].Score * 10) : 0);
-                        }
-                        else
-                            return "0";
-                    }
-                    catch
-                    {
+                    if (level == LevelPractice.Extra)
                         return match.ToString();
+
+                    if (this.allScoreData.clearData.ContainsKey(chara))
+                    {
+                        var key = new LevelStagePair(level, stage);
+                        var practices = this.allScoreData.clearData[chara].Practices;
+                        return this.ToNumberString(
+                            practices.ContainsKey(key) ? (practices[key].Score * 10) : 0);
                     }
+                    else
+                        return "0";
                 }));
         }
     }
