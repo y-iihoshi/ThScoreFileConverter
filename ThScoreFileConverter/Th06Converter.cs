@@ -713,7 +713,7 @@ namespace ThScoreFileConverter
                         new Predicate<string>(elem => (elem == match.Groups[1].Value.ToUpper())));
                     var type = int.Parse(match.Groups[2].Value);
 
-                    Predicate<CardAttack> findCard = (attack => false);
+                    Func<CardAttack, bool> findCard = (attack => false);
 
                     if (stage == 0)     // total
                     {
@@ -735,7 +735,7 @@ namespace ThScoreFileConverter
                                 StageCardTable[st].Contains(attack.Number) && (attack.TrialCount > 0)));
                     }
 
-                    return Utils.CountIf<CardAttack>(this.allScoreData.cardAttacks, findCard).ToString();
+                    return this.allScoreData.cardAttacks.Count(findCard).ToString();
                 }));
         }
 

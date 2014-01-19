@@ -771,9 +771,8 @@ namespace ThScoreFileConverter
                                     score => (isTarget(score) && triedAndSucceeded(score))
                                         ? (long)score.FirstSuccess : 0L));
                         case 5:     // num of succeeded scenes
-                            return Utils.CountIf<Score>(
-                                this.allScoreData.scores, new Predicate<Score>(
-                                    score => (isTarget(score) && triedAndSucceeded(score)))).ToString();
+                            return this.allScoreData.scores.Count(
+                                    score => isTarget(score) && triedAndSucceeded(score)).ToString();
                         default:    // unreachable
                             return match.ToString();
                     }

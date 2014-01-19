@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
 
@@ -28,22 +29,6 @@ namespace ThScoreFileConverter
         public static T ParseEnum<T>(string value, bool ignoreCase = false)
         {
             return (T)Enum.Parse(typeof(T), value, ignoreCase);
-        }
-
-        /// <summary>
-        /// T 型インスタンスの集合のうち条件を満たす要素数を返す
-        /// </summary>
-        /// <typeparam name="T">任意の型</typeparam>
-        /// <param name="set">T 型インスタンスの列挙可能な集合</param>
-        /// <param name="predicator">条件を表すデリゲート</param>
-        /// <returns>条件を満たす T 型インスタンスの数</returns>
-        public static int CountIf<T>(IEnumerable<T> set, Predicate<T> predicator)
-        {
-            int count = 0;
-            foreach (var element in set)
-                if (predicator(element))
-                    count++;
-            return count;
         }
 
         /// <summary>
@@ -87,22 +72,19 @@ namespace ThScoreFileConverter
         /// <typeparam name="T">Type of the object to compare</typeparam>
         public class And<T>
         {
-            private Predicate<T>[] preds;
+            private Func<T, bool>[] predicates;
 
-            public And(params Predicate<T>[] preds)
+            public And(params Func<T, bool>[] predicates)
             {
-                this.preds = preds;
+                this.predicates = predicates;
             }
 
-            private bool Pred(T t)
+            private bool Pred(T obj)
             {
-                foreach (var pred in this.preds)
-                    if (!pred(t))
-                        return false;
-                return true;
+                return this.predicates.All(pred => pred(obj));
             }
 
-            public static implicit operator Predicate<T>(And<T> from)
+            public static implicit operator Func<T, bool>(And<T> from)
             {
                 return from.Pred;
             }

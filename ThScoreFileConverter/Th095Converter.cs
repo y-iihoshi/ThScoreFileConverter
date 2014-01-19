@@ -586,9 +586,8 @@ namespace ThScoreFileConverter
                                 this.allScoreData.scores.Sum(
                                     score => (score != null) ? score.TrialCount : 0));
                         case 4:     // num of succeeded scenes
-                            return Utils.CountIf<Score>(
-                                this.allScoreData.scores, new Predicate<Score>(
-                                    score => ((score != null) && (score.HighScore > 0)))).ToString();
+                            return this.allScoreData.scores.Count(
+                                    score => (score != null) && (score.HighScore > 0)).ToString();
                         default:    // unreachable
                             return match.ToString();
                     }

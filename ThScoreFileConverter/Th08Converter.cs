@@ -936,8 +936,7 @@ namespace ThScoreFileConverter
                             }
                             return string.Join("\n", list.ToArray());
                         case "G":   // number of got spell cards
-                            return Utils.CountIf<byte>(
-                                score.CardFlags, new Predicate<byte>(flag => (flag > 0))).ToString();
+                            return score.CardFlags.Count(flag => flag > 0).ToString();
                         default:    // unreachable
                             return match.ToString();
                     }
@@ -1074,7 +1073,7 @@ namespace ThScoreFileConverter
                         new Predicate<string>(elem => (elem == match.Groups[4].Value)));
                     var type = int.Parse(match.Groups[5].Value);
 
-                    Predicate<CardAttack> findCard = (attack => false);
+                    Func<CardAttack, bool> findCard = (attack => false);
 
                     if (level == LevelPractice.Total)
                     {
@@ -1232,8 +1231,7 @@ namespace ThScoreFileConverter
                         }
                     }
 
-                    return Utils.CountIf<CardAttack>(
-                        this.allScoreData.cardAttacks, findCard).ToString();
+                    return this.allScoreData.cardAttacks.Count(findCard).ToString();
                 }));
         }
 

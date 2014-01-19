@@ -609,9 +609,9 @@ namespace ThScoreFileConverter
                     var stage = int.Parse(match.Groups[4].Value);   // 0: total of all stages
                     var type = int.Parse(match.Groups[5].Value);
 
-                    Predicate<SpellCard> findByKindType = (card => true);
-                    Predicate<SpellCard> findByLevel = (card => true);
-                    Predicate<SpellCard> findByStage = (card => true);
+                    Func<SpellCard, bool> findByKindType = (card => true);
+                    Func<SpellCard, bool> findByLevel = (card => true);
+                    Func<SpellCard, bool> findByStage = (card => true);
 
                     if (kind == "S")
                     {
@@ -654,8 +654,7 @@ namespace ThScoreFileConverter
                             break;
                     }
 
-                    return Utils.CountIf<SpellCard>(
-                        this.allScoreData.clearData[(CharaWithTotal)chara].Cards,
+                    return this.allScoreData.clearData[(CharaWithTotal)chara].Cards.Count(
                         new Utils.And<SpellCard>(findByKindType, findByLevel, findByStage)).ToString();
                 }));
         }

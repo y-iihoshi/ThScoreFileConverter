@@ -870,7 +870,7 @@ namespace ThScoreFileConverter
                     var stage = int.Parse(match.Groups[3].Value);
                     var type = int.Parse(match.Groups[4].Value);
 
-                    Predicate<CardAttack> findCard = (attack => false);
+                    Func<CardAttack, bool> findCard = (attack => false);
 
                     if (level == LevelWithTotal.Total)
                     {
@@ -943,7 +943,7 @@ namespace ThScoreFileConverter
                         }
                     }
 
-                    return Utils.CountIf<CardAttack>(this.allScoreData.cardAttacks, findCard).ToString();
+                    return this.allScoreData.cardAttacks.Count(findCard).ToString();
                 }));
         }
 
