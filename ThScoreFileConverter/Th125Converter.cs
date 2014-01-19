@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -761,23 +762,23 @@ namespace ThScoreFileConverter
                         switch (type)
                         {
                             case 1:     // total score
-                                return this.ToNumberString(Utils.Accumulate<Score>(
-                                    this.allScoreData.scores, new Converter<Score, int>(
+                                return this.ToNumberString(
+                                    this.allScoreData.scores.Sum(
                                         score => (isTarget(score) && triedAndSucceeded(score))
-                                            ? score.HighScore : 0)));
+                                            ? (long)score.HighScore : 0L));
                             case 2:     // total of bestshot scores
-                                return this.ToNumberString(Utils.Accumulate<Score>(
-                                    this.allScoreData.scores, new Converter<Score, int>(
-                                        score => isTarget(score) ? score.BestshotScore : 0)));
+                                return this.ToNumberString(
+                                    this.allScoreData.scores.Sum(
+                                        score => isTarget(score) ? (long)score.BestshotScore : 0L));
                             case 3:     // total of num of shots
-                                return this.ToNumberString(Utils.Accumulate<Score>(
-                                    this.allScoreData.scores, new Converter<Score, int>(
-                                        score => isTarget(score) ? score.TrialCount : 0)));
+                                return this.ToNumberString(
+                                    this.allScoreData.scores.Sum(
+                                        score => isTarget(score) ? score.TrialCount : 0));
                             case 4:     // total of num of shots for the first success
-                                return this.ToNumberString(Utils.Accumulate<Score>(
-                                    this.allScoreData.scores, new Converter<Score, int>(
+                                return this.ToNumberString(
+                                    this.allScoreData.scores.Sum(
                                         score => (isTarget(score) && triedAndSucceeded(score))
-                                            ? score.FirstSuccess : 0)));
+                                            ? (long)score.FirstSuccess : 0L));
                             case 5:     // num of succeeded scenes
                                 return Utils.CountIf<Score>(
                                     this.allScoreData.scores, new Predicate<Score>(

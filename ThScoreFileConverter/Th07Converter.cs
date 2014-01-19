@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -800,17 +801,17 @@ namespace ThScoreFileConverter
                             switch (type)
                             {
                                 case 1:     // MaxBonus
-                                    return this.ToNumberString(Utils.Accumulate<CardAttack>(
-                                        this.allScoreData.cardAttacks, new Converter<CardAttack, uint>(
-                                            attack => ((attack != null) ? attack.MaxBonuses[chara] : 0))));
+                                    return this.ToNumberString(
+                                        this.allScoreData.cardAttacks.Sum(
+                                            attack => (attack != null) ? (long)attack.MaxBonuses[chara] : 0L));
                                 case 2:     // clear count
-                                    return this.ToNumberString(Utils.Accumulate<CardAttack>(
-                                        this.allScoreData.cardAttacks, new Converter<CardAttack, int>(
-                                            attack => ((attack != null) ? attack.ClearCounts[chara] : 0))));
+                                    return this.ToNumberString(
+                                        this.allScoreData.cardAttacks.Sum(
+                                            attack => (attack != null) ? attack.ClearCounts[chara] : 0));
                                 case 3:     // trial count
-                                    return this.ToNumberString(Utils.Accumulate<CardAttack>(
-                                        this.allScoreData.cardAttacks, new Converter<CardAttack, int>(
-                                            attack => ((attack != null) ? attack.TrialCounts[chara] : 0))));
+                                    return this.ToNumberString(
+                                        this.allScoreData.cardAttacks.Sum(
+                                            attack => (attack != null) ? attack.TrialCounts[chara] : 0));
                                 default:    // unreachable
                                     return match.ToString();
                             }

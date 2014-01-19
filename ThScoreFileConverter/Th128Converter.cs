@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -412,7 +413,7 @@ namespace ThScoreFileConverter
                     reader.BaseStream.Seek(-4, SeekOrigin.Current);
                     // 8 means the total size of Signature, Unknown, and Checksum.
                     var body = reader.ReadBytes(chapter.Size - 8);
-                    var sum = Utils.Accumulate<byte>(body, new Converter<byte, int>(elem => elem));
+                    var sum = body.Sum(elem => (int)elem);
                     if (sum != chapter.Checksum)
                         return false;
 
@@ -576,14 +577,11 @@ namespace ThScoreFileConverter
                             switch (type)
                             {
                                 case 1:
-                                    return this.ToNumberString(Utils.Accumulate<SpellCard>(
-                                        cards, new Converter<SpellCard,int>(card => card.NoIceCount)));
+                                    return this.ToNumberString(cards.Sum(card => card.NoIceCount));
                                 case 2:
-                                    return this.ToNumberString(Utils.Accumulate<SpellCard>(
-                                        cards, new Converter<SpellCard, int>(card => card.NoMissCount)));
+                                    return this.ToNumberString(cards.Sum(card => card.NoMissCount));
                                 case 3:
-                                    return this.ToNumberString(Utils.Accumulate<SpellCard>(
-                                        cards, new Converter<SpellCard, int>(card => card.TrialCount)));
+                                    return this.ToNumberString(cards.Sum(card => card.TrialCount));
                                 default:
                                     return match.ToString();
                             }
@@ -836,35 +834,29 @@ namespace ThScoreFileConverter
                         {
                             case 1:     // total play count
                                 if (route == RouteWithTotal.Total)
-                                    return this.ToNumberString(Utils.Accumulate<ClearData>(
-                                        this.allScoreData.clearData.Values, new Converter<ClearData, int>(
-                                            data => ((data.Route != route) ? data.TotalPlayCount : 0))));
+                                    return this.ToNumberString(
+                                        this.allScoreData.clearData.Values.Sum(
+                                            data => (data.Route != route) ? data.TotalPlayCount : 0));
                                 else
                                     return this.ToNumberString(
                                         this.allScoreData.clearData[route].TotalPlayCount);
                             case 2:     // play times
                                 {
-                                    var frames = 0L;
-                                    if (route == RouteWithTotal.Total)
-                                        frames = Utils.Accumulate<ClearData>(
-                                            this.allScoreData.clearData.Values, new Converter<ClearData, int>(
-                                                data => ((data.Route != route) ? data.PlayTime : 0)));
-                                    else
-                                        frames = this.allScoreData.clearData[route].PlayTime;
+                                    var frames = (route == RouteWithTotal.Total)
+                                        ? this.allScoreData.clearData.Values.Sum(
+                                            data => (data.Route != route) ? (long)data.PlayTime : 0L)
+                                        : (long)this.allScoreData.clearData[route].PlayTime;
                                     return new Time(frames).ToString();
                                 }
                             case 3:     // clear count
                                 if (route == RouteWithTotal.Total)
-                                    return this.ToNumberString(Utils.Accumulate<ClearData>(
-                                        this.allScoreData.clearData.Values, new Converter<ClearData, int>(
-                                            data => ((data.Route != route)
-                                                ? (int)Utils.Accumulate<int>(data.ClearCounts.Values,
-                                                    new Converter<int, int>(count => count))
-                                                : 0))));
+                                    return this.ToNumberString(
+                                        this.allScoreData.clearData.Values.Sum(
+                                            data => (data.Route != route)
+                                                ? data.ClearCounts.Values.Sum(count => count) : 0));
                                 else
-                                    return this.ToNumberString(Utils.Accumulate<int>(
-                                        this.allScoreData.clearData[route].ClearCounts.Values,
-                                        new Converter<int, int>(count => count)));
+                                    return this.ToNumberString(
+                                        this.allScoreData.clearData[route].ClearCounts.Values.Sum(count => count));
                             default:    // unreachable
                                 return match.ToString();
                         }
@@ -905,44 +897,38 @@ namespace ThScoreFileConverter
                         {
                             case 1:     // total play count
                                 if (route == RouteWithTotal.Total)
-                                    return this.ToNumberString(Utils.Accumulate<ClearData>(
-                                        this.allScoreData.clearData.Values, new Converter<ClearData, int>(
-                                            data => ((data.Route != route) ? data.TotalPlayCount : 0))));
+                                    return this.ToNumberString(
+                                        this.allScoreData.clearData.Values.Sum(
+                                            data => (data.Route != route) ? data.TotalPlayCount : 0));
                                 else
                                     return this.allScoreData.clearData[route].TotalPlayCount.ToString();
                             case 2:     // play times
                                 {
-                                    var frames = 0L;
-                                    if (route == RouteWithTotal.Total)
-                                        frames = Utils.Accumulate<ClearData>(
-                                            this.allScoreData.clearData.Values, new Converter<ClearData, int>(
-                                                data => ((data.Route != route) ? data.PlayTime : 0)));
-                                    else
-                                        frames = this.allScoreData.clearData[route].PlayTime;
+                                    var frames = (route == RouteWithTotal.Total)
+                                        ? this.allScoreData.clearData.Values.Sum(
+                                            data => (data.Route != route) ? (long)data.PlayTime : 0L)
+                                        : (long)this.allScoreData.clearData[route].PlayTime;
                                     return new Time(frames).ToString();
                                 }
                             case 3:     // clear count
                                 if (route == RouteWithTotal.Total)
                                 {
                                     if (level == LevelWithTotal.Total)
-                                        return this.ToNumberString(Utils.Accumulate<ClearData>(
-                                            this.allScoreData.clearData.Values, new Converter<ClearData, int>(
-                                                data => ((data.Route != route)
-                                                    ? (int)Utils.Accumulate<int>(data.ClearCounts.Values,
-                                                        new Converter<int, int>(count => count))
-                                                    : 0))));
+                                        return this.ToNumberString(
+                                            this.allScoreData.clearData.Values.Sum(
+                                                data => (data.Route != route)
+                                                    ? data.ClearCounts.Values.Sum(count => count) : 0));
                                     else
-                                        return this.ToNumberString(Utils.Accumulate<ClearData>(
-                                            this.allScoreData.clearData.Values, new Converter<ClearData, int>(
-                                                data => ((data.Route != route)
-                                                    ? data.ClearCounts[(Level)level] : 0))));
+                                        return this.ToNumberString(
+                                            this.allScoreData.clearData.Values.Sum(
+                                                data => (data.Route != route)
+                                                    ? data.ClearCounts[(Level)level] : 0));
                                 }
                                 else
                                 {
                                     if (level == LevelWithTotal.Total)
-                                        return this.ToNumberString(Utils.Accumulate<int>(
-                                            this.allScoreData.clearData[route].ClearCounts.Values,
-                                            new Converter<int, int>(count => count)));
+                                        return this.ToNumberString(
+                                            this.allScoreData.clearData[route].ClearCounts.Values.Sum(count => count));
                                     else
                                         return this.ToNumberString(this.allScoreData.
                                             clearData[route].ClearCounts[(Level)level]);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -582,17 +583,17 @@ namespace ThScoreFileConverter
                         switch (type)
                         {
                             case 1:     // total score
-                                return this.ToNumberString(Utils.Accumulate<Score>(
-                                    this.allScoreData.scores, new Converter<Score, int>(
-                                        score => ((score != null) ? score.HighScore : 0))));
+                                return this.ToNumberString(
+                                    this.allScoreData.scores.Sum(
+                                        score => (score != null) ? (long)score.HighScore : 0L));
                             case 2:     // total of bestshot scores
-                                return this.ToNumberString(Utils.Accumulate<Score>(
-                                    this.allScoreData.scores, new Converter<Score, int>(
-                                        score => ((score != null) ? score.BestshotScore : 0))));
+                                return this.ToNumberString(
+                                    this.allScoreData.scores.Sum(
+                                        score => (score != null) ? (long)score.BestshotScore : 0L));
                             case 3:     // total of num of shots
-                                return this.ToNumberString(Utils.Accumulate<Score>(
-                                    this.allScoreData.scores, new Converter<Score, int>(
-                                        score => ((score != null) ? score.TrialCount : 0))));
+                                return this.ToNumberString(
+                                    this.allScoreData.scores.Sum(
+                                        score => (score != null) ? score.TrialCount : 0));
                             case 4:     // num of succeeded scenes
                                 return Utils.CountIf<Score>(
                                     this.allScoreData.scores, new Predicate<Score>(

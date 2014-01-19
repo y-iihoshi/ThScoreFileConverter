@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace ThScoreFileConverter
 {
@@ -648,13 +649,13 @@ namespace ThScoreFileConverter
                             switch (type)
                             {
                                 case 1:     // clear count
-                                    return this.ToNumberString(Utils.Accumulate<CardAttack>(
-                                        this.allScoreData.cardAttacks, new Converter<CardAttack, int>(
-                                            attack => ((attack != null) ? attack.ClearCount : 0))));
+                                    return this.ToNumberString(
+                                        this.allScoreData.cardAttacks.Sum(
+                                            attack => (attack != null) ? attack.ClearCount : 0));
                                 case 2:     // trial count
-                                    return this.ToNumberString(Utils.Accumulate<CardAttack>(
-                                        this.allScoreData.cardAttacks, new Converter<CardAttack, int>(
-                                            attack => ((attack != null) ? attack.TrialCount : 0))));
+                                    return this.ToNumberString(
+                                        this.allScoreData.cardAttacks.Sum(
+                                            attack => (attack != null) ? attack.TrialCount : 0));
                                 default:    // unreachable
                                     return match.ToString();
                             }

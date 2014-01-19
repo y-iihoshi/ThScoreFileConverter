@@ -30,36 +30,6 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// T 型インスタンスの集合から合計値を算出する
-        /// </summary>
-        /// <typeparam name="T">任意の型</typeparam>
-        /// <param name="set">T 型インスタンスの列挙可能な集合</param>
-        /// <param name="converter">T 型インスタンスから int 型数値に変換するデリゲート</param>
-        /// <returns>各 T 型インスタンスから変換した数値の合計値</returns>
-        public static long Accumulate<T>(IEnumerable<T> set, Converter<T, int> converter)
-        {
-            long total = 0L;
-            foreach (var element in set)
-                total += converter(element);
-            return total;
-        }
-
-        /// <summary>
-        /// T 型インスタンスの集合から合計値を算出する
-        /// </summary>
-        /// <typeparam name="T">任意の型</typeparam>
-        /// <param name="set">T 型インスタンスの列挙可能な集合</param>
-        /// <param name="converter">T 型インスタンスから uint 型数値に変換するデリゲート</param>
-        /// <returns>各 T 型インスタンスから変換した数値の合計値</returns>
-        public static long Accumulate<T>(IEnumerable<T> set, Converter<T, uint> converter)
-        {
-            long total = 0L;
-            foreach (var element in set)
-                total += converter(element);
-            return total;
-        }
-
-        /// <summary>
         /// T 型インスタンスの集合のうち条件を満たす要素数を返す
         /// </summary>
         /// <typeparam name="T">任意の型</typeparam>

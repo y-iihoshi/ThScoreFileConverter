@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -972,37 +973,37 @@ namespace ThScoreFileConverter
                             {
                                 case 1:     // MaxBonus
                                     if (kind == "S")
-                                        return this.ToNumberString(Utils.Accumulate<CardAttack>(
-                                            this.allScoreData.cardAttacks, new Converter<CardAttack, uint>(
-                                                attack => ((attack != null)
-                                                    ? attack.StoryCareer.MaxBonuses[chara] : 0))));
+                                        return this.ToNumberString(
+                                            this.allScoreData.cardAttacks.Sum(
+                                                attack => (attack != null)
+                                                    ? (long)attack.StoryCareer.MaxBonuses[chara] : 0L));
                                     else
-                                        return this.ToNumberString(Utils.Accumulate<CardAttack>(
-                                            this.allScoreData.cardAttacks, new Converter<CardAttack, uint>(
-                                                attack => ((attack != null)
-                                                    ? attack.PracticeCareer.MaxBonuses[chara] : 0))));
+                                        return this.ToNumberString(
+                                            this.allScoreData.cardAttacks.Sum(
+                                                attack => (attack != null)
+                                                    ? (long)attack.PracticeCareer.MaxBonuses[chara] : 0L));
                                 case 2:     // clear count
                                     if (kind == "S")
-                                        return this.ToNumberString(Utils.Accumulate<CardAttack>(
-                                            this.allScoreData.cardAttacks, new Converter<CardAttack, int>(
-                                                attack => ((attack != null)
-                                                    ? attack.StoryCareer.ClearCounts[chara] : 0))));
+                                        return this.ToNumberString(
+                                            this.allScoreData.cardAttacks.Sum(
+                                                attack => (attack != null)
+                                                    ? attack.StoryCareer.ClearCounts[chara] : 0));
                                     else
-                                        return this.ToNumberString(Utils.Accumulate<CardAttack>(
-                                            this.allScoreData.cardAttacks, new Converter<CardAttack, int>(
-                                                attack => ((attack != null)
-                                                    ? attack.PracticeCareer.ClearCounts[chara] : 0))));
+                                        return this.ToNumberString(
+                                            this.allScoreData.cardAttacks.Sum(
+                                                attack => (attack != null)
+                                                    ? attack.PracticeCareer.ClearCounts[chara] : 0));
                                 case 3:     // trial count
                                     if (kind == "S")
-                                        return this.ToNumberString(Utils.Accumulate<CardAttack>(
-                                            this.allScoreData.cardAttacks, new Converter<CardAttack, int>(
-                                                attack => ((attack != null)
-                                                    ? attack.StoryCareer.TrialCounts[chara] : 0))));
+                                        return this.ToNumberString(
+                                            this.allScoreData.cardAttacks.Sum(
+                                                attack => (attack != null)
+                                                    ? attack.StoryCareer.TrialCounts[chara] : 0));
                                     else
-                                        return this.ToNumberString(Utils.Accumulate<CardAttack>(
-                                            this.allScoreData.cardAttacks, new Converter<CardAttack, int>(
-                                                attack => ((attack != null)
-                                                    ? attack.PracticeCareer.TrialCounts[chara] : 0))));
+                                        return this.ToNumberString(
+                                            this.allScoreData.cardAttacks.Sum(
+                                                attack => (attack != null)
+                                                    ? attack.PracticeCareer.TrialCounts[chara] : 0));
                                 default:    // unreachable
                                     return match.ToString();
                             }

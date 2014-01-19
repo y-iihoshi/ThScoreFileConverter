@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -396,7 +397,7 @@ namespace ThScoreFileConverter
                     reader.BaseStream.Seek(-4, SeekOrigin.Current);
                     // 8 means the total size of Signature, Unknown, and Checksum.
                     var body = reader.ReadBytes(chapter.Size - 8);
-                    var sum = Utils.Accumulate<byte>(body, new Converter<byte, int>(elem => elem));
+                    var sum = body.Sum(elem => (int)elem);
                     if (sum != chapter.Checksum)
                         return false;
 
@@ -553,23 +554,13 @@ namespace ThScoreFileConverter
                         if (number == 0)
                         {
                             if (type == 1)
-                            {
-                                if (kind == "S")
-                                    return this.ToNumberString(Utils.Accumulate<SpellCard>(
-                                        cards, new Converter<SpellCard, int>(card => card.ClearCount)));
-                                else
-                                    return this.ToNumberString(Utils.Accumulate<SpellCard>(
-                                        cards, new Converter<SpellCard, int>(card => card.PracticeClearCount)));
-                            }
+                                return this.ToNumberString((kind == "S")
+                                    ? cards.Sum(card => card.ClearCount)
+                                    : cards.Sum(card => card.PracticeClearCount));
                             else
-                            {
-                                if (kind == "S")
-                                    return this.ToNumberString(Utils.Accumulate<SpellCard>(
-                                        cards, new Converter<SpellCard, int>(card => card.TrialCount)));
-                                else
-                                    return this.ToNumberString(Utils.Accumulate<SpellCard>(
-                                        cards, new Converter<SpellCard, int>(card => card.PracticeTrialCount)));
-                            }
+                                return this.ToNumberString((kind == "S")
+                                    ? cards.Sum(card => card.TrialCount)
+                                    : cards.Sum(card => card.PracticeTrialCount));
                         }
                         else if ((0 < number) && (number <= NumCards))
                         {
@@ -758,35 +749,29 @@ namespace ThScoreFileConverter
                         {
                             case 1:     // total play count
                                 if (chara == CharaWithTotal.Total)
-                                    return this.ToNumberString(Utils.Accumulate<ClearData>(
-                                        this.allScoreData.clearData.Values, new Converter<ClearData, int>(
-                                            data => ((data.Chara != chara) ? data.TotalPlayCount : 0))));
+                                    return this.ToNumberString(
+                                        this.allScoreData.clearData.Values.Sum(
+                                            data => (data.Chara != chara) ? data.TotalPlayCount : 0));
                                 else
                                     return this.ToNumberString(
                                         this.allScoreData.clearData[chara].TotalPlayCount);
                             case 2:     // play times
                                 {
-                                    var frames = 0L;
-                                    if (chara == CharaWithTotal.Total)
-                                        frames = Utils.Accumulate<ClearData>(
-                                            this.allScoreData.clearData.Values, new Converter<ClearData, int>(
-                                                data => ((data.Chara != chara) ? data.PlayTime : 0)));
-                                    else
-                                        frames = this.allScoreData.clearData[chara].PlayTime;
+                                    var frames = (chara == CharaWithTotal.Total)
+                                        ? this.allScoreData.clearData.Values.Sum(
+                                            data => (data.Chara != chara) ? (long)data.PlayTime : 0L)
+                                        : (long)this.allScoreData.clearData[chara].PlayTime;
                                     return new Time(frames).ToString();
                                 }
                             case 3:     // clear count
                                 if (chara == CharaWithTotal.Total)
-                                    return this.ToNumberString(Utils.Accumulate<ClearData>(
-                                        this.allScoreData.clearData.Values, new Converter<ClearData, int>(
-                                            data => ((data.Chara != chara)
-                                                ? (int)Utils.Accumulate<int>(data.ClearCounts.Values,
-                                                    new Converter<int, int>(count => count))
-                                                : 0))));
+                                    return this.ToNumberString(
+                                        this.allScoreData.clearData.Values.Sum(
+                                            data => (data.Chara != chara)
+                                                ? data.ClearCounts.Values.Sum(count => count) : 0));
                                 else
-                                    return this.ToNumberString(Utils.Accumulate<int>(
-                                        this.allScoreData.clearData[chara].ClearCounts.Values,
-                                        new Converter<int, int>(count => count)));
+                                    return this.ToNumberString(
+                                        this.allScoreData.clearData[chara].ClearCounts.Values.Sum(count => count));
                             default:    // unreachable
                                 return match.ToString();
                         }
@@ -820,44 +805,38 @@ namespace ThScoreFileConverter
                         {
                             case 1:     // total play count
                                 if (chara == CharaWithTotal.Total)
-                                    return this.ToNumberString(Utils.Accumulate<ClearData>(
-                                        this.allScoreData.clearData.Values, new Converter<ClearData, int>(
-                                            data => ((data.Chara != chara) ? data.TotalPlayCount : 0))));
+                                    return this.ToNumberString(
+                                        this.allScoreData.clearData.Values.Sum(
+                                            data => (data.Chara != chara) ? data.TotalPlayCount : 0));
                                 else
                                     return this.allScoreData.clearData[chara].TotalPlayCount.ToString();
                             case 2:     // play times
                                 {
-                                    var frames = 0L;
-                                    if (chara == CharaWithTotal.Total)
-                                        frames = Utils.Accumulate<ClearData>(
-                                            this.allScoreData.clearData.Values, new Converter<ClearData, int>(
-                                                data => ((data.Chara != chara) ? data.PlayTime : 0)));
-                                    else
-                                        frames = this.allScoreData.clearData[chara].PlayTime;
+                                    var frames = (chara == CharaWithTotal.Total)
+                                        ? this.allScoreData.clearData.Values.Sum(
+                                            data => (data.Chara != chara) ? (long)data.PlayTime : 0L)
+                                        : (long)this.allScoreData.clearData[chara].PlayTime;
                                     return new Time(frames).ToString();
                                 }
                             case 3:     // clear count
                                 if (chara == CharaWithTotal.Total)
                                 {
                                     if (level == LevelWithTotal.Total)
-                                        return this.ToNumberString(Utils.Accumulate<ClearData>(
-                                            this.allScoreData.clearData.Values, new Converter<ClearData, int>(
-                                                data => ((data.Chara != chara)
-                                                    ? (int)Utils.Accumulate<int>(data.ClearCounts.Values,
-                                                        new Converter<int, int>(count => count))
-                                                    : 0))));
+                                        return this.ToNumberString(
+                                            this.allScoreData.clearData.Values.Sum(
+                                                data => (data.Chara != chara)
+                                                    ? data.ClearCounts.Values.Sum(count => count) : 0));
                                     else
-                                        return this.ToNumberString(Utils.Accumulate<ClearData>(
-                                            this.allScoreData.clearData.Values, new Converter<ClearData, int>(
-                                                data => ((data.Chara != chara)
-                                                    ? data.ClearCounts[(LevelPractice)level] : 0))));
+                                        return this.ToNumberString(
+                                            this.allScoreData.clearData.Values.Sum(
+                                                data => (data.Chara != chara)
+                                                    ? data.ClearCounts[(LevelPractice)level] : 0));
                                 }
                                 else
                                 {
                                     if (level == LevelWithTotal.Total)
-                                        return this.ToNumberString(Utils.Accumulate<int>(
-                                            this.allScoreData.clearData[chara].ClearCounts.Values,
-                                            new Converter<int, int>(count => count)));
+                                        return this.ToNumberString(
+                                            this.allScoreData.clearData[chara].ClearCounts.Values.Sum(count => count));
                                     else
                                         return this.ToNumberString(this.allScoreData.
                                             clearData[chara].ClearCounts[(LevelPractice)level]);
