@@ -47,21 +47,6 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// ItemCollection インスタンスから条件を満たす要素を返す
-        /// </summary>
-        /// <typeparam name="T">items の各要素をこの型と見なす</typeparam>
-        /// <param name="items">ItemCollection インスタンス</param>
-        /// <param name="predicator">条件を表すデリゲート</param>
-        /// <returns>条件を満たす T 型インスタンス</returns>
-        public static T Find<T>(ItemCollection items, Predicate<T> predicator)
-        {
-            foreach (T item in items)
-                if (predicator(item))
-                    return item;
-            return default(T);
-        }
-
-        /// <summary>
         /// 数値から文字列への変換
         /// </summary>
         /// <typeparam name="T">数値の型</typeparam>

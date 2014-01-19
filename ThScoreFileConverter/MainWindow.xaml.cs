@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -71,15 +72,14 @@ namespace ThScoreFileConverter
                         MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
 
-                var lastTitleItem = Utils.Find<ComboBoxItem>(
-                    this.cmbTitle.Items, new Predicate<ComboBoxItem>(
-                        item => (item.Name == this.settings.LastTitle)));
+                var lastTitleItem = this.cmbTitle.Items.Cast<ComboBoxItem>()
+                    .FirstOrDefault(item => item.Name == this.settings.LastTitle);
                 if (lastTitleItem != null)
                     lastTitleItem.IsSelected = true;
                 else
                 {
-                    var firstEnabledItem = Utils.Find<ComboBoxItem>(
-                        this.cmbTitle.Items, new Predicate<ComboBoxItem>(item => item.IsEnabled));
+                    var firstEnabledItem = this.cmbTitle.Items.Cast<ComboBoxItem>()
+                        .FirstOrDefault(item => item.IsEnabled);
                     if (firstEnabledItem != null)
                         firstEnabledItem.IsSelected = true;
                 }
