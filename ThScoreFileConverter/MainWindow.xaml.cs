@@ -577,6 +577,7 @@ namespace ThScoreFileConverter
         private void ThConverter_ExceptionOccurred(object sender, ExceptionOccurredEventArgs e)
         {
             this.ShowExceptionMessage(e.Exception);
+            this.AddLogLine(Properties.Resources.msgErrUnhandledException);
             this.SetAllControlsEnabled(true);
             this.ChangeCursor(null);
         }

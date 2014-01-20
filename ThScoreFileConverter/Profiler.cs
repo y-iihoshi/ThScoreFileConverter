@@ -35,17 +35,13 @@ namespace ThScoreFileConverter
         /// <param name="postprocess">計測終了時の処理</param>
         public Profiler(Action preprocess, Action<TimeSpan> postprocess)
         {
-            if (preprocess == null)
-                throw new ArgumentNullException("preprocess");
-            if (postprocess == null)
-                throw new ArgumentNullException("postprocess");
-
             this.disposed = false;
             this.watch = new Stopwatch();
             this.preprocess = preprocess;
             this.postprocess = postprocess;
 
-            this.preprocess();
+            if (this.preprocess != null)
+                this.preprocess();
             this.watch.Start();
         }
 
@@ -88,7 +84,8 @@ namespace ThScoreFileConverter
                 }
 
                 this.watch.Stop();
-                this.postprocess(this.watch.Elapsed);
+                if (this.postprocess != null)
+                    this.postprocess(this.watch.Elapsed);
                 this.disposed = true;
             }
         }

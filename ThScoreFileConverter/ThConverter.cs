@@ -145,7 +145,12 @@ namespace ThScoreFileConverter
         {
             try
             {
+#if DEBUG
+                using (var profiler = new Profiler("Convert"))
+                    this.Convert(obj as SettingsPerTitle);
+#else
                 this.Convert(obj as SettingsPerTitle);
+#endif
             }
             catch (Exception e)
             {
