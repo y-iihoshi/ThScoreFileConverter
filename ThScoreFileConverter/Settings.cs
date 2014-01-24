@@ -16,10 +16,6 @@
     "StyleCop.CSharp.MaintainabilityRules",
     "SA1402:FileMayOnlyContainASingleClass",
     Justification = "Reviewed.")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "StyleCop.CSharp.OrderingRules",
-    "SA1201:ElementsMustAppearInTheCorrectOrder",
-    Justification = "Reviewed.")]
 
 namespace ThScoreFileConverter
 {
@@ -34,6 +30,18 @@ namespace ThScoreFileConverter
     /// </summary>
     public class SettingsPerTitle
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SettingsPerTitle"/> class.
+        /// </summary>
+        public SettingsPerTitle()
+        {
+            this.ScoreFile = string.Empty;
+            this.BestShotDirectory = string.Empty;
+            this.TemplateFiles = new string[] { };
+            this.OutputDirectory = string.Empty;
+            this.ImageOutputDirectory = string.Empty;
+        }
+
         /// <summary>
         /// Gets or sets the path of the score file.
         /// </summary>
@@ -58,18 +66,6 @@ namespace ThScoreFileConverter
         /// Gets or sets the path of the output directory of the image files.
         /// </summary>
         public string ImageOutputDirectory { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SettingsPerTitle"/> class.
-        /// </summary>
-        public SettingsPerTitle()
-        {
-            this.ScoreFile = string.Empty;
-            this.BestShotDirectory = string.Empty;
-            this.TemplateFiles = new string[] { };
-            this.OutputDirectory = string.Empty;
-            this.ImageOutputDirectory = string.Empty;
-        }
     }
 
     /// <summary>
@@ -78,6 +74,18 @@ namespace ThScoreFileConverter
     [DataContract]
     public class Settings
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Settings"/> class.
+        /// </summary>
+        public Settings()
+        {
+            this.LastTitle = string.Empty;
+            this.Dictionary = new Dictionary<string, SettingsPerTitle>();
+            this.FontFamilyName = SystemFonts.MessageFontFamily.Source;
+            this.FontSize = SystemFonts.MessageFontSize;
+            this.OutputNumberGroupSeparator = true;
+        }
+
         /// <summary>
         /// Gets or sets the last selected work.
         /// </summary>
@@ -108,18 +116,6 @@ namespace ThScoreFileConverter
         /// </summary>
         [DataMember(Order = 4)]
         public bool? OutputNumberGroupSeparator { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Settings"/> class.
-        /// </summary>
-        public Settings()
-        {
-            this.LastTitle = string.Empty;
-            this.Dictionary = new Dictionary<string, SettingsPerTitle>();
-            this.FontFamilyName = SystemFonts.MessageFontFamily.Source;
-            this.FontSize = SystemFonts.MessageFontSize;
-            this.OutputNumberGroupSeparator = true;
-        }
 
         /// <summary>
         /// Loads the settings from the specified XML file.

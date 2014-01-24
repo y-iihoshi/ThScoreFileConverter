@@ -8,14 +8,6 @@
     "StyleCop.CSharp.LayoutRules",
     "SA1503:CurlyBracketsMustNotBeOmitted",
     Justification = "Reviewed.")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "StyleCop.CSharp.OrderingRules",
-    "SA1201:ElementsMustAppearInTheCorrectOrder",
-    Justification = "Reviewed.")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "StyleCop.CSharp.OrderingRules",
-    "SA1202:ElementsMustBeOrderedByAccess",
-    Justification = "Reviewed.")]
 
 namespace ThScoreFileConverter
 {
@@ -65,36 +57,20 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
+        /// Finalizes an instance of the <see cref="BitReader"/> class.
+        /// </summary>
+        ~BitReader()
+        {
+            this.Dispose(false);
+        }
+
+        /// <summary>
         /// Implements the <see cref="IDisposable.Dispose"/> method.
         /// </summary>
         public void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        /// Disposes the resources of the current instance.
-        /// </summary>
-        /// <param name="disposing">
-        /// <c>true</c> if calls from the <see cref="Dispose()"/> method; <c>false</c> for the destructor.
-        /// </param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-                if (disposing)
-                    this.stream.Dispose();
-                this.disposed = true;
-            }
-        }
-
-        /// <summary>
-        /// Finalizes an instance of the <see cref="BitReader"/> class.
-        /// </summary>
-        ~BitReader()
-        {
-            this.Dispose(false);
         }
 
         /// <summary>
@@ -126,6 +102,22 @@ namespace ThScoreFileConverter
             }
 
             return value;
+        }
+
+        /// <summary>
+        /// Disposes the resources of the current instance.
+        /// </summary>
+        /// <param name="disposing">
+        /// <c>true</c> if calls from the <see cref="Dispose()"/> method; <c>false</c> for the destructor.
+        /// </param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                    this.stream.Dispose();
+                this.disposed = true;
+            }
         }
     }
 }

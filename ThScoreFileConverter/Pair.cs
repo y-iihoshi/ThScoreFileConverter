@@ -8,10 +8,6 @@
     "StyleCop.CSharp.LayoutRules",
     "SA1503:CurlyBracketsMustNotBeOmitted",
     Justification = "Reviewed.")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "StyleCop.CSharp.OrderingRules",
-    "SA1201:ElementsMustAppearInTheCorrectOrder",
-    Justification = "Reviewed.")]
 
 namespace ThScoreFileConverter
 {
@@ -23,16 +19,6 @@ namespace ThScoreFileConverter
     public class Pair<Type1, Type2>
     {
         /// <summary>
-        /// Gets the value of the first component of the pair.
-        /// </summary>
-        protected Type1 First { get; private set; }
-
-        /// <summary>
-        /// Gets the value of the second component of the pair.
-        /// </summary>
-        protected Type2 Second { get; private set; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Pair{Type1,Type2}"/> class.
         /// </summary>
         /// <param name="first">The value of the first component of the pair.</param>
@@ -42,6 +28,16 @@ namespace ThScoreFileConverter
             this.First = first;
             this.Second = second;
         }
+
+        /// <summary>
+        /// Gets the value of the first component of the pair.
+        /// </summary>
+        protected Type1 First { get; private set; }
+
+        /// <summary>
+        /// Gets the value of the second component of the pair.
+        /// </summary>
+        protected Type2 Second { get; private set; }
 
         /// <summary>
         /// Determines whether the specified instance is equal to the current instance.

@@ -16,18 +16,6 @@
     "StyleCop.CSharp.MaintainabilityRules",
     "SA1402:FileMayOnlyContainASingleClass",
     Justification = "Reviewed.")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "StyleCop.CSharp.OrderingRules",
-    "SA1201:ElementsMustAppearInTheCorrectOrder",
-    Justification = "Reviewed.")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "StyleCop.CSharp.OrderingRules",
-    "SA1202:ElementsMustBeOrderedByAccess",
-    Justification = "Reviewed.")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "StyleCop.CSharp.OrderingRules",
-    "SA1204:StaticElementsMustAppearBeforeInstanceElements",
-    Justification = "Reviewed.")]
 
 namespace ThScoreFileConverter
 {
@@ -80,6 +68,19 @@ namespace ThScoreFileConverter
     public class ThConverterEventArgs : EventArgs
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="ThConverterEventArgs"/> class.
+        /// </summary>
+        /// <param name="path">The path of the last output file.</param>
+        /// <param name="current">The number of the files that have been output.</param>
+        /// <param name="total">The total number of the files.</param>
+        public ThConverterEventArgs(string path, int current, int total)
+        {
+            this.Path = path;
+            this.Current = current;
+            this.Total = total;
+        }
+
+        /// <summary>
         /// Gets the path of the last output file.
         /// </summary>
         public string Path { get; private set; }
@@ -105,19 +106,6 @@ namespace ThScoreFileConverter
                     "({0}/{1}) {2} ", this.Current, this.Total, System.IO.Path.GetFileName(this.Path));
             }
         }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ThConverterEventArgs"/> class.
-        /// </summary>
-        /// <param name="path">The path of the last output file.</param>
-        /// <param name="current">The number of the files that have been output.</param>
-        /// <param name="total">The total number of the files.</param>
-        public ThConverterEventArgs(string path, int current, int total)
-        {
-            this.Path = path;
-            this.Current = current;
-            this.Total = total;
-        }
     }
 
     /// <summary>
@@ -126,11 +114,6 @@ namespace ThScoreFileConverter
     public class ExceptionOccurredEventArgs : EventArgs
     {
         /// <summary>
-        /// Gets the exception data.
-        /// </summary>
-        public Exception Exception { get; private set; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ExceptionOccurredEventArgs"/> class.
         /// </summary>
         /// <param name="e">The exception data.</param>
@@ -138,6 +121,11 @@ namespace ThScoreFileConverter
         {
             this.Exception = e;
         }
+
+        /// <summary>
+        /// Gets the exception data.
+        /// </summary>
+        public Exception Exception { get; private set; }
     }
 
     /// <summary>
@@ -145,6 +133,28 @@ namespace ThScoreFileConverter
     /// </summary>
     public class ThConverter
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ThConverter"/> class.
+        /// </summary>
+        protected ThConverter()
+        {
+        }
+
+        /// <summary>
+        /// Represents the event that the conversion process per file has finished.
+        /// </summary>
+        public event EventHandler<ThConverterEventArgs> ConvertFinished;
+
+        /// <summary>
+        /// Represents the event that all conversion process has finished.
+        /// </summary>
+        public event EventHandler<ThConverterEventArgs> ConvertAllFinished;
+
+        /// <summary>
+        /// Represents the event that an exception has occurred.
+        /// </summary>
+        public event EventHandler<ExceptionOccurredEventArgs> ExceptionOccurred;
+
         /// <summary>
         /// Gets the string indicating the supported version of the score file to convert.
         /// </summary>
@@ -174,28 +184,6 @@ namespace ThScoreFileConverter
         public bool OutputNumberGroupSeparator { protected get; set; }
 
         /// <summary>
-        /// Represents the event that the conversion process per file has finished.
-        /// </summary>
-        public event EventHandler<ThConverterEventArgs> ConvertFinished;
-
-        /// <summary>
-        /// Represents the event that all conversion process has finished.
-        /// </summary>
-        public event EventHandler<ThConverterEventArgs> ConvertAllFinished;
-
-        /// <summary>
-        /// Represents the event that an exception has occurred.
-        /// </summary>
-        public event EventHandler<ExceptionOccurredEventArgs> ExceptionOccurred;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ThConverter"/> class.
-        /// </summary>
-        protected ThConverter()
-        {
-        }
-
-        /// <summary>
         /// Converts a score file.
         /// </summary>
         /// <param name="obj">An instance of the <see cref="SettingsPerTitle"/> class.</param>
@@ -213,55 +201,6 @@ namespace ThScoreFileConverter
             catch (Exception e)
             {
                 this.OnExceptionOccurred(new ExceptionOccurredEventArgs(e));
-            }
-        }
-
-        /// <summary>
-        /// Converts a score file.
-        /// </summary>
-        /// <param name="settings">The settings per work.</param>
-        private void Convert(SettingsPerTitle settings)
-        {
-            using (var scr = new FileStream(settings.ScoreFile, FileMode.Open, FileAccess.Read))
-            using (var reader = new BinaryReader(scr))
-            {
-                scr.Seek(0, SeekOrigin.Begin);
-                if (!this.ReadScoreFile(scr))
-                    throw new NotSupportedException(Properties.Resources.msgErrScoreFileNotSupported);
-
-                if (this.HasBestShotConverter)
-                {
-                    var dir = Path.Combine(settings.OutputDirectory, settings.ImageOutputDirectory);
-                    if (!Directory.Exists(dir))
-                        Directory.CreateDirectory(dir);
-                    var files = this.FilterBestShotFiles(
-                        Directory.GetFiles(settings.BestShotDirectory, Properties.Resources.ptnBestShot));
-                    for (var index = 0; index < files.Length; index++)
-                    {
-                        var result = GetBestShotFilePath(files[index], dir);
-                        using (var bsts = new FileStream(files[index], FileMode.Open, FileAccess.Read))
-                        using (var rslt = new FileStream(result, FileMode.OpenOrCreate, FileAccess.Write))
-                        {
-                            this.ConvertBestShot(bsts, rslt);
-                            this.OnConvertFinished(new ThConverterEventArgs(result, index + 1, files.Length));
-                        }
-                    }
-                }
-
-                for (var index = 0; index < settings.TemplateFiles.Length; index++)
-                {
-                    var result = GetOutputFilePath(settings.TemplateFiles[index], settings.OutputDirectory);
-                    using (var tmpl =
-                        new FileStream(settings.TemplateFiles[index], FileMode.Open, FileAccess.Read))
-                    using (var rslt = new FileStream(result, FileMode.OpenOrCreate, FileAccess.Write))
-                    {
-                        this.Convert(tmpl, rslt);
-                        this.OnConvertFinished(
-                            new ThConverterEventArgs(result, index + 1, settings.TemplateFiles.Length));
-                    }
-                }
-
-                this.OnConvertAllFinished(new ThConverterEventArgs(string.Empty, 0, 0));
             }
         }
 
@@ -323,6 +262,87 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
+        /// Gets a path string of the output file.
+        /// </summary>
+        /// <param name="templateFile">A path string of the template file.</param>
+        /// <param name="outputDirectory">A path string of the output directory.</param>
+        /// <returns>A path string of the output file.</returns>
+        private static string GetOutputFilePath(string templateFile, string outputDirectory)
+        {
+            var outputFile = Path.Combine(outputDirectory, Path.GetFileNameWithoutExtension(templateFile));
+            if (outputDirectory == Path.GetDirectoryName(templateFile))
+                outputFile += "_";
+            outputFile += Path.GetExtension(templateFile);
+
+            return outputFile;
+        }
+
+        /// <summary>
+        /// Gets a path string of the converted best shot file.
+        /// </summary>
+        /// <param name="bestshotFile">A path string of the best shot file before conversion.</param>
+        /// <param name="outputDirectory">A path string of the output directory.</param>
+        /// <returns>A path string of the converted best shot file.</returns>
+        private static string GetBestShotFilePath(string bestshotFile, string outputDirectory)
+        {
+            var outputFile = Path.Combine(outputDirectory, Path.GetFileNameWithoutExtension(bestshotFile));
+            if (outputDirectory == Path.GetDirectoryName(bestshotFile))
+                outputFile += "_";
+            outputFile += Properties.Resources.strBestShotExtension;
+
+            return outputFile;
+        }
+
+        /// <summary>
+        /// Converts a score file.
+        /// </summary>
+        /// <param name="settings">The settings per work.</param>
+        private void Convert(SettingsPerTitle settings)
+        {
+            using (var scr = new FileStream(settings.ScoreFile, FileMode.Open, FileAccess.Read))
+            using (var reader = new BinaryReader(scr))
+            {
+                scr.Seek(0, SeekOrigin.Begin);
+                if (!this.ReadScoreFile(scr))
+                    throw new NotSupportedException(Properties.Resources.msgErrScoreFileNotSupported);
+
+                if (this.HasBestShotConverter)
+                {
+                    var dir = Path.Combine(settings.OutputDirectory, settings.ImageOutputDirectory);
+                    if (!Directory.Exists(dir))
+                        Directory.CreateDirectory(dir);
+                    var files = this.FilterBestShotFiles(
+                        Directory.GetFiles(settings.BestShotDirectory, Properties.Resources.ptnBestShot));
+                    for (var index = 0; index < files.Length; index++)
+                    {
+                        var result = GetBestShotFilePath(files[index], dir);
+                        using (var bsts = new FileStream(files[index], FileMode.Open, FileAccess.Read))
+                        using (var rslt = new FileStream(result, FileMode.OpenOrCreate, FileAccess.Write))
+                        {
+                            this.ConvertBestShot(bsts, rslt);
+                            this.OnConvertFinished(new ThConverterEventArgs(result, index + 1, files.Length));
+                        }
+                    }
+                }
+
+                for (var index = 0; index < settings.TemplateFiles.Length; index++)
+                {
+                    var result = GetOutputFilePath(settings.TemplateFiles[index], settings.OutputDirectory);
+                    using (var tmpl =
+                        new FileStream(settings.TemplateFiles[index], FileMode.Open, FileAccess.Read))
+                    using (var rslt = new FileStream(result, FileMode.OpenOrCreate, FileAccess.Write))
+                    {
+                        this.Convert(tmpl, rslt);
+                        this.OnConvertFinished(
+                            new ThConverterEventArgs(result, index + 1, settings.TemplateFiles.Length));
+                    }
+                }
+
+                this.OnConvertAllFinished(new ThConverterEventArgs(string.Empty, 0, 0));
+            }
+        }
+
+        /// <summary>
         /// Raises the event indicating the conversion process per file has finished.
         /// </summary>
         /// <param name="e">The event data issued by the <see cref="ThConverter"/> class.</param>
@@ -353,38 +373,6 @@ namespace ThScoreFileConverter
             var handler = this.ExceptionOccurred;
             if (handler != null)
                 handler(this, e);
-        }
-
-        /// <summary>
-        /// Gets a path string of the output file.
-        /// </summary>
-        /// <param name="templateFile">A path string of the template file.</param>
-        /// <param name="outputDirectory">A path string of the output directory.</param>
-        /// <returns>A path string of the output file.</returns>
-        private static string GetOutputFilePath(string templateFile, string outputDirectory)
-        {
-            var outputFile = Path.Combine(outputDirectory, Path.GetFileNameWithoutExtension(templateFile));
-            if (outputDirectory == Path.GetDirectoryName(templateFile))
-                outputFile += "_";
-            outputFile += Path.GetExtension(templateFile);
-
-            return outputFile;
-        }
-
-        /// <summary>
-        /// Gets a path string of the converted best shot file.
-        /// </summary>
-        /// <param name="bestshotFile">A path string of the best shot file before conversion.</param>
-        /// <param name="outputDirectory">A path string of the output directory.</param>
-        /// <returns>A path string of the converted best shot file.</returns>
-        private static string GetBestShotFilePath(string bestshotFile, string outputDirectory)
-        {
-            var outputFile = Path.Combine(outputDirectory, Path.GetFileNameWithoutExtension(bestshotFile));
-            if (outputDirectory == Path.GetDirectoryName(bestshotFile))
-                outputFile += "_";
-            outputFile += Properties.Resources.strBestShotExtension;
-
-            return outputFile;
         }
     }
 }

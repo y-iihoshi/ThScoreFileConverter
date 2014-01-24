@@ -17,11 +17,6 @@ namespace ThScoreFileConverter
     public class Win32Window : WinForms.IWin32Window
     {
         /// <summary>
-        /// Gets the window handle for the current instance.
-        /// </summary>
-        public IntPtr Handle { get; private set; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Win32Window"/> class.
         /// </summary>
         /// <param name="window">The instance of <see cref="System.Windows.Window"/>.</param>
@@ -29,5 +24,10 @@ namespace ThScoreFileConverter
         {
             this.Handle = new WindowInteropHelper(window).Handle;
         }
+
+        /// <summary>
+        /// Gets the window handle for the current instance.
+        /// </summary>
+        public IntPtr Handle { get; private set; }
     }
 }

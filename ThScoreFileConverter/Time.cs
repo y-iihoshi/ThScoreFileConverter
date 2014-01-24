@@ -8,10 +8,6 @@
     "StyleCop.CSharp.LayoutRules",
     "SA1503:CurlyBracketsMustNotBeOmitted",
     Justification = "Reviewed.")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "StyleCop.CSharp.OrderingRules",
-    "SA1201:ElementsMustAppearInTheCorrectOrder",
-    Justification = "Reviewed.")]
 
 namespace ThScoreFileConverter
 {
@@ -23,39 +19,6 @@ namespace ThScoreFileConverter
     /// </summary>
     public class Time
     {
-        /// <summary>
-        /// Gets the hours component of the time represented by the current instance.
-        /// </summary>
-        public long Hours { get; private set; }
-
-        /// <summary>
-        /// Gets the minutes component of the time represented by the current instance.
-        /// </summary>
-        public int Minutes { get; private set; }
-
-        /// <summary>
-        /// Gets the seconds component of the time represented by the current instance.
-        /// </summary>
-        public int Seconds { get; private set; }
-
-        /// <summary>
-        /// Gets the milliseconds component of the time represented by the current instance.
-        /// </summary>
-        /// <remarks>This property should be used exclusively with <see cref="Frames"/>.</remarks>
-        public int Milliseconds { get; private set; }
-
-        /// <summary>
-        /// Gets the frames component of the time represented by the current instance.
-        /// </summary>
-        /// <remarks>This property should be used exclusively with <see cref="Milliseconds"/>.</remarks>
-        public int Frames { get; private set; }
-
-        /// <summary>
-        /// Gets a value indicating whether the value less than a second is treated as fps or milliseconds.
-        /// <c>true</c> if fps; <c>false</c> for milliseconds.
-        /// </summary>
-        public bool IsFrames { get; private set; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Time"/> class to a specified number of frames
         /// or milliseconds.
@@ -126,6 +89,39 @@ namespace ThScoreFileConverter
 
             this.IsFrames = isFrames;
         }
+
+        /// <summary>
+        /// Gets the hours component of the time represented by the current instance.
+        /// </summary>
+        public long Hours { get; private set; }
+
+        /// <summary>
+        /// Gets the minutes component of the time represented by the current instance.
+        /// </summary>
+        public int Minutes { get; private set; }
+
+        /// <summary>
+        /// Gets the seconds component of the time represented by the current instance.
+        /// </summary>
+        public int Seconds { get; private set; }
+
+        /// <summary>
+        /// Gets the milliseconds component of the time represented by the current instance.
+        /// </summary>
+        /// <remarks>This property should be used exclusively with <see cref="Frames"/>.</remarks>
+        public int Milliseconds { get; private set; }
+
+        /// <summary>
+        /// Gets the frames component of the time represented by the current instance.
+        /// </summary>
+        /// <remarks>This property should be used exclusively with <see cref="Milliseconds"/>.</remarks>
+        public int Frames { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether the value less than a second is treated as fps or milliseconds.
+        /// <c>true</c> if fps; <c>false</c> for milliseconds.
+        /// </summary>
+        public bool IsFrames { get; private set; }
 
         /// <summary>
         /// Returns a string that represents the current instance.

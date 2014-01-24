@@ -8,14 +8,6 @@
     "StyleCop.CSharp.LayoutRules",
     "SA1503:CurlyBracketsMustNotBeOmitted",
     Justification = "Reviewed.")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "StyleCop.CSharp.OrderingRules",
-    "SA1201:ElementsMustAppearInTheCorrectOrder",
-    Justification = "Reviewed.")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "StyleCop.CSharp.OrderingRules",
-    "SA1202:ElementsMustBeOrderedByAccess",
-    Justification = "Reviewed.")]
 
 namespace ThScoreFileConverter
 {
@@ -41,6 +33,17 @@ namespace ThScoreFileConverter
         private bool disposed;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="SettingWindow"/> class.
+        /// </summary>
+        /// <param name="owner">The instance of the owner window.</param>
+        public SettingWindow(Window owner)
+            : this()
+        {
+            this.Owner = owner;
+            this.chkOutputNumberGroupSeparator.IsChecked = ((MainWindow)owner).OutputNumberGroupSeparator;
+        }
+
+        /// <summary>
         /// Prevents a default instance of the <see cref="SettingWindow"/> class from being created.
         /// </summary>
         private SettingWindow()
@@ -59,14 +62,11 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SettingWindow"/> class.
+        /// Finalizes an instance of the <see cref="SettingWindow"/> class.
         /// </summary>
-        /// <param name="owner">The instance of the owner window.</param>
-        public SettingWindow(Window owner)
-            : this()
+        ~SettingWindow()
         {
-            this.Owner = owner;
-            this.chkOutputNumberGroupSeparator.IsChecked = ((MainWindow)owner).OutputNumberGroupSeparator;
+            this.Dispose(false);
         }
 
         /// <summary>
@@ -92,14 +92,6 @@ namespace ThScoreFileConverter
                     this.fontDialog.Dispose();
                 this.disposed = true;
             }
-        }
-
-        /// <summary>
-        /// Finalizes an instance of the <see cref="SettingWindow"/> class.
-        /// </summary>
-        ~SettingWindow()
-        {
-            this.Dispose(false);
         }
 
         #region Font settings

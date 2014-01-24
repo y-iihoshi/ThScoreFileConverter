@@ -8,10 +8,6 @@
     "StyleCop.CSharp.LayoutRules",
     "SA1503:CurlyBracketsMustNotBeOmitted",
     Justification = "Reviewed.")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "StyleCop.CSharp.OrderingRules",
-    "SA1202:ElementsMustBeOrderedByAccess",
-    Justification = "Reviewed.")]
 
 namespace ThScoreFileConverter
 {
@@ -31,6 +27,16 @@ namespace ThScoreFileConverter
     public partial class AboutWindow : Window
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="AboutWindow"/> class.
+        /// </summary>
+        /// <param name="owner">The owner window of the new instance.</param>
+        public AboutWindow(Window owner)
+            : this()
+        {
+            this.Owner = owner;
+        }
+
+        /// <summary>
         /// Prevents a default instance of the <see cref="AboutWindow"/> class from being created.
         /// </summary>
         private AboutWindow()
@@ -45,16 +51,6 @@ namespace ThScoreFileConverter
             this.txtName.Text = asmName.Name;
             this.txtVersion.Text = Properties.Resources.strVersionPrefix + asmName.Version.ToString();
             this.txtCopyright.Text = ((AssemblyCopyrightAttribute)attrs[0]).Copyright;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AboutWindow"/> class.
-        /// </summary>
-        /// <param name="owner">The owner window of the new instance.</param>
-        public AboutWindow(Window owner)
-            : this()
-        {
-            this.Owner = owner;
         }
 
         /// <summary>

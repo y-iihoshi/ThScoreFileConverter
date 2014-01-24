@@ -4,15 +4,6 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "StyleCop.CSharp.OrderingRules",
-    "SA1201:ElementsMustAppearInTheCorrectOrder",
-    Justification = "Reviewed.")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "StyleCop.CSharp.OrderingRules",
-    "SA1202:ElementsMustBeOrderedByAccess",
-    Justification = "Reviewed.")]
-
 namespace ThScoreFileConverter
 {
     using System;
@@ -27,6 +18,18 @@ namespace ThScoreFileConverter
     /// </summary>
     public static class Utils
     {
+        /// <summary>
+        /// Defines a method to read from a binary stream.
+        /// </summary>
+        public interface IBinaryReadable
+        {
+            /// <summary>
+            /// Reads from a stream by using the specified <see cref="BinaryReader"/> instance.
+            /// </summary>
+            /// <param name="reader">The instance to use.</param>
+            void ReadFrom(BinaryReader reader);
+        }
+
         /// <summary>
         /// Concatenates all names of the specified enumeration type.
         /// </summary>
@@ -94,18 +97,6 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// Defines a method to read from a binary stream.
-        /// </summary>
-        public interface IBinaryReadable
-        {
-            /// <summary>
-            /// Reads from a stream by using the specified <see cref="BinaryReader"/> instance.
-            /// </summary>
-            /// <param name="reader">The instance to use.</param>
-            void ReadFrom(BinaryReader reader);
-        }
-
-        /// <summary>
         /// Represents a logical-and predicate.
         /// </summary>
         /// <typeparam name="T">Type of the instance to evaluate.</typeparam>
@@ -126,6 +117,17 @@ namespace ThScoreFileConverter
             }
 
             /// <summary>
+            /// Casts the instance of the <see cref="And{T}"/> class to an instance of the
+            /// <c>Func{T,bool}</c> class.
+            /// </summary>
+            /// <param name="from">The instance of the <see cref="And{T}"/> class to cast.</param>
+            /// <returns>An instance of the <c>Func{T,bool}</c> class.</returns>
+            public static implicit operator Func<T, bool>(And<T> from)
+            {
+                return from.Pred;
+            }
+
+            /// <summary>
             /// Evaluates the instance of <typeparamref name="T"/> by all predicates of the current instance.
             /// </summary>
             /// <param name="obj">The instance to evaluate.</param>
@@ -136,17 +138,6 @@ namespace ThScoreFileConverter
             private bool Pred(T obj)
             {
                 return this.predicates.All(pred => pred(obj));
-            }
-
-            /// <summary>
-            /// Casts the instance of the <see cref="And{T}"/> class to an instance of the
-            /// <c>Func{T,bool}</c> class.
-            /// </summary>
-            /// <param name="from">The instance of the <see cref="And{T}"/> class to cast.</param>
-            /// <returns>An instance of the <c>Func{T,bool}</c> class.</returns>
-            public static implicit operator Func<T, bool>(And<T> from)
-            {
-                return from.Pred;
             }
         }
     }

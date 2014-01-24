@@ -8,10 +8,6 @@
     "StyleCop.CSharp.LayoutRules",
     "SA1503:CurlyBracketsMustNotBeOmitted",
     Justification = "Reviewed.")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "StyleCop.CSharp.OrderingRules",
-    "SA1201:ElementsMustAppearInTheCorrectOrder",
-    Justification = "Reviewed.")]
 
 namespace ThScoreFileConverter
 {
@@ -40,27 +36,6 @@ namespace ThScoreFileConverter
         /// The instance that executes a conversion process.
         /// </summary>
         private ThConverter converter = null;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether thousand separator characters are contained in the
-        /// string that represents a numeric value.
-        /// </summary>
-        public bool OutputNumberGroupSeparator
-        {
-            get
-            {
-                return ((this.settings != null) && this.settings.OutputNumberGroupSeparator.HasValue)
-                    ? this.settings.OutputNumberGroupSeparator.Value : true;
-            }
-
-            set
-            {
-                if (this.settings != null)
-                    this.settings.OutputNumberGroupSeparator = value;
-                if (this.converter != null)
-                    this.converter.OutputNumberGroupSeparator = value;
-            }
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
@@ -105,6 +80,27 @@ namespace ThScoreFileConverter
             catch (Exception ex)
             {
                 this.ShowExceptionMessage(ex);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether thousand separator characters are contained in the
+        /// string that represents a numeric value.
+        /// </summary>
+        public bool OutputNumberGroupSeparator
+        {
+            get
+            {
+                return ((this.settings != null) && this.settings.OutputNumberGroupSeparator.HasValue)
+                    ? this.settings.OutputNumberGroupSeparator.Value : true;
+            }
+
+            set
+            {
+                if (this.settings != null)
+                    this.settings.OutputNumberGroupSeparator = value;
+                if (this.converter != null)
+                    this.converter.OutputNumberGroupSeparator = value;
             }
         }
 
