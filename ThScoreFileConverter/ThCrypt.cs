@@ -1,24 +1,35 @@
-﻿using System;
-using System.IO;
+﻿//-----------------------------------------------------------------------
+// <copyright file="ThCrypt.cs" company="None">
+//     (c) 2013-2014 IIHOSHI Yoshinori
+// </copyright>
+//-----------------------------------------------------------------------
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.LayoutRules",
+    "SA1503:CurlyBracketsMustNotBeOmitted",
+    Justification = "Reviewed.")]
 
 namespace ThScoreFileConverter
 {
+    using System;
+    using System.IO;
+
     /// <summary>
-    /// 東方 Project で使用されている暗号化形式を扱う静的クラス
-    /// Thanks to Touhou Toolkit 5
+    /// The static class that treats the encryption format used for Touhou Project works.
+    /// Thanks to Touhou Toolkit 5.
     /// </summary>
     public static class ThCrypt
     {
         /// <summary>
-        /// 暗号化する
+        /// Encrypts data.
         /// </summary>
-        /// <param Name="input">暗号化対象のストリーム</param>
-        /// <param Name="output">暗号化後の出力先ストリーム</param>
-        /// <param Name="size">暗号化対象のサイズ（単位: Byte）</param>
-        /// <param Name="key">暗号化キー</param>
-        /// <param Name="step">FIXME</param>
-        /// <param Name="block">FIXME</param>
-        /// <param Name="limit">FIXME</param>
+        /// <param name="input">The stream to input data to encrypt.</param>
+        /// <param name="output">The stream that is output the encrypted data.</param>
+        /// <param name="size">The size of input data. (Unit: [Byte])</param>
+        /// <param name="key">The encryption key.</param>
+        /// <param name="step">The step.</param>
+        /// <param name="block">The size of block.</param>
+        /// <param name="limit">The limit value.</param>
         public static void Encrypt(
             Stream input, Stream output, int size, byte key, byte step, int block, int limit)
         {
@@ -26,15 +37,15 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// 復号化する
+        /// Decrypts data.
         /// </summary>
-        /// <param Name="input">復号化対象のストリーム</param>
-        /// <param Name="output">復号化後の出力先ストリーム</param>
-        /// <param Name="size">復号化対象のサイズ（単位: Byte）</param>
-        /// <param Name="key">復号化キー</param>
-        /// <param Name="step">FIXME</param>
-        /// <param Name="block">FIXME</param>
-        /// <param Name="limit">FIXME</param>
+        /// <param name="input">The stream to input data to decrypt.</param>
+        /// <param name="output">The stream that is output the decrypted data.</param>
+        /// <param name="size">The size of input data. (Unit: [Byte])</param>
+        /// <param name="key">The decryption key.</param>
+        /// <param name="step">The step.</param>
+        /// <param name="block">The size of block.</param>
+        /// <param name="limit">The limit value.</param>
         public static void Decrypt(
             Stream input, Stream output, int size, byte key, byte step, int block, int limit)
         {
@@ -54,6 +65,7 @@ namespace ThScoreFileConverter
                     block = size;
                 if (input.Read(inBlock, 0, block) != block)
                     return;
+
                 var inIndex = 0;
                 for (var j = 0; j < 2; ++j)
                 {
@@ -66,10 +78,12 @@ namespace ThScoreFileConverter
                         key += step;
                     }
                 }
+
                 output.Write(outBlock, 0, block);
                 limit -= block;
                 size -= block;
             }
+
             size += addup;
             if (size > 0)
             {

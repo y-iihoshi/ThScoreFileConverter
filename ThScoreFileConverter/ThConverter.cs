@@ -1,17 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿//-----------------------------------------------------------------------
+// <copyright file="ThConverter.cs" company="None">
+//     (c) 2013-2014 IIHOSHI Yoshinori
+// </copyright>
+//-----------------------------------------------------------------------
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.DocumentationRules",
+    "SA1649:FileHeaderFileNameDocumentationMustMatchTypeName",
+    Justification = "Reviewed.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.LayoutRules",
+    "SA1503:CurlyBracketsMustNotBeOmitted",
+    Justification = "Reviewed.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.MaintainabilityRules",
+    "SA1402:FileMayOnlyContainASingleClass",
+    Justification = "Reviewed.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.OrderingRules",
+    "SA1201:ElementsMustAppearInTheCorrectOrder",
+    Justification = "Reviewed.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.OrderingRules",
+    "SA1202:ElementsMustBeOrderedByAccess",
+    Justification = "Reviewed.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.OrderingRules",
+    "SA1204:StaticElementsMustAppearBeforeInstanceElements",
+    Justification = "Reviewed.")]
 
 namespace ThScoreFileConverter
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+
     /// <summary>
-    /// スコアファイルの変換を行うインスタンスを生成するクラス
+    /// Generates an instance that executes the conversion of a score file.
     /// </summary>
     public class ThConverterFactory
     {
         /// <summary>
-        /// ThConverter クラスのサブクラス群の型
+        /// The dictionary of the types of the subclasses of the <see cref="ThConverter"/> class.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.SpacingRules",
+            "SA1025:CodeMustNotContainMultipleWhitespaceInARow",
+            Justification = "Reviewed.")]
         private static readonly Dictionary<string, Type> ConverterTypes = new Dictionary<string, Type>
         {
             { Properties.Resources.keyTh06,  typeof(Th06Converter)  },
@@ -28,10 +63,10 @@ namespace ThScoreFileConverter
         };
 
         /// <summary>
-        /// ThConverter クラスのサブクラスインスタンスを生成する
+        /// Creates a new instance of the subclass of the <see cref="ThConverter"/> class.
         /// </summary>
-        /// <param Name="key">サブクラスを指定する文字列</param>
-        /// <returns>key が示すサブクラスのインスタンス</returns>
+        /// <param name="key">The string to specify the subclass.</param>
+        /// <returns>An instance of the subclass specified by <paramref name="key"/>.</returns>
         public static ThConverter Create(string key)
         {
             return ConverterTypes.ContainsKey(key)
@@ -40,42 +75,43 @@ namespace ThScoreFileConverter
     }
 
     /// <summary>
-    /// ThConverter クラスが発行するイベントのデータ
+    /// Represents the event data issued by the <see cref="ThConverter"/> class.
     /// </summary>
     public class ThConverterEventArgs : EventArgs
     {
         /// <summary>
-        /// 本イベント発行時点で最後に出力したファイルのパス
+        /// Gets the path of the last output file.
         /// </summary>
         public string Path { get; private set; }
 
         /// <summary>
-        /// 本イベント発行時点で出力済みのファイル数
+        /// Gets the number of the files that have been output.
         /// </summary>
         public int Current { get; private set; }
 
         /// <summary>
-        /// 処理対象ファイルの総数
+        /// Gets the total number of the files.
         /// </summary>
         public int Total { get; private set; }
 
         /// <summary>
-        /// 本イベントのメッセージ
+        /// Gets a message string that represents the current instance.
         /// </summary>
         public string Message
         {
             get
             {
-                return string.Format("({0}/{1}) {2} ", Current, Total, System.IO.Path.GetFileName(Path));
+                return string.Format(
+                    "({0}/{1}) {2} ", this.Current, this.Total, System.IO.Path.GetFileName(this.Path));
             }
         }
 
         /// <summary>
-        /// インスタンスを生成する
+        /// Initializes a new instance of the <see cref="ThConverterEventArgs"/> class.
         /// </summary>
-        /// <param Name="path">最後に出力したファイルのパス</param>
-        /// <param Name="current">出力済みファイル数</param>
-        /// <param Name="total">処理対象ファイルの総数</param>
+        /// <param name="path">The path of the last output file.</param>
+        /// <param name="current">The number of the files that have been output.</param>
+        /// <param name="total">The total number of the files.</param>
         public ThConverterEventArgs(string path, int current, int total)
         {
             this.Path = path;
@@ -84,10 +120,20 @@ namespace ThScoreFileConverter
         }
     }
 
+    /// <summary>
+    /// Represents the event data that indicates occurring of an exception.
+    /// </summary>
     public class ExceptionOccurredEventArgs : EventArgs
     {
+        /// <summary>
+        /// Gets the exception data.
+        /// </summary>
         public Exception Exception { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExceptionOccurredEventArgs"/> class.
+        /// </summary>
+        /// <param name="e">The exception data.</param>
         public ExceptionOccurredEventArgs(Exception e)
         {
             this.Exception = e;
@@ -95,53 +141,65 @@ namespace ThScoreFileConverter
     }
 
     /// <summary>
-    /// スコアファイルの変換を行うクラス群の基底クラス
+    /// Represents the base class for classes that executes conversion of a score file.
     /// </summary>
     public class ThConverter
     {
         /// <summary>
-        /// 変換対象スコアファイルの対応バージョン
-        /// サブクラスでの override が必要
+        /// Gets the string indicating the supported version of the score file to convert.
         /// </summary>
-        public virtual string SupportedVersions { get { return null; } }
+        /// <remarks>It is required to override this method by a subclass.</remarks>
+        public virtual string SupportedVersions
+        {
+            get { return null; }
+        }
 
         /// <summary>
-        /// ベストショットファイルの変換処理を持っているかを示す
-        /// 変換処理を実装するサブクラスでは override が必要
+        /// Gets a value indicating whether the current instance has the conversion method for best-shot
+        /// files or not.
         /// </summary>
-        public virtual bool HasBestShotConverter { get { return false; } }
+        /// <remarks>
+        /// It is required to override this method by the subclass that implements the conversion process
+        /// of best-shot files.
+        /// </remarks>
+        public virtual bool HasBestShotConverter
+        {
+            get { return false; }
+        }
 
         /// <summary>
-        /// 数値を桁区切り形式で出力する場合 true
+        /// Gets or sets a value indicating whether a numeric value is output with thousand separator
+        /// characters.
         /// </summary>
         public bool OutputNumberGroupSeparator { protected get; set; }
 
         /// <summary>
-        /// ファイル毎の変換処理の完了を示すイベント
+        /// Represents the event that the conversion process per file has finished.
         /// </summary>
         public event EventHandler<ThConverterEventArgs> ConvertFinished;
 
         /// <summary>
-        /// 全ての変換処理の完了を示すイベント
+        /// Represents the event that all conversion process has finished.
         /// </summary>
         public event EventHandler<ThConverterEventArgs> ConvertAllFinished;
 
         /// <summary>
-        /// 例外発生を示すイベント
+        /// Represents the event that an exception has occurred.
         /// </summary>
         public event EventHandler<ExceptionOccurredEventArgs> ExceptionOccurred;
 
         /// <summary>
-        /// 本クラスのインスタンス生成を禁止する
+        /// Initializes a new instance of the <see cref="ThConverter"/> class.
         /// </summary>
-        protected ThConverter() { }
+        protected ThConverter()
+        {
+        }
 
         /// <summary>
-        /// スコアファイルの変換処理
-        /// スレッドのトップレベルにするために 1 引数化
+        /// Converts a score file.
         /// </summary>
-        /// <param Name="obj">SettingsPerTitle インスタンス</param>
-        public void Convert(Object obj)
+        /// <param name="obj">An instance of the <see cref="SettingsPerTitle"/> class.</param>
+        public void Convert(object obj)
         {
             try
             {
@@ -159,9 +217,9 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// スコアファイルの変換処理
+        /// Converts a score file.
         /// </summary>
-        /// <param Name="settings">作品毎の設定</param>
+        /// <param name="settings">The settings per work.</param>
         private void Convert(SettingsPerTitle settings)
         {
             using (var scr = new FileStream(settings.ScoreFile, FileMode.Open, FileAccess.Read))
@@ -203,68 +261,71 @@ namespace ThScoreFileConverter
                     }
                 }
 
-                this.OnConvertAllFinished(new ThConverterEventArgs("", 0, 0));
+                this.OnConvertAllFinished(new ThConverterEventArgs(string.Empty, 0, 0));
             }
         }
 
         /// <summary>
-        /// スコアファイルからの読み込み
-        /// サブクラスでの override が必要
+        /// Reads from the input stream that treats a score file.
         /// </summary>
-        /// <param Name="score">スコアファイル</param>
+        /// <remarks>Needs to be overridden by a subclass.</remarks>
+        /// <param name="input">The input stream that treats a score file.</param>
+        /// <returns><c>true</c> if read successfully; otherwise, <c>false</c>.</returns>
         protected virtual bool ReadScoreFile(Stream input)
         {
             throw new NotImplementedException();
         }
 
         /// <summary>
-        /// スコアの変換処理（テンプレートファイル毎）
-        /// サブクラスでの override が必要
+        /// Converts the stream indicating score data.
         /// </summary>
-        /// <param Name="input">テンプレートファイル</param>
-        /// <param Name="output">出力ファイル</param>
+        /// <remarks>Needs to be overridden by a subclass.</remarks>
+        /// <param name="input">The input stream that treats a template file.</param>
+        /// <param name="output">The stream for outputting the converted data.</param>
         protected virtual void Convert(Stream input, Stream output)
         {
             throw new NotImplementedException();
         }
 
         /// <summary>
-        /// ベストショットファイルの変換処理
-        /// 変換処理を実装するサブクラスでは override が必要
+        /// Converts the stream indicating best shot data.
         /// </summary>
-        /// <param Name="input">変換前のベストショットファイル</param>
-        /// <param Name="output">変換後のベストショットファイル</param>
+        /// <remarks>Needs to be overridden by the subclass that implements the conversion.</remarks>
+        /// <param name="input">The input stream that treats the best shot data to convert.</param>
+        /// <param name="output">The stream for outputting converted best shot data.</param>
         protected virtual void ConvertBestShot(Stream input, Stream output)
         {
             throw new NotImplementedException();
         }
 
         /// <summary>
-        /// ベストショットファイル群を抽出するフィルタリング処理
-        /// ベストショットファイルの変換処理を実装するサブクラスでは override が必要
+        /// Filters the file paths to extract the paths of best shot files.
         /// </summary>
-        /// <param name="files">任意のファイルのパスの配列</param>
-        /// <returns>ベストショットファイルのパスの配列</returns>
+        /// <remarks>
+        /// Needs to be overridden by the subclass that implements the conversion of best shot data.
+        /// </remarks>
+        /// <param name="files">The array of file paths to filter.</param>
+        /// <returns>An array of the paths of best shot files.</returns>
         protected virtual string[] FilterBestShotFiles(string[] files)
         {
             throw new NotImplementedException();
         }
 
         /// <summary>
-        /// 数値から文字列への変換（桁区切り形式での出力設定が反映される）
+        /// Returns a string that represents the specified numeric value.
         /// </summary>
-        /// <typeparam name="T">数値の型</typeparam>
-        /// <param name="number">数値</param>
-        /// <returns>変換後の文字列</returns>
+        /// <typeparam name="T">The type of <paramref name="number"/>.</typeparam>
+        /// <param name="number">A numeric value.</param>
+        /// <returns>A string that represents <paramref name="number"/>.</returns>
         protected string ToNumberString<T>(T number) where T : struct
         {
             return Utils.ToNumberString(number, this.OutputNumberGroupSeparator);
         }
 
         /// <summary>
-        /// ファイル毎の変換処理の完了時の処理
+        /// Raises the event indicating the conversion process per file has finished.
         /// </summary>
-        /// <param Name="e">ThConverter クラスから発行するイベントのデータ</param>
+        /// <param name="e">The event data issued by the <see cref="ThConverter"/> class.</param>
         private void OnConvertFinished(ThConverterEventArgs e)
         {
             var handler = this.ConvertFinished;
@@ -273,9 +334,9 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// 全ての変換処理の完了時の処理
+        /// Raises the event indicating the all conversion process has finished.
         /// </summary>
-        /// <param Name="e">ThConverter クラスから発行するイベントのデータ</param>
+        /// <param name="e">The event data issued by the <see cref="ThConverter"/> class.</param>
         private void OnConvertAllFinished(ThConverterEventArgs e)
         {
             var handler = this.ConvertAllFinished;
@@ -283,6 +344,10 @@ namespace ThScoreFileConverter
                 handler(this, e);
         }
 
+        /// <summary>
+        /// Raises the event indicating an exception has occurred.
+        /// </summary>
+        /// <param name="e">The event data that indicates occurring of an exception.</param>
         private void OnExceptionOccurred(ExceptionOccurredEventArgs e)
         {
             var handler = this.ExceptionOccurred;
@@ -291,11 +356,11 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// 出力ファイルのパスを取得する
+        /// Gets a path string of the output file.
         /// </summary>
-        /// <param Name="templateFile">テンプレートファイルのパス</param>
-        /// <param Name="outputDirectory">出力先ディレクトリのパス</param>
-        /// <returns>出力ファイルのパス</returns>
+        /// <param name="templateFile">A path string of the template file.</param>
+        /// <param name="outputDirectory">A path string of the output directory.</param>
+        /// <returns>A path string of the output file.</returns>
         private static string GetOutputFilePath(string templateFile, string outputDirectory)
         {
             var outputFile = Path.Combine(outputDirectory, Path.GetFileNameWithoutExtension(templateFile));
@@ -307,11 +372,11 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// 変換後のベストショットファイルのパスを取得する
+        /// Gets a path string of the converted best shot file.
         /// </summary>
-        /// <param Name="bestshotFile">変換前のベストショットファイルのパス</param>
-        /// <param Name="outputDirectory">出力先ディレクトリのパス</param>
-        /// <returns>変換後のベストショットファイルのパス</returns>
+        /// <param name="bestshotFile">A path string of the best shot file before conversion.</param>
+        /// <param name="outputDirectory">A path string of the output directory.</param>
+        /// <returns>A path string of the converted best shot file.</returns>
         private static string GetBestShotFilePath(string bestshotFile, string outputDirectory)
         {
             var outputFile = Path.Combine(outputDirectory, Path.GetFileNameWithoutExtension(bestshotFile));

@@ -1,11 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Text.RegularExpressions;
+﻿//-----------------------------------------------------------------------
+// <copyright file="Th09Converter.cs" company="None">
+//     (c) 2013-2014 IIHOSHI Yoshinori
+// </copyright>
+//-----------------------------------------------------------------------
+
+#pragma warning disable 1591
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.DocumentationRules", "*", Justification = "Reviewed.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.LayoutRules", "*", Justification = "Reviewed.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.LayoutRules",
+    "SA1503:CurlyBracketsMustNotBeOmitted",
+    Justification = "Reviewed.")]
 
 namespace ThScoreFileConverter
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
+    using System.Text.RegularExpressions;
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        "StyleCop.CSharp.OrderingRules",
+        "SA1201:ElementsMustAppearInTheCorrectOrder",
+        Justification = "Reviewed.")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        "StyleCop.CSharp.SpacingRules",
+        "SA1025:CodeMustNotContainMultipleWhitespaceInARow",
+        Justification = "Reviewed.")]
     public class Th09Converter : ThConverter
     {
         private enum Level      { Easy, Normal, Hard, Lunatic, Extra }
@@ -28,15 +53,15 @@ namespace ThScoreFileConverter
 
         private class AllScoreData
         {
-            public Header header;
-            public Dictionary<CharaLevelPair, HighScore[]> rankings;
-            public PlayList playList;
-            public LastName lastName;
-            public VersionInfo versionInfo;
+            public Header Header { get; set; }
+            public Dictionary<CharaLevelPair, HighScore[]> Rankings { get; set; }
+            public PlayList PlayList { get; set; }
+            public LastName LastName { get; set; }
+            public VersionInfo VersionInfo { get; set; }
 
             public AllScoreData()
             {
-                this.rankings = new Dictionary<CharaLevelPair, HighScore[]>();
+                this.Rankings = new Dictionary<CharaLevelPair, HighScore[]>();
             }
         }
 
@@ -74,8 +99,8 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Signature");
                 if (this.Size1 != 0x000C)
                     throw new InvalidDataException("Size1");
-                //if (this.Size2 != 0x000C)
-                //    throw new InvalidDataException("Size2");
+                // if (this.Size2 != 0x000C)
+                //     throw new InvalidDataException("Size2");
             }
 
             public override void ReadFrom(BinaryReader reader)
@@ -105,8 +130,8 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Signature");
                 if (this.Size1 != 0x002C)
                     throw new InvalidDataException("Size1");
-                //if (this.Size2 != 0x002C)
-                //    throw new InvalidDataException("Size2");
+                // if (this.Size2 != 0x002C)
+                //     throw new InvalidDataException("Size2");
             }
 
             public override void ReadFrom(BinaryReader reader)
@@ -143,8 +168,8 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Signature");
                 if (this.Size1 != 0x01FC)
                     throw new InvalidDataException("Size1");
-                //if (this.Size2 != 0x01FC)
-                //    throw new InvalidDataException("Size2");
+                // if (this.Size2 != 0x01FC)
+                //     throw new InvalidDataException("Size2");
 
                 var numCharas = Enum.GetValues(typeof(Chara)).Length;
                 this.MatchFlags = new Dictionary<Chara, byte>(numCharas);
@@ -190,8 +215,8 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Signature");
                 if (this.Size1 != 0x0018)
                     throw new InvalidDataException("Size1");
-                //if (this.Size2 != 0x0018)
-                //    throw new InvalidDataException("Size2");
+                // if (this.Size2 != 0x0018)
+                //     throw new InvalidDataException("Size2");
             }
 
             public override void ReadFrom(BinaryReader reader)
@@ -217,8 +242,8 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Signature");
                 if (this.Size1 != 0x001C)
                     throw new InvalidDataException("Size1");
-                //if (this.Size2 != 0x001C)
-                //    throw new InvalidDataException("Size2");
+                // if (this.Size2 != 0x001C)
+                //     throw new InvalidDataException("Size2");
             }
 
             public override void ReadFrom(BinaryReader reader)
@@ -410,34 +435,34 @@ namespace ThScoreFileConverter
                         case "TH9K":
                             var header = new Header(chapter);
                             header.ReadFrom(reader);
-                            allScoreData.header = header;
+                            allScoreData.Header = header;
                             break;
 
                         case "HSCR":
                             var score = new HighScore(chapter);
                             score.ReadFrom(reader);
                             var key = new CharaLevelPair(score.Chara, score.Level);
-                            if (!allScoreData.rankings.ContainsKey(key))
-                                allScoreData.rankings.Add(key, new HighScore[5]);
-                            allScoreData.rankings[key][score.Rank] = score;
+                            if (!allScoreData.Rankings.ContainsKey(key))
+                                allScoreData.Rankings.Add(key, new HighScore[5]);
+                            allScoreData.Rankings[key][score.Rank] = score;
                             break;
 
                         case "PLST":
                             var playList = new PlayList(chapter);
                             playList.ReadFrom(reader);
-                            allScoreData.playList = playList;
+                            allScoreData.PlayList = playList;
                             break;
 
                         case "LSNM":
                             var lastName = new LastName(chapter);
                             lastName.ReadFrom(reader);
-                            allScoreData.lastName = lastName;
+                            allScoreData.LastName = lastName;
                             break;
 
                         case "VRSM":
                             var versionInfo = new VersionInfo(chapter);
                             versionInfo.ReadFrom(reader);
-                            allScoreData.versionInfo = versionInfo;
+                            allScoreData.VersionInfo = versionInfo;
                             break;
 
                         default:
@@ -452,11 +477,11 @@ namespace ThScoreFileConverter
                 // It's OK, do nothing.
             }
 
-            if ((allScoreData.header != null) &&
-                (allScoreData.rankings.Count == (charas.Length * levels.Length)) &&
-                (allScoreData.playList != null) &&
-                (allScoreData.lastName != null) &&
-                (allScoreData.versionInfo != null))
+            if ((allScoreData.Header != null) &&
+                (allScoreData.Rankings.Count == (charas.Length * levels.Length)) &&
+                (allScoreData.PlayList != null) &&
+                (allScoreData.LastName != null) &&
+                (allScoreData.VersionInfo != null))
                 return allScoreData;
             else
                 return null;
@@ -482,40 +507,41 @@ namespace ThScoreFileConverter
         {
             var pattern = string.Format(
                 @"%T09SCR([{0}])({1})([1-5])([1-3])",
-                Utils.JoinEnumNames<LevelShort>(""),
+                Utils.JoinEnumNames<LevelShort>(string.Empty),
                 Utils.JoinEnumNames<CharaShort>("|"));
-            return new Regex(pattern, RegexOptions.IgnoreCase)
-                .Replace(input, Utils.ToNothrowEvaluator(match =>
-                {
-                    var level = (Level)Enum.Parse(typeof(LevelShort), match.Groups[1].Value, true);
-                    var chara = (Chara)Enum.Parse(typeof(CharaShort), match.Groups[2].Value, true);
-                    var rank = int.Parse(match.Groups[3].Value) - 1;
-                    var type = int.Parse(match.Groups[4].Value);
-                    var score = this.allScoreData.rankings[new CharaLevelPair(chara, level)][rank];
+            var evaluator = Utils.ToNothrowEvaluator(match =>
+            {
+                var level = (Level)Enum.Parse(typeof(LevelShort), match.Groups[1].Value, true);
+                var chara = (Chara)Enum.Parse(typeof(CharaShort), match.Groups[2].Value, true);
+                var rank = int.Parse(match.Groups[3].Value) - 1;
+                var type = int.Parse(match.Groups[4].Value);
+                var score = this.allScoreData.Rankings[new CharaLevelPair(chara, level)][rank];
 
-                    switch (type)
-                    {
-                        case 1:     // name
-                            return Encoding.Default.GetString(score.Name).Split('\0')[0];
-                        case 2:     // score
-                            return this.ToNumberString(score.Score * 10 + score.ContinueCount);
-                        case 3:     // date
-                            var date = Encoding.Default.GetString(score.Date).Split('\0')[0];
-                            return (date != "--/--") ? date : "--/--/--";
-                        default:    // unreachable
-                            return match.ToString();
-                    }
-                }));
+                switch (type)
+                {
+                    case 1:     // name
+                        return Encoding.Default.GetString(score.Name).Split('\0')[0];
+                    case 2:     // score
+                        return this.ToNumberString((score.Score * 10) + score.ContinueCount);
+                    case 3:     // date
+                        var date = Encoding.Default.GetString(score.Date).Split('\0')[0];
+                        return (date != "--/--") ? date : "--/--/--";
+                    default:    // unreachable
+                        return match.ToString();
+                }
+            });
+            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
 
         // %T09TIMEALL
         private string ReplaceTime(string input)
         {
-            return new Regex(@"%T09TIMEALL", RegexOptions.IgnoreCase)
-                .Replace(input, Utils.ToNothrowEvaluator(match =>
-                {
-                    return this.allScoreData.playList.TotalRunningTime.ToLongString();
-                }));
+            var pattern = @"%T09TIMEALL";
+            var evaluator = Utils.ToNothrowEvaluator(match =>
+            {
+                return this.allScoreData.PlayList.TotalRunningTime.ToLongString();
+            });
+            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
 
         // %T09CLEAR[x][yy][z]
@@ -523,33 +549,33 @@ namespace ThScoreFileConverter
         {
             var pattern = string.Format(
                 @"%T09CLEAR([{0}])({1})([12])",
-                Utils.JoinEnumNames<LevelShort>(""),
+                Utils.JoinEnumNames<LevelShort>(string.Empty),
                 Utils.JoinEnumNames<CharaShort>("|"));
-            return new Regex(pattern, RegexOptions.IgnoreCase)
-                .Replace(input, Utils.ToNothrowEvaluator(match =>
-                {
-                    var level = (Level)Enum.Parse(typeof(LevelShort), match.Groups[1].Value, true);
-                    var chara = (Chara)Enum.Parse(typeof(CharaShort), match.Groups[2].Value, true);
-                    var type = int.Parse(match.Groups[3].Value);
-                    var count = this.allScoreData.playList.ClearCounts[chara].Counts[level];
+            var evaluator = Utils.ToNothrowEvaluator(match =>
+            {
+                var level = (Level)Enum.Parse(typeof(LevelShort), match.Groups[1].Value, true);
+                var chara = (Chara)Enum.Parse(typeof(CharaShort), match.Groups[2].Value, true);
+                var type = int.Parse(match.Groups[3].Value);
+                var count = this.allScoreData.PlayList.ClearCounts[chara].Counts[level];
 
-                    switch (type)
-                    {
-                        case 1:     // clear count
-                            return this.ToNumberString(count);
-                        case 2:     // clear flag
-                            if (count > 0)
-                                return "Cleared";
-                            else
-                            {
-                                var score = this.allScoreData.rankings[new CharaLevelPair(chara, level)][0];
-                                var date = Encoding.Default.GetString(score.Date).TrimEnd('\0');
-                                return (date != "--/--") ? "Not Cleared" : "-------";
-                            }
-                        default:    // unreachable
-                            return match.ToString();
-                    }
-                }));
+                switch (type)
+                {
+                    case 1:     // clear count
+                        return this.ToNumberString(count);
+                    case 2:     // clear flag
+                        if (count > 0)
+                            return "Cleared";
+                        else
+                        {
+                            var score = this.allScoreData.Rankings[new CharaLevelPair(chara, level)][0];
+                            var date = Encoding.Default.GetString(score.Date).TrimEnd('\0');
+                            return (date != "--/--") ? "Not Cleared" : "-------";
+                        }
+                    default:    // unreachable
+                        return match.ToString();
+                }
+            });
+            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
     }
 }

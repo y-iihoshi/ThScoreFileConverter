@@ -1,37 +1,56 @@
-﻿using System;
-using System.IO;
+﻿//-----------------------------------------------------------------------
+// <copyright file="BitReader.cs" company="None">
+//     (c) 2013-2014 IIHOSHI Yoshinori
+// </copyright>
+//-----------------------------------------------------------------------
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.LayoutRules",
+    "SA1503:CurlyBracketsMustNotBeOmitted",
+    Justification = "Reviewed.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.OrderingRules",
+    "SA1201:ElementsMustAppearInTheCorrectOrder",
+    Justification = "Reviewed.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.OrderingRules",
+    "SA1202:ElementsMustBeOrderedByAccess",
+    Justification = "Reviewed.")]
 
 namespace ThScoreFileConverter
 {
+    using System;
+    using System.IO;
+
     /// <summary>
-    /// ストリームからビット単位で読み出すクラス
+    /// Represents a reader that reads data by bitwise from a stream.
     /// </summary>
     public class BitReader : IDisposable
     {
         /// <summary>
-        /// 読み出し対象のストリーム
+        /// The stream to read.
         /// </summary>
         private Stream stream;
         
         /// <summary>
-        /// 破棄済みかどうかを示すフラグ
+        /// The flag that represents whether <see cref="Dispose(bool)"/> has been called.
         /// </summary>
         private bool disposed;
 
         /// <summary>
-        /// 読み出し中のバイト
+        /// The byte that is currently reading.
         /// </summary>
         private int current;
 
         /// <summary>
-        /// 読み出しビット位置を示すマスク値
+        /// The mask value that represents the reading bit position.
         /// </summary>
         private byte mask;
 
         /// <summary>
-        /// インスタンスを生成する
+        /// Initializes a new instance of the <see cref="BitReader"/> class.
         /// </summary>
-        /// <param Name="stream">読み出し対象のストリーム</param>
+        /// <param name="stream">The stream to read.</param>
         public BitReader(Stream stream)
         {
             if (stream == null)
@@ -46,18 +65,20 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// 破棄処理（Dispose パターン参照）
+        /// Implements the <see cref="IDisposable.Dispose"/> method.
         /// </summary>
         public void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
-        
+
         /// <summary>
-        /// 破棄処理（Dispose パターン参照）
+        /// Disposes the resources of the current instance.
         /// </summary>
-        /// <param Name="disposing"></param>
+        /// <param name="disposing">
+        /// <c>true</c> if calls from the <see cref="Dispose()"/> method; <c>false</c> for the destructor.
+        /// </param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -69,7 +90,7 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// デストラクター（Dispose パターン参照）
+        /// Finalizes an instance of the <see cref="BitReader"/> class.
         /// </summary>
         ~BitReader()
         {
@@ -77,10 +98,10 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// 指定されたビット数分読み出す
+        /// Reads the specified number of bits from the stream.
         /// </summary>
-        /// <param Name="num">読み出すビット数</param>
-        /// <returns>読み出した値</returns>
+        /// <param name="num">The number of reading bits.</param>
+        /// <returns>The value that is read from the stream.</returns>
         public int ReadBits(int num)
         {
             if (this.disposed)
@@ -95,6 +116,7 @@ namespace ThScoreFileConverter
                     if (this.current < 0)   // EOF
                         this.current = 0;
                 }
+
                 value <<= 1;
                 if (((byte)this.current & this.mask) != 0)
                     value |= 1;
@@ -102,6 +124,7 @@ namespace ThScoreFileConverter
                 if (this.mask == 0)
                     this.mask = 0x80;
             }
+
             return value;
         }
     }

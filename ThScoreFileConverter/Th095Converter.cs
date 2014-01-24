@@ -1,15 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Text.RegularExpressions;
+﻿//-----------------------------------------------------------------------
+// <copyright file="Th095Converter.cs" company="None">
+//     (c) 2013-2014 IIHOSHI Yoshinori
+// </copyright>
+//-----------------------------------------------------------------------
+
+#pragma warning disable 1591
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.DocumentationRules", "*", Justification = "Reviewed.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.LayoutRules", "*", Justification = "Reviewed.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.LayoutRules",
+    "SA1503:CurlyBracketsMustNotBeOmitted",
+    Justification = "Reviewed.")]
 
 namespace ThScoreFileConverter
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.Drawing.Imaging;
+    using System.IO;
+    using System.Linq;
+    using System.Runtime.InteropServices;
+    using System.Text;
+    using System.Text.RegularExpressions;
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        "StyleCop.CSharp.OrderingRules",
+        "SA1201:ElementsMustAppearInTheCorrectOrder",
+        Justification = "Reviewed.")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        "StyleCop.CSharp.SpacingRules",
+        "SA1025:CodeMustNotContainMultipleWhitespaceInARow",
+        Justification = "Reviewed.")]
     public class Th095Converter : ThConverter
     {
         private static readonly string[] LevelArray =
@@ -85,21 +110,21 @@ namespace ThScoreFileConverter
         private static readonly Dictionary<LevelScenePair, EnemyCardPair> SpellCards =
             new Dictionary<LevelScenePair, EnemyCardPair>()
             {
-                { new LevelScenePair(1, 1), new EnemyCardPair(Enemy.Wriggle, "") },
-                { new LevelScenePair(1, 2), new EnemyCardPair(Enemy.Rumia,   "") },
+                { new LevelScenePair(1, 1), new EnemyCardPair(Enemy.Wriggle, string.Empty) },
+                { new LevelScenePair(1, 2), new EnemyCardPair(Enemy.Rumia,   string.Empty) },
                 { new LevelScenePair(1, 3), new EnemyCardPair(Enemy.Wriggle, "蛍符「地上の恒星」") },
                 { new LevelScenePair(1, 4), new EnemyCardPair(Enemy.Rumia,   "闇符「ダークサイドオブザムーン」") },
                 { new LevelScenePair(1, 5), new EnemyCardPair(Enemy.Wriggle, "蝶符「バタフライストーム」") },
                 { new LevelScenePair(1, 6), new EnemyCardPair(Enemy.Rumia,   "夜符「ミッドナイトバード」") },
 
-                { new LevelScenePair(2, 1), new EnemyCardPair(Enemy.Cirno, "") },
-                { new LevelScenePair(2, 2), new EnemyCardPair(Enemy.Letty, "") },
+                { new LevelScenePair(2, 1), new EnemyCardPair(Enemy.Cirno, string.Empty) },
+                { new LevelScenePair(2, 2), new EnemyCardPair(Enemy.Letty, string.Empty) },
                 { new LevelScenePair(2, 3), new EnemyCardPair(Enemy.Cirno, "雪符「ダイアモンドブリザード」") },
                 { new LevelScenePair(2, 4), new EnemyCardPair(Enemy.Letty, "寒符「コールドスナップ」") },
                 { new LevelScenePair(2, 5), new EnemyCardPair(Enemy.Cirno, "凍符「マイナスＫ」") },
                 { new LevelScenePair(2, 6), new EnemyCardPair(Enemy.Letty, "冬符「ノーザンウイナー」") },
 
-                { new LevelScenePair(3, 1), new EnemyCardPair(Enemy.Alice, "") },
+                { new LevelScenePair(3, 1), new EnemyCardPair(Enemy.Alice, string.Empty) },
                 { new LevelScenePair(3, 2), new EnemyCardPair(Enemy.Keine, "光符「アマテラス」") },
                 { new LevelScenePair(3, 3), new EnemyCardPair(Enemy.Alice, "操符「ドールズインシー」") },
                 { new LevelScenePair(3, 4), new EnemyCardPair(Enemy.Keine, "包符「昭和の雨」") },
@@ -108,7 +133,7 @@ namespace ThScoreFileConverter
                 { new LevelScenePair(3, 7), new EnemyCardPair(Enemy.Alice, "赤符「ドールミラセティ」") },
                 { new LevelScenePair(3, 8), new EnemyCardPair(Enemy.Keine, "倭符「邪馬台の国」") },
 
-                { new LevelScenePair(4, 1), new EnemyCardPair(Enemy.Reisen,   "") },
+                { new LevelScenePair(4, 1), new EnemyCardPair(Enemy.Reisen,   string.Empty) },
                 { new LevelScenePair(4, 2), new EnemyCardPair(Enemy.Medicine, "霧符「ガシングガーデン」") },
                 { new LevelScenePair(4, 3), new EnemyCardPair(Enemy.Tewi,     "脱兎「フラスターエスケープ」") },
                 { new LevelScenePair(4, 4), new EnemyCardPair(Enemy.Reisen,   "散符「朧月花栞（ロケット・イン・ミスト）」") },
@@ -118,7 +143,7 @@ namespace ThScoreFileConverter
                 { new LevelScenePair(4, 8), new EnemyCardPair(Enemy.Tewi,     "借符「大穴牟遅様の薬」") },
                 { new LevelScenePair(4, 9), new EnemyCardPair(Enemy.Reisen,   "狂夢「風狂の夢（ドリームワールド）」") },
 
-                { new LevelScenePair(5, 1), new EnemyCardPair(Enemy.Meirin,    "") },
+                { new LevelScenePair(5, 1), new EnemyCardPair(Enemy.Meirin,    string.Empty) },
                 { new LevelScenePair(5, 2), new EnemyCardPair(Enemy.Patchouli, "日＆水符「ハイドロジェナスプロミネンス」") },
                 { new LevelScenePair(5, 3), new EnemyCardPair(Enemy.Meirin,    "華符「彩光蓮華掌」") },
                 { new LevelScenePair(5, 4), new EnemyCardPair(Enemy.Patchouli, "水＆火符「フロギスティックレイン」") },
@@ -127,7 +152,7 @@ namespace ThScoreFileConverter
                 { new LevelScenePair(5, 7), new EnemyCardPair(Enemy.Meirin,    "彩華「虹色太極拳」") },
                 { new LevelScenePair(5, 8), new EnemyCardPair(Enemy.Patchouli, "日＆月符「ロイヤルダイアモンドリング」") },
 
-                { new LevelScenePair(6, 1), new EnemyCardPair(Enemy.Chen,  "") },
+                { new LevelScenePair(6, 1), new EnemyCardPair(Enemy.Chen,  string.Empty) },
                 { new LevelScenePair(6, 2), new EnemyCardPair(Enemy.Youmu, "人智剣「天女返し」") },
                 { new LevelScenePair(6, 3), new EnemyCardPair(Enemy.Chen,  "星符「飛び重ね鱗」") },
                 { new LevelScenePair(6, 4), new EnemyCardPair(Enemy.Youmu, "妄執剣「修羅の血」") },
@@ -136,7 +161,7 @@ namespace ThScoreFileConverter
                 { new LevelScenePair(6, 7), new EnemyCardPair(Enemy.Chen,  "化猫「橙」") },
                 { new LevelScenePair(6, 8), new EnemyCardPair(Enemy.Youmu, "四生剣「衆生無情の響き」") },
 
-                { new LevelScenePair(7, 1), new EnemyCardPair(Enemy.Sakuya,  "") },
+                { new LevelScenePair(7, 1), new EnemyCardPair(Enemy.Sakuya,  string.Empty) },
                 { new LevelScenePair(7, 2), new EnemyCardPair(Enemy.Remilia, "魔符「全世界ナイトメア」") },
                 { new LevelScenePair(7, 3), new EnemyCardPair(Enemy.Sakuya,  "時符「トンネルエフェクト」") },
                 { new LevelScenePair(7, 4), new EnemyCardPair(Enemy.Remilia, "紅符「ブラッディマジックスクウェア」") },
@@ -145,7 +170,7 @@ namespace ThScoreFileConverter
                 { new LevelScenePair(7, 7), new EnemyCardPair(Enemy.Sakuya,  "銀符「パーフェクトメイド」") },
                 { new LevelScenePair(7, 8), new EnemyCardPair(Enemy.Remilia, "神鬼「レミリアストーカー」") },
 
-                { new LevelScenePair(8, 1), new EnemyCardPair(Enemy.Ran,    "") },
+                { new LevelScenePair(8, 1), new EnemyCardPair(Enemy.Ran,    string.Empty) },
                 { new LevelScenePair(8, 2), new EnemyCardPair(Enemy.Yuyuko, "幽雅「死出の誘蛾灯」") },
                 { new LevelScenePair(8, 3), new EnemyCardPair(Enemy.Ran,    "密符「御大師様の秘鍵」") },
                 { new LevelScenePair(8, 4), new EnemyCardPair(Enemy.Yuyuko, "蝶符「鳳蝶紋の死槍」") },
@@ -154,7 +179,7 @@ namespace ThScoreFileConverter
                 { new LevelScenePair(8, 7), new EnemyCardPair(Enemy.Ran,    "超人「飛翔役小角」") },
                 { new LevelScenePair(8, 8), new EnemyCardPair(Enemy.Yuyuko, "「死蝶浮月」") },
 
-                { new LevelScenePair(9, 1), new EnemyCardPair(Enemy.Eirin,  "") },
+                { new LevelScenePair(9, 1), new EnemyCardPair(Enemy.Eirin,  string.Empty) },
                 { new LevelScenePair(9, 2), new EnemyCardPair(Enemy.Kaguya, "新難題「月のイルメナイト」") },
                 { new LevelScenePair(9, 3), new EnemyCardPair(Enemy.Eirin,  "薬符「胡蝶夢丸ナイトメア」") },
                 { new LevelScenePair(9, 4), new EnemyCardPair(Enemy.Kaguya, "新難題「エイジャの赤石」") },
@@ -163,7 +188,7 @@ namespace ThScoreFileConverter
                 { new LevelScenePair(9, 7), new EnemyCardPair(Enemy.Eirin,  "秘薬「仙香玉兎」") },
                 { new LevelScenePair(9, 8), new EnemyCardPair(Enemy.Kaguya, "新難題「ミステリウム」") },
 
-                { new LevelScenePair(10, 1), new EnemyCardPair(Enemy.Komachi,   "") },
+                { new LevelScenePair(10, 1), new EnemyCardPair(Enemy.Komachi,   string.Empty) },
                 { new LevelScenePair(10, 2), new EnemyCardPair(Enemy.Shikieiki, "嘘言「タン・オブ・ウルフ」") },
                 { new LevelScenePair(10, 3), new EnemyCardPair(Enemy.Komachi,   "死歌「八重霧の渡し」") },
                 { new LevelScenePair(10, 4), new EnemyCardPair(Enemy.Shikieiki, "審判「十王裁判」") },
@@ -184,9 +209,9 @@ namespace ThScoreFileConverter
 
         private class AllScoreData
         {
-            public Header header;
-            public List<Score> scores;
-            public Status status;
+            public Header Header { get; set; }
+            public List<Score> Scores { get; set; }
+            public Status Status { get; set; }
         }
 
         private class Header : Utils.IBinaryReadable
@@ -445,7 +470,7 @@ namespace ThScoreFileConverter
                         !((chapter.Signature == "ST") && (chapter.Unknown == 0x0000)))
                         return false;
 
-                    Int64 sum = signature + chapter.Size;
+                    long sum = signature + chapter.Size;
                     // 3 means Signature, Checksum, and Size.
                     for (var count = 3; count < chapter.Size / sizeof(uint); count++)
                         sum += reader.ReadUInt32();
@@ -469,9 +494,9 @@ namespace ThScoreFileConverter
             var allScoreData = new AllScoreData();
             var chapter = new Chapter();
 
-            allScoreData.scores = new List<Score>(SpellCards.Count);
-            allScoreData.header = new Header();
-            allScoreData.header.ReadFrom(reader);
+            allScoreData.Scores = new List<Score>(SpellCards.Count);
+            allScoreData.Header = new Header();
+            allScoreData.Header.ReadFrom(reader);
 
             try
             {
@@ -483,12 +508,12 @@ namespace ThScoreFileConverter
                         case "SC":
                             var score = new Score(chapter);
                             score.ReadFrom(reader);
-                            allScoreData.scores.Add(score);
+                            allScoreData.Scores.Add(score);
                             break;
                         case "ST":
                             var status = new Status(chapter);
                             status.ReadFrom(reader);
-                            allScoreData.status = status;
+                            allScoreData.Status = status;
                             break;
                         default:
                             // 12 means the total size of Signature, Unknown, Size and Checksum.
@@ -502,9 +527,9 @@ namespace ThScoreFileConverter
                 // It's OK, do nothing.
             }
 
-            if ((allScoreData.header != null) &&
+            if ((allScoreData.Header != null) &&
                 // (allScoreData.scores.Count >= 0) &&
-                (allScoreData.status != null))
+                (allScoreData.Status != null))
                 return allScoreData;
             else
                 return null;
@@ -534,168 +559,178 @@ namespace ThScoreFileConverter
         // %T95SCR[x][y][z]
         private string ReplaceScore(string input)
         {
-            return new Regex(@"%T95SCR([\dX])([1-9])([1-4])", RegexOptions.IgnoreCase)
-                .Replace(input, Utils.ToNothrowEvaluator(match =>
+            var pattern = @"%T95SCR([\dX])([1-9])([1-4])";
+            var evaluator = Utils.ToNothrowEvaluator(match =>
+            {
+                var level = match.Groups[1].Value.ToUpper();
+                var scene = int.Parse(match.Groups[2].Value);
+                var type = int.Parse(match.Groups[3].Value);
+
+                var levelIndex = Array.IndexOf(LevelShortArray, level);
+                var levelScene = new LevelScenePair(levelIndex + 1, scene);
+                var score = this.allScoreData.Scores.Find(
+                    elem => (elem != null) && elem.LevelScene.Equals(levelScene));
+
+                switch (type)
                 {
-                    var level = match.Groups[1].Value.ToUpper();
-                    var scene = int.Parse(match.Groups[2].Value);
-                    var type = int.Parse(match.Groups[3].Value);
-
-                    var levelIndex = Array.IndexOf(LevelShortArray, level);
-                    var levelScene = new LevelScenePair(levelIndex + 1, scene);
-                    var score = this.allScoreData.scores.Find(
-                        elem => (elem != null) && elem.LevelScene.Equals(levelScene));
-
-                    switch (type)
-                    {
-                        case 1:     // high score
-                            return this.ToNumberString((score != null) ? score.HighScore : 0);
-                        case 2:     // bestshot score
-                            return this.ToNumberString((score != null) ? score.BestshotScore : 0);
-                        case 3:     // num of shots
-                            return this.ToNumberString((score != null) ? score.TrialCount : 0);
-                        case 4:     // slow rate
-                            return (score != null) ? (score.SlowRate2.ToString("F3") + "%") : "-----%";
-                        default:    // unreachable
-                            return match.ToString();
-                    }
-                }));
+                    case 1:     // high score
+                        return this.ToNumberString((score != null) ? score.HighScore : 0);
+                    case 2:     // bestshot score
+                        return this.ToNumberString((score != null) ? score.BestshotScore : 0);
+                    case 3:     // num of shots
+                        return this.ToNumberString((score != null) ? score.TrialCount : 0);
+                    case 4:     // slow rate
+                        return (score != null) ? (score.SlowRate2.ToString("F3") + "%") : "-----%";
+                    default:    // unreachable
+                        return match.ToString();
+                }
+            });
+            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
 
         // %T95SCRTL[x]
         private string ReplaceScoreTotal(string input)
         {
-            return new Regex(@"%T95SCRTL([1-4])", RegexOptions.IgnoreCase)
-                .Replace(input, Utils.ToNothrowEvaluator(match =>
-                {
-                    var type = int.Parse(match.Groups[1].Value);
+            var pattern = @"%T95SCRTL([1-4])";
+            var evaluator = Utils.ToNothrowEvaluator(match =>
+            {
+                var type = int.Parse(match.Groups[1].Value);
 
-                    switch (type)
-                    {
-                        case 1:     // total score
-                            return this.ToNumberString(
-                                this.allScoreData.scores.Sum(
-                                    score => (score != null) ? (long)score.HighScore : 0L));
-                        case 2:     // total of bestshot scores
-                            return this.ToNumberString(
-                                this.allScoreData.scores.Sum(
-                                    score => (score != null) ? (long)score.BestshotScore : 0L));
-                        case 3:     // total of num of shots
-                            return this.ToNumberString(
-                                this.allScoreData.scores.Sum(
-                                    score => (score != null) ? score.TrialCount : 0));
-                        case 4:     // num of succeeded scenes
-                            return this.allScoreData.scores.Count(
-                                    score => (score != null) && (score.HighScore > 0)).ToString();
-                        default:    // unreachable
-                            return match.ToString();
-                    }
-                }));
+                switch (type)
+                {
+                    case 1:     // total score
+                        return this.ToNumberString(
+                            this.allScoreData.Scores.Sum(
+                                score => (score != null) ? (long)score.HighScore : 0L));
+                    case 2:     // total of bestshot scores
+                        return this.ToNumberString(
+                            this.allScoreData.Scores.Sum(
+                                score => (score != null) ? (long)score.BestshotScore : 0L));
+                    case 3:     // total of num of shots
+                        return this.ToNumberString(
+                            this.allScoreData.Scores.Sum(
+                                score => (score != null) ? score.TrialCount : 0));
+                    case 4:     // num of succeeded scenes
+                        return this.allScoreData.Scores.Count(
+                                score => (score != null) && (score.HighScore > 0)).ToString();
+                    default:    // unreachable
+                        return match.ToString();
+                }
+            });
+            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
 
         // %T95CARD[x][y][z]
         private string ReplaceCard(string input)
         {
-            return new Regex(@"%T95CARD([\dX])([1-9])([12])", RegexOptions.IgnoreCase)
-                .Replace(input, Utils.ToNothrowEvaluator(match =>
+            var pattern = @"%T95CARD([\dX])([1-9])([12])";
+            var evaluator = Utils.ToNothrowEvaluator(match =>
+            {
+                var level = match.Groups[1].Value.ToUpper();
+                var scene = int.Parse(match.Groups[2].Value);
+                var type = int.Parse(match.Groups[3].Value);
+
+                var levelIndex = Array.IndexOf(LevelShortArray, level);
+                var key = new LevelScenePair(levelIndex + 1, scene);
+                var score = this.allScoreData.Scores.Find(
+                    elem => (elem != null) && elem.LevelScene.Equals(key));
+
+                switch (type)
                 {
-                    var level = match.Groups[1].Value.ToUpper();
-                    var scene = int.Parse(match.Groups[2].Value);
-                    var type = int.Parse(match.Groups[3].Value);
-
-                    var levelIndex = Array.IndexOf(LevelShortArray, level);
-                    var key = new LevelScenePair(levelIndex + 1, scene);
-                    var score = this.allScoreData.scores.Find(
-                        elem => (elem != null) && elem.LevelScene.Equals(key));
-
-                    switch (type)
-                    {
-                        case 1:     // target Name
-                            return (score != null) ? EnemyNames[SpellCards[key].Enemy] : "??????????";
-                        case 2:     // spell card Name
-                            return (score != null) ? SpellCards[key].Card : "??????????";
-                        default:    // unreachable
-                            return match.ToString();
-                    }
-                }));
+                    case 1:     // target Name
+                        return (score != null) ? EnemyNames[SpellCards[key].Enemy] : "??????????";
+                    case 2:     // spell card Name
+                        return (score != null) ? SpellCards[key].Card : "??????????";
+                    default:    // unreachable
+                        return match.ToString();
+                }
+            });
+            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
 
         // %T95SHOT[x][y]
         private string ReplaceShot(string input, string outputFilePath)
         {
-            return new Regex(@"%T95SHOT([\dX])([1-9])", RegexOptions.IgnoreCase)
-                .Replace(input, Utils.ToNothrowEvaluator(match =>
+            var pattern = @"%T95SHOT([\dX])([1-9])";
+            var evaluator = Utils.ToNothrowEvaluator(match =>
+            {
+                var level = match.Groups[1].Value.ToUpper();
+                var scene = int.Parse(match.Groups[2].Value);
+
+                var levelIndex = Array.IndexOf(LevelShortArray, level);
+                var key = new LevelScenePair(levelIndex + 1, scene);
+
+                if ((this.bestshots != null) && this.bestshots.ContainsKey(key))
                 {
-                    var level = match.Groups[1].Value.ToUpper();
-                    var scene = int.Parse(match.Groups[2].Value);
-
-                    var levelIndex = Array.IndexOf(LevelShortArray, level);
-                    var key = new LevelScenePair(levelIndex + 1, scene);
-
-                    if ((this.bestshots != null) && this.bestshots.ContainsKey(key))
-                        return string.Format("<img src=\"{0}\" alt=\"{1}\" title=\"{1}\" border=0>",
-                            new Uri(outputFilePath)
-                                .MakeRelativeUri(new Uri(this.bestshots[key].Path)).OriginalString,
-                            string.Format("ClearData: {0}\nSlow: {1:F6}%\nSpellName: {2}",
-                                this.ToNumberString(this.bestshots[key].Header.Score),
-                                this.bestshots[key].Header.SlowRate,
-                                Encoding.Default.GetString(
-                                    this.bestshots[key].Header.CardName).TrimEnd('\0')));
-                    else
-                        return "";
-                }));
+                    var relativePath = new Uri(outputFilePath)
+                        .MakeRelativeUri(new Uri(this.bestshots[key].Path)).OriginalString;
+                    var alternativeString = string.Format(
+                        "ClearData: {0}\nSlow: {1:F6}%\nSpellName: {2}",
+                        this.ToNumberString(this.bestshots[key].Header.Score),
+                        this.bestshots[key].Header.SlowRate,
+                        Encoding.Default.GetString(this.bestshots[key].Header.CardName).TrimEnd('\0'));
+                    return string.Format(
+                        "<img src=\"{0}\" alt=\"{1}\" title=\"{1}\" border=0>",
+                        relativePath,
+                        alternativeString);
+                }
+                else
+                    return string.Empty;
+            });
+            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
 
         // %T95SHOTEX[x][y][z]
         private string ReplaceShotEx(string input, string outputFilePath)
         {
-            return new Regex(@"%T95SHOTEX([\dX])([1-9])([1-6])", RegexOptions.IgnoreCase)
-                .Replace(input, Utils.ToNothrowEvaluator(match =>
-                {
-                    var level = match.Groups[1].Value.ToUpper();
-                    var scene = int.Parse(match.Groups[2].Value);
-                    var type = int.Parse(match.Groups[3].Value);
+            var pattern = @"%T95SHOTEX([\dX])([1-9])([1-6])";
+            var evaluator = Utils.ToNothrowEvaluator(match =>
+            {
+                var level = match.Groups[1].Value.ToUpper();
+                var scene = int.Parse(match.Groups[2].Value);
+                var type = int.Parse(match.Groups[3].Value);
 
-                    var levelIndex = Array.IndexOf(LevelShortArray, level);
-                    var key = new LevelScenePair(levelIndex + 1, scene);
+                var levelIndex = Array.IndexOf(LevelShortArray, level);
+                var key = new LevelScenePair(levelIndex + 1, scene);
 
-                    if ((this.bestshots != null) && this.bestshots.ContainsKey(key))
-                        switch (type)
-                        {
-                            case 1:     // relative path to the bestshot file
-                                return new Uri(outputFilePath)
-                                    .MakeRelativeUri(new Uri(this.bestshots[key].Path)).OriginalString;
-                            case 2:     // width
-                                return this.bestshots[key].Header.Width.ToString();
-                            case 3:     // height
-                                return this.bestshots[key].Header.Height.ToString();
-                            case 4:     // score
-                                return this.ToNumberString(this.bestshots[key].Header.Score);
-                            case 5:     // slow rate
-                                return this.bestshots[key].Header.SlowRate.ToString("F6") + "%";
-                            case 6:     // date & time
-                                var score = this.allScoreData.scores.Find(
-                                    elem => (elem != null) && elem.LevelScene.Equals(key));
-                                if (score != null)
-                                    return new DateTime(1970, 1, 1).AddSeconds(score.DateTime)
-                                        .ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
-                                else
-                                    return "----/--/-- --:--:--";
-                            default:    // unreachable
-                                return match.ToString();
-                        }
-                    else
-                        switch (type)
-                        {
-                            case 1: return "";
-                            case 2: return "0";
-                            case 3: return "0";
-                            case 4: return "--------";
-                            case 5: return "-----%";
-                            case 6: return "----/--/-- --:--:--";
-                            default: return match.ToString();
-                        }
-                }));
+                if ((this.bestshots != null) && this.bestshots.ContainsKey(key))
+                    switch (type)
+                    {
+                        case 1:     // relative path to the bestshot file
+                            return new Uri(outputFilePath)
+                                .MakeRelativeUri(new Uri(this.bestshots[key].Path)).OriginalString;
+                        case 2:     // width
+                            return this.bestshots[key].Header.Width.ToString();
+                        case 3:     // height
+                            return this.bestshots[key].Header.Height.ToString();
+                        case 4:     // score
+                            return this.ToNumberString(this.bestshots[key].Header.Score);
+                        case 5:     // slow rate
+                            return this.bestshots[key].Header.SlowRate.ToString("F6") + "%";
+                        case 6:     // date & time
+                            var score = this.allScoreData.Scores.Find(
+                                elem => (elem != null) && elem.LevelScene.Equals(key));
+                            if (score != null)
+                                return new DateTime(1970, 1, 1).AddSeconds(score.DateTime)
+                                    .ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
+                            else
+                                return "----/--/-- --:--:--";
+                        default:    // unreachable
+                            return match.ToString();
+                    }
+                else
+                    switch (type)
+                    {
+                        case 1: return string.Empty;
+                        case 2: return "0";
+                        case 3: return "0";
+                        case 4: return "--------";
+                        case 5: return "-----%";
+                        case 6: return "----/--/-- --:--:--";
+                        default: return match.ToString();
+                    }
+            });
+            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
 
         protected override string[] FilterBestShotFiles(string[] files)
@@ -736,7 +771,8 @@ namespace ThScoreFileConverter
                 var bitmap = new Bitmap(header.Width, header.Height, PixelFormat.Format24bppRgb);
                 var bitmapData = bitmap.LockBits(
                     new Rectangle(0, 0, header.Width, header.Height),
-                    ImageLockMode.WriteOnly, bitmap.PixelFormat);
+                    ImageLockMode.WriteOnly,
+                    bitmap.PixelFormat);
                 var destination = bitmapData.Scan0;
                 for (var sourceIndex = 0; sourceIndex < source.Length; sourceIndex += sourceStride)
                 {

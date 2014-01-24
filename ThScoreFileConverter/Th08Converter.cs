@@ -1,12 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
+﻿//-----------------------------------------------------------------------
+// <copyright file="Th08Converter.cs" company="None">
+//     (c) 2013-2014 IIHOSHI Yoshinori
+// </copyright>
+//-----------------------------------------------------------------------
+
+#pragma warning disable 1591
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.DocumentationRules", "*", Justification = "Reviewed.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.LayoutRules", "*", Justification = "Reviewed.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.LayoutRules",
+    "SA1503:CurlyBracketsMustNotBeOmitted",
+    Justification = "Reviewed.")]
 
 namespace ThScoreFileConverter
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Text;
+    using System.Text.RegularExpressions;
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        "StyleCop.CSharp.OrderingRules",
+        "SA1201:ElementsMustAppearInTheCorrectOrder",
+        Justification = "Reviewed.")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        "StyleCop.CSharp.SpacingRules",
+        "SA1025:CodeMustNotContainMultipleWhitespaceInARow",
+        Justification = "Reviewed.")]
     public class Th08Converter : ThConverter
     {
         private enum Level               { Easy, Normal, Hard, Lunatic, Extra }
@@ -74,15 +99,15 @@ namespace ThScoreFileConverter
         private static readonly List<HighScore> InitialRanking = new List<HighScore>()
         {
             new HighScore(100000),
-            new HighScore( 90000),
-            new HighScore( 80000),
-            new HighScore( 70000),
-            new HighScore( 60000),
-            new HighScore( 50000),
-            new HighScore( 40000),
-            new HighScore( 30000),
-            new HighScore( 20000),
-            new HighScore( 10000)
+            new HighScore(90000),
+            new HighScore(80000),
+            new HighScore(70000),
+            new HighScore(60000),
+            new HighScore(50000),
+            new HighScore(40000),
+            new HighScore(30000),
+            new HighScore(20000),
+            new HighScore(10000)
         };
 
         private const int NumCards = 222;
@@ -91,16 +116,16 @@ namespace ThScoreFileConverter
         private static readonly Dictionary<StagePractice, Range<int>> StageCardTable =
             new Dictionary<StagePractice, Range<int>>()
             {
-                { StagePractice.Stage1,   new Range<int>{ Min = 0,   Max = 12  } },
-                { StagePractice.Stage2,   new Range<int>{ Min = 13,  Max = 31  } },
-                { StagePractice.Stage3,   new Range<int>{ Min = 32,  Max = 53  } },
-                { StagePractice.Stage4A,  new Range<int>{ Min = 54,  Max = 76  } },
-                { StagePractice.Stage4B,  new Range<int>{ Min = 77,  Max = 99  } },
-                { StagePractice.Stage5,   new Range<int>{ Min = 100, Max = 118 } },
-                { StagePractice.Stage6A,  new Range<int>{ Min = 119, Max = 146 } },
-                { StagePractice.Stage6B,  new Range<int>{ Min = 147, Max = 190 } },
-                { StagePractice.Extra,    new Range<int>{ Min = 191, Max = 204 } },
-                { StagePractice.LastWord, new Range<int>{ Min = 205, Max = 221 } }
+                { StagePractice.Stage1,   new Range<int> { Min = 0,   Max = 12  } },
+                { StagePractice.Stage2,   new Range<int> { Min = 13,  Max = 31  } },
+                { StagePractice.Stage3,   new Range<int> { Min = 32,  Max = 53  } },
+                { StagePractice.Stage4A,  new Range<int> { Min = 54,  Max = 76  } },
+                { StagePractice.Stage4B,  new Range<int> { Min = 77,  Max = 99  } },
+                { StagePractice.Stage5,   new Range<int> { Min = 100, Max = 118 } },
+                { StagePractice.Stage6A,  new Range<int> { Min = 119, Max = 146 } },
+                { StagePractice.Stage6B,  new Range<int> { Min = 147, Max = 190 } },
+                { StagePractice.Extra,    new Range<int> { Min = 191, Max = 204 } },
+                { StagePractice.LastWord, new Range<int> { Min = 205, Max = 221 } }
             };
 
         private class CharaLevelPair : Pair<Chara, Level>
@@ -122,23 +147,23 @@ namespace ThScoreFileConverter
 
         private class AllScoreData
         {
-            public Header header;
-            public Dictionary<CharaLevelPair, List<HighScore>> rankings;
-            public Dictionary<CharaWithTotal, ClearData> clearData;
-            public CardAttack[] cardAttacks;
-            public Dictionary<Chara, PracticeScore> practiceScores;
-            public FLSP flsp;
-            public PlayList playList;
-            public LastName lastName;
-            public VersionInfo versionInfo;
+            public Header Header { get; set; }
+            public Dictionary<CharaLevelPair, List<HighScore>> Rankings { get; set; }
+            public Dictionary<CharaWithTotal, ClearData> ClearData { get; set; }
+            public CardAttack[] CardAttacks { get; set; }
+            public Dictionary<Chara, PracticeScore> PracticeScores { get; set; }
+            public FLSP Flsp { get; set; }
+            public PlayList PlayList { get; set; }
+            public LastName LastName { get; set; }
+            public VersionInfo VersionInfo { get; set; }
 
             public AllScoreData()
             {
-                this.rankings = new Dictionary<CharaLevelPair, List<HighScore>>();
-                this.clearData =
+                this.Rankings = new Dictionary<CharaLevelPair, List<HighScore>>();
+                this.ClearData =
                     new Dictionary<CharaWithTotal, ClearData>(Enum.GetValues(typeof(CharaWithTotal)).Length);
-                this.cardAttacks = new CardAttack[NumCards];
-                this.practiceScores =
+                this.CardAttacks = new CardAttack[NumCards];
+                this.PracticeScores =
                     new Dictionary<Chara, PracticeScore>(Enum.GetValues(typeof(Chara)).Length);
             }
         }
@@ -176,8 +201,8 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Signature");
                 if (this.Size1 != 0x000C)
                     throw new InvalidDataException("Size1");
-                //if (this.Size2 != 0x000C)
-                //    throw new InvalidDataException("Size2");
+                // if (this.Size2 != 0x000C)
+                //     throw new InvalidDataException("Size2");
             }
 
             public override void ReadFrom(BinaryReader reader)
@@ -224,8 +249,8 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Signature");
                 if (this.Size1 != 0x0168)
                     throw new InvalidDataException("Size1");
-                //if (this.Size2 != 0x0168)
-                //    throw new InvalidDataException("Size2");
+                // if (this.Size2 != 0x0168)
+                //     throw new InvalidDataException("Size2");
             }
 
             public HighScore(uint score)    // for InitialRanking only
@@ -260,7 +285,7 @@ namespace ThScoreFileConverter
                 this.PauseCount = reader.ReadInt32();
                 this.TimePoint = reader.ReadInt32();
                 this.HumanRate = reader.ReadInt32();
-                this.CardFlags = reader.ReadBytes(NumCards);
+                this.CardFlags = reader.ReadBytes(Th08Converter.NumCards);
                 this.Padding = reader.ReadBytes(2);
             }
         }
@@ -281,8 +306,8 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Signature");
                 if (this.Size1 != 0x0024)
                     throw new InvalidDataException("Size1");
-                //if (this.Size2 != 0x0024)
-                //    throw new InvalidDataException("Size2");
+                // if (this.Size2 != 0x0024)
+                //     throw new InvalidDataException("Size2");
 
                 var numLevels = Enum.GetValues(typeof(Level)).Length;
                 this.StoryFlags = new PlayableStageFlag[numLevels];
@@ -323,8 +348,8 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Signature");
                 if (this.Size1 != 0x022C)
                     throw new InvalidDataException("Size1");
-                //if (this.Size2 != 0x022C)
-                //    throw new InvalidDataException("Size2");
+                // if (this.Size2 != 0x022C)
+                //     throw new InvalidDataException("Size2");
 
                 this.StoryCareer = new CardAttackCareer();
                 this.PracticeCareer = new CardAttackCareer();
@@ -344,9 +369,9 @@ namespace ThScoreFileConverter
                 this.Unknown3 = reader.ReadUInt32();
             }
 
-            public bool hasTried()
+            public bool HasTried()
             {
-                return (Encoding.Default.GetString(this.CardName).TrimEnd('\0').Length > 0);
+                return Encoding.Default.GetString(this.CardName).TrimEnd('\0').Length > 0;
             }
         }
 
@@ -391,8 +416,8 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Signature");
                 if (this.Size1 != 0x0178)
                     throw new InvalidDataException("Size1");
-                //if (this.Size2 != 0x0178)
-                //    throw new InvalidDataException("Size2");
+                // if (this.Size2 != 0x0178)
+                //     throw new InvalidDataException("Size2");
 
                 this.PlayCounts = new Dictionary<StageLevelPair, int>();
                 this.HighScores = new Dictionary<StageLevelPair, int>();
@@ -437,8 +462,8 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Signature");
                 if (this.Size1 != 0x0020)
                     throw new InvalidDataException("Size1");
-                //if (this.Size2 != 0x0020)
-                //    throw new InvalidDataException("Size2");
+                // if (this.Size2 != 0x0020)
+                //     throw new InvalidDataException("Size2");
             }
 
             public override void ReadFrom(BinaryReader reader)
@@ -465,8 +490,8 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Signature");
                 if (this.Size1 != 0x0228)
                     throw new InvalidDataException("Size1");
-                //if (this.Size2 != 0x0228)
-                //    throw new InvalidDataException("Size2");
+                // if (this.Size2 != 0x0228)
+                //     throw new InvalidDataException("Size2");
 
                 this.PlayCounts = new Dictionary<Level, PlayCount>(Enum.GetValues(typeof(Level)).Length);
                 this.Unknown2 = new PlayCount();
@@ -532,8 +557,8 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Signature");
                 if (this.Size1 != 0x0018)
                     throw new InvalidDataException("Size1");
-                //if (this.Size2 != 0x0018)
-                //    throw new InvalidDataException("Size2");
+                // if (this.Size2 != 0x0018)
+                //     throw new InvalidDataException("Size2");
             }
 
             public override void ReadFrom(BinaryReader reader)
@@ -558,8 +583,8 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Signature");
                 if (this.Size1 != 0x001C)
                     throw new InvalidDataException("Size1");
-                //if (this.Size2 != 0x001C)
-                //    throw new InvalidDataException("Size2");
+                // if (this.Size2 != 0x001C)
+                //     throw new InvalidDataException("Size2");
             }
 
             public override void ReadFrom(BinaryReader reader)
@@ -731,7 +756,7 @@ namespace ThScoreFileConverter
             var allScoreData = new AllScoreData();
             var chapter = new Chapter();
 
-            allScoreData.rankings = new Dictionary<CharaLevelPair, List<HighScore>>();
+            allScoreData.Rankings = new Dictionary<CharaLevelPair, List<HighScore>>();
             reader.ReadBytes(0x1C);
 
             try
@@ -745,7 +770,7 @@ namespace ThScoreFileConverter
                             {
                                 var header = new Header(chapter);
                                 header.ReadFrom(reader);
-                                allScoreData.header = header;
+                                allScoreData.Header = header;
                             }
                             break;
 
@@ -754,9 +779,9 @@ namespace ThScoreFileConverter
                                 var score = new HighScore(chapter);
                                 score.ReadFrom(reader);
                                 var key = new CharaLevelPair(score.Chara, score.Level);
-                                if (!allScoreData.rankings.ContainsKey(key))
-                                    allScoreData.rankings.Add(key, new List<HighScore>(InitialRanking));
-                                var ranking = allScoreData.rankings[key];
+                                if (!allScoreData.Rankings.ContainsKey(key))
+                                    allScoreData.Rankings.Add(key, new List<HighScore>(InitialRanking));
+                                var ranking = allScoreData.Rankings[key];
                                 ranking.Add(score);
                                 ranking.Sort((lhs, rhs) => rhs.Score.CompareTo(lhs.Score));
                                 ranking.RemoveAt(ranking.Count - 1);
@@ -767,8 +792,8 @@ namespace ThScoreFileConverter
                             {
                                 var clearData = new ClearData(chapter);
                                 clearData.ReadFrom(reader);
-                                if (!allScoreData.clearData.ContainsKey(clearData.Chara))
-                                    allScoreData.clearData.Add(clearData.Chara, clearData);
+                                if (!allScoreData.ClearData.ContainsKey(clearData.Chara))
+                                    allScoreData.ClearData.Add(clearData.Chara, clearData);
                             }
                             break;
 
@@ -776,7 +801,7 @@ namespace ThScoreFileConverter
                             {
                                 var attack = new CardAttack(chapter);
                                 attack.ReadFrom(reader);
-                                allScoreData.cardAttacks[attack.Number] = attack;
+                                allScoreData.CardAttacks[attack.Number] = attack;
                             }
                             break;
 
@@ -784,8 +809,8 @@ namespace ThScoreFileConverter
                             {
                                 var score = new PracticeScore(chapter);
                                 score.ReadFrom(reader);
-                                if (!allScoreData.practiceScores.ContainsKey(score.Chara))
-                                    allScoreData.practiceScores.Add(score.Chara, score);
+                                if (!allScoreData.PracticeScores.ContainsKey(score.Chara))
+                                    allScoreData.PracticeScores.Add(score.Chara, score);
                             }
                             break;
 
@@ -793,7 +818,7 @@ namespace ThScoreFileConverter
                             {
                                 var playList = new PlayList(chapter);
                                 playList.ReadFrom(reader);
-                                allScoreData.playList = playList;
+                                allScoreData.PlayList = playList;
                             }
                             break;
 
@@ -801,7 +826,7 @@ namespace ThScoreFileConverter
                             {
                                 var lastName = new LastName(chapter);
                                 lastName.ReadFrom(reader);
-                                allScoreData.lastName = lastName;
+                                allScoreData.LastName = lastName;
                             }
                             break;
 
@@ -809,7 +834,7 @@ namespace ThScoreFileConverter
                             {
                                 var flsp = new FLSP(chapter);
                                 flsp.ReadFrom(reader);
-                                allScoreData.flsp = flsp;
+                                allScoreData.Flsp = flsp;
                             }
                             break;
 
@@ -817,7 +842,7 @@ namespace ThScoreFileConverter
                             {
                                 var versionInfo = new VersionInfo(chapter);
                                 versionInfo.ReadFrom(reader);
-                                allScoreData.versionInfo = versionInfo;
+                                allScoreData.VersionInfo = versionInfo;
                             }
                             break;
 
@@ -833,15 +858,15 @@ namespace ThScoreFileConverter
                 // It's OK, do nothing.
             }
 
-            if ((allScoreData.header != null) &&
-                //(allScoreData.rankings.Count >= 0) &&
-                (allScoreData.clearData.Count == Enum.GetValues(typeof(CharaWithTotal)).Length) &&
-                //(allScoreData.cardAttacks.Length == NumCards) &&
-                //(allScoreData.practiceScores.Count >= 0) &&
-                (allScoreData.flsp != null) &&
-                (allScoreData.playList != null) &&
-                (allScoreData.lastName != null) &&
-                (allScoreData.versionInfo != null))
+            if ((allScoreData.Header != null) &&
+                // (allScoreData.rankings.Count >= 0) &&
+                (allScoreData.ClearData.Count == Enum.GetValues(typeof(CharaWithTotal)).Length) &&
+                // (allScoreData.cardAttacks.Length == NumCards) &&
+                // (allScoreData.practiceScores.Count >= 0) &&
+                (allScoreData.Flsp != null) &&
+                (allScoreData.PlayList != null) &&
+                (allScoreData.LastName != null) &&
+                (allScoreData.VersionInfo != null))
                 return allScoreData;
             else
                 return null;
@@ -872,74 +897,78 @@ namespace ThScoreFileConverter
         {
             var pattern = string.Format(
                 @"%T08SCR([{0}])({1})(\d)([\dA-G])",
-                Utils.JoinEnumNames<LevelShort>(""),
+                Utils.JoinEnumNames<LevelShort>(string.Empty),
                 Utils.JoinEnumNames<CharaShort>("|"));
-            return new Regex(pattern, RegexOptions.IgnoreCase)
-                .Replace(input, Utils.ToNothrowEvaluator(match =>
-                {
-                    var level = Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
-                    var chara = Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
-                    var rank = (int.Parse(match.Groups[3].Value) + 9) % 10;     // 1..9,0 -> 0..9
-                    var type = match.Groups[4].Value.ToUpper();
-                    var key = new CharaLevelPair(chara, level);
-                    var score = this.allScoreData.rankings.ContainsKey(key)
-                        ? this.allScoreData.rankings[key][rank] : InitialRanking[rank];
+            var evaluator = Utils.ToNothrowEvaluator(match =>
+            {
+                var level = Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
+                var chara = Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
+                var rank = (int.Parse(match.Groups[3].Value) + 9) % 10;     // 1..9,0 -> 0..9
+                var type = match.Groups[4].Value.ToUpper();
+                var key = new CharaLevelPair(chara, level);
+                var score = this.allScoreData.Rankings.ContainsKey(key)
+                    ? this.allScoreData.Rankings[key][rank] : InitialRanking[rank];
 
-                    switch (type)
-                    {
-                        case "1":   // name
-                            return Encoding.Default.GetString(score.Name).Split('\0')[0];
-                        case "2":   // score
-                            return this.ToNumberString(score.Score * 10 + score.ContinueCount);
-                        case "3":   // stage
-                            if ((level == LevelShort.X) &&
-                                (Encoding.Default.GetString(score.Date).TrimEnd('\0') == "--/--"))
-                                return StageArray[(int)Stage.Extra];
-                            else if (score.StageProgress == 99)
-                                return "All Clear";
-                            else
-                                return StageArray[score.StageProgress];
-                        case "4":   // date
-                            return Encoding.Default.GetString(score.Date).TrimEnd('\0');
-                        case "5":   // slow rate
-                            return score.SlowRate.ToString("F3") + "%";
-                        case "6":   // play time
-                            return new Time(score.PlayTime).ToString();
-                        case "7":   // initial number of players
-                            return (score.PlayerNum + 1).ToString();
-                        case "8":   // point items
-                            return this.ToNumberString(score.PointItem);
-                        case "9":   // time point
-                            return this.ToNumberString(score.TimePoint);
-                        case "0":   // miss count
-                            return score.MissCount.ToString();
-                        case "A":   // bomb count
-                            return score.BombCount.ToString();
-                        case "B":   // last spell count
-                            return score.LastSpellCount.ToString();
-                        case "C":   // pause count
-                            return this.ToNumberString(score.PauseCount);
-                        case "D":   // continue count
-                            return score.ContinueCount.ToString();
-                        case "E":   // human rate
-                            return string.Format("{0:F2}", score.HumanRate / 100.0) + "%";
-                        case "F":   // got spell cards
-                            var list = new List<string>();
-                            for (var index = 0; index < NumCards; index++)
+                switch (type)
+                {
+                    case "1":   // name
+                        return Encoding.Default.GetString(score.Name).Split('\0')[0];
+                    case "2":   // score
+                        return this.ToNumberString((score.Score * 10) + score.ContinueCount);
+                    case "3":   // stage
+                        if ((level == LevelShort.X) &&
+                            (Encoding.Default.GetString(score.Date).TrimEnd('\0') == "--/--"))
+                            return StageArray[(int)Stage.Extra];
+                        else if (score.StageProgress == 99)
+                            return "All Clear";
+                        else
+                            return StageArray[score.StageProgress];
+                    case "4":   // date
+                        return Encoding.Default.GetString(score.Date).TrimEnd('\0');
+                    case "5":   // slow rate
+                        return score.SlowRate.ToString("F3") + "%";
+                    case "6":   // play time
+                        return new Time(score.PlayTime).ToString();
+                    case "7":   // initial number of players
+                        return (score.PlayerNum + 1).ToString();
+                    case "8":   // point items
+                        return this.ToNumberString(score.PointItem);
+                    case "9":   // time point
+                        return this.ToNumberString(score.TimePoint);
+                    case "0":   // miss count
+                        return score.MissCount.ToString();
+                    case "A":   // bomb count
+                        return score.BombCount.ToString();
+                    case "B":   // last spell count
+                        return score.LastSpellCount.ToString();
+                    case "C":   // pause count
+                        return this.ToNumberString(score.PauseCount);
+                    case "D":   // continue count
+                        return score.ContinueCount.ToString();
+                    case "E":   // human rate
+                        return string.Format("{0:F2}", score.HumanRate / 100.0) + "%";
+                    case "F":   // got spell cards
+                        var list = new List<string>();
+                        for (var index = 0; index < NumCards; index++)
+                        {
+                            var attack = this.allScoreData.CardAttacks[index];
+                            if (score.CardFlags[index] > 0)
                             {
-                                var attack = this.allScoreData.cardAttacks[index];
-                                if (score.CardFlags[index] > 0)
-                                    list.Add(string.Format("No.{0:D3} {1}",
-                                        (attack.Number + 1),
-                                        Encoding.Default.GetString(attack.CardName).TrimEnd('\0')));
+                                var str = string.Format(
+                                    "No.{0:D3} {1}",
+                                    attack.Number + 1,
+                                    Encoding.Default.GetString(attack.CardName).TrimEnd('\0'));
+                                list.Add(str);
                             }
-                            return string.Join("\n", list.ToArray());
-                        case "G":   // number of got spell cards
-                            return score.CardFlags.Count(flag => flag > 0).ToString();
-                        default:    // unreachable
-                            return match.ToString();
-                    }
-                }));
+                        }
+                        return string.Join("\n", list.ToArray());
+                    case "G":   // number of got spell cards
+                        return score.CardFlags.Count(flag => flag > 0).ToString();
+                    default:    // unreachable
+                        return match.ToString();
+                }
+            });
+            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
 
         // %T08C[w][xxx][yy][z]
@@ -948,192 +977,164 @@ namespace ThScoreFileConverter
             var pattern = string.Format(
                 @"%T08C([SP])(\d\d\d)({0})([1-3])",
                 Utils.JoinEnumNames<CharaShortWithTotal>("|"));
-            return new Regex(pattern, RegexOptions.IgnoreCase)
-                .Replace(input, Utils.ToNothrowEvaluator(match =>
-                {
-                    var kind = match.Groups[1].Value.ToUpper();
-                    var number = int.Parse(match.Groups[2].Value);
-                    var chara =
-                        (CharaWithTotal)Utils.ParseEnum<CharaShortWithTotal>(match.Groups[3].Value, true);
-                    var type = int.Parse(match.Groups[4].Value);
+            var evaluator = Utils.ToNothrowEvaluator(match =>
+            {
+                var kind = match.Groups[1].Value.ToUpper();
+                var number = int.Parse(match.Groups[2].Value);
+                var chara =
+                    (CharaWithTotal)Utils.ParseEnum<CharaShortWithTotal>(match.Groups[3].Value, true);
+                var type = int.Parse(match.Groups[4].Value);
 
-                    if (number == 0)
+                if (number == 0)
+                    switch (type)
+                    {
+                        case 1:     // MaxBonus
+                            if (kind == "S")
+                                return this.ToNumberString(
+                                    this.allScoreData.CardAttacks.Sum(
+                                        attack => (attack != null)
+                                            ? (long)attack.StoryCareer.MaxBonuses[chara] : 0L));
+                            else
+                                return this.ToNumberString(
+                                    this.allScoreData.CardAttacks.Sum(
+                                        attack => (attack != null)
+                                            ? (long)attack.PracticeCareer.MaxBonuses[chara] : 0L));
+                        case 2:     // clear count
+                            if (kind == "S")
+                                return this.ToNumberString(
+                                    this.allScoreData.CardAttacks.Sum(
+                                        attack => (attack != null)
+                                            ? attack.StoryCareer.ClearCounts[chara] : 0));
+                            else
+                                return this.ToNumberString(
+                                    this.allScoreData.CardAttacks.Sum(
+                                        attack => (attack != null)
+                                            ? attack.PracticeCareer.ClearCounts[chara] : 0));
+                        case 3:     // trial count
+                            if (kind == "S")
+                                return this.ToNumberString(
+                                    this.allScoreData.CardAttacks.Sum(
+                                        attack => (attack != null)
+                                            ? attack.StoryCareer.TrialCounts[chara] : 0));
+                            else
+                                return this.ToNumberString(
+                                    this.allScoreData.CardAttacks.Sum(
+                                        attack => (attack != null)
+                                            ? attack.PracticeCareer.TrialCounts[chara] : 0));
+                        default:    // unreachable
+                            return match.ToString();
+                    }
+                else if ((0 < number) && (number <= NumCards))
+                {
+                    var attack = this.allScoreData.CardAttacks[number - 1];
+                    if (attack != null)
+                    {
+                        var career = (kind == "S") ? attack.StoryCareer : attack.PracticeCareer;
                         switch (type)
                         {
                             case 1:     // MaxBonus
-                                if (kind == "S")
-                                    return this.ToNumberString(
-                                        this.allScoreData.cardAttacks.Sum(
-                                            attack => (attack != null)
-                                                ? (long)attack.StoryCareer.MaxBonuses[chara] : 0L));
-                                else
-                                    return this.ToNumberString(
-                                        this.allScoreData.cardAttacks.Sum(
-                                            attack => (attack != null)
-                                                ? (long)attack.PracticeCareer.MaxBonuses[chara] : 0L));
+                                return this.ToNumberString(career.MaxBonuses[chara]);
                             case 2:     // clear count
-                                if (kind == "S")
-                                    return this.ToNumberString(
-                                        this.allScoreData.cardAttacks.Sum(
-                                            attack => (attack != null)
-                                                ? attack.StoryCareer.ClearCounts[chara] : 0));
-                                else
-                                    return this.ToNumberString(
-                                        this.allScoreData.cardAttacks.Sum(
-                                            attack => (attack != null)
-                                                ? attack.PracticeCareer.ClearCounts[chara] : 0));
+                                return this.ToNumberString(career.ClearCounts[chara]);
                             case 3:     // trial count
-                                if (kind == "S")
-                                    return this.ToNumberString(
-                                        this.allScoreData.cardAttacks.Sum(
-                                            attack => (attack != null)
-                                                ? attack.StoryCareer.TrialCounts[chara] : 0));
-                                else
-                                    return this.ToNumberString(
-                                        this.allScoreData.cardAttacks.Sum(
-                                            attack => (attack != null)
-                                                ? attack.PracticeCareer.TrialCounts[chara] : 0));
+                                return this.ToNumberString(career.TrialCounts[chara]);
                             default:    // unreachable
                                 return match.ToString();
                         }
-                    else if ((0 < number) && (number <= NumCards))
-                    {
-                        var attack = this.allScoreData.cardAttacks[number - 1];
-                        if (attack != null)
-                        {
-                            var career = (kind == "S") ? attack.StoryCareer : attack.PracticeCareer;
-                            switch (type)
-                            {
-                                case 1:     // MaxBonus
-                                    return this.ToNumberString(career.MaxBonuses[chara]);
-                                case 2:     // clear count
-                                    return this.ToNumberString(career.ClearCounts[chara]);
-                                case 3:     // trial count
-                                    return this.ToNumberString(career.TrialCounts[chara]);
-                                default:    // unreachable
-                                    return match.ToString();
-                            }
-                        }
-                        else
-                            return "0";
                     }
                     else
-                        return match.ToString();
-                }));
+                        return "0";
+                }
+                else
+                    return match.ToString();
+            });
+            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
 
         // %T08CARD[xxx][y]
         private string ReplaceCard(string input)
         {
-            return new Regex(@"%T08CARD(\d{3})([NR])", RegexOptions.IgnoreCase)
-                .Replace(input, Utils.ToNothrowEvaluator(match =>
-                {
-                    var number = int.Parse(match.Groups[1].Value);
-                    var type = match.Groups[2].Value.ToUpper();
+            var pattern = @"%T08CARD(\d{3})([NR])";
+            var evaluator = Utils.ToNothrowEvaluator(match =>
+            {
+                var number = int.Parse(match.Groups[1].Value);
+                var type = match.Groups[2].Value.ToUpper();
 
-                    if ((0 < number) && (number <= NumCards))
-                    {
-                        var attack = this.allScoreData.cardAttacks[number - 1];
-                        if (type == "N")
-                            return ((attack != null) && attack.hasTried())
-                                ? Encoding.Default.GetString(attack.CardName).TrimEnd('\0') : "??????????";
-                        else
-                        {
-                            if ((attack != null) && attack.hasTried())
-                                return (attack.Level == LevelPractice.LastWord)
-                                    ? "Last Word" : attack.Level.ToString();
-                            else
-                                return "?????";
-                        }
-                    }
+                if ((0 < number) && (number <= NumCards))
+                {
+                    var attack = this.allScoreData.CardAttacks[number - 1];
+                    if (type == "N")
+                        return ((attack != null) && attack.HasTried())
+                            ? Encoding.Default.GetString(attack.CardName).TrimEnd('\0') : "??????????";
                     else
-                        return match.ToString();
-                }));
+                    {
+                        if ((attack != null) && attack.HasTried())
+                            return (attack.Level == LevelPractice.LastWord)
+                                ? "Last Word" : attack.Level.ToString();
+                        else
+                            return "?????";
+                    }
+                }
+                else
+                    return match.ToString();
+            });
+            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
 
         // %T08CRG[v][w][xx][yy][z]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.MaintainabilityRules",
+            "SA1119:StatementMustNotUseUnnecessaryParenthesis",
+            Justification = "Reviewed.")]
         private string ReplaceCollectRate(string input)
         {
             var pattern = string.Format(
                 @"%T08CRG([SP])([{0}])({1})({2})([12])",
-                Utils.JoinEnumNames<LevelShortPractice>(""),
+                Utils.JoinEnumNames<LevelShortPractice>(string.Empty),
                 Utils.JoinEnumNames<CharaShortWithTotal>("|"),
                 string.Join("|", StageShortWithTotalArray));
-            return new Regex(pattern, RegexOptions.IgnoreCase)
-                .Replace(input, Utils.ToNothrowEvaluator(match =>
+            var evaluator = Utils.ToNothrowEvaluator(match =>
+            {
+                var kind = match.Groups[1].Value.ToUpper();
+                var level = (LevelPractice)Utils.ParseEnum<LevelShortPractice>(
+                    match.Groups[2].Value, true);
+                var chara = (CharaWithTotal)Utils.ParseEnum<CharaShortWithTotal>(
+                    match.Groups[3].Value, true);
+                var stage = Array.IndexOf(StageShortWithTotalArray, match.Groups[4].Value.ToUpper());
+                var type = int.Parse(match.Groups[5].Value);
+
+                Func<CardAttack, bool> findCard = (attack => false);
+
+                if (level == LevelPractice.Total)
                 {
-                    var kind = match.Groups[1].Value.ToUpper();
-                    var level = (LevelPractice)Utils.ParseEnum<LevelShortPractice>(
-                        match.Groups[2].Value, true);
-                    var chara = (CharaWithTotal)Utils.ParseEnum<CharaShortWithTotal>(
-                        match.Groups[3].Value, true);
-                    var stage = Array.IndexOf(StageShortWithTotalArray, match.Groups[4].Value.ToUpper());
-                    var type = int.Parse(match.Groups[5].Value);
-
-                    Func<CardAttack, bool> findCard = (attack => false);
-
-                    if (level == LevelPractice.Total)
+                    if (stage == 0)     // total
                     {
-                        if (stage == 0)     // total
+                        if (kind == "S")
                         {
-                            if (kind == "S")
-                            {
-                                if (type == 1)
-                                    findCard = (attack =>
-                                        (attack != null) &&
-                                        (attack.StoryCareer.ClearCounts[chara] > 0));
-                                else
-                                    findCard = (attack =>
-                                        (attack != null) &&
-                                        (attack.StoryCareer.TrialCounts[chara] > 0));
-                            }
+                            if (type == 1)
+                                findCard = (attack =>
+                                    (attack != null) &&
+                                    (attack.StoryCareer.ClearCounts[chara] > 0));
                             else
-                            {
-                                if (type == 1)
-                                    findCard = (attack =>
-                                        (attack != null) &&
-                                        (attack.PracticeCareer.ClearCounts[chara] > 0));
-                                else
-                                    findCard = (attack =>
-                                        (attack != null) &&
-                                        (attack.PracticeCareer.TrialCounts[chara] > 0));
-                            }
+                                findCard = (attack =>
+                                    (attack != null) &&
+                                    (attack.StoryCareer.TrialCounts[chara] > 0));
                         }
                         else
                         {
-                            var st = (StagePractice)(stage - 1);
-                            if (kind == "S")
-                            {
-                                if (type == 1)
-                                    findCard = (attack =>
-                                        (attack != null) &&
-                                        StageCardTable[st].Contains(attack.Number) &&
-                                        (attack.StoryCareer.ClearCounts[chara] > 0));
-                                else
-                                    findCard = (attack =>
-                                        (attack != null) &&
-                                        StageCardTable[st].Contains(attack.Number) &&
-                                        (attack.StoryCareer.TrialCounts[chara] > 0));
-                            }
+                            if (type == 1)
+                                findCard = (attack =>
+                                    (attack != null) &&
+                                    (attack.PracticeCareer.ClearCounts[chara] > 0));
                             else
-                            {
-                                if (type == 1)
-                                    findCard = (attack =>
-                                        (attack != null) &&
-                                        StageCardTable[st].Contains(attack.Number) &&
-                                        (attack.PracticeCareer.ClearCounts[chara] > 0));
-                                else
-                                    findCard = (attack =>
-                                        (attack != null) &&
-                                        StageCardTable[st].Contains(attack.Number) &&
-                                        (attack.PracticeCareer.TrialCounts[chara] > 0));
-                            }
+                                findCard = (attack =>
+                                    (attack != null) &&
+                                    (attack.PracticeCareer.TrialCounts[chara] > 0));
                         }
                     }
-                    else if ((level == LevelPractice.Extra) || (level == LevelPractice.LastWord))
+                    else
                     {
-                        var st = (level == LevelPractice.Extra)
-                            ? StagePractice.Extra : StagePractice.LastWord;
+                        var st = (StagePractice)(stage - 1);
                         if (kind == "S")
                         {
                             if (type == 1)
@@ -1161,75 +1162,108 @@ namespace ThScoreFileConverter
                                     (attack.PracticeCareer.TrialCounts[chara] > 0));
                         }
                     }
+                }
+                else if ((level == LevelPractice.Extra) || (level == LevelPractice.LastWord))
+                {
+                    var st = (level == LevelPractice.Extra)
+                        ? StagePractice.Extra : StagePractice.LastWord;
+                    if (kind == "S")
+                    {
+                        if (type == 1)
+                            findCard = (attack =>
+                                (attack != null) &&
+                                StageCardTable[st].Contains(attack.Number) &&
+                                (attack.StoryCareer.ClearCounts[chara] > 0));
+                        else
+                            findCard = (attack =>
+                                (attack != null) &&
+                                StageCardTable[st].Contains(attack.Number) &&
+                                (attack.StoryCareer.TrialCounts[chara] > 0));
+                    }
                     else
                     {
-                        if (stage == 0)     // total
+                        if (type == 1)
+                            findCard = (attack =>
+                                (attack != null) &&
+                                StageCardTable[st].Contains(attack.Number) &&
+                                (attack.PracticeCareer.ClearCounts[chara] > 0));
+                        else
+                            findCard = (attack =>
+                                (attack != null) &&
+                                StageCardTable[st].Contains(attack.Number) &&
+                                (attack.PracticeCareer.TrialCounts[chara] > 0));
+                    }
+                }
+                else
+                {
+                    if (stage == 0)     // total
+                    {
+                        if (kind == "S")
                         {
-                            if (kind == "S")
-                            {
-                                if (type == 1)
-                                    findCard = (attack =>
-                                        (attack != null) &&
-                                        (attack.Level == level) &&
-                                        (attack.StoryCareer.ClearCounts[chara] > 0));
-                                else
-                                    findCard = (attack =>
-                                        (attack != null) &&
-                                        (attack.Level == level) &&
-                                        (attack.StoryCareer.TrialCounts[chara] > 0));
-                            }
+                            if (type == 1)
+                                findCard = (attack =>
+                                    (attack != null) &&
+                                    (attack.Level == level) &&
+                                    (attack.StoryCareer.ClearCounts[chara] > 0));
                             else
-                            {
-                                if (type == 1)
-                                    findCard = (attack =>
-                                        (attack != null) &&
-                                        (attack.Level == level) &&
-                                        (attack.PracticeCareer.ClearCounts[chara] > 0));
-                                else
-                                    findCard = (attack =>
-                                        (attack != null) &&
-                                        (attack.Level == level) &&
-                                        (attack.PracticeCareer.TrialCounts[chara] > 0));
-                            }
+                                findCard = (attack =>
+                                    (attack != null) &&
+                                    (attack.Level == level) &&
+                                    (attack.StoryCareer.TrialCounts[chara] > 0));
                         }
                         else
                         {
-                            var st = (StagePractice)(stage - 1);
-                            if (kind == "S")
-                            {
-                                if (type == 1)
-                                    findCard = (attack =>
-                                        (attack != null) &&
-                                        StageCardTable[st].Contains(attack.Number) &&
-                                        (attack.Level == level) &&
-                                        (attack.StoryCareer.ClearCounts[chara] > 0));
-                                else
-                                    findCard = (attack =>
-                                        (attack != null) &&
-                                        StageCardTable[st].Contains(attack.Number) &&
-                                        (attack.Level == level) &&
-                                        (attack.StoryCareer.TrialCounts[chara] > 0));
-                            }
+                            if (type == 1)
+                                findCard = (attack =>
+                                    (attack != null) &&
+                                    (attack.Level == level) &&
+                                    (attack.PracticeCareer.ClearCounts[chara] > 0));
                             else
-                            {
-                                if (type == 1)
-                                    findCard = (attack =>
-                                        (attack != null) &&
-                                        StageCardTable[st].Contains(attack.Number) &&
-                                        (attack.Level == level) &&
-                                        (attack.PracticeCareer.ClearCounts[chara] > 0));
-                                else
-                                    findCard = (attack =>
-                                        (attack != null) &&
-                                        StageCardTable[st].Contains(attack.Number) &&
-                                        (attack.Level == level) &&
-                                        (attack.PracticeCareer.TrialCounts[chara] > 0));
-                            }
+                                findCard = (attack =>
+                                    (attack != null) &&
+                                    (attack.Level == level) &&
+                                    (attack.PracticeCareer.TrialCounts[chara] > 0));
                         }
                     }
+                    else
+                    {
+                        var st = (StagePractice)(stage - 1);
+                        if (kind == "S")
+                        {
+                            if (type == 1)
+                                findCard = (attack =>
+                                    (attack != null) &&
+                                    StageCardTable[st].Contains(attack.Number) &&
+                                    (attack.Level == level) &&
+                                    (attack.StoryCareer.ClearCounts[chara] > 0));
+                            else
+                                findCard = (attack =>
+                                    (attack != null) &&
+                                    StageCardTable[st].Contains(attack.Number) &&
+                                    (attack.Level == level) &&
+                                    (attack.StoryCareer.TrialCounts[chara] > 0));
+                        }
+                        else
+                        {
+                            if (type == 1)
+                                findCard = (attack =>
+                                    (attack != null) &&
+                                    StageCardTable[st].Contains(attack.Number) &&
+                                    (attack.Level == level) &&
+                                    (attack.PracticeCareer.ClearCounts[chara] > 0));
+                            else
+                                findCard = (attack =>
+                                    (attack != null) &&
+                                    StageCardTable[st].Contains(attack.Number) &&
+                                    (attack.Level == level) &&
+                                    (attack.PracticeCareer.TrialCounts[chara] > 0));
+                        }
+                    }
+                }
 
-                    return this.allScoreData.cardAttacks.Count(findCard).ToString();
-                }));
+                return this.allScoreData.CardAttacks.Count(findCard).ToString();
+            });
+            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
 
         // %T08CLEAR[x][yy]
@@ -1237,36 +1271,36 @@ namespace ThScoreFileConverter
         {
             var pattern = string.Format(
                 @"%T08CLEAR([{0}])({1})",
-                Utils.JoinEnumNames<LevelShort>(""),
+                Utils.JoinEnumNames<LevelShort>(string.Empty),
                 Utils.JoinEnumNames<CharaShort>("|"));
-            return new Regex(pattern, RegexOptions.IgnoreCase)
-                .Replace(input, Utils.ToNothrowEvaluator(match =>
-                {
-                    var level = Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
-                    var chara = Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
+            var evaluator = Utils.ToNothrowEvaluator(match =>
+            {
+                var level = Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
+                var chara = Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
 
-                    var key = new CharaLevelPair(chara, level);
-                    if (this.allScoreData.rankings.ContainsKey(key))
-                    {
-                        var stageProgress = 0;
-                        foreach (var rank in this.allScoreData.rankings[key])
-                            stageProgress = Math.Max(stageProgress, rank.StageProgress);
-                        if ((stageProgress == (int)Stage.Stage4A) || (stageProgress == (int)Stage.Stage4B))
-                            return "Stage 4";
-                        else if (stageProgress < (int)Stage.Stage6B)
-                            return StageArray[stageProgress];
-                        else if (stageProgress == (int)Stage.Stage6B)
-                            return "FinalA Clear";
-                        else if (stageProgress == (int)Stage.Extra)
-                            return "Not Clear";
-                        else if (stageProgress == 99)
-                            return "All Clear";
-                        else
-                            return "-------";
-                    }
+                var key = new CharaLevelPair(chara, level);
+                if (this.allScoreData.Rankings.ContainsKey(key))
+                {
+                    var stageProgress = 0;
+                    foreach (var rank in this.allScoreData.Rankings[key])
+                        stageProgress = Math.Max(stageProgress, rank.StageProgress);
+                    if ((stageProgress == (int)Stage.Stage4A) || (stageProgress == (int)Stage.Stage4B))
+                        return "Stage 4";
+                    else if (stageProgress < (int)Stage.Stage6B)
+                        return StageArray[stageProgress];
+                    else if (stageProgress == (int)Stage.Stage6B)
+                        return "FinalA Clear";
+                    else if (stageProgress == (int)Stage.Extra)
+                        return "Not Clear";
+                    else if (stageProgress == 99)
+                        return "All Clear";
                     else
                         return "-------";
-                }));
+                }
+                else
+                    return "-------";
+            });
+            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
 
         // %T08PLAY[x][yy]
@@ -1274,46 +1308,47 @@ namespace ThScoreFileConverter
         {
             var pattern = string.Format(
                 @"%T08PLAY([{0}])({1}|CL|CN|PR)",
-                Utils.JoinEnumNames<LevelShortWithTotal>(""),
+                Utils.JoinEnumNames<LevelShortWithTotal>(string.Empty),
                 Utils.JoinEnumNames<CharaShortWithTotal>("|"));
-            return new Regex(pattern, RegexOptions.IgnoreCase)
-                .Replace(input, Utils.ToNothrowEvaluator(match =>
+            var evaluator = Utils.ToNothrowEvaluator(match =>
+            {
+                var level = Utils.ParseEnum<LevelShortWithTotal>(match.Groups[1].Value, true);
+                var charaAndMore = match.Groups[2].Value.ToUpper();
+
+                var playCount = (level == LevelShortWithTotal.T)
+                    ? this.allScoreData.PlayList.TotalPlayCount
+                    : this.allScoreData.PlayList.PlayCounts[(Level)level];
+
+                switch (charaAndMore)
                 {
-                    var level = Utils.ParseEnum<LevelShortWithTotal>(match.Groups[1].Value, true);
-                    var charaAndMore = match.Groups[2].Value.ToUpper();
-
-                    var playCount = (level == LevelShortWithTotal.T)
-                        ? this.allScoreData.playList.TotalPlayCount
-                        : this.allScoreData.playList.PlayCounts[(Level)level];
-
-                    switch (charaAndMore)
-                    {
-                        case "CL":  // clear count
-                            return this.ToNumberString(playCount.TotalClear);
-                        case "CN":  // continue count
-                            return this.ToNumberString(playCount.TotalContinue);
-                        case "PR":  // practice count
-                            return this.ToNumberString(playCount.TotalPractice);
-                        default:
-                            var chara = Utils.ParseEnum<CharaShortWithTotal>(match.Groups[2].Value, true);
-                            return this.ToNumberString((chara == CharaShortWithTotal.TL)
-                                ? playCount.TotalTrial : playCount.Trials[(Chara)chara]);
-                    }
-                }));
+                    case "CL":  // clear count
+                        return this.ToNumberString(playCount.TotalClear);
+                    case "CN":  // continue count
+                        return this.ToNumberString(playCount.TotalContinue);
+                    case "PR":  // practice count
+                        return this.ToNumberString(playCount.TotalPractice);
+                    default:
+                        var chara = Utils.ParseEnum<CharaShortWithTotal>(match.Groups[2].Value, true);
+                        return this.ToNumberString((chara == CharaShortWithTotal.TL)
+                            ? playCount.TotalTrial : playCount.Trials[(Chara)chara]);
+                }
+            });
+            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
 
         // %T08TIME(ALL|PLY)
         private string ReplaceTime(string input)
         {
-            return new Regex(@"%T08TIME(ALL|PLY)", RegexOptions.IgnoreCase)
-                .Replace(input, Utils.ToNothrowEvaluator(match =>
-                {
-                    var kind = match.Groups[1].Value.ToUpper();
+            var pattern = @"%T08TIME(ALL|PLY)";
+            var evaluator = Utils.ToNothrowEvaluator(match =>
+            {
+                var kind = match.Groups[1].Value.ToUpper();
 
-                    return (kind == "ALL")
-                        ? this.allScoreData.playList.TotalRunningTime.ToLongString()
-                        : this.allScoreData.playList.TotalPlayTime.ToLongString();
-                }));
+                return (kind == "ALL")
+                    ? this.allScoreData.PlayList.TotalRunningTime.ToLongString()
+                    : this.allScoreData.PlayList.TotalPlayTime.ToLongString();
+            });
+            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
 
         // %T08PRAC[w][xx][yy][z]
@@ -1321,34 +1356,34 @@ namespace ThScoreFileConverter
         {
             var pattern = string.Format(
                 @"%T08PRAC([{0}])({1})({2})([12])",
-                Utils.JoinEnumNames<LevelShort>(""),
+                Utils.JoinEnumNames<LevelShort>(string.Empty),
                 Utils.JoinEnumNames<CharaShort>("|"),
                 string.Join("|", StageShortArray));
-            return new Regex(pattern, RegexOptions.IgnoreCase)
-                .Replace(input, Utils.ToNothrowEvaluator(match =>
+            var evaluator = Utils.ToNothrowEvaluator(match =>
+            {
+                var level = (Level)Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
+                var chara = (Chara)Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
+                var stage = (Stage)Array.IndexOf(StageShortArray, match.Groups[3].Value.ToUpper());
+                var type = int.Parse(match.Groups[4].Value);
+
+                if (level == Level.Extra)
+                    return match.ToString();
+
+                if (this.allScoreData.PracticeScores.ContainsKey(chara))
                 {
-                    var level = (Level)Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
-                    var chara = (Chara)Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
-                    var stage = (Stage)Array.IndexOf(StageShortArray, match.Groups[3].Value.ToUpper());
-                    var type = int.Parse(match.Groups[4].Value);
-
-                    if (level == Level.Extra)
-                        return match.ToString();
-
-                    if (this.allScoreData.practiceScores.ContainsKey(chara))
-                    {
-                        var scores = this.allScoreData.practiceScores[chara];
-                        var key = new StageLevelPair(stage, level);
-                        if (type == 1)
-                            return this.ToNumberString(
-                                scores.HighScores.ContainsKey(key) ? (scores.HighScores[key] * 10) : 0);
-                        else
-                            return this.ToNumberString(
-                                scores.PlayCounts.ContainsKey(key) ? scores.PlayCounts[key] : 0);
-                    }
+                    var scores = this.allScoreData.PracticeScores[chara];
+                    var key = new StageLevelPair(stage, level);
+                    if (type == 1)
+                        return this.ToNumberString(
+                            scores.HighScores.ContainsKey(key) ? (scores.HighScores[key] * 10) : 0);
                     else
-                        return "0";
-                }));
+                        return this.ToNumberString(
+                            scores.PlayCounts.ContainsKey(key) ? scores.PlayCounts[key] : 0);
+                }
+                else
+                    return "0";
+            });
+            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
     }
 }

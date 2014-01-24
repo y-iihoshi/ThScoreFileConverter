@@ -1,24 +1,41 @@
-﻿using System;
-using System.Diagnostics;
-using System.Drawing;
-using System.Reflection;
-using System.Windows;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Interop;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
+﻿//-----------------------------------------------------------------------
+// <copyright file="AboutWindow.xaml.cs" company="None">
+//     (c) 2013-2014 IIHOSHI Yoshinori
+// </copyright>
+//-----------------------------------------------------------------------
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.LayoutRules",
+    "SA1503:CurlyBracketsMustNotBeOmitted",
+    Justification = "Reviewed.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.OrderingRules",
+    "SA1202:ElementsMustBeOrderedByAccess",
+    Justification = "Reviewed.")]
 
 namespace ThScoreFileConverter
 {
+    using System.Diagnostics;
+    using System.Drawing;
+    using System.Reflection;
+    using System.Windows;
+    using System.Windows.Documents;
+    using System.Windows.Input;
+    using System.Windows.Interop;
+    using System.Windows.Media.Imaging;
+    using System.Windows.Navigation;
+
     /// <summary>
-    /// AboutWindow.xaml の相互作用ロジック
+    /// Interaction logic for AboutWindow.xaml
     /// </summary>
     public partial class AboutWindow : Window
     {
+        /// <summary>
+        /// Prevents a default instance of the <see cref="AboutWindow"/> class from being created.
+        /// </summary>
         private AboutWindow()
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
             this.imgIcon.Source = Imaging.CreateBitmapSourceFromHIcon(
                 SystemIcons.Application.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
@@ -30,17 +47,31 @@ namespace ThScoreFileConverter
             this.txtCopyright.Text = ((AssemblyCopyrightAttribute)attrs[0]).Copyright;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AboutWindow"/> class.
+        /// </summary>
+        /// <param name="owner">The owner window of the new instance.</param>
         public AboutWindow(Window owner)
             : this()
         {
             this.Owner = owner;
         }
 
+        /// <summary>
+        /// Handles the <c>RequestNavigate</c> routed event of the <see cref="Hyperlink"/> class.
+        /// </summary>
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
-            Process.Start(((Hyperlink)sender).NavigateUri.ToString());
+            Process.Start(e.Uri.ToString());
         }
 
+        /// <summary>
+        /// Handles the <c>PreviewKeyDown</c> routed event of the current window.
+        /// </summary>
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)

@@ -1,21 +1,30 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Interop;
-using WinForms = System.Windows.Forms;
+﻿//-----------------------------------------------------------------------
+// <copyright file="Win32Window.cs" company="None">
+//     (c) 2013-2014 IIHOSHI Yoshinori
+// </copyright>
+//-----------------------------------------------------------------------
 
 namespace ThScoreFileConverter
 {
+    using System;
+    using System.Windows;
+    using System.Windows.Interop;
+    using WinForms = System.Windows.Forms;
+
     /// <summary>
-    /// System.Windows.Window から System.Windows.Forms.IWin32Window への変換用クラス
+    /// Converter from <see cref="System.Windows.Window"/> to <see cref="System.Windows.Forms.IWin32Window"/>.
     /// </summary>
     public class Win32Window : WinForms.IWin32Window
     {
+        /// <summary>
+        /// Gets the window handle for the current instance.
+        /// </summary>
         public IntPtr Handle { get; private set; }
 
         /// <summary>
-        /// インスタンスを生成する
+        /// Initializes a new instance of the <see cref="Win32Window"/> class.
         /// </summary>
-        /// <param Name="window">変換元の System.Windows.Window インスタンス</param>
+        /// <param name="window">The instance of <see cref="System.Windows.Window"/>.</param>
         public Win32Window(Window window)
         {
             this.Handle = new WindowInteropHelper(window).Handle;

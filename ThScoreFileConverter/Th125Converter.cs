@@ -1,16 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Text.RegularExpressions;
+﻿//-----------------------------------------------------------------------
+// <copyright file="Th125Converter.cs" company="None">
+//     (c) 2013-2014 IIHOSHI Yoshinori
+// </copyright>
+//-----------------------------------------------------------------------
+
+#pragma warning disable 1591
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.DocumentationRules", "*", Justification = "Reviewed.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.LayoutRules", "*", Justification = "Reviewed.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.LayoutRules",
+    "SA1503:CurlyBracketsMustNotBeOmitted",
+    Justification = "Reviewed.")]
 
 namespace ThScoreFileConverter
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.Specialized;
+    using System.Drawing;
+    using System.Drawing.Imaging;
+    using System.IO;
+    using System.Linq;
+    using System.Runtime.InteropServices;
+    using System.Text;
+    using System.Text.RegularExpressions;
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        "StyleCop.CSharp.OrderingRules",
+        "SA1201:ElementsMustAppearInTheCorrectOrder",
+        Justification = "Reviewed.")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        "StyleCop.CSharp.SpacingRules",
+        "SA1025:CodeMustNotContainMultipleWhitespaceInARow",
+        Justification = "Reviewed.")]
     public class Th125Converter : ThConverter
     {
         private static readonly string[] LevelArray =
@@ -22,8 +47,8 @@ namespace ThScoreFileConverter
             "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "X", "S"
         };
 
-        private enum Chara      { Aya, Hatate };
-        private enum CharaShort { A, H };
+        private enum Chara      { Aya, Hatate }
+        private enum CharaShort { A, H }
 
         private enum Enemy
         {
@@ -94,21 +119,21 @@ namespace ThScoreFileConverter
         private static readonly Dictionary<LevelScenePair, EnemyCardPair> SpellCards =
             new Dictionary<LevelScenePair, EnemyCardPair>()
             {
-                { new LevelScenePair(1, 1), new EnemyCardPair(Enemy.Minoriko, "") },
-                { new LevelScenePair(1, 2), new EnemyCardPair(Enemy.Minoriko, "") },
+                { new LevelScenePair(1, 1), new EnemyCardPair(Enemy.Minoriko, string.Empty) },
+                { new LevelScenePair(1, 2), new EnemyCardPair(Enemy.Minoriko, string.Empty) },
                 { new LevelScenePair(1, 3), new EnemyCardPair(Enemy.Shizuha,  "秋符「フォーリンブラスト」") },
                 { new LevelScenePair(1, 4), new EnemyCardPair(Enemy.Minoriko, "実符「ウォームカラーハーヴェスト」") },
                 { new LevelScenePair(1, 5), new EnemyCardPair(Enemy.Shizuha,  "枯道「ロストウィンドロウ」") },
                 { new LevelScenePair(1, 6), new EnemyCardPair(Enemy.Minoriko, "焼芋「スイートポテトルーム」") },
 
-                { new LevelScenePair(2, 1), new EnemyCardPair(Enemy.Parsee, "") },
-                { new LevelScenePair(2, 2), new EnemyCardPair(Enemy.Hina,   "") },
+                { new LevelScenePair(2, 1), new EnemyCardPair(Enemy.Parsee, string.Empty) },
+                { new LevelScenePair(2, 2), new EnemyCardPair(Enemy.Hina,   string.Empty) },
                 { new LevelScenePair(2, 3), new EnemyCardPair(Enemy.Parsee, "嫉妬「ジェラシーボンバー」") },
                 { new LevelScenePair(2, 4), new EnemyCardPair(Enemy.Hina,   "厄野「禊川の堆積」") },
                 { new LevelScenePair(2, 5), new EnemyCardPair(Enemy.Parsee, "怨み念法「積怨返し」") },
                 { new LevelScenePair(2, 6), new EnemyCardPair(Enemy.Hina,   "災禍「呪いの雛人形」") },
 
-                { new LevelScenePair(3, 1), new EnemyCardPair(Enemy.Yamame, "") },
+                { new LevelScenePair(3, 1), new EnemyCardPair(Enemy.Yamame, string.Empty) },
                 { new LevelScenePair(3, 2), new EnemyCardPair(Enemy.Kogasa, "傘符「一本足ピッチャー返し」") },
                 { new LevelScenePair(3, 3), new EnemyCardPair(Enemy.Kisume, "釣瓶「飛んで井の中」") },
                 { new LevelScenePair(3, 4), new EnemyCardPair(Enemy.Yamame, "細綱「カンダタロープ」") },
@@ -117,16 +142,16 @@ namespace ThScoreFileConverter
                 { new LevelScenePair(3, 7), new EnemyCardPair(Enemy.Yamame, "毒符「樺黄小町」") },
                 { new LevelScenePair(3, 8), new EnemyCardPair(Enemy.Kogasa, "傘符「細雪の過客」") },
 
-                { new LevelScenePair(4, 1), new EnemyCardPair(Enemy.Nitori, "") },
-                { new LevelScenePair(4, 2), new EnemyCardPair(Enemy.Momiji, "") },
+                { new LevelScenePair(4, 1), new EnemyCardPair(Enemy.Nitori, string.Empty) },
+                { new LevelScenePair(4, 2), new EnemyCardPair(Enemy.Momiji, string.Empty) },
                 { new LevelScenePair(4, 3), new EnemyCardPair(Enemy.Nitori, "水符「ウォーターカーペット」") },
                 { new LevelScenePair(4, 4), new EnemyCardPair(Enemy.Momiji, "狗符「レイビーズバイト」") },
                 { new LevelScenePair(4, 5), new EnemyCardPair(Enemy.Nitori, "河符「ディバイディングエッジ」") },
                 { new LevelScenePair(4, 6), new EnemyCardPair(Enemy.Momiji, "山窩「エクスペリーズカナン」") },
                 { new LevelScenePair(4, 7), new EnemyCardPair(Enemy.Nitori, "河童「乾燥尻子玉」") },
 
-                { new LevelScenePair(5, 1), new EnemyCardPair(Enemy.Ichirin,   "") },
-                { new LevelScenePair(5, 2), new EnemyCardPair(Enemy.Minamitsu, "") },
+                { new LevelScenePair(5, 1), new EnemyCardPair(Enemy.Ichirin,   string.Empty) },
+                { new LevelScenePair(5, 2), new EnemyCardPair(Enemy.Minamitsu, string.Empty) },
                 { new LevelScenePair(5, 3), new EnemyCardPair(Enemy.Ichirin,   "拳骨「天空鉄槌落とし」") },
                 { new LevelScenePair(5, 4), new EnemyCardPair(Enemy.Minamitsu, "錨符「幽霊船長期停泊」") },
                 { new LevelScenePair(5, 5), new EnemyCardPair(Enemy.Ichirin,   "稲妻「帯電入道」") },
@@ -134,8 +159,8 @@ namespace ThScoreFileConverter
                 { new LevelScenePair(5, 7), new EnemyCardPair(Enemy.Ichirin,   "鉄拳「入道にょき」") },
                 { new LevelScenePair(5, 8), new EnemyCardPair(Enemy.Minamitsu, "「ディープシンカー」") },
 
-                { new LevelScenePair(6, 1), new EnemyCardPair(Enemy.Yuugi, "") },
-                { new LevelScenePair(6, 2), new EnemyCardPair(Enemy.Suika, "") },
+                { new LevelScenePair(6, 1), new EnemyCardPair(Enemy.Yuugi, string.Empty) },
+                { new LevelScenePair(6, 2), new EnemyCardPair(Enemy.Suika, string.Empty) },
                 { new LevelScenePair(6, 3), new EnemyCardPair(Enemy.Yuugi, "光鬼「金剛螺旋」") },
                 { new LevelScenePair(6, 4), new EnemyCardPair(Enemy.Suika, "鬼符「豆粒大の針地獄」") },
                 { new LevelScenePair(6, 5), new EnemyCardPair(Enemy.Yuugi, "鬼符「鬼気狂瀾」") },
@@ -143,15 +168,15 @@ namespace ThScoreFileConverter
                 { new LevelScenePair(6, 7), new EnemyCardPair(Enemy.Yuugi, "鬼声「壊滅の咆哮」") },
                 { new LevelScenePair(6, 8), new EnemyCardPair(Enemy.Suika, "鬼符「ミッシングパワー」") },
 
-                { new LevelScenePair(7, 1), new EnemyCardPair(Enemy.Shou,   "") },
-                { new LevelScenePair(7, 2), new EnemyCardPair(Enemy.Nazrin, "") },
+                { new LevelScenePair(7, 1), new EnemyCardPair(Enemy.Shou,   string.Empty) },
+                { new LevelScenePair(7, 2), new EnemyCardPair(Enemy.Nazrin, string.Empty) },
                 { new LevelScenePair(7, 3), new EnemyCardPair(Enemy.Shou,   "寅符「ハングリータイガー」") },
                 { new LevelScenePair(7, 4), new EnemyCardPair(Enemy.Nazrin, "棒符「ナズーリンロッド」") },
                 { new LevelScenePair(7, 5), new EnemyCardPair(Enemy.Shou,   "天符「焦土曼荼羅」") },
                 { new LevelScenePair(7, 6), new EnemyCardPair(Enemy.Nazrin, "財宝「ゴールドラッシュ」") },
                 { new LevelScenePair(7, 7), new EnemyCardPair(Enemy.Shou,   "宝符「黄金の震眩」") },
 
-                { new LevelScenePair(8, 1), new EnemyCardPair(Enemy.Rin,    "") },
+                { new LevelScenePair(8, 1), new EnemyCardPair(Enemy.Rin,    string.Empty) },
                 { new LevelScenePair(8, 2), new EnemyCardPair(Enemy.Utsuho, "熔解「メルティングホワイト」") },
                 { new LevelScenePair(8, 3), new EnemyCardPair(Enemy.Rin,    "死符「ゴーストタウン」") },
                 { new LevelScenePair(8, 4), new EnemyCardPair(Enemy.Utsuho, "巨星「レッドジャイアント」") },
@@ -160,7 +185,7 @@ namespace ThScoreFileConverter
                 { new LevelScenePair(8, 7), new EnemyCardPair(Enemy.Rin,    "酔歩「キャットランダムウォーク」") },
                 { new LevelScenePair(8, 8), new EnemyCardPair(Enemy.Utsuho, "七星「セプテントリオン」") },
 
-                { new LevelScenePair(9, 1), new EnemyCardPair(Enemy.Satori, "") },
+                { new LevelScenePair(9, 1), new EnemyCardPair(Enemy.Satori, string.Empty) },
                 { new LevelScenePair(9, 2), new EnemyCardPair(Enemy.Koishi, "心符「没我の愛」") },
                 { new LevelScenePair(9, 3), new EnemyCardPair(Enemy.Satori, "脳符「ブレインフィンガープリント」") },
                 { new LevelScenePair(9, 4), new EnemyCardPair(Enemy.Koishi, "記憶「ＤＮＡの瑕」") },
@@ -178,7 +203,7 @@ namespace ThScoreFileConverter
                 { new LevelScenePair(10, 7), new EnemyCardPair(Enemy.Tenshi, "「全人類の緋想天」") },
                 { new LevelScenePair(10, 8), new EnemyCardPair(Enemy.Iku,    "龍魚「龍宮の使い遊泳弾」") },
 
-                { new LevelScenePair(11, 1), new EnemyCardPair(Enemy.Kanako, "") },
+                { new LevelScenePair(11, 1), new EnemyCardPair(Enemy.Kanako, string.Empty) },
                 { new LevelScenePair(11, 2), new EnemyCardPair(Enemy.Suwako, "神桜「湛えの桜吹雪」") },
                 { new LevelScenePair(11, 3), new EnemyCardPair(Enemy.Kanako, "蛇符「グラウンドサーペント」") },
                 { new LevelScenePair(11, 4), new EnemyCardPair(Enemy.Suwako, "姫川「プリンセスジェイドグリーン」") },
@@ -187,7 +212,7 @@ namespace ThScoreFileConverter
                 { new LevelScenePair(11, 7), new EnemyCardPair(Enemy.Kanako, "儚道「御神渡りクロス」") },
                 { new LevelScenePair(11, 8), new EnemyCardPair(Enemy.Suwako, "土着神「御射軍神さま」") },
 
-                { new LevelScenePair(12, 1), new EnemyCardPair(Enemy.Byakuren, "") },
+                { new LevelScenePair(12, 1), new EnemyCardPair(Enemy.Byakuren, string.Empty) },
                 { new LevelScenePair(12, 2), new EnemyCardPair(Enemy.Nue,      "正体不明「紫鏡」") },
                 { new LevelScenePair(12, 3), new EnemyCardPair(Enemy.Byakuren, "「遊行聖」") },
                 { new LevelScenePair(12, 4), new EnemyCardPair(Enemy.Nue,      "正体不明「赤マント青マント」") },
@@ -206,11 +231,11 @@ namespace ThScoreFileConverter
                 { new LevelScenePair(13, 8), new EnemyCardPair(Enemy.Marisa, "彗星「ブレイジングスター」") },
                 { new LevelScenePair(13, 9), new EnemyCardPair(Enemy.Sanae,  "妖怪退治「妖力スポイラー」") },
 
-                { new LevelScenePair(14, 1), new EnemyCardPair(Enemy.Hatate, "") },
+                { new LevelScenePair(14, 1), new EnemyCardPair(Enemy.Hatate, string.Empty) },
                 { new LevelScenePair(14, 2), new EnemyCardPair(Enemy.Hatate, "取材「姫海棠はたての練習取材」") },
                 { new LevelScenePair(14, 3), new EnemyCardPair(Enemy.Hatate, "連写「ラピッドショット」") },
                 { new LevelScenePair(14, 4), new EnemyCardPair(Enemy.Hatate, "遠眼「天狗サイコグラフィ」") },
-                { new LevelScenePair(14, 5), new EnemyCardPair(Enemy.Aya,    "") },
+                { new LevelScenePair(14, 5), new EnemyCardPair(Enemy.Aya,    string.Empty) },
                 { new LevelScenePair(14, 6), new EnemyCardPair(Enemy.Aya,    "取材「射命丸文の圧迫取材」") },
                 { new LevelScenePair(14, 7), new EnemyCardPair(Enemy.Aya,    "望遠「キャンディッドショット」") },
                 { new LevelScenePair(14, 8), new EnemyCardPair(Enemy.Aya,    "速写「ファストショット」") },
@@ -219,9 +244,9 @@ namespace ThScoreFileConverter
 
         private class AllScoreData
         {
-            public Header header;
-            public List<Score> scores;
-            public Status status;
+            public Header Header { get; set; }
+            public List<Score> Scores { get; set; }
+            public Status Status { get; set; }
         }
 
         private class Header : Utils.IBinaryReadable
@@ -366,43 +391,43 @@ namespace ThScoreFileConverter
 
                 public BonusFields(int data) { this.data = new BitVector32(data); }
 
-                public int Data { get { return data.Data; } }
+                public int Data { get { return this.data.Data; } }
 
-                public bool Bit00        { get { return data[0x00000001]; } }
-                public bool Bit01        { get { return data[0x00000002]; } }
-                public bool TwoShot      { get { return data[0x00000004]; } }
-                public bool NiceShot     { get { return data[0x00000008]; } }
-                public bool RiskBonus    { get { return data[0x00000010]; } }
-                public bool Bit05        { get { return data[0x00000020]; } }
-                public bool RedShot      { get { return data[0x00000040]; } }
-                public bool PurpleShot   { get { return data[0x00000080]; } }
+                public bool Bit00        { get { return this.data[0x00000001]; } }
+                public bool Bit01        { get { return this.data[0x00000002]; } }
+                public bool TwoShot      { get { return this.data[0x00000004]; } }
+                public bool NiceShot     { get { return this.data[0x00000008]; } }
+                public bool RiskBonus    { get { return this.data[0x00000010]; } }
+                public bool Bit05        { get { return this.data[0x00000020]; } }
+                public bool RedShot      { get { return this.data[0x00000040]; } }
+                public bool PurpleShot   { get { return this.data[0x00000080]; } }
 
-                public bool BlueShot     { get { return data[0x00000100]; } }
-                public bool CyanShot     { get { return data[0x00000200]; } }
-                public bool GreenShot    { get { return data[0x00000400]; } }
-                public bool YellowShot   { get { return data[0x00000800]; } }
-                public bool OrangeShot   { get { return data[0x00001000]; } }
-                public bool ColorfulShot { get { return data[0x00002000]; } }
-                public bool RainbowShot  { get { return data[0x00004000]; } }
-                public bool Bit15        { get { return data[0x00008000]; } }
+                public bool BlueShot     { get { return this.data[0x00000100]; } }
+                public bool CyanShot     { get { return this.data[0x00000200]; } }
+                public bool GreenShot    { get { return this.data[0x00000400]; } }
+                public bool YellowShot   { get { return this.data[0x00000800]; } }
+                public bool OrangeShot   { get { return this.data[0x00001000]; } }
+                public bool ColorfulShot { get { return this.data[0x00002000]; } }
+                public bool RainbowShot  { get { return this.data[0x00004000]; } }
+                public bool Bit15        { get { return this.data[0x00008000]; } }
 
-                public bool SoloShot     { get { return data[0x00010000]; } }
-                public bool Bit17        { get { return data[0x00020000]; } }
-                public bool Bit18        { get { return data[0x00040000]; } }
-                public bool Bit19        { get { return data[0x00080000]; } }
-                public bool Bit20        { get { return data[0x00100000]; } }
-                public bool Bit21        { get { return data[0x00200000]; } }
-                public bool MacroBonus   { get { return data[0x00400000]; } }
-                public bool Bit23        { get { return data[0x00800000]; } }
+                public bool SoloShot     { get { return this.data[0x00010000]; } }
+                public bool Bit17        { get { return this.data[0x00020000]; } }
+                public bool Bit18        { get { return this.data[0x00040000]; } }
+                public bool Bit19        { get { return this.data[0x00080000]; } }
+                public bool Bit20        { get { return this.data[0x00100000]; } }
+                public bool Bit21        { get { return this.data[0x00200000]; } }
+                public bool MacroBonus   { get { return this.data[0x00400000]; } }
+                public bool Bit23        { get { return this.data[0x00800000]; } }
 
-                public bool FrontShot    { get { return data[0x01000000]; } }
-                public bool BackShot     { get { return data[0x02000000]; } }
-                public bool SideShot     { get { return data[0x04000000]; } }
-                public bool ClearShot    { get { return data[0x08000000]; } }
-                public bool CatBonus     { get { return data[0x10000000]; } }
-                public bool Bit29        { get { return data[0x20000000]; } }
-                public bool Bit30        { get { return data[0x40000000]; } }
-                //public bool Bit31 { get { return data[0x80000000]; } }
+                public bool FrontShot    { get { return this.data[0x01000000]; } }
+                public bool BackShot     { get { return this.data[0x02000000]; } }
+                public bool SideShot     { get { return this.data[0x04000000]; } }
+                public bool ClearShot    { get { return this.data[0x08000000]; } }
+                public bool CatBonus     { get { return this.data[0x10000000]; } }
+                public bool Bit29        { get { return this.data[0x20000000]; } }
+                public bool Bit30        { get { return this.data[0x40000000]; } }
+                // public bool Bit31 { get { return this.data[0x80000000]; } }
             }
 
             public string Signature { get; private set; }   // "BST2"
@@ -581,7 +606,7 @@ namespace ThScoreFileConverter
                         !((chapter.Signature == "ST") && (chapter.Unknown == 0x0001)))
                         return false;
 
-                    Int64 sum = signature + chapter.Size;
+                    long sum = signature + chapter.Size;
                     // 3 means Signature, Checksum, and Size.
                     for (var count = 3; count < chapter.Size / sizeof(uint); count++)
                         sum += reader.ReadUInt32();
@@ -605,9 +630,9 @@ namespace ThScoreFileConverter
             var allScoreData = new AllScoreData();
             var chapter = new Chapter();
 
-            allScoreData.scores = new List<Score>(SpellCards.Count);
-            allScoreData.header = new Header();
-            allScoreData.header.ReadFrom(reader);
+            allScoreData.Scores = new List<Score>(SpellCards.Count);
+            allScoreData.Header = new Header();
+            allScoreData.Header.ReadFrom(reader);
 
             try
             {
@@ -619,12 +644,12 @@ namespace ThScoreFileConverter
                         case "SC":
                             var score = new Score(chapter);
                             score.ReadFrom(reader);
-                            allScoreData.scores.Add(score);
+                            allScoreData.Scores.Add(score);
                             break;
                         case "ST":
                             var status = new Status(chapter);
                             status.ReadFrom(reader);
-                            allScoreData.status = status;
+                            allScoreData.Status = status;
                             break;
                         default:
                             // 12 means the total size of Signature, Unknown, Size and Checksum.
@@ -638,9 +663,9 @@ namespace ThScoreFileConverter
                 // It's OK, do nothing.
             }
 
-            if ((allScoreData.header != null) &&
+            if ((allScoreData.Header != null) &&
                 // (allScoreData.scores.Count >= 0) &&
-                (allScoreData.status != null))
+                (allScoreData.Status != null))
                 return allScoreData;
             else
                 return null;
@@ -673,301 +698,307 @@ namespace ThScoreFileConverter
         {
             var pattern = string.Format(
                 @"%T125SCR([{0}])([{1}])([1-9])([1-5])",
-                Utils.JoinEnumNames<CharaShort>(""),
-                string.Join("", LevelShortArray));
-            return new Regex(pattern, RegexOptions.IgnoreCase)
-                .Replace(input, Utils.ToNothrowEvaluator(match =>
+                Utils.JoinEnumNames<CharaShort>(string.Empty),
+                string.Join(string.Empty, LevelShortArray));
+            var evaluator = Utils.ToNothrowEvaluator(match =>
+            {
+                var chara = (Chara)Utils.ParseEnum<CharaShort>(match.Groups[1].Value, true);
+                var level = match.Groups[2].Value.ToUpper();
+                var scene = int.Parse(match.Groups[3].Value);
+                var type = int.Parse(match.Groups[4].Value);
+
+                var levelIndex = Array.IndexOf(LevelShortArray, level);
+                var levelScene = new LevelScenePair(levelIndex + 1, scene);
+                var score = this.allScoreData.Scores.Find(elem =>
+                    (elem != null) && (elem.Chara == chara) && elem.LevelScene.Equals(levelScene));
+
+                switch (type)
                 {
-                    var chara = (Chara)Utils.ParseEnum<CharaShort>(match.Groups[1].Value, true);
-                    var level = match.Groups[2].Value.ToUpper();
-                    var scene = int.Parse(match.Groups[3].Value);
-                    var type = int.Parse(match.Groups[4].Value);
-
-                    var levelIndex = Array.IndexOf(LevelShortArray, level);
-                    var levelScene = new LevelScenePair(levelIndex + 1, scene);
-                    var score = this.allScoreData.scores.Find(elem =>
-                        (elem != null) && (elem.Chara == chara) && elem.LevelScene.Equals(levelScene));
-
-                    switch (type)
-                    {
-                        case 1:     // high score
-                            return this.ToNumberString((score != null) ? score.HighScore : 0);
-                        case 2:     // bestshot score
-                            return this.ToNumberString((score != null) ? score.BestshotScore : 0);
-                        case 3:     // num of shots
-                            return this.ToNumberString((score != null) ? score.TrialCount : 0);
-                        case 4:     // num of shots for the first success
-                            return this.ToNumberString((score != null) ? score.FirstSuccess : 0);
-                        case 5:     // date & time
-                            if (score != null)
-                                return new DateTime(1970, 1, 1).AddSeconds(score.DateTime)
-                                    .ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
-                            else
-                                return "----/--/-- --:--:--";
-                        default:    // unreachable
-                            return match.ToString();
-                    }
-                }));
+                    case 1:     // high score
+                        return this.ToNumberString((score != null) ? score.HighScore : 0);
+                    case 2:     // bestshot score
+                        return this.ToNumberString((score != null) ? score.BestshotScore : 0);
+                    case 3:     // num of shots
+                        return this.ToNumberString((score != null) ? score.TrialCount : 0);
+                    case 4:     // num of shots for the first success
+                        return this.ToNumberString((score != null) ? score.FirstSuccess : 0);
+                    case 5:     // date & time
+                        if (score != null)
+                            return new DateTime(1970, 1, 1).AddSeconds(score.DateTime)
+                                .ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
+                        else
+                            return "----/--/-- --:--:--";
+                    default:    // unreachable
+                        return match.ToString();
+                }
+            });
+            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
 
         // %T125SCRTL[x][y][z]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.MaintainabilityRules",
+            "SA1119:StatementMustNotUseUnnecessaryParenthesis",
+            Justification = "Reviewed.")]
         private string ReplaceScoreTotal(string input)
         {
-            var pattern = string.Format(@"%T125SCRTL([{0}])([12])([1-5])", Utils.JoinEnumNames<CharaShort>(""));
-            return new Regex(pattern, RegexOptions.IgnoreCase)
-                .Replace(input, Utils.ToNothrowEvaluator(match =>
+            var pattern = string.Format(
+                @"%T125SCRTL([{0}])([12])([1-5])",
+                Utils.JoinEnumNames<CharaShort>(string.Empty));
+            var evaluator = Utils.ToNothrowEvaluator(match =>
+            {
+                var chara = (Chara)Utils.ParseEnum<CharaShort>(match.Groups[1].Value, true);
+                var method = int.Parse(match.Groups[2].Value);
+                var type = int.Parse(match.Groups[3].Value);
+
+                Func<Score, bool> triedAndSucceeded = (score =>
+                    (score.TrialCount > 0) && (score.FirstSuccess > 0));
+                Func<Score, bool> isTarget = (score =>
                 {
-                    var chara = (Chara)Utils.ParseEnum<CharaShort>(match.Groups[1].Value, true);
-                    var method = int.Parse(match.Groups[2].Value);
-                    var type = int.Parse(match.Groups[3].Value);
+                    if (score == null)
+                        return false;
 
-                    Func<Score, bool> triedAndSucceeded = (score =>
-                        (score.TrialCount > 0) && (score.FirstSuccess > 0));
-                    Func<Score, bool> isTarget = (score =>
+                    if (method == 1)
                     {
-                        if (score == null)
-                            return false;
-
-                        if (method == 1)
+                        if (LevelArray[score.LevelScene.Level - 1] == "sp")
                         {
-                            if (LevelArray[score.LevelScene.Level - 1] == "sp")
+                            if (chara == Chara.Aya)
                             {
-                                if (chara == Chara.Aya)
-                                {
-                                    if (score.LevelScene.Scene <= 4)
-                                        return (score.Chara == Chara.Aya);
-                                    else
-                                        return (score.Chara == Chara.Hatate);
-                                }
+                                if (score.LevelScene.Scene <= 4)
+                                    return score.Chara == Chara.Aya;
                                 else
-                                    return false;
+                                    return score.Chara == Chara.Hatate;
                             }
                             else
-                                return (score.Chara == chara);
+                                return false;
                         }
                         else
-                            return (score.Chara == chara);
-                    });
-
-                    switch (type)
-                    {
-                        case 1:     // total score
-                            return this.ToNumberString(
-                                this.allScoreData.scores.Sum(
-                                    score => (isTarget(score) && triedAndSucceeded(score))
-                                        ? (long)score.HighScore : 0L));
-                        case 2:     // total of bestshot scores
-                            return this.ToNumberString(
-                                this.allScoreData.scores.Sum(
-                                    score => isTarget(score) ? (long)score.BestshotScore : 0L));
-                        case 3:     // total of num of shots
-                            return this.ToNumberString(
-                                this.allScoreData.scores.Sum(
-                                    score => isTarget(score) ? score.TrialCount : 0));
-                        case 4:     // total of num of shots for the first success
-                            return this.ToNumberString(
-                                this.allScoreData.scores.Sum(
-                                    score => (isTarget(score) && triedAndSucceeded(score))
-                                        ? (long)score.FirstSuccess : 0L));
-                        case 5:     // num of succeeded scenes
-                            return this.allScoreData.scores.Count(
-                                    score => isTarget(score) && triedAndSucceeded(score)).ToString();
-                        default:    // unreachable
-                            return match.ToString();
+                            return score.Chara == chara;
                     }
-                }));
+                    else
+                        return score.Chara == chara;
+                });
+
+                switch (type)
+                {
+                    case 1:     // total score
+                        return this.ToNumberString(
+                            this.allScoreData.Scores.Sum(
+                                score => (isTarget(score) && triedAndSucceeded(score))
+                                    ? (long)score.HighScore : 0L));
+                    case 2:     // total of bestshot scores
+                        return this.ToNumberString(
+                            this.allScoreData.Scores.Sum(
+                                score => isTarget(score) ? (long)score.BestshotScore : 0L));
+                    case 3:     // total of num of shots
+                        return this.ToNumberString(
+                            this.allScoreData.Scores.Sum(
+                                score => isTarget(score) ? score.TrialCount : 0));
+                    case 4:     // total of num of shots for the first success
+                        return this.ToNumberString(
+                            this.allScoreData.Scores.Sum(
+                                score => (isTarget(score) && triedAndSucceeded(score))
+                                    ? (long)score.FirstSuccess : 0L));
+                    case 5:     // num of succeeded scenes
+                        return this.allScoreData.Scores.Count(
+                                score => isTarget(score) && triedAndSucceeded(score)).ToString();
+                    default:    // unreachable
+                        return match.ToString();
+                }
+            });
+            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
 
         // %T125CARD[x][y][z]
         private string ReplaceCard(string input)
         {
-            var pattern = string.Format(@"%T125CARD([{0}])([1-9])([12])", string.Join("", LevelShortArray));
-            return new Regex(pattern, RegexOptions.IgnoreCase)
-                .Replace(input, Utils.ToNothrowEvaluator(match =>
+            var pattern = string.Format(
+                @"%T125CARD([{0}])([1-9])([12])",
+                string.Join(string.Empty, LevelShortArray));
+            var evaluator = Utils.ToNothrowEvaluator(match =>
+            {
+                var level = match.Groups[1].Value.ToUpper();
+                var scene = int.Parse(match.Groups[2].Value);
+                var type = int.Parse(match.Groups[3].Value);
+
+                var levelIndex = Array.IndexOf(LevelShortArray, level);
+                var key = new LevelScenePair(levelIndex + 1, scene);
+                var score = this.allScoreData.Scores.Find(
+                    elem => (elem != null) && elem.LevelScene.Equals(key));
+
+                switch (type)
                 {
-                    var level = match.Groups[1].Value.ToUpper();
-                    var scene = int.Parse(match.Groups[2].Value);
-                    var type = int.Parse(match.Groups[3].Value);
-
-                    var levelIndex = Array.IndexOf(LevelShortArray, level);
-                    var key = new LevelScenePair(levelIndex + 1, scene);
-                    var score = this.allScoreData.scores.Find(
-                        elem => (elem != null) && elem.LevelScene.Equals(key));
-
-                    switch (type)
-                    {
-                        case 1:     // target Name
-                            return (score != null) ? EnemyNames[SpellCards[key].Enemy] : "??????????";
-                        case 2:     // spell card Name
-                            return (score != null) ? SpellCards[key].Card : "??????????";
-                        default:    // unreachable
-                            return match.ToString();
-                    }
-                }));
+                    case 1:     // target Name
+                        return (score != null) ? EnemyNames[SpellCards[key].Enemy] : "??????????";
+                    case 2:     // spell card Name
+                        return (score != null) ? SpellCards[key].Card : "??????????";
+                    default:    // unreachable
+                        return match.ToString();
+                }
+            });
+            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
 
         // %T125TIMEPLY
         private string ReplaceTime(string input)
         {
-            return new Regex(@"%T125TIMEPLY", RegexOptions.IgnoreCase)
-                .Replace(input, Utils.ToNothrowEvaluator(match =>
-                {
-                    return new Time(this.allScoreData.status.TotalPlayTime * 10, false).ToLongString();
-                }));
+            var pattern = @"%T125TIMEPLY";
+            var evaluator = Utils.ToNothrowEvaluator(match =>
+            {
+                return new Time(this.allScoreData.Status.TotalPlayTime * 10, false).ToLongString();
+            });
+            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
 
         // %T125SHOT[x][y][z]
         private string ReplaceShot(string input, string outputFilePath)
         {
-            var pattern = string.Format(@"%T125SHOT([{0}])([{1}])([1-9])",
-                Utils.JoinEnumNames<CharaShort>(""),
-                string.Join("", LevelShortArray));
-            return new Regex(pattern, RegexOptions.IgnoreCase)
-                .Replace(input, Utils.ToNothrowEvaluator(match =>
+            var pattern = string.Format(
+                @"%T125SHOT([{0}])([{1}])([1-9])",
+                Utils.JoinEnumNames<CharaShort>(string.Empty),
+                string.Join(string.Empty, LevelShortArray));
+            var evaluator = Utils.ToNothrowEvaluator(match =>
+            {
+                var chara = (Chara)Utils.ParseEnum<CharaShort>(match.Groups[1].Value, true);
+                var level = match.Groups[2].Value.ToUpper();
+                var scene = int.Parse(match.Groups[3].Value);
+
+                var bestshots = this.bestshots.ContainsKey(chara) ? this.bestshots[chara] : null;
+                var levelIndex = Array.IndexOf(LevelShortArray, level);
+                var key = new LevelScenePair(levelIndex + 1, scene);
+
+                if ((bestshots != null) && bestshots.ContainsKey(key))
                 {
-                    var chara = (Chara)Utils.ParseEnum<CharaShort>(match.Groups[1].Value, true);
-                    var level = match.Groups[2].Value.ToUpper();
-                    var scene = int.Parse(match.Groups[3].Value);
+                    var relativePath = new Uri(outputFilePath)
+                        .MakeRelativeUri(new Uri(bestshots[key].Path)).OriginalString;
+                    var alternativeString = string.Format(
+                        "ClearData: {0}\nSlow: {1:F6}%\nSpellName: {2}",
+                        this.ToNumberString(bestshots[key].Header.ResultScore),
+                        bestshots[key].Header.SlowRate,
+                        Encoding.Default.GetString(bestshots[key].Header.CardName).TrimEnd('\0'));
+                    return string.Format(
+                        "<img src=\"{0}\" alt=\"{1}\" title=\"{1}\" border=0>",
+                        relativePath,
+                        alternativeString);
+                }
+                else
+                    return string.Empty;
+            });
+            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+        }
 
-                    var bestshots = this.bestshots.ContainsKey(chara) ? this.bestshots[chara] : null;
-                    var levelIndex = Array.IndexOf(LevelShortArray, level);
-                    var key = new LevelScenePair(levelIndex + 1, scene);
+        private class Detail
+        {
+            public Detail(bool outputs, string format, string value)
+            {
+                this.Outputs = outputs;
+                this.Format = format;
+                this.Value = value;
+            }
 
-                    if ((bestshots != null) && bestshots.ContainsKey(key))
-                        return string.Format("<img src=\"{0}\" alt=\"{1}\" title=\"{1}\" border=0>",
-                            new Uri(outputFilePath)
-                                .MakeRelativeUri(new Uri(bestshots[key].Path)).OriginalString,
-                            string.Format("ClearData: {0}\nSlow: {1:F6}%\nSpellName: {2}",
-                                this.ToNumberString(bestshots[key].Header.ResultScore),
-                                bestshots[key].Header.SlowRate,
-                                Encoding.Default.GetString(bestshots[key].Header.CardName).TrimEnd('\0')));
-                    else
-                        return "";
-                }));
+            public bool Outputs { get; private set; }
+            public string Format { get; private set; }
+            public string Value { get; private set; }
         }
 
         // %T125SHOTEX[w][x][y][z]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.MaintainabilityRules",
+            "SA1119:StatementMustNotUseUnnecessaryParenthesis",
+            Justification = "Reviewed.")]
         private string ReplaceShotEx(string input, string outputFilePath)
         {
-            var pattern = string.Format(@"%T125SHOTEX([{0}])([{1}])([1-9])([1-7])",
-                Utils.JoinEnumNames<CharaShort>(""),
-                string.Join("", LevelShortArray));
-            return new Regex(pattern, RegexOptions.IgnoreCase)
-                .Replace(input, Utils.ToNothrowEvaluator(match =>
-                {
-                    var chara = (Chara)Utils.ParseEnum<CharaShort>(match.Groups[1].Value, true);
-                    var level = match.Groups[2].Value.ToUpper();
-                    var scene = int.Parse(match.Groups[3].Value);
-                    var type = int.Parse(match.Groups[4].Value);
+            Func<BestShotHeader, List<Detail>> detailList = (header => new List<Detail>
+            {
+                new Detail(true,                       "Base Point    {0,9}", this.ToNumberString(header.BasePoint)),
+                new Detail(header.Fields.ClearShot,    "Clear Shot!   {0,9}", string.Format("+ {0}", header.ClearShot)),
+                new Detail(header.Fields.SoloShot,     "Solo Shot     {0,9}", "+ 100"),
+                new Detail(header.Fields.RedShot,      "Red Shot      {0,9}", "+ 300"),
+                new Detail(header.Fields.PurpleShot,   "Purple Shot   {0,9}", "+ 300"),
+                new Detail(header.Fields.BlueShot,     "Blue Shot     {0,9}", "+ 300"),
+                new Detail(header.Fields.CyanShot,     "Cyan Shot     {0,9}", "+ 300"),
+                new Detail(header.Fields.GreenShot,    "Green Shot    {0,9}", "+ 300"),
+                new Detail(header.Fields.YellowShot,   "Yellow Shot   {0,9}", "+ 300"),
+                new Detail(header.Fields.OrangeShot,   "Orange Shot   {0,9}", "+ 300"),
+                new Detail(header.Fields.ColorfulShot, "Colorful Shot {0,9}", "+ 900"),
+                new Detail(header.Fields.RainbowShot,  "Rainbow Shot  {0,9}", string.Format("+ {0}", this.ToNumberString(2100))),
+                new Detail(header.Fields.RiskBonus,    "Risk Bonus    {0,9}", string.Format("+ {0}", this.ToNumberString(header.RiskBonus))),
+                new Detail(header.Fields.MacroBonus,   "Macro Bonus   {0,9}", string.Format("+ {0}", this.ToNumberString(header.MacroBonus))),
+                new Detail(header.Fields.FrontShot,    "Front Shot    {0,9}", string.Format("+ {0}", header.FrontSideBackShot)),
+                new Detail(header.Fields.SideShot,     "Side Shot     {0,9}", string.Format("+ {0}", header.FrontSideBackShot)),
+                new Detail(header.Fields.BackShot,     "Back Shot     {0,9}", string.Format("+ {0}", header.FrontSideBackShot)),
+                new Detail(header.Fields.CatBonus,     "Cat Bonus     {0,9}", "+ 666"),
+                new Detail(true,                       string.Empty,          string.Empty),
+                new Detail(true,                       "Boss Shot!    {0,9}", string.Format("* {0:F2}", header.BossShot)),
+                new Detail(header.Fields.TwoShot,      "Two Shot!     {0,9}", "* 1.50"),
+                new Detail(header.Fields.NiceShot,     "Nice Shot!    {0,9}", string.Format("* {0:F2}", header.NiceShot)),
+                new Detail(true,                       "Angle Bonus   {0,9}", string.Format("* {0:F2}", header.AngleBonus)),
+                new Detail(true,                       string.Empty,          string.Empty),
+                new Detail(true,                       "Result Score  {0,9}", this.ToNumberString(header.ResultScore))
+            });
+            var pattern = string.Format(
+                @"%T125SHOTEX([{0}])([{1}])([1-9])([1-7])",
+                Utils.JoinEnumNames<CharaShort>(string.Empty),
+                string.Join(string.Empty, LevelShortArray));
+            var evaluator = Utils.ToNothrowEvaluator(match =>
+            {
+                var chara = (Chara)Utils.ParseEnum<CharaShort>(match.Groups[1].Value, true);
+                var level = match.Groups[2].Value.ToUpper();
+                var scene = int.Parse(match.Groups[3].Value);
+                var type = int.Parse(match.Groups[4].Value);
 
-                    var bestshots = this.bestshots.ContainsKey(chara) ? this.bestshots[chara] : null;
-                    var levelIndex = Array.IndexOf(LevelShortArray, level);
-                    var key = new LevelScenePair(levelIndex + 1, scene);
+                var bestshots = this.bestshots.ContainsKey(chara) ? this.bestshots[chara] : null;
+                var levelIndex = Array.IndexOf(LevelShortArray, level);
+                var key = new LevelScenePair(levelIndex + 1, scene);
 
-                    if ((bestshots != null) && bestshots.ContainsKey(key))
-                        switch (type)
-                        {
-                            case 1:     // relative path to the bestshot file
-                                return new Uri(outputFilePath)
-                                    .MakeRelativeUri(new Uri(bestshots[key].Path)).OriginalString;
-                            case 2:     // width
-                                return bestshots[key].Header.Width.ToString();
-                            case 3:     // height
-                                return bestshots[key].Header.Height.ToString();
-                            case 4:     // score
-                                return this.ToNumberString(bestshots[key].Header.ResultScore);
-                            case 5:     // slow rate
-                                return bestshots[key].Header.SlowRate.ToString("F6") + "%";
-                            case 6:     // date & time
-                                {
-                                    var score = this.allScoreData.scores.Find(elem =>
-                                        (elem != null) && (elem.Chara == chara) && elem.LevelScene.Equals(key));
-                                    if (score != null)
-                                        return new DateTime(1970, 1, 1).AddSeconds(score.DateTime)
-                                            .ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
-                                    else
-                                        return "----/--/-- --:--:--";
-                                }
-                            case 7:     // detail info
-                                {
-                                    var header = bestshots[key].Header;
-                                    var info = new List<string>();
-                                    info.Add(string.Format("Base Point    {0,9}",
-                                        this.ToNumberString<int>(header.BasePoint)));
-                                    if (header.Fields.ClearShot)
-                                        info.Add(string.Format("Clear Shot!   {0,9}",
-                                            string.Format("+ {0}", header.ClearShot)));
-                                    if (header.Fields.SoloShot)
-                                        info.Add(string.Format("Solo Shot     {0,9}", "+ 100"));
-                                    if (header.Fields.RedShot)
-                                        info.Add(string.Format("Red Shot      {0,9}", "+ 300"));
-                                    if (header.Fields.PurpleShot)
-                                        info.Add(string.Format("Purple Shot   {0,9}", "+ 300"));
-                                    if (header.Fields.BlueShot)
-                                        info.Add(string.Format("Blue Shot     {0,9}", "+ 300"));
-                                    if (header.Fields.CyanShot)
-                                        info.Add(string.Format("Cyan Shot     {0,9}", "+ 300"));
-                                    if (header.Fields.GreenShot)
-                                        info.Add(string.Format("Green Shot    {0,9}", "+ 300"));
-                                    if (header.Fields.YellowShot)
-                                        info.Add(string.Format("Yellow Shot   {0,9}", "+ 300"));
-                                    if (header.Fields.OrangeShot)
-                                        info.Add(string.Format("Orange Shot   {0,9}", "+ 300"));
-                                    if (header.Fields.ColorfulShot)
-                                        info.Add(string.Format("Colorful Shot {0,9}", "+ 900"));
-                                    if (header.Fields.RainbowShot)
-                                        info.Add(string.Format("Rainbow Shot  {0,9}",
-                                            string.Format("+ {0}", this.ToNumberString<int>(2100))));
-                                    if (header.Fields.RiskBonus)
-                                        info.Add(string.Format("Risk Bonus    {0,9}",
-                                            string.Format("+ {0}",
-                                                this.ToNumberString<int>(header.RiskBonus))));
-                                    if (header.Fields.MacroBonus)
-                                        info.Add(string.Format("Macro Bonus   {0,9}",
-                                            string.Format("+ {0}",
-                                                this.ToNumberString<int>(header.MacroBonus))));
-                                    if (header.Fields.FrontShot)
-                                        info.Add(string.Format("Front Shot    {0,9}",
-                                            string.Format("+ {0}", header.FrontSideBackShot)));
-                                    if (header.Fields.SideShot)
-                                        info.Add(string.Format("Side Shot     {0,9}",
-                                            string.Format("+ {0}", header.FrontSideBackShot)));
-                                    if (header.Fields.BackShot)
-                                        info.Add(string.Format("Back Shot     {0,9}",
-                                            string.Format("+ {0}", header.FrontSideBackShot)));
-                                    if (header.Fields.CatBonus)
-                                        info.Add(string.Format("Cat Bonus     {0,9}", "+ 666"));
-                                    info.Add("");
-                                    info.Add(string.Format("Boss Shot!    {0,9}",
-                                        string.Format("* {0:F2}", header.BossShot)));
-                                    if (header.Fields.TwoShot)
-                                        info.Add(string.Format("Two Shot!     {0,9}", "* 1.50"));
-                                    if (header.Fields.NiceShot)
-                                        info.Add(string.Format("Nice Shot!    {0,9}",
-                                            string.Format("* {0:F2}", header.NiceShot)));
-                                    info.Add(string.Format("Angle Bonus   {0,9}",
-                                        string.Format("* {0:F2}", header.AngleBonus)));
-                                    info.Add("");
-                                    info.Add(string.Format("Result Score  {0,9}",
-                                        this.ToNumberString<int>(header.ResultScore)));
-                                    return string.Join("\r\n", info.ToArray());
-                                }
-                            default:    // unreachable
-                                return match.ToString();
-                        }
-                    else
-                        switch (type)
-                        {
-                            case 1: return "";
-                            case 2: return "0";
-                            case 3: return "0";
-                            case 4: return "--------";
-                            case 5: return "-----%";
-                            case 6: return "----/--/-- --:--:--";
-                            case 7: return "";
-                            default: return match.ToString();
-                        }
-                }));
+                if ((bestshots != null) && bestshots.ContainsKey(key))
+                    switch (type)
+                    {
+                        case 1:     // relative path to the bestshot file
+                            return new Uri(outputFilePath)
+                                .MakeRelativeUri(new Uri(bestshots[key].Path)).OriginalString;
+                        case 2:     // width
+                            return bestshots[key].Header.Width.ToString();
+                        case 3:     // height
+                            return bestshots[key].Header.Height.ToString();
+                        case 4:     // score
+                            return this.ToNumberString(bestshots[key].Header.ResultScore);
+                        case 5:     // slow rate
+                            return bestshots[key].Header.SlowRate.ToString("F6") + "%";
+                        case 6:     // date & time
+                            {
+                                var score = this.allScoreData.Scores.Find(elem =>
+                                    (elem != null) && (elem.Chara == chara) && elem.LevelScene.Equals(key));
+                                if (score != null)
+                                    return new DateTime(1970, 1, 1).AddSeconds(score.DateTime)
+                                        .ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
+                                else
+                                    return "----/--/-- --:--:--";
+                            }
+                        case 7:     // detail info
+                            {
+                                var detailStrings = detailList(bestshots[key].Header)
+                                    .Where(detail => detail.Outputs)
+                                    .Select(detail => string.Format(detail.Format, detail.Value));
+                                return string.Join("\r\n", detailStrings.ToArray());
+                            }
+                        default:    // unreachable
+                            return match.ToString();
+                    }
+                else
+                    switch (type)
+                    {
+                        case 1: return string.Empty;
+                        case 2: return "0";
+                        case 3: return "0";
+                        case 4: return "--------";
+                        case 5: return "-----%";
+                        case 6: return "----/--/-- --:--:--";
+                        case 7: return string.Empty;
+                        default: return match.ToString();
+                    }
+            });
+            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
 
         protected override string[] FilterBestShotFiles(string[] files)
@@ -1012,7 +1043,8 @@ namespace ThScoreFileConverter
                 var bitmap = new Bitmap(header.Width, header.Height, PixelFormat.Format32bppArgb);
                 var bitmapData = bitmap.LockBits(
                     new Rectangle(0, 0, header.Width, header.Height),
-                    ImageLockMode.WriteOnly, bitmap.PixelFormat);
+                    ImageLockMode.WriteOnly,
+                    bitmap.PixelFormat);
                 var destination = bitmapData.Scan0;
                 Marshal.Copy(source, 0, destination, source.Length);
                 bitmap.UnlockBits(bitmapData);

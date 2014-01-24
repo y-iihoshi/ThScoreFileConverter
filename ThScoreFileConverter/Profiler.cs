@@ -1,38 +1,49 @@
-﻿using System;
-using System.Diagnostics;
+﻿//-----------------------------------------------------------------------
+// <copyright file="Profiler.cs" company="None">
+//     (c) 2013-2014 IIHOSHI Yoshinori
+// </copyright>
+//-----------------------------------------------------------------------
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.LayoutRules",
+    "SA1503:CurlyBracketsMustNotBeOmitted",
+    Justification = "Reviewed.")]
 
 namespace ThScoreFileConverter
 {
+    using System;
+    using System.Diagnostics;
+
     /// <summary>
-    /// Dispose パターンを利用した処理時間計測クラス
+    /// Represents a profiler that measures the processing time by using Dispose pattern.
     /// </summary>
-    class Profiler : IDisposable
+    public class Profiler : IDisposable
     {
         /// <summary>
-        /// 破棄済みかどうかを示すフラグ
+        /// The flag that represents whether <see cref="Dispose(bool)"/> has been called.
         /// </summary>
-        protected bool disposed;
+        private bool disposed;
 
         /// <summary>
-        /// 処理時間計測に使う Stopwatch インスタンス
+        /// The instance of the <see cref="Stopwatch"/> class for measuring the processing time.
         /// </summary>
-        protected Stopwatch watch;
+        private Stopwatch watch;
 
         /// <summary>
-        /// 計測開始時の処理
+        /// The delegate of the process called before the measuring.
         /// </summary>
-        protected Action preprocess;
+        private Action preprocess;
 
         /// <summary>
-        /// 計測終了時の処理
+        /// The delegate of the process called after the measuring.
         /// </summary>
-        protected Action<TimeSpan> postprocess;
+        private Action<TimeSpan> postprocess;
 
         /// <summary>
-        /// インスタンスを生成する
+        /// Initializes a new instance of the <see cref="Profiler"/> class.
         /// </summary>
-        /// <param name="preprocess">計測開始時の処理</param>
-        /// <param name="postprocess">計測終了時の処理</param>
+        /// <param name="preprocess">The delegate of the process called before the measuring.</param>
+        /// <param name="postprocess">The delegate of the process called after the measuring.</param>
         public Profiler(Action preprocess, Action<TimeSpan> postprocess)
         {
             this.disposed = false;
@@ -46,16 +57,16 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// インスタンスを生成する
+        /// Initializes a new instance of the <see cref="Profiler"/> class.
         /// </summary>
-        /// <param name="message">計測終了時に出力する文字列</param>
+        /// <param name="message">The string that is output after the measuring.</param>
         public Profiler(string message)
             : this(null, (elapsed) => Console.WriteLine("{0}: Elapsed = {1}", message, elapsed))
         {
         }
 
         /// <summary>
-        /// デストラクター（Dispose パターン参照）
+        /// Finalizes an instance of the <see cref="Profiler"/> class.
         /// </summary>
         ~Profiler()
         {
@@ -63,7 +74,7 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// インスタンスを破棄する（Dispose パターン参照）
+        /// Implements the <see cref="IDisposable.Dispose"/> method.
         /// </summary>
         public void Dispose()
         {
@@ -72,9 +83,11 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// インスタンスを破棄する（Dispose パターン参照）
+        /// Disposes the resources of the current instance.
         /// </summary>
-        /// <param name="disposing"></param>
+        /// <param name="disposing">
+        /// <c>true</c> if calls from the <see cref="Dispose()"/> method; <c>false</c> for the destructor.
+        /// </param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)

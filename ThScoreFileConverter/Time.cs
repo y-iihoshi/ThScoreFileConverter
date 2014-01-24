@@ -1,29 +1,70 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="Time.cs" company="None">
+//     (c) 2013-2014 IIHOSHI Yoshinori
+// </copyright>
+//-----------------------------------------------------------------------
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.LayoutRules",
+    "SA1503:CurlyBracketsMustNotBeOmitted",
+    Justification = "Reviewed.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.OrderingRules",
+    "SA1201:ElementsMustAppearInTheCorrectOrder",
+    Justification = "Reviewed.")]
 
 namespace ThScoreFileConverter
 {
+    using System;
+
     /// <summary>
-    /// 時間を表すクラス
-    /// 秒未満の値をミリ秒またはフレーム数/秒 (fps) で扱う
+    /// Represents a time.
+    /// A value of less than a second is treated as milliseconds or frames-per-second (fps).
     /// </summary>
     public class Time
     {
+        /// <summary>
+        /// Gets the hours component of the time represented by the current instance.
+        /// </summary>
         public long Hours { get; private set; }
+
+        /// <summary>
+        /// Gets the minutes component of the time represented by the current instance.
+        /// </summary>
         public int Minutes { get; private set; }
+
+        /// <summary>
+        /// Gets the seconds component of the time represented by the current instance.
+        /// </summary>
         public int Seconds { get; private set; }
+
+        /// <summary>
+        /// Gets the milliseconds component of the time represented by the current instance.
+        /// </summary>
+        /// <remarks>This property should be used exclusively with <see cref="Frames"/>.</remarks>
         public int Milliseconds { get; private set; }
+
+        /// <summary>
+        /// Gets the frames component of the time represented by the current instance.
+        /// </summary>
+        /// <remarks>This property should be used exclusively with <see cref="Milliseconds"/>.</remarks>
         public int Frames { get; private set; }
 
         /// <summary>
-        /// 秒未満の値をフレーム数/秒 (fps) で扱う場合 true、ミリ秒で扱う場合 false
+        /// Gets a value indicating whether the value less than a second is treated as fps or milliseconds.
+        /// <c>true</c> if fps; <c>false</c> for milliseconds.
         /// </summary>
         public bool IsFrames { get; private set; }
 
         /// <summary>
-        /// インスタンスを生成する
+        /// Initializes a new instance of the <see cref="Time"/> class to a specified number of frames
+        /// or milliseconds.
         /// </summary>
-        /// <param name="framesOrMilliseconds">ミリ秒またはフレーム数/秒 (fps)</param>
-        /// <param name="isFrames">秒未満の値を fps で扱う場合 true、ミリ秒で扱う場合 false</param>
+        /// <param name="framesOrMilliseconds">Number of frames or milliseconds.</param>
+        /// <param name="isFrames">
+        /// <c>true</c> if treats <paramref name="framesOrMilliseconds"/> as a frames; <c>false</c> for
+        /// milliseconds.
+        /// </param>
         public Time(long framesOrMilliseconds, bool isFrames = true)
         {
             var seconds = framesOrMilliseconds / (isFrames ? 60 : 1000);
@@ -33,27 +74,32 @@ namespace ThScoreFileConverter
             if (isFrames)
             {
                 this.Milliseconds = -1;
-                this.Frames = (int)(framesOrMilliseconds - seconds * 60);
+                this.Frames = (int)(framesOrMilliseconds - (seconds * 60));
             }
             else
             {
-                this.Milliseconds = (int)(framesOrMilliseconds - seconds * 1000);
+                this.Milliseconds = (int)(framesOrMilliseconds - (seconds * 1000));
                 this.Frames = -1;
             }
-            this.Seconds = (int)(seconds - minutes * 60);
-            this.Minutes = (int)(minutes - hours * 60);
+
+            this.Seconds = (int)(seconds - (minutes * 60));
+            this.Minutes = (int)(minutes - (hours * 60));
             this.Hours = hours;
             this.IsFrames = isFrames;
         }
 
         /// <summary>
-        /// インスタンスを生成する
+        /// Initializes a new instance of the <see cref="Time"/> class to a specified number of hours,
+        /// minutes, seconds, and frames or milliseconds.
         /// </summary>
-        /// <param name="hours">時</param>
-        /// <param name="minutes">分</param>
-        /// <param name="seconds">秒</param>
-        /// <param name="framesOrMilliseconds">ミリ秒または fps</param>
-        /// <param name="isFrames">秒未満の値を fps で扱う場合 true、ミリ秒で扱う場合 false</param>
+        /// <param name="hours">Number of hours.</param>
+        /// <param name="minutes">Number of minutes.</param>
+        /// <param name="seconds">Number of seconds.</param>
+        /// <param name="framesOrMilliseconds">Number of frames or milliseconds.</param>
+        /// <param name="isFrames">
+        /// <c>true</c> if treats <paramref name="framesOrMilliseconds"/> as a frames; <c>false</c> for
+        /// milliseconds.
+        /// </param>
         public Time(long hours, int minutes, int seconds, int framesOrMilliseconds, bool isFrames = true)
         {
             if (minutes >= 60)
@@ -66,6 +112,7 @@ namespace ThScoreFileConverter
             this.Hours = hours;
             this.Minutes = minutes;
             this.Seconds = seconds;
+
             if (isFrames)
             {
                 this.Milliseconds = -1;
@@ -76,29 +123,32 @@ namespace ThScoreFileConverter
                 this.Milliseconds = framesOrMilliseconds;
                 this.Frames = -1;
             }
+
             this.IsFrames = isFrames;
         }
 
         /// <summary>
-        /// 本クラスのインスタンスを文字列化する
+        /// Returns a string that represents the current instance.
+        /// The string is formatted such as <c>hh:mm:ss</c>.
         /// </summary>
-        /// <returns>変換後の文字列 (hh:mm:ss)</returns>
+        /// <returns>A string that represents the current instance.</returns>
         public override string ToString()
         {
             return string.Format("{0}:{1:D2}:{2:D2}", this.Hours, this.Minutes, this.Seconds);
         }
 
         /// <summary>
-        /// 本クラスのインスタンスを文字列化する
+        /// Returns a string that represents the current instance.
+        /// If <see cref="IsFrames"/> is <c>true</c>, the string is formatted such as <c>hh:mm:ss.ff</c>;
+        /// otherwise, <c>hh:mm:ss.ddd</c>.
         /// </summary>
-        /// <returns>変換後の文字列 (hh:mm:ss.ddd or hh:mm:ss.ff)</returns>
+        /// <returns>A string that represents the current instance.</returns>
         public string ToLongString()
         {
-            if (this.IsFrames)
-                return string.Format(
-                    "{0}:{1:D2}:{2:D2}.{3:D2}", this.Hours, this.Minutes, this.Seconds, this.Frames);
-            else
-                return string.Format(
+            return this.IsFrames
+                ? string.Format(
+                    "{0}:{1:D2}:{2:D2}.{3:D2}", this.Hours, this.Minutes, this.Seconds, this.Frames)
+                : string.Format(
                     "{0}:{1:D2}:{2:D2}.{3:D3}", this.Hours, this.Minutes, this.Seconds, this.Milliseconds);
         }
     }

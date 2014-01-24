@@ -1,97 +1,120 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Globalization;
-using System.Runtime.Serialization;
-using System.Windows;
-using System.Xml;
+﻿//-----------------------------------------------------------------------
+// <copyright file="Settings.cs" company="None">
+//     (c) 2013-2014 IIHOSHI Yoshinori
+// </copyright>
+//-----------------------------------------------------------------------
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.DocumentationRules",
+    "SA1649:FileHeaderFileNameDocumentationMustMatchTypeName",
+    Justification = "Reviewed.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.LayoutRules",
+    "SA1503:CurlyBracketsMustNotBeOmitted",
+    Justification = "Reviewed.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.MaintainabilityRules",
+    "SA1402:FileMayOnlyContainASingleClass",
+    Justification = "Reviewed.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.OrderingRules",
+    "SA1201:ElementsMustAppearInTheCorrectOrder",
+    Justification = "Reviewed.")]
 
 namespace ThScoreFileConverter
 {
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Runtime.Serialization;
+    using System.Windows;
+    using System.Xml;
+
     /// <summary>
-    /// 作品毎の設定を表すクラス
+    /// Represents settings per work.
     /// </summary>
     public class SettingsPerTitle
     {
         /// <summary>
-        /// スコアファイルのパス
+        /// Gets or sets the path of the score file.
         /// </summary>
         public string ScoreFile { get; set; }
 
         /// <summary>
-        /// ベストショットディレクトリのパス
+        /// Gets or sets the path of the best shot directory.
         /// </summary>
         public string BestShotDirectory { get; set; }
 
         /// <summary>
-        /// テンプレートファイル群のパス
+        /// Gets or sets the array of the paths of template files.
         /// </summary>
         public string[] TemplateFiles { get; set; }
 
         /// <summary>
-        /// 出力先ディレクトリのパス
+        /// Gets or sets the path of the output directory.
         /// </summary>
         public string OutputDirectory { get; set; }
 
         /// <summary>
-        /// 画像ファイル出力先ディレクトリのパス
+        /// Gets or sets the path of the output directory of the image files.
         /// </summary>
         public string ImageOutputDirectory { get; set; }
 
         /// <summary>
-        /// インスタンスを生成する
+        /// Initializes a new instance of the <see cref="SettingsPerTitle"/> class.
         /// </summary>
         public SettingsPerTitle()
         {
-            this.ScoreFile = "";
-            this.BestShotDirectory = "";
+            this.ScoreFile = string.Empty;
+            this.BestShotDirectory = string.Empty;
             this.TemplateFiles = new string[] { };
-            this.OutputDirectory = "";
-            this.ImageOutputDirectory = "";
+            this.OutputDirectory = string.Empty;
+            this.ImageOutputDirectory = string.Empty;
         }
     }
 
     /// <summary>
-    /// 本ツールの設定を扱うクラス
+    /// Represents the settings of this application.
     /// </summary>
-    [DataContract()]
+    [DataContract]
     public class Settings
     {
         /// <summary>
-        /// 前回終了時に選択していた作品
+        /// Gets or sets the last selected work.
         /// </summary>
         [DataMember(Order = 0)]
         public string LastTitle { get; set; }
 
         /// <summary>
-        /// 作品毎の設定を保持する dictionary
+        /// Gets or sets the dictionary of <see cref="SettingsPerTitle"/> instances.
         /// </summary>
         [DataMember(Order = 1)]
         public Dictionary<string, SettingsPerTitle> Dictionary { get; set; }
 
         /// <summary>
-        /// UI に使うフォントの名前
+        /// Gets or sets the font family name used for the UI of this application.
         /// </summary>
         [DataMember(Order = 2)]
         public string FontFamilyName { get; set; }
 
         /// <summary>
-        /// UI に使うフォントのサイズ
+        /// Gets or sets the font size used for the UI of this application.
         /// </summary>
         [DataMember(Order = 3)]
         public double? FontSize { get; set; }
 
         /// <summary>
-        /// 数値を桁区切り形式で出力する場合 true
+        /// Gets or sets a value indicating whether numeric values is output with thousand separator
+        /// characters.
         /// </summary>
         [DataMember(Order = 4)]
         public bool? OutputNumberGroupSeparator { get; set; }
 
         /// <summary>
-        /// インスタンスを生成する
+        /// Initializes a new instance of the <see cref="Settings"/> class.
         /// </summary>
         public Settings()
         {
-            this.LastTitle = "";
+            this.LastTitle = string.Empty;
             this.Dictionary = new Dictionary<string, SettingsPerTitle>();
             this.FontFamilyName = SystemFonts.MessageFontFamily.Source;
             this.FontSize = SystemFonts.MessageFontSize;
@@ -99,9 +122,9 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// XML ファイルからの設定読み込み
+        /// Loads the settings from the specified XML file.
         /// </summary>
-        /// <param Name="path">読み込み元の XML ファイル</param>
+        /// <param name="path">The path of the XML file to load.</param>
         public void Load(string path)
         {
             try
@@ -134,9 +157,9 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// XML ファイルへの設定保存
+        /// Saves the settings to the specified XML file.
         /// </summary>
-        /// <param Name="path">保存先 XML ファイル</param>
+        /// <param name="path">The path of the XML file to save.</param>
         public void Save(string path)
         {
             using (var stream = new FileStream(path, FileMode.Create, FileAccess.Write))

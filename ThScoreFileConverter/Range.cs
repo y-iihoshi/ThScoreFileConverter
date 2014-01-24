@@ -1,46 +1,60 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="Range.cs" company="None">
+//     (c) 2013-2014 IIHOSHI Yoshinori
+// </copyright>
+//-----------------------------------------------------------------------
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.LayoutRules",
+    "SA1503:CurlyBracketsMustNotBeOmitted",
+    Justification = "Reviewed.")]
 
 namespace ThScoreFileConverter
 {
+    using System;
+
     /// <summary>
-    /// 上限値と下限値で定義される範囲を扱うクラス
+    /// Represents a range determined by the upper and lower limit values.
     /// </summary>
-    /// <typeparam Name="T">範囲に属する値の型</typeparam>
+    /// <typeparam name="T">The type of the value that is in the range.</typeparam>
     public class Range<T> where T : IComparable<T>
     {
         /// <summary>
-        /// 下限値
+        /// Gets or sets the lower limit value.
         /// </summary>
         public T Min { get; set; }
 
         /// <summary>
-        /// 上限値
+        /// Gets or sets the upper limit value.
         /// </summary>
         public T Max { get; set; }
 
         /// <summary>
-        /// 範囲を表す文字列に変換する
+        /// Returns a string that represents the current instance.
+        /// The string is formatted such as <c>[<see cref="Min"/>, <see cref="Max"/>]</c>.
         /// </summary>
-        /// <returns>"[下限値, 上限値]"</returns>
+        /// <returns>A string that represents the current instance.</returns>
         public override string ToString()
         {
             return string.Format("[{0}, {1}]", this.Min, this.Max);
         }
 
         /// <summary>
-        /// インスタンスの正当性をチェックする
+        /// Checks whether the current instance represents a valid range.
         /// </summary>
-        /// <returns>true: 正当、false: 不当</returns>
+        /// <returns><c>true</c> if valid; <c>false</c> for invalid.</returns>
         public bool IsValid()
         {
             return this.Min.CompareTo(this.Max) <= 0;
         }
 
         /// <summary>
-        /// value が範囲内にあるかチェックする
+        /// Checks whether the specified value is in the range represented by the current instance.
         /// </summary>
-        /// <param Name="value"></param>
-        /// <returns>true: 範囲内、false: 範囲外</returns>
+        /// <param name="value">The value to check.</param>
+        /// <returns>
+        /// <c>true</c> if <paramref name="value"/> is in the range; otherwise, <c>false</c>.
+        /// </returns>
         public bool Contains(T value)
         {
             return (this.Min.CompareTo(value) <= 0) && (value.CompareTo(this.Max) <= 0);

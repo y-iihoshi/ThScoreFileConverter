@@ -1,31 +1,49 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using WinForms = System.Windows.Forms;
+﻿//-----------------------------------------------------------------------
+// <copyright file="MainWindow.xaml.cs" company="None">
+//     (c) 2013-2014 IIHOSHI Yoshinori
+// </copyright>
+//-----------------------------------------------------------------------
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.LayoutRules",
+    "SA1503:CurlyBracketsMustNotBeOmitted",
+    Justification = "Reviewed.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.OrderingRules",
+    "SA1201:ElementsMustAppearInTheCorrectOrder",
+    Justification = "Reviewed.")]
 
 namespace ThScoreFileConverter
 {
+    using System;
+    using System.ComponentModel;
+    using System.IO;
+    using System.Linq;
+    using System.Threading;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Input;
+    using Prop = ThScoreFileConverter.Properties;
+    using WinForms = System.Windows.Forms;
+
     /// <summary>
-    /// MainWindow.xaml の相互作用ロジック
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
         /// <summary>
-        /// 全設定
+        /// Represents the all settings for this application.
         /// </summary>
         private Settings settings = null;
 
         /// <summary>
-        /// 変換処理を行うクラスインスタンス
+        /// The instance that executes a conversion process.
         /// </summary>
         private ThConverter converter = null;
 
         /// <summary>
-        /// 数値を桁区切り形式で出力する場合 true
+        /// Gets or sets a value indicating whether thousand separator characters are contained in the
+        /// string that represents a numeric value.
         /// </summary>
         public bool OutputNumberGroupSeparator
         {
@@ -34,6 +52,7 @@ namespace ThScoreFileConverter
                 return ((this.settings != null) && this.settings.OutputNumberGroupSeparator.HasValue)
                     ? this.settings.OutputNumberGroupSeparator.Value : true;
             }
+
             set
             {
                 if (this.settings != null)
@@ -44,32 +63,29 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// インスタンスを生成する
+        /// Initializes a new instance of the <see cref="MainWindow"/> class.
         /// </summary>
         public MainWindow()
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
             try
             {
                 this.settings = new Settings();
                 try
                 {
-                    this.settings.Load(Properties.Resources.strSettingFile);
+                    this.settings.Load(Prop.Resources.strSettingFile);
                 }
                 catch (InvalidDataException)
                 {
                     var backup = Path.ChangeExtension(
-                        Properties.Resources.strSettingFile,
-                        Properties.Resources.strBackupFileExtension);
+                        Prop.Resources.strSettingFile, Prop.Resources.strBackupFileExtension);
                     File.Delete(backup);
-                    File.Move(Properties.Resources.strSettingFile, backup);
+                    File.Move(Prop.Resources.strSettingFile, backup);
                     var message = string.Format(
-                        Properties.Resources.msgFmtBrokenSettingFile,
-                        Properties.Resources.strSettingFile, backup);
+                        Prop.Resources.msgFmtBrokenSettingFile, Prop.Resources.strSettingFile, backup);
                     MessageBox.Show(
-                        message, Properties.Resources.msgTitleWarning,
-                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                        message, Prop.Resources.msgTitleWarning, MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
 
                 var lastTitleItem = this.cmbTitle.Items.Cast<ComboBoxItem>()
@@ -83,7 +99,8 @@ namespace ThScoreFileConverter
                     if (firstEnabledItem != null)
                         firstEnabledItem.IsSelected = true;
                 }
-                ((App)App.Current).UpdateResources(settings.FontFamilyName, settings.FontSize);
+
+                ((App)App.Current).UpdateResources(this.settings.FontFamilyName, this.settings.FontSize);
             }
             catch (Exception ex)
             {
@@ -92,18 +109,18 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// メインウィンドウの終了前処理
+        /// Handles the closing event of this window.
         /// </summary>
-        /// <param Name="sender"></param>
-        /// <param Name="e"></param>
-        private void wndMain_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void WndMain_Closing(object sender, CancelEventArgs e)
         {
             try
             {
                 this.UpdateSettingsFromControls((ComboBoxItem)this.cmbTitle.SelectedItem);
                 this.settings.FontFamilyName = App.Current.Resources["FontFamilyKey"].ToString();
                 this.settings.FontSize = Convert.ToDouble(App.Current.Resources["FontSizeKey"]);
-                this.settings.Save(Properties.Resources.strSettingFile);
+                this.settings.Save(Prop.Resources.strSettingFile);
             }
             catch (Exception ex)
             {
@@ -111,14 +128,14 @@ namespace ThScoreFileConverter
             }
         }
 
-        #region 作品名コンボボックス
+        #region Work combo box
 
         /// <summary>
-        /// 作品の選択状況の変化
+        /// Handles the <c>SelectionChanged</c> routed event of the <see cref="cmbTitle"/> member.
         /// </summary>
-        /// <param Name="sender"></param>
-        /// <param Name="e"></param>
-        private void cmbTitle_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void CmbTitle_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.RemovedItems.Count > 0)
                 this.UpdateSettingsFromControls((ComboBoxItem)e.RemovedItems[0]);
@@ -129,9 +146,9 @@ namespace ThScoreFileConverter
 
                 this.converter = ThConverterFactory.Create(item.Name);
                 this.converter.OutputNumberGroupSeparator = this.settings.OutputNumberGroupSeparator.Value;
-                this.converter.ConvertFinished += ThConverter_ConvertFinished;
-                this.converter.ConvertAllFinished += ThConverter_ConvertAllFinished;
-                this.converter.ExceptionOccurred += ThConverter_ExceptionOccurred;
+                this.converter.ConvertFinished += this.ThConverter_ConvertFinished;
+                this.converter.ConvertAllFinished += this.ThConverter_ConvertAllFinished;
+                this.converter.ExceptionOccurred += this.ThConverter_ExceptionOccurred;
 
                 this.settings.LastTitle = item.Name;
                 this.UpdateControlsFromSettings(item);
@@ -140,19 +157,19 @@ namespace ThScoreFileConverter
 
         #endregion
 
-        #region スコアファイル
+        #region Score file
 
         /// <summary>
-        /// スコアファイルの選択
+        /// Handles the <c>Click</c> routed event of the <see cref="btnScore"/> member.
         /// </summary>
-        /// <param Name="sender"></param>
-        /// <param Name="e"></param>
-        private void btnScore_Click(object sender, RoutedEventArgs e)
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void BtnScore_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 var dialog = new WinForms.OpenFileDialog();
-                dialog.Filter = Properties.Resources.fltScoreFile;
+                dialog.Filter = Prop.Resources.fltScoreFile;
                 if (this.txtScore.Text.Length > 0)
                     dialog.InitialDirectory = Path.GetDirectoryName(this.txtScore.Text);
 
@@ -167,11 +184,12 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// スコアファイル欄へのドラッグ中
+        /// Handles the <c>PreviewDragEnter</c> and <c>PreviewDragOver</c> routed event of the
+        /// <see cref="txtScore"/> member.
         /// </summary>
-        /// <param Name="sender"></param>
-        /// <param Name="e"></param>
-        private void txtScore_Dragging(object sender, DragEventArgs e)
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void TxtScore_Dragging(object sender, DragEventArgs e)
         {
             try
             {
@@ -190,11 +208,11 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// スコアファイル欄へのドロップ
+        /// Handles the <c>Drop</c> routed event of the <see cref="txtScore"/> member.
         /// </summary>
-        /// <param Name="sender"></param>
-        /// <param Name="e"></param>
-        private void txtScore_Drop(object sender, DragEventArgs e)
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void TxtScore_Drop(object sender, DragEventArgs e)
         {
             try
             {
@@ -213,30 +231,30 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// スコアファイル欄内の変化
+        /// Handles the <c>TextChanged</c> routed event of the <see cref="txtScore"/> member.
         /// </summary>
-        /// <param Name="sender"></param>
-        /// <param Name="e"></param>
-        private void txtScore_TextChanged(object sender, TextChangedEventArgs e)
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void TxtScore_TextChanged(object sender, TextChangedEventArgs e)
         {
             this.UpdateBtnConvertIsEnabled();
         }
 
         #endregion
 
-        #region ベストショットディレクトリ
+        #region Best shot directory
 
         /// <summary>
-        /// ベストショットディレクトリの選択
+        /// Handles the <c>Click</c> routed event of the <see cref="btnBestShot"/> member.
         /// </summary>
-        /// <param Name="sender"></param>
-        /// <param Name="e"></param>
-        private void btnBestShot_Click(object sender, RoutedEventArgs e)
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void BtnBestShot_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 var dialog = new WinForms.FolderBrowserDialog();
-                dialog.Description = Properties.Resources.msgSelectBestShotDirectory;
+                dialog.Description = Prop.Resources.msgSelectBestShotDirectory;
                 if (Directory.Exists(this.txtBestShot.Text))
                     dialog.SelectedPath = this.txtBestShot.Text;
 
@@ -251,11 +269,12 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// ベストショットディレクトリ欄へのドラッグ中
+        /// Handles the <c>PreviewDragEnter</c> and <c>PreviewDragOver</c> routed event of the
+        /// <see cref="txtBestShot"/> member.
         /// </summary>
-        /// <param Name="sender"></param>
-        /// <param Name="e"></param>
-        private void txtBestShot_Dragging(object sender, DragEventArgs e)
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void TxtBestShot_Dragging(object sender, DragEventArgs e)
         {
             try
             {
@@ -274,11 +293,11 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// ベストショットディレクトリ欄へのドロップ
+        /// Handles the <c>Drop</c> routed event of the <see cref="txtBestShot"/> member.
         /// </summary>
-        /// <param Name="sender"></param>
-        /// <param Name="e"></param>
-        private void txtBestShot_Drop(object sender, DragEventArgs e)
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void TxtBestShot_Drop(object sender, DragEventArgs e)
         {
             try
             {
@@ -297,30 +316,30 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// ベストショットディレクトリ欄内の変化
+        /// Handles the <c>TextChanged</c> routed event of the <see cref="txtBestShot"/> member.
         /// </summary>
-        /// <param Name="sender"></param>
-        /// <param Name="e"></param>
-        private void txtBestShot_TextChanged(object sender, TextChangedEventArgs e)
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void TxtBestShot_TextChanged(object sender, TextChangedEventArgs e)
         {
             this.UpdateBtnConvertIsEnabled();
         }
 
         #endregion
 
-        #region テンプレートファイル
+        #region Template files
 
         /// <summary>
-        /// テンプレートファイルの選択
+        /// Handles the <c>Click</c> routed event of the <see cref="btnTemplateAdd"/> member.
         /// </summary>
-        /// <param Name="sender"></param>
-        /// <param Name="e"></param>
-        private void btnTemplateAdd_Click(object sender, RoutedEventArgs e)
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void BtnTemplateAdd_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 var dialog = new WinForms.OpenFileDialog();
-                dialog.Filter = Properties.Resources.fltTemplateFile;
+                dialog.Filter = Prop.Resources.fltTemplateFile;
                 dialog.Multiselect = true;
                 if (this.lstTemplate.Items.Count > 0)
                 {
@@ -345,11 +364,11 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// テンプレートファイルの選択解除
+        /// Handles the <c>Click</c> routed event of the <see cref="btnTemplateClear"/> member.
         /// </summary>
-        /// <param Name="sender"></param>
-        /// <param Name="e"></param>
-        private void btnTemplateClear_Click(object sender, RoutedEventArgs e)
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void BtnTemplateClear_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -364,11 +383,11 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// テンプレートファイルの一括選択解除
+        /// Handles the <c>Click</c> routed event of the <see cref="btnTemplateClearAll"/> member.
         /// </summary>
-        /// <param Name="sender"></param>
-        /// <param Name="e"></param>
-        private void btnTemplateClearAll_Click(object sender, RoutedEventArgs e)
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void BtnTemplateClearAll_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -382,11 +401,12 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// テンプレートファイル一覧へのドラッグ中
+        /// Handles the <c>PreviewDragEnter</c> and <c>PreviewDragOver</c> routed event of the
+        /// <see cref="lstTemplate"/> member.
         /// </summary>
-        /// <param Name="sender"></param>
-        /// <param Name="e"></param>
-        private void lstTemplate_Dragging(object sender, DragEventArgs e)
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void LstTemplate_Dragging(object sender, DragEventArgs e)
         {
             try
             {
@@ -405,18 +425,22 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// テンプレートファイル一覧へのドロップ
+        /// Handles the <c>Drop</c> routed event of the <see cref="lstTemplate"/> member.
         /// </summary>
-        /// <param Name="sender"></param>
-        /// <param Name="e"></param>
-        private void lstTemplate_Drop(object sender, DragEventArgs e)
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void LstTemplate_Drop(object sender, DragEventArgs e)
         {
             try
             {
-                foreach (var filename in (string[])(e.Data.GetData(DataFormats.FileDrop, false)))
-                    if (File.Exists(filename) && !this.lstTemplate.Items.Contains(filename))
-                        this.lstTemplate.Items.Add(filename);
-                this.UpdateBtnConvertIsEnabled();
+                if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                {
+                    var droppedPaths = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+                    foreach (var path in droppedPaths)
+                        if (File.Exists(path) && !this.lstTemplate.Items.Contains(path))
+                            this.lstTemplate.Items.Add(path);
+                    this.UpdateBtnConvertIsEnabled();
+                }
             }
             catch (Exception ex)
             {
@@ -425,30 +449,30 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// テンプレートファイル一覧の選択状況の変化
+        /// Handles the <c>SelectionChanged</c> routed event of the <see cref="lstTemplate"/> member.
         /// </summary>
-        /// <param Name="sender"></param>
-        /// <param Name="e"></param>
-        private void lstTemplate_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void LstTemplate_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            btnTemplateClear.IsEnabled = (this.lstTemplate.SelectedItems.Count > 0);
+            btnTemplateClear.IsEnabled = this.lstTemplate.SelectedItems.Count > 0;
         }
 
         #endregion
 
-        #region 出力先ディレクトリ
+        #region Output directory
 
         /// <summary>
-        /// 出力先ディレクトリの選択
+        /// Handles the <c>Click</c> routed event of the <see cref="btnOutput"/> member.
         /// </summary>
-        /// <param Name="sender"></param>
-        /// <param Name="e"></param>
-        private void btnOutput_Click(object sender, RoutedEventArgs e)
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void BtnOutput_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 var dialog = new WinForms.FolderBrowserDialog();
-                dialog.Description = Properties.Resources.msgSelectOutputDirectory;
+                dialog.Description = Prop.Resources.msgSelectOutputDirectory;
                 if (Directory.Exists(this.txtOutput.Text))
                     dialog.SelectedPath = this.txtOutput.Text;
 
@@ -463,11 +487,12 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// 出力先ディレクトリ欄へのドラッグ中
+        /// Handles the <c>PreviewDragEnter</c> and <c>PreviewDragOver</c> routed event of the
+        /// <see cref="txtOutput"/> member.
         /// </summary>
-        /// <param Name="sender"></param>
-        /// <param Name="e"></param>
-        private void txtOutput_Dragging(object sender, DragEventArgs e)
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void TxtOutput_Dragging(object sender, DragEventArgs e)
         {
             try
             {
@@ -486,11 +511,11 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// 出力先ディレクトリ欄へのドロップ
+        /// Handles the <c>Drop</c> routed event of the <see cref="txtOutput"/> member.
         /// </summary>
-        /// <param Name="sender"></param>
-        /// <param Name="e"></param>
-        private void txtOutput_Drop(object sender, DragEventArgs e)
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void TxtOutput_Drop(object sender, DragEventArgs e)
         {
             try
             {
@@ -509,11 +534,11 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// 出力先ディレクトリ欄内の変化
+        /// Handles the <c>TextChanged</c> routed event of the <see cref="txtOutput"/> member.
         /// </summary>
-        /// <param Name="sender"></param>
-        /// <param Name="e"></param>
-        private void txtOutput_TextChanged(object sender, TextChangedEventArgs e)
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void TxtOutput_TextChanged(object sender, TextChangedEventArgs e)
         {
             this.UpdateBtnConvertIsEnabled();
         }
@@ -521,11 +546,11 @@ namespace ThScoreFileConverter
         #endregion
 
         /// <summary>
-        /// 変換開始
+        /// Handles the <c>Click</c> routed event of the <see cref="btnConvert"/> member.
         /// </summary>
-        /// <param Name="sender"></param>
-        /// <param Name="e"></param>
-        private void btnConvert_Click(object sender, RoutedEventArgs e)
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void BtnConvert_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -533,7 +558,7 @@ namespace ThScoreFileConverter
                 this.SetAllControlsEnabled(false);
 
                 this.txtLog.Clear();
-                this.AddLogLine(Properties.Resources.msgStartConversion);
+                this.AddLogLine(Prop.Resources.msgStartConversion);
 
                 var selectedItem = (ComboBoxItem)this.cmbTitle.SelectedItem;
                 this.UpdateSettingsFromControls(selectedItem);
@@ -548,56 +573,56 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// ファイル毎の変換処理完了
+        /// Handles the event indicating the conversion process per file has finished.
         /// </summary>
-        /// <param Name="sender"></param>
-        /// <param Name="e"></param>
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
         private void ThConverter_ConvertFinished(object sender, ThConverterEventArgs e)
         {
             this.AddLogLine(e.Message);
         }
 
         /// <summary>
-        /// 全ての変換処理完了
+        /// Handles the event indicating the all conversion process has finished.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
         private void ThConverter_ConvertAllFinished(object sender, ThConverterEventArgs e)
         {
-            this.AddLogLine(Properties.Resources.msgEndConversion);
+            this.AddLogLine(Prop.Resources.msgEndConversion);
             this.SetAllControlsEnabled(true);
             this.ChangeCursor(null);
         }
 
         /// <summary>
-        /// 変換処理での例外発生
+        /// Handles the event indicating an exception has occurred.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
         private void ThConverter_ExceptionOccurred(object sender, ExceptionOccurredEventArgs e)
         {
             this.ShowExceptionMessage(e.Exception);
-            this.AddLogLine(Properties.Resources.msgErrUnhandledException);
+            this.AddLogLine(Prop.Resources.msgErrUnhandledException);
             this.SetAllControlsEnabled(true);
             this.ChangeCursor(null);
         }
 
         /// <summary>
-        /// 設定ダイアログの表示
+        /// Handles the <c>Click</c> routed event of the <see cref="btnSetting"/> member.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnSetting_Click(object sender, RoutedEventArgs e)
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void BtnSetting_Click(object sender, RoutedEventArgs e)
         {
             new SettingWindow(this).ShowDialog();
         }
 
         /// <summary>
-        /// About ダイアログの表示
+        /// Handles the <c>Click</c> routed event of the <see cref="btnAbout"/> member.
         /// </summary>
-        /// <param Name="sender"></param>
-        /// <param Name="e"></param>
-        private void btnAbout_Click(object sender, RoutedEventArgs e)
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void BtnAbout_Click(object sender, RoutedEventArgs e)
         {
             new AboutWindow(this).ShowDialog();
         }
@@ -605,9 +630,9 @@ namespace ThScoreFileConverter
         #region Utility
 
         /// <summary>
-        /// ログ出力用テキストボックスに 1 行出力する
+        /// Outputs one line to the text box for logging.
         /// </summary>
-        /// <param Name="log">出力するログ</param>
+        /// <param name="log">The log text to output.</param>
         private void AddLogLine(string log)
         {
             var dispatcher = this.txtLog.Dispatcher;
@@ -621,9 +646,9 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// マウスカーソルを変更する
+        /// Changes the mouse cursor.
         /// </summary>
-        /// <param Name="cursor"></param>
+        /// <param name="cursor">The <see cref="Cursor"/> instance to set.</param>
         private void ChangeCursor(Cursor cursor)
         {
             var dispatcher = this.Dispatcher;
@@ -634,9 +659,9 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// 全てのコントロールの IsEnabled プロパティを一括設定する
+        /// Sets the <c>IsEnabled</c> properties of all controls.
         /// </summary>
-        /// <param Name="isEnabled"></param>
+        /// <param name="isEnabled">The value to set.</param>
         private void SetAllControlsEnabled(bool isEnabled)
         {
             var dispatcher = this.Dispatcher;
@@ -647,28 +672,28 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// 例外発生時のメッセージを表示する
+        /// Shows a message that represents the occurred exception.
         /// </summary>
-        /// <param name="message"></param>
+        /// <param name="e">The occurred exception.</param>
         private void ShowExceptionMessage(Exception e)
         {
             var dispatcher = this.Dispatcher;
             if (dispatcher.CheckAccess())
-                MessageBox.Show(
 #if DEBUG
-                    e.ToString(),
+                MessageBox.Show(
+                    e.ToString(), Prop.Resources.msgTitleError, MessageBoxButton.OK, MessageBoxImage.Error);
 #else
-                    e.Message,
+                MessageBox.Show(
+                    e.Message, Prop.Resources.msgTitleError, MessageBoxButton.OK, MessageBoxImage.Error);
 #endif
-                    Properties.Resources.msgTitleError, MessageBoxButton.OK, MessageBoxImage.Error);
             else
                 dispatcher.Invoke(new Action<Exception>(this.ShowExceptionMessage), e);
         }
 
         /// <summary>
-        /// 
+        /// Updates the settings of this application by statuses of the controls on this window.
         /// </summary>
-        /// <param name="item"></param>
+        /// <param name="item">The currently selected item of the "Work" combo box.</param>
         private void UpdateSettingsFromControls(ComboBoxItem item)
         {
             if (!this.settings.Dictionary.ContainsKey(item.Name))
@@ -684,16 +709,16 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// 
+        /// Updates the controls on this window by the settings of this application.
         /// </summary>
-        /// <param name="item"></param>
+        /// <param name="item">The currently selected item of the "Work" combo box.</param>
         private void UpdateControlsFromSettings(ComboBoxItem item)
         {
             if (!this.settings.Dictionary.ContainsKey(item.Name))
                 this.settings.Dictionary.Add(item.Name, new SettingsPerTitle());
 
             this.txtScore.Clear();
-            this.lblSupportedVersion.Content = "";
+            this.lblSupportedVersion.Content = string.Empty;
             this.txtBestShot.Clear();
             this.lstTemplate.Items.Clear();
             this.txtOutput.Clear();
@@ -722,7 +747,7 @@ namespace ThScoreFileConverter
                 this.txtScore.Text = entry.ScoreFile;
             if (this.converter != null)
                 this.lblSupportedVersion.Content =
-                    Properties.Resources.strSupportedVersions + this.converter.SupportedVersions;
+                    Prop.Resources.strSupportedVersions + this.converter.SupportedVersions;
             if (this.txtBestShot.IsEnabled && Directory.Exists(entry.BestShotDirectory))
                 this.txtBestShot.Text = entry.BestShotDirectory;
             foreach (var template in entry.TemplateFiles)
@@ -731,23 +756,23 @@ namespace ThScoreFileConverter
             if (Directory.Exists(entry.OutputDirectory))
                 this.txtOutput.Text = entry.OutputDirectory;
             if (this.txtImageOutput.IsEnabled)
-                this.txtImageOutput.Text = (entry.ImageOutputDirectory != "")
-                    ? entry.ImageOutputDirectory : Properties.Resources.strBestShotDirectory;
+                this.txtImageOutput.Text = (entry.ImageOutputDirectory != string.Empty)
+                    ? entry.ImageOutputDirectory : Prop.Resources.strBestShotDirectory;
 
             ((App)App.Current).UpdateResources(this.settings.FontFamilyName, this.settings.FontSize);
         }
 
         /// <summary>
-        /// スコアファイル変換ボタンの有効・無効状態の更新
+        /// Updates the value of <see cref="btnConvert"/><c>.IsEnabled</c>.
         /// </summary>
         private void UpdateBtnConvertIsEnabled()
         {
-            btnConvert.IsEnabled = (
+            btnConvert.IsEnabled =
                 (this.txtScore.Text.Length > 0) &&
                 this.lstTemplate.HasItems &&
                 (this.txtOutput.Text.Length > 0) &&
                 (!this.txtBestShot.IsEnabled || (this.txtBestShot.Text.Length > 0)) &&
-                (!this.txtImageOutput.IsEnabled || (this.txtImageOutput.Text.Length > 0)));
+                (!this.txtImageOutput.IsEnabled || (this.txtImageOutput.Text.Length > 0));
         }
 
         #endregion

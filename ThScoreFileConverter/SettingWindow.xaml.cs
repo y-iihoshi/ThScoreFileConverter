@@ -1,28 +1,47 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Input;
-using SysDraw = System.Drawing;
-using WinForms = System.Windows.Forms;
+﻿//-----------------------------------------------------------------------
+// <copyright file="SettingWindow.xaml.cs" company="None">
+//     (c) 2013-2014 IIHOSHI Yoshinori
+// </copyright>
+//-----------------------------------------------------------------------
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.LayoutRules",
+    "SA1503:CurlyBracketsMustNotBeOmitted",
+    Justification = "Reviewed.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.OrderingRules",
+    "SA1201:ElementsMustAppearInTheCorrectOrder",
+    Justification = "Reviewed.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.OrderingRules",
+    "SA1202:ElementsMustBeOrderedByAccess",
+    Justification = "Reviewed.")]
 
 namespace ThScoreFileConverter
 {
+    using System;
+    using System.Windows;
+    using System.Windows.Input;
+    using SysDraw = System.Drawing;
+    using WinForms = System.Windows.Forms;
+
     /// <summary>
-    /// ConfigWindow.xaml の相互作用ロジック
+    /// Interaction logic for SettingWindow.xaml
     /// </summary>
     public partial class SettingWindow : Window, IDisposable
     {
         /// <summary>
-        /// フォント設定ダイアログのインスタンス
+        /// The instance of the <see cref="System.Windows.Forms.FontDialog"/> class.
         /// </summary>
         private WinForms.FontDialog fontDialog = null;
 
         /// <summary>
-        /// 破棄済みかどうかを示すフラグ
+        /// The flag that represents whether <see cref="Dispose(bool)"/> has been called.
         /// </summary>
         private bool disposed;
 
         /// <summary>
-        /// インスタンスを生成する
+        /// Prevents a default instance of the <see cref="SettingWindow"/> class from being created.
         /// </summary>
         private SettingWindow()
         {
@@ -30,19 +49,19 @@ namespace ThScoreFileConverter
 
             this.fontDialog = new WinForms.FontDialog();
             this.fontDialog.ShowApply = true;
-            this.fontDialog.Apply += fontDialog_Apply;
+            this.fontDialog.Apply += this.FontDialog_Apply;
             this.fontDialog.FontMustExist = true;
             this.fontDialog.ShowEffects = false;
 
             this.disposed = false;
 
-            this.chkOutputNumberGroupSeparator.Click += chkOutputNumberGroupSeparator_Click;
+            this.chkOutputNumberGroupSeparator.Click += this.ChkOutputNumberGroupSeparator_Click;
         }
 
         /// <summary>
-        /// インスタンスを生成する
+        /// Initializes a new instance of the <see cref="SettingWindow"/> class.
         /// </summary>
-        /// <param name="owner">親ウィンドウのインスタンス</param>
+        /// <param name="owner">The instance of the owner window.</param>
         public SettingWindow(Window owner)
             : this()
         {
@@ -51,7 +70,7 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// 破棄処理（Dispose パターン参照）
+        /// Implements the <see cref="IDisposable.Dispose"/> method.
         /// </summary>
         public void Dispose()
         {
@@ -60,9 +79,11 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// 破棄処理（Dispose パターン参照）
+        /// Disposes the resources of the current instance.
         /// </summary>
-        /// <param name="disposing"></param>
+        /// <param name="disposing">
+        /// <c>true</c> if calls from the <see cref="Dispose()"/> method; <c>false</c> for the destructor.
+        /// </param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -74,21 +95,21 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// デストラクター（Dispose パターン参照）
+        /// Finalizes an instance of the <see cref="SettingWindow"/> class.
         /// </summary>
         ~SettingWindow()
         {
             this.Dispose(false);
         }
 
-        #region フォント設定
+        #region Font settings
 
         /// <summary>
-        /// フォントの変更
+        /// Handles the <c>Click</c> routed events of the <see cref="btnFontChange"/> member.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnFontChange_Click(object sender, RoutedEventArgs e)
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void BtnFontChange_Click(object sender, RoutedEventArgs e)
         {
             this.fontDialog.Font = new SysDraw.Font(
                 App.Current.Resources["FontFamilyKey"].ToString(),
@@ -100,7 +121,7 @@ namespace ThScoreFileConverter
             switch (result)
             {
                 case WinForms.DialogResult.OK:
-                    fontDialog_Apply(sender, e);
+                    this.FontDialog_Apply(sender, e);
                     break;
                 case WinForms.DialogResult.Cancel:
                     ((App)App.Current).UpdateResources(oldFont);
@@ -111,35 +132,35 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// フォント変更ダイアログによるフォント設定の一時適用
+        /// Handles the <c>FontDialog.Apply</c> event of the <see cref="fontDialog"/> member.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void fontDialog_Apply(object sender, EventArgs e)
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void FontDialog_Apply(object sender, EventArgs e)
         {
             ((App)App.Current).UpdateResources(this.fontDialog.Font);
         }
 
         /// <summary>
-        /// フォント設定のリセット
+        /// Handles the <c>Click</c> routed event of the <see cref="btnFontReset"/> member.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnFontReset_Click(object sender, RoutedEventArgs e)
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void BtnFontReset_Click(object sender, RoutedEventArgs e)
         {
             ((App)App.Current).UpdateResources(SystemFonts.MessageFontFamily, SystemFonts.MessageFontSize);
         }
 
         #endregion
 
-        #region 出力書式設定
+        #region Output format settings
 
         /// <summary>
-        /// 「数値を桁区切り形式で出力する」チェックボックスのクリック
+        /// Handles the <c>Click</c> routed event of the <see cref="chkOutputNumberGroupSeparator"/> member.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void chkOutputNumberGroupSeparator_Click(object sender, RoutedEventArgs e)
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void ChkOutputNumberGroupSeparator_Click(object sender, RoutedEventArgs e)
         {
             ((MainWindow)this.Owner).OutputNumberGroupSeparator =
                 this.chkOutputNumberGroupSeparator.IsChecked.Value;
@@ -148,20 +169,20 @@ namespace ThScoreFileConverter
         #endregion
 
         /// <summary>
-        /// 「OK」ボタンのクリック
+        /// Handles the <c>Click</c> routed event of the <see cref="btnOK"/> member.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnOK_Click(object sender, RoutedEventArgs e)
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void BtnOK_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
         /// <summary>
-        /// ウィンドウにフォーカスがある時のキー押下時の前処理
+        /// Handles the <c>PreviewKeyDown</c> routed event of the current window.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)

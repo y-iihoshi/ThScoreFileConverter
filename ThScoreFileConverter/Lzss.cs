@@ -1,33 +1,44 @@
-﻿using System;
-using System.IO;
+﻿//-----------------------------------------------------------------------
+// <copyright file="Lzss.cs" company="None">
+//     (c) 2013-2014 IIHOSHI Yoshinori
+// </copyright>
+//-----------------------------------------------------------------------
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.LayoutRules",
+    "SA1503:CurlyBracketsMustNotBeOmitted",
+    Justification = "Reviewed.")]
 
 namespace ThScoreFileConverter
 {
+    using System;
+    using System.IO;
+
     /// <summary>
-    /// LZSS 圧縮・展開を扱う静的クラス
+    /// Provides static methods for compressing and decompressing LZSS formatted data.
     /// </summary>
     public static class Lzss
     {
         /// <summary>
-        /// 辞書のサイズ
+        /// The size of the dictionary.
         /// </summary>
         private const int DicSize = 0x2000;
 
         /// <summary>
-        /// LZSS 圧縮を行う（未実装）
+        /// Compresses data by LZSS format.
         /// </summary>
-        /// <param Name="input"></param>
-        /// <param Name="output"></param>
+        /// <param name="input">The stream to input data.</param>
+        /// <param name="output">The stream that is output the compressed data.</param>
         public static void Compress(Stream input, Stream output)
         {
             throw new NotImplementedException("LZSS complession is not supported.");
         }
 
         /// <summary>
-        /// LZSS 展開を行う
+        /// Decompresses the LZSS formatted data.
         /// </summary>
-        /// <param Name="input">展開元のストリーム</param>
-        /// <param Name="output">展開結果の出力先ストリーム</param>
+        /// <param name="input">The stream to input data.</param>
+        /// <param name="output">The stream that is output the decompressed data.</param>
         public static void Extract(Stream input, Stream output)
         {
             var reader = new BitReader(input);
