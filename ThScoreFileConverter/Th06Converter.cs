@@ -52,33 +52,41 @@ namespace ThScoreFileConverter
             "-------", "Stage 1", "Stage 2", "Stage 3", "Stage 4", "Stage 5", "Stage 6", "Extra Stage"
         };
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.SpacingRules",
+            "SA1008:OpeningParenthesisMustBeSpacedCorrectly",
+            Justification = "Reviewed.")]
         private static readonly List<HighScore> InitialRanking = new List<HighScore>()
         {
             new HighScore(1000000),
-            new HighScore(900000),
-            new HighScore(800000),
-            new HighScore(700000),
-            new HighScore(600000),
-            new HighScore(500000),
-            new HighScore(400000),
-            new HighScore(300000),
-            new HighScore(200000),
-            new HighScore(100000)
+            new HighScore( 900000),
+            new HighScore( 800000),
+            new HighScore( 700000),
+            new HighScore( 600000),
+            new HighScore( 500000),
+            new HighScore( 400000),
+            new HighScore( 300000),
+            new HighScore( 200000),
+            new HighScore( 100000)
         };
 
         private const int NumCards = 64;
 
         // Thanks to thwiki.info
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.SpacingRules",
+            "SA1008:OpeningParenthesisMustBeSpacedCorrectly",
+            Justification = "Reviewed.")]
         private static readonly Dictionary<Stage, Range<int>> StageCardTable =
             new Dictionary<Stage, Range<int>>()
             {
-                { Stage.Stage1, new Range<int> { Min = 0,  Max = 2  } },
-                { Stage.Stage2, new Range<int> { Min = 3,  Max = 6  } },
-                { Stage.Stage3, new Range<int> { Min = 7,  Max = 13 } },
-                { Stage.Stage4, new Range<int> { Min = 14, Max = 31 } },
-                { Stage.Stage5, new Range<int> { Min = 32, Max = 39 } },
-                { Stage.Stage6, new Range<int> { Min = 40, Max = 50 } },
-                { Stage.Extra,  new Range<int> { Min = 51, Max = 63 } }
+                { Stage.Stage1, new Range<int>( 0,  2) },
+                { Stage.Stage2, new Range<int>( 3,  6) },
+                { Stage.Stage3, new Range<int>( 7, 13) },
+                { Stage.Stage4, new Range<int>(14, 31) },
+                { Stage.Stage5, new Range<int>(32, 39) },
+                { Stage.Stage6, new Range<int>(40, 50) },
+                { Stage.Extra,  new Range<int>(51, 63) }
             };
 
         // Thanks to thwiki.info
@@ -673,7 +681,7 @@ namespace ThScoreFileConverter
                         default:    // unreachable
                             return match.ToString();
                     }
-                else if ((0 < number) && (number <= NumCards))
+                else if (new Range<int>(1, NumCards).Contains(number))
                 {
                     var attack = this.allScoreData.CardAttacks[number - 1];
                     if (attack != null)
@@ -704,7 +712,7 @@ namespace ThScoreFileConverter
                 var number = int.Parse(match.Groups[1].Value);
                 var type = match.Groups[2].Value.ToUpper();
 
-                if ((0 < number) && (number <= NumCards))
+                if (new Range<int>(1, NumCards).Contains(number))
                 {
                     var attack = this.allScoreData.CardAttacks[number - 1];
                     if (type == "N")

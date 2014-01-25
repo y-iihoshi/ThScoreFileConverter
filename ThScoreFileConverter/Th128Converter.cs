@@ -84,25 +84,29 @@ namespace ThScoreFileConverter
         private const int NumCards = 250;
 
         // Thanks to thwiki.info
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.SpacingRules",
+            "SA1008:OpeningParenthesisMustBeSpacedCorrectly",
+            Justification = "Reviewed.")]
         private static readonly Dictionary<Stage, Range<int>> StageCardTable =
             new Dictionary<Stage, Range<int>>()
             {
-                { Stage.StageA_1,  new Range<int> { Min = 0,   Max = 7   } },
-                { Stage.StageA1_2, new Range<int> { Min = 8,   Max = 19  } },
-                { Stage.StageA1_3, new Range<int> { Min = 20,  Max = 43  } },
-                { Stage.StageA2_2, new Range<int> { Min = 44,  Max = 55  } },
-                { Stage.StageA2_3, new Range<int> { Min = 56,  Max = 79  } },
-                { Stage.StageB_1,  new Range<int> { Min = 80,  Max = 87  } },
-                { Stage.StageB1_2, new Range<int> { Min = 88,  Max = 99  } },
-                { Stage.StageB1_3, new Range<int> { Min = 100, Max = 123 } },
-                { Stage.StageB2_2, new Range<int> { Min = 124, Max = 135 } },
-                { Stage.StageB2_3, new Range<int> { Min = 136, Max = 159 } },
-                { Stage.StageC_1,  new Range<int> { Min = 160, Max = 167 } },
-                { Stage.StageC1_2, new Range<int> { Min = 168, Max = 179 } },
-                { Stage.StageC1_3, new Range<int> { Min = 180, Max = 203 } },
-                { Stage.StageC2_2, new Range<int> { Min = 204, Max = 215 } },
-                { Stage.StageC2_3, new Range<int> { Min = 216, Max = 239 } },
-                { Stage.Extra,     new Range<int> { Min = 240, Max = 249 } }
+                { Stage.StageA_1,  new Range<int>(  0,   7) },
+                { Stage.StageA1_2, new Range<int>(  8,  19) },
+                { Stage.StageA1_3, new Range<int>( 20,  43) },
+                { Stage.StageA2_2, new Range<int>( 44,  55) },
+                { Stage.StageA2_3, new Range<int>( 56,  79) },
+                { Stage.StageB_1,  new Range<int>( 80,  87) },
+                { Stage.StageB1_2, new Range<int>( 88,  99) },
+                { Stage.StageB1_3, new Range<int>(100, 123) },
+                { Stage.StageB2_2, new Range<int>(124, 135) },
+                { Stage.StageB2_3, new Range<int>(136, 159) },
+                { Stage.StageC_1,  new Range<int>(160, 167) },
+                { Stage.StageC1_2, new Range<int>(168, 179) },
+                { Stage.StageC1_3, new Range<int>(180, 203) },
+                { Stage.StageC2_2, new Range<int>(204, 215) },
+                { Stage.StageC2_3, new Range<int>(216, 239) },
+                { Stage.Extra,     new Range<int>(240, 249) }
             };
 
         private class LevelStagePair : Pair<Level, Stage>
@@ -600,7 +604,7 @@ namespace ThScoreFileConverter
                         default:
                             return match.ToString();
                     }
-                else if ((0 < number) && (number <= NumCards))
+                else if (new Range<int>(1, NumCards).Contains(number))
                     switch (type)
                     {
                         case 1:
@@ -627,7 +631,7 @@ namespace ThScoreFileConverter
                 var number = int.Parse(match.Groups[1].Value);
                 var type = match.Groups[2].Value.ToUpper();
 
-                if ((0 < number) && (number <= NumCards))
+                if (new Range<int>(1, NumCards).Contains(number))
                 {
                     var card = this.allScoreData.CardData.Cards[number - 1];
                     if (type == "N")

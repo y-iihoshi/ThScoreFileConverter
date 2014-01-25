@@ -61,16 +61,20 @@ namespace ThScoreFileConverter
         private const int NumCards = 113;
 
         // Thanks to thwiki.info
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.SpacingRules",
+            "SA1008:OpeningParenthesisMustBeSpacedCorrectly",
+            Justification = "Reviewed.")]
         private static readonly Dictionary<Stage, Range<int>> StageCardTable =
             new Dictionary<Stage, Range<int>>()
             {
-                { Stage.Stage1, new Range<int> { Min = 0,   Max = 9   } },
-                { Stage.Stage2, new Range<int> { Min = 10,  Max = 25  } },
-                { Stage.Stage3, new Range<int> { Min = 26,  Max = 41  } },
-                { Stage.Stage4, new Range<int> { Min = 42,  Max = 56  } },
-                { Stage.Stage5, new Range<int> { Min = 57,  Max = 76  } },
-                { Stage.Stage6, new Range<int> { Min = 77,  Max = 99  } },
-                { Stage.Extra,  new Range<int> { Min = 100, Max = 112 } }
+                { Stage.Stage1, new Range<int>(  0,   9) },
+                { Stage.Stage2, new Range<int>( 10,  25) },
+                { Stage.Stage3, new Range<int>( 26,  41) },
+                { Stage.Stage4, new Range<int>( 42,  56) },
+                { Stage.Stage5, new Range<int>( 57,  76) },
+                { Stage.Stage6, new Range<int>( 77,  99) },
+                { Stage.Extra,  new Range<int>(100, 112) }
             };
 
         private class LevelStagePair : Pair<Level, Stage>
@@ -534,7 +538,7 @@ namespace ThScoreFileConverter
                 if (number == 0)
                     return this.ToNumberString((type == 1)
                         ? cards.Sum(card => card.ClearCount) : cards.Sum(card => card.TrialCount));
-                else if ((0 < number) && (number <= NumCards))
+                if (new Range<int>(1, NumCards).Contains(number))
                     return this.ToNumberString((type == 1)
                         ? cards[number - 1].ClearCount : cards[number - 1].TrialCount);
                 else
@@ -552,7 +556,7 @@ namespace ThScoreFileConverter
                 var number = int.Parse(match.Groups[1].Value);
                 var type = match.Groups[2].Value.ToUpper();
 
-                if ((0 < number) && (number <= NumCards))
+                if (new Range<int>(1, NumCards).Contains(number))
                 {
                     var card = this.allScoreData.ClearData[CharaWithTotal.Total].Cards[number - 1];
                     if (type == "N")

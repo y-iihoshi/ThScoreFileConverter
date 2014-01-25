@@ -20,14 +20,25 @@ namespace ThScoreFileConverter
     public class Range<T> where T : IComparable<T>
     {
         /// <summary>
-        /// Gets or sets the lower limit value.
+        /// Initializes a new instance of the <see cref="Range{T}"/> class.
         /// </summary>
-        public T Min { get; set; }
+        /// <param name="min">The lower limit value of the range.</param>
+        /// <param name="max">The upper limit value of the range.</param>
+        public Range(T min, T max)
+        {
+            this.Min = min;
+            this.Max = max;
+        }
 
         /// <summary>
-        /// Gets or sets the upper limit value.
+        /// Gets the lower limit value.
         /// </summary>
-        public T Max { get; set; }
+        public T Min { get; private set; }
+
+        /// <summary>
+        /// Gets the upper limit value.
+        /// </summary>
+        public T Max { get; private set; }
 
         /// <summary>
         /// Returns a string that represents the current instance.

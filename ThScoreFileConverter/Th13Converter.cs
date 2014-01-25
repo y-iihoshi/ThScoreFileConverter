@@ -68,19 +68,19 @@ namespace ThScoreFileConverter
         // Thanks to thwiki.info
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "StyleCop.CSharp.SpacingRules",
-            "SA1025:CodeMustNotContainMultipleWhitespaceInARow",
+            "SA1008:OpeningParenthesisMustBeSpacedCorrectly",
             Justification = "Reviewed.")]
         private static readonly Dictionary<StagePractice, Range<int>> StageCardTable =
             new Dictionary<StagePractice, Range<int>>()
             {
-                { StagePractice.Stage1,    new Range<int> { Min = 0,   Max = 13  } },
-                { StagePractice.Stage2,    new Range<int> { Min = 14,  Max = 29  } },
-                { StagePractice.Stage3,    new Range<int> { Min = 30,  Max = 43  } },
-                { StagePractice.Stage4,    new Range<int> { Min = 44,  Max = 58  } },
-                { StagePractice.Stage5,    new Range<int> { Min = 59,  Max = 77  } },
-                { StagePractice.Stage6,    new Range<int> { Min = 78,  Max = 105 } },
-                { StagePractice.Extra,     new Range<int> { Min = 106, Max = 118 } },
-                { StagePractice.OverDrive, new Range<int> { Min = 119, Max = 126 } }
+                { StagePractice.Stage1,    new Range<int>(  0,  13) },
+                { StagePractice.Stage2,    new Range<int>( 14,  29) },
+                { StagePractice.Stage3,    new Range<int>( 30,  43) },
+                { StagePractice.Stage4,    new Range<int>( 44,  58) },
+                { StagePractice.Stage5,    new Range<int>( 59,  77) },
+                { StagePractice.Stage6,    new Range<int>( 78, 105) },
+                { StagePractice.Extra,     new Range<int>(106, 118) },
+                { StagePractice.OverDrive, new Range<int>(119, 126) }
             };
 
         private class LevelStagePair : Pair<LevelPractice, StagePractice>
@@ -580,7 +580,7 @@ namespace ThScoreFileConverter
                             ? cards.Sum(card => card.TrialCount)
                             : cards.Sum(card => card.PracticeTrialCount));
                 }
-                else if ((0 < number) && (number <= NumCards))
+                else if (new Range<int>(1, NumCards).Contains(number))
                 {
                     if (type == 1)
                         return this.ToNumberString((kind == "S")
@@ -604,7 +604,7 @@ namespace ThScoreFileConverter
                 var number = int.Parse(match.Groups[1].Value);
                 var type = match.Groups[2].Value.ToUpper();
 
-                if ((0 < number) && (number <= NumCards))
+                if (new Range<int>(1, NumCards).Contains(number))
                 {
                     var card = this.allScoreData.ClearData[CharaWithTotal.Total].Cards[number - 1];
                     if (type == "N")

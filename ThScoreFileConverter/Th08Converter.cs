@@ -96,36 +96,44 @@ namespace ThScoreFileConverter
             AllClear = 0x8000
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.SpacingRules",
+            "SA1008:OpeningParenthesisMustBeSpacedCorrectly",
+            Justification = "Reviewed.")]
         private static readonly List<HighScore> InitialRanking = new List<HighScore>()
         {
             new HighScore(100000),
-            new HighScore(90000),
-            new HighScore(80000),
-            new HighScore(70000),
-            new HighScore(60000),
-            new HighScore(50000),
-            new HighScore(40000),
-            new HighScore(30000),
-            new HighScore(20000),
-            new HighScore(10000)
+            new HighScore( 90000),
+            new HighScore( 80000),
+            new HighScore( 70000),
+            new HighScore( 60000),
+            new HighScore( 50000),
+            new HighScore( 40000),
+            new HighScore( 30000),
+            new HighScore( 20000),
+            new HighScore( 10000)
         };
 
         private const int NumCards = 222;
 
         // Thanks to thwiki.info
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.SpacingRules",
+            "SA1008:OpeningParenthesisMustBeSpacedCorrectly",
+            Justification = "Reviewed.")]
         private static readonly Dictionary<StagePractice, Range<int>> StageCardTable =
             new Dictionary<StagePractice, Range<int>>()
             {
-                { StagePractice.Stage1,   new Range<int> { Min = 0,   Max = 12  } },
-                { StagePractice.Stage2,   new Range<int> { Min = 13,  Max = 31  } },
-                { StagePractice.Stage3,   new Range<int> { Min = 32,  Max = 53  } },
-                { StagePractice.Stage4A,  new Range<int> { Min = 54,  Max = 76  } },
-                { StagePractice.Stage4B,  new Range<int> { Min = 77,  Max = 99  } },
-                { StagePractice.Stage5,   new Range<int> { Min = 100, Max = 118 } },
-                { StagePractice.Stage6A,  new Range<int> { Min = 119, Max = 146 } },
-                { StagePractice.Stage6B,  new Range<int> { Min = 147, Max = 190 } },
-                { StagePractice.Extra,    new Range<int> { Min = 191, Max = 204 } },
-                { StagePractice.LastWord, new Range<int> { Min = 205, Max = 221 } }
+                { StagePractice.Stage1,   new Range<int>(  0,  12) },
+                { StagePractice.Stage2,   new Range<int>( 13,  31) },
+                { StagePractice.Stage3,   new Range<int>( 32,  53) },
+                { StagePractice.Stage4A,  new Range<int>( 54,  76) },
+                { StagePractice.Stage4B,  new Range<int>( 77,  99) },
+                { StagePractice.Stage5,   new Range<int>(100, 118) },
+                { StagePractice.Stage6A,  new Range<int>(119, 146) },
+                { StagePractice.Stage6B,  new Range<int>(147, 190) },
+                { StagePractice.Extra,    new Range<int>(191, 204) },
+                { StagePractice.LastWord, new Range<int>(205, 221) }
             };
 
         private class CharaLevelPair : Pair<Chara, Level>
@@ -1023,7 +1031,7 @@ namespace ThScoreFileConverter
                         default:    // unreachable
                             return match.ToString();
                     }
-                else if ((0 < number) && (number <= NumCards))
+                else if (new Range<int>(1, NumCards).Contains(number))
                 {
                     var attack = this.allScoreData.CardAttacks[number - 1];
                     if (attack != null)
@@ -1059,7 +1067,7 @@ namespace ThScoreFileConverter
                 var number = int.Parse(match.Groups[1].Value);
                 var type = match.Groups[2].Value.ToUpper();
 
-                if ((0 < number) && (number <= NumCards))
+                if (new Range<int>(1, NumCards).Contains(number))
                 {
                     var attack = this.allScoreData.CardAttacks[number - 1];
                     if (type == "N")
