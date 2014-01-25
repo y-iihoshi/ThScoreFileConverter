@@ -61,7 +61,7 @@ namespace ThScoreFileConverter
         /// </summary>
         /// <param name="message">The string that is output after the measuring.</param>
         public Profiler(string message)
-            : this(null, (elapsed) => Console.WriteLine("{0}: Elapsed = {1}", message, elapsed))
+            : this(null, elapsed => Console.WriteLine("{0}: Elapsed = {1}", message, elapsed))
         {
         }
 

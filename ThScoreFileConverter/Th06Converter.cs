@@ -363,13 +363,12 @@ namespace ThScoreFileConverter
 
         public override string SupportedVersions
         {
-            get
-            {
-                return "1.02h";
-            }
+            get { return "1.02h"; }
         }
 
-        public Th06Converter() { }
+        public Th06Converter()
+        {
+        }
 
         protected override bool ReadScoreFile(Stream input)
         {

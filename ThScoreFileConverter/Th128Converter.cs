@@ -344,13 +344,12 @@ namespace ThScoreFileConverter
 
         public override string SupportedVersions
         {
-            get
-            {
-                return "1.00a";
-            }
+            get { return "1.00a"; }
         }
 
-        public Th128Converter() { }
+        public Th128Converter()
+        {
+        }
 
         protected override bool ReadScoreFile(Stream input)
         {

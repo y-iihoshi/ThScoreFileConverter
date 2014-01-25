@@ -506,21 +506,17 @@ namespace ThScoreFileConverter
 
         public override string SupportedVersions
         {
-            get
-            {
-                return "1.00a";
-            }
+            get { return "1.00a"; }
         }
 
         public override bool HasBestShotConverter
         {
-            get
-            {
-                return true;
-            }
+            get { return true; }
         }
 
-        public Th125Converter() { }
+        public Th125Converter()
+        {
+        }
 
         protected override bool ReadScoreFile(Stream input)
         {

@@ -296,13 +296,12 @@ namespace ThScoreFileConverter
 
         public override string SupportedVersions
         {
-            get
-            {
-                return "1.00a";
-            }
+            get { return "1.00a"; }
         }
 
-        public Th11Converter() { }
+        public Th11Converter()
+        {
+        }
 
         protected override bool ReadScoreFile(Stream input)
         {
@@ -523,7 +522,7 @@ namespace ThScoreFileConverter
         private string ReplaceCareer(string input)
         {
             var pattern = string.Format(
-                @"%T11C(\d\d\d)({0})([12])",
+                @"%T11C(\d{{3}})({0})([12])",
                 Utils.JoinEnumNames<CharaShortWithTotal>("|"));
             var evaluator = Utils.ToNothrowEvaluator(match =>
             {
