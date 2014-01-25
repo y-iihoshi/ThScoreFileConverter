@@ -950,15 +950,18 @@ namespace ThScoreFileConverter
                     var lv = (Level)level;
                     if (stage > 0)
                     {
+                        Stage st = (Stage)(stage - 1);
                         if (type == 1)
                             findCard = (attack =>
                                 (attack != null) &&
                                 (CardLevelTable[attack.Number] == lv) &&
+                                StageCardTable[st].Contains(attack.Number) &&
                                 (attack.ClearCounts[chara] > 0));
                         else
                             findCard = (attack =>
                                 (attack != null) &&
                                 (CardLevelTable[attack.Number] == lv) &&
+                                StageCardTable[st].Contains(attack.Number) &&
                                 (attack.TrialCounts[chara] > 0));
                     }
                     else
