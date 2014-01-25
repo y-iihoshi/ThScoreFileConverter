@@ -854,8 +854,8 @@ namespace ThScoreFileConverter
                 {
                     var key = new LevelStagePair(level, stage);
                     var practices = this.allScoreData.ClearData[chara].Practices;
-                    return this.ToNumberString(
-                        practices.ContainsKey(key) ? (practices[key].Score * 10) : 0);
+                    return practices.ContainsKey(key)
+                        ? this.ToNumberString(practices[key].Score * 10) : "0";
                 }
                 else
                     return "0";

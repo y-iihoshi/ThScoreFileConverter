@@ -1373,11 +1373,11 @@ namespace ThScoreFileConverter
                     var scores = this.allScoreData.PracticeScores[chara];
                     var key = new StageLevelPair(stage, level);
                     if (type == 1)
-                        return this.ToNumberString(
-                            scores.HighScores.ContainsKey(key) ? (scores.HighScores[key] * 10) : 0);
+                        return scores.HighScores.ContainsKey(key)
+                            ? this.ToNumberString(scores.HighScores[key] * 10) : "0";
                     else
-                        return this.ToNumberString(
-                            scores.PlayCounts.ContainsKey(key) ? scores.PlayCounts[key] : 0);
+                        return scores.HighScores.ContainsKey(key)
+                            ? this.ToNumberString(scores.PlayCounts[key]) : "0";
                 }
                 else
                     return "0";

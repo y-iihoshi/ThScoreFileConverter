@@ -570,11 +570,11 @@ namespace ThScoreFileConverter
                 switch (type)
                 {
                     case 1:     // high score
-                        return this.ToNumberString((score != null) ? score.HighScore : 0);
+                        return (score != null) ? this.ToNumberString(score.HighScore) : "0";
                     case 2:     // bestshot score
-                        return this.ToNumberString((score != null) ? score.BestshotScore : 0);
+                        return (score != null) ? this.ToNumberString(score.BestshotScore) : "0";
                     case 3:     // num of shots
-                        return this.ToNumberString((score != null) ? score.TrialCount : 0);
+                        return (score != null) ? this.ToNumberString(score.TrialCount) : "0";
                     case 4:     // slow rate
                         return (score != null) ? (score.SlowRate2.ToString("F3") + "%") : "-----%";
                     default:    // unreachable

@@ -1076,11 +1076,11 @@ namespace ThScoreFileConverter
                 {
                     var scores = this.allScoreData.PracticeScores[key];
                     if (type == 1)
-                        return this.ToNumberString(
-                            scores.ContainsKey(stage) ? (scores[stage].HighScore * 10) : 0);
+                        return scores.ContainsKey(stage)
+                            ? this.ToNumberString(scores[stage].HighScore * 10) : "0";
                     else
-                        return this.ToNumberString(
-                            scores.ContainsKey(stage) ? scores[stage].TrialCount : 0);
+                        return scores.ContainsKey(stage)
+                            ? this.ToNumberString(scores[stage].TrialCount) : "0";
                 }
                 else
                     return "0";

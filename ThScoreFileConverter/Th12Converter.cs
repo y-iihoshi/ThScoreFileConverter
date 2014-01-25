@@ -532,11 +532,11 @@ namespace ThScoreFileConverter
 
                 var cards = this.allScoreData.ClearData[(CharaWithTotal)chara].Cards;
                 if (number == 0)
-                    return this.ToNumberString(
-                        (type == 1) ? cards.Sum(card => card.ClearCount) : cards.Sum(card => card.TrialCount));
+                    return this.ToNumberString((type == 1)
+                        ? cards.Sum(card => card.ClearCount) : cards.Sum(card => card.TrialCount));
                 else if ((0 < number) && (number <= NumCards))
-                    return this.ToNumberString(
-                        (type == 1) ? cards[number - 1].ClearCount : cards[number - 1].TrialCount);
+                    return this.ToNumberString((type == 1)
+                        ? cards[number - 1].ClearCount : cards[number - 1].TrialCount);
                 else
                     return match.ToString();
             });
@@ -810,8 +810,8 @@ namespace ThScoreFileConverter
                 {
                     var key = new LevelStagePair(level, stage);
                     var practices = this.allScoreData.ClearData[chara].Practices;
-                    return this.ToNumberString(
-                        practices.ContainsKey(key) ? (practices[key].Score * 10) : 0);
+                    return practices.ContainsKey(key)
+                        ? this.ToNumberString(practices[key].Score * 10) : "0";
                 }
                 else
                     return "0";

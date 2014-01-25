@@ -823,8 +823,8 @@ namespace ThScoreFileConverter
                 if (this.allScoreData.PracticeScores.ContainsKey(key))
                 {
                     var scores = this.allScoreData.PracticeScores[key];
-                    return this.ToNumberString(
-                        scores.ContainsKey(stage) ? scores[stage].HighScore : 0);
+                    return scores.ContainsKey(stage)
+                        ? this.ToNumberString(scores[stage].HighScore) : "0";
                 }
                 else
                     return "0";
