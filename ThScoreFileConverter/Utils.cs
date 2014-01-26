@@ -33,30 +33,47 @@ namespace ThScoreFileConverter
         /// <summary>
         /// Concatenates all names of the specified enumeration type.
         /// </summary>
-        /// <typeparam name="T">The enumeration type.</typeparam>
+        /// <typeparam name="TEnum">The enumeration type.</typeparam>
         /// <param name="separator">The string to use as a separator.</param>
         /// <returns>
-        /// A string that consists of the names of <typeparamref name="T"/> delimited by
+        /// A string that consists of the names of <typeparamref name="TEnum"/> delimited by
         /// <paramref name="separator"/>.
         /// </returns>
-        public static string JoinEnumNames<T>(string separator)
+        public static string JoinEnumNames<TEnum>(string separator)
+            where TEnum : struct, IComparable, IFormattable, IConvertible
         {
-            return string.Join(separator, Enum.GetNames(typeof(T)));
+            return string.Join(separator, Enum.GetNames(typeof(TEnum)));
         }
 
         /// <summary>
         /// Converts the string representation of the name or numeric value of one or more enumerated
         /// constants to an equivalent enumerated instance.
         /// </summary>
-        /// <typeparam name="T">The enumeration type.</typeparam>
+        /// <typeparam name="TEnum">The enumeration type.</typeparam>
         /// <param name="value">A string containing the name or value to convert.</param>
         /// <param name="ignoreCase"><c>true</c> if ignore case; <c>false</c> to regard case.</param>
         /// <returns>
-        /// An instance of <typeparamref name="T"/> whose value is represented by <paramref name="value"/>.
+        /// An instance of <typeparamref name="TEnum"/> whose value is represented by
+        /// <paramref name="value"/>.
         /// </returns>
-        public static T ParseEnum<T>(string value, bool ignoreCase = false)
+        public static TEnum ParseEnum<TEnum>(string value, bool ignoreCase = false)
+            where TEnum : struct, IComparable, IFormattable, IConvertible
         {
-            return (T)Enum.Parse(typeof(T), value, ignoreCase);
+            return (TEnum)Enum.Parse(typeof(TEnum), value, ignoreCase);
+        }
+
+        /// <summary>
+        /// Gets the <c>IEnumerable{T}</c> instance to enumerate values of the <typeparamref name="TEnum"/>
+        /// type.
+        /// </summary>
+        /// <typeparam name="TEnum">The enumeration type.</typeparam>
+        /// <returns>
+        /// The <c>IEnumerable{T}</c> instance to enumerate values of the <typeparamref name="TEnum"/> type.
+        /// </returns>
+        public static IEnumerable<TEnum> GetEnumerator<TEnum>()
+            where TEnum : struct, IComparable, IFormattable, IConvertible
+        {
+            return Enum.GetValues(typeof(TEnum)).Cast<TEnum>();
         }
 
         /// <summary>
