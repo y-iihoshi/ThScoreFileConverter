@@ -71,7 +71,6 @@ namespace ThScoreFileConverter
             A11, A12, A13, A22, A23, B11, B12, B13, B22, B23, C11, C12, C13, C22, C23, EXT, TTL
         }
 
-        // FIXME
         private static readonly string[] StageProgressArray =
         {
             "-------",
@@ -318,7 +317,7 @@ namespace ThScoreFileConverter
             public uint Unknown1 { get; private set; }
             public int TrialCount { get; private set; }
             public int Number { get; private set; }         // 0-origin
-            public Level Level { get; private set; }        // Easy .. Extra
+            public Level Level { get; private set; }
 
             public void ReadFrom(BinaryReader reader)
             {
@@ -566,8 +565,7 @@ namespace ThScoreFileConverter
                     case 3:     // stage
                         if (ranking.DateTime > 0)
                             return (ranking.StageProgress < StageProgressArray.Length)
-                                ? StageProgressArray[ranking.StageProgress]
-                                : StageProgressArray[0];
+                                ? StageProgressArray[ranking.StageProgress] : StageProgressArray[0];
                         else
                             return StageProgressArray[0];
                     case 4:     // date & time
@@ -589,6 +587,10 @@ namespace ThScoreFileConverter
         }
 
         // %T128C[xxx][z]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.MaintainabilityRules",
+            "SA1119:StatementMustNotUseUnnecessaryParenthesis",
+            Justification = "Reviewed.")]
         private string ReplaceCareer(string input)
         {
             var pattern = @"%T128C(\d{3})([1-3])";
@@ -597,31 +599,18 @@ namespace ThScoreFileConverter
                 var number = int.Parse(match.Groups[1].Value);
                 var type = int.Parse(match.Groups[2].Value);
 
-                var cards = this.allScoreData.CardData.Cards;
+                Func<SpellCard, int> getCount = (card => 0);
+                if (type == 1)
+                    getCount = (card => card.NoIceCount);
+                else if (type == 2)
+                    getCount = (card => card.NoMissCount);
+                else
+                    getCount = (card => card.TrialCount);
+
                 if (number == 0)
-                    switch (type)
-                    {
-                        case 1:
-                            return this.ToNumberString(cards.Sum(card => card.NoIceCount));
-                        case 2:
-                            return this.ToNumberString(cards.Sum(card => card.NoMissCount));
-                        case 3:
-                            return this.ToNumberString(cards.Sum(card => card.TrialCount));
-                        default:
-                            return match.ToString();
-                    }
+                    return this.ToNumberString(this.allScoreData.CardData.Cards.Sum(getCount));
                 else if (new Range<int>(1, NumCards).Contains(number))
-                    switch (type)
-                    {
-                        case 1:
-                            return this.ToNumberString(cards[number - 1].NoIceCount);
-                        case 2:
-                            return this.ToNumberString(cards[number - 1].NoMissCount);
-                        case 3:
-                            return this.ToNumberString(cards[number - 1].TrialCount);
-                        default:
-                            return match.ToString();
-                    }
+                    return this.ToNumberString(getCount(this.allScoreData.CardData.Cards[number - 1]));
                 else
                     return match.ToString();
             });
@@ -671,110 +660,40 @@ namespace ThScoreFileConverter
                 var stage = Utils.ParseEnum<StageShortWithTotal>(match.Groups[2].Value, true);
                 var type = int.Parse(match.Groups[3].Value);
 
-                Func<SpellCard, bool> findCard = (card => false);
+                Func<SpellCard, bool> checkNotNull = (card => card != null);
+                Func<SpellCard, bool> findByLevel = (card => true);
+                Func<SpellCard, bool> findByStage = (card => true);
+                Func<SpellCard, bool> findByType = (card => true);
 
-                if (level == LevelShortWithTotal.T)
+                if (stage == StageShortWithTotal.TTL)
                 {
-                    if (stage == StageShortWithTotal.TTL)
-                        switch (type)
-                        {
-                            case 1:
-                                findCard = (card => card.NoIceCount > 0);
-                                break;
-                            case 2:
-                                findCard = (card => card.NoMissCount > 0);
-                                break;
-                            case 3:
-                                findCard = (card => card.TrialCount > 0);
-                                break;
-                            default:    // unreachable
-                                break;
-                        }
-                    else
-                    {
-                        var st = (Stage)stage;
-                        switch (type)
-                        {
-                            case 1:
-                                findCard = (card =>
-                                    StageCardTable[st].Contains(card.Number) && (card.NoIceCount > 0));
-                                break;
-                            case 2:
-                                findCard = (card =>
-                                    StageCardTable[st].Contains(card.Number) && (card.NoMissCount > 0));
-                                break;
-                            case 3:
-                                findCard = (card =>
-                                    StageCardTable[st].Contains(card.Number) && (card.TrialCount > 0));
-                                break;
-                            default:    // unreachable
-                                break;
-                        }
-                    }
+                    // Do nothing
                 }
-                else if (level == LevelShortWithTotal.X)
-                    switch (type)
-                    {
-                        case 1:
-                            findCard = (card =>
-                                StageCardTable[Stage.Extra].Contains(card.Number) && (card.NoIceCount > 0));
-                            break;
-                        case 2:
-                            findCard = (card =>
-                                StageCardTable[Stage.Extra].Contains(card.Number) && (card.NoMissCount > 0));
-                            break;
-                        case 3:
-                            findCard = (card =>
-                                StageCardTable[Stage.Extra].Contains(card.Number) && (card.TrialCount > 0));
-                            break;
-                        default:    // unreachable
-                            break;
-                    }
                 else
+                    findByStage = (card => StageCardTable[(Stage)stage].Contains(card.Number));
+
+                switch (level)
                 {
-                    var lv = (Level)level;
-                    if (stage == StageShortWithTotal.TTL)
-                        switch (type)
-                        {
-                            case 1:
-                                findCard = (card => (card.Level == lv) && (card.NoIceCount > 0));
-                                break;
-                            case 2:
-                                findCard = (card => (card.Level == lv) && (card.NoMissCount > 0));
-                                break;
-                            case 3:
-                                findCard = (card => (card.Level == lv) && (card.TrialCount > 0));
-                                break;
-                            default:    // unreachable
-                                break;
-                        }
-                    else
-                    {
-                        var st = (Stage)stage;
-                        switch (type)
-                        {
-                            case 1:
-                                findCard = (card =>
-                                    StageCardTable[st].Contains(card.Number) &&
-                                    (card.Level == lv) && (card.NoIceCount > 0));
-                                break;
-                            case 2:
-                                findCard = (card =>
-                                    StageCardTable[st].Contains(card.Number) &&
-                                    (card.Level == lv) && (card.NoMissCount > 0));
-                                break;
-                            case 3:
-                                findCard = (card =>
-                                    StageCardTable[st].Contains(card.Number) &&
-                                    (card.Level == lv) && (card.TrialCount > 0));
-                                break;
-                            default:    // unreachable
-                                break;
-                        }
-                    }
+                    case LevelShortWithTotal.T:
+                        // Do nothing
+                        break;
+                    case LevelShortWithTotal.X:
+                        findByStage = (card => StageCardTable[Stage.Extra].Contains(card.Number));
+                        break;
+                    default:
+                        findByLevel = (card => card.Level == (Level)level);
+                        break;
                 }
 
-                return this.allScoreData.CardData.Cards.Count(findCard).ToString();
+                if (type == 1)
+                    findByType = (card => card.NoIceCount > 0);
+                else if (type == 2)
+                    findByType = (card => card.NoMissCount > 0);
+                else
+                    findByType = (card => card.TrialCount > 0);
+
+                var and = new Utils.And<SpellCard>(checkNotNull, findByLevel, findByStage, findByType);
+                return this.allScoreData.CardData.Cards.Count(and).ToString();
             });
             return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
@@ -796,13 +715,10 @@ namespace ThScoreFileConverter
                 if ((route == RouteWithTotal.Extra) && (level != Level.Extra))
                     return match.ToString();
 
-                var stageProgress = 0;
-                for (var rank = 0; rank < 10; rank++)
-                {
-                    var ranking = this.allScoreData.ClearData[route].Rankings[level][rank];
-                    if (ranking.DateTime > 0)
-                        stageProgress = Math.Max(stageProgress, ranking.StageProgress);
-                }
+                var rankings = this.allScoreData.ClearData[route].Rankings[level]
+                    .Where(ranking => ranking.DateTime > 0);
+                var stageProgress = (rankings.Count() > 0)
+                    ? rankings.Max(ranking => ranking.StageProgress) : 0;
 
                 return (stageProgress < StageProgressArray.Length)
                     ? StageProgressArray[stageProgress] : StageProgressArray[0];
@@ -811,6 +727,10 @@ namespace ThScoreFileConverter
         }
 
         // %T128ROUTE[xx][y]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.MaintainabilityRules",
+            "SA1119:StatementMustNotUseUnnecessaryParenthesis",
+            Justification = "Reviewed.")]
         private string ReplaceRoute(string input)
         {
             var pattern = string.Format(
@@ -822,41 +742,41 @@ namespace ThScoreFileConverter
                     (RouteWithTotal)Utils.ParseEnum<RouteShortWithTotal>(match.Groups[1].Value, true);
                 var type = int.Parse(match.Groups[2].Value);
 
-                switch (type)
+                Func<ClearData, long> getValueByType = (data => 0L);
+                Func<long, string> toString = (value => string.Empty);
+                if (type == 1)
                 {
-                    case 1:     // total play count
-                        if (route == RouteWithTotal.Total)
-                            return this.ToNumberString(
-                                this.allScoreData.ClearData.Values.Sum(
-                                    data => (data.Route != route) ? data.TotalPlayCount : 0));
-                        else
-                            return this.ToNumberString(
-                                this.allScoreData.ClearData[route].TotalPlayCount);
-                    case 2:     // play times
-                        {
-                            var frames = (route == RouteWithTotal.Total)
-                                ? this.allScoreData.ClearData.Values.Sum(
-                                    data => (data.Route != route) ? (long)data.PlayTime : 0L)
-                                : (long)this.allScoreData.ClearData[route].PlayTime;
-                            return new Time(frames).ToString();
-                        }
-                    case 3:     // clear count
-                        if (route == RouteWithTotal.Total)
-                            return this.ToNumberString(
-                                this.allScoreData.ClearData.Values.Sum(
-                                    data => (data.Route != route)
-                                        ? data.ClearCounts.Values.Sum() : 0));
-                        else
-                            return this.ToNumberString(
-                                this.allScoreData.ClearData[route].ClearCounts.Values.Sum());
-                    default:    // unreachable
-                        return match.ToString();
+                    getValueByType = (data => data.TotalPlayCount);
+                    toString = (value => this.ToNumberString(value));
                 }
+                else if (type == 2)
+                {
+                    getValueByType = (data => data.PlayTime);
+                    toString = (value => new Time(value).ToString());
+                }
+                else
+                {
+                    getValueByType = (data => data.ClearCounts.Values.Sum());
+                    toString = (value => this.ToNumberString(value));
+                }
+
+                Func<AllScoreData, long> getValueByRoute = (allData => 0L);
+                if (route == RouteWithTotal.Total)
+                    getValueByRoute = (allData => allData.ClearData.Values.Sum(
+                        data => (data.Route != route) ? getValueByType(data) : 0L));
+                else
+                    getValueByRoute = (allData => getValueByType(allData.ClearData[route]));
+
+                return toString(getValueByRoute(this.allScoreData));
             });
             return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
 
         // %T128ROUTEEX[x][yy][z]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.MaintainabilityRules",
+            "SA1119:StatementMustNotUseUnnecessaryParenthesis",
+            Justification = "Reviewed.")]
         private string ReplaceRouteEx(string input)
         {
             var pattern = string.Format(
@@ -878,49 +798,35 @@ namespace ThScoreFileConverter
                     ((level != LevelWithTotal.Extra) && (level != LevelWithTotal.Total)))
                     return match.ToString();
 
-                switch (type)
+                Func<ClearData, long> getValueByType = (data => 0L);
+                Func<long, string> toString = (value => string.Empty);
+                if (type == 1)
                 {
-                    case 1:     // total play count
-                        if (route == RouteWithTotal.Total)
-                            return this.ToNumberString(
-                                this.allScoreData.ClearData.Values.Sum(
-                                    data => (data.Route != route) ? data.TotalPlayCount : 0));
-                        else
-                            return this.allScoreData.ClearData[route].TotalPlayCount.ToString();
-                    case 2:     // play times
-                        {
-                            var frames = (route == RouteWithTotal.Total)
-                                ? this.allScoreData.ClearData.Values.Sum(
-                                    data => (data.Route != route) ? (long)data.PlayTime : 0L)
-                                : (long)this.allScoreData.ClearData[route].PlayTime;
-                            return new Time(frames).ToString();
-                        }
-                    case 3:     // clear count
-                        if (route == RouteWithTotal.Total)
-                        {
-                            if (level == LevelWithTotal.Total)
-                                return this.ToNumberString(
-                                    this.allScoreData.ClearData.Values.Sum(
-                                        data => (data.Route != route)
-                                            ? data.ClearCounts.Values.Sum() : 0));
-                            else
-                                return this.ToNumberString(
-                                    this.allScoreData.ClearData.Values.Sum(
-                                        data => (data.Route != route)
-                                            ? data.ClearCounts[(Level)level] : 0));
-                        }
-                        else
-                        {
-                            if (level == LevelWithTotal.Total)
-                                return this.ToNumberString(
-                                    this.allScoreData.ClearData[route].ClearCounts.Values.Sum());
-                            else
-                                return this.ToNumberString(
-                                    this.allScoreData.ClearData[route].ClearCounts[(Level)level]);
-                        }
-                    default:    // unreachable
-                        return match.ToString();
+                    getValueByType = (data => data.TotalPlayCount);
+                    toString = (value => this.ToNumberString(value));
                 }
+                else if (type == 2)
+                {
+                    getValueByType = (data => data.PlayTime);
+                    toString = (value => new Time(value).ToString());
+                }
+                else
+                {
+                    if (level == LevelWithTotal.Total)
+                        getValueByType = (data => data.ClearCounts.Values.Sum());
+                    else
+                        getValueByType = (data => data.ClearCounts[(Level)level]);
+                    toString = (value => this.ToNumberString(value));
+                }
+
+                Func<AllScoreData, long> getValueByRoute = (allData => 0L);
+                if (route == RouteWithTotal.Total)
+                    getValueByRoute = (allData => allData.ClearData.Values.Sum(
+                        data => (data.Route != route) ? getValueByType(data) : 0L));
+                else
+                    getValueByRoute = (allData => getValueByType(allData.ClearData[route]));
+
+                return toString(getValueByRoute(this.allScoreData));
             });
             return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }

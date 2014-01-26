@@ -806,6 +806,10 @@ namespace ThScoreFileConverter
         }
 
         // %T07C[xxx][yy][z]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.MaintainabilityRules",
+            "SA1119:StatementMustNotUseUnnecessaryParenthesis",
+            Justification = "Reviewed.")]
         private string ReplaceCareer(string input)
         {
             var pattern = string.Format(
@@ -818,42 +822,23 @@ namespace ThScoreFileConverter
                     (CharaWithTotal)Utils.ParseEnum<CharaShortWithTotal>(match.Groups[2].Value, true);
                 var type = int.Parse(match.Groups[3].Value);
 
+                Func<CardAttack, long> getValue = (attack => 0L);
+                if (type == 1)
+                    getValue = (attack => attack.MaxBonuses[chara]);
+                else if (type == 2)
+                    getValue = (attack => attack.ClearCounts[chara]);
+                else
+                    getValue = (attack => attack.TrialCounts[chara]);
+
+                Func<CardAttack, long> getValueWithNullCheck =
+                    (attack => (attack != null) ? getValue(attack) : 0L);
+
                 if (number == 0)
-                    switch (type)
-                    {
-                        case 1:     // MaxBonus
-                            return this.ToNumberString(
-                                this.allScoreData.CardAttacks.Sum(
-                                    attack => (attack != null) ? (long)attack.MaxBonuses[chara] : 0L));
-                        case 2:     // clear count
-                            return this.ToNumberString(
-                                this.allScoreData.CardAttacks.Sum(
-                                    attack => (attack != null) ? attack.ClearCounts[chara] : 0));
-                        case 3:     // trial count
-                            return this.ToNumberString(
-                                this.allScoreData.CardAttacks.Sum(
-                                    attack => (attack != null) ? attack.TrialCounts[chara] : 0));
-                        default:    // unreachable
-                            return match.ToString();
-                    }
+                    return this.ToNumberString(
+                        this.allScoreData.CardAttacks.Sum(getValueWithNullCheck));
                 else if (new Range<int>(1, NumCards).Contains(number))
-                {
-                    var attack = this.allScoreData.CardAttacks[number - 1];
-                    if (attack != null)
-                        switch (type)
-                        {
-                            case 1:     // MaxBonus
-                                return this.ToNumberString(attack.MaxBonuses[chara]);
-                            case 2:     // clear count
-                                return this.ToNumberString(attack.ClearCounts[chara]);
-                            case 3:     // trial count
-                                return this.ToNumberString(attack.TrialCounts[chara]);
-                            default:    // unreachable
-                                return match.ToString();
-                        }
-                    else
-                        return "0";
-                }
+                    return this.ToNumberString(
+                        getValueWithNullCheck(this.allScoreData.CardAttacks[number - 1]));
                 else
                     return match.ToString();
             });
@@ -905,81 +890,41 @@ namespace ThScoreFileConverter
                 var stage = int.Parse(match.Groups[3].Value);
                 var type = int.Parse(match.Groups[4].Value);
 
-                Func<CardAttack, bool> findCard = (attack => false);
+                Func<CardAttack, bool> checkNotNull = (attack => attack != null);
+                Func<CardAttack, bool> findByLevel = (attack => true);
+                Func<CardAttack, bool> findByStage = (attack => true);
+                Func<CardAttack, bool> findByType = (attack => true);
 
-                if (level == LevelWithTotal.Total)
+                if (stage == 0)
                 {
-                    if (stage == 0)     // total
-                    {
-                        if (type == 1)
-                            findCard = (attack => (attack != null) && (attack.ClearCounts[chara] > 0));
-                        else
-                            findCard = (attack => (attack != null) && (attack.TrialCounts[chara] > 0));
-                    }
-                    else
-                    {
-                        var st = (Stage)(stage - 1);
-                        if (type == 1)
-                            findCard = (attack =>
-                                (attack != null) &&
-                                StageCardTable[st].Contains(attack.Number) &&
-                                (attack.ClearCounts[chara] > 0));
-                        else
-                            findCard = (attack =>
-                                (attack != null) &&
-                                StageCardTable[st].Contains(attack.Number) &&
-                                (attack.TrialCounts[chara] > 0));
-                    }
-                }
-                else if ((level == LevelWithTotal.Extra) || (level == LevelWithTotal.Phantasm))
-                {
-                    var st = (level == LevelWithTotal.Extra) ? Stage.Extra : Stage.Phantasm;
-                    if (type == 1)
-                        findCard = (attack =>
-                            (attack != null) &&
-                            StageCardTable[st].Contains(attack.Number) &&
-                            (attack.ClearCounts[chara] > 0));
-                    else
-                        findCard = (attack =>
-                            (attack != null) &&
-                            StageCardTable[st].Contains(attack.Number) &&
-                            (attack.TrialCounts[chara] > 0));
+                    // Do nothing
                 }
                 else
+                    findByStage = (attack => StageCardTable[(Stage)(stage - 1)].Contains(attack.Number));
+
+                switch (level)
                 {
-                    var lv = (Level)level;
-                    if (stage > 0)
-                    {
-                        Stage st = (Stage)(stage - 1);
-                        if (type == 1)
-                            findCard = (attack =>
-                                (attack != null) &&
-                                (CardLevelTable[attack.Number] == lv) &&
-                                StageCardTable[st].Contains(attack.Number) &&
-                                (attack.ClearCounts[chara] > 0));
-                        else
-                            findCard = (attack =>
-                                (attack != null) &&
-                                (CardLevelTable[attack.Number] == lv) &&
-                                StageCardTable[st].Contains(attack.Number) &&
-                                (attack.TrialCounts[chara] > 0));
-                    }
-                    else
-                    {
-                        if (type == 1)
-                            findCard = (attack =>
-                                (attack != null) &&
-                                (CardLevelTable[attack.Number] == lv) &&
-                                (attack.ClearCounts[chara] > 0));
-                        else
-                            findCard = (attack =>
-                                (attack != null) &&
-                                (CardLevelTable[attack.Number] == lv) &&
-                                (attack.TrialCounts[chara] > 0));
-                    }
+                    case LevelWithTotal.Total:
+                        // Do nothing
+                        break;
+                    case LevelWithTotal.Extra:
+                        findByStage = (attack => StageCardTable[Stage.Extra].Contains(attack.Number));
+                        break;
+                    case LevelWithTotal.Phantasm:
+                        findByStage = (attack => StageCardTable[Stage.Phantasm].Contains(attack.Number));
+                        break;
+                    default:
+                        findByLevel = (attack => CardLevelTable[attack.Number] == (Level)level);
+                        break;
                 }
 
-                return this.allScoreData.CardAttacks.Count(findCard).ToString();
+                if (type == 1)
+                    findByType = (attack => attack.ClearCounts[chara] > 0);
+                else
+                    findByType = (attack => attack.TrialCounts[chara] > 0);
+
+                var and = new Utils.And<CardAttack>(checkNotNull, findByLevel, findByStage, findByType);
+                return this.allScoreData.CardAttacks.Count(and).ToString();
             });
             return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
@@ -999,9 +944,7 @@ namespace ThScoreFileConverter
                 var key = new CharaLevelPair(chara, level);
                 if (this.allScoreData.Rankings.ContainsKey(key))
                 {
-                    var stageProgress = 0;
-                    foreach (var rank in this.allScoreData.Rankings[key])
-                        stageProgress = Math.Max(stageProgress, rank.StageProgress);
+                    var stageProgress = this.allScoreData.Rankings[key].Max(rank => rank.StageProgress);
                     if ((stageProgress == (int)Stage.Extra + 1) ||
                         (stageProgress == (int)Stage.Phantasm + 1))
                         return "Not Clear";

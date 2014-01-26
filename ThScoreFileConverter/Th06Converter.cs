@@ -556,9 +556,9 @@ namespace ThScoreFileConverter
 
                         case "CATK":
                             {
-                                var cardAttack = new CardAttack(chapter);
-                                cardAttack.ReadFrom(reader);
-                                allScoreData.CardAttacks[cardAttack.Number] = cardAttack;
+                                var attack = new CardAttack(chapter);
+                                attack.ReadFrom(reader);
+                                allScoreData.CardAttacks[attack.Number] = attack;
                             }
                             break;
 
@@ -659,6 +659,10 @@ namespace ThScoreFileConverter
         }
 
         // %T06C[xx][y]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.MaintainabilityRules",
+            "SA1119:StatementMustNotUseUnnecessaryParenthesis",
+            Justification = "Reviewed.")]
         private string ReplaceCareer(string input)
         {
             var pattern = @"%T06C(\d{2})([12])";
@@ -667,36 +671,21 @@ namespace ThScoreFileConverter
                 var number = int.Parse(match.Groups[1].Value);
                 var type = int.Parse(match.Groups[2].Value);
 
+                Func<CardAttack, int> getCount = (attack => 0);
+                if (type == 1)
+                    getCount = (attack => attack.ClearCount);
+                else
+                    getCount = (attack => attack.TrialCount);
+
+                Func<CardAttack, int> getCountWithNullCheck =
+                    (attack => (attack != null) ? getCount(attack) : 0);
+
                 if (number == 0)
-                    switch (type)
-                    {
-                        case 1:     // clear count
-                            return this.ToNumberString(
-                                this.allScoreData.CardAttacks.Sum(
-                                    attack => (attack != null) ? attack.ClearCount : 0));
-                        case 2:     // trial count
-                            return this.ToNumberString(
-                                this.allScoreData.CardAttacks.Sum(
-                                    attack => (attack != null) ? attack.TrialCount : 0));
-                        default:    // unreachable
-                            return match.ToString();
-                    }
+                    return this.ToNumberString(
+                        this.allScoreData.CardAttacks.Sum(getCountWithNullCheck));
                 else if (new Range<int>(1, NumCards).Contains(number))
-                {
-                    var attack = this.allScoreData.CardAttacks[number - 1];
-                    if (attack != null)
-                        switch (type)
-                        {
-                            case 1:     // clear count
-                                return this.ToNumberString(attack.ClearCount);
-                            case 2:     // trial count
-                                return this.ToNumberString(attack.TrialCount);
-                            default:    // unreachable
-                                return match.ToString();
-                        }
-                    else
-                        return "0";
-                }
+                    return this.ToNumberString(
+                        getCountWithNullCheck(this.allScoreData.CardAttacks[number - 1]));
                 else
                     return match.ToString();
             });
@@ -717,8 +706,7 @@ namespace ThScoreFileConverter
                     var attack = this.allScoreData.CardAttacks[number - 1];
                     if (type == "N")
                         return ((attack != null) && attack.HasTried())
-                            ? Encoding.Default.GetString(attack.CardName).Split('\0')[0]
-                            : "??????????";
+                            ? Encoding.Default.GetString(attack.CardName).Split('\0')[0] : "??????????";
                     else
                     {
                         if ((attack != null) && attack.HasTried())
@@ -751,29 +739,24 @@ namespace ThScoreFileConverter
                 var stage = Array.IndexOf(stageShortWithTotalArray, match.Groups[1].Value.ToUpper());
                 var type = int.Parse(match.Groups[2].Value);
 
-                Func<CardAttack, bool> findCard = (attack => false);
+                Func<CardAttack, bool> checkNotNull = (attack => attack != null);
+                Func<CardAttack, bool> findByStage = (attack => true);
+                Func<CardAttack, bool> findByType = (attack => true);
 
-                if (stage == 0)     // total
+                if (stage == 0)
                 {
-                    if (type == 1)
-                        findCard = (attack => (attack != null) && (attack.ClearCount > 0));
-                    else
-                        findCard = (attack => (attack != null) && (attack.TrialCount > 0));
+                    // Do nothing
                 }
                 else
-                {
-                    var st = (Stage)(stage - 1);
-                    if (type == 1)
-                        findCard = (attack =>
-                            (attack != null) &&
-                            StageCardTable[st].Contains(attack.Number) && (attack.ClearCount > 0));
-                    else
-                        findCard = (attack =>
-                            (attack != null) &&
-                            StageCardTable[st].Contains(attack.Number) && (attack.TrialCount > 0));
-                }
+                    findByStage = (attack => StageCardTable[(Stage)(stage - 1)].Contains(attack.Number));
 
-                return this.allScoreData.CardAttacks.Count(findCard).ToString();
+                if (type == 1)
+                    findByType = (attack => attack.ClearCount > 0);
+                else
+                    findByType = (attack => attack.TrialCount > 0);
+
+                var and = new Utils.And<CardAttack>(checkNotNull, findByStage, findByType);
+                return this.allScoreData.CardAttacks.Count(and).ToString();
             });
             return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
@@ -793,9 +776,7 @@ namespace ThScoreFileConverter
                 var key = new CharaLevelPair(chara, level);
                 if (this.allScoreData.Rankings.ContainsKey(key))
                 {
-                    var stageProgress = 0;
-                    foreach (var rank in this.allScoreData.Rankings[key])
-                        stageProgress = Math.Max(stageProgress, rank.StageProgress);
+                    var stageProgress = this.allScoreData.Rankings[key].Max(rank => rank.StageProgress);
                     if (stageProgress == (int)Stage.Extra + 1)
                         return "Not Clear";
                     else if (stageProgress < StageProgressArray.Length)

@@ -1003,15 +1003,10 @@ namespace ThScoreFileConverter
 
         protected override string[] FilterBestShotFiles(string[] files)
         {
-            var bestshots = new List<string>();
             var pattern = string.Format(@"bs2?_({0})_[1-9].dat", string.Join("|", LevelArray));
             var regex = new Regex(pattern, RegexOptions.IgnoreCase);
 
-            foreach (var file in files)
-                if (regex.IsMatch(Path.GetFileName(file)))
-                    bestshots.Add(file);
-
-            return bestshots.ToArray();
+            return files.Where(file => regex.IsMatch(Path.GetFileName(file))).ToArray();
         }
 
         protected override void ConvertBestShot(Stream input, Stream output)
