@@ -50,12 +50,12 @@ ThScoreFileConverter （以下、本ツール）は、東方 Project の各作�
 * 東方星蓮船 ver. 1.00b
 * ダブルスポイラー ver. 1.00a
 * 妖精大戦争 ver. 1.00a
+* 東方神霊廟 ver. 1.00c
 
 ### 対応予定あり {: #WillSupport }
 
 以下作品については、本ツール作者の原作プレイ進捗状況に伴って今後対応予定です：
 
-* 東方神霊廟
 * 東方輝針城
 
 以下作品についても上記と同様ですが、本ツール作者は格ゲーが弾幕 STG 以上に下手なので、後回しです：
@@ -69,25 +69,22 @@ ThScoreFileConverter （以下、本ツール）は、東方 Project の各作�
 
 ## Environments {: #Environments }
 
-.NET Framework 3.0 以上がインストールされている環境（[参考記事][@IT]）であれば動作すると思います。
+.NET Framework 3.5 がインストールされている環境（[参考記事][@IT]）であれば動作すると思います。
 
   [@IT]: http://www.atmarkit.co.jp/ait/articles/1211/16/news093.html "Windows TIPS: .NET Frameworkのバージョンを整理する - @IT"
 
 ### ビルド環境 {: #BuiltEnv }
 
-* Windows 7 Professional SP1 (64bit) + .NET Framework 3.0
+* Windows 7 Professional SP1 (64bit)
+* Visual Studio Express 2012 for Windows Desktop Update 4
+* .NET Framework 3.5 Client Profile
 
 ### 動作確認済み環境 {: #TestedEnv }
 
-* Windows XP Home Edition SP3 (32bit)  
-以下をインストール済み。実際どれで動いているのかはよく分かっていない…（もちろん、ちゃんと調べれば分かるだろうけど、面倒）
-    * .NET Framework 2.0 SP2 （これで動かないのは確か）
-    * .NET Framework 3.0 SP2
-    * .NET Framework 3.5 SP1
-    * .NET Framework 4.0 Client Profile
-* Windows 7 Professional SP1 (64bit) + .NET Framework 4.5
-* Windows 8 (64bit) + .NET Framework 4.5 （Ver.1.2.0.0 までは確認済み）
-* Windows 8.1 (64bit) + .NET Framework 4.5
+* Windows XP Home Edition SP3 (32bit) + .NET Framework 3.5 SP1
+* Windows 7 Professional SP1 (64bit) + .NET Framework 3.5 SP1
+* Windows 8 (64bit) + .NET Framework 3.5 SP1 （Ver.1.2.0.0 までは確認済み）
+* Windows 8.1 (64bit) + .NET Framework 3.5 SP1
 
 ----------------------------------------
 
@@ -191,6 +188,16 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ----------------------------------------
 
 ## ChangeLog {: #ChangeLog }
+
+2014/01/27 ver. 1.5.0.0
+
+* 東方神霊廟に対応
+* 東方星蓮船
+    * プラクティススコアのテンプレートファイルの誤記を修正
+* 東方妖々夢
+    * [スペルカード蒐集率](manual/format.html#T07CRG)で難易度を指定した場合に、ステージの指定に関係なく全ステージ合計の値を出力していたため修正
+* [ビルド環境](#BuiltEnv)を .NET Framework 3.0 から 3.5 に変更
+* 全体的にソースコードを整理
 
 2013/12/10 ver. 1.4.0.0
 
