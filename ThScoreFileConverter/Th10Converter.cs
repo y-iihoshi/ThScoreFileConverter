@@ -170,9 +170,10 @@ namespace ThScoreFileConverter
 
             public override void ReadFrom(BinaryReader reader)
             {
-                var levels = Enum.GetValues(typeof(Level));
+                var levels = Utils.GetEnumerator<Level>();
+                var stages = Utils.GetEnumerator<Stage>();
                 this.Chara = (CharaWithTotal)reader.ReadInt32();
-                foreach (Level level in levels)
+                foreach (var level in levels)
                 {
                     if (!this.Rankings.ContainsKey(level))
                         this.Rankings.Add(level, new ScoreData[10]);
@@ -185,23 +186,21 @@ namespace ThScoreFileConverter
                 }
                 this.TotalPlayCount = reader.ReadInt32();
                 this.PlayTime = reader.ReadInt32();
-                foreach (Level level in levels)
+                foreach (var level in levels)
                 {
                     var clearCount = reader.ReadInt32();
                     if (!this.ClearCounts.ContainsKey(level))
                         this.ClearCounts.Add(level, clearCount);
                 }
-                foreach (Level level in levels)
-                    if (level != Level.Extra)
-                        foreach (Stage stage in Enum.GetValues(typeof(Stage)))
-                            if (stage != Stage.Extra)
-                            {
-                                var practice = new Practice();
-                                practice.ReadFrom(reader);
-                                var key = new LevelStagePair(level, stage);
-                                if (!this.Practices.ContainsKey(key))
-                                    this.Practices.Add(key, practice);
-                            }
+                foreach (var level in levels.Where(lv => lv != Level.Extra))
+                    foreach (var stage in stages.Where(st => st != Stage.Extra))
+                    {
+                        var practice = new Practice();
+                        practice.ReadFrom(reader);
+                        var key = new LevelStagePair(level, stage);
+                        if (!this.Practices.ContainsKey(key))
+                            this.Practices.Add(key, practice);
+                    }
                 for (var number = 0; number < Th10Converter.NumCards; number++)
                 {
                     var card = new SpellCard();

@@ -324,12 +324,12 @@ namespace ThScoreFileConverter
 
             public override void ReadFrom(BinaryReader reader)
             {
-                var levels = Enum.GetValues(typeof(Level));
+                var levels = Utils.GetEnumerator<Level>();
                 this.Unknown1 = reader.ReadUInt32();
-                foreach (int level in levels)
-                    this.StoryFlags[level] = (PlayableStageFlag)reader.ReadUInt16();
-                foreach (int level in levels)
-                    this.PracticeFlags[level] = (PlayableStageFlag)reader.ReadUInt16();
+                foreach (var level in levels)
+                    this.StoryFlags[(int)level] = (PlayableStageFlag)reader.ReadUInt16();
+                foreach (var level in levels)
+                    this.PracticeFlags[(int)level] = (PlayableStageFlag)reader.ReadUInt16();
                 this.Unknown2 = reader.ReadByte();
                 this.Chara = (CharaWithTotal)reader.ReadByte();
                 this.Unknown3 = reader.ReadUInt16();
@@ -399,12 +399,12 @@ namespace ThScoreFileConverter
 
             public void ReadFrom(BinaryReader reader)
             {
-                var charas = Enum.GetValues(typeof(CharaWithTotal));
-                foreach (CharaWithTotal chara in charas)
+                var charas = Utils.GetEnumerator<CharaWithTotal>();
+                foreach (var chara in charas)
                     this.MaxBonuses.Add(chara, reader.ReadUInt32());
-                foreach (CharaWithTotal chara in charas)
+                foreach (var chara in charas)
                     this.TrialCounts.Add(chara, reader.ReadInt32());
-                foreach (CharaWithTotal chara in charas)
+                foreach (var chara in charas)
                     this.ClearCounts.Add(chara, reader.ReadInt32());
             }
         }
@@ -435,19 +435,19 @@ namespace ThScoreFileConverter
             {
                 // The fields for Stage.Extra and Level.Extra actually exist...
 
-                var stages = Enum.GetValues(typeof(Stage));
-                var levels = Enum.GetValues(typeof(Level));
+                var stages = Utils.GetEnumerator<Stage>();
+                var levels = Utils.GetEnumerator<Level>();
                 this.Unknown1 = reader.ReadUInt32();
-                foreach (Stage stage in stages)
-                    foreach (Level level in levels)
+                foreach (var stage in stages)
+                    foreach (var level in levels)
                     {
                         var key = new StageLevelPair(stage, level);
                         if (!this.PlayCounts.ContainsKey(key))
                             this.PlayCounts.Add(key, 0);
                         this.PlayCounts[key] = reader.ReadInt32();
                     }
-                foreach (Stage stage in stages)
-                    foreach (Level level in levels)
+                foreach (var stage in stages)
+                    foreach (var level in levels)
                     {
                         var key = new StageLevelPair(stage, level);
                         if (!this.HighScores.ContainsKey(key))
@@ -513,7 +513,7 @@ namespace ThScoreFileConverter
                     reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), false);
                 this.TotalPlayTime = new Time(
                     reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), false);
-                foreach (Level level in Enum.GetValues(typeof(Level)))
+                foreach (var level in Utils.GetEnumerator<Level>())
                 {
                     var playCount = new PlayCount();
                     playCount.ReadFrom(reader);
@@ -544,7 +544,7 @@ namespace ThScoreFileConverter
             public void ReadFrom(BinaryReader reader)
             {
                 this.TotalTrial = reader.ReadInt32();
-                foreach (Chara chara in Enum.GetValues(typeof(Chara)))
+                foreach (var chara in Utils.GetEnumerator<Chara>())
                     this.Trials.Add(chara, reader.ReadInt32());
                 this.Unknown = reader.ReadUInt32();
                 this.TotalClear = reader.ReadInt32();

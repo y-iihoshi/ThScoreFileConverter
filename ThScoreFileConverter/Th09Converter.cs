@@ -180,7 +180,7 @@ namespace ThScoreFileConverter
 
             public override void ReadFrom(BinaryReader reader)
             {
-                var charas = Enum.GetValues(typeof(Chara));
+                var charas = Utils.GetEnumerator<Chara>();
                 this.Unknown = reader.ReadUInt32();
                 this.TotalRunningTime = new Time(
                     reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), false);
@@ -188,13 +188,13 @@ namespace ThScoreFileConverter
                     reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), false);
                 this.BgmFlags = reader.ReadBytes(19);
                 this.Padding = reader.ReadBytes(13);
-                foreach (Chara chara in charas)
+                foreach (var chara in charas)
                     this.MatchFlags.Add(chara, reader.ReadByte());
-                foreach (Chara chara in charas)
+                foreach (var chara in charas)
                     this.StoryFlags.Add(chara, reader.ReadByte());
-                foreach (Chara chara in charas)
+                foreach (var chara in charas)
                     this.ExtraFlags.Add(chara, reader.ReadByte());
-                foreach (Chara chara in charas)
+                foreach (var chara in charas)
                 {
                     var clearCount = new ClearCount();
                     clearCount.ReadFrom(reader);
@@ -269,7 +269,7 @@ namespace ThScoreFileConverter
 
             public void ReadFrom(BinaryReader reader)
             {
-                foreach (Level level in Enum.GetValues(typeof(Level)))
+                foreach (var level in Utils.GetEnumerator<Level>())
                     this.Counts.Add(level, reader.ReadInt32());
                 this.Unknown = reader.ReadUInt32();
             }
@@ -419,8 +419,6 @@ namespace ThScoreFileConverter
             var reader = new BinaryReader(input);
             var allScoreData = new AllScoreData();
             var chapter = new Chapter();
-            var charas = Enum.GetValues(typeof(Chara));
-            var levels = Enum.GetValues(typeof(Level));
 
             reader.ReadBytes(0x18);
 
@@ -486,8 +484,10 @@ namespace ThScoreFileConverter
                 // It's OK, do nothing.
             }
 
+            var numCharas = Enum.GetValues(typeof(Chara)).Length;
+            var numLevels = Enum.GetValues(typeof(Level)).Length;
             if ((allScoreData.Header != null) &&
-                (allScoreData.Rankings.Count == (charas.Length * levels.Length)) &&
+                (allScoreData.Rankings.Count == numCharas * numLevels) &&
                 (allScoreData.PlayList != null) &&
                 (allScoreData.LastName != null) &&
                 (allScoreData.VersionInfo != null))

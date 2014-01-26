@@ -302,17 +302,17 @@ namespace ThScoreFileConverter
 
             public override void ReadFrom(BinaryReader reader)
             {
-                var charas = Enum.GetValues(typeof(CharaWithTotal));
+                var charas = Utils.GetEnumerator<CharaWithTotal>();
                 this.Unknown1 = reader.ReadUInt32();
-                foreach (CharaWithTotal chara in charas)
+                foreach (var chara in charas)
                     this.MaxBonuses.Add(chara, reader.ReadUInt32());
                 this.Number = reader.ReadInt16();
                 this.Unknown2 = reader.ReadByte();
                 this.CardName = reader.ReadBytes(0x30);
                 this.Unknown3 = reader.ReadByte();
-                foreach (CharaWithTotal chara in charas)
+                foreach (var chara in charas)
                     this.TrialCounts.Add(chara, reader.ReadUInt16());
-                foreach (CharaWithTotal chara in charas)
+                foreach (var chara in charas)
                     this.ClearCounts.Add(chara, reader.ReadUInt16());
             }
 
@@ -383,7 +383,7 @@ namespace ThScoreFileConverter
                     reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), false);
                 this.TotalPlayTime = new Time(
                     reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), false);
-                foreach (LevelWithTotal level in Enum.GetValues(typeof(LevelWithTotal)))
+                foreach (var level in Utils.GetEnumerator<LevelWithTotal>())
                 {
                     var playCount = new PlayCount();
                     playCount.ReadFrom(reader);
@@ -410,7 +410,7 @@ namespace ThScoreFileConverter
             public void ReadFrom(BinaryReader reader)
             {
                 this.TotalTrial = reader.ReadInt32();
-                foreach (Chara chara in Enum.GetValues(typeof(Chara)))
+                foreach (var chara in Utils.GetEnumerator<Chara>())
                     this.Trials.Add(chara, reader.ReadInt32());
                 this.TotalRetry = reader.ReadInt32();
                 this.TotalClear = reader.ReadInt32();

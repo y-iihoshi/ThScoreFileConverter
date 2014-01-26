@@ -188,9 +188,10 @@ namespace ThScoreFileConverter
 
             public override void ReadFrom(BinaryReader reader)
             {
-                var levels = Enum.GetValues(typeof(LevelPractice));
+                var levels = Utils.GetEnumerator<LevelPractice>();
+                var stages = Utils.GetEnumerator<StagePractice>();
                 this.Chara = (CharaWithTotal)reader.ReadInt32();
-                foreach (LevelPractice level in levels)
+                foreach (var level in levels)
                 {
                     if (!this.Rankings.ContainsKey(level))
                         this.Rankings.Add(level, new ScoreData[10]);
@@ -204,22 +205,22 @@ namespace ThScoreFileConverter
                 this.Unknown1 = reader.ReadBytes(0x118);
                 this.TotalPlayCount = reader.ReadInt32();
                 this.PlayTime = reader.ReadInt32();
-                foreach (LevelPractice level in levels)
+                foreach (var level in levels)
                 {
                     var clearCount = reader.ReadInt32();
                     if (!this.ClearCounts.ContainsKey(level))
                         this.ClearCounts.Add(level, clearCount);
                 }
                 this.Unknown2 = reader.ReadBytes(0x04);
-                foreach (Level level in Enum.GetValues(typeof(Level)))
+                foreach (var level in Utils.GetEnumerator<Level>())
                 {
                     var clearFlag = reader.ReadInt32();
                     if (!this.ClearFlags.ContainsKey(level))
                         this.ClearFlags.Add(level, clearFlag);
                 }
                 this.Unknown3 = reader.ReadBytes(0x08);
-                foreach (LevelPractice level in levels)
-                    foreach (StagePractice stage in Enum.GetValues(typeof(StagePractice)))
+                foreach (var level in levels)
+                    foreach (var stage in stages)
                     {
                         var practice = new Practice();
                         practice.ReadFrom(reader);
