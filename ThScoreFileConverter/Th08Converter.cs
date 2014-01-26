@@ -955,20 +955,22 @@ namespace ThScoreFileConverter
                     case "E":   // human rate
                         return string.Format("{0:F2}", score.HumanRate / 100.0) + "%";
                     case "F":   // got spell cards
-                        var list = new List<string>();
-                        for (var index = 0; index < NumCards; index++)
                         {
-                            var attack = this.allScoreData.CardAttacks[index];
-                            if (score.CardFlags[index] > 0)
+                            var list = new List<string>();
+                            for (var index = 0; index < NumCards; index++)
                             {
-                                var str = string.Format(
-                                    "No.{0:D3} {1}",
-                                    attack.Number + 1,
-                                    Encoding.Default.GetString(attack.CardName).TrimEnd('\0'));
-                                list.Add(str);
+                                var attack = this.allScoreData.CardAttacks[index];
+                                if (score.CardFlags[index] > 0)
+                                {
+                                    var str = string.Format(
+                                        "No.{0:D3} {1}",
+                                        attack.Number + 1,
+                                        Encoding.Default.GetString(attack.CardName).TrimEnd('\0'));
+                                    list.Add(str);
+                                }
                             }
+                            return string.Join("\n", list.ToArray());
                         }
-                        return string.Join("\n", list.ToArray());
                     case "G":   // number of got spell cards
                         return score.CardFlags.Count(flag => flag > 0).ToString();
                     default:    // unreachable
@@ -1335,9 +1337,11 @@ namespace ThScoreFileConverter
                     case "PR":  // practice count
                         return this.ToNumberString(playCount.TotalPractice);
                     default:
-                        var chara = Utils.ParseEnum<CharaShortWithTotal>(match.Groups[2].Value, true);
-                        return this.ToNumberString((chara == CharaShortWithTotal.TL)
-                            ? playCount.TotalTrial : playCount.Trials[(Chara)chara]);
+                        {
+                            var chara = Utils.ParseEnum<CharaShortWithTotal>(match.Groups[2].Value, true);
+                            return this.ToNumberString((chara == CharaShortWithTotal.TL)
+                                ? playCount.TotalTrial : playCount.Trials[(Chara)chara]);
+                        }
                 }
             });
             return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);

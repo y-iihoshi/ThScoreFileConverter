@@ -459,15 +459,19 @@ namespace ThScoreFileConverter
                     switch (chapter.Signature)
                     {
                         case "CR":
-                            var clearData = new ClearData(chapter);
-                            clearData.ReadFrom(reader);
-                            if (!allScoreData.ClearData.ContainsKey(clearData.Chara))
-                                allScoreData.ClearData.Add(clearData.Chara, clearData);
+                            {
+                                var clearData = new ClearData(chapter);
+                                clearData.ReadFrom(reader);
+                                if (!allScoreData.ClearData.ContainsKey(clearData.Chara))
+                                    allScoreData.ClearData.Add(clearData.Chara, clearData);
+                            }
                             break;
                         case "ST":
-                            var status = new Status(chapter);
-                            status.ReadFrom(reader);
-                            allScoreData.Status = status;
+                            {
+                                var status = new Status(chapter);
+                                status.ReadFrom(reader);
+                                allScoreData.Status = status;
+                            }
                             break;
                         default:
                             // 12 means the total size of Signature, Unknown, Checksum, and Size.

@@ -502,14 +502,18 @@ namespace ThScoreFileConverter
                     switch (chapter.Signature)
                     {
                         case "SC":
-                            var score = new Score(chapter);
-                            score.ReadFrom(reader);
-                            allScoreData.Scores.Add(score);
+                            {
+                                var score = new Score(chapter);
+                                score.ReadFrom(reader);
+                                allScoreData.Scores.Add(score);
+                            }
                             break;
                         case "ST":
-                            var status = new Status(chapter);
-                            status.ReadFrom(reader);
-                            allScoreData.Status = status;
+                            {
+                                var status = new Status(chapter);
+                                status.ReadFrom(reader);
+                                allScoreData.Status = status;
+                            }
                             break;
                         default:
                             // 12 means the total size of Signature, Unknown, Size and Checksum.
@@ -704,13 +708,15 @@ namespace ThScoreFileConverter
                         case 5:     // slow rate
                             return this.bestshots[key].Header.SlowRate.ToString("F6") + "%";
                         case 6:     // date & time
-                            var score = this.allScoreData.Scores.Find(
-                                elem => (elem != null) && elem.LevelScene.Equals(key));
-                            if (score != null)
-                                return new DateTime(1970, 1, 1).AddSeconds(score.DateTime)
-                                    .ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
-                            else
-                                return "----/--/-- --:--:--";
+                            {
+                                var score = this.allScoreData.Scores.Find(
+                                    elem => (elem != null) && elem.LevelScene.Equals(key));
+                                if (score != null)
+                                    return new DateTime(1970, 1, 1).AddSeconds(score.DateTime)
+                                        .ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
+                                else
+                                    return "----/--/-- --:--:--";
+                            }
                         default:    // unreachable
                             return match.ToString();
                     }

@@ -1042,9 +1042,11 @@ namespace ThScoreFileConverter
                     case "RT":  // retry count
                         return this.ToNumberString(playCount.TotalRetry);
                     default:
-                        var chara = Utils.ParseEnum<CharaShortWithTotal>(match.Groups[2].Value, true);
-                        return this.ToNumberString((chara == CharaShortWithTotal.TL)
-                            ? playCount.TotalTrial : playCount.Trials[(Chara)chara]);
+                        {
+                            var chara = Utils.ParseEnum<CharaShortWithTotal>(match.Groups[2].Value, true);
+                            return this.ToNumberString((chara == CharaShortWithTotal.TL)
+                                ? playCount.TotalTrial : playCount.Trials[(Chara)chara]);
+                        }
                 }
             });
             return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);

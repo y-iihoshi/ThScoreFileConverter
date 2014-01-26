@@ -638,14 +638,18 @@ namespace ThScoreFileConverter
                     switch (chapter.Signature)
                     {
                         case "SC":
-                            var score = new Score(chapter);
-                            score.ReadFrom(reader);
-                            allScoreData.Scores.Add(score);
+                            {
+                                var score = new Score(chapter);
+                                score.ReadFrom(reader);
+                                allScoreData.Scores.Add(score);
+                            }
                             break;
                         case "ST":
-                            var status = new Status(chapter);
-                            status.ReadFrom(reader);
-                            allScoreData.Status = status;
+                            {
+                                var status = new Status(chapter);
+                                status.ReadFrom(reader);
+                                allScoreData.Status = status;
+                            }
                             break;
                         default:
                             // 12 means the total size of Signature, Unknown, Size and Checksum.

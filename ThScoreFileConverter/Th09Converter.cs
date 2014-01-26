@@ -432,36 +432,46 @@ namespace ThScoreFileConverter
                     switch (chapter.Signature)
                     {
                         case "TH9K":
-                            var header = new Header(chapter);
-                            header.ReadFrom(reader);
-                            allScoreData.Header = header;
+                            {
+                                var header = new Header(chapter);
+                                header.ReadFrom(reader);
+                                allScoreData.Header = header;
+                            }
                             break;
 
                         case "HSCR":
-                            var score = new HighScore(chapter);
-                            score.ReadFrom(reader);
-                            var key = new CharaLevelPair(score.Chara, score.Level);
-                            if (!allScoreData.Rankings.ContainsKey(key))
-                                allScoreData.Rankings.Add(key, new HighScore[5]);
-                            allScoreData.Rankings[key][score.Rank] = score;
+                            {
+                                var score = new HighScore(chapter);
+                                score.ReadFrom(reader);
+                                var key = new CharaLevelPair(score.Chara, score.Level);
+                                if (!allScoreData.Rankings.ContainsKey(key))
+                                    allScoreData.Rankings.Add(key, new HighScore[5]);
+                                allScoreData.Rankings[key][score.Rank] = score;
+                            }
                             break;
 
                         case "PLST":
-                            var playList = new PlayList(chapter);
-                            playList.ReadFrom(reader);
-                            allScoreData.PlayList = playList;
+                            {
+                                var playList = new PlayList(chapter);
+                                playList.ReadFrom(reader);
+                                allScoreData.PlayList = playList;
+                            }
                             break;
 
                         case "LSNM":
-                            var lastName = new LastName(chapter);
-                            lastName.ReadFrom(reader);
-                            allScoreData.LastName = lastName;
+                            {
+                                var lastName = new LastName(chapter);
+                                lastName.ReadFrom(reader);
+                                allScoreData.LastName = lastName;
+                            }
                             break;
 
                         case "VRSM":
-                            var versionInfo = new VersionInfo(chapter);
-                            versionInfo.ReadFrom(reader);
-                            allScoreData.VersionInfo = versionInfo;
+                            {
+                                var versionInfo = new VersionInfo(chapter);
+                                versionInfo.ReadFrom(reader);
+                                allScoreData.VersionInfo = versionInfo;
+                            }
                             break;
 
                         default:
@@ -523,8 +533,10 @@ namespace ThScoreFileConverter
                     case 2:     // score
                         return this.ToNumberString((score.Score * 10) + score.ContinueCount);
                     case 3:     // date
-                        var date = Encoding.Default.GetString(score.Date).Split('\0')[0];
-                        return (date != "--/--") ? date : "--/--/--";
+                        {
+                            var date = Encoding.Default.GetString(score.Date).Split('\0')[0];
+                            return (date != "--/--") ? date : "--/--/--";
+                        }
                     default:    // unreachable
                         return match.ToString();
                 }
