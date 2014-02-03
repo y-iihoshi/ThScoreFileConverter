@@ -54,7 +54,9 @@ namespace ThScoreFileConverter
         private static readonly string[] StageProgressArray =
         {
             "-------", "Stage 1", "Stage 2", "Stage 3", "Stage 4", "Stage 5", "Stage 6",
-            "Not Clear", "All Clear"
+            "Not Clear", "All Clear",
+            // "Extra Clear"
+            "All Clear"
         };
 
         private const int NumCards = 127;
