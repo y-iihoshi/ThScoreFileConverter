@@ -174,7 +174,7 @@ Web からダウンロードした zip ファイルを任意の場所に展開�
 
 ## License {: #License }
 
-Copyright (c) 2013, IIHOSHI Yoshinori  
+Copyright (c) 2013-2014, IIHOSHI Yoshinori  
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -188,6 +188,11 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ----------------------------------------
 
 ## ChangeLog {: #ChangeLog }
+
+2014/02/03 ver. 1.5.1.0
+
+* 東方神霊廟
+    * [スコアランキング](manual/format.html#T13SCR)の到達ステージと[クリア達成度](manual/format.html#T13CLEAR)において、Extra クリア済みの場合に <samp>-------</samp> と出力していたため修正
 
 2014/01/27 ver. 1.5.0.0
 
