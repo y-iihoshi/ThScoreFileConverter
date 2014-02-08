@@ -625,7 +625,7 @@ namespace ThScoreFileConverter
                 else
                     findByType = (card => card.TrialCount > 0);
 
-                var and = new Utils.And<SpellCard>(checkNotNull, findByLevel, findByStage, findByType);
+                var and = Utils.MakeAndPredicate(checkNotNull, findByLevel, findByStage, findByType);
                 return this.allScoreData.ClearData[(CharaWithTotal)chara].Cards.Count(and).ToString();
             });
             return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);

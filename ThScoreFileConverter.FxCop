@@ -5501,34 +5501,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Utils+And`1">
-          <Messages>
-           <Message Id="And" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>'Utils.And&lt;T&gt;'</Item>
-             <Item>And</Item>
-            </Issue>
-           </Message>
-           <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Created="2014-02-08 15:40:17Z">
-            <Issue>
-             <Item>'Utils.And&lt;T&gt;'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-          <Members>
-           <Member Name="#op_Implicit(ThScoreFileConverter.Utils+And`1&lt;!0&gt;):System.Func`2&lt;!0,System.Boolean&gt;">
-            <Messages>
-             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Created="2014-02-08 15:40:17Z">
-              <Issue Name="Multiple">
-               <Item>ToXXX</Item>
-               <Item>FromXXX</Item>
-               <Item>'Utils.And&lt;T&gt;.implicit operator Func&lt;T, bool&gt;(Utils.And&lt;T&gt;)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Utils+IBinaryReadable">
           <Messages>
            <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Created="2014-02-08 15:40:17Z">
@@ -10852,34 +10824,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Utils+And`1">
-          <Messages>
-           <Message Id="And" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>'Utils.And&lt;T&gt;'</Item>
-             <Item>And</Item>
-            </Issue>
-           </Message>
-           <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Created="2014-02-08 15:40:17Z">
-            <Issue>
-             <Item>'Utils.And&lt;T&gt;'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-          <Members>
-           <Member Name="#op_Implicit(ThScoreFileConverter.Utils+And`1&lt;!0&gt;):System.Func`2&lt;!0,System.Boolean&gt;">
-            <Messages>
-             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Created="2014-02-08 15:40:17Z">
-              <Issue Name="Multiple">
-               <Item>ToXXX</Item>
-               <Item>FromXXX</Item>
-               <Item>'Utils.And&lt;T&gt;.implicit operator Func&lt;T, bool&gt;(Utils.And&lt;T&gt;)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Utils+IBinaryReadable">
           <Messages>
            <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Created="2014-02-08 15:40:17Z">
@@ -10929,9 +10873,6 @@
    <Rule TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720">
     <Resolution Name="LanguageIndependentMemberParameter">In member {0}, consider replacing the data type identifier '{1}' in parameter name {2} with a more generic term, such as 'value'.</Resolution>
    </Rule>
-   <Rule TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716">
-    <Resolution Name="Type">Rename type {0} so that it no longer conflicts with the reserved language keyword '{1}'. Using a reserved keyword as the name of a type makes it harder for consumers in other languages to use the type.</Resolution>
-   </Rule>
    <Rule TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033">
     <Resolution Name="Default">Make {0} sealed (a breaking change if this class has previously shipped), implement the method non-explicitly, or implement a new method that exposes the functionality of {1} and is visible to derived classes.</Resolution>
    </Rule>
@@ -10946,9 +10887,6 @@
    </Rule>
    <Rule TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034">
     <Resolution Name="Default">Do not nest type {0}. Alternatively, change its accessibility so that it is not externally visible.</Resolution>
-   </Rule>
-   <Rule TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225">
-    <Resolution Name="Multiple">Provide a method named '{0}' or '{1}' as an alternate for operator {2}.</Resolution>
    </Rule>
    <Rule TypeName="PropertiesShouldNotBeWriteOnly" Category="Microsoft.Design" CheckId="CA1044">
     <Resolution Name="MakeMoreAccessible">Because the property getter for {0} is less visible than its setter, either increase the accessibility of its getter or decrease the accessibility of its setter.</Resolution>

@@ -1134,7 +1134,7 @@ namespace ThScoreFileConverter
                         break;
                 }
 
-                var and = new Utils.And<CardAttack>(checkNotNull, findByKindType, findByLevel, findByStage);
+                var and = Utils.MakeAndPredicate(checkNotNull, findByKindType, findByLevel, findByStage);
                 return this.allScoreData.CardAttacks.Count(and).ToString();
             });
             return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);

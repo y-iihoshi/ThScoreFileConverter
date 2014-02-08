@@ -692,7 +692,7 @@ namespace ThScoreFileConverter
                         break;
                 }
 
-                var and = new Utils.And<SpellCard>(checkNotNull, findByKindType, findByLevel, findByStage);
+                var and = Utils.MakeAndPredicate(checkNotNull, findByKindType, findByLevel, findByStage);
                 return this.allScoreData.ClearData[(CharaWithTotal)chara].Cards.Count(and).ToString();
             });
             return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);

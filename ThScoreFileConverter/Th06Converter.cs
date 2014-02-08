@@ -759,7 +759,7 @@ namespace ThScoreFileConverter
                 else
                     findByType = (attack => attack.TrialCount > 0);
 
-                var and = new Utils.And<CardAttack>(checkNotNull, findByStage, findByType);
+                var and = Utils.MakeAndPredicate(checkNotNull, findByStage, findByType);
                 return this.allScoreData.CardAttacks.Count(and).ToString();
             });
             return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);

@@ -106,48 +106,14 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// Represents a logical-and predicate.
+        /// Makes a logical-and predicate by one or more predicates.
         /// </summary>
-        /// <typeparam name="T">Type of the instance to evaluate.</typeparam>
-        public class And<T>
+        /// <typeparam name="T">The type of the instance to evaluate.</typeparam>
+        /// <param name="predicates">The predicates combined with logical-and operators.</param>
+        /// <returns>A logical-and predicate.</returns>
+        public static Func<T, bool> MakeAndPredicate<T>(params Func<T, bool>[] predicates)
         {
-            /// <summary>
-            /// The predicates combined with logical-and operators.
-            /// </summary>
-            private Func<T, bool>[] predicates;
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="And{T}"/> class.
-            /// </summary>
-            /// <param name="predicates">The predicates combined with logical-and operators.</param>
-            public And(params Func<T, bool>[] predicates)
-            {
-                this.predicates = predicates;
-            }
-
-            /// <summary>
-            /// Casts the instance of the <see cref="And{T}"/> class to an instance of the
-            /// <c>Func{T,bool}</c> class.
-            /// </summary>
-            /// <param name="from">The instance of the <see cref="And{T}"/> class to cast.</param>
-            /// <returns>An instance of the <c>Func{T,bool}</c> class.</returns>
-            public static implicit operator Func<T, bool>(And<T> from)
-            {
-                return from.Pred;
-            }
-
-            /// <summary>
-            /// Evaluates the instance of <typeparamref name="T"/> by all predicates of the current instance.
-            /// </summary>
-            /// <param name="obj">The instance to evaluate.</param>
-            /// <returns>
-            /// <c>true</c> if <paramref name="obj"/> satisfies all predicates of the current instance;
-            /// otherwise, <c>false</c>.
-            /// </returns>
-            private bool Pred(T obj)
-            {
-                return this.predicates.All(pred => pred(obj));
-            }
+            return arg => predicates.All(pred => pred(arg));
         }
     }
 }
