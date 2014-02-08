@@ -635,7 +635,7 @@ namespace ThScoreFileConverter
             {
                 var level = Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
                 var chara = Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
-                var rank = (int.Parse(match.Groups[3].Value) + 9) % 10;     // 1..9,0 -> 0..9
+                var rank = Utils.ToZeroBased(int.Parse(match.Groups[3].Value));
                 var type = int.Parse(match.Groups[4].Value);
 
                 var key = new CharaLevelPair(chara, level);

@@ -531,7 +531,7 @@ namespace ThScoreFileConverter
             {
                 var level = (Level)Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
                 var route = (RouteWithTotal)Utils.ParseEnum<RouteShort>(match.Groups[2].Value, true);
-                var rank = (int.Parse(match.Groups[3].Value) + 9) % 10;     // from [1..9, 0] to [0..9]
+                var rank = Utils.ToZeroBased(int.Parse(match.Groups[3].Value));
                 var type = int.Parse(match.Groups[4].Value);
 
                 if ((level == Level.Extra) && (route != RouteWithTotal.Extra))

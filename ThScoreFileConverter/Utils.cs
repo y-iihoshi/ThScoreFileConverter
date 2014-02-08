@@ -4,6 +4,11 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "StyleCop.CSharp.LayoutRules",
+    "SA1503:CurlyBracketsMustNotBeOmitted",
+    Justification = "Reviewed.")]
+
 namespace ThScoreFileConverter
 {
     using System;
@@ -130,6 +135,32 @@ namespace ThScoreFileConverter
         public static Func<T, bool> MakeAndPredicate<T>(params Func<T, bool>[] predicates)
         {
             return arg => predicates.All(pred => pred(arg));
+        }
+
+        /// <summary>
+        /// Converts an one digit value from one-based to zero-based.
+        /// </summary>
+        /// <param name="input">An one digit value to convert.</param>
+        /// <returns>A converted one digit value.</returns>
+        public static int ToZeroBased(int input)
+        {
+            if ((input < 0) || (9 < input))
+                throw new ArgumentOutOfRangeException("input");
+
+            return (input + 9) % 10;
+        }
+
+        /// <summary>
+        /// Converts an one digit value from zero-based to one-based.
+        /// </summary>
+        /// <param name="input">An one digit value to convert.</param>
+        /// <returns>A converted one digit value.</returns>
+        public static int ToOneBased(int input)
+        {
+            if ((input < 0) || (9 < input))
+                throw new ArgumentOutOfRangeException("input");
+
+            return (input + 1) % 10;
         }
     }
 }
