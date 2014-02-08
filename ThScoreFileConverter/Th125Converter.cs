@@ -25,6 +25,8 @@ namespace ThScoreFileConverter
     using System.IO;
     using System.Linq;
     using System.Runtime.InteropServices;
+    using System.Security;
+    using System.Security.Permissions;
     using System.Text;
     using System.Text.RegularExpressions;
 
@@ -700,7 +702,7 @@ namespace ThScoreFileConverter
                 @"%T125SCR([{0}])([{1}])([1-9])([1-5])",
                 Utils.JoinEnumNames<CharaShort>(string.Empty),
                 string.Join(string.Empty, LevelShortArray));
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var chara = (Chara)Utils.ParseEnum<CharaShort>(match.Groups[1].Value, true);
                 var level = match.Groups[2].Value.ToUpper();
@@ -745,7 +747,7 @@ namespace ThScoreFileConverter
             var pattern = string.Format(
                 @"%T125SCRTL([{0}])([12])([1-5])",
                 Utils.JoinEnumNames<CharaShort>(string.Empty));
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var chara = (Chara)Utils.ParseEnum<CharaShort>(match.Groups[1].Value, true);
                 var method = int.Parse(match.Groups[2].Value);
@@ -815,7 +817,7 @@ namespace ThScoreFileConverter
             var pattern = string.Format(
                 @"%T125CARD([{0}])([1-9])([12])",
                 string.Join(string.Empty, LevelShortArray));
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var level = match.Groups[1].Value.ToUpper();
                 var scene = int.Parse(match.Groups[2].Value);
@@ -843,7 +845,7 @@ namespace ThScoreFileConverter
         private string ReplaceTime(string input)
         {
             var pattern = @"%T125TIMEPLY";
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 return new Time(this.allScoreData.Status.TotalPlayTime * 10, false).ToLongString();
             });
@@ -857,7 +859,7 @@ namespace ThScoreFileConverter
                 @"%T125SHOT([{0}])([{1}])([1-9])",
                 Utils.JoinEnumNames<CharaShort>(string.Empty),
                 string.Join(string.Empty, LevelShortArray));
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var chara = (Chara)Utils.ParseEnum<CharaShort>(match.Groups[1].Value, true);
                 var level = match.Groups[2].Value.ToUpper();
@@ -940,7 +942,7 @@ namespace ThScoreFileConverter
                 @"%T125SHOTEX([{0}])([{1}])([1-9])([1-7])",
                 Utils.JoinEnumNames<CharaShort>(string.Empty),
                 string.Join(string.Empty, LevelShortArray));
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var chara = (Chara)Utils.ParseEnum<CharaShort>(match.Groups[1].Value, true);
                 var level = match.Groups[2].Value.ToUpper();
@@ -1034,15 +1036,25 @@ namespace ThScoreFileConverter
                 Lzss.Extract(input, decoded);
 
                 decoded.Seek(0, SeekOrigin.Begin);
-                var source = decoded.ToArray();
                 var bitmap = new Bitmap(header.Width, header.Height, PixelFormat.Format32bppArgb);
-                var bitmapData = bitmap.LockBits(
-                    new Rectangle(0, 0, header.Width, header.Height),
-                    ImageLockMode.WriteOnly,
-                    bitmap.PixelFormat);
-                var destination = bitmapData.Scan0;
-                Marshal.Copy(source, 0, destination, source.Length);
-                bitmap.UnlockBits(bitmapData);
+                try
+                {
+                    var permission = new SecurityPermission(SecurityPermissionFlag.UnmanagedCode);
+                    permission.Demand();
+
+                    var bitmapData = bitmap.LockBits(
+                        new Rectangle(0, 0, header.Width, header.Height),
+                        ImageLockMode.WriteOnly,
+                        bitmap.PixelFormat);
+                    var source = decoded.ToArray();
+                    var destination = bitmapData.Scan0;
+                    Marshal.Copy(source, 0, destination, source.Length);
+                    bitmap.UnlockBits(bitmapData);
+                }
+                catch (SecurityException e)
+                {
+                    Console.WriteLine(e.ToString());
+                }
 
                 bitmap.Save(output, ImageFormat.Png);
                 output.Flush();

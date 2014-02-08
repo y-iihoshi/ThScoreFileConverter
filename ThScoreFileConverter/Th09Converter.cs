@@ -518,7 +518,7 @@ namespace ThScoreFileConverter
                 @"%T09SCR([{0}])({1})([1-5])([1-3])",
                 Utils.JoinEnumNames<LevelShort>(string.Empty),
                 Utils.JoinEnumNames<CharaShort>("|"));
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var level = (Level)Enum.Parse(typeof(LevelShort), match.Groups[1].Value, true);
                 var chara = (Chara)Enum.Parse(typeof(CharaShort), match.Groups[2].Value, true);
@@ -549,7 +549,7 @@ namespace ThScoreFileConverter
         private string ReplaceTime(string input)
         {
             var pattern = @"%T09TIMEALL";
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 return this.allScoreData.PlayList.TotalRunningTime.ToLongString();
             });
@@ -563,7 +563,7 @@ namespace ThScoreFileConverter
                 @"%T09CLEAR([{0}])({1})([12])",
                 Utils.JoinEnumNames<LevelShort>(string.Empty),
                 Utils.JoinEnumNames<CharaShort>("|"));
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var level = (Level)Enum.Parse(typeof(LevelShort), match.Groups[1].Value, true);
                 var chara = (Chara)Enum.Parse(typeof(CharaShort), match.Groups[2].Value, true);

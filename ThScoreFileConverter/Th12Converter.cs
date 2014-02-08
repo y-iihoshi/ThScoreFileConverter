@@ -486,7 +486,7 @@ namespace ThScoreFileConverter
                 @"%T12SCR([{0}])({1})(\d)([1-5])",
                 Utils.JoinEnumNames<LevelShort>(string.Empty),
                 Utils.JoinEnumNames<CharaShort>("|"));
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var level = (Level)Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
                 var chara = (CharaWithTotal)Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
@@ -534,7 +534,7 @@ namespace ThScoreFileConverter
             var pattern = string.Format(
                 @"%T12C(\d{{3}})({0})([12])",
                 Utils.JoinEnumNames<CharaShortWithTotal>("|"));
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var number = int.Parse(match.Groups[1].Value);
                 var chara = Utils.ParseEnum<CharaShortWithTotal>(match.Groups[2].Value, true);
@@ -561,7 +561,7 @@ namespace ThScoreFileConverter
         private string ReplaceCard(string input)
         {
             var pattern = @"%T12CARD(\d{3})([NR])";
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var number = int.Parse(match.Groups[1].Value);
                 var type = match.Groups[2].Value.ToUpper();
@@ -594,7 +594,7 @@ namespace ThScoreFileConverter
                 @"%T12CRG([{0}])({1})([0-6])([12])",
                 Utils.JoinEnumNames<LevelShortWithTotal>(string.Empty),
                 Utils.JoinEnumNames<CharaShortWithTotal>("|"));
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var level = Utils.ParseEnum<LevelShortWithTotal>(match.Groups[1].Value, true);
                 var chara = Utils.ParseEnum<CharaShortWithTotal>(match.Groups[2].Value, true);
@@ -644,7 +644,7 @@ namespace ThScoreFileConverter
                 @"%T12CLEAR([{0}])({1})",
                 Utils.JoinEnumNames<LevelShort>(string.Empty),
                 Utils.JoinEnumNames<CharaShort>("|"));
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var level = (Level)Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
                 var chara = (CharaWithTotal)Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
@@ -679,7 +679,7 @@ namespace ThScoreFileConverter
             var pattern = string.Format(
                 @"%T12CHARA({0})([1-3])",
                 Utils.JoinEnumNames<CharaShortWithTotal>("|"));
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var chara =
                     (CharaWithTotal)Utils.ParseEnum<CharaShortWithTotal>(match.Groups[1].Value, true);
@@ -726,7 +726,7 @@ namespace ThScoreFileConverter
                 @"%T12CHARAEX([{0}])({1})([1-3])",
                 Utils.JoinEnumNames<LevelShortWithTotal>(string.Empty),
                 Utils.JoinEnumNames<CharaShortWithTotal>("|"));
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var level =
                     (LevelWithTotal)Utils.ParseEnum<LevelShortWithTotal>(match.Groups[1].Value, true);
@@ -774,7 +774,7 @@ namespace ThScoreFileConverter
                 @"%T12PRAC([{0}])({1})([1-6])",
                 Utils.JoinEnumNames<LevelShort>(string.Empty),
                 Utils.JoinEnumNames<CharaShort>("|"));
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var level = (Level)Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
                 var chara = (CharaWithTotal)Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);

@@ -80,6 +80,7 @@ namespace ThScoreFileConverter
             catch (Exception ex)
             {
                 this.ShowExceptionMessage(ex);
+                throw;
             }
         }
 
@@ -121,6 +122,7 @@ namespace ThScoreFileConverter
             catch (Exception ex)
             {
                 this.ShowExceptionMessage(ex);
+                throw;
             }
         }
 
@@ -176,6 +178,7 @@ namespace ThScoreFileConverter
             catch (Exception ex)
             {
                 this.ShowExceptionMessage(ex);
+                throw;
             }
         }
 
@@ -200,6 +203,7 @@ namespace ThScoreFileConverter
             catch (Exception ex)
             {
                 this.ShowExceptionMessage(ex);
+                throw;
             }
         }
 
@@ -223,6 +227,7 @@ namespace ThScoreFileConverter
             catch (Exception ex)
             {
                 this.ShowExceptionMessage(ex);
+                throw;
             }
         }
 
@@ -261,6 +266,7 @@ namespace ThScoreFileConverter
             catch (Exception ex)
             {
                 this.ShowExceptionMessage(ex);
+                throw;
             }
         }
 
@@ -285,6 +291,7 @@ namespace ThScoreFileConverter
             catch (Exception ex)
             {
                 this.ShowExceptionMessage(ex);
+                throw;
             }
         }
 
@@ -308,6 +315,7 @@ namespace ThScoreFileConverter
             catch (Exception ex)
             {
                 this.ShowExceptionMessage(ex);
+                throw;
             }
         }
 
@@ -356,6 +364,7 @@ namespace ThScoreFileConverter
             catch (Exception ex)
             {
                 this.ShowExceptionMessage(ex);
+                throw;
             }
         }
 
@@ -375,6 +384,7 @@ namespace ThScoreFileConverter
             catch (Exception ex)
             {
                 this.ShowExceptionMessage(ex);
+                throw;
             }
         }
 
@@ -393,6 +403,7 @@ namespace ThScoreFileConverter
             catch (Exception ex)
             {
                 this.ShowExceptionMessage(ex);
+                throw;
             }
         }
 
@@ -417,6 +428,7 @@ namespace ThScoreFileConverter
             catch (Exception ex)
             {
                 this.ShowExceptionMessage(ex);
+                throw;
             }
         }
 
@@ -441,6 +453,7 @@ namespace ThScoreFileConverter
             catch (Exception ex)
             {
                 this.ShowExceptionMessage(ex);
+                throw;
             }
         }
 
@@ -479,6 +492,7 @@ namespace ThScoreFileConverter
             catch (Exception ex)
             {
                 this.ShowExceptionMessage(ex);
+                throw;
             }
         }
 
@@ -503,6 +517,7 @@ namespace ThScoreFileConverter
             catch (Exception ex)
             {
                 this.ShowExceptionMessage(ex);
+                throw;
             }
         }
 
@@ -526,6 +541,7 @@ namespace ThScoreFileConverter
             catch (Exception ex)
             {
                 this.ShowExceptionMessage(ex);
+                throw;
             }
         }
 
@@ -565,6 +581,7 @@ namespace ThScoreFileConverter
             catch (Exception ex)
             {
                 this.ShowExceptionMessage(ex);
+                throw;
             }
         }
 

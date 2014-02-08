@@ -48,7 +48,7 @@ namespace ThScoreFileConverter
             if (stream == null)
                 throw new ArgumentNullException("stream");
             if (!stream.CanRead)
-                throw new ArgumentException("stream");
+                throw new ArgumentException("stream must be readable", "stream");
 
             this.stream = stream;
             this.disposed = false;

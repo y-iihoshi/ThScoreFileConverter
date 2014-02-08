@@ -24,6 +24,8 @@ namespace ThScoreFileConverter
     using System.IO;
     using System.Linq;
     using System.Runtime.InteropServices;
+    using System.Security;
+    using System.Security.Permissions;
     using System.Text;
     using System.Text.RegularExpressions;
 
@@ -560,7 +562,7 @@ namespace ThScoreFileConverter
         private string ReplaceScore(string input)
         {
             var pattern = @"%T95SCR([\dX])([1-9])([1-4])";
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var level = match.Groups[1].Value.ToUpper();
                 var scene = int.Parse(match.Groups[2].Value);
@@ -592,7 +594,7 @@ namespace ThScoreFileConverter
         private string ReplaceScoreTotal(string input)
         {
             var pattern = @"%T95SCRTL([1-4])";
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var type = int.Parse(match.Groups[1].Value);
 
@@ -624,7 +626,7 @@ namespace ThScoreFileConverter
         private string ReplaceCard(string input)
         {
             var pattern = @"%T95CARD([\dX])([1-9])([12])";
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var level = match.Groups[1].Value.ToUpper();
                 var scene = int.Parse(match.Groups[2].Value);
@@ -652,7 +654,7 @@ namespace ThScoreFileConverter
         private string ReplaceShot(string input, string outputFilePath)
         {
             var pattern = @"%T95SHOT([\dX])([1-9])";
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var level = match.Groups[1].Value.ToUpper();
                 var scene = int.Parse(match.Groups[2].Value);
@@ -684,7 +686,7 @@ namespace ThScoreFileConverter
         private string ReplaceShotEx(string input, string outputFilePath)
         {
             var pattern = @"%T95SHOTEX([\dX])([1-9])([1-6])";
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var level = match.Groups[1].Value.ToUpper();
                 var scene = int.Parse(match.Groups[2].Value);
@@ -763,20 +765,30 @@ namespace ThScoreFileConverter
                 Lzss.Extract(input, decoded);
 
                 decoded.Seek(0, SeekOrigin.Begin);
-                var source = decoded.ToArray();
-                var sourceStride = 3 * header.Width;    // "3" means 24bpp.
                 var bitmap = new Bitmap(header.Width, header.Height, PixelFormat.Format24bppRgb);
-                var bitmapData = bitmap.LockBits(
-                    new Rectangle(0, 0, header.Width, header.Height),
-                    ImageLockMode.WriteOnly,
-                    bitmap.PixelFormat);
-                var destination = bitmapData.Scan0;
-                for (var sourceIndex = 0; sourceIndex < source.Length; sourceIndex += sourceStride)
+                try
                 {
-                    Marshal.Copy(source, sourceIndex, destination, sourceStride);
-                    destination = new IntPtr(destination.ToInt32() + bitmapData.Stride);
+                    var permission = new SecurityPermission(SecurityPermissionFlag.UnmanagedCode);
+                    permission.Demand();
+
+                    var bitmapData = bitmap.LockBits(
+                        new Rectangle(0, 0, header.Width, header.Height),
+                        ImageLockMode.WriteOnly,
+                        bitmap.PixelFormat);
+                    var source = decoded.ToArray();
+                    var sourceStride = 3 * header.Width;    // "3" means 24bpp.
+                    var destination = bitmapData.Scan0;
+                    for (var sourceIndex = 0; sourceIndex < source.Length; sourceIndex += sourceStride)
+                    {
+                        Marshal.Copy(source, sourceIndex, destination, sourceStride);
+                        destination = new IntPtr(destination.ToInt32() + bitmapData.Stride);
+                    }
+                    bitmap.UnlockBits(bitmapData);
                 }
-                bitmap.UnlockBits(bitmapData);
+                catch (SecurityException e)
+                {
+                    Console.WriteLine(e.ToString());
+                }
 
                 bitmap.Save(output, ImageFormat.Png);
                 output.Flush();

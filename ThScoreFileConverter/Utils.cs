@@ -91,29 +91,6 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// Returns a <see cref="MatchEvaluator"/> delegate that does the same evaluation with
-        /// <paramref name="evaluator"/> and throws no exception.
-        /// If an exception occurred from <paramref name="evaluator"/>, the returned delegate returns
-        /// the matched substring itself.
-        /// </summary>
-        /// <param name="evaluator">The <see cref="MatchEvaluator"/> delegate to convert.</param>
-        /// <returns>A converted <see cref="MatchEvaluator"/> delegate.</returns>
-        public static MatchEvaluator ToNothrowEvaluator(MatchEvaluator evaluator)
-        {
-            return match =>
-            {
-                try
-                {
-                    return evaluator(match);
-                }
-                catch
-                {
-                    return match.ToString();
-                }
-            };
-        }
-
-        /// <summary>
         /// Represents a logical-and predicate.
         /// </summary>
         /// <typeparam name="T">Type of the instance to evaluate.</typeparam>

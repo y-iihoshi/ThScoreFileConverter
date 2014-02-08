@@ -203,6 +203,7 @@ namespace ThScoreFileConverter
             catch (Exception e)
             {
                 this.OnExceptionOccurred(new ExceptionOccurredEventArgs(e));
+                throw;
             }
         }
 

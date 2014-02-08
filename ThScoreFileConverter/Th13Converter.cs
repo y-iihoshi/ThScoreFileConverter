@@ -517,7 +517,7 @@ namespace ThScoreFileConverter
                 @"%T13SCR([{0}])({1})(\d)([1-5])",
                 Utils.JoinEnumNames<LevelShort>(string.Empty),
                 Utils.JoinEnumNames<CharaShort>("|"));
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var level = (LevelPractice)Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
                 var chara = (CharaWithTotal)Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
@@ -565,7 +565,7 @@ namespace ThScoreFileConverter
             var pattern = string.Format(
                 @"%T13C([SP])(\d{{3}})({0})([12])",
                 Utils.JoinEnumNames<CharaShortWithTotal>("|"));
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var kind = match.Groups[1].Value.ToUpper();
                 var number = int.Parse(match.Groups[2].Value);
@@ -603,7 +603,7 @@ namespace ThScoreFileConverter
         private string ReplaceCard(string input)
         {
             var pattern = @"%T13CARD(\d{3})([NR])";
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var number = int.Parse(match.Groups[1].Value);
                 var type = match.Groups[2].Value.ToUpper();
@@ -637,7 +637,7 @@ namespace ThScoreFileConverter
                 @"%T13CRG([SP])([{0}])({1})([0-6])([12])",
                 Utils.JoinEnumNames<LevelShortPracticeWithTotal>(string.Empty),
                 Utils.JoinEnumNames<CharaShortWithTotal>("|"));
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var kind = match.Groups[1].Value.ToUpper();
                 var level = Utils.ParseEnum<LevelShortPracticeWithTotal>(match.Groups[2].Value, true);
@@ -701,7 +701,7 @@ namespace ThScoreFileConverter
                 @"%T13CLEAR([{0}])({1})",
                 Utils.JoinEnumNames<LevelShort>(string.Empty),
                 Utils.JoinEnumNames<CharaShort>("|"));
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var level = (LevelPractice)Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
                 var chara = (CharaWithTotal)Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
@@ -736,7 +736,7 @@ namespace ThScoreFileConverter
             var pattern = string.Format(
                 @"%T13CHARA({0})([1-3])",
                 Utils.JoinEnumNames<CharaShortWithTotal>("|"));
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var chara =
                     (CharaWithTotal)Utils.ParseEnum<CharaShortWithTotal>(match.Groups[1].Value, true);
@@ -783,7 +783,7 @@ namespace ThScoreFileConverter
                 @"%T13CHARAEX([{0}])({1})([1-3])",
                 Utils.JoinEnumNames<LevelShortWithTotal>(string.Empty),
                 Utils.JoinEnumNames<CharaShortWithTotal>("|"));
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var level =
                     (LevelWithTotal)Utils.ParseEnum<LevelShortWithTotal>(match.Groups[1].Value, true);
@@ -831,7 +831,7 @@ namespace ThScoreFileConverter
                 @"%T13PRAC([{0}])({1})([1-6])",
                 Utils.JoinEnumNames<LevelShort>(string.Empty),
                 Utils.JoinEnumNames<CharaShort>("|"));
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var level = (LevelPractice)Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
                 var chara = (CharaWithTotal)Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);

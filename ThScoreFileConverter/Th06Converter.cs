@@ -627,7 +627,7 @@ namespace ThScoreFileConverter
                 @"%T06SCR([{0}])({1})(\d)([1-3])",
                 Utils.JoinEnumNames<LevelShort>(string.Empty),
                 Utils.JoinEnumNames<CharaShort>("|"));
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var level = Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
                 var chara = Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
@@ -666,7 +666,7 @@ namespace ThScoreFileConverter
         private string ReplaceCareer(string input)
         {
             var pattern = @"%T06C(\d{2})([12])";
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var number = int.Parse(match.Groups[1].Value);
                 var type = int.Parse(match.Groups[2].Value);
@@ -696,7 +696,7 @@ namespace ThScoreFileConverter
         private string ReplaceCard(string input)
         {
             var pattern = @"%T06CARD(\d{2})([NR])";
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var number = int.Parse(match.Groups[1].Value);
                 var type = match.Groups[2].Value.ToUpper();
@@ -734,7 +734,7 @@ namespace ThScoreFileConverter
         {
             string[] stageShortWithTotalArray = { "0", "1", "2", "3", "4", "5", "6", "X" };
             var pattern = @"%T06CRG([0-6X])([12])";
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var stage = Array.IndexOf(stageShortWithTotalArray, match.Groups[1].Value.ToUpper());
                 var type = int.Parse(match.Groups[2].Value);
@@ -768,7 +768,7 @@ namespace ThScoreFileConverter
                 @"%T06CLEAR([{0}])({1})",
                 Utils.JoinEnumNames<LevelShort>(string.Empty),
                 Utils.JoinEnumNames<CharaShort>("|"));
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var level = Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
                 var chara = Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
@@ -799,7 +799,7 @@ namespace ThScoreFileConverter
                 @"%T06PRAC([{0}])({1})([1-6])",
                 Utils.JoinEnumNames<LevelShort>(string.Empty),
                 Utils.JoinEnumNames<CharaShort>("|"));
-            var evaluator = Utils.ToNothrowEvaluator(match =>
+            var evaluator = new MatchEvaluator(match =>
             {
                 var level = Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
                 var chara = Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
