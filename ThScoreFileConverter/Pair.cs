@@ -14,16 +14,16 @@ namespace ThScoreFileConverter
     /// <summary>
     /// Pair of instances.
     /// </summary>
-    /// <typeparam name="Type1">The type of the <see cref="First"/> property.</typeparam>
-    /// <typeparam name="Type2">The type of the <see cref="Second"/> property.</typeparam>
-    public class Pair<Type1, Type2>
+    /// <typeparam name="TFirst">The type of the <see cref="First"/> property.</typeparam>
+    /// <typeparam name="TSecond">The type of the <see cref="Second"/> property.</typeparam>
+    public class Pair<TFirst, TSecond>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Pair{Type1,Type2}"/> class.
+        /// Initializes a new instance of the <see cref="Pair{TFirst,TSecond}"/> class.
         /// </summary>
         /// <param name="first">The value of the first component of the pair.</param>
         /// <param name="second">The value of the second component of the pair.</param>
-        protected Pair(Type1 first, Type2 second)
+        protected Pair(TFirst first, TSecond second)
         {
             this.First = first;
             this.Second = second;
@@ -32,12 +32,12 @@ namespace ThScoreFileConverter
         /// <summary>
         /// Gets the value of the first component of the pair.
         /// </summary>
-        protected Type1 First { get; private set; }
+        protected TFirst First { get; private set; }
 
         /// <summary>
         /// Gets the value of the second component of the pair.
         /// </summary>
-        protected Type2 Second { get; private set; }
+        protected TSecond Second { get; private set; }
 
         /// <summary>
         /// Determines whether the specified instance is equal to the current instance.
@@ -51,7 +51,7 @@ namespace ThScoreFileConverter
             if ((obj == null) || (GetType() != obj.GetType()))
                 return false;
 
-            var target = (Pair<Type1, Type2>)obj;
+            var target = (Pair<TFirst, TSecond>)obj;
             return this.First.Equals(target.First) && this.Second.Equals(target.Second);
         }
 

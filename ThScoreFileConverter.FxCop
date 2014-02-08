@@ -506,20 +506,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Pair`2">
-          <Messages>
-           <Message Id="T" TypeName="IdentifiersShouldHaveCorrectPrefix" Category="Microsoft.Naming" CheckId="CA1715" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-            <Issue Name="TypeTypeParameter">
-             <Item>'Pair&lt;Type1, Type2&gt;'</Item>
-             <Item>'Type1'</Item>
-            </Issue>
-            <Issue Name="TypeTypeParameter">
-             <Item>'Pair&lt;Type1, Type2&gt;'</Item>
-             <Item>'Type2'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="Range`1">
           <Members>
            <Member Name="#ToString()">
@@ -4793,24 +4779,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Th128Converter+LevelStagePair">
-          <Messages>
-           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2014-02-08 15:40:17Z">
-            <Issue>
-             <Item>'Th128Converter.LevelStagePair'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="Th128Converter+Practice">
-          <Messages>
-           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2014-02-08 15:40:17Z">
-            <Issue>
-             <Item>'Th128Converter.Practice'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="Th128Converter+ScoreData">
           <Members>
            <Member Name="#unknown1">
@@ -6937,20 +6905,6 @@
             </Messages>
            </Member>
           </Members>
-         </Type>
-         <Type Name="Pair`2">
-          <Messages>
-           <Message Id="T" TypeName="IdentifiersShouldHaveCorrectPrefix" Category="Microsoft.Naming" CheckId="CA1715" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-            <Issue Name="TypeTypeParameter">
-             <Item>'Pair&lt;Type1, Type2&gt;'</Item>
-             <Item>'Type1'</Item>
-            </Issue>
-            <Issue Name="TypeTypeParameter">
-             <Item>'Pair&lt;Type1, Type2&gt;'</Item>
-             <Item>'Type2'</Item>
-            </Issue>
-           </Message>
-          </Messages>
          </Type>
          <Type Name="Range`1">
           <Members>
@@ -11088,24 +11042,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Th128Converter+LevelStagePair">
-          <Messages>
-           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2014-02-08 15:40:17Z">
-            <Issue>
-             <Item>'Th128Converter.LevelStagePair'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="Th128Converter+Practice">
-          <Messages>
-           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2014-02-08 14:04:32Z">
-            <Issue>
-             <Item>'Th128Converter.Practice'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="Th128Converter+ScoreData">
           <Members>
            <Member Name="#unknown1">
@@ -12791,9 +12727,6 @@
    <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
     <Resolution Name="Default">{0} appears to have no upstream public or protected callers.</Resolution>
    </Rule>
-   <Rule TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812">
-    <Resolution Name="Default">{0} is an internal class that is apparently never instantiated. If so, remove the code from the assembly. If this class is intended to contain only static methods, consider adding a private constructor to prevent the compiler from generating a default constructor.</Resolution>
-   </Rule>
    <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
     <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>
    </Rule>
@@ -12816,9 +12749,6 @@
    </Rule>
    <Rule TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704">
     <Resolution Name="MemberParameterMoreMeaningfulName">In method {0}, consider providing a more meaningful name than parameter name {1}.</Resolution>
-   </Rule>
-   <Rule TypeName="IdentifiersShouldHaveCorrectPrefix" Category="Microsoft.Naming" CheckId="CA1715">
-    <Resolution Name="TypeTypeParameter">On type {0}, prefix generic type parameter name {1} with 'T'.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720">
     <Resolution Name="LanguageIndependentMemberParameter">In member {0}, consider replacing the data type identifier '{1}' in parameter name {2} with a more generic term, such as 'value'.</Resolution>
