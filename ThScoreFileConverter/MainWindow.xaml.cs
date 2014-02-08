@@ -19,6 +19,7 @@ namespace ThScoreFileConverter
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
+    using System.Windows.Threading;
     using Prop = ThScoreFileConverter.Properties;
     using WinForms = System.Windows.Forms;
 
@@ -655,7 +656,8 @@ namespace ThScoreFileConverter
                 this.txtLog.ScrollToEnd();
             }
             else
-                dispatcher.Invoke(new Action<string>(this.AddLogLine), log);
+                dispatcher.Invoke(
+                    DispatcherPriority.Normal, new Action<string>(this.AddLogLine), log);
         }
 
         /// <summary>
@@ -668,7 +670,8 @@ namespace ThScoreFileConverter
             if (dispatcher.CheckAccess())
                 Mouse.OverrideCursor = cursor;
             else
-                dispatcher.Invoke(new Action<Cursor>(this.ChangeCursor), cursor);
+                dispatcher.Invoke(
+                    DispatcherPriority.Normal, new Action<Cursor>(this.ChangeCursor), cursor);
         }
 
         /// <summary>
@@ -681,7 +684,8 @@ namespace ThScoreFileConverter
             if (dispatcher.CheckAccess())
                 this.IsEnabled = isEnabled;
             else
-                dispatcher.Invoke(new Action<bool>(this.SetAllControlsEnabled), isEnabled);
+                dispatcher.Invoke(
+                    DispatcherPriority.Normal, new Action<bool>(this.SetAllControlsEnabled), isEnabled);
         }
 
         /// <summary>
@@ -700,7 +704,8 @@ namespace ThScoreFileConverter
                     e.Message, Prop.Resources.msgTitleError, MessageBoxButton.OK, MessageBoxImage.Error);
 #endif
             else
-                dispatcher.Invoke(new Action<Exception>(this.ShowExceptionMessage), e);
+                dispatcher.Invoke(
+                    DispatcherPriority.Normal, new Action<Exception>(this.ShowExceptionMessage), e);
         }
 
         /// <summary>

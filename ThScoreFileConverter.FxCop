@@ -90,7 +90,7 @@
           <Members>
            <Member Name="#System.Windows.Markup.IComponentConnector.Connect(System.Int32,System.Object)">
             <Messages>
-             <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Created="2014-02-08 18:16:41Z">
               <Issue Name="Parameter">
                <Item>'target'</Item>
                <Item>'TextBlock'</Item>
@@ -104,7 +104,7 @@
                <Item>castclass</Item>
               </Issue>
              </Message>
-             <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'AboutWindow'</Item>
                <Item>'IComponentConnector.Connect(int, object)'</Item>
@@ -150,57 +150,9 @@
          </Type>
          <Type Name="MainWindow">
           <Members>
-           <Member Name="#AddLogLine(System.String)">
-            <Messages>
-             <Message Id="System.Windows.Threading.Dispatcher.#Invoke(System.Delegate,System.Object[])" TypeName="UseOnlyApiFromTargetedFramework" Category="Microsoft.Portability" CheckId="CA1903" Created="2014-02-08 15:40:17Z">
-              <Issue Name="MemberReferencesMember">
-               <Item>'MainWindow.AddLogLine(string)'</Item>
-               <Item>'Dispatcher.Invoke(Delegate, params object[])'</Item>
-               <Item>.NET Framework 3.0 Service Pack 2</Item>
-               <Item>.NET Framework 3.5</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ChangeCursor(System.Windows.Input.Cursor)">
-            <Messages>
-             <Message Id="System.Windows.Threading.Dispatcher.#Invoke(System.Delegate,System.Object[])" TypeName="UseOnlyApiFromTargetedFramework" Category="Microsoft.Portability" CheckId="CA1903" Created="2014-02-08 15:40:17Z">
-              <Issue Name="MemberReferencesMember">
-               <Item>'MainWindow.ChangeCursor(Cursor)'</Item>
-               <Item>'Dispatcher.Invoke(Delegate, params object[])'</Item>
-               <Item>.NET Framework 3.0 Service Pack 2</Item>
-               <Item>.NET Framework 3.5</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#SetAllControlsEnabled(System.Boolean)">
-            <Messages>
-             <Message Id="System.Windows.Threading.Dispatcher.#Invoke(System.Delegate,System.Object[])" TypeName="UseOnlyApiFromTargetedFramework" Category="Microsoft.Portability" CheckId="CA1903" Created="2014-02-08 15:40:17Z">
-              <Issue Name="MemberReferencesMember">
-               <Item>'MainWindow.SetAllControlsEnabled(bool)'</Item>
-               <Item>'Dispatcher.Invoke(Delegate, params object[])'</Item>
-               <Item>.NET Framework 3.0 Service Pack 2</Item>
-               <Item>.NET Framework 3.5</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ShowExceptionMessage(System.Exception)">
-            <Messages>
-             <Message Id="System.Windows.Threading.Dispatcher.#Invoke(System.Delegate,System.Object[])" TypeName="UseOnlyApiFromTargetedFramework" Category="Microsoft.Portability" CheckId="CA1903" Created="2014-02-08 15:40:17Z">
-              <Issue Name="MemberReferencesMember">
-               <Item>'MainWindow.ShowExceptionMessage(Exception)'</Item>
-               <Item>'Dispatcher.Invoke(Delegate, params object[])'</Item>
-               <Item>.NET Framework 3.0 Service Pack 2</Item>
-               <Item>.NET Framework 3.5</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#System.Windows.Markup.IComponentConnector.Connect(System.Int32,System.Object)">
             <Messages>
-             <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Created="2014-02-08 18:16:41Z">
               <Issue Name="Parameter">
                <Item>'target'</Item>
                <Item>'Button'</Item>
@@ -352,7 +304,7 @@
                <Item>castclass</Item>
               </Issue>
              </Message>
-             <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'MainWindow'</Item>
                <Item>'IComponentConnector.Connect(int, object)'</Item>
@@ -362,7 +314,7 @@
            </Member>
            <Member Name="#TH06">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'MainWindow.TH06'</Item>
               </Issue>
@@ -371,7 +323,7 @@
            </Member>
            <Member Name="#TH07">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'MainWindow.TH07'</Item>
               </Issue>
@@ -380,7 +332,7 @@
            </Member>
            <Member Name="#TH08">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'MainWindow.TH08'</Item>
               </Issue>
@@ -389,7 +341,7 @@
            </Member>
            <Member Name="#TH09">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'MainWindow.TH09'</Item>
               </Issue>
@@ -398,7 +350,7 @@
            </Member>
            <Member Name="#TH095">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'MainWindow.TH095'</Item>
               </Issue>
@@ -407,7 +359,7 @@
            </Member>
            <Member Name="#TH10">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'MainWindow.TH10'</Item>
               </Issue>
@@ -416,7 +368,7 @@
            </Member>
            <Member Name="#TH11">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'MainWindow.TH11'</Item>
               </Issue>
@@ -425,7 +377,7 @@
            </Member>
            <Member Name="#TH12">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'MainWindow.TH12'</Item>
               </Issue>
@@ -434,7 +386,7 @@
            </Member>
            <Member Name="#TH125">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'MainWindow.TH125'</Item>
               </Issue>
@@ -443,7 +395,7 @@
            </Member>
            <Member Name="#TH128">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'MainWindow.TH128'</Item>
               </Issue>
@@ -452,7 +404,7 @@
            </Member>
            <Member Name="#TH13">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'MainWindow.TH13'</Item>
               </Issue>
@@ -461,7 +413,7 @@
            </Member>
            <Member Name="#TH14">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'MainWindow.TH14'</Item>
               </Issue>
@@ -536,7 +488,7 @@
            </Member>
            <Member Name="#System.Windows.Markup.IComponentConnector.Connect(System.Int32,System.Object)">
             <Messages>
-             <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Created="2014-02-08 18:16:41Z">
               <Issue Name="Parameter">
                <Item>'target'</Item>
                <Item>'Button'</Item>
@@ -550,7 +502,7 @@
                <Item>castclass</Item>
               </Issue>
              </Message>
-             <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'SettingWindow'</Item>
                <Item>'IComponentConnector.Connect(int, object)'</Item>
@@ -560,7 +512,7 @@
            </Member>
            <Member Name="#txtFontInfo">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'SettingWindow.txtFontInfo'</Item>
               </Issue>
@@ -644,7 +596,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th06Converter.ReplaceCard(string)'</Item>
@@ -657,7 +609,7 @@
            </Member>
            <Member Name="#ReplaceCareer(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th06Converter.ReplaceCareer(string)'</Item>
@@ -684,7 +636,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th06Converter.ReplaceCollectRate(string)'</Item>
@@ -706,7 +658,7 @@
            </Member>
            <Member Name="#ReplacePractice(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th06Converter.ReplacePractice(string)'</Item>
@@ -719,7 +671,7 @@
            </Member>
            <Member Name="#ReplaceScore(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th06Converter.ReplaceScore(string)'</Item>
@@ -969,7 +921,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th07Converter.ReplaceCard(string)'</Item>
@@ -982,7 +934,7 @@
            </Member>
            <Member Name="#ReplaceCareer(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th07Converter.ReplaceCareer(string)'</Item>
@@ -1002,7 +954,7 @@
            </Member>
            <Member Name="#ReplaceCollectRate(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th07Converter.ReplaceCollectRate(string)'</Item>
@@ -1042,7 +994,7 @@
            </Member>
            <Member Name="#ReplacePractice(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th07Converter.ReplacePractice(string)'</Item>
@@ -1062,7 +1014,7 @@
            </Member>
            <Member Name="#ReplaceScore(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th07Converter.ReplaceScore(string)'</Item>
@@ -1442,7 +1394,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th08Converter.ReplaceCard(string)'</Item>
@@ -1462,7 +1414,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th08Converter.ReplaceCareer(string)'</Item>
@@ -1494,7 +1446,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th08Converter.ReplaceCollectRate(string)'</Item>
@@ -1534,7 +1486,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th08Converter.ReplacePractice(string)'</Item>
@@ -1554,7 +1506,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th08Converter.ReplaceScore(string)'</Item>
@@ -2080,7 +2032,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th095Converter.ReplaceCard(string)'</Item>
@@ -2107,7 +2059,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th095Converter.ReplaceScore(string)'</Item>
@@ -2136,7 +2088,7 @@
            </Member>
            <Member Name="#ReplaceScoreTotal(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th095Converter.ReplaceScoreTotal(string)'</Item>
@@ -2165,7 +2117,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th095Converter.ReplaceShot(string, string)'</Item>
@@ -2210,7 +2162,7 @@
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th095Converter.ReplaceShotEx(string, string)'</Item>
@@ -2447,7 +2399,7 @@
            </Member>
            <Member Name="#ReplaceClear(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th09Converter.ReplaceClear(string)'</Item>
@@ -2460,7 +2412,7 @@
            </Member>
            <Member Name="#ReplaceScore(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th09Converter.ReplaceScore(string)'</Item>
@@ -2772,7 +2724,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th10Converter.ReplaceCard(string)'</Item>
@@ -2785,7 +2737,7 @@
            </Member>
            <Member Name="#ReplaceCareer(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th10Converter.ReplaceCareer(string)'</Item>
@@ -2805,7 +2757,7 @@
            </Member>
            <Member Name="#ReplaceChara(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th10Converter.ReplaceChara(string)'</Item>
@@ -2818,7 +2770,7 @@
            </Member>
            <Member Name="#ReplaceCharaEx(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th10Converter.ReplaceCharaEx(string)'</Item>
@@ -2831,7 +2783,7 @@
            </Member>
            <Member Name="#ReplaceCollectRate(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th10Converter.ReplaceCollectRate(string)'</Item>
@@ -2860,7 +2812,7 @@
            </Member>
            <Member Name="#ReplacePractice(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th10Converter.ReplacePractice(string)'</Item>
@@ -2882,7 +2834,7 @@
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th10Converter.ReplaceScore(string)'</Item>
@@ -3062,7 +3014,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th11Converter.ReplaceCard(string)'</Item>
@@ -3075,7 +3027,7 @@
            </Member>
            <Member Name="#ReplaceCareer(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th11Converter.ReplaceCareer(string)'</Item>
@@ -3095,7 +3047,7 @@
            </Member>
            <Member Name="#ReplaceChara(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th11Converter.ReplaceChara(string)'</Item>
@@ -3108,7 +3060,7 @@
            </Member>
            <Member Name="#ReplaceCharaEx(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th11Converter.ReplaceCharaEx(string)'</Item>
@@ -3121,7 +3073,7 @@
            </Member>
            <Member Name="#ReplaceCollectRate(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th11Converter.ReplaceCollectRate(string)'</Item>
@@ -3150,7 +3102,7 @@
            </Member>
            <Member Name="#ReplacePractice(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th11Converter.ReplacePractice(string)'</Item>
@@ -3172,7 +3124,7 @@
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th11Converter.ReplaceScore(string)'</Item>
@@ -3376,7 +3328,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th125Converter.ReplaceCard(string)'</Item>
@@ -3412,7 +3364,7 @@
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th125Converter.ReplaceScore(string)'</Item>
@@ -3432,7 +3384,7 @@
            </Member>
            <Member Name="#ReplaceScoreTotal(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th125Converter.ReplaceScoreTotal(string)'</Item>
@@ -3468,7 +3420,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th125Converter.ReplaceShot(string, string)'</Item>
@@ -3513,7 +3465,7 @@
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th125Converter.ReplaceShotEx(string, string)'</Item>
@@ -4053,7 +4005,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th128Converter.ReplaceCard(string)'</Item>
@@ -4066,7 +4018,7 @@
            </Member>
            <Member Name="#ReplaceCareer(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th128Converter.ReplaceCareer(string)'</Item>
@@ -4086,7 +4038,7 @@
            </Member>
            <Member Name="#ReplaceCollectRate(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th128Converter.ReplaceCollectRate(string)'</Item>
@@ -4108,7 +4060,7 @@
            </Member>
            <Member Name="#ReplaceRoute(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th128Converter.ReplaceRoute(string)'</Item>
@@ -4121,7 +4073,7 @@
            </Member>
            <Member Name="#ReplaceRouteEx(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th128Converter.ReplaceRouteEx(string)'</Item>
@@ -4143,7 +4095,7 @@
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th128Converter.ReplaceScore(string)'</Item>
@@ -4311,7 +4263,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th12Converter.ReplaceCard(string)'</Item>
@@ -4324,7 +4276,7 @@
            </Member>
            <Member Name="#ReplaceCareer(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th12Converter.ReplaceCareer(string)'</Item>
@@ -4344,7 +4296,7 @@
            </Member>
            <Member Name="#ReplaceChara(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th12Converter.ReplaceChara(string)'</Item>
@@ -4357,7 +4309,7 @@
            </Member>
            <Member Name="#ReplaceCharaEx(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th12Converter.ReplaceCharaEx(string)'</Item>
@@ -4370,7 +4322,7 @@
            </Member>
            <Member Name="#ReplaceCollectRate(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th12Converter.ReplaceCollectRate(string)'</Item>
@@ -4399,7 +4351,7 @@
            </Member>
            <Member Name="#ReplacePractice(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th12Converter.ReplacePractice(string)'</Item>
@@ -4421,7 +4373,7 @@
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th12Converter.ReplaceScore(string)'</Item>
@@ -4614,7 +4566,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th13Converter.ReplaceCard(string)'</Item>
@@ -4634,7 +4586,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th13Converter.ReplaceCareer(string)'</Item>
@@ -4654,7 +4606,7 @@
            </Member>
            <Member Name="#ReplaceChara(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th13Converter.ReplaceChara(string)'</Item>
@@ -4667,7 +4619,7 @@
            </Member>
            <Member Name="#ReplaceCharaEx(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th13Converter.ReplaceCharaEx(string)'</Item>
@@ -4687,7 +4639,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th13Converter.ReplaceCollectRate(string)'</Item>
@@ -4716,7 +4668,7 @@
            </Member>
            <Member Name="#ReplacePractice(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th13Converter.ReplacePractice(string)'</Item>
@@ -4738,7 +4690,7 @@
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th13Converter.ReplaceScore(string)'</Item>
@@ -5023,7 +4975,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th14Converter.ReplaceCard(string)'</Item>
@@ -5043,7 +4995,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th14Converter.ReplaceCareer(string)'</Item>
@@ -5063,7 +5015,7 @@
            </Member>
            <Member Name="#ReplaceChara(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th14Converter.ReplaceChara(string)'</Item>
@@ -5076,7 +5028,7 @@
            </Member>
            <Member Name="#ReplaceCharaEx(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th14Converter.ReplaceCharaEx(string)'</Item>
@@ -5096,7 +5048,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th14Converter.ReplaceCollectRate(string)'</Item>
@@ -5125,7 +5077,7 @@
            </Member>
            <Member Name="#ReplacePractice(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th14Converter.ReplacePractice(string)'</Item>
@@ -5147,7 +5099,7 @@
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th14Converter.ReplaceScore(string)'</Item>
@@ -5626,7 +5578,7 @@
           <Members>
            <Member Name="#System.Windows.Markup.IComponentConnector.Connect(System.Int32,System.Object)">
             <Messages>
-             <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Created="2014-02-08 18:16:41Z">
               <Issue Name="Parameter">
                <Item>'target'</Item>
                <Item>'TextBlock'</Item>
@@ -5640,7 +5592,7 @@
                <Item>castclass</Item>
               </Issue>
              </Message>
-             <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'AboutWindow'</Item>
                <Item>'IComponentConnector.Connect(int, object)'</Item>
@@ -5686,57 +5638,9 @@
          </Type>
          <Type Name="MainWindow">
           <Members>
-           <Member Name="#AddLogLine(System.String)">
-            <Messages>
-             <Message Id="System.Windows.Threading.Dispatcher.#Invoke(System.Delegate,System.Object[])" TypeName="UseOnlyApiFromTargetedFramework" Category="Microsoft.Portability" CheckId="CA1903" Created="2014-02-08 15:40:17Z">
-              <Issue Name="MemberReferencesMember">
-               <Item>'MainWindow.AddLogLine(string)'</Item>
-               <Item>'Dispatcher.Invoke(Delegate, params object[])'</Item>
-               <Item>.NET Framework 3.0 Service Pack 2</Item>
-               <Item>.NET Framework 3.5</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ChangeCursor(System.Windows.Input.Cursor)">
-            <Messages>
-             <Message Id="System.Windows.Threading.Dispatcher.#Invoke(System.Delegate,System.Object[])" TypeName="UseOnlyApiFromTargetedFramework" Category="Microsoft.Portability" CheckId="CA1903" Created="2014-02-08 15:40:17Z">
-              <Issue Name="MemberReferencesMember">
-               <Item>'MainWindow.ChangeCursor(Cursor)'</Item>
-               <Item>'Dispatcher.Invoke(Delegate, params object[])'</Item>
-               <Item>.NET Framework 3.0 Service Pack 2</Item>
-               <Item>.NET Framework 3.5</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#SetAllControlsEnabled(System.Boolean)">
-            <Messages>
-             <Message Id="System.Windows.Threading.Dispatcher.#Invoke(System.Delegate,System.Object[])" TypeName="UseOnlyApiFromTargetedFramework" Category="Microsoft.Portability" CheckId="CA1903" Created="2014-02-08 15:40:17Z">
-              <Issue Name="MemberReferencesMember">
-               <Item>'MainWindow.SetAllControlsEnabled(bool)'</Item>
-               <Item>'Dispatcher.Invoke(Delegate, params object[])'</Item>
-               <Item>.NET Framework 3.0 Service Pack 2</Item>
-               <Item>.NET Framework 3.5</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ShowExceptionMessage(System.Exception)">
-            <Messages>
-             <Message Id="System.Windows.Threading.Dispatcher.#Invoke(System.Delegate,System.Object[])" TypeName="UseOnlyApiFromTargetedFramework" Category="Microsoft.Portability" CheckId="CA1903" Created="2014-02-08 15:40:17Z">
-              <Issue Name="MemberReferencesMember">
-               <Item>'MainWindow.ShowExceptionMessage(Exception)'</Item>
-               <Item>'Dispatcher.Invoke(Delegate, params object[])'</Item>
-               <Item>.NET Framework 3.0 Service Pack 2</Item>
-               <Item>.NET Framework 3.5</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#System.Windows.Markup.IComponentConnector.Connect(System.Int32,System.Object)">
             <Messages>
-             <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Created="2014-02-08 18:16:41Z">
               <Issue Name="Parameter">
                <Item>'target'</Item>
                <Item>'Button'</Item>
@@ -5888,7 +5792,7 @@
                <Item>castclass</Item>
               </Issue>
              </Message>
-             <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'MainWindow'</Item>
                <Item>'IComponentConnector.Connect(int, object)'</Item>
@@ -5898,7 +5802,7 @@
            </Member>
            <Member Name="#TH06">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'MainWindow.TH06'</Item>
               </Issue>
@@ -5907,7 +5811,7 @@
            </Member>
            <Member Name="#TH07">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'MainWindow.TH07'</Item>
               </Issue>
@@ -5916,7 +5820,7 @@
            </Member>
            <Member Name="#TH08">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'MainWindow.TH08'</Item>
               </Issue>
@@ -5925,7 +5829,7 @@
            </Member>
            <Member Name="#TH09">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'MainWindow.TH09'</Item>
               </Issue>
@@ -5934,7 +5838,7 @@
            </Member>
            <Member Name="#TH095">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'MainWindow.TH095'</Item>
               </Issue>
@@ -5943,7 +5847,7 @@
            </Member>
            <Member Name="#TH10">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'MainWindow.TH10'</Item>
               </Issue>
@@ -5952,7 +5856,7 @@
            </Member>
            <Member Name="#TH11">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'MainWindow.TH11'</Item>
               </Issue>
@@ -5961,7 +5865,7 @@
            </Member>
            <Member Name="#TH12">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'MainWindow.TH12'</Item>
               </Issue>
@@ -5970,7 +5874,7 @@
            </Member>
            <Member Name="#TH125">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'MainWindow.TH125'</Item>
               </Issue>
@@ -5979,7 +5883,7 @@
            </Member>
            <Member Name="#TH128">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'MainWindow.TH128'</Item>
               </Issue>
@@ -5988,7 +5892,7 @@
            </Member>
            <Member Name="#TH13">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'MainWindow.TH13'</Item>
               </Issue>
@@ -5997,7 +5901,7 @@
            </Member>
            <Member Name="#TH14">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'MainWindow.TH14'</Item>
               </Issue>
@@ -6072,7 +5976,7 @@
            </Member>
            <Member Name="#System.Windows.Markup.IComponentConnector.Connect(System.Int32,System.Object)">
             <Messages>
-             <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Created="2014-02-08 18:16:41Z">
               <Issue Name="Parameter">
                <Item>'target'</Item>
                <Item>'Button'</Item>
@@ -6086,7 +5990,7 @@
                <Item>castclass</Item>
               </Issue>
              </Message>
-             <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'SettingWindow'</Item>
                <Item>'IComponentConnector.Connect(int, object)'</Item>
@@ -6096,7 +6000,7 @@
            </Member>
            <Member Name="#txtFontInfo">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
               <Issue>
                <Item>'SettingWindow.txtFontInfo'</Item>
               </Issue>
@@ -6152,7 +6056,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th06Converter.ReplaceCard(string)'</Item>
@@ -6165,7 +6069,7 @@
            </Member>
            <Member Name="#ReplaceCareer(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th06Converter.ReplaceCareer(string)'</Item>
@@ -6192,7 +6096,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th06Converter.ReplaceCollectRate(string)'</Item>
@@ -6214,7 +6118,7 @@
            </Member>
            <Member Name="#ReplacePractice(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th06Converter.ReplacePractice(string)'</Item>
@@ -6227,7 +6131,7 @@
            </Member>
            <Member Name="#ReplaceScore(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th06Converter.ReplaceScore(string)'</Item>
@@ -6442,7 +6346,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th07Converter.ReplaceCard(string)'</Item>
@@ -6455,7 +6359,7 @@
            </Member>
            <Member Name="#ReplaceCareer(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th07Converter.ReplaceCareer(string)'</Item>
@@ -6475,7 +6379,7 @@
            </Member>
            <Member Name="#ReplaceCollectRate(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th07Converter.ReplaceCollectRate(string)'</Item>
@@ -6515,7 +6419,7 @@
            </Member>
            <Member Name="#ReplacePractice(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th07Converter.ReplacePractice(string)'</Item>
@@ -6535,7 +6439,7 @@
            </Member>
            <Member Name="#ReplaceScore(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th07Converter.ReplaceScore(string)'</Item>
@@ -6880,7 +6784,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th08Converter.ReplaceCard(string)'</Item>
@@ -6900,7 +6804,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th08Converter.ReplaceCareer(string)'</Item>
@@ -6932,7 +6836,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th08Converter.ReplaceCollectRate(string)'</Item>
@@ -6972,7 +6876,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th08Converter.ReplacePractice(string)'</Item>
@@ -6992,7 +6896,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th08Converter.ReplaceScore(string)'</Item>
@@ -7507,7 +7411,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th095Converter.ReplaceCard(string)'</Item>
@@ -7534,7 +7438,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th095Converter.ReplaceScore(string)'</Item>
@@ -7563,7 +7467,7 @@
            </Member>
            <Member Name="#ReplaceScoreTotal(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th095Converter.ReplaceScoreTotal(string)'</Item>
@@ -7592,7 +7496,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th095Converter.ReplaceShot(string, string)'</Item>
@@ -7637,7 +7541,7 @@
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th095Converter.ReplaceShotEx(string, string)'</Item>
@@ -7846,7 +7750,7 @@
            </Member>
            <Member Name="#ReplaceClear(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th09Converter.ReplaceClear(string)'</Item>
@@ -7859,7 +7763,7 @@
            </Member>
            <Member Name="#ReplaceScore(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th09Converter.ReplaceScore(string)'</Item>
@@ -8171,7 +8075,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th10Converter.ReplaceCard(string)'</Item>
@@ -8184,7 +8088,7 @@
            </Member>
            <Member Name="#ReplaceCareer(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th10Converter.ReplaceCareer(string)'</Item>
@@ -8204,7 +8108,7 @@
            </Member>
            <Member Name="#ReplaceChara(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th10Converter.ReplaceChara(string)'</Item>
@@ -8217,7 +8121,7 @@
            </Member>
            <Member Name="#ReplaceCharaEx(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th10Converter.ReplaceCharaEx(string)'</Item>
@@ -8230,7 +8134,7 @@
            </Member>
            <Member Name="#ReplaceCollectRate(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th10Converter.ReplaceCollectRate(string)'</Item>
@@ -8259,7 +8163,7 @@
            </Member>
            <Member Name="#ReplacePractice(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th10Converter.ReplacePractice(string)'</Item>
@@ -8281,7 +8185,7 @@
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th10Converter.ReplaceScore(string)'</Item>
@@ -8461,7 +8365,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th11Converter.ReplaceCard(string)'</Item>
@@ -8474,7 +8378,7 @@
            </Member>
            <Member Name="#ReplaceCareer(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th11Converter.ReplaceCareer(string)'</Item>
@@ -8494,7 +8398,7 @@
            </Member>
            <Member Name="#ReplaceChara(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th11Converter.ReplaceChara(string)'</Item>
@@ -8507,7 +8411,7 @@
            </Member>
            <Member Name="#ReplaceCharaEx(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th11Converter.ReplaceCharaEx(string)'</Item>
@@ -8520,7 +8424,7 @@
            </Member>
            <Member Name="#ReplaceCollectRate(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th11Converter.ReplaceCollectRate(string)'</Item>
@@ -8549,7 +8453,7 @@
            </Member>
            <Member Name="#ReplacePractice(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th11Converter.ReplacePractice(string)'</Item>
@@ -8571,7 +8475,7 @@
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th11Converter.ReplaceScore(string)'</Item>
@@ -8775,7 +8679,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th125Converter.ReplaceCard(string)'</Item>
@@ -8811,7 +8715,7 @@
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th125Converter.ReplaceScore(string)'</Item>
@@ -8831,7 +8735,7 @@
            </Member>
            <Member Name="#ReplaceScoreTotal(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th125Converter.ReplaceScoreTotal(string)'</Item>
@@ -8867,7 +8771,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th125Converter.ReplaceShot(string, string)'</Item>
@@ -8912,7 +8816,7 @@
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th125Converter.ReplaceShotEx(string, string)'</Item>
@@ -9452,7 +9356,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th128Converter.ReplaceCard(string)'</Item>
@@ -9465,7 +9369,7 @@
            </Member>
            <Member Name="#ReplaceCareer(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th128Converter.ReplaceCareer(string)'</Item>
@@ -9485,7 +9389,7 @@
            </Member>
            <Member Name="#ReplaceCollectRate(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th128Converter.ReplaceCollectRate(string)'</Item>
@@ -9507,7 +9411,7 @@
            </Member>
            <Member Name="#ReplaceRoute(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th128Converter.ReplaceRoute(string)'</Item>
@@ -9520,7 +9424,7 @@
            </Member>
            <Member Name="#ReplaceRouteEx(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th128Converter.ReplaceRouteEx(string)'</Item>
@@ -9542,7 +9446,7 @@
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th128Converter.ReplaceScore(string)'</Item>
@@ -9710,7 +9614,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th12Converter.ReplaceCard(string)'</Item>
@@ -9723,7 +9627,7 @@
            </Member>
            <Member Name="#ReplaceCareer(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th12Converter.ReplaceCareer(string)'</Item>
@@ -9743,7 +9647,7 @@
            </Member>
            <Member Name="#ReplaceChara(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th12Converter.ReplaceChara(string)'</Item>
@@ -9756,7 +9660,7 @@
            </Member>
            <Member Name="#ReplaceCharaEx(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th12Converter.ReplaceCharaEx(string)'</Item>
@@ -9769,7 +9673,7 @@
            </Member>
            <Member Name="#ReplaceCollectRate(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th12Converter.ReplaceCollectRate(string)'</Item>
@@ -9798,7 +9702,7 @@
            </Member>
            <Member Name="#ReplacePractice(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th12Converter.ReplacePractice(string)'</Item>
@@ -9820,7 +9724,7 @@
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th12Converter.ReplaceScore(string)'</Item>
@@ -10013,7 +9917,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th13Converter.ReplaceCard(string)'</Item>
@@ -10033,7 +9937,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th13Converter.ReplaceCareer(string)'</Item>
@@ -10053,7 +9957,7 @@
            </Member>
            <Member Name="#ReplaceChara(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th13Converter.ReplaceChara(string)'</Item>
@@ -10066,7 +9970,7 @@
            </Member>
            <Member Name="#ReplaceCharaEx(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th13Converter.ReplaceCharaEx(string)'</Item>
@@ -10086,7 +9990,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th13Converter.ReplaceCollectRate(string)'</Item>
@@ -10115,7 +10019,7 @@
            </Member>
            <Member Name="#ReplacePractice(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th13Converter.ReplacePractice(string)'</Item>
@@ -10137,7 +10041,7 @@
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th13Converter.ReplaceScore(string)'</Item>
@@ -10422,7 +10326,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th14Converter.ReplaceCard(string)'</Item>
@@ -10442,7 +10346,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th14Converter.ReplaceCareer(string)'</Item>
@@ -10462,7 +10366,7 @@
            </Member>
            <Member Name="#ReplaceChara(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th14Converter.ReplaceChara(string)'</Item>
@@ -10475,7 +10379,7 @@
            </Member>
            <Member Name="#ReplaceCharaEx(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th14Converter.ReplaceCharaEx(string)'</Item>
@@ -10495,7 +10399,7 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th14Converter.ReplaceCollectRate(string)'</Item>
@@ -10524,7 +10428,7 @@
            </Member>
            <Member Name="#ReplacePractice(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th14Converter.ReplacePractice(string)'</Item>
@@ -10546,7 +10450,7 @@
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
+             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
               <Issue Name="IFormatProviderAlternate">
                <Item>'int.Parse(string)'</Item>
                <Item>'Th14Converter.ReplaceScore(string)'</Item>
@@ -11073,9 +10977,6 @@
    </Rule>
    <Rule TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820">
     <Resolution Name="IsNullOrEmpty">Replace the call to {0} in {1} with a call to 'String.IsNullOrEmpty'.</Resolution>
-   </Rule>
-   <Rule TypeName="UseOnlyApiFromTargetedFramework" Category="Microsoft.Portability" CheckId="CA1903">
-    <Resolution Name="MemberReferencesMember">Member {0} uses member {1}. Because this member was introduced in {2}, which was not included in the project's target framework, {3}, your application may fail to run on systems without this service pack installed.</Resolution>
    </Rule>
   </Rules>
  </FxCopReport>
