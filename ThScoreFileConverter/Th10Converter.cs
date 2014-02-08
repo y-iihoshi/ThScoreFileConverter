@@ -88,10 +88,11 @@ namespace ThScoreFileConverter
 
         private class Header : Utils.IBinaryReadable
         {
+            private uint unknown1;
+            private uint unknown2;
+
             public string Signature { get; private set; }
             public int EncodedAllSize { get; private set; }
-            public uint Unknown1 { get; private set; }
-            public uint Unknown2 { get; private set; }
             public int EncodedBodySize { get; private set; }
             public int DecodedBodySize { get; private set; }
 
@@ -99,8 +100,8 @@ namespace ThScoreFileConverter
             {
                 this.Signature = new string(reader.ReadChars(4));
                 this.EncodedAllSize = reader.ReadInt32();
-                this.Unknown1 = reader.ReadUInt32();
-                this.Unknown2 = reader.ReadUInt32();
+                this.unknown1 = reader.ReadUInt32();
+                this.unknown2 = reader.ReadUInt32();
                 this.EncodedBodySize = reader.ReadInt32();
                 this.DecodedBodySize = reader.ReadInt32();
             }
@@ -109,8 +110,8 @@ namespace ThScoreFileConverter
             {
                 writer.Write(this.Signature.ToCharArray());
                 writer.Write(this.EncodedAllSize);
-                writer.Write(this.Unknown1);
-                writer.Write(this.Unknown2);
+                writer.Write(this.unknown1);
+                writer.Write(this.unknown2);
                 writer.Write(this.EncodedBodySize);
                 writer.Write(this.DecodedBodySize);
             }
@@ -119,7 +120,7 @@ namespace ThScoreFileConverter
         private class Chapter : Utils.IBinaryReadable
         {
             public string Signature { get; private set; }
-            public ushort Unknown { get; private set; }
+            public ushort Version { get; private set; }
             public uint Checksum { get; private set; }
             public int Size { get; private set; }
 
@@ -127,7 +128,7 @@ namespace ThScoreFileConverter
             public Chapter(Chapter ch)
             {
                 this.Signature = ch.Signature;
-                this.Unknown = ch.Unknown;
+                this.Version = ch.Version;
                 this.Checksum = ch.Checksum;
                 this.Size = ch.Size;
             }
@@ -135,7 +136,7 @@ namespace ThScoreFileConverter
             public virtual void ReadFrom(BinaryReader reader)
             {
                 this.Signature = Encoding.Default.GetString(reader.ReadBytes(2));
-                this.Unknown = reader.ReadUInt16();
+                this.Version = reader.ReadUInt16();
                 this.Checksum = reader.ReadUInt32();
                 this.Size = reader.ReadInt32();
             }
@@ -156,8 +157,8 @@ namespace ThScoreFileConverter
             {
                 if (this.Signature != "CR")
                     throw new InvalidDataException("Signature");
-                if (this.Unknown != 0x0000)
-                    throw new InvalidDataException("Unknown");
+                if (this.Version != 0x0000)
+                    throw new InvalidDataException("Version");
                 if (this.Size != 0x0000437C)
                     throw new InvalidDataException("Size");
 
@@ -212,18 +213,19 @@ namespace ThScoreFileConverter
 
         private class Status : Chapter
         {
+            private byte[] unknown1;    // .Length = 0x10
+            private byte[] unknown2;    // .Length = 0x0410
+
             public byte[] LastName { get; private set; }    // .Length = 10 (The last 2 bytes are always 0x00 ?)
-            public byte[] Unknown1 { get; private set; }    // .Length = 0x10
             public byte[] BgmFlags { get; private set; }    // .Length = 18
-            public byte[] Unknown2 { get; private set; }    // .Length = 0x0410
 
             public Status(Chapter ch)
                 : base(ch)
             {
                 if (this.Signature != "ST")
                     throw new InvalidDataException("Signature");
-                if (this.Unknown != 0x0000)
-                    throw new InvalidDataException("Unknown");
+                if (this.Version != 0x0000)
+                    throw new InvalidDataException("Version");
                 if (this.Size != 0x00000448)
                     throw new InvalidDataException("Size");
             }
@@ -231,9 +233,9 @@ namespace ThScoreFileConverter
             public override void ReadFrom(BinaryReader reader)
             {
                 this.LastName = reader.ReadBytes(10);
-                this.Unknown1 = reader.ReadBytes(0x10);
+                this.unknown1 = reader.ReadBytes(0x10);
                 this.BgmFlags = reader.ReadBytes(18);
-                this.Unknown2 = reader.ReadBytes(0x0410);
+                this.unknown2 = reader.ReadBytes(0x0410);
             }
         }
 
@@ -375,13 +377,13 @@ namespace ThScoreFileConverter
                 {
                     chapter.ReadFrom(reader);
 
-                    if (!((chapter.Signature == "CR") && (chapter.Unknown == 0x0000)) &&
-                        !((chapter.Signature == "ST") && (chapter.Unknown == 0x0000)))
+                    if (!((chapter.Signature == "CR") && (chapter.Version == 0x0000)) &&
+                        !((chapter.Signature == "ST") && (chapter.Version == 0x0000)))
                         return false;
 
                     // -4 means the size of Size.
                     reader.BaseStream.Seek(-4, SeekOrigin.Current);
-                    // 8 means the total size of Signature, Unknown, and Checksum.
+                    // 8 means the total size of Signature, Version, and Checksum.
                     var body = reader.ReadBytes(chapter.Size - 8);
                     var sum = body.Sum(elem => (int)elem);
                     if (sum != chapter.Checksum)
@@ -432,7 +434,7 @@ namespace ThScoreFileConverter
                             }
                             break;
                         default:
-                            // 12 means the total size of Signature, Unknown, Checksum, and Size.
+                            // 12 means the total size of Signature, Version, Checksum, and Size.
                             reader.ReadBytes(chapter.Size - 12);
                             break;
                     }

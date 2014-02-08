@@ -89,8 +89,8 @@ namespace ThScoreFileConverter
 
         private class Header : Chapter
         {
-            public byte Unknown1 { get; private set; }      // always 0x01?
-            public byte[] Unknown2 { get; private set; }    // .Length = 3
+            private byte unknown1;      // always 0x01?
+            private byte[] unknown2;    // .Length = 3
 
             public Header(Chapter ch)
                 : base(ch)
@@ -105,22 +105,23 @@ namespace ThScoreFileConverter
 
             public override void ReadFrom(BinaryReader reader)
             {
-                this.Unknown1 = reader.ReadByte();
-                this.Unknown2 = reader.ReadBytes(3);
+                this.unknown1 = reader.ReadByte();
+                this.unknown2 = reader.ReadBytes(3);
             }
         }
 
         private class HighScore : Chapter   // per character, level, rank
         {
-            public uint Unknown1 { get; private set; }      // always 0x00000002?
+            private uint unknown1;  // always 0x00000002?
+            private uint unknown2;  // always 0x00000000?
+            private byte unknown3;  // always 0x00?
+
             public uint Score { get; private set; }         // * 10
-            public uint Unknown2 { get; private set; }      // always 0x00000000?
             public Chara Chara { get; private set; }        // size: 1Byte
             public Level Level { get; private set; }        // size: 1Byte
             public short Rank { get; private set; }         // 0-origin
             public byte[] Name { get; private set; }        // .Length = 9, null-terminated
             public byte[] Date { get; private set; }        // .Length = 9, "yy/mm/dd\0"
-            public byte Unknown3 { get; private set; }      // always 0x00?
             public byte ContinueCount { get; private set; }
 
             public HighScore(Chapter ch)
@@ -136,22 +137,23 @@ namespace ThScoreFileConverter
 
             public override void ReadFrom(BinaryReader reader)
             {
-                this.Unknown1 = reader.ReadUInt32();
+                this.unknown1 = reader.ReadUInt32();
                 this.Score = reader.ReadUInt32();
-                this.Unknown2 = reader.ReadUInt32();
+                this.unknown2 = reader.ReadUInt32();
                 this.Chara = (Chara)reader.ReadByte();
                 this.Level = (Level)reader.ReadByte();
                 this.Rank = reader.ReadInt16();
                 this.Name = reader.ReadBytes(9);
                 this.Date = reader.ReadBytes(9);
-                this.Unknown3 = reader.ReadByte();
+                this.unknown3 = reader.ReadByte();
                 this.ContinueCount = reader.ReadByte();
             }
         }
 
         private class PlayList : Chapter
         {
-            public uint Unknown { get; private set; }           // always 0x00000003?
+            private uint unknown;   // always 0x00000003?
+
             public Time TotalRunningTime { get; private set; }
             public Time TotalPlayTime { get; private set; }     // really...?
             public byte[] BgmFlags { get; private set; }        // .Length = 19
@@ -181,7 +183,7 @@ namespace ThScoreFileConverter
             public override void ReadFrom(BinaryReader reader)
             {
                 var charas = Utils.GetEnumerator<Chara>();
-                this.Unknown = reader.ReadUInt32();
+                this.unknown = reader.ReadUInt32();
                 this.TotalRunningTime = new Time(
                     reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), false);
                 this.TotalPlayTime = new Time(
@@ -205,7 +207,8 @@ namespace ThScoreFileConverter
 
         private class LastName : Chapter
         {
-            public uint Unknown { get; private set; }   // always 0x00000001?
+            private uint unknown;   // always 0x00000001?
+
             public byte[] Name { get; private set; }    // .Length = 12, null-terminated
 
             public LastName(Chapter ch)
@@ -221,19 +224,20 @@ namespace ThScoreFileConverter
 
             public override void ReadFrom(BinaryReader reader)
             {
-                this.Unknown = reader.ReadUInt32();
+                this.unknown = reader.ReadUInt32();
                 this.Name = reader.ReadBytes(12);
             }
         }
 
         private class VersionInfo : Chapter
         {
-            public ushort Unknown1 { get; private set; }    // always 0x0001?
-            public ushort Unknown2 { get; private set; }    // always 0x0018?
+            private ushort unknown1;    // always 0x0001?
+            private ushort unknown2;    // always 0x0018?
+            private byte[] unknown3;    // .Length = 3, always 0x000049?
+            private byte[] unknown4;    // .Length = 3
+            private uint unknown5;      // variable...
+
             public byte[] Version { get; private set; }     // .Length = 6, null-terminated
-            public byte[] Unknown3 { get; private set; }    // .Length = 3, always 0x000049?
-            public byte[] Unknown4 { get; private set; }    // .Length = 3
-            public uint Unknown5 { get; private set; }      // variable...
 
             public VersionInfo(Chapter ch)
                 : base(ch)
@@ -248,19 +252,20 @@ namespace ThScoreFileConverter
 
             public override void ReadFrom(BinaryReader reader)
             {
-                this.Unknown1 = reader.ReadUInt16();
-                this.Unknown2 = reader.ReadUInt16();
+                this.unknown1 = reader.ReadUInt16();
+                this.unknown2 = reader.ReadUInt16();
                 this.Version = reader.ReadBytes(6);
-                this.Unknown3 = reader.ReadBytes(3);
-                this.Unknown4 = reader.ReadBytes(3);
-                this.Unknown5 = reader.ReadUInt32();
+                this.unknown3 = reader.ReadBytes(3);
+                this.unknown4 = reader.ReadBytes(3);
+                this.unknown5 = reader.ReadUInt32();
             }
         }
 
         private class ClearCount : Utils.IBinaryReadable
         {
+            private uint unknown;
+
             public Dictionary<Level, int> Counts { get; private set; }
-            public uint Unknown { get; private set; }
 
             public ClearCount()
             {
@@ -271,7 +276,7 @@ namespace ThScoreFileConverter
             {
                 foreach (var level in Utils.GetEnumerator<Level>())
                     this.Counts.Add(level, reader.ReadInt32());
-                this.Unknown = reader.ReadUInt32();
+                this.unknown = reader.ReadUInt32();
             }
         }
 
