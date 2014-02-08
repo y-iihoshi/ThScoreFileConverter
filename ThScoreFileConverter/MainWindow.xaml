@@ -26,7 +26,7 @@
             <ComboBoxItem Name="TH125" Content="ダブルスポイラー"/>
             <ComboBoxItem Name="TH128" Content="妖精大戦争"/>
             <ComboBoxItem Name="TH13" Content="東方神霊廟"/>
-            <ComboBoxItem Name="TH14" Content="東方輝針城" IsEnabled="False"/>
+            <ComboBoxItem Name="TH14" Content="東方輝針城"/>
         </ComboBox>
         <Label x:Name="lblSupportedVersion" Content="" Margin="165,10,10,10"/>
 

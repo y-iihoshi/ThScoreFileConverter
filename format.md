@@ -4984,3 +4984,539 @@ SpellName: %T125CARD122" border=0&gt;
   </td>
  </tr>
 </table>
+
+----------------------------------------
+
+## 東方輝針城用テンプレート書式 {: #Th14Formats }
+
+### スコアランキング {: #T14SCR }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="5">書式</td>
+  <td colspan="2"><code>%T14SCR[w][xx][y][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[w]</code></td>
+  <td>
+   難易度
+<dl class="format">
+ <dt><code>[E]</code></dt><dd>Easy</dd>
+ <dt><code>[N]</code></dt><dd>Normal</dd>
+ <dt><code>[H]</code></dt><dd>Hard</dd>
+ <dt><code>[L]</code></dt><dd>Lunatic</dd>
+ <dt><code>[X]</code></dt><dd>Extra</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[xx]</code></td>
+  <td>
+   キャラの名前
+<dl class="format">
+ <dt><code>[RA]</code></dt><dd>霊夢 (A)</dd>
+ <dt><code>[RB]</code></dt><dd>霊夢 (B)</dd>
+ <dt><code>[MA]</code></dt><dd>魔理沙 (A)</dd>
+ <dt><code>[MB]</code></dt><dd>魔理沙 (B)</dd>
+ <dt><code>[SA]</code></dt><dd>咲夜 (A)</dd>
+ <dt><code>[SB]</code></dt><dd>咲夜 (B)</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[y]</code></td>
+  <td>
+   順位
+<dl class="format">
+ <dt><code>[1～9]</code></dt><dd>1～9 位</dd>
+ <dt><code>[0]</code></dt><dd>10 位</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[1]</code></dt><dd>登録名</dd>
+ <dt><code>[2]</code></dt><dd>スコア</dd>
+ <dt><code>[3]</code></dt><dd>到達ステージ</dd>
+ <dt><code>[4]</code></dt><dd>日時</dd>
+ <dt><code>[5]</code></dt><dd>処理落ち率</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T14SCRNSB12</code></dt><dd>Normal 咲夜 (B) の 1 位のスコア</dd>
+ <dt><code>%T14SCRXRA44</code></dt><dd>Extra 霊夢 (A) の 4 位の日時</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>スコアの 1 の位には、原作と同様にコンティニュー回数が出力されます。</li>
+ <li>日時は年月日及び時分秒が「<samp>yyyy/mm/dd hh:mm:ss</samp>」の形式で出力されます。</li>
+ <li>処理落ち率は小数点以下第 3 位まで（% 記号付きで）出力されます。今後、この桁数を設定可能にするかも知れません。</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+### 御札戦歴 {: #T14C }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="5">書式</td>
+  <td colspan="2"><code>%T14C[w][xxx][yy][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[w]</code></td>
+  <td>
+   戦歴の種類
+<dl class="format">
+ <dt><code>[S]</code></dt><dd>ゲーム本編</dd>
+ <dt><code>[P]</code></dt><dd>スペルプラクティス</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[xxx]</code></td>
+  <td>
+   スペルカードの番号など
+<dl class="format">
+ <dt><code>[000]</code></dt><dd>全スペルカードの合計値</dd>
+ <dt><code>[001～120]</code></dt><dd>スペルカードの番号</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[yy]</code></td>
+  <td>
+   キャラの名前など
+<dl class="format">
+ <dt><code>[TL]</code></dt><dd>全主人公合計</dd>
+ <dt><code>[RA]</code></dt><dd>霊夢 (A)</dd>
+ <dt><code>[RB]</code></dt><dd>霊夢 (B)</dd>
+ <dt><code>[MA]</code></dt><dd>魔理沙 (A)</dd>
+ <dt><code>[MB]</code></dt><dd>魔理沙 (B)</dd>
+ <dt><code>[SA]</code></dt><dd>咲夜 (A)</dd>
+ <dt><code>[SB]</code></dt><dd>咲夜 (B)</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[1]</code></dt><dd>取得回数（勝率の分子）</dd>
+ <dt><code>[2]</code></dt><dd>挑戦回数（勝率の分母）</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T14CS003TL1</code></dt>
+ <dd>ゲーム本編 全主人公合計の氷符「テイルフィンスラップ」(Easy) の取得回数</dd>
+ <dt><code>%T14CP003SB2</code></dt>
+ <dd>スペルプラクティス 咲夜 (B) の氷符「テイルフィンスラップ」(Easy) の挑戦回数</dd>
+</dl>
+  </td>
+ </tr>
+</table>
+
+### スペルカード基本情報 {: #T14CARD }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="3">書式</td>
+  <td colspan="2"><code>%T14CARD[xxx][y]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[xxx]</code></td>
+  <td>
+   スペルカードの番号
+<dl class="format">
+ <dt><code>[001～120]</code></dt><dd>スペルカードの番号</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[y]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[N]</code></dt><dd>スペルカードの名前</dd>
+ <dt><code>[R]</code></dt>
+ <dd>スペルカードの難易度 (Easy, Normal, Hard, Lunatic, Extra)</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T14CARD003N</code></dt><dd>氷符「テイルフィンスラップ」</dd>
+ <dt><code>%T14CARD003R</code></dt><dd>Easy</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>未挑戦のスペルカードの名前は「<samp>?????</samp>」のように出力されます。（一応ネタバレ防止のため。）今後、このように隠すかどうかを設定可能にするかも知れません。</li>
+ <li>一方、スペルカードの難易度は、未挑戦かどうかにかかわらず常に出力されます。原作でも Result 画面を見れば難易度はバレるので、このような仕様にしています。</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+### スペルカード蒐集率 {: #T14CRG }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="6">書式</td>
+  <td colspan="2"><code>%T14CRG[v][w][xx][y][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[v]</code></td>
+  <td>
+   戦歴の種類
+<dl class="format">
+ <dt><code>[S]</code></dt><dd>ゲーム本編</dd>
+ <dt><code>[P]</code></dt><dd>スペルプラクティス</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[w]</code></td>
+  <td>
+   難易度など
+<dl class="format">
+ <dt><code>[E]</code></dt><dd>Easy</dd>
+ <dt><code>[N]</code></dt><dd>Normal</dd>
+ <dt><code>[H]</code></dt><dd>Hard</dd>
+ <dt><code>[L]</code></dt><dd>Lunatic</dd>
+ <dt><code>[X]</code></dt><dd>Extra</dd>
+ <dt><code>[T]</code></dt><dd>Total</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[xx]</code></td>
+  <td>
+   キャラの名前など
+<dl class="format">
+ <dt><code>[TL]</code></dt><dd>全主人公合計</dd>
+ <dt><code>[RA]</code></dt><dd>霊夢 (A)</dd>
+ <dt><code>[RB]</code></dt><dd>霊夢 (B)</dd>
+ <dt><code>[MA]</code></dt><dd>魔理沙 (A)</dd>
+ <dt><code>[MB]</code></dt><dd>魔理沙 (B)</dd>
+ <dt><code>[SA]</code></dt><dd>咲夜 (A)</dd>
+ <dt><code>[SB]</code></dt><dd>咲夜 (B)</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[y]</code></td>
+  <td>
+   ステージ
+<dl class="format">
+ <dt><code>[0]</code></dt><dd>全ステージ合計</dd>
+ <dt><code>[1～6]</code></dt><dd>Stage 1～6</dd>
+</dl>
+   （Extra ではこの指定は無視され、Total ではそのステージの Easy～Lunatic
+   の合計が出力されます。）
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[1]</code></dt><dd>取得数（勝率の分子）</dd>
+ <dt><code>[2]</code></dt><dd>挑戦数（勝率の分母）</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T14CRGSERA01</code></dt>
+ <dd>ゲーム本編 Easy 霊夢 (A) の全ステージ合計の取得数</dd>
+ <dt><code>%T14CRGSTSB41</code></dt>
+ <dd>ゲーム本編 咲夜 (B) の Stage 4 の全難易度合計の取得数</dd>
+ <dt><code>%T14CRGPTTL02</code></dt>
+ <dd>スペルプラクティス 全難易度・全キャラ・全ステージ合計の挑戦数</dd>
+</dl>
+  </td>
+ </tr>
+</table>
+
+### クリア達成度 {: #T14CLEAR }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="3">書式</td>
+  <td colspan="2"><code>%T14CLEAR[x][yy]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   難易度
+<dl class="format">
+ <dt><code>[E]</code></dt><dd>Easy</dd>
+ <dt><code>[N]</code></dt><dd>Normal</dd>
+ <dt><code>[H]</code></dt><dd>Hard</dd>
+ <dt><code>[L]</code></dt><dd>Lunatic</dd>
+ <dt><code>[X]</code></dt><dd>Extra</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[yy]</code></td>
+  <td>
+   キャラの名前
+<dl class="format">
+ <dt><code>[RA]</code></dt><dd>霊夢 (A)</dd>
+ <dt><code>[RB]</code></dt><dd>霊夢 (B)</dd>
+ <dt><code>[MA]</code></dt><dd>魔理沙 (A)</dd>
+ <dt><code>[MB]</code></dt><dd>魔理沙 (B)</dd>
+ <dt><code>[SA]</code></dt><dd>咲夜 (A)</dd>
+ <dt><code>[SB]</code></dt><dd>咲夜 (B)</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T14CLEARXMB</code></dt><dd>Extra 魔理沙 (B) のクリア達成度</dd>
+ <dt><code>%T14CLEARNRA</code></dt><dd>Normal 霊夢 (A) のクリア達成度</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>
+  クリア達成度（ゲームの進行状況）に応じて以下の文字列が出力されます。
+  <p class="legends">
+   <samp>-------</samp>（未プレイ）, <samp>Stage 1</samp>,
+   <samp>Stage 2</samp>, <samp>Stage 3</samp>, <samp>Stage 4</samp>,
+   <samp>Stage 5</samp>, <samp>Stage 6</samp>, <samp>All Clear</samp>,
+   <samp>Not Clear</samp>（Extra 未クリア）
+  </p>
+ </li>
+ <li>本ツールでは、ランキングを基にクリア達成度を算出しているため、実際はクリア済みでもランキング上に存在していなければ未クリア扱いになってしまいます。</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+### キャラごとの個別データ {: #T14CHARA }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="3">書式</td>
+  <td colspan="2"><code>%T14CHARA[xx][y]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[xx]</code></td>
+  <td>
+   キャラの名前など
+<dl class="format">
+ <dt><code>[TL]</code></dt><dd>全主人公合計</dd>
+ <dt><code>[RA]</code></dt><dd>霊夢 (A)</dd>
+ <dt><code>[RB]</code></dt><dd>霊夢 (B)</dd>
+ <dt><code>[MA]</code></dt><dd>魔理沙 (A)</dd>
+ <dt><code>[MB]</code></dt><dd>魔理沙 (B)</dd>
+ <dt><code>[SA]</code></dt><dd>咲夜 (A)</dd>
+ <dt><code>[SB]</code></dt><dd>咲夜 (B)</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[y]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[1]</code></dt><dd>総プレイ回数</dd>
+ <dt><code>[2]</code></dt><dd>プレイ時間</dd>
+ <dt><code>[3]</code></dt><dd>クリア回数</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T14CHARATL2</code></dt><dd>全主人公合計のプレイ時間</dd>
+ <dt><code>%T14CHARARA1</code></dt><dd>霊夢 (A) の総プレイ回数</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>
+  プレイ時間は時分秒が「<samp>h:mm:ss</samp>」の形式で出力されます。<br />
+  なお、スコアファイルにはフレーム数単位で保存されているため、60fps 固定と見なして換算した結果を出力しています。
+ </li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+### キャラごとの個別データ（詳細版） {: #T14CHARAEX }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="4">書式</td>
+  <td colspan="2"><code>%T14CHARAEX[x][yy][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   難易度など
+<dl class="format">
+ <dt><code>[E]</code></dt><dd>Easy</dd>
+ <dt><code>[N]</code></dt><dd>Normal</dd>
+ <dt><code>[H]</code></dt><dd>Hard</dd>
+ <dt><code>[L]</code></dt><dd>Lunatic</dd>
+ <dt><code>[X]</code></dt><dd>Extra</dd>
+ <dt><code>[T]</code></dt><dd>Total</dd>
+</dl>
+   （総プレイ回数とプレイ時間ではこの指定は無視されます。）
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[yy]</code></td>
+  <td>
+   キャラの名前など
+<dl class="format">
+ <dt><code>[TL]</code></dt><dd>全主人公合計</dd>
+ <dt><code>[RA]</code></dt><dd>霊夢 (A)</dd>
+ <dt><code>[RB]</code></dt><dd>霊夢 (B)</dd>
+ <dt><code>[MA]</code></dt><dd>魔理沙 (A)</dd>
+ <dt><code>[MB]</code></dt><dd>魔理沙 (B)</dd>
+ <dt><code>[SA]</code></dt><dd>咲夜 (A)</dd>
+ <dt><code>[SB]</code></dt><dd>咲夜 (B)</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[1]</code></dt><dd>総プレイ回数</dd>
+ <dt><code>[2]</code></dt><dd>プレイ時間</dd>
+ <dt><code>[3]</code></dt><dd>クリア回数</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T14CHARAEXETL2</code></dt><dd>全主人公合計のプレイ時間</dd>
+ <dt><code>%T14CHARAEXERA1</code></dt><dd>霊夢 (A) の総プレイ回数</dd>
+ <dt><code>%T14CHARAEXTSB3</code></dt><dd>咲夜 (B) の全難易度合計のクリア回数</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>
+  プレイ時間は時分秒が「<samp>h:mm:ss</samp>」の形式で出力されます。<br />
+  なお、スコアファイルにはフレーム数単位で保存されているため、60fps 固定と見なして換算した結果を出力しています。
+ </li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+### プラクティススコア {: #T14PRAC }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="4">書式</td>
+  <td colspan="2"><code>%T14PRAC[x][yy][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   難易度
+<dl class="format">
+ <dt><code>[E]</code></dt><dd>Easy</dd>
+ <dt><code>[N]</code></dt><dd>Normal</dd>
+ <dt><code>[H]</code></dt><dd>Hard</dd>
+ <dt><code>[L]</code></dt><dd>Lunatic</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[yy]</code></td>
+  <td>
+   キャラの名前
+<dl class="format">
+ <dt><code>[RA]</code></dt><dd>霊夢 (A)</dd>
+ <dt><code>[RB]</code></dt><dd>霊夢 (B)</dd>
+ <dt><code>[MA]</code></dt><dd>魔理沙 (A)</dd>
+ <dt><code>[MB]</code></dt><dd>魔理沙 (B)</dd>
+ <dt><code>[SA]</code></dt><dd>咲夜 (A)</dd>
+ <dt><code>[SB]</code></dt><dd>咲夜 (B)</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   ステージ
+<dl class="format">
+ <dt><code>[1～6]</code></dt><dd>Stage 1～6</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T14PRACESB1</code></dt>
+ <dd>Easy 咲夜 (B) の Stage 1 のプラクティススコア</dd>
+ <dt><code>%T14PRACNRA4</code></dt>
+ <dd>Normal 霊夢 (A) の Stage 4 のプラクティススコア</dd>
+</dl>
+  </td>
+ </tr>
+</table>
