@@ -19,6 +19,7 @@ namespace ThScoreFileConverter
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
     using System.Text;
     using System.Text.RegularExpressions;
@@ -527,8 +528,8 @@ namespace ThScoreFileConverter
             {
                 var level = (Level)Enum.Parse(typeof(LevelShort), match.Groups[1].Value, true);
                 var chara = (Chara)Enum.Parse(typeof(CharaShort), match.Groups[2].Value, true);
-                var rank = int.Parse(match.Groups[3].Value) - 1;
-                var type = int.Parse(match.Groups[4].Value);
+                var rank = Utils.ToZeroBased(int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
+                var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
                 var score = this.allScoreData.Rankings[new CharaLevelPair(chara, level)][rank];
 
@@ -572,7 +573,7 @@ namespace ThScoreFileConverter
             {
                 var level = (Level)Enum.Parse(typeof(LevelShort), match.Groups[1].Value, true);
                 var chara = (Chara)Enum.Parse(typeof(CharaShort), match.Groups[2].Value, true);
-                var type = int.Parse(match.Groups[3].Value);
+                var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                 var count = this.allScoreData.PlayList.ClearCounts[chara].Counts[level];
 

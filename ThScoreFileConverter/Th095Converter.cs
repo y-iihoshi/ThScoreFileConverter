@@ -21,6 +21,7 @@ namespace ThScoreFileConverter
     using System.Collections.Generic;
     using System.Drawing;
     using System.Drawing.Imaging;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Runtime.InteropServices;
@@ -569,8 +570,8 @@ namespace ThScoreFileConverter
             var evaluator = new MatchEvaluator(match =>
             {
                 var level = match.Groups[1].Value.ToUpper();
-                var scene = int.Parse(match.Groups[2].Value);
-                var type = int.Parse(match.Groups[3].Value);
+                var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
+                var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                 var levelIndex = Array.IndexOf(LevelShortArray, level);
                 var levelScene = new LevelScenePair(levelIndex + 1, scene);
@@ -600,7 +601,7 @@ namespace ThScoreFileConverter
             var pattern = @"%T95SCRTL([1-4])";
             var evaluator = new MatchEvaluator(match =>
             {
-                var type = int.Parse(match.Groups[1].Value);
+                var type = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
 
                 switch (type)
                 {
@@ -633,8 +634,8 @@ namespace ThScoreFileConverter
             var evaluator = new MatchEvaluator(match =>
             {
                 var level = match.Groups[1].Value.ToUpper();
-                var scene = int.Parse(match.Groups[2].Value);
-                var type = int.Parse(match.Groups[3].Value);
+                var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
+                var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                 var levelIndex = Array.IndexOf(LevelShortArray, level);
                 var key = new LevelScenePair(levelIndex + 1, scene);
@@ -661,7 +662,7 @@ namespace ThScoreFileConverter
             var evaluator = new MatchEvaluator(match =>
             {
                 var level = match.Groups[1].Value.ToUpper();
-                var scene = int.Parse(match.Groups[2].Value);
+                var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
                 var levelIndex = Array.IndexOf(LevelShortArray, level);
                 var key = new LevelScenePair(levelIndex + 1, scene);
@@ -693,8 +694,8 @@ namespace ThScoreFileConverter
             var evaluator = new MatchEvaluator(match =>
             {
                 var level = match.Groups[1].Value.ToUpper();
-                var scene = int.Parse(match.Groups[2].Value);
-                var type = int.Parse(match.Groups[3].Value);
+                var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
+                var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                 var levelIndex = Array.IndexOf(LevelShortArray, level);
                 var key = new LevelScenePair(levelIndex + 1, scene);

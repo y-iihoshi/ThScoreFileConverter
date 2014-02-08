@@ -19,6 +19,7 @@ namespace ThScoreFileConverter
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Text;
@@ -918,7 +919,7 @@ namespace ThScoreFileConverter
             {
                 var level = Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
                 var chara = Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
-                var rank = Utils.ToZeroBased(int.Parse(match.Groups[3].Value));
+                var rank = Utils.ToZeroBased(int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
                 var type = match.Groups[4].Value.ToUpper();
 
                 var key = new CharaLevelPair(chara, level);
@@ -1002,10 +1003,10 @@ namespace ThScoreFileConverter
             var evaluator = new MatchEvaluator(match =>
             {
                 var kind = match.Groups[1].Value.ToUpper();
-                var number = int.Parse(match.Groups[2].Value);
+                var number = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                 var chara =
                     (CharaWithTotal)Utils.ParseEnum<CharaShortWithTotal>(match.Groups[3].Value, true);
-                var type = int.Parse(match.Groups[4].Value);
+                var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
                 Func<CardAttack, CardAttackCareer> getCareer = (attack => null);
                 if (kind == "S")
@@ -1042,7 +1043,7 @@ namespace ThScoreFileConverter
             var pattern = @"%T08CARD(\d{3})([NR])";
             var evaluator = new MatchEvaluator(match =>
             {
-                var number = int.Parse(match.Groups[1].Value);
+                var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
                 var type = match.Groups[2].Value.ToUpper();
 
                 if (new Range<int>(1, NumCards).Contains(number))
@@ -1086,7 +1087,7 @@ namespace ThScoreFileConverter
                 var chara = (CharaWithTotal)Utils.ParseEnum<CharaShortWithTotal>(
                     match.Groups[3].Value, true);
                 var stage = Array.IndexOf(StageShortWithTotalArray, match.Groups[4].Value.ToUpper());
-                var type = int.Parse(match.Groups[5].Value);
+                var type = int.Parse(match.Groups[5].Value, CultureInfo.InvariantCulture);
 
                 Func<CardAttack, bool> checkNotNull = (attack => attack != null);
                 Func<CardAttack, bool> findByKindType = (attack => true);
@@ -1238,7 +1239,7 @@ namespace ThScoreFileConverter
                 var level = (Level)Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
                 var chara = (Chara)Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
                 var stage = (Stage)Array.IndexOf(StageShortArray, match.Groups[3].Value.ToUpper());
-                var type = int.Parse(match.Groups[4].Value);
+                var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
                 if (level == Level.Extra)
                     return match.ToString();

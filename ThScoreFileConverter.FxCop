@@ -265,35 +265,6 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th06Converter.ReplaceCard(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCareer(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th06Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th06Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#ReplaceCollectRate(System.String)">
@@ -305,53 +276,11 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th06Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
              <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
               <Issue Name="IFormatProviderAlternateString">
                <Item>'int.ToString()'</Item>
                <Item>'Th06Converter.ReplaceCollectRate(string)'</Item>
                <Item>'int.ToString(IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplacePractice(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th06Converter.ReplacePractice(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceScore(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th06Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th06Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
@@ -590,55 +519,10 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th07Converter.ReplaceCard(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCareer(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th07Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th07Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#ReplaceCollectRate(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th07Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th07Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
              <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
               <Issue Name="IFormatProviderAlternateString">
                <Item>'int.ToString()'</Item>
@@ -661,44 +545,8 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#ReplacePractice(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th07Converter.ReplacePractice(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th07Converter.ReplacePractice(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#ReplaceScore(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th07Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th07Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
              <Message Id="System.Single.ToString(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
               <Issue Name="IFormatProviderAlternateString">
                <Item>'float.ToString(string)'</Item>
@@ -1063,15 +911,6 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th08Converter.ReplaceCard(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#ReplaceCareer(System.String)">
@@ -1081,22 +920,6 @@
                <Item>'string.ToUpper()'</Item>
                <Item>'Th08Converter.ReplaceCareer(string)'</Item>
                <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th08Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th08Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1113,15 +936,6 @@
                <Item>'string.ToUpper()'</Item>
                <Item>'Th08Converter.ReplaceCollectRate(string)'</Item>
                <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th08Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
              <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
@@ -1155,15 +969,6 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th08Converter.ReplacePractice(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#ReplaceScore(System.String)">
@@ -1173,15 +978,6 @@
                <Item>'string.ToUpper()'</Item>
                <Item>'Th08Converter.ReplaceScore(string)'</Item>
                <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th08Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
              <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
@@ -1701,22 +1497,6 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th095Converter.ReplaceCard(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th095Converter.ReplaceCard(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#ReplaceScore(System.String)">
@@ -1726,22 +1506,6 @@
                <Item>'string.ToUpper()'</Item>
                <Item>'Th095Converter.ReplaceScore(string)'</Item>
                <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th095Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th095Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
              <Message Id="System.Single.ToString(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
@@ -1757,15 +1521,6 @@
            </Member>
            <Member Name="#ReplaceScoreTotal(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th095Converter.ReplaceScoreTotal(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
              <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
               <Issue Name="IFormatProviderAlternateString">
                <Item>'int.ToString()'</Item>
@@ -1784,15 +1539,6 @@
                <Item>'string.ToUpper()'</Item>
                <Item>'Th095Converter.ReplaceShot(string, string)'</Item>
                <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th095Converter.ReplaceShot(string, string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1827,22 +1573,6 @@
                <Item>'short.ToString()'</Item>
                <Item>'Th095Converter.ReplaceShotEx(string, string)'</Item>
                <Item>'short.ToString(IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th095Converter.ReplaceShotEx(string, string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th095Converter.ReplaceShotEx(string, string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
@@ -2062,39 +1792,6 @@
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
               <Issue>
                <Item>'Th09Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceClear(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th09Converter.ReplaceClear(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceScore(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th09Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th09Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -2393,99 +2090,15 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th10Converter.ReplaceCard(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCareer(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th10Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th10Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceChara(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th10Converter.ReplaceChara(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCharaEx(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th10Converter.ReplaceCharaEx(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#ReplaceCollectRate(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th10Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th10Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
              <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
               <Issue Name="IFormatProviderAlternateString">
                <Item>'int.ToString()'</Item>
                <Item>'Th10Converter.ReplaceCollectRate(string)'</Item>
                <Item>'int.ToString(IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplacePractice(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th10Converter.ReplacePractice(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
@@ -2499,22 +2112,6 @@
                <Item>'DateTime.ToString(string)'</Item>
                <Item>'Th10Converter.ReplaceScore(string)'</Item>
                <Item>'DateTime.ToString(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th10Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th10Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
@@ -2683,99 +2280,15 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th11Converter.ReplaceCard(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCareer(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th11Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th11Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceChara(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th11Converter.ReplaceChara(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCharaEx(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th11Converter.ReplaceCharaEx(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#ReplaceCollectRate(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th11Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th11Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
              <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
               <Issue Name="IFormatProviderAlternateString">
                <Item>'int.ToString()'</Item>
                <Item>'Th11Converter.ReplaceCollectRate(string)'</Item>
                <Item>'int.ToString(IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplacePractice(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th11Converter.ReplacePractice(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
@@ -2789,22 +2302,6 @@
                <Item>'DateTime.ToString(string)'</Item>
                <Item>'Th11Converter.ReplaceScore(string)'</Item>
                <Item>'DateTime.ToString(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th11Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th11Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
@@ -2997,22 +2494,6 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th125Converter.ReplaceCard(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th125Converter.ReplaceCard(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#ReplaceScore(System.String)">
@@ -3033,42 +2514,10 @@
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th125Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th125Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#ReplaceScoreTotal(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th125Converter.ReplaceScoreTotal(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th125Converter.ReplaceScoreTotal(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
              <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
               <Issue Name="IFormatProviderAlternateString">
                <Item>'int.ToString()'</Item>
@@ -3087,15 +2536,6 @@
                <Item>'string.ToUpper()'</Item>
                <Item>'Th125Converter.ReplaceShot(string, string)'</Item>
                <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th125Converter.ReplaceShot(string, string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -3130,22 +2570,6 @@
                <Item>'short.ToString()'</Item>
                <Item>'Th125Converter.ReplaceShotEx(string, string)'</Item>
                <Item>'short.ToString(IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th125Converter.ReplaceShotEx(string, string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th125Converter.ReplaceShotEx(string, string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
@@ -3674,79 +3098,15 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th128Converter.ReplaceCard(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCareer(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th128Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th128Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#ReplaceCollectRate(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th128Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
              <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
               <Issue Name="IFormatProviderAlternateString">
                <Item>'int.ToString()'</Item>
                <Item>'Th128Converter.ReplaceCollectRate(string)'</Item>
                <Item>'int.ToString(IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceRoute(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th128Converter.ReplaceRoute(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceRouteEx(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th128Converter.ReplaceRouteEx(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
@@ -3760,22 +3120,6 @@
                <Item>'DateTime.ToString(string)'</Item>
                <Item>'Th128Converter.ReplaceScore(string)'</Item>
                <Item>'DateTime.ToString(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th128Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th128Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
@@ -3932,99 +3276,15 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th12Converter.ReplaceCard(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCareer(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th12Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th12Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceChara(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th12Converter.ReplaceChara(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCharaEx(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th12Converter.ReplaceCharaEx(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#ReplaceCollectRate(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th12Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th12Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
              <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
               <Issue Name="IFormatProviderAlternateString">
                <Item>'int.ToString()'</Item>
                <Item>'Th12Converter.ReplaceCollectRate(string)'</Item>
                <Item>'int.ToString(IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplacePractice(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th12Converter.ReplacePractice(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
@@ -4038,22 +3298,6 @@
                <Item>'DateTime.ToString(string)'</Item>
                <Item>'Th12Converter.ReplaceScore(string)'</Item>
                <Item>'DateTime.ToString(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th12Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th12Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
@@ -4235,15 +3479,6 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th13Converter.ReplaceCard(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#ReplaceCareer(System.String)">
@@ -4253,48 +3488,6 @@
                <Item>'string.ToUpper()'</Item>
                <Item>'Th13Converter.ReplaceCareer(string)'</Item>
                <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th13Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th13Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceChara(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th13Converter.ReplaceChara(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCharaEx(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th13Converter.ReplaceCharaEx(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -4308,40 +3501,11 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th13Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th13Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
              <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
               <Issue Name="IFormatProviderAlternateString">
                <Item>'int.ToString()'</Item>
                <Item>'Th13Converter.ReplaceCollectRate(string)'</Item>
                <Item>'int.ToString(IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplacePractice(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th13Converter.ReplacePractice(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
@@ -4355,22 +3519,6 @@
                <Item>'DateTime.ToString(string)'</Item>
                <Item>'Th13Converter.ReplaceScore(string)'</Item>
                <Item>'DateTime.ToString(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th13Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th13Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
@@ -4644,15 +3792,6 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th14Converter.ReplaceCard(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#ReplaceCareer(System.String)">
@@ -4662,48 +3801,6 @@
                <Item>'string.ToUpper()'</Item>
                <Item>'Th14Converter.ReplaceCareer(string)'</Item>
                <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th14Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th14Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceChara(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th14Converter.ReplaceChara(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCharaEx(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th14Converter.ReplaceCharaEx(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -4717,40 +3814,11 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th14Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th14Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
              <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
               <Issue Name="IFormatProviderAlternateString">
                <Item>'int.ToString()'</Item>
                <Item>'Th14Converter.ReplaceCollectRate(string)'</Item>
                <Item>'int.ToString(IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplacePractice(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th14Converter.ReplacePractice(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
@@ -4764,22 +3832,6 @@
                <Item>'DateTime.ToString(string)'</Item>
                <Item>'Th14Converter.ReplaceScore(string)'</Item>
                <Item>'DateTime.ToString(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th14Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th14Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
@@ -5335,35 +4387,6 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th06Converter.ReplaceCard(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCareer(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th06Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th06Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#ReplaceCollectRate(System.String)">
@@ -5375,53 +4398,11 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th06Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
              <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
               <Issue Name="IFormatProviderAlternateString">
                <Item>'int.ToString()'</Item>
                <Item>'Th06Converter.ReplaceCollectRate(string)'</Item>
                <Item>'int.ToString(IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplacePractice(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th06Converter.ReplacePractice(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceScore(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th06Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th06Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
@@ -5625,55 +4606,10 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th07Converter.ReplaceCard(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCareer(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th07Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th07Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#ReplaceCollectRate(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th07Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th07Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
              <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
               <Issue Name="IFormatProviderAlternateString">
                <Item>'int.ToString()'</Item>
@@ -5696,44 +4632,8 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#ReplacePractice(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th07Converter.ReplacePractice(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th07Converter.ReplacePractice(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#ReplaceScore(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th07Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th07Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
              <Message Id="System.Single.ToString(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
               <Issue Name="IFormatProviderAlternateString">
                <Item>'float.ToString(string)'</Item>
@@ -6063,15 +4963,6 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th08Converter.ReplaceCard(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#ReplaceCareer(System.String)">
@@ -6081,22 +4972,6 @@
                <Item>'string.ToUpper()'</Item>
                <Item>'Th08Converter.ReplaceCareer(string)'</Item>
                <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th08Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th08Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -6113,15 +4988,6 @@
                <Item>'string.ToUpper()'</Item>
                <Item>'Th08Converter.ReplaceCollectRate(string)'</Item>
                <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th08Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
              <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
@@ -6155,15 +5021,6 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th08Converter.ReplacePractice(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#ReplaceScore(System.String)">
@@ -6173,15 +5030,6 @@
                <Item>'string.ToUpper()'</Item>
                <Item>'Th08Converter.ReplaceScore(string)'</Item>
                <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th08Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
              <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
@@ -6690,22 +5538,6 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th095Converter.ReplaceCard(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th095Converter.ReplaceCard(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#ReplaceScore(System.String)">
@@ -6715,22 +5547,6 @@
                <Item>'string.ToUpper()'</Item>
                <Item>'Th095Converter.ReplaceScore(string)'</Item>
                <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th095Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th095Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
              <Message Id="System.Single.ToString(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
@@ -6746,15 +5562,6 @@
            </Member>
            <Member Name="#ReplaceScoreTotal(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th095Converter.ReplaceScoreTotal(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
              <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
               <Issue Name="IFormatProviderAlternateString">
                <Item>'int.ToString()'</Item>
@@ -6773,15 +5580,6 @@
                <Item>'string.ToUpper()'</Item>
                <Item>'Th095Converter.ReplaceShot(string, string)'</Item>
                <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th095Converter.ReplaceShot(string, string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -6816,22 +5614,6 @@
                <Item>'short.ToString()'</Item>
                <Item>'Th095Converter.ReplaceShotEx(string, string)'</Item>
                <Item>'short.ToString(IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th095Converter.ReplaceShotEx(string, string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th095Converter.ReplaceShotEx(string, string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
@@ -7023,39 +5805,6 @@
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
               <Issue>
                <Item>'Th09Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceClear(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th09Converter.ReplaceClear(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceScore(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th09Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th09Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -7354,99 +6103,15 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th10Converter.ReplaceCard(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCareer(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th10Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th10Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceChara(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th10Converter.ReplaceChara(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCharaEx(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th10Converter.ReplaceCharaEx(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#ReplaceCollectRate(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th10Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th10Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
              <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
               <Issue Name="IFormatProviderAlternateString">
                <Item>'int.ToString()'</Item>
                <Item>'Th10Converter.ReplaceCollectRate(string)'</Item>
                <Item>'int.ToString(IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplacePractice(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th10Converter.ReplacePractice(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
@@ -7460,22 +6125,6 @@
                <Item>'DateTime.ToString(string)'</Item>
                <Item>'Th10Converter.ReplaceScore(string)'</Item>
                <Item>'DateTime.ToString(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th10Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th10Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
@@ -7644,99 +6293,15 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th11Converter.ReplaceCard(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCareer(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th11Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th11Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceChara(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th11Converter.ReplaceChara(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCharaEx(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th11Converter.ReplaceCharaEx(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#ReplaceCollectRate(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th11Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th11Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
              <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
               <Issue Name="IFormatProviderAlternateString">
                <Item>'int.ToString()'</Item>
                <Item>'Th11Converter.ReplaceCollectRate(string)'</Item>
                <Item>'int.ToString(IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplacePractice(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th11Converter.ReplacePractice(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
@@ -7750,22 +6315,6 @@
                <Item>'DateTime.ToString(string)'</Item>
                <Item>'Th11Converter.ReplaceScore(string)'</Item>
                <Item>'DateTime.ToString(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th11Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th11Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
@@ -7958,22 +6507,6 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th125Converter.ReplaceCard(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th125Converter.ReplaceCard(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#ReplaceScore(System.String)">
@@ -7994,42 +6527,10 @@
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th125Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th125Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#ReplaceScoreTotal(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th125Converter.ReplaceScoreTotal(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th125Converter.ReplaceScoreTotal(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
              <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
               <Issue Name="IFormatProviderAlternateString">
                <Item>'int.ToString()'</Item>
@@ -8048,15 +6549,6 @@
                <Item>'string.ToUpper()'</Item>
                <Item>'Th125Converter.ReplaceShot(string, string)'</Item>
                <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th125Converter.ReplaceShot(string, string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -8091,22 +6583,6 @@
                <Item>'short.ToString()'</Item>
                <Item>'Th125Converter.ReplaceShotEx(string, string)'</Item>
                <Item>'short.ToString(IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th125Converter.ReplaceShotEx(string, string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th125Converter.ReplaceShotEx(string, string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
@@ -8635,79 +7111,15 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th128Converter.ReplaceCard(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCareer(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th128Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th128Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#ReplaceCollectRate(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th128Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
              <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
               <Issue Name="IFormatProviderAlternateString">
                <Item>'int.ToString()'</Item>
                <Item>'Th128Converter.ReplaceCollectRate(string)'</Item>
                <Item>'int.ToString(IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceRoute(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th128Converter.ReplaceRoute(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceRouteEx(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th128Converter.ReplaceRouteEx(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
@@ -8721,22 +7133,6 @@
                <Item>'DateTime.ToString(string)'</Item>
                <Item>'Th128Converter.ReplaceScore(string)'</Item>
                <Item>'DateTime.ToString(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th128Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th128Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
@@ -8893,99 +7289,15 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th12Converter.ReplaceCard(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCareer(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th12Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th12Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceChara(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th12Converter.ReplaceChara(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCharaEx(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th12Converter.ReplaceCharaEx(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#ReplaceCollectRate(System.String)">
             <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th12Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th12Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
              <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
               <Issue Name="IFormatProviderAlternateString">
                <Item>'int.ToString()'</Item>
                <Item>'Th12Converter.ReplaceCollectRate(string)'</Item>
                <Item>'int.ToString(IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplacePractice(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th12Converter.ReplacePractice(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
@@ -8999,22 +7311,6 @@
                <Item>'DateTime.ToString(string)'</Item>
                <Item>'Th12Converter.ReplaceScore(string)'</Item>
                <Item>'DateTime.ToString(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th12Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th12Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
@@ -9196,15 +7492,6 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th13Converter.ReplaceCard(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#ReplaceCareer(System.String)">
@@ -9214,48 +7501,6 @@
                <Item>'string.ToUpper()'</Item>
                <Item>'Th13Converter.ReplaceCareer(string)'</Item>
                <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th13Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th13Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceChara(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th13Converter.ReplaceChara(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCharaEx(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th13Converter.ReplaceCharaEx(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -9269,40 +7514,11 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th13Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th13Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
              <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
               <Issue Name="IFormatProviderAlternateString">
                <Item>'int.ToString()'</Item>
                <Item>'Th13Converter.ReplaceCollectRate(string)'</Item>
                <Item>'int.ToString(IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplacePractice(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th13Converter.ReplacePractice(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
@@ -9316,22 +7532,6 @@
                <Item>'DateTime.ToString(string)'</Item>
                <Item>'Th13Converter.ReplaceScore(string)'</Item>
                <Item>'DateTime.ToString(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th13Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th13Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
@@ -9605,15 +7805,6 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th14Converter.ReplaceCard(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#ReplaceCareer(System.String)">
@@ -9623,48 +7814,6 @@
                <Item>'string.ToUpper()'</Item>
                <Item>'Th14Converter.ReplaceCareer(string)'</Item>
                <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th14Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th14Converter.ReplaceCareer(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceChara(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th14Converter.ReplaceChara(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCharaEx(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th14Converter.ReplaceCharaEx(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -9678,40 +7827,11 @@
                <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th14Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th14Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
              <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 15:40:17Z">
               <Issue Name="IFormatProviderAlternateString">
                <Item>'int.ToString()'</Item>
                <Item>'Th14Converter.ReplaceCollectRate(string)'</Item>
                <Item>'int.ToString(IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplacePractice(System.String)">
-            <Messages>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th14Converter.ReplacePractice(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
@@ -9725,22 +7845,6 @@
                <Item>'DateTime.ToString(string)'</Item>
                <Item>'Th14Converter.ReplaceScore(string)'</Item>
                <Item>'DateTime.ToString(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-             <Message Id="System.Int32.Parse(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2014-02-08 18:07:43Z">
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th14Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
-               <Item>'CultureInfo.CurrentCulture'</Item>
-               <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-              <Issue Name="IFormatProviderAlternate">
-               <Item>'int.Parse(string)'</Item>
-               <Item>'Th14Converter.ReplaceScore(string)'</Item>
-               <Item>'int.Parse(string, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
               </Issue>
