@@ -20,6 +20,15 @@ namespace ThScoreFileConverter
     public class Time
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="Time"/> class to a specified number of frames.
+        /// </summary>
+        /// <param name="frames">Number of frames</param>
+        public Time(long frames)
+            : this(frames, true)
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Time"/> class to a specified number of frames
         /// or milliseconds.
         /// </summary>
@@ -28,7 +37,7 @@ namespace ThScoreFileConverter
         /// <c>true</c> if treats <paramref name="framesOrMilliseconds"/> as a frames; <c>false</c> for
         /// milliseconds.
         /// </param>
-        public Time(long framesOrMilliseconds, bool isFrames = true)
+        public Time(long framesOrMilliseconds, bool isFrames)
         {
             var seconds = framesOrMilliseconds / (isFrames ? 60 : 1000);
             var minutes = seconds / 60;
@@ -53,6 +62,19 @@ namespace ThScoreFileConverter
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Time"/> class to a specified number of hours,
+        /// minutes, seconds and frames.
+        /// </summary>
+        /// <param name="hours">Number of hours.</param>
+        /// <param name="minutes">Number of minutes.</param>
+        /// <param name="seconds">Number of seconds.</param>
+        /// <param name="frames">Number of frames.</param>
+        public Time(long hours, int minutes, int seconds, int frames)
+            : this(hours, minutes, seconds, frames, true)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Time"/> class to a specified number of hours,
         /// minutes, seconds, and frames or milliseconds.
         /// </summary>
         /// <param name="hours">Number of hours.</param>
@@ -63,7 +85,7 @@ namespace ThScoreFileConverter
         /// <c>true</c> if treats <paramref name="framesOrMilliseconds"/> as a frames; <c>false</c> for
         /// milliseconds.
         /// </param>
-        public Time(long hours, int minutes, int seconds, int framesOrMilliseconds, bool isFrames = true)
+        public Time(long hours, int minutes, int seconds, int framesOrMilliseconds, bool isFrames)
         {
             if (minutes >= 60)
                 throw new ArgumentOutOfRangeException("minutes");

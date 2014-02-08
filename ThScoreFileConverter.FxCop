@@ -5125,28 +5125,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Time">
-          <Members>
-           <Member Name="#.ctor(System.Int64,System.Boolean)">
-            <Messages>
-             <Message TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026" Created="2014-02-08 19:44:19Z">
-              <Issue>
-               <Item>'Time.Time(long, bool)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#.ctor(System.Int64,System.Int32,System.Int32,System.Int32,System.Boolean)">
-            <Messages>
-             <Message TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026" Created="2014-02-08 19:44:19Z">
-              <Issue>
-               <Item>'Time.Time(long, int, int, int, bool)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Utils">
           <Members>
            <Member Name="#JoinEnumNames`1(System.String)">
@@ -5155,15 +5133,6 @@
               <Issue>
                <Item>'Utils.JoinEnumNames&lt;TEnum&gt;(string)'</Item>
                <Item>'TEnum'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ParseEnum`1(System.String,System.Boolean)">
-            <Messages>
-             <Message TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026" Created="2014-02-08 19:44:19Z">
-              <Issue>
-               <Item>'Utils.ParseEnum&lt;TEnum&gt;(string, bool)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -10117,28 +10086,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Time">
-          <Members>
-           <Member Name="#.ctor(System.Int64,System.Boolean)">
-            <Messages>
-             <Message TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026" Created="2014-02-08 19:44:19Z">
-              <Issue>
-               <Item>'Time.Time(long, bool)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#.ctor(System.Int64,System.Int32,System.Int32,System.Int32,System.Boolean)">
-            <Messages>
-             <Message TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026" Created="2014-02-08 19:44:19Z">
-              <Issue>
-               <Item>'Time.Time(long, int, int, int, bool)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Utils">
           <Members>
            <Member Name="#JoinEnumNames`1(System.String)">
@@ -10147,15 +10094,6 @@
               <Issue>
                <Item>'Utils.JoinEnumNames&lt;TEnum&gt;(string)'</Item>
                <Item>'TEnum'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ParseEnum`1(System.String,System.Boolean)">
-            <Messages>
-             <Message TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026" Created="2014-02-08 19:44:19Z">
-              <Issue>
-               <Item>'Utils.ParseEnum&lt;TEnum&gt;(string, bool)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -10190,9 +10128,6 @@
    </Rule>
    <Rule TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227">
     <Resolution Name="Default">Change {0} to be read-only by removing the property setter.</Resolution>
-   </Rule>
-   <Rule TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026">
-    <Resolution Name="Default">Replace method {0} with an overload that supplies all default arguments.</Resolution>
    </Rule>
    <Rule TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004">
     <Resolution Name="Default">Consider a design where {0} doesn't require explicit type parameter {1} in any call to it.</Resolution>

@@ -52,12 +52,28 @@ namespace ThScoreFileConverter
         /// </summary>
         /// <typeparam name="TEnum">The enumeration type.</typeparam>
         /// <param name="value">A string containing the name or value to convert.</param>
+        /// <returns>
+        /// An instance of <typeparamref name="TEnum"/> whose value is represented by
+        /// <paramref name="value"/>.
+        /// </returns>
+        public static TEnum ParseEnum<TEnum>(string value)
+            where TEnum : struct, IComparable, IFormattable, IConvertible
+        {
+            return ParseEnum<TEnum>(value, false);
+        }
+
+        /// <summary>
+        /// Converts the string representation of the name or numeric value of one or more enumerated
+        /// constants to an equivalent enumerated instance.
+        /// </summary>
+        /// <typeparam name="TEnum">The enumeration type.</typeparam>
+        /// <param name="value">A string containing the name or value to convert.</param>
         /// <param name="ignoreCase"><c>true</c> if ignore case; <c>false</c> to regard case.</param>
         /// <returns>
         /// An instance of <typeparamref name="TEnum"/> whose value is represented by
         /// <paramref name="value"/>.
         /// </returns>
-        public static TEnum ParseEnum<TEnum>(string value, bool ignoreCase = false)
+        public static TEnum ParseEnum<TEnum>(string value, bool ignoreCase)
             where TEnum : struct, IComparable, IFormattable, IConvertible
         {
             return (TEnum)Enum.Parse(typeof(TEnum), value, ignoreCase);
