@@ -8,6 +8,7 @@ namespace ThScoreFileConverter
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Text.RegularExpressions;
@@ -87,7 +88,21 @@ namespace ThScoreFileConverter
         /// <returns>A string that represents <paramref name="number"/>.</returns>
         public static string ToNumberString<T>(T number, bool outputSeparator) where T : struct
         {
-            return outputSeparator ? string.Format("{0:N0}", number) : number.ToString();
+            return outputSeparator ? Utils.Format("{0:N0}", number) : number.ToString();
+        }
+
+        /// <summary>
+        /// Wraps the <c>string.Format()</c> method to specify an IFormatProvider instance.
+        /// </summary>
+        /// <param name="fmt">A composite format string.</param>
+        /// <param name="args">An <c>Object</c> array containing zero or more objects to format.</param>
+        /// <returns>
+        /// A copy of <paramref name="fmt"/> in which the format items have been replaced by the string
+        /// representation of the corresponding objects in <paramref name="args"/>.
+        /// </returns>
+        public static string Format(string fmt, params object[] args)
+        {
+            return string.Format(CultureInfo.CurrentCulture, fmt, args);
         }
 
         /// <summary>

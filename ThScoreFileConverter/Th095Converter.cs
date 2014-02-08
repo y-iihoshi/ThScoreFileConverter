@@ -670,12 +670,12 @@ namespace ThScoreFileConverter
                 {
                     var relativePath = new Uri(outputFilePath)
                         .MakeRelativeUri(new Uri(this.bestshots[key].Path)).OriginalString;
-                    var alternativeString = string.Format(
+                    var alternativeString = Utils.Format(
                         "ClearData: {0}\nSlow: {1:F6}%\nSpellName: {2}",
                         this.ToNumberString(this.bestshots[key].Header.Score),
                         this.bestshots[key].Header.SlowRate,
                         Encoding.Default.GetString(this.bestshots[key].Header.CardName).TrimEnd('\0'));
-                    return string.Format(
+                    return Utils.Format(
                         "<img src=\"{0}\" alt=\"{1}\" title=\"{1}\" border=0>",
                         relativePath,
                         alternativeString);
@@ -743,7 +743,7 @@ namespace ThScoreFileConverter
 
         protected override string[] FilterBestShotFiles(string[] files)
         {
-            var pattern = string.Format(@"bs_({0})_[1-9].dat", string.Join("|", LevelArray));
+            var pattern = Utils.Format(@"bs_({0})_[1-9].dat", string.Join("|", LevelArray));
             var regex = new Regex(pattern, RegexOptions.IgnoreCase);
 
             return files.Where(file => regex.IsMatch(Path.GetFileName(file))).ToArray();

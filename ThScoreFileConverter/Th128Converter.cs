@@ -523,7 +523,7 @@ namespace ThScoreFileConverter
         // %T128SCR[w][xx][y][z]
         private string ReplaceScore(string input)
         {
-            var pattern = string.Format(
+            var pattern = Utils.Format(
                 @"%T128SCR([{0}])({1})(\d)([1-5])",
                 Utils.JoinEnumNames<LevelShort>(string.Empty),
                 Utils.JoinEnumNames<RouteShort>("|"));
@@ -634,7 +634,7 @@ namespace ThScoreFileConverter
             Justification = "Reviewed.")]
         private string ReplaceCollectRate(string input)
         {
-            var pattern = string.Format(
+            var pattern = Utils.Format(
                 @"%T128CRG([{0}])({1})([1-3])",
                 Utils.JoinEnumNames<LevelShortWithTotal>(string.Empty),
                 Utils.JoinEnumNames<StageShortWithTotal>("|"));
@@ -685,7 +685,7 @@ namespace ThScoreFileConverter
         // %T128CLEAR[x][yy]
         private string ReplaceClear(string input)
         {
-            var pattern = string.Format(
+            var pattern = Utils.Format(
                 @"%T128CLEAR([{0}])({1})",
                 Utils.JoinEnumNames<LevelShort>(string.Empty),
                 Utils.JoinEnumNames<RouteShort>("|"));
@@ -717,7 +717,7 @@ namespace ThScoreFileConverter
             Justification = "Reviewed.")]
         private string ReplaceRoute(string input)
         {
-            var pattern = string.Format(
+            var pattern = Utils.Format(
                 @"%T128ROUTE({0})([1-3])",
                 Utils.JoinEnumNames<RouteShortWithTotal>("|"));
             var evaluator = new MatchEvaluator(match =>
@@ -763,7 +763,7 @@ namespace ThScoreFileConverter
             Justification = "Reviewed.")]
         private string ReplaceRouteEx(string input)
         {
-            var pattern = string.Format(
+            var pattern = Utils.Format(
                 @"%T128ROUTEEX([{0}])({1})([1-3])",
                 Utils.JoinEnumNames<LevelShortWithTotal>(string.Empty),
                 Utils.JoinEnumNames<RouteShortWithTotal>("|"));

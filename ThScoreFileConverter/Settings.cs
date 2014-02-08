@@ -144,11 +144,11 @@ namespace ThScoreFileConverter
             }
             catch (SerializationException e)
             {
-                throw new InvalidDataException(string.Format("{0} may be broken.", path), e);
+                throw new InvalidDataException(Utils.Format("{0} may be broken.", path), e);
             }
             catch (XmlException e)
             {
-                throw new InvalidDataException(string.Format("{0} may be broken.", path), e);
+                throw new InvalidDataException(Utils.Format("{0} may be broken.", path), e);
             }
         }
 

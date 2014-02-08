@@ -47,7 +47,7 @@ namespace ThScoreFileConverter
         /// <returns>A string that represents the current instance.</returns>
         public override string ToString()
         {
-            return string.Format("[{0}, {1}]", this.Min, this.Max);
+            return Utils.Format("[{0}, {1}]", this.Min, this.Max);
         }
 
         /// <summary>

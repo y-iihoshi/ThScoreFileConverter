@@ -104,7 +104,7 @@ namespace ThScoreFileConverter
         {
             get
             {
-                return string.Format(
+                return Utils.Format(
                     "({0}/{1}) {2} ", this.Current, this.Total, System.IO.Path.GetFileName(this.Path));
             }
         }

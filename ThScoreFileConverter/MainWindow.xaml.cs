@@ -57,7 +57,7 @@ namespace ThScoreFileConverter
                         Prop.Resources.strSettingFile, Prop.Resources.strBackupFileExtension);
                     File.Delete(backup);
                     File.Move(Prop.Resources.strSettingFile, backup);
-                    var message = string.Format(
+                    var message = Utils.Format(
                         Prop.Resources.msgFmtBrokenSettingFile, Prop.Resources.strSettingFile, backup);
                     MessageBox.Show(
                         message, Prop.Resources.msgTitleWarning, MessageBoxButton.OK, MessageBoxImage.Warning);

@@ -773,7 +773,7 @@ namespace ThScoreFileConverter
         // %T07SCR[w][xx][y][z]
         private string ReplaceScore(string input)
         {
-            var pattern = string.Format(
+            var pattern = Utils.Format(
                 @"%T07SCR([{0}])({1})(\d)([1-5])",
                 Utils.JoinEnumNames<LevelShort>(string.Empty),
                 Utils.JoinEnumNames<CharaShort>("|"));
@@ -819,7 +819,7 @@ namespace ThScoreFileConverter
             Justification = "Reviewed.")]
         private string ReplaceCareer(string input)
         {
-            var pattern = string.Format(
+            var pattern = Utils.Format(
                 @"%T07C(\d{{3}})({0})([1-3])",
                 Utils.JoinEnumNames<CharaShortWithTotal>("|"));
             var evaluator = new MatchEvaluator(match =>
@@ -884,7 +884,7 @@ namespace ThScoreFileConverter
             Justification = "Reviewed.")]
         private string ReplaceCollectRate(string input)
         {
-            var pattern = string.Format(
+            var pattern = Utils.Format(
                 @"%T07CRG([{0}])({1})([0-6])([12])",
                 Utils.JoinEnumNames<LevelShortWithTotal>(string.Empty),
                 Utils.JoinEnumNames<CharaShortWithTotal>("|"));
@@ -939,7 +939,7 @@ namespace ThScoreFileConverter
         // %T07CLEAR[x][yy]
         private string ReplaceClear(string input)
         {
-            var pattern = string.Format(
+            var pattern = Utils.Format(
                 @"%T07CLEAR([{0}])({1})",
                 Utils.JoinEnumNames<LevelShort>(string.Empty),
                 Utils.JoinEnumNames<CharaShort>("|"));
@@ -971,7 +971,7 @@ namespace ThScoreFileConverter
         // %T07PLAY[x][yy]
         private string ReplacePlay(string input)
         {
-            var pattern = string.Format(
+            var pattern = Utils.Format(
                 @"%T07PLAY([{0}])({1}|CL|CN|PR|RT)",
                 Utils.JoinEnumNames<LevelShortWithTotal>(string.Empty),
                 Utils.JoinEnumNames<CharaShortWithTotal>("|"));
@@ -1020,7 +1020,7 @@ namespace ThScoreFileConverter
         // %T07PRAC[w][xx][y][z]
         private string ReplacePractice(string input)
         {
-            var pattern = string.Format(
+            var pattern = Utils.Format(
                 @"%T07PRAC([{0}])({1})([1-6])([12])",
                 Utils.JoinEnumNames<LevelShort>(string.Empty),
                 Utils.JoinEnumNames<CharaShort>("|"));

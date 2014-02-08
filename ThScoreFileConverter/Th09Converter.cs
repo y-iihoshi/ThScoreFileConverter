@@ -519,7 +519,7 @@ namespace ThScoreFileConverter
         // %T09SCR[w][xx][y][z]
         private string ReplaceScore(string input)
         {
-            var pattern = string.Format(
+            var pattern = Utils.Format(
                 @"%T09SCR([{0}])({1})([1-5])([1-3])",
                 Utils.JoinEnumNames<LevelShort>(string.Empty),
                 Utils.JoinEnumNames<CharaShort>("|"));
@@ -564,7 +564,7 @@ namespace ThScoreFileConverter
         // %T09CLEAR[x][yy][z]
         private string ReplaceClear(string input)
         {
-            var pattern = string.Format(
+            var pattern = Utils.Format(
                 @"%T09CLEAR([{0}])({1})([12])",
                 Utils.JoinEnumNames<LevelShort>(string.Empty),
                 Utils.JoinEnumNames<CharaShort>("|"));

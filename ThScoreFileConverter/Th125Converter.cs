@@ -702,7 +702,7 @@ namespace ThScoreFileConverter
         // %T125SCR[w][x][y][z]
         private string ReplaceScore(string input)
         {
-            var pattern = string.Format(
+            var pattern = Utils.Format(
                 @"%T125SCR([{0}])([{1}])([1-9])([1-5])",
                 Utils.JoinEnumNames<CharaShort>(string.Empty),
                 string.Join(string.Empty, LevelShortArray));
@@ -748,7 +748,7 @@ namespace ThScoreFileConverter
             Justification = "Reviewed.")]
         private string ReplaceScoreTotal(string input)
         {
-            var pattern = string.Format(
+            var pattern = Utils.Format(
                 @"%T125SCRTL([{0}])([12])([1-5])",
                 Utils.JoinEnumNames<CharaShort>(string.Empty));
             var evaluator = new MatchEvaluator(match =>
@@ -818,7 +818,7 @@ namespace ThScoreFileConverter
         // %T125CARD[x][y][z]
         private string ReplaceCard(string input)
         {
-            var pattern = string.Format(
+            var pattern = Utils.Format(
                 @"%T125CARD([{0}])([1-9])([12])",
                 string.Join(string.Empty, LevelShortArray));
             var evaluator = new MatchEvaluator(match =>
@@ -859,7 +859,7 @@ namespace ThScoreFileConverter
         // %T125SHOT[x][y][z]
         private string ReplaceShot(string input, string outputFilePath)
         {
-            var pattern = string.Format(
+            var pattern = Utils.Format(
                 @"%T125SHOT([{0}])([{1}])([1-9])",
                 Utils.JoinEnumNames<CharaShort>(string.Empty),
                 string.Join(string.Empty, LevelShortArray));
@@ -877,12 +877,12 @@ namespace ThScoreFileConverter
                 {
                     var relativePath = new Uri(outputFilePath)
                         .MakeRelativeUri(new Uri(bestshots[key].Path)).OriginalString;
-                    var alternativeString = string.Format(
+                    var alternativeString = Utils.Format(
                         "ClearData: {0}\nSlow: {1:F6}%\nSpellName: {2}",
                         this.ToNumberString(bestshots[key].Header.ResultScore),
                         bestshots[key].Header.SlowRate,
                         Encoding.Default.GetString(bestshots[key].Header.CardName).TrimEnd('\0'));
-                    return string.Format(
+                    return Utils.Format(
                         "<img src=\"{0}\" alt=\"{1}\" title=\"{1}\" border=0>",
                         relativePath,
                         alternativeString);
@@ -917,7 +917,7 @@ namespace ThScoreFileConverter
             Func<BestShotHeader, List<Detail>> detailList = (header => new List<Detail>
             {
                 new Detail(true,                       "Base Point    {0,9}", this.ToNumberString(header.BasePoint)),
-                new Detail(header.Fields.ClearShot,    "Clear Shot!   {0,9}", string.Format("+ {0}", header.ClearShot)),
+                new Detail(header.Fields.ClearShot,    "Clear Shot!   {0,9}", Utils.Format("+ {0}", header.ClearShot)),
                 new Detail(header.Fields.SoloShot,     "Solo Shot     {0,9}", "+ 100"),
                 new Detail(header.Fields.RedShot,      "Red Shot      {0,9}", "+ 300"),
                 new Detail(header.Fields.PurpleShot,   "Purple Shot   {0,9}", "+ 300"),
@@ -927,22 +927,22 @@ namespace ThScoreFileConverter
                 new Detail(header.Fields.YellowShot,   "Yellow Shot   {0,9}", "+ 300"),
                 new Detail(header.Fields.OrangeShot,   "Orange Shot   {0,9}", "+ 300"),
                 new Detail(header.Fields.ColorfulShot, "Colorful Shot {0,9}", "+ 900"),
-                new Detail(header.Fields.RainbowShot,  "Rainbow Shot  {0,9}", string.Format("+ {0}", this.ToNumberString(2100))),
-                new Detail(header.Fields.RiskBonus,    "Risk Bonus    {0,9}", string.Format("+ {0}", this.ToNumberString(header.RiskBonus))),
-                new Detail(header.Fields.MacroBonus,   "Macro Bonus   {0,9}", string.Format("+ {0}", this.ToNumberString(header.MacroBonus))),
-                new Detail(header.Fields.FrontShot,    "Front Shot    {0,9}", string.Format("+ {0}", header.FrontSideBackShot)),
-                new Detail(header.Fields.SideShot,     "Side Shot     {0,9}", string.Format("+ {0}", header.FrontSideBackShot)),
-                new Detail(header.Fields.BackShot,     "Back Shot     {0,9}", string.Format("+ {0}", header.FrontSideBackShot)),
+                new Detail(header.Fields.RainbowShot,  "Rainbow Shot  {0,9}", Utils.Format("+ {0}", this.ToNumberString(2100))),
+                new Detail(header.Fields.RiskBonus,    "Risk Bonus    {0,9}", Utils.Format("+ {0}", this.ToNumberString(header.RiskBonus))),
+                new Detail(header.Fields.MacroBonus,   "Macro Bonus   {0,9}", Utils.Format("+ {0}", this.ToNumberString(header.MacroBonus))),
+                new Detail(header.Fields.FrontShot,    "Front Shot    {0,9}", Utils.Format("+ {0}", header.FrontSideBackShot)),
+                new Detail(header.Fields.SideShot,     "Side Shot     {0,9}", Utils.Format("+ {0}", header.FrontSideBackShot)),
+                new Detail(header.Fields.BackShot,     "Back Shot     {0,9}", Utils.Format("+ {0}", header.FrontSideBackShot)),
                 new Detail(header.Fields.CatBonus,     "Cat Bonus     {0,9}", "+ 666"),
                 new Detail(true,                       string.Empty,          string.Empty),
-                new Detail(true,                       "Boss Shot!    {0,9}", string.Format("* {0:F2}", header.BossShot)),
+                new Detail(true,                       "Boss Shot!    {0,9}", Utils.Format("* {0:F2}", header.BossShot)),
                 new Detail(header.Fields.TwoShot,      "Two Shot!     {0,9}", "* 1.50"),
-                new Detail(header.Fields.NiceShot,     "Nice Shot!    {0,9}", string.Format("* {0:F2}", header.NiceShot)),
-                new Detail(true,                       "Angle Bonus   {0,9}", string.Format("* {0:F2}", header.AngleBonus)),
+                new Detail(header.Fields.NiceShot,     "Nice Shot!    {0,9}", Utils.Format("* {0:F2}", header.NiceShot)),
+                new Detail(true,                       "Angle Bonus   {0,9}", Utils.Format("* {0:F2}", header.AngleBonus)),
                 new Detail(true,                       string.Empty,          string.Empty),
                 new Detail(true,                       "Result Score  {0,9}", this.ToNumberString(header.ResultScore))
             });
-            var pattern = string.Format(
+            var pattern = Utils.Format(
                 @"%T125SHOTEX([{0}])([{1}])([1-9])([1-7])",
                 Utils.JoinEnumNames<CharaShort>(string.Empty),
                 string.Join(string.Empty, LevelShortArray));
@@ -985,7 +985,7 @@ namespace ThScoreFileConverter
                             {
                                 var detailStrings = detailList(bestshots[key].Header)
                                     .Where(detail => detail.Outputs)
-                                    .Select(detail => string.Format(detail.Format, detail.Value));
+                                    .Select(detail => Utils.Format(detail.Format, detail.Value));
                                 return string.Join("\r\n", detailStrings.ToArray());
                             }
                         default:    // unreachable
@@ -1009,7 +1009,7 @@ namespace ThScoreFileConverter
 
         protected override string[] FilterBestShotFiles(string[] files)
         {
-            var pattern = string.Format(@"bs2?_({0})_[1-9].dat", string.Join("|", LevelArray));
+            var pattern = Utils.Format(@"bs2?_({0})_[1-9].dat", string.Join("|", LevelArray));
             var regex = new Regex(pattern, RegexOptions.IgnoreCase);
 
             return files.Where(file => regex.IsMatch(Path.GetFileName(file))).ToArray();

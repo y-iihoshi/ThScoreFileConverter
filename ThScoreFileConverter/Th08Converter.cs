@@ -910,7 +910,7 @@ namespace ThScoreFileConverter
         // %T08SCR[w][xx][y][z]
         private string ReplaceScore(string input)
         {
-            var pattern = string.Format(
+            var pattern = Utils.Format(
                 @"%T08SCR([{0}])({1})(\d)([\dA-G])",
                 Utils.JoinEnumNames<LevelShort>(string.Empty),
                 Utils.JoinEnumNames<CharaShort>("|"));
@@ -962,7 +962,7 @@ namespace ThScoreFileConverter
                     case "D":   // continue count
                         return score.ContinueCount.ToString();
                     case "E":   // human rate
-                        return string.Format("{0:F2}", score.HumanRate / 100.0) + "%";
+                        return Utils.Format("{0:F2}", score.HumanRate / 100.0) + "%";
                     case "F":   // got spell cards
                         {
                             var list = new List<string>();
@@ -971,7 +971,7 @@ namespace ThScoreFileConverter
                                 if (score.CardFlags[index] > 0)
                                 {
                                     var attack = this.allScoreData.CardAttacks[index];
-                                    var str = string.Format(
+                                    var str = Utils.Format(
                                         "No.{0:D3} {1}",
                                         attack.Number + 1,
                                         Encoding.Default.GetString(attack.CardName).TrimEnd('\0'));
@@ -996,7 +996,7 @@ namespace ThScoreFileConverter
             Justification = "Reviewed.")]
         private string ReplaceCareer(string input)
         {
-            var pattern = string.Format(
+            var pattern = Utils.Format(
                 @"%T08C([SP])(\d{{3}})({0})([1-3])",
                 Utils.JoinEnumNames<CharaShortWithTotal>("|"));
             var evaluator = new MatchEvaluator(match =>
@@ -1073,7 +1073,7 @@ namespace ThScoreFileConverter
             Justification = "Reviewed.")]
         private string ReplaceCollectRate(string input)
         {
-            var pattern = string.Format(
+            var pattern = Utils.Format(
                 @"%T08CRG([SP])([{0}])({1})({2})([12])",
                 Utils.JoinEnumNames<LevelShortPractice>(string.Empty),
                 Utils.JoinEnumNames<CharaShortWithTotal>("|"),
@@ -1143,7 +1143,7 @@ namespace ThScoreFileConverter
         // %T08CLEAR[x][yy]
         private string ReplaceClear(string input)
         {
-            var pattern = string.Format(
+            var pattern = Utils.Format(
                 @"%T08CLEAR([{0}])({1})",
                 Utils.JoinEnumNames<LevelShort>(string.Empty),
                 Utils.JoinEnumNames<CharaShort>("|"));
@@ -1178,7 +1178,7 @@ namespace ThScoreFileConverter
         // %T08PLAY[x][yy]
         private string ReplacePlay(string input)
         {
-            var pattern = string.Format(
+            var pattern = Utils.Format(
                 @"%T08PLAY([{0}])({1}|CL|CN|PR)",
                 Utils.JoinEnumNames<LevelShortWithTotal>(string.Empty),
                 Utils.JoinEnumNames<CharaShortWithTotal>("|"));
@@ -1228,7 +1228,7 @@ namespace ThScoreFileConverter
         // %T08PRAC[w][xx][yy][z]
         private string ReplacePractice(string input)
         {
-            var pattern = string.Format(
+            var pattern = Utils.Format(
                 @"%T08PRAC([{0}])({1})({2})([12])",
                 Utils.JoinEnumNames<LevelShort>(string.Empty),
                 Utils.JoinEnumNames<CharaShort>("|"),

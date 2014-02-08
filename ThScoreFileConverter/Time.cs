@@ -130,7 +130,7 @@ namespace ThScoreFileConverter
         /// <returns>A string that represents the current instance.</returns>
         public override string ToString()
         {
-            return string.Format("{0}:{1:D2}:{2:D2}", this.Hours, this.Minutes, this.Seconds);
+            return Utils.Format("{0}:{1:D2}:{2:D2}", this.Hours, this.Minutes, this.Seconds);
         }
 
         /// <summary>
@@ -142,9 +142,9 @@ namespace ThScoreFileConverter
         public string ToLongString()
         {
             return this.IsFrames
-                ? string.Format(
+                ? Utils.Format(
                     "{0}:{1:D2}:{2:D2}.{3:D2}", this.Hours, this.Minutes, this.Seconds, this.Frames)
-                : string.Format(
+                : Utils.Format(
                     "{0}:{1:D2}:{2:D2}.{3:D3}", this.Hours, this.Minutes, this.Seconds, this.Milliseconds);
         }
     }
