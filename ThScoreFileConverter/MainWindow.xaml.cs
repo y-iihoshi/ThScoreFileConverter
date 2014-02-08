@@ -13,6 +13,7 @@ namespace ThScoreFileConverter
 {
     using System;
     using System.ComponentModel;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Threading;
@@ -117,7 +118,8 @@ namespace ThScoreFileConverter
             {
                 this.UpdateSettingsFromControls((ComboBoxItem)this.cmbTitle.SelectedItem);
                 this.settings.FontFamilyName = App.Current.Resources["FontFamilyKey"].ToString();
-                this.settings.FontSize = Convert.ToDouble(App.Current.Resources["FontSizeKey"]);
+                this.settings.FontSize =
+                    Convert.ToDouble(App.Current.Resources["FontSizeKey"], CultureInfo.InvariantCulture);
                 this.settings.Save(Prop.Resources.strSettingFile);
             }
             catch (Exception ex)

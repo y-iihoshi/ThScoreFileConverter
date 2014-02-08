@@ -805,7 +805,7 @@ namespace ThScoreFileConverter
                     case 4:     // date
                         return Encoding.Default.GetString(score.Date).TrimEnd('\0');
                     case 5:     // slow rate
-                        return score.SlowRate.ToString("F3") + "%";
+                        return Utils.Format("{0:F3}%", score.SlowRate);
                     default:    // unreachable
                         return match.ToString();
                 }
@@ -932,7 +932,7 @@ namespace ThScoreFileConverter
                     findByType = (attack => attack.TrialCounts[chara] > 0);
 
                 var and = Utils.MakeAndPredicate(checkNotNull, findByLevel, findByStage, findByType);
-                return this.allScoreData.CardAttacks.Count(and).ToString();
+                return this.allScoreData.CardAttacks.Count(and).ToString(CultureInfo.CurrentCulture);
             });
             return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }

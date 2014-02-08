@@ -12,6 +12,7 @@
 namespace ThScoreFileConverter
 {
     using System;
+    using System.Globalization;
     using System.Windows;
     using System.Windows.Input;
     using SysDraw = System.Drawing;
@@ -105,7 +106,7 @@ namespace ThScoreFileConverter
         {
             this.fontDialog.Font = new SysDraw.Font(
                 App.Current.Resources["FontFamilyKey"].ToString(),
-                Convert.ToSingle(App.Current.Resources["FontSizeKey"]));
+                Convert.ToSingle(App.Current.Resources["FontSizeKey"], CultureInfo.InvariantCulture));
 
             var oldFont = this.fontDialog.Font;
             var result = this.fontDialog.ShowDialog(new Win32Window(this));

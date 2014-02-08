@@ -546,12 +546,12 @@ namespace ThScoreFileConverter
                     case 4:     // date & time
                         if (ranking.DateTime > 0)
                             return new DateTime(1970, 1, 1).AddSeconds(ranking.DateTime)
-                                .ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
+                                .ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
                         else
                             return "----/--/-- --:--:--";
                     case 5:     // slow
                         if (ranking.DateTime > 0)
-                            return ranking.SlowRate.ToString("F3") + "%";
+                            return Utils.Format("{0:F3}%", ranking.SlowRate);
                         else
                             return "-----%";
                     default:    // unreachable
@@ -695,7 +695,8 @@ namespace ThScoreFileConverter
                 }
 
                 var and = Utils.MakeAndPredicate(checkNotNull, findByKindType, findByLevel, findByStage);
-                return this.allScoreData.ClearData[(CharaWithTotal)chara].Cards.Count(and).ToString();
+                return this.allScoreData.ClearData[(CharaWithTotal)chara].Cards.Count(and)
+                    .ToString(CultureInfo.CurrentCulture);
             });
             return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }

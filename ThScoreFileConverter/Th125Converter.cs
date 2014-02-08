@@ -732,7 +732,7 @@ namespace ThScoreFileConverter
                     case 5:     // date & time
                         if (score != null)
                             return new DateTime(1970, 1, 1).AddSeconds(score.DateTime)
-                                .ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
+                                .ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
                         else
                             return "----/--/-- --:--:--";
                     default:    // unreachable
@@ -807,8 +807,9 @@ namespace ThScoreFileConverter
                                 score => (isTarget(score) && triedAndSucceeded(score))
                                     ? (long)score.FirstSuccess : 0L));
                     case 5:     // num of succeeded scenes
-                        return this.allScoreData.Scores.Count(
-                                score => isTarget(score) && triedAndSucceeded(score)).ToString();
+                        return this.allScoreData.Scores
+                            .Count(score => isTarget(score) && triedAndSucceeded(score))
+                            .ToString(CultureInfo.CurrentCulture);
                     default:    // unreachable
                         return match.ToString();
                 }
@@ -965,20 +966,20 @@ namespace ThScoreFileConverter
                             return new Uri(outputFilePath)
                                 .MakeRelativeUri(new Uri(bestshots[key].Path)).OriginalString;
                         case 2:     // width
-                            return bestshots[key].Header.Width.ToString();
+                            return bestshots[key].Header.Width.ToString(CultureInfo.InvariantCulture);
                         case 3:     // height
-                            return bestshots[key].Header.Height.ToString();
+                            return bestshots[key].Header.Height.ToString(CultureInfo.InvariantCulture);
                         case 4:     // score
                             return this.ToNumberString(bestshots[key].Header.ResultScore);
                         case 5:     // slow rate
-                            return bestshots[key].Header.SlowRate.ToString("F6") + "%";
+                            return Utils.Format("{0:F6}%", bestshots[key].Header.SlowRate);
                         case 6:     // date & time
                             {
                                 var score = this.allScoreData.Scores.Find(elem =>
                                     (elem != null) && (elem.Chara == chara) && elem.LevelScene.Equals(key));
                                 if (score != null)
-                                    return new DateTime(1970, 1, 1).AddSeconds(score.DateTime)
-                                        .ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
+                                    return new DateTime(1970, 1, 1).AddSeconds(score.DateTime).ToLocalTime()
+                                        .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
                                 else
                                     return "----/--/-- --:--:--";
                             }

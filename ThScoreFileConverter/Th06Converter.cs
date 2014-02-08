@@ -761,7 +761,7 @@ namespace ThScoreFileConverter
                     findByType = (attack => attack.TrialCount > 0);
 
                 var and = Utils.MakeAndPredicate(checkNotNull, findByStage, findByType);
-                return this.allScoreData.CardAttacks.Count(and).ToString();
+                return this.allScoreData.CardAttacks.Count(and).ToString(CultureInfo.CurrentCulture);
             });
             return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }

@@ -943,27 +943,27 @@ namespace ThScoreFileConverter
                     case "4":   // date
                         return Encoding.Default.GetString(score.Date).TrimEnd('\0');
                     case "5":   // slow rate
-                        return score.SlowRate.ToString("F3") + "%";
+                        return Utils.Format("{0:F3}%", score.SlowRate);
                     case "6":   // play time
                         return new Time(score.PlayTime).ToString();
                     case "7":   // initial number of players
-                        return (score.PlayerNum + 1).ToString();
+                        return (score.PlayerNum + 1).ToString(CultureInfo.CurrentCulture);
                     case "8":   // point items
                         return this.ToNumberString(score.PointItem);
                     case "9":   // time point
                         return this.ToNumberString(score.TimePoint);
                     case "0":   // miss count
-                        return score.MissCount.ToString();
+                        return score.MissCount.ToString(CultureInfo.CurrentCulture);
                     case "A":   // bomb count
-                        return score.BombCount.ToString();
+                        return score.BombCount.ToString(CultureInfo.CurrentCulture);
                     case "B":   // last spell count
-                        return score.LastSpellCount.ToString();
+                        return score.LastSpellCount.ToString(CultureInfo.CurrentCulture);
                     case "C":   // pause count
                         return this.ToNumberString(score.PauseCount);
                     case "D":   // continue count
-                        return score.ContinueCount.ToString();
+                        return score.ContinueCount.ToString(CultureInfo.CurrentCulture);
                     case "E":   // human rate
-                        return Utils.Format("{0:F2}", score.HumanRate / 100.0) + "%";
+                        return Utils.Format("{0:F2}%", score.HumanRate / 100.0);
                     case "F":   // got spell cards
                         {
                             var list = new List<string>();
@@ -982,7 +982,7 @@ namespace ThScoreFileConverter
                             return string.Join("\n", list.ToArray());
                         }
                     case "G":   // number of got spell cards
-                        return score.CardFlags.Count(flag => flag > 0).ToString();
+                        return score.CardFlags.Count(flag => flag > 0).ToString(CultureInfo.CurrentCulture);
                     default:    // unreachable
                         return match.ToString();
                 }
@@ -1136,7 +1136,7 @@ namespace ThScoreFileConverter
                 }
 
                 var and = Utils.MakeAndPredicate(checkNotNull, findByKindType, findByLevel, findByStage);
-                return this.allScoreData.CardAttacks.Count(and).ToString();
+                return this.allScoreData.CardAttacks.Count(and).ToString(CultureInfo.CurrentCulture);
             });
             return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
