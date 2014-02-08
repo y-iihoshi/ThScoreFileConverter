@@ -108,14 +108,6 @@ namespace ThScoreFileConverter
                 { Stage.Extra,     new Range<int>(240, 249) }
             };
 
-        private class LevelStagePair : Pair<Level, Stage>
-        {
-            public Level Level { get { return this.First; } }
-            public Stage Stage { get { return this.Second; } }
-
-            public LevelStagePair(Level level, Stage stage) : base(level, stage) { }
-        }
-
         private class AllScoreData
         {
             public Header Header { get; set; }
@@ -332,18 +324,6 @@ namespace ThScoreFileConverter
                 this.TrialCount = reader.ReadInt32();
                 this.Number = reader.ReadInt32();
                 this.Level = (Level)reader.ReadInt32();
-            }
-        }
-
-        private class Practice : Utils.IBinaryReadable
-        {
-            public uint Score { get; private set; }     // * 10
-            public uint StageFlag { get; private set; } // 0x00000000: disable, 0x00000101: enable ?
-
-            public void ReadFrom(BinaryReader reader)
-            {
-                this.Score = reader.ReadUInt32();
-                this.StageFlag = reader.ReadUInt32();
             }
         }
 
