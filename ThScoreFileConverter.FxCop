@@ -86,34 +86,6 @@
       <Namespaces>
        <Namespace Name="ThScoreFileConverter">
         <Types>
-         <Type Name="AboutWindow">
-          <Members>
-           <Member Name="#System.Windows.Markup.IComponentConnector.Connect(System.Int32,System.Object)">
-            <Messages>
-             <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Created="2014-02-08 18:16:41Z">
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'TextBlock'</Item>
-               <Item>'AboutWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'TextBlock'</Item>
-               <Item>'AboutWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'AboutWindow'</Item>
-               <Item>'IComponentConnector.Connect(int, object)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="ExceptionOccurredEventArgs">
           <Members>
            <Member Name="#.ctor(System.Exception)">
@@ -150,276 +122,6 @@
          </Type>
          <Type Name="MainWindow">
           <Members>
-           <Member Name="#System.Windows.Markup.IComponentConnector.Connect(System.Int32,System.Object)">
-            <Messages>
-             <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Created="2014-02-08 18:16:41Z">
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'Button'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'Button'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'Button'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'Button'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'Button'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'Button'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'Button'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'Button'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'ComboBoxItem'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'ComboBoxItem'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'ComboBoxItem'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'ComboBoxItem'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'ComboBoxItem'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'ComboBoxItem'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'ComboBoxItem'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'ComboBoxItem'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'ComboBoxItem'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'ComboBoxItem'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'ComboBoxItem'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'Label'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'Label'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'TextBox'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'TextBox'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'TextBox'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'TextBox'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'MainWindow'</Item>
-               <Item>'IComponentConnector.Connect(int, object)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TH06">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'MainWindow.TH06'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TH07">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'MainWindow.TH07'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TH08">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'MainWindow.TH08'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TH09">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'MainWindow.TH09'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TH095">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'MainWindow.TH095'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TH10">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'MainWindow.TH10'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TH11">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'MainWindow.TH11'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TH12">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'MainWindow.TH12'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TH125">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'MainWindow.TH125'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TH128">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'MainWindow.TH128'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TH13">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'MainWindow.TH13'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TH14">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'MainWindow.TH14'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#UpdateControlsFromSettings(System.Windows.Controls.ComboBoxItem)">
             <Messages>
              <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Created="2014-02-08 15:40:17Z">
@@ -482,39 +184,6 @@
                <Item>'Convert.ToSingle(object, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#System.Windows.Markup.IComponentConnector.Connect(System.Int32,System.Object)">
-            <Messages>
-             <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Created="2014-02-08 18:16:41Z">
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'Button'</Item>
-               <Item>'SettingWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'Button'</Item>
-               <Item>'SettingWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'SettingWindow'</Item>
-               <Item>'IComponentConnector.Connect(int, object)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#txtFontInfo">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'SettingWindow.txtFontInfo'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -5460,7 +5129,7 @@
           <Members>
            <Member Name="#.ctor(System.Int64,System.Boolean)">
             <Messages>
-             <Message TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026" Created="2014-02-08 19:44:19Z">
               <Issue>
                <Item>'Time.Time(long, bool)'</Item>
               </Issue>
@@ -5469,7 +5138,7 @@
            </Member>
            <Member Name="#.ctor(System.Int64,System.Int32,System.Int32,System.Int32,System.Boolean)">
             <Messages>
-             <Message TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026" Created="2014-02-08 19:44:19Z">
               <Issue>
                <Item>'Time.Time(long, int, int, int, bool)'</Item>
               </Issue>
@@ -5492,7 +5161,7 @@
            </Member>
            <Member Name="#ParseEnum`1(System.String,System.Boolean)">
             <Messages>
-             <Message TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026" Created="2014-02-08 19:44:19Z">
               <Issue>
                <Item>'Utils.ParseEnum&lt;TEnum&gt;(string, bool)'</Item>
               </Issue>
@@ -5546,34 +5215,6 @@
       <Namespaces>
        <Namespace Name="ThScoreFileConverter">
         <Types>
-         <Type Name="AboutWindow">
-          <Members>
-           <Member Name="#System.Windows.Markup.IComponentConnector.Connect(System.Int32,System.Object)">
-            <Messages>
-             <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Created="2014-02-08 18:16:41Z">
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'TextBlock'</Item>
-               <Item>'AboutWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'TextBlock'</Item>
-               <Item>'AboutWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'AboutWindow'</Item>
-               <Item>'IComponentConnector.Connect(int, object)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="ExceptionOccurredEventArgs">
           <Members>
            <Member Name="#.ctor(System.Exception)">
@@ -5610,276 +5251,6 @@
          </Type>
          <Type Name="MainWindow">
           <Members>
-           <Member Name="#System.Windows.Markup.IComponentConnector.Connect(System.Int32,System.Object)">
-            <Messages>
-             <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Created="2014-02-08 18:16:41Z">
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'Button'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'Button'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'Button'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'Button'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'Button'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'Button'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'Button'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'Button'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'ComboBoxItem'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'ComboBoxItem'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'ComboBoxItem'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'ComboBoxItem'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'ComboBoxItem'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'ComboBoxItem'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'ComboBoxItem'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'ComboBoxItem'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'ComboBoxItem'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'ComboBoxItem'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'ComboBoxItem'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'Label'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'Label'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'TextBox'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'TextBox'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'TextBox'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'TextBox'</Item>
-               <Item>'MainWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'MainWindow'</Item>
-               <Item>'IComponentConnector.Connect(int, object)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TH06">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'MainWindow.TH06'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TH07">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'MainWindow.TH07'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TH08">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'MainWindow.TH08'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TH09">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'MainWindow.TH09'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TH095">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'MainWindow.TH095'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TH10">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'MainWindow.TH10'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TH11">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'MainWindow.TH11'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TH12">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'MainWindow.TH12'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TH125">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'MainWindow.TH125'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TH128">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'MainWindow.TH128'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TH13">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'MainWindow.TH13'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#TH14">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'MainWindow.TH14'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#UpdateControlsFromSettings(System.Windows.Controls.ComboBoxItem)">
             <Messages>
              <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Created="2014-02-08 15:40:17Z">
@@ -5942,39 +5313,6 @@
                <Item>'Convert.ToSingle(object, IFormatProvider)'</Item>
                <Item>'CultureInfo.CurrentCulture'</Item>
                <Item>'CultureInfo.InvariantCulture'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#System.Windows.Markup.IComponentConnector.Connect(System.Int32,System.Object)">
-            <Messages>
-             <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Created="2014-02-08 18:16:41Z">
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'Button'</Item>
-               <Item>'SettingWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-              <Issue Name="Parameter">
-               <Item>'target'</Item>
-               <Item>'Button'</Item>
-               <Item>'SettingWindow.IComponentConnector.Connect(int, object)'</Item>
-               <Item>castclass</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'SettingWindow'</Item>
-               <Item>'IComponentConnector.Connect(int, object)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#txtFontInfo">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 18:16:41Z">
-              <Issue>
-               <Item>'SettingWindow.txtFontInfo'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -10783,7 +10121,7 @@
           <Members>
            <Member Name="#.ctor(System.Int64,System.Boolean)">
             <Messages>
-             <Message TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026" Created="2014-02-08 19:44:19Z">
               <Issue>
                <Item>'Time.Time(long, bool)'</Item>
               </Issue>
@@ -10792,7 +10130,7 @@
            </Member>
            <Member Name="#.ctor(System.Int64,System.Int32,System.Int32,System.Int32,System.Boolean)">
             <Messages>
-             <Message TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026" Created="2014-02-08 19:44:19Z">
               <Issue>
                <Item>'Time.Time(long, int, int, int, bool)'</Item>
               </Issue>
@@ -10815,7 +10153,7 @@
            </Member>
            <Member Name="#ParseEnum`1(System.String,System.Boolean)">
             <Messages>
-             <Message TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026" Created="2014-02-08 19:44:19Z">
               <Issue>
                <Item>'Utils.ParseEnum&lt;TEnum&gt;(string, bool)'</Item>
               </Issue>
@@ -10856,9 +10194,6 @@
    <Rule TypeName="DefaultParametersShouldNotBeUsed" Category="Microsoft.Design" CheckId="CA1026">
     <Resolution Name="Default">Replace method {0} with an overload that supplies all default arguments.</Resolution>
    </Rule>
-   <Rule TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800">
-    <Resolution Name="Parameter">{0}, a parameter, is cast to type {1} multiple times in method {2}. Cache the result of the 'as' operator or direct cast in order to eliminate the redundant {3} instruction.</Resolution>
-   </Rule>
    <Rule TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004">
     <Resolution Name="Default">Consider a design where {0} doesn't require explicit type parameter {1} in any call to it.</Resolution>
    </Rule>
@@ -10872,9 +10207,6 @@
    </Rule>
    <Rule TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720">
     <Resolution Name="LanguageIndependentMemberParameter">In member {0}, consider replacing the data type identifier '{1}' in parameter name {2} with a more generic term, such as 'value'.</Resolution>
-   </Rule>
-   <Rule TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033">
-    <Resolution Name="Default">Make {0} sealed (a breaking change if this class has previously shipped), implement the method non-explicitly, or implement a new method that exposes the functionality of {1} and is visible to derived classes.</Resolution>
    </Rule>
    <Rule TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014">
     <Resolution Name="Default">Mark {0} with CLSCompliant(true) because it exposes externally visible types.</Resolution>
