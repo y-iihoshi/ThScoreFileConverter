@@ -137,22 +137,8 @@
          </Type>
          <Type Name="Th06Converter">
           <Members>
-           <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th06Converter.Decrypt(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Extract(System.IO.Stream,System.IO.Stream)">
             <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th06Converter.Extract(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
              <Message Id="checksum" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Created="2014-02-08 15:40:17Z">
               <Issue>
                <Item>'Th06Converter.Extract(Stream, Stream)'</Item>
@@ -179,24 +165,6 @@
                <Item>'Th06Converter.Extract(Stream, Stream)'</Item>
                <Item>'unknown3'</Item>
                <Item>'uint'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Read(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th06Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Validate(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th06Converter.Validate(Stream)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -344,22 +312,8 @@
          </Type>
          <Type Name="Th07Converter">
           <Members>
-           <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th07Converter.Decrypt(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Extract(System.IO.Stream,System.IO.Stream)">
             <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th07Converter.Extract(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
              <Message Id="checksum" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Created="2014-02-08 15:40:17Z">
               <Issue>
                <Item>'Th07Converter.Extract(Stream, Stream)'</Item>
@@ -393,24 +347,6 @@
                <Item>'Th07Converter.Extract(Stream, Stream)'</Item>
                <Item>'unknown3'</Item>
                <Item>'uint'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Read(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th07Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Validate(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th07Converter.Validate(Stream)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -668,22 +604,8 @@
          </Type>
          <Type Name="Th08Converter">
           <Members>
-           <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th08Converter.Decrypt(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Extract(System.IO.Stream,System.IO.Stream)">
             <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th08Converter.Extract(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
              <Message Id="checksum" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Created="2014-02-08 15:40:17Z">
               <Issue>
                <Item>'Th08Converter.Extract(Stream, Stream)'</Item>
@@ -717,24 +639,6 @@
                <Item>'Th08Converter.Extract(Stream, Stream)'</Item>
                <Item>'unknown3'</Item>
                <Item>'uint'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Read(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th08Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Validate(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th08Converter.Validate(Stream)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1134,42 +1038,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th095Converter.Decrypt(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Extract(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th095Converter.Extract(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Read(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th095Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Validate(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th095Converter.Validate(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
           </Members>
          </Type>
          <Type Name="Th095Converter+BestShotHeader">
@@ -1305,22 +1173,8 @@
          </Type>
          <Type Name="Th09Converter">
           <Members>
-           <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th09Converter.Decrypt(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Extract(System.IO.Stream,System.IO.Stream)">
             <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th09Converter.Extract(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
              <Message Id="checksum" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Created="2014-02-08 15:40:17Z">
               <Issue>
                <Item>'Th09Converter.Extract(Stream, Stream)'</Item>
@@ -1347,24 +1201,6 @@
                <Item>'Th09Converter.Extract(Stream, Stream)'</Item>
                <Item>'unknown2'</Item>
                <Item>'ushort'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Read(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th09Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Validate(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th09Converter.Validate(Stream)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1607,46 +1443,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Th10Converter">
-          <Members>
-           <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th10Converter.Decrypt(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Extract(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th10Converter.Extract(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Read(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th10Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Validate(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th10Converter.Validate(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Th10Converter+LevelStagePair">
           <Members>
            <Member Name="#Level">
@@ -1736,46 +1532,6 @@
              <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
               <Issue>
                <Item>'Th10Converter.Status.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th11Converter">
-          <Members>
-           <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th11Converter.Decrypt(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Extract(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th11Converter.Extract(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Read(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th11Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Validate(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th11Converter.Validate(Stream)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1884,46 +1640,6 @@
              <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
               <Issue>
                <Item>'Th11Converter.Status.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th125Converter">
-          <Members>
-           <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th125Converter.Decrypt(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Extract(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th125Converter.Extract(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Read(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th125Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Validate(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th125Converter.Validate(Stream)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -2385,46 +2101,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Th128Converter">
-          <Members>
-           <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th128Converter.Decrypt(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Extract(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th128Converter.Extract(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Read(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th128Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Validate(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th128Converter.Validate(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Th128Converter+ScoreData">
           <Members>
            <Member Name="#unknown1">
@@ -2502,46 +2178,6 @@
              <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
               <Issue>
                <Item>'Th128Converter.Status.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th12Converter">
-          <Members>
-           <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th12Converter.Decrypt(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Extract(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th12Converter.Extract(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Read(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th12Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Validate(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th12Converter.Validate(Stream)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -2650,46 +2286,6 @@
              <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
               <Issue>
                <Item>'Th12Converter.Status.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th13Converter">
-          <Members>
-           <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th13Converter.Decrypt(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Extract(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th13Converter.Extract(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Read(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th13Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Validate(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th13Converter.Validate(Stream)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -2890,46 +2486,6 @@
              <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
               <Issue>
                <Item>'Th13Converter.Status.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th14Converter">
-          <Members>
-           <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th14Converter.Decrypt(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Extract(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th14Converter.Extract(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Read(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th14Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Validate(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th14Converter.Validate(Stream)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -3298,46 +2854,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Th06Converter">
-          <Members>
-           <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th06Converter.Decrypt(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Extract(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th06Converter.Extract(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Read(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th06Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Validate(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th06Converter.Validate(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Th06Converter+CardAttack">
           <Members>
            <Member Name="#unknown1">
@@ -3471,46 +2987,6 @@
              <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
               <Issue>
                <Item>'Th06Converter.PracticeScore.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th07Converter">
-          <Members>
-           <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th07Converter.Decrypt(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Extract(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th07Converter.Extract(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Read(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th07Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Validate(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th07Converter.Validate(Stream)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -3763,46 +3239,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th08Converter">
-          <Members>
-           <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th08Converter.Decrypt(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Extract(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th08Converter.Extract(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Read(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th08Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Validate(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th08Converter.Validate(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
           </Members>
          </Type>
@@ -4186,46 +3622,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Th095Converter">
-          <Members>
-           <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th095Converter.Decrypt(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Extract(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th095Converter.Extract(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Read(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th095Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Validate(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th095Converter.Validate(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Th095Converter+BestShotHeader">
           <Members>
            <Member Name="#unknown1">
@@ -4351,46 +3747,6 @@
              <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
               <Issue>
                <Item>'Th095Converter.Status.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th09Converter">
-          <Members>
-           <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th09Converter.Decrypt(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Extract(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th09Converter.Extract(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Read(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th09Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Validate(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th09Converter.Validate(Stream)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -4633,46 +3989,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Th10Converter">
-          <Members>
-           <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th10Converter.Decrypt(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Extract(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th10Converter.Extract(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Read(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th10Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Validate(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th10Converter.Validate(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Th10Converter+LevelStagePair">
           <Members>
            <Member Name="#Level">
@@ -4762,46 +4078,6 @@
              <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
               <Issue>
                <Item>'Th10Converter.Status.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th11Converter">
-          <Members>
-           <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th11Converter.Decrypt(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Extract(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th11Converter.Extract(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Read(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th11Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Validate(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th11Converter.Validate(Stream)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -4910,46 +4186,6 @@
              <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
               <Issue>
                <Item>'Th11Converter.Status.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th125Converter">
-          <Members>
-           <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th125Converter.Decrypt(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Extract(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th125Converter.Extract(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Read(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th125Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Validate(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th125Converter.Validate(Stream)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -5411,46 +4647,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Th128Converter">
-          <Members>
-           <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th128Converter.Decrypt(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Extract(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th128Converter.Extract(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Read(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th128Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Validate(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th128Converter.Validate(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Th128Converter+ScoreData">
           <Members>
            <Member Name="#unknown1">
@@ -5528,46 +4724,6 @@
              <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
               <Issue>
                <Item>'Th128Converter.Status.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th12Converter">
-          <Members>
-           <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th12Converter.Decrypt(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Extract(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th12Converter.Extract(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Read(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th12Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Validate(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th12Converter.Validate(Stream)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -5676,46 +4832,6 @@
              <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
               <Issue>
                <Item>'Th12Converter.Status.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th13Converter">
-          <Members>
-           <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th13Converter.Decrypt(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Extract(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th13Converter.Extract(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Read(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th13Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Validate(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th13Converter.Validate(Stream)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -5916,46 +5032,6 @@
              <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
               <Issue>
                <Item>'Th13Converter.Status.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th14Converter">
-          <Members>
-           <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th14Converter.Decrypt(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Extract(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th14Converter.Extract(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Read(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th14Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Validate(System.IO.Stream)">
-            <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
-              <Issue>
-               <Item>'Th14Converter.Validate(Stream)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -6254,9 +5330,6 @@
    </Rule>
    <Rule TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824">
     <Resolution Name="Default">Because assembly {0} contains a ResX-based resource file, mark it with the NeutralResourcesLanguage attribute, specifying the language of the resources within the assembly. This could improve lookup performance the first time a resource is retrieved.</Resolution>
-   </Rule>
-   <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
-    <Resolution Name="Default">The 'this' parameter (or 'Me' in Visual Basic) of {0} is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
    </Rule>
    <Rule TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819">
     <Resolution Name="Default">Change {0} to return a collection or make it a method.</Resolution>

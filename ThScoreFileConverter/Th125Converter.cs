@@ -534,25 +534,25 @@ namespace ThScoreFileConverter
             using (var decoded = new MemoryStream())
 #endif
             {
-                if (!this.Decrypt(input, decrypted))
+                if (!Decrypt(input, decrypted))
                     return false;
 
                 decrypted.Seek(0, SeekOrigin.Begin);
-                if (!this.Extract(decrypted, decoded))
+                if (!Extract(decrypted, decoded))
                     return false;
 
                 decoded.Seek(0, SeekOrigin.Begin);
-                if (!this.Validate(decoded))
+                if (!Validate(decoded))
                     return false;
 
                 decoded.Seek(0, SeekOrigin.Begin);
-                this.allScoreData = this.Read(decoded);
+                this.allScoreData = Read(decoded);
 
                 return this.allScoreData != null;
             }
         }
 
-        private bool Decrypt(Stream input, Stream output)
+        private static bool Decrypt(Stream input, Stream output)
         {
             var reader = new BinaryReader(input);
             var writer = new BinaryWriter(output);
@@ -571,7 +571,7 @@ namespace ThScoreFileConverter
             return true;
         }
 
-        private bool Extract(Stream input, Stream output)
+        private static bool Extract(Stream input, Stream output)
         {
             var reader = new BinaryReader(input);
             var writer = new BinaryWriter(output);
@@ -588,7 +588,7 @@ namespace ThScoreFileConverter
             return header.DecodedBodySize == (output.Position - bodyBeginPos);
         }
 
-        private bool Validate(Stream input)
+        private static bool Validate(Stream input)
         {
             var reader = new BinaryReader(input);
 
@@ -627,7 +627,7 @@ namespace ThScoreFileConverter
             return remainSize == 0;
         }
 
-        private AllScoreData Read(Stream input)
+        private static AllScoreData Read(Stream input)
         {
             var reader = new BinaryReader(input);
             var allScoreData = new AllScoreData();
