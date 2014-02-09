@@ -1022,7 +1022,9 @@ namespace ThScoreFileConverter
             using (var decoded = new MemoryStream())
             {
                 var outputFile = output as FileStream;
-                var chara = Path.GetFileName(outputFile.Name).StartsWith("bs2_") ? Chara.Hatate : Chara.Aya;
+                var chara = Path.GetFileName(outputFile.Name)
+                    .StartsWith("bs2_", StringComparison.CurrentCultureIgnoreCase)
+                    ? Chara.Hatate : Chara.Aya;
 
                 var reader = new BinaryReader(input);
                 var header = new BestShotHeader();
