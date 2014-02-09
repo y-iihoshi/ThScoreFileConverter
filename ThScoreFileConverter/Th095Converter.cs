@@ -756,7 +756,6 @@ namespace ThScoreFileConverter
             using (var decoded = new MemoryStream())
             {
                 var outputFile = output as FileStream;
-                var outputFileName = Path.GetFileName(outputFile.Name);
 
                 var reader = new BinaryReader(input);
                 var header = new BestShotHeader();

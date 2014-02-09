@@ -357,19 +357,19 @@ namespace ThScoreFileConverter
 
             var reader = new BinaryReader(input);
 
-            var unknown1 = reader.ReadUInt16();
-            var checksum = reader.ReadUInt16();     // already checked by this.Decrypt()
+            reader.ReadUInt16();    // Unknown1
+            reader.ReadUInt16();    // Checksum; already checked by this.Decrypt()
             var version = reader.ReadInt16();
             if (version != 4)
                 return false;
 
-            var unknown2 = reader.ReadUInt16();
+            reader.ReadUInt16();    // Unknown2
             var headerSize = reader.ReadInt32();
             if (headerSize != 0x18)
                 return false;
 
             var decodedSize = reader.ReadInt32();
-            var decodedBodySize = reader.ReadInt32();
+            reader.ReadInt32();     // DecodedBodySize
             var encodedBodySize = reader.ReadInt32();
             if (encodedBodySize != (encodedSize - headerSize))
                 return false;
