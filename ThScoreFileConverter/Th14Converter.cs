@@ -576,7 +576,7 @@ namespace ThScoreFileConverter
                 Utils.JoinEnumNames<CharaShortWithTotal>("|"));
             var evaluator = new MatchEvaluator(match =>
             {
-                var kind = match.Groups[1].Value.ToUpper();
+                var kind = match.Groups[1].Value.ToUpper(CultureInfo.InvariantCulture);
                 var number = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                 var chara = Utils.ParseEnum<CharaShortWithTotal>(match.Groups[3].Value, true);
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
@@ -615,7 +615,7 @@ namespace ThScoreFileConverter
             var evaluator = new MatchEvaluator(match =>
             {
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
-                var type = match.Groups[2].Value.ToUpper();
+                var type = match.Groups[2].Value.ToUpper(CultureInfo.InvariantCulture);
 
                 if (new Range<int>(1, NumCards).Contains(number))
                 {
@@ -647,7 +647,7 @@ namespace ThScoreFileConverter
                 Utils.JoinEnumNames<CharaShortWithTotal>("|"));
             var evaluator = new MatchEvaluator(match =>
             {
-                var kind = match.Groups[1].Value.ToUpper();
+                var kind = match.Groups[1].Value.ToUpper(CultureInfo.InvariantCulture);
                 var level = Utils.ParseEnum<LevelShortWithTotal>(match.Groups[2].Value, true);
                 var chara = Utils.ParseEnum<CharaShortWithTotal>(match.Groups[3].Value, true);
                 var stage = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);

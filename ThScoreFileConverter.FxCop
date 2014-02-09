@@ -226,28 +226,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#ReplaceCard(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th06Converter.ReplaceCard(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCollectRate(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th06Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Validate(System.IO.Stream)">
             <Messages>
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
@@ -467,39 +445,6 @@
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
               <Issue>
                <Item>'Th07Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCard(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th07Converter.ReplaceCard(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplacePlay(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th07Converter.ReplacePlay(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceTime(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th07Converter.ReplaceTime(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -833,88 +778,6 @@
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
               <Issue>
                <Item>'Th08Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCard(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th08Converter.ReplaceCard(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCareer(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th08Converter.ReplaceCareer(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCollectRate(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th08Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th08Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplacePlay(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th08Converter.ReplacePlay(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplacePractice(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th08Converter.ReplacePractice(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceScore(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th08Converter.ReplaceScore(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceTime(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th08Converter.ReplaceTime(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1355,50 +1218,6 @@
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
               <Issue>
                <Item>'Th095Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCard(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th095Converter.ReplaceCard(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceScore(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th095Converter.ReplaceScore(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceShot(System.String,System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th095Converter.ReplaceShot(string, string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceShotEx(System.String,System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th095Converter.ReplaceShotEx(string, string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1896,17 +1715,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#ReplaceCard(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th10Converter.ReplaceCard(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Validate(System.IO.Stream)">
             <Messages>
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
@@ -2047,17 +1855,6 @@
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
               <Issue>
                <Item>'Th11Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCard(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th11Converter.ReplaceCard(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -2226,50 +2023,6 @@
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
               <Issue>
                <Item>'Th125Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCard(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th125Converter.ReplaceCard(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceScore(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th125Converter.ReplaceScore(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceShot(System.String,System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th125Converter.ReplaceShot(string, string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceShotEx(System.String,System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th125Converter.ReplaceShotEx(string, string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -2778,17 +2531,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#ReplaceCard(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th128Converter.ReplaceCard(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Validate(System.IO.Stream)">
             <Messages>
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
@@ -2917,17 +2659,6 @@
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
               <Issue>
                <Item>'Th12Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCard(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th12Converter.ReplaceCard(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -3085,39 +2816,6 @@
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
               <Issue>
                <Item>'Th13Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCard(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th13Converter.ReplaceCard(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCareer(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th13Converter.ReplaceCareer(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCollectRate(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th13Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -3367,39 +3065,6 @@
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
               <Issue>
                <Item>'Th14Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCard(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th14Converter.ReplaceCard(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCareer(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th14Converter.ReplaceCareer(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCollectRate(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th14Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -3905,28 +3570,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#ReplaceCard(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th06Converter.ReplaceCard(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCollectRate(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th06Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Validate(System.IO.Stream)">
             <Messages>
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
@@ -4111,39 +3754,6 @@
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
               <Issue>
                <Item>'Th07Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCard(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th07Converter.ReplaceCard(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplacePlay(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th07Converter.ReplacePlay(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceTime(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th07Converter.ReplaceTime(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -4442,88 +4052,6 @@
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
               <Issue>
                <Item>'Th08Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCard(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th08Converter.ReplaceCard(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCareer(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th08Converter.ReplaceCareer(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCollectRate(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th08Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th08Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplacePlay(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th08Converter.ReplacePlay(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplacePractice(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th08Converter.ReplacePractice(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceScore(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th08Converter.ReplaceScore(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceTime(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th08Converter.ReplaceTime(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -4953,50 +4481,6 @@
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
               <Issue>
                <Item>'Th095Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCard(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th095Converter.ReplaceCard(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceScore(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th095Converter.ReplaceScore(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceShot(System.String,System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th095Converter.ReplaceShot(string, string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceShotEx(System.String,System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th095Converter.ReplaceShotEx(string, string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -5466,17 +4950,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#ReplaceCard(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th10Converter.ReplaceCard(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Validate(System.IO.Stream)">
             <Messages>
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
@@ -5617,17 +5090,6 @@
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
               <Issue>
                <Item>'Th11Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCard(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th11Converter.ReplaceCard(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -5796,50 +5258,6 @@
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
               <Issue>
                <Item>'Th125Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCard(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th125Converter.ReplaceCard(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceScore(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th125Converter.ReplaceScore(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceShot(System.String,System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th125Converter.ReplaceShot(string, string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceShotEx(System.String,System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th125Converter.ReplaceShotEx(string, string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -6348,17 +5766,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#ReplaceCard(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th128Converter.ReplaceCard(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Validate(System.IO.Stream)">
             <Messages>
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
@@ -6487,17 +5894,6 @@
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
               <Issue>
                <Item>'Th12Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCard(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th12Converter.ReplaceCard(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -6655,39 +6051,6 @@
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
               <Issue>
                <Item>'Th13Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCard(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th13Converter.ReplaceCard(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCareer(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th13Converter.ReplaceCareer(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCollectRate(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th13Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -6937,39 +6300,6 @@
              <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2014-02-08 15:40:17Z" FixCategory="NonBreaking">
               <Issue>
                <Item>'Th14Converter.Read(Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCard(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th14Converter.ReplaceCard(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCareer(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th14Converter.ReplaceCareer(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#ReplaceCollectRate(System.String)">
-            <Messages>
-             <Message Id="System.String.ToUpper" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'string.ToUpper()'</Item>
-               <Item>'Th14Converter.ReplaceCollectRate(string)'</Item>
-               <Item>'string.ToUpper(CultureInfo)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -7384,9 +6714,6 @@
    </Rule>
    <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
     <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
-   </Rule>
-   <Rule TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304">
-    <Resolution Name="Default">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'CultureInfo' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Resolution>
    </Rule>
    <Rule TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307">
     <Resolution Name="Default">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, such as when sorting a list of items for display in a list box, specify 'StringComparison.CurrentCulture' or 'StringComparison.CurrentCultureIgnoreCase' as the 'StringComparison' parameter. If comparing case-insensitive identifiers, such as file paths, environment variables, or registry keys and values, specify 'StringComparison.OrdinalIgnoreCase'. Otherwise, if comparing case-sensitive identifiers, specify 'StringComparison.Ordinal'.</Resolution>

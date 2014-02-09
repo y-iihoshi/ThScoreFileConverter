@@ -710,7 +710,7 @@ namespace ThScoreFileConverter
             var evaluator = new MatchEvaluator(match =>
             {
                 var chara = (Chara)Utils.ParseEnum<CharaShort>(match.Groups[1].Value, true);
-                var level = match.Groups[2].Value.ToUpper();
+                var level = match.Groups[2].Value.ToUpper(CultureInfo.InvariantCulture);
                 var scene = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
@@ -825,7 +825,7 @@ namespace ThScoreFileConverter
                 string.Join(string.Empty, LevelShortArray));
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = match.Groups[1].Value.ToUpper();
+                var level = match.Groups[1].Value.ToUpper(CultureInfo.InvariantCulture);
                 var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
@@ -868,7 +868,7 @@ namespace ThScoreFileConverter
             var evaluator = new MatchEvaluator(match =>
             {
                 var chara = (Chara)Utils.ParseEnum<CharaShort>(match.Groups[1].Value, true);
-                var level = match.Groups[2].Value.ToUpper();
+                var level = match.Groups[2].Value.ToUpper(CultureInfo.InvariantCulture);
                 var scene = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                 var bestshots = this.bestshots.ContainsKey(chara) ? this.bestshots[chara] : null;
@@ -951,7 +951,7 @@ namespace ThScoreFileConverter
             var evaluator = new MatchEvaluator(match =>
             {
                 var chara = (Chara)Utils.ParseEnum<CharaShort>(match.Groups[1].Value, true);
-                var level = match.Groups[2].Value.ToUpper();
+                var level = match.Groups[2].Value.ToUpper(CultureInfo.InvariantCulture);
                 var scene = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 

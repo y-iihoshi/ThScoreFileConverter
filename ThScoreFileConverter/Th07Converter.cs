@@ -860,7 +860,7 @@ namespace ThScoreFileConverter
             var evaluator = new MatchEvaluator(match =>
             {
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
-                var type = match.Groups[2].Value.ToUpper();
+                var type = match.Groups[2].Value.ToUpper(CultureInfo.InvariantCulture);
 
                 if (new Range<int>(1, NumCards).Contains(number))
                 {
@@ -979,7 +979,7 @@ namespace ThScoreFileConverter
             var evaluator = new MatchEvaluator(match =>
             {
                 var level = Utils.ParseEnum<LevelShortWithTotal>(match.Groups[1].Value, true);
-                var charaAndMore = match.Groups[2].Value.ToUpper();
+                var charaAndMore = match.Groups[2].Value.ToUpper(CultureInfo.InvariantCulture);
 
                 var playCount = this.allScoreData.PlayList.PlayCounts[(LevelWithTotal)level];
                 switch (charaAndMore)
@@ -1009,7 +1009,7 @@ namespace ThScoreFileConverter
             var pattern = @"%T07TIME(ALL|PLY)";
             var evaluator = new MatchEvaluator(match =>
             {
-                var kind = match.Groups[1].Value.ToUpper();
+                var kind = match.Groups[1].Value.ToUpper(CultureInfo.InvariantCulture);
 
                 return (kind == "ALL")
                     ? this.allScoreData.PlayList.TotalRunningTime.ToLongString()

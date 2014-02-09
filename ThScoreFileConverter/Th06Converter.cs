@@ -704,7 +704,7 @@ namespace ThScoreFileConverter
             var evaluator = new MatchEvaluator(match =>
             {
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
-                var type = match.Groups[2].Value.ToUpper();
+                var type = match.Groups[2].Value.ToUpper(CultureInfo.InvariantCulture);
 
                 if (new Range<int>(1, NumCards).Contains(number))
                 {
@@ -741,7 +741,8 @@ namespace ThScoreFileConverter
             var pattern = @"%T06CRG([0-6X])([12])";
             var evaluator = new MatchEvaluator(match =>
             {
-                var stage = Array.IndexOf(stageShortWithTotalArray, match.Groups[1].Value.ToUpper());
+                var stage = Array.IndexOf(
+                    stageShortWithTotalArray, match.Groups[1].Value.ToUpper(CultureInfo.InvariantCulture));
                 var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
                 Func<CardAttack, bool> checkNotNull = (attack => attack != null);

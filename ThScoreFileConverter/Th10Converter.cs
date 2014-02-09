@@ -559,7 +559,7 @@ namespace ThScoreFileConverter
             var evaluator = new MatchEvaluator(match =>
             {
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
-                var type = match.Groups[2].Value.ToUpper();
+                var type = match.Groups[2].Value.ToUpper(CultureInfo.InvariantCulture);
 
                 if (new Range<int>(1, NumCards).Contains(number))
                 {

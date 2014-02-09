@@ -569,7 +569,7 @@ namespace ThScoreFileConverter
             var pattern = @"%T95SCR([\dX])([1-9])([1-4])";
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = match.Groups[1].Value.ToUpper();
+                var level = match.Groups[1].Value.ToUpper(CultureInfo.InvariantCulture);
                 var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
@@ -634,7 +634,7 @@ namespace ThScoreFileConverter
             var pattern = @"%T95CARD([\dX])([1-9])([12])";
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = match.Groups[1].Value.ToUpper();
+                var level = match.Groups[1].Value.ToUpper(CultureInfo.InvariantCulture);
                 var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
@@ -662,7 +662,7 @@ namespace ThScoreFileConverter
             var pattern = @"%T95SHOT([\dX])([1-9])";
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = match.Groups[1].Value.ToUpper();
+                var level = match.Groups[1].Value.ToUpper(CultureInfo.InvariantCulture);
                 var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
                 var levelIndex = Array.IndexOf(LevelShortArray, level);
@@ -694,7 +694,7 @@ namespace ThScoreFileConverter
             var pattern = @"%T95SHOTEX([\dX])([1-9])([1-6])";
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = match.Groups[1].Value.ToUpper();
+                var level = match.Groups[1].Value.ToUpper(CultureInfo.InvariantCulture);
                 var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
