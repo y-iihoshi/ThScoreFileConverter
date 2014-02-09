@@ -49,6 +49,7 @@ namespace ThScoreFileConverter
         /// A string that consists of the names of <typeparamref name="TEnum"/> delimited by
         /// <paramref name="separator"/>.
         /// </returns>
+        [CLSCompliant(false)]
         public static string JoinEnumNames<TEnum>(string separator)
             where TEnum : struct, IComparable, IFormattable, IConvertible
         {
@@ -65,6 +66,7 @@ namespace ThScoreFileConverter
         /// An instance of <typeparamref name="TEnum"/> whose value is represented by
         /// <paramref name="value"/>.
         /// </returns>
+        [CLSCompliant(false)]
         public static TEnum ParseEnum<TEnum>(string value)
             where TEnum : struct, IComparable, IFormattable, IConvertible
         {
@@ -82,6 +84,7 @@ namespace ThScoreFileConverter
         /// An instance of <typeparamref name="TEnum"/> whose value is represented by
         /// <paramref name="value"/>.
         /// </returns>
+        [CLSCompliant(false)]
         public static TEnum ParseEnum<TEnum>(string value, bool ignoreCase)
             where TEnum : struct, IComparable, IFormattable, IConvertible
         {
@@ -96,6 +99,7 @@ namespace ThScoreFileConverter
         /// <returns>
         /// The <c>IEnumerable{T}</c> instance to enumerate values of the <typeparamref name="TEnum"/> type.
         /// </returns>
+        [CLSCompliant(false)]
         public static IEnumerable<TEnum> GetEnumerator<TEnum>()
             where TEnum : struct, IComparable, IFormattable, IConvertible
         {
