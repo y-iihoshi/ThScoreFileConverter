@@ -75,26 +75,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Lzss">
-          <Members>
-           <Member Name="#Compress(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message Id="input" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2014-02-08 15:40:17Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'input'</Item>
-               <Item>'Lzss.Compress(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="output" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2014-02-08 15:40:17Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'output'</Item>
-               <Item>'Lzss.Compress(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="MainWindow">
           <Members>
            <Member Name="#UpdateControlsFromSettings(System.Windows.Controls.ComboBoxItem)">
@@ -2692,56 +2672,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="ThCrypt">
-          <Members>
-           <Member Name="#Encrypt(System.IO.Stream,System.IO.Stream,System.Int32,System.Byte,System.Byte,System.Int32,System.Int32)">
-            <Messages>
-             <Message Id="block" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2014-02-08 15:40:17Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'block'</Item>
-               <Item>'ThCrypt.Encrypt(Stream, Stream, int, byte, byte, int, int)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="input" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2014-02-08 15:40:17Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'input'</Item>
-               <Item>'ThCrypt.Encrypt(Stream, Stream, int, byte, byte, int, int)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="key" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2014-02-08 15:40:17Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'key'</Item>
-               <Item>'ThCrypt.Encrypt(Stream, Stream, int, byte, byte, int, int)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="limit" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2014-02-08 15:40:17Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'limit'</Item>
-               <Item>'ThCrypt.Encrypt(Stream, Stream, int, byte, byte, int, int)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="output" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2014-02-08 15:40:17Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'output'</Item>
-               <Item>'ThCrypt.Encrypt(Stream, Stream, int, byte, byte, int, int)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="size" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2014-02-08 15:40:17Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'size'</Item>
-               <Item>'ThCrypt.Encrypt(Stream, Stream, int, byte, byte, int, int)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="step" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2014-02-08 15:40:17Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'step'</Item>
-               <Item>'ThCrypt.Encrypt(Stream, Stream, int, byte, byte, int, int)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Utils">
           <Members>
            <Member Name="#JoinEnumNames`1(System.String)">
@@ -2788,26 +2718,6 @@
               <Issue Name="MemberParameterMoreMeaningfulName">
                <Item>'ExceptionOccurredEventArgs.ExceptionOccurredEventArgs(Exception)'</Item>
                <Item>'e'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Lzss">
-          <Members>
-           <Member Name="#Compress(System.IO.Stream,System.IO.Stream)">
-            <Messages>
-             <Message Id="input" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2014-02-08 15:40:17Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'input'</Item>
-               <Item>'Lzss.Compress(Stream, Stream)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="output" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2014-02-08 15:40:17Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'output'</Item>
-               <Item>'Lzss.Compress(Stream, Stream)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -5238,56 +5148,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="ThCrypt">
-          <Members>
-           <Member Name="#Encrypt(System.IO.Stream,System.IO.Stream,System.Int32,System.Byte,System.Byte,System.Int32,System.Int32)">
-            <Messages>
-             <Message Id="block" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2014-02-08 15:40:17Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'block'</Item>
-               <Item>'ThCrypt.Encrypt(Stream, Stream, int, byte, byte, int, int)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="input" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2014-02-08 15:40:17Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'input'</Item>
-               <Item>'ThCrypt.Encrypt(Stream, Stream, int, byte, byte, int, int)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="key" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2014-02-08 15:40:17Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'key'</Item>
-               <Item>'ThCrypt.Encrypt(Stream, Stream, int, byte, byte, int, int)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="limit" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2014-02-08 15:40:17Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'limit'</Item>
-               <Item>'ThCrypt.Encrypt(Stream, Stream, int, byte, byte, int, int)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="output" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2014-02-08 15:40:17Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'output'</Item>
-               <Item>'ThCrypt.Encrypt(Stream, Stream, int, byte, byte, int, int)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="size" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2014-02-08 15:40:17Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'size'</Item>
-               <Item>'ThCrypt.Encrypt(Stream, Stream, int, byte, byte, int, int)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="step" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2014-02-08 15:40:17Z" FixCategory="DependsOnFix">
-              <Issue>
-               <Item>'step'</Item>
-               <Item>'ThCrypt.Encrypt(Stream, Stream, int, byte, byte, int, int)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Utils">
           <Members>
            <Member Name="#JoinEnumNames`1(System.String)">
@@ -5336,9 +5196,6 @@
    </Rule>
    <Rule TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804">
     <Resolution Name="Default">{0} declares a variable, {1}, of type {2}, which is never used or is only assigned to. Use this variable or remove it.</Resolution>
-   </Rule>
-   <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
-    <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
    </Rule>
    <Rule TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820">
     <Resolution Name="IsNullOrEmpty">Replace the call to {0} in {1} with a call to 'String.IsNullOrEmpty'.</Resolution>

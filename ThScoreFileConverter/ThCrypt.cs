@@ -12,6 +12,7 @@
 namespace ThScoreFileConverter
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
 
     /// <summary>
@@ -30,6 +31,7 @@ namespace ThScoreFileConverter
         /// <param name="step">The step.</param>
         /// <param name="block">The size of block.</param>
         /// <param name="limit">The limit value.</param>
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", Justification = "Reviewed.")]
         public static void Encrypt(
             Stream input, Stream output, int size, byte key, byte step, int block, int limit)
         {

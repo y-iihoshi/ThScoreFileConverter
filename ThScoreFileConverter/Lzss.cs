@@ -12,6 +12,7 @@
 namespace ThScoreFileConverter
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
 
     /// <summary>
@@ -29,6 +30,7 @@ namespace ThScoreFileConverter
         /// </summary>
         /// <param name="input">The stream to input data.</param>
         /// <param name="output">The stream that is output the compressed data.</param>
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", Justification = "Reviewed.")]
         public static void Compress(Stream input, Stream output)
         {
             throw new NotImplementedException("LZSS complession is not supported.");
