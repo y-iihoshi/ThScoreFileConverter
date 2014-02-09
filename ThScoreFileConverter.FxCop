@@ -61,19 +61,6 @@
       <Namespaces>
        <Namespace Name="ThScoreFileConverter">
         <Types>
-         <Type Name="SettingsPerTitle">
-          <Members>
-           <Member Name="#TemplateFiles">
-            <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'SettingsPerTitle.TemplateFiles'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Th06Converter+CardAttack">
           <Members>
            <Member Name="#unknown1">
@@ -2496,19 +2483,6 @@
       <Namespaces>
        <Namespace Name="ThScoreFileConverter">
         <Types>
-         <Type Name="SettingsPerTitle">
-          <Members>
-           <Member Name="#TemplateFiles">
-            <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'SettingsPerTitle.TemplateFiles'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Th06Converter+CardAttack">
           <Members>
            <Member Name="#unknown1">
@@ -4929,9 +4903,6 @@
    </Rule>
    <Rule TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824">
     <Resolution Name="Default">Because assembly {0} contains a ResX-based resource file, mark it with the NeutralResourcesLanguage attribute, specifying the language of the resources within the assembly. This could improve lookup performance the first time a resource is retrieved.</Resolution>
-   </Rule>
-   <Rule TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819">
-    <Resolution Name="Default">Change {0} to return a collection or make it a method.</Resolution>
    </Rule>
   </Rules>
  </FxCopReport>

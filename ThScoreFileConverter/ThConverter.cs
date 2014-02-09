@@ -22,6 +22,7 @@ namespace ThScoreFileConverter
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
 
     /// <summary>
     /// Generates an instance that executes the conversion of a score file.
@@ -328,16 +329,16 @@ namespace ThScoreFileConverter
                     }
                 }
 
-                for (var index = 0; index < settings.TemplateFiles.Length; index++)
+                var numFiles = settings.TemplateFiles.Count();
+                for (var index = 0; index < numFiles; index++)
                 {
-                    var result = GetOutputFilePath(settings.TemplateFiles[index], settings.OutputDirectory);
-                    using (var tmpl =
-                        new FileStream(settings.TemplateFiles[index], FileMode.Open, FileAccess.Read))
+                    var template = settings.TemplateFiles.ElementAt(index);
+                    var result = GetOutputFilePath(template, settings.OutputDirectory);
+                    using (var tmpl = new FileStream(template, FileMode.Open, FileAccess.Read))
                     using (var rslt = new FileStream(result, FileMode.OpenOrCreate, FileAccess.Write))
                     {
                         this.Convert(tmpl, rslt);
-                        this.OnConvertFinished(
-                            new ThConverterEventArgs(result, index + 1, settings.TemplateFiles.Length));
+                        this.OnConvertFinished(new ThConverterEventArgs(result, index + 1, numFiles));
                     }
                 }
 

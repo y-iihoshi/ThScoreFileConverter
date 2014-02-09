@@ -37,7 +37,7 @@ namespace ThScoreFileConverter
         {
             this.ScoreFile = string.Empty;
             this.BestShotDirectory = string.Empty;
-            this.TemplateFiles = new string[] { };
+            this.TemplateFiles = null;
             this.OutputDirectory = string.Empty;
             this.ImageOutputDirectory = string.Empty;
         }
@@ -55,7 +55,7 @@ namespace ThScoreFileConverter
         /// <summary>
         /// Gets or sets the array of the paths of template files.
         /// </summary>
-        public string[] TemplateFiles { get; set; }
+        public IEnumerable<string> TemplateFiles { get; set; }
 
         /// <summary>
         /// Gets or sets the path of the output directory.

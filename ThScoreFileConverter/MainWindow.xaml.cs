@@ -12,6 +12,7 @@
 namespace ThScoreFileConverter
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Globalization;
     using System.IO;
@@ -722,10 +723,9 @@ namespace ThScoreFileConverter
             var entry = this.settings.Dictionary[item.Name];
             entry.ScoreFile = this.txtScore.Text;
             entry.BestShotDirectory = this.txtBestShot.Text;
-            entry.TemplateFiles = new string[this.lstTemplate.Items.Count];
+            entry.TemplateFiles = this.lstTemplate.Items.Cast<string>().ToList();
             entry.OutputDirectory = this.txtOutput.Text;
             entry.ImageOutputDirectory = this.txtImageOutput.Text;
-            this.lstTemplate.Items.CopyTo(entry.TemplateFiles, 0);
         }
 
         /// <summary>
