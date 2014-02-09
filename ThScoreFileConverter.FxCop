@@ -61,47 +61,6 @@
       <Namespaces>
        <Namespace Name="ThScoreFileConverter">
         <Types>
-         <Type Name="ExceptionOccurredEventArgs">
-          <Members>
-           <Member Name="#.ctor(System.Exception)">
-            <Messages>
-             <Message Id="e" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2014-02-08 15:40:17Z">
-              <Issue Name="MemberParameterMoreMeaningfulName">
-               <Item>'ExceptionOccurredEventArgs.ExceptionOccurredEventArgs(Exception)'</Item>
-               <Item>'e'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="MainWindow">
-          <Members>
-           <Member Name="#UpdateControlsFromSettings(System.Windows.Controls.ComboBoxItem)">
-            <Messages>
-             <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Created="2014-02-08 15:40:17Z">
-              <Issue Name="IsNullOrEmpty">
-               <Item>'string.operator !=(string, string)'</Item>
-               <Item>'MainWindow.UpdateControlsFromSettings(ComboBoxItem)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Settings">
-          <Members>
-           <Member Name="#Dictionary">
-            <Messages>
-             <Message TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Settings.Dictionary'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="SettingsPerTitle">
           <Members>
            <Member Name="#TemplateFiles">
@@ -2537,47 +2496,6 @@
       <Namespaces>
        <Namespace Name="ThScoreFileConverter">
         <Types>
-         <Type Name="ExceptionOccurredEventArgs">
-          <Members>
-           <Member Name="#.ctor(System.Exception)">
-            <Messages>
-             <Message Id="e" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2014-02-08 15:40:17Z">
-              <Issue Name="MemberParameterMoreMeaningfulName">
-               <Item>'ExceptionOccurredEventArgs.ExceptionOccurredEventArgs(Exception)'</Item>
-               <Item>'e'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="MainWindow">
-          <Members>
-           <Member Name="#UpdateControlsFromSettings(System.Windows.Controls.ComboBoxItem)">
-            <Messages>
-             <Message TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820" Created="2014-02-08 15:40:17Z">
-              <Issue Name="IsNullOrEmpty">
-               <Item>'string.operator !=(string, string)'</Item>
-               <Item>'MainWindow.UpdateControlsFromSettings(ComboBoxItem)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Settings">
-          <Members>
-           <Member Name="#Dictionary">
-            <Messages>
-             <Message TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Settings.Dictionary'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="SettingsPerTitle">
           <Members>
            <Member Name="#TemplateFiles">
@@ -5006,23 +4924,14 @@
    <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
     <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>
    </Rule>
-   <Rule TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227">
-    <Resolution Name="Default">Change {0} to be read-only by removing the property setter.</Resolution>
-   </Rule>
    <Rule TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004">
     <Resolution Name="Default">Consider a design where {0} doesn't require explicit type parameter {1} in any call to it.</Resolution>
-   </Rule>
-   <Rule TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704">
-    <Resolution Name="MemberParameterMoreMeaningfulName">In method {0}, consider providing a more meaningful name than parameter name {1}.</Resolution>
    </Rule>
    <Rule TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824">
     <Resolution Name="Default">Because assembly {0} contains a ResX-based resource file, mark it with the NeutralResourcesLanguage attribute, specifying the language of the resources within the assembly. This could improve lookup performance the first time a resource is retrieved.</Resolution>
    </Rule>
    <Rule TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819">
     <Resolution Name="Default">Change {0} to return a collection or make it a method.</Resolution>
-   </Rule>
-   <Rule TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820">
-    <Resolution Name="IsNullOrEmpty">Replace the call to {0} in {1} with a call to 'String.IsNullOrEmpty'.</Resolution>
    </Rule>
   </Rules>
  </FxCopReport>

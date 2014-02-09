@@ -96,7 +96,7 @@ namespace ThScoreFileConverter
         /// Gets or sets the dictionary of <see cref="SettingsPerTitle"/> instances.
         /// </summary>
         [DataMember(Order = 1)]
-        public Dictionary<string, SettingsPerTitle> Dictionary { get; set; }
+        public Dictionary<string, SettingsPerTitle> Dictionary { get; private set; }
 
         /// <summary>
         /// Gets or sets the font family name used for the UI of this application.

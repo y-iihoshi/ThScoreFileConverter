@@ -776,7 +776,7 @@ namespace ThScoreFileConverter
             if (Directory.Exists(entry.OutputDirectory))
                 this.txtOutput.Text = entry.OutputDirectory;
             if (this.txtImageOutput.IsEnabled)
-                this.txtImageOutput.Text = (entry.ImageOutputDirectory != string.Empty)
+                this.txtImageOutput.Text = (entry.ImageOutputDirectory.Length > 0)
                     ? entry.ImageOutputDirectory : Prop.Resources.strBestShotDirectory;
 
             ((App)App.Current).UpdateResources(this.settings.FontFamilyName, this.settings.FontSize);

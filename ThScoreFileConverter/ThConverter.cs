@@ -118,10 +118,10 @@ namespace ThScoreFileConverter
         /// <summary>
         /// Initializes a new instance of the <see cref="ExceptionOccurredEventArgs"/> class.
         /// </summary>
-        /// <param name="e">The exception data.</param>
-        public ExceptionOccurredEventArgs(Exception e)
+        /// <param name="ex">The exception data.</param>
+        public ExceptionOccurredEventArgs(Exception ex)
         {
-            this.Exception = e;
+            this.Exception = ex;
         }
 
         /// <summary>
