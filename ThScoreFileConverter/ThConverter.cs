@@ -26,7 +26,7 @@ namespace ThScoreFileConverter
     /// <summary>
     /// Generates an instance that executes the conversion of a score file.
     /// </summary>
-    public class ThConverterFactory
+    public static class ThConverterFactory
     {
         /// <summary>
         /// The dictionary of the types of the subclasses of the <see cref="ThConverter"/> class.
@@ -183,21 +183,21 @@ namespace ThScoreFileConverter
         /// Gets or sets a value indicating whether a numeric value is output with thousand separator
         /// characters.
         /// </summary>
-        public bool OutputNumberGroupSeparator { protected get; set; }
+        public bool OutputNumberGroupSeparator { get; set; }
 
         /// <summary>
         /// Converts a score file.
         /// </summary>
-        /// <param name="obj">An instance of the <see cref="SettingsPerTitle"/> class.</param>
-        public void Convert(object obj)
+        /// <param name="threadArg">An instance of the <see cref="SettingsPerTitle"/> class.</param>
+        public void Convert(object threadArg)
         {
             try
             {
 #if DEBUG
                 using (var profiler = new Profiler("Convert"))
-                    this.Convert(obj as SettingsPerTitle);
+                    this.Convert(threadArg as SettingsPerTitle);
 #else
-                this.Convert(obj as SettingsPerTitle);
+                this.Convert(threadArg as SettingsPerTitle);
 #endif
             }
             catch (Exception e)

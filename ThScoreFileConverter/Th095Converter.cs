@@ -217,7 +217,7 @@ namespace ThScoreFileConverter
             public Status Status { get; set; }
         }
 
-        private class Header : Utils.IBinaryReadable
+        private class Header : IBinaryReadable
         {
             private uint unknown1;
             private uint unknown2;
@@ -248,7 +248,7 @@ namespace ThScoreFileConverter
             }
         }
 
-        private class Chapter : Utils.IBinaryReadable
+        private class Chapter : IBinaryReadable
         {
             public string Signature { get; private set; }
             public ushort Version { get; private set; }
@@ -340,7 +340,7 @@ namespace ThScoreFileConverter
             }
         }
 
-        private class BestShotHeader : Utils.IBinaryReadable
+        private class BestShotHeader : IBinaryReadable
         {
             private ushort unknown1;
             private ushort unknown2;    // 0x0102 ... Version?

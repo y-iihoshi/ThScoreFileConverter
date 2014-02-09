@@ -42,19 +42,6 @@
   <Settings />
  </Rules>
  <FxCopReport Version="10.0">
-  <Namespaces>
-   <Namespace Name="ThScoreFileConverter">
-    <Messages>
-     <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 11:43:55Z">
-      <Issue Name="Namespace">
-       <Item>Th</Item>
-       <Item>ThScoreFileConverter</Item>
-       <Item>TH</Item>
-      </Issue>
-     </Message>
-    </Messages>
-   </Namespace>
-  </Namespaces>
   <Targets>
    <Target Name="$(ProjectDir)/ThScoreFileConverter/bin/Debug/ThScoreFileConverter.exe">
     <Modules>
@@ -62,18 +49,6 @@
       <Messages>
        <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Created="2014-02-08 15:40:17Z">
         <Issue Name="NoStrongName">
-         <Item>'ThScoreFileConverter.exe'</Item>
-        </Issue>
-       </Message>
-       <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-        <Issue Name="Assembly">
-         <Item>Th</Item>
-         <Item>'ThScoreFileConverter.exe'</Item>
-         <Item>TH</Item>
-        </Issue>
-       </Message>
-       <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Created="2014-02-08 15:40:17Z">
-        <Issue>
          <Item>'ThScoreFileConverter.exe'</Item>
         </Issue>
        </Message>
@@ -161,15 +136,6 @@
           </Members>
          </Type>
          <Type Name="Th06Converter">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'Th06Converter'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
             <Messages>
@@ -377,15 +343,6 @@
           </Members>
          </Type>
          <Type Name="Th07Converter">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'Th07Converter'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
             <Messages>
@@ -710,15 +667,6 @@
           </Members>
          </Type>
          <Type Name="Th08Converter">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'Th08Converter'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
             <Messages>
@@ -1174,15 +1122,6 @@
           </Members>
          </Type>
          <Type Name="Th095Converter">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'Th095Converter'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#ConvertBestShot(System.IO.Stream,System.IO.Stream)">
             <Messages>
@@ -1365,15 +1304,6 @@
           </Members>
          </Type>
          <Type Name="Th09Converter">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'Th09Converter'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
             <Messages>
@@ -1678,15 +1608,6 @@
           </Members>
          </Type>
          <Type Name="Th10Converter">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'Th10Converter'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
             <Messages>
@@ -1822,15 +1743,6 @@
           </Members>
          </Type>
          <Type Name="Th11Converter">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'Th11Converter'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
             <Messages>
@@ -1979,15 +1891,6 @@
           </Members>
          </Type>
          <Type Name="Th125Converter">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'Th125Converter'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
             <Messages>
@@ -2483,15 +2386,6 @@
           </Members>
          </Type>
          <Type Name="Th128Converter">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'Th128Converter'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
             <Messages>
@@ -2615,15 +2509,6 @@
           </Members>
          </Type>
          <Type Name="Th12Converter">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'Th12Converter'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
             <Messages>
@@ -2772,15 +2657,6 @@
           </Members>
          </Type>
          <Type Name="Th13Converter">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'Th13Converter'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
             <Messages>
@@ -3021,15 +2897,6 @@
           </Members>
          </Type>
          <Type Name="Th14Converter">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'Th14Converter'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
             <Messages>
@@ -3269,76 +3136,7 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="ThConverter">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'ThConverter'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-          </Messages>
-          <Members>
-           <Member Name="#Convert(System.Object)">
-            <Messages>
-             <Message Id="obj" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Created="2014-02-08 15:40:17Z">
-              <Issue Name="LanguageIndependentMemberParameter">
-               <Item>'ThConverter.Convert(object)'</Item>
-               <Item>obj</Item>
-               <Item>'obj'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#OutputNumberGroupSeparator">
-            <Messages>
-             <Message TypeName="PropertiesShouldNotBeWriteOnly" Category="Microsoft.Design" CheckId="CA1044" Created="2014-02-08 15:40:17Z">
-              <Issue Name="MakeMoreAccessible">
-               <Item>'ThConverter.OutputNumberGroupSeparator'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="ThConverterEventArgs">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'ThConverterEventArgs'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="ThConverterFactory">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'ThConverterFactory'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-           <Message TypeName="StaticHolderTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1053" Created="2014-02-08 15:40:17Z">
-            <Issue Name="CSharp2_0">
-             <Item>'ThConverterFactory'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="ThCrypt">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'ThCrypt'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Encrypt(System.IO.Stream,System.IO.Stream,System.Int32,System.Byte,System.Byte,System.Int32,System.Int32)">
             <Messages>
@@ -3402,15 +3200,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Utils+IBinaryReadable">
-          <Messages>
-           <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Created="2014-02-08 15:40:17Z">
-            <Issue>
-             <Item>'Utils.IBinaryReadable'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
         </Types>
        </Namespace>
       </Namespaces>
@@ -3423,18 +3212,6 @@
       <Messages>
        <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Created="2014-02-08 15:40:17Z">
         <Issue Name="NoStrongName">
-         <Item>'ThScoreFileConverter.exe'</Item>
-        </Issue>
-       </Message>
-       <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-        <Issue Name="Assembly">
-         <Item>Th</Item>
-         <Item>'ThScoreFileConverter.exe'</Item>
-         <Item>TH</Item>
-        </Issue>
-       </Message>
-       <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Created="2014-02-08 15:40:17Z">
-        <Issue>
          <Item>'ThScoreFileConverter.exe'</Item>
         </Issue>
        </Message>
@@ -3522,15 +3299,6 @@
           </Members>
          </Type>
          <Type Name="Th06Converter">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'Th06Converter'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
             <Messages>
@@ -3710,15 +3478,6 @@
           </Members>
          </Type>
          <Type Name="Th07Converter">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'Th07Converter'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
             <Messages>
@@ -4008,15 +3767,6 @@
           </Members>
          </Type>
          <Type Name="Th08Converter">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'Th08Converter'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
             <Messages>
@@ -4437,15 +4187,6 @@
           </Members>
          </Type>
          <Type Name="Th095Converter">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'Th095Converter'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
             <Messages>
@@ -4617,15 +4358,6 @@
           </Members>
          </Type>
          <Type Name="Th09Converter">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'Th09Converter'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
             <Messages>
@@ -4902,15 +4634,6 @@
           </Members>
          </Type>
          <Type Name="Th10Converter">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'Th10Converter'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
             <Messages>
@@ -5046,15 +4769,6 @@
           </Members>
          </Type>
          <Type Name="Th11Converter">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'Th11Converter'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
             <Messages>
@@ -5203,15 +4917,6 @@
           </Members>
          </Type>
          <Type Name="Th125Converter">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'Th125Converter'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
             <Messages>
@@ -5707,15 +5412,6 @@
           </Members>
          </Type>
          <Type Name="Th128Converter">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'Th128Converter'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
             <Messages>
@@ -5839,15 +5535,6 @@
           </Members>
          </Type>
          <Type Name="Th12Converter">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'Th12Converter'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
             <Messages>
@@ -5996,15 +5683,6 @@
           </Members>
          </Type>
          <Type Name="Th13Converter">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'Th13Converter'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
             <Messages>
@@ -6245,15 +5923,6 @@
           </Members>
          </Type>
          <Type Name="Th14Converter">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'Th14Converter'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Decrypt(System.IO.Stream,System.IO.Stream)">
             <Messages>
@@ -6493,76 +6162,7 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="ThConverter">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 14:04:32Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'ThConverter'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-          </Messages>
-          <Members>
-           <Member Name="#Convert(System.Object)">
-            <Messages>
-             <Message Id="obj" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Created="2014-02-08 14:04:32Z">
-              <Issue Name="LanguageIndependentMemberParameter">
-               <Item>'ThConverter.Convert(object)'</Item>
-               <Item>obj</Item>
-               <Item>'obj'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#OutputNumberGroupSeparator">
-            <Messages>
-             <Message TypeName="PropertiesShouldNotBeWriteOnly" Category="Microsoft.Design" CheckId="CA1044" Created="2014-02-08 14:04:32Z">
-              <Issue Name="MakeMoreAccessible">
-               <Item>'ThConverter.OutputNumberGroupSeparator'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="ThConverterEventArgs">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'ThConverterEventArgs'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="ThConverterFactory">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'ThConverterFactory'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-           <Message TypeName="StaticHolderTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1053" Created="2014-02-08 15:40:17Z">
-            <Issue Name="CSharp2_0">
-             <Item>'ThConverterFactory'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="ThCrypt">
-          <Messages>
-           <Message Id="Th" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2014-02-08 15:40:17Z">
-            <Issue Name="Type">
-             <Item>Th</Item>
-             <Item>'ThCrypt'</Item>
-             <Item>TH</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Encrypt(System.IO.Stream,System.IO.Stream,System.Int32,System.Byte,System.Byte,System.Int32,System.Int32)">
             <Messages>
@@ -6626,15 +6226,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Utils+IBinaryReadable">
-          <Messages>
-           <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Created="2014-02-08 15:40:17Z">
-            <Issue>
-             <Item>'Utils.IBinaryReadable'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
         </Types>
        </Namespace>
       </Namespaces>
@@ -6658,31 +6249,14 @@
    <Rule TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004">
     <Resolution Name="Default">Consider a design where {0} doesn't require explicit type parameter {1} in any call to it.</Resolution>
    </Rule>
-   <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
-    <Resolution Name="Assembly">Correct the casing of '{0}' in assembly name {1} by changing it to '{2}'.</Resolution>
-    <Resolution Name="Namespace">Correct the casing of '{0}' in namespace name '{1}' by changing it to '{2}'.</Resolution>
-    <Resolution Name="Type">Correct the casing of '{0}' in type name {1} by changing it to '{2}'.</Resolution>
-   </Rule>
    <Rule TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704">
     <Resolution Name="MemberParameterMoreMeaningfulName">In method {0}, consider providing a more meaningful name than parameter name {1}.</Resolution>
-   </Rule>
-   <Rule TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720">
-    <Resolution Name="LanguageIndependentMemberParameter">In member {0}, consider replacing the data type identifier '{1}' in parameter name {2} with a more generic term, such as 'value'.</Resolution>
-   </Rule>
-   <Rule TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014">
-    <Resolution Name="Default">Mark {0} with CLSCompliant(true) because it exposes externally visible types.</Resolution>
    </Rule>
    <Rule TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824">
     <Resolution Name="Default">Because assembly {0} contains a ResX-based resource file, mark it with the NeutralResourcesLanguage attribute, specifying the language of the resources within the assembly. This could improve lookup performance the first time a resource is retrieved.</Resolution>
    </Rule>
    <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
     <Resolution Name="Default">The 'this' parameter (or 'Me' in Visual Basic) of {0} is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
-   </Rule>
-   <Rule TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034">
-    <Resolution Name="Default">Do not nest type {0}. Alternatively, change its accessibility so that it is not externally visible.</Resolution>
-   </Rule>
-   <Rule TypeName="PropertiesShouldNotBeWriteOnly" Category="Microsoft.Design" CheckId="CA1044">
-    <Resolution Name="MakeMoreAccessible">Because the property getter for {0} is less visible than its setter, either increase the accessibility of its getter or decrease the accessibility of its setter.</Resolution>
    </Rule>
    <Rule TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819">
     <Resolution Name="Default">Change {0} to return a collection or make it a method.</Resolution>
@@ -6692,9 +6266,6 @@
    </Rule>
    <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
     <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
-   </Rule>
-   <Rule TypeName="StaticHolderTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1053">
-    <Resolution Name="CSharp2_0">Because type {0} contains only 'static' members, mark it as 'static' to prevent the compiler from adding a default public constructor.</Resolution>
    </Rule>
    <Rule TypeName="TestForEmptyStringsUsingStringLength" Category="Microsoft.Performance" CheckId="CA1820">
     <Resolution Name="IsNullOrEmpty">Replace the call to {0} in {1} with a call to 'String.IsNullOrEmpty'.</Resolution>

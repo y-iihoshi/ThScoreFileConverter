@@ -158,7 +158,7 @@ namespace ThScoreFileConverter
             }
         }
 
-        private class Chapter : Utils.IBinaryReadable
+        private class Chapter : IBinaryReadable
         {
             public string Signature { get; private set; }   // .Length = 4
             public short Size1 { get; private set; }
@@ -399,7 +399,7 @@ namespace ThScoreFileConverter
             }
         }
 
-        private class PlayCount : Utils.IBinaryReadable     // per level-with-total
+        private class PlayCount : IBinaryReadable     // per level-with-total
         {
             public int TotalTrial { get; private set; }
             public Dictionary<Chara, int> Trials { get; private set; }

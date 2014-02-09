@@ -95,7 +95,7 @@ namespace ThScoreFileConverter
             public Status Status { get; set; }
         }
 
-        private class Header : Utils.IBinaryReadable
+        private class Header : IBinaryReadable
         {
             private uint unknown1;
             private uint unknown2;
@@ -126,7 +126,7 @@ namespace ThScoreFileConverter
             }
         }
 
-        private class Chapter : Utils.IBinaryReadable
+        private class Chapter : IBinaryReadable
         {
             public string Signature { get; private set; }
             public ushort Version { get; private set; }
@@ -268,7 +268,7 @@ namespace ThScoreFileConverter
             }
         }
 
-        private class ScoreData : Utils.IBinaryReadable
+        private class ScoreData : IBinaryReadable
         {
             private uint unknown1;
 
@@ -291,7 +291,7 @@ namespace ThScoreFileConverter
             }
         }
 
-        private class SpellCard : Utils.IBinaryReadable
+        private class SpellCard : IBinaryReadable
         {
             public byte[] Name { get; private set; }            // .Length = 0x80
             public int ClearCount { get; private set; }
@@ -315,7 +315,7 @@ namespace ThScoreFileConverter
             }
         }
 
-        private class Practice : Utils.IBinaryReadable
+        private class Practice : IBinaryReadable
         {
             private ushort unknown1;    // always 0x0000?
 

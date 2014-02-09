@@ -66,7 +66,7 @@ namespace ThScoreFileConverter
             }
         }
 
-        private class Chapter : Utils.IBinaryReadable
+        private class Chapter : IBinaryReadable
         {
             public string Signature { get; private set; }   // .Length = 4
             public short Size1 { get; private set; }
@@ -262,7 +262,7 @@ namespace ThScoreFileConverter
             }
         }
 
-        private class ClearCount : Utils.IBinaryReadable
+        private class ClearCount : IBinaryReadable
         {
             private uint unknown;
 
