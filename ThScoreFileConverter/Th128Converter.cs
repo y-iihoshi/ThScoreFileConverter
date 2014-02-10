@@ -35,41 +35,84 @@ namespace ThScoreFileConverter
         Justification = "Reviewed.")]
     public class Th128Converter : ThConverter
     {
-        private enum Level                  { Easy, Normal, Hard, Lunatic, Extra }
-        private enum LevelWithTotal         { Easy, Normal, Hard, Lunatic, Extra, Total }
-        private enum LevelShort             { E, N, H, L, X }
-        private enum LevelShortWithTotal    { E, N, H, L, X, T }
+        private enum Level
+        {
+            [EnumAltName("E")] Easy,
+            [EnumAltName("N")] Normal,
+            [EnumAltName("H")] Hard,
+            [EnumAltName("L")] Lunatic,
+            [EnumAltName("X")] Extra
+        }
+        private enum LevelWithTotal
+        {
+            [EnumAltName("E")] Easy,
+            [EnumAltName("N")] Normal,
+            [EnumAltName("H")] Hard,
+            [EnumAltName("L")] Lunatic,
+            [EnumAltName("X")] Extra,
+            [EnumAltName("T")] Total
+        }
 
         private enum Route
         {
-            RouteA1, RouteA2, RouteB1, RouteB2, RouteC1, RouteC2, Extra
+            [EnumAltName("A1")] RouteA1,
+            [EnumAltName("A2")] RouteA2,
+            [EnumAltName("B1")] RouteB1,
+            [EnumAltName("B2")] RouteB2,
+            [EnumAltName("C1")] RouteC1,
+            [EnumAltName("C2")] RouteC2,
+            [EnumAltName("EX")] Extra
         }
         private enum RouteWithTotal
         {
-            RouteA1, RouteA2, RouteB1, RouteB2, RouteC1, RouteC2, Extra, Total
+            [EnumAltName("A1")] RouteA1,
+            [EnumAltName("A2")] RouteA2,
+            [EnumAltName("B1")] RouteB1,
+            [EnumAltName("B2")] RouteB2,
+            [EnumAltName("C1")] RouteC1,
+            [EnumAltName("C2")] RouteC2,
+            [EnumAltName("EX")] Extra,
+            [EnumAltName("TL")] Total
         }
-        private enum RouteShort             { A1, A2, B1, B2, C1, C2, EX }
-        private enum RouteShortWithTotal    { A1, A2, B1, B2, C1, C2, EX, TL }
 
         private enum Stage
         {
-            StageA_1, StageA1_2, StageA1_3, StageA2_2, StageA2_3,
-            StageB_1, StageB1_2, StageB1_3, StageB2_2, StageB2_3,
-            StageC_1, StageC1_2, StageC1_3, StageC2_2, StageC2_3, Extra
+            [EnumAltName("A11")] StageA_1,
+            [EnumAltName("A12")] StageA1_2,
+            [EnumAltName("A13")] StageA1_3,
+            [EnumAltName("A22")] StageA2_2,
+            [EnumAltName("A23")] StageA2_3,
+            [EnumAltName("B11")] StageB_1,
+            [EnumAltName("B12")] StageB1_2,
+            [EnumAltName("B13")] StageB1_3,
+            [EnumAltName("B22")] StageB2_2,
+            [EnumAltName("B23")] StageB2_3,
+            [EnumAltName("C11")] StageC_1,
+            [EnumAltName("C12")] StageC1_2,
+            [EnumAltName("C13")] StageC1_3,
+            [EnumAltName("C22")] StageC2_2,
+            [EnumAltName("C23")] StageC2_3,
+            [EnumAltName("EXT")] Extra
         }
         private enum StageWithTotal
         {
-            StageA_1, StageA1_2, StageA1_3, StageA2_2, StageA2_3,
-            StageB_1, StageB1_2, StageB1_3, StageB2_2, StageB2_3,
-            StageC_1, StageC1_2, StageC1_3, StageC2_2, StageC2_3, Extra, Total
-        }
-        private enum StageShort
-        {
-            A11, A12, A13, A22, A23, B11, B12, B13, B22, B23, C11, C12, C13, C22, C23, EXT
-        }
-        private enum StageShortWithTotal
-        {
-            A11, A12, A13, A22, A23, B11, B12, B13, B22, B23, C11, C12, C13, C22, C23, EXT, TTL
+            [EnumAltName("A11")] StageA_1,
+            [EnumAltName("A12")] StageA1_2,
+            [EnumAltName("A13")] StageA1_3,
+            [EnumAltName("A22")] StageA2_2,
+            [EnumAltName("A23")] StageA2_3,
+            [EnumAltName("B11")] StageB_1,
+            [EnumAltName("B12")] StageB1_2,
+            [EnumAltName("B13")] StageB1_3,
+            [EnumAltName("B22")] StageB2_2,
+            [EnumAltName("B23")] StageB2_3,
+            [EnumAltName("C11")] StageC_1,
+            [EnumAltName("C12")] StageC1_2,
+            [EnumAltName("C13")] StageC1_3,
+            [EnumAltName("C22")] StageC2_2,
+            [EnumAltName("C23")] StageC2_3,
+            [EnumAltName("EXT")] Extra,
+            [EnumAltName("TTL")] Total
         }
 
         private static readonly string[] StageProgressArray =
@@ -524,14 +567,20 @@ namespace ThScoreFileConverter
         // %T128SCR[w][xx][y][z]
         private string ReplaceScore(string input)
         {
+            var levels = Utils.GetEnumerator<Level>();
+            var routes = Utils.GetEnumerator<Route>();
             var pattern = Utils.Format(
                 @"%T128SCR([{0}])({1})(\d)([1-5])",
-                Utils.JoinEnumNames<LevelShort>(string.Empty),
-                Utils.JoinEnumNames<RouteShort>("|"));
+                string.Join(string.Empty, levels.Select(lv => lv.ToShortName()).ToArray()),
+                string.Join("|", routes.Select(rt => rt.ToShortName()).ToArray()));
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = (Level)Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
-                var route = (RouteWithTotal)Utils.ParseEnum<RouteShort>(match.Groups[2].Value, true);
+                var level = levels.First(
+                    lv => lv.ToShortName()
+                        .Equals(match.Groups[1].Value, StringComparison.InvariantCultureIgnoreCase));
+                var route = (RouteWithTotal)routes.First(
+                    rt => rt.ToShortName()
+                        .Equals(match.Groups[2].Value, StringComparison.InvariantCultureIgnoreCase));
                 var rank = Utils.ToZeroBased(int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
@@ -635,14 +684,20 @@ namespace ThScoreFileConverter
             Justification = "Reviewed.")]
         private string ReplaceCollectRate(string input)
         {
+            var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();
+            var stagesWithTotal = Utils.GetEnumerator<StageWithTotal>();
             var pattern = Utils.Format(
                 @"%T128CRG([{0}])({1})([1-3])",
-                Utils.JoinEnumNames<LevelShortWithTotal>(string.Empty),
-                Utils.JoinEnumNames<StageShortWithTotal>("|"));
+                string.Join(string.Empty, levelsWithTotal.Select(lv => lv.ToShortName()).ToArray()),
+                string.Join("|", stagesWithTotal.Select(st => st.ToShortName()).ToArray()));
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = Utils.ParseEnum<LevelShortWithTotal>(match.Groups[1].Value, true);
-                var stage = Utils.ParseEnum<StageShortWithTotal>(match.Groups[2].Value, true);
+                var level = levelsWithTotal.First(
+                    lv => lv.ToShortName()
+                        .Equals(match.Groups[1].Value, StringComparison.InvariantCultureIgnoreCase));
+                var stage = stagesWithTotal.First(
+                    st => st.ToShortName()
+                        .Equals(match.Groups[2].Value, StringComparison.InvariantCultureIgnoreCase));
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                 Func<SpellCard, bool> checkNotNull = (card => card != null);
@@ -650,7 +705,7 @@ namespace ThScoreFileConverter
                 Func<SpellCard, bool> findByStage = (card => true);
                 Func<SpellCard, bool> findByType = (card => true);
 
-                if (stage == StageShortWithTotal.TTL)
+                if (stage == StageWithTotal.Total)
                 {
                     // Do nothing
                 }
@@ -659,10 +714,10 @@ namespace ThScoreFileConverter
 
                 switch (level)
                 {
-                    case LevelShortWithTotal.T:
+                    case LevelWithTotal.Total:
                         // Do nothing
                         break;
-                    case LevelShortWithTotal.X:
+                    case LevelWithTotal.Extra:
                         findByStage = (card => StageCardTable[Stage.Extra].Contains(card.Number));
                         break;
                     default:
@@ -686,14 +741,20 @@ namespace ThScoreFileConverter
         // %T128CLEAR[x][yy]
         private string ReplaceClear(string input)
         {
+            var levels = Utils.GetEnumerator<Level>();
+            var routes = Utils.GetEnumerator<Route>();
             var pattern = Utils.Format(
                 @"%T128CLEAR([{0}])({1})",
-                Utils.JoinEnumNames<LevelShort>(string.Empty),
-                Utils.JoinEnumNames<RouteShort>("|"));
+                string.Join(string.Empty, levels.Select(lv => lv.ToShortName()).ToArray()),
+                string.Join("|", routes.Select(rt => rt.ToShortName()).ToArray()));
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = (Level)Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
-                var route = (RouteWithTotal)Utils.ParseEnum<RouteShort>(match.Groups[2].Value, true);
+                var level = levels.First(
+                    lv => lv.ToShortName()
+                        .Equals(match.Groups[1].Value, StringComparison.InvariantCultureIgnoreCase));
+                var route = (RouteWithTotal)routes.First(
+                    rt => rt.ToShortName()
+                        .Equals(match.Groups[2].Value, StringComparison.InvariantCultureIgnoreCase));
 
                 if ((level == Level.Extra) && (route != RouteWithTotal.Extra))
                     return match.ToString();
@@ -718,13 +779,15 @@ namespace ThScoreFileConverter
             Justification = "Reviewed.")]
         private string ReplaceRoute(string input)
         {
+            var routesWithTotal = Utils.GetEnumerator<RouteWithTotal>();
             var pattern = Utils.Format(
                 @"%T128ROUTE({0})([1-3])",
-                Utils.JoinEnumNames<RouteShortWithTotal>("|"));
+                string.Join("|", routesWithTotal.Select(rt => rt.ToShortName()).ToArray()));
             var evaluator = new MatchEvaluator(match =>
             {
-                var route =
-                    (RouteWithTotal)Utils.ParseEnum<RouteShortWithTotal>(match.Groups[1].Value, true);
+                var route = routesWithTotal.First(
+                    rt => rt.ToShortName()
+                        .Equals(match.Groups[1].Value, StringComparison.InvariantCultureIgnoreCase));
                 var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
                 Func<ClearData, long> getValueByType = (data => 0L);
@@ -764,16 +827,20 @@ namespace ThScoreFileConverter
             Justification = "Reviewed.")]
         private string ReplaceRouteEx(string input)
         {
+            var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();
+            var routesWithTotal = Utils.GetEnumerator<RouteWithTotal>();
             var pattern = Utils.Format(
                 @"%T128ROUTEEX([{0}])({1})([1-3])",
-                Utils.JoinEnumNames<LevelShortWithTotal>(string.Empty),
-                Utils.JoinEnumNames<RouteShortWithTotal>("|"));
+                string.Join(string.Empty, levelsWithTotal.Select(lv => lv.ToShortName()).ToArray()),
+                string.Join("|", routesWithTotal.Select(rt => rt.ToShortName()).ToArray()));
             var evaluator = new MatchEvaluator(match =>
             {
-                var level =
-                    (LevelWithTotal)Utils.ParseEnum<LevelShortWithTotal>(match.Groups[1].Value, true);
-                var route =
-                    (RouteWithTotal)Utils.ParseEnum<RouteShortWithTotal>(match.Groups[2].Value, true);
+                var level = levelsWithTotal.First(
+                    lv => lv.ToShortName()
+                        .Equals(match.Groups[1].Value, StringComparison.InvariantCultureIgnoreCase));
+                var route = routesWithTotal.First(
+                    rt => rt.ToShortName()
+                        .Equals(match.Groups[2].Value, StringComparison.InvariantCultureIgnoreCase));
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                 if ((level == LevelWithTotal.Extra) &&

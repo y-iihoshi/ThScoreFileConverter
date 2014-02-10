@@ -35,21 +35,43 @@ namespace ThScoreFileConverter
         Justification = "Reviewed.")]
     public class Th11Converter : ThConverter
     {
-        private enum Level                  { Easy, Normal, Hard, Lunatic, Extra }
-        private enum LevelWithTotal         { Easy, Normal, Hard, Lunatic, Extra, Total }
-        private enum LevelShort             { E, N, H, L, X }
-        private enum LevelShortWithTotal    { E, N, H, L, X, T }
+        private enum Level
+        {
+            [EnumAltName("E")] Easy,
+            [EnumAltName("N")] Normal,
+            [EnumAltName("H")] Hard,
+            [EnumAltName("L")] Lunatic,
+            [EnumAltName("X")] Extra
+        }
+        private enum LevelWithTotal
+        {
+            [EnumAltName("E")] Easy,
+            [EnumAltName("N")] Normal,
+            [EnumAltName("H")] Hard,
+            [EnumAltName("L")] Lunatic,
+            [EnumAltName("X")] Extra,
+            [EnumAltName("T")] Total
+        }
 
         private enum Chara
         {
-            ReimuYukari, ReimuSuika, ReimuAya, MarisaAlice, MarisaPatchouli, MarisaNitori
+            [EnumAltName("RY")] ReimuYukari,
+            [EnumAltName("RS")] ReimuSuika,
+            [EnumAltName("RA")] ReimuAya,
+            [EnumAltName("MA")] MarisaAlice,
+            [EnumAltName("MP")] MarisaPatchouli,
+            [EnumAltName("MN")] MarisaNitori
         }
         private enum CharaWithTotal
         {
-            ReimuYukari, ReimuSuika, ReimuAya, MarisaAlice, MarisaPatchouli, MarisaNitori, Total
+            [EnumAltName("RY")] ReimuYukari,
+            [EnumAltName("RS")] ReimuSuika,
+            [EnumAltName("RA")] ReimuAya,
+            [EnumAltName("MA")] MarisaAlice,
+            [EnumAltName("MP")] MarisaPatchouli,
+            [EnumAltName("MN")] MarisaNitori,
+            [EnumAltName("TL")] Total
         }
-        private enum CharaShort             { RY, RS, RA, MA, MP, MN }
-        private enum CharaShortWithTotal    { RY, RS, RA, MA, MP, MN, TL }
 
         private enum Stage { Stage1, Stage2, Stage3, Stage4, Stage5, Stage6, Extra }
 
@@ -486,14 +508,20 @@ namespace ThScoreFileConverter
         // %T11SCR[w][xx][y][z]
         private string ReplaceScore(string input)
         {
+            var levels = Utils.GetEnumerator<Level>();
+            var charas = Utils.GetEnumerator<Chara>();
             var pattern = Utils.Format(
                 @"%T11SCR([{0}])({1})(\d)([1-5])",
-                Utils.JoinEnumNames<LevelShort>(string.Empty),
-                Utils.JoinEnumNames<CharaShort>("|"));
+                string.Join(string.Empty, levels.Select(lv => lv.ToShortName()).ToArray()),
+                string.Join("|", charas.Select(ch => ch.ToShortName()).ToArray()));
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = (Level)Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
-                var chara = (CharaWithTotal)Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
+                var level = levels.First(
+                    lv => lv.ToShortName()
+                        .Equals(match.Groups[1].Value, StringComparison.InvariantCultureIgnoreCase));
+                var chara = (CharaWithTotal)charas.First(
+                    ch => ch.ToShortName()
+                        .Equals(match.Groups[2].Value, StringComparison.InvariantCultureIgnoreCase));
                 var rank = Utils.ToZeroBased(int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
@@ -535,13 +563,16 @@ namespace ThScoreFileConverter
             Justification = "Reviewed.")]
         private string ReplaceCareer(string input)
         {
+            var charasWithTotal = Utils.GetEnumerator<CharaWithTotal>();
             var pattern = Utils.Format(
                 @"%T11C(\d{{3}})({0})([12])",
-                Utils.JoinEnumNames<CharaShortWithTotal>("|"));
+                string.Join("|", charasWithTotal.Select(ch => ch.ToShortName()).ToArray()));
             var evaluator = new MatchEvaluator(match =>
             {
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
-                var chara = Utils.ParseEnum<CharaShortWithTotal>(match.Groups[2].Value, true);
+                var chara = charasWithTotal.First(
+                    ch => ch.ToShortName()
+                        .Equals(match.Groups[2].Value, StringComparison.InvariantCultureIgnoreCase));
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                 Func<SpellCard, int> getCount = (card => 0);
@@ -550,7 +581,7 @@ namespace ThScoreFileConverter
                 else
                     getCount = (card => card.TrialCount);
 
-                var cards = this.allScoreData.ClearData[(CharaWithTotal)chara].Cards;
+                var cards = this.allScoreData.ClearData[chara].Cards;
                 if (number == 0)
                     return this.ToNumberString(cards.Sum(getCount));
                 else if (new Range<int>(1, NumCards).Contains(number))
@@ -594,14 +625,20 @@ namespace ThScoreFileConverter
             Justification = "Reviewed.")]
         private string ReplaceCollectRate(string input)
         {
+            var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();
+            var charasWithTotal = Utils.GetEnumerator<CharaWithTotal>();
             var pattern = Utils.Format(
                 @"%T11CRG([{0}])({1})([0-6])([12])",
-                Utils.JoinEnumNames<LevelShortWithTotal>(string.Empty),
-                Utils.JoinEnumNames<CharaShortWithTotal>("|"));
+                string.Join(string.Empty, levelsWithTotal.Select(lv => lv.ToShortName()).ToArray()),
+                string.Join("|", charasWithTotal.Select(ch => ch.ToShortName()).ToArray()));
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = Utils.ParseEnum<LevelShortWithTotal>(match.Groups[1].Value, true);
-                var chara = Utils.ParseEnum<CharaShortWithTotal>(match.Groups[2].Value, true);
+                var level = levelsWithTotal.First(
+                    lv => lv.ToShortName()
+                        .Equals(match.Groups[1].Value, StringComparison.InvariantCultureIgnoreCase));
+                var chara = charasWithTotal.First(
+                    ch => ch.ToShortName()
+                        .Equals(match.Groups[2].Value, StringComparison.InvariantCultureIgnoreCase));
                 var stage = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
@@ -619,10 +656,10 @@ namespace ThScoreFileConverter
 
                 switch (level)
                 {
-                    case LevelShortWithTotal.T:
+                    case LevelWithTotal.Total:
                         // Do nothing
                         break;
-                    case LevelShortWithTotal.X:
+                    case LevelWithTotal.Extra:
                         findByStage = (card => StageCardTable[Stage.Extra].Contains(card.Number));
                         break;
                     default:
@@ -636,7 +673,7 @@ namespace ThScoreFileConverter
                     findByType = (card => card.TrialCount > 0);
 
                 var and = Utils.MakeAndPredicate(checkNotNull, findByLevel, findByStage, findByType);
-                return this.allScoreData.ClearData[(CharaWithTotal)chara].Cards.Count(and)
+                return this.allScoreData.ClearData[chara].Cards.Count(and)
                     .ToString(CultureInfo.CurrentCulture);
             });
             return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
@@ -645,14 +682,20 @@ namespace ThScoreFileConverter
         // %T11CLEAR[x][yy]
         private string ReplaceClear(string input)
         {
+            var levels = Utils.GetEnumerator<Level>();
+            var charas = Utils.GetEnumerator<Chara>();
             var pattern = Utils.Format(
                 @"%T11CLEAR([{0}])({1})",
-                Utils.JoinEnumNames<LevelShort>(string.Empty),
-                Utils.JoinEnumNames<CharaShort>("|"));
+                string.Join(string.Empty, levels.Select(lv => lv.ToShortName()).ToArray()),
+                string.Join("|", charas.Select(ch => ch.ToShortName()).ToArray()));
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = (Level)Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
-                var chara = (CharaWithTotal)Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
+                var level = levels.First(
+                    lv => lv.ToShortName()
+                        .Equals(match.Groups[1].Value, StringComparison.InvariantCultureIgnoreCase));
+                var chara = (CharaWithTotal)charas.First(
+                    ch => ch.ToShortName()
+                        .Equals(match.Groups[2].Value, StringComparison.InvariantCultureIgnoreCase));
 
                 var rankings = this.allScoreData.ClearData[chara].Rankings[level]
                     .Where(ranking => ranking.DateTime > 0);
@@ -681,13 +724,15 @@ namespace ThScoreFileConverter
             Justification = "Reviewed.")]
         private string ReplaceChara(string input)
         {
+            var charasWithTotal = Utils.GetEnumerator<CharaWithTotal>();
             var pattern = Utils.Format(
                 @"%T11CHARA({0})([1-3])",
-                Utils.JoinEnumNames<CharaShortWithTotal>("|"));
+                string.Join("|", charasWithTotal.Select(ch => ch.ToShortName()).ToArray()));
             var evaluator = new MatchEvaluator(match =>
             {
-                var chara =
-                    (CharaWithTotal)Utils.ParseEnum<CharaShortWithTotal>(match.Groups[1].Value, true);
+                var chara = charasWithTotal.First(
+                    ch => ch.ToShortName()
+                        .Equals(match.Groups[1].Value, StringComparison.InvariantCultureIgnoreCase));
                 var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
                 Func<ClearData, long> getValueByType = (data => 0L);
@@ -727,16 +772,20 @@ namespace ThScoreFileConverter
             Justification = "Reviewed.")]
         private string ReplaceCharaEx(string input)
         {
+            var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();
+            var charasWithTotal = Utils.GetEnumerator<CharaWithTotal>();
             var pattern = Utils.Format(
                 @"%T11CHARAEX([{0}])({1})([1-3])",
-                Utils.JoinEnumNames<LevelShortWithTotal>(string.Empty),
-                Utils.JoinEnumNames<CharaShortWithTotal>("|"));
+                string.Join(string.Empty, levelsWithTotal.Select(lv => lv.ToShortName()).ToArray()),
+                string.Join("|", charasWithTotal.Select(ch => ch.ToShortName()).ToArray()));
             var evaluator = new MatchEvaluator(match =>
             {
-                var level =
-                    (LevelWithTotal)Utils.ParseEnum<LevelShortWithTotal>(match.Groups[1].Value, true);
-                var chara =
-                    (CharaWithTotal)Utils.ParseEnum<CharaShortWithTotal>(match.Groups[2].Value, true);
+                var level = levelsWithTotal.First(
+                    lv => lv.ToShortName()
+                        .Equals(match.Groups[1].Value, StringComparison.InvariantCultureIgnoreCase));
+                var chara = charasWithTotal.First(
+                    ch => ch.ToShortName()
+                        .Equals(match.Groups[2].Value, StringComparison.InvariantCultureIgnoreCase));
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                 Func<ClearData, long> getValueByType = (data => 0L);
@@ -775,14 +824,20 @@ namespace ThScoreFileConverter
         // %T11PRAC[x][yy][z]
         private string ReplacePractice(string input)
         {
+            var levels = Utils.GetEnumerator<Level>();
+            var charas = Utils.GetEnumerator<Chara>();
             var pattern = Utils.Format(
                 @"%T11PRAC([{0}])({1})([1-6])",
-                Utils.JoinEnumNames<LevelShort>(string.Empty),
-                Utils.JoinEnumNames<CharaShort>("|"));
+                string.Join(string.Empty, levels.Select(lv => lv.ToShortName()).ToArray()),
+                string.Join("|", charas.Select(ch => ch.ToShortName()).ToArray()));
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = (Level)Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
-                var chara = (CharaWithTotal)Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
+                var level = levels.First(
+                    lv => lv.ToShortName()
+                        .Equals(match.Groups[1].Value, StringComparison.InvariantCultureIgnoreCase));
+                var chara = (CharaWithTotal)charas.First(
+                    ch => ch.ToShortName()
+                        .Equals(match.Groups[2].Value, StringComparison.InvariantCultureIgnoreCase));
                 var stage = (Stage)Utils.ToZeroBased(
                     int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
 

@@ -93,7 +93,7 @@ namespace ThScoreFileConverter
         public string LastTitle { get; set; }
 
         /// <summary>
-        /// Gets or sets the dictionary of <see cref="SettingsPerTitle"/> instances.
+        /// Gets the dictionary of <see cref="SettingsPerTitle"/> instances.
         /// </summary>
         [DataMember(Order = 1)]
         public Dictionary<string, SettingsPerTitle> Dictionary { get; private set; }

@@ -21,6 +21,7 @@ namespace ThScoreFileConverter
     using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
+    using System.Linq;
     using System.Text;
     using System.Text.RegularExpressions;
 
@@ -34,15 +35,34 @@ namespace ThScoreFileConverter
         Justification = "Reviewed.")]
     public class Th09Converter : ThConverter
     {
-        private enum Level      { Easy, Normal, Hard, Lunatic, Extra }
-        private enum LevelShort { E, N, H, L, X }
+        private enum Level
+        {
+            [EnumAltName("E")] Easy,
+            [EnumAltName("N")] Normal,
+            [EnumAltName("H")] Hard,
+            [EnumAltName("L")] Lunatic,
+            [EnumAltName("X")] Extra
+        }
 
         private enum Chara
         {
-            Reimu, Marisa, Sakuya, Youmu, Reisen, Cirno, Lyrica, Mystia,
-            Tewi, Yuuka, Aya, Medicine, Komachi, Shikieiki, Merlin, Lunasa
+            [EnumAltName("RM")] Reimu,
+            [EnumAltName("MR")] Marisa,
+            [EnumAltName("SK")] Sakuya,
+            [EnumAltName("YM")] Youmu,
+            [EnumAltName("RS")] Reisen,
+            [EnumAltName("CI")] Cirno,
+            [EnumAltName("LY")] Lyrica,
+            [EnumAltName("MY")] Mystia,
+            [EnumAltName("TW")] Tewi,
+            [EnumAltName("YU")] Yuuka,
+            [EnumAltName("AY")] Aya,
+            [EnumAltName("MD")] Medicine,
+            [EnumAltName("KM")] Komachi,
+            [EnumAltName("SI")] Shikieiki,
+            [EnumAltName("ML")] Merlin,
+            [EnumAltName("LN")] Lunasa
         }
-        private enum CharaShort { RM, MR, SK, YM, RS, CI, LY, MY, TW, YU, AY, MD, KM, SI, ML, LN }
 
         private class CharaLevelPair : Pair<Chara, Level>
         {
@@ -520,14 +540,20 @@ namespace ThScoreFileConverter
         // %T09SCR[w][xx][y][z]
         private string ReplaceScore(string input)
         {
+            var levels = Utils.GetEnumerator<Level>();
+            var charas = Utils.GetEnumerator<Chara>();
             var pattern = Utils.Format(
                 @"%T09SCR([{0}])({1})([1-5])([1-3])",
-                Utils.JoinEnumNames<LevelShort>(string.Empty),
-                Utils.JoinEnumNames<CharaShort>("|"));
+                string.Join(string.Empty, levels.Select(lv => lv.ToShortName()).ToArray()),
+                string.Join("|", charas.Select(ch => ch.ToShortName()).ToArray()));
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = (Level)Enum.Parse(typeof(LevelShort), match.Groups[1].Value, true);
-                var chara = (Chara)Enum.Parse(typeof(CharaShort), match.Groups[2].Value, true);
+                var level = levels.First(
+                    lv => lv.ToShortName()
+                        .Equals(match.Groups[1].Value, StringComparison.InvariantCultureIgnoreCase));
+                var chara = charas.First(
+                    ch => ch.ToShortName()
+                        .Equals(match.Groups[2].Value, StringComparison.InvariantCultureIgnoreCase));
                 var rank = Utils.ToZeroBased(int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
@@ -565,14 +591,20 @@ namespace ThScoreFileConverter
         // %T09CLEAR[x][yy][z]
         private string ReplaceClear(string input)
         {
+            var levels = Utils.GetEnumerator<Level>();
+            var charas = Utils.GetEnumerator<Chara>();
             var pattern = Utils.Format(
                 @"%T09CLEAR([{0}])({1})([12])",
-                Utils.JoinEnumNames<LevelShort>(string.Empty),
-                Utils.JoinEnumNames<CharaShort>("|"));
+                string.Join(string.Empty, levels.Select(lv => lv.ToShortName()).ToArray()),
+                string.Join("|", charas.Select(ch => ch.ToShortName()).ToArray()));
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = (Level)Enum.Parse(typeof(LevelShort), match.Groups[1].Value, true);
-                var chara = (Chara)Enum.Parse(typeof(CharaShort), match.Groups[2].Value, true);
+                var level = levels.First(
+                    lv => lv.ToShortName()
+                        .Equals(match.Groups[1].Value, StringComparison.InvariantCultureIgnoreCase));
+                var chara = charas.First(
+                    ch => ch.ToShortName()
+                        .Equals(match.Groups[2].Value, StringComparison.InvariantCultureIgnoreCase));
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                 var count = this.allScoreData.PlayList.ClearCounts[chara].Counts[level];

@@ -74,6 +74,7 @@
     <Compile Include="AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EnumExtensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Pair.cs" />
     <Compile Include="Profiler.cs" />

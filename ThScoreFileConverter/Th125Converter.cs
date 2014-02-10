@@ -50,49 +50,45 @@ namespace ThScoreFileConverter
             "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "X", "S"
         };
 
-        private enum Chara      { Aya, Hatate }
-        private enum CharaShort { A, H }
+        private enum Chara
+        {
+            [EnumAltName("A")] Aya,
+            [EnumAltName("H")] Hatate
+        }
 
         private enum Enemy
         {
-            Shizuha, Minoriko, Parsee, Hina, Kogasa, Kisume, Yamame, Nitori, Momiji, Ichirin,
-            Minamitsu, Yuugi, Suika, Shou, Nazrin, Utsuho, Rin, Koishi, Satori, Tenshi,
-            Iku, Suwako, Kanako, Nue, Byakuren, Reimu, Marisa, Sanae, Hatate, Aya
+            [EnumAltName("静葉",        LongName = "秋 静葉")]          Shizuha,
+            [EnumAltName("穣子",        LongName = "秋 穣子")]          Minoriko,
+            [EnumAltName("パルスィ",    LongName = "水橋 パルスィ")]    Parsee,
+            [EnumAltName("雛",          LongName = "鍵山 雛")]          Hina,
+            [EnumAltName("小傘",        LongName = "多々良 小傘")]      Kogasa,
+            [EnumAltName("キスメ",      LongName = "キスメ")]           Kisume,
+            [EnumAltName("ヤマメ",      LongName = "黒谷 ヤマメ")]      Yamame,
+            [EnumAltName("にとり",      LongName = "河城 にとり")]      Nitori,
+            [EnumAltName("椛",          LongName = "犬走 椛")]          Momiji,
+            [EnumAltName("一輪 & 雲山", LongName = "雲居 一輪 & 雲山")] Ichirin,
+            [EnumAltName("水蜜",        LongName = "村紗 水蜜")]        Minamitsu,
+            [EnumAltName("勇儀",        LongName = "星熊 勇儀")]        Yuugi,
+            [EnumAltName("萃香",        LongName = "伊吹 萃香")]        Suika,
+            [EnumAltName("星",          LongName = "寅丸 星")]          Shou,
+            [EnumAltName("ナズーリン",  LongName = "ナズーリン")]       Nazrin,
+            [EnumAltName("お空",        LongName = "霊烏路 空")]        Utsuho,
+            [EnumAltName("お燐",        LongName = "火焔猫 燐")]        Rin,
+            [EnumAltName("こいし",      LongName = "古明地 こいし")]    Koishi,
+            [EnumAltName("さとり",      LongName = "古明地 さとり")]    Satori,
+            [EnumAltName("天子",        LongName = "比那名居 天子")]    Tenshi,
+            [EnumAltName("衣玖",        LongName = "永江 衣玖")]        Iku,
+            [EnumAltName("諏訪子",      LongName = "洩矢 諏訪子")]      Suwako,
+            [EnumAltName("神奈子",      LongName = "八坂 神奈子")]      Kanako,
+            [EnumAltName("ぬえ",        LongName = "封獣 ぬえ")]        Nue,
+            [EnumAltName("白蓮",        LongName = "聖 白蓮")]          Byakuren,
+            [EnumAltName("霊夢",        LongName = "博麗 霊夢")]        Reimu,
+            [EnumAltName("魔理沙",      LongName = "霧雨 魔理沙")]      Marisa,
+            [EnumAltName("早苗",        LongName = "東風谷 早苗")]      Sanae,
+            [EnumAltName("はたて",      LongName = "姫海棠 はたて")]    Hatate,
+            [EnumAltName("文",          LongName = "射命丸 文")]        Aya
         }
-
-        private static readonly Dictionary<Enemy, string> EnemyNames = new Dictionary<Enemy, string>()
-        {
-            { Enemy.Shizuha,    "秋 静葉"          },
-            { Enemy.Minoriko,   "秋 穣子"          },
-            { Enemy.Parsee,     "水橋 パルスィ"    },
-            { Enemy.Hina,       "鍵山 雛"          },
-            { Enemy.Kogasa,     "多々良 小傘"      },
-            { Enemy.Kisume,     "キスメ"           },
-            { Enemy.Yamame,     "黒谷 ヤマメ"      },
-            { Enemy.Nitori,     "河城 にとり"      },
-            { Enemy.Momiji,     "犬走 椛"          },
-            { Enemy.Ichirin,    "雲居 一輪 & 雲山" },
-            { Enemy.Minamitsu,  "村紗 水蜜"        },
-            { Enemy.Yuugi,      "星熊 勇儀"        },
-            { Enemy.Suika,      "伊吹 萃香"        },
-            { Enemy.Shou,       "寅丸 星"          },
-            { Enemy.Nazrin,     "ナズーリン"       },
-            { Enemy.Utsuho,     "霊烏路 空"        },
-            { Enemy.Rin,        "火焔猫 燐"        },
-            { Enemy.Koishi,     "古明地 こいし"    },
-            { Enemy.Satori,     "古明地 さとり"    },
-            { Enemy.Tenshi,     "比那名居 天子"    },
-            { Enemy.Iku,        "永江 衣玖"        },
-            { Enemy.Suwako,     "洩矢 諏訪子"      },
-            { Enemy.Kanako,     "八坂 神奈子"      },
-            { Enemy.Nue,        "封獣 ぬえ"        },
-            { Enemy.Byakuren,   "聖 白蓮"          },
-            { Enemy.Reimu,      "博麗 霊夢"        },
-            { Enemy.Marisa,     "霧雨 魔理沙"      },
-            { Enemy.Sanae,      "東風谷 早苗"      },
-            { Enemy.Hatate,     "姫海棠 はたて"    },
-            { Enemy.Aya,        "射命丸 文"        }
-        };
 
         private class LevelScenePair : Pair<int, int>
         {
@@ -703,13 +699,16 @@ namespace ThScoreFileConverter
         // %T125SCR[w][x][y][z]
         private string ReplaceScore(string input)
         {
+            var charas = Utils.GetEnumerator<Chara>();
             var pattern = Utils.Format(
                 @"%T125SCR([{0}])([{1}])([1-9])([1-5])",
-                Utils.JoinEnumNames<CharaShort>(string.Empty),
+                string.Join(string.Empty, charas.Select(ch => ch.ToShortName()).ToArray()),
                 string.Join(string.Empty, LevelShortArray));
             var evaluator = new MatchEvaluator(match =>
             {
-                var chara = (Chara)Utils.ParseEnum<CharaShort>(match.Groups[1].Value, true);
+                var chara = charas.First(
+                    ch => ch.ToShortName()
+                        .Equals(match.Groups[1].Value, StringComparison.InvariantCultureIgnoreCase));
                 var level = match.Groups[2].Value.ToUpper(CultureInfo.InvariantCulture);
                 var scene = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
@@ -749,12 +748,15 @@ namespace ThScoreFileConverter
             Justification = "Reviewed.")]
         private string ReplaceScoreTotal(string input)
         {
+            var charas = Utils.GetEnumerator<Chara>();
             var pattern = Utils.Format(
                 @"%T125SCRTL([{0}])([12])([1-5])",
-                Utils.JoinEnumNames<CharaShort>(string.Empty));
+                string.Join(string.Empty, charas.Select(ch => ch.ToShortName()).ToArray()));
             var evaluator = new MatchEvaluator(match =>
             {
-                var chara = (Chara)Utils.ParseEnum<CharaShort>(match.Groups[1].Value, true);
+                var chara = charas.First(
+                    ch => ch.ToShortName()
+                        .Equals(match.Groups[1].Value, StringComparison.InvariantCultureIgnoreCase));
                 var method = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
@@ -837,7 +839,7 @@ namespace ThScoreFileConverter
                 switch (type)
                 {
                     case 1:     // target Name
-                        return (score != null) ? EnemyNames[SpellCards[key].Enemy] : "??????????";
+                        return (score != null) ? SpellCards[key].Enemy.ToLongName() : "??????????";
                     case 2:     // spell card Name
                         return (score != null) ? SpellCards[key].Card : "??????????";
                     default:    // unreachable
@@ -861,13 +863,16 @@ namespace ThScoreFileConverter
         // %T125SHOT[x][y][z]
         private string ReplaceShot(string input, string outputFilePath)
         {
+            var charas = Utils.GetEnumerator<Chara>();
             var pattern = Utils.Format(
                 @"%T125SHOT([{0}])([{1}])([1-9])",
-                Utils.JoinEnumNames<CharaShort>(string.Empty),
+                string.Join(string.Empty, charas.Select(ch => ch.ToShortName()).ToArray()),
                 string.Join(string.Empty, LevelShortArray));
             var evaluator = new MatchEvaluator(match =>
             {
-                var chara = (Chara)Utils.ParseEnum<CharaShort>(match.Groups[1].Value, true);
+                var chara = charas.First(
+                    ch => ch.ToShortName()
+                        .Equals(match.Groups[1].Value, StringComparison.InvariantCultureIgnoreCase));
                 var level = match.Groups[2].Value.ToUpper(CultureInfo.InvariantCulture);
                 var scene = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
@@ -944,13 +949,16 @@ namespace ThScoreFileConverter
                 new Detail(true,                       string.Empty,          string.Empty),
                 new Detail(true,                       "Result Score  {0,9}", this.ToNumberString(header.ResultScore))
             });
+            var charas = Utils.GetEnumerator<Chara>();
             var pattern = Utils.Format(
                 @"%T125SHOTEX([{0}])([{1}])([1-9])([1-7])",
-                Utils.JoinEnumNames<CharaShort>(string.Empty),
+                string.Join(string.Empty, charas.Select(ch => ch.ToShortName()).ToArray()),
                 string.Join(string.Empty, LevelShortArray));
             var evaluator = new MatchEvaluator(match =>
             {
-                var chara = (Chara)Utils.ParseEnum<CharaShort>(match.Groups[1].Value, true);
+                var chara = charas.First(
+                    ch => ch.ToShortName()
+                        .Equals(match.Groups[1].Value, StringComparison.InvariantCultureIgnoreCase));
                 var level = match.Groups[2].Value.ToUpper(CultureInfo.InvariantCulture);
                 var scene = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);

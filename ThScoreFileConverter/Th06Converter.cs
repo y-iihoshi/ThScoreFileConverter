@@ -35,15 +35,39 @@ namespace ThScoreFileConverter
         Justification = "Reviewed.")]
     public class Th06Converter : ThConverter
     {
-        private enum Level               { Easy, Normal, Hard, Lunatic, Extra }
-        private enum LevelWithTotal      { Easy, Normal, Hard, Lunatic, Extra, Total }
-        private enum LevelShort          { E, N, H, L, X }
-        private enum LevelShortWithTotal { E, N, H, L, X, T }
+        private enum Level
+        {
+            [EnumAltName("E")] Easy,
+            [EnumAltName("N")] Normal,
+            [EnumAltName("H")] Hard,
+            [EnumAltName("L")] Lunatic,
+            [EnumAltName("X")] Extra
+        }
+        private enum LevelWithTotal
+        {
+            [EnumAltName("E")] Easy,
+            [EnumAltName("N")] Normal,
+            [EnumAltName("H")] Hard,
+            [EnumAltName("L")] Lunatic,
+            [EnumAltName("X")] Extra,
+            [EnumAltName("T")] Total
+        }
 
-        private enum Chara               { ReimuA, ReimuB, MarisaA, MarisaB }
-        private enum CharaWithTotal      { ReimuA, ReimuB, MarisaA, MarisaB, Total }
-        private enum CharaShort          { RA, RB, MA, MB }
-        private enum CharaShortWithTotal { RA, RB, MA, MB, TL }
+        private enum Chara
+        {
+            [EnumAltName("RA")] ReimuA,
+            [EnumAltName("RB")] ReimuB,
+            [EnumAltName("MA")] MarisaA,
+            [EnumAltName("MB")] MarisaB
+        }
+        private enum CharaWithTotal
+        {
+            [EnumAltName("RA")] ReimuA,
+            [EnumAltName("RB")] ReimuB,
+            [EnumAltName("MA")] MarisaA,
+            [EnumAltName("MB")] MarisaB,
+            [EnumAltName("TL")] Total
+        }
 
         private enum Stage          { Stage1, Stage2, Stage3, Stage4, Stage5, Stage6, Extra }
         private enum StageWithTotal { Stage1, Stage2, Stage3, Stage4, Stage5, Stage6, Extra, Total }
@@ -171,7 +195,6 @@ namespace ThScoreFileConverter
             public Level Level { get { return this.Second; } }
 
             public CharaLevelPair(Chara chara, Level level) : base(chara, level) { }
-            public CharaLevelPair(CharaShort chara, LevelShort level) : base((Chara)chara, (Level)level) { }
         }
 
         private class AllScoreData
@@ -628,14 +651,20 @@ namespace ThScoreFileConverter
         // %T06SCR[w][xx][y][z]
         private string ReplaceScore(string input)
         {
+            var levels = Utils.GetEnumerator<Level>();
+            var charas = Utils.GetEnumerator<Chara>();
             var pattern = Utils.Format(
                 @"%T06SCR([{0}])({1})(\d)([1-3])",
-                Utils.JoinEnumNames<LevelShort>(string.Empty),
-                Utils.JoinEnumNames<CharaShort>("|"));
+                string.Join(string.Empty, levels.Select(lv => lv.ToShortName()).ToArray()),
+                string.Join("|", charas.Select(ch => ch.ToShortName()).ToArray()));
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
-                var chara = Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
+                var level = levels.First(
+                    lv => lv.ToShortName()
+                        .Equals(match.Groups[1].Value, StringComparison.InvariantCultureIgnoreCase));
+                var chara = charas.First(
+                    ch => ch.ToShortName()
+                        .Equals(match.Groups[2].Value, StringComparison.InvariantCultureIgnoreCase));
                 var rank = Utils.ToZeroBased(int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
@@ -770,14 +799,20 @@ namespace ThScoreFileConverter
         // %T06CLEAR[x][yy]
         private string ReplaceClear(string input)
         {
+            var levels = Utils.GetEnumerator<Level>();
+            var charas = Utils.GetEnumerator<Chara>();
             var pattern = Utils.Format(
                 @"%T06CLEAR([{0}])({1})",
-                Utils.JoinEnumNames<LevelShort>(string.Empty),
-                Utils.JoinEnumNames<CharaShort>("|"));
+                string.Join(string.Empty, levels.Select(lv => lv.ToShortName()).ToArray()),
+                string.Join("|", charas.Select(ch => ch.ToShortName()).ToArray()));
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
-                var chara = Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
+                var level = levels.First(
+                    lv => lv.ToShortName()
+                        .Equals(match.Groups[1].Value, StringComparison.InvariantCultureIgnoreCase));
+                var chara = charas.First(
+                    ch => ch.ToShortName()
+                        .Equals(match.Groups[2].Value, StringComparison.InvariantCultureIgnoreCase));
 
                 var key = new CharaLevelPair(chara, level);
                 if (this.allScoreData.Rankings.ContainsKey(key))
@@ -801,18 +836,24 @@ namespace ThScoreFileConverter
         // %T06PRAC[x][yy][z]
         private string ReplacePractice(string input)
         {
+            var levels = Utils.GetEnumerator<Level>();
+            var charas = Utils.GetEnumerator<Chara>();
             var pattern = Utils.Format(
                 @"%T06PRAC([{0}])({1})([1-6])",
-                Utils.JoinEnumNames<LevelShort>(string.Empty),
-                Utils.JoinEnumNames<CharaShort>("|"));
+                string.Join(string.Empty, levels.Select(lv => lv.ToShortName()).ToArray()),
+                string.Join("|", charas.Select(ch => ch.ToShortName()).ToArray()));
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = Utils.ParseEnum<LevelShort>(match.Groups[1].Value, true);
-                var chara = Utils.ParseEnum<CharaShort>(match.Groups[2].Value, true);
+                var level = levels.First(
+                    lv => lv.ToShortName()
+                        .Equals(match.Groups[1].Value, StringComparison.InvariantCultureIgnoreCase));
+                var chara = charas.First(
+                    ch => ch.ToShortName()
+                        .Equals(match.Groups[2].Value, StringComparison.InvariantCultureIgnoreCase));
                 var stage = (Stage)Utils.ToZeroBased(
                     int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
 
-                if (level == LevelShort.X)
+                if (level == Level.Extra)
                     return match.ToString();
 
                 var key = new CharaLevelPair(chara, level);

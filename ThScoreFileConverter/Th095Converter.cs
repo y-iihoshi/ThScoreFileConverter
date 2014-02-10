@@ -51,39 +51,32 @@ namespace ThScoreFileConverter
 
         private enum Enemy
         {
-            Wriggle, Rumia, Cirno, Letty, Alice, Keine, Medicine, Tewi, Reisen, Meirin, Patchouli,
-            Chen, Youmu, Sakuya, Remilia, Ran, Yuyuko, Eirin, Kaguya, Komachi, Shikieiki,
-            Flandre, Yukari, Mokou, Suika
+            [EnumAltName("リグル",     LongName = "リグル・ナイトバグ")]         Wriggle,
+            [EnumAltName("ルーミア",   LongName = "ルーミア")]                   Rumia,
+            [EnumAltName("チルノ",     LongName = "チルノ")]                     Cirno,
+            [EnumAltName("レティ",     LongName = "レティ・ホワイトロック")]     Letty,
+            [EnumAltName("アリス",     LongName = "アリス・マーガトロイド")]     Alice,
+            [EnumAltName("慧音",       LongName = "上白沢 慧音")]                Keine,
+            [EnumAltName("メディスン", LongName = "メディスン・メランコリー")]   Medicine,
+            [EnumAltName("てゐ",       LongName = "因幡 てゐ")]                  Tewi,
+            [EnumAltName("鈴仙",       LongName = "鈴仙・優曇華院・イナバ")]     Reisen,
+            [EnumAltName("美鈴",       LongName = "紅 美鈴")]                    Meirin,
+            [EnumAltName("パチュリー", LongName = "パチュリー・ノーレッジ")]     Patchouli,
+            [EnumAltName("橙",         LongName = "橙")]                         Chen,
+            [EnumAltName("妖夢",       LongName = "魂魄 妖夢")]                  Youmu,
+            [EnumAltName("咲夜",       LongName = "十六夜 咲夜")]                Sakuya,
+            [EnumAltName("レミリア",   LongName = "レミリア・スカーレット")]     Remilia,
+            [EnumAltName("藍",         LongName = "八雲 藍")]                    Ran,
+            [EnumAltName("幽々子",     LongName = "西行寺 幽々子")]              Yuyuko,
+            [EnumAltName("永琳",       LongName = "八意 永琳")]                  Eirin,
+            [EnumAltName("輝夜",       LongName = "蓬莱山 輝夜")]                Kaguya,
+            [EnumAltName("小町",       LongName = "小野塚 小町")]                Komachi,
+            [EnumAltName("映姫",       LongName = "四季映姫・ヤマザナドゥ")]     Shikieiki,
+            [EnumAltName("フラン",     LongName = "フランドール・スカーレット")] Flandre,
+            [EnumAltName("紫",         LongName = "八雲 紫")]                    Yukari,
+            [EnumAltName("妹紅",       LongName = "藤原 妹紅")]                  Mokou,
+            [EnumAltName("萃香",       LongName = "伊吹 萃香")]                  Suika
         }
-
-        private static readonly Dictionary<Enemy, string> EnemyNames = new Dictionary<Enemy, string>()
-        {
-            { Enemy.Wriggle,    "リグル・ナイトバグ"         },
-            { Enemy.Rumia,      "ルーミア"                   },
-            { Enemy.Cirno,      "チルノ"                     },
-            { Enemy.Letty,      "レティ・ホワイトロック"     },
-            { Enemy.Alice,      "アリス・マーガトロイド"     },
-            { Enemy.Keine,      "上白沢 慧音"                },
-            { Enemy.Medicine,   "メディスン・メランコリー"   },
-            { Enemy.Tewi,       "因幡 てゐ"                  },
-            { Enemy.Reisen,     "鈴仙・優曇華院・イナバ"     },
-            { Enemy.Meirin,     "紅 美鈴"                    },
-            { Enemy.Patchouli,  "パチュリー・ノーレッジ"     },
-            { Enemy.Chen,       "橙"                         },
-            { Enemy.Youmu,      "魂魄 妖夢"                  },
-            { Enemy.Sakuya,     "十六夜 咲夜"                },
-            { Enemy.Remilia,    "レミリア・スカーレット"     },
-            { Enemy.Ran,        "八雲 藍"                    },
-            { Enemy.Yuyuko,     "西行寺 幽々子"              },
-            { Enemy.Eirin,      "八意 永琳"                  },
-            { Enemy.Kaguya,     "蓬莱山 輝夜"                },
-            { Enemy.Komachi,    "小野塚 小町"                },
-            { Enemy.Shikieiki,  "四季映姫・ヤマザナドゥ"     },
-            { Enemy.Flandre,    "フランドール・スカーレット" },
-            { Enemy.Yukari,     "八雲 紫"                    },
-            { Enemy.Mokou,      "藤原 妹紅"                  },
-            { Enemy.Suika,      "伊吹 萃香"                  }
-        };
 
         private class LevelScenePair : Pair<int, int>
         {
@@ -646,7 +639,7 @@ namespace ThScoreFileConverter
                 switch (type)
                 {
                     case 1:     // target Name
-                        return (score != null) ? EnemyNames[SpellCards[key].Enemy] : "??????????";
+                        return (score != null) ? SpellCards[key].Enemy.ToLongName() : "??????????";
                     case 2:     // spell card Name
                         return (score != null) ? SpellCards[key].Card : "??????????";
                     default:    // unreachable
