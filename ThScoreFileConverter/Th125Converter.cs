@@ -517,6 +517,25 @@ namespace ThScoreFileConverter
             get { return true; }
         }
 
+        private static readonly string CharaPattern;
+        private static readonly Func<string, StringComparison, Chara> ToChara;
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Performance",
+            "CA1810:InitializeReferenceTypeStaticFieldsInline",
+            Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.MaintainabilityRules",
+            "SA1119:StatementMustNotUseUnnecessaryParenthesis",
+            Justification = "Reviewed.")]
+        static Th125Converter()
+        {
+            var charas = Utils.GetEnumerator<Chara>();
+            CharaPattern = string.Join("|", charas.Select(ch => ch.ToShortName()).ToArray());
+            ToChara = ((shortName, comparisonType) =>
+                charas.First(ch => ch.ToShortName().Equals(shortName, comparisonType)));
+        }
+
         public Th125Converter()
         {
         }
@@ -699,16 +718,13 @@ namespace ThScoreFileConverter
         // %T125SCR[w][x][y][z]
         private string ReplaceScore(string input)
         {
-            var charas = Utils.GetEnumerator<Chara>();
             var pattern = Utils.Format(
                 @"%T125SCR([{0}])([{1}])([1-9])([1-5])",
-                string.Join(string.Empty, charas.Select(ch => ch.ToShortName()).ToArray()),
+                CharaPattern,
                 string.Join(string.Empty, LevelShortArray));
             var evaluator = new MatchEvaluator(match =>
             {
-                var chara = charas.First(
-                    ch => ch.ToShortName()
-                        .Equals(match.Groups[1].Value, StringComparison.InvariantCultureIgnoreCase));
+                var chara = ToChara(match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
                 var level = match.Groups[2].Value.ToUpper(CultureInfo.InvariantCulture);
                 var scene = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
@@ -748,15 +764,10 @@ namespace ThScoreFileConverter
             Justification = "Reviewed.")]
         private string ReplaceScoreTotal(string input)
         {
-            var charas = Utils.GetEnumerator<Chara>();
-            var pattern = Utils.Format(
-                @"%T125SCRTL([{0}])([12])([1-5])",
-                string.Join(string.Empty, charas.Select(ch => ch.ToShortName()).ToArray()));
+            var pattern = Utils.Format(@"%T125SCRTL([{0}])([12])([1-5])", CharaPattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var chara = charas.First(
-                    ch => ch.ToShortName()
-                        .Equals(match.Groups[1].Value, StringComparison.InvariantCultureIgnoreCase));
+                var chara = ToChara(match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
                 var method = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
@@ -863,16 +874,13 @@ namespace ThScoreFileConverter
         // %T125SHOT[x][y][z]
         private string ReplaceShot(string input, string outputFilePath)
         {
-            var charas = Utils.GetEnumerator<Chara>();
             var pattern = Utils.Format(
                 @"%T125SHOT([{0}])([{1}])([1-9])",
-                string.Join(string.Empty, charas.Select(ch => ch.ToShortName()).ToArray()),
+                CharaPattern,
                 string.Join(string.Empty, LevelShortArray));
             var evaluator = new MatchEvaluator(match =>
             {
-                var chara = charas.First(
-                    ch => ch.ToShortName()
-                        .Equals(match.Groups[1].Value, StringComparison.InvariantCultureIgnoreCase));
+                var chara = ToChara(match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
                 var level = match.Groups[2].Value.ToUpper(CultureInfo.InvariantCulture);
                 var scene = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
@@ -949,16 +957,13 @@ namespace ThScoreFileConverter
                 new Detail(true,                       string.Empty,          string.Empty),
                 new Detail(true,                       "Result Score  {0,9}", this.ToNumberString(header.ResultScore))
             });
-            var charas = Utils.GetEnumerator<Chara>();
             var pattern = Utils.Format(
                 @"%T125SHOTEX([{0}])([{1}])([1-9])([1-7])",
-                string.Join(string.Empty, charas.Select(ch => ch.ToShortName()).ToArray()),
+                CharaPattern,
                 string.Join(string.Empty, LevelShortArray));
             var evaluator = new MatchEvaluator(match =>
             {
-                var chara = charas.First(
-                    ch => ch.ToShortName()
-                        .Equals(match.Groups[1].Value, StringComparison.InvariantCultureIgnoreCase));
+                var chara = ToChara(match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
                 var level = match.Groups[2].Value.ToUpper(CultureInfo.InvariantCulture);
                 var scene = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);

@@ -21,7 +21,6 @@ namespace ThScoreFileConverter
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     /// <summary>
@@ -80,7 +79,7 @@ namespace ThScoreFileConverter
             /// <summary>
             /// Initializes static members of the <see cref="AttributeCache{TEnum,TAttribute}"/> class.
             /// </summary>
-            [SuppressMessage(
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
                 "Microsoft.Performance",
                 "CA1810:InitializeReferenceTypeStaticFieldsInline",
                 Justification = "Reviewed.")]
