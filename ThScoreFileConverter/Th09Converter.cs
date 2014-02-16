@@ -140,7 +140,7 @@ namespace ThScoreFileConverter
             public uint Score { get; private set; }         // * 10
             public Chara Chara { get; private set; }        // size: 1Byte
             public Level Level { get; private set; }        // size: 1Byte
-            public short Rank { get; private set; }         // 0-origin
+            public short Rank { get; private set; }         // 0-based
             public byte[] Name { get; private set; }        // .Length = 9, null-terminated
             public byte[] Date { get; private set; }        // .Length = 9, "yy/mm/dd\0"
             public byte ContinueCount { get; private set; }

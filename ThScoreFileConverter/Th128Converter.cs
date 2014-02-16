@@ -115,14 +115,33 @@ namespace ThScoreFileConverter
             [EnumAltName("TTL")] Total
         }
 
-        private static readonly string[] StageProgressArray =
+        private enum StageProgress
         {
-            "-------",
-            "Stage A-1", "Stage A1-2", "Stage A1-3", "Stage A2-2", "Stage A2-3",
-            "Stage B-1", "Stage B1-2", "Stage B1-3", "Stage B2-2", "Stage B2-3",
-            "Stage C-1", "Stage C1-2", "Stage C1-3", "Stage C2-2", "Stage C2-3", "Extra Stage",
-            "A1 Clear", "A2 Clear", "B1 Clear", "B2 Clear", "C1 Clear", "C2 Clear", "Extra Clear"
-        };
+            [EnumAltName("-------")]     None,
+            [EnumAltName("Stage A-1")]   StageA_1,
+            [EnumAltName("Stage A1-2")]  StageA1_2,
+            [EnumAltName("Stage A1-3")]  StageA1_3,
+            [EnumAltName("Stage A2-2")]  StageA2_2,
+            [EnumAltName("Stage A2-3")]  StageA2_3,
+            [EnumAltName("Stage B-1")]   StageB_1,
+            [EnumAltName("Stage B1-2")]  StageB1_2,
+            [EnumAltName("Stage B1-3")]  StageB1_3,
+            [EnumAltName("Stage B2-2")]  StageB2_2,
+            [EnumAltName("Stage B2-3")]  StageB2_3,
+            [EnumAltName("Stage C-1")]   StageC_1,
+            [EnumAltName("Stage C1-2")]  StageC1_2,
+            [EnumAltName("Stage C1-3")]  StageC1_3,
+            [EnumAltName("Stage C2-2")]  StageC2_2,
+            [EnumAltName("Stage C2-3")]  StageC2_3,
+            [EnumAltName("Extra Stage")] Extra,
+            [EnumAltName("A1 Clear")]    A1Clear,
+            [EnumAltName("A2 Clear")]    A2Clear,
+            [EnumAltName("B1 Clear")]    B1Clear,
+            [EnumAltName("B2 Clear")]    B2Clear,
+            [EnumAltName("C1 Clear")]    C1Clear,
+            [EnumAltName("C2 Clear")]    C2Clear,
+            [EnumAltName("Extra Clear")] ExtraClear
+        }
 
         private const int NumCards = 250;
 
@@ -330,7 +349,7 @@ namespace ThScoreFileConverter
             private byte[] unknown1;    // .Length = 0x08
 
             public uint Score { get; private set; }         // * 10
-            public byte StageProgress { get; private set; }
+            public StageProgress StageProgress { get; private set; }    // size: 1Byte
             public byte ContinueCount { get; private set; }
             public byte[] Name { get; private set; }        // .Length = 10 (The last 2 bytes are always 0x00 ?)
             public uint DateTime { get; private set; }      // UNIX time (unit: [s])
@@ -339,7 +358,7 @@ namespace ThScoreFileConverter
             public void ReadFrom(BinaryReader reader)
             {
                 this.Score = reader.ReadUInt32();
-                this.StageProgress = reader.ReadByte();
+                this.StageProgress = (StageProgress)reader.ReadByte();
                 this.ContinueCount = reader.ReadByte();
                 this.Name = reader.ReadBytes(10);
                 this.DateTime = reader.ReadUInt32();
@@ -356,7 +375,7 @@ namespace ThScoreFileConverter
             public int NoMissCount { get; private set; }
             public int NoIceCount { get; private set; }
             public int TrialCount { get; private set; }
-            public int Number { get; private set; }         // 0-origin
+            public int Number { get; private set; }         // 0-based
             public Level Level { get; private set; }
 
             public void ReadFrom(BinaryReader reader)
@@ -382,14 +401,12 @@ namespace ThScoreFileConverter
         private static readonly string LevelWithTotalPattern;
         private static readonly string RoutePattern;
         private static readonly string RouteWithTotalPattern;
-        // private static readonly string StagePattern;
-        private static readonly string StageWithTotalPattern;
+        private static readonly string StageWithTotalExceptExtraPattern;
 
         private static readonly Func<string, StringComparison, Level> ToLevel;
         private static readonly Func<string, StringComparison, LevelWithTotal> ToLevelWithTotal;
         private static readonly Func<string, StringComparison, Route> ToRoute;
         private static readonly Func<string, StringComparison, RouteWithTotal> ToRouteWithTotal;
-        // private static readonly Func<string, StringComparison, Stage> ToStage;
         private static readonly Func<string, StringComparison, StageWithTotal> ToStageWithTotal;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
@@ -406,18 +423,21 @@ namespace ThScoreFileConverter
             var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();
             var routes = Utils.GetEnumerator<Route>();
             var routesWithTotal = Utils.GetEnumerator<RouteWithTotal>();
-            // var stages = Utils.GetEnumerator<Stage>();
             var stagesWithTotal = Utils.GetEnumerator<StageWithTotal>();
 
-            LevelPattern = string.Join(string.Empty, levels.Select(lv => lv.ToShortName()).ToArray());
-            LevelWithTotalPattern =
-                string.Join(string.Empty, levelsWithTotal.Select(lv => lv.ToShortName()).ToArray());
-            RoutePattern = string.Join("|", routes.Select(rt => rt.ToShortName()).ToArray());
-            RouteWithTotalPattern =
-                string.Join("|", routesWithTotal.Select(rt => rt.ToShortName()).ToArray());
-            // StagePattern = string.Join("|", stages.Select(st => st.ToShortName()).ToArray());
-            StageWithTotalPattern =
-                string.Join("|", stagesWithTotal.Select(st => st.ToShortName()).ToArray());
+            // To avoid SA1118
+            var stagesWithTotalExceptExtra = stagesWithTotal.Where(st => st != StageWithTotal.Extra);
+
+            LevelPattern = string.Join(
+                string.Empty, levels.Select(lv => lv.ToShortName()).ToArray());
+            LevelWithTotalPattern = string.Join(
+                string.Empty, levelsWithTotal.Select(lv => lv.ToShortName()).ToArray());
+            RoutePattern = string.Join(
+                "|", routes.Select(rt => rt.ToShortName()).ToArray());
+            RouteWithTotalPattern = string.Join(
+                "|", routesWithTotal.Select(rt => rt.ToShortName()).ToArray());
+            StageWithTotalExceptExtraPattern = string.Join(
+                "|", stagesWithTotalExceptExtra.Select(st => st.ToShortName()).ToArray());
 
             ToLevel = ((shortName, comparisonType) =>
                 levels.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
@@ -427,8 +447,6 @@ namespace ThScoreFileConverter
                 routes.First(rt => rt.ToShortName().Equals(shortName, comparisonType)));
             ToRouteWithTotal = ((shortName, comparisonType) =>
                 routesWithTotal.First(rt => rt.ToShortName().Equals(shortName, comparisonType)));
-            // ToStage = ((shortName, comparisonType) =>
-            //     stages.First(st => st.ToShortName().Equals(shortName, comparisonType)));
             ToStageWithTotal = ((shortName, comparisonType) =>
                 stagesWithTotal.First(st => st.ToShortName().Equals(shortName, comparisonType)));
         }
@@ -645,10 +663,9 @@ namespace ThScoreFileConverter
                         return this.ToNumberString((ranking.Score * 10) + ranking.ContinueCount);
                     case 3:     // stage
                         if (ranking.DateTime > 0)
-                            return (ranking.StageProgress < StageProgressArray.Length)
-                                ? StageProgressArray[ranking.StageProgress] : StageProgressArray[0];
+                            return ranking.StageProgress.ToShortName();
                         else
-                            return StageProgressArray[0];
+                            return StageProgress.None.ToShortName();
                     case 4:     // date & time
                         if (ranking.DateTime > 0)
                             return new DateTime(1970, 1, 1).AddSeconds(ranking.DateTime)
@@ -732,7 +749,7 @@ namespace ThScoreFileConverter
         private string ReplaceCollectRate(string input)
         {
             var pattern = Utils.Format(
-                @"%T128CRG([{0}])({1})([1-3])", LevelWithTotalPattern, StageWithTotalPattern);
+                @"%T128CRG([{0}])({1})([1-3])", LevelWithTotalPattern, StageWithTotalExceptExtraPattern);
             var evaluator = new MatchEvaluator(match =>
             {
                 var level = ToLevelWithTotal(match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
@@ -795,10 +812,9 @@ namespace ThScoreFileConverter
                 var rankings = this.allScoreData.ClearData[route].Rankings[level]
                     .Where(ranking => ranking.DateTime > 0);
                 var stageProgress = (rankings.Count() > 0)
-                    ? rankings.Max(ranking => ranking.StageProgress) : 0;
+                    ? rankings.Max(ranking => ranking.StageProgress) : StageProgress.None;
 
-                return (stageProgress < StageProgressArray.Length)
-                    ? StageProgressArray[stageProgress] : StageProgressArray[0];
+                return stageProgress.ToShortName();
             });
             return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }

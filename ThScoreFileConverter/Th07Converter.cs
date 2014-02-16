@@ -75,14 +75,43 @@ namespace ThScoreFileConverter
             [EnumAltName("TL")] Total
         }
 
-        private enum Stage          { Stage1, Stage2, Stage3, Stage4, Stage5, Stage6, Extra, Phantasm }
-        private enum StageWithTotal { Stage1, Stage2, Stage3, Stage4, Stage5, Stage6, Extra, Phantasm, Total }
-
-        private static readonly string[] StageProgressArray =
+        private enum Stage
         {
-            "-------", "Stage 1", "Stage 2", "Stage 3", "Stage 4", "Stage 5", "Stage 6",
-            "Extra Stage", "Phantasm Stage"
-        };
+            [EnumAltName("1")] Stage1,
+            [EnumAltName("2")] Stage2,
+            [EnumAltName("3")] Stage3,
+            [EnumAltName("4")] Stage4,
+            [EnumAltName("5")] Stage5,
+            [EnumAltName("6")] Stage6,
+            [EnumAltName("X")] Extra,
+            [EnumAltName("P")] Phantasm
+        }
+        private enum StageWithTotal
+        {
+            [EnumAltName("1")] Stage1,
+            [EnumAltName("2")] Stage2,
+            [EnumAltName("3")] Stage3,
+            [EnumAltName("4")] Stage4,
+            [EnumAltName("5")] Stage5,
+            [EnumAltName("6")] Stage6,
+            [EnumAltName("X")] Extra,
+            [EnumAltName("P")] Phantasm,
+            [EnumAltName("0")] Total
+        }
+
+        private enum StageProgress
+        {
+            [EnumAltName("-------")]        None,
+            [EnumAltName("Stage 1")]        Stage1,
+            [EnumAltName("Stage 2")]        Stage2,
+            [EnumAltName("Stage 3")]        Stage3,
+            [EnumAltName("Stage 4")]        Stage4,
+            [EnumAltName("Stage 5")]        Stage5,
+            [EnumAltName("Stage 6")]        Stage6,
+            [EnumAltName("Extra Stage")]    Extra,
+            [EnumAltName("Phantasm Stage")] Phantasm,
+            [EnumAltName("All Clear")]      Clear = 99
+        }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "StyleCop.CSharp.SpacingRules",
@@ -234,13 +263,13 @@ namespace ThScoreFileConverter
         {
             private uint unknown1;  // always 0x00000001?
 
-            public uint Score { get; private set; }         // * 10
+            public uint Score { get; private set; }                     // * 10
             public float SlowRate { get; private set; }
-            public Chara Chara { get; private set; }        // size: 1Byte
-            public Level Level { get; private set; }        // size: 1Byte
-            public byte StageProgress { get; private set; } // 1..8: Stage1..Phantasm, 99: all clear
-            public byte[] Name { get; private set; }        // .Length = 9, null-terminated
-            public byte[] Date { get; private set; }        // .Length = 6, "mm/dd\0"
+            public Chara Chara { get; private set; }                    // size: 1Byte
+            public Level Level { get; private set; }                    // size: 1Byte
+            public StageProgress StageProgress { get; private set; }    // size: 1Byte
+            public byte[] Name { get; private set; }                    // .Length = 9, null-terminated
+            public byte[] Date { get; private set; }                    // .Length = 6, "mm/dd\0"
             public ushort ContinueCount { get; private set; }
 
             public HighScore(Chapter ch)
@@ -269,7 +298,7 @@ namespace ThScoreFileConverter
                 this.SlowRate = reader.ReadSingle();
                 this.Chara = (Chara)reader.ReadByte();
                 this.Level = (Level)reader.ReadByte();
-                this.StageProgress = reader.ReadByte();
+                this.StageProgress = (StageProgress)reader.ReadByte();
                 this.Name = reader.ReadBytes(9);
                 this.Date = reader.ReadBytes(6);
                 this.ContinueCount = reader.ReadUInt16();
@@ -312,7 +341,7 @@ namespace ThScoreFileConverter
             private byte unknown3;  // always 0x00?
 
             public Dictionary<CharaWithTotal, uint> MaxBonuses { get; private set; }
-            public short Number { get; private set; }       // 0-origin
+            public short Number { get; private set; }       // 0-based
             public byte[] CardName { get; private set; }    // .Length = 0x30
             public Dictionary<CharaWithTotal, ushort> TrialCounts { get; private set; }
             public Dictionary<CharaWithTotal, ushort> ClearCounts { get; private set; }
@@ -521,11 +550,15 @@ namespace ThScoreFileConverter
         private static readonly string LevelWithTotalPattern;
         private static readonly string CharaPattern;
         private static readonly string CharaWithTotalPattern;
+        private static readonly string StageExceptExPhPattern;
+        private static readonly string StageWithTotalExceptExPhPattern;
 
         private static readonly Func<string, StringComparison, Level> ToLevel;
         private static readonly Func<string, StringComparison, LevelWithTotal> ToLevelWithTotal;
         private static readonly Func<string, StringComparison, Chara> ToChara;
         private static readonly Func<string, StringComparison, CharaWithTotal> ToCharaWithTotal;
+        private static readonly Func<string, StringComparison, Stage> ToStage;
+        private static readonly Func<string, StringComparison, StageWithTotal> ToStageWithTotal;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Microsoft.Performance",
@@ -541,13 +574,26 @@ namespace ThScoreFileConverter
             var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();
             var charas = Utils.GetEnumerator<Chara>();
             var charasWithTotal = Utils.GetEnumerator<CharaWithTotal>();
+            var stages = Utils.GetEnumerator<Stage>();
+            var stagesWithTotal = Utils.GetEnumerator<StageWithTotal>();
 
-            LevelPattern = string.Join(string.Empty, levels.Select(lv => lv.ToShortName()).ToArray());
-            LevelWithTotalPattern =
-                string.Join(string.Empty, levelsWithTotal.Select(lv => lv.ToShortName()).ToArray());
-            CharaPattern = string.Join("|", charas.Select(ch => ch.ToShortName()).ToArray());
-            CharaWithTotalPattern =
-                string.Join("|", charasWithTotal.Select(ch => ch.ToShortName()).ToArray());
+            // To avoid SA1118
+            var stagesExceptExPh = stages.Where(st => (st != Stage.Extra) && (st != Stage.Phantasm));
+            var stagesWithTotalExceptExPh = stagesWithTotal
+                .Where(st => (st != StageWithTotal.Extra) && (st != StageWithTotal.Phantasm));
+
+            LevelPattern = string.Join(
+                string.Empty, levels.Select(lv => lv.ToShortName()).ToArray());
+            LevelWithTotalPattern = string.Join(
+                string.Empty, levelsWithTotal.Select(lv => lv.ToShortName()).ToArray());
+            CharaPattern = string.Join(
+                "|", charas.Select(ch => ch.ToShortName()).ToArray());
+            CharaWithTotalPattern = string.Join(
+                "|", charasWithTotal.Select(ch => ch.ToShortName()).ToArray());
+            StageExceptExPhPattern = string.Join(
+                string.Empty, stagesExceptExPh.Select(st => st.ToShortName()).ToArray());
+            StageWithTotalExceptExPhPattern = string.Join(
+                string.Empty, stagesWithTotalExceptExPh.Select(st => st.ToShortName()).ToArray());
 
             ToLevel = ((shortName, comparisonType) =>
                 levels.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
@@ -557,6 +603,10 @@ namespace ThScoreFileConverter
                 charas.First(ch => ch.ToShortName().Equals(shortName, comparisonType)));
             ToCharaWithTotal = ((shortName, comparisonType) =>
                 charasWithTotal.First(ch => ch.ToShortName().Equals(shortName, comparisonType)));
+            ToStage = ((shortName, comparisonType) =>
+                stages.First(st => st.ToShortName().Equals(shortName, comparisonType)));
+            ToStageWithTotal = ((shortName, comparisonType) =>
+                stagesWithTotal.First(st => st.ToShortName().Equals(shortName, comparisonType)));
         }
 
         public Th07Converter()
@@ -845,8 +895,7 @@ namespace ThScoreFileConverter
         // %T07SCR[w][xx][y][z]
         private string ReplaceScore(string input)
         {
-            var pattern = Utils.Format(
-                @"%T07SCR([{0}])({1})(\d)([1-5])", LevelPattern, CharaPattern);
+            var pattern = Utils.Format(@"%T07SCR([{0}])({1})(\d)([1-5])", LevelPattern, CharaPattern);
             var evaluator = new MatchEvaluator(match =>
             {
                 var level = ToLevel(match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
@@ -865,12 +914,7 @@ namespace ThScoreFileConverter
                     case 2:     // score
                         return this.ToNumberString((score.Score * 10) + score.ContinueCount);
                     case 3:     // stage
-                        if (score.StageProgress == 99)
-                            return "All Clear";
-                        else if (score.StageProgress < StageProgressArray.Length)
-                            return StageProgressArray[score.StageProgress];
-                        else
-                            return StageProgressArray[0];
+                        return score.StageProgress.ToShortName();
                     case 4:     // date
                         return Encoding.Default.GetString(score.Date).TrimEnd('\0');
                     case 5:     // slow rate
@@ -952,12 +996,15 @@ namespace ThScoreFileConverter
         private string ReplaceCollectRate(string input)
         {
             var pattern = Utils.Format(
-                @"%T07CRG([{0}])({1})([0-6])([12])", LevelWithTotalPattern, CharaWithTotalPattern);
+                @"%T07CRG([{0}])({1})([{2}])([12])",
+                LevelWithTotalPattern,
+                CharaWithTotalPattern,
+                StageWithTotalExceptExPhPattern);
             var evaluator = new MatchEvaluator(match =>
             {
                 var level = ToLevelWithTotal(match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
                 var chara = ToCharaWithTotal(match.Groups[2].Value, StringComparison.OrdinalIgnoreCase);
-                var stage = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
+                var stage = ToStageWithTotal(match.Groups[3].Value, StringComparison.OrdinalIgnoreCase);
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
                 Func<CardAttack, bool> checkNotNull = (attack => attack != null);
@@ -965,12 +1012,12 @@ namespace ThScoreFileConverter
                 Func<CardAttack, bool> findByStage = (attack => true);
                 Func<CardAttack, bool> findByType = (attack => true);
 
-                if (stage == 0)
+                if (stage == StageWithTotal.Total)
                 {
                     // Do nothing
                 }
                 else
-                    findByStage = (attack => StageCardTable[(Stage)(stage - 1)].Contains(attack.Number));
+                    findByStage = (attack => StageCardTable[(Stage)stage].Contains(attack.Number));
 
                 switch (level)
                 {
@@ -1012,18 +1059,13 @@ namespace ThScoreFileConverter
                 if (this.allScoreData.Rankings.ContainsKey(key))
                 {
                     var stageProgress = this.allScoreData.Rankings[key].Max(rank => rank.StageProgress);
-                    if ((stageProgress == (int)Stage.Extra + 1) ||
-                        (stageProgress == (int)Stage.Phantasm + 1))
+                    if ((stageProgress == StageProgress.Extra) || (stageProgress == StageProgress.Phantasm))
                         return "Not Clear";
-                    else if (stageProgress < StageProgressArray.Length)
-                        return StageProgressArray[stageProgress];
-                    else if (stageProgress == 99)
-                        return "All Clear";
                     else
-                        return "-------";
+                        return stageProgress.ToShortName();
                 }
                 else
-                    return "-------";
+                    return StageProgress.None.ToShortName();
             });
             return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
@@ -1079,13 +1121,16 @@ namespace ThScoreFileConverter
         // %T07PRAC[w][xx][y][z]
         private string ReplacePractice(string input)
         {
-            var pattern = Utils.Format(@"%T07PRAC([{0}])({1})([1-6])([12])", LevelPattern, CharaPattern);
+            var pattern = Utils.Format(
+                @"%T07PRAC([{0}])({1})([{2}])([12])",
+                LevelPattern,
+                CharaPattern,
+                StageExceptExPhPattern);
             var evaluator = new MatchEvaluator(match =>
             {
                 var level = ToLevel(match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
                 var chara = ToChara(match.Groups[2].Value, StringComparison.OrdinalIgnoreCase);
-                var stage = (Stage)Utils.ToZeroBased(
-                    int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
+                var stage = ToStage(match.Groups[3].Value, StringComparison.OrdinalIgnoreCase);
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
                 if ((level == Level.Extra) || (level == Level.Phantasm))
