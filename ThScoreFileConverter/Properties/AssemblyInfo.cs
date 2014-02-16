@@ -58,3 +58,4 @@ using System.Windows;
 [assembly: AssemblyFileVersion("1.5.1.0")]
 
 [assembly: CLSCompliant(true)]
+[assembly: NeutralResourcesLanguageAttribute("ja-JP")]

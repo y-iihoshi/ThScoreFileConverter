@@ -52,11 +52,6 @@
          <Item>'ThScoreFileConverter.exe'</Item>
         </Issue>
        </Message>
-       <Message TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824" Created="2014-02-08 15:40:17Z">
-        <Issue>
-         <Item>'ThScoreFileConverter.exe'</Item>
-        </Issue>
-       </Message>
       </Messages>
       <Namespaces>
        <Namespace Name="ThScoreFileConverter">
@@ -2457,11 +2452,6 @@
       <Messages>
        <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Created="2014-02-08 15:40:17Z">
         <Issue Name="NoStrongName">
-         <Item>'ThScoreFileConverter.exe'</Item>
-        </Issue>
-       </Message>
-       <Message TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824" Created="2014-02-08 15:40:17Z">
-        <Issue>
          <Item>'ThScoreFileConverter.exe'</Item>
         </Issue>
        </Message>
@@ -4869,9 +4859,6 @@
    </Rule>
    <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
     <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>
-   </Rule>
-   <Rule TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824">
-    <Resolution Name="Default">Because assembly {0} contains a ResX-based resource file, mark it with the NeutralResourcesLanguage attribute, specifying the language of the resources within the assembly. This could improve lookup performance the first time a resource is retrieved.</Resolution>
    </Rule>
   </Rules>
  </FxCopReport>
