@@ -149,7 +149,7 @@ namespace ThScoreFileConverter
         }
 
         [Flags]
-        private enum PlayableStageFlag
+        private enum PlayableStages
         {
             Stage1   = 0x0001,
             Stage2   = 0x0002,
@@ -159,6 +159,7 @@ namespace ThScoreFileConverter
             Stage5   = 0x0020,
             Stage6A  = 0x0040,
             Stage6B  = 0x0080,
+            Extra    = 0x0100,
             Unknown  = 0x4000,
             AllClear = 0x8000
         }
@@ -371,9 +372,9 @@ namespace ThScoreFileConverter
             private byte unknown2;      // always 0x00?
             private ushort unknown3;    // always 0x0000?
 
-            public PlayableStageFlag[] StoryFlags { get; private set; }     // size: 2Bytes * levels; really...?
-            public PlayableStageFlag[] PracticeFlags { get; private set; }  // size: 2Bytes * levels; really...?
-            public CharaWithTotal Chara { get; private set; }               // size: 1Byte
+            public Dictionary<Level, PlayableStages> StoryFlags { get; private set; }       // really...?
+            public Dictionary<Level, PlayableStages> PracticeFlags { get; private set; }    // really...?
+            public CharaWithTotal Chara { get; private set; }                               // size: 1Byte
 
             public ClearData(Chapter ch)
                 : base(ch)
@@ -386,8 +387,8 @@ namespace ThScoreFileConverter
                 //     throw new InvalidDataException("Size2");
 
                 var numLevels = Enum.GetValues(typeof(Level)).Length;
-                this.StoryFlags = new PlayableStageFlag[numLevels];
-                this.PracticeFlags = new PlayableStageFlag[numLevels];
+                this.StoryFlags = new Dictionary<Level, PlayableStages>(numLevels);
+                this.PracticeFlags = new Dictionary<Level, PlayableStages>(numLevels);
             }
 
             public override void ReadFrom(BinaryReader reader)
@@ -395,9 +396,9 @@ namespace ThScoreFileConverter
                 var levels = Utils.GetEnumerator<Level>();
                 this.unknown1 = reader.ReadUInt32();
                 foreach (var level in levels)
-                    this.StoryFlags[(int)level] = (PlayableStageFlag)reader.ReadUInt16();
+                    this.StoryFlags[level] = (PlayableStages)reader.ReadUInt16();
                 foreach (var level in levels)
-                    this.PracticeFlags[(int)level] = (PlayableStageFlag)reader.ReadUInt16();
+                    this.PracticeFlags[level] = (PlayableStages)reader.ReadUInt16();
                 this.unknown2 = reader.ReadByte();
                 this.Chara = (CharaWithTotal)reader.ReadByte();
                 this.unknown3 = reader.ReadUInt16();
@@ -1281,16 +1282,19 @@ namespace ThScoreFileConverter
                     var stageProgress = this.allScoreData.Rankings[key].Max(rank => rank.StageProgress);
                     if ((stageProgress == StageProgress.Stage4A) || (stageProgress == StageProgress.Stage4B))
                         return "Stage 4";
-                    else if (stageProgress < StageProgress.Stage6B)
-                        return stageProgress.ToShortName();
-                    else if (stageProgress == StageProgress.Stage6B)
-                        return "FinalA Clear";
                     else if (stageProgress == StageProgress.Extra)
                         return "Not Clear";
                     else if (stageProgress == StageProgress.Clear)
-                        return stageProgress.ToShortName();
+                    {
+                        if ((level != Level.Extra) &&
+                            ((this.allScoreData.ClearData[(CharaWithTotal)chara].StoryFlags[level]
+                                & PlayableStages.Stage6B) != PlayableStages.Stage6B))
+                            return "FinalA Clear";
+                        else
+                            return stageProgress.ToShortName();
+                    }
                     else
-                        return "-------";
+                        return stageProgress.ToShortName();
                 }
                 else
                     return "-------";
