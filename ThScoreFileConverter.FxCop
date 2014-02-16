@@ -2445,20 +2445,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Utils">
-          <Members>
-           <Member Name="#JoinEnumNames`1(System.String)">
-            <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Utils.JoinEnumNames&lt;TEnum&gt;(string)'</Item>
-               <Item>'TEnum'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
         </Types>
        </Namespace>
       </Namespaces>
@@ -4867,20 +4853,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Utils">
-          <Members>
-           <Member Name="#JoinEnumNames`1(System.String)">
-            <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Utils.JoinEnumNames&lt;TEnum&gt;(string)'</Item>
-               <Item>'TEnum'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
         </Types>
        </Namespace>
       </Namespaces>
@@ -4897,9 +4869,6 @@
    </Rule>
    <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
     <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>
-   </Rule>
-   <Rule TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004">
-    <Resolution Name="Default">Consider a design where {0} doesn't require explicit type parameter {1} in any call to it.</Resolution>
    </Rule>
    <Rule TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824">
     <Resolution Name="Default">Because assembly {0} contains a ResX-based resource file, mark it with the NeutralResourcesLanguage attribute, specifying the language of the resources within the assembly. This could improve lookup performance the first time a resource is retrieved.</Resolution>

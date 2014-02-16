@@ -41,22 +41,6 @@ namespace ThScoreFileConverter
     public static class Utils
     {
         /// <summary>
-        /// Concatenates all names of the specified enumeration type.
-        /// </summary>
-        /// <typeparam name="TEnum">The enumeration type.</typeparam>
-        /// <param name="separator">The string to use as a separator.</param>
-        /// <returns>
-        /// A string that consists of the names of <typeparamref name="TEnum"/> delimited by
-        /// <paramref name="separator"/>.
-        /// </returns>
-        [CLSCompliant(false)]
-        public static string JoinEnumNames<TEnum>(string separator)
-            where TEnum : struct, IComparable, IFormattable, IConvertible
-        {
-            return string.Join(separator, Enum.GetNames(typeof(TEnum)));
-        }
-
-        /// <summary>
         /// Converts the string representation of the name or numeric value of one or more enumerated
         /// constants to an equivalent enumerated instance.
         /// </summary>
