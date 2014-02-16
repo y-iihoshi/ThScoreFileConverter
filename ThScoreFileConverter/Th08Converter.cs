@@ -1052,7 +1052,7 @@ namespace ThScoreFileConverter
                 var level = ToLevel(match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
                 var chara = ToChara(match.Groups[2].Value, StringComparison.OrdinalIgnoreCase);
                 var rank = Utils.ToZeroBased(int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
-                var type = match.Groups[4].Value.ToUpper(CultureInfo.InvariantCulture);
+                var type = match.Groups[4].Value.ToUpperInvariant();
 
                 var key = new CharaLevelPair(chara, level);
                 var score = this.allScoreData.Rankings.ContainsKey(key)
@@ -1130,7 +1130,7 @@ namespace ThScoreFileConverter
             var pattern = Utils.Format(@"%T08C([SP])(\d{{3}})({0})([1-3])", CharaWithTotalPattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var kind = match.Groups[1].Value.ToUpper(CultureInfo.InvariantCulture);
+                var kind = match.Groups[1].Value.ToUpperInvariant();
                 var number = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                 var chara = ToCharaWithTotal(match.Groups[3].Value, StringComparison.OrdinalIgnoreCase);
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
@@ -1171,7 +1171,7 @@ namespace ThScoreFileConverter
             var evaluator = new MatchEvaluator(match =>
             {
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
-                var type = match.Groups[2].Value.ToUpper(CultureInfo.InvariantCulture);
+                var type = match.Groups[2].Value.ToUpperInvariant();
 
                 if (new Range<int>(1, NumCards).Contains(number))
                 {
@@ -1210,7 +1210,7 @@ namespace ThScoreFileConverter
                 StageWithTotalExceptExtraPattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var kind = match.Groups[1].Value.ToUpper(CultureInfo.InvariantCulture);
+                var kind = match.Groups[1].Value.ToUpperInvariant();
                 var level = ToLevelPractice(match.Groups[2].Value, StringComparison.OrdinalIgnoreCase);
                 var chara = ToCharaWithTotal(match.Groups[3].Value, StringComparison.OrdinalIgnoreCase);
                 var stage = ToStageWithTotal(match.Groups[4].Value, StringComparison.OrdinalIgnoreCase);
@@ -1310,7 +1310,7 @@ namespace ThScoreFileConverter
             var evaluator = new MatchEvaluator(match =>
             {
                 var level = ToLevelWithTotal(match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
-                var charaAndMore = match.Groups[2].Value.ToUpper(CultureInfo.InvariantCulture);
+                var charaAndMore = match.Groups[2].Value.ToUpperInvariant();
 
                 var playCount = (level == LevelWithTotal.Total)
                     ? this.allScoreData.PlayList.TotalPlayCount
@@ -1342,7 +1342,7 @@ namespace ThScoreFileConverter
             var pattern = @"%T08TIME(ALL|PLY)";
             var evaluator = new MatchEvaluator(match =>
             {
-                var kind = match.Groups[1].Value.ToUpper(CultureInfo.InvariantCulture);
+                var kind = match.Groups[1].Value.ToUpperInvariant();
 
                 return (kind == "ALL")
                     ? this.allScoreData.PlayList.TotalRunningTime.ToLongString()

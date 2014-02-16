@@ -720,7 +720,7 @@ namespace ThScoreFileConverter
             var pattern = Utils.Format(@"%T13C([SP])(\d{{3}})({0})([12])", CharaWithTotalPattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var kind = match.Groups[1].Value.ToUpper(CultureInfo.InvariantCulture);
+                var kind = match.Groups[1].Value.ToUpperInvariant();
                 var number = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                 var chara = ToCharaWithTotal(match.Groups[3].Value, StringComparison.OrdinalIgnoreCase);
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
@@ -759,7 +759,7 @@ namespace ThScoreFileConverter
             var evaluator = new MatchEvaluator(match =>
             {
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
-                var type = match.Groups[2].Value.ToUpper(CultureInfo.InvariantCulture);
+                var type = match.Groups[2].Value.ToUpperInvariant();
 
                 if (new Range<int>(1, NumCards).Contains(number))
                 {
@@ -795,7 +795,7 @@ namespace ThScoreFileConverter
                 StageWithTotalExceptExtraPattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var kind = match.Groups[1].Value.ToUpper(CultureInfo.InvariantCulture);
+                var kind = match.Groups[1].Value.ToUpperInvariant();
                 var level = ToLevelPracticeWithTotal(
                     match.Groups[2].Value, StringComparison.OrdinalIgnoreCase);
                 var chara = ToCharaWithTotal(match.Groups[3].Value, StringComparison.OrdinalIgnoreCase);
