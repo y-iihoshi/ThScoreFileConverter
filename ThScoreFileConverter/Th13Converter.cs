@@ -415,6 +415,7 @@ namespace ThScoreFileConverter
         }
 
         private static readonly string LevelPattern;
+        private static readonly string LevelExceptExtraPattern;
         private static readonly string LevelWithTotalPattern;
         private static readonly string LevelPracticeWithTotalPattern;
         private static readonly string CharaPattern;
@@ -449,11 +450,14 @@ namespace ThScoreFileConverter
             var stagesWithTotal = Utils.GetEnumerator<StageWithTotal>();
 
             // To avoid SA1118
+            var levelsExceptExtra = levels.Where(lv => lv != Level.Extra);
             var stagesExceptExtra = stages.Where(st => st != Stage.Extra);
             var stagesWithTotalExceptExtra = stagesWithTotal.Where(st => st != StageWithTotal.Extra);
 
             LevelPattern = string.Join(
                 string.Empty, levels.Select(lv => lv.ToShortName()).ToArray());
+            LevelExceptExtraPattern = string.Join(
+                string.Empty, levelsExceptExtra.Select(lv => lv.ToShortName()).ToArray());
             LevelWithTotalPattern = string.Join(
                 string.Empty, levelsWithTotal.Select(lv => lv.ToShortName()).ToArray());
             LevelPracticeWithTotalPattern = string.Join(
@@ -973,7 +977,10 @@ namespace ThScoreFileConverter
         private string ReplacePractice(string input)
         {
             var pattern = Utils.Format(
-                @"%T13PRAC([{0}])({1})([{2}])", LevelPattern, CharaPattern, StageExceptExtraPattern);
+                @"%T13PRAC([{0}])({1})([{2}])",
+                LevelExceptExtraPattern,
+                CharaPattern,
+                StageExceptExtraPattern);
             var evaluator = new MatchEvaluator(match =>
             {
                 var level = (LevelPractice)ToLevel(

@@ -430,6 +430,7 @@ namespace ThScoreFileConverter
         }
 
         private static readonly string LevelPattern;
+        private static readonly string LevelExceptExtraPattern;
         private static readonly string CharaPattern;
         private static readonly string StageExceptExtraPattern;
         private static readonly string StageWithTotalPattern;
@@ -456,6 +457,9 @@ namespace ThScoreFileConverter
 
             LevelPattern = string.Join(
                 string.Empty, levels.Select(lv => lv.ToShortName()).ToArray());
+            LevelExceptExtraPattern = string.Join(
+                string.Empty,
+                levels.Where(lv => lv != Level.Extra).Select(st => st.ToShortName()).ToArray());
             CharaPattern = string.Join(
                 "|", charas.Select(ch => ch.ToShortName()).ToArray());
             StageExceptExtraPattern = string.Join(
@@ -881,7 +885,7 @@ namespace ThScoreFileConverter
         {
             var pattern = Utils.Format(
                 @"%T06PRAC([{0}])({1})([{2}])",
-                LevelPattern,
+                LevelExceptExtraPattern,
                 CharaPattern,
                 StageExceptExtraPattern);
             var evaluator = new MatchEvaluator(match =>
