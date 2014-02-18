@@ -61,6 +61,16 @@ namespace ThScoreFileConverter
             [EnumAltName("X")] Extra,
             [EnumAltName("-")] NotUsed
         }
+        private enum LevelPracticeWithTotal
+        {
+            [EnumAltName("E")] Easy,
+            [EnumAltName("N")] Normal,
+            [EnumAltName("H")] Hard,
+            [EnumAltName("L")] Lunatic,
+            [EnumAltName("X")] Extra,
+            [EnumAltName("-")] NotUsed,
+            [EnumAltName("T")] Total
+        }
 
         private enum Chara
         {
@@ -228,16 +238,12 @@ namespace ThScoreFileConverter
 
         private class ClearData : Chapter   // per character
         {
-            private byte[] unknown1;    // .Length = 0x118
-            private byte[] unknown2;    // .Length = 0x04
-            private byte[] unknown3;    // .Length = 0x08
-
             public CharaWithTotal Chara { get; private set; }   // size: 4Bytes
-            public Dictionary<LevelPractice, ScoreData[]> Rankings { get; private set; }
+            public Dictionary<LevelPracticeWithTotal, ScoreData[]> Rankings { get; private set; }
             public int TotalPlayCount { get; private set; }
             public int PlayTime { get; private set; }           // = seconds * 60fps
-            public Dictionary<LevelPractice, int> ClearCounts { get; private set; }
-            public Dictionary<Level, int> ClearFlags { get; private set; }  // Really...?
+            public Dictionary<LevelPracticeWithTotal, int> ClearCounts { get; private set; }
+            public Dictionary<LevelPracticeWithTotal, int> ClearFlags { get; private set; }     // Really...?
             public Dictionary<LevelStagePair, Practice> Practices { get; private set; }
             public SpellCard[] Cards { get; private set; }      // [0..119]
 
@@ -251,21 +257,20 @@ namespace ThScoreFileConverter
                 if (this.Size != 0x00005298)
                     throw new InvalidDataException("Size");
 
-                var numLevels = Enum.GetValues(typeof(Level)).Length;
-                var numLevelsPractice = Enum.GetValues(typeof(LevelPractice)).Length;
-                this.Rankings = new Dictionary<LevelPractice, ScoreData[]>(numLevelsPractice);
-                this.ClearCounts = new Dictionary<LevelPractice, int>(numLevelsPractice);
-                this.ClearFlags = new Dictionary<Level, int>(numLevels);
+                var numLevels = Enum.GetValues(typeof(LevelPracticeWithTotal)).Length;
+                this.Rankings = new Dictionary<LevelPracticeWithTotal, ScoreData[]>(numLevels);
+                this.ClearCounts = new Dictionary<LevelPracticeWithTotal, int>(numLevels);
+                this.ClearFlags = new Dictionary<LevelPracticeWithTotal, int>(numLevels);
                 this.Practices = new Dictionary<LevelStagePair, Practice>();
                 this.Cards = new SpellCard[NumCards];
             }
 
             public override void ReadFrom(BinaryReader reader)
             {
-                var levels = Utils.GetEnumerator<LevelPractice>();
+                var levelsPracticeWithTotal = Utils.GetEnumerator<LevelPracticeWithTotal>();
                 var stages = Utils.GetEnumerator<StagePractice>();
                 this.Chara = (CharaWithTotal)reader.ReadInt32();
-                foreach (var level in levels)
+                foreach (var level in levelsPracticeWithTotal)
                 {
                     if (!this.Rankings.ContainsKey(level))
                         this.Rankings.Add(level, new ScoreData[10]);
@@ -276,24 +281,21 @@ namespace ThScoreFileConverter
                         this.Rankings[level][rank] = score;
                     }
                 }
-                this.unknown1 = reader.ReadBytes(0x118);
                 this.TotalPlayCount = reader.ReadInt32();
                 this.PlayTime = reader.ReadInt32();
-                foreach (var level in levels)
+                foreach (var level in levelsPracticeWithTotal)
                 {
                     var clearCount = reader.ReadInt32();
                     if (!this.ClearCounts.ContainsKey(level))
                         this.ClearCounts.Add(level, clearCount);
                 }
-                this.unknown2 = reader.ReadBytes(0x04);
-                foreach (var level in Utils.GetEnumerator<Level>())
+                foreach (var level in levelsPracticeWithTotal)
                 {
                     var clearFlag = reader.ReadInt32();
                     if (!this.ClearFlags.ContainsKey(level))
                         this.ClearFlags.Add(level, clearFlag);
                 }
-                this.unknown3 = reader.ReadBytes(0x08);
-                foreach (var level in levels)
+                foreach (var level in Utils.GetEnumerator<LevelPractice>())
                     foreach (var stage in stages)
                     {
                         var practice = new Practice();
@@ -663,7 +665,7 @@ namespace ThScoreFileConverter
             var pattern = Utils.Format(@"%T14SCR([{0}])({1})(\d)([1-5])", LevelPattern, CharaPattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = (LevelPractice)ToLevel(
+                var level = (LevelPracticeWithTotal)ToLevel(
                     match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
                 var chara = (CharaWithTotal)ToChara(
                     match.Groups[2].Value, StringComparison.OrdinalIgnoreCase);
@@ -848,7 +850,7 @@ namespace ThScoreFileConverter
             var pattern = Utils.Format(@"%T14CLEAR([{0}])({1})", LevelPattern, CharaPattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = (LevelPractice)ToLevel(
+                var level = (LevelPracticeWithTotal)ToLevel(
                     match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
                 var chara = (CharaWithTotal)ToChara(
                     match.Groups[2].Value, StringComparison.OrdinalIgnoreCase);
@@ -943,7 +945,7 @@ namespace ThScoreFileConverter
                     if (level == LevelWithTotal.Total)
                         getValueByType = (data => data.ClearCounts.Values.Sum());
                     else
-                        getValueByType = (data => data.ClearCounts[(LevelPractice)level]);
+                        getValueByType = (data => data.ClearCounts[(LevelPracticeWithTotal)level]);
                     toString = (value => this.ToNumberString(value));
                 }
 
