@@ -48,11 +48,7 @@ namespace ThScoreFileConverter
         /// </returns>
         public override bool Equals(object obj)
         {
-            if ((obj == null) || (GetType() != obj.GetType()))
-                return false;
-
-            var target = (Pair<TFirst, TSecond>)obj;
-            return this.First.Equals(target.First) && this.Second.Equals(target.Second);
+            return Equals(this, obj as Pair<TFirst, TSecond>);
         }
 
         /// <summary>
@@ -62,6 +58,28 @@ namespace ThScoreFileConverter
         public override int GetHashCode()
         {
             return this.First.GetHashCode() ^ this.Second.GetHashCode();
+        }
+
+        /// <summary>
+        /// Determines whether two instances are equal.
+        /// </summary>
+        /// <param name="lhs">The left-hand-side instance.</param>
+        /// <param name="rhs">The right-hand-side instance.</param>
+        /// <returns>
+        /// <c>true</c> if <paramref name="lhs"/> is equal to <paramref name="rhs"/>;
+        /// otherwise, <c>false</c>.
+        /// </returns>
+        private static bool Equals(Pair<TFirst, TSecond> lhs, Pair<TFirst, TSecond> rhs)
+        {
+            if (object.ReferenceEquals(lhs, null))
+                return object.ReferenceEquals(rhs, null);
+            else
+            {
+                if (object.ReferenceEquals(lhs, rhs))
+                    return true;
+                else
+                    return lhs.First.Equals(rhs.First) && lhs.Second.Equals(rhs.Second);
+            }
         }
     }
 }
