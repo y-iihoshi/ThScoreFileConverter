@@ -437,9 +437,8 @@ namespace ThScoreFileConverter
         }
 
         private static readonly string LevelPattern;
-        private static readonly string LevelExceptExtraPattern;
         private static readonly string CharaPattern;
-        private static readonly string StageExceptExtraPattern;
+        private static readonly string StagePattern;
         private static readonly string StageWithTotalPattern;
 
         private static readonly Func<string, StringComparison, Level> ToLevel;
@@ -464,14 +463,10 @@ namespace ThScoreFileConverter
 
             LevelPattern = string.Join(
                 string.Empty, levels.Select(lv => lv.ToShortName()).ToArray());
-            LevelExceptExtraPattern = string.Join(
-                string.Empty,
-                levels.Where(lv => lv != Level.Extra).Select(st => st.ToShortName()).ToArray());
             CharaPattern = string.Join(
                 "|", charas.Select(ch => ch.ToShortName()).ToArray());
-            StageExceptExtraPattern = string.Join(
-                string.Empty,
-                stages.Where(st => st != Stage.Extra).Select(st => st.ToShortName()).ToArray());
+            StagePattern = string.Join(
+                string.Empty, stages.Select(st => st.ToShortName()).ToArray());
             StageWithTotalPattern = string.Join(
                 string.Empty, stagesWithTotal.Select(st => st.ToShortName()).ToArray());
 
@@ -891,10 +886,7 @@ namespace ThScoreFileConverter
         private string ReplacePractice(string input)
         {
             var pattern = Utils.Format(
-                @"%T06PRAC([{0}])({1})([{2}])",
-                LevelExceptExtraPattern,
-                CharaPattern,
-                StageExceptExtraPattern);
+                @"%T06PRAC([{0}])({1})([{2}])", LevelPattern, CharaPattern, StagePattern);
             var evaluator = new MatchEvaluator(match =>
             {
                 var level = ToLevel(match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
@@ -902,6 +894,8 @@ namespace ThScoreFileConverter
                 var stage = ToStage(match.Groups[3].Value, StringComparison.OrdinalIgnoreCase);
 
                 if (level == Level.Extra)
+                    return match.ToString();
+                if (stage == Stage.Extra)
                     return match.ToString();
 
                 var key = new CharaLevelPair(chara, level);

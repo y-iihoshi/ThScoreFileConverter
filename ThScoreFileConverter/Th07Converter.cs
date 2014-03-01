@@ -551,12 +551,11 @@ namespace ThScoreFileConverter
         }
 
         private static readonly string LevelPattern;
-        private static readonly string LevelExceptExPhPattern;
         private static readonly string LevelWithTotalPattern;
         private static readonly string CharaPattern;
         private static readonly string CharaWithTotalPattern;
-        private static readonly string StageExceptExPhPattern;
-        private static readonly string StageWithTotalExceptExPhPattern;
+        private static readonly string StagePattern;
+        private static readonly string StageWithTotalPattern;
 
         private static readonly Func<string, StringComparison, Level> ToLevel;
         private static readonly Func<string, StringComparison, LevelWithTotal> ToLevelWithTotal;
@@ -582,26 +581,18 @@ namespace ThScoreFileConverter
             var stages = Utils.GetEnumerator<Stage>();
             var stagesWithTotal = Utils.GetEnumerator<StageWithTotal>();
 
-            // To avoid SA1118
-            var levelsExceptExPh = levels.Where(lv => (lv != Level.Extra) && (lv != Level.Phantasm));
-            var stagesExceptExPh = stages.Where(st => (st != Stage.Extra) && (st != Stage.Phantasm));
-            var stagesWithTotalExceptExPh = stagesWithTotal
-                .Where(st => (st != StageWithTotal.Extra) && (st != StageWithTotal.Phantasm));
-
             LevelPattern = string.Join(
                 string.Empty, levels.Select(lv => lv.ToShortName()).ToArray());
-            LevelExceptExPhPattern = string.Join(
-                string.Empty, levelsExceptExPh.Select(lv => lv.ToShortName()).ToArray());
             LevelWithTotalPattern = string.Join(
                 string.Empty, levelsWithTotal.Select(lv => lv.ToShortName()).ToArray());
             CharaPattern = string.Join(
                 "|", charas.Select(ch => ch.ToShortName()).ToArray());
             CharaWithTotalPattern = string.Join(
                 "|", charasWithTotal.Select(ch => ch.ToShortName()).ToArray());
-            StageExceptExPhPattern = string.Join(
-                string.Empty, stagesExceptExPh.Select(st => st.ToShortName()).ToArray());
-            StageWithTotalExceptExPhPattern = string.Join(
-                string.Empty, stagesWithTotalExceptExPh.Select(st => st.ToShortName()).ToArray());
+            StagePattern = string.Join(
+                string.Empty, stages.Select(st => st.ToShortName()).ToArray());
+            StageWithTotalPattern = string.Join(
+                string.Empty, stagesWithTotal.Select(st => st.ToShortName()).ToArray());
 
             ToLevel = ((shortName, comparisonType) =>
                 levels.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
@@ -1007,13 +998,16 @@ namespace ThScoreFileConverter
                 @"%T07CRG([{0}])({1})([{2}])([12])",
                 LevelWithTotalPattern,
                 CharaWithTotalPattern,
-                StageWithTotalExceptExPhPattern);
+                StageWithTotalPattern);
             var evaluator = new MatchEvaluator(match =>
             {
                 var level = ToLevelWithTotal(match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
                 var chara = ToCharaWithTotal(match.Groups[2].Value, StringComparison.OrdinalIgnoreCase);
                 var stage = ToStageWithTotal(match.Groups[3].Value, StringComparison.OrdinalIgnoreCase);
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
+
+                if ((stage == StageWithTotal.Extra) || (stage == StageWithTotal.Phantasm))
+                    return match.ToString();
 
                 Func<CardAttack, bool> checkNotNull = (attack => attack != null);
                 Func<CardAttack, bool> findByLevel = (attack => true);
@@ -1130,10 +1124,7 @@ namespace ThScoreFileConverter
         private string ReplacePractice(string input)
         {
             var pattern = Utils.Format(
-                @"%T07PRAC([{0}])({1})([{2}])([12])",
-                LevelExceptExPhPattern,
-                CharaPattern,
-                StageExceptExPhPattern);
+                @"%T07PRAC([{0}])({1})([{2}])([12])", LevelPattern, CharaPattern, StagePattern);
             var evaluator = new MatchEvaluator(match =>
             {
                 var level = ToLevel(match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
@@ -1142,6 +1133,8 @@ namespace ThScoreFileConverter
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
                 if ((level == Level.Extra) || (level == Level.Phantasm))
+                    return match.ToString();
+                if ((stage == Stage.Extra) || (stage == Stage.Phantasm))
                     return match.ToString();
 
                 var key = new CharaLevelPair(chara, level);

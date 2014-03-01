@@ -403,7 +403,7 @@ namespace ThScoreFileConverter
         private static readonly string LevelWithTotalPattern;
         private static readonly string RoutePattern;
         private static readonly string RouteWithTotalPattern;
-        private static readonly string StageWithTotalExceptExtraPattern;
+        private static readonly string StageWithTotalPattern;
 
         private static readonly Func<string, StringComparison, Level> ToLevel;
         private static readonly Func<string, StringComparison, LevelWithTotal> ToLevelWithTotal;
@@ -427,9 +427,6 @@ namespace ThScoreFileConverter
             var routesWithTotal = Utils.GetEnumerator<RouteWithTotal>();
             var stagesWithTotal = Utils.GetEnumerator<StageWithTotal>();
 
-            // To avoid SA1118
-            var stagesWithTotalExceptExtra = stagesWithTotal.Where(st => st != StageWithTotal.Extra);
-
             LevelPattern = string.Join(
                 string.Empty, levels.Select(lv => lv.ToShortName()).ToArray());
             LevelWithTotalPattern = string.Join(
@@ -438,8 +435,8 @@ namespace ThScoreFileConverter
                 "|", routes.Select(rt => rt.ToShortName()).ToArray());
             RouteWithTotalPattern = string.Join(
                 "|", routesWithTotal.Select(rt => rt.ToShortName()).ToArray());
-            StageWithTotalExceptExtraPattern = string.Join(
-                "|", stagesWithTotalExceptExtra.Select(st => st.ToShortName()).ToArray());
+            StageWithTotalPattern = string.Join(
+                "|", stagesWithTotal.Select(st => st.ToShortName()).ToArray());
 
             ToLevel = ((shortName, comparisonType) =>
                 levels.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
@@ -751,12 +748,15 @@ namespace ThScoreFileConverter
         private string ReplaceCollectRate(string input)
         {
             var pattern = Utils.Format(
-                @"%T128CRG([{0}])({1})([1-3])", LevelWithTotalPattern, StageWithTotalExceptExtraPattern);
+                @"%T128CRG([{0}])({1})([1-3])", LevelWithTotalPattern, StageWithTotalPattern);
             var evaluator = new MatchEvaluator(match =>
             {
                 var level = ToLevelWithTotal(match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
                 var stage = ToStageWithTotal(match.Groups[2].Value, StringComparison.OrdinalIgnoreCase);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
+
+                if (stage == StageWithTotal.Extra)
+                    return match.ToString();
 
                 Func<SpellCard, bool> checkNotNull = (card => card != null);
                 Func<SpellCard, bool> findByLevel = (card => true);
