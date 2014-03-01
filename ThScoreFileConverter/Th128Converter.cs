@@ -314,8 +314,18 @@ namespace ThScoreFileConverter
 
         private class Status : Chapter
         {
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public byte[] LastName { get; private set; }    // .Length = 10 (The last 2 bytes are always 0x00 ?)
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public byte[] BgmFlags { get; private set; }    // .Length = 10
+
             public int TotalPlayTime { get; private set; }  // unit: 10ms
 
             public Status(Chapter ch)

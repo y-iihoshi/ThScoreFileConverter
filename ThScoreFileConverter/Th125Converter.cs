@@ -356,8 +356,18 @@ namespace ThScoreFileConverter
 
         private class Status : Chapter
         {
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public byte[] LastName { get; private set; }    // .Length = 10 (The last 2 bytes are always 0x00 ?)
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public byte[] BgmFlags { get; private set; }    // .Length = 6
+
             public int TotalPlayTime { get; private set; }  // unit: [0.01s]
 
             public Status(Chapter ch)
@@ -390,14 +400,18 @@ namespace ThScoreFileConverter
 
                 public BonusFields(int data) { this.data = new BitVector32(data); }
 
+                [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                    "Microsoft.Performance",
+                    "CA1811:AvoidUncalledPrivateCode",
+                    Justification = "For future use.")]
                 public int Data { get { return this.data.Data; } }
 
-                public bool Bit00        { get { return this.data[0x00000001]; } }
-                public bool Bit01        { get { return this.data[0x00000002]; } }
+                // public bool Bit00        { get { return this.data[0x00000001]; } }
+                // public bool Bit01        { get { return this.data[0x00000002]; } }
                 public bool TwoShot      { get { return this.data[0x00000004]; } }
                 public bool NiceShot     { get { return this.data[0x00000008]; } }
                 public bool RiskBonus    { get { return this.data[0x00000010]; } }
-                public bool Bit05        { get { return this.data[0x00000020]; } }
+                // public bool Bit05        { get { return this.data[0x00000020]; } }
                 public bool RedShot      { get { return this.data[0x00000040]; } }
                 public bool PurpleShot   { get { return this.data[0x00000080]; } }
 
@@ -408,25 +422,25 @@ namespace ThScoreFileConverter
                 public bool OrangeShot   { get { return this.data[0x00001000]; } }
                 public bool ColorfulShot { get { return this.data[0x00002000]; } }
                 public bool RainbowShot  { get { return this.data[0x00004000]; } }
-                public bool Bit15        { get { return this.data[0x00008000]; } }
+                // public bool Bit15        { get { return this.data[0x00008000]; } }
 
                 public bool SoloShot     { get { return this.data[0x00010000]; } }
-                public bool Bit17        { get { return this.data[0x00020000]; } }
-                public bool Bit18        { get { return this.data[0x00040000]; } }
-                public bool Bit19        { get { return this.data[0x00080000]; } }
-                public bool Bit20        { get { return this.data[0x00100000]; } }
-                public bool Bit21        { get { return this.data[0x00200000]; } }
+                // public bool Bit17        { get { return this.data[0x00020000]; } }
+                // public bool Bit18        { get { return this.data[0x00040000]; } }
+                // public bool Bit19        { get { return this.data[0x00080000]; } }
+                // public bool Bit20        { get { return this.data[0x00100000]; } }
+                // public bool Bit21        { get { return this.data[0x00200000]; } }
                 public bool MacroBonus   { get { return this.data[0x00400000]; } }
-                public bool Bit23        { get { return this.data[0x00800000]; } }
+                // public bool Bit23        { get { return this.data[0x00800000]; } }
 
                 public bool FrontShot    { get { return this.data[0x01000000]; } }
                 public bool BackShot     { get { return this.data[0x02000000]; } }
                 public bool SideShot     { get { return this.data[0x04000000]; } }
                 public bool ClearShot    { get { return this.data[0x08000000]; } }
                 public bool CatBonus     { get { return this.data[0x10000000]; } }
-                public bool Bit29        { get { return this.data[0x20000000]; } }
-                public bool Bit30        { get { return this.data[0x40000000]; } }
-                // public bool Bit31 { get { return this.data[0x80000000]; } }
+                // public bool Bit29        { get { return this.data[0x20000000]; } }
+                // public bool Bit30        { get { return this.data[0x40000000]; } }
+                // public bool Bit31        { get { return this.data[0x80000000]; } }
             }
 
             public string Signature { get; private set; }   // "BST2"
@@ -434,11 +448,37 @@ namespace ThScoreFileConverter
             public short Scene { get; private set; }        // 1-based
             public short Width { get; private set; }
             public short Height { get; private set; }
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public short Width2 { get; private set; }       // ???
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public short Height2 { get; private set; }      // ???
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public short HalfWidth { get; private set; }    // ???
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public short HalfHeight { get; private set; }   // ???
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public uint DateTime { get; private set; }
+
             public float SlowRate { get; private set; }     // Really...?
             public BonusFields Fields { get; private set; }
             public int ResultScore { get; private set; }
@@ -450,8 +490,19 @@ namespace ThScoreFileConverter
             public int MacroBonus { get; private set; }
             public int FrontSideBackShot { get; private set; }  // Really...?
             public int ClearShot { get; private set; }
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public float Angle { get; private set; }
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public int ResultScore2 { get; private set; }   // ???
+
             public byte[] CardName { get; private set; }    // .Length = 0x50
 
             public void ReadFrom(BinaryReader reader)

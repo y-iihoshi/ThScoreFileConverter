@@ -129,7 +129,16 @@ namespace ThScoreFileConverter
 
         private class LevelStagePair : Pair<Level, Stage>
         {
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public Level Level { get { return this.First; } }
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public Stage Stage { get { return this.Second; } }
 
             public LevelStagePair(Level level, Stage stage) : base(level, stage) { }
@@ -269,7 +278,16 @@ namespace ThScoreFileConverter
 
         private class Status : Chapter
         {
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public byte[] LastName { get; private set; }    // .Length = 10 (The last 2 bytes are always 0x00 ?)
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public byte[] BgmFlags { get; private set; }    // .Length = 18
 
             public Status(Chapter ch)
@@ -333,6 +351,11 @@ namespace ThScoreFileConverter
         private class Practice : IBinaryReadable
         {
             public uint Score { get; private set; }     // * 10
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public uint StageFlag { get; private set; } // 0x00000000: disable, 0x00000101: enable ?
 
             public void ReadFrom(BinaryReader reader)

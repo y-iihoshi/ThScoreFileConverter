@@ -157,7 +157,16 @@ namespace ThScoreFileConverter
 
         private class LevelStagePair : Pair<LevelPractice, StagePractice>
         {
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public LevelPractice Level { get { return this.First; } }
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public StagePractice Stage { get { return this.Second; } }
 
             public LevelStagePair(LevelPractice level, StagePractice stage) : base(level, stage) { }
@@ -305,8 +314,22 @@ namespace ThScoreFileConverter
 
         private class Status : Chapter
         {
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public byte[] LastName { get; private set; }    // .Length = 10 (The last 2 bytes are always 0x00 ?)
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public byte[] BgmFlags { get; private set; }    // .Length = 17
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public int TotalPlayTime { get; private set; }  // unit: 10ms
 
             public Status(Chapter ch)
@@ -361,6 +384,11 @@ namespace ThScoreFileConverter
             public int PracticeTrialCount { get; private set; }
             public int Number { get; private set; }             // 0-based
             public LevelPractice Level { get; private set; }
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public int PracticeScore { get; private set; }
 
             public void ReadFrom(BinaryReader reader)
@@ -379,7 +407,17 @@ namespace ThScoreFileConverter
         private class Practice : IBinaryReadable
         {
             public uint Score { get; private set; }         // * 10
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public byte ClearFlag { get; private set; }     // 0x00: Not clear, 0x01: Cleared
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public byte EnableFlag { get; private set; }    // 0x00: Disable, 0x01: Enable
 
             public void ReadFrom(BinaryReader reader)

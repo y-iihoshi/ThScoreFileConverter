@@ -189,7 +189,16 @@ namespace ThScoreFileConverter
 
         private class CharaLevelPair : Pair<Chara, Level>
         {
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public Chara Chara { get { return this.First; } }
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public Level Level { get { return this.Second; } }
 
             public CharaLevelPair(Chara chara, Level level) : base(chara, level) { }
@@ -303,8 +312,18 @@ namespace ThScoreFileConverter
 
         private class ClearData : Chapter   // per character
         {
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public byte[] StoryFlags { get; private set; }      // [level]; really...?
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public byte[] PracticeFlags { get; private set; }   // [level]; really...?
+
             public Chara Chara { get; private set; }            // size: 4Bytes
 
             public ClearData(Chapter ch)
@@ -470,6 +489,10 @@ namespace ThScoreFileConverter
 
         private class LastName : Chapter
         {
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public byte[] Name { get; private set; }    // .Length = 12, null-terminated
 
             public LastName(Chapter ch)
@@ -492,6 +515,10 @@ namespace ThScoreFileConverter
 
         private class VersionInfo : Chapter
         {
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public byte[] Version { get; private set; }     // .Length = 6, null-terminated
 
             public VersionInfo(Chapter ch)

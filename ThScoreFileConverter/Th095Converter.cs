@@ -86,7 +86,16 @@ namespace ThScoreFileConverter
 
         private class LevelScenePair : Pair<Level, int>
         {
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public Level Level { get { return this.First; } }
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public int Scene { get { return this.Second; } }    // 1-based
 
             public LevelScenePair(Level level, int scene) : base(level, scene) { }
@@ -279,7 +288,13 @@ namespace ThScoreFileConverter
             public int BestshotScore { get; private set; }
             public uint DateTime { get; private set; }      // UNIX time (unit: [s])
             public int TrialCount { get; private set; }
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public float SlowRate1 { get; private set; }    // ??
+
             public float SlowRate2 { get; private set; }    // ??
 
             public Score(Chapter ch)
@@ -312,6 +327,10 @@ namespace ThScoreFileConverter
 
         private class Status : Chapter
         {
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public byte[] LastName { get; private set; }    // .Length = 10 (The last 2 bytes are always 0x00 ?)
 
             public Status(Chapter ch)

@@ -206,7 +206,16 @@ namespace ThScoreFileConverter
 
         private class CharaLevelPair : Pair<Chara, Level>
         {
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public Chara Chara { get { return this.First; } }
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public Level Level { get { return this.Second; } }
 
             public CharaLevelPair(Chara chara, Level level) : base(chara, level) { }
@@ -214,7 +223,16 @@ namespace ThScoreFileConverter
 
         private class StageLevelPair : Pair<Stage, Level>
         {
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public Stage Stage { get { return this.First; } }
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public Level Level { get { return this.Second; } }
 
             public StageLevelPair(Stage stage, Level level) : base(stage, level) { }
@@ -304,7 +322,6 @@ namespace ThScoreFileConverter
             public int TimePoint { get; private set; }
             public int HumanRate { get; private set; }      // / 100
             public byte[] CardFlags { get; private set; }   // .Length = 222
-            public byte[] Padding { get; private set; }     // .Length = 2
 
             public HighScore(Chapter ch)
                 : base(ch)
@@ -355,7 +372,7 @@ namespace ThScoreFileConverter
                 this.TimePoint = reader.ReadInt32();
                 this.HumanRate = reader.ReadInt32();
                 this.CardFlags = reader.ReadBytes(Th08Converter.NumCards);
-                this.Padding = reader.ReadBytes(2);
+                reader.ReadBytes(2);
             }
         }
 
@@ -399,8 +416,19 @@ namespace ThScoreFileConverter
             public short Number { get; private set; }       // 0-based
             public LevelPractice Level { get; private set; }
             public byte[] CardName { get; private set; }    // .Length = 0x30
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public byte[] EnemyName { get; private set; }   // .Length = 0x30
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public byte[] Comment { get; private set; }     // .Length = 0x80, should split by '\0'
+
             public CardAttackCareer StoryCareer { get; private set; }
             public CardAttackCareer PracticeCareer { get; private set; }
 
@@ -537,8 +565,12 @@ namespace ThScoreFileConverter
             public Time TotalPlayTime { get; private set; }
             public Dictionary<Level, PlayCount> PlayCounts { get; private set; }
             public PlayCount TotalPlayCount { get; private set; }
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public byte[] BgmFlags { get; private set; }            // .Length = 21
-            public byte[] Padding { get; private set; }             // .Length = 11
 
             public PlayStatus(Chapter ch)
                 : base(ch)
@@ -571,7 +603,7 @@ namespace ThScoreFileConverter
                 new PlayCount().ReadFrom(reader);   // always all 0?
                 this.TotalPlayCount.ReadFrom(reader);
                 this.BgmFlags = reader.ReadBytes(21);
-                this.Padding = reader.ReadBytes(11);
+                reader.ReadBytes(11);
             }
         }
 
@@ -602,6 +634,10 @@ namespace ThScoreFileConverter
 
         private class LastName : Chapter
         {
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public byte[] Name { get; private set; }    // .Length = 12, null-terminated
 
             public LastName(Chapter ch)
@@ -624,6 +660,10 @@ namespace ThScoreFileConverter
 
         private class VersionInfo : Chapter
         {
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public byte[] Version { get; private set; }     // .Length = 6, null-terminated
 
             public VersionInfo(Chapter ch)
