@@ -314,10 +314,6 @@ namespace ThScoreFileConverter
 
         private class Status : Chapter
         {
-            private byte[] unknown1;    // .Length = 0x10
-            private byte[] unknown2;    // .Length = 0x18
-            private byte[] unknown3;    // .Length = 0x03E0
-
             public byte[] LastName { get; private set; }    // .Length = 10 (The last 2 bytes are always 0x00 ?)
             public byte[] BgmFlags { get; private set; }    // .Length = 10
             public int TotalPlayTime { get; private set; }  // unit: 10ms
@@ -336,18 +332,16 @@ namespace ThScoreFileConverter
             public override void ReadFrom(BinaryReader reader)
             {
                 this.LastName = reader.ReadBytes(10);
-                this.unknown1 = reader.ReadBytes(0x10);
+                reader.ReadBytes(0x10);
                 this.BgmFlags = reader.ReadBytes(10);
-                this.unknown2 = reader.ReadBytes(0x18);
+                reader.ReadBytes(0x18);
                 this.TotalPlayTime = reader.ReadInt32();
-                this.unknown3 = reader.ReadBytes(0x03E0);
+                reader.ReadBytes(0x03E0);
             }
         }
 
         private class ScoreData : IBinaryReadable
         {
-            private byte[] unknown1;    // .Length = 0x08
-
             public uint Score { get; private set; }         // * 10
             public StageProgress StageProgress { get; private set; }    // size: 1Byte
             public byte ContinueCount { get; private set; }
@@ -363,14 +357,12 @@ namespace ThScoreFileConverter
                 this.Name = reader.ReadBytes(10);
                 this.DateTime = reader.ReadUInt32();
                 this.SlowRate = reader.ReadSingle();
-                this.unknown1 = reader.ReadBytes(0x08);
+                reader.ReadBytes(0x08);
             }
         }
 
         private class SpellCard : IBinaryReadable
         {
-            private uint unknown1;
-
             public byte[] Name { get; private set; }        // .Length = 0x80
             public int NoMissCount { get; private set; }
             public int NoIceCount { get; private set; }
@@ -383,7 +375,7 @@ namespace ThScoreFileConverter
                 this.Name = reader.ReadBytes(0x80);
                 this.NoMissCount = reader.ReadInt32();
                 this.NoIceCount = reader.ReadInt32();
-                this.unknown1 = reader.ReadUInt32();
+                reader.ReadUInt32();
                 this.TrialCount = reader.ReadInt32();
                 this.Number = reader.ReadInt32();
                 this.Level = (Level)reader.ReadInt32();

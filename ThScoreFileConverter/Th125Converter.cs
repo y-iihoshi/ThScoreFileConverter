@@ -315,14 +315,6 @@ namespace ThScoreFileConverter
 
         private class Score : Chapter   // per scene
         {
-            private byte[] unknown1;    // .Length = 0x04
-            private byte[] unknown2;    // .Length = 0x04
-            private uint unknown3;      // always 0x00000000?
-            private uint unknown4;      // always 0x00000000?
-            private uint unknown5;      // checksum of the bestshot file?
-            private uint unknown6;      // always 0x00000001?
-            private byte[] unknown7;    // .Length = 0x08
-
             public LevelScenePair LevelScene { get; private set; }
             public int HighScore { get; private set; }
             public Chara Chara { get; private set; }        // size: 4Bytes
@@ -347,27 +339,23 @@ namespace ThScoreFileConverter
                 var number = reader.ReadInt32();
                 this.LevelScene = new LevelScenePair((Level)(number / 10), (number % 10) + 1);
                 this.HighScore = reader.ReadInt32();
-                this.unknown1 = reader.ReadBytes(0x04);
+                reader.ReadBytes(0x04);
                 this.Chara = (Chara)reader.ReadInt32();
-                this.unknown2 = reader.ReadBytes(0x04);
+                reader.ReadBytes(0x04);
                 this.TrialCount = reader.ReadInt32();
                 this.FirstSuccess = reader.ReadInt32();
-                this.unknown3 = reader.ReadUInt32();
+                reader.ReadUInt32();    // always 0x00000000?
                 this.DateTime = reader.ReadUInt32();
-                this.unknown4 = reader.ReadUInt32();
-                this.unknown5 = reader.ReadUInt32();
-                this.unknown6 = reader.ReadUInt32();
+                reader.ReadUInt32();    // always 0x00000000?
+                reader.ReadUInt32();    // checksum of the bestshot file?
+                reader.ReadUInt32();    // always 0x00000001?
                 this.BestshotScore = reader.ReadInt32();
-                this.unknown7 = reader.ReadBytes(0x08);
+                reader.ReadBytes(0x08);
             }
         }
 
         private class Status : Chapter
         {
-            private byte[] unknown1;    // .Length = 2
-            private byte[] unknown2;    // .Length = 0x2E
-            private byte[] unknown3;    // .Length = 0x0424
-
             public byte[] LastName { get; private set; }    // .Length = 10 (The last 2 bytes are always 0x00 ?)
             public byte[] BgmFlags { get; private set; }    // .Length = 6
             public int TotalPlayTime { get; private set; }  // unit: [0.01s]
@@ -386,11 +374,11 @@ namespace ThScoreFileConverter
             public override void ReadFrom(BinaryReader reader)
             {
                 this.LastName = reader.ReadBytes(10);
-                this.unknown1 = reader.ReadBytes(2);
+                reader.ReadBytes(2);
                 this.BgmFlags = reader.ReadBytes(6);
-                this.unknown2 = reader.ReadBytes(0x2E);
+                reader.ReadBytes(0x2E);
                 this.TotalPlayTime = reader.ReadInt32();
-                this.unknown3 = reader.ReadBytes(0x424);
+                reader.ReadBytes(0x424);
             }
         }
 
@@ -441,14 +429,6 @@ namespace ThScoreFileConverter
                 // public bool Bit31 { get { return this.data[0x80000000]; } }
             }
 
-            private ushort unknown1;    // always 0x0405?
-            private ushort unknown2;    // 0x0100 ... Version?
-            private uint unknown3;      // always 0x00000000?
-            private uint unknown4;      // always 0x00000000?
-            private byte[] unknown5;    // .Length = 0x08
-            private byte[] unknown6;    // .Length = 0x30
-            private uint unknown7;
-
             public string Signature { get; private set; }   // "BST2"
             public Level Level { get; private set; }
             public short Scene { get; private set; }        // 1-based
@@ -479,24 +459,24 @@ namespace ThScoreFileConverter
                 this.Signature = new string(reader.ReadChars(4));
                 if (this.Signature == "BST2")
                 {
-                    this.unknown1 = reader.ReadUInt16();
+                    reader.ReadUInt16();    // always 0x0405?
                     this.Level = (Level)(reader.ReadInt16() - 1);
                     this.Scene = reader.ReadInt16();
-                    this.unknown2 = reader.ReadUInt16();
+                    reader.ReadUInt16();    // 0x0100 ... Version?
                     this.Width = reader.ReadInt16();
                     this.Height = reader.ReadInt16();
-                    this.unknown3 = reader.ReadUInt32();
+                    reader.ReadUInt32();    // always 0x00000000?
                     this.Width2 = reader.ReadInt16();
                     this.Height2 = reader.ReadInt16();
                     this.HalfWidth = reader.ReadInt16();
                     this.HalfHeight = reader.ReadInt16();
                     this.DateTime = reader.ReadUInt32();
-                    this.unknown4 = reader.ReadUInt32();
+                    reader.ReadUInt32();    // always 0x00000000?
                     this.SlowRate = reader.ReadSingle();
                     this.Fields = new BonusFields(reader.ReadInt32());
                     this.ResultScore = reader.ReadInt32();
                     this.BasePoint = reader.ReadInt32();
-                    this.unknown5 = reader.ReadBytes(0x08);
+                    reader.ReadBytes(0x08);
                     this.RiskBonus = reader.ReadInt32();
                     this.BossShot = reader.ReadSingle();
                     this.NiceShot = reader.ReadSingle();
@@ -504,10 +484,10 @@ namespace ThScoreFileConverter
                     this.MacroBonus = reader.ReadInt32();
                     this.FrontSideBackShot = reader.ReadInt32();
                     this.ClearShot = reader.ReadInt32();
-                    this.unknown6 = reader.ReadBytes(0x30);
+                    reader.ReadBytes(0x30);
                     this.Angle = reader.ReadSingle();
                     this.ResultScore2 = reader.ReadInt32();
-                    this.unknown7 = reader.ReadUInt32();
+                    reader.ReadUInt32();
                     this.CardName = reader.ReadBytes(0x50);
                 }
             }

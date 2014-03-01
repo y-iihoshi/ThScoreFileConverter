@@ -274,11 +274,6 @@ namespace ThScoreFileConverter
 
         private class Score : Chapter   // per scene
         {
-            private uint unknown1;      // always 0x00000000?
-            private byte[] unknown2;    // .Length = 0x20
-            private uint unknown3;      // checksum of the bestshot file?
-            private byte[] unknown4;    // .Length = 0x10
-
             public LevelScenePair LevelScene { get; private set; }
             public int HighScore { get; private set; }
             public int BestshotScore { get; private set; }
@@ -303,22 +298,20 @@ namespace ThScoreFileConverter
                 var number = reader.ReadInt32();
                 this.LevelScene = new LevelScenePair((Level)(number / 10), (number % 10) + 1);
                 this.HighScore = reader.ReadInt32();
-                this.unknown1 = reader.ReadUInt32();
+                reader.ReadUInt32();    // always 0x00000000?
                 this.BestshotScore = reader.ReadInt32();
-                this.unknown2 = reader.ReadBytes(0x20);
+                reader.ReadBytes(0x20);
                 this.DateTime = reader.ReadUInt32();
-                this.unknown3 = reader.ReadUInt32();
+                reader.ReadUInt32();    // checksum of the bestshot file?
                 this.TrialCount = reader.ReadInt32();
                 this.SlowRate1 = reader.ReadSingle();
                 this.SlowRate2 = reader.ReadSingle();
-                this.unknown4 = reader.ReadBytes(0x10);
+                reader.ReadBytes(0x10);
             }
         }
 
         private class Status : Chapter
         {
-            private byte[] unknown1;    // .Length = 0x0442
-
             public byte[] LastName { get; private set; }    // .Length = 10 (The last 2 bytes are always 0x00 ?)
 
             public Status(Chapter ch)
@@ -335,15 +328,12 @@ namespace ThScoreFileConverter
             public override void ReadFrom(BinaryReader reader)
             {
                 this.LastName = reader.ReadBytes(10);
-                this.unknown1 = reader.ReadBytes(0x0442);
+                reader.ReadBytes(0x0442);
             }
         }
 
         private class BestShotHeader : IBinaryReadable
         {
-            private ushort unknown1;
-            private ushort unknown2;    // 0x0102 ... Version?
-
             public string Signature { get; private set; }   // "BSTS"
             public Level Level { get; private set; }
             public short Scene { get; private set; }        // 1-based
@@ -358,10 +348,10 @@ namespace ThScoreFileConverter
                 this.Signature = new string(reader.ReadChars(4));
                 if (this.Signature == "BSTS")
                 {
-                    this.unknown1 = reader.ReadUInt16();
+                    reader.ReadUInt16();
                     this.Level = (Level)(reader.ReadInt16() - 1);
                     this.Scene = reader.ReadInt16();
-                    this.unknown2 = reader.ReadUInt16();
+                    reader.ReadUInt16();    // 0x0102 ... Version?
                     this.Width = reader.ReadInt16();
                     this.Height = reader.ReadInt16();
                     this.Score = reader.ReadInt32();

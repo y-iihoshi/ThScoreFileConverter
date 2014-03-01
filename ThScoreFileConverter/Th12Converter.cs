@@ -269,9 +269,6 @@ namespace ThScoreFileConverter
 
         private class Status : Chapter
         {
-            private byte[] unknown1;    // .Length = 0x10
-            private byte[] unknown2;    // .Length = 0x0411
-
             public byte[] LastName { get; private set; }    // .Length = 10 (The last 2 bytes are always 0x00 ?)
             public byte[] BgmFlags { get; private set; }    // .Length = 17
 
@@ -289,16 +286,14 @@ namespace ThScoreFileConverter
             public override void ReadFrom(BinaryReader reader)
             {
                 this.LastName = reader.ReadBytes(10);
-                this.unknown1 = reader.ReadBytes(0x10);
+                reader.ReadBytes(0x10);
                 this.BgmFlags = reader.ReadBytes(17);
-                this.unknown2 = reader.ReadBytes(0x0411);
+                reader.ReadBytes(0x0411);
             }
         }
 
         private class ScoreData : IBinaryReadable
         {
-            private uint unknown1;
-
             public uint Score { get; private set; }         // * 10
             public StageProgress StageProgress { get; private set; }    // size: 1Byte
             public byte ContinueCount { get; private set; }
@@ -314,7 +309,7 @@ namespace ThScoreFileConverter
                 this.Name = reader.ReadBytes(10);
                 this.DateTime = reader.ReadUInt32();
                 this.SlowRate = reader.ReadSingle();
-                this.unknown1 = reader.ReadUInt32();
+                reader.ReadUInt32();
             }
         }
 

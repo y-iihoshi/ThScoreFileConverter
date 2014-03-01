@@ -315,10 +315,6 @@ namespace ThScoreFileConverter
 
         private class Status : Chapter
         {
-            private byte[] unknown1;    // .Length = 0x10
-            private byte[] unknown2;    // .Length = 0x11
-            private byte[] unknown3;    // .Length = 0x03E0
-
             public byte[] LastName { get; private set; }    // .Length = 10 (The last 2 bytes are always 0x00 ?)
             public byte[] BgmFlags { get; private set; }    // .Length = 17
             public int TotalPlayTime { get; private set; }  // unit: 10ms
@@ -337,18 +333,16 @@ namespace ThScoreFileConverter
             public override void ReadFrom(BinaryReader reader)
             {
                 this.LastName = reader.ReadBytes(10);
-                this.unknown1 = reader.ReadBytes(0x10);
+                reader.ReadBytes(0x10);
                 this.BgmFlags = reader.ReadBytes(17);
-                this.unknown2 = reader.ReadBytes(0x11);
+                reader.ReadBytes(0x11);
                 this.TotalPlayTime = reader.ReadInt32();
-                this.unknown3 = reader.ReadBytes(0x03E0);
+                reader.ReadBytes(0x03E0);
             }
         }
 
         private class ScoreData : IBinaryReadable
         {
-            private uint unknown1;
-
             public uint Score { get; private set; }         // * 10
             public StageProgress StageProgress { get; private set; }    // size: 1Byte
             public byte ContinueCount { get; private set; }
@@ -364,7 +358,7 @@ namespace ThScoreFileConverter
                 this.Name = reader.ReadBytes(10);
                 this.DateTime = reader.ReadUInt32();
                 this.SlowRate = reader.ReadSingle();
-                this.unknown1 = reader.ReadUInt32();
+                reader.ReadUInt32();
             }
         }
 
@@ -394,8 +388,6 @@ namespace ThScoreFileConverter
 
         private class Practice : IBinaryReadable
         {
-            private ushort unknown1;    // always 0x0000?
-
             public uint Score { get; private set; }         // * 10
             public byte ClearFlag { get; private set; }     // 0x00: Not clear, 0x01: Cleared
             public byte EnableFlag { get; private set; }    // 0x00: Disable, 0x01: Enable
@@ -405,7 +397,7 @@ namespace ThScoreFileConverter
                 this.Score = reader.ReadUInt32();
                 this.ClearFlag = reader.ReadByte();
                 this.EnableFlag = reader.ReadByte();
-                this.unknown1 = reader.ReadUInt16();
+                reader.ReadUInt16();    // always 0x0000?
             }
         }
 

@@ -269,9 +269,6 @@ namespace ThScoreFileConverter
 
         private class Status : Chapter
         {
-            private byte[] unknown1;    // .Length = 0x10
-            private byte[] unknown2;    // .Length = 0x0410
-
             public byte[] LastName { get; private set; }    // .Length = 10 (The last 2 bytes are always 0x00 ?)
             public byte[] BgmFlags { get; private set; }    // .Length = 18
 
@@ -289,9 +286,9 @@ namespace ThScoreFileConverter
             public override void ReadFrom(BinaryReader reader)
             {
                 this.LastName = reader.ReadBytes(10);
-                this.unknown1 = reader.ReadBytes(0x10);
+                reader.ReadBytes(0x10);
                 this.BgmFlags = reader.ReadBytes(18);
-                this.unknown2 = reader.ReadBytes(0x0410);
+                reader.ReadBytes(0x0410);
             }
         }
 

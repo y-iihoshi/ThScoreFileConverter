@@ -56,28 +56,6 @@
       <Namespaces>
        <Namespace Name="ThScoreFileConverter">
         <Types>
-         <Type Name="Th06Converter+CardAttack">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th06Converter.CardAttack.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th06Converter.CardAttack.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Th06Converter+CharaLevelPair">
           <Members>
            <Member Name="#Chara">
@@ -135,94 +113,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th06Converter.ClearData.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th06Converter+Header">
-          <Members>
-           <Member Name="#unknown">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th06Converter.Header.unknown'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th06Converter+HighScore">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th06Converter.HighScore.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th06Converter+PracticeScore">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th06Converter.PracticeScore.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th06Converter.PracticeScore.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th07Converter+CardAttack">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th07Converter.CardAttack.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th07Converter.CardAttack.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown3">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th07Converter.CardAttack.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
           </Members>
          </Type>
@@ -284,41 +174,6 @@
              </Accessor>
             </Accessors>
            </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th07Converter.ClearData.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th07Converter+Header">
-          <Members>
-           <Member Name="#unknown">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th07Converter.Header.unknown'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th07Converter+HighScore">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th07Converter.HighScore.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
           </Members>
          </Type>
          <Type Name="Th07Converter+LastName">
@@ -336,99 +191,10 @@
              </Accessor>
             </Accessors>
            </Member>
-           <Member Name="#unknown">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th07Converter.LastName.unknown'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th07Converter+PlayStatus">
-          <Members>
-           <Member Name="#unknown">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-03-01 09:07:51Z">
-              <Issue>
-               <Item>'Th07Converter.PlayStatus.unknown'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th07Converter+PracticeScore">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th07Converter.PracticeScore.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th07Converter.PracticeScore.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
           </Members>
          </Type>
          <Type Name="Th07Converter+VersionInfo">
           <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th07Converter.VersionInfo.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th07Converter.VersionInfo.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown3">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th07Converter.VersionInfo.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown4">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th07Converter.VersionInfo.unknown4'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown5">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th07Converter.VersionInfo.unknown5'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Version">
             <Accessors>
              <Accessor Name="#get_Version()">
@@ -472,33 +238,6 @@
              </Accessor>
             </Accessors>
            </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th08Converter.CardAttack.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th08Converter.CardAttack.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown3">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th08Converter.CardAttack.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
           </Members>
          </Type>
          <Type Name="Th08Converter+CharaLevelPair">
@@ -531,63 +270,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Th08Converter+ClearData">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th08Converter.ClearData.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th08Converter.ClearData.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown3">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th08Converter.ClearData.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th08Converter+FLSP">
-          <Members>
-           <Member Name="#unknown">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th08Converter.FLSP.unknown'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th08Converter+Header">
-          <Members>
-           <Member Name="#unknown">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th08Converter.Header.unknown'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Th08Converter+HighScore">
           <Members>
            <Member Name="#Padding">
@@ -602,42 +284,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th08Converter.HighScore.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th08Converter.HighScore.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown3">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th08Converter.HighScore.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown4">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th08Converter.HighScore.unknown4'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
           </Members>
          </Type>
@@ -655,28 +301,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-           <Member Name="#unknown">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th08Converter.LastName.unknown'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th08Converter+PlayCount">
-          <Members>
-           <Member Name="#unknown">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th08Converter.PlayCount.unknown'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
           </Members>
          </Type>
@@ -707,37 +331,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-03-01 09:07:51Z">
-              <Issue>
-               <Item>'Th08Converter.PlayStatus.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th08Converter+PracticeScore">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th08Converter.PracticeScore.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th08Converter.PracticeScore.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
           </Members>
          </Type>
@@ -773,42 +366,6 @@
          </Type>
          <Type Name="Th08Converter+VersionInfo">
           <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th08Converter.VersionInfo.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th08Converter.VersionInfo.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown3">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th08Converter.VersionInfo.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown4">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th08Converter.VersionInfo.unknown4'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Version">
             <Accessors>
              <Accessor Name="#get_Version()">
@@ -821,28 +378,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th095Converter+BestShotHeader">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th095Converter.BestShotHeader.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th095Converter.BestShotHeader.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
           </Members>
          </Type>
@@ -891,42 +426,6 @@
              </Accessor>
             </Accessors>
            </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th095Converter.Score.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th095Converter.Score.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown3">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th095Converter.Score.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown4">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th095Converter.Score.unknown4'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
           </Members>
          </Type>
          <Type Name="Th095Converter+Status">
@@ -943,15 +442,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th095Converter.Status.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
           </Members>
          </Type>
@@ -985,72 +475,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Th09Converter+ClearCount">
-          <Members>
-           <Member Name="#unknown">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th09Converter.ClearCount.unknown'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th09Converter+Header">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th09Converter.Header.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th09Converter.Header.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th09Converter+HighScore">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th09Converter.HighScore.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th09Converter.HighScore.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown3">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th09Converter.HighScore.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Th09Converter+LastName">
           <Members>
            <Member Name="#Name">
@@ -1065,15 +489,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-           <Member Name="#unknown">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th09Converter.LastName.unknown'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
           </Members>
          </Type>
@@ -1118,64 +533,10 @@
              </Accessor>
             </Accessors>
            </Member>
-           <Member Name="#unknown">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-03-01 09:07:51Z">
-              <Issue>
-               <Item>'Th09Converter.PlayStatus.unknown'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
           </Members>
          </Type>
          <Type Name="Th09Converter+VersionInfo">
           <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th09Converter.VersionInfo.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th09Converter.VersionInfo.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown3">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th09Converter.VersionInfo.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown4">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th09Converter.VersionInfo.unknown4'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown5">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th09Converter.VersionInfo.unknown5'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Version">
             <Accessors>
              <Accessor Name="#get_Version()">
@@ -1266,24 +627,6 @@
              </Accessor>
             </Accessors>
            </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th10Converter.Status.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th10Converter.Status.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
           </Members>
          </Type>
          <Type Name="Th11Converter+LevelStagePair">
@@ -1333,19 +676,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Th11Converter+ScoreData">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th11Converter.ScoreData.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Th11Converter+Status">
           <Members>
            <Member Name="#BgmFlags">
@@ -1373,24 +703,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th11Converter.Status.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th11Converter.Status.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
           </Members>
          </Type>
@@ -1473,69 +785,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th125Converter.BestShotHeader.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th125Converter.BestShotHeader.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown3">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th125Converter.BestShotHeader.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown4">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th125Converter.BestShotHeader.unknown4'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown5">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th125Converter.BestShotHeader.unknown5'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown6">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th125Converter.BestShotHeader.unknown6'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown7">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th125Converter.BestShotHeader.unknown7'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
            <Member Name="#Width2">
             <Accessors>
@@ -1725,73 +974,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Th125Converter+Score">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th125Converter.Score.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th125Converter.Score.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown3">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th125Converter.Score.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown4">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th125Converter.Score.unknown4'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown5">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th125Converter.Score.unknown5'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown6">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th125Converter.Score.unknown6'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown7">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th125Converter.Score.unknown7'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Th125Converter+Status">
           <Members>
            <Member Name="#BgmFlags">
@@ -1819,59 +1001,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th125Converter.Status.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th125Converter.Status.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown3">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th125Converter.Status.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th128Converter+ScoreData">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th128Converter.ScoreData.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th128Converter+SpellCard">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th128Converter.SpellCard.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
           </Members>
          </Type>
@@ -1902,33 +1031,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th128Converter.Status.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th128Converter.Status.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown3">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th128Converter.Status.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
           </Members>
          </Type>
@@ -1979,19 +1081,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Th12Converter+ScoreData">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th12Converter.ScoreData.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Th12Converter+Status">
           <Members>
            <Member Name="#BgmFlags">
@@ -2019,24 +1108,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th12Converter.Status.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th12Converter.Status.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
           </Members>
          </Type>
@@ -2098,28 +1169,6 @@
              </Accessor>
             </Accessors>
            </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th13Converter.Practice.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th13Converter+ScoreData">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th13Converter.ScoreData.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
           </Members>
          </Type>
          <Type Name="Th13Converter+SpellCard">
@@ -2179,33 +1228,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th13Converter.Status.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th13Converter.Status.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown3">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th13Converter.Status.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
           </Members>
          </Type>
@@ -2267,28 +1289,6 @@
              </Accessor>
             </Accessors>
            </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th14Converter.Practice.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th14Converter+ScoreData">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th14Converter.ScoreData.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
           </Members>
          </Type>
          <Type Name="Th14Converter+SpellCard">
@@ -2348,33 +1348,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th14Converter.Status.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th14Converter.Status.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown3">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
-              <Issue>
-               <Item>'Th14Converter.Status.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
           </Members>
          </Type>
@@ -2397,28 +1370,6 @@
       <Namespaces>
        <Namespace Name="ThScoreFileConverter">
         <Types>
-         <Type Name="Th06Converter+CardAttack">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th06Converter.CardAttack.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th06Converter.CardAttack.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Th06Converter+CharaLevelPair">
           <Members>
            <Member Name="#Chara">
@@ -2476,94 +1427,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th06Converter.ClearData.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th06Converter+Header">
-          <Members>
-           <Member Name="#unknown">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th06Converter.Header.unknown'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th06Converter+HighScore">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th06Converter.HighScore.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th06Converter+PracticeScore">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th06Converter.PracticeScore.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th06Converter.PracticeScore.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th07Converter+CardAttack">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th07Converter.CardAttack.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th07Converter.CardAttack.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown3">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th07Converter.CardAttack.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
           </Members>
          </Type>
@@ -2625,41 +1488,6 @@
              </Accessor>
             </Accessors>
            </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th07Converter.ClearData.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th07Converter+Header">
-          <Members>
-           <Member Name="#unknown">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th07Converter.Header.unknown'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th07Converter+HighScore">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th07Converter.HighScore.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
           </Members>
          </Type>
          <Type Name="Th07Converter+LastName">
@@ -2677,99 +1505,10 @@
              </Accessor>
             </Accessors>
            </Member>
-           <Member Name="#unknown">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th07Converter.LastName.unknown'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th07Converter+PlayStatus">
-          <Members>
-           <Member Name="#unknown">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-03-01 09:07:51Z">
-              <Issue>
-               <Item>'Th07Converter.PlayStatus.unknown'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th07Converter+PracticeScore">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th07Converter.PracticeScore.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th07Converter.PracticeScore.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
           </Members>
          </Type>
          <Type Name="Th07Converter+VersionInfo">
           <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th07Converter.VersionInfo.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th07Converter.VersionInfo.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown3">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th07Converter.VersionInfo.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown4">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th07Converter.VersionInfo.unknown4'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown5">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th07Converter.VersionInfo.unknown5'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Version">
             <Accessors>
              <Accessor Name="#get_Version()">
@@ -2813,33 +1552,6 @@
              </Accessor>
             </Accessors>
            </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th08Converter.CardAttack.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th08Converter.CardAttack.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown3">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th08Converter.CardAttack.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
           </Members>
          </Type>
          <Type Name="Th08Converter+CharaLevelPair">
@@ -2872,63 +1584,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Th08Converter+ClearData">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th08Converter.ClearData.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th08Converter.ClearData.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown3">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th08Converter.ClearData.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th08Converter+FLSP">
-          <Members>
-           <Member Name="#unknown">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th08Converter.FLSP.unknown'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th08Converter+Header">
-          <Members>
-           <Member Name="#unknown">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th08Converter.Header.unknown'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Th08Converter+HighScore">
           <Members>
            <Member Name="#Padding">
@@ -2943,42 +1598,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th08Converter.HighScore.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th08Converter.HighScore.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown3">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th08Converter.HighScore.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown4">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th08Converter.HighScore.unknown4'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
           </Members>
          </Type>
@@ -2996,28 +1615,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-           <Member Name="#unknown">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th08Converter.LastName.unknown'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th08Converter+PlayCount">
-          <Members>
-           <Member Name="#unknown">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th08Converter.PlayCount.unknown'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
           </Members>
          </Type>
@@ -3048,37 +1645,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-03-01 09:07:51Z">
-              <Issue>
-               <Item>'Th08Converter.PlayStatus.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th08Converter+PracticeScore">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th08Converter.PracticeScore.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th08Converter.PracticeScore.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
           </Members>
          </Type>
@@ -3114,42 +1680,6 @@
          </Type>
          <Type Name="Th08Converter+VersionInfo">
           <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th08Converter.VersionInfo.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th08Converter.VersionInfo.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown3">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th08Converter.VersionInfo.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown4">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th08Converter.VersionInfo.unknown4'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Version">
             <Accessors>
              <Accessor Name="#get_Version()">
@@ -3162,28 +1692,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th095Converter+BestShotHeader">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th095Converter.BestShotHeader.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th095Converter.BestShotHeader.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
           </Members>
          </Type>
@@ -3232,42 +1740,6 @@
              </Accessor>
             </Accessors>
            </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th095Converter.Score.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th095Converter.Score.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown3">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th095Converter.Score.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown4">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th095Converter.Score.unknown4'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
           </Members>
          </Type>
          <Type Name="Th095Converter+Status">
@@ -3284,15 +1756,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th095Converter.Status.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
           </Members>
          </Type>
@@ -3326,72 +1789,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Th09Converter+ClearCount">
-          <Members>
-           <Member Name="#unknown">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th09Converter.ClearCount.unknown'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th09Converter+Header">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th09Converter.Header.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th09Converter.Header.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th09Converter+HighScore">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th09Converter.HighScore.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th09Converter.HighScore.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown3">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th09Converter.HighScore.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Th09Converter+LastName">
           <Members>
            <Member Name="#Name">
@@ -3406,15 +1803,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-           <Member Name="#unknown">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th09Converter.LastName.unknown'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
           </Members>
          </Type>
@@ -3459,64 +1847,10 @@
              </Accessor>
             </Accessors>
            </Member>
-           <Member Name="#unknown">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-03-01 09:07:51Z">
-              <Issue>
-               <Item>'Th09Converter.PlayStatus.unknown'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
           </Members>
          </Type>
          <Type Name="Th09Converter+VersionInfo">
           <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th09Converter.VersionInfo.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th09Converter.VersionInfo.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown3">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th09Converter.VersionInfo.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown4">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th09Converter.VersionInfo.unknown4'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown5">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th09Converter.VersionInfo.unknown5'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Version">
             <Accessors>
              <Accessor Name="#get_Version()">
@@ -3607,24 +1941,6 @@
              </Accessor>
             </Accessors>
            </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th10Converter.Status.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th10Converter.Status.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
           </Members>
          </Type>
          <Type Name="Th11Converter+LevelStagePair">
@@ -3674,19 +1990,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Th11Converter+ScoreData">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th11Converter.ScoreData.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Th11Converter+Status">
           <Members>
            <Member Name="#BgmFlags">
@@ -3714,24 +2017,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th11Converter.Status.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th11Converter.Status.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
           </Members>
          </Type>
@@ -3814,69 +2099,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th125Converter.BestShotHeader.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th125Converter.BestShotHeader.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown3">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th125Converter.BestShotHeader.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown4">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th125Converter.BestShotHeader.unknown4'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown5">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th125Converter.BestShotHeader.unknown5'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown6">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th125Converter.BestShotHeader.unknown6'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown7">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th125Converter.BestShotHeader.unknown7'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
            <Member Name="#Width2">
             <Accessors>
@@ -4066,73 +2288,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Th125Converter+Score">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th125Converter.Score.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th125Converter.Score.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown3">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th125Converter.Score.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown4">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th125Converter.Score.unknown4'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown5">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th125Converter.Score.unknown5'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown6">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th125Converter.Score.unknown6'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown7">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th125Converter.Score.unknown7'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Th125Converter+Status">
           <Members>
            <Member Name="#BgmFlags">
@@ -4160,59 +2315,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th125Converter.Status.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th125Converter.Status.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown3">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th125Converter.Status.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th128Converter+ScoreData">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th128Converter.ScoreData.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th128Converter+SpellCard">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th128Converter.SpellCard.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
           </Members>
          </Type>
@@ -4243,33 +2345,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th128Converter.Status.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th128Converter.Status.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown3">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th128Converter.Status.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
           </Members>
          </Type>
@@ -4320,19 +2395,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Th12Converter+ScoreData">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th12Converter.ScoreData.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Th12Converter+Status">
           <Members>
            <Member Name="#BgmFlags">
@@ -4360,24 +2422,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th12Converter.Status.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th12Converter.Status.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
           </Members>
          </Type>
@@ -4439,28 +2483,6 @@
              </Accessor>
             </Accessors>
            </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th13Converter.Practice.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th13Converter+ScoreData">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th13Converter.ScoreData.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
           </Members>
          </Type>
          <Type Name="Th13Converter+SpellCard">
@@ -4520,33 +2542,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th13Converter.Status.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th13Converter.Status.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown3">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th13Converter.Status.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
           </Members>
          </Type>
@@ -4608,28 +2603,6 @@
              </Accessor>
             </Accessors>
            </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th14Converter.Practice.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Th14Converter+ScoreData">
-          <Members>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th14Converter.ScoreData.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
           </Members>
          </Type>
          <Type Name="Th14Converter+SpellCard">
@@ -4690,33 +2663,6 @@
              </Accessor>
             </Accessors>
            </Member>
-           <Member Name="#unknown1">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th14Converter.Status.unknown1'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown2">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th14Converter.Status.unknown2'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#unknown3">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
-              <Issue>
-               <Item>'Th14Converter.Status.unknown3'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
           </Members>
          </Type>
         </Types>
@@ -4732,9 +2678,6 @@
    </Rule>
    <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
     <Resolution Name="Default">{0} appears to have no upstream public or protected callers.</Resolution>
-   </Rule>
-   <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
-    <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>
    </Rule>
   </Rules>
  </FxCopReport>
