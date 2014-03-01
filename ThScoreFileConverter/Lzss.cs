@@ -12,13 +12,12 @@
 namespace ThScoreFileConverter
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.IO;
 
     /// <summary>
     /// Provides static methods for compressing and decompressing LZSS formatted data.
     /// </summary>
-    public static class Lzss
+    internal static class Lzss
     {
         /// <summary>
         /// The size of the dictionary.
@@ -30,7 +29,14 @@ namespace ThScoreFileConverter
         /// </summary>
         /// <param name="input">The stream to input data.</param>
         /// <param name="output">The stream that is output the compressed data.</param>
-        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Usage",
+            "CA1801:ReviewUnusedParameters",
+            Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Performance",
+            "CA1811:AvoidUncalledPrivateCode",
+            Justification = "For future use.")]
         public static void Compress(Stream input, Stream output)
         {
             throw new NotImplementedException("LZSS complession is not supported.");

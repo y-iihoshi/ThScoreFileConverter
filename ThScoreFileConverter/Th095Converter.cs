@@ -38,7 +38,7 @@ namespace ThScoreFileConverter
         "StyleCop.CSharp.SpacingRules",
         "SA1025:CodeMustNotContainMultipleWhitespaceInARow",
         Justification = "Reviewed.")]
-    public class Th095Converter : ThConverter
+    internal class Th095Converter : ThConverter
     {
         private enum Level
         {

@@ -27,7 +27,7 @@ namespace ThScoreFileConverter
     /// <summary>
     /// Generates an instance that executes the conversion of a score file.
     /// </summary>
-    public static class ThConverterFactory
+    internal static class ThConverterFactory
     {
         /// <summary>
         /// The dictionary of the types of the subclasses of the <see cref="ThConverter"/> class.
@@ -68,7 +68,7 @@ namespace ThScoreFileConverter
     /// <summary>
     /// Represents the event data issued by the <see cref="ThConverter"/> class.
     /// </summary>
-    public class ThConverterEventArgs : EventArgs
+    internal class ThConverterEventArgs : EventArgs
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ThConverterEventArgs"/> class.
@@ -114,7 +114,7 @@ namespace ThScoreFileConverter
     /// <summary>
     /// Represents the event data that indicates occurring of an exception.
     /// </summary>
-    public class ExceptionOccurredEventArgs : EventArgs
+    internal class ExceptionOccurredEventArgs : EventArgs
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ExceptionOccurredEventArgs"/> class.
@@ -134,7 +134,7 @@ namespace ThScoreFileConverter
     /// <summary>
     /// Represents the base class for classes that executes conversion of a score file.
     /// </summary>
-    public class ThConverter
+    internal class ThConverter
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ThConverter"/> class.

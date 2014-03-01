@@ -12,14 +12,13 @@
 namespace ThScoreFileConverter
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.IO;
 
     /// <summary>
     /// The static class that treats the encryption format used for Touhou Project works.
     /// Thanks to Touhou Toolkit 5.
     /// </summary>
-    public static class ThCrypt
+    internal static class ThCrypt
     {
         /// <summary>
         /// Encrypts data.
@@ -31,7 +30,14 @@ namespace ThScoreFileConverter
         /// <param name="step">The step.</param>
         /// <param name="block">The size of block.</param>
         /// <param name="limit">The limit value.</param>
-        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Usage",
+            "CA1801:ReviewUnusedParameters",
+            Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Performance",
+            "CA1811:AvoidUncalledPrivateCode",
+            Justification = "For future use.")]
         public static void Encrypt(
             Stream input, Stream output, int size, byte key, byte step, int block, int limit)
         {
