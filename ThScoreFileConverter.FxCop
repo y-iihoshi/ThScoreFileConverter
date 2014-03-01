@@ -347,13 +347,13 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Th07Converter+PlayList">
+         <Type Name="Th07Converter+PlayStatus">
           <Members>
            <Member Name="#unknown">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-03-01 09:07:51Z">
               <Issue>
-               <Item>'Th07Converter.PlayList.unknown'</Item>
+               <Item>'Th07Converter.PlayStatus.unknown'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -680,15 +680,15 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Th08Converter+PlayList">
+         <Type Name="Th08Converter+PlayStatus">
           <Members>
            <Member Name="#BgmFlags">
             <Accessors>
              <Accessor Name="#get_BgmFlags()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2014-02-08 15:40:17Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2014-03-01 09:07:51Z">
                 <Issue>
-                 <Item>'Th08Converter.PlayList.BgmFlags.get()'</Item>
+                 <Item>'Th08Converter.PlayStatus.BgmFlags.get()'</Item>
                 </Issue>
                </Message>
               </Messages>
@@ -699,9 +699,9 @@
             <Accessors>
              <Accessor Name="#get_Padding()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2014-02-08 15:40:17Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2014-03-01 09:07:51Z">
                 <Issue>
-                 <Item>'Th08Converter.PlayList.Padding.get()'</Item>
+                 <Item>'Th08Converter.PlayStatus.Padding.get()'</Item>
                 </Issue>
                </Message>
               </Messages>
@@ -710,9 +710,9 @@
            </Member>
            <Member Name="#unknown1">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-03-01 09:07:51Z">
               <Issue>
-               <Item>'Th08Converter.PlayList.unknown1'</Item>
+               <Item>'Th08Converter.PlayStatus.unknown1'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1077,15 +1077,15 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Th09Converter+PlayList">
+         <Type Name="Th09Converter+PlayStatus">
           <Members>
            <Member Name="#BgmFlags">
             <Accessors>
              <Accessor Name="#get_BgmFlags()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2014-02-08 15:40:17Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2014-03-01 09:07:51Z">
                 <Issue>
-                 <Item>'Th09Converter.PlayList.BgmFlags.get()'</Item>
+                 <Item>'Th09Converter.PlayStatus.BgmFlags.get()'</Item>
                 </Issue>
                </Message>
               </Messages>
@@ -1096,9 +1096,9 @@
             <Accessors>
              <Accessor Name="#get_Padding()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2014-02-08 15:40:17Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2014-03-01 09:07:51Z">
                 <Issue>
-                 <Item>'Th09Converter.PlayList.Padding.get()'</Item>
+                 <Item>'Th09Converter.PlayStatus.Padding.get()'</Item>
                 </Issue>
                </Message>
               </Messages>
@@ -1109,9 +1109,9 @@
             <Accessors>
              <Accessor Name="#get_TotalPlayTime()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2014-02-08 15:40:17Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2014-03-01 09:07:51Z">
                 <Issue>
-                 <Item>'Th09Converter.PlayList.TotalPlayTime.get()'</Item>
+                 <Item>'Th09Converter.PlayStatus.TotalPlayTime.get()'</Item>
                 </Issue>
                </Message>
               </Messages>
@@ -1120,9 +1120,9 @@
            </Member>
            <Member Name="#unknown">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:40:17Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-03-01 09:07:51Z">
               <Issue>
-               <Item>'Th09Converter.PlayList.unknown'</Item>
+               <Item>'Th09Converter.PlayStatus.unknown'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -2688,13 +2688,13 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Th07Converter+PlayList">
+         <Type Name="Th07Converter+PlayStatus">
           <Members>
            <Member Name="#unknown">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-03-01 09:07:51Z">
               <Issue>
-               <Item>'Th07Converter.PlayList.unknown'</Item>
+               <Item>'Th07Converter.PlayStatus.unknown'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -3021,15 +3021,15 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Th08Converter+PlayList">
+         <Type Name="Th08Converter+PlayStatus">
           <Members>
            <Member Name="#BgmFlags">
             <Accessors>
              <Accessor Name="#get_BgmFlags()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2014-02-08 15:40:17Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2014-03-01 09:07:51Z">
                 <Issue>
-                 <Item>'Th08Converter.PlayList.BgmFlags.get()'</Item>
+                 <Item>'Th08Converter.PlayStatus.BgmFlags.get()'</Item>
                 </Issue>
                </Message>
               </Messages>
@@ -3040,9 +3040,9 @@
             <Accessors>
              <Accessor Name="#get_Padding()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2014-02-08 15:40:17Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2014-03-01 09:07:51Z">
                 <Issue>
-                 <Item>'Th08Converter.PlayList.Padding.get()'</Item>
+                 <Item>'Th08Converter.PlayStatus.Padding.get()'</Item>
                 </Issue>
                </Message>
               </Messages>
@@ -3051,9 +3051,9 @@
            </Member>
            <Member Name="#unknown1">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-03-01 09:07:51Z">
               <Issue>
-               <Item>'Th08Converter.PlayList.unknown1'</Item>
+               <Item>'Th08Converter.PlayStatus.unknown1'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -3418,15 +3418,15 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Th09Converter+PlayList">
+         <Type Name="Th09Converter+PlayStatus">
           <Members>
            <Member Name="#BgmFlags">
             <Accessors>
              <Accessor Name="#get_BgmFlags()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2014-02-08 14:04:32Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2014-03-01 09:07:51Z">
                 <Issue>
-                 <Item>'Th09Converter.PlayList.BgmFlags.get()'</Item>
+                 <Item>'Th09Converter.PlayStatus.BgmFlags.get()'</Item>
                 </Issue>
                </Message>
               </Messages>
@@ -3437,9 +3437,9 @@
             <Accessors>
              <Accessor Name="#get_Padding()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2014-02-08 14:04:32Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2014-03-01 09:07:51Z">
                 <Issue>
-                 <Item>'Th09Converter.PlayList.Padding.get()'</Item>
+                 <Item>'Th09Converter.PlayStatus.Padding.get()'</Item>
                 </Issue>
                </Message>
               </Messages>
@@ -3450,9 +3450,9 @@
             <Accessors>
              <Accessor Name="#get_TotalPlayTime()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2014-02-08 14:04:32Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2014-03-01 09:07:51Z">
                 <Issue>
-                 <Item>'Th09Converter.PlayList.TotalPlayTime.get()'</Item>
+                 <Item>'Th09Converter.PlayStatus.TotalPlayTime.get()'</Item>
                 </Issue>
                </Message>
               </Messages>
@@ -3461,9 +3461,9 @@
            </Member>
            <Member Name="#unknown">
             <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-02-08 15:53:28Z">
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2014-03-01 09:07:51Z">
               <Issue>
-               <Item>'Th09Converter.PlayList.unknown'</Item>
+               <Item>'Th09Converter.PlayStatus.unknown'</Item>
               </Issue>
              </Message>
             </Messages>

@@ -202,7 +202,7 @@ namespace ThScoreFileConverter
             public Dictionary<Chara, ClearData> ClearData { get; set; }
             public CardAttack[] CardAttacks { get; set; }
             public Dictionary<CharaLevelPair, Dictionary<Stage, PracticeScore>> PracticeScores { get; set; }
-            public PlayList PlayList { get; set; }
+            public PlayStatus PlayStatus { get; set; }
             public LastName LastName { get; set; }
             public VersionInfo VersionInfo { get; set; }
 
@@ -418,7 +418,7 @@ namespace ThScoreFileConverter
             }
         }
 
-        private class PlayList : Chapter
+        private class PlayStatus : Chapter
         {
             private uint unknown;   // always 0x00000001?
 
@@ -426,7 +426,7 @@ namespace ThScoreFileConverter
             public Time TotalPlayTime { get; private set; }
             public Dictionary<LevelWithTotal, PlayCount> PlayCounts { get; private set; }
 
-            public PlayList(Chapter ch)
+            public PlayStatus(Chapter ch)
                 : base(ch)
             {
                 if (this.Signature != "PLST")
@@ -829,9 +829,9 @@ namespace ThScoreFileConverter
 
                         case "PLST":
                             {
-                                var playList = new PlayList(chapter);
-                                playList.ReadFrom(reader);
-                                allScoreData.PlayList = playList;
+                                var status = new PlayStatus(chapter);
+                                status.ReadFrom(reader);
+                                allScoreData.PlayStatus = status;
                             }
                             break;
 
@@ -868,7 +868,7 @@ namespace ThScoreFileConverter
                 (allScoreData.ClearData.Count == Enum.GetValues(typeof(Chara)).Length) &&
                 // (allScoreData.cardAttacks.Length == NumCards) &&
                 // (allScoreData.practiceScores.Count >= 0) &&
-                (allScoreData.PlayList != null) &&
+                (allScoreData.PlayStatus != null) &&
                 (allScoreData.LastName != null) &&
                 (allScoreData.VersionInfo != null))
                 return allScoreData;
@@ -1084,7 +1084,7 @@ namespace ThScoreFileConverter
                 var level = ToLevelWithTotal(match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
                 var charaAndMore = match.Groups[2].Value.ToUpperInvariant();
 
-                var playCount = this.allScoreData.PlayList.PlayCounts[(LevelWithTotal)level];
+                var playCount = this.allScoreData.PlayStatus.PlayCounts[(LevelWithTotal)level];
                 switch (charaAndMore)
                 {
                     case "CL":  // clear count
@@ -1116,8 +1116,8 @@ namespace ThScoreFileConverter
                 var kind = match.Groups[1].Value.ToUpperInvariant();
 
                 return (kind == "ALL")
-                    ? this.allScoreData.PlayList.TotalRunningTime.ToLongString()
-                    : this.allScoreData.PlayList.TotalPlayTime.ToLongString();
+                    ? this.allScoreData.PlayStatus.TotalRunningTime.ToLongString()
+                    : this.allScoreData.PlayStatus.TotalPlayTime.ToLongString();
             });
             return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
