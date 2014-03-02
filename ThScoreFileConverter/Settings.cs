@@ -37,7 +37,7 @@ namespace ThScoreFileConverter
         {
             this.ScoreFile = string.Empty;
             this.BestShotDirectory = string.Empty;
-            this.TemplateFiles = null;
+            this.TemplateFiles = new List<string>();
             this.OutputDirectory = string.Empty;
             this.ImageOutputDirectory = string.Empty;
         }
