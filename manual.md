@@ -191,6 +191,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 * 東方輝針城に対応
 * 東方永夜抄
     * [クリア達成度](manual/format.html#T08CLEAR)において、<samp>FinalA Clear</samp> を出力する判定方法を修正
+* 東方星蓮船
+    * プラクティススコアのテンプレートファイルの誤記を修正（Ver.1.5.0.0 でのリリース漏れ）
 * 妖精大戦争
     * スペルカード蒐集率のテンプレートファイルの誤記を修正
 * 全体的にソースコードを整理
@@ -203,8 +205,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 2014/01/27 ver. 1.5.0.0
 
 * 東方神霊廟に対応
-* 東方星蓮船
-    * プラクティススコアのテンプレートファイルの誤記を修正
+* <del>東方星蓮船</del>
+    * <del>プラクティススコアのテンプレートファイルの誤記を修正</del>
 * 東方妖々夢
     * [スペルカード蒐集率](manual/format.html#T07CRG)で難易度を指定した場合に、ステージの指定に関係なく全ステージ合計の値を出力していたため修正
 * [ビルド環境](#BuiltEnv)を .NET Framework 3.0 から 3.5 に変更
