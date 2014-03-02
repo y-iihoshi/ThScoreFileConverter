@@ -51,14 +51,11 @@ ThScoreFileConverter （以下、本ツール）は、東方 Project の各作�
 * ダブルスポイラー ver. 1.00a
 * 妖精大戦争 ver. 1.00a
 * 東方神霊廟 ver. 1.00c
+* 東方輝針城 ver. 1.00b
 
 ### 対応予定あり {: #WillSupport }
 
 以下作品については、本ツール作者の原作プレイ進捗状況に伴って今後対応予定です：
-
-* 東方輝針城
-
-以下作品についても上記と同様ですが、本ツール作者は格ゲーが弾幕 STG 以上に下手なので、後回しです：
 
 * 東方萃夢想
 * 東方緋想天
@@ -83,7 +80,7 @@ ThScoreFileConverter （以下、本ツール）は、東方 Project の各作�
 
 * Windows XP Home Edition SP3 (32bit) + .NET Framework 3.5 SP1
 * Windows 7 Professional SP1 (64bit) + .NET Framework 3.5 SP1
-* Windows 8 (64bit) + .NET Framework 3.5 SP1 （Ver.1.2.0.0 までは確認済み）
+* Windows 8 (64bit) + .NET Framework 3.5 SP1 （Ver.1.2.0.0 まで確認済み）
 * Windows 8.1 (64bit) + .NET Framework 3.5 SP1
 
 ----------------------------------------
@@ -188,6 +185,15 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ----------------------------------------
 
 ## ChangeLog {: #ChangeLog }
+
+2014/03/02 ver. 1.6.0.0
+
+* 東方輝針城に対応
+* 東方永夜抄
+    * [クリア達成度](manual/format.html#T08CLEAR)において、<samp>FinalA Clear</samp> を出力する判定方法を修正
+* 妖精大戦争
+    * スペルカード蒐集率のテンプレートファイルの誤記を修正
+* 全体的にソースコードを整理
 
 2014/02/03 ver. 1.5.1.0
 
