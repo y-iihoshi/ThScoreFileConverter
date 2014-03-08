@@ -41,7 +41,7 @@ namespace ThScoreFileConverter
         Justification = "Reviewed.")]
     internal class Th125Converter : ThConverter
     {
-        private enum Level
+        public enum Level
         {
             [EnumAltName("1", LongName = "01")] Level1,
             [EnumAltName("2", LongName = "02")] Level2,
@@ -59,13 +59,13 @@ namespace ThScoreFileConverter
             [EnumAltName("S", LongName = "sp")] Spoiler
         }
 
-        private enum Chara
+        public enum Chara
         {
             [EnumAltName("A")] Aya,
             [EnumAltName("H")] Hatate
         }
 
-        private enum Enemy
+        public enum Enemy
         {
             [EnumAltName("静葉",        LongName = "秋 静葉")]          Shizuha,
             [EnumAltName("穣子",        LongName = "秋 穣子")]          Minoriko,

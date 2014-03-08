@@ -35,7 +35,7 @@ namespace ThScoreFileConverter
         Justification = "Reviewed.")]
     internal class Th09Converter : ThConverter
     {
-        private enum Level
+        public enum Level
         {
             [EnumAltName("E")] Easy,
             [EnumAltName("N")] Normal,
@@ -44,7 +44,7 @@ namespace ThScoreFileConverter
             [EnumAltName("X")] Extra
         }
 
-        private enum Chara
+        public enum Chara
         {
             [EnumAltName("RM")] Reimu,
             [EnumAltName("MR")] Marisa,

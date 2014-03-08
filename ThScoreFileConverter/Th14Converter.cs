@@ -35,7 +35,7 @@ namespace ThScoreFileConverter
         Justification = "Reviewed.")]
     internal class Th14Converter : ThConverter
     {
-        private enum Level
+        public enum Level
         {
             [EnumAltName("E")] Easy,
             [EnumAltName("N")] Normal,
@@ -43,7 +43,7 @@ namespace ThScoreFileConverter
             [EnumAltName("L")] Lunatic,
             [EnumAltName("X")] Extra
         }
-        private enum LevelWithTotal
+        public enum LevelWithTotal
         {
             [EnumAltName("E")] Easy,
             [EnumAltName("N")] Normal,
@@ -52,7 +52,7 @@ namespace ThScoreFileConverter
             [EnumAltName("X")] Extra,
             [EnumAltName("T")] Total
         }
-        private enum LevelPractice
+        public enum LevelPractice
         {
             [EnumAltName("E")] Easy,
             [EnumAltName("N")] Normal,
@@ -61,7 +61,7 @@ namespace ThScoreFileConverter
             [EnumAltName("X")] Extra,
             [EnumAltName("-")] NotUsed
         }
-        private enum LevelPracticeWithTotal
+        public enum LevelPracticeWithTotal
         {
             [EnumAltName("E")] Easy,
             [EnumAltName("N")] Normal,
@@ -72,7 +72,7 @@ namespace ThScoreFileConverter
             [EnumAltName("T")] Total
         }
 
-        private enum Chara
+        public enum Chara
         {
             [EnumAltName("RA")] ReimuA,
             [EnumAltName("RB")] ReimuB,
@@ -81,7 +81,7 @@ namespace ThScoreFileConverter
             [EnumAltName("SA")] SakuyaA,
             [EnumAltName("SB")] SakuyaB
         }
-        private enum CharaWithTotal
+        public enum CharaWithTotal
         {
             [EnumAltName("RA")] ReimuA,
             [EnumAltName("RB")] ReimuB,
@@ -92,7 +92,7 @@ namespace ThScoreFileConverter
             [EnumAltName("TL")] Total
         }
 
-        private enum Stage
+        public enum Stage
         {
             [EnumAltName("1")] Stage1,
             [EnumAltName("2")] Stage2,
@@ -102,7 +102,7 @@ namespace ThScoreFileConverter
             [EnumAltName("6")] Stage6,
             [EnumAltName("X")] Extra
         }
-        private enum StageWithTotal
+        public enum StageWithTotal
         {
             [EnumAltName("1")] Stage1,
             [EnumAltName("2")] Stage2,
@@ -113,7 +113,7 @@ namespace ThScoreFileConverter
             [EnumAltName("X")] Extra,
             [EnumAltName("0")] Total
         }
-        private enum StagePractice
+        public enum StagePractice
         {
             [EnumAltName("1")] Stage1,
             [EnumAltName("2")] Stage2,
@@ -125,7 +125,7 @@ namespace ThScoreFileConverter
             [EnumAltName("-")] NotUsed
         }
 
-        private enum StageProgress
+        public enum StageProgress
         {
             [EnumAltName("-------")]     None,
             [EnumAltName("Stage 1")]     Stage1,

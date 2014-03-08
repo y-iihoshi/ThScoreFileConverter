@@ -35,7 +35,7 @@ namespace ThScoreFileConverter
         Justification = "Reviewed.")]
     internal class Th11Converter : ThConverter
     {
-        private enum Level
+        public enum Level
         {
             [EnumAltName("E")] Easy,
             [EnumAltName("N")] Normal,
@@ -43,7 +43,7 @@ namespace ThScoreFileConverter
             [EnumAltName("L")] Lunatic,
             [EnumAltName("X")] Extra
         }
-        private enum LevelWithTotal
+        public enum LevelWithTotal
         {
             [EnumAltName("E")] Easy,
             [EnumAltName("N")] Normal,
@@ -53,7 +53,7 @@ namespace ThScoreFileConverter
             [EnumAltName("T")] Total
         }
 
-        private enum Chara
+        public enum Chara
         {
             [EnumAltName("RY")] ReimuYukari,
             [EnumAltName("RS")] ReimuSuika,
@@ -62,7 +62,7 @@ namespace ThScoreFileConverter
             [EnumAltName("MP")] MarisaPatchouli,
             [EnumAltName("MN")] MarisaNitori
         }
-        private enum CharaWithTotal
+        public enum CharaWithTotal
         {
             [EnumAltName("RY")] ReimuYukari,
             [EnumAltName("RS")] ReimuSuika,
@@ -73,7 +73,7 @@ namespace ThScoreFileConverter
             [EnumAltName("TL")] Total
         }
 
-        private enum Stage
+        public enum Stage
         {
             [EnumAltName("1")] Stage1,
             [EnumAltName("2")] Stage2,
@@ -83,7 +83,7 @@ namespace ThScoreFileConverter
             [EnumAltName("6")] Stage6,
             [EnumAltName("X")] Extra
         }
-        private enum StageWithTotal
+        public enum StageWithTotal
         {
             [EnumAltName("1")] Stage1,
             [EnumAltName("2")] Stage2,
@@ -95,7 +95,7 @@ namespace ThScoreFileConverter
             [EnumAltName("0")] Total
         }
 
-        private enum StageProgress
+        public enum StageProgress
         {
             [EnumAltName("-------")]     None,
             [EnumAltName("Stage 1")]     Stage1,

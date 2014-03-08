@@ -40,7 +40,7 @@ namespace ThScoreFileConverter
         Justification = "Reviewed.")]
     internal class Th095Converter : ThConverter
     {
-        private enum Level
+        public enum Level
         {
             [EnumAltName("1", LongName = "01")] Level1,
             [EnumAltName("2", LongName = "02")] Level2,
@@ -55,7 +55,7 @@ namespace ThScoreFileConverter
             [EnumAltName("X", LongName = "ex")] Extra
         }
 
-        private enum Enemy
+        public enum Enemy
         {
             [EnumAltName("リグル",     LongName = "リグル・ナイトバグ")]         Wriggle,
             [EnumAltName("ルーミア",   LongName = "ルーミア")]                   Rumia,
