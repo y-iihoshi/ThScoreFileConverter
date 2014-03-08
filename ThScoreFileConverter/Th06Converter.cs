@@ -104,24 +104,6 @@ namespace ThScoreFileConverter
             [EnumAltName("All Clear")]   Clear = 99
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "StyleCop.CSharp.SpacingRules",
-            "SA1008:OpeningParenthesisMustBeSpacedCorrectly",
-            Justification = "Reviewed.")]
-        private static readonly List<HighScore> InitialRanking = new List<HighScore>()
-        {
-            new HighScore(1000000),
-            new HighScore( 900000),
-            new HighScore( 800000),
-            new HighScore( 700000),
-            new HighScore( 600000),
-            new HighScore( 500000),
-            new HighScore( 400000),
-            new HighScore( 300000),
-            new HighScore( 200000),
-            new HighScore( 100000)
-        };
-
         private const int NumCards = 64;
 
         // Thanks to thwiki.info
@@ -436,6 +418,8 @@ namespace ThScoreFileConverter
             get { return "1.02h"; }
         }
 
+        private static readonly List<HighScore> InitialRanking;
+
         private static readonly string LevelPattern;
         private static readonly string CharaPattern;
         private static readonly string StagePattern;
@@ -454,8 +438,26 @@ namespace ThScoreFileConverter
             "StyleCop.CSharp.MaintainabilityRules",
             "SA1119:StatementMustNotUseUnnecessaryParenthesis",
             Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.SpacingRules",
+            "SA1008:OpeningParenthesisMustBeSpacedCorrectly",
+            Justification = "Reviewed.")]
         static Th06Converter()
         {
+            InitialRanking = new List<HighScore>()
+            {
+                new HighScore(1000000),
+                new HighScore( 900000),
+                new HighScore( 800000),
+                new HighScore( 700000),
+                new HighScore( 600000),
+                new HighScore( 500000),
+                new HighScore( 400000),
+                new HighScore( 300000),
+                new HighScore( 200000),
+                new HighScore( 100000)
+            };
+
             var levels = Utils.GetEnumerator<Level>();
             var charas = Utils.GetEnumerator<Chara>();
             var stages = Utils.GetEnumerator<Stage>();
