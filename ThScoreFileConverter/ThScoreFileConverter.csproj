@@ -98,7 +98,6 @@
     <Compile Include="Win32Window.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="ThConverter.cs" />
-    <Compile Include="Range.cs" />
     <Compile Include="Th10Converter.cs" />
     <Compile Include="ThCrypt.cs" />
     <Compile Include="Th11Converter.cs" />

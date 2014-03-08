@@ -24,6 +24,7 @@ namespace ThScoreFileConverter
     using System.Linq;
     using System.Text;
     using System.Text.RegularExpressions;
+    using CardInfo = SpellCardInfo<Th06Converter.Stage, Th06Converter.Level>;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage(
         "StyleCop.CSharp.OrderingRules",
@@ -104,100 +105,6 @@ namespace ThScoreFileConverter
             [EnumAltName("All Clear")]   Clear = 99
         }
 
-        private const int NumCards = 64;
-
-        // Thanks to thwiki.info
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "StyleCop.CSharp.SpacingRules",
-            "SA1008:OpeningParenthesisMustBeSpacedCorrectly",
-            Justification = "Reviewed.")]
-        private static readonly Dictionary<Stage, Range<int>> StageCardTable =
-            new Dictionary<Stage, Range<int>>()
-            {
-                { Stage.Stage1, new Range<int>( 0,  2) },
-                { Stage.Stage2, new Range<int>( 3,  6) },
-                { Stage.Stage3, new Range<int>( 7, 13) },
-                { Stage.Stage4, new Range<int>(14, 31) },
-                { Stage.Stage5, new Range<int>(32, 39) },
-                { Stage.Stage6, new Range<int>(40, 50) },
-                { Stage.Extra,  new Range<int>(51, 63) }
-            };
-
-        // Thanks to thwiki.info
-        private static readonly Level[][] CardLevelTable =
-        {
-            new Level[] { Level.Hard, Level.Lunatic },
-            new Level[] { Level.Easy, Level.Normal, Level.Hard, Level.Lunatic },
-            new Level[] { Level.Easy, Level.Normal, Level.Hard, Level.Lunatic },
-            new Level[] { Level.Easy, Level.Normal },
-            new Level[] { Level.Hard, Level.Lunatic },
-            new Level[] { Level.Easy, Level.Normal, Level.Hard, Level.Lunatic },
-            new Level[] { Level.Normal, Level.Hard, Level.Lunatic },
-            new Level[] { Level.Easy, Level.Normal },
-            new Level[] { Level.Hard, Level.Lunatic },
-            new Level[] { Level.Easy, Level.Normal, Level.Hard, Level.Lunatic },
-
-            new Level[] { Level.Hard, Level.Lunatic },
-            new Level[] { Level.Easy, Level.Normal },
-            new Level[] { Level.Hard, Level.Lunatic },
-            new Level[] { Level.Normal, Level.Hard, Level.Lunatic },
-            new Level[] { Level.Easy, Level.Normal },
-            new Level[] { Level.Easy, Level.Normal },
-            new Level[] { Level.Easy, Level.Normal },
-            new Level[] { Level.Easy, Level.Normal },
-            new Level[] { Level.Normal },
-            new Level[] { Level.Normal, Level.Hard, Level.Lunatic },
-
-            new Level[] { Level.Normal, Level.Hard, Level.Lunatic },
-            new Level[] { Level.Normal, Level.Hard, Level.Lunatic },
-            new Level[] { Level.Hard, Level.Lunatic },
-            new Level[] { Level.Hard, Level.Lunatic },
-            new Level[] { Level.Hard, Level.Lunatic },
-            new Level[] { Level.Hard, Level.Lunatic },
-            new Level[] { Level.Hard, Level.Lunatic },
-            new Level[] { Level.Easy, Level.Normal, Level.Hard, Level.Lunatic },
-            new Level[] { Level.Easy, Level.Normal, Level.Hard, Level.Lunatic },
-            new Level[] { Level.Easy, Level.Normal, Level.Hard, Level.Lunatic },
-
-            new Level[] { Level.Normal, Level.Hard, Level.Lunatic },
-            new Level[] { Level.Easy, Level.Normal, Level.Hard, Level.Lunatic },
-            new Level[] { Level.Easy, Level.Normal },
-            new Level[] { Level.Hard, Level.Lunatic },
-            new Level[] { Level.Easy, Level.Normal },
-            new Level[] { Level.Easy, Level.Normal },
-            new Level[] { Level.Easy, Level.Normal },
-            new Level[] { Level.Hard, Level.Lunatic },
-            new Level[] { Level.Hard, Level.Lunatic },
-            new Level[] { Level.Hard, Level.Lunatic },
-
-            new Level[] { Level.Normal, Level.Hard, Level.Lunatic },
-            new Level[] { Level.Normal },
-            new Level[] { Level.Normal },
-            new Level[] { Level.Normal },
-            new Level[] { Level.Normal },
-            new Level[] { Level.Normal },
-            new Level[] { Level.Hard, Level.Lunatic },
-            new Level[] { Level.Hard, Level.Lunatic },
-            new Level[] { Level.Hard, Level.Lunatic },
-            new Level[] { Level.Hard, Level.Lunatic },
-
-            new Level[] { Level.Hard, Level.Lunatic },
-            new Level[] { Level.Extra },
-            new Level[] { Level.Extra },
-            new Level[] { Level.Extra },
-            new Level[] { Level.Extra },
-            new Level[] { Level.Extra },
-            new Level[] { Level.Extra },
-            new Level[] { Level.Extra },
-            new Level[] { Level.Extra },
-            new Level[] { Level.Extra },
-
-            new Level[] { Level.Extra },
-            new Level[] { Level.Extra },
-            new Level[] { Level.Extra },
-            new Level[] { Level.Extra }
-        };
-
         private class CharaLevelPair : Pair<Chara, Level>
         {
             [System.Diagnostics.CodeAnalysis.SuppressMessage(
@@ -228,7 +135,7 @@ namespace ThScoreFileConverter
                 var numCharas = Enum.GetValues(typeof(Chara)).Length;
                 this.Rankings = new Dictionary<CharaLevelPair, List<HighScore>>();
                 this.ClearData = new Dictionary<Chara, ClearData>(numCharas);
-                this.CardAttacks = new CardAttack[NumCards];
+                this.CardAttacks = new CardAttack[CardTable.Count];
                 this.PracticeScores = new Dictionary<CharaLevelPair, Dictionary<Stage, PracticeScore>>();
             }
         }
@@ -351,7 +258,13 @@ namespace ThScoreFileConverter
         private class CardAttack : Chapter      // per card
         {
             public short Number { get; private set; }       // 0-based
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public byte[] CardName { get; private set; }    // .Length = 0x24, null-terminated
+
             public ushort TrialCount { get; private set; }
             public ushort ClearCount { get; private set; }
 
@@ -418,6 +331,7 @@ namespace ThScoreFileConverter
             get { return "1.02h"; }
         }
 
+        private static readonly Dictionary<int, CardInfo> CardTable;
         private static readonly List<HighScore> InitialRanking;
 
         private static readonly string LevelPattern;
@@ -444,6 +358,76 @@ namespace ThScoreFileConverter
             Justification = "Reviewed.")]
         static Th06Converter()
         {
+            // Thanks to thwiki.info
+            var cardList = new List<CardInfo>()
+            {
+                new CardInfo( 1, "月符「ムーンライトレイ」",         Stage.Stage1, Level.Hard, Level.Lunatic),
+                new CardInfo( 2, "夜符「ナイトバード」",             Stage.Stage1, Level.Easy, Level.Normal, Level.Hard, Level.Lunatic),
+                new CardInfo( 3, "闇符「ディマーケイション」",       Stage.Stage1, Level.Easy, Level.Normal, Level.Hard, Level.Lunatic),
+                new CardInfo( 4, "氷符「アイシクルフォール」",       Stage.Stage2, Level.Easy, Level.Normal),
+                new CardInfo( 5, "雹符「ヘイルストーム」",           Stage.Stage2, Level.Hard, Level.Lunatic),
+                new CardInfo( 6, "凍符「パーフェクトフリーズ」",     Stage.Stage2, Level.Easy, Level.Normal, Level.Hard, Level.Lunatic),
+                new CardInfo( 7, "雪符「ダイアモンドブリザード」",   Stage.Stage2, Level.Normal, Level.Hard, Level.Lunatic),
+                new CardInfo( 8, "華符「芳華絢爛」",                 Stage.Stage3, Level.Easy, Level.Normal),
+                new CardInfo( 9, "華符「セラギネラ９」",             Stage.Stage3, Level.Hard, Level.Lunatic),
+                new CardInfo(10, "虹符「彩虹の風鈴」",               Stage.Stage3, Level.Easy, Level.Normal, Level.Hard, Level.Lunatic),
+                new CardInfo(11, "幻符「華想夢葛」",                 Stage.Stage3, Level.Hard, Level.Lunatic),
+                new CardInfo(12, "彩符「彩雨」",                     Stage.Stage3, Level.Easy, Level.Normal),
+                new CardInfo(13, "彩符「彩光乱舞」",                 Stage.Stage3, Level.Hard, Level.Lunatic),
+                new CardInfo(14, "彩符「極彩颱風」",                 Stage.Stage3, Level.Normal, Level.Hard, Level.Lunatic),
+                new CardInfo(15, "火符「アグニシャイン」",           Stage.Stage4, Level.Easy, Level.Normal),
+                new CardInfo(16, "水符「プリンセスウンディネ」",     Stage.Stage4, Level.Easy, Level.Normal),
+                new CardInfo(17, "木符「シルフィホルン」",           Stage.Stage4, Level.Easy, Level.Normal),
+                new CardInfo(18, "土符「レイジィトリリトン」",       Stage.Stage4, Level.Easy, Level.Normal),
+                new CardInfo(19, "金符「メタルファティーグ」",       Stage.Stage4, Level.Normal),
+                new CardInfo(20, "火符「アグニシャイン上級」",       Stage.Stage4, Level.Normal, Level.Hard, Level.Lunatic),
+                new CardInfo(21, "木符「シルフィホルン上級」",       Stage.Stage4, Level.Normal, Level.Hard, Level.Lunatic),
+                new CardInfo(22, "土符「レイジィトリリトン上級」",   Stage.Stage4, Level.Normal, Level.Hard, Level.Lunatic),
+                new CardInfo(23, "火符「アグニレイディアンス」",     Stage.Stage4, Level.Hard, Level.Lunatic),
+                new CardInfo(24, "水符「ベリーインレイク」",         Stage.Stage4, Level.Hard, Level.Lunatic),
+                new CardInfo(25, "木符「グリーンストーム」",         Stage.Stage4, Level.Hard, Level.Lunatic),
+                new CardInfo(26, "土符「トリリトンシェイク」",       Stage.Stage4, Level.Hard, Level.Lunatic),
+                new CardInfo(27, "金符「シルバードラゴン」",         Stage.Stage4, Level.Hard, Level.Lunatic),
+                new CardInfo(28, "火＆土符「ラーヴァクロムレク」",   Stage.Stage4, Level.Easy, Level.Normal, Level.Hard, Level.Lunatic),
+                new CardInfo(29, "木＆火符「フォレストブレイズ」",   Stage.Stage4, Level.Easy, Level.Normal, Level.Hard, Level.Lunatic),
+                new CardInfo(30, "水＆木符「ウォーターエルフ」",     Stage.Stage4, Level.Easy, Level.Normal, Level.Hard, Level.Lunatic),
+                new CardInfo(31, "金＆水符「マーキュリポイズン」",   Stage.Stage4, Level.Normal, Level.Hard, Level.Lunatic),
+                new CardInfo(32, "土＆金符「エメラルドメガリス」",   Stage.Stage4, Level.Easy, Level.Normal, Level.Hard, Level.Lunatic),
+                new CardInfo(33, "奇術「ミスディレクション」",       Stage.Stage5, Level.Easy, Level.Normal),
+                new CardInfo(34, "奇術「幻惑ミスディレクション」",   Stage.Stage5, Level.Hard, Level.Lunatic),
+                new CardInfo(35, "幻在「クロックコープス」",         Stage.Stage5, Level.Easy, Level.Normal),
+                new CardInfo(36, "幻象「ルナクロック」",             Stage.Stage5, Level.Easy, Level.Normal),
+                new CardInfo(37, "メイド秘技「操りドール」",         Stage.Stage5, Level.Easy, Level.Normal),
+                new CardInfo(38, "幻幽「ジャック・ザ・ルドビレ」",   Stage.Stage5, Level.Hard, Level.Lunatic),
+                new CardInfo(39, "幻世「ザ・ワールド」",             Stage.Stage5, Level.Hard, Level.Lunatic),
+                new CardInfo(40, "メイド秘技「殺人ドール」",         Stage.Stage5, Level.Hard, Level.Lunatic),
+                new CardInfo(41, "奇術「エターナルミーク」",         Stage.Stage6, Level.Normal, Level.Hard, Level.Lunatic),
+                new CardInfo(42, "天罰「スターオブダビデ」",         Stage.Stage6, Level.Normal),
+                new CardInfo(43, "冥符「紅色の冥界」",               Stage.Stage6, Level.Normal),
+                new CardInfo(44, "呪詛「ブラド・ツェペシュの呪い」", Stage.Stage6, Level.Normal),
+                new CardInfo(45, "紅符「スカーレットシュート」",     Stage.Stage6, Level.Normal),
+                new CardInfo(46, "「レッドマジック」",               Stage.Stage6, Level.Normal),
+                new CardInfo(47, "神罰「幼きデーモンロード」",       Stage.Stage6, Level.Hard, Level.Lunatic),
+                new CardInfo(48, "獄符「千本の針の山」",             Stage.Stage6, Level.Hard, Level.Lunatic),
+                new CardInfo(49, "神術「吸血鬼幻想」",               Stage.Stage6, Level.Hard, Level.Lunatic),
+                new CardInfo(50, "紅符「スカーレットマイスタ」",     Stage.Stage6, Level.Hard, Level.Lunatic),
+                new CardInfo(51, "「紅色の幻想郷」",                 Stage.Stage6, Level.Hard, Level.Lunatic),
+                new CardInfo(52, "月符「サイレントセレナ」",         Stage.Extra,  Level.Extra),
+                new CardInfo(53, "日符「ロイヤルフレア」",           Stage.Extra,  Level.Extra),
+                new CardInfo(54, "火水木金土符「賢者の石」",         Stage.Extra,  Level.Extra),
+                new CardInfo(55, "禁忌「クランベリートラップ」",     Stage.Extra,  Level.Extra),
+                new CardInfo(56, "禁忌「レーヴァテイン」",           Stage.Extra,  Level.Extra),
+                new CardInfo(57, "禁忌「フォーオブアカインド」",     Stage.Extra,  Level.Extra),
+                new CardInfo(58, "禁忌「カゴメカゴメ」",             Stage.Extra,  Level.Extra),
+                new CardInfo(59, "禁忌「恋の迷路」",                 Stage.Extra,  Level.Extra),
+                new CardInfo(60, "禁弾「スターボウブレイク」",       Stage.Extra,  Level.Extra),
+                new CardInfo(61, "禁弾「カタディオプトリック」",     Stage.Extra,  Level.Extra),
+                new CardInfo(62, "禁弾「過去を刻む時計」",           Stage.Extra,  Level.Extra),
+                new CardInfo(63, "秘弾「そして誰もいなくなるか？」", Stage.Extra,  Level.Extra),
+                new CardInfo(64, "ＱＥＤ「４９５年の波紋」",         Stage.Extra,  Level.Extra)
+            };
+            CardTable = cardList.ToDictionary(card => card.Number);
+
             InitialRanking = new List<HighScore>()
             {
                 new HighScore(1000000),
@@ -785,7 +769,7 @@ namespace ThScoreFileConverter
                 if (number == 0)
                     return this.ToNumberString(
                         this.allScoreData.CardAttacks.Sum(getCountWithNullCheck));
-                else if (new Range<int>(1, NumCards).Contains(number))
+                else if (CardTable.ContainsKey(number))
                     return this.ToNumberString(
                         getCountWithNullCheck(this.allScoreData.CardAttacks[number - 1]));
                 else
@@ -803,20 +787,17 @@ namespace ThScoreFileConverter
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
                 var type = match.Groups[2].Value.ToUpperInvariant();
 
-                if (new Range<int>(1, NumCards).Contains(number))
+                if (CardTable.ContainsKey(number))
                 {
                     var attack = this.allScoreData.CardAttacks[number - 1];
                     if (type == "N")
                         return ((attack != null) && attack.HasTried())
-                            ? Encoding.Default.GetString(attack.CardName).Split('\0')[0] : "??????????";
+                            ? CardTable[number].Name : "??????????";
                     else
                     {
                         if ((attack != null) && attack.HasTried())
-                        {
-                            var levelStrings = Array.ConvertAll<Level, string>(
-                                CardLevelTable[attack.Number], elem => elem.ToString());
-                            return string.Join(", ", levelStrings);
-                        }
+                            return string.Join(
+                                ", ", CardTable[number].Levels.Select(lv => lv.ToString()).ToArray());
                         else
                             return "?????";
                     }
@@ -849,7 +830,7 @@ namespace ThScoreFileConverter
                     // Do nothing
                 }
                 else
-                    findByStage = (attack => StageCardTable[(Stage)stage].Contains(attack.Number));
+                    findByStage = (attack => CardTable[attack.Number + 1].Stage == (Stage)stage);
 
                 if (type == 1)
                     findByType = (attack => attack.ClearCount > 0);

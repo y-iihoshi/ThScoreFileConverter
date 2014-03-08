@@ -24,6 +24,7 @@ namespace ThScoreFileConverter
     using System.Linq;
     using System.Text;
     using System.Text.RegularExpressions;
+    using CardInfo = SpellCardInfo<Th14Converter.Stage, Th14Converter.Level>;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage(
         "StyleCop.CSharp.OrderingRules",
@@ -139,30 +140,6 @@ namespace ThScoreFileConverter
             [EnumAltName("Extra Clear")] ExtraClear
         }
 
-        private const int NumCards = 120;
-
-        // Thanks to thwiki.info
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "StyleCop.CSharp.SpacingRules",
-            "SA1008:OpeningParenthesisMustBeSpacedCorrectly",
-            Justification = "Reviewed.")]
-        private static readonly Dictionary<Stage, Range<int>> StageCardTable =
-            new Dictionary<Stage, Range<int>>()
-            {
-                { Stage.Stage1,     new Range<int>(  0,   9) },
-                { Stage.Stage2,     new Range<int>( 10,  25) },
-                { Stage.Stage3,     new Range<int>( 26,  39) },
-#if false
-                { Stage.Stage4A,    new Range<int>( 40,  51) },
-                { Stage.Stage4B,    new Range<int>( 52,  63) },
-#else
-                { Stage.Stage4,     new Range<int>( 40,  63) },
-#endif
-                { Stage.Stage5,     new Range<int>( 64,  83) },
-                { Stage.Stage6,     new Range<int>( 84, 107) },
-                { Stage.Extra,      new Range<int>(108, 119) }
-            };
-
         private class LevelStagePair : Pair<LevelPractice, StagePractice>
         {
             [System.Diagnostics.CodeAnalysis.SuppressMessage(
@@ -271,7 +248,7 @@ namespace ThScoreFileConverter
                 this.ClearCounts = new Dictionary<LevelPracticeWithTotal, int>(numLevels);
                 this.ClearFlags = new Dictionary<LevelPracticeWithTotal, int>(numLevels);
                 this.Practices = new Dictionary<LevelStagePair, Practice>();
-                this.Cards = new SpellCard[NumCards];
+                this.Cards = new SpellCard[CardTable.Count];
             }
 
             public override void ReadFrom(BinaryReader reader)
@@ -313,7 +290,7 @@ namespace ThScoreFileConverter
                         if (!this.Practices.ContainsKey(key))
                             this.Practices.Add(key, practice);
                     }
-                for (var number = 0; number < Th14Converter.NumCards; number++)
+                for (var number = 0; number < this.Cards.Length; number++)
                 {
                     var card = new SpellCard();
                     card.ReadFrom(reader);
@@ -387,7 +364,12 @@ namespace ThScoreFileConverter
 
         private class SpellCard : IBinaryReadable
         {
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public byte[] Name { get; private set; }            // .Length = 0x80
+
             public int ClearCount { get; private set; }
             public int PracticeClearCount { get; private set; }
             public int TrialCount { get; private set; }
@@ -451,6 +433,8 @@ namespace ThScoreFileConverter
             get { return "1.00b"; }
         }
 
+        private static readonly Dictionary<int, CardInfo> CardTable;
+
         private static readonly string LevelPattern;
         private static readonly string LevelWithTotalPattern;
         private static readonly string CharaPattern;
@@ -473,8 +457,137 @@ namespace ThScoreFileConverter
             "StyleCop.CSharp.MaintainabilityRules",
             "SA1119:StatementMustNotUseUnnecessaryParenthesis",
             Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.SpacingRules",
+            "SA1008:OpeningParenthesisMustBeSpacedCorrectly",
+            Justification = "Reviewed.")]
         static Th14Converter()
         {
+            var cardList = new List<CardInfo>()
+            {
+                new CardInfo(  1, "氷符「アルティメットブリザード」",   Stage.Stage1, Level.Hard),
+                new CardInfo(  2, "氷符「アルティメットブリザード」",   Stage.Stage1, Level.Lunatic),
+                new CardInfo(  3, "水符「テイルフィンスラップ」",       Stage.Stage1, Level.Easy),
+                new CardInfo(  4, "水符「テイルフィンスラップ」",       Stage.Stage1, Level.Normal),
+                new CardInfo(  5, "水符「テイルフィンスラップ」",       Stage.Stage1, Level.Hard),
+                new CardInfo(  6, "水符「テイルフィンスラップ」",       Stage.Stage1, Level.Lunatic),
+                new CardInfo(  7, "鱗符「スケールウェイブ」",           Stage.Stage1, Level.Easy),
+                new CardInfo(  8, "鱗符「スケールウェイブ」",           Stage.Stage1, Level.Normal),
+                new CardInfo(  9, "鱗符「逆鱗の荒波」",                 Stage.Stage1, Level.Hard),
+                new CardInfo( 10, "鱗符「逆鱗の大荒波」",               Stage.Stage1, Level.Lunatic),
+                new CardInfo( 11, "飛符「フライングヘッド」",           Stage.Stage2, Level.Easy),
+                new CardInfo( 12, "飛符「フライングヘッド」",           Stage.Stage2, Level.Normal),
+                new CardInfo( 13, "飛符「フライングヘッド」",           Stage.Stage2, Level.Hard),
+                new CardInfo( 14, "飛符「フライングヘッド」",           Stage.Stage2, Level.Lunatic),
+                new CardInfo( 15, "首符「クローズアイショット」",       Stage.Stage2, Level.Easy),
+                new CardInfo( 16, "首符「クローズアイショット」",       Stage.Stage2, Level.Normal),
+                new CardInfo( 17, "首符「ろくろ首飛来」",               Stage.Stage2, Level.Hard),
+                new CardInfo( 18, "首符「ろくろ首飛来」",               Stage.Stage2, Level.Lunatic),
+                new CardInfo( 19, "飛頭「マルチプリケイティブヘッド」", Stage.Stage2, Level.Easy),
+                new CardInfo( 20, "飛頭「マルチプリケイティブヘッド」", Stage.Stage2, Level.Normal),
+                new CardInfo( 21, "飛頭「セブンズヘッド」",             Stage.Stage2, Level.Hard),
+                new CardInfo( 22, "飛頭「ナインズヘッド」",             Stage.Stage2, Level.Lunatic),
+                new CardInfo( 23, "飛頭「デュラハンナイト」",           Stage.Stage2, Level.Easy),
+                new CardInfo( 24, "飛頭「デュラハンナイト」",           Stage.Stage2, Level.Normal),
+                new CardInfo( 25, "飛頭「デュラハンナイト」",           Stage.Stage2, Level.Hard),
+                new CardInfo( 26, "飛頭「デュラハンナイト」",           Stage.Stage2, Level.Lunatic),
+                new CardInfo( 27, "牙符「月下の犬歯」",                 Stage.Stage3, Level.Hard),
+                new CardInfo( 28, "牙符「月下の犬歯」",                 Stage.Stage3, Level.Lunatic),
+                new CardInfo( 29, "変身「トライアングルファング」",     Stage.Stage3, Level.Easy),
+                new CardInfo( 30, "変身「トライアングルファング」",     Stage.Stage3, Level.Normal),
+                new CardInfo( 31, "変身「スターファング」",             Stage.Stage3, Level.Hard),
+                new CardInfo( 32, "変身「スターファング」",             Stage.Stage3, Level.Lunatic),
+                new CardInfo( 33, "咆哮「ストレンジロア」",             Stage.Stage3, Level.Easy),
+                new CardInfo( 34, "咆哮「ストレンジロア」",             Stage.Stage3, Level.Normal),
+                new CardInfo( 35, "咆哮「満月の遠吠え」",               Stage.Stage3, Level.Hard),
+                new CardInfo( 36, "咆哮「満月の遠吠え」",               Stage.Stage3, Level.Lunatic),
+                new CardInfo( 37, "狼符「スターリングパウンス」",       Stage.Stage3, Level.Easy),
+                new CardInfo( 38, "狼符「スターリングパウンス」",       Stage.Stage3, Level.Normal),
+                new CardInfo( 39, "天狼「ハイスピードパウンス」",       Stage.Stage3, Level.Hard),
+                new CardInfo( 40, "天狼「ハイスピードパウンス」",       Stage.Stage3, Level.Lunatic),
+                new CardInfo( 41, "平曲「祇園精舎の鐘の音」",           Stage.Stage4, Level.Easy),
+                new CardInfo( 42, "平曲「祇園精舎の鐘の音」",           Stage.Stage4, Level.Normal),
+                new CardInfo( 43, "平曲「祇園精舎の鐘の音」",           Stage.Stage4, Level.Hard),
+                new CardInfo( 44, "平曲「祇園精舎の鐘の音」",           Stage.Stage4, Level.Lunatic),
+                new CardInfo( 45, "怨霊「耳無し芳一」",                 Stage.Stage4, Level.Easy),
+                new CardInfo( 46, "怨霊「耳無し芳一」",                 Stage.Stage4, Level.Normal),
+                new CardInfo( 47, "怨霊「平家の大怨霊」",               Stage.Stage4, Level.Hard),
+                new CardInfo( 48, "怨霊「平家の大怨霊」",               Stage.Stage4, Level.Lunatic),
+                new CardInfo( 49, "楽符「邪悪な五線譜」",               Stage.Stage4, Level.Easy),
+                new CardInfo( 50, "楽符「邪悪な五線譜」",               Stage.Stage4, Level.Normal),
+                new CardInfo( 51, "楽符「凶悪な五線譜」",               Stage.Stage4, Level.Hard),
+                new CardInfo( 52, "楽符「ダブルスコア」",               Stage.Stage4, Level.Lunatic),
+                new CardInfo( 53, "琴符「諸行無常の琴の音」",           Stage.Stage4, Level.Easy),
+                new CardInfo( 54, "琴符「諸行無常の琴の音」",           Stage.Stage4, Level.Normal),
+                new CardInfo( 55, "琴符「諸行無常の琴の音」",           Stage.Stage4, Level.Hard),
+                new CardInfo( 56, "琴符「諸行無常の琴の音」",           Stage.Stage4, Level.Lunatic),
+                new CardInfo( 57, "響符「平安の残響」",                 Stage.Stage4, Level.Easy),
+                new CardInfo( 58, "響符「平安の残響」",                 Stage.Stage4, Level.Normal),
+                new CardInfo( 59, "響符「エコーチェンバー」",           Stage.Stage4, Level.Hard),
+                new CardInfo( 60, "響符「エコーチェンバー」",           Stage.Stage4, Level.Lunatic),
+                new CardInfo( 61, "箏曲「下克上送箏曲」",               Stage.Stage4, Level.Easy),
+                new CardInfo( 62, "箏曲「下克上送箏曲」",               Stage.Stage4, Level.Normal),
+                new CardInfo( 63, "筝曲「下克上レクイエム」",           Stage.Stage4, Level.Hard),
+                new CardInfo( 64, "筝曲「下克上レクイエム」",           Stage.Stage4, Level.Lunatic),
+                new CardInfo( 65, "欺符「逆針撃」",                     Stage.Stage5, Level.Easy),
+                new CardInfo( 66, "欺符「逆針撃」",                     Stage.Stage5, Level.Normal),
+                new CardInfo( 67, "欺符「逆針撃」",                     Stage.Stage5, Level.Hard),
+                new CardInfo( 68, "欺符「逆針撃」",                     Stage.Stage5, Level.Lunatic),
+                new CardInfo( 69, "逆符「鏡の国の弾幕」",               Stage.Stage5, Level.Easy),
+                new CardInfo( 70, "逆符「鏡の国の弾幕」",               Stage.Stage5, Level.Normal),
+                new CardInfo( 71, "逆符「イビルインザミラー」",         Stage.Stage5, Level.Hard),
+                new CardInfo( 72, "逆符「イビルインザミラー」",         Stage.Stage5, Level.Lunatic),
+                new CardInfo( 73, "逆符「天地有用」",                   Stage.Stage5, Level.Easy),
+                new CardInfo( 74, "逆符「天地有用」",                   Stage.Stage5, Level.Normal),
+                new CardInfo( 75, "逆符「天下転覆」",                   Stage.Stage5, Level.Hard),
+                new CardInfo( 76, "逆符「天下転覆」",                   Stage.Stage5, Level.Lunatic),
+                new CardInfo( 77, "逆弓「天壌夢弓」",                   Stage.Stage5, Level.Easy),
+                new CardInfo( 78, "逆弓「天壌夢弓」",                   Stage.Stage5, Level.Normal),
+                new CardInfo( 79, "逆弓「天壌夢弓の詔勅」",             Stage.Stage5, Level.Hard),
+                new CardInfo( 80, "逆弓「天壌夢弓の詔勅」",             Stage.Stage5, Level.Lunatic),
+                new CardInfo( 81, "逆転「リバースヒエラルキー」",       Stage.Stage5, Level.Easy),
+                new CardInfo( 82, "逆転「リバースヒエラルキー」",       Stage.Stage5, Level.Normal),
+                new CardInfo( 83, "逆転「チェンジエアブレイブ」",       Stage.Stage5, Level.Hard),
+                new CardInfo( 84, "逆転「チェンジエアブレイブ」",       Stage.Stage5, Level.Lunatic),
+                new CardInfo( 85, "小弾「小人の道」",                   Stage.Stage6, Level.Easy),
+                new CardInfo( 86, "小弾「小人の道」",                   Stage.Stage6, Level.Normal),
+                new CardInfo( 87, "小弾「小人の茨道」",                 Stage.Stage6, Level.Hard),
+                new CardInfo( 88, "小弾「小人の茨道」",                 Stage.Stage6, Level.Lunatic),
+                new CardInfo( 89, "小槌「大きくなあれ」",               Stage.Stage6, Level.Easy),
+                new CardInfo( 90, "小槌「大きくなあれ」",               Stage.Stage6, Level.Normal),
+                new CardInfo( 91, "小槌「もっと大きくなあれ」",         Stage.Stage6, Level.Hard),
+                new CardInfo( 92, "小槌「もっと大きくなあれ」",         Stage.Stage6, Level.Lunatic),
+                new CardInfo( 93, "妖剣「輝針剣」",                     Stage.Stage6, Level.Easy),
+                new CardInfo( 94, "妖剣「輝針剣」",                     Stage.Stage6, Level.Normal),
+                new CardInfo( 95, "妖剣「輝針剣」",                     Stage.Stage6, Level.Hard),
+                new CardInfo( 96, "妖剣「輝針剣」",                     Stage.Stage6, Level.Lunatic),
+                new CardInfo( 97, "小槌「お前が大きくなあれ」",         Stage.Stage6, Level.Easy),
+                new CardInfo( 98, "小槌「お前が大きくなあれ」",         Stage.Stage6, Level.Normal),
+                new CardInfo( 99, "小槌「お前が大きくなあれ」",         Stage.Stage6, Level.Hard),
+                new CardInfo(100, "小槌「お前が大きくなあれ」",         Stage.Stage6, Level.Lunatic),
+                new CardInfo(101, "「進撃の小人」",                     Stage.Stage6, Level.Easy),
+                new CardInfo(102, "「進撃の小人」",                     Stage.Stage6, Level.Normal),
+                new CardInfo(103, "「ウォールオブイッスン」",           Stage.Stage6, Level.Hard),
+                new CardInfo(104, "「ウォールオブイッスン」",           Stage.Stage6, Level.Lunatic),
+                new CardInfo(105, "「ホップオマイサムセブン」",         Stage.Stage6, Level.Easy),
+                new CardInfo(106, "「ホップオマイサムセブン」",         Stage.Stage6, Level.Normal),
+                new CardInfo(107, "「七人の一寸法師」",                 Stage.Stage6, Level.Hard),
+                new CardInfo(108, "「七人の一寸法師」",                 Stage.Stage6, Level.Lunatic),
+                new CardInfo(109, "弦楽「嵐のアンサンブル」",           Stage.Extra,  Level.Extra),
+                new CardInfo(110, "弦楽「浄瑠璃世界」",                 Stage.Extra,  Level.Extra),
+                new CardInfo(111, "一鼓「暴れ宮太鼓」",                 Stage.Extra,  Level.Extra),
+                new CardInfo(112, "二鼓「怨霊アヤノツヅミ」",           Stage.Extra,  Level.Extra),
+                new CardInfo(113, "三鼓「午前零時のスリーストライク」", Stage.Extra,  Level.Extra),
+                new CardInfo(114, "死鼓「ランドパーカス」",             Stage.Extra,  Level.Extra),
+                new CardInfo(115, "五鼓「デンデン太鼓」",               Stage.Extra,  Level.Extra),
+                new CardInfo(116, "六鼓「オルタネイトスティッキング」", Stage.Extra,  Level.Extra),
+                new CardInfo(117, "七鼓「高速和太鼓ロケット」",         Stage.Extra,  Level.Extra),
+                new CardInfo(118, "八鼓「雷神の怒り」",                 Stage.Extra,  Level.Extra),
+                new CardInfo(119, "「ブルーレディショー」",             Stage.Extra,  Level.Extra),
+                new CardInfo(120, "「プリスティンビート」",             Stage.Extra,  Level.Extra)
+            };
+            CardTable = cardList.ToDictionary(card => card.Number);
+
             var levels = Utils.GetEnumerator<Level>();
             var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();
             var charas = Utils.GetEnumerator<Chara>();
@@ -770,7 +883,7 @@ namespace ThScoreFileConverter
                 var cards = this.allScoreData.ClearData[chara].Cards;
                 if (number == 0)
                     return this.ToNumberString(cards.Sum(getCount));
-                else if (new Range<int>(1, NumCards).Contains(number))
+                else if (CardTable.ContainsKey(number))
                     return this.ToNumberString(getCount(cards[number - 1]));
                 else
                     return match.ToString();
@@ -787,14 +900,13 @@ namespace ThScoreFileConverter
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
                 var type = match.Groups[2].Value.ToUpperInvariant();
 
-                if (new Range<int>(1, NumCards).Contains(number))
+                if (CardTable.ContainsKey(number))
                 {
                     var card = this.allScoreData.ClearData[CharaWithTotal.Total].Cards[number - 1];
                     if (type == "N")
-                        return card.HasTried()
-                            ? Encoding.Default.GetString(card.Name).TrimEnd('\0') : "??????????";
+                        return card.HasTried() ? CardTable[card.Number + 1].Name : "??????????";
                     else
-                        return card.Level.ToString();
+                        return CardTable[card.Number + 1].Level.ToString();
                 }
                 else
                     return match.ToString();
@@ -850,7 +962,7 @@ namespace ThScoreFileConverter
                     // Do nothing
                 }
                 else
-                    findByStage = (card => StageCardTable[(Stage)stage].Contains(card.Number));
+                    findByStage = (card => CardTable[card.Number + 1].Stage == (Stage)stage);
 
                 switch (level)
                 {
@@ -858,7 +970,7 @@ namespace ThScoreFileConverter
                         // Do nothing
                         break;
                     case LevelWithTotal.Extra:
-                        findByStage = (card => StageCardTable[Stage.Extra].Contains(card.Number));
+                        findByStage = (card => CardTable[card.Number + 1].Stage == Stage.Extra);
                         break;
                     default:
                         findByLevel = (card => card.Level == (Level)level);

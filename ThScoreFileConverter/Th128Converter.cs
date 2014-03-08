@@ -24,6 +24,7 @@ namespace ThScoreFileConverter
     using System.Linq;
     using System.Text;
     using System.Text.RegularExpressions;
+    using CardInfo = SpellCardInfo<Th128Converter.Stage, Th128Converter.Level>;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage(
         "StyleCop.CSharp.OrderingRules",
@@ -142,34 +143,6 @@ namespace ThScoreFileConverter
             [EnumAltName("C2 Clear")]    C2Clear,
             [EnumAltName("Extra Clear")] ExtraClear
         }
-
-        private const int NumCards = 250;
-
-        // Thanks to thwiki.info
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "StyleCop.CSharp.SpacingRules",
-            "SA1008:OpeningParenthesisMustBeSpacedCorrectly",
-            Justification = "Reviewed.")]
-        private static readonly Dictionary<Stage, Range<int>> StageCardTable =
-            new Dictionary<Stage, Range<int>>()
-            {
-                { Stage.StageA_1,  new Range<int>(  0,   7) },
-                { Stage.StageA1_2, new Range<int>(  8,  19) },
-                { Stage.StageA1_3, new Range<int>( 20,  43) },
-                { Stage.StageA2_2, new Range<int>( 44,  55) },
-                { Stage.StageA2_3, new Range<int>( 56,  79) },
-                { Stage.StageB_1,  new Range<int>( 80,  87) },
-                { Stage.StageB1_2, new Range<int>( 88,  99) },
-                { Stage.StageB1_3, new Range<int>(100, 123) },
-                { Stage.StageB2_2, new Range<int>(124, 135) },
-                { Stage.StageB2_3, new Range<int>(136, 159) },
-                { Stage.StageC_1,  new Range<int>(160, 167) },
-                { Stage.StageC1_2, new Range<int>(168, 179) },
-                { Stage.StageC1_3, new Range<int>(180, 203) },
-                { Stage.StageC2_2, new Range<int>(204, 215) },
-                { Stage.StageC2_3, new Range<int>(216, 239) },
-                { Stage.Extra,     new Range<int>(240, 249) }
-            };
 
         private class AllScoreData
         {
@@ -298,12 +271,12 @@ namespace ThScoreFileConverter
                 if (this.Size != 0x0000947C)
                     throw new InvalidDataException("Size");
 
-                this.Cards = new SpellCard[NumCards];
+                this.Cards = new SpellCard[CardTable.Count];
             }
 
             public override void ReadFrom(BinaryReader reader)
             {
-                for (var number = 0; number < Th128Converter.NumCards; number++)
+                for (var number = 0; number < this.Cards.Length; number++)
                 {
                     var card = new SpellCard();
                     card.ReadFrom(reader);
@@ -373,7 +346,12 @@ namespace ThScoreFileConverter
 
         private class SpellCard : IBinaryReadable
         {
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public byte[] Name { get; private set; }        // .Length = 0x80
+
             public int NoMissCount { get; private set; }
             public int NoIceCount { get; private set; }
             public int TrialCount { get; private set; }
@@ -404,6 +382,8 @@ namespace ThScoreFileConverter
             get { return "1.00a"; }
         }
 
+        private static readonly Dictionary<int, CardInfo> CardTable;
+
         private static readonly string LevelPattern;
         private static readonly string LevelWithTotalPattern;
         private static readonly string RoutePattern;
@@ -424,8 +404,267 @@ namespace ThScoreFileConverter
             "StyleCop.CSharp.MaintainabilityRules",
             "SA1119:StatementMustNotUseUnnecessaryParenthesis",
             Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.SpacingRules",
+            "SA1008:OpeningParenthesisMustBeSpacedCorrectly",
+            Justification = "Reviewed.")]
         static Th128Converter()
         {
+            var cardList = new List<CardInfo>()
+            {
+                new CardInfo(  1, "月符「ルナティックレイン」",               Stage.StageA_1,  Level.Easy),
+                new CardInfo(  2, "月符「ルナティックレイン」",               Stage.StageA_1,  Level.Normal),
+                new CardInfo(  3, "月符「ルナティックレイン」",               Stage.StageA_1,  Level.Hard),
+                new CardInfo(  4, "月符「ルナティックレイン」",               Stage.StageA_1,  Level.Lunatic),
+                new CardInfo(  5, "月符「ルナサイクロン」",                   Stage.StageA_1,  Level.Easy),
+                new CardInfo(  6, "月符「ルナサイクロン」",                   Stage.StageA_1,  Level.Normal),
+                new CardInfo(  7, "月符「ルナサイクロン」",                   Stage.StageA_1,  Level.Hard),
+                new CardInfo(  8, "月符「ルナサイクロン」",                   Stage.StageA_1,  Level.Lunatic),
+                new CardInfo(  9, "流星「プチコメット」",                     Stage.StageA1_2, Level.Easy),
+                new CardInfo( 10, "流星「プチコメット」",                     Stage.StageA1_2, Level.Normal),
+                new CardInfo( 11, "流星「プチコメット」",                     Stage.StageA1_2, Level.Hard),
+                new CardInfo( 12, "流星「プチコメット」",                     Stage.StageA1_2, Level.Lunatic),
+                new CardInfo( 13, "星粒「スプリンクルピース」",               Stage.StageA1_2, Level.Easy),
+                new CardInfo( 14, "星粒「スプリンクルピース」",               Stage.StageA1_2, Level.Normal),
+                new CardInfo( 15, "星粒「スプリンクルピース」",               Stage.StageA1_2, Level.Hard),
+                new CardInfo( 16, "星粒「スプリンクルピース」",               Stage.StageA1_2, Level.Lunatic),
+                new CardInfo( 17, "星符「トゥインクルサファイア」",           Stage.StageA1_2, Level.Easy),
+                new CardInfo( 18, "星符「トゥインクルサファイア」",           Stage.StageA1_2, Level.Normal),
+                new CardInfo( 19, "星符「トゥインクルサファイア」",           Stage.StageA1_2, Level.Hard),
+                new CardInfo( 20, "星符「トゥインクルサファイア」",           Stage.StageA1_2, Level.Lunatic),
+                new CardInfo( 21, "陽光「サンシャインブラスト」",             Stage.StageA1_3, Level.Easy),
+                new CardInfo( 22, "陽光「サンシャインブラスト」",             Stage.StageA1_3, Level.Normal),
+                new CardInfo( 23, "陽光「サンシャインブラスト」",             Stage.StageA1_3, Level.Hard),
+                new CardInfo( 24, "陽光「サンシャインブラスト」",             Stage.StageA1_3, Level.Lunatic),
+                new CardInfo( 25, "光符「ルチルフレクション」",               Stage.StageA1_3, Level.Easy),
+                new CardInfo( 26, "光符「ルチルフレクション」",               Stage.StageA1_3, Level.Normal),
+                new CardInfo( 27, "光符「ルチルフレクション」",               Stage.StageA1_3, Level.Hard),
+                new CardInfo( 28, "光符「ルチルフレクション」",               Stage.StageA1_3, Level.Lunatic),
+                new CardInfo( 29, "日熱「アイスディゾルバー」",               Stage.StageA1_3, Level.Easy),
+                new CardInfo( 30, "日熱「アイスディゾルバー」",               Stage.StageA1_3, Level.Normal),
+                new CardInfo( 31, "日熱「アイスディゾルバー」",               Stage.StageA1_3, Level.Hard),
+                new CardInfo( 32, "日熱「アイスディゾルバー」",               Stage.StageA1_3, Level.Lunatic),
+                new CardInfo( 33, "空符「エルフィンキャノピー」",             Stage.StageA1_3, Level.Easy),
+                new CardInfo( 34, "空符「エルフィンキャノピー」",             Stage.StageA1_3, Level.Normal),
+                new CardInfo( 35, "空符「エルフィンキャノピー」",             Stage.StageA1_3, Level.Hard),
+                new CardInfo( 36, "空符「エルフィンキャノピー」",             Stage.StageA1_3, Level.Lunatic),
+                new CardInfo( 37, "協力技「フェアリーオーバードライブ」",     Stage.StageA1_3, Level.Easy),
+                new CardInfo( 38, "協力技「フェアリーオーバードライブ」",     Stage.StageA1_3, Level.Normal),
+                new CardInfo( 39, "協力技「フェアリーオーバードライブ」",     Stage.StageA1_3, Level.Hard),
+                new CardInfo( 40, "協力技「フェアリーオーバードライブ」",     Stage.StageA1_3, Level.Lunatic),
+                new CardInfo( 41, "「スリーフェアリーズ」",                   Stage.StageA1_3, Level.Easy),
+                new CardInfo( 42, "「スリーフェアリーズ」",                   Stage.StageA1_3, Level.Normal),
+                new CardInfo( 43, "「スリーフェアリーズ」",                   Stage.StageA1_3, Level.Hard),
+                new CardInfo( 44, "「スリーフェアリーズ」",                   Stage.StageA1_3, Level.Lunatic),
+                new CardInfo( 45, "虹光「プリズムフラッシュ」",               Stage.StageA2_2, Level.Easy),
+                new CardInfo( 46, "虹光「プリズムフラッシュ」",               Stage.StageA2_2, Level.Normal),
+                new CardInfo( 47, "虹光「プリズムフラッシュ」",               Stage.StageA2_2, Level.Hard),
+                new CardInfo( 48, "虹光「プリズムフラッシュ」",               Stage.StageA2_2, Level.Lunatic),
+                new CardInfo( 49, "光精「ダイアモンドリング」",               Stage.StageA2_2, Level.Easy),
+                new CardInfo( 50, "光精「ダイアモンドリング」",               Stage.StageA2_2, Level.Normal),
+                new CardInfo( 51, "光精「ダイアモンドリング」",               Stage.StageA2_2, Level.Hard),
+                new CardInfo( 52, "光精「ダイアモンドリング」",               Stage.StageA2_2, Level.Lunatic),
+                new CardInfo( 53, "光符「ブルーディフレクション」",           Stage.StageA2_2, Level.Easy),
+                new CardInfo( 54, "光符「ブルーディフレクション」",           Stage.StageA2_2, Level.Normal),
+                new CardInfo( 55, "光符「ブルーディフレクション」",           Stage.StageA2_2, Level.Hard),
+                new CardInfo( 56, "光符「ブルーディフレクション」",           Stage.StageA2_2, Level.Lunatic),
+                new CardInfo( 57, "星光「スターレーザー」",                   Stage.StageA2_3, Level.Easy),
+                new CardInfo( 58, "星光「スターレーザー」",                   Stage.StageA2_3, Level.Normal),
+                new CardInfo( 59, "星光「スターレーザー」",                   Stage.StageA2_3, Level.Hard),
+                new CardInfo( 60, "星光「スターレーザー」",                   Stage.StageA2_3, Level.Lunatic),
+                new CardInfo( 61, "光符「トリプルメテオ」",                   Stage.StageA2_3, Level.Easy),
+                new CardInfo( 62, "光符「トリプルメテオ」",                   Stage.StageA2_3, Level.Normal),
+                new CardInfo( 63, "光符「トリプルメテオ」",                   Stage.StageA2_3, Level.Hard),
+                new CardInfo( 64, "光符「トリプルメテオ」",                   Stage.StageA2_3, Level.Lunatic),
+                new CardInfo( 65, "星熱「アイスディゾルバー」",               Stage.StageA2_3, Level.Easy),
+                new CardInfo( 66, "星熱「アイスディゾルバー」",               Stage.StageA2_3, Level.Normal),
+                new CardInfo( 67, "星熱「アイスディゾルバー」",               Stage.StageA2_3, Level.Hard),
+                new CardInfo( 68, "星熱「アイスディゾルバー」",               Stage.StageA2_3, Level.Lunatic),
+                new CardInfo( 69, "光星「オリオンベルト」",                   Stage.StageA2_3, Level.Easy),
+                new CardInfo( 70, "光星「オリオンベルト」",                   Stage.StageA2_3, Level.Normal),
+                new CardInfo( 71, "光星「オリオンベルト」",                   Stage.StageA2_3, Level.Hard),
+                new CardInfo( 72, "光星「オリオンベルト」",                   Stage.StageA2_3, Level.Lunatic),
+                new CardInfo( 73, "協力技「フェアリーオーバードライブ」",     Stage.StageA2_3, Level.Easy),
+                new CardInfo( 74, "協力技「フェアリーオーバードライブ」",     Stage.StageA2_3, Level.Normal),
+                new CardInfo( 75, "協力技「フェアリーオーバードライブ」",     Stage.StageA2_3, Level.Hard),
+                new CardInfo( 76, "協力技「フェアリーオーバードライブ」",     Stage.StageA2_3, Level.Lunatic),
+                new CardInfo( 77, "「スリーフェアリーズ」",                   Stage.StageA2_3, Level.Easy),
+                new CardInfo( 78, "「スリーフェアリーズ」",                   Stage.StageA2_3, Level.Normal),
+                new CardInfo( 79, "「スリーフェアリーズ」",                   Stage.StageA2_3, Level.Hard),
+                new CardInfo( 80, "「スリーフェアリーズ」",                   Stage.StageA2_3, Level.Lunatic),
+                new CardInfo( 81, "日符「アグレッシブライト」",               Stage.StageB_1,  Level.Easy),
+                new CardInfo( 82, "日符「アグレッシブライト」",               Stage.StageB_1,  Level.Normal),
+                new CardInfo( 83, "日符「アグレッシブライト」",               Stage.StageB_1,  Level.Hard),
+                new CardInfo( 84, "日符「アグレッシブライト」",               Stage.StageB_1,  Level.Lunatic),
+                new CardInfo( 85, "日符「ダイレクトサンライト」",             Stage.StageB_1,  Level.Easy),
+                new CardInfo( 86, "日符「ダイレクトサンライト」",             Stage.StageB_1,  Level.Normal),
+                new CardInfo( 87, "日符「ダイレクトサンライト」",             Stage.StageB_1,  Level.Hard),
+                new CardInfo( 88, "日符「ダイレクトサンライト」",             Stage.StageB_1,  Level.Lunatic),
+                new CardInfo( 89, "流星「コメットストリーム」",               Stage.StageB1_2, Level.Easy),
+                new CardInfo( 90, "流星「コメットストリーム」",               Stage.StageB1_2, Level.Normal),
+                new CardInfo( 91, "流星「コメットストリーム」",               Stage.StageB1_2, Level.Hard),
+                new CardInfo( 92, "流星「コメットストリーム」",               Stage.StageB1_2, Level.Lunatic),
+                new CardInfo( 93, "星粒「スターピースシャワー」",             Stage.StageB1_2, Level.Easy),
+                new CardInfo( 94, "星粒「スターピースシャワー」",             Stage.StageB1_2, Level.Normal),
+                new CardInfo( 95, "星粒「スターピースシャワー」",             Stage.StageB1_2, Level.Hard),
+                new CardInfo( 96, "星粒「スターピースシャワー」",             Stage.StageB1_2, Level.Lunatic),
+                new CardInfo( 97, "星符「シューティングサファイア」",         Stage.StageB1_2, Level.Easy),
+                new CardInfo( 98, "星符「シューティングサファイア」",         Stage.StageB1_2, Level.Normal),
+                new CardInfo( 99, "星符「シューティングサファイア」",         Stage.StageB1_2, Level.Hard),
+                new CardInfo(100, "星符「シューティングサファイア」",         Stage.StageB1_2, Level.Lunatic),
+                new CardInfo(101, "月光「サイレントストーム」",               Stage.StageB1_3, Level.Easy),
+                new CardInfo(102, "月光「サイレントストーム」",               Stage.StageB1_3, Level.Normal),
+                new CardInfo(103, "月光「サイレントストーム」",               Stage.StageB1_3, Level.Hard),
+                new CardInfo(104, "月光「サイレントストーム」",               Stage.StageB1_3, Level.Lunatic),
+                new CardInfo(105, "光符「ブライトナイト」",                   Stage.StageB1_3, Level.Easy),
+                new CardInfo(106, "光符「ブライトナイト」",                   Stage.StageB1_3, Level.Normal),
+                new CardInfo(107, "光符「ブライトナイト」",                   Stage.StageB1_3, Level.Hard),
+                new CardInfo(108, "光符「ブライトナイト」",                   Stage.StageB1_3, Level.Lunatic),
+                new CardInfo(109, "月熱「アイスディゾルバー」",               Stage.StageB1_3, Level.Easy),
+                new CardInfo(110, "月熱「アイスディゾルバー」",               Stage.StageB1_3, Level.Normal),
+                new CardInfo(111, "月熱「アイスディゾルバー」",               Stage.StageB1_3, Level.Hard),
+                new CardInfo(112, "月熱「アイスディゾルバー」",               Stage.StageB1_3, Level.Lunatic),
+                new CardInfo(113, "空符「ブレイクキャノピー」",               Stage.StageB1_3, Level.Easy),
+                new CardInfo(114, "空符「ブレイクキャノピー」",               Stage.StageB1_3, Level.Normal),
+                new CardInfo(115, "空符「ブレイクキャノピー」",               Stage.StageB1_3, Level.Hard),
+                new CardInfo(116, "空符「ブレイクキャノピー」",               Stage.StageB1_3, Level.Lunatic),
+                new CardInfo(117, "協力技「フェアリーオーバードライブ」",     Stage.StageB1_3, Level.Easy),
+                new CardInfo(118, "協力技「フェアリーオーバードライブ」",     Stage.StageB1_3, Level.Normal),
+                new CardInfo(119, "協力技「フェアリーオーバードライブ」",     Stage.StageB1_3, Level.Hard),
+                new CardInfo(120, "協力技「フェアリーオーバードライブ」",     Stage.StageB1_3, Level.Lunatic),
+                new CardInfo(121, "「スリーフェアリーズ」",                   Stage.StageB1_3, Level.Easy),
+                new CardInfo(122, "「スリーフェアリーズ」",                   Stage.StageB1_3, Level.Normal),
+                new CardInfo(123, "「スリーフェアリーズ」",                   Stage.StageB1_3, Level.Hard),
+                new CardInfo(124, "「スリーフェアリーズ」",                   Stage.StageB1_3, Level.Lunatic),
+                new CardInfo(125, "月光「ダークスティルネス」",               Stage.StageB2_2, Level.Easy),
+                new CardInfo(126, "月光「ダークスティルネス」",               Stage.StageB2_2, Level.Normal),
+                new CardInfo(127, "月光「ダークスティルネス」",               Stage.StageB2_2, Level.Hard),
+                new CardInfo(128, "月光「ダークスティルネス」",               Stage.StageB2_2, Level.Lunatic),
+                new CardInfo(129, "障光「ムーンライトウォール」",             Stage.StageB2_2, Level.Easy),
+                new CardInfo(130, "障光「ムーンライトウォール」",             Stage.StageB2_2, Level.Normal),
+                new CardInfo(131, "障光「ムーンライトウォール」",             Stage.StageB2_2, Level.Hard),
+                new CardInfo(132, "障光「ムーンライトウォール」",             Stage.StageB2_2, Level.Lunatic),
+                new CardInfo(133, "夜符「ナイトフェアリーズ」",               Stage.StageB2_2, Level.Easy),
+                new CardInfo(134, "夜符「ナイトフェアリーズ」",               Stage.StageB2_2, Level.Normal),
+                new CardInfo(135, "夜符「ナイトフェアリーズ」",               Stage.StageB2_2, Level.Hard),
+                new CardInfo(136, "夜符「ナイトフェアリーズ」",               Stage.StageB2_2, Level.Lunatic),
+                new CardInfo(137, "星光「スターストーム」",                   Stage.StageB2_3, Level.Easy),
+                new CardInfo(138, "星光「スターストーム」",                   Stage.StageB2_3, Level.Normal),
+                new CardInfo(139, "星光「スターストーム」",                   Stage.StageB2_3, Level.Hard),
+                new CardInfo(140, "星光「スターストーム」",                   Stage.StageB2_3, Level.Lunatic),
+                new CardInfo(141, "光符「エクステンシブメテオ」",             Stage.StageB2_3, Level.Easy),
+                new CardInfo(142, "光符「エクステンシブメテオ」",             Stage.StageB2_3, Level.Normal),
+                new CardInfo(143, "光符「エクステンシブメテオ」",             Stage.StageB2_3, Level.Hard),
+                new CardInfo(144, "光符「エクステンシブメテオ」",             Stage.StageB2_3, Level.Lunatic),
+                new CardInfo(145, "星熱「アイスディゾルバー」",               Stage.StageB2_3, Level.Easy),
+                new CardInfo(146, "星熱「アイスディゾルバー」",               Stage.StageB2_3, Level.Normal),
+                new CardInfo(147, "星熱「アイスディゾルバー」",               Stage.StageB2_3, Level.Hard),
+                new CardInfo(148, "星熱「アイスディゾルバー」",               Stage.StageB2_3, Level.Lunatic),
+                new CardInfo(149, "光星「グレートトライアングル」",           Stage.StageB2_3, Level.Easy),
+                new CardInfo(150, "光星「グレートトライアングル」",           Stage.StageB2_3, Level.Normal),
+                new CardInfo(151, "光星「グレートトライアングル」",           Stage.StageB2_3, Level.Hard),
+                new CardInfo(152, "光星「グレートトライアングル」",           Stage.StageB2_3, Level.Lunatic),
+                new CardInfo(153, "協力技「フェアリーオーバードライブ」",     Stage.StageB2_3, Level.Easy),
+                new CardInfo(154, "協力技「フェアリーオーバードライブ」",     Stage.StageB2_3, Level.Normal),
+                new CardInfo(155, "協力技「フェアリーオーバードライブ」",     Stage.StageB2_3, Level.Hard),
+                new CardInfo(156, "協力技「フェアリーオーバードライブ」",     Stage.StageB2_3, Level.Lunatic),
+                new CardInfo(157, "「スリーフェアリーズ」",                   Stage.StageB2_3, Level.Easy),
+                new CardInfo(158, "「スリーフェアリーズ」",                   Stage.StageB2_3, Level.Normal),
+                new CardInfo(159, "「スリーフェアリーズ」",                   Stage.StageB2_3, Level.Hard),
+                new CardInfo(160, "「スリーフェアリーズ」",                   Stage.StageB2_3, Level.Lunatic),
+                new CardInfo(161, "星符「スターライトレイン」",               Stage.StageC_1, Level.Easy),
+                new CardInfo(162, "星符「スターライトレイン」",               Stage.StageC_1, Level.Normal),
+                new CardInfo(163, "星符「スターライトレイン」",               Stage.StageC_1, Level.Hard),
+                new CardInfo(164, "星符「スターライトレイン」",               Stage.StageC_1, Level.Lunatic),
+                new CardInfo(165, "星符「レッドスター」",                     Stage.StageC_1, Level.Easy),
+                new CardInfo(166, "星符「レッドスター」",                     Stage.StageC_1, Level.Normal),
+                new CardInfo(167, "星符「レッドスター」",                     Stage.StageC_1, Level.Hard),
+                new CardInfo(168, "星符「レッドスター」",                     Stage.StageC_1, Level.Lunatic),
+                new CardInfo(169, "瞬光「フェイタルフラッシュ」",             Stage.StageC1_2, Level.Easy),
+                new CardInfo(170, "瞬光「フェイタルフラッシュ」",             Stage.StageC1_2, Level.Normal),
+                new CardInfo(171, "瞬光「フェイタルフラッシュ」",             Stage.StageC1_2, Level.Hard),
+                new CardInfo(172, "瞬光「フェイタルフラッシュ」",             Stage.StageC1_2, Level.Lunatic),
+                new CardInfo(173, "光精「クロスディフュージョン」",           Stage.StageC1_2, Level.Easy),
+                new CardInfo(174, "光精「クロスディフュージョン」",           Stage.StageC1_2, Level.Normal),
+                new CardInfo(175, "光精「クロスディフュージョン」",           Stage.StageC1_2, Level.Hard),
+                new CardInfo(176, "光精「クロスディフュージョン」",           Stage.StageC1_2, Level.Lunatic),
+                new CardInfo(177, "光符「イエローディフレクション」",         Stage.StageC1_2, Level.Easy),
+                new CardInfo(178, "光符「イエローディフレクション」",         Stage.StageC1_2, Level.Normal),
+                new CardInfo(179, "光符「イエローディフレクション」",         Stage.StageC1_2, Level.Hard),
+                new CardInfo(180, "光符「イエローディフレクション」",         Stage.StageC1_2, Level.Lunatic),
+                new CardInfo(181, "月光「サイレントフラワー」",               Stage.StageC1_3, Level.Easy),
+                new CardInfo(182, "月光「サイレントフラワー」",               Stage.StageC1_3, Level.Normal),
+                new CardInfo(183, "月光「サイレントフラワー」",               Stage.StageC1_3, Level.Hard),
+                new CardInfo(184, "月光「サイレントフラワー」",               Stage.StageC1_3, Level.Lunatic),
+                new CardInfo(185, "光符「フルムーンナイト」",                 Stage.StageC1_3, Level.Easy),
+                new CardInfo(186, "光符「フルムーンナイト」",                 Stage.StageC1_3, Level.Normal),
+                new CardInfo(187, "光符「フルムーンナイト」",                 Stage.StageC1_3, Level.Hard),
+                new CardInfo(188, "光符「フルムーンナイト」",                 Stage.StageC1_3, Level.Lunatic),
+                new CardInfo(189, "月熱「アイスディゾルバー」",               Stage.StageC1_3, Level.Easy),
+                new CardInfo(190, "月熱「アイスディゾルバー」",               Stage.StageC1_3, Level.Normal),
+                new CardInfo(191, "月熱「アイスディゾルバー」",               Stage.StageC1_3, Level.Hard),
+                new CardInfo(192, "月熱「アイスディゾルバー」",               Stage.StageC1_3, Level.Lunatic),
+                new CardInfo(193, "降光「トリプルライト」",                   Stage.StageC1_3, Level.Easy),
+                new CardInfo(194, "降光「トリプルライト」",                   Stage.StageC1_3, Level.Normal),
+                new CardInfo(195, "降光「トリプルライト」",                   Stage.StageC1_3, Level.Hard),
+                new CardInfo(196, "降光「トリプルライト」",                   Stage.StageC1_3, Level.Lunatic),
+                new CardInfo(197, "協力技「フェアリーオーバードライブ」",     Stage.StageC1_3, Level.Easy),
+                new CardInfo(198, "協力技「フェアリーオーバードライブ」",     Stage.StageC1_3, Level.Normal),
+                new CardInfo(199, "協力技「フェアリーオーバードライブ」",     Stage.StageC1_3, Level.Hard),
+                new CardInfo(200, "協力技「フェアリーオーバードライブ」",     Stage.StageC1_3, Level.Lunatic),
+                new CardInfo(201, "「スリーフェアリーズ」",                   Stage.StageC1_3, Level.Easy),
+                new CardInfo(202, "「スリーフェアリーズ」",                   Stage.StageC1_3, Level.Normal),
+                new CardInfo(203, "「スリーフェアリーズ」",                   Stage.StageC1_3, Level.Hard),
+                new CardInfo(204, "「スリーフェアリーズ」",                   Stage.StageC1_3, Level.Lunatic),
+                new CardInfo(205, "月光「ムーンスティルネス」",               Stage.StageC2_2, Level.Easy),
+                new CardInfo(206, "月光「ムーンスティルネス」",               Stage.StageC2_2, Level.Normal),
+                new CardInfo(207, "月光「ムーンスティルネス」",               Stage.StageC2_2, Level.Hard),
+                new CardInfo(208, "月光「ムーンスティルネス」",               Stage.StageC2_2, Level.Lunatic),
+                new CardInfo(209, "光壁「ウォールブレイク」",                 Stage.StageC2_2, Level.Easy),
+                new CardInfo(210, "光壁「ウォールブレイク」",                 Stage.StageC2_2, Level.Normal),
+                new CardInfo(211, "光壁「ウォールブレイク」",                 Stage.StageC2_2, Level.Hard),
+                new CardInfo(212, "光壁「ウォールブレイク」",                 Stage.StageC2_2, Level.Lunatic),
+                new CardInfo(213, "月光「サイレントサイクロン」",             Stage.StageC2_2, Level.Easy),
+                new CardInfo(214, "月光「サイレントサイクロン」",             Stage.StageC2_2, Level.Normal),
+                new CardInfo(215, "月光「サイレントサイクロン」",             Stage.StageC2_2, Level.Hard),
+                new CardInfo(216, "月光「サイレントサイクロン」",             Stage.StageC2_2, Level.Lunatic),
+                new CardInfo(217, "陽光「サンシャインニードル」",             Stage.StageC2_3, Level.Easy),
+                new CardInfo(218, "陽光「サンシャインニードル」",             Stage.StageC2_3, Level.Normal),
+                new CardInfo(219, "陽光「サンシャインニードル」",             Stage.StageC2_3, Level.Hard),
+                new CardInfo(220, "陽光「サンシャインニードル」",             Stage.StageC2_3, Level.Lunatic),
+                new CardInfo(221, "光符「ハイパーインクレクション」",         Stage.StageC2_3, Level.Easy),
+                new CardInfo(222, "光符「ハイパーインクレクション」",         Stage.StageC2_3, Level.Normal),
+                new CardInfo(223, "光符「ハイパーインクレクション」",         Stage.StageC2_3, Level.Hard),
+                new CardInfo(224, "光符「ハイパーインクレクション」",         Stage.StageC2_3, Level.Lunatic),
+                new CardInfo(225, "日熱「アイスディゾルバー」",               Stage.StageC2_3, Level.Easy),
+                new CardInfo(226, "日熱「アイスディゾルバー」",               Stage.StageC2_3, Level.Normal),
+                new CardInfo(227, "日熱「アイスディゾルバー」",               Stage.StageC2_3, Level.Hard),
+                new CardInfo(228, "日熱「アイスディゾルバー」",               Stage.StageC2_3, Level.Lunatic),
+                new CardInfo(229, "激光「サンバースト」",                     Stage.StageC2_3, Level.Easy),
+                new CardInfo(230, "激光「サンバースト」",                     Stage.StageC2_3, Level.Normal),
+                new CardInfo(231, "激光「サンバースト」",                     Stage.StageC2_3, Level.Hard),
+                new CardInfo(232, "激光「サンバースト」",                     Stage.StageC2_3, Level.Lunatic),
+                new CardInfo(233, "協力技「フェアリーオーバードライブ」",     Stage.StageC2_3, Level.Easy),
+                new CardInfo(234, "協力技「フェアリーオーバードライブ」",     Stage.StageC2_3, Level.Normal),
+                new CardInfo(235, "協力技「フェアリーオーバードライブ」",     Stage.StageC2_3, Level.Hard),
+                new CardInfo(236, "協力技「フェアリーオーバードライブ」",     Stage.StageC2_3, Level.Lunatic),
+                new CardInfo(237, "「スリーフェアリーズ」",                   Stage.StageC2_3, Level.Easy),
+                new CardInfo(238, "「スリーフェアリーズ」",                   Stage.StageC2_3, Level.Normal),
+                new CardInfo(239, "「スリーフェアリーズ」",                   Stage.StageC2_3, Level.Hard),
+                new CardInfo(240, "「スリーフェアリーズ」",                   Stage.StageC2_3, Level.Lunatic),
+                new CardInfo(241, "光符「ミステリアスビーム」",               Stage.Extra,     Level.Extra),
+                new CardInfo(242, "光撃「シュート・ザ・リトルムーン」",       Stage.Extra,     Level.Extra),
+                new CardInfo(243, "魔弾「テストスレイブ」",                   Stage.Extra,     Level.Extra),
+                new CardInfo(244, "閉符「ビッグクランチ」",                   Stage.Extra,     Level.Extra),
+                new CardInfo(245, "恋符「マスタースパークのような懐中電灯」", Stage.Extra,     Level.Extra),
+                new CardInfo(246, "魔開「オープンユニバース」",               Stage.Extra,     Level.Extra),
+                new CardInfo(247, "魔十字「グランドクロス」",                 Stage.Extra,     Level.Extra),
+                new CardInfo(248, "流星「スーパーペルセイド」",               Stage.Extra,     Level.Extra),
+                new CardInfo(249, "「ブレイジングスターのような鬼ごっこ」",   Stage.Extra,     Level.Extra),
+                new CardInfo(250, "「妖精尽滅光」",                           Stage.Extra,     Level.Extra)
+            };
+            CardTable = cardList.ToDictionary(card => card.Number);
+
             var levels = Utils.GetEnumerator<Level>();
             var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();
             var routes = Utils.GetEnumerator<Route>();
@@ -712,7 +951,7 @@ namespace ThScoreFileConverter
 
                 if (number == 0)
                     return this.ToNumberString(this.allScoreData.CardData.Cards.Sum(getCount));
-                else if (new Range<int>(1, NumCards).Contains(number))
+                else if (CardTable.ContainsKey(number))
                     return this.ToNumberString(getCount(this.allScoreData.CardData.Cards[number - 1]));
                 else
                     return match.ToString();
@@ -729,14 +968,13 @@ namespace ThScoreFileConverter
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
                 var type = match.Groups[2].Value.ToUpperInvariant();
 
-                if (new Range<int>(1, NumCards).Contains(number))
+                if (CardTable.ContainsKey(number))
                 {
                     var card = this.allScoreData.CardData.Cards[number - 1];
                     if (type == "N")
-                        return card.HasTried()
-                            ? Encoding.Default.GetString(card.Name).TrimEnd('\0') : "??????????";
+                        return card.HasTried() ? CardTable[card.Number + 1].Name : "??????????";
                     else
-                        return card.Level.ToString();
+                        return CardTable[card.Number + 1].Level.ToString();
                 }
                 else
                     return match.ToString();
@@ -772,7 +1010,7 @@ namespace ThScoreFileConverter
                     // Do nothing
                 }
                 else
-                    findByStage = (card => StageCardTable[(Stage)stage].Contains(card.Number));
+                    findByStage = (card => CardTable[card.Number + 1].Stage == (Stage)stage);
 
                 switch (level)
                 {
@@ -780,7 +1018,7 @@ namespace ThScoreFileConverter
                         // Do nothing
                         break;
                     case LevelWithTotal.Extra:
-                        findByStage = (card => StageCardTable[Stage.Extra].Contains(card.Number));
+                        findByStage = (card => CardTable[card.Number + 1].Stage == Stage.Extra);
                         break;
                     default:
                         findByLevel = (card => card.Level == (Level)level);

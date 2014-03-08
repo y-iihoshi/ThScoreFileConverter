@@ -24,6 +24,7 @@ namespace ThScoreFileConverter
     using System.Linq;
     using System.Text;
     using System.Text.RegularExpressions;
+    using CardInfo = SpellCardInfo<Th11Converter.Stage, Th11Converter.Level>;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage(
         "StyleCop.CSharp.OrderingRules",
@@ -107,25 +108,6 @@ namespace ThScoreFileConverter
             [EnumAltName("Extra Stage")] Extra,
             [EnumAltName("All Clear")]   Clear
         }
-
-        private const int NumCards = 175;
-
-        // Thanks to thwiki.info
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "StyleCop.CSharp.SpacingRules",
-            "SA1008:OpeningParenthesisMustBeSpacedCorrectly",
-            Justification = "Reviewed.")]
-        private static readonly Dictionary<Stage, Range<int>> StageCardTable =
-            new Dictionary<Stage, Range<int>>()
-            {
-                { Stage.Stage1, new Range<int>(  0,   9) },
-                { Stage.Stage2, new Range<int>( 10,  25) },
-                { Stage.Stage3, new Range<int>( 26,  41) },
-                { Stage.Stage4, new Range<int>( 42, 117) },
-                { Stage.Stage5, new Range<int>(118, 137) },
-                { Stage.Stage6, new Range<int>(138, 161) },
-                { Stage.Extra,  new Range<int>(162, 174) }
-            };
 
         private class LevelStagePair : Pair<Level, Stage>
         {
@@ -231,7 +213,7 @@ namespace ThScoreFileConverter
                 this.Rankings = new Dictionary<Level, ScoreData[]>(numLevels);
                 this.ClearCounts = new Dictionary<Level, int>(numLevels);
                 this.Practices = new Dictionary<LevelStagePair, Practice>();
-                this.Cards = new SpellCard[NumCards];
+                this.Cards = new SpellCard[CardTable.Count];
             }
 
             public override void ReadFrom(BinaryReader reader)
@@ -267,7 +249,7 @@ namespace ThScoreFileConverter
                         if (!this.Practices.ContainsKey(key))
                             this.Practices.Add(key, practice);
                     }
-                for (var number = 0; number < Th11Converter.NumCards; number++)
+                for (var number = 0; number < this.Cards.Length; number++)
                 {
                     var card = new SpellCard();
                     card.ReadFrom(reader);
@@ -333,7 +315,12 @@ namespace ThScoreFileConverter
 
         private class SpellCard : IBinaryReadable
         {
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public byte[] Name { get; private set; }    // .Length = 0x80
+
             public int ClearCount { get; private set; }
             public int TrialCount { get; private set; }
             public int Number { get; private set; }     // 0-based
@@ -378,6 +365,8 @@ namespace ThScoreFileConverter
             get { return "1.00a"; }
         }
 
+        private static readonly Dictionary<int, CardInfo> CardTable;
+
         private static readonly string LevelPattern;
         private static readonly string LevelWithTotalPattern;
         private static readonly string CharaPattern;
@@ -400,8 +389,192 @@ namespace ThScoreFileConverter
             "StyleCop.CSharp.MaintainabilityRules",
             "SA1119:StatementMustNotUseUnnecessaryParenthesis",
             Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.SpacingRules",
+            "SA1008:OpeningParenthesisMustBeSpacedCorrectly",
+            Justification = "Reviewed.")]
         static Th11Converter()
         {
+            var cardList = new List<CardInfo>()
+            {
+                new CardInfo(  1, "怪奇「釣瓶落としの怪」",               Stage.Stage1, Level.Hard),
+                new CardInfo(  2, "怪奇「釣瓶落としの怪」",               Stage.Stage1, Level.Lunatic),
+                new CardInfo(  3, "罠符「キャプチャーウェブ」",           Stage.Stage1, Level.Easy),
+                new CardInfo(  4, "罠符「キャプチャーウェブ」",           Stage.Stage1, Level.Normal),
+                new CardInfo(  5, "蜘蛛「石窟の蜘蛛の巣」",               Stage.Stage1, Level.Hard),
+                new CardInfo(  6, "蜘蛛「石窟の蜘蛛の巣」",               Stage.Stage1, Level.Lunatic),
+                new CardInfo(  7, "瘴符「フィルドミアズマ」",             Stage.Stage1, Level.Easy),
+                new CardInfo(  8, "瘴符「フィルドミアズマ」",             Stage.Stage1, Level.Normal),
+                new CardInfo(  9, "瘴気「原因不明の熱病」",               Stage.Stage1, Level.Hard),
+                new CardInfo( 10, "瘴気「原因不明の熱病」",               Stage.Stage1, Level.Lunatic),
+                new CardInfo( 11, "妬符「グリーンアイドモンスター」",     Stage.Stage2, Level.Easy),
+                new CardInfo( 12, "妬符「グリーンアイドモンスター」",     Stage.Stage2, Level.Normal),
+                new CardInfo( 13, "嫉妬「緑色の目をした見えない怪物」",   Stage.Stage2, Level.Hard),
+                new CardInfo( 14, "嫉妬「緑色の目をした見えない怪物」",   Stage.Stage2, Level.Lunatic),
+                new CardInfo( 15, "花咲爺「華やかなる仁者への嫉妬」",     Stage.Stage2, Level.Easy),
+                new CardInfo( 16, "花咲爺「華やかなる仁者への嫉妬」",     Stage.Stage2, Level.Normal),
+                new CardInfo( 17, "花咲爺「シロの灰」",                   Stage.Stage2, Level.Hard),
+                new CardInfo( 18, "花咲爺「シロの灰」",                   Stage.Stage2, Level.Lunatic),
+                new CardInfo( 19, "舌切雀「謙虚なる富者への片恨」",       Stage.Stage2, Level.Easy),
+                new CardInfo( 20, "舌切雀「謙虚なる富者への片恨」",       Stage.Stage2, Level.Normal),
+                new CardInfo( 21, "舌切雀「大きな葛籠と小さな葛籠」",     Stage.Stage2, Level.Hard),
+                new CardInfo( 22, "舌切雀「大きな葛籠と小さな葛籠」",     Stage.Stage2, Level.Lunatic),
+                new CardInfo( 23, "恨符「丑の刻参り」",                   Stage.Stage2, Level.Easy),
+                new CardInfo( 24, "恨符「丑の刻参り」",                   Stage.Stage2, Level.Normal),
+                new CardInfo( 25, "恨符「丑の刻参り七日目」",             Stage.Stage2, Level.Hard),
+                new CardInfo( 26, "恨符「丑の刻参り七日目」",             Stage.Stage2, Level.Lunatic),
+                new CardInfo( 27, "鬼符「怪力乱神」",                     Stage.Stage3, Level.Easy),
+                new CardInfo( 28, "鬼符「怪力乱神」",                     Stage.Stage3, Level.Normal),
+                new CardInfo( 29, "鬼符「怪力乱神」",                     Stage.Stage3, Level.Hard),
+                new CardInfo( 30, "鬼符「怪力乱神」",                     Stage.Stage3, Level.Lunatic),
+                new CardInfo( 31, "怪輪「地獄の苦輪」",                   Stage.Stage3, Level.Easy),
+                new CardInfo( 32, "怪輪「地獄の苦輪」",                   Stage.Stage3, Level.Normal),
+                new CardInfo( 33, "枷符「咎人の外さぬ枷」",               Stage.Stage3, Level.Hard),
+                new CardInfo( 34, "枷符「咎人の外さぬ枷」",               Stage.Stage3, Level.Lunatic),
+                new CardInfo( 35, "力業「大江山嵐」",                     Stage.Stage3, Level.Easy),
+                new CardInfo( 36, "力業「大江山嵐」",                     Stage.Stage3, Level.Normal),
+                new CardInfo( 37, "力業「大江山颪」",                     Stage.Stage3, Level.Hard),
+                new CardInfo( 38, "力業「大江山颪」",                     Stage.Stage3, Level.Lunatic),
+                new CardInfo( 39, "四天王奥義「三歩必殺」",               Stage.Stage3, Level.Easy),
+                new CardInfo( 40, "四天王奥義「三歩必殺」",               Stage.Stage3, Level.Normal),
+                new CardInfo( 41, "四天王奥義「三歩必殺」",               Stage.Stage3, Level.Hard),
+                new CardInfo( 42, "四天王奥義「三歩必殺」",               Stage.Stage3, Level.Lunatic),
+                new CardInfo( 43, "想起「テリブルスーヴニール」",         Stage.Stage4, Level.Easy),
+                new CardInfo( 44, "想起「テリブルスーヴニール」",         Stage.Stage4, Level.Normal),
+                new CardInfo( 45, "想起「恐怖催眠術」",                   Stage.Stage4, Level.Hard),
+                new CardInfo( 46, "想起「恐怖催眠術」",                   Stage.Stage4, Level.Lunatic),
+                new CardInfo( 47, "想起「二重黒死蝶」",                   Stage.Stage4, Level.Easy),
+                new CardInfo( 48, "想起「二重黒死蝶」",                   Stage.Stage4, Level.Normal),
+                new CardInfo( 49, "想起「二重黒死蝶」",                   Stage.Stage4, Level.Hard),
+                new CardInfo( 50, "想起「二重黒死蝶」",                   Stage.Stage4, Level.Lunatic),
+                new CardInfo( 51, "想起「飛行虫ネスト」",                 Stage.Stage4, Level.Easy),
+                new CardInfo( 52, "想起「飛行虫ネスト」",                 Stage.Stage4, Level.Normal),
+                new CardInfo( 53, "想起「飛行虫ネスト」",                 Stage.Stage4, Level.Hard),
+                new CardInfo( 54, "想起「飛行虫ネスト」",                 Stage.Stage4, Level.Lunatic),
+                new CardInfo( 55, "想起「波と粒の境界」",                 Stage.Stage4, Level.Easy),
+                new CardInfo( 56, "想起「波と粒の境界」",                 Stage.Stage4, Level.Normal),
+                new CardInfo( 57, "想起「波と粒の境界」",                 Stage.Stage4, Level.Hard),
+                new CardInfo( 58, "想起「波と粒の境界」",                 Stage.Stage4, Level.Lunatic),
+                new CardInfo( 59, "想起「戸隠山投げ」",                   Stage.Stage4, Level.Easy),
+                new CardInfo( 60, "想起「戸隠山投げ」",                   Stage.Stage4, Level.Normal),
+                new CardInfo( 61, "想起「戸隠山投げ」",                   Stage.Stage4, Level.Hard),
+                new CardInfo( 62, "想起「戸隠山投げ」",                   Stage.Stage4, Level.Lunatic),
+                new CardInfo( 63, "想起「百万鬼夜行」",                   Stage.Stage4, Level.Easy),
+                new CardInfo( 64, "想起「百万鬼夜行」",                   Stage.Stage4, Level.Normal),
+                new CardInfo( 65, "想起「百万鬼夜行」",                   Stage.Stage4, Level.Hard),
+                new CardInfo( 66, "想起「百万鬼夜行」",                   Stage.Stage4, Level.Lunatic),
+                new CardInfo( 67, "想起「濛々迷霧」",                     Stage.Stage4, Level.Easy),
+                new CardInfo( 68, "想起「濛々迷霧」",                     Stage.Stage4, Level.Normal),
+                new CardInfo( 69, "想起「濛々迷霧」",                     Stage.Stage4, Level.Hard),
+                new CardInfo( 70, "想起「濛々迷霧」",                     Stage.Stage4, Level.Lunatic),
+                new CardInfo( 71, "想起「風神木の葉隠れ」",               Stage.Stage4, Level.Easy),
+                new CardInfo( 72, "想起「風神木の葉隠れ」",               Stage.Stage4, Level.Normal),
+                new CardInfo( 73, "想起「風神木の葉隠れ」",               Stage.Stage4, Level.Hard),
+                new CardInfo( 74, "想起「風神木の葉隠れ」",               Stage.Stage4, Level.Lunatic),
+                new CardInfo( 75, "想起「天狗のマクロバースト」",         Stage.Stage4, Level.Easy),
+                new CardInfo( 76, "想起「天狗のマクロバースト」",         Stage.Stage4, Level.Normal),
+                new CardInfo( 77, "想起「天狗のマクロバースト」",         Stage.Stage4, Level.Hard),
+                new CardInfo( 78, "想起「天狗のマクロバースト」",         Stage.Stage4, Level.Lunatic),
+                new CardInfo( 79, "想起「鳥居つむじ風」",                 Stage.Stage4, Level.Easy),
+                new CardInfo( 80, "想起「鳥居つむじ風」",                 Stage.Stage4, Level.Normal),
+                new CardInfo( 81, "想起「鳥居つむじ風」",                 Stage.Stage4, Level.Hard),
+                new CardInfo( 82, "想起「鳥居つむじ風」",                 Stage.Stage4, Level.Lunatic),
+                new CardInfo( 83, "想起「春の京人形」",                   Stage.Stage4, Level.Easy),
+                new CardInfo( 84, "想起「春の京人形」",                   Stage.Stage4, Level.Normal),
+                new CardInfo( 85, "想起「春の京人形」",                   Stage.Stage4, Level.Hard),
+                new CardInfo( 86, "想起「春の京人形」",                   Stage.Stage4, Level.Lunatic),
+                new CardInfo( 87, "想起「ストロードールカミカゼ」",       Stage.Stage4, Level.Easy),
+                new CardInfo( 88, "想起「ストロードールカミカゼ」",       Stage.Stage4, Level.Normal),
+                new CardInfo( 89, "想起「ストロードールカミカゼ」",       Stage.Stage4, Level.Hard),
+                new CardInfo( 90, "想起「ストロードールカミカゼ」",       Stage.Stage4, Level.Lunatic),
+                new CardInfo( 91, "想起「リターンイナニメトネス」",       Stage.Stage4, Level.Easy),
+                new CardInfo( 92, "想起「リターンイナニメトネス」",       Stage.Stage4, Level.Normal),
+                new CardInfo( 93, "想起「リターンイナニメトネス」",       Stage.Stage4, Level.Hard),
+                new CardInfo( 94, "想起「リターンイナニメトネス」",       Stage.Stage4, Level.Lunatic),
+                new CardInfo( 95, "想起「マーキュリポイズン」",           Stage.Stage4, Level.Easy),
+                new CardInfo( 96, "想起「マーキュリポイズン」",           Stage.Stage4, Level.Normal),
+                new CardInfo( 97, "想起「マーキュリポイズン」",           Stage.Stage4, Level.Hard),
+                new CardInfo( 98, "想起「マーキュリポイズン」",           Stage.Stage4, Level.Lunatic),
+                new CardInfo( 99, "想起「プリンセスウンディネ」",         Stage.Stage4, Level.Easy),
+                new CardInfo(100, "想起「プリンセスウンディネ」",         Stage.Stage4, Level.Normal),
+                new CardInfo(101, "想起「プリンセスウンディネ」",         Stage.Stage4, Level.Hard),
+                new CardInfo(102, "想起「プリンセスウンディネ」",         Stage.Stage4, Level.Lunatic),
+                new CardInfo(103, "想起「賢者の石」",                     Stage.Stage4, Level.Easy),
+                new CardInfo(104, "想起「賢者の石」",                     Stage.Stage4, Level.Normal),
+                new CardInfo(105, "想起「賢者の石」",                     Stage.Stage4, Level.Hard),
+                new CardInfo(106, "想起「賢者の石」",                     Stage.Stage4, Level.Lunatic),
+                new CardInfo(107, "想起「のびーるアーム」",               Stage.Stage4, Level.Easy),
+                new CardInfo(108, "想起「のびーるアーム」",               Stage.Stage4, Level.Normal),
+                new CardInfo(109, "想起「のびーるアーム」",               Stage.Stage4, Level.Hard),
+                new CardInfo(110, "想起「のびーるアーム」",               Stage.Stage4, Level.Lunatic),
+                new CardInfo(111, "想起「河童のポロロッカ」",             Stage.Stage4, Level.Easy),
+                new CardInfo(112, "想起「河童のポロロッカ」",             Stage.Stage4, Level.Normal),
+                new CardInfo(113, "想起「河童のポロロッカ」",             Stage.Stage4, Level.Hard),
+                new CardInfo(114, "想起「河童のポロロッカ」",             Stage.Stage4, Level.Lunatic),
+                new CardInfo(115, "想起「光り輝く水底のトラウマ」",       Stage.Stage4, Level.Easy),
+                new CardInfo(116, "想起「光り輝く水底のトラウマ」",       Stage.Stage4, Level.Normal),
+                new CardInfo(117, "想起「光り輝く水底のトラウマ」",       Stage.Stage4, Level.Hard),
+                new CardInfo(118, "想起「光り輝く水底のトラウマ」",       Stage.Stage4, Level.Lunatic),
+                new CardInfo(119, "猫符「キャッツウォーク」",             Stage.Stage5, Level.Easy),
+                new CardInfo(120, "猫符「キャッツウォーク」",             Stage.Stage5, Level.Normal),
+                new CardInfo(121, "猫符「怨霊猫乱歩」",                   Stage.Stage5, Level.Hard),
+                new CardInfo(122, "猫符「怨霊猫乱歩」",                   Stage.Stage5, Level.Lunatic),
+                new CardInfo(123, "呪精「ゾンビフェアリー」",             Stage.Stage5, Level.Easy),
+                new CardInfo(124, "呪精「ゾンビフェアリー」",             Stage.Stage5, Level.Normal),
+                new CardInfo(125, "呪精「怨霊憑依妖精」",                 Stage.Stage5, Level.Hard),
+                new CardInfo(126, "呪精「怨霊憑依妖精」",                 Stage.Stage5, Level.Lunatic),
+                new CardInfo(127, "恨霊「スプリーンイーター」",           Stage.Stage5, Level.Easy),
+                new CardInfo(128, "恨霊「スプリーンイーター」",           Stage.Stage5, Level.Normal),
+                new CardInfo(129, "屍霊「食人怨霊」",                     Stage.Stage5, Level.Hard),
+                new CardInfo(130, "屍霊「食人怨霊」",                     Stage.Stage5, Level.Lunatic),
+                new CardInfo(131, "贖罪「旧地獄の針山」",                 Stage.Stage5, Level.Easy),
+                new CardInfo(132, "贖罪「旧地獄の針山」",                 Stage.Stage5, Level.Normal),
+                new CardInfo(133, "贖罪「昔時の針と痛がる怨霊」",         Stage.Stage5, Level.Hard),
+                new CardInfo(134, "贖罪「昔時の針と痛がる怨霊」",         Stage.Stage5, Level.Lunatic),
+                new CardInfo(135, "「死灰復燃」",                         Stage.Stage5, Level.Easy),
+                new CardInfo(136, "「死灰復燃」",                         Stage.Stage5, Level.Normal),
+                new CardInfo(137, "「小悪霊復活せし」",                   Stage.Stage5, Level.Hard),
+                new CardInfo(138, "「小悪霊復活せし」",                   Stage.Stage5, Level.Lunatic),
+                new CardInfo(139, "妖怪「火焔の車輪」",                   Stage.Stage6, Level.Easy),
+                new CardInfo(140, "妖怪「火焔の車輪」",                   Stage.Stage6, Level.Normal),
+                new CardInfo(141, "妖怪「火焔の車輪」",                   Stage.Stage6, Level.Hard),
+                new CardInfo(142, "妖怪「火焔の車輪」",                   Stage.Stage6, Level.Lunatic),
+                new CardInfo(143, "核熱「ニュークリアフュージョン」",     Stage.Stage6, Level.Easy),
+                new CardInfo(144, "核熱「ニュークリアフュージョン」",     Stage.Stage6, Level.Normal),
+                new CardInfo(145, "核熱「ニュークリアエクスカーション」", Stage.Stage6, Level.Hard),
+                new CardInfo(146, "核熱「核反応制御不能」",               Stage.Stage6, Level.Lunatic),
+                new CardInfo(147, "爆符「プチフレア」",                   Stage.Stage6, Level.Easy),
+                new CardInfo(148, "爆符「メガフレア」",                   Stage.Stage6, Level.Normal),
+                new CardInfo(149, "爆符「ギガフレア」",                   Stage.Stage6, Level.Hard),
+                new CardInfo(150, "爆符「ペタフレア」",                   Stage.Stage6, Level.Lunatic),
+                new CardInfo(151, "焔星「フィクストスター」",             Stage.Stage6, Level.Easy),
+                new CardInfo(152, "焔星「フィクストスター」",             Stage.Stage6, Level.Normal),
+                new CardInfo(153, "焔星「プラネタリーレボリューション」", Stage.Stage6, Level.Hard),
+                new CardInfo(154, "焔星「十凶星」",                       Stage.Stage6, Level.Lunatic),
+                new CardInfo(155, "「地獄極楽メルトダウン」",             Stage.Stage6, Level.Easy),
+                new CardInfo(156, "「地獄極楽メルトダウン」",             Stage.Stage6, Level.Normal),
+                new CardInfo(157, "「ヘルズトカマク」",                   Stage.Stage6, Level.Hard),
+                new CardInfo(158, "「ヘルズトカマク」",                   Stage.Stage6, Level.Lunatic),
+                new CardInfo(159, "「地獄の人工太陽」",                   Stage.Stage6, Level.Easy),
+                new CardInfo(160, "「地獄の人工太陽」",                   Stage.Stage6, Level.Normal),
+                new CardInfo(161, "「サブタレイニアンサン」",             Stage.Stage6, Level.Hard),
+                new CardInfo(162, "「サブタレイニアンサン」",             Stage.Stage6, Level.Lunatic),
+                new CardInfo(163, "秘法「九字刺し」",                     Stage.Extra,  Level.Extra),
+                new CardInfo(164, "奇跡「ミラクルフルーツ」",             Stage.Extra,  Level.Extra),
+                new CardInfo(165, "神徳「五穀豊穣ライスシャワー」",       Stage.Extra,  Level.Extra),
+                new CardInfo(166, "表象「夢枕にご先祖総立ち」",           Stage.Extra,  Level.Extra),
+                new CardInfo(167, "表象「弾幕パラノイア」",               Stage.Extra,  Level.Extra),
+                new CardInfo(168, "本能「イドの解放」",                   Stage.Extra,  Level.Extra),
+                new CardInfo(169, "抑制「スーパーエゴ」",                 Stage.Extra,  Level.Extra),
+                new CardInfo(170, "反応「妖怪ポリグラフ」",               Stage.Extra,  Level.Extra),
+                new CardInfo(171, "無意識「弾幕のロールシャッハ」",       Stage.Extra,  Level.Extra),
+                new CardInfo(172, "復燃「恋の埋火」",                     Stage.Extra,  Level.Extra),
+                new CardInfo(173, "深層「無意識の遺伝子」",               Stage.Extra,  Level.Extra),
+                new CardInfo(174, "「嫌われ者のフィロソフィ」",           Stage.Extra,  Level.Extra),
+                new CardInfo(175, "「サブタレイニアンローズ」",           Stage.Extra,  Level.Extra)
+            };
+            CardTable = cardList.ToDictionary(card => card.Number);
+
             var levels = Utils.GetEnumerator<Level>();
             var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();
             var charas = Utils.GetEnumerator<Chara>();
@@ -680,7 +853,7 @@ namespace ThScoreFileConverter
                 var cards = this.allScoreData.ClearData[chara].Cards;
                 if (number == 0)
                     return this.ToNumberString(cards.Sum(getCount));
-                else if (new Range<int>(1, NumCards).Contains(number))
+                else if (CardTable.ContainsKey(number))
                     return this.ToNumberString(getCount(cards[number - 1]));
                 else
                     return match.ToString();
@@ -697,14 +870,13 @@ namespace ThScoreFileConverter
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
                 var type = match.Groups[2].Value.ToUpperInvariant();
 
-                if (new Range<int>(1, NumCards).Contains(number))
+                if (CardTable.ContainsKey(number))
                 {
                     var card = this.allScoreData.ClearData[CharaWithTotal.Total].Cards[number - 1];
                     if (type == "N")
-                        return card.HasTried()
-                            ? Encoding.Default.GetString(card.Name).TrimEnd('\0') : "??????????";
+                        return card.HasTried() ? CardTable[card.Number + 1].Name : "??????????";
                     else
-                        return card.Level.ToString();
+                        return CardTable[card.Number + 1].Level.ToString();
                 }
                 else
                     return match.ToString();
@@ -744,7 +916,7 @@ namespace ThScoreFileConverter
                     // Do nothing
                 }
                 else
-                    findByStage = (card => StageCardTable[(Stage)stage].Contains(card.Number));
+                    findByStage = (card => CardTable[card.Number + 1].Stage == (Stage)stage);
 
                 switch (level)
                 {
@@ -752,7 +924,7 @@ namespace ThScoreFileConverter
                         // Do nothing
                         break;
                     case LevelWithTotal.Extra:
-                        findByStage = (card => StageCardTable[Stage.Extra].Contains(card.Number));
+                        findByStage = (card => CardTable[card.Number + 1].Stage == Stage.Extra);
                         break;
                     default:
                         findByLevel = (card => card.Level == (Level)level);

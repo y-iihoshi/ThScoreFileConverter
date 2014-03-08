@@ -24,6 +24,7 @@ namespace ThScoreFileConverter
     using System.Linq;
     using System.Text;
     using System.Text.RegularExpressions;
+    using CardInfo = SpellCardInfo<Th13Converter.StagePractice, Th13Converter.LevelPractice>;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage(
         "StyleCop.CSharp.OrderingRules",
@@ -135,26 +136,6 @@ namespace ThScoreFileConverter
             [EnumAltName("Extra Clear")] ExtraClear
         }
 
-        private const int NumCards = 127;
-
-        // Thanks to thwiki.info
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "StyleCop.CSharp.SpacingRules",
-            "SA1008:OpeningParenthesisMustBeSpacedCorrectly",
-            Justification = "Reviewed.")]
-        private static readonly Dictionary<StagePractice, Range<int>> StageCardTable =
-            new Dictionary<StagePractice, Range<int>>()
-            {
-                { StagePractice.Stage1,    new Range<int>(  0,  13) },
-                { StagePractice.Stage2,    new Range<int>( 14,  29) },
-                { StagePractice.Stage3,    new Range<int>( 30,  43) },
-                { StagePractice.Stage4,    new Range<int>( 44,  58) },
-                { StagePractice.Stage5,    new Range<int>( 59,  77) },
-                { StagePractice.Stage6,    new Range<int>( 78, 105) },
-                { StagePractice.Extra,     new Range<int>(106, 118) },
-                { StagePractice.OverDrive, new Range<int>(119, 126) }
-            };
-
         private class LevelStagePair : Pair<LevelPractice, StagePractice>
         {
             [System.Diagnostics.CodeAnalysis.SuppressMessage(
@@ -261,7 +242,7 @@ namespace ThScoreFileConverter
                 this.ClearCounts = new Dictionary<LevelPracticeWithTotal, int>(numLevels);
                 this.ClearFlags = new Dictionary<LevelPracticeWithTotal, int>(numLevels);
                 this.Practices = new Dictionary<LevelStagePair, Practice>();
-                this.Cards = new SpellCard[NumCards];
+                this.Cards = new SpellCard[CardTable.Count];
             }
 
             public override void ReadFrom(BinaryReader reader)
@@ -303,7 +284,7 @@ namespace ThScoreFileConverter
                         if (!this.Practices.ContainsKey(key))
                             this.Practices.Add(key, practice);
                     }
-                for (var number = 0; number < Th13Converter.NumCards; number++)
+                for (var number = 0; number < this.Cards.Length; number++)
                 {
                     var card = new SpellCard();
                     card.ReadFrom(reader);
@@ -377,7 +358,12 @@ namespace ThScoreFileConverter
 
         private class SpellCard : IBinaryReadable
         {
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
             public byte[] Name { get; private set; }            // .Length = 0x80
+
             public int ClearCount { get; private set; }
             public int PracticeClearCount { get; private set; }
             public int TrialCount { get; private set; }
@@ -441,6 +427,8 @@ namespace ThScoreFileConverter
             get { return "1.00c"; }
         }
 
+        private static readonly Dictionary<int, CardInfo> CardTable;
+
         private static readonly string LevelPattern;
         private static readonly string LevelWithTotalPattern;
         private static readonly string LevelPracticeWithTotalPattern;
@@ -465,8 +453,144 @@ namespace ThScoreFileConverter
             "StyleCop.CSharp.MaintainabilityRules",
             "SA1119:StatementMustNotUseUnnecessaryParenthesis",
             Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.SpacingRules",
+            "SA1008:OpeningParenthesisMustBeSpacedCorrectly",
+            Justification = "Reviewed.")]
         static Th13Converter()
         {
+            var cardList = new List<CardInfo>()
+            {
+                new CardInfo(  1, "符牒「死蝶の舞」",                     StagePractice.Stage1,    LevelPractice.Easy),
+                new CardInfo(  2, "符牒「死蝶の舞」",                     StagePractice.Stage1,    LevelPractice.Normal),
+                new CardInfo(  3, "符牒「死蝶の舞　- 桜花 -」",           StagePractice.Stage1,    LevelPractice.Hard),
+                new CardInfo(  4, "符牒「死蝶の舞　- 桜花 -」",           StagePractice.Stage1,    LevelPractice.Lunatic),
+                new CardInfo(  5, "幽蝶「ゴーストスポット」",             StagePractice.Stage1,    LevelPractice.Easy),
+                new CardInfo(  6, "幽蝶「ゴーストスポット」",             StagePractice.Stage1,    LevelPractice.Normal),
+                new CardInfo(  7, "幽蝶「ゴーストスポット　- 桜花 -」",   StagePractice.Stage1,    LevelPractice.Hard),
+                new CardInfo(  8, "幽蝶「ゴーストスポット　- 桜花 -」",   StagePractice.Stage1,    LevelPractice.Lunatic),
+                new CardInfo(  9, "冥符「常夜桜」",                       StagePractice.Stage1,    LevelPractice.Easy),
+                new CardInfo( 10, "冥符「常夜桜」",                       StagePractice.Stage1,    LevelPractice.Normal),
+                new CardInfo( 11, "冥符「常夜桜」",                       StagePractice.Stage1,    LevelPractice.Hard),
+                new CardInfo( 12, "冥符「常夜桜」",                       StagePractice.Stage1,    LevelPractice.Lunatic),
+                new CardInfo( 13, "桜符「西行桜吹雪」",                   StagePractice.Stage1,    LevelPractice.Hard),
+                new CardInfo( 14, "桜符「西行桜吹雪」",                   StagePractice.Stage1,    LevelPractice.Lunatic),
+                new CardInfo( 15, "響符「マウンテンエコー」",             StagePractice.Stage2,    LevelPractice.Easy),
+                new CardInfo( 16, "響符「マウンテンエコー」",             StagePractice.Stage2,    LevelPractice.Normal),
+                new CardInfo( 17, "響符「マウンテンエコースクランブル」", StagePractice.Stage2,    LevelPractice.Hard),
+                new CardInfo( 18, "響符「マウンテンエコースクランブル」", StagePractice.Stage2,    LevelPractice.Lunatic),
+                new CardInfo( 19, "響符「パワーレゾナンス」",             StagePractice.Stage2,    LevelPractice.Easy),
+                new CardInfo( 20, "響符「パワーレゾナンス」",             StagePractice.Stage2,    LevelPractice.Normal),
+                new CardInfo( 21, "響符「パワーレゾナンス」",             StagePractice.Stage2,    LevelPractice.Hard),
+                new CardInfo( 22, "響符「パワーレゾナンス」",             StagePractice.Stage2,    LevelPractice.Lunatic),
+                new CardInfo( 23, "山彦「ロングレンジエコー」",           StagePractice.Stage2,    LevelPractice.Easy),
+                new CardInfo( 24, "山彦「ロングレンジエコー」",           StagePractice.Stage2,    LevelPractice.Normal),
+                new CardInfo( 25, "山彦「アンプリファイエコー」",         StagePractice.Stage2,    LevelPractice.Hard),
+                new CardInfo( 26, "山彦「アンプリファイエコー」",         StagePractice.Stage2,    LevelPractice.Lunatic),
+                new CardInfo( 27, "大声「チャージドクライ」",             StagePractice.Stage2,    LevelPractice.Easy),
+                new CardInfo( 28, "大声「チャージドクライ」",             StagePractice.Stage2,    LevelPractice.Normal),
+                new CardInfo( 29, "大声「チャージドヤッホー」",           StagePractice.Stage2,    LevelPractice.Hard),
+                new CardInfo( 30, "大声「チャージドヤッホー」",           StagePractice.Stage2,    LevelPractice.Lunatic),
+                new CardInfo( 31, "虹符「アンブレラサイクロン」",         StagePractice.Stage3,    LevelPractice.Hard),
+                new CardInfo( 32, "虹符「アンブレラサイクロン」",         StagePractice.Stage3,    LevelPractice.Lunatic),
+                new CardInfo( 33, "回復「ヒールバイデザイア」",           StagePractice.Stage3,    LevelPractice.Easy),
+                new CardInfo( 34, "回復「ヒールバイデザイア」",           StagePractice.Stage3,    LevelPractice.Normal),
+                new CardInfo( 35, "回復「ヒールバイデザイア」",           StagePractice.Stage3,    LevelPractice.Hard),
+                new CardInfo( 36, "回復「ヒールバイデザイア」",           StagePractice.Stage3,    LevelPractice.Lunatic),
+                new CardInfo( 37, "毒爪「ポイズンレイズ」",               StagePractice.Stage3,    LevelPractice.Easy),
+                new CardInfo( 38, "毒爪「ポイズンレイズ」",               StagePractice.Stage3,    LevelPractice.Normal),
+                new CardInfo( 39, "毒爪「ポイズンマーダー」",             StagePractice.Stage3,    LevelPractice.Hard),
+                new CardInfo( 40, "毒爪「ポイズンマーダー」",             StagePractice.Stage3,    LevelPractice.Lunatic),
+                new CardInfo( 41, "欲符「稼欲霊招来」",                   StagePractice.Stage3,    LevelPractice.Easy),
+                new CardInfo( 42, "欲符「稼欲霊招来」",                   StagePractice.Stage3,    LevelPractice.Normal),
+                new CardInfo( 43, "欲霊「スコアデザイアイーター」",       StagePractice.Stage3,    LevelPractice.Hard),
+                new CardInfo( 44, "欲霊「スコアデザイアイーター」",       StagePractice.Stage3,    LevelPractice.Lunatic),
+                new CardInfo( 45, "邪符「ヤンシャオグイ」",               StagePractice.Stage4,    LevelPractice.Normal),
+                new CardInfo( 46, "邪符「グーフンイエグイ」",             StagePractice.Stage4,    LevelPractice.Hard),
+                new CardInfo( 47, "邪符「グーフンイエグイ」",             StagePractice.Stage4,    LevelPractice.Lunatic),
+                new CardInfo( 48, "入魔「ゾウフォルゥモォ」",             StagePractice.Stage4,    LevelPractice.Easy),
+                new CardInfo( 49, "入魔「ゾウフォルゥモォ」",             StagePractice.Stage4,    LevelPractice.Normal),
+                new CardInfo( 50, "入魔「ゾウフォルゥモォ」",             StagePractice.Stage4,    LevelPractice.Hard),
+                new CardInfo( 51, "入魔「ゾウフォルゥモォ」",             StagePractice.Stage4,    LevelPractice.Lunatic),
+                new CardInfo( 52, "降霊「死人タンキー」",                 StagePractice.Stage4,    LevelPractice.Easy),
+                new CardInfo( 53, "降霊「死人タンキー」",                 StagePractice.Stage4,    LevelPractice.Normal),
+                new CardInfo( 54, "通霊「トンリン芳香」",                 StagePractice.Stage4,    LevelPractice.Hard),
+                new CardInfo( 55, "通霊「トンリン芳香」",                 StagePractice.Stage4,    LevelPractice.Lunatic),
+                new CardInfo( 56, "道符「タオ胎動」",                     StagePractice.Stage4,    LevelPractice.Easy),
+                new CardInfo( 57, "道符「タオ胎動」",                     StagePractice.Stage4,    LevelPractice.Normal),
+                new CardInfo( 58, "道符「タオ胎動」",                     StagePractice.Stage4,    LevelPractice.Hard),
+                new CardInfo( 59, "道符「タオ胎動」",                     StagePractice.Stage4,    LevelPractice.Lunatic),
+                new CardInfo( 60, "雷矢「ガゴウジサイクロン」",           StagePractice.Stage5,    LevelPractice.Normal),
+                new CardInfo( 61, "雷矢「ガゴウジサイクロン」",           StagePractice.Stage5,    LevelPractice.Hard),
+                new CardInfo( 62, "雷矢「ガゴウジトルネード」",           StagePractice.Stage5,    LevelPractice.Lunatic),
+                new CardInfo( 63, "天符「雨の磐舟」",                     StagePractice.Stage5,    LevelPractice.Easy),
+                new CardInfo( 64, "天符「雨の磐舟」",                     StagePractice.Stage5,    LevelPractice.Normal),
+                new CardInfo( 65, "天符「天の磐舟よ天へ昇れ」",           StagePractice.Stage5,    LevelPractice.Hard),
+                new CardInfo( 66, "天符「天の磐舟よ天へ昇れ」",           StagePractice.Stage5,    LevelPractice.Lunatic),
+                new CardInfo( 67, "投皿「物部の八十平瓮」",               StagePractice.Stage5,    LevelPractice.Easy),
+                new CardInfo( 68, "投皿「物部の八十平瓮」",               StagePractice.Stage5,    LevelPractice.Normal),
+                new CardInfo( 69, "投皿「物部の八十平瓮」",               StagePractice.Stage5,    LevelPractice.Hard),
+                new CardInfo( 70, "投皿「物部の八十平瓮」",               StagePractice.Stage5,    LevelPractice.Lunatic),
+                new CardInfo( 71, "炎符「廃仏の炎風」",                   StagePractice.Stage5,    LevelPractice.Easy),
+                new CardInfo( 72, "炎符「廃仏の炎風」",                   StagePractice.Stage5,    LevelPractice.Normal),
+                new CardInfo( 73, "炎符「桜井寺炎上」",                   StagePractice.Stage5,    LevelPractice.Hard),
+                new CardInfo( 74, "炎符「桜井寺炎上」",                   StagePractice.Stage5,    LevelPractice.Lunatic),
+                new CardInfo( 75, "聖童女「大物忌正餐」",                 StagePractice.Stage5,    LevelPractice.Easy),
+                new CardInfo( 76, "聖童女「大物忌正餐」",                 StagePractice.Stage5,    LevelPractice.Normal),
+                new CardInfo( 77, "聖童女「大物忌正餐」",                 StagePractice.Stage5,    LevelPractice.Hard),
+                new CardInfo( 78, "聖童女「大物忌正餐」",                 StagePractice.Stage5,    LevelPractice.Lunatic),
+                new CardInfo( 79, "名誉「十二階の色彩」",                 StagePractice.Stage6,    LevelPractice.Easy),
+                new CardInfo( 80, "名誉「十二階の色彩」",                 StagePractice.Stage6,    LevelPractice.Normal),
+                new CardInfo( 81, "名誉「十二階の冠位」",                 StagePractice.Stage6,    LevelPractice.Hard),
+                new CardInfo( 82, "名誉「十二階の冠位」",                 StagePractice.Stage6,    LevelPractice.Lunatic),
+                new CardInfo( 83, "仙符「日出ずる処の道士」",             StagePractice.Stage6,    LevelPractice.Easy),
+                new CardInfo( 84, "仙符「日出ずる処の道士」",             StagePractice.Stage6,    LevelPractice.Normal),
+                new CardInfo( 85, "仙符「日出ずる処の天子」",             StagePractice.Stage6,    LevelPractice.Hard),
+                new CardInfo( 86, "仙符「日出ずる処の天子」",             StagePractice.Stage6,    LevelPractice.Lunatic),
+                new CardInfo( 87, "召喚「豪族乱舞」",                     StagePractice.Stage6,    LevelPractice.Easy),
+                new CardInfo( 88, "召喚「豪族乱舞」",                     StagePractice.Stage6,    LevelPractice.Normal),
+                new CardInfo( 89, "召喚「豪族乱舞」",                     StagePractice.Stage6,    LevelPractice.Hard),
+                new CardInfo( 90, "召喚「豪族乱舞」",                     StagePractice.Stage6,    LevelPractice.Lunatic),
+                new CardInfo( 91, "秘宝「斑鳩寺の天球儀」",               StagePractice.Stage6,    LevelPractice.Easy),
+                new CardInfo( 92, "秘宝「斑鳩寺の天球儀」",               StagePractice.Stage6,    LevelPractice.Normal),
+                new CardInfo( 93, "秘宝「斑鳩寺の天球儀」",               StagePractice.Stage6,    LevelPractice.Hard),
+                new CardInfo( 94, "秘宝「聖徳太子のオーパーツ」",         StagePractice.Stage6,    LevelPractice.Lunatic),
+                new CardInfo( 95, "光符「救世観音の光後光」",             StagePractice.Stage6,    LevelPractice.Easy),
+                new CardInfo( 96, "光符「救世観音の光後光」",             StagePractice.Stage6,    LevelPractice.Normal),
+                new CardInfo( 97, "光符「グセフラッシュ」",               StagePractice.Stage6,    LevelPractice.Hard),
+                new CardInfo( 98, "光符「グセフラッシュ」",               StagePractice.Stage6,    LevelPractice.Lunatic),
+                new CardInfo( 99, "眼光「十七条のレーザー」",             StagePractice.Stage6,    LevelPractice.Easy),
+                new CardInfo(100, "眼光「十七条のレーザー」",             StagePractice.Stage6,    LevelPractice.Normal),
+                new CardInfo(101, "神光「逆らう事なきを宗とせよ」",       StagePractice.Stage6,    LevelPractice.Hard),
+                new CardInfo(102, "神光「逆らう事なきを宗とせよ」",       StagePractice.Stage6,    LevelPractice.Lunatic),
+                new CardInfo(103, "「星降る神霊廟」",                     StagePractice.Stage6,    LevelPractice.Easy),
+                new CardInfo(104, "「星降る神霊廟」",                     StagePractice.Stage6,    LevelPractice.Normal),
+                new CardInfo(105, "「生まれたての神霊」",                 StagePractice.Stage6,    LevelPractice.Hard),
+                new CardInfo(106, "「生まれたての神霊」",                 StagePractice.Stage6,    LevelPractice.Lunatic),
+                new CardInfo(107, "アンノウン「軌道不明の鬼火」",         StagePractice.Extra,     LevelPractice.Extra),
+                new CardInfo(108, "アンノウン「姿態不明の空魚」",         StagePractice.Extra,     LevelPractice.Extra),
+                new CardInfo(109, "アンノウン「原理不明の妖怪玉」",       StagePractice.Extra,     LevelPractice.Extra),
+                new CardInfo(110, "壱番勝負「霊長化弾幕変化」",           StagePractice.Extra,     LevelPractice.Extra),
+                new CardInfo(111, "弐番勝負「肉食化弾幕変化」",           StagePractice.Extra,     LevelPractice.Extra),
+                new CardInfo(112, "参番勝負「延羽化弾幕変化」",           StagePractice.Extra,     LevelPractice.Extra),
+                new CardInfo(113, "四番勝負「両生化弾幕変化」",           StagePractice.Extra,     LevelPractice.Extra),
+                new CardInfo(114, "伍番勝負「鳥獣戯画」",                 StagePractice.Extra,     LevelPractice.Extra),
+                new CardInfo(115, "六番勝負「狸の化け学校」",             StagePractice.Extra,     LevelPractice.Extra),
+                new CardInfo(116, "七番勝負「野生の離島」",               StagePractice.Extra,     LevelPractice.Extra),
+                new CardInfo(117, "変化「まぬけ巫女の偽調伏」",           StagePractice.Extra,     LevelPractice.Extra),
+                new CardInfo(118, "「マミゾウ化弾幕十変化」",             StagePractice.Extra,     LevelPractice.Extra),
+                new CardInfo(119, "狢符「満月のポンポコリン」",           StagePractice.Extra,     LevelPractice.Extra),
+                new CardInfo(120, "桜符「桜吹雪地獄」",                   StagePractice.OverDrive, LevelPractice.OverDrive),
+                new CardInfo(121, "山彦「ヤマビコの本領発揮エコー」",     StagePractice.OverDrive, LevelPractice.OverDrive),
+                new CardInfo(122, "毒爪「死なない殺人鬼」",               StagePractice.OverDrive, LevelPractice.OverDrive),
+                new CardInfo(123, "道符「ＴＡＯ胎動　～道～」",           StagePractice.OverDrive, LevelPractice.OverDrive),
+                new CardInfo(124, "怨霊「入鹿の雷」",                     StagePractice.OverDrive, LevelPractice.OverDrive),
+                new CardInfo(125, "聖童女「太陽神の贄」",                 StagePractice.OverDrive, LevelPractice.OverDrive),
+                new CardInfo(126, "「神霊大宇宙」",                       StagePractice.OverDrive, LevelPractice.OverDrive),
+                new CardInfo(127, "「ワイルドカーペット」",               StagePractice.OverDrive, LevelPractice.OverDrive)
+            };
+            CardTable = cardList.ToDictionary(card => card.Number);
+
             var levels = Utils.GetEnumerator<Level>();
             var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();
             var levelsPracticeWithTotal = Utils.GetEnumerator<LevelPracticeWithTotal>();
@@ -767,7 +891,7 @@ namespace ThScoreFileConverter
                 var cards = this.allScoreData.ClearData[chara].Cards;
                 if (number == 0)
                     return this.ToNumberString(cards.Sum(getCount));
-                else if (new Range<int>(1, NumCards).Contains(number))
+                else if (CardTable.ContainsKey(number))
                     return this.ToNumberString(getCount(cards[number - 1]));
                 else
                     return match.ToString();
@@ -784,16 +908,16 @@ namespace ThScoreFileConverter
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
                 var type = match.Groups[2].Value.ToUpperInvariant();
 
-                if (new Range<int>(1, NumCards).Contains(number))
+                if (CardTable.ContainsKey(number))
                 {
                     var card = this.allScoreData.ClearData[CharaWithTotal.Total].Cards[number - 1];
                     if (type == "N")
-                        return card.HasTried()
-                            ? Encoding.Default.GetString(card.Name).TrimEnd('\0') : "??????????";
+                        return card.HasTried() ? CardTable[card.Number + 1].Name : "??????????";
                     else
                     {
-                        var levelName = card.Level.ToLongName();
-                        return (levelName.Length > 0) ? levelName : card.Level.ToString();
+                        var levelName = CardTable[card.Number + 1].Level.ToLongName();
+                        return (levelName.Length > 0)
+                            ? levelName : CardTable[card.Number + 1].Level.ToString();
                     }
                 }
                 else
@@ -850,7 +974,7 @@ namespace ThScoreFileConverter
                     // Do nothing
                 }
                 else
-                    findByStage = (card => StageCardTable[(StagePractice)stage].Contains(card.Number));
+                    findByStage = (card => CardTable[card.Number + 1].Stage == (StagePractice)stage);
 
                 switch (level)
                 {
@@ -858,10 +982,10 @@ namespace ThScoreFileConverter
                         // Do nothing
                         break;
                     case LevelPracticeWithTotal.Extra:
-                        findByStage = (card => StageCardTable[StagePractice.Extra].Contains(card.Number));
+                        findByStage = (card => CardTable[card.Number + 1].Stage == StagePractice.Extra);
                         break;
                     case LevelPracticeWithTotal.OverDrive:
-                        findByStage = (card => StageCardTable[StagePractice.OverDrive].Contains(card.Number));
+                        findByStage = (card => CardTable[card.Number + 1].Stage == StagePractice.OverDrive);
                         break;
                     default:
                         findByLevel = (card => card.Level == (LevelPractice)level);
