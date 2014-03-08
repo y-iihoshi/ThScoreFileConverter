@@ -136,7 +136,7 @@ namespace ThScoreFileConverter
             public Header Header { get; set; }
             public Dictionary<CharaLevelPair, List<HighScore>> Rankings { get; set; }
             public Dictionary<Chara, ClearData> ClearData { get; set; }
-            public CardAttack[] CardAttacks { get; set; }
+            public Dictionary<int, CardAttack> CardAttacks { get; set; }
             public Dictionary<CharaLevelPair, Dictionary<Stage, PracticeScore>> PracticeScores { get; set; }
             public PlayStatus PlayStatus { get; set; }
             public LastName LastName { get; set; }
@@ -147,7 +147,7 @@ namespace ThScoreFileConverter
                 var numCharas = Enum.GetValues(typeof(Chara)).Length;
                 this.Rankings = new Dictionary<CharaLevelPair, List<HighScore>>();
                 this.ClearData = new Dictionary<Chara, ClearData>(numCharas);
-                this.CardAttacks = new CardAttack[CardTable.Count];
+                this.CardAttacks = new Dictionary<int, CardAttack>(CardTable.Count);
                 this.PracticeScores = new Dictionary<CharaLevelPair, Dictionary<Stage, PracticeScore>>();
             }
         }
@@ -277,7 +277,7 @@ namespace ThScoreFileConverter
         private class CardAttack : Chapter      // per card
         {
             public Dictionary<CharaWithTotal, uint> MaxBonuses { get; private set; }
-            public short Number { get; private set; }       // 0-based
+            public short Number { get; private set; }       // 1-based
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage(
                 "Microsoft.Performance",
@@ -310,7 +310,7 @@ namespace ThScoreFileConverter
                 reader.ReadUInt32();    // always 0x00000001?
                 foreach (var chara in charas)
                     this.MaxBonuses.Add(chara, reader.ReadUInt32());
-                this.Number = reader.ReadInt16();
+                this.Number = (short)(reader.ReadInt16() + 1);
                 reader.ReadByte();
                 this.CardName = reader.ReadBytes(0x30);
                 reader.ReadByte();      // always 0x00?
@@ -903,7 +903,8 @@ namespace ThScoreFileConverter
                             {
                                 var attack = new CardAttack(chapter);
                                 attack.ReadFrom(reader);
-                                allScoreData.CardAttacks[attack.Number] = attack;
+                                if (!allScoreData.CardAttacks.ContainsKey(attack.Number))
+                                    allScoreData.CardAttacks.Add(attack.Number, attack);
                             }
                             break;
 
@@ -1050,15 +1051,16 @@ namespace ThScoreFileConverter
                 else
                     getValue = (attack => attack.TrialCounts[chara]);
 
-                Func<CardAttack, long> getValueWithNullCheck =
-                    (attack => (attack != null) ? getValue(attack) : 0L);
-
                 if (number == 0)
-                    return this.ToNumberString(
-                        this.allScoreData.CardAttacks.Sum(getValueWithNullCheck));
+                    return this.ToNumberString(this.allScoreData.CardAttacks.Values.Sum(getValue));
                 else if (CardTable.ContainsKey(number))
-                    return this.ToNumberString(
-                        getValueWithNullCheck(this.allScoreData.CardAttacks[number - 1]));
+                {
+                    CardAttack attack;
+                    if (this.allScoreData.CardAttacks.TryGetValue(number, out attack))
+                        return this.ToNumberString(getValue(attack));
+                    else
+                        return "0";
+                }
                 else
                     return match.ToString();
             });
@@ -1076,13 +1078,11 @@ namespace ThScoreFileConverter
 
                 if (CardTable.ContainsKey(number))
                 {
-                    var attack = this.allScoreData.CardAttacks[number - 1];
-                    if (type == "N")
-                        return ((attack != null) && attack.HasTried())
-                            ? CardTable[number].Name : "??????????";
+                    CardAttack attack;
+                    if (this.allScoreData.CardAttacks.TryGetValue(number, out attack) && attack.HasTried())
+                        return (type == "N") ? CardTable[number].Name : CardTable[number].Level.ToString();
                     else
-                        return ((attack != null) && attack.HasTried())
-                            ? CardTable[number].Level.ToString() : "?????";
+                        return (type == "N") ? "??????????" : "?????";
                 }
                 else
                     return match.ToString();
@@ -1112,7 +1112,6 @@ namespace ThScoreFileConverter
                 if ((stage == StageWithTotal.Extra) || (stage == StageWithTotal.Phantasm))
                     return match.ToString();
 
-                Func<CardAttack, bool> checkNotNull = (attack => attack != null);
                 Func<CardAttack, bool> findByLevel = (attack => true);
                 Func<CardAttack, bool> findByStage = (attack => true);
                 Func<CardAttack, bool> findByType = (attack => true);
@@ -1122,7 +1121,7 @@ namespace ThScoreFileConverter
                     // Do nothing
                 }
                 else
-                    findByStage = (attack => CardTable[attack.Number + 1].Stage == (Stage)stage);
+                    findByStage = (attack => CardTable[attack.Number].Stage == (Stage)stage);
 
                 switch (level)
                 {
@@ -1130,13 +1129,13 @@ namespace ThScoreFileConverter
                         // Do nothing
                         break;
                     case LevelWithTotal.Extra:
-                        findByStage = (attack => CardTable[attack.Number + 1].Stage == Stage.Extra);
+                        findByStage = (attack => CardTable[attack.Number].Stage == Stage.Extra);
                         break;
                     case LevelWithTotal.Phantasm:
-                        findByStage = (attack => CardTable[attack.Number + 1].Stage == Stage.Phantasm);
+                        findByStage = (attack => CardTable[attack.Number].Stage == Stage.Phantasm);
                         break;
                     default:
-                        findByLevel = (attack => CardTable[attack.Number + 1].Level == (Level)level);
+                        findByLevel = (attack => CardTable[attack.Number].Level == (Level)level);
                         break;
                 }
 
@@ -1145,8 +1144,8 @@ namespace ThScoreFileConverter
                 else
                     findByType = (attack => attack.TrialCounts[chara] > 0);
 
-                var and = Utils.MakeAndPredicate(checkNotNull, findByLevel, findByStage, findByType);
-                return this.allScoreData.CardAttacks.Count(and).ToString(CultureInfo.CurrentCulture);
+                var and = Utils.MakeAndPredicate(findByLevel, findByStage, findByType);
+                return this.allScoreData.CardAttacks.Values.Count(and).ToString(CultureInfo.CurrentCulture);
             });
             return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }

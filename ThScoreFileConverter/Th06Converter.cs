@@ -127,7 +127,7 @@ namespace ThScoreFileConverter
             public Header Header { get; set; }
             public Dictionary<CharaLevelPair, List<HighScore>> Rankings { get; set; }
             public Dictionary<Chara, ClearData> ClearData { get; set; }
-            public CardAttack[] CardAttacks { get; set; }
+            public Dictionary<int, CardAttack> CardAttacks { get; set; }
             public Dictionary<CharaLevelPair, Dictionary<Stage, PracticeScore>> PracticeScores { get; set; }
 
             public AllScoreData()
@@ -135,7 +135,7 @@ namespace ThScoreFileConverter
                 var numCharas = Enum.GetValues(typeof(Chara)).Length;
                 this.Rankings = new Dictionary<CharaLevelPair, List<HighScore>>();
                 this.ClearData = new Dictionary<Chara, ClearData>(numCharas);
-                this.CardAttacks = new CardAttack[CardTable.Count];
+                this.CardAttacks = new Dictionary<int, CardAttack>(CardTable.Count);
                 this.PracticeScores = new Dictionary<CharaLevelPair, Dictionary<Stage, PracticeScore>>();
             }
         }
@@ -257,7 +257,7 @@ namespace ThScoreFileConverter
 
         private class CardAttack : Chapter      // per card
         {
-            public short Number { get; private set; }       // 0-based
+            public short Number { get; private set; }       // 1-based
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage(
                 "Microsoft.Performance",
@@ -282,7 +282,7 @@ namespace ThScoreFileConverter
             public override void ReadFrom(BinaryReader reader)
             {
                 reader.ReadBytes(8);
-                this.Number = reader.ReadInt16();
+                this.Number = (short)(reader.ReadInt16() + 1);
                 reader.ReadBytes(6);
                 this.CardName = reader.ReadBytes(0x24);
                 this.TrialCount = reader.ReadUInt16();
@@ -652,7 +652,8 @@ namespace ThScoreFileConverter
                             {
                                 var attack = new CardAttack(chapter);
                                 attack.ReadFrom(reader);
-                                allScoreData.CardAttacks[attack.Number] = attack;
+                                if (!allScoreData.CardAttacks.ContainsKey(attack.Number))
+                                    allScoreData.CardAttacks.Add(attack.Number, attack);
                             }
                             break;
 
@@ -763,15 +764,16 @@ namespace ThScoreFileConverter
                 else
                     getCount = (attack => attack.TrialCount);
 
-                Func<CardAttack, int> getCountWithNullCheck =
-                    (attack => (attack != null) ? getCount(attack) : 0);
-
                 if (number == 0)
-                    return this.ToNumberString(
-                        this.allScoreData.CardAttacks.Sum(getCountWithNullCheck));
+                    return this.ToNumberString(this.allScoreData.CardAttacks.Values.Sum(getCount));
                 else if (CardTable.ContainsKey(number))
-                    return this.ToNumberString(
-                        getCountWithNullCheck(this.allScoreData.CardAttacks[number - 1]));
+                {
+                    CardAttack attack;
+                    if (this.allScoreData.CardAttacks.TryGetValue(number, out attack))
+                        return this.ToNumberString(getCount(attack));
+                    else
+                        return "0";
+                }
                 else
                     return match.ToString();
             });
@@ -789,18 +791,14 @@ namespace ThScoreFileConverter
 
                 if (CardTable.ContainsKey(number))
                 {
-                    var attack = this.allScoreData.CardAttacks[number - 1];
-                    if (type == "N")
-                        return ((attack != null) && attack.HasTried())
-                            ? CardTable[number].Name : "??????????";
-                    else
-                    {
-                        if ((attack != null) && attack.HasTried())
-                            return string.Join(
+                    CardAttack attack;
+                    if (this.allScoreData.CardAttacks.TryGetValue(number, out attack) && attack.HasTried())
+                        return (type == "N")
+                            ? CardTable[number].Name
+                            : string.Join(
                                 ", ", CardTable[number].Levels.Select(lv => lv.ToString()).ToArray());
-                        else
-                            return "?????";
-                    }
+                    else
+                        return (type == "N") ? "??????????" : "?????";
                 }
                 else
                     return match.ToString();
@@ -821,7 +819,6 @@ namespace ThScoreFileConverter
                 var stage = ToStageWithTotal(match.Groups[1].Value);
                 var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
-                Func<CardAttack, bool> checkNotNull = (attack => attack != null);
                 Func<CardAttack, bool> findByStage = (attack => true);
                 Func<CardAttack, bool> findByType = (attack => true);
 
@@ -830,15 +827,15 @@ namespace ThScoreFileConverter
                     // Do nothing
                 }
                 else
-                    findByStage = (attack => CardTable[attack.Number + 1].Stage == (Stage)stage);
+                    findByStage = (attack => CardTable[attack.Number].Stage == (Stage)stage);
 
                 if (type == 1)
                     findByType = (attack => attack.ClearCount > 0);
                 else
                     findByType = (attack => attack.TrialCount > 0);
 
-                var and = Utils.MakeAndPredicate(checkNotNull, findByStage, findByType);
-                return this.allScoreData.CardAttacks.Count(and).ToString(CultureInfo.CurrentCulture);
+                var and = Utils.MakeAndPredicate(findByStage, findByType);
+                return this.allScoreData.CardAttacks.Values.Count(and).ToString(CultureInfo.CurrentCulture);
             });
             return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
