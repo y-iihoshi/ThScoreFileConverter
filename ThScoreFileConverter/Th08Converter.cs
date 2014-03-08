@@ -444,7 +444,8 @@ namespace ThScoreFileConverter
 
             public bool HasTried()
             {
-                return Encoding.Default.GetString(this.CardName).TrimEnd('\0').Length > 0;
+                return (this.StoryCareer.TrialCounts[CharaWithTotal.Total] > 0)
+                    || (this.PracticeCareer.TrialCounts[CharaWithTotal.Total] > 0);
             }
         }
 

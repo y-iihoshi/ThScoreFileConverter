@@ -371,7 +371,7 @@ namespace ThScoreFileConverter
 
             public bool HasTried()
             {
-                return Encoding.Default.GetString(this.CardName).TrimEnd('\0').Length > 0;
+                return this.TrialCounts[CharaWithTotal.Total] > 0;
             }
         }
 

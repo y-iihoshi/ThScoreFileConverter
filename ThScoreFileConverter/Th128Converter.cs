@@ -390,6 +390,11 @@ namespace ThScoreFileConverter
                 this.Number = reader.ReadInt32();
                 this.Level = (Level)reader.ReadInt32();
             }
+
+            public bool HasTried()
+            {
+                return this.TrialCount > 0;
+            }
         }
 
         private AllScoreData allScoreData = null;
@@ -727,10 +732,8 @@ namespace ThScoreFileConverter
                 {
                     var card = this.allScoreData.CardData.Cards[number - 1];
                     if (type == "N")
-                    {
-                        var name = Encoding.Default.GetString(card.Name).TrimEnd('\0');
-                        return (name.Length > 0) ? name : "??????????";
-                    }
+                        return card.HasTried()
+                            ? Encoding.Default.GetString(card.Name).TrimEnd('\0') : "??????????";
                     else
                         return card.Level.ToString();
                 }

@@ -402,6 +402,11 @@ namespace ThScoreFileConverter
                 this.Level = (LevelPractice)reader.ReadInt32();
                 this.PracticeScore = reader.ReadInt32();
             }
+
+            public bool HasTried()
+            {
+                return (this.TrialCount > 0) || (this.PracticeTrialCount > 0);
+            }
         }
 
         private class Practice : IBinaryReadable
@@ -783,10 +788,8 @@ namespace ThScoreFileConverter
                 {
                     var card = this.allScoreData.ClearData[CharaWithTotal.Total].Cards[number - 1];
                     if (type == "N")
-                    {
-                        var name = Encoding.Default.GetString(card.Name).TrimEnd('\0');
-                        return (name.Length > 0) ? name : "??????????";
-                    }
+                        return card.HasTried()
+                            ? Encoding.Default.GetString(card.Name).TrimEnd('\0') : "??????????";
                     else
                     {
                         var levelName = card.Level.ToLongName();
