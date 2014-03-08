@@ -52,7 +52,7 @@ namespace ThScoreFileConverter
             [EnumAltName("X")] Extra,
             [EnumAltName("T")] Total
         }
-        public enum LevelPractice
+        public enum LevelPracticeWithTotal
         {
             [EnumAltName("E")] Easy,
             [EnumAltName("N")] Normal,
@@ -396,7 +396,7 @@ namespace ThScoreFileConverter
         private class CardAttack : Chapter      // per card
         {
             public short Number { get; private set; }       // 0-based
-            public LevelPractice Level { get; private set; }
+            public LevelPracticeWithTotal Level { get; private set; }
             public byte[] CardName { get; private set; }    // .Length = 0x30
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage(
@@ -433,7 +433,7 @@ namespace ThScoreFileConverter
                 reader.ReadUInt32();    // always 0x00000003?
                 this.Number = reader.ReadInt16();
                 reader.ReadByte();
-                this.Level = (LevelPractice)reader.ReadByte();
+                this.Level = (LevelPracticeWithTotal)reader.ReadByte();
                 this.CardName = reader.ReadBytes(0x30);
                 this.EnemyName = reader.ReadBytes(0x30);
                 this.Comment = reader.ReadBytes(0x80);
@@ -681,7 +681,7 @@ namespace ThScoreFileConverter
 
         private static readonly string LevelPattern;
         private static readonly string LevelWithTotalPattern;
-        private static readonly string LevelPracticePattern;
+        private static readonly string LevelPracticeWithTotalPattern;
         private static readonly string CharaPattern;
         private static readonly string CharaWithTotalPattern;
         private static readonly string StagePattern;
@@ -689,7 +689,7 @@ namespace ThScoreFileConverter
 
         private static readonly Func<string, StringComparison, Level> ToLevel;
         private static readonly Func<string, StringComparison, LevelWithTotal> ToLevelWithTotal;
-        private static readonly Func<string, StringComparison, LevelPractice> ToLevelPractice;
+        private static readonly Func<string, StringComparison, LevelPracticeWithTotal> ToLevelPracticeWithTotal;
         private static readonly Func<string, StringComparison, Chara> ToChara;
         private static readonly Func<string, StringComparison, CharaWithTotal> ToCharaWithTotal;
         private static readonly Func<string, StringComparison, Stage> ToStage;
@@ -725,7 +725,7 @@ namespace ThScoreFileConverter
 
             var levels = Utils.GetEnumerator<Level>();
             var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();
-            var levelsPractice = Utils.GetEnumerator<LevelPractice>();
+            var levelsPracticeWithTotal = Utils.GetEnumerator<LevelPracticeWithTotal>();
             var charas = Utils.GetEnumerator<Chara>();
             var charasWithTotal = Utils.GetEnumerator<CharaWithTotal>();
             var stages = Utils.GetEnumerator<Stage>();
@@ -735,8 +735,8 @@ namespace ThScoreFileConverter
                 string.Empty, levels.Select(lv => lv.ToShortName()).ToArray());
             LevelWithTotalPattern = string.Join(
                 string.Empty, levelsWithTotal.Select(lv => lv.ToShortName()).ToArray());
-            LevelPracticePattern = string.Join(
-                string.Empty, levelsPractice.Select(lv => lv.ToShortName()).ToArray());
+            LevelPracticeWithTotalPattern = string.Join(
+                string.Empty, levelsPracticeWithTotal.Select(lv => lv.ToShortName()).ToArray());
             CharaPattern = string.Join(
                 "|", charas.Select(ch => ch.ToShortName()).ToArray());
             CharaWithTotalPattern = string.Join(
@@ -750,8 +750,8 @@ namespace ThScoreFileConverter
                 levels.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
             ToLevelWithTotal = ((shortName, comparisonType) =>
                 levelsWithTotal.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
-            ToLevelPractice = ((shortName, comparisonType) =>
-                levelsPractice.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
+            ToLevelPracticeWithTotal = ((shortName, comparisonType) =>
+                levelsPracticeWithTotal.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
             ToChara = ((shortName, comparisonType) =>
                 charas.First(ch => ch.ToShortName().Equals(shortName, comparisonType)));
             ToCharaWithTotal = ((shortName, comparisonType) =>
@@ -1211,13 +1211,14 @@ namespace ThScoreFileConverter
         {
             var pattern = Utils.Format(
                 @"%T08CRG([SP])([{0}])({1})({2})([12])",
-                LevelPracticePattern,
+                LevelPracticeWithTotalPattern,
                 CharaWithTotalPattern,
                 StageWithTotalPattern);
             var evaluator = new MatchEvaluator(match =>
             {
                 var kind = match.Groups[1].Value.ToUpperInvariant();
-                var level = ToLevelPractice(match.Groups[2].Value, StringComparison.OrdinalIgnoreCase);
+                var level = ToLevelPracticeWithTotal(
+                    match.Groups[2].Value, StringComparison.OrdinalIgnoreCase);
                 var chara = ToCharaWithTotal(match.Groups[3].Value, StringComparison.OrdinalIgnoreCase);
                 var stage = ToStageWithTotal(match.Groups[4].Value, StringComparison.OrdinalIgnoreCase);
                 var type = int.Parse(match.Groups[5].Value, CultureInfo.InvariantCulture);
@@ -1254,14 +1255,14 @@ namespace ThScoreFileConverter
 
                 switch (level)
                 {
-                    case LevelPractice.Total:
+                    case LevelPracticeWithTotal.Total:
                         // Do nothing
                         break;
-                    case LevelPractice.Extra:
+                    case LevelPracticeWithTotal.Extra:
                         findByStage =
                             (attack => StageCardTable[StagePractice.Extra].Contains(attack.Number));
                         break;
-                    case LevelPractice.LastWord:
+                    case LevelPracticeWithTotal.LastWord:
                         findByStage =
                             (attack => StageCardTable[StagePractice.LastWord].Contains(attack.Number));
                         break;
