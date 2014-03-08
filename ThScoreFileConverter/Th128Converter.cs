@@ -410,11 +410,11 @@ namespace ThScoreFileConverter
         private static readonly string RouteWithTotalPattern;
         private static readonly string StageWithTotalPattern;
 
-        private static readonly Func<string, StringComparison, Level> ToLevel;
-        private static readonly Func<string, StringComparison, LevelWithTotal> ToLevelWithTotal;
-        private static readonly Func<string, StringComparison, Route> ToRoute;
-        private static readonly Func<string, StringComparison, RouteWithTotal> ToRouteWithTotal;
-        private static readonly Func<string, StringComparison, StageWithTotal> ToStageWithTotal;
+        private static readonly Func<string, Level> ToLevel;
+        private static readonly Func<string, LevelWithTotal> ToLevelWithTotal;
+        private static readonly Func<string, Route> ToRoute;
+        private static readonly Func<string, RouteWithTotal> ToRouteWithTotal;
+        private static readonly Func<string, StageWithTotal> ToStageWithTotal;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Microsoft.Performance",
@@ -443,15 +443,17 @@ namespace ThScoreFileConverter
             StageWithTotalPattern = string.Join(
                 "|", stagesWithTotal.Select(st => st.ToShortName()).ToArray());
 
-            ToLevel = ((shortName, comparisonType) =>
+            var comparisonType = StringComparison.OrdinalIgnoreCase;
+
+            ToLevel = (shortName =>
                 levels.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
-            ToLevelWithTotal = ((shortName, comparisonType) =>
+            ToLevelWithTotal = (shortName =>
                 levelsWithTotal.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
-            ToRoute = ((shortName, comparisonType) =>
+            ToRoute = (shortName =>
                 routes.First(rt => rt.ToShortName().Equals(shortName, comparisonType)));
-            ToRouteWithTotal = ((shortName, comparisonType) =>
+            ToRouteWithTotal = (shortName =>
                 routesWithTotal.First(rt => rt.ToShortName().Equals(shortName, comparisonType)));
-            ToStageWithTotal = ((shortName, comparisonType) =>
+            ToStageWithTotal = (shortName =>
                 stagesWithTotal.First(st => st.ToShortName().Equals(shortName, comparisonType)));
         }
 
@@ -647,9 +649,8 @@ namespace ThScoreFileConverter
             var pattern = Utils.Format(@"%T128SCR([{0}])({1})(\d)([1-5])", LevelPattern, RoutePattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevel(match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
-                var route = (RouteWithTotal)ToRoute(
-                    match.Groups[2].Value, StringComparison.OrdinalIgnoreCase);
+                var level = ToLevel(match.Groups[1].Value);
+                var route = (RouteWithTotal)ToRoute(match.Groups[2].Value);
                 var rank = Utils.ToZeroBased(int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
@@ -754,8 +755,8 @@ namespace ThScoreFileConverter
                 @"%T128CRG([{0}])({1})([1-3])", LevelWithTotalPattern, StageWithTotalPattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevelWithTotal(match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
-                var stage = ToStageWithTotal(match.Groups[2].Value, StringComparison.OrdinalIgnoreCase);
+                var level = ToLevelWithTotal(match.Groups[1].Value);
+                var stage = ToStageWithTotal(match.Groups[2].Value);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                 if (stage == StageWithTotal.Extra)
@@ -805,9 +806,8 @@ namespace ThScoreFileConverter
             var pattern = Utils.Format(@"%T128CLEAR([{0}])({1})", LevelPattern, RoutePattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevel(match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
-                var route = (RouteWithTotal)ToRoute(
-                    match.Groups[2].Value, StringComparison.OrdinalIgnoreCase);
+                var level = ToLevel(match.Groups[1].Value);
+                var route = (RouteWithTotal)ToRoute(match.Groups[2].Value);
 
                 if ((level == Level.Extra) && (route != RouteWithTotal.Extra))
                     return match.ToString();
@@ -834,7 +834,7 @@ namespace ThScoreFileConverter
             var pattern = Utils.Format(@"%T128ROUTE({0})([1-3])", RouteWithTotalPattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var route = ToRouteWithTotal(match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
+                var route = ToRouteWithTotal(match.Groups[1].Value);
                 var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
                 Func<ClearData, long> getValueByType = (data => 0L);
@@ -878,8 +878,8 @@ namespace ThScoreFileConverter
                 @"%T128ROUTEEX([{0}])({1})([1-3])", LevelWithTotalPattern, RouteWithTotalPattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevelWithTotal(match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
-                var route = ToRouteWithTotal(match.Groups[2].Value, StringComparison.OrdinalIgnoreCase);
+                var level = ToLevelWithTotal(match.Groups[1].Value);
+                var route = ToRouteWithTotal(match.Groups[2].Value);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                 if ((level == LevelWithTotal.Extra) &&

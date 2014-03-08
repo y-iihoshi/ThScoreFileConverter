@@ -319,8 +319,8 @@ namespace ThScoreFileConverter
         private static readonly string LevelPattern;
         private static readonly string CharaPattern;
 
-        private static readonly Func<string, StringComparison, Level> ToLevel;
-        private static readonly Func<string, StringComparison, Chara> ToChara;
+        private static readonly Func<string, Level> ToLevel;
+        private static readonly Func<string, Chara> ToChara;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Microsoft.Performance",
@@ -338,10 +338,10 @@ namespace ThScoreFileConverter
             LevelPattern = string.Join(string.Empty, levels.Select(lv => lv.ToShortName()).ToArray());
             CharaPattern = string.Join("|", charas.Select(ch => ch.ToShortName()).ToArray());
 
-            ToLevel = ((shortName, comparisonType) =>
-                levels.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
-            ToChara = ((shortName, comparisonType) =>
-                charas.First(ch => ch.ToShortName().Equals(shortName, comparisonType)));
+            var comparisonType = StringComparison.OrdinalIgnoreCase;
+
+            ToLevel = (shortName => levels.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
+            ToChara = (shortName => charas.First(ch => ch.ToShortName().Equals(shortName, comparisonType)));
         }
 
         public Th09Converter()
@@ -579,8 +579,8 @@ namespace ThScoreFileConverter
             var pattern = Utils.Format(@"%T09SCR([{0}])({1})([1-5])([1-3])", LevelPattern, CharaPattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevel(match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
-                var chara = ToChara(match.Groups[2].Value, StringComparison.OrdinalIgnoreCase);
+                var level = ToLevel(match.Groups[1].Value);
+                var chara = ToChara(match.Groups[2].Value);
                 var rank = Utils.ToZeroBased(int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
@@ -621,8 +621,8 @@ namespace ThScoreFileConverter
             var pattern = Utils.Format(@"%T09CLEAR([{0}])({1})([12])", LevelPattern, CharaPattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevel(match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
-                var chara = ToChara(match.Groups[2].Value, StringComparison.OrdinalIgnoreCase);
+                var level = ToLevel(match.Groups[1].Value);
+                var chara = ToChara(match.Groups[2].Value);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                 var count = this.allScoreData.PlayStatus.ClearCounts[chara].Counts[level];

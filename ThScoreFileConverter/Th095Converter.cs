@@ -297,7 +297,7 @@ namespace ThScoreFileConverter
         private static readonly string LevelPattern;
         private static readonly string LevelLongPattern;
 
-        private static readonly Func<string, StringComparison, Level> ToLevel;
+        private static readonly Func<string, Level> ToLevel;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Microsoft.Performance",
@@ -414,8 +414,9 @@ namespace ThScoreFileConverter
             LevelPattern = string.Join(string.Empty, levels.Select(lv => lv.ToShortName()).ToArray());
             LevelLongPattern = string.Join("|", levels.Select(lv => lv.ToLongName()).ToArray());
 
-            ToLevel = ((shortName, comparisonType) =>
-                levels.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
+            var comparisonType = StringComparison.OrdinalIgnoreCase;
+
+            ToLevel = (shortName => levels.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
         }
 
         public Th095Converter()
@@ -602,7 +603,7 @@ namespace ThScoreFileConverter
             var pattern = Utils.Format(@"%T95SCR([{0}])([1-9])([1-4])", LevelPattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevel(match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
+                var level = ToLevel(match.Groups[1].Value);
                 var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
@@ -666,7 +667,7 @@ namespace ThScoreFileConverter
             var pattern = Utils.Format(@"%T95CARD([{0}])([1-9])([12])", LevelPattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevel(match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
+                var level = ToLevel(match.Groups[1].Value);
                 var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
@@ -693,7 +694,7 @@ namespace ThScoreFileConverter
             var pattern = Utils.Format(@"%T95SHOT([{0}])([1-9])", LevelPattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevel(match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
+                var level = ToLevel(match.Groups[1].Value);
                 var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
                 var key = new LevelScenePair(level, scene);
@@ -724,7 +725,7 @@ namespace ThScoreFileConverter
             var pattern = Utils.Format(@"%T95SHOTEX([{0}])([1-9])([1-6])", LevelPattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevel(match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
+                var level = ToLevel(match.Groups[1].Value);
                 var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 

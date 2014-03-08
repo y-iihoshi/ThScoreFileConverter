@@ -687,13 +687,13 @@ namespace ThScoreFileConverter
         private static readonly string StagePattern;
         private static readonly string StageWithTotalPattern;
 
-        private static readonly Func<string, StringComparison, Level> ToLevel;
-        private static readonly Func<string, StringComparison, LevelWithTotal> ToLevelWithTotal;
-        private static readonly Func<string, StringComparison, LevelPracticeWithTotal> ToLevelPracticeWithTotal;
-        private static readonly Func<string, StringComparison, Chara> ToChara;
-        private static readonly Func<string, StringComparison, CharaWithTotal> ToCharaWithTotal;
-        private static readonly Func<string, StringComparison, Stage> ToStage;
-        private static readonly Func<string, StringComparison, StageWithTotal> ToStageWithTotal;
+        private static readonly Func<string, Level> ToLevel;
+        private static readonly Func<string, LevelWithTotal> ToLevelWithTotal;
+        private static readonly Func<string, LevelPracticeWithTotal> ToLevelPracticeWithTotal;
+        private static readonly Func<string, Chara> ToChara;
+        private static readonly Func<string, CharaWithTotal> ToCharaWithTotal;
+        private static readonly Func<string, Stage> ToStage;
+        private static readonly Func<string, StageWithTotal> ToStageWithTotal;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Microsoft.Performance",
@@ -746,19 +746,21 @@ namespace ThScoreFileConverter
             StageWithTotalPattern = string.Join(
                 "|", stagesWithTotal.Select(st => st.ToShortName()).ToArray());
 
-            ToLevel = ((shortName, comparisonType) =>
+            var comparisonType = StringComparison.OrdinalIgnoreCase;
+
+            ToLevel = (shortName =>
                 levels.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
-            ToLevelWithTotal = ((shortName, comparisonType) =>
+            ToLevelWithTotal = (shortName =>
                 levelsWithTotal.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
-            ToLevelPracticeWithTotal = ((shortName, comparisonType) =>
+            ToLevelPracticeWithTotal = (shortName =>
                 levelsPracticeWithTotal.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
-            ToChara = ((shortName, comparisonType) =>
+            ToChara = (shortName =>
                 charas.First(ch => ch.ToShortName().Equals(shortName, comparisonType)));
-            ToCharaWithTotal = ((shortName, comparisonType) =>
+            ToCharaWithTotal = (shortName =>
                 charasWithTotal.First(ch => ch.ToShortName().Equals(shortName, comparisonType)));
-            ToStage = ((shortName, comparisonType) =>
+            ToStage = (shortName =>
                 stages.First(st => st.ToShortName().Equals(shortName, comparisonType)));
-            ToStageWithTotal = ((shortName, comparisonType) =>
+            ToStageWithTotal = (shortName =>
                 stagesWithTotal.First(st => st.ToShortName().Equals(shortName, comparisonType)));
         }
 
@@ -1055,8 +1057,8 @@ namespace ThScoreFileConverter
             var pattern = Utils.Format(@"%T08SCR([{0}])({1})(\d)([\dA-G])", LevelPattern, CharaPattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevel(match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
-                var chara = ToChara(match.Groups[2].Value, StringComparison.OrdinalIgnoreCase);
+                var level = ToLevel(match.Groups[1].Value);
+                var chara = ToChara(match.Groups[2].Value);
                 var rank = Utils.ToZeroBased(int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
                 var type = match.Groups[4].Value.ToUpperInvariant();
 
@@ -1138,7 +1140,7 @@ namespace ThScoreFileConverter
             {
                 var kind = match.Groups[1].Value.ToUpperInvariant();
                 var number = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
-                var chara = ToCharaWithTotal(match.Groups[3].Value, StringComparison.OrdinalIgnoreCase);
+                var chara = ToCharaWithTotal(match.Groups[3].Value);
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
                 Func<CardAttack, CardAttackCareer> getCareer = (attack => null);
@@ -1217,10 +1219,9 @@ namespace ThScoreFileConverter
             var evaluator = new MatchEvaluator(match =>
             {
                 var kind = match.Groups[1].Value.ToUpperInvariant();
-                var level = ToLevelPracticeWithTotal(
-                    match.Groups[2].Value, StringComparison.OrdinalIgnoreCase);
-                var chara = ToCharaWithTotal(match.Groups[3].Value, StringComparison.OrdinalIgnoreCase);
-                var stage = ToStageWithTotal(match.Groups[4].Value, StringComparison.OrdinalIgnoreCase);
+                var level = ToLevelPracticeWithTotal(match.Groups[2].Value);
+                var chara = ToCharaWithTotal(match.Groups[3].Value);
+                var stage = ToStageWithTotal(match.Groups[4].Value);
                 var type = int.Parse(match.Groups[5].Value, CultureInfo.InvariantCulture);
 
                 if (stage == StageWithTotal.Extra)
@@ -1283,8 +1284,8 @@ namespace ThScoreFileConverter
             var pattern = Utils.Format(@"%T08CLEAR([{0}])({1})", LevelPattern, CharaPattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevel(match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
-                var chara = ToChara(match.Groups[2].Value, StringComparison.OrdinalIgnoreCase);
+                var level = ToLevel(match.Groups[1].Value);
+                var chara = ToChara(match.Groups[2].Value);
 
                 var key = new CharaLevelPair(chara, level);
                 if (this.allScoreData.Rankings.ContainsKey(key))
@@ -1319,7 +1320,7 @@ namespace ThScoreFileConverter
                 @"%T08PLAY([{0}])({1}|CL|CN|PR)", LevelWithTotalPattern, CharaWithTotalPattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevelWithTotal(match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
+                var level = ToLevelWithTotal(match.Groups[1].Value);
                 var charaAndMore = match.Groups[2].Value.ToUpperInvariant();
 
                 var playCount = (level == LevelWithTotal.Total)
@@ -1336,8 +1337,7 @@ namespace ThScoreFileConverter
                         return this.ToNumberString(playCount.TotalPractice);
                     default:
                         {
-                            var chara = ToCharaWithTotal(
-                                match.Groups[2].Value, StringComparison.OrdinalIgnoreCase);
+                            var chara = ToCharaWithTotal(match.Groups[2].Value);
                             return this.ToNumberString((chara == CharaWithTotal.Total)
                                 ? playCount.TotalTrial : playCount.Trials[(Chara)chara]);
                         }
@@ -1368,9 +1368,9 @@ namespace ThScoreFileConverter
                 @"%T08PRAC([{0}])({1})({2})([12])", LevelPattern, CharaPattern, StagePattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevel(match.Groups[1].Value, StringComparison.OrdinalIgnoreCase);
-                var chara = ToChara(match.Groups[2].Value, StringComparison.OrdinalIgnoreCase);
-                var stage = ToStage(match.Groups[3].Value, StringComparison.OrdinalIgnoreCase);
+                var level = ToLevel(match.Groups[1].Value);
+                var chara = ToChara(match.Groups[2].Value);
+                var stage = ToStage(match.Groups[3].Value);
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
                 if (level == Level.Extra)
