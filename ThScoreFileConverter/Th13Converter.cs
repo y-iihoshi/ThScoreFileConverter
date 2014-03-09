@@ -880,9 +880,11 @@ namespace ThScoreFileConverter
                 var chara = ToCharaWithTotal(match.Groups[3].Value);
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
+                Func<SpellCard, bool> isValidLevel = (card => true);
                 Func<SpellCard, int> getCount = (card => 0);
                 if (kind == "S")
                 {
+                    isValidLevel = (card => card.Level != LevelPractice.OverDrive);
                     if (type == 1)
                         getCount = (card => card.ClearCount);
                     else
@@ -898,12 +900,12 @@ namespace ThScoreFileConverter
 
                 var cards = this.allScoreData.ClearData[chara].Cards;
                 if (number == 0)
-                    return this.ToNumberString(cards.Values.Sum(getCount));
+                    return this.ToNumberString(cards.Values.Where(isValidLevel).Sum(getCount));
                 else if (CardTable.ContainsKey(number))
                 {
                     SpellCard card;
                     if (cards.TryGetValue(number, out card))
-                        return this.ToNumberString(getCount(card));
+                        return isValidLevel(card) ? this.ToNumberString(getCount(card)) : match.ToString();
                     else
                         return "0";
                 }
@@ -970,6 +972,8 @@ namespace ThScoreFileConverter
 
                 if (stage == StageWithTotal.Extra)
                     return match.ToString();
+                if ((kind == "S") && (level == LevelPracticeWithTotal.OverDrive))
+                    return match.ToString();
 
                 Func<SpellCard, bool> findByKindType = (card => true);
                 Func<SpellCard, bool> findByLevel = (card => true);
@@ -978,9 +982,11 @@ namespace ThScoreFileConverter
                 if (kind == "S")
                 {
                     if (type == 1)
-                        findByKindType = (card => card.ClearCount > 0);
+                        findByKindType = (card =>
+                            (card.Level != LevelPractice.OverDrive) && (card.ClearCount > 0));
                     else
-                        findByKindType = (card => card.TrialCount > 0);
+                        findByKindType = (card =>
+                            (card.Level != LevelPractice.OverDrive) && (card.TrialCount > 0));
                 }
                 else
                 {
