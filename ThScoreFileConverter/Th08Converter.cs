@@ -1362,9 +1362,13 @@ namespace ThScoreFileConverter
                 var chara = ToCharaWithTotal(match.Groups[3].Value);
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
+                Func<CardAttack, bool> isValidLevel = (attack => true);
                 Func<CardAttack, CardAttackCareer> getCareer = (attack => null);
                 if (kind == "S")
+                {
+                    isValidLevel = (attack => CardTable[attack.Number].Level != LevelPractice.LastWord);
                     getCareer = (attack => attack.StoryCareer);
+                }
                 else
                     getCareer = (attack => attack.PracticeCareer);
 
@@ -1377,12 +1381,14 @@ namespace ThScoreFileConverter
                     getValue = (attack => getCareer(attack).TrialCounts[chara]);
 
                 if (number == 0)
-                    return this.ToNumberString(this.allScoreData.CardAttacks.Values.Sum(getValue));
+                    return this.ToNumberString(
+                        this.allScoreData.CardAttacks.Values.Where(isValidLevel).Sum(getValue));
                 else if (CardTable.ContainsKey(number))
                 {
                     CardAttack attack;
                     if (this.allScoreData.CardAttacks.TryGetValue(number, out attack))
-                        return this.ToNumberString(getValue(attack));
+                        return isValidLevel(attack)
+                            ? this.ToNumberString(getValue(attack)) : match.ToString();
                     else
                         return "0";
                 }
@@ -1448,6 +1454,8 @@ namespace ThScoreFileConverter
 
                 if (stage == StageWithTotal.Extra)
                     return match.ToString();
+                if ((kind == "S") && (level == LevelPracticeWithTotal.LastWord))
+                    return match.ToString();
 
                 Func<CardAttack, bool> findByKindType = (attack => true);
                 Func<CardAttack, bool> findByLevel = (attack => true);
@@ -1456,9 +1464,13 @@ namespace ThScoreFileConverter
                 if (kind == "S")
                 {
                     if (type == 1)
-                        findByKindType = (attack => attack.StoryCareer.ClearCounts[chara] > 0);
+                        findByKindType = (attack =>
+                            (CardTable[attack.Number].Level != LevelPractice.LastWord) &&
+                            (attack.StoryCareer.ClearCounts[chara] > 0));
                     else
-                        findByKindType = (attack => attack.StoryCareer.TrialCounts[chara] > 0);
+                        findByKindType = (attack =>
+                            (CardTable[attack.Number].Level != LevelPractice.LastWord) &&
+                            (attack.StoryCareer.TrialCounts[chara] > 0));
                 }
                 else
                 {
