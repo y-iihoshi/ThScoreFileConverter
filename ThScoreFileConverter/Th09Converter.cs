@@ -317,6 +317,11 @@ namespace ThScoreFileConverter
             get { return "1.50a"; }
         }
 
+        public override bool HasCardReplacer
+        {
+            get { return false; }
+        }
+
         private static readonly string LevelPattern;
         private static readonly string CharaPattern;
 

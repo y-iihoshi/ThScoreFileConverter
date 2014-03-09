@@ -763,6 +763,8 @@ namespace ThScoreFileConverter
                 this.txtImageOutput.IsEnabled = false;
             }
 
+            this.chkHideUntriedCards.IsEnabled = this.converter.HasCardReplacer;
+
             var entry = this.settings.Dictionary[item.Name];
             if (File.Exists(entry.ScoreFile))
                 this.txtScore.Text = entry.ScoreFile;

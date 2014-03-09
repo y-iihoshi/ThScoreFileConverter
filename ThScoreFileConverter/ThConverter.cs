@@ -161,7 +161,7 @@ namespace ThScoreFileConverter
         /// <summary>
         /// Gets the string indicating the supported version of the score file to convert.
         /// </summary>
-        /// <remarks>It is required to override this method by a subclass.</remarks>
+        /// <remarks>It is required to override this property by a subclass.</remarks>
         public virtual string SupportedVersions
         {
             get { return null; }
@@ -172,12 +172,24 @@ namespace ThScoreFileConverter
         /// files or not.
         /// </summary>
         /// <remarks>
-        /// It is required to override this method by the subclass that implements the conversion process
+        /// It is required to override this property by the subclass that implements the conversion process
         /// of best-shot files.
         /// </remarks>
         public virtual bool HasBestShotConverter
         {
             get { return false; }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the current instance has the replace method for spell card
+        /// information or not.
+        /// </summary>
+        /// <remarks>
+        /// It is required to override this property by the subclass that does not have such replace method.
+        /// </remarks>
+        public virtual bool HasCardReplacer
+        {
+            get { return true; }
         }
 
         /// <summary>
