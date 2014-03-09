@@ -40,6 +40,7 @@ namespace ThScoreFileConverter
             this.TemplateFiles = new List<string>();
             this.OutputDirectory = string.Empty;
             this.ImageOutputDirectory = string.Empty;
+            this.HideUntriedCards = true;
         }
 
         /// <summary>
@@ -66,6 +67,11 @@ namespace ThScoreFileConverter
         /// Gets or sets the path of the output directory of the image files.
         /// </summary>
         public string ImageOutputDirectory { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether it hides untried cards.
+        /// </summary>
+        public bool HideUntriedCards { get; set; }
     }
 
     /// <summary>

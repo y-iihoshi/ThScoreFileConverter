@@ -225,7 +225,8 @@ namespace ThScoreFileConverter
         /// <remarks>Needs to be overridden by a subclass.</remarks>
         /// <param name="input">The input stream that treats a template file.</param>
         /// <param name="output">The stream for outputting the converted data.</param>
-        protected virtual void Convert(Stream input, Stream output)
+        /// <param name="hideUntriedCards"><c>true</c> if it hides untried spell cards.</param>
+        protected virtual void Convert(Stream input, Stream output, bool hideUntriedCards)
         {
             throw new NotImplementedException();
         }
@@ -337,7 +338,7 @@ namespace ThScoreFileConverter
                     using (var tmpl = new FileStream(template, FileMode.Open, FileAccess.Read))
                     using (var rslt = new FileStream(result, FileMode.OpenOrCreate, FileAccess.Write))
                     {
-                        this.Convert(tmpl, rslt);
+                        this.Convert(tmpl, rslt, settings.HideUntriedCards);
                         this.OnConvertFinished(new ThConverterEventArgs(result, index + 1, numFiles));
                     }
                 }

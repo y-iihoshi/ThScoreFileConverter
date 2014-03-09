@@ -560,7 +560,7 @@ namespace ThScoreFileConverter
                 return null;
         }
 
-        protected override void Convert(Stream input, Stream output)
+        protected override void Convert(Stream input, Stream output, bool hideUntriedCards)
         {
             var reader = new StreamReader(input, Encoding.GetEncoding("shift_jis"));
             var writer = new StreamWriter(output, Encoding.GetEncoding("shift_jis"));

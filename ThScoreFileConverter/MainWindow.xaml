@@ -3,12 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:p="clr-namespace:ThScoreFileConverter.Properties"
         xmlns:Specialized="clr-namespace:System.Collections.Specialized;assembly=System" x:Name="wndMain" x:Class="ThScoreFileConverter.MainWindow"
-        Title="ThScoreFileConverter" Height="538" Width="505" ResizeMode="CanMinimize" Closing="WndMain_Closing" Background="#FFEEEEEE" Style="{DynamicResource WindowStyleKey}">
+        Title="ThScoreFileConverter" Height="558" Width="505" ResizeMode="CanMinimize" Closing="WndMain_Closing" Background="#FFEEEEEE" Style="{DynamicResource WindowStyleKey}">
     <Grid Margin="10,10,10,0" VerticalAlignment="Top">
         <Grid.RowDefinitions>
             <RowDefinition Height="45"/>
             <RowDefinition Height="180"/>
-            <RowDefinition Height="75"/>
+            <RowDefinition Height="95"/>
             <RowDefinition Height="45"/>
             <RowDefinition Height="90"/>
             <RowDefinition Height="45"/>
@@ -50,6 +50,7 @@
 
         <Label x:Name="lblImageOutput" Content="画像出力先(_I):" HorizontalAlignment="Left" Margin="10,40,0,0" Grid.Row="2" Width="120" Target="{Binding ElementName=txtOutput, Mode=OneWay}" Height="25" VerticalAlignment="Top" IsEnabled="False"/>
         <TextBox x:Name="txtImageOutput" HorizontalAlignment="Right" Margin="0,40,95,0" Grid.Row="2" Width="245" TextChanged="TxtOutput_TextChanged" PreviewDragEnter="TxtOutput_Dragging" PreviewDragOver="TxtOutput_Dragging" Drop="TxtOutput_Drop" Height="25" VerticalAlignment="Top" IsEnabled="False"/>
+        <CheckBox x:Name="chkHideUntriedCards" Content="未挑戦のスペルカード名を出力しない(_H)" Margin="0,70,10,0" Grid.Row="2" VerticalAlignment="Top" RenderTransformOrigin="0.298,0.556" IsChecked="True" HorizontalAlignment="Right" Width="330"/>
 
         <Button x:Name="btnConvert" Content="変換(_V)" HorizontalAlignment="Center" Grid.Row="3" Margin="0,10" Grid.Column="1" Width="100" IsEnabled="False" Click="BtnConvert_Click" IsDefault="True" Height="25"/>
 

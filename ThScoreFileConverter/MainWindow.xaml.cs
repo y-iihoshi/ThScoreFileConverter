@@ -726,6 +726,7 @@ namespace ThScoreFileConverter
             entry.TemplateFiles = this.lstTemplate.Items.Cast<string>().ToList();
             entry.OutputDirectory = this.txtOutput.Text;
             entry.ImageOutputDirectory = this.txtImageOutput.Text;
+            entry.HideUntriedCards = this.chkHideUntriedCards.IsChecked.Value;
         }
 
         /// <summary>
@@ -778,6 +779,7 @@ namespace ThScoreFileConverter
             if (this.txtImageOutput.IsEnabled)
                 this.txtImageOutput.Text = (entry.ImageOutputDirectory.Length > 0)
                     ? entry.ImageOutputDirectory : Prop.Resources.strBestShotDirectory;
+            this.chkHideUntriedCards.IsChecked = entry.HideUntriedCards;
 
             ((App)App.Current).UpdateResources(this.settings.FontFamilyName, this.settings.FontSize);
         }

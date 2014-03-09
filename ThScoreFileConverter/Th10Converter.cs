@@ -710,7 +710,7 @@ namespace ThScoreFileConverter
                 return null;
         }
 
-        protected override void Convert(Stream input, Stream output)
+        protected override void Convert(Stream input, Stream output, bool hideUntriedCards)
         {
             var reader = new StreamReader(input, Encoding.GetEncoding("shift_jis"));
             var writer = new StreamWriter(output, Encoding.GetEncoding("shift_jis"));
@@ -718,7 +718,7 @@ namespace ThScoreFileConverter
             var allLines = reader.ReadToEnd();
             allLines = this.ReplaceScore(allLines);
             allLines = this.ReplaceCareer(allLines);
-            allLines = this.ReplaceCard(allLines);
+            allLines = this.ReplaceCard(allLines, hideUntriedCards);
             allLines = this.ReplaceCollectRate(allLines);
             allLines = this.ReplaceClear(allLines);
             allLines = this.ReplaceChara(allLines);
@@ -810,7 +810,7 @@ namespace ThScoreFileConverter
         }
 
         // %T10CARD[xxx][y]
-        private string ReplaceCard(string input)
+        private string ReplaceCard(string input, bool hideUntriedCards)
         {
             var pattern = @"%T10CARD(\d{3})([NR])";
             var evaluator = new MatchEvaluator(match =>
@@ -822,12 +822,14 @@ namespace ThScoreFileConverter
                 {
                     if (type == "N")
                     {
-                        var cards = this.allScoreData.ClearData[CharaWithTotal.Total].Cards;
-                        SpellCard card;
-                        if (cards.TryGetValue(number, out card) && card.HasTried())
-                            return CardTable[number].Name;
-                        else
-                            return "??????????";
+                        if (hideUntriedCards)
+                        {
+                            var cards = this.allScoreData.ClearData[CharaWithTotal.Total].Cards;
+                            SpellCard card;
+                            if (!cards.TryGetValue(number, out card) || !card.HasTried())
+                                return "??????????";
+                        }
+                        return CardTable[number].Name;
                     }
                     else
                         return CardTable[number].Level.ToString();

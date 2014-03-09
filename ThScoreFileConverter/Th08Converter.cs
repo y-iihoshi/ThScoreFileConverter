@@ -1259,7 +1259,7 @@ namespace ThScoreFileConverter
                 return null;
         }
 
-        protected override void Convert(Stream input, Stream output)
+        protected override void Convert(Stream input, Stream output, bool hideUntriedCards)
         {
             var reader = new StreamReader(input, Encoding.GetEncoding("shift_jis"));
             var writer = new StreamWriter(output, Encoding.GetEncoding("shift_jis"));
@@ -1267,7 +1267,7 @@ namespace ThScoreFileConverter
             var allLine = reader.ReadToEnd();
             allLine = this.ReplaceScore(allLine);
             allLine = this.ReplaceCareer(allLine);
-            allLine = this.ReplaceCard(allLine);
+            allLine = this.ReplaceCard(allLine, hideUntriedCards);
             allLine = this.ReplaceCollectRate(allLine);
             allLine = this.ReplaceClear(allLine);
             allLine = this.ReplacePlay(allLine);
@@ -1393,7 +1393,7 @@ namespace ThScoreFileConverter
         }
 
         // %T08CARD[xxx][y]
-        private string ReplaceCard(string input)
+        private string ReplaceCard(string input, bool hideUntriedCards)
         {
             var pattern = @"%T08CARD(\d{3})([NR])";
             var evaluator = new MatchEvaluator(match =>
@@ -1403,20 +1403,22 @@ namespace ThScoreFileConverter
 
                 if (CardTable.ContainsKey(number))
                 {
-                    CardAttack attack;
-                    if (this.allScoreData.CardAttacks.TryGetValue(number, out attack) && attack.HasTried())
+                    if (hideUntriedCards)
                     {
-                        if (type == "N")
-                            return CardTable[number].Name;
-                        else
-                        {
-                            var level = CardTable[number].Level;
-                            var levelName = level.ToLongName();
-                            return (levelName.Length > 0) ? levelName : level.ToString();
-                        }
+                        CardAttack attack;
+                        if (!this.allScoreData.CardAttacks.TryGetValue(number, out attack) ||
+                            !attack.HasTried())
+                            return (type == "N") ? "??????????" : "?????";
                     }
+
+                    if (type == "N")
+                        return CardTable[number].Name;
                     else
-                        return (type == "N") ? "??????????" : "?????";
+                    {
+                        var level = CardTable[number].Level;
+                        var levelName = level.ToLongName();
+                        return (levelName.Length > 0) ? levelName : level.ToString();
+                    }
                 }
                 else
                     return match.ToString();

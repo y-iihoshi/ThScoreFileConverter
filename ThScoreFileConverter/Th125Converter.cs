@@ -737,7 +737,7 @@ namespace ThScoreFileConverter
                 return null;
         }
 
-        protected override void Convert(Stream input, Stream output)
+        protected override void Convert(Stream input, Stream output, bool hideUntriedCards)
         {
             var reader = new StreamReader(input, Encoding.GetEncoding("shift_jis"));
             var writer = new StreamWriter(output, Encoding.GetEncoding("shift_jis"));
@@ -746,7 +746,7 @@ namespace ThScoreFileConverter
             var allLine = reader.ReadToEnd();
             allLine = this.ReplaceScore(allLine);
             allLine = this.ReplaceScoreTotal(allLine);
-            allLine = this.ReplaceCard(allLine);
+            allLine = this.ReplaceCard(allLine, hideUntriedCards);
             allLine = this.ReplaceTime(allLine);
             if (outputFile != null)
             {
@@ -872,7 +872,7 @@ namespace ThScoreFileConverter
         }
 
         // %T125CARD[x][y][z]
-        private string ReplaceCard(string input)
+        private string ReplaceCard(string input, bool hideUntriedCards)
         {
             var pattern = Utils.Format(@"%T125CARD([{0}])([1-9])([12])", LevelPattern);
             var evaluator = new MatchEvaluator(match =>
@@ -882,18 +882,15 @@ namespace ThScoreFileConverter
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                 var key = new LevelScenePair(level, scene);
-                var score = this.allScoreData.Scores.Find(
-                    elem => (elem != null) && elem.LevelScene.Equals(key));
 
-                switch (type)
+                if (hideUntriedCards)
                 {
-                    case 1:     // target Name
-                        return (score != null) ? SpellCards[key].Enemy.ToLongName() : "??????????";
-                    case 2:     // spell card Name
-                        return (score != null) ? SpellCards[key].Card : "??????????";
-                    default:    // unreachable
-                        return match.ToString();
+                    var score = this.allScoreData.Scores.Find(
+                        elem => (elem != null) && elem.LevelScene.Equals(key));
+                    if (score == null)
+                        return "??????????";
                 }
+                return (type == 1) ? SpellCards[key].Enemy.ToLongName() : SpellCards[key].Card;
             });
             return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
