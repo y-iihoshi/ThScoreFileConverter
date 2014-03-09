@@ -222,12 +222,13 @@ namespace ThScoreFileConverter
 
             public AllScoreData()
             {
-                this.Rankings = new Dictionary<CharaLevelPair, List<HighScore>>();
+                var numCharas = Enum.GetValues(typeof(Chara)).Length;
+                var numPairs = numCharas * Enum.GetValues(typeof(Level)).Length;
+                this.Rankings = new Dictionary<CharaLevelPair, List<HighScore>>(numPairs);
                 this.ClearData =
                     new Dictionary<CharaWithTotal, ClearData>(Enum.GetValues(typeof(CharaWithTotal)).Length);
                 this.CardAttacks = new Dictionary<int, CardAttack>(CardTable.Count);
-                this.PracticeScores =
-                    new Dictionary<Chara, PracticeScore>(Enum.GetValues(typeof(Chara)).Length);
+                this.PracticeScores = new Dictionary<Chara, PracticeScore>(numCharas);
             }
         }
 
@@ -290,8 +291,8 @@ namespace ThScoreFileConverter
             public int LastSpellCount { get; private set; }
             public int PauseCount { get; private set; }
             public int TimePoint { get; private set; }
-            public int HumanRate { get; private set; }      // / 100
-            public byte[] CardFlags { get; private set; }   // .Length = 222
+            public int HumanRate { get; private set; }                  // / 100
+            public Dictionary<int, byte> CardFlags { get; private set; }
 
             public HighScore(Chapter ch)
                 : base(ch)
@@ -302,6 +303,8 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Size1");
                 // if (this.Size2 != 0x0168)
                 //     throw new InvalidDataException("Size2");
+
+                this.CardFlags = new Dictionary<int, byte>(CardTable.Count);
             }
 
             public HighScore(uint score)    // for InitialRanking only
@@ -310,7 +313,7 @@ namespace ThScoreFileConverter
                 this.Score = score;
                 this.Name = Encoding.Default.GetBytes("--------\0");
                 this.Date = Encoding.Default.GetBytes("--/--\0");
-                this.CardFlags = new byte[CardTable.Count];
+                this.CardFlags = new Dictionary<int, byte>(CardTable.Count);
             }
 
             public override void ReadFrom(BinaryReader reader)
@@ -341,7 +344,8 @@ namespace ThScoreFileConverter
                 this.PauseCount = reader.ReadInt32();
                 this.TimePoint = reader.ReadInt32();
                 this.HumanRate = reader.ReadInt32();
-                this.CardFlags = reader.ReadBytes(CardTable.Count);
+                foreach (var key in CardTable.Keys)
+                    this.CardFlags.Add(key, reader.ReadByte());
                 reader.ReadBytes(2);
             }
         }
@@ -370,11 +374,12 @@ namespace ThScoreFileConverter
             public override void ReadFrom(BinaryReader reader)
             {
                 var levels = Utils.GetEnumerator<Level>();
+
                 reader.ReadUInt32();    // always 0x00000004?
                 foreach (var level in levels)
-                    this.StoryFlags[level] = (PlayableStages)reader.ReadUInt16();
+                    this.StoryFlags.Add(level, (PlayableStages)reader.ReadUInt16());
                 foreach (var level in levels)
-                    this.PracticeFlags[level] = (PlayableStages)reader.ReadUInt16();
+                    this.PracticeFlags.Add(level, (PlayableStages)reader.ReadUInt16());
                 reader.ReadByte();      // always 0x00?
                 this.Chara = (CharaWithTotal)reader.ReadByte();
                 reader.ReadUInt16();    // always 0x0000?
@@ -484,8 +489,9 @@ namespace ThScoreFileConverter
                 // if (this.Size2 != 0x0178)
                 //     throw new InvalidDataException("Size2");
 
-                this.PlayCounts = new Dictionary<StageLevelPair, int>();
-                this.HighScores = new Dictionary<StageLevelPair, int>();
+                var numPairs = Enum.GetValues(typeof(Stage)).Length * Enum.GetValues(typeof(Level)).Length;
+                this.PlayCounts = new Dictionary<StageLevelPair, int>(numPairs);
+                this.HighScores = new Dictionary<StageLevelPair, int>(numPairs);
             }
 
             public override void ReadFrom(BinaryReader reader)
@@ -1137,7 +1143,6 @@ namespace ThScoreFileConverter
             var allScoreData = new AllScoreData();
             var chapter = new Chapter();
 
-            allScoreData.Rankings = new Dictionary<CharaLevelPair, List<HighScore>>();
             reader.ReadBytes(0x1C);
 
             try
@@ -1328,12 +1333,13 @@ namespace ThScoreFileConverter
                     case "F":   // got spell cards
                         {
                             var list = CardTable.Values
-                                .Where(card => score.CardFlags[card.Number - 1] > 0)
+                                .Where(card => score.CardFlags[card.Number] > 0)
                                 .Select(card => Utils.Format("No.{0:D3} {1}", card.Number, card.Name));
                             return string.Join("\n", list.ToArray());
                         }
                     case "G":   // number of got spell cards
-                        return score.CardFlags.Count(flag => flag > 0).ToString(CultureInfo.CurrentCulture);
+                        return score.CardFlags.Values.Count(flag => flag > 0)
+                            .ToString(CultureInfo.CurrentCulture);
                     default:    // unreachable
                         return match.ToString();
                 }

@@ -145,10 +145,12 @@ namespace ThScoreFileConverter
             public AllScoreData()
             {
                 var numCharas = Enum.GetValues(typeof(Chara)).Length;
-                this.Rankings = new Dictionary<CharaLevelPair, List<HighScore>>();
+                var numPairs = numCharas * Enum.GetValues(typeof(Level)).Length;
+                this.Rankings = new Dictionary<CharaLevelPair, List<HighScore>>(numPairs);
                 this.ClearData = new Dictionary<Chara, ClearData>(numCharas);
                 this.CardAttacks = new Dictionary<int, CardAttack>(CardTable.Count);
-                this.PracticeScores = new Dictionary<CharaLevelPair, Dictionary<Stage, PracticeScore>>();
+                this.PracticeScores =
+                    new Dictionary<CharaLevelPair, Dictionary<Stage, PracticeScore>>(numPairs);
             }
         }
 
@@ -243,13 +245,13 @@ namespace ThScoreFileConverter
                 "Microsoft.Performance",
                 "CA1811:AvoidUncalledPrivateCode",
                 Justification = "For future use.")]
-            public byte[] StoryFlags { get; private set; }      // [level]; really...?
+            public Dictionary<Level, byte> StoryFlags { get; private set; }     // really...?
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage(
                 "Microsoft.Performance",
                 "CA1811:AvoidUncalledPrivateCode",
                 Justification = "For future use.")]
-            public byte[] PracticeFlags { get; private set; }   // [level]; really...?
+            public Dictionary<Level, byte> PracticeFlags { get; private set; }  // really...?
 
             public Chara Chara { get; private set; }            // size: 4Bytes
 
@@ -262,14 +264,21 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Size1");
                 // if (this.Size2 != 0x001C)
                 //     throw new InvalidDataException("Size2");
+
+                var numLevels = Enum.GetValues(typeof(Level)).Length;
+                this.StoryFlags = new Dictionary<Level, byte>(numLevels);
+                this.PracticeFlags = new Dictionary<Level, byte>(numLevels);
             }
 
             public override void ReadFrom(BinaryReader reader)
             {
-                var numLevels = Enum.GetValues(typeof(Level)).Length;
+                var levels = Utils.GetEnumerator<Level>();
+
                 reader.ReadUInt32();    // always 0x00000001?
-                this.StoryFlags = reader.ReadBytes(numLevels);
-                this.PracticeFlags = reader.ReadBytes(numLevels);
+                foreach (var level in levels)
+                    this.StoryFlags.Add(level, reader.ReadByte());
+                foreach (var level in levels)
+                    this.PracticeFlags.Add(level, reader.ReadByte());
                 this.Chara = (Chara)reader.ReadInt32();
             }
         }
@@ -858,7 +867,6 @@ namespace ThScoreFileConverter
             var allScoreData = new AllScoreData();
             var chapter = new Chapter();
 
-            allScoreData.Rankings = new Dictionary<CharaLevelPair, List<HighScore>>();
             reader.ReadBytes(0x1C);
 
             try
@@ -917,8 +925,13 @@ namespace ThScoreFileConverter
                                 {
                                     var key = new CharaLevelPair(score.Chara, score.Level);
                                     if (!allScoreData.PracticeScores.ContainsKey(key))
+                                    {
+                                        var numStages = Utils.GetEnumerator<Stage>()
+                                            .Where(st => (st != Stage.Extra) && (st != Stage.Phantasm))
+                                            .Count();
                                         allScoreData.PracticeScores.Add(
-                                            key, new Dictionary<Stage, PracticeScore>());
+                                            key, new Dictionary<Stage, PracticeScore>(numStages));
+                                    }
                                     var scores = allScoreData.PracticeScores[key];
                                     if (!scores.ContainsKey(score.Stage))
                                         scores.Add(score.Stage, score);

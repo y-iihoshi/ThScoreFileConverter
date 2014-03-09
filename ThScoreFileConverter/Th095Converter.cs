@@ -122,6 +122,11 @@ namespace ThScoreFileConverter
             public Header Header { get; set; }
             public List<Score> Scores { get; set; }
             public Status Status { get; set; }
+
+            public AllScoreData()
+            {
+                this.Scores = new List<Score>(SpellCards.Count);
+            }
         }
 
         private class Header : IBinaryReadable
@@ -521,9 +526,9 @@ namespace ThScoreFileConverter
             var allScoreData = new AllScoreData();
             var chapter = new Chapter();
 
-            allScoreData.Scores = new List<Score>(SpellCards.Count);
-            allScoreData.Header = new Header();
-            allScoreData.Header.ReadFrom(reader);
+            var header = new Header();
+            header.ReadFrom(reader);
+            allScoreData.Header = header;
 
             try
             {

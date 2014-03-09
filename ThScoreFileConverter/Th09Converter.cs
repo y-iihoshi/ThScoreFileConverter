@@ -91,7 +91,8 @@ namespace ThScoreFileConverter
 
             public AllScoreData()
             {
-                this.Rankings = new Dictionary<CharaLevelPair, HighScore[]>();
+                var numPairs = Enum.GetValues(typeof(Chara)).Length * Enum.GetValues(typeof(Level)).Length;
+                this.Rankings = new Dictionary<CharaLevelPair, HighScore[]>(numPairs);
             }
         }
 
@@ -506,7 +507,8 @@ namespace ThScoreFileConverter
                                 var key = new CharaLevelPair(score.Chara, score.Level);
                                 if (!allScoreData.Rankings.ContainsKey(key))
                                     allScoreData.Rankings.Add(key, new HighScore[5]);
-                                allScoreData.Rankings[key][score.Rank] = score;
+                                if ((0 <= score.Rank) && (score.Rank < 5))
+                                    allScoreData.Rankings[key][score.Rank] = score;
                             }
                             break;
 

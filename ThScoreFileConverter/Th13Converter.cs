@@ -158,6 +158,12 @@ namespace ThScoreFileConverter
             public Header Header { get; set; }
             public Dictionary<CharaWithTotal, ClearData> ClearData { get; set; }
             public Status Status { get; set; }
+
+            public AllScoreData()
+            {
+                this.ClearData =
+                    new Dictionary<CharaWithTotal, ClearData>(Enum.GetValues(typeof(CharaWithTotal)).Length);
+            }
         }
 
         private class Header : IBinaryReadable
@@ -238,10 +244,12 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Size");
 
                 var numLevels = Enum.GetValues(typeof(LevelPracticeWithTotal)).Length;
+                var numPairs = Enum.GetValues(typeof(LevelPractice)).Length *
+                    Enum.GetValues(typeof(StagePractice)).Length;
                 this.Rankings = new Dictionary<LevelPracticeWithTotal, ScoreData[]>(numLevels);
                 this.ClearCounts = new Dictionary<LevelPracticeWithTotal, int>(numLevels);
                 this.ClearFlags = new Dictionary<LevelPracticeWithTotal, int>(numLevels);
-                this.Practices = new Dictionary<LevelStagePair, Practice>();
+                this.Practices = new Dictionary<LevelStagePair, Practice>(numPairs);
                 this.Cards = new Dictionary<int, SpellCard>(CardTable.Count);
             }
 
@@ -742,11 +750,10 @@ namespace ThScoreFileConverter
             var reader = new BinaryReader(input);
             var allScoreData = new AllScoreData();
             var chapter = new Chapter();
-            var numCharas = Enum.GetValues(typeof(CharaWithTotal)).Length;
 
-            allScoreData.ClearData = new Dictionary<CharaWithTotal, ClearData>(numCharas);
-            allScoreData.Header = new Header();
-            allScoreData.Header.ReadFrom(reader);
+            var header = new Header();
+            header.ReadFrom(reader);
+            allScoreData.Header = header;
 
             try
             {
@@ -783,7 +790,7 @@ namespace ThScoreFileConverter
             }
 
             if ((allScoreData.Header != null) &&
-                (allScoreData.ClearData.Count == numCharas) &&
+                (allScoreData.ClearData.Count == Enum.GetValues(typeof(CharaWithTotal)).Length) &&
                 (allScoreData.Status != null))
                 return allScoreData;
             else

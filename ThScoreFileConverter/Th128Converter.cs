@@ -150,6 +150,12 @@ namespace ThScoreFileConverter
             public Dictionary<RouteWithTotal, ClearData> ClearData { get; set; }
             public CardData CardData { get; set; }
             public Status Status { get; set; }
+
+            public AllScoreData()
+            {
+                this.ClearData =
+                    new Dictionary<RouteWithTotal, ClearData>(Enum.GetValues(typeof(RouteWithTotal)).Length);
+            }
         }
 
         private class Header : IBinaryReadable
@@ -807,11 +813,10 @@ namespace ThScoreFileConverter
             var reader = new BinaryReader(input);
             var allScoreData = new AllScoreData();
             var chapter = new Chapter();
-            var numRoutes = Enum.GetValues(typeof(RouteWithTotal)).Length;
 
-            allScoreData.ClearData = new Dictionary<RouteWithTotal, ClearData>(numRoutes);
-            allScoreData.Header = new Header();
-            allScoreData.Header.ReadFrom(reader);
+            var header = new Header();
+            header.ReadFrom(reader);
+            allScoreData.Header = header;
 
             try
             {
@@ -855,7 +860,7 @@ namespace ThScoreFileConverter
             }
 
             if ((allScoreData.Header != null) &&
-                (allScoreData.ClearData.Count == numRoutes) &&
+                (allScoreData.ClearData.Count == Enum.GetValues(typeof(RouteWithTotal)).Length) &&
                 (allScoreData.CardData != null) &&
                 (allScoreData.Status != null))
                 return allScoreData;
