@@ -5,16 +5,8 @@
 //-----------------------------------------------------------------------
 
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "StyleCop.CSharp.DocumentationRules",
-    "SA1649:FileHeaderFileNameDocumentationMustMatchTypeName",
-    Justification = "Reviewed.")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
     "StyleCop.CSharp.LayoutRules",
     "SA1503:CurlyBracketsMustNotBeOmitted",
-    Justification = "Reviewed.")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "StyleCop.CSharp.MaintainabilityRules",
-    "SA1402:FileMayOnlyContainASingleClass",
     Justification = "Reviewed.")]
 
 namespace ThScoreFileConverter
@@ -22,26 +14,6 @@ namespace ThScoreFileConverter
     using System;
     using System.IO;
     using System.Linq;
-
-    /// <summary>
-    /// Represents the event data that indicates occurring of an exception.
-    /// </summary>
-    internal class ExceptionOccurredEventArgs : EventArgs
-    {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ExceptionOccurredEventArgs"/> class.
-        /// </summary>
-        /// <param name="ex">The exception data.</param>
-        public ExceptionOccurredEventArgs(Exception ex)
-        {
-            this.Exception = ex;
-        }
-
-        /// <summary>
-        /// Gets the exception data.
-        /// </summary>
-        public Exception Exception { get; private set; }
-    }
 
     /// <summary>
     /// Represents the base class for classes that executes conversion of a score file.
