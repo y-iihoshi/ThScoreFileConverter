@@ -76,6 +76,7 @@
     </Compile>
     <Compile Include="EnumExtensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="IBinaryReadable.cs" />
     <Compile Include="Pair.cs" />
     <Compile Include="Profiler.cs" />
     <Compile Include="SettingWindow.xaml.cs">

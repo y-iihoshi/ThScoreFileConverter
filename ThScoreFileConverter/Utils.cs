@@ -5,10 +5,6 @@
 //-----------------------------------------------------------------------
 
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "StyleCop.CSharp.DocumentationRules",
-    "SA1649:FileHeaderFileNameDocumentationMustMatchTypeName",
-    Justification = "Reviewed.")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
     "StyleCop.CSharp.LayoutRules",
     "SA1503:CurlyBracketsMustNotBeOmitted",
     Justification = "Reviewed.")]
@@ -18,22 +14,7 @@ namespace ThScoreFileConverter
     using System;
     using System.Collections.Generic;
     using System.Globalization;
-    using System.IO;
     using System.Linq;
-    using System.Text.RegularExpressions;
-    using System.Windows.Controls;
-
-    /// <summary>
-    /// Defines a method to read from a binary stream.
-    /// </summary>
-    public interface IBinaryReadable
-    {
-        /// <summary>
-        /// Reads from a stream by using the specified <see cref="BinaryReader"/> instance.
-        /// </summary>
-        /// <param name="reader">The instance to use.</param>
-        void ReadFrom(BinaryReader reader);
-    }
 
     /// <summary>
     /// Provides static methods for convenience.
