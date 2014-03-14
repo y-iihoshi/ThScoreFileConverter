@@ -25,10 +25,6 @@ namespace ThScoreFileConverter
     using System.Text;
     using System.Text.RegularExpressions;
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage(
-        "StyleCop.CSharp.SpacingRules",
-        "SA1025:CodeMustNotContainMultipleWhitespaceInARow",
-        Justification = "Reviewed.")]
     internal class Th09Converter : ThConverter
     {
         private static readonly string LevelPattern;

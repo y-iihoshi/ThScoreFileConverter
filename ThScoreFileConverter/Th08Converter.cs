@@ -26,10 +26,6 @@ namespace ThScoreFileConverter
     using System.Text.RegularExpressions;
     using CardInfo = SpellCardInfo<Th08Converter.StagePractice, Th08Converter.LevelPractice>;
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage(
-        "StyleCop.CSharp.SpacingRules",
-        "SA1025:CodeMustNotContainMultipleWhitespaceInARow",
-        Justification = "Reviewed.")]
     internal class Th08Converter : ThConverter
     {
         private static readonly Dictionary<int, CardInfo> CardTable;
@@ -60,6 +56,10 @@ namespace ThScoreFileConverter
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "StyleCop.CSharp.MaintainabilityRules",
             "SA1119:StatementMustNotUseUnnecessaryParenthesis",
+            Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.SpacingRules",
+            "SA1025:CodeMustNotContainMultipleWhitespaceInARow",
             Justification = "Reviewed.")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "StyleCop.CSharp.SpacingRules",
@@ -462,6 +462,10 @@ namespace ThScoreFileConverter
             [EnumAltName("LW", LongName = "Last Word")] LastWord
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.SpacingRules",
+            "SA1025:CodeMustNotContainMultipleWhitespaceInARow",
+            Justification = "Reviewed.")]
         public enum StageProgress
         {
             [EnumAltName("Stage 1")]          St1,

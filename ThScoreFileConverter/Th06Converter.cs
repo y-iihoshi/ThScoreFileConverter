@@ -26,10 +26,6 @@ namespace ThScoreFileConverter
     using System.Text.RegularExpressions;
     using CardInfo = SpellCardInfo<Th06Converter.Stage, Th06Converter.Level>;
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage(
-        "StyleCop.CSharp.SpacingRules",
-        "SA1025:CodeMustNotContainMultipleWhitespaceInARow",
-        Justification = "Reviewed.")]
     internal class Th06Converter : ThConverter
     {
         private static readonly Dictionary<int, CardInfo> CardTable;
@@ -231,6 +227,10 @@ namespace ThScoreFileConverter
             [EnumAltName("0")] Total
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.SpacingRules",
+            "SA1025:CodeMustNotContainMultipleWhitespaceInARow",
+            Justification = "Reviewed.")]
         public enum StageProgress
         {
             [EnumAltName("-------")]     None,

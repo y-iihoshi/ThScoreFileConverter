@@ -31,10 +31,6 @@ namespace ThScoreFileConverter
     using System.Text;
     using System.Text.RegularExpressions;
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage(
-        "StyleCop.CSharp.SpacingRules",
-        "SA1025:CodeMustNotContainMultipleWhitespaceInARow",
-        Justification = "Reviewed.")]
     internal class Th125Converter : ThConverter
     {
         private static readonly Dictionary<LevelScenePair, EnemyCardPair> SpellCards;
@@ -213,6 +209,10 @@ namespace ThScoreFileConverter
             [EnumAltName("H")] Hatate
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.SpacingRules",
+            "SA1025:CodeMustNotContainMultipleWhitespaceInARow",
+            Justification = "Reviewed.")]
         public enum Enemy
         {
             [EnumAltName("静葉",        LongName = "秋 静葉")]          Shizuha,
@@ -1043,6 +1043,10 @@ namespace ThScoreFileConverter
                 }
             }
 
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "StyleCop.CSharp.SpacingRules",
+                "SA1025:CodeMustNotContainMultipleWhitespaceInARow",
+                Justification = "Reviewed.")]
             public struct BonusFields
             {
                 private BitVector32 data;

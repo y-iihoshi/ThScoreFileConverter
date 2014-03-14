@@ -30,10 +30,6 @@ namespace ThScoreFileConverter
     using System.Text;
     using System.Text.RegularExpressions;
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage(
-        "StyleCop.CSharp.SpacingRules",
-        "SA1025:CodeMustNotContainMultipleWhitespaceInARow",
-        Justification = "Reviewed.")]
     internal class Th095Converter : ThConverter
     {
         private static readonly Dictionary<LevelScenePair, EnemyCardPair> SpellCards;
@@ -175,6 +171,10 @@ namespace ThScoreFileConverter
             [EnumAltName("X", LongName = "ex")] Extra
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.SpacingRules",
+            "SA1025:CodeMustNotContainMultipleWhitespaceInARow",
+            Justification = "Reviewed.")]
         public enum Enemy
         {
             [EnumAltName("リグル",     LongName = "リグル・ナイトバグ")]         Wriggle,
