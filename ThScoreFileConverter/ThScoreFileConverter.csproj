@@ -96,6 +96,7 @@
     <Compile Include="Th12Converter.cs" />
     <Compile Include="Th13Converter.cs" />
     <Compile Include="Th14Converter.cs" />
+    <Compile Include="ThConverterEventArgs.cs" />
     <Compile Include="ThConverterFactory.cs" />
     <Compile Include="Time.cs" />
     <Compile Include="Utils.cs" />
