@@ -32,409 +32,11 @@ namespace ThScoreFileConverter
     using System.Text.RegularExpressions;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage(
-        "StyleCop.CSharp.OrderingRules",
-        "SA1201:ElementsMustAppearInTheCorrectOrder",
-        Justification = "Reviewed.")]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage(
         "StyleCop.CSharp.SpacingRules",
         "SA1025:CodeMustNotContainMultipleWhitespaceInARow",
         Justification = "Reviewed.")]
     internal class Th125Converter : ThConverter
     {
-        public enum Level
-        {
-            [EnumAltName("1", LongName = "01")] Lv1,
-            [EnumAltName("2", LongName = "02")] Lv2,
-            [EnumAltName("3", LongName = "03")] Lv3,
-            [EnumAltName("4", LongName = "04")] Lv4,
-            [EnumAltName("5", LongName = "05")] Lv5,
-            [EnumAltName("6", LongName = "06")] Lv6,
-            [EnumAltName("7", LongName = "07")] Lv7,
-            [EnumAltName("8", LongName = "08")] Lv8,
-            [EnumAltName("9", LongName = "09")] Lv9,
-            [EnumAltName("A", LongName = "10")] Lv10,
-            [EnumAltName("B", LongName = "11")] Lv11,
-            [EnumAltName("C", LongName = "12")] Lv12,
-            [EnumAltName("X", LongName = "ex")] Extra,
-            [EnumAltName("S", LongName = "sp")] Spoiler
-        }
-
-        public enum Chara
-        {
-            [EnumAltName("A")] Aya,
-            [EnumAltName("H")] Hatate
-        }
-
-        public enum Enemy
-        {
-            [EnumAltName("静葉",        LongName = "秋 静葉")]          Shizuha,
-            [EnumAltName("穣子",        LongName = "秋 穣子")]          Minoriko,
-            [EnumAltName("パルスィ",    LongName = "水橋 パルスィ")]    Parsee,
-            [EnumAltName("雛",          LongName = "鍵山 雛")]          Hina,
-            [EnumAltName("小傘",        LongName = "多々良 小傘")]      Kogasa,
-            [EnumAltName("キスメ",      LongName = "キスメ")]           Kisume,
-            [EnumAltName("ヤマメ",      LongName = "黒谷 ヤマメ")]      Yamame,
-            [EnumAltName("にとり",      LongName = "河城 にとり")]      Nitori,
-            [EnumAltName("椛",          LongName = "犬走 椛")]          Momiji,
-            [EnumAltName("一輪 & 雲山", LongName = "雲居 一輪 & 雲山")] Ichirin,
-            [EnumAltName("水蜜",        LongName = "村紗 水蜜")]        Minamitsu,
-            [EnumAltName("勇儀",        LongName = "星熊 勇儀")]        Yuugi,
-            [EnumAltName("萃香",        LongName = "伊吹 萃香")]        Suika,
-            [EnumAltName("星",          LongName = "寅丸 星")]          Shou,
-            [EnumAltName("ナズーリン",  LongName = "ナズーリン")]       Nazrin,
-            [EnumAltName("お空",        LongName = "霊烏路 空")]        Utsuho,
-            [EnumAltName("お燐",        LongName = "火焔猫 燐")]        Rin,
-            [EnumAltName("こいし",      LongName = "古明地 こいし")]    Koishi,
-            [EnumAltName("さとり",      LongName = "古明地 さとり")]    Satori,
-            [EnumAltName("天子",        LongName = "比那名居 天子")]    Tenshi,
-            [EnumAltName("衣玖",        LongName = "永江 衣玖")]        Iku,
-            [EnumAltName("諏訪子",      LongName = "洩矢 諏訪子")]      Suwako,
-            [EnumAltName("神奈子",      LongName = "八坂 神奈子")]      Kanako,
-            [EnumAltName("ぬえ",        LongName = "封獣 ぬえ")]        Nue,
-            [EnumAltName("白蓮",        LongName = "聖 白蓮")]          Byakuren,
-            [EnumAltName("霊夢",        LongName = "博麗 霊夢")]        Reimu,
-            [EnumAltName("魔理沙",      LongName = "霧雨 魔理沙")]      Marisa,
-            [EnumAltName("早苗",        LongName = "東風谷 早苗")]      Sanae,
-            [EnumAltName("はたて",      LongName = "姫海棠 はたて")]    Hatate,
-            [EnumAltName("文",          LongName = "射命丸 文")]        Aya
-        }
-
-        private class LevelScenePair : Pair<Level, int>
-        {
-            public Level Level { get { return this.First; } }
-            public int Scene { get { return this.Second; } }    // 1-based
-
-            public LevelScenePair(Level level, int scene) : base(level, scene) { }
-        }
-
-        private class EnemyCardPair : Pair<Enemy, string>
-        {
-            public Enemy Enemy { get { return this.First; } }
-            public string Card { get { return this.Second; } }
-
-            public EnemyCardPair(Enemy enemy, string card) : base(enemy, card) { }
-        }
-
-        private class BestShotPair : Pair<string, BestShotHeader>
-        {
-            public string Path { get { return this.First; } }
-            public BestShotHeader Header { get { return this.Second; } }
-
-            public BestShotPair(string name, BestShotHeader header) : base(name, header) { }
-        }
-
-        private class AllScoreData
-        {
-            public Header Header { get; set; }
-            public List<Score> Scores { get; set; }
-            public Status Status { get; set; }
-
-            public AllScoreData()
-            {
-                this.Scores = new List<Score>(SpellCards.Count);
-            }
-        }
-
-        private class Header : IBinaryReadable
-        {
-            private uint unknown1;
-            private uint unknown2;
-
-            public string Signature { get; private set; }
-            public int EncodedAllSize { get; private set; }
-            public int EncodedBodySize { get; private set; }
-            public int DecodedBodySize { get; private set; }
-
-            public void ReadFrom(BinaryReader reader)
-            {
-                this.Signature = Encoding.Default.GetString(reader.ReadBytes(4));
-                this.EncodedAllSize = reader.ReadInt32();
-                this.unknown1 = reader.ReadUInt32();
-                this.unknown2 = reader.ReadUInt32();
-                this.EncodedBodySize = reader.ReadInt32();
-                this.DecodedBodySize = reader.ReadInt32();
-            }
-
-            public void WriteTo(BinaryWriter writer)
-            {
-                writer.Write(this.Signature.ToCharArray());
-                writer.Write(this.EncodedAllSize);
-                writer.Write(this.unknown1);
-                writer.Write(this.unknown2);
-                writer.Write(this.EncodedBodySize);
-                writer.Write(this.DecodedBodySize);
-            }
-        }
-
-        private class Chapter : IBinaryReadable
-        {
-            public string Signature { get; private set; }
-            public ushort Version { get; private set; }
-            public int Size { get; private set; }
-            public uint Checksum { get; private set; }
-
-            public Chapter() { }
-            public Chapter(Chapter ch)
-            {
-                this.Signature = ch.Signature;
-                this.Version = ch.Version;
-                this.Size = ch.Size;
-                this.Checksum = ch.Checksum;
-            }
-
-            public virtual void ReadFrom(BinaryReader reader)
-            {
-                this.Signature = Encoding.Default.GetString(reader.ReadBytes(2));
-                this.Version = reader.ReadUInt16();
-                this.Size = reader.ReadInt32();
-                this.Checksum = reader.ReadUInt32();
-            }
-        }
-
-        private class Score : Chapter   // per scene
-        {
-            public LevelScenePair LevelScene { get; private set; }
-            public int HighScore { get; private set; }
-            public Chara Chara { get; private set; }        // size: 4Bytes
-            public int TrialCount { get; private set; }
-            public int FirstSuccess { get; private set; }
-            public uint DateTime { get; private set; }      // UNIX time (unit: [s])
-            public int BestshotScore { get; private set; }
-
-            public Score(Chapter ch)
-                : base(ch)
-            {
-                if (this.Signature != "SC")
-                    throw new InvalidDataException("Signature");
-                if (this.Version != 0x0000)
-                    throw new InvalidDataException("Version");
-                if (this.Size != 0x00000048)
-                    throw new InvalidDataException("Size");
-            }
-
-            public override void ReadFrom(BinaryReader reader)
-            {
-                var number = reader.ReadInt32();
-                this.LevelScene = new LevelScenePair((Level)(number / 10), (number % 10) + 1);
-                this.HighScore = reader.ReadInt32();
-                reader.ReadBytes(0x04);
-                this.Chara = (Chara)reader.ReadInt32();
-                reader.ReadBytes(0x04);
-                this.TrialCount = reader.ReadInt32();
-                this.FirstSuccess = reader.ReadInt32();
-                reader.ReadUInt32();    // always 0x00000000?
-                this.DateTime = reader.ReadUInt32();
-                reader.ReadUInt32();    // always 0x00000000?
-                reader.ReadUInt32();    // checksum of the bestshot file?
-                reader.ReadUInt32();    // always 0x00000001?
-                this.BestshotScore = reader.ReadInt32();
-                reader.ReadBytes(0x08);
-            }
-        }
-
-        private class Status : Chapter
-        {
-            [System.Diagnostics.CodeAnalysis.SuppressMessage(
-                "Microsoft.Performance",
-                "CA1811:AvoidUncalledPrivateCode",
-                Justification = "For future use.")]
-            public byte[] LastName { get; private set; }    // .Length = 10 (The last 2 bytes are always 0x00 ?)
-
-            [System.Diagnostics.CodeAnalysis.SuppressMessage(
-                "Microsoft.Performance",
-                "CA1811:AvoidUncalledPrivateCode",
-                Justification = "For future use.")]
-            public byte[] BgmFlags { get; private set; }    // .Length = 6
-
-            public int TotalPlayTime { get; private set; }  // unit: [0.01s]
-
-            public Status(Chapter ch)
-                : base(ch)
-            {
-                if (this.Signature != "ST")
-                    throw new InvalidDataException("Signature");
-                if (this.Version != 0x0001)
-                    throw new InvalidDataException("Version");
-                if (this.Size != 0x00000474)
-                    throw new InvalidDataException("Size");
-            }
-
-            public override void ReadFrom(BinaryReader reader)
-            {
-                this.LastName = reader.ReadBytes(10);
-                reader.ReadBytes(2);
-                this.BgmFlags = reader.ReadBytes(6);
-                reader.ReadBytes(0x2E);
-                this.TotalPlayTime = reader.ReadInt32();
-                reader.ReadBytes(0x424);
-            }
-        }
-
-        private class BestShotHeader : IBinaryReadable
-        {
-            public struct BonusFields
-            {
-                private BitVector32 data;
-
-                public BonusFields(int data) { this.data = new BitVector32(data); }
-
-                [System.Diagnostics.CodeAnalysis.SuppressMessage(
-                    "Microsoft.Performance",
-                    "CA1811:AvoidUncalledPrivateCode",
-                    Justification = "For future use.")]
-                public int Data { get { return this.data.Data; } }
-
-                // public bool Bit00        { get { return this.data[0x00000001]; } }
-                // public bool Bit01        { get { return this.data[0x00000002]; } }
-                public bool TwoShot      { get { return this.data[0x00000004]; } }
-                public bool NiceShot     { get { return this.data[0x00000008]; } }
-                public bool RiskBonus    { get { return this.data[0x00000010]; } }
-                // public bool Bit05        { get { return this.data[0x00000020]; } }
-                public bool RedShot      { get { return this.data[0x00000040]; } }
-                public bool PurpleShot   { get { return this.data[0x00000080]; } }
-
-                public bool BlueShot     { get { return this.data[0x00000100]; } }
-                public bool CyanShot     { get { return this.data[0x00000200]; } }
-                public bool GreenShot    { get { return this.data[0x00000400]; } }
-                public bool YellowShot   { get { return this.data[0x00000800]; } }
-                public bool OrangeShot   { get { return this.data[0x00001000]; } }
-                public bool ColorfulShot { get { return this.data[0x00002000]; } }
-                public bool RainbowShot  { get { return this.data[0x00004000]; } }
-                // public bool Bit15        { get { return this.data[0x00008000]; } }
-
-                public bool SoloShot     { get { return this.data[0x00010000]; } }
-                // public bool Bit17        { get { return this.data[0x00020000]; } }
-                // public bool Bit18        { get { return this.data[0x00040000]; } }
-                // public bool Bit19        { get { return this.data[0x00080000]; } }
-                // public bool Bit20        { get { return this.data[0x00100000]; } }
-                // public bool Bit21        { get { return this.data[0x00200000]; } }
-                public bool MacroBonus   { get { return this.data[0x00400000]; } }
-                // public bool Bit23        { get { return this.data[0x00800000]; } }
-
-                public bool FrontShot    { get { return this.data[0x01000000]; } }
-                public bool BackShot     { get { return this.data[0x02000000]; } }
-                public bool SideShot     { get { return this.data[0x04000000]; } }
-                public bool ClearShot    { get { return this.data[0x08000000]; } }
-                public bool CatBonus     { get { return this.data[0x10000000]; } }
-                // public bool Bit29        { get { return this.data[0x20000000]; } }
-                // public bool Bit30        { get { return this.data[0x40000000]; } }
-                // public bool Bit31        { get { return this.data[0x80000000]; } }
-            }
-
-            public string Signature { get; private set; }   // "BST2"
-            public Level Level { get; private set; }
-            public short Scene { get; private set; }        // 1-based
-            public short Width { get; private set; }
-            public short Height { get; private set; }
-
-            [System.Diagnostics.CodeAnalysis.SuppressMessage(
-                "Microsoft.Performance",
-                "CA1811:AvoidUncalledPrivateCode",
-                Justification = "For future use.")]
-            public short Width2 { get; private set; }       // ???
-
-            [System.Diagnostics.CodeAnalysis.SuppressMessage(
-                "Microsoft.Performance",
-                "CA1811:AvoidUncalledPrivateCode",
-                Justification = "For future use.")]
-            public short Height2 { get; private set; }      // ???
-
-            [System.Diagnostics.CodeAnalysis.SuppressMessage(
-                "Microsoft.Performance",
-                "CA1811:AvoidUncalledPrivateCode",
-                Justification = "For future use.")]
-            public short HalfWidth { get; private set; }    // ???
-
-            [System.Diagnostics.CodeAnalysis.SuppressMessage(
-                "Microsoft.Performance",
-                "CA1811:AvoidUncalledPrivateCode",
-                Justification = "For future use.")]
-            public short HalfHeight { get; private set; }   // ???
-
-            [System.Diagnostics.CodeAnalysis.SuppressMessage(
-                "Microsoft.Performance",
-                "CA1811:AvoidUncalledPrivateCode",
-                Justification = "For future use.")]
-            public uint DateTime { get; private set; }
-
-            public float SlowRate { get; private set; }     // Really...?
-            public BonusFields Fields { get; private set; }
-            public int ResultScore { get; private set; }
-            public int BasePoint { get; private set; }
-            public int RiskBonus { get; private set; }
-            public float BossShot { get; private set; }
-            public float NiceShot { get; private set; }     // minimum = 1.20?
-            public float AngleBonus { get; private set; }
-            public int MacroBonus { get; private set; }
-            public int FrontSideBackShot { get; private set; }  // Really...?
-            public int ClearShot { get; private set; }
-
-            [System.Diagnostics.CodeAnalysis.SuppressMessage(
-                "Microsoft.Performance",
-                "CA1811:AvoidUncalledPrivateCode",
-                Justification = "For future use.")]
-            public float Angle { get; private set; }
-
-            [System.Diagnostics.CodeAnalysis.SuppressMessage(
-                "Microsoft.Performance",
-                "CA1811:AvoidUncalledPrivateCode",
-                Justification = "For future use.")]
-            public int ResultScore2 { get; private set; }   // ???
-
-            public byte[] CardName { get; private set; }    // .Length = 0x50
-
-            public void ReadFrom(BinaryReader reader)
-            {
-                this.Signature = new string(reader.ReadChars(4));
-                if (this.Signature == "BST2")
-                {
-                    reader.ReadUInt16();    // always 0x0405?
-                    this.Level = (Level)(reader.ReadInt16() - 1);
-                    this.Scene = reader.ReadInt16();
-                    reader.ReadUInt16();    // 0x0100 ... Version?
-                    this.Width = reader.ReadInt16();
-                    this.Height = reader.ReadInt16();
-                    reader.ReadUInt32();    // always 0x00000000?
-                    this.Width2 = reader.ReadInt16();
-                    this.Height2 = reader.ReadInt16();
-                    this.HalfWidth = reader.ReadInt16();
-                    this.HalfHeight = reader.ReadInt16();
-                    this.DateTime = reader.ReadUInt32();
-                    reader.ReadUInt32();    // always 0x00000000?
-                    this.SlowRate = reader.ReadSingle();
-                    this.Fields = new BonusFields(reader.ReadInt32());
-                    this.ResultScore = reader.ReadInt32();
-                    this.BasePoint = reader.ReadInt32();
-                    reader.ReadBytes(0x08);
-                    this.RiskBonus = reader.ReadInt32();
-                    this.BossShot = reader.ReadSingle();
-                    this.NiceShot = reader.ReadSingle();
-                    this.AngleBonus = reader.ReadSingle();
-                    this.MacroBonus = reader.ReadInt32();
-                    this.FrontSideBackShot = reader.ReadInt32();
-                    this.ClearShot = reader.ReadInt32();
-                    reader.ReadBytes(0x30);
-                    this.Angle = reader.ReadSingle();
-                    this.ResultScore2 = reader.ReadInt32();
-                    reader.ReadUInt32();
-                    this.CardName = reader.ReadBytes(0x50);
-                }
-            }
-        }
-
-        private AllScoreData allScoreData = null;
-        private Dictionary<Chara, Dictionary<LevelScenePair, BestShotPair>> bestshots = null;
-
-        public override string SupportedVersions
-        {
-            get { return "1.00a"; }
-        }
-
-        public override bool HasBestShotConverter
-        {
-            get { return true; }
-        }
-
         private static readonly Dictionary<LevelScenePair, EnemyCardPair> SpellCards;
 
         private static readonly string LevelPattern;
@@ -443,6 +45,9 @@ namespace ThScoreFileConverter
 
         private static readonly Func<string, Level> ToLevel;
         private static readonly Func<string, Chara> ToChara;
+
+        private AllScoreData allScoreData = null;
+        private Dictionary<Chara, Dictionary<LevelScenePair, BestShotPair>> bestshots = null;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Microsoft.Performance",
@@ -584,6 +189,74 @@ namespace ThScoreFileConverter
         {
         }
 
+        public enum Level
+        {
+            [EnumAltName("1", LongName = "01")] Lv1,
+            [EnumAltName("2", LongName = "02")] Lv2,
+            [EnumAltName("3", LongName = "03")] Lv3,
+            [EnumAltName("4", LongName = "04")] Lv4,
+            [EnumAltName("5", LongName = "05")] Lv5,
+            [EnumAltName("6", LongName = "06")] Lv6,
+            [EnumAltName("7", LongName = "07")] Lv7,
+            [EnumAltName("8", LongName = "08")] Lv8,
+            [EnumAltName("9", LongName = "09")] Lv9,
+            [EnumAltName("A", LongName = "10")] Lv10,
+            [EnumAltName("B", LongName = "11")] Lv11,
+            [EnumAltName("C", LongName = "12")] Lv12,
+            [EnumAltName("X", LongName = "ex")] Extra,
+            [EnumAltName("S", LongName = "sp")] Spoiler
+        }
+
+        public enum Chara
+        {
+            [EnumAltName("A")] Aya,
+            [EnumAltName("H")] Hatate
+        }
+
+        public enum Enemy
+        {
+            [EnumAltName("静葉",        LongName = "秋 静葉")]          Shizuha,
+            [EnumAltName("穣子",        LongName = "秋 穣子")]          Minoriko,
+            [EnumAltName("パルスィ",    LongName = "水橋 パルスィ")]    Parsee,
+            [EnumAltName("雛",          LongName = "鍵山 雛")]          Hina,
+            [EnumAltName("小傘",        LongName = "多々良 小傘")]      Kogasa,
+            [EnumAltName("キスメ",      LongName = "キスメ")]           Kisume,
+            [EnumAltName("ヤマメ",      LongName = "黒谷 ヤマメ")]      Yamame,
+            [EnumAltName("にとり",      LongName = "河城 にとり")]      Nitori,
+            [EnumAltName("椛",          LongName = "犬走 椛")]          Momiji,
+            [EnumAltName("一輪 & 雲山", LongName = "雲居 一輪 & 雲山")] Ichirin,
+            [EnumAltName("水蜜",        LongName = "村紗 水蜜")]        Minamitsu,
+            [EnumAltName("勇儀",        LongName = "星熊 勇儀")]        Yuugi,
+            [EnumAltName("萃香",        LongName = "伊吹 萃香")]        Suika,
+            [EnumAltName("星",          LongName = "寅丸 星")]          Shou,
+            [EnumAltName("ナズーリン",  LongName = "ナズーリン")]       Nazrin,
+            [EnumAltName("お空",        LongName = "霊烏路 空")]        Utsuho,
+            [EnumAltName("お燐",        LongName = "火焔猫 燐")]        Rin,
+            [EnumAltName("こいし",      LongName = "古明地 こいし")]    Koishi,
+            [EnumAltName("さとり",      LongName = "古明地 さとり")]    Satori,
+            [EnumAltName("天子",        LongName = "比那名居 天子")]    Tenshi,
+            [EnumAltName("衣玖",        LongName = "永江 衣玖")]        Iku,
+            [EnumAltName("諏訪子",      LongName = "洩矢 諏訪子")]      Suwako,
+            [EnumAltName("神奈子",      LongName = "八坂 神奈子")]      Kanako,
+            [EnumAltName("ぬえ",        LongName = "封獣 ぬえ")]        Nue,
+            [EnumAltName("白蓮",        LongName = "聖 白蓮")]          Byakuren,
+            [EnumAltName("霊夢",        LongName = "博麗 霊夢")]        Reimu,
+            [EnumAltName("魔理沙",      LongName = "霧雨 魔理沙")]      Marisa,
+            [EnumAltName("早苗",        LongName = "東風谷 早苗")]      Sanae,
+            [EnumAltName("はたて",      LongName = "姫海棠 はたて")]    Hatate,
+            [EnumAltName("文",          LongName = "射命丸 文")]        Aya
+        }
+
+        public override string SupportedVersions
+        {
+            get { return "1.00a"; }
+        }
+
+        public override bool HasBestShotConverter
+        {
+            get { return true; }
+        }
+
         protected override bool ReadScoreFile(Stream input)
         {
             using (var decrypted = new MemoryStream())
@@ -608,6 +281,89 @@ namespace ThScoreFileConverter
                 this.allScoreData = Read(decoded);
 
                 return this.allScoreData != null;
+            }
+        }
+
+        protected override void Convert(Stream input, Stream output, bool hideUntriedCards)
+        {
+            var reader = new StreamReader(input, Encoding.GetEncoding("shift_jis"));
+            var writer = new StreamWriter(output, Encoding.GetEncoding("shift_jis"));
+            var outputFile = output as FileStream;
+
+            var allLine = reader.ReadToEnd();
+            allLine = this.ReplaceScore(allLine);
+            allLine = this.ReplaceScoreTotal(allLine);
+            allLine = this.ReplaceCard(allLine, hideUntriedCards);
+            allLine = this.ReplaceTime(allLine);
+            if (outputFile != null)
+            {
+                allLine = this.ReplaceShot(allLine, outputFile.Name);
+                allLine = this.ReplaceShotEx(allLine, outputFile.Name);
+            }
+            writer.Write(allLine);
+
+            writer.Flush();
+            writer.BaseStream.SetLength(writer.BaseStream.Position);
+        }
+
+        protected override string[] FilterBestShotFiles(string[] files)
+        {
+            var pattern = Utils.Format(@"bs2?_({0})_[1-9].dat", LevelLongPattern);
+            var regex = new Regex(pattern, RegexOptions.IgnoreCase);
+
+            return files.Where(file => regex.IsMatch(Path.GetFileName(file))).ToArray();
+        }
+
+        protected override void ConvertBestShot(Stream input, Stream output)
+        {
+            using (var decoded = new MemoryStream())
+            {
+                var outputFile = output as FileStream;
+                var chara = Path.GetFileName(outputFile.Name)
+                    .StartsWith("bs2_", StringComparison.CurrentCultureIgnoreCase)
+                    ? Chara.Hatate : Chara.Aya;
+
+                var reader = new BinaryReader(input);
+                var header = new BestShotHeader();
+                header.ReadFrom(reader);
+
+                if (this.bestshots == null)
+                    this.bestshots = new Dictionary<Chara, Dictionary<LevelScenePair, BestShotPair>>(
+                        Enum.GetValues(typeof(Chara)).Length);
+                if (!this.bestshots.ContainsKey(chara))
+                    this.bestshots.Add(
+                        chara, new Dictionary<LevelScenePair, BestShotPair>(SpellCards.Count));
+
+                var key = new LevelScenePair(header.Level, header.Scene);
+                if (!this.bestshots[chara].ContainsKey(key))
+                    this.bestshots[chara].Add(key, new BestShotPair(outputFile.Name, header));
+
+                Lzss.Extract(input, decoded);
+
+                decoded.Seek(0, SeekOrigin.Begin);
+                var bitmap = new Bitmap(header.Width, header.Height, PixelFormat.Format32bppArgb);
+                try
+                {
+                    var permission = new SecurityPermission(SecurityPermissionFlag.UnmanagedCode);
+                    permission.Demand();
+
+                    var bitmapData = bitmap.LockBits(
+                        new Rectangle(0, 0, header.Width, header.Height),
+                        ImageLockMode.WriteOnly,
+                        bitmap.PixelFormat);
+                    var source = decoded.ToArray();
+                    var destination = bitmapData.Scan0;
+                    Marshal.Copy(source, 0, destination, source.Length);
+                    bitmap.UnlockBits(bitmapData);
+                }
+                catch (SecurityException e)
+                {
+                    Console.WriteLine(e.ToString());
+                }
+
+                bitmap.Save(output, ImageFormat.Png);
+                output.Flush();
+                output.SetLength(output.Position);
             }
         }
 
@@ -735,28 +491,6 @@ namespace ThScoreFileConverter
                 return allScoreData;
             else
                 return null;
-        }
-
-        protected override void Convert(Stream input, Stream output, bool hideUntriedCards)
-        {
-            var reader = new StreamReader(input, Encoding.GetEncoding("shift_jis"));
-            var writer = new StreamWriter(output, Encoding.GetEncoding("shift_jis"));
-            var outputFile = output as FileStream;
-
-            var allLine = reader.ReadToEnd();
-            allLine = this.ReplaceScore(allLine);
-            allLine = this.ReplaceScoreTotal(allLine);
-            allLine = this.ReplaceCard(allLine, hideUntriedCards);
-            allLine = this.ReplaceTime(allLine);
-            if (outputFile != null)
-            {
-                allLine = this.ReplaceShot(allLine, outputFile.Name);
-                allLine = this.ReplaceShotEx(allLine, outputFile.Name);
-            }
-            writer.Write(allLine);
-
-            writer.Flush();
-            writer.BaseStream.SetLength(writer.BaseStream.Position);
         }
 
         // %T125SCR[w][x][y][z]
@@ -939,20 +673,6 @@ namespace ThScoreFileConverter
             return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
 
-        private class Detail
-        {
-            public Detail(bool outputs, string format, string value)
-            {
-                this.Outputs = outputs;
-                this.Format = format;
-                this.Value = value;
-            }
-
-            public bool Outputs { get; private set; }
-            public string Format { get; private set; }
-            public string Value { get; private set; }
-        }
-
         // %T125SHOTEX[w][x][y][z]
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "StyleCop.CSharp.MaintainabilityRules",
@@ -1050,65 +770,341 @@ namespace ThScoreFileConverter
             return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
 
-        protected override string[] FilterBestShotFiles(string[] files)
+        private class LevelScenePair : Pair<Level, int>
         {
-            var pattern = Utils.Format(@"bs2?_({0})_[1-9].dat", LevelLongPattern);
-            var regex = new Regex(pattern, RegexOptions.IgnoreCase);
+            public LevelScenePair(Level level, int scene) : base(level, scene) { }
 
-            return files.Where(file => regex.IsMatch(Path.GetFileName(file))).ToArray();
+            public Level Level { get { return this.First; } }
+            public int Scene { get { return this.Second; } }    // 1-based
         }
 
-        protected override void ConvertBestShot(Stream input, Stream output)
+        private class EnemyCardPair : Pair<Enemy, string>
         {
-            using (var decoded = new MemoryStream())
+            public EnemyCardPair(Enemy enemy, string card) : base(enemy, card) { }
+
+            public Enemy Enemy { get { return this.First; } }
+            public string Card { get { return this.Second; } }
+        }
+
+        private class BestShotPair : Pair<string, BestShotHeader>
+        {
+            public BestShotPair(string name, BestShotHeader header) : base(name, header) { }
+
+            public string Path { get { return this.First; } }
+            public BestShotHeader Header { get { return this.Second; } }
+        }
+
+        private class AllScoreData
+        {
+            public AllScoreData()
             {
-                var outputFile = output as FileStream;
-                var chara = Path.GetFileName(outputFile.Name)
-                    .StartsWith("bs2_", StringComparison.CurrentCultureIgnoreCase)
-                    ? Chara.Hatate : Chara.Aya;
-
-                var reader = new BinaryReader(input);
-                var header = new BestShotHeader();
-                header.ReadFrom(reader);
-
-                if (this.bestshots == null)
-                    this.bestshots = new Dictionary<Chara, Dictionary<LevelScenePair, BestShotPair>>(
-                        Enum.GetValues(typeof(Chara)).Length);
-                if (!this.bestshots.ContainsKey(chara))
-                    this.bestshots.Add(
-                        chara, new Dictionary<LevelScenePair, BestShotPair>(SpellCards.Count));
-
-                var key = new LevelScenePair(header.Level, header.Scene);
-                if (!this.bestshots[chara].ContainsKey(key))
-                    this.bestshots[chara].Add(key, new BestShotPair(outputFile.Name, header));
-
-                Lzss.Extract(input, decoded);
-
-                decoded.Seek(0, SeekOrigin.Begin);
-                var bitmap = new Bitmap(header.Width, header.Height, PixelFormat.Format32bppArgb);
-                try
-                {
-                    var permission = new SecurityPermission(SecurityPermissionFlag.UnmanagedCode);
-                    permission.Demand();
-
-                    var bitmapData = bitmap.LockBits(
-                        new Rectangle(0, 0, header.Width, header.Height),
-                        ImageLockMode.WriteOnly,
-                        bitmap.PixelFormat);
-                    var source = decoded.ToArray();
-                    var destination = bitmapData.Scan0;
-                    Marshal.Copy(source, 0, destination, source.Length);
-                    bitmap.UnlockBits(bitmapData);
-                }
-                catch (SecurityException e)
-                {
-                    Console.WriteLine(e.ToString());
-                }
-
-                bitmap.Save(output, ImageFormat.Png);
-                output.Flush();
-                output.SetLength(output.Position);
+                this.Scores = new List<Score>(SpellCards.Count);
             }
+
+            public Header Header { get; set; }
+            public List<Score> Scores { get; set; }
+            public Status Status { get; set; }
+        }
+
+        private class Header : IBinaryReadable
+        {
+            private uint unknown1;
+            private uint unknown2;
+
+            public string Signature { get; private set; }
+            public int EncodedAllSize { get; private set; }
+            public int EncodedBodySize { get; private set; }
+            public int DecodedBodySize { get; private set; }
+
+            public void ReadFrom(BinaryReader reader)
+            {
+                this.Signature = Encoding.Default.GetString(reader.ReadBytes(4));
+                this.EncodedAllSize = reader.ReadInt32();
+                this.unknown1 = reader.ReadUInt32();
+                this.unknown2 = reader.ReadUInt32();
+                this.EncodedBodySize = reader.ReadInt32();
+                this.DecodedBodySize = reader.ReadInt32();
+            }
+
+            public void WriteTo(BinaryWriter writer)
+            {
+                writer.Write(this.Signature.ToCharArray());
+                writer.Write(this.EncodedAllSize);
+                writer.Write(this.unknown1);
+                writer.Write(this.unknown2);
+                writer.Write(this.EncodedBodySize);
+                writer.Write(this.DecodedBodySize);
+            }
+        }
+
+        private class Chapter : IBinaryReadable
+        {
+            public Chapter() { }
+            public Chapter(Chapter ch)
+            {
+                this.Signature = ch.Signature;
+                this.Version = ch.Version;
+                this.Size = ch.Size;
+                this.Checksum = ch.Checksum;
+            }
+
+            public string Signature { get; private set; }
+            public ushort Version { get; private set; }
+            public int Size { get; private set; }
+            public uint Checksum { get; private set; }
+
+            public virtual void ReadFrom(BinaryReader reader)
+            {
+                this.Signature = Encoding.Default.GetString(reader.ReadBytes(2));
+                this.Version = reader.ReadUInt16();
+                this.Size = reader.ReadInt32();
+                this.Checksum = reader.ReadUInt32();
+            }
+        }
+
+        private class Score : Chapter   // per scene
+        {
+            public Score(Chapter ch)
+                : base(ch)
+            {
+                if (this.Signature != "SC")
+                    throw new InvalidDataException("Signature");
+                if (this.Version != 0x0000)
+                    throw new InvalidDataException("Version");
+                if (this.Size != 0x00000048)
+                    throw new InvalidDataException("Size");
+            }
+
+            public LevelScenePair LevelScene { get; private set; }
+            public int HighScore { get; private set; }
+            public Chara Chara { get; private set; }        // size: 4Bytes
+            public int TrialCount { get; private set; }
+            public int FirstSuccess { get; private set; }
+            public uint DateTime { get; private set; }      // UNIX time (unit: [s])
+            public int BestshotScore { get; private set; }
+
+            public override void ReadFrom(BinaryReader reader)
+            {
+                var number = reader.ReadInt32();
+                this.LevelScene = new LevelScenePair((Level)(number / 10), (number % 10) + 1);
+                this.HighScore = reader.ReadInt32();
+                reader.ReadBytes(0x04);
+                this.Chara = (Chara)reader.ReadInt32();
+                reader.ReadBytes(0x04);
+                this.TrialCount = reader.ReadInt32();
+                this.FirstSuccess = reader.ReadInt32();
+                reader.ReadUInt32();    // always 0x00000000?
+                this.DateTime = reader.ReadUInt32();
+                reader.ReadUInt32();    // always 0x00000000?
+                reader.ReadUInt32();    // checksum of the bestshot file?
+                reader.ReadUInt32();    // always 0x00000001?
+                this.BestshotScore = reader.ReadInt32();
+                reader.ReadBytes(0x08);
+            }
+        }
+
+        private class Status : Chapter
+        {
+            public Status(Chapter ch)
+                : base(ch)
+            {
+                if (this.Signature != "ST")
+                    throw new InvalidDataException("Signature");
+                if (this.Version != 0x0001)
+                    throw new InvalidDataException("Version");
+                if (this.Size != 0x00000474)
+                    throw new InvalidDataException("Size");
+            }
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
+            public byte[] LastName { get; private set; }    // .Length = 10 (The last 2 bytes are always 0x00 ?)
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
+            public byte[] BgmFlags { get; private set; }    // .Length = 6
+
+            public int TotalPlayTime { get; private set; }  // unit: [0.01s]
+
+            public override void ReadFrom(BinaryReader reader)
+            {
+                this.LastName = reader.ReadBytes(10);
+                reader.ReadBytes(2);
+                this.BgmFlags = reader.ReadBytes(6);
+                reader.ReadBytes(0x2E);
+                this.TotalPlayTime = reader.ReadInt32();
+                reader.ReadBytes(0x424);
+            }
+        }
+
+        private class BestShotHeader : IBinaryReadable
+        {
+            public string Signature { get; private set; }   // "BST2"
+            public Level Level { get; private set; }
+            public short Scene { get; private set; }        // 1-based
+            public short Width { get; private set; }
+            public short Height { get; private set; }
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
+            public short Width2 { get; private set; }       // ???
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
+            public short Height2 { get; private set; }      // ???
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
+            public short HalfWidth { get; private set; }    // ???
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
+            public short HalfHeight { get; private set; }   // ???
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
+            public uint DateTime { get; private set; }
+
+            public float SlowRate { get; private set; }     // Really...?
+            public BonusFields Fields { get; private set; }
+            public int ResultScore { get; private set; }
+            public int BasePoint { get; private set; }
+            public int RiskBonus { get; private set; }
+            public float BossShot { get; private set; }
+            public float NiceShot { get; private set; }     // minimum = 1.20?
+            public float AngleBonus { get; private set; }
+            public int MacroBonus { get; private set; }
+            public int FrontSideBackShot { get; private set; }  // Really...?
+            public int ClearShot { get; private set; }
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
+            public float Angle { get; private set; }
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
+            public int ResultScore2 { get; private set; }   // ???
+
+            public byte[] CardName { get; private set; }    // .Length = 0x50
+
+            public void ReadFrom(BinaryReader reader)
+            {
+                this.Signature = new string(reader.ReadChars(4));
+                if (this.Signature == "BST2")
+                {
+                    reader.ReadUInt16();    // always 0x0405?
+                    this.Level = (Level)(reader.ReadInt16() - 1);
+                    this.Scene = reader.ReadInt16();
+                    reader.ReadUInt16();    // 0x0100 ... Version?
+                    this.Width = reader.ReadInt16();
+                    this.Height = reader.ReadInt16();
+                    reader.ReadUInt32();    // always 0x00000000?
+                    this.Width2 = reader.ReadInt16();
+                    this.Height2 = reader.ReadInt16();
+                    this.HalfWidth = reader.ReadInt16();
+                    this.HalfHeight = reader.ReadInt16();
+                    this.DateTime = reader.ReadUInt32();
+                    reader.ReadUInt32();    // always 0x00000000?
+                    this.SlowRate = reader.ReadSingle();
+                    this.Fields = new BonusFields(reader.ReadInt32());
+                    this.ResultScore = reader.ReadInt32();
+                    this.BasePoint = reader.ReadInt32();
+                    reader.ReadBytes(0x08);
+                    this.RiskBonus = reader.ReadInt32();
+                    this.BossShot = reader.ReadSingle();
+                    this.NiceShot = reader.ReadSingle();
+                    this.AngleBonus = reader.ReadSingle();
+                    this.MacroBonus = reader.ReadInt32();
+                    this.FrontSideBackShot = reader.ReadInt32();
+                    this.ClearShot = reader.ReadInt32();
+                    reader.ReadBytes(0x30);
+                    this.Angle = reader.ReadSingle();
+                    this.ResultScore2 = reader.ReadInt32();
+                    reader.ReadUInt32();
+                    this.CardName = reader.ReadBytes(0x50);
+                }
+            }
+
+            public struct BonusFields
+            {
+                private BitVector32 data;
+
+                public BonusFields(int data) { this.data = new BitVector32(data); }
+
+                [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                    "Microsoft.Performance",
+                    "CA1811:AvoidUncalledPrivateCode",
+                    Justification = "For future use.")]
+                public int Data { get { return this.data.Data; } }
+
+                // public bool Bit00        { get { return this.data[0x00000001]; } }
+                // public bool Bit01        { get { return this.data[0x00000002]; } }
+                public bool TwoShot      { get { return this.data[0x00000004]; } }
+                public bool NiceShot     { get { return this.data[0x00000008]; } }
+                public bool RiskBonus    { get { return this.data[0x00000010]; } }
+                // public bool Bit05        { get { return this.data[0x00000020]; } }
+                public bool RedShot      { get { return this.data[0x00000040]; } }
+                public bool PurpleShot   { get { return this.data[0x00000080]; } }
+
+                public bool BlueShot     { get { return this.data[0x00000100]; } }
+                public bool CyanShot     { get { return this.data[0x00000200]; } }
+                public bool GreenShot    { get { return this.data[0x00000400]; } }
+                public bool YellowShot   { get { return this.data[0x00000800]; } }
+                public bool OrangeShot   { get { return this.data[0x00001000]; } }
+                public bool ColorfulShot { get { return this.data[0x00002000]; } }
+                public bool RainbowShot  { get { return this.data[0x00004000]; } }
+                // public bool Bit15        { get { return this.data[0x00008000]; } }
+
+                public bool SoloShot     { get { return this.data[0x00010000]; } }
+                // public bool Bit17        { get { return this.data[0x00020000]; } }
+                // public bool Bit18        { get { return this.data[0x00040000]; } }
+                // public bool Bit19        { get { return this.data[0x00080000]; } }
+                // public bool Bit20        { get { return this.data[0x00100000]; } }
+                // public bool Bit21        { get { return this.data[0x00200000]; } }
+                public bool MacroBonus   { get { return this.data[0x00400000]; } }
+                // public bool Bit23        { get { return this.data[0x00800000]; } }
+
+                public bool FrontShot    { get { return this.data[0x01000000]; } }
+                public bool BackShot     { get { return this.data[0x02000000]; } }
+                public bool SideShot     { get { return this.data[0x04000000]; } }
+                public bool ClearShot    { get { return this.data[0x08000000]; } }
+                public bool CatBonus     { get { return this.data[0x10000000]; } }
+                // public bool Bit29        { get { return this.data[0x20000000]; } }
+                // public bool Bit30        { get { return this.data[0x40000000]; } }
+                // public bool Bit31        { get { return this.data[0x80000000]; } }
+            }
+        }
+
+        private class Detail
+        {
+            public Detail(bool outputs, string format, string value)
+            {
+                this.Outputs = outputs;
+                this.Format = format;
+                this.Value = value;
+            }
+
+            public bool Outputs { get; private set; }
+            public string Format { get; private set; }
+            public string Value { get; private set; }
         }
     }
 }

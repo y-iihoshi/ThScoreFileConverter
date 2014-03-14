@@ -26,15 +26,45 @@ namespace ThScoreFileConverter
     using System.Text.RegularExpressions;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage(
-        "StyleCop.CSharp.OrderingRules",
-        "SA1201:ElementsMustAppearInTheCorrectOrder",
-        Justification = "Reviewed.")]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage(
         "StyleCop.CSharp.SpacingRules",
         "SA1025:CodeMustNotContainMultipleWhitespaceInARow",
         Justification = "Reviewed.")]
     internal class Th09Converter : ThConverter
     {
+        private static readonly string LevelPattern;
+        private static readonly string CharaPattern;
+
+        private static readonly Func<string, Level> ToLevel;
+        private static readonly Func<string, Chara> ToChara;
+
+        private AllScoreData allScoreData = null;
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Performance",
+            "CA1810:InitializeReferenceTypeStaticFieldsInline",
+            Justification = "Reviewed.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.MaintainabilityRules",
+            "SA1119:StatementMustNotUseUnnecessaryParenthesis",
+            Justification = "Reviewed.")]
+        static Th09Converter()
+        {
+            var levels = Utils.GetEnumerator<Level>();
+            var charas = Utils.GetEnumerator<Chara>();
+
+            LevelPattern = string.Join(string.Empty, levels.Select(lv => lv.ToShortName()).ToArray());
+            CharaPattern = string.Join("|", charas.Select(ch => ch.ToShortName()).ToArray());
+
+            var comparisonType = StringComparison.OrdinalIgnoreCase;
+
+            ToLevel = (shortName => levels.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
+            ToChara = (shortName => charas.First(ch => ch.ToShortName().Equals(shortName, comparisonType)));
+        }
+
+        public Th09Converter()
+        {
+        }
+
         public enum Level
         {
             [EnumAltName("E")] Easy,
@@ -64,254 +94,6 @@ namespace ThScoreFileConverter
             [EnumAltName("LN")] Lunasa
         }
 
-        private class CharaLevelPair : Pair<Chara, Level>
-        {
-            [System.Diagnostics.CodeAnalysis.SuppressMessage(
-                "Microsoft.Performance",
-                "CA1811:AvoidUncalledPrivateCode",
-                Justification = "For future use.")]
-            public Chara Chara { get { return this.First; } }
-
-            [System.Diagnostics.CodeAnalysis.SuppressMessage(
-                "Microsoft.Performance",
-                "CA1811:AvoidUncalledPrivateCode",
-                Justification = "For future use.")]
-            public Level Level { get { return this.Second; } }
-
-            public CharaLevelPair(Chara chara, Level level) : base(chara, level) { }
-        }
-
-        private class AllScoreData
-        {
-            public Header Header { get; set; }
-            public Dictionary<CharaLevelPair, HighScore[]> Rankings { get; set; }
-            public PlayStatus PlayStatus { get; set; }
-            public LastName LastName { get; set; }
-            public VersionInfo VersionInfo { get; set; }
-
-            public AllScoreData()
-            {
-                var numPairs = Enum.GetValues(typeof(Chara)).Length * Enum.GetValues(typeof(Level)).Length;
-                this.Rankings = new Dictionary<CharaLevelPair, HighScore[]>(numPairs);
-            }
-        }
-
-        private class Chapter : IBinaryReadable
-        {
-            public string Signature { get; private set; }   // .Length = 4
-            public short Size1 { get; private set; }
-            public short Size2 { get; private set; }        // always equal to size1?
-
-            public Chapter() { }
-            public Chapter(Chapter ch)
-            {
-                this.Signature = ch.Signature;
-                this.Size1 = ch.Size1;
-                this.Size2 = ch.Size2;
-            }
-
-            public virtual void ReadFrom(BinaryReader reader)
-            {
-                this.Signature = new string(reader.ReadChars(4));
-                this.Size1 = reader.ReadInt16();
-                this.Size2 = reader.ReadInt16();
-            }
-        }
-
-        private class Header : Chapter
-        {
-            public Header(Chapter ch)
-                : base(ch)
-            {
-                if (this.Signature != "TH9K")
-                    throw new InvalidDataException("Signature");
-                if (this.Size1 != 0x000C)
-                    throw new InvalidDataException("Size1");
-                // if (this.Size2 != 0x000C)
-                //     throw new InvalidDataException("Size2");
-            }
-
-            public override void ReadFrom(BinaryReader reader)
-            {
-                reader.ReadByte();      // always 0x01?
-                reader.ReadBytes(3);
-            }
-        }
-
-        private class HighScore : Chapter   // per character, level, rank
-        {
-            public uint Score { get; private set; }         // * 10
-            public Chara Chara { get; private set; }        // size: 1Byte
-            public Level Level { get; private set; }        // size: 1Byte
-            public short Rank { get; private set; }         // 0-based
-            public byte[] Name { get; private set; }        // .Length = 9, null-terminated
-            public byte[] Date { get; private set; }        // .Length = 9, "yy/mm/dd\0"
-            public byte ContinueCount { get; private set; }
-
-            public HighScore(Chapter ch)
-                : base(ch)
-            {
-                if (this.Signature != "HSCR")
-                    throw new InvalidDataException("Signature");
-                if (this.Size1 != 0x002C)
-                    throw new InvalidDataException("Size1");
-                // if (this.Size2 != 0x002C)
-                //     throw new InvalidDataException("Size2");
-            }
-
-            public override void ReadFrom(BinaryReader reader)
-            {
-                reader.ReadUInt32();    // always 0x00000002?
-                this.Score = reader.ReadUInt32();
-                reader.ReadUInt32();    // always 0x00000000?
-                this.Chara = (Chara)reader.ReadByte();
-                this.Level = (Level)reader.ReadByte();
-                this.Rank = reader.ReadInt16();
-                this.Name = reader.ReadBytes(9);
-                this.Date = reader.ReadBytes(9);
-                reader.ReadByte();      // always 0x00?
-                this.ContinueCount = reader.ReadByte();
-            }
-        }
-
-        private class PlayStatus : Chapter
-        {
-            public Time TotalRunningTime { get; private set; }
-
-            [System.Diagnostics.CodeAnalysis.SuppressMessage(
-                "Microsoft.Performance",
-                "CA1811:AvoidUncalledPrivateCode",
-                Justification = "For future use.")]
-            public Time TotalPlayTime { get; private set; }     // really...?
-
-            [System.Diagnostics.CodeAnalysis.SuppressMessage(
-                "Microsoft.Performance",
-                "CA1811:AvoidUncalledPrivateCode",
-                Justification = "For future use.")]
-            public byte[] BgmFlags { get; private set; }        // .Length = 19
-
-            public Dictionary<Chara, byte> MatchFlags { get; private set; }
-            public Dictionary<Chara, byte> StoryFlags { get; private set; }
-            public Dictionary<Chara, byte> ExtraFlags { get; private set; }
-            public Dictionary<Chara, ClearCount> ClearCounts { get; private set; }
-
-            public PlayStatus(Chapter ch)
-                : base(ch)
-            {
-                if (this.Signature != "PLST")
-                    throw new InvalidDataException("Signature");
-                if (this.Size1 != 0x01FC)
-                    throw new InvalidDataException("Size1");
-                // if (this.Size2 != 0x01FC)
-                //     throw new InvalidDataException("Size2");
-
-                var numCharas = Enum.GetValues(typeof(Chara)).Length;
-                this.MatchFlags = new Dictionary<Chara, byte>(numCharas);
-                this.StoryFlags = new Dictionary<Chara, byte>(numCharas);
-                this.ExtraFlags = new Dictionary<Chara, byte>(numCharas);
-                this.ClearCounts = new Dictionary<Chara, ClearCount>(numCharas);
-            }
-
-            public override void ReadFrom(BinaryReader reader)
-            {
-                var charas = Utils.GetEnumerator<Chara>();
-                reader.ReadUInt32();    // always 0x00000003?
-                this.TotalRunningTime = new Time(
-                    reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), false);
-                this.TotalPlayTime = new Time(
-                    reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), false);
-                this.BgmFlags = reader.ReadBytes(19);
-                reader.ReadBytes(13);
-                foreach (var chara in charas)
-                    this.MatchFlags.Add(chara, reader.ReadByte());
-                foreach (var chara in charas)
-                    this.StoryFlags.Add(chara, reader.ReadByte());
-                foreach (var chara in charas)
-                    this.ExtraFlags.Add(chara, reader.ReadByte());
-                foreach (var chara in charas)
-                {
-                    var clearCount = new ClearCount();
-                    clearCount.ReadFrom(reader);
-                    this.ClearCounts.Add(chara, clearCount);
-                }
-            }
-        }
-
-        private class LastName : Chapter
-        {
-            [System.Diagnostics.CodeAnalysis.SuppressMessage(
-                "Microsoft.Performance",
-                "CA1811:AvoidUncalledPrivateCode",
-                Justification = "For future use.")]
-            public byte[] Name { get; private set; }    // .Length = 12, null-terminated
-
-            public LastName(Chapter ch)
-                : base(ch)
-            {
-                if (this.Signature != "LSNM")
-                    throw new InvalidDataException("Signature");
-                if (this.Size1 != 0x0018)
-                    throw new InvalidDataException("Size1");
-                // if (this.Size2 != 0x0018)
-                //     throw new InvalidDataException("Size2");
-            }
-
-            public override void ReadFrom(BinaryReader reader)
-            {
-                reader.ReadUInt32();    // always 0x00000001?
-                this.Name = reader.ReadBytes(12);
-            }
-        }
-
-        private class VersionInfo : Chapter
-        {
-            [System.Diagnostics.CodeAnalysis.SuppressMessage(
-                "Microsoft.Performance",
-                "CA1811:AvoidUncalledPrivateCode",
-                Justification = "For future use.")]
-            public byte[] Version { get; private set; }     // .Length = 6, null-terminated
-
-            public VersionInfo(Chapter ch)
-                : base(ch)
-            {
-                if (this.Signature != "VRSM")
-                    throw new InvalidDataException("Signature");
-                if (this.Size1 != 0x001C)
-                    throw new InvalidDataException("Size1");
-                // if (this.Size2 != 0x001C)
-                //     throw new InvalidDataException("Size2");
-            }
-
-            public override void ReadFrom(BinaryReader reader)
-            {
-                reader.ReadUInt16();    // always 0x0001?
-                reader.ReadUInt16();    // always 0x0018?
-                this.Version = reader.ReadBytes(6);
-                reader.ReadBytes(3);    // always 0x000049?
-                reader.ReadBytes(3);
-                reader.ReadUInt32();
-            }
-        }
-
-        private class ClearCount : IBinaryReadable
-        {
-            public Dictionary<Level, int> Counts { get; private set; }
-
-            public ClearCount()
-            {
-                this.Counts = new Dictionary<Level, int>(Enum.GetValues(typeof(Level)).Length);
-            }
-
-            public void ReadFrom(BinaryReader reader)
-            {
-                foreach (var level in Utils.GetEnumerator<Level>())
-                    this.Counts.Add(level, reader.ReadInt32());
-                reader.ReadUInt32();
-            }
-        }
-
-        private AllScoreData allScoreData = null;
-
         public override string SupportedVersions
         {
             get { return "1.50a"; }
@@ -320,38 +102,6 @@ namespace ThScoreFileConverter
         public override bool HasCardReplacer
         {
             get { return false; }
-        }
-
-        private static readonly string LevelPattern;
-        private static readonly string CharaPattern;
-
-        private static readonly Func<string, Level> ToLevel;
-        private static readonly Func<string, Chara> ToChara;
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Performance",
-            "CA1810:InitializeReferenceTypeStaticFieldsInline",
-            Justification = "Reviewed.")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "StyleCop.CSharp.MaintainabilityRules",
-            "SA1119:StatementMustNotUseUnnecessaryParenthesis",
-            Justification = "Reviewed.")]
-        static Th09Converter()
-        {
-            var levels = Utils.GetEnumerator<Level>();
-            var charas = Utils.GetEnumerator<Chara>();
-
-            LevelPattern = string.Join(string.Empty, levels.Select(lv => lv.ToShortName()).ToArray());
-            CharaPattern = string.Join("|", charas.Select(ch => ch.ToShortName()).ToArray());
-
-            var comparisonType = StringComparison.OrdinalIgnoreCase;
-
-            ToLevel = (shortName => levels.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
-            ToChara = (shortName => charas.First(ch => ch.ToShortName().Equals(shortName, comparisonType)));
-        }
-
-        public Th09Converter()
-        {
         }
 
         protected override bool ReadScoreFile(Stream input)
@@ -379,6 +129,21 @@ namespace ThScoreFileConverter
 
                 return this.allScoreData != null;
             }
+        }
+
+        protected override void Convert(Stream input, Stream output, bool hideUntriedCards)
+        {
+            var reader = new StreamReader(input, Encoding.GetEncoding("shift_jis"));
+            var writer = new StreamWriter(output, Encoding.GetEncoding("shift_jis"));
+
+            var allLine = reader.ReadToEnd();
+            allLine = this.ReplaceScore(allLine);
+            allLine = this.ReplaceTime(allLine);
+            allLine = this.ReplaceClear(allLine);
+            writer.Write(allLine);
+
+            writer.Flush();
+            writer.BaseStream.SetLength(writer.BaseStream.Position);
         }
 
         private static bool Decrypt(Stream input, Stream output)
@@ -565,21 +330,6 @@ namespace ThScoreFileConverter
                 return null;
         }
 
-        protected override void Convert(Stream input, Stream output, bool hideUntriedCards)
-        {
-            var reader = new StreamReader(input, Encoding.GetEncoding("shift_jis"));
-            var writer = new StreamWriter(output, Encoding.GetEncoding("shift_jis"));
-
-            var allLine = reader.ReadToEnd();
-            allLine = this.ReplaceScore(allLine);
-            allLine = this.ReplaceTime(allLine);
-            allLine = this.ReplaceClear(allLine);
-            writer.Write(allLine);
-
-            writer.Flush();
-            writer.BaseStream.SetLength(writer.BaseStream.Position);
-        }
-
         // %T09SCR[w][xx][y][z]
         private string ReplaceScore(string input)
         {
@@ -652,6 +402,252 @@ namespace ThScoreFileConverter
                 }
             });
             return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+        }
+
+        private class CharaLevelPair : Pair<Chara, Level>
+        {
+            public CharaLevelPair(Chara chara, Level level) : base(chara, level) { }
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
+            public Chara Chara { get { return this.First; } }
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
+            public Level Level { get { return this.Second; } }
+        }
+
+        private class AllScoreData
+        {
+            public AllScoreData()
+            {
+                var numPairs = Enum.GetValues(typeof(Chara)).Length * Enum.GetValues(typeof(Level)).Length;
+                this.Rankings = new Dictionary<CharaLevelPair, HighScore[]>(numPairs);
+            }
+
+            public Header Header { get; set; }
+            public Dictionary<CharaLevelPair, HighScore[]> Rankings { get; set; }
+            public PlayStatus PlayStatus { get; set; }
+            public LastName LastName { get; set; }
+            public VersionInfo VersionInfo { get; set; }
+        }
+
+        private class Chapter : IBinaryReadable
+        {
+            public Chapter() { }
+            public Chapter(Chapter ch)
+            {
+                this.Signature = ch.Signature;
+                this.Size1 = ch.Size1;
+                this.Size2 = ch.Size2;
+            }
+
+            public string Signature { get; private set; }   // .Length = 4
+            public short Size1 { get; private set; }
+            public short Size2 { get; private set; }        // always equal to size1?
+
+            public virtual void ReadFrom(BinaryReader reader)
+            {
+                this.Signature = new string(reader.ReadChars(4));
+                this.Size1 = reader.ReadInt16();
+                this.Size2 = reader.ReadInt16();
+            }
+        }
+
+        private class Header : Chapter
+        {
+            public Header(Chapter ch)
+                : base(ch)
+            {
+                if (this.Signature != "TH9K")
+                    throw new InvalidDataException("Signature");
+                if (this.Size1 != 0x000C)
+                    throw new InvalidDataException("Size1");
+                // if (this.Size2 != 0x000C)
+                //     throw new InvalidDataException("Size2");
+            }
+
+            public override void ReadFrom(BinaryReader reader)
+            {
+                reader.ReadByte();      // always 0x01?
+                reader.ReadBytes(3);
+            }
+        }
+
+        private class HighScore : Chapter   // per character, level, rank
+        {
+            public HighScore(Chapter ch)
+                : base(ch)
+            {
+                if (this.Signature != "HSCR")
+                    throw new InvalidDataException("Signature");
+                if (this.Size1 != 0x002C)
+                    throw new InvalidDataException("Size1");
+                // if (this.Size2 != 0x002C)
+                //     throw new InvalidDataException("Size2");
+            }
+
+            public uint Score { get; private set; }         // * 10
+            public Chara Chara { get; private set; }        // size: 1Byte
+            public Level Level { get; private set; }        // size: 1Byte
+            public short Rank { get; private set; }         // 0-based
+            public byte[] Name { get; private set; }        // .Length = 9, null-terminated
+            public byte[] Date { get; private set; }        // .Length = 9, "yy/mm/dd\0"
+            public byte ContinueCount { get; private set; }
+
+            public override void ReadFrom(BinaryReader reader)
+            {
+                reader.ReadUInt32();    // always 0x00000002?
+                this.Score = reader.ReadUInt32();
+                reader.ReadUInt32();    // always 0x00000000?
+                this.Chara = (Chara)reader.ReadByte();
+                this.Level = (Level)reader.ReadByte();
+                this.Rank = reader.ReadInt16();
+                this.Name = reader.ReadBytes(9);
+                this.Date = reader.ReadBytes(9);
+                reader.ReadByte();      // always 0x00?
+                this.ContinueCount = reader.ReadByte();
+            }
+        }
+
+        private class PlayStatus : Chapter
+        {
+            public PlayStatus(Chapter ch)
+                : base(ch)
+            {
+                if (this.Signature != "PLST")
+                    throw new InvalidDataException("Signature");
+                if (this.Size1 != 0x01FC)
+                    throw new InvalidDataException("Size1");
+                // if (this.Size2 != 0x01FC)
+                //     throw new InvalidDataException("Size2");
+
+                var numCharas = Enum.GetValues(typeof(Chara)).Length;
+                this.MatchFlags = new Dictionary<Chara, byte>(numCharas);
+                this.StoryFlags = new Dictionary<Chara, byte>(numCharas);
+                this.ExtraFlags = new Dictionary<Chara, byte>(numCharas);
+                this.ClearCounts = new Dictionary<Chara, ClearCount>(numCharas);
+            }
+
+            public Time TotalRunningTime { get; private set; }
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
+            public Time TotalPlayTime { get; private set; }     // really...?
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
+            public byte[] BgmFlags { get; private set; }        // .Length = 19
+
+            public Dictionary<Chara, byte> MatchFlags { get; private set; }
+            public Dictionary<Chara, byte> StoryFlags { get; private set; }
+            public Dictionary<Chara, byte> ExtraFlags { get; private set; }
+            public Dictionary<Chara, ClearCount> ClearCounts { get; private set; }
+
+            public override void ReadFrom(BinaryReader reader)
+            {
+                var charas = Utils.GetEnumerator<Chara>();
+                reader.ReadUInt32();    // always 0x00000003?
+                this.TotalRunningTime = new Time(
+                    reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), false);
+                this.TotalPlayTime = new Time(
+                    reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), false);
+                this.BgmFlags = reader.ReadBytes(19);
+                reader.ReadBytes(13);
+                foreach (var chara in charas)
+                    this.MatchFlags.Add(chara, reader.ReadByte());
+                foreach (var chara in charas)
+                    this.StoryFlags.Add(chara, reader.ReadByte());
+                foreach (var chara in charas)
+                    this.ExtraFlags.Add(chara, reader.ReadByte());
+                foreach (var chara in charas)
+                {
+                    var clearCount = new ClearCount();
+                    clearCount.ReadFrom(reader);
+                    this.ClearCounts.Add(chara, clearCount);
+                }
+            }
+        }
+
+        private class ClearCount : IBinaryReadable
+        {
+            public ClearCount()
+            {
+                this.Counts = new Dictionary<Level, int>(Enum.GetValues(typeof(Level)).Length);
+            }
+
+            public Dictionary<Level, int> Counts { get; private set; }
+
+            public void ReadFrom(BinaryReader reader)
+            {
+                foreach (var level in Utils.GetEnumerator<Level>())
+                    this.Counts.Add(level, reader.ReadInt32());
+                reader.ReadUInt32();
+            }
+        }
+
+        private class LastName : Chapter
+        {
+            public LastName(Chapter ch)
+                : base(ch)
+            {
+                if (this.Signature != "LSNM")
+                    throw new InvalidDataException("Signature");
+                if (this.Size1 != 0x0018)
+                    throw new InvalidDataException("Size1");
+                // if (this.Size2 != 0x0018)
+                //     throw new InvalidDataException("Size2");
+            }
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
+            public byte[] Name { get; private set; }    // .Length = 12, null-terminated
+
+            public override void ReadFrom(BinaryReader reader)
+            {
+                reader.ReadUInt32();    // always 0x00000001?
+                this.Name = reader.ReadBytes(12);
+            }
+        }
+
+        private class VersionInfo : Chapter
+        {
+            public VersionInfo(Chapter ch)
+                : base(ch)
+            {
+                if (this.Signature != "VRSM")
+                    throw new InvalidDataException("Signature");
+                if (this.Size1 != 0x001C)
+                    throw new InvalidDataException("Size1");
+                // if (this.Size2 != 0x001C)
+                //     throw new InvalidDataException("Size2");
+            }
+
+            [System.Diagnostics.CodeAnalysis.SuppressMessage(
+                "Microsoft.Performance",
+                "CA1811:AvoidUncalledPrivateCode",
+                Justification = "For future use.")]
+            public byte[] Version { get; private set; }     // .Length = 6, null-terminated
+
+            public override void ReadFrom(BinaryReader reader)
+            {
+                reader.ReadUInt16();    // always 0x0001?
+                reader.ReadUInt16();    // always 0x0018?
+                this.Version = reader.ReadBytes(6);
+                reader.ReadBytes(3);    // always 0x000049?
+                reader.ReadBytes(3);
+                reader.ReadUInt32();
+            }
         }
     }
 }
