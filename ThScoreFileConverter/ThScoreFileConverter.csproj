@@ -80,6 +80,7 @@
     <Compile Include="IBinaryReadable.cs" />
     <Compile Include="Pair.cs" />
     <Compile Include="Profiler.cs" />
+    <Compile Include="SettingsPerTitle.cs" />
     <Compile Include="SettingWindow.xaml.cs">
       <DependentUpon>SettingWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
