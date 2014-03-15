@@ -9,8 +9,6 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
     "StyleCop.CSharp.DocumentationRules", "*", Justification = "Reviewed.")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "StyleCop.CSharp.LayoutRules", "*", Justification = "Reviewed.")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
     "StyleCop.CSharp.LayoutRules",
     "SA1503:CurlyBracketsMustNotBeOmitted",
     Justification = "Reviewed.")]
@@ -275,6 +273,7 @@ namespace ThScoreFileConverter
             [EnumAltName("X")] Extra,
             [EnumAltName("P")] Phantasm
         }
+
         public enum LevelWithTotal
         {
             [EnumAltName("E")] Easy,
@@ -295,6 +294,7 @@ namespace ThScoreFileConverter
             [EnumAltName("SA")] SakuyaA,
             [EnumAltName("SB")] SakuyaB
         }
+
         public enum CharaWithTotal
         {
             [EnumAltName("RA")] ReimuA,
@@ -317,6 +317,7 @@ namespace ThScoreFileConverter
             [EnumAltName("X")] Extra,
             [EnumAltName("P")] Phantasm
         }
+
         public enum StageWithTotal
         {
             [EnumAltName("1")] St1,
@@ -394,8 +395,8 @@ namespace ThScoreFileConverter
             allLine = this.ReplacePlay(allLine);
             allLine = this.ReplaceTime(allLine);
             allLine = this.ReplacePractice(allLine);
-            writer.Write(allLine);
 
+            writer.Write(allLine);
             writer.Flush();
             writer.BaseStream.SetLength(writer.BaseStream.Position);
         }
@@ -483,7 +484,7 @@ namespace ThScoreFileConverter
                     {
                         case "TH7K":
                             temp = reader.ReadByte();
-                            // 8 means the total size of Signature, Size1, and Size2.
+                            //// 8 means the total size of Signature, Size1, and Size2.
                             reader.ReadBytes(chapter.Size1 - 8 - 1);
                             if (temp != 0x01)
                                 return false;
@@ -493,12 +494,13 @@ namespace ThScoreFileConverter
                             reader.ReadBytes(chapter.Size1 - 8 - 1);    // 8 means the same above
                             if (temp != 0x01)
                                 return false;
-                            // th07.exe does something more things here...
+                            //// th07.exe does something more things here...
                             break;
                         default:
                             reader.ReadBytes(chapter.Size1 - 8);        // 8 means the same above
                             break;
                     }
+
                     remainSize -= chapter.Size1;
                 }
             }
@@ -510,6 +512,10 @@ namespace ThScoreFileConverter
             return remainSize == 0;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.LayoutRules",
+            "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine",
+            Justification = "Reviewed.")]
         private static AllScoreData Read(Stream input)
         {
             var reader = new BinaryReader(input);
@@ -581,6 +587,7 @@ namespace ThScoreFileConverter
                                         allScoreData.PracticeScores.Add(
                                             key, new Dictionary<Stage, PracticeScore>(numStages));
                                     }
+
                                     var scores = allScoreData.PracticeScores[key];
                                     if (!scores.ContainsKey(score.Stage))
                                         scores.Add(score.Stage, score);
@@ -625,10 +632,10 @@ namespace ThScoreFileConverter
             }
 
             if ((allScoreData.Header != null) &&
-                // (allScoreData.rankings.Count >= 0) &&
+                //// (allScoreData.rankings.Count >= 0) &&
                 (allScoreData.ClearData.Count == Enum.GetValues(typeof(Chara)).Length) &&
-                // (allScoreData.cardAttacks.Length == NumCards) &&
-                // (allScoreData.practiceScores.Count >= 0) &&
+                //// (allScoreData.cardAttacks.Length == NumCards) &&
+                //// (allScoreData.practiceScores.Count >= 0) &&
                 (allScoreData.PlayStatus != null) &&
                 (allScoreData.LastName != null) &&
                 (allScoreData.VersionInfo != null))
@@ -727,6 +734,7 @@ namespace ThScoreFileConverter
                             !attack.HasTried())
                             return (type == "N") ? "??????????" : "?????";
                     }
+
                     return (type == "N") ? CardTable[number].Name : CardTable[number].Level.ToString();
                 }
                 else
@@ -902,19 +910,28 @@ namespace ThScoreFileConverter
 
         private class CharaLevelPair : Pair<Chara, Level>
         {
-            public CharaLevelPair(Chara chara, Level level) : base(chara, level) { }
+            public CharaLevelPair(Chara chara, Level level)
+                : base(chara, level)
+            {
+            }
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage(
                 "Microsoft.Performance",
                 "CA1811:AvoidUncalledPrivateCode",
                 Justification = "For future use.")]
-            public Chara Chara { get { return this.First; } }
+            public Chara Chara
+            {
+                get { return this.First; }
+            }
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage(
                 "Microsoft.Performance",
                 "CA1811:AvoidUncalledPrivateCode",
                 Justification = "For future use.")]
-            public Level Level { get { return this.Second; } }
+            public Level Level
+            {
+                get { return this.Second; }
+            }
         }
 
         private class AllScoreData
@@ -931,18 +948,28 @@ namespace ThScoreFileConverter
             }
 
             public Header Header { get; set; }
+
             public Dictionary<CharaLevelPair, List<HighScore>> Rankings { get; set; }
+
             public Dictionary<Chara, ClearData> ClearData { get; set; }
+
             public Dictionary<int, CardAttack> CardAttacks { get; set; }
+
             public Dictionary<CharaLevelPair, Dictionary<Stage, PracticeScore>> PracticeScores { get; set; }
+
             public PlayStatus PlayStatus { get; set; }
+
             public LastName LastName { get; set; }
+
             public VersionInfo VersionInfo { get; set; }
         }
 
         private class Chapter : IBinaryReadable
         {
-            public Chapter() { }
+            public Chapter()
+            {
+            }
+
             public Chapter(Chapter ch)
             {
                 this.Signature = ch.Signature;
@@ -951,7 +978,9 @@ namespace ThScoreFileConverter
             }
 
             public string Signature { get; private set; }   // .Length = 4
+
             public short Size1 { get; private set; }
+
             public short Size2 { get; private set; }        // always equal to size1?
 
             public virtual void ReadFrom(BinaryReader reader)
@@ -971,8 +1000,6 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Signature");
                 if (this.Size1 != 0x000C)
                     throw new InvalidDataException("Size1");
-                // if (this.Size2 != 0x000C)
-                //     throw new InvalidDataException("Size2");
             }
 
             public override void ReadFrom(BinaryReader reader)
@@ -990,8 +1017,6 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Signature");
                 if (this.Size1 != 0x0028)
                     throw new InvalidDataException("Size1");
-                // if (this.Size2 != 0x0028)
-                //     throw new InvalidDataException("Size2");
             }
 
             public HighScore(uint score)    // for InitialRanking only
@@ -1003,12 +1028,19 @@ namespace ThScoreFileConverter
             }
 
             public uint Score { get; private set; }                     // * 10
+
             public float SlowRate { get; private set; }
+
             public Chara Chara { get; private set; }                    // size: 1Byte
+
             public Level Level { get; private set; }                    // size: 1Byte
+
             public StageProgress StageProgress { get; private set; }    // size: 1Byte
+
             public byte[] Name { get; private set; }                    // .Length = 9, null-terminated
+
             public byte[] Date { get; private set; }                    // .Length = 6, "mm/dd\0"
+
             public ushort ContinueCount { get; private set; }
 
             public override void ReadFrom(BinaryReader reader)
@@ -1034,8 +1066,6 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Signature");
                 if (this.Size1 != 0x001C)
                     throw new InvalidDataException("Size1");
-                // if (this.Size2 != 0x001C)
-                //     throw new InvalidDataException("Size2");
 
                 var numLevels = Enum.GetValues(typeof(Level)).Length;
                 this.StoryFlags = new Dictionary<Level, byte>(numLevels);
@@ -1078,8 +1108,6 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Signature");
                 if (this.Size1 != 0x0078)
                     throw new InvalidDataException("Size1");
-                // if (this.Size2 != 0x0078)
-                //     throw new InvalidDataException("Size2");
 
                 var numCharas = Enum.GetValues(typeof(CharaWithTotal)).Length;
                 this.MaxBonuses = new Dictionary<CharaWithTotal, uint>(numCharas);
@@ -1088,6 +1116,7 @@ namespace ThScoreFileConverter
             }
 
             public Dictionary<CharaWithTotal, uint> MaxBonuses { get; private set; }
+
             public short Number { get; private set; }       // 1-based
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage(
@@ -1097,6 +1126,7 @@ namespace ThScoreFileConverter
             public byte[] CardName { get; private set; }    // .Length = 0x30
 
             public Dictionary<CharaWithTotal, ushort> TrialCounts { get; private set; }
+
             public Dictionary<CharaWithTotal, ushort> ClearCounts { get; private set; }
 
             public override void ReadFrom(BinaryReader reader)
@@ -1130,14 +1160,16 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Signature");
                 if (this.Size1 != 0x0018)
                     throw new InvalidDataException("Size1");
-                // if (this.Size2 != 0x0018)
-                //     throw new InvalidDataException("Size2");
             }
 
             public int TrialCount { get; private set; }     // really...?
+
             public int HighScore { get; private set; }
+
             public Chara Chara { get; private set; }        // size: 1Byte
+
             public Level Level { get; private set; }        // size: 1Byte
+
             public Stage Stage { get; private set; }        // size: 1Byte
 
             public override void ReadFrom(BinaryReader reader)
@@ -1161,15 +1193,15 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Signature");
                 if (this.Size1 != 0x0160)
                     throw new InvalidDataException("Size1");
-                // if (this.Size2 != 0x0160)
-                //     throw new InvalidDataException("Size2");
 
                 this.PlayCounts =
                     new Dictionary<LevelWithTotal, PlayCount>(Enum.GetValues(typeof(LevelWithTotal)).Length);
             }
 
             public Time TotalRunningTime { get; private set; }
+
             public Time TotalPlayTime { get; private set; }
+
             public Dictionary<LevelWithTotal, PlayCount> PlayCounts { get; private set; }
 
             public override void ReadFrom(BinaryReader reader)
@@ -1197,10 +1229,15 @@ namespace ThScoreFileConverter
             }
 
             public int TotalTrial { get; private set; }
+
             public Dictionary<Chara, int> Trials { get; private set; }
+
             public int TotalRetry { get; private set; }
+
             public int TotalClear { get; private set; }
+
             public int TotalContinue { get; private set; }
+
             public int TotalPractice { get; private set; }
 
             public void ReadFrom(BinaryReader reader)
@@ -1224,8 +1261,6 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Signature");
                 if (this.Size1 != 0x0018)
                     throw new InvalidDataException("Size1");
-                // if (this.Size2 != 0x0018)
-                //     throw new InvalidDataException("Size2");
             }
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage(
@@ -1250,8 +1285,6 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Signature");
                 if (this.Size1 != 0x001C)
                     throw new InvalidDataException("Size1");
-                // if (this.Size2 != 0x001C)
-                //     throw new InvalidDataException("Size2");
             }
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage(

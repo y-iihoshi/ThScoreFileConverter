@@ -9,8 +9,6 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
     "StyleCop.CSharp.DocumentationRules", "*", Justification = "Reviewed.")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "StyleCop.CSharp.LayoutRules", "*", Justification = "Reviewed.")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
     "StyleCop.CSharp.LayoutRules",
     "SA1503:CurlyBracketsMustNotBeOmitted",
     Justification = "Reviewed.")]
@@ -136,8 +134,8 @@ namespace ThScoreFileConverter
             allLine = this.ReplaceScore(allLine);
             allLine = this.ReplaceTime(allLine);
             allLine = this.ReplaceClear(allLine);
-            writer.Write(allLine);
 
+            writer.Write(allLine);
             writer.Flush();
             writer.BaseStream.SetLength(writer.BaseStream.Position);
         }
@@ -230,7 +228,7 @@ namespace ThScoreFileConverter
                 if (chapter.Signature == "TH9K")
                 {
                     var temp = reader.ReadByte();
-                    // 8 means the total size of Signature, Size1 and Size2.
+                    //// 8 means the total size of Signature, Size1 and Size2.
                     reader.ReadBytes(chapter.Size1 - 8 - 1);
                     if (temp != 0x01)
                         return false;
@@ -243,6 +241,10 @@ namespace ThScoreFileConverter
             return true;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.LayoutRules",
+            "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine",
+            Justification = "Reviewed.")]
         private static AllScoreData Read(Stream input)
         {
             var reader = new BinaryReader(input);
@@ -327,6 +329,10 @@ namespace ThScoreFileConverter
         }
 
         // %T09SCR[w][xx][y][z]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.LayoutRules",
+            "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine",
+            Justification = "Reviewed.")]
         private string ReplaceScore(string input)
         {
             var pattern = Utils.Format(@"%T09SCR([{0}])({1})([1-5])([1-3])", LevelPattern, CharaPattern);
@@ -369,6 +375,10 @@ namespace ThScoreFileConverter
         }
 
         // %T09CLEAR[x][yy][z]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.LayoutRules",
+            "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine",
+            Justification = "Reviewed.")]
         private string ReplaceClear(string input)
         {
             var pattern = Utils.Format(@"%T09CLEAR([{0}])({1})([12])", LevelPattern, CharaPattern);
@@ -402,19 +412,28 @@ namespace ThScoreFileConverter
 
         private class CharaLevelPair : Pair<Chara, Level>
         {
-            public CharaLevelPair(Chara chara, Level level) : base(chara, level) { }
+            public CharaLevelPair(Chara chara, Level level)
+                : base(chara, level)
+            {
+            }
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage(
                 "Microsoft.Performance",
                 "CA1811:AvoidUncalledPrivateCode",
                 Justification = "For future use.")]
-            public Chara Chara { get { return this.First; } }
+            public Chara Chara
+            {
+                get { return this.First; }
+            }
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage(
                 "Microsoft.Performance",
                 "CA1811:AvoidUncalledPrivateCode",
                 Justification = "For future use.")]
-            public Level Level { get { return this.Second; } }
+            public Level Level
+            {
+                get { return this.Second; }
+            }
         }
 
         private class AllScoreData
@@ -426,15 +445,22 @@ namespace ThScoreFileConverter
             }
 
             public Header Header { get; set; }
+
             public Dictionary<CharaLevelPair, HighScore[]> Rankings { get; set; }
+
             public PlayStatus PlayStatus { get; set; }
+
             public LastName LastName { get; set; }
+
             public VersionInfo VersionInfo { get; set; }
         }
 
         private class Chapter : IBinaryReadable
         {
-            public Chapter() { }
+            public Chapter()
+            {
+            }
+
             public Chapter(Chapter ch)
             {
                 this.Signature = ch.Signature;
@@ -443,7 +469,9 @@ namespace ThScoreFileConverter
             }
 
             public string Signature { get; private set; }   // .Length = 4
+
             public short Size1 { get; private set; }
+
             public short Size2 { get; private set; }        // always equal to size1?
 
             public virtual void ReadFrom(BinaryReader reader)
@@ -463,8 +491,6 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Signature");
                 if (this.Size1 != 0x000C)
                     throw new InvalidDataException("Size1");
-                // if (this.Size2 != 0x000C)
-                //     throw new InvalidDataException("Size2");
             }
 
             public override void ReadFrom(BinaryReader reader)
@@ -483,16 +509,20 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Signature");
                 if (this.Size1 != 0x002C)
                     throw new InvalidDataException("Size1");
-                // if (this.Size2 != 0x002C)
-                //     throw new InvalidDataException("Size2");
             }
 
             public uint Score { get; private set; }         // * 10
+
             public Chara Chara { get; private set; }        // size: 1Byte
+
             public Level Level { get; private set; }        // size: 1Byte
+
             public short Rank { get; private set; }         // 0-based
+
             public byte[] Name { get; private set; }        // .Length = 9, null-terminated
+
             public byte[] Date { get; private set; }        // .Length = 9, "yy/mm/dd\0"
+
             public byte ContinueCount { get; private set; }
 
             public override void ReadFrom(BinaryReader reader)
@@ -519,8 +549,6 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Signature");
                 if (this.Size1 != 0x01FC)
                     throw new InvalidDataException("Size1");
-                // if (this.Size2 != 0x01FC)
-                //     throw new InvalidDataException("Size2");
 
                 var numCharas = Enum.GetValues(typeof(Chara)).Length;
                 this.MatchFlags = new Dictionary<Chara, byte>(numCharas);
@@ -544,8 +572,11 @@ namespace ThScoreFileConverter
             public byte[] BgmFlags { get; private set; }        // .Length = 19
 
             public Dictionary<Chara, byte> MatchFlags { get; private set; }
+
             public Dictionary<Chara, byte> StoryFlags { get; private set; }
+
             public Dictionary<Chara, byte> ExtraFlags { get; private set; }
+
             public Dictionary<Chara, ClearCount> ClearCounts { get; private set; }
 
             public override void ReadFrom(BinaryReader reader)
@@ -599,8 +630,6 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Signature");
                 if (this.Size1 != 0x0018)
                     throw new InvalidDataException("Size1");
-                // if (this.Size2 != 0x0018)
-                //     throw new InvalidDataException("Size2");
             }
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage(
@@ -625,8 +654,6 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Signature");
                 if (this.Size1 != 0x001C)
                     throw new InvalidDataException("Size1");
-                // if (this.Size2 != 0x001C)
-                //     throw new InvalidDataException("Size2");
             }
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage(

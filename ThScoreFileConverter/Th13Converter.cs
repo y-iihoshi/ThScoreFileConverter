@@ -9,8 +9,6 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
     "StyleCop.CSharp.DocumentationRules", "*", Justification = "Reviewed.")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "StyleCop.CSharp.LayoutRules", "*", Justification = "Reviewed.")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
     "StyleCop.CSharp.LayoutRules",
     "SA1503:CurlyBracketsMustNotBeOmitted",
     Justification = "Reviewed.")]
@@ -251,6 +249,7 @@ namespace ThScoreFileConverter
             [EnumAltName("L")] Lunatic,
             [EnumAltName("X")] Extra
         }
+
         public enum LevelWithTotal
         {
             [EnumAltName("E")] Easy,
@@ -260,6 +259,7 @@ namespace ThScoreFileConverter
             [EnumAltName("X")] Extra,
             [EnumAltName("T")] Total
         }
+
         public enum LevelPractice
         {
             [EnumAltName("E")] Easy,
@@ -269,6 +269,7 @@ namespace ThScoreFileConverter
             [EnumAltName("X")] Extra,
             [EnumAltName("D", LongName = "Over Drive")] OverDrive
         }
+
         public enum LevelPracticeWithTotal
         {
             [EnumAltName("E")] Easy,
@@ -287,6 +288,7 @@ namespace ThScoreFileConverter
             [EnumAltName("SN")] Sanae,
             [EnumAltName("YM")] Youmu
         }
+
         public enum CharaWithTotal
         {
             [EnumAltName("RM")] Reimu,
@@ -306,6 +308,7 @@ namespace ThScoreFileConverter
             [EnumAltName("6")] St6,
             [EnumAltName("X")] Extra
         }
+
         public enum StageWithTotal
         {
             [EnumAltName("1")] St1,
@@ -317,6 +320,7 @@ namespace ThScoreFileConverter
             [EnumAltName("X")] Extra,
             [EnumAltName("0")] Total
         }
+
         public enum StagePractice
         {
             [EnumAltName("1")] St1,
@@ -393,8 +397,8 @@ namespace ThScoreFileConverter
             allLines = this.ReplaceChara(allLines);
             allLines = this.ReplaceCharaEx(allLines);
             allLines = this.ReplacePractice(allLines);
-            writer.Write(allLines);
 
+            writer.Write(allLines);
             writer.Flush();
             writer.BaseStream.SetLength(writer.BaseStream.Position);
         }
@@ -453,9 +457,9 @@ namespace ThScoreFileConverter
                         !((chapter.Signature == "ST") && (chapter.Version == 0x0001)))
                         return false;
 
-                    // -4 means the size of Size.
+                    //// -4 means the size of Size.
                     reader.BaseStream.Seek(-4, SeekOrigin.Current);
-                    // 8 means the total size of Signature, Version, and Checksum.
+                    //// 8 means the total size of Signature, Version, and Checksum.
                     var body = reader.ReadBytes(chapter.Size - 8);
                     var sum = body.Sum(elem => (int)elem);
                     if (sum != chapter.Checksum)
@@ -472,6 +476,10 @@ namespace ThScoreFileConverter
             return remainSize == 0;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.LayoutRules",
+            "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine",
+            Justification = "Reviewed.")]
         private static AllScoreData Read(Stream input)
         {
             var reader = new BinaryReader(input);
@@ -642,6 +650,7 @@ namespace ThScoreFileConverter
                             if (!cards.TryGetValue(number, out card) || !card.HasTried())
                                 return "??????????";
                         }
+
                         return CardTable[number].Name;
                     }
                     else
@@ -879,19 +888,28 @@ namespace ThScoreFileConverter
 
         private class LevelStagePair : Pair<LevelPractice, StagePractice>
         {
-            public LevelStagePair(LevelPractice level, StagePractice stage) : base(level, stage) { }
+            public LevelStagePair(LevelPractice level, StagePractice stage)
+                : base(level, stage)
+            {
+            }
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage(
                 "Microsoft.Performance",
                 "CA1811:AvoidUncalledPrivateCode",
                 Justification = "For future use.")]
-            public LevelPractice Level { get { return this.First; } }
+            public LevelPractice Level
+            {
+                get { return this.First; }
+            }
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage(
                 "Microsoft.Performance",
                 "CA1811:AvoidUncalledPrivateCode",
                 Justification = "For future use.")]
-            public StagePractice Stage { get { return this.Second; } }
+            public StagePractice Stage
+            {
+                get { return this.Second; }
+            }
         }
 
         private class AllScoreData
@@ -903,7 +921,9 @@ namespace ThScoreFileConverter
             }
 
             public Header Header { get; set; }
+
             public Dictionary<CharaWithTotal, ClearData> ClearData { get; set; }
+
             public Status Status { get; set; }
         }
 
@@ -913,8 +933,11 @@ namespace ThScoreFileConverter
             private uint unknown2;
 
             public string Signature { get; private set; }
+
             public int EncodedAllSize { get; private set; }
+
             public int EncodedBodySize { get; private set; }
+
             public int DecodedBodySize { get; private set; }
 
             public void ReadFrom(BinaryReader reader)
@@ -940,7 +963,10 @@ namespace ThScoreFileConverter
 
         private class Chapter : IBinaryReadable
         {
-            public Chapter() { }
+            public Chapter()
+            {
+            }
+
             public Chapter(Chapter ch)
             {
                 this.Signature = ch.Signature;
@@ -950,8 +976,11 @@ namespace ThScoreFileConverter
             }
 
             public string Signature { get; private set; }
+
             public ushort Version { get; private set; }
+
             public uint Checksum { get; private set; }
+
             public int Size { get; private set; }
 
             public virtual void ReadFrom(BinaryReader reader)
@@ -986,19 +1015,28 @@ namespace ThScoreFileConverter
             }
 
             public CharaWithTotal Chara { get; private set; }   // size: 4Bytes
+
             public Dictionary<LevelPracticeWithTotal, ScoreData[]> Rankings { get; private set; }
+
             public int TotalPlayCount { get; private set; }
+
             public int PlayTime { get; private set; }           // = seconds * 60fps
+
             public Dictionary<LevelPracticeWithTotal, int> ClearCounts { get; private set; }
+
             public Dictionary<LevelPracticeWithTotal, int> ClearFlags { get; private set; }     // Really...?
+
             public Dictionary<LevelStagePair, Practice> Practices { get; private set; }
+
             public Dictionary<int, SpellCard> Cards { get; private set; }
 
             public override void ReadFrom(BinaryReader reader)
             {
                 var levelsPracticeWithTotal = Utils.GetEnumerator<LevelPracticeWithTotal>();
                 var stages = Utils.GetEnumerator<StagePractice>();
+
                 this.Chara = (CharaWithTotal)reader.ReadInt32();
+
                 foreach (var level in levelsPracticeWithTotal)
                 {
                     if (!this.Rankings.ContainsKey(level))
@@ -1010,20 +1048,24 @@ namespace ThScoreFileConverter
                         this.Rankings[level][rank] = score;
                     }
                 }
+
                 this.TotalPlayCount = reader.ReadInt32();
                 this.PlayTime = reader.ReadInt32();
+
                 foreach (var level in levelsPracticeWithTotal)
                 {
                     var clearCount = reader.ReadInt32();
                     if (!this.ClearCounts.ContainsKey(level))
                         this.ClearCounts.Add(level, clearCount);
                 }
+
                 foreach (var level in levelsPracticeWithTotal)
                 {
                     var clearFlag = reader.ReadInt32();
                     if (!this.ClearFlags.ContainsKey(level))
                         this.ClearFlags.Add(level, clearFlag);
                 }
+
                 foreach (var level in Utils.GetEnumerator<LevelPractice>())
                     foreach (var stage in stages)
                     {
@@ -1033,6 +1075,7 @@ namespace ThScoreFileConverter
                         if (!this.Practices.ContainsKey(key))
                             this.Practices.Add(key, practice);
                     }
+
                 for (var number = 0; number < CardTable.Count; number++)
                 {
                     var card = new SpellCard();
@@ -1087,12 +1130,17 @@ namespace ThScoreFileConverter
 
         private class ScoreData : IBinaryReadable
         {
-            public uint Score { get; private set; }         // * 10
+            public uint Score { get; private set; }     // * 10
+
             public StageProgress StageProgress { get; private set; }    // size: 1Byte
+
             public byte ContinueCount { get; private set; }
-            public byte[] Name { get; private set; }        // .Length = 10 (The last 2 bytes are always 0x00 ?)
-            public uint DateTime { get; private set; }      // UNIX time (unit: [s])
-            public float SlowRate { get; private set; }     // really...?
+
+            public byte[] Name { get; private set; }    // .Length = 10 (The last 2 bytes are always 0x00 ?)
+
+            public uint DateTime { get; private set; }  // UNIX time (unit: [s])
+
+            public float SlowRate { get; private set; } // really...?
 
             public void ReadFrom(BinaryReader reader)
             {
@@ -1115,10 +1163,15 @@ namespace ThScoreFileConverter
             public byte[] Name { get; private set; }            // .Length = 0x80
 
             public int ClearCount { get; private set; }
+
             public int PracticeClearCount { get; private set; }
+
             public int TrialCount { get; private set; }
+
             public int PracticeTrialCount { get; private set; }
+
             public int Number { get; private set; }             // 1-based
+
             public LevelPractice Level { get; private set; }
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage(

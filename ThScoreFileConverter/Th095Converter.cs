@@ -9,8 +9,6 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
     "StyleCop.CSharp.DocumentationRules", "*", Justification = "Reviewed.")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "StyleCop.CSharp.LayoutRules", "*", Justification = "Reviewed.")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
     "StyleCop.CSharp.LayoutRules",
     "SA1503:CurlyBracketsMustNotBeOmitted",
     Justification = "Reviewed.")]
@@ -256,8 +254,8 @@ namespace ThScoreFileConverter
                 allLine = this.ReplaceShot(allLine, outputFile.Name);
                 allLine = this.ReplaceShotEx(allLine, outputFile.Name);
             }
-            writer.Write(allLine);
 
+            writer.Write(allLine);
             writer.Flush();
             writer.BaseStream.SetLength(writer.BaseStream.Position);
         }
@@ -299,6 +297,7 @@ namespace ThScoreFileConverter
                         new Rectangle(0, 0, header.Width, header.Height),
                         ImageLockMode.WriteOnly,
                         bitmap.PixelFormat);
+
                     var source = decoded.ToArray();
                     var sourceStride = 3 * header.Width;    // "3" means 24bpp.
                     var destination = bitmapData.Scan0;
@@ -307,6 +306,7 @@ namespace ThScoreFileConverter
                         Marshal.Copy(source, sourceIndex, destination, sourceStride);
                         destination = new IntPtr(destination.ToInt32() + bitmapData.Stride);
                     }
+
                     bitmap.UnlockBits(bitmapData);
                 }
                 catch (SecurityException e)
@@ -378,7 +378,7 @@ namespace ThScoreFileConverter
                         return false;
 
                     long sum = signature + chapter.Size;
-                    // 3 means Signature, Checksum, and Size.
+                    //// 3 means Signature, Checksum, and Size.
                     for (var count = 3; count < chapter.Size / sizeof(uint); count++)
                         sum += reader.ReadUInt32();
                     if ((uint)sum != chapter.Checksum)
@@ -395,6 +395,10 @@ namespace ThScoreFileConverter
             return remainSize == 0;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.LayoutRules",
+            "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine",
+            Justification = "Reviewed.")]
         private static AllScoreData Read(Stream input)
         {
             var reader = new BinaryReader(input);
@@ -439,7 +443,7 @@ namespace ThScoreFileConverter
             }
 
             if ((allScoreData.Header != null) &&
-                // (allScoreData.scores.Count >= 0) &&
+                //// (allScoreData.scores.Count >= 0) &&
                 (allScoreData.Status != null))
                 return allScoreData;
             else
@@ -529,6 +533,7 @@ namespace ThScoreFileConverter
                     if (score == null)
                         return "??????????";
                 }
+
                 return (type == 1) ? SpellCards[key].Enemy.ToLongName() : SpellCards[key].Card;
             });
             return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
@@ -566,6 +571,10 @@ namespace ThScoreFileConverter
         }
 
         // %T95SHOTEX[x][y][z]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.LayoutRules",
+            "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine",
+            Justification = "Reviewed.")]
         private string ReplaceShotEx(string input, string outputFilePath)
         {
             var pattern = Utils.Format(@"%T95SHOTEX([{0}])([1-9])([1-6])", LevelPattern);
@@ -621,35 +630,64 @@ namespace ThScoreFileConverter
 
         private class LevelScenePair : Pair<Level, int>
         {
-            public LevelScenePair(Level level, int scene) : base(level, scene) { }
+            public LevelScenePair(Level level, int scene)
+                : base(level, scene)
+            {
+            }
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage(
                 "Microsoft.Performance",
                 "CA1811:AvoidUncalledPrivateCode",
                 Justification = "For future use.")]
-            public Level Level { get { return this.First; } }
+            public Level Level
+            {
+                get { return this.First; }
+            }
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage(
                 "Microsoft.Performance",
                 "CA1811:AvoidUncalledPrivateCode",
                 Justification = "For future use.")]
-            public int Scene { get { return this.Second; } }    // 1-based
+            public int Scene
+            {
+                get { return this.Second; }     // 1-based
+            }
         }
 
         private class EnemyCardPair : Pair<Enemy, string>
         {
-            public EnemyCardPair(Enemy enemy, string card) : base(enemy, card) { }
+            public EnemyCardPair(Enemy enemy, string card)
+                : base(enemy, card)
+            {
+            }
 
-            public Enemy Enemy { get { return this.First; } }
-            public string Card { get { return this.Second; } }
+            public Enemy Enemy
+            {
+                get { return this.First; }
+            }
+
+            public string Card
+            {
+                get { return this.Second; }
+            }
         }
 
         private class BestShotPair : Pair<string, BestShotHeader>
         {
-            public BestShotPair(string name, BestShotHeader header) : base(name, header) { }
+            public BestShotPair(string name, BestShotHeader header)
+                : base(name, header)
+            {
+            }
 
-            public string Path { get { return this.First; } }
-            public BestShotHeader Header { get { return this.Second; } }
+            public string Path
+            {
+                get { return this.First; }
+            }
+
+            public BestShotHeader Header
+            {
+                get { return this.Second; }
+            }
         }
 
         private class AllScoreData
@@ -660,7 +698,9 @@ namespace ThScoreFileConverter
             }
 
             public Header Header { get; set; }
+
             public List<Score> Scores { get; set; }
+
             public Status Status { get; set; }
         }
 
@@ -670,8 +710,11 @@ namespace ThScoreFileConverter
             private uint unknown2;
 
             public string Signature { get; private set; }
+
             public int EncodedAllSize { get; private set; }
+
             public int EncodedBodySize { get; private set; }
+
             public int DecodedBodySize { get; private set; }
 
             public void ReadFrom(BinaryReader reader)
@@ -697,7 +740,10 @@ namespace ThScoreFileConverter
 
         private class Chapter : IBinaryReadable
         {
-            public Chapter() { }
+            public Chapter()
+            {
+            }
+
             public Chapter(Chapter ch)
             {
                 this.Signature = ch.Signature;
@@ -707,8 +753,11 @@ namespace ThScoreFileConverter
             }
 
             public string Signature { get; private set; }
+
             public ushort Version { get; private set; }
+
             public int Size { get; private set; }
+
             public uint Checksum { get; private set; }
 
             public virtual void ReadFrom(BinaryReader reader)
@@ -734,9 +783,13 @@ namespace ThScoreFileConverter
             }
 
             public LevelScenePair LevelScene { get; private set; }
+
             public int HighScore { get; private set; }
+
             public int BestshotScore { get; private set; }
+
             public uint DateTime { get; private set; }      // UNIX time (unit: [s])
+
             public int TrialCount { get; private set; }
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage(
@@ -793,12 +846,19 @@ namespace ThScoreFileConverter
         private class BestShotHeader : IBinaryReadable
         {
             public string Signature { get; private set; }   // "BSTS"
+
             public Level Level { get; private set; }
+
             public short Scene { get; private set; }        // 1-based
+
             public short Width { get; private set; }
+
             public short Height { get; private set; }
+
             public int Score { get; private set; }
+
             public float SlowRate { get; private set; }
+
             public byte[] CardName { get; private set; }    // .Length = 0x50
 
             public void ReadFrom(BinaryReader reader)

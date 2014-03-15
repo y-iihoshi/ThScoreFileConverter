@@ -9,8 +9,6 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
     "StyleCop.CSharp.DocumentationRules", "*", Justification = "Reviewed.")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "StyleCop.CSharp.LayoutRules", "*", Justification = "Reviewed.")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
     "StyleCop.CSharp.LayoutRules",
     "SA1503:CurlyBracketsMustNotBeOmitted",
     Justification = "Reviewed.")]
@@ -300,8 +298,8 @@ namespace ThScoreFileConverter
                 allLine = this.ReplaceShot(allLine, outputFile.Name);
                 allLine = this.ReplaceShotEx(allLine, outputFile.Name);
             }
-            writer.Write(allLine);
 
+            writer.Write(allLine);
             writer.Flush();
             writer.BaseStream.SetLength(writer.BaseStream.Position);
         }
@@ -425,7 +423,7 @@ namespace ThScoreFileConverter
                         return false;
 
                     long sum = signature + chapter.Size;
-                    // 3 means Signature, Checksum, and Size.
+                    //// 3 means Signature, Checksum, and Size.
                     for (var count = 3; count < chapter.Size / sizeof(uint); count++)
                         sum += reader.ReadUInt32();
                     if ((uint)sum != chapter.Checksum)
@@ -442,6 +440,10 @@ namespace ThScoreFileConverter
             return remainSize == 0;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.LayoutRules",
+            "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine",
+            Justification = "Reviewed.")]
         private static AllScoreData Read(Stream input)
         {
             var reader = new BinaryReader(input);
@@ -486,7 +488,7 @@ namespace ThScoreFileConverter
             }
 
             if ((allScoreData.Header != null) &&
-                // (allScoreData.scores.Count >= 0) &&
+                //// (allScoreData.scores.Count >= 0) &&
                 (allScoreData.Status != null))
                 return allScoreData;
             else
@@ -624,6 +626,7 @@ namespace ThScoreFileConverter
                     if (score == null)
                         return "??????????";
                 }
+
                 return (type == 1) ? SpellCards[key].Enemy.ToLongName() : SpellCards[key].Card;
             });
             return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
@@ -674,6 +677,10 @@ namespace ThScoreFileConverter
         }
 
         // %T125SHOTEX[w][x][y][z]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.LayoutRules",
+            "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine",
+            Justification = "Reviewed.")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "StyleCop.CSharp.MaintainabilityRules",
             "SA1119:StatementMustNotUseUnnecessaryParenthesis",
@@ -772,26 +779,56 @@ namespace ThScoreFileConverter
 
         private class LevelScenePair : Pair<Level, int>
         {
-            public LevelScenePair(Level level, int scene) : base(level, scene) { }
+            public LevelScenePair(Level level, int scene)
+                : base(level, scene)
+            {
+            }
 
-            public Level Level { get { return this.First; } }
-            public int Scene { get { return this.Second; } }    // 1-based
+            public Level Level
+            {
+                get { return this.First; }
+            }
+
+            public int Scene
+            {
+                get { return this.Second; }     // 1-based
+            }
         }
 
         private class EnemyCardPair : Pair<Enemy, string>
         {
-            public EnemyCardPair(Enemy enemy, string card) : base(enemy, card) { }
+            public EnemyCardPair(Enemy enemy, string card)
+                : base(enemy, card)
+            {
+            }
 
-            public Enemy Enemy { get { return this.First; } }
-            public string Card { get { return this.Second; } }
+            public Enemy Enemy
+            {
+                get { return this.First; }
+            }
+
+            public string Card
+            {
+                get { return this.Second; }
+            }
         }
 
         private class BestShotPair : Pair<string, BestShotHeader>
         {
-            public BestShotPair(string name, BestShotHeader header) : base(name, header) { }
+            public BestShotPair(string name, BestShotHeader header)
+                : base(name, header)
+            {
+            }
 
-            public string Path { get { return this.First; } }
-            public BestShotHeader Header { get { return this.Second; } }
+            public string Path
+            {
+                get { return this.First; }
+            }
+
+            public BestShotHeader Header
+            {
+                get { return this.Second; }
+            }
         }
 
         private class AllScoreData
@@ -802,7 +839,9 @@ namespace ThScoreFileConverter
             }
 
             public Header Header { get; set; }
+
             public List<Score> Scores { get; set; }
+
             public Status Status { get; set; }
         }
 
@@ -812,8 +851,11 @@ namespace ThScoreFileConverter
             private uint unknown2;
 
             public string Signature { get; private set; }
+
             public int EncodedAllSize { get; private set; }
+
             public int EncodedBodySize { get; private set; }
+
             public int DecodedBodySize { get; private set; }
 
             public void ReadFrom(BinaryReader reader)
@@ -839,7 +881,10 @@ namespace ThScoreFileConverter
 
         private class Chapter : IBinaryReadable
         {
-            public Chapter() { }
+            public Chapter()
+            {
+            }
+
             public Chapter(Chapter ch)
             {
                 this.Signature = ch.Signature;
@@ -849,8 +894,11 @@ namespace ThScoreFileConverter
             }
 
             public string Signature { get; private set; }
+
             public ushort Version { get; private set; }
+
             public int Size { get; private set; }
+
             public uint Checksum { get; private set; }
 
             public virtual void ReadFrom(BinaryReader reader)
@@ -876,11 +924,17 @@ namespace ThScoreFileConverter
             }
 
             public LevelScenePair LevelScene { get; private set; }
+
             public int HighScore { get; private set; }
+
             public Chara Chara { get; private set; }        // size: 4Bytes
+
             public int TrialCount { get; private set; }
+
             public int FirstSuccess { get; private set; }
+
             public uint DateTime { get; private set; }      // UNIX time (unit: [s])
+
             public int BestshotScore { get; private set; }
 
             public override void ReadFrom(BinaryReader reader)
@@ -941,12 +995,20 @@ namespace ThScoreFileConverter
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "StyleCop.CSharp.LayoutRules",
+            "SA1502",
+            Justification = "Reviewed.")]
         private class BestShotHeader : IBinaryReadable
         {
             public string Signature { get; private set; }   // "BST2"
+
             public Level Level { get; private set; }
+
             public short Scene { get; private set; }        // 1-based
+
             public short Width { get; private set; }
+
             public short Height { get; private set; }
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage(
@@ -980,15 +1042,25 @@ namespace ThScoreFileConverter
             public uint DateTime { get; private set; }
 
             public float SlowRate { get; private set; }     // Really...?
+
             public BonusFields Fields { get; private set; }
+
             public int ResultScore { get; private set; }
+
             public int BasePoint { get; private set; }
+
             public int RiskBonus { get; private set; }
+
             public float BossShot { get; private set; }
+
             public float NiceShot { get; private set; }     // minimum = 1.20?
+
             public float AngleBonus { get; private set; }
+
             public int MacroBonus { get; private set; }
+
             public int FrontSideBackShot { get; private set; }  // Really...?
+
             public int ClearShot { get; private set; }
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage(
@@ -1043,57 +1115,118 @@ namespace ThScoreFileConverter
                 }
             }
 
-            [System.Diagnostics.CodeAnalysis.SuppressMessage(
-                "StyleCop.CSharp.SpacingRules",
-                "SA1025:CodeMustNotContainMultipleWhitespaceInARow",
-                Justification = "Reviewed.")]
             public struct BonusFields
             {
                 private BitVector32 data;
 
-                public BonusFields(int data) { this.data = new BitVector32(data); }
+                public BonusFields(int data)
+                {
+                    this.data = new BitVector32(data);
+                }
 
                 [System.Diagnostics.CodeAnalysis.SuppressMessage(
                     "Microsoft.Performance",
                     "CA1811:AvoidUncalledPrivateCode",
                     Justification = "For future use.")]
-                public int Data { get { return this.data.Data; } }
+                public int Data
+                {
+                    get { return this.data.Data; }
+                }
 
-                // public bool Bit00        { get { return this.data[0x00000001]; } }
-                // public bool Bit01        { get { return this.data[0x00000002]; } }
-                public bool TwoShot      { get { return this.data[0x00000004]; } }
-                public bool NiceShot     { get { return this.data[0x00000008]; } }
-                public bool RiskBonus    { get { return this.data[0x00000010]; } }
-                // public bool Bit05        { get { return this.data[0x00000020]; } }
-                public bool RedShot      { get { return this.data[0x00000040]; } }
-                public bool PurpleShot   { get { return this.data[0x00000080]; } }
+                public bool TwoShot
+                {
+                    get { return this.data[0x00000004]; }
+                }
 
-                public bool BlueShot     { get { return this.data[0x00000100]; } }
-                public bool CyanShot     { get { return this.data[0x00000200]; } }
-                public bool GreenShot    { get { return this.data[0x00000400]; } }
-                public bool YellowShot   { get { return this.data[0x00000800]; } }
-                public bool OrangeShot   { get { return this.data[0x00001000]; } }
-                public bool ColorfulShot { get { return this.data[0x00002000]; } }
-                public bool RainbowShot  { get { return this.data[0x00004000]; } }
-                // public bool Bit15        { get { return this.data[0x00008000]; } }
+                public bool NiceShot
+                {
+                    get { return this.data[0x00000008]; }
+                }
 
-                public bool SoloShot     { get { return this.data[0x00010000]; } }
-                // public bool Bit17        { get { return this.data[0x00020000]; } }
-                // public bool Bit18        { get { return this.data[0x00040000]; } }
-                // public bool Bit19        { get { return this.data[0x00080000]; } }
-                // public bool Bit20        { get { return this.data[0x00100000]; } }
-                // public bool Bit21        { get { return this.data[0x00200000]; } }
-                public bool MacroBonus   { get { return this.data[0x00400000]; } }
-                // public bool Bit23        { get { return this.data[0x00800000]; } }
+                public bool RiskBonus
+                {
+                    get { return this.data[0x00000010]; }
+                }
 
-                public bool FrontShot    { get { return this.data[0x01000000]; } }
-                public bool BackShot     { get { return this.data[0x02000000]; } }
-                public bool SideShot     { get { return this.data[0x04000000]; } }
-                public bool ClearShot    { get { return this.data[0x08000000]; } }
-                public bool CatBonus     { get { return this.data[0x10000000]; } }
-                // public bool Bit29        { get { return this.data[0x20000000]; } }
-                // public bool Bit30        { get { return this.data[0x40000000]; } }
-                // public bool Bit31        { get { return this.data[0x80000000]; } }
+                public bool RedShot
+                {
+                    get { return this.data[0x00000040]; }
+                }
+
+                public bool PurpleShot
+                {
+                    get { return this.data[0x00000080]; }
+                }
+
+                public bool BlueShot
+                {
+                    get { return this.data[0x00000100]; }
+                }
+
+                public bool CyanShot
+                {
+                    get { return this.data[0x00000200]; }
+                }
+
+                public bool GreenShot
+                {
+                    get { return this.data[0x00000400]; }
+                }
+
+                public bool YellowShot
+                {
+                    get { return this.data[0x00000800]; }
+                }
+
+                public bool OrangeShot
+                {
+                    get { return this.data[0x00001000]; }
+                }
+
+                public bool ColorfulShot
+                {
+                    get { return this.data[0x00002000]; }
+                }
+
+                public bool RainbowShot
+                {
+                    get { return this.data[0x00004000]; }
+                }
+
+                public bool SoloShot
+                {
+                    get { return this.data[0x00010000]; }
+                }
+
+                public bool MacroBonus
+                {
+                    get { return this.data[0x00400000]; }
+                }
+
+                public bool FrontShot
+                {
+                    get { return this.data[0x01000000]; }
+                }
+
+                public bool BackShot
+                {
+                    get { return this.data[0x02000000]; }
+                }
+
+                public bool SideShot
+                {
+                    get { return this.data[0x04000000]; }
+                }
+
+                public bool ClearShot
+                {
+                    get { return this.data[0x08000000]; }
+                }
+
+                public bool CatBonus
+                {
+                    get { return this.data[0x10000000]; }
+                }
             }
         }
 
@@ -1107,7 +1240,9 @@ namespace ThScoreFileConverter
             }
 
             public bool Outputs { get; private set; }
+
             public string Format { get; private set; }
+
             public string Value { get; private set; }
         }
     }
