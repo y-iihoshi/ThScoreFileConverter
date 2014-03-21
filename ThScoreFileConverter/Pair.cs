@@ -11,12 +11,14 @@
 
 namespace ThScoreFileConverter
 {
+    using System;
+
     /// <summary>
-    /// Pair of instances.
+    /// Indicates a pair of instances.
     /// </summary>
     /// <typeparam name="TFirst">The type of the <see cref="First"/> property.</typeparam>
     /// <typeparam name="TSecond">The type of the <see cref="Second"/> property.</typeparam>
-    public class Pair<TFirst, TSecond>
+    public class Pair<TFirst, TSecond> : IEquatable<Pair<TFirst, TSecond>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Pair{TFirst,TSecond}"/> class.
@@ -48,7 +50,16 @@ namespace ThScoreFileConverter
         /// </returns>
         public override bool Equals(object obj)
         {
-            return Equals(this, obj as Pair<TFirst, TSecond>);
+            if (object.ReferenceEquals(obj, null))
+                return false;
+
+            if (object.ReferenceEquals(this, obj))
+                return true;
+
+            if (this.GetType() != obj.GetType())
+                return false;
+
+            return this.Equals(obj as Pair<TFirst, TSecond>);
         }
 
         /// <summary>
@@ -61,25 +72,18 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// Determines whether two instances are equal.
+        /// Determines whether the specified instance is equal to the current instance.
         /// </summary>
-        /// <param name="lhs">The left-hand-side instance.</param>
-        /// <param name="rhs">The right-hand-side instance.</param>
+        /// <param name="other">The instance to compare with the current instance.</param>
         /// <returns>
-        /// <c>true</c> if <paramref name="lhs"/> is equal to <paramref name="rhs"/>;
-        /// otherwise, <c>false</c>.
+        /// <c>true</c> if <paramref name="other"/> is equal to <c>this</c>; otherwise, <c>false</c>.
         /// </returns>
-        private static bool Equals(Pair<TFirst, TSecond> lhs, Pair<TFirst, TSecond> rhs)
+        public bool Equals(Pair<TFirst, TSecond> other)
         {
-            if (object.ReferenceEquals(lhs, null))
-                return object.ReferenceEquals(rhs, null);
-            else
-            {
-                if (object.ReferenceEquals(lhs, rhs))
-                    return true;
-                else
-                    return lhs.First.Equals(rhs.First) && lhs.Second.Equals(rhs.Second);
-            }
+            if (object.ReferenceEquals(other, null))
+                return false;
+
+            return this.First.Equals(other.First) && this.Second.Equals(other.Second);
         }
     }
 }
