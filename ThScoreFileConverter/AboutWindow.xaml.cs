@@ -4,8 +4,6 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1503:CurlyBracketsMustNotBeOmitted", Justification = "Reviewed.")]
-
 namespace ThScoreFileConverter
 {
     using System.Diagnostics;
