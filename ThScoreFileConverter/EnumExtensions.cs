@@ -4,15 +4,13 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "StyleCop.CSharp.LayoutRules",
-    "SA1503:CurlyBracketsMustNotBeOmitted",
-    Justification = "Reviewed.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1503:CurlyBracketsMustNotBeOmitted", Justification = "Reviewed.")]
 
 namespace ThScoreFileConverter
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     /// <summary>
@@ -71,10 +69,7 @@ namespace ThScoreFileConverter
             /// <summary>
             /// Initializes static members of the <see cref="AttributeCache{TEnum,TAttribute}"/> class.
             /// </summary>
-            [System.Diagnostics.CodeAnalysis.SuppressMessage(
-                "Microsoft.Performance",
-                "CA1810:InitializeReferenceTypeStaticFieldsInline",
-                Justification = "Reviewed.")]
+            [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = "Reviewed.")]
             static AttributeCache()
             {
                 var type = typeof(TEnum);

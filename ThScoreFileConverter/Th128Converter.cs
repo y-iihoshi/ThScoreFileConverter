@@ -6,17 +6,14 @@
 
 #pragma warning disable 1591
 
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "StyleCop.CSharp.DocumentationRules", "*", Justification = "Reviewed.")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "StyleCop.CSharp.LayoutRules",
-    "SA1503:CurlyBracketsMustNotBeOmitted",
-    Justification = "Reviewed.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "*", Justification = "Reviewed.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1503:CurlyBracketsMustNotBeOmitted", Justification = "Reviewed.")]
 
 namespace ThScoreFileConverter
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.IO;
     using System.Linq;
@@ -42,22 +39,10 @@ namespace ThScoreFileConverter
 
         private AllScoreData allScoreData = null;
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Microsoft.Performance",
-            "CA1810:InitializeReferenceTypeStaticFieldsInline",
-            Justification = "Reviewed.")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "StyleCop.CSharp.MaintainabilityRules",
-            "SA1119:StatementMustNotUseUnnecessaryParenthesis",
-            Justification = "Reviewed.")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "StyleCop.CSharp.SpacingRules",
-            "SA1025:CodeMustNotContainMultipleWhitespaceInARow",
-            Justification = "Reviewed.")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "StyleCop.CSharp.SpacingRules",
-            "SA1008:OpeningParenthesisMustBeSpacedCorrectly",
-            Justification = "Reviewed.")]
+        [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = "Reviewed.")]
+        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
+        [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
+        [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1008:OpeningParenthesisMustBeSpacedCorrectly", Justification = "Reviewed.")]
         static Th128Converter()
         {
             var cardList = new List<CardInfo>()
@@ -433,10 +418,7 @@ namespace ThScoreFileConverter
             [EnumAltName("TTL")] Total
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "StyleCop.CSharp.SpacingRules",
-            "SA1025:CodeMustNotContainMultipleWhitespaceInARow",
-            Justification = "Reviewed.")]
+        [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         public enum StageProgress
         {
             [EnumAltName("-------")]     None,
@@ -591,10 +573,7 @@ namespace ThScoreFileConverter
             return remainSize == 0;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "StyleCop.CSharp.LayoutRules",
-            "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine",
-            Justification = "Reviewed.")]
+        [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine", Justification = "Reviewed.")]
         private static AllScoreData Read(Stream input)
         {
             var reader = new BinaryReader(input);
@@ -702,10 +681,7 @@ namespace ThScoreFileConverter
         }
 
         // %T128C[xxx][z]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "StyleCop.CSharp.MaintainabilityRules",
-            "SA1119:StatementMustNotUseUnnecessaryParenthesis",
-            Justification = "Reviewed.")]
+        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
         private string ReplaceCareer(string input)
         {
             var pattern = @"%T128C(\d{3})([1-3])";
@@ -771,10 +747,7 @@ namespace ThScoreFileConverter
         }
 
         // %T128CRG[x][yyy][z]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "StyleCop.CSharp.MaintainabilityRules",
-            "SA1119:StatementMustNotUseUnnecessaryParenthesis",
-            Justification = "Reviewed.")]
+        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
         private string ReplaceCollectRate(string input)
         {
             var pattern = Utils.Format(
@@ -851,10 +824,7 @@ namespace ThScoreFileConverter
         }
 
         // %T128ROUTE[xx][y]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "StyleCop.CSharp.MaintainabilityRules",
-            "SA1119:StatementMustNotUseUnnecessaryParenthesis",
-            Justification = "Reviewed.")]
+        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
         private string ReplaceRoute(string input)
         {
             var pattern = Utils.Format(@"%T128ROUTE({0})([1-3])", RouteWithTotalPattern);
@@ -894,10 +864,7 @@ namespace ThScoreFileConverter
         }
 
         // %T128ROUTEEX[x][yy][z]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "StyleCop.CSharp.MaintainabilityRules",
-            "SA1119:StatementMustNotUseUnnecessaryParenthesis",
-            Justification = "Reviewed.")]
+        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
         private string ReplaceRouteEx(string input)
         {
             var pattern = Utils.Format(
@@ -1140,16 +1107,10 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Size");
             }
 
-            [System.Diagnostics.CodeAnalysis.SuppressMessage(
-                "Microsoft.Performance",
-                "CA1811:AvoidUncalledPrivateCode",
-                Justification = "For future use.")]
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public byte[] LastName { get; private set; }    // .Length = 10 (The last 2 bytes are always 0x00 ?)
 
-            [System.Diagnostics.CodeAnalysis.SuppressMessage(
-                "Microsoft.Performance",
-                "CA1811:AvoidUncalledPrivateCode",
-                Justification = "For future use.")]
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public byte[] BgmFlags { get; private set; }    // .Length = 10
 
             public int TotalPlayTime { get; private set; }  // unit: 10ms
@@ -1193,10 +1154,7 @@ namespace ThScoreFileConverter
 
         private class SpellCard : IBinaryReadable
         {
-            [System.Diagnostics.CodeAnalysis.SuppressMessage(
-                "Microsoft.Performance",
-                "CA1811:AvoidUncalledPrivateCode",
-                Justification = "For future use.")]
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public byte[] Name { get; private set; }        // .Length = 0x80
 
             public int NoMissCount { get; private set; }

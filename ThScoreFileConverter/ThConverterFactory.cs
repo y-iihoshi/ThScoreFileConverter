@@ -8,6 +8,7 @@ namespace ThScoreFileConverter
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// Generates an instance that executes the conversion of a score file.
@@ -17,10 +18,7 @@ namespace ThScoreFileConverter
         /// <summary>
         /// The dictionary of the types of the subclasses of the <see cref="ThConverter"/> class.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "StyleCop.CSharp.SpacingRules",
-            "SA1025:CodeMustNotContainMultipleWhitespaceInARow",
-            Justification = "Reviewed.")]
+        [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         private static readonly Dictionary<string, Type> ConverterTypes = new Dictionary<string, Type>
         {
             { Properties.Resources.keyTh06,  typeof(Th06Converter)  },
