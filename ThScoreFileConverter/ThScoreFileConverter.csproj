@@ -79,6 +79,7 @@
     <Compile Include="ExceptionOccurredEventArgs.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IBinaryReadable.cs" />
+    <Compile Include="IBinaryWritable.cs" />
     <Compile Include="Pair.cs" />
     <Compile Include="Profiler.cs" />
     <Compile Include="SettingsPerTitle.cs" />

@@ -787,7 +787,7 @@ namespace ThScoreFileConverter
             public Status Status { get; set; }
         }
 
-        private class Header : IBinaryReadable
+        private class Header : IBinaryReadable, IBinaryWritable
         {
             private uint unknown1;
             private uint unknown2;
