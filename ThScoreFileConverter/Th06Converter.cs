@@ -665,7 +665,7 @@ namespace ThScoreFileConverter
             }
         }
 
-        private class FileHeader
+        private class FileHeader : IBinaryReadable
         {
             public const short ValidVersion = 0x0010;
             public const int ValidSize = 0x00000014;
