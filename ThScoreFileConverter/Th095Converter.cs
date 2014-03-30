@@ -832,7 +832,7 @@ namespace ThScoreFileConverter
 
             public void ReadFrom(BinaryReader reader)
             {
-                this.Signature = new string(reader.ReadChars(4));
+                this.Signature = Encoding.Default.GetString(reader.ReadBytes(4));
                 if (this.Signature == "BSTS")
                 {
                     reader.ReadUInt16();

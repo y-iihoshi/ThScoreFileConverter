@@ -1023,7 +1023,7 @@ namespace ThScoreFileConverter
 
             public void ReadFrom(BinaryReader reader)
             {
-                this.Signature = new string(reader.ReadChars(4));
+                this.Signature = Encoding.Default.GetString(reader.ReadBytes(4));
                 if (this.Signature == "BST2")
                 {
                     reader.ReadUInt16();    // always 0x0405?

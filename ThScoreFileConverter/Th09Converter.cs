@@ -501,7 +501,7 @@ namespace ThScoreFileConverter
 
             public virtual void ReadFrom(BinaryReader reader)
             {
-                this.Signature = new string(reader.ReadChars(4));
+                this.Signature = Encoding.Default.GetString(reader.ReadBytes(4));
                 this.Size1 = reader.ReadInt16();
                 this.Size2 = reader.ReadInt16();
             }

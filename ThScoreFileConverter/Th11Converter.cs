@@ -867,7 +867,7 @@ namespace ThScoreFileConverter
 
             public void ReadFrom(BinaryReader reader)
             {
-                this.Signature = new string(reader.ReadChars(4));
+                this.Signature = Encoding.Default.GetString(reader.ReadBytes(4));
                 this.EncodedAllSize = reader.ReadInt32();
                 this.unknown1 = reader.ReadUInt32();
                 this.unknown2 = reader.ReadUInt32();
