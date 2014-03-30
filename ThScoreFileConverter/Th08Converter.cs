@@ -562,48 +562,32 @@ namespace ThScoreFileConverter
         private static bool Extract(Stream input, Stream output)
         {
             var reader = new BinaryReader(input);
+            var writer = new BinaryWriter(output);
+            var header = new FileHeader();
 
-            reader.ReadUInt16();    // Unknown1
-            reader.ReadUInt16();    // Checksum; already checked by this.Decrypt()
-            var version = reader.ReadInt16();
-            if (version != 1)
+            header.ReadFrom(reader);
+            if (!header.IsValid)
+                return false;
+            if (header.Size + header.EncodedBodySize != input.Length)
                 return false;
 
-            reader.ReadUInt16();    // Unknown2
-            var headerSize = reader.ReadInt32();
-            if (headerSize != 0x1C)
-                return false;
-
-            reader.ReadUInt32();    // Unknown3
-            var decodedSize = reader.ReadInt32();
-            reader.ReadInt32();     // DecodedBodySize
-            var encodedBodySize = reader.ReadInt32();
-            if (encodedBodySize != (input.Length - headerSize))
-                return false;
-
-            var header = new byte[headerSize];
-            input.Seek(0, SeekOrigin.Begin);
-            input.Read(header, 0, headerSize);
-            output.Write(header, 0, headerSize);
+            header.WriteTo(writer);
 
             Lzss.Extract(input, output);
             output.Flush();
             output.SetLength(output.Position);
 
-            return output.Position == decodedSize;
+            return output.Position == header.DecodedAllSize;
         }
 
         private static bool Validate(Stream input)
         {
             var reader = new BinaryReader(input);
+            var header = new FileHeader();
             var chapter = new Chapter();
 
-            reader.ReadBytes(8);
-            var headerSize = reader.ReadInt32();
-            reader.ReadBytes(4);
-            var decodedSize = reader.ReadInt32();
-            var remainSize = decodedSize - headerSize;
-            reader.ReadBytes(8);
+            header.ReadFrom(reader);
+            var remainSize = header.DecodedAllSize - header.Size;
             if (remainSize <= 0)
                 return false;
 
@@ -655,7 +639,7 @@ namespace ThScoreFileConverter
             var allScoreData = new AllScoreData();
             var chapter = new Chapter();
 
-            reader.ReadBytes(0x1C);
+            reader.ReadBytes(FileHeader.ValidSize);
 
             try
             {
@@ -1152,6 +1136,68 @@ namespace ThScoreFileConverter
             public Level Level
             {
                 get { return this.Second; }
+            }
+        }
+
+        private class FileHeader
+        {
+            public const short ValidVersion = 0x0001;
+            public const int ValidSize = 0x0000001C;
+
+            private ushort unknown1;
+            private ushort unknown2;
+            private uint unknown3;
+
+            public FileHeader()
+            {
+            }
+
+            public ushort Checksum { get; private set; }
+
+            public short Version { get; private set; }
+
+            public int Size { get; private set; }
+
+            public int DecodedAllSize { get; private set; }
+
+            public int DecodedBodySize { get; private set; }
+
+            public int EncodedBodySize { get; private set; }
+
+            public bool IsValid
+            {
+                get
+                {
+                    return (this.Version == ValidVersion)
+                        && (this.Size == ValidSize)
+                        && (this.DecodedAllSize == this.Size + this.DecodedBodySize);
+                }
+            }
+
+            public void ReadFrom(BinaryReader reader)
+            {
+                this.unknown1 = reader.ReadUInt16();
+                this.Checksum = reader.ReadUInt16();
+                this.Version = reader.ReadInt16();
+                this.unknown2 = reader.ReadUInt16();
+                this.Size = reader.ReadInt32();
+                this.unknown3 = reader.ReadUInt32();
+                this.DecodedAllSize = reader.ReadInt32();
+                this.DecodedBodySize = reader.ReadInt32();
+                this.EncodedBodySize = reader.ReadInt32();
+            }
+
+            public void WriteTo(BinaryWriter writer)
+            {
+                writer.Write(this.unknown1);
+                writer.Write(this.Checksum);
+                writer.Write(this.Version);
+                writer.Write(this.unknown2);
+                writer.Write(this.Size);
+                writer.Write(this.unknown3);
+                writer.Write(this.DecodedAllSize);
+                writer.Write(this.DecodedBodySize);
+                writer.Write(this.EncodedBodySize);
             }
         }
 

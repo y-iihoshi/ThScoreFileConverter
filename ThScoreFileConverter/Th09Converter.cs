@@ -132,13 +132,10 @@ namespace ThScoreFileConverter
 
         private static bool Decrypt(Stream input, Stream output)
         {
-            input.Seek(0, SeekOrigin.End);
-            var endPos = input.Position;
-            input.Seek(0, SeekOrigin.Begin);
-            var size = (int)(endPos - input.Position);
+            var size = (int)input.Length;
             ThCrypt.Decrypt(input, output, size, 0x3A, 0xCD, 0x0100, 0x0C00);
 
-            byte[] data = new byte[size];
+            var data = new byte[size];
             output.Seek(0, SeekOrigin.Begin);
             output.Read(data, 0, size);
 
@@ -154,81 +151,75 @@ namespace ThScoreFileConverter
             }
 
             output.Seek(0, SeekOrigin.Begin);
-            output.Write(data, 0, (int)size);
+            output.Write(data, 0, size);
 
             return (ushort)checksum == BitConverter.ToUInt16(data, 2);
         }
 
         private static bool Extract(Stream input, Stream output)
         {
-            input.Seek(0, SeekOrigin.End);
-            var endPos = input.Position;
-            input.Seek(0, SeekOrigin.Begin);
-            var encodedSize = (int)(endPos - input.Position);
-
             var reader = new BinaryReader(input);
+            var writer = new BinaryWriter(output);
+            var header = new FileHeader();
 
-            reader.ReadUInt16();    // Unknown1
-            reader.ReadUInt16();    // Checksum; already checked by this.Decrypt()
-            var version = reader.ReadInt16();
-            if (version != 4)
+            header.ReadFrom(reader);
+            if (!header.IsValid)
+                return false;
+            if (header.Size + header.EncodedBodySize != input.Length)
                 return false;
 
-            reader.ReadUInt16();    // Unknown2
-            var headerSize = reader.ReadInt32();
-            if (headerSize != 0x18)
-                return false;
-
-            var decodedSize = reader.ReadInt32();
-            reader.ReadInt32();     // DecodedBodySize
-            var encodedBodySize = reader.ReadInt32();
-            if (encodedBodySize != (encodedSize - headerSize))
-                return false;
-
-            byte[] header = new byte[headerSize];
-            input.Seek(0, SeekOrigin.Begin);
-            input.Read(header, 0, headerSize);
-            output.Write(header, 0, headerSize);
+            header.WriteTo(writer);
 
             Lzss.Extract(input, output);
             output.Flush();
             output.SetLength(output.Position);
 
-            return output.Position == decodedSize;
+            return output.Position == header.DecodedAllSize;
         }
 
         private static bool Validate(Stream input)
         {
             var reader = new BinaryReader(input);
+            var header = new FileHeader();
             var chapter = new Chapter();
 
-            reader.ReadBytes(8);
-            var headerSize = reader.ReadInt32();
-            var decodedSize = reader.ReadInt32();
-            var remainSize = decodedSize - headerSize;
-            reader.ReadBytes(8);
+            header.ReadFrom(reader);
+            var remainSize = header.DecodedAllSize - header.Size;
             if (remainSize <= 0)
                 return false;
 
-            while (remainSize > 0)
+            try
             {
-                chapter.ReadFrom(reader);
-                if (chapter.Size1 == 0)
-                    return false;
-                if (chapter.Signature == "TH9K")
+                while (remainSize > 0)
                 {
-                    var temp = reader.ReadByte();
-                    //// 8 means the total size of Signature, Size1 and Size2.
-                    reader.ReadBytes(chapter.Size1 - 8 - 1);
-                    if (temp != 0x01)
+                    chapter.ReadFrom(reader);
+                    if (chapter.Size1 == 0)
                         return false;
+
+                    byte temp = 0;
+                    switch (chapter.Signature)
+                    {
+                        case "TH9K":
+                            temp = reader.ReadByte();
+                            //// 8 means the total size of Signature, Size1 and Size2.
+                            reader.ReadBytes(chapter.Size1 - 8 - 1);
+                            if (temp != 0x01)
+                                return false;
+                            break;
+                        default:
+                            reader.ReadBytes(chapter.Size1 - 8);    // 8 means the same above
+                            break;
+                    }
+
+                    remainSize -= chapter.Size1;
                 }
-                else
-                    reader.ReadBytes(chapter.Size1 - 8);    // 8 means the same above
-                remainSize -= chapter.Size1;
+            }
+            catch (EndOfStreamException)
+            {
+                // It's OK, do nothing.
             }
 
-            return true;
+            return remainSize == 0;
         }
 
         [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine", Justification = "Reviewed.")]
@@ -238,7 +229,7 @@ namespace ThScoreFileConverter
             var allScoreData = new AllScoreData();
             var chapter = new Chapter();
 
-            reader.ReadBytes(0x18);
+            reader.ReadBytes(FileHeader.ValidSize);
 
             try
             {
@@ -408,6 +399,65 @@ namespace ThScoreFileConverter
             public Level Level
             {
                 get { return this.Second; }
+            }
+        }
+
+        private class FileHeader
+        {
+            public const short ValidVersion = 0x0004;
+            public const int ValidSize = 0x00000018;
+
+            private ushort unknown1;
+            private ushort unknown2;
+
+            public FileHeader()
+            {
+            }
+
+            public ushort Checksum { get; private set; }
+
+            public short Version { get; private set; }
+
+            public int Size { get; private set; }
+
+            public int DecodedAllSize { get; private set; }
+
+            public int DecodedBodySize { get; private set; }
+
+            public int EncodedBodySize { get; private set; }
+
+            public bool IsValid
+            {
+                get
+                {
+                    return (this.Version == ValidVersion)
+                        && (this.Size == ValidSize)
+                        && (this.DecodedAllSize == this.Size + this.DecodedBodySize);
+                }
+            }
+
+            public void ReadFrom(BinaryReader reader)
+            {
+                this.unknown1 = reader.ReadUInt16();
+                this.Checksum = reader.ReadUInt16();
+                this.Version = reader.ReadInt16();
+                this.unknown2 = reader.ReadUInt16();
+                this.Size = reader.ReadInt32();
+                this.DecodedAllSize = reader.ReadInt32();
+                this.DecodedBodySize = reader.ReadInt32();
+                this.EncodedBodySize = reader.ReadInt32();
+            }
+
+            public void WriteTo(BinaryWriter writer)
+            {
+                writer.Write(this.unknown1);
+                writer.Write(this.Checksum);
+                writer.Write(this.Version);
+                writer.Write(this.unknown2);
+                writer.Write(this.Size);
+                writer.Write(this.DecodedAllSize);
+                writer.Write(this.DecodedBodySize);
+                writer.Write(this.EncodedBodySize);
             }
         }
 
