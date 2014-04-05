@@ -314,8 +314,7 @@ namespace ThScoreFileConverter
 
             var header = new Header();
             header.ReadFrom(reader);
-
-            if (header.Signature != "TH95")
+            if (!header.IsValid)
                 return false;
             if (header.EncodedAllSize != reader.BaseStream.Length)
                 return false;
@@ -354,21 +353,12 @@ namespace ThScoreFileConverter
 
             try
             {
-                while (true)
+                while (remainSize > 0)
                 {
-                    var signature = reader.ReadUInt32();
-                    reader.BaseStream.Seek(-4, SeekOrigin.Current);
-
                     chapter.ReadFrom(reader);
-                    if (!((chapter.Signature == "SC") && (chapter.Version == 0x0001)) &&
-                        !((chapter.Signature == "ST") && (chapter.Version == 0x0000)))
+                    if (!chapter.IsValid)
                         return false;
-
-                    long sum = signature + chapter.Size;
-                    //// 3 means Signature, Checksum, and Size.
-                    for (var count = 3; count < chapter.Size / sizeof(uint); count++)
-                        sum += reader.ReadUInt32();
-                    if ((uint)sum != chapter.Checksum)
+                    if (!Score.CanInitialize(chapter) && !Status.CanInitialize(chapter))
                         return false;
 
                     remainSize -= chapter.Size;
@@ -382,43 +372,31 @@ namespace ThScoreFileConverter
             return remainSize == 0;
         }
 
-        [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine", Justification = "Reviewed.")]
+        [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         private static AllScoreData Read(Stream input)
         {
+            var dictionary = new Dictionary<string, Action<AllScoreData, Chapter>>
+            {
+                { Score.ValidSignature,  (data, ch) => data.Set(new Score(ch))  },
+                { Status.ValidSignature, (data, ch) => data.Set(new Status(ch)) }
+            };
+
             var reader = new BinaryReader(input);
             var allScoreData = new AllScoreData();
             var chapter = new Chapter();
 
             var header = new Header();
             header.ReadFrom(reader);
-            allScoreData.Header = header;
+            allScoreData.Set(header);
 
             try
             {
+                Action<AllScoreData, Chapter> setChapter;
                 while (true)
                 {
                     chapter.ReadFrom(reader);
-                    switch (chapter.Signature)
-                    {
-                        case "SC":
-                            {
-                                var score = new Score(chapter);
-                                score.ReadFrom(reader);
-                                allScoreData.Scores.Add(score);
-                            }
-                            break;
-                        case "ST":
-                            {
-                                var status = new Status(chapter);
-                                status.ReadFrom(reader);
-                                allScoreData.Status = status;
-                            }
-                            break;
-                        default:
-                            // 12 means the total size of Signature, Version, Size and Checksum.
-                            reader.ReadBytes(chapter.Size - 12);
-                            break;
-                    }
+                    if (dictionary.TryGetValue(chapter.Signature, out setChapter))
+                        setChapter(allScoreData, chapter);
                 }
             }
             catch (EndOfStreamException)
@@ -672,15 +650,34 @@ namespace ThScoreFileConverter
                 this.Scores = new List<Score>(SpellCards.Count);
             }
 
-            public Header Header { get; set; }
+            public Header Header { get; private set; }
 
-            public List<Score> Scores { get; set; }
+            public List<Score> Scores { get; private set; }
 
-            public Status Status { get; set; }
+            public Status Status { get; private set; }
+
+            public void Set(Header header)
+            {
+                this.Header = header;
+            }
+
+            public void Set(Score score)
+            {
+                this.Scores.Add(score);
+            }
+
+            public void Set(Status status)
+            {
+                this.Status = status;
+            }
         }
 
         private class Header : IBinaryReadable, IBinaryWritable
         {
+            public const string ValidSignature = "TH95";
+            public const int SignatureSize = 4;
+            public const int Size = SignatureSize + (sizeof(int) * 3) + (sizeof(uint) * 2);
+
             private uint unknown1;
             private uint unknown2;
 
@@ -692,9 +689,18 @@ namespace ThScoreFileConverter
 
             public int DecodedBodySize { get; private set; }
 
+            public bool IsValid
+            {
+                get
+                {
+                    return this.Signature.Equals(ValidSignature, StringComparison.Ordinal)
+                        && (this.EncodedAllSize - this.EncodedBodySize == Size);
+                }
+            }
+
             public void ReadFrom(BinaryReader reader)
             {
-                this.Signature = Encoding.Default.GetString(reader.ReadBytes(4));
+                this.Signature = Encoding.Default.GetString(reader.ReadBytes(SignatureSize));
                 this.EncodedAllSize = reader.ReadInt32();
                 this.unknown1 = reader.ReadUInt32();
                 this.unknown2 = reader.ReadUInt32();
@@ -704,7 +710,7 @@ namespace ThScoreFileConverter
 
             public void WriteTo(BinaryWriter writer)
             {
-                writer.Write(this.Signature.ToCharArray());
+                writer.Write(Encoding.Default.GetBytes(this.Signature));
                 writer.Write(this.EncodedAllSize);
                 writer.Write(this.unknown1);
                 writer.Write(this.unknown2);
@@ -715,16 +721,25 @@ namespace ThScoreFileConverter
 
         private class Chapter : IBinaryReadable
         {
+            public const int SignatureSize = 2;
+
             public Chapter()
             {
+                this.Signature = string.Empty;
+                this.Version = 0;
+                this.Size = 0;
+                this.Checksum = 0;
+                this.Data = new byte[] { };
             }
 
-            public Chapter(Chapter ch)
+            protected Chapter(Chapter ch)
             {
                 this.Signature = ch.Signature;
                 this.Version = ch.Version;
                 this.Size = ch.Size;
                 this.Checksum = ch.Checksum;
+                this.Data = new byte[ch.Data.Length];
+                ch.Data.CopyTo(this.Data, 0);
             }
 
             public string Signature { get; private set; }
@@ -735,26 +750,65 @@ namespace ThScoreFileConverter
 
             public uint Checksum { get; private set; }
 
-            public virtual void ReadFrom(BinaryReader reader)
+            public bool IsValid
             {
-                this.Signature = Encoding.Default.GetString(reader.ReadBytes(2));
+                get
+                {
+                    var sigVer = Encoding.Default.GetBytes(this.Signature)
+                        .Concat(BitConverter.GetBytes(this.Version))
+                        .ToArray();
+                    long sum = BitConverter.ToUInt32(sigVer, 0) + this.Size;
+                    for (var index = 0; index < this.Data.Length; index += sizeof(uint))
+                        sum += BitConverter.ToUInt32(this.Data, index);
+                    return (uint)sum == this.Checksum;
+                }
+            }
+
+            protected byte[] Data { get; private set; }
+
+            public void ReadFrom(BinaryReader reader)
+            {
+                this.Signature = Encoding.Default.GetString(reader.ReadBytes(SignatureSize));
                 this.Version = reader.ReadUInt16();
                 this.Size = reader.ReadInt32();
                 this.Checksum = reader.ReadUInt32();
+                this.Data = reader.ReadBytes(
+                    this.Size - SignatureSize - sizeof(ushort) - sizeof(int) - sizeof(uint));
             }
         }
 
         private class Score : Chapter   // per scene
         {
+            public const string ValidSignature = "SC";
+            public const ushort ValidVersion = 0x0001;
+            public const int ValidSize = 0x00000060;
+
             public Score(Chapter ch)
                 : base(ch)
             {
-                if (this.Signature != "SC")
+                if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
                     throw new InvalidDataException("Signature");
-                if (this.Version != 0x0001)
+                if (this.Version != ValidVersion)
                     throw new InvalidDataException("Version");
-                if (this.Size != 0x00000060)
+                if (this.Size != ValidSize)
                     throw new InvalidDataException("Size");
+
+                using (var stream = new MemoryStream(this.Data, false))
+                using (var reader = new BinaryReader(stream))
+                {
+                    var number = reader.ReadInt32();
+                    this.LevelScene = new LevelScenePair((Level)(number / 10), (number % 10) + 1);
+                    this.HighScore = reader.ReadInt32();
+                    reader.ReadUInt32();    // always 0x00000000?
+                    this.BestshotScore = reader.ReadInt32();
+                    reader.ReadBytes(0x20);
+                    this.DateTime = reader.ReadUInt32();
+                    reader.ReadUInt32();    // checksum of the bestshot file?
+                    this.TrialCount = reader.ReadInt32();
+                    this.SlowRate1 = reader.ReadSingle();
+                    this.SlowRate2 = reader.ReadSingle();
+                    reader.ReadBytes(0x10);
+                }
             }
 
             public LevelScenePair LevelScene { get; private set; }
@@ -772,49 +826,55 @@ namespace ThScoreFileConverter
 
             public float SlowRate2 { get; private set; }    // ??
 
-            public override void ReadFrom(BinaryReader reader)
+            public static bool CanInitialize(Chapter chapter)
             {
-                var number = reader.ReadInt32();
-                this.LevelScene = new LevelScenePair((Level)(number / 10), (number % 10) + 1);
-                this.HighScore = reader.ReadInt32();
-                reader.ReadUInt32();    // always 0x00000000?
-                this.BestshotScore = reader.ReadInt32();
-                reader.ReadBytes(0x20);
-                this.DateTime = reader.ReadUInt32();
-                reader.ReadUInt32();    // checksum of the bestshot file?
-                this.TrialCount = reader.ReadInt32();
-                this.SlowRate1 = reader.ReadSingle();
-                this.SlowRate2 = reader.ReadSingle();
-                reader.ReadBytes(0x10);
+                return chapter.Signature.Equals(ValidSignature, StringComparison.Ordinal)
+                    && (chapter.Version == ValidVersion)
+                    && (chapter.Size == ValidSize);
             }
         }
 
         private class Status : Chapter
         {
+            public const string ValidSignature = "ST";
+            public const ushort ValidVersion = 0x0000;
+            public const int ValidSize = 0x00000458;
+
             public Status(Chapter ch)
                 : base(ch)
             {
-                if (this.Signature != "ST")
+                if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
                     throw new InvalidDataException("Signature");
-                if (this.Version != 0x0000)
+                if (this.Version != ValidVersion)
                     throw new InvalidDataException("Version");
-                if (this.Size != 0x00000458)
+                if (this.Size != ValidSize)
                     throw new InvalidDataException("Size");
+
+                using (var stream = new MemoryStream(this.Data, false))
+                using (var reader = new BinaryReader(stream))
+                {
+                    this.LastName = reader.ReadBytes(10);
+                    reader.ReadBytes(0x0442);
+                }
             }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public byte[] LastName { get; private set; }    // .Length = 10 (The last 2 bytes are always 0x00 ?)
 
-            public override void ReadFrom(BinaryReader reader)
+            public static bool CanInitialize(Chapter chapter)
             {
-                this.LastName = reader.ReadBytes(10);
-                reader.ReadBytes(0x0442);
+                return chapter.Signature.Equals(ValidSignature, StringComparison.Ordinal)
+                    && (chapter.Version == ValidVersion)
+                    && (chapter.Size == ValidSize);
             }
         }
 
         private class BestShotHeader : IBinaryReadable
         {
-            public string Signature { get; private set; }   // "BSTS"
+            public const string ValidSignature = "BSTS";
+            public const int SignatureSize = 4;
+
+            public string Signature { get; private set; }
 
             public Level Level { get; private set; }
 
@@ -832,8 +892,8 @@ namespace ThScoreFileConverter
 
             public void ReadFrom(BinaryReader reader)
             {
-                this.Signature = Encoding.Default.GetString(reader.ReadBytes(4));
-                if (this.Signature == "BSTS")
+                this.Signature = Encoding.Default.GetString(reader.ReadBytes(SignatureSize));
+                if (this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
                 {
                     reader.ReadUInt16();
                     this.Level = (Level)(reader.ReadInt16() - 1);

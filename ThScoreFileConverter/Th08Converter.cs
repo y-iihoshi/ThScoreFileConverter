@@ -599,25 +599,18 @@ namespace ThScoreFileConverter
                     if (chapter.Size1 == 0)
                         return false;
 
-                    byte temp = 0;
                     switch (chapter.Signature)
                     {
-                        case "TH8K":
-                            temp = reader.ReadByte();
-                            //// 8 means the total size of Signature, Size1, and Size2.
-                            reader.ReadBytes(chapter.Size1 - 8 - 1);
-                            if (temp != 0x01)
+                        case Header.ValidSignature:
+                            if (chapter.FirstByteOfData != 0x01)
                                 return false;
                             break;
-                        case "VRSM":
-                            temp = reader.ReadByte();
-                            reader.ReadBytes(chapter.Size1 - 8 - 1);    // 8 means the same above
-                            if (temp != 0x01)
+                        case VersionInfo.ValidSignature:
+                            if (chapter.FirstByteOfData != 0x01)
                                 return false;
                             //// th08.exe does something more things here...
                             break;
                         default:
-                            reader.ReadBytes(chapter.Size1 - 8);        // 8 means the same above
                             break;
                     }
 
@@ -632,9 +625,22 @@ namespace ThScoreFileConverter
             return remainSize == 0;
         }
 
-        [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine", Justification = "Reviewed.")]
+        [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         private static AllScoreData Read(Stream input)
         {
+            var dictionary = new Dictionary<string, Action<AllScoreData, Chapter>>
+            {
+                { Header.ValidSignature,        (data, ch) => data.Set(new Header(ch))        },
+                { HighScore.ValidSignature,     (data, ch) => data.Set(new HighScore(ch))     },
+                { ClearData.ValidSignature,     (data, ch) => data.Set(new ClearData(ch))     },
+                { CardAttack.ValidSignature,    (data, ch) => data.Set(new CardAttack(ch))    },
+                { PracticeScore.ValidSignature, (data, ch) => data.Set(new PracticeScore(ch)) },
+                { FLSP.ValidSignature,          (data, ch) => data.Set(new FLSP(ch))          },
+                { PlayStatus.ValidSignature,    (data, ch) => data.Set(new PlayStatus(ch))    },
+                { LastName.ValidSignature,      (data, ch) => data.Set(new LastName(ch))      },
+                { VersionInfo.ValidSignature,   (data, ch) => data.Set(new VersionInfo(ch))   }
+            };
+
             var reader = new BinaryReader(input);
             var allScoreData = new AllScoreData();
             var chapter = new Chapter();
@@ -643,97 +649,12 @@ namespace ThScoreFileConverter
 
             try
             {
+                Action<AllScoreData, Chapter> setChapter;
                 while (true)
                 {
                     chapter.ReadFrom(reader);
-                    switch (chapter.Signature)
-                    {
-                        case "TH8K":
-                            {
-                                var header = new Header(chapter);
-                                header.ReadFrom(reader);
-                                allScoreData.Header = header;
-                            }
-                            break;
-
-                        case "HSCR":
-                            {
-                                var score = new HighScore(chapter);
-                                score.ReadFrom(reader);
-                                var key = new CharaLevelPair(score.Chara, score.Level);
-                                if (!allScoreData.Rankings.ContainsKey(key))
-                                    allScoreData.Rankings.Add(key, new List<HighScore>(InitialRanking));
-                                var ranking = allScoreData.Rankings[key];
-                                ranking.Add(score);
-                                ranking.Sort((lhs, rhs) => rhs.Score.CompareTo(lhs.Score));
-                                ranking.RemoveAt(ranking.Count - 1);
-                            }
-                            break;
-
-                        case "CLRD":
-                            {
-                                var clearData = new ClearData(chapter);
-                                clearData.ReadFrom(reader);
-                                if (!allScoreData.ClearData.ContainsKey(clearData.Chara))
-                                    allScoreData.ClearData.Add(clearData.Chara, clearData);
-                            }
-                            break;
-
-                        case "CATK":
-                            {
-                                var attack = new CardAttack(chapter);
-                                attack.ReadFrom(reader);
-                                if (!allScoreData.CardAttacks.ContainsKey(attack.Number))
-                                    allScoreData.CardAttacks.Add(attack.Number, attack);
-                            }
-                            break;
-
-                        case "PSCR":
-                            {
-                                var score = new PracticeScore(chapter);
-                                score.ReadFrom(reader);
-                                if (!allScoreData.PracticeScores.ContainsKey(score.Chara))
-                                    allScoreData.PracticeScores.Add(score.Chara, score);
-                            }
-                            break;
-
-                        case "PLST":
-                            {
-                                var status = new PlayStatus(chapter);
-                                status.ReadFrom(reader);
-                                allScoreData.PlayStatus = status;
-                            }
-                            break;
-
-                        case "LSNM":
-                            {
-                                var lastName = new LastName(chapter);
-                                lastName.ReadFrom(reader);
-                                allScoreData.LastName = lastName;
-                            }
-                            break;
-
-                        case "FLSP":
-                            {
-                                var flsp = new FLSP(chapter);
-                                flsp.ReadFrom(reader);
-                                allScoreData.Flsp = flsp;
-                            }
-                            break;
-
-                        case "VRSM":
-                            {
-                                var versionInfo = new VersionInfo(chapter);
-                                versionInfo.ReadFrom(reader);
-                                allScoreData.VersionInfo = versionInfo;
-                            }
-                            break;
-
-                        default:
-                            // 8 means the total size of Signature, Size1, and Size2.
-                            reader.ReadBytes(chapter.Size1 - 8);
-                            break;
-                    }
+                    if (dictionary.TryGetValue(chapter.Signature, out setChapter))
+                        setChapter(allScoreData, chapter);
                 }
             }
             catch (EndOfStreamException)
@@ -1214,36 +1135,96 @@ namespace ThScoreFileConverter
                 this.PracticeScores = new Dictionary<Chara, PracticeScore>(numCharas);
             }
 
-            public Header Header { get; set; }
+            public Header Header { get; private set; }
 
-            public Dictionary<CharaLevelPair, List<HighScore>> Rankings { get; set; }
+            public Dictionary<CharaLevelPair, List<HighScore>> Rankings { get; private set; }
 
-            public Dictionary<CharaWithTotal, ClearData> ClearData { get; set; }
+            public Dictionary<CharaWithTotal, ClearData> ClearData { get; private set; }
 
-            public Dictionary<int, CardAttack> CardAttacks { get; set; }
+            public Dictionary<int, CardAttack> CardAttacks { get; private set; }
 
-            public Dictionary<Chara, PracticeScore> PracticeScores { get; set; }
+            public Dictionary<Chara, PracticeScore> PracticeScores { get; private set; }
 
-            public FLSP Flsp { get; set; }
+            public FLSP Flsp { get; private set; }
 
-            public PlayStatus PlayStatus { get; set; }
+            public PlayStatus PlayStatus { get; private set; }
 
-            public LastName LastName { get; set; }
+            public LastName LastName { get; private set; }
 
-            public VersionInfo VersionInfo { get; set; }
+            public VersionInfo VersionInfo { get; private set; }
+
+            public void Set(Header header)
+            {
+                this.Header = header;
+            }
+
+            public void Set(HighScore score)
+            {
+                var key = new CharaLevelPair(score.Chara, score.Level);
+                if (!this.Rankings.ContainsKey(key))
+                    this.Rankings.Add(key, new List<HighScore>(InitialRanking));
+                var ranking = this.Rankings[key];
+                ranking.Add(score);
+                ranking.Sort((lhs, rhs) => rhs.Score.CompareTo(lhs.Score));
+                ranking.RemoveAt(ranking.Count - 1);
+            }
+
+            public void Set(ClearData data)
+            {
+                if (!this.ClearData.ContainsKey(data.Chara))
+                    this.ClearData.Add(data.Chara, data);
+            }
+
+            public void Set(CardAttack attack)
+            {
+                if (!this.CardAttacks.ContainsKey(attack.Number))
+                    this.CardAttacks.Add(attack.Number, attack);
+            }
+
+            public void Set(PracticeScore score)
+            {
+                if (!this.PracticeScores.ContainsKey(score.Chara))
+                    this.PracticeScores.Add(score.Chara, score);
+            }
+
+            public void Set(FLSP flsp)
+            {
+                this.Flsp = flsp;
+            }
+
+            public void Set(PlayStatus status)
+            {
+                this.PlayStatus = status;
+            }
+
+            public void Set(LastName name)
+            {
+                this.LastName = name;
+            }
+
+            public void Set(VersionInfo info)
+            {
+                this.VersionInfo = info;
+            }
         }
 
         private class Chapter : IBinaryReadable
         {
             public Chapter()
             {
+                this.Signature = string.Empty;
+                this.Size1 = 0;
+                this.Size2 = 0;
+                this.Data = new byte[] { };
             }
 
-            public Chapter(Chapter ch)
+            protected Chapter(Chapter ch)
             {
                 this.Signature = ch.Signature;
                 this.Size1 = ch.Size1;
                 this.Size2 = ch.Size2;
+                this.Data = new byte[ch.Data.Length];
+                ch.Data.CopyTo(this.Data, 0);
             }
 
             public string Signature { get; private set; }   // .Length = 4
@@ -1252,42 +1233,95 @@ namespace ThScoreFileConverter
 
             public short Size2 { get; private set; }        // always equal to size1?
 
-            public virtual void ReadFrom(BinaryReader reader)
+            public byte FirstByteOfData
+            {
+                get { return this.Data[0]; }
+            }
+
+            protected byte[] Data { get; private set; }
+
+            public void ReadFrom(BinaryReader reader)
             {
                 this.Signature = Encoding.Default.GetString(reader.ReadBytes(4));
                 this.Size1 = reader.ReadInt16();
                 this.Size2 = reader.ReadInt16();
+                this.Data = reader.ReadBytes(this.Size1 - this.Signature.Length - (sizeof(short) * 2));
             }
         }
 
         private class Header : Chapter
         {
+            public const string ValidSignature = "TH8K";
+            public const short ValidSize = 0x000C;
+
             public Header(Chapter ch)
                 : base(ch)
             {
-                if (this.Signature != "TH8K")
+                if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
                     throw new InvalidDataException("Signature");
-                if (this.Size1 != 0x000C)
+                if (this.Size1 != ValidSize)
                     throw new InvalidDataException("Size1");
-            }
 
-            public override void ReadFrom(BinaryReader reader)
-            {
-                reader.ReadUInt32();    // always 0x00000001?
+                using (var stream = new MemoryStream(this.Data, false))
+                using (var reader = new BinaryReader(stream))
+                {
+                    reader.ReadUInt32();    // always 0x00000001?
+                }
             }
         }
 
         private class HighScore : Chapter   // per character, level, rank
         {
+            public const string ValidSignature = "HSCR";
+            public const short ValidSize = 0x0168;
+
             public HighScore(Chapter ch)
                 : base(ch)
             {
-                if (this.Signature != "HSCR")
+                if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
                     throw new InvalidDataException("Signature");
-                if (this.Size1 != 0x0168)
+                if (this.Size1 != ValidSize)
                     throw new InvalidDataException("Size1");
 
                 this.CardFlags = new Dictionary<int, byte>(CardTable.Count);
+
+                using (var stream = new MemoryStream(this.Data, false))
+                using (var reader = new BinaryReader(stream))
+                {
+                    reader.ReadUInt32();    // always 0x00000004?
+                    this.Score = reader.ReadUInt32();
+                    this.SlowRate = reader.ReadSingle();
+                    this.Chara = (Chara)reader.ReadByte();
+                    this.Level = (Level)reader.ReadByte();
+                    this.StageProgress = (StageProgress)reader.ReadByte();
+                    this.Name = reader.ReadBytes(9);
+                    this.Date = reader.ReadBytes(6);
+                    this.ContinueCount = reader.ReadUInt16();
+
+                    // 01 00 00 00 04 00 09 00 FF FF FF FF FF FF FF FF
+                    // 05 00 00 00 01 00 08 00 58 02 58 02
+                    reader.ReadBytes(0x1C);
+
+                    this.PlayerNum = reader.ReadByte();
+
+                    // NN 03 00 01 01 LL 01 00 02 00 00 ** ** 00 00 00
+                    // 00 00 00 00 00 00 00 00 00 00 00 00 01 40 00 00
+                    // where NN: PlayerNum, LL: level, **: unknown (0x64 or 0x0A; 0x50 or 0x0A)
+                    reader.ReadBytes(0x1F);
+
+                    this.PlayTime = reader.ReadUInt32();
+                    this.PointItem = reader.ReadInt32();
+                    reader.ReadUInt32();    // always 0x00000000?
+                    this.MissCount = reader.ReadInt32();
+                    this.BombCount = reader.ReadInt32();
+                    this.LastSpellCount = reader.ReadInt32();
+                    this.PauseCount = reader.ReadInt32();
+                    this.TimePoint = reader.ReadInt32();
+                    this.HumanRate = reader.ReadInt32();
+                    foreach (var key in CardTable.Keys)
+                        this.CardFlags.Add(key, reader.ReadByte());
+                    reader.ReadBytes(2);
+                }
             }
 
             public HighScore(uint score)    // for InitialRanking only
@@ -1334,58 +1368,38 @@ namespace ThScoreFileConverter
             public int HumanRate { get; private set; }                  // / 100
 
             public Dictionary<int, byte> CardFlags { get; private set; }
-
-            public override void ReadFrom(BinaryReader reader)
-            {
-                reader.ReadUInt32();    // always 0x00000004?
-                this.Score = reader.ReadUInt32();
-                this.SlowRate = reader.ReadSingle();
-                this.Chara = (Chara)reader.ReadByte();
-                this.Level = (Level)reader.ReadByte();
-                this.StageProgress = (StageProgress)reader.ReadByte();
-                this.Name = reader.ReadBytes(9);
-                this.Date = reader.ReadBytes(6);
-                this.ContinueCount = reader.ReadUInt16();
-
-                // 01 00 00 00 04 00 09 00 FF FF FF FF FF FF FF FF
-                // 05 00 00 00 01 00 08 00 58 02 58 02
-                reader.ReadBytes(0x1C);
-
-                this.PlayerNum = reader.ReadByte();
-
-                // NN 03 00 01 01 LL 01 00 02 00 00 ** ** 00 00 00
-                // 00 00 00 00 00 00 00 00 00 00 00 00 01 40 00 00
-                // where NN: PlayerNum, LL: level, **: unknown (0x64 or 0x0A; 0x50 or 0x0A)
-                reader.ReadBytes(0x1F);
-
-                this.PlayTime = reader.ReadUInt32();
-                this.PointItem = reader.ReadInt32();
-                reader.ReadUInt32();    // always 0x00000000?
-                this.MissCount = reader.ReadInt32();
-                this.BombCount = reader.ReadInt32();
-                this.LastSpellCount = reader.ReadInt32();
-                this.PauseCount = reader.ReadInt32();
-                this.TimePoint = reader.ReadInt32();
-                this.HumanRate = reader.ReadInt32();
-                foreach (var key in CardTable.Keys)
-                    this.CardFlags.Add(key, reader.ReadByte());
-                reader.ReadBytes(2);
-            }
         }
 
         private class ClearData : Chapter   // per character-with-total
         {
+            public const string ValidSignature = "CLRD";
+            public const short ValidSize = 0x0024;
+
             public ClearData(Chapter ch)
                 : base(ch)
             {
-                if (this.Signature != "CLRD")
+                if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
                     throw new InvalidDataException("Signature");
-                if (this.Size1 != 0x0024)
+                if (this.Size1 != ValidSize)
                     throw new InvalidDataException("Size1");
 
-                var numLevels = Enum.GetValues(typeof(Level)).Length;
+                var levels = Utils.GetEnumerator<Level>();
+                var numLevels = levels.Count();
                 this.StoryFlags = new Dictionary<Level, PlayableStages>(numLevels);
                 this.PracticeFlags = new Dictionary<Level, PlayableStages>(numLevels);
+
+                using (var stream = new MemoryStream(this.Data, false))
+                using (var reader = new BinaryReader(stream))
+                {
+                    reader.ReadUInt32();    // always 0x00000004?
+                    foreach (var level in levels)
+                        this.StoryFlags.Add(level, (PlayableStages)reader.ReadUInt16());
+                    foreach (var level in levels)
+                        this.PracticeFlags.Add(level, (PlayableStages)reader.ReadUInt16());
+                    reader.ReadByte();      // always 0x00?
+                    this.Chara = (CharaWithTotal)reader.ReadByte();
+                    reader.ReadUInt16();    // always 0x0000?
+                }
             }
 
             public Dictionary<Level, PlayableStages> StoryFlags { get; private set; }       // really...?
@@ -1393,34 +1407,38 @@ namespace ThScoreFileConverter
             public Dictionary<Level, PlayableStages> PracticeFlags { get; private set; }    // really...?
 
             public CharaWithTotal Chara { get; private set; }                               // size: 1Byte
-
-            public override void ReadFrom(BinaryReader reader)
-            {
-                var levels = Utils.GetEnumerator<Level>();
-
-                reader.ReadUInt32();    // always 0x00000004?
-                foreach (var level in levels)
-                    this.StoryFlags.Add(level, (PlayableStages)reader.ReadUInt16());
-                foreach (var level in levels)
-                    this.PracticeFlags.Add(level, (PlayableStages)reader.ReadUInt16());
-                reader.ReadByte();      // always 0x00?
-                this.Chara = (CharaWithTotal)reader.ReadByte();
-                reader.ReadUInt16();    // always 0x0000?
-            }
         }
 
         private class CardAttack : Chapter      // per card
         {
+            public const string ValidSignature = "CATK";
+            public const short ValidSize = 0x022C;
+
             public CardAttack(Chapter ch)
                 : base(ch)
             {
-                if (this.Signature != "CATK")
+                if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
                     throw new InvalidDataException("Signature");
-                if (this.Size1 != 0x022C)
+                if (this.Size1 != ValidSize)
                     throw new InvalidDataException("Size1");
 
                 this.StoryCareer = new CardAttackCareer();
                 this.PracticeCareer = new CardAttackCareer();
+
+                using (var stream = new MemoryStream(this.Data, false))
+                using (var reader = new BinaryReader(stream))
+                {
+                    reader.ReadUInt32();    // always 0x00000003?
+                    this.Number = (short)(reader.ReadInt16() + 1);
+                    reader.ReadByte();
+                    this.Level = (LevelPracticeWithTotal)reader.ReadByte();     // Last Word == Normal...
+                    this.CardName = reader.ReadBytes(0x30);
+                    this.EnemyName = reader.ReadBytes(0x30);
+                    this.Comment = reader.ReadBytes(0x80);
+                    this.StoryCareer.ReadFrom(reader);
+                    this.PracticeCareer.ReadFrom(reader);
+                    reader.ReadUInt32();    // always 0x00000000?
+                }
             }
 
             public short Number { get; private set; }       // 1-based
@@ -1440,20 +1458,6 @@ namespace ThScoreFileConverter
 
             public CardAttackCareer PracticeCareer { get; private set; }
 
-            public override void ReadFrom(BinaryReader reader)
-            {
-                reader.ReadUInt32();    // always 0x00000003?
-                this.Number = (short)(reader.ReadInt16() + 1);
-                reader.ReadByte();
-                this.Level = (LevelPracticeWithTotal)reader.ReadByte();     // Last Word == Normal...
-                this.CardName = reader.ReadBytes(0x30);
-                this.EnemyName = reader.ReadBytes(0x30);
-                this.Comment = reader.ReadBytes(0x80);
-                this.StoryCareer.ReadFrom(reader);
-                this.PracticeCareer.ReadFrom(reader);
-                reader.ReadUInt32();    // always 0x00000000?
-            }
-
             public bool HasTried()
             {
                 return (this.StoryCareer.TrialCounts[CharaWithTotal.Total] > 0)
@@ -1461,7 +1465,7 @@ namespace ThScoreFileConverter
             }
         }
 
-        private class CardAttackCareer : IBinaryReadable      // per story or practice
+        private class CardAttackCareer : IBinaryReadable    // per story or practice
         {
             public CardAttackCareer()
             {
@@ -1491,17 +1495,51 @@ namespace ThScoreFileConverter
 
         private class PracticeScore : Chapter   // per character
         {
+            public const string ValidSignature = "PSCR";
+            public const short ValidSize = 0x0178;
+
             public PracticeScore(Chapter ch)
                 : base(ch)
             {
-                if (this.Signature != "PSCR")
+                if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
                     throw new InvalidDataException("Signature");
-                if (this.Size1 != 0x0178)
+                if (this.Size1 != ValidSize)
                     throw new InvalidDataException("Size1");
 
-                var numPairs = Enum.GetValues(typeof(Stage)).Length * Enum.GetValues(typeof(Level)).Length;
+                var stages = Utils.GetEnumerator<Stage>();
+                var levels = Utils.GetEnumerator<Level>();
+                var numPairs = stages.Count() * levels.Count();
                 this.PlayCounts = new Dictionary<StageLevelPair, int>(numPairs);
                 this.HighScores = new Dictionary<StageLevelPair, int>(numPairs);
+
+                using (var stream = new MemoryStream(this.Data, false))
+                using (var reader = new BinaryReader(stream))
+                {
+                    //// The fields for Stage.Extra and Level.Extra actually exist...
+
+                    reader.ReadUInt32();    // always 0x00000002?
+
+                    foreach (var stage in stages)
+                        foreach (var level in levels)
+                        {
+                            var key = new StageLevelPair(stage, level);
+                            if (!this.PlayCounts.ContainsKey(key))
+                                this.PlayCounts.Add(key, 0);
+                            this.PlayCounts[key] = reader.ReadInt32();
+                        }
+
+                    foreach (var stage in stages)
+                        foreach (var level in levels)
+                        {
+                            var key = new StageLevelPair(stage, level);
+                            if (!this.HighScores.ContainsKey(key))
+                                this.HighScores.Add(key, 0);
+                            this.HighScores[key] = reader.ReadInt32();
+                        }
+
+                    this.Chara = (Chara)reader.ReadByte();
+                    reader.ReadBytes(3);    // always 0x000001?
+                }
             }
 
             public Dictionary<StageLevelPair, int> PlayCounts { get; private set; }
@@ -1509,67 +1547,75 @@ namespace ThScoreFileConverter
             public Dictionary<StageLevelPair, int> HighScores { get; private set; }     // * 10
 
             public Chara Chara { get; private set; }        // size: 1Byte
-
-            public override void ReadFrom(BinaryReader reader)
-            {
-                // The fields for Stage.Extra and Level.Extra actually exist...
-                var stages = Utils.GetEnumerator<Stage>();
-                var levels = Utils.GetEnumerator<Level>();
-
-                reader.ReadUInt32();    // always 0x00000002?
-
-                foreach (var stage in stages)
-                    foreach (var level in levels)
-                    {
-                        var key = new StageLevelPair(stage, level);
-                        if (!this.PlayCounts.ContainsKey(key))
-                            this.PlayCounts.Add(key, 0);
-                        this.PlayCounts[key] = reader.ReadInt32();
-                    }
-
-                foreach (var stage in stages)
-                    foreach (var level in levels)
-                    {
-                        var key = new StageLevelPair(stage, level);
-                        if (!this.HighScores.ContainsKey(key))
-                            this.HighScores.Add(key, 0);
-                        this.HighScores[key] = reader.ReadInt32();
-                    }
-
-                this.Chara = (Chara)reader.ReadByte();
-                reader.ReadBytes(3);    // always 0x000001?
-            }
         }
 
         private class FLSP : Chapter    // FIXME
         {
+            public const string ValidSignature = "FLSP";
+            public const short ValidSize = 0x0020;
+
             public FLSP(Chapter ch)
                 : base(ch)
             {
-                if (this.Signature != "FLSP")
+                if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
                     throw new InvalidDataException("Signature");
-                if (this.Size1 != 0x0020)
+                if (this.Size1 != ValidSize)
                     throw new InvalidDataException("Size1");
-            }
 
-            public override void ReadFrom(BinaryReader reader)
-            {
-                reader.ReadBytes(0x18);
+                using (var stream = new MemoryStream(this.Data, false))
+                using (var reader = new BinaryReader(stream))
+                {
+                    reader.ReadBytes(0x18);
+                }
             }
         }
 
         private class PlayStatus : Chapter
         {
+            public const string ValidSignature = "PLST";
+            public const short ValidSize = 0x0228;
+
             public PlayStatus(Chapter ch)
                 : base(ch)
             {
-                if (this.Signature != "PLST")
+                if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
                     throw new InvalidDataException("Signature");
-                if (this.Size1 != 0x0228)
+                if (this.Size1 != ValidSize)
                     throw new InvalidDataException("Size1");
 
-                this.PlayCounts = new Dictionary<Level, PlayCount>(Enum.GetValues(typeof(Level)).Length);
+                var levels = Utils.GetEnumerator<Level>();
+                var numLevels = levels.Count();
+                this.PlayCounts = new Dictionary<Level, PlayCount>(numLevels);
                 this.TotalPlayCount = new PlayCount();
+
+                using (var stream = new MemoryStream(this.Data, false))
+                using (var reader = new BinaryReader(stream))
+                {
+                    reader.ReadUInt32();    // always 0x00000002?
+                    var hours = reader.ReadInt32();
+                    var minutes = reader.ReadInt32();
+                    var seconds = reader.ReadInt32();
+                    var milliseconds = reader.ReadInt32();
+                    this.TotalRunningTime = new Time(hours, minutes, seconds, milliseconds, false);
+                    hours = reader.ReadInt32();
+                    minutes = reader.ReadInt32();
+                    seconds = reader.ReadInt32();
+                    milliseconds = reader.ReadInt32();
+                    this.TotalPlayTime = new Time(hours, minutes, seconds, milliseconds, false);
+
+                    foreach (var level in levels)
+                    {
+                        var playCount = new PlayCount();
+                        playCount.ReadFrom(reader);
+                        if (!this.PlayCounts.ContainsKey(level))
+                            this.PlayCounts.Add(level, playCount);
+                    }
+
+                    new PlayCount().ReadFrom(reader);   // always all 0?
+                    this.TotalPlayCount.ReadFrom(reader);
+                    this.BgmFlags = reader.ReadBytes(21);
+                    reader.ReadBytes(11);
+                }
             }
 
             public Time TotalRunningTime { get; private set; }
@@ -1582,28 +1628,6 @@ namespace ThScoreFileConverter
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public byte[] BgmFlags { get; private set; }            // .Length = 21
-
-            public override void ReadFrom(BinaryReader reader)
-            {
-                reader.ReadUInt32();    // always 0x00000002?
-                this.TotalRunningTime = new Time(
-                    reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), false);
-                this.TotalPlayTime = new Time(
-                    reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), false);
-
-                foreach (var level in Utils.GetEnumerator<Level>())
-                {
-                    var playCount = new PlayCount();
-                    playCount.ReadFrom(reader);
-                    if (!this.PlayCounts.ContainsKey(level))
-                        this.PlayCounts.Add(level, playCount);
-                }
-
-                new PlayCount().ReadFrom(reader);   // always all 0?
-                this.TotalPlayCount.ReadFrom(reader);
-                this.BgmFlags = reader.ReadBytes(21);
-                reader.ReadBytes(11);
-            }
         }
 
         private class PlayCount : IBinaryReadable   // per level-with-total
@@ -1637,47 +1661,55 @@ namespace ThScoreFileConverter
 
         private class LastName : Chapter
         {
+            public const string ValidSignature = "LSNM";
+            public const short ValidSize = 0x0018;
+
             public LastName(Chapter ch)
                 : base(ch)
             {
-                if (this.Signature != "LSNM")
+                if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
                     throw new InvalidDataException("Signature");
-                if (this.Size1 != 0x0018)
+                if (this.Size1 != ValidSize)
                     throw new InvalidDataException("Size1");
+
+                using (var stream = new MemoryStream(this.Data, false))
+                using (var reader = new BinaryReader(stream))
+                {
+                    reader.ReadUInt32();    // always 0x00000001?
+                    this.Name = reader.ReadBytes(12);
+                }
             }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public byte[] Name { get; private set; }    // .Length = 12, null-terminated
-
-            public override void ReadFrom(BinaryReader reader)
-            {
-                reader.ReadUInt32();    // always 0x00000001?
-                this.Name = reader.ReadBytes(12);
-            }
         }
 
         private class VersionInfo : Chapter
         {
+            public const string ValidSignature = "VRSM";
+            public const short ValidSize = 0x001C;
+
             public VersionInfo(Chapter ch)
                 : base(ch)
             {
-                if (this.Signature != "VRSM")
+                if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
                     throw new InvalidDataException("Signature");
-                if (this.Size1 != 0x001C)
+                if (this.Size1 != ValidSize)
                     throw new InvalidDataException("Size1");
+
+                using (var stream = new MemoryStream(this.Data, false))
+                using (var reader = new BinaryReader(stream))
+                {
+                    reader.ReadUInt32();    // always 0x00000001?
+                    this.Version = reader.ReadBytes(6);
+                    reader.ReadBytes(3);
+                    reader.ReadBytes(3);
+                    reader.ReadUInt32();
+                }
             }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public byte[] Version { get; private set; }     // .Length = 6, null-terminated
-
-            public override void ReadFrom(BinaryReader reader)
-            {
-                reader.ReadUInt32();    // always 0x00000001?
-                this.Version = reader.ReadBytes(6);
-                reader.ReadBytes(3);
-                reader.ReadBytes(3);
-                reader.ReadUInt32();
-            }
         }
     }
 }
