@@ -845,14 +845,14 @@ namespace ThScoreFileConverter
                 this.Data = new byte[] { };
             }
 
-            protected Chapter(Chapter ch)
+            protected Chapter(Chapter chapter)
             {
-                this.Signature = ch.Signature;
-                this.Version = ch.Version;
-                this.Checksum = ch.Checksum;
-                this.Size = ch.Size;
-                this.Data = new byte[ch.Data.Length];
-                ch.Data.CopyTo(this.Data, 0);
+                this.Signature = chapter.Signature;
+                this.Version = chapter.Version;
+                this.Checksum = chapter.Checksum;
+                this.Size = chapter.Size;
+                this.Data = new byte[chapter.Data.Length];
+                chapter.Data.CopyTo(this.Data, 0);
             }
 
             public string Signature { get; private set; }
@@ -891,8 +891,8 @@ namespace ThScoreFileConverter
             public const ushort ValidVersion = 0x0002;
             public const int ValidSize = 0x000045F4;
 
-            public ClearData(Chapter ch)
-                : base(ch)
+            public ClearData(Chapter chapter)
+                : base(chapter)
             {
                 if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
                     throw new InvalidDataException("Signature");
@@ -988,8 +988,8 @@ namespace ThScoreFileConverter
             public const ushort ValidVersion = 0x0002;
             public const int ValidSize = 0x00000448;
 
-            public Status(Chapter ch)
-                : base(ch)
+            public Status(Chapter chapter)
+                : base(chapter)
             {
                 if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
                     throw new InvalidDataException("Signature");

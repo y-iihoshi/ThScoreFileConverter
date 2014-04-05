@@ -266,15 +266,15 @@ namespace ThScoreFileConverter
             var reader = new StreamReader(input, Encoding.GetEncoding("shift_jis"));
             var writer = new StreamWriter(output, Encoding.GetEncoding("shift_jis"));
 
-            var allLine = reader.ReadToEnd();
-            allLine = this.ReplaceScore(allLine);
-            allLine = this.ReplaceCareer(allLine);
-            allLine = this.ReplaceCard(allLine, hideUntriedCards);
-            allLine = this.ReplaceCollectRate(allLine);
-            allLine = this.ReplaceClear(allLine);
-            allLine = this.ReplacePractice(allLine);
+            var allLines = reader.ReadToEnd();
+            allLines = this.ReplaceScore(allLines);
+            allLines = this.ReplaceCareer(allLines);
+            allLines = this.ReplaceCard(allLines, hideUntriedCards);
+            allLines = this.ReplaceCollectRate(allLines);
+            allLines = this.ReplaceClear(allLines);
+            allLines = this.ReplacePractice(allLines);
 
-            writer.Write(allLine);
+            writer.Write(allLines);
             writer.Flush();
             writer.BaseStream.SetLength(writer.BaseStream.Position);
         }
@@ -736,13 +736,13 @@ namespace ThScoreFileConverter
                 this.Data = new byte[] { };
             }
 
-            protected Chapter(Chapter ch)
+            protected Chapter(Chapter chapter)
             {
-                this.Signature = ch.Signature;
-                this.Size1 = ch.Size1;
-                this.Size2 = ch.Size2;
-                this.Data = new byte[ch.Data.Length];
-                ch.Data.CopyTo(this.Data, 0);
+                this.Signature = chapter.Signature;
+                this.Size1 = chapter.Size1;
+                this.Size2 = chapter.Size2;
+                this.Data = new byte[chapter.Data.Length];
+                chapter.Data.CopyTo(this.Data, 0);
             }
 
             public string Signature { get; private set; }   // .Length = 4
@@ -772,8 +772,8 @@ namespace ThScoreFileConverter
             public const string ValidSignature = "TH6K";
             public const short ValidSize = 0x000C;
 
-            public Header(Chapter ch)
-                : base(ch)
+            public Header(Chapter chapter)
+                : base(chapter)
             {
                 if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
                     throw new InvalidDataException("Signature");
@@ -793,8 +793,8 @@ namespace ThScoreFileConverter
             public const string ValidSignature = "HSCR";
             public const short ValidSize = 0x001C;
 
-            public HighScore(Chapter ch)
-                : base(ch)
+            public HighScore(Chapter chapter)
+                : base(chapter)
             {
                 if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
                     throw new InvalidDataException("Signature");
@@ -836,8 +836,8 @@ namespace ThScoreFileConverter
             public const string ValidSignature = "CLRD";
             public const short ValidSize = 0x0018;
 
-            public ClearData(Chapter ch)
-                : base(ch)
+            public ClearData(Chapter chapter)
+                : base(chapter)
             {
                 if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
                     throw new InvalidDataException("Signature");
@@ -875,8 +875,8 @@ namespace ThScoreFileConverter
             public const string ValidSignature = "CATK";
             public const short ValidSize = 0x0040;
 
-            public CardAttack(Chapter ch)
-                : base(ch)
+            public CardAttack(Chapter chapter)
+                : base(chapter)
             {
                 if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
                     throw new InvalidDataException("Signature");
@@ -915,8 +915,8 @@ namespace ThScoreFileConverter
             public const string ValidSignature = "PSCR";
             public const short ValidSize = 0x0014;
 
-            public PracticeScore(Chapter ch)
-                : base(ch)
+            public PracticeScore(Chapter chapter)
+                : base(chapter)
             {
                 if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
                     throw new InvalidDataException("Signature");

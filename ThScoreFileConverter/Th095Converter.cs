@@ -232,17 +232,17 @@ namespace ThScoreFileConverter
             var writer = new StreamWriter(output, Encoding.GetEncoding("shift_jis"));
             var outputFile = output as FileStream;
 
-            var allLine = reader.ReadToEnd();
-            allLine = this.ReplaceScore(allLine);
-            allLine = this.ReplaceScoreTotal(allLine);
-            allLine = this.ReplaceCard(allLine, hideUntriedCards);
+            var allLines = reader.ReadToEnd();
+            allLines = this.ReplaceScore(allLines);
+            allLines = this.ReplaceScoreTotal(allLines);
+            allLines = this.ReplaceCard(allLines, hideUntriedCards);
             if (outputFile != null)
             {
-                allLine = this.ReplaceShot(allLine, outputFile.Name);
-                allLine = this.ReplaceShotEx(allLine, outputFile.Name);
+                allLines = this.ReplaceShot(allLines, outputFile.Name);
+                allLines = this.ReplaceShotEx(allLines, outputFile.Name);
             }
 
-            writer.Write(allLine);
+            writer.Write(allLines);
             writer.Flush();
             writer.BaseStream.SetLength(writer.BaseStream.Position);
         }
@@ -732,14 +732,14 @@ namespace ThScoreFileConverter
                 this.Data = new byte[] { };
             }
 
-            protected Chapter(Chapter ch)
+            protected Chapter(Chapter chapter)
             {
-                this.Signature = ch.Signature;
-                this.Version = ch.Version;
-                this.Size = ch.Size;
-                this.Checksum = ch.Checksum;
-                this.Data = new byte[ch.Data.Length];
-                ch.Data.CopyTo(this.Data, 0);
+                this.Signature = chapter.Signature;
+                this.Version = chapter.Version;
+                this.Size = chapter.Size;
+                this.Checksum = chapter.Checksum;
+                this.Data = new byte[chapter.Data.Length];
+                chapter.Data.CopyTo(this.Data, 0);
             }
 
             public string Signature { get; private set; }
@@ -783,8 +783,8 @@ namespace ThScoreFileConverter
             public const ushort ValidVersion = 0x0001;
             public const int ValidSize = 0x00000060;
 
-            public Score(Chapter ch)
-                : base(ch)
+            public Score(Chapter chapter)
+                : base(chapter)
             {
                 if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
                     throw new InvalidDataException("Signature");
@@ -840,8 +840,8 @@ namespace ThScoreFileConverter
             public const ushort ValidVersion = 0x0000;
             public const int ValidSize = 0x00000458;
 
-            public Status(Chapter ch)
-                : base(ch)
+            public Status(Chapter chapter)
+                : base(chapter)
             {
                 if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
                     throw new InvalidDataException("Signature");
