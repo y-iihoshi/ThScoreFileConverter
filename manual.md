@@ -42,6 +42,7 @@ ThScoreFileConverter （以下、本ツール）は、東方 Project の各作�
 
 * 東方紅魔郷 ver. 1.02h
 * 東方妖々夢 ver. 1.00b
+* 東方萃夢想 ver. 1.11
 * 東方永夜抄 ver. 1.00d
 * 東方花映塚 ver. 1.50a
 * 東方文花帖 ver. 1.02a
@@ -57,10 +58,10 @@ ThScoreFileConverter （以下、本ツール）は、東方 Project の各作�
 
 以下作品については、本ツール作者の原作プレイ進捗状況に伴って今後対応予定です：
 
-* 東方萃夢想
 * 東方緋想天
 * 東方非想天則
 * 東方心綺楼
+* 弾幕アマノジャク
 
 ----------------------------------------
 
@@ -78,7 +79,7 @@ ThScoreFileConverter （以下、本ツール）は、東方 Project の各作�
 
 ### 動作確認済み環境 {: #TestedEnv }
 
-* Windows XP Home Edition SP3 (32bit) + .NET Framework 3.5 SP1
+* Windows XP Home Edition SP3 (32bit) + .NET Framework 3.5 SP1 （Ver.1.6.1.0 まで確認済み）
 * Windows 7 Professional SP1 (64bit) + .NET Framework 3.5 SP1
 * Windows 8 (64bit) + .NET Framework 3.5 SP1 （Ver.1.2.0.0 まで確認済み）
 * Windows 8.1 (64bit) + .NET Framework 3.5 SP1
@@ -189,6 +190,11 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 ## ChangeLog {: #ChangeLog }
 
+2014/04/13 ver. 1.7.0.0
+
+* 東方萃夢想に対応
+* 全体的にソースコードを整理（いつまでやるのか…）
+
 2014/03/10 ver. 1.6.1.0
 
 * スペルカードの情報を全て内部データとして持つようにした（Thanks to [東方Wiki][thwiki]）
@@ -200,7 +206,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 * 東方神霊廟
     * [御札戦歴](manual/format.html#T13C)と[スペルカード蒐集率](manual/format.html#T13CRG)において、ゲーム本編と Over Drive の組み合わせを無視していなかったため修正
     * 御札戦歴（ゲーム本編）のテンプレートファイルに Over Drive の分を誤掲載していたため削除
-* 全体的にソースコードを整理（いつまでやるのか…）
+* 全体的にソースコードを整理
 
 2014/03/02 ver. 1.6.0.0
 
