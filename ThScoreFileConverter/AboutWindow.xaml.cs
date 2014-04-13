@@ -15,6 +15,7 @@ namespace ThScoreFileConverter
     using System.Windows.Interop;
     using System.Windows.Media.Imaging;
     using System.Windows.Navigation;
+    using Prop = ThScoreFileConverter.Properties;
 
     /// <summary>
     /// Interaction logic for AboutWindow.xaml
@@ -44,7 +45,7 @@ namespace ThScoreFileConverter
             var asmName = thisAsm.GetName();
             var attrs = thisAsm.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), true);
             this.txtName.Text = asmName.Name;
-            this.txtVersion.Text = Properties.Resources.strVersionPrefix + asmName.Version.ToString();
+            this.txtVersion.Text = Prop.Resources.strVersionPrefix + asmName.Version.ToString();
             this.txtCopyright.Text = ((AssemblyCopyrightAttribute)attrs[0]).Copyright;
         }
 

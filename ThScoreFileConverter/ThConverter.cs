@@ -9,6 +9,7 @@ namespace ThScoreFileConverter
     using System;
     using System.IO;
     using System.Linq;
+    using ThScoreFileConverter.Properties;
 
     /// <summary>
     /// Represents the base class for classes that executes conversion of a score file.
@@ -184,7 +185,7 @@ namespace ThScoreFileConverter
             var outputFile = Path.Combine(outputDirectory, Path.GetFileNameWithoutExtension(bestshotFile));
             if (outputDirectory == Path.GetDirectoryName(bestshotFile))
                 outputFile += "_";
-            outputFile += Properties.Resources.strBestShotExtension;
+            outputFile += Resources.strBestShotExtension;
 
             return outputFile;
         }
@@ -200,7 +201,7 @@ namespace ThScoreFileConverter
             {
                 scr.Seek(0, SeekOrigin.Begin);
                 if (!this.ReadScoreFile(scr))
-                    throw new NotSupportedException(Properties.Resources.msgErrScoreFileNotSupported);
+                    throw new NotSupportedException(Resources.msgErrScoreFileNotSupported);
 
                 if (this.HasBestShotConverter)
                 {
@@ -208,7 +209,7 @@ namespace ThScoreFileConverter
                     if (!Directory.Exists(dir))
                         Directory.CreateDirectory(dir);
                     var files = this.FilterBestShotFiles(
-                        Directory.GetFiles(settings.BestShotDirectory, Properties.Resources.ptnBestShot));
+                        Directory.GetFiles(settings.BestShotDirectory, Resources.ptnBestShot));
                     for (var index = 0; index < files.Length; index++)
                     {
                         var result = GetBestShotFilePath(files[index], dir);

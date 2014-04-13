@@ -89,6 +89,7 @@
     </Compile>
     <Compile Include="SpellCardInfo.cs" />
     <Compile Include="Th06Converter.cs" />
+    <Compile Include="Th075Converter.cs" />
     <Compile Include="Th07Converter.cs" />
     <Compile Include="Th08Converter.cs" />
     <Compile Include="Th095Converter.cs" />

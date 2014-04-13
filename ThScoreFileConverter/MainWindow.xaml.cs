@@ -7,7 +7,6 @@
 namespace ThScoreFileConverter
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Globalization;
     using System.IO;
@@ -61,13 +60,13 @@ namespace ThScoreFileConverter
                         message, Prop.Resources.msgTitleWarning, MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
 
-                var lastTitleItem = this.cmbTitle.Items.Cast<ComboBoxItem>()
+                var lastTitleItem = this.cmbTitle.Items.OfType<ComboBoxItem>()
                     .FirstOrDefault(item => item.Name == this.settings.LastTitle);
                 if (lastTitleItem != null)
                     lastTitleItem.IsSelected = true;
                 else
                 {
-                    var firstEnabledItem = this.cmbTitle.Items.Cast<ComboBoxItem>()
+                    var firstEnabledItem = this.cmbTitle.Items.OfType<ComboBoxItem>()
                         .FirstOrDefault(item => item.IsEnabled);
                     if (firstEnabledItem != null)
                         firstEnabledItem.IsSelected = true;
