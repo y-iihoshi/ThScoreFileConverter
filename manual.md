@@ -162,10 +162,12 @@ Web からダウンロードした zip ファイルを任意の場所に展開�
 ## Copyrights {: #Copyrights }
 
 * 東方 Project の各作品の著作権は[上海アリス幻樂団][ZUN]様にあります。本ツール作者とは一切関係がありません。
+* 東方萃夢想、東方緋想天、東方非想天則、東方心綺楼の著作権は[黄昏フロンティア][tasofro]様及び[上海アリス幻樂団][ZUN]様にあります。本ツール作者とは一切関係がありません。
 * 東方メモリマネージャーの著作権は [sue445][sue445] 様にあります。本ツール作者とは一切関係がありません。
 * 本ツールの著作権は IIHOSHI Yoshinori ([Web site][MyWeb], [Twitter][MyTwitter]) にあります。
 
   [ZUN]: http://www16.big.or.jp/~zun/ "上海アリス幻樂団"
+  [tasofro]: http://www.tasofro.net "Twilight-Frontier"
   [sue445]: http://www.sue445.net/ "sue445.NET"
   [thwiki]: http://thwiki.info/ "東方Wiki"
   [MyWeb]: http://www.colorless-sight.jp "Colorless Sight"
