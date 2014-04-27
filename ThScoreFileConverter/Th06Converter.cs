@@ -517,7 +517,7 @@ namespace ThScoreFileConverter
                     // Do nothing
                 }
                 else
-                    findByStage = (attack => CardTable[attack.Number].Stage == (Stage)stage);
+                    findByStage = (attack => CardTable[attack.CardId].Stage == (Stage)stage);
 
                 if (type == 1)
                     findByType = (attack => attack.ClearCount > 0);
@@ -702,8 +702,8 @@ namespace ThScoreFileConverter
 
             public void Set(CardAttack attack)
             {
-                if (!this.CardAttacks.ContainsKey(attack.Number))
-                    this.CardAttacks.Add(attack.Number, attack);
+                if (!this.CardAttacks.ContainsKey(attack.CardId))
+                    this.CardAttacks.Add(attack.CardId, attack);
             }
 
             public void Set(PracticeScore score)
@@ -887,7 +887,7 @@ namespace ThScoreFileConverter
                 using (var reader = new BinaryReader(stream))
                 {
                     reader.ReadBytes(8);
-                    this.Number = (short)(reader.ReadInt16() + 1);
+                    this.CardId = (short)(reader.ReadInt16() + 1);
                     reader.ReadBytes(6);
                     this.CardName = reader.ReadBytes(0x24);
                     this.TrialCount = reader.ReadUInt16();
@@ -895,7 +895,7 @@ namespace ThScoreFileConverter
                 }
             }
 
-            public short Number { get; private set; }       // 1-based
+            public short CardId { get; private set; }       // 1-based
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public byte[] CardName { get; private set; }    // .Length = 0x24, null-terminated

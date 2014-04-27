@@ -761,7 +761,7 @@ namespace ThScoreFileConverter
                 Func<CardAttack, CardAttackCareer> getCareer = (attack => null);
                 if (kind == "S")
                 {
-                    isValidLevel = (attack => CardTable[attack.Number].Level != LevelPractice.LastWord);
+                    isValidLevel = (attack => CardTable[attack.CardId].Level != LevelPractice.LastWord);
                     getCareer = (attack => attack.StoryCareer);
                 }
                 else
@@ -857,11 +857,11 @@ namespace ThScoreFileConverter
                 {
                     if (type == 1)
                         findByKindType = (attack =>
-                            (CardTable[attack.Number].Level != LevelPractice.LastWord) &&
+                            (CardTable[attack.CardId].Level != LevelPractice.LastWord) &&
                             (attack.StoryCareer.ClearCounts[chara] > 0));
                     else
                         findByKindType = (attack =>
-                            (CardTable[attack.Number].Level != LevelPractice.LastWord) &&
+                            (CardTable[attack.CardId].Level != LevelPractice.LastWord) &&
                             (attack.StoryCareer.TrialCounts[chara] > 0));
                 }
                 else
@@ -877,7 +877,7 @@ namespace ThScoreFileConverter
                     // Do nothing
                 }
                 else
-                    findByStage = (attack => CardTable[attack.Number].Stage == (StagePractice)stage);
+                    findByStage = (attack => CardTable[attack.CardId].Stage == (StagePractice)stage);
 
                 switch (level)
                 {
@@ -886,11 +886,11 @@ namespace ThScoreFileConverter
                         break;
                     case LevelPracticeWithTotal.Extra:
                         findByStage =
-                            (attack => CardTable[attack.Number].Stage == StagePractice.Extra);
+                            (attack => CardTable[attack.CardId].Stage == StagePractice.Extra);
                         break;
                     case LevelPracticeWithTotal.LastWord:
                         findByStage =
-                            (attack => CardTable[attack.Number].Stage == StagePractice.LastWord);
+                            (attack => CardTable[attack.CardId].Stage == StagePractice.LastWord);
                         break;
                     default:
                         findByLevel = (attack => attack.Level == level);
@@ -1177,8 +1177,8 @@ namespace ThScoreFileConverter
 
             public void Set(CardAttack attack)
             {
-                if (!this.CardAttacks.ContainsKey(attack.Number))
-                    this.CardAttacks.Add(attack.Number, attack);
+                if (!this.CardAttacks.ContainsKey(attack.CardId))
+                    this.CardAttacks.Add(attack.CardId, attack);
             }
 
             public void Set(PracticeScore score)
@@ -1429,7 +1429,7 @@ namespace ThScoreFileConverter
                 using (var reader = new BinaryReader(stream))
                 {
                     reader.ReadUInt32();    // always 0x00000003?
-                    this.Number = (short)(reader.ReadInt16() + 1);
+                    this.CardId = (short)(reader.ReadInt16() + 1);
                     reader.ReadByte();
                     this.Level = (LevelPracticeWithTotal)reader.ReadByte();     // Last Word == Normal...
                     this.CardName = reader.ReadBytes(0x30);
@@ -1441,7 +1441,7 @@ namespace ThScoreFileConverter
                 }
             }
 
-            public short Number { get; private set; }       // 1-based
+            public short CardId { get; private set; }       // 1-based
 
             public LevelPracticeWithTotal Level { get; private set; }
 

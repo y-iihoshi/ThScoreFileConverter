@@ -643,7 +643,7 @@ namespace ThScoreFileConverter
                     // Do nothing
                 }
                 else
-                    findByStage = (attack => CardTable[attack.Number].Stage == (Stage)stage);
+                    findByStage = (attack => CardTable[attack.CardId].Stage == (Stage)stage);
 
                 switch (level)
                 {
@@ -651,13 +651,13 @@ namespace ThScoreFileConverter
                         // Do nothing
                         break;
                     case LevelWithTotal.Extra:
-                        findByStage = (attack => CardTable[attack.Number].Stage == Stage.Extra);
+                        findByStage = (attack => CardTable[attack.CardId].Stage == Stage.Extra);
                         break;
                     case LevelWithTotal.Phantasm:
-                        findByStage = (attack => CardTable[attack.Number].Stage == Stage.Phantasm);
+                        findByStage = (attack => CardTable[attack.CardId].Stage == Stage.Phantasm);
                         break;
                     default:
-                        findByLevel = (attack => CardTable[attack.Number].Level == (Level)level);
+                        findByLevel = (attack => CardTable[attack.CardId].Level == (Level)level);
                         break;
                 }
 
@@ -915,8 +915,8 @@ namespace ThScoreFileConverter
 
             public void Set(CardAttack attack)
             {
-                if (!this.CardAttacks.ContainsKey(attack.Number))
-                    this.CardAttacks.Add(attack.Number, attack);
+                if (!this.CardAttacks.ContainsKey(attack.CardId))
+                    this.CardAttacks.Add(attack.CardId, attack);
             }
 
             public void Set(PracticeScore score)
@@ -1133,7 +1133,7 @@ namespace ThScoreFileConverter
                     reader.ReadUInt32();    // always 0x00000001?
                     foreach (var chara in charas)
                         this.MaxBonuses.Add(chara, reader.ReadUInt32());
-                    this.Number = (short)(reader.ReadInt16() + 1);
+                    this.CardId = (short)(reader.ReadInt16() + 1);
                     reader.ReadByte();
                     this.CardName = reader.ReadBytes(0x30);
                     reader.ReadByte();      // always 0x00?
@@ -1146,7 +1146,7 @@ namespace ThScoreFileConverter
 
             public Dictionary<CharaWithTotal, uint> MaxBonuses { get; private set; }
 
-            public short Number { get; private set; }       // 1-based
+            public short CardId { get; private set; }       // 1-based
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public byte[] CardName { get; private set; }    // .Length = 0x30
