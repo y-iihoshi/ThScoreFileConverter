@@ -636,7 +636,7 @@ namespace ThScoreFileConverter
                     // Do nothing
                 }
                 else
-                    findByStage = (card => CardTable[card.Number].Stage == (Stage)stage);
+                    findByStage = (card => CardTable[card.Id].Stage == (Stage)stage);
 
                 switch (level)
                 {
@@ -644,7 +644,7 @@ namespace ThScoreFileConverter
                         // Do nothing
                         break;
                     case LevelWithTotal.Extra:
-                        findByStage = (card => CardTable[card.Number].Stage == Stage.Extra);
+                        findByStage = (card => CardTable[card.Id].Stage == Stage.Extra);
                         break;
                     default:
                         findByLevel = (card => card.Level == (Level)level);
@@ -1016,8 +1016,8 @@ namespace ThScoreFileConverter
                     {
                         var card = new SpellCard();
                         card.ReadFrom(reader);
-                        if (!this.Cards.ContainsKey(card.Number))
-                            this.Cards.Add(card.Number, card);
+                        if (!this.Cards.ContainsKey(card.Id))
+                            this.Cards.Add(card.Id, card);
                     }
                 }
             }
@@ -1119,7 +1119,7 @@ namespace ThScoreFileConverter
 
             public int TrialCount { get; private set; }
 
-            public int Number { get; private set; }     // 1-based
+            public int Id { get; private set; }         // 1-based
 
             public Level Level { get; private set; }
 
@@ -1128,7 +1128,7 @@ namespace ThScoreFileConverter
                 this.Name = reader.ReadBytes(0x80);
                 this.ClearCount = reader.ReadInt32();
                 this.TrialCount = reader.ReadInt32();
-                this.Number = reader.ReadInt32() + 1;
+                this.Id = reader.ReadInt32() + 1;
                 this.Level = (Level)reader.ReadInt32();
             }
 
