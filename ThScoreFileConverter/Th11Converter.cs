@@ -224,7 +224,7 @@ namespace ThScoreFileConverter
                 new CardInfo(174, "「嫌われ者のフィロソフィ」",           Stage.Extra, Level.Extra),
                 new CardInfo(175, "「サブタレイニアンローズ」",           Stage.Extra, Level.Extra)
             };
-            CardTable = cardList.ToDictionary(card => card.Number);
+            CardTable = cardList.ToDictionary(card => card.Id);
 
             var levels = Utils.GetEnumerator<Level>();
             var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();

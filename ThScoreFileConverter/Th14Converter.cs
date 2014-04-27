@@ -169,7 +169,7 @@ namespace ThScoreFileConverter
                 new CardInfo(119, "「ブルーレディショー」",             Stage.Extra, Level.Extra),
                 new CardInfo(120, "「プリスティンビート」",             Stage.Extra, Level.Extra)
             };
-            CardTable = cardList.ToDictionary(card => card.Number);
+            CardTable = cardList.ToDictionary(card => card.Id);
 
             var levels = Utils.GetEnumerator<Level>();
             var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();

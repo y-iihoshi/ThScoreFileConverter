@@ -178,7 +178,7 @@ namespace ThScoreFileConverter
                 new CardInfo(126, "「神霊大宇宙」",                       StagePractice.OverDrive, LevelPractice.OverDrive),
                 new CardInfo(127, "「ワイルドカーペット」",               StagePractice.OverDrive, LevelPractice.OverDrive)
             };
-            CardTable = cardList.ToDictionary(card => card.Number);
+            CardTable = cardList.ToDictionary(card => card.Id);
 
             var levels = Utils.GetEnumerator<Level>();
             var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();

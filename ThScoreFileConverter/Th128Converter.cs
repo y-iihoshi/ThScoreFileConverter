@@ -297,7 +297,7 @@ namespace ThScoreFileConverter
                 new CardInfo(249, "「ブレイジングスターのような鬼ごっこ」",   Stage.Extra, Level.Extra),
                 new CardInfo(250, "「妖精尽滅光」",                           Stage.Extra, Level.Extra)
             };
-            CardTable = cardList.ToDictionary(card => card.Number);
+            CardTable = cardList.ToDictionary(card => card.Id);
 
             var levels = Utils.GetEnumerator<Level>();
             var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();

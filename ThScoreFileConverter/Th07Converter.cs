@@ -192,7 +192,7 @@ namespace ThScoreFileConverter
                 new CardInfo(140, "結界「生と死の境界」",                       Stage.Phantasm, Level.Phantasm),
                 new CardInfo(141, "紫奥義「弾幕結界」",                         Stage.Phantasm, Level.Phantasm)
             };
-            CardTable = cardList.ToDictionary(card => card.Number);
+            CardTable = cardList.ToDictionary(card => card.Id);
 
             InitialRanking = new List<HighScore>()
             {

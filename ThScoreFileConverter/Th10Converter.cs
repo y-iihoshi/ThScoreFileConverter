@@ -159,7 +159,7 @@ namespace ThScoreFileConverter
                 new CardInfo(109, "「諏訪大戦　～ 土着神話 vs 中央神話」",    Stage.Extra, Level.Extra),
                 new CardInfo(110, "祟符「ミシャグジさま」",                   Stage.Extra, Level.Extra)
             };
-            CardTable = cardList.ToDictionary(card => card.Number);
+            CardTable = cardList.ToDictionary(card => card.Id);
 
             var levels = Utils.GetEnumerator<Level>();
             var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();

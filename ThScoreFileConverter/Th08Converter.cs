@@ -275,7 +275,7 @@ namespace ThScoreFileConverter
                 new CardInfo(221, "「西行寺無余涅槃」",                       StagePractice.LastWord, LevelPractice.LastWord),
                 new CardInfo(222, "「深弾幕結界　-夢幻泡影-」",               StagePractice.LastWord, LevelPractice.LastWord)
             };
-            CardTable = cardList.ToDictionary(card => card.Number);
+            CardTable = cardList.ToDictionary(card => card.Id);
 
             InitialRanking = new List<HighScore>()
             {
@@ -731,8 +731,8 @@ namespace ThScoreFileConverter
                     case "F":   // got spell cards
                         {
                             var list = CardTable.Values
-                                .Where(card => score.CardFlags[card.Number] > 0)
-                                .Select(card => Utils.Format("No.{0:D3} {1}", card.Number, card.Name));
+                                .Where(card => score.CardFlags[card.Id] > 0)
+                                .Select(card => Utils.Format("No.{0:D3} {1}", card.Id, card.Name));
                             return string.Join("\n", list.ToArray());
                         }
                     case "G":   // number of got spell cards

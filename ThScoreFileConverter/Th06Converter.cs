@@ -110,7 +110,7 @@ namespace ThScoreFileConverter
                 new CardInfo(63, "秘弾「そして誰もいなくなるか？」", Stage.Extra, Level.Extra),
                 new CardInfo(64, "ＱＥＤ「４９５年の波紋」",         Stage.Extra, Level.Extra)
             };
-            CardTable = cardList.ToDictionary(card => card.Number);
+            CardTable = cardList.ToDictionary(card => card.Id);
 
             InitialRanking = new List<HighScore>()
             {

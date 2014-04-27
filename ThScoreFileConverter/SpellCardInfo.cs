@@ -25,16 +25,16 @@ namespace ThScoreFileConverter
         /// <summary>
         /// Initializes a new instance of the <see cref="SpellCardInfo{TStage,TLevel}"/> class.
         /// </summary>
-        /// <param name="number">A 1-based sequential number of the spell card.</param>
+        /// <param name="id">A 1-based sequential number of the spell card.</param>
         /// <param name="name">A name of the spell card.</param>
         /// <param name="stage">The stage which the spell card is used.</param>
         /// <param name="levels">The level(s) which the spell card is used.</param>
-        public SpellCardInfo(int number, string name, TStage stage, params TLevel[] levels)
+        public SpellCardInfo(int id, string name, TStage stage, params TLevel[] levels)
         {
-            if (number <= 0)
+            if (id <= 0)
                 throw new ArgumentOutOfRangeException("number");
 
-            this.Number = number;
+            this.Id = id;
             this.Name = name;
             this.Stage = stage;
             this.levels = levels;
@@ -43,7 +43,7 @@ namespace ThScoreFileConverter
         /// <summary>
         /// Gets a 1-based sequential number of the current spell card.
         /// </summary>
-        public int Number { get; private set; }
+        public int Id { get; private set; }
 
         /// <summary>
         /// Gets a name of the current spell card.

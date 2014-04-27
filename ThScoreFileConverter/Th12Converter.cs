@@ -162,7 +162,7 @@ namespace ThScoreFileConverter
                 new CardInfo(112, "「平安京の悪夢」",                     Stage.Extra, Level.Extra),
                 new CardInfo(113, "恨弓「源三位頼政の弓」",               Stage.Extra, Level.Extra)
             };
-            CardTable = cardList.ToDictionary(card => card.Number);
+            CardTable = cardList.ToDictionary(card => card.Id);
 
             var levels = Utils.GetEnumerator<Level>();
             var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();
