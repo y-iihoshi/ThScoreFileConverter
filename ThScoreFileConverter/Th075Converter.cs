@@ -464,18 +464,6 @@ namespace ThScoreFileConverter
             [EnumAltName("7")] St7
         }
 
-        public enum StageWithTotal
-        {
-            [EnumAltName("1")] St1,
-            [EnumAltName("2")] St2,
-            [EnumAltName("3")] St3,
-            [EnumAltName("4")] St4,
-            [EnumAltName("5")] St5,
-            [EnumAltName("6")] St6,
-            [EnumAltName("7")] St7,
-            [EnumAltName("0")] Total
-        }
-
         public override string SupportedVersions
         {
             get { return "1.11"; }
