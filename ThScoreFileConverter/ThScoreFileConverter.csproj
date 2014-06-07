@@ -94,6 +94,7 @@
     <Compile Include="Th08Converter.cs" />
     <Compile Include="Th095Converter.cs" />
     <Compile Include="Th09Converter.cs" />
+    <Compile Include="Th105Converter.cs" />
     <Compile Include="Th125Converter.cs" />
     <Compile Include="Th128Converter.cs" />
     <Compile Include="Th12Converter.cs" />
@@ -144,6 +145,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <AppDesigner Include="Properties\" />
   </ItemGroup>

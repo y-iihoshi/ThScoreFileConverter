@@ -32,7 +32,7 @@ namespace ThScoreFileConverter
         public SpellCardInfo(int id, string name, TStage stage, params TLevel[] levels)
         {
             if (id <= 0)
-                throw new ArgumentOutOfRangeException("number");
+                throw new ArgumentOutOfRangeException("id");
 
             this.Id = id;
             this.Name = name;

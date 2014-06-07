@@ -171,6 +171,9 @@
   <data name="keyTh14" xml:space="preserve">
     <value>TH14</value>
   </data>
+  <data name="keyTh143" xml:space="preserve">
+    <value>TH143</value>
+  </data>
   <data name="msgEndConversion" xml:space="preserve">
     <value>出力が完了しました。</value>
   </data>

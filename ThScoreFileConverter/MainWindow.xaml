@@ -27,9 +27,10 @@
             <ComboBoxItem Name="TH128" Content="妖精大戦争"/>
             <ComboBoxItem Name="TH13" Content="東方神霊廟"/>
             <ComboBoxItem Name="TH14" Content="東方輝針城"/>
+            <ComboBoxItem Name="TH143" Content="弾幕アマノジャク" IsEnabled="False"/>
             <Separator/>
             <ComboBoxItem Name="TH075" Content="東方萃夢想"/>
-            <ComboBoxItem Name="TH105" Content="東方緋想天" IsEnabled="False"/>
+            <ComboBoxItem Name="TH105" Content="東方緋想天"/>
             <ComboBoxItem Name="TH123" Content="東方非想天則" IsEnabled="False"/>
             <ComboBoxItem Name="TH135" Content="東方心綺楼" IsEnabled="False"/>
         </ComboBox>

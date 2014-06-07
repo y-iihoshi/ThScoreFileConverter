@@ -2946,6 +2946,380 @@ SpellName: %T95CARD122" border=0&gt;
 
 ----------------------------------------
 
+## 東方緋想天用テンプレート書式 {: #Th105Formats }
+
+### 御札戦歴 {: #T105C }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="4">書式</td>
+  <td colspan="2"><code>%T105C[xxx][yy][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[xxx]</code></td>
+  <td>
+   スペルカードの番号など
+<dl class="format">
+ <dt><code>[000]</code></dt><dd>全スペルカードの合計値</dd>
+ <dt><code>[001～100]</code></dt><dd>スペルカードの番号</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[yy]</code></td>
+  <td>
+   キャラの名前
+<dl class="format">
+ <dt><code>[RM]</code></dt><dd>霊夢</dd>
+ <dt><code>[MR]</code></dt><dd>魔理沙</dd>
+ <dt><code>[SK]</code></dt><dd>咲夜</dd>
+ <dt><code>[AL]</code></dt><dd>アリス</dd>
+ <dt><code>[PC]</code></dt><dd>パチュリー</dd>
+ <dt><code>[YM]</code></dt><dd>妖夢</dd>
+ <dt><code>[RL]</code></dt><dd>レミリア</dd>
+ <dt><code>[YU]</code></dt><dd>幽々子</dd>
+ <dt><code>[YK]</code></dt><dd>紫</dd>
+ <dt><code>[SU]</code></dt><dd>萃香</dd>
+ <dt><code>[RS]</code></dt><dd>鈴仙</dd>
+ <dt><code>[AY]</code></dt><dd>文</dd>
+ <dt><code>[KM]</code></dt><dd>小町</dd>
+ <dt><code>[IK]</code></dt><dd>衣玖</dd>
+ <dt><code>[TN]</code></dt><dd>天子</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[1]</code></dt><dd>取得回数（勝率の分子）</dd>
+ <dt><code>[2]</code></dt><dd>挑戦回数（勝率の分母）</dd>
+ <dt><code>[3]</code></dt><dd>残り時間</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T105C001RM1</code></dt>
+ <dd>霊夢の星符「ポラリスユニーク」(Easy) の取得回数</dd>
+ <dt><code>%T105C008MR2</code></dt>
+ <dd>魔理沙の剣符「ソルジャーオブクロス」(Lunatic) の挑戦回数</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>キャラが異なると、スペルカードの番号が同じでもその中身は異なります。</li>
+ <li>存在しないキャラと番号の組み合わせ（霊夢の No.77 など）は無視されます。</li>
+ <li>
+  残り時間は分秒が「<samp>mm:ss</samp>」の形式で出力されます。<br />
+  なお、スコアファイルにはフレーム数単位で保存されているため、60fps 固定と見なして換算した結果を出力しています。
+ </li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+### スペルカード基本情報 {: #T105CARD }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="4">書式</td>
+  <td colspan="2"><code>%T105CARD[xxx][yy][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[xxx]</code></td>
+  <td>
+   スペルカードの番号
+<dl class="format">
+ <dt><code>[001～100]</code></dt><dd>スペルカードの番号</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[yy]</code></td>
+  <td>
+   キャラの名前
+<dl class="format">
+ <dt><code>[RM]</code></dt><dd>霊夢</dd>
+ <dt><code>[MR]</code></dt><dd>魔理沙</dd>
+ <dt><code>[SK]</code></dt><dd>咲夜</dd>
+ <dt><code>[AL]</code></dt><dd>アリス</dd>
+ <dt><code>[PC]</code></dt><dd>パチュリー</dd>
+ <dt><code>[YM]</code></dt><dd>妖夢</dd>
+ <dt><code>[RL]</code></dt><dd>レミリア</dd>
+ <dt><code>[YU]</code></dt><dd>幽々子</dd>
+ <dt><code>[YK]</code></dt><dd>紫</dd>
+ <dt><code>[SU]</code></dt><dd>萃香</dd>
+ <dt><code>[RS]</code></dt><dd>鈴仙</dd>
+ <dt><code>[AY]</code></dt><dd>文</dd>
+ <dt><code>[KM]</code></dt><dd>小町</dd>
+ <dt><code>[IK]</code></dt><dd>衣玖</dd>
+ <dt><code>[TN]</code></dt><dd>天子</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[N]</code></dt><dd>スペルカードの名前</dd>
+ <dt><code>[R]</code></dt>
+ <dd>スペルカードの難易度 (Easy, Normal, Hard, Lunatic)</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T105CARD001SKN</code></dt><dd>星符「ポラリスユニーク」</dd>
+ <dt><code>%T105CARD001SKR</code></dt><dd>Easy</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>キャラが異なると、スペルカードの番号が同じでもその中身は異なります。</li>
+ <li>存在しないキャラと番号の組み合わせ（霊夢の No.77 など）は無視されます。</li>
+ <li><a href="../manual.html#HowToUse">未挑戦のスペルカード名を出力しない</a>設定にしている場合、該当するものは名前・難易度ともに「<samp>?????</samp>」のように出力されます。（一応ネタバレ防止のため。）</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+### スペルカード蒐集率 {: #T105CRG }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="4">書式</td>
+  <td colspan="2"><code>%T105CRG[x][yy][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   難易度など
+<dl class="format">
+ <dt><code>[E]</code></dt><dd>Easy</dd>
+ <dt><code>[N]</code></dt><dd>Normal</dd>
+ <dt><code>[H]</code></dt><dd>Hard</dd>
+ <dt><code>[L]</code></dt><dd>Lunatic</dd>
+ <dt><code>[T]</code></dt><dd>Total</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[yy]</code></td>
+  <td>
+   キャラの名前
+<dl class="format">
+ <dt><code>[RM]</code></dt><dd>霊夢</dd>
+ <dt><code>[MR]</code></dt><dd>魔理沙</dd>
+ <dt><code>[SK]</code></dt><dd>咲夜</dd>
+ <dt><code>[AL]</code></dt><dd>アリス</dd>
+ <dt><code>[PC]</code></dt><dd>パチュリー</dd>
+ <dt><code>[YM]</code></dt><dd>妖夢</dd>
+ <dt><code>[RL]</code></dt><dd>レミリア</dd>
+ <dt><code>[YU]</code></dt><dd>幽々子</dd>
+ <dt><code>[YK]</code></dt><dd>紫</dd>
+ <dt><code>[SU]</code></dt><dd>萃香</dd>
+ <dt><code>[RS]</code></dt><dd>鈴仙</dd>
+ <dt><code>[AY]</code></dt><dd>文</dd>
+ <dt><code>[KM]</code></dt><dd>小町</dd>
+ <dt><code>[IK]</code></dt><dd>衣玖</dd>
+ <dt><code>[TN]</code></dt><dd>天子</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[1]</code></dt><dd>取得数（勝率の分子）</dd>
+ <dt><code>[2]</code></dt><dd>挑戦数（勝率の分母）</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T105CRGEYK1</code></dt><dd>Easy 紫の取得数</dd>
+ <dt><code>%T105CRGHRL2</code></dt><dd>Hard レミリアの挑戦数</dd>
+</dl>
+  </td>
+ </tr>
+</table>
+
+### デッキ用カード蒐集歴 {: #T105DC }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="5">書式</td>
+  <td colspan="2"><code>%T105DC[ww][x][yy][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[ww]</code></td>
+  <td>
+   キャラの名前
+<dl class="format">
+ <dt><code>[RM]</code></dt><dd>霊夢</dd>
+ <dt><code>[MR]</code></dt><dd>魔理沙</dd>
+ <dt><code>[SK]</code></dt><dd>咲夜</dd>
+ <dt><code>[AL]</code></dt><dd>アリス</dd>
+ <dt><code>[PC]</code></dt><dd>パチュリー</dd>
+ <dt><code>[YM]</code></dt><dd>妖夢</dd>
+ <dt><code>[RL]</code></dt><dd>レミリア</dd>
+ <dt><code>[YU]</code></dt><dd>幽々子</dd>
+ <dt><code>[YK]</code></dt><dd>紫</dd>
+ <dt><code>[SU]</code></dt><dd>萃香</dd>
+ <dt><code>[RS]</code></dt><dd>鈴仙</dd>
+ <dt><code>[AY]</code></dt><dd>文</dd>
+ <dt><code>[KM]</code></dt><dd>小町</dd>
+ <dt><code>[IK]</code></dt><dd>衣玖</dd>
+ <dt><code>[TN]</code></dt><dd>天子</dd>
+</dl>
+   （System ではこの指定は無視されます。）
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   カードの種類
+<dl class="format">
+ <dt><code>[Y]</code></dt><dd>System</dd>
+ <dt><code>[K]</code></dt><dd>Skill</dd>
+ <dt><code>[P]</code></dt><dd>Spell</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[yy]</code></td>
+  <td>
+   カードの番号
+<dl class="format">
+ <dt><code>[01～11]</code></dt><dd>カードの番号</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[N]</code></dt><dd>カードの名前</dd>
+ <dt><code>[C]</code></dt><dd>蒐集枚数</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T105DCRMY01N</code></dt><dd>「気質発現」</dd>
+ <dt><code>%T105DCMRK02N</code></dt><dd>ミアズマスウィープ</dd>
+ <dt><code>%T105DCSKP03C</code></dt><dd>傷符「インスクライブレッドソウル」の蒐集枚数</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>キャラが異なると、カードの番号が同じでもその中身は異なります。（System は除く。）</li>
+ <li>存在しないカードの指定（霊夢の Spell No.09 など）は無視されます。</li>
+ <li><a href="../manual.html#HowToUse">未挑戦のスペルカード名を出力しない</a>設定にしている場合、未入手のカードの名前が「<samp>?????</samp>」のように出力されます。（一応ネタバレ防止のため。）</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+<!--
+
+### キャラクター戦歴 {: #T105CHR }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="4">書式</td>
+  <td colspan="2"><code>%T105CHR[x][yy][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   難易度
+<dl class="format">
+ <dt><code>[E]</code></dt><dd>Easy</dd>
+ <dt><code>[N]</code></dt><dd>Normal</dd>
+ <dt><code>[H]</code></dt><dd>Hard</dd>
+ <dt><code>[L]</code></dt><dd>Lunatic</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[yy]</code></td>
+  <td>
+   キャラの名前
+<dl class="format">
+ <dt><code>[RM]</code></dt><dd>霊夢</dd>
+ <dt><code>[MR]</code></dt><dd>魔理沙</dd>
+ <dt><code>[SK]</code></dt><dd>咲夜</dd>
+ <dt><code>[AL]</code></dt><dd>アリス</dd>
+ <dt><code>[PC]</code></dt><dd>パチュリー</dd>
+ <dt><code>[YM]</code></dt><dd>妖夢</dd>
+ <dt><code>[RL]</code></dt><dd>レミリア</dd>
+ <dt><code>[YU]</code></dt><dd>幽々子</dd>
+ <dt><code>[YK]</code></dt><dd>紫</dd>
+ <dt><code>[SU]</code></dt><dd>萃香</dd>
+ <dt><code>[RS]</code></dt><dd>鈴仙</dd>
+ <dt><code>[AY]</code></dt><dd>文</dd>
+ <dt><code>[KM]</code></dt><dd>小町</dd>
+ <dt><code>[IK]</code></dt><dd>衣玖</dd>
+ <dt><code>[TN]</code></dt><dd>天子</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[1]</code></dt><dd>クリア回数</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T105CHRHRL1</code></dt><dd>Hard レミリアのクリア回数</dd>
+</dl>
+  </td>
+ </tr>
+</table>
+
+-->
+
+----------------------------------------
+
 ## 東方地霊殿用テンプレート書式 {: #Th11Formats }
 
 ### スコアランキング {: #T11SCR }
