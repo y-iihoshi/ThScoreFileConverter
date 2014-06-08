@@ -27,12 +27,10 @@ namespace ThScoreFileConverter
         private static readonly Dictionary<Chara, List<StageInfo>> StageInfoTable;
         private static readonly Dictionary<Chara, IEnumerable<CharaCardIdPair>> EnemyCardIdTable;
 
-        private static readonly string LevelPattern;
         private static readonly string LevelWithTotalPattern;
         private static readonly string CharaPattern;
         private static readonly string CardTypePattern;
 
-        private static readonly Func<string, Level> ToLevel;
         private static readonly Func<string, LevelWithTotal> ToLevelWithTotal;
         private static readonly Func<string, Chara> ToChara;
         private static readonly Func<string, CardType> ToCardType;
@@ -580,13 +578,10 @@ namespace ThScoreFileConverter
                 stageInfoPair => stageInfoPair.Value.SelectMany(
                     stageInfo => stageInfo.CardIds.Select(id => new CharaCardIdPair(stageInfo.Enemy, id))));
 
-            var levels = Utils.GetEnumerator<Level>();
             var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();
             var charas = Utils.GetEnumerator<Chara>();
             var cardTypes = Utils.GetEnumerator<CardType>();
 
-            LevelPattern = string.Join(
-                string.Empty, levels.Select(lv => lv.ToShortName()).ToArray());
             LevelWithTotalPattern = string.Join(
                 string.Empty, levelsWithTotal.Select(lv => lv.ToShortName()).ToArray());
             CharaPattern = string.Join(
@@ -596,8 +591,6 @@ namespace ThScoreFileConverter
 
             var comparisonType = StringComparison.OrdinalIgnoreCase;
 
-            ToLevel = (shortName =>
-                levels.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
             ToLevelWithTotal = (shortName =>
                 levelsWithTotal.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
             ToChara = (shortName =>
@@ -951,7 +944,7 @@ namespace ThScoreFileConverter
                             return SystemCardNameTable[number - 1];
                         }
                         else
-                            return card.MaxNumber.ToString();
+                            return this.ToNumberString(card.MaxNumber);
                     }
                     else
                         return match.ToString();
@@ -973,7 +966,7 @@ namespace ThScoreFileConverter
                             return CardNameTable[key];
                         }
                         else
-                            return card.MaxNumber.ToString();
+                            return this.ToNumberString(card.MaxNumber);
                     }
                     else
                         return match.ToString();
@@ -981,29 +974,6 @@ namespace ThScoreFileConverter
             });
             return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
         }
-
-#if false
-        // %T105CHR[x][yy][z]
-        private string ReplaceChara(string input)
-        {
-            var pattern = Utils.Format(@"%T105CHR([{0}])({1})(1)", LevelPattern, CharaPattern);
-            var evaluator = new MatchEvaluator(match =>
-            {
-                var level = ToLevel(match.Groups[1].Value);
-                var chara = ToChara(match.Groups[2].Value);
-                var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
-
-                switch (type)
-                {
-                    case 1:
-                        return this.ToNumberString(this.allScoreData.StoryClearCounts[chara]);
-                    default:
-                        return match.ToString();
-                }
-            });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
-        }
-#endif
 
         private class CharaCardIdPair : Pair<Chara, int>
         {
@@ -1032,6 +1002,7 @@ namespace ThScoreFileConverter
                 this.CardIds = cardIds.ToList();
             }
 
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public Stage Stage { get; private set; }
 
             public Chara Enemy { get; private set; }
