@@ -6277,3 +6277,374 @@ SpellName: %T125CARD122" border=0&gt;
   </td>
  </tr>
 </table>
+
+----------------------------------------
+
+## 弾幕アマノジャク用テンプレート書式 {: #Th143Formats }
+
+### スコア一覧 {: #T143SCR }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="5">書式</td>
+  <td colspan="2"><code>%T143SCR[w][x][y][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[w]</code></td>
+  <td>
+   日付
+<dl class="format">
+ <dt><code>[1～9]</code></dt><dd>一日目～九日目</dd>
+ <dt><code>[L]</code></dt><dd>最終日</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   シーン
+<dl class="format">
+ <dt><code>[1～9]</code></dt><dd>1～9</dd>
+ <dt><code>[0]</code></dt><dd>10</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[y]</code></td>
+  <td>
+   アイテムなど
+<dl class="format">
+ <dt><code>[0]</code></dt><dd>ノーアイテム</dd>
+ <dt><code>[1]</code></dt><dd>ひらり布</dd>
+ <dt><code>[2]</code></dt><dd>天狗のトイカメラ</dd>
+ <dt><code>[3]</code></dt><dd>隙間の折りたたみ傘</dd>
+ <dt><code>[4]</code></dt><dd>亡霊の送り提灯</dd>
+ <dt><code>[5]</code></dt><dd>血に飢えた陰陽玉</dd>
+ <dt><code>[6]</code></dt><dd>四尺マジックボム</dd>
+ <dt><code>[7]</code></dt><dd>身代わり地蔵</dd>
+ <dt><code>[8]</code></dt><dd>呪いのデコイ人形</dd>
+ <dt><code>[9]</code></dt><dd>打ち出の小槌（レプリカ）</dd>
+ <dt><code>[T]</code></dt><dd>合計</dd>
+</dl>
+   （項目が得点の場合、この指定は無視されます。）
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[1]</code></dt><dd>得点</dd>
+ <dt><code>[2]</code></dt><dd>挑戦回数</dd>
+ <dt><code>[3]</code></dt><dd>クリア回数</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T143SCR11T1</code></dt><dd>一日目 シーン 1 の得点</dd>
+ <dt><code>%T143SCR2313</code></dt><dd>二日目 シーン 3 のひらり布でのクリア回数</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>存在しない日付とシーンの組み合わせ（一日目 シーン 7 など）は無視されます。</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+### スコア合計 {: #T143SCRTL }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="3">書式</td>
+  <td colspan="2"><code>%T143SCRTL[x][y]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   アイテムなど
+<dl class="format">
+ <dt><code>[0]</code></dt><dd>ノーアイテム</dd>
+ <dt><code>[1]</code></dt><dd>ひらり布</dd>
+ <dt><code>[2]</code></dt><dd>天狗のトイカメラ</dd>
+ <dt><code>[3]</code></dt><dd>隙間の折りたたみ傘</dd>
+ <dt><code>[4]</code></dt><dd>亡霊の送り提灯</dd>
+ <dt><code>[5]</code></dt><dd>血に飢えた陰陽玉</dd>
+ <dt><code>[6]</code></dt><dd>四尺マジックボム</dd>
+ <dt><code>[7]</code></dt><dd>身代わり地蔵</dd>
+ <dt><code>[8]</code></dt><dd>呪いのデコイ人形</dd>
+ <dt><code>[9]</code></dt><dd>打ち出の小槌（レプリカ）</dd>
+ <dt><code>[T]</code></dt><dd>合計</dd>
+</dl>
+   （項目が得点の合計の場合、この指定は無視されます。）
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[y]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[1]</code></dt><dd>得点の合計</dd>
+ <dt><code>[2]</code></dt><dd>挑戦回数の合計</dd>
+ <dt><code>[3]</code></dt><dd>クリア回数の合計</dd>
+ <dt><code>[4]</code></dt><dd>クリアシーン数</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T143SCRTLT1</code></dt><dd>得点の合計</dd>
+ <dt><code>%T143SCRTL04</code></dt><dd>ノーアイテムでのクリアシーン数</dd>
+</dl>
+  </td>
+ </tr>
+</table>
+
+### スペルカード情報 {: #T143CARD }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="4">書式</td>
+  <td colspan="2"><code>%T143CARD[x][y][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   日付
+<dl class="format">
+ <dt><code>[1～9]</code></dt><dd>一日目～九日目</dd>
+ <dt><code>[L]</code></dt><dd>最終日</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[y]</code></td>
+  <td>
+   シーン
+<dl class="format">
+ <dt><code>[1～9]</code></dt><dd>1～9</dd>
+ <dt><code>[0]</code></dt><dd>10</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[1]</code></dt><dd>敵の名前</dd>
+ <dt><code>[2]</code></dt><dd>スペルカード名</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T143CARD111</code></dt><dd>一日目 シーン 1 の敵の名前</dd>
+ <dt><code>%T143CARD232</code></dt><dd>二日目 シーン 3 のスペルカード名</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>存在しない日付とシーンの組み合わせ（一日目 シーン 7 など）は無視されます。</li>
+ <li><a href="../manual.html#HowToUse">未挑戦のスペルカード名を出力しない</a>設定にしている場合、該当するものは敵の名前・スペルカード名ともに「<samp>?????</samp>」のように出力されます。（一応ネタバレ防止のため。）</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+### 異名情報 {: #T143NICK }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="2">書式</td>
+  <td colspan="2"><code>%T143NICK[xx]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[xx]</code></td>
+  <td>
+   番号
+<dl class="format">
+ <dt><code>[01～70]</code></dt><dd>1～70</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T143NICK11</code></dt><dd>はじめてのアマノジャク</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>未取得の異名は「<samp>?????</samp>」のように出力されます。</li>
+ <li>No.29 の異名のゲーム内表示は誤記と思われるため、修正しています。</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+### 総プレイ時間 {: #T143TIMEPLY }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td>書式</td>
+  <td><code>%T143TIMEPLY</code></td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td>
+<ul>
+ <li>時分秒およびミリ秒が「<samp>h:mm:ss.ddd</samp>」の形式で出力されます。</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+### スクリーンショット出力 {: #T143SHOT }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="3">書式</td>
+  <td colspan="2"><code>%T143SHOT[x][y]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   日付
+<dl class="format">
+ <dt><code>[1～9]</code></dt><dd>一日目～九日目</dd>
+ <dt><code>[L]</code></dt><dd>最終日</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[y]</code></td>
+  <td>
+   シーン
+<dl class="format">
+ <dt><code>[1～9]</code></dt><dd>1～9</dd>
+ <dt><code>[0]</code></dt><dd>10</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T143SHOT12</code></dt><dd>一日目 シーン 2 のスクリーンショット</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>存在しない日付とシーンの組み合わせ（一日目 シーン 7 など）は無視されます。</li>
+ <li>
+  このテンプレート書式は「<samp>&lt;img src="./screenshot/sc01_01.png" alt="～" title="～" border=0&gt;</samp>」のような HTML の IMG タグに置換されます。<br />
+  同時に、対象となるスクリーンショットファイル (sc??_??.dat<!--_-->) を PNG 形式に変換した画像ファイルが出力されます。
+ </li>
+ <li>IMG タグの alt 属性と title 属性には日時が出力されます。</li>
+ <li>画像ファイルは、「出力先(O):」欄で指定されたフォルダ内の「画像出力先(I):」欄で指定されたフォルダに出力されます。</li>
+ <li>画像ファイルの出力先フォルダが存在しない場合、本ツールが自動で作成します。</li>
+ <li>スクリーンショットファイルが存在しない場合、IMG タグや画像ファイルは出力されません。</li>
+ <li>スクリーンショットファイルの変換は、このテンプレート書式がテンプレートファイル内に無くても実行されます。</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+### スクリーンショット出力（詳細版） {: #T143SHOTEX }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="4">書式</td>
+  <td colspan="2"><code>%T143SHOTEX[x][y][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   日付
+<dl class="format">
+ <dt><code>[1～9]</code></dt><dd>一日目～九日目</dd>
+ <dt><code>[L]</code></dt><dd>最終日</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[y]</code></td>
+  <td>
+   シーン
+<dl class="format">
+ <dt><code>[1～9]</code></dt><dd>1～9</dd>
+ <dt><code>[0]</code></dt><dd>10</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[1]</code></dt><dd>画像ファイルへの相対パス</dd>
+ <dt><code>[2]</code></dt><dd>画像ファイルの幅 (px)</dd>
+ <dt><code>[3]</code></dt><dd>画像ファイルの高さ (px)</dd>
+ <dt><code>[4]</code></dt><dd>スクリーンショット撮影日時</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T143SHOTEX121</code></dt><dd>一日目 シーン 2 の画像ファイルへの相対パス</dd>
+ <dt><code>%T143SHOTEX234</code></dt><dd>二日目 シーン 3 のスクリーンショット撮影日時</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>存在しない日付とシーンの組み合わせ（一日目 シーン 7 など）は無視されます。</li>
+ <li>
+  このテンプレート書式を使って、例えば <code>%T143SHOT12</code> と同等の出力結果を得るには、テンプレートファイルに以下の通りに記載します。
+<pre><code>&lt;img src="%T143SHOTEX121" alt="SpellName: %T143CARD122" title="SpellName: %T143CARD122" border=0&gt;
+</code></pre>
+ </li>
+</ul>
+  </td>
+ </tr>
+</table>

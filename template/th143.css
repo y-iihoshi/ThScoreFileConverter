@@ -1,0 +1,20 @@
+/*
+ * th143.css
+ *	Cascading style sheet for TH143 result files
+ */
+
+td.scene {
+	min-width: 60px;
+}
+
+td.target {
+	min-width: 200px;
+}
+
+td.score {
+	min-width: 60px;
+}
+
+td.count {
+	min-width: 50px;
+}

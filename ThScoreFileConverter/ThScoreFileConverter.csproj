@@ -99,6 +99,7 @@
     <Compile Include="Th128Converter.cs" />
     <Compile Include="Th12Converter.cs" />
     <Compile Include="Th13Converter.cs" />
+    <Compile Include="Th143Converter.cs" />
     <Compile Include="Th14Converter.cs" />
     <Compile Include="ThConverterEventArgs.cs" />
     <Compile Include="ThConverterFactory.cs" />

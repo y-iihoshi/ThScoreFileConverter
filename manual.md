@@ -54,6 +54,7 @@ ThScoreFileConverter （以下、本ツール）は、東方 Project の各作�
 * 妖精大戦争 ver. 1.00a
 * 東方神霊廟 ver. 1.00c
 * 東方輝針城 ver. 1.00b
+* 弾幕アマノジャク ver. 1.00a
 
 ### 対応予定あり {: #WillSupport }
 
@@ -61,7 +62,6 @@ ThScoreFileConverter （以下、本ツール）は、東方 Project の各作�
 
 * 東方非想天則
 * 東方心綺楼
-* 弾幕アマノジャク
 
 ----------------------------------------
 
@@ -195,6 +195,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 2014/xx/xx ver. 1.8.0.0
 
 * 東方緋想天に対応
+* 弾幕アマノジャクに対応
 * 全体的にソースコードを整理（いつまでやるのか…）
 
 2014/04/13 ver. 1.7.0.0

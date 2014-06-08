@@ -34,6 +34,7 @@ namespace ThScoreFileConverter
             { Resources.keyTh128, typeof(Th128Converter) },
             { Resources.keyTh13,  typeof(Th13Converter)  },
             { Resources.keyTh14,  typeof(Th14Converter)  },
+            { Resources.keyTh143, typeof(Th143Converter) },
             { Resources.keyTh075, typeof(Th075Converter) },
             { Resources.keyTh105, typeof(Th105Converter) }
         };
