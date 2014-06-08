@@ -192,10 +192,11 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 ## ChangeLog {: #ChangeLog }
 
-2014/xx/xx ver. 1.8.0.0
+2014/06/08 ver. 1.8.0.0
 
 * 東方緋想天に対応
 * 弾幕アマノジャクに対応
+* テンプレートファイルのフッター部分の誤記・リンク先を修正
 * 全体的にソースコードを整理（いつまでやるのか…）
 
 2014/04/13 ver. 1.7.0.0
