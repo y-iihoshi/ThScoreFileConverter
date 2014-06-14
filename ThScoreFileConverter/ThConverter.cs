@@ -28,6 +28,16 @@ namespace ThScoreFileConverter
         protected static readonly string LevelWithTotalPattern;
 
         /// <summary>
+        /// Represents a regular expression of <see cref="Stage"/>.
+        /// </summary>
+        protected static readonly string StagePattern;
+
+        /// <summary>
+        /// Represents a regular expression of <see cref="StageWithTotal"/>.
+        /// </summary>
+        protected static readonly string StageWithTotalPattern;
+
+        /// <summary>
         /// Converts from the string matched with <see cref="LevelPattern"/> to a value of
         /// <see cref="Level"/>.
         /// </summary>
@@ -40,6 +50,18 @@ namespace ThScoreFileConverter
         protected static readonly Func<string, LevelWithTotal> ToLevelWithTotal;
 
         /// <summary>
+        /// Converts from the string matched with <see cref="StagePattern"/> to a value of
+        /// <see cref="Stage"/>.
+        /// </summary>
+        protected static readonly Func<string, Stage> ToStage;
+
+        /// <summary>
+        /// Converts from the string matched with <see cref="StageWithTotalPattern"/> to a value of
+        /// <see cref="StageWithTotal"/>.
+        /// </summary>
+        protected static readonly Func<string, StageWithTotal> ToStageWithTotal;
+
+        /// <summary>
         /// Initializes static members of the <see cref="ThConverter"/> class.
         /// </summary>
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = "Reviewed.")]
@@ -47,11 +69,17 @@ namespace ThScoreFileConverter
         {
             var levels = Utils.GetEnumerator<Level>();
             var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();
+            var stages = Utils.GetEnumerator<Stage>();
+            var stagesWithTotal = Utils.GetEnumerator<StageWithTotal>();
 
             LevelPattern = string.Join(
                 string.Empty, levels.Select(lv => lv.ToShortName()).ToArray());
             LevelWithTotalPattern = string.Join(
                 string.Empty, levelsWithTotal.Select(lv => lv.ToShortName()).ToArray());
+            StagePattern = string.Join(
+                string.Empty, stages.Select(st => st.ToShortName()).ToArray());
+            StageWithTotalPattern = string.Join(
+                string.Empty, stagesWithTotal.Select(st => st.ToShortName()).ToArray());
 
             var comparisonType = StringComparison.OrdinalIgnoreCase;
 
@@ -59,6 +87,10 @@ namespace ThScoreFileConverter
                 levels.First(lv => lv.ToShortName().Equals(shortName, comparisonType));
             ToLevelWithTotal = (shortName) =>
                 levelsWithTotal.First(lv => lv.ToShortName().Equals(shortName, comparisonType));
+            ToStage = (shortName) =>
+                stages.First(st => st.ToShortName().Equals(shortName, comparisonType));
+            ToStageWithTotal = (shortName) =>
+                stagesWithTotal.First(st => st.ToShortName().Equals(shortName, comparisonType));
         }
 
         /// <summary>
@@ -158,6 +190,108 @@ namespace ThScoreFileConverter
             /// Represents total across levels.
             /// </summary>
             [EnumAltName("T")]
+            Total
+        }
+
+        /// <summary>
+        /// Represents stage.
+        /// </summary>
+        public enum Stage
+        {
+            /// <summary>
+            /// Represents stage 1.
+            /// </summary>
+            [EnumAltName("1")]
+            St1,
+
+            /// <summary>
+            /// Represents stage 2.
+            /// </summary>
+            [EnumAltName("2")]
+            St2,
+
+            /// <summary>
+            /// Represents stage 3.
+            /// </summary>
+            [EnumAltName("3")]
+            St3,
+
+            /// <summary>
+            /// Represents stage 4.
+            /// </summary>
+            [EnumAltName("4")]
+            St4,
+
+            /// <summary>
+            /// Represents stage 5.
+            /// </summary>
+            [EnumAltName("5")]
+            St5,
+
+            /// <summary>
+            /// Represents stage 6.
+            /// </summary>
+            [EnumAltName("6")]
+            St6,
+
+            /// <summary>
+            /// Represents Extra stage.
+            /// </summary>
+            [EnumAltName("X")]
+            Extra
+        }
+
+        /// <summary>
+        /// Represents stage and total.
+        /// </summary>
+        public enum StageWithTotal
+        {
+            /// <summary>
+            /// Represents stage 1.
+            /// </summary>
+            [EnumAltName("1")]
+            St1,
+
+            /// <summary>
+            /// Represents stage 2.
+            /// </summary>
+            [EnumAltName("2")]
+            St2,
+
+            /// <summary>
+            /// Represents stage 3.
+            /// </summary>
+            [EnumAltName("3")]
+            St3,
+
+            /// <summary>
+            /// Represents stage 4.
+            /// </summary>
+            [EnumAltName("4")]
+            St4,
+
+            /// <summary>
+            /// Represents stage 5.
+            /// </summary>
+            [EnumAltName("5")]
+            St5,
+
+            /// <summary>
+            /// Represents stage 6.
+            /// </summary>
+            [EnumAltName("6")]
+            St6,
+
+            /// <summary>
+            /// Represents Extra stage.
+            /// </summary>
+            [EnumAltName("X")]
+            Extra,
+
+            /// <summary>
+            /// Represents total across stages.
+            /// </summary>
+            [EnumAltName("0")]
             Total
         }
 

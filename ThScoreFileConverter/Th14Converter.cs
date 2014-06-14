@@ -18,7 +18,7 @@ namespace ThScoreFileConverter
     using System.Linq;
     using System.Text;
     using System.Text.RegularExpressions;
-    using CardInfo = SpellCardInfo<Th14Converter.Stage, ThConverter.Level>;
+    using CardInfo = SpellCardInfo<ThConverter.Stage, ThConverter.Level>;
 
     internal class Th14Converter : ThConverter
     {
@@ -26,13 +26,9 @@ namespace ThScoreFileConverter
 
         private static readonly string CharaPattern;
         private static readonly string CharaWithTotalPattern;
-        private static readonly string StagePattern;
-        private static readonly string StageWithTotalPattern;
 
         private static readonly Func<string, Chara> ToChara;
         private static readonly Func<string, CharaWithTotal> ToCharaWithTotal;
-        private static readonly Func<string, Stage> ToStage;
-        private static readonly Func<string, StageWithTotal> ToStageWithTotal;
 
         private AllScoreData allScoreData = null;
 
@@ -169,17 +165,11 @@ namespace ThScoreFileConverter
 
             var charas = Utils.GetEnumerator<Chara>();
             var charasWithTotal = Utils.GetEnumerator<CharaWithTotal>();
-            var stages = Utils.GetEnumerator<Stage>();
-            var stagesWithTotal = Utils.GetEnumerator<StageWithTotal>();
 
             CharaPattern = string.Join(
                 "|", charas.Select(ch => ch.ToShortName()).ToArray());
             CharaWithTotalPattern = string.Join(
                 "|", charasWithTotal.Select(ch => ch.ToShortName()).ToArray());
-            StagePattern = string.Join(
-                string.Empty, stages.Select(st => st.ToShortName()).ToArray());
-            StageWithTotalPattern = string.Join(
-                string.Empty, stagesWithTotal.Select(st => st.ToShortName()).ToArray());
 
             var comparisonType = StringComparison.OrdinalIgnoreCase;
 
@@ -187,10 +177,6 @@ namespace ThScoreFileConverter
                 charas.First(ch => ch.ToShortName().Equals(shortName, comparisonType)));
             ToCharaWithTotal = (shortName =>
                 charasWithTotal.First(ch => ch.ToShortName().Equals(shortName, comparisonType)));
-            ToStage = (shortName =>
-                stages.First(st => st.ToShortName().Equals(shortName, comparisonType)));
-            ToStageWithTotal = (shortName =>
-                stagesWithTotal.First(st => st.ToShortName().Equals(shortName, comparisonType)));
         }
 
         public Th14Converter()
@@ -237,29 +223,6 @@ namespace ThScoreFileConverter
             [EnumAltName("SA")] SakuyaA,
             [EnumAltName("SB")] SakuyaB,
             [EnumAltName("TL")] Total
-        }
-
-        public enum Stage
-        {
-            [EnumAltName("1")] St1,
-            [EnumAltName("2")] St2,
-            [EnumAltName("3")] St3,
-            [EnumAltName("4")] St4,
-            [EnumAltName("5")] St5,
-            [EnumAltName("6")] St6,
-            [EnumAltName("X")] Extra
-        }
-
-        public enum StageWithTotal
-        {
-            [EnumAltName("1")] St1,
-            [EnumAltName("2")] St2,
-            [EnumAltName("3")] St3,
-            [EnumAltName("4")] St4,
-            [EnumAltName("5")] St5,
-            [EnumAltName("6")] St6,
-            [EnumAltName("X")] Extra,
-            [EnumAltName("0")] Total
         }
 
         public enum StagePractice

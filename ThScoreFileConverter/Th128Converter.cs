@@ -26,11 +26,11 @@ namespace ThScoreFileConverter
 
         private static readonly string RoutePattern;
         private static readonly string RouteWithTotalPattern;
-        private static readonly string StageWithTotalPattern;
+        private static readonly new string StageWithTotalPattern;
 
         private static readonly Func<string, Route> ToRoute;
         private static readonly Func<string, RouteWithTotal> ToRouteWithTotal;
-        private static readonly Func<string, StageWithTotal> ToStageWithTotal;
+        private static readonly new Func<string, StageWithTotal> ToStageWithTotal;
 
         private AllScoreData allScoreData = null;
 
@@ -343,7 +343,7 @@ namespace ThScoreFileConverter
             [EnumAltName("TL")] Total
         }
 
-        public enum Stage
+        public new enum Stage
         {
             [EnumAltName("A11")] A_1,
             [EnumAltName("A12")] A1_2,
@@ -363,7 +363,7 @@ namespace ThScoreFileConverter
             [EnumAltName("EXT")] Extra
         }
 
-        public enum StageWithTotal
+        public new enum StageWithTotal
         {
             [EnumAltName("A11")] A_1,
             [EnumAltName("A12")] A1_2,

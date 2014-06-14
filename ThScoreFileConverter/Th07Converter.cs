@@ -29,15 +29,15 @@ namespace ThScoreFileConverter
         private static readonly new string LevelWithTotalPattern;
         private static readonly string CharaPattern;
         private static readonly string CharaWithTotalPattern;
-        private static readonly string StagePattern;
-        private static readonly string StageWithTotalPattern;
+        private static readonly new string StagePattern;
+        private static readonly new string StageWithTotalPattern;
 
         private static readonly new Func<string, Level> ToLevel;
         private static readonly new Func<string, LevelWithTotal> ToLevelWithTotal;
         private static readonly Func<string, Chara> ToChara;
         private static readonly Func<string, CharaWithTotal> ToCharaWithTotal;
-        private static readonly Func<string, Stage> ToStage;
-        private static readonly Func<string, StageWithTotal> ToStageWithTotal;
+        private static readonly new Func<string, Stage> ToStage;
+        private static readonly new Func<string, StageWithTotal> ToStageWithTotal;
 
         private AllScoreData allScoreData = null;
 
@@ -290,7 +290,7 @@ namespace ThScoreFileConverter
             [EnumAltName("TL")] Total
         }
 
-        public enum Stage
+        public new enum Stage
         {
             [EnumAltName("1")] St1,
             [EnumAltName("2")] St2,
@@ -302,7 +302,7 @@ namespace ThScoreFileConverter
             [EnumAltName("P")] Phantasm
         }
 
-        public enum StageWithTotal
+        public new enum StageWithTotal
         {
             [EnumAltName("1")] St1,
             [EnumAltName("2")] St2,

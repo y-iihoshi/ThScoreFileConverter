@@ -453,7 +453,7 @@ namespace ThScoreFileConverter
             [EnumAltName("TL")] Total
         }
 
-        public enum Stage
+        public new enum Stage
         {
             [EnumAltName("1")] St1,
             [EnumAltName("2")] St2,
