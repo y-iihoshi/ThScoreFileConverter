@@ -28,16 +28,14 @@ namespace ThScoreFileConverter
     {
         private static readonly Dictionary<LevelScenePair, EnemyCardPair> SpellCards;
 
-        private static readonly new string LevelPattern;
-        private static readonly string LevelLongPattern;
+        private static readonly new EnumShortNameParser<Level> LevelParser;
 
-        private static readonly new Func<string, Level> ToLevel;
+        private static readonly string LevelLongPattern;
 
         private AllScoreData allScoreData = null;
         private Dictionary<LevelScenePair, BestShotPair> bestshots = null;
 
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = "Reviewed.")]
-        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
         static Th095Converter()
         {
             // Thanks to thwiki.info
@@ -130,14 +128,10 @@ namespace ThScoreFileConverter
                 { new LevelScenePair(Level.Extra, 8), new EnemyCardPair(Enemy.Suika,     "「百万鬼夜行」") }
             };
 
+            LevelParser = new EnumShortNameParser<Level>();
+
             var levels = Utils.GetEnumerator<Level>();
-
-            LevelPattern = string.Join(string.Empty, levels.Select(lv => lv.ToShortName()).ToArray());
             LevelLongPattern = string.Join("|", levels.Select(lv => lv.ToLongName()).ToArray());
-
-            var comparisonType = StringComparison.OrdinalIgnoreCase;
-
-            ToLevel = (shortName => levels.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
         }
 
         public Th095Converter()
@@ -415,10 +409,10 @@ namespace ThScoreFileConverter
         // %T95SCR[x][y][z]
         private string ReplaceScore(string input)
         {
-            var pattern = Utils.Format(@"%T95SCR([{0}])([1-9])([1-4])", LevelPattern);
+            var pattern = Utils.Format(@"%T95SCR({0})([1-9])([1-4])", LevelParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevel(match.Groups[1].Value);
+                var level = LevelParser.Parse(match.Groups[1].Value);
                 var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
@@ -479,10 +473,10 @@ namespace ThScoreFileConverter
         // %T95CARD[x][y][z]
         private string ReplaceCard(string input, bool hideUntriedCards)
         {
-            var pattern = Utils.Format(@"%T95CARD([{0}])([1-9])([12])", LevelPattern);
+            var pattern = Utils.Format(@"%T95CARD({0})([1-9])([12])", LevelParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevel(match.Groups[1].Value);
+                var level = LevelParser.Parse(match.Groups[1].Value);
                 var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
@@ -504,10 +498,10 @@ namespace ThScoreFileConverter
         // %T95SHOT[x][y]
         private string ReplaceShot(string input, string outputFilePath)
         {
-            var pattern = Utils.Format(@"%T95SHOT([{0}])([1-9])", LevelPattern);
+            var pattern = Utils.Format(@"%T95SHOT({0})([1-9])", LevelParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevel(match.Groups[1].Value);
+                var level = LevelParser.Parse(match.Groups[1].Value);
                 var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
                 var key = new LevelScenePair(level, scene);
@@ -536,10 +530,10 @@ namespace ThScoreFileConverter
         [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine", Justification = "Reviewed.")]
         private string ReplaceShotEx(string input, string outputFilePath)
         {
-            var pattern = Utils.Format(@"%T95SHOTEX([{0}])([1-9])([1-6])", LevelPattern);
+            var pattern = Utils.Format(@"%T95SHOTEX({0})([1-9])([1-6])", LevelParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevel(match.Groups[1].Value);
+                var level = LevelParser.Parse(match.Groups[1].Value);
                 var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 

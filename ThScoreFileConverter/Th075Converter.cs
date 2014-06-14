@@ -27,18 +27,13 @@ namespace ThScoreFileConverter
         [SuppressMessage("Microsoft.Performance", "CA1802:UseLiteralsWhereAppropriate", Justification = "Reviewed.")]
         private static readonly string CharTable;
 
-        private static readonly new string LevelPattern;
-        private static readonly new string LevelWithTotalPattern;
-        private static readonly string CharaPattern;
-
-        private static readonly new Func<string, Level> ToLevel;
-        private static readonly new Func<string, LevelWithTotal> ToLevelWithTotal;
-        private static readonly Func<string, Chara> ToChara;
+        private static readonly new EnumShortNameParser<Level> LevelParser;
+        private static readonly new EnumShortNameParser<LevelWithTotal> LevelWithTotalParser;
+        private static readonly EnumShortNameParser<Chara> CharaParser;
 
         private AllScoreData allScoreData = null;
 
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = "Reviewed.")]
-        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1008:OpeningParenthesisMustBeSpacedCorrectly", Justification = "Reviewed.")]
         static Th075Converter()
@@ -380,25 +375,9 @@ namespace ThScoreFileConverter
                 @"0123456789+-/*=%#!?.,:;_@$" +
                 @"(){}[]<>&\|~^             ";
 
-            var levels = Utils.GetEnumerator<Level>();
-            var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();
-            var charas = Utils.GetEnumerator<Chara>();
-
-            LevelPattern = string.Join(
-                string.Empty, levels.Select(lv => lv.ToShortName()).ToArray());
-            LevelWithTotalPattern = string.Join(
-                string.Empty, levelsWithTotal.Select(lv => lv.ToShortName()).ToArray());
-            CharaPattern = string.Join(
-                "|", charas.Select(ch => ch.ToShortName()).ToArray());
-
-            var comparisonType = StringComparison.OrdinalIgnoreCase;
-
-            ToLevel = (shortName =>
-                levels.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
-            ToLevelWithTotal = (shortName =>
-                levelsWithTotal.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
-            ToChara = (shortName =>
-                charas.First(ch => ch.ToShortName().Equals(shortName, comparisonType)));
+            LevelParser = new EnumShortNameParser<Level>();
+            LevelWithTotalParser = new EnumShortNameParser<LevelWithTotal>();
+            CharaParser = new EnumShortNameParser<Chara>();
         }
 
         public Th075Converter()
@@ -531,11 +510,12 @@ namespace ThScoreFileConverter
         // %T75SCR[w][xx][y][z]
         private string ReplaceScore(string input)
         {
-            var pattern = Utils.Format(@"%T75SCR([{0}])({1})(\d)([1-3])", LevelPattern, CharaPattern);
+            var pattern = Utils.Format(
+                @"%T75SCR({0})({1})(\d)([1-3])", LevelParser.Pattern, CharaParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevel(match.Groups[1].Value);
-                var chara = ToChara(match.Groups[2].Value);
+                var level = LevelParser.Parse(match.Groups[1].Value);
+                var chara = CharaParser.Parse(match.Groups[2].Value);
                 var rank = Utils.ToZeroBased(int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
@@ -564,11 +544,11 @@ namespace ThScoreFileConverter
         [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
         private string ReplaceCareer(string input)
         {
-            var pattern = Utils.Format(@"%T75C(\d{{3}})({0})([1-4])", CharaPattern);
+            var pattern = Utils.Format(@"%T75C(\d{{3}})({0})([1-4])", CharaParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
-                var chara = ToChara(match.Groups[2].Value);
+                var chara = CharaParser.Parse(match.Groups[2].Value);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                 if (chara == Chara.Meiling)
@@ -625,11 +605,11 @@ namespace ThScoreFileConverter
         // %T75CARD[xxx][yy][z]
         private string ReplaceCard(string input, bool hideUntriedCards)
         {
-            var pattern = Utils.Format(@"%T75CARD(\d{{3}})({0})([NR])", CharaPattern);
+            var pattern = Utils.Format(@"%T75CARD(\d{{3}})({0})([NR])", CharaParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
-                var chara = ToChara(match.Groups[2].Value);
+                var chara = CharaParser.Parse(match.Groups[2].Value);
                 var type = match.Groups[3].Value.ToUpperInvariant();
 
                 if (chara == Chara.Meiling)
@@ -660,11 +640,12 @@ namespace ThScoreFileConverter
         [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
         private string ReplaceCollectRate(string input)
         {
-            var pattern = Utils.Format(@"%T75CRG([{0}])({1})([1-3])", LevelWithTotalPattern, CharaPattern);
+            var pattern = Utils.Format(
+                @"%T75CRG({0})({1})([1-3])", LevelWithTotalParser.Pattern, CharaParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevelWithTotal(match.Groups[1].Value);
-                var chara = ToChara(match.Groups[2].Value);
+                var level = LevelWithTotalParser.Parse(match.Groups[1].Value);
+                var chara = CharaParser.Parse(match.Groups[2].Value);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                 if (chara == Chara.Meiling)
@@ -722,11 +703,12 @@ namespace ThScoreFileConverter
         // %T75CHR[x][yy][z]
         private string ReplaceChara(string input)
         {
-            var pattern = Utils.Format(@"%T75CHR([{0}])({1})([1-4])", LevelPattern, CharaPattern);
+            var pattern = Utils.Format(
+                @"%T75CHR({0})({1})([1-4])", LevelParser.Pattern, CharaParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevel(match.Groups[1].Value);
-                var chara = ToChara(match.Groups[2].Value);
+                var level = LevelParser.Parse(match.Groups[1].Value);
+                var chara = CharaParser.Parse(match.Groups[2].Value);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                 if (chara == Chara.Meiling)

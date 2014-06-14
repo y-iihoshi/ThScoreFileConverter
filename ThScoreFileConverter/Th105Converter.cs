@@ -27,18 +27,13 @@ namespace ThScoreFileConverter
         private static readonly Dictionary<Chara, List<StageInfo>> StageInfoTable;
         private static readonly Dictionary<Chara, IEnumerable<CharaCardIdPair>> EnemyCardIdTable;
 
-        private static readonly new string LevelWithTotalPattern;
-        private static readonly string CharaPattern;
-        private static readonly string CardTypePattern;
-
-        private static readonly new Func<string, LevelWithTotal> ToLevelWithTotal;
-        private static readonly Func<string, Chara> ToChara;
-        private static readonly Func<string, CardType> ToCardType;
+        private static readonly new EnumShortNameParser<LevelWithTotal> LevelWithTotalParser;
+        private static readonly EnumShortNameParser<Chara> CharaParser;
+        private static readonly EnumShortNameParser<CardType> CardTypeParser;
 
         private AllScoreData allScoreData = null;
 
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = "Reviewed.")]
-        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         static Th105Converter()
         {
@@ -578,25 +573,9 @@ namespace ThScoreFileConverter
                 stageInfoPair => stageInfoPair.Value.SelectMany(
                     stageInfo => stageInfo.CardIds.Select(id => new CharaCardIdPair(stageInfo.Enemy, id))));
 
-            var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();
-            var charas = Utils.GetEnumerator<Chara>();
-            var cardTypes = Utils.GetEnumerator<CardType>();
-
-            LevelWithTotalPattern = string.Join(
-                string.Empty, levelsWithTotal.Select(lv => lv.ToShortName()).ToArray());
-            CharaPattern = string.Join(
-                "|", charas.Select(ch => ch.ToShortName()).ToArray());
-            CardTypePattern = string.Join(
-                string.Empty, cardTypes.Select(type => type.ToShortName()).ToArray());
-
-            var comparisonType = StringComparison.OrdinalIgnoreCase;
-
-            ToLevelWithTotal = (shortName =>
-                levelsWithTotal.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
-            ToChara = (shortName =>
-                charas.First(ch => ch.ToShortName().Equals(shortName, comparisonType)));
-            ToCardType = (shortName =>
-                cardTypes.First(type => type.ToShortName().Equals(shortName, comparisonType)));
+            LevelWithTotalParser = new EnumShortNameParser<LevelWithTotal>();
+            CharaParser = new EnumShortNameParser<Chara>();
+            CardTypeParser = new EnumShortNameParser<CardType>();
         }
 
         public Th105Converter()
@@ -799,11 +778,11 @@ namespace ThScoreFileConverter
         [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
         private string ReplaceCareer(string input)
         {
-            var pattern = Utils.Format(@"%T105C(\d{{3}})({0})([1-3])", CharaPattern);
+            var pattern = Utils.Format(@"%T105C(\d{{3}})({0})([1-3])", CharaParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
-                var chara = ToChara(match.Groups[2].Value);
+                var chara = CharaParser.Parse(match.Groups[2].Value);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                 Func<SpellCardResult, long> getValue = (result => 0L);
@@ -857,11 +836,11 @@ namespace ThScoreFileConverter
         // %T105CARD[xxx][yy][z]
         private string ReplaceCard(string input, bool hideUntriedCards)
         {
-            var pattern = Utils.Format(@"%T105CARD(\d{{3}})({0})([NR])", CharaPattern);
+            var pattern = Utils.Format(@"%T105CARD(\d{{3}})({0})([NR])", CharaParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
-                var chara = ToChara(match.Groups[2].Value);
+                var chara = CharaParser.Parse(match.Groups[2].Value);
                 var type = match.Groups[3].Value.ToUpperInvariant();
 
                 var numLevels = Enum.GetValues(typeof(Level)).Length;
@@ -892,11 +871,14 @@ namespace ThScoreFileConverter
         [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
         private string ReplaceCollectRate(string input)
         {
-            var pattern = Utils.Format(@"%T105CRG([{0}])({1})([1-2])", LevelWithTotalPattern, CharaPattern);
+            var pattern = Utils.Format(
+                @"%T105CRG({0})({1})([1-2])",
+                LevelWithTotalParser.Pattern,
+                CharaParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevelWithTotal(match.Groups[1].Value);
-                var chara = ToChara(match.Groups[2].Value);
+                var level = LevelWithTotalParser.Parse(match.Groups[1].Value);
+                var chara = CharaParser.Parse(match.Groups[2].Value);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                 Func<KeyValuePair<CharaCardIdPair, SpellCardResult>, bool> findByLevel;
@@ -920,11 +902,12 @@ namespace ThScoreFileConverter
         // %T105DC[ww][x][yy][z]
         private string ReplaceCardForDeck(string input, bool hideUntriedCards)
         {
-            var pattern = Utils.Format(@"%T105DC({0})([{1}])(\d{{2}})([NC])", CharaPattern, CardTypePattern);
+            var pattern = Utils.Format(
+                @"%T105DC({0})({1})(\d{{2}})([NC])", CharaParser.Pattern, CardTypeParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var chara = ToChara(match.Groups[1].Value);
-                var cardType = ToCardType(match.Groups[2].Value);
+                var chara = CharaParser.Parse(match.Groups[1].Value);
+                var cardType = CardTypeParser.Parse(match.Groups[2].Value);
                 var number = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
                 var type = match.Groups[4].Value.ToUpperInvariant();
 

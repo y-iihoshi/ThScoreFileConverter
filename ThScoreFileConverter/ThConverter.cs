@@ -18,48 +18,24 @@ namespace ThScoreFileConverter
     internal class ThConverter
     {
         /// <summary>
-        /// Represents a regular expression of <see cref="Level"/>.
+        /// Parser of <see cref="Level"/>.
         /// </summary>
-        protected static readonly string LevelPattern;
+        protected static readonly EnumShortNameParser<Level> LevelParser;
 
         /// <summary>
-        /// Represents a regular expression of <see cref="LevelWithTotal"/>.
+        /// Parser of <see cref="LevelWithTotal"/>.
         /// </summary>
-        protected static readonly string LevelWithTotalPattern;
+        protected static readonly EnumShortNameParser<LevelWithTotal> LevelWithTotalParser;
 
         /// <summary>
-        /// Represents a regular expression of <see cref="Stage"/>.
+        /// Parser of <see cref="Stage"/>.
         /// </summary>
-        protected static readonly string StagePattern;
+        protected static readonly EnumShortNameParser<Stage> StageParser;
 
         /// <summary>
-        /// Represents a regular expression of <see cref="StageWithTotal"/>.
+        /// Parser of <see cref="StageWithTotal"/>.
         /// </summary>
-        protected static readonly string StageWithTotalPattern;
-
-        /// <summary>
-        /// Converts from the string matched with <see cref="LevelPattern"/> to a value of
-        /// <see cref="Level"/>.
-        /// </summary>
-        protected static readonly Func<string, Level> ToLevel;
-
-        /// <summary>
-        /// Converts from the string matched with <see cref="LevelWithTotalPattern"/> to a value of
-        /// <see cref="LevelWithTotal"/>.
-        /// </summary>
-        protected static readonly Func<string, LevelWithTotal> ToLevelWithTotal;
-
-        /// <summary>
-        /// Converts from the string matched with <see cref="StagePattern"/> to a value of
-        /// <see cref="Stage"/>.
-        /// </summary>
-        protected static readonly Func<string, Stage> ToStage;
-
-        /// <summary>
-        /// Converts from the string matched with <see cref="StageWithTotalPattern"/> to a value of
-        /// <see cref="StageWithTotal"/>.
-        /// </summary>
-        protected static readonly Func<string, StageWithTotal> ToStageWithTotal;
+        protected static readonly EnumShortNameParser<StageWithTotal> StageWithTotalParser;
 
         /// <summary>
         /// Initializes static members of the <see cref="ThConverter"/> class.
@@ -67,30 +43,10 @@ namespace ThScoreFileConverter
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = "Reviewed.")]
         static ThConverter()
         {
-            var levels = Utils.GetEnumerator<Level>();
-            var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();
-            var stages = Utils.GetEnumerator<Stage>();
-            var stagesWithTotal = Utils.GetEnumerator<StageWithTotal>();
-
-            LevelPattern = string.Join(
-                string.Empty, levels.Select(lv => lv.ToShortName()).ToArray());
-            LevelWithTotalPattern = string.Join(
-                string.Empty, levelsWithTotal.Select(lv => lv.ToShortName()).ToArray());
-            StagePattern = string.Join(
-                string.Empty, stages.Select(st => st.ToShortName()).ToArray());
-            StageWithTotalPattern = string.Join(
-                string.Empty, stagesWithTotal.Select(st => st.ToShortName()).ToArray());
-
-            var comparisonType = StringComparison.OrdinalIgnoreCase;
-
-            ToLevel = (shortName) =>
-                levels.First(lv => lv.ToShortName().Equals(shortName, comparisonType));
-            ToLevelWithTotal = (shortName) =>
-                levelsWithTotal.First(lv => lv.ToShortName().Equals(shortName, comparisonType));
-            ToStage = (shortName) =>
-                stages.First(st => st.ToShortName().Equals(shortName, comparisonType));
-            ToStageWithTotal = (shortName) =>
-                stagesWithTotal.First(st => st.ToShortName().Equals(shortName, comparisonType));
+            LevelParser = new EnumShortNameParser<Level>();
+            LevelWithTotalParser = new EnumShortNameParser<LevelWithTotal>();
+            StageParser = new EnumShortNameParser<Stage>();
+            StageWithTotalParser = new EnumShortNameParser<StageWithTotal>();
         }
 
         /// <summary>

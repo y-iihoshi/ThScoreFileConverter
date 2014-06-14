@@ -76,6 +76,7 @@
     </Compile>
     <Compile Include="EnumAltNameAttribute.cs" />
     <Compile Include="EnumExtensions.cs" />
+    <Compile Include="EnumShortNameParser.cs" />
     <Compile Include="ExceptionOccurredEventArgs.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IBinaryReadable.cs" />

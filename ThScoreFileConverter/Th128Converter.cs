@@ -24,18 +24,13 @@ namespace ThScoreFileConverter
     {
         private static readonly Dictionary<int, CardInfo> CardTable;
 
-        private static readonly string RoutePattern;
-        private static readonly string RouteWithTotalPattern;
-        private static readonly new string StageWithTotalPattern;
-
-        private static readonly Func<string, Route> ToRoute;
-        private static readonly Func<string, RouteWithTotal> ToRouteWithTotal;
-        private static readonly new Func<string, StageWithTotal> ToStageWithTotal;
+        private static readonly EnumShortNameParser<Route> RouteParser;
+        private static readonly EnumShortNameParser<RouteWithTotal> RouteWithTotalParser;
+        private static readonly new EnumShortNameParser<StageWithTotal> StageWithTotalParser;
 
         private AllScoreData allScoreData = null;
 
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = "Reviewed.")]
-        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1008:OpeningParenthesisMustBeSpacedCorrectly", Justification = "Reviewed.")]
         static Th128Converter()
@@ -295,25 +290,9 @@ namespace ThScoreFileConverter
             };
             CardTable = cardList.ToDictionary(card => card.Id);
 
-            var routes = Utils.GetEnumerator<Route>();
-            var routesWithTotal = Utils.GetEnumerator<RouteWithTotal>();
-            var stagesWithTotal = Utils.GetEnumerator<StageWithTotal>();
-
-            RoutePattern = string.Join(
-                "|", routes.Select(rt => rt.ToShortName()).ToArray());
-            RouteWithTotalPattern = string.Join(
-                "|", routesWithTotal.Select(rt => rt.ToShortName()).ToArray());
-            StageWithTotalPattern = string.Join(
-                "|", stagesWithTotal.Select(st => st.ToShortName()).ToArray());
-
-            var comparisonType = StringComparison.OrdinalIgnoreCase;
-
-            ToRoute = (shortName =>
-                routes.First(rt => rt.ToShortName().Equals(shortName, comparisonType)));
-            ToRouteWithTotal = (shortName =>
-                routesWithTotal.First(rt => rt.ToShortName().Equals(shortName, comparisonType)));
-            ToStageWithTotal = (shortName =>
-                stagesWithTotal.First(st => st.ToShortName().Equals(shortName, comparisonType)));
+            RouteParser = new EnumShortNameParser<Route>();
+            RouteWithTotalParser = new EnumShortNameParser<RouteWithTotal>();
+            StageWithTotalParser = new EnumShortNameParser<StageWithTotal>();
         }
 
         public Th128Converter()
@@ -577,11 +556,12 @@ namespace ThScoreFileConverter
         // %T128SCR[w][xx][y][z]
         private string ReplaceScore(string input)
         {
-            var pattern = Utils.Format(@"%T128SCR([{0}])({1})(\d)([1-5])", LevelPattern, RoutePattern);
+            var pattern = Utils.Format(
+                @"%T128SCR({0})({1})(\d)([1-5])", LevelParser.Pattern, RouteParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevel(match.Groups[1].Value);
-                var route = (RouteWithTotal)ToRoute(match.Groups[2].Value);
+                var level = LevelParser.Parse(match.Groups[1].Value);
+                var route = (RouteWithTotal)RouteParser.Parse(match.Groups[2].Value);
                 var rank = Utils.ToZeroBased(int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
@@ -691,11 +671,11 @@ namespace ThScoreFileConverter
         private string ReplaceCollectRate(string input)
         {
             var pattern = Utils.Format(
-                @"%T128CRG([{0}])({1})([1-3])", LevelWithTotalPattern, StageWithTotalPattern);
+                @"%T128CRG({0})({1})([1-3])", LevelWithTotalParser.Pattern, StageWithTotalParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevelWithTotal(match.Groups[1].Value);
-                var stage = ToStageWithTotal(match.Groups[2].Value);
+                var level = LevelWithTotalParser.Parse(match.Groups[1].Value);
+                var stage = StageWithTotalParser.Parse(match.Groups[2].Value);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                 if (stage == StageWithTotal.Extra)
@@ -742,11 +722,12 @@ namespace ThScoreFileConverter
         // %T128CLEAR[x][yy]
         private string ReplaceClear(string input)
         {
-            var pattern = Utils.Format(@"%T128CLEAR([{0}])({1})", LevelPattern, RoutePattern);
+            var pattern = Utils.Format(
+                @"%T128CLEAR({0})({1})", LevelParser.Pattern, RouteParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevel(match.Groups[1].Value);
-                var route = (RouteWithTotal)ToRoute(match.Groups[2].Value);
+                var level = LevelParser.Parse(match.Groups[1].Value);
+                var route = (RouteWithTotal)RouteParser.Parse(match.Groups[2].Value);
 
                 if ((level == Level.Extra) && (route != RouteWithTotal.Extra))
                     return match.ToString();
@@ -767,10 +748,11 @@ namespace ThScoreFileConverter
         [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
         private string ReplaceRoute(string input)
         {
-            var pattern = Utils.Format(@"%T128ROUTE({0})([1-3])", RouteWithTotalPattern);
+            var pattern = Utils.Format(
+                @"%T128ROUTE({0})([1-3])", RouteWithTotalParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var route = ToRouteWithTotal(match.Groups[1].Value);
+                var route = RouteWithTotalParser.Parse(match.Groups[1].Value);
                 var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
                 Func<ClearData, long> getValueByType = (data => 0L);
@@ -808,11 +790,13 @@ namespace ThScoreFileConverter
         private string ReplaceRouteEx(string input)
         {
             var pattern = Utils.Format(
-                @"%T128ROUTEEX([{0}])({1})([1-3])", LevelWithTotalPattern, RouteWithTotalPattern);
+                @"%T128ROUTEEX({0})({1})([1-3])",
+                LevelWithTotalParser.Pattern,
+                RouteWithTotalParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevelWithTotal(match.Groups[1].Value);
-                var route = ToRouteWithTotal(match.Groups[2].Value);
+                var level = LevelWithTotalParser.Parse(match.Groups[1].Value);
+                var route = RouteWithTotalParser.Parse(match.Groups[2].Value);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                 if ((level == LevelWithTotal.Extra) &&

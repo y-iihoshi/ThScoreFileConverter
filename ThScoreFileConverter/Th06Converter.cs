@@ -25,14 +25,11 @@ namespace ThScoreFileConverter
         private static readonly Dictionary<int, CardInfo> CardTable;
         private static readonly List<HighScore> InitialRanking;
 
-        private static readonly string CharaPattern;
-
-        private static readonly Func<string, Chara> ToChara;
+        private static readonly EnumShortNameParser<Chara> CharaParser;
 
         private AllScoreData allScoreData = null;
 
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = "Reviewed.")]
-        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1008:OpeningParenthesisMustBeSpacedCorrectly", Justification = "Reviewed.")]
         static Th06Converter()
         {
@@ -120,15 +117,7 @@ namespace ThScoreFileConverter
                 new HighScore( 100000)
             };
 
-            var charas = Utils.GetEnumerator<Chara>();
-
-            CharaPattern = string.Join(
-                "|", charas.Select(ch => ch.ToShortName()).ToArray());
-
-            var comparisonType = StringComparison.OrdinalIgnoreCase;
-
-            ToChara = (shortName =>
-                charas.First(ch => ch.ToShortName().Equals(shortName, comparisonType)));
+            CharaParser = new EnumShortNameParser<Chara>();
         }
 
         public Th06Converter()
@@ -348,11 +337,12 @@ namespace ThScoreFileConverter
         // %T06SCR[w][xx][y][z]
         private string ReplaceScore(string input)
         {
-            var pattern = Utils.Format(@"%T06SCR([{0}])({1})(\d)([1-3])", LevelPattern, CharaPattern);
+            var pattern = Utils.Format(
+                @"%T06SCR({0})({1})(\d)([1-3])", LevelParser.Pattern, CharaParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevel(match.Groups[1].Value);
-                var chara = ToChara(match.Groups[2].Value);
+                var level = LevelParser.Parse(match.Groups[1].Value);
+                var chara = CharaParser.Parse(match.Groups[2].Value);
                 var rank = Utils.ToZeroBased(int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
@@ -440,10 +430,10 @@ namespace ThScoreFileConverter
         [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
         private string ReplaceCollectRate(string input)
         {
-            var pattern = Utils.Format(@"%T06CRG([{0}])([12])", StageWithTotalPattern);
+            var pattern = Utils.Format(@"%T06CRG({0})([12])", StageWithTotalParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var stage = ToStageWithTotal(match.Groups[1].Value);
+                var stage = StageWithTotalParser.Parse(match.Groups[1].Value);
                 var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
                 Func<CardAttack, bool> findByStage = (attack => true);
@@ -470,11 +460,11 @@ namespace ThScoreFileConverter
         // %T06CLEAR[x][yy]
         private string ReplaceClear(string input)
         {
-            var pattern = Utils.Format(@"%T06CLEAR([{0}])({1})", LevelPattern, CharaPattern);
+            var pattern = Utils.Format(@"%T06CLEAR({0})({1})", LevelParser.Pattern, CharaParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevel(match.Groups[1].Value);
-                var chara = ToChara(match.Groups[2].Value);
+                var level = LevelParser.Parse(match.Groups[1].Value);
+                var chara = CharaParser.Parse(match.Groups[2].Value);
 
                 var key = new CharaLevelPair(chara, level);
                 if (this.allScoreData.Rankings.ContainsKey(key))
@@ -495,12 +485,12 @@ namespace ThScoreFileConverter
         private string ReplacePractice(string input)
         {
             var pattern = Utils.Format(
-                @"%T06PRAC([{0}])({1})([{2}])", LevelPattern, CharaPattern, StagePattern);
+                @"%T06PRAC({0})({1})({2})", LevelParser.Pattern, CharaParser.Pattern, StageParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevel(match.Groups[1].Value);
-                var chara = ToChara(match.Groups[2].Value);
-                var stage = ToStage(match.Groups[3].Value);
+                var level = LevelParser.Parse(match.Groups[1].Value);
+                var chara = CharaParser.Parse(match.Groups[2].Value);
+                var stage = StageParser.Parse(match.Groups[3].Value);
 
                 if (level == Level.Extra)
                     return match.ToString();

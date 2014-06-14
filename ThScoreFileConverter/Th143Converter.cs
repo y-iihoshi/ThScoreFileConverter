@@ -30,18 +30,15 @@ namespace ThScoreFileConverter
         private static readonly Dictionary<DayScenePair, EnemiesCardPair> SpellCards;
         private static readonly List<string> Nicknames;
 
-        private static readonly string DayPattern;
-        private static readonly string DayLongPattern;
-        private static readonly string ItemWithTotalPattern;
+        private static readonly EnumShortNameParser<Day> DayParser;
+        private static readonly EnumShortNameParser<ItemWithTotal> ItemWithTotalParser;
 
-        private static readonly Func<string, Day> ToDay;
-        private static readonly Func<string, ItemWithTotal> ToItemWithTotal;
+        private static readonly string DayLongPattern;
 
         private AllScoreData allScoreData = null;
         private Dictionary<DayScenePair, BestShotPair> bestshots = null;
 
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = "Reviewed.")]
-        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
         static Th143Converter()
         {
             // Thanks to thwiki.info
@@ -194,19 +191,11 @@ namespace ThScoreFileConverter
                 "究極反則生命体"
             };
 
+            DayParser = new EnumShortNameParser<Day>();
+            ItemWithTotalParser = new EnumShortNameParser<ItemWithTotal>();
+
             var days = Utils.GetEnumerator<Day>();
-            var itemsWithTotal = Utils.GetEnumerator<ItemWithTotal>();
-
-            DayPattern = string.Join(string.Empty, days.Select(day => day.ToShortName()).ToArray());
             DayLongPattern = string.Join("|", days.Select(day => day.ToLongName()).ToArray());
-            ItemWithTotalPattern = string.Join(
-                string.Empty, itemsWithTotal.Select(item => item.ToShortName()).ToArray());
-
-            var comparisonType = StringComparison.OrdinalIgnoreCase;
-
-            ToDay = (shortName => days.First(day => day.ToShortName().Equals(shortName, comparisonType)));
-            ToItemWithTotal = (shortName =>
-                itemsWithTotal.First(item => item.ToShortName().Equals(shortName, comparisonType)));
         }
 
         public Th143Converter()
@@ -507,13 +496,13 @@ namespace ThScoreFileConverter
         private string ReplaceScore(string input)
         {
             var pattern = Utils.Format(
-                @"%T143SCR([{0}])([0-9])([{1}])([1-3])", DayPattern, ItemWithTotalPattern);
+                @"%T143SCR({0})([0-9])({1})([1-3])", DayParser.Pattern, ItemWithTotalParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var day = ToDay(match.Groups[1].Value);
+                var day = DayParser.Parse(match.Groups[1].Value);
                 var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                 scene = (scene == 0) ? 10 : scene;
-                var item = ToItemWithTotal(match.Groups[3].Value);
+                var item = ItemWithTotalParser.Parse(match.Groups[3].Value);
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
                 var key = new DayScenePair(day, scene);
@@ -543,10 +532,10 @@ namespace ThScoreFileConverter
         [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
         private string ReplaceScoreTotal(string input)
         {
-            var pattern = Utils.Format(@"%T143SCRTL([{0}])([1-4])", ItemWithTotalPattern);
+            var pattern = Utils.Format(@"%T143SCRTL({0})([1-4])", ItemWithTotalParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var item = ToItemWithTotal(match.Groups[1].Value);
+                var item = ItemWithTotalParser.Parse(match.Groups[1].Value);
                 var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
                 switch (type)
@@ -573,10 +562,10 @@ namespace ThScoreFileConverter
         // %T143CARD[x][y][z]
         private string ReplaceCard(string input, bool hideUntriedCards)
         {
-            var pattern = Utils.Format(@"%T143CARD([{0}])([0-9])([12])", DayPattern);
+            var pattern = Utils.Format(@"%T143CARD({0})([0-9])([12])", DayParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var day = ToDay(match.Groups[1].Value);
+                var day = DayParser.Parse(match.Groups[1].Value);
                 var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                 scene = (scene == 0) ? 10 : scene;
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
@@ -637,10 +626,10 @@ namespace ThScoreFileConverter
         // %T143SHOT[x][y]
         private string ReplaceShot(string input, string outputFilePath)
         {
-            var pattern = Utils.Format(@"%T143SHOT([{0}])([0-9])", DayPattern);
+            var pattern = Utils.Format(@"%T143SHOT({0})([0-9])", DayParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var day = ToDay(match.Groups[1].Value);
+                var day = DayParser.Parse(match.Groups[1].Value);
                 var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                 scene = (scene == 0) ? 10 : scene;
 
@@ -667,11 +656,10 @@ namespace ThScoreFileConverter
         [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
         private string ReplaceShotEx(string input, string outputFilePath)
         {
-            var pattern = Utils.Format(
-                @"%T143SHOTEX([{0}])([0-9])([1-4])", DayPattern);
+            var pattern = Utils.Format(@"%T143SHOTEX({0})([0-9])([1-4])", DayParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var day = ToDay(match.Groups[1].Value);
+                var day = DayParser.Parse(match.Groups[1].Value);
                 var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                 scene = (scene == 0) ? 10 : scene;
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);

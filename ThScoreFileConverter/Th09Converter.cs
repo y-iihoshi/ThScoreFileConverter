@@ -21,23 +21,14 @@ namespace ThScoreFileConverter
 
     internal class Th09Converter : ThConverter
     {
-        private static readonly string CharaPattern;
-
-        private static readonly Func<string, Chara> ToChara;
+        private static readonly EnumShortNameParser<Chara> CharaParser;
 
         private AllScoreData allScoreData = null;
 
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = "Reviewed.")]
-        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
         static Th09Converter()
         {
-            var charas = Utils.GetEnumerator<Chara>();
-
-            CharaPattern = string.Join("|", charas.Select(ch => ch.ToShortName()).ToArray());
-
-            var comparisonType = StringComparison.OrdinalIgnoreCase;
-
-            ToChara = (shortName => charas.First(ch => ch.ToShortName().Equals(shortName, comparisonType)));
+            CharaParser = new EnumShortNameParser<Chara>();
         }
 
         public Th09Converter()
@@ -252,11 +243,12 @@ namespace ThScoreFileConverter
         [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine", Justification = "Reviewed.")]
         private string ReplaceScore(string input)
         {
-            var pattern = Utils.Format(@"%T09SCR([{0}])({1})([1-5])([1-3])", LevelPattern, CharaPattern);
+            var pattern = Utils.Format(
+                @"%T09SCR({0})({1})([1-5])([1-3])", LevelParser.Pattern, CharaParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevel(match.Groups[1].Value);
-                var chara = ToChara(match.Groups[2].Value);
+                var level = LevelParser.Parse(match.Groups[1].Value);
+                var chara = CharaParser.Parse(match.Groups[2].Value);
                 var rank = Utils.ToZeroBased(int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
@@ -295,11 +287,12 @@ namespace ThScoreFileConverter
         [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine", Justification = "Reviewed.")]
         private string ReplaceClear(string input)
         {
-            var pattern = Utils.Format(@"%T09CLEAR([{0}])({1})([12])", LevelPattern, CharaPattern);
+            var pattern = Utils.Format(
+                @"%T09CLEAR({0})({1})([12])", LevelParser.Pattern, CharaParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevel(match.Groups[1].Value);
-                var chara = ToChara(match.Groups[2].Value);
+                var level = LevelParser.Parse(match.Groups[1].Value);
+                var chara = CharaParser.Parse(match.Groups[2].Value);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                 var count = this.allScoreData.PlayStatus.ClearCounts[chara].Counts[level];

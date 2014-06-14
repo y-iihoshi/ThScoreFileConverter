@@ -29,18 +29,15 @@ namespace ThScoreFileConverter
     {
         private static readonly Dictionary<LevelScenePair, EnemyCardPair> SpellCards;
 
-        private static readonly new string LevelPattern;
-        private static readonly string LevelLongPattern;
-        private static readonly string CharaPattern;
+        private static readonly new EnumShortNameParser<Level> LevelParser;
+        private static readonly EnumShortNameParser<Chara> CharaParser;
 
-        private static readonly new Func<string, Level> ToLevel;
-        private static readonly Func<string, Chara> ToChara;
+        private static readonly string LevelLongPattern;
 
         private AllScoreData allScoreData = null;
         private Dictionary<Chara, Dictionary<LevelScenePair, BestShotPair>> bestshots = null;
 
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = "Reviewed.")]
-        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
         static Th125Converter()
         {
             // Thanks to thwiki.info
@@ -156,17 +153,11 @@ namespace ThScoreFileConverter
                 { new LevelScenePair(Level.Spoiler, 9), new EnemyCardPair(Enemy.Aya,       "「幻想風靡」") }
             };
 
+            LevelParser = new EnumShortNameParser<Level>();
+            CharaParser = new EnumShortNameParser<Chara>();
+
             var levels = Utils.GetEnumerator<Level>();
-            var charas = Utils.GetEnumerator<Chara>();
-
-            LevelPattern = string.Join(string.Empty, levels.Select(lv => lv.ToShortName()).ToArray());
             LevelLongPattern = string.Join("|", levels.Select(lv => lv.ToLongName()).ToArray());
-            CharaPattern = string.Join("|", charas.Select(ch => ch.ToShortName()).ToArray());
-
-            var comparisonType = StringComparison.OrdinalIgnoreCase;
-
-            ToLevel = (shortName => levels.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
-            ToChara = (shortName => charas.First(ch => ch.ToShortName().Equals(shortName, comparisonType)));
         }
 
         public Th125Converter()
@@ -461,11 +452,11 @@ namespace ThScoreFileConverter
         private string ReplaceScore(string input)
         {
             var pattern = Utils.Format(
-                @"%T125SCR([{0}])([{1}])([1-9])([1-5])", CharaPattern, LevelPattern);
+                @"%T125SCR({0})({1})([1-9])([1-5])", CharaParser.Pattern, LevelParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var chara = ToChara(match.Groups[1].Value);
-                var level = ToLevel(match.Groups[2].Value);
+                var chara = CharaParser.Parse(match.Groups[1].Value);
+                var level = LevelParser.Parse(match.Groups[2].Value);
                 var scene = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
@@ -500,10 +491,10 @@ namespace ThScoreFileConverter
         [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
         private string ReplaceScoreTotal(string input)
         {
-            var pattern = Utils.Format(@"%T125SCRTL([{0}])([12])([1-5])", CharaPattern);
+            var pattern = Utils.Format(@"%T125SCRTL({0})([12])([1-5])", CharaParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var chara = ToChara(match.Groups[1].Value);
+                var chara = CharaParser.Parse(match.Groups[1].Value);
                 var method = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
@@ -569,10 +560,10 @@ namespace ThScoreFileConverter
         // %T125CARD[x][y][z]
         private string ReplaceCard(string input, bool hideUntriedCards)
         {
-            var pattern = Utils.Format(@"%T125CARD([{0}])([1-9])([12])", LevelPattern);
+            var pattern = Utils.Format(@"%T125CARD({0})([1-9])([12])", LevelParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var level = ToLevel(match.Groups[1].Value);
+                var level = LevelParser.Parse(match.Groups[1].Value);
                 var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
@@ -605,11 +596,12 @@ namespace ThScoreFileConverter
         // %T125SHOT[x][y][z]
         private string ReplaceShot(string input, string outputFilePath)
         {
-            var pattern = Utils.Format(@"%T125SHOT([{0}])([{1}])([1-9])", CharaPattern, LevelPattern);
+            var pattern = Utils.Format(
+                @"%T125SHOT({0})({1})([1-9])", CharaParser.Pattern, LevelParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var chara = ToChara(match.Groups[1].Value);
-                var level = ToLevel(match.Groups[2].Value);
+                var chara = CharaParser.Parse(match.Groups[1].Value);
+                var level = LevelParser.Parse(match.Groups[2].Value);
                 var scene = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                 var bestshots = this.bestshots.ContainsKey(chara) ? this.bestshots[chara] : null;
@@ -669,11 +661,11 @@ namespace ThScoreFileConverter
                 new Detail(true,                       "Result Score  {0,9}", this.ToNumberString(header.ResultScore))
             });
             var pattern = Utils.Format(
-                @"%T125SHOTEX([{0}])([{1}])([1-9])([1-7])", CharaPattern, LevelPattern);
+                @"%T125SHOTEX({0})({1})([1-9])([1-7])", CharaParser.Pattern, LevelParser.Pattern);
             var evaluator = new MatchEvaluator(match =>
             {
-                var chara = ToChara(match.Groups[1].Value);
-                var level = ToLevel(match.Groups[2].Value);
+                var chara = CharaParser.Parse(match.Groups[1].Value);
+                var level = LevelParser.Parse(match.Groups[2].Value);
                 var scene = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
