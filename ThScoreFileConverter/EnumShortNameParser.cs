@@ -15,20 +15,26 @@ namespace ThScoreFileConverter
     /// </summary>
     /// <typeparam name="TEnum">The enumeration type which fields have short names.</typeparam>
     [CLSCompliant(false)]
-    public class EnumShortNameParser<TEnum>
+    public sealed class EnumShortNameParser<TEnum>
         where TEnum : struct, IComparable, IFormattable, IConvertible
     {
         /// <summary>
         /// Elements of <typeparamref name="TEnum"/>.
         /// </summary>
-        private static IEnumerable<TEnum> elements = Utils.GetEnumerator<TEnum>();
+        private static readonly IEnumerable<TEnum> Elements = Utils.GetEnumerator<TEnum>();
+
+        /// <summary>
+        /// A regular expression of the short names of <typeparamref name="TEnum"/>.
+        /// </summary>
+        private static readonly string PatternImpl =
+            string.Join("|", Elements.Select(elem => elem.ToShortName()).ToArray());
 
         /// <summary>
         /// Gets a regular expression of the short names of <typeparamref name="TEnum"/>.
         /// </summary>
         public string Pattern
         {
-            get { return string.Join("|", elements.Select(elem => elem.ToShortName()).ToArray()); }
+            get { return PatternImpl; }
         }
 
         /// <summary>
@@ -38,7 +44,7 @@ namespace ThScoreFileConverter
         /// <returns>A value of <typeparamref name="TEnum"/>.</returns>
         public TEnum Parse(string shortName)
         {
-            return elements.First(
+            return Elements.First(
                 elem => elem.ToShortName().Equals(shortName, StringComparison.OrdinalIgnoreCase));
         }
     }
