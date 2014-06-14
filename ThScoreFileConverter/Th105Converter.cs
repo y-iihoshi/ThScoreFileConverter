@@ -27,11 +27,11 @@ namespace ThScoreFileConverter
         private static readonly Dictionary<Chara, List<StageInfo>> StageInfoTable;
         private static readonly Dictionary<Chara, IEnumerable<CharaCardIdPair>> EnemyCardIdTable;
 
-        private static readonly string LevelWithTotalPattern;
+        private static readonly new string LevelWithTotalPattern;
         private static readonly string CharaPattern;
         private static readonly string CardTypePattern;
 
-        private static readonly Func<string, LevelWithTotal> ToLevelWithTotal;
+        private static readonly new Func<string, LevelWithTotal> ToLevelWithTotal;
         private static readonly Func<string, Chara> ToChara;
         private static readonly Func<string, CardType> ToCardType;
 
@@ -603,7 +603,7 @@ namespace ThScoreFileConverter
         {
         }
 
-        public enum Level
+        public new enum Level
         {
             [EnumAltName("E")] Easy,
             [EnumAltName("N")] Normal,
@@ -611,7 +611,7 @@ namespace ThScoreFileConverter
             [EnumAltName("L")] Lunatic
         }
 
-        public enum LevelWithTotal
+        public new enum LevelWithTotal
         {
             [EnumAltName("E")] Easy,
             [EnumAltName("N")] Normal,

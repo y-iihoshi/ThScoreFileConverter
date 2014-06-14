@@ -21,10 +21,8 @@ namespace ThScoreFileConverter
 
     internal class Th09Converter : ThConverter
     {
-        private static readonly string LevelPattern;
         private static readonly string CharaPattern;
 
-        private static readonly Func<string, Level> ToLevel;
         private static readonly Func<string, Chara> ToChara;
 
         private AllScoreData allScoreData = null;
@@ -33,29 +31,17 @@ namespace ThScoreFileConverter
         [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
         static Th09Converter()
         {
-            var levels = Utils.GetEnumerator<Level>();
             var charas = Utils.GetEnumerator<Chara>();
 
-            LevelPattern = string.Join(string.Empty, levels.Select(lv => lv.ToShortName()).ToArray());
             CharaPattern = string.Join("|", charas.Select(ch => ch.ToShortName()).ToArray());
 
             var comparisonType = StringComparison.OrdinalIgnoreCase;
 
-            ToLevel = (shortName => levels.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
             ToChara = (shortName => charas.First(ch => ch.ToShortName().Equals(shortName, comparisonType)));
         }
 
         public Th09Converter()
         {
-        }
-
-        public enum Level
-        {
-            [EnumAltName("E")] Easy,
-            [EnumAltName("N")] Normal,
-            [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic,
-            [EnumAltName("X")] Extra
         }
 
         public enum Chara

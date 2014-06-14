@@ -18,21 +18,17 @@ namespace ThScoreFileConverter
     using System.Linq;
     using System.Text;
     using System.Text.RegularExpressions;
-    using CardInfo = SpellCardInfo<Th14Converter.Stage, Th14Converter.Level>;
+    using CardInfo = SpellCardInfo<Th14Converter.Stage, ThConverter.Level>;
 
     internal class Th14Converter : ThConverter
     {
         private static readonly Dictionary<int, CardInfo> CardTable;
 
-        private static readonly string LevelPattern;
-        private static readonly string LevelWithTotalPattern;
         private static readonly string CharaPattern;
         private static readonly string CharaWithTotalPattern;
         private static readonly string StagePattern;
         private static readonly string StageWithTotalPattern;
 
-        private static readonly Func<string, Level> ToLevel;
-        private static readonly Func<string, LevelWithTotal> ToLevelWithTotal;
         private static readonly Func<string, Chara> ToChara;
         private static readonly Func<string, CharaWithTotal> ToCharaWithTotal;
         private static readonly Func<string, Stage> ToStage;
@@ -171,17 +167,11 @@ namespace ThScoreFileConverter
             };
             CardTable = cardList.ToDictionary(card => card.Id);
 
-            var levels = Utils.GetEnumerator<Level>();
-            var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();
             var charas = Utils.GetEnumerator<Chara>();
             var charasWithTotal = Utils.GetEnumerator<CharaWithTotal>();
             var stages = Utils.GetEnumerator<Stage>();
             var stagesWithTotal = Utils.GetEnumerator<StageWithTotal>();
 
-            LevelPattern = string.Join(
-                string.Empty, levels.Select(lv => lv.ToShortName()).ToArray());
-            LevelWithTotalPattern = string.Join(
-                string.Empty, levelsWithTotal.Select(lv => lv.ToShortName()).ToArray());
             CharaPattern = string.Join(
                 "|", charas.Select(ch => ch.ToShortName()).ToArray());
             CharaWithTotalPattern = string.Join(
@@ -193,10 +183,6 @@ namespace ThScoreFileConverter
 
             var comparisonType = StringComparison.OrdinalIgnoreCase;
 
-            ToLevel = (shortName =>
-                levels.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
-            ToLevelWithTotal = (shortName =>
-                levelsWithTotal.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
             ToChara = (shortName =>
                 charas.First(ch => ch.ToShortName().Equals(shortName, comparisonType)));
             ToCharaWithTotal = (shortName =>
@@ -209,25 +195,6 @@ namespace ThScoreFileConverter
 
         public Th14Converter()
         {
-        }
-
-        public enum Level
-        {
-            [EnumAltName("E")] Easy,
-            [EnumAltName("N")] Normal,
-            [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic,
-            [EnumAltName("X")] Extra
-        }
-
-        public enum LevelWithTotal
-        {
-            [EnumAltName("E")] Easy,
-            [EnumAltName("N")] Normal,
-            [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic,
-            [EnumAltName("X")] Extra,
-            [EnumAltName("T")] Total
         }
 
         public enum LevelPractice

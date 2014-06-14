@@ -27,12 +27,12 @@ namespace ThScoreFileConverter
         [SuppressMessage("Microsoft.Performance", "CA1802:UseLiteralsWhereAppropriate", Justification = "Reviewed.")]
         private static readonly string CharTable;
 
-        private static readonly string LevelPattern;
-        private static readonly string LevelWithTotalPattern;
+        private static readonly new string LevelPattern;
+        private static readonly new string LevelWithTotalPattern;
         private static readonly string CharaPattern;
 
-        private static readonly Func<string, Level> ToLevel;
-        private static readonly Func<string, LevelWithTotal> ToLevelWithTotal;
+        private static readonly new Func<string, Level> ToLevel;
+        private static readonly new Func<string, LevelWithTotal> ToLevelWithTotal;
         private static readonly Func<string, Chara> ToChara;
 
         private AllScoreData allScoreData = null;
@@ -405,7 +405,7 @@ namespace ThScoreFileConverter
         {
         }
 
-        public enum Level
+        public new enum Level
         {
             [EnumAltName("E")] Easy,
             [EnumAltName("N")] Normal,
@@ -413,7 +413,7 @@ namespace ThScoreFileConverter
             [EnumAltName("L")] Lunatic
         }
 
-        public enum LevelWithTotal
+        public new enum LevelWithTotal
         {
             [EnumAltName("E")] Easy,
             [EnumAltName("N")] Normal,

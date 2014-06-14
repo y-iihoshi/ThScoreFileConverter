@@ -18,20 +18,16 @@ namespace ThScoreFileConverter
     using System.Linq;
     using System.Text;
     using System.Text.RegularExpressions;
-    using CardInfo = SpellCardInfo<Th128Converter.Stage, Th128Converter.Level>;
+    using CardInfo = SpellCardInfo<Th128Converter.Stage, ThConverter.Level>;
 
     internal class Th128Converter : ThConverter
     {
         private static readonly Dictionary<int, CardInfo> CardTable;
 
-        private static readonly string LevelPattern;
-        private static readonly string LevelWithTotalPattern;
         private static readonly string RoutePattern;
         private static readonly string RouteWithTotalPattern;
         private static readonly string StageWithTotalPattern;
 
-        private static readonly Func<string, Level> ToLevel;
-        private static readonly Func<string, LevelWithTotal> ToLevelWithTotal;
         private static readonly Func<string, Route> ToRoute;
         private static readonly Func<string, RouteWithTotal> ToRouteWithTotal;
         private static readonly Func<string, StageWithTotal> ToStageWithTotal;
@@ -299,16 +295,10 @@ namespace ThScoreFileConverter
             };
             CardTable = cardList.ToDictionary(card => card.Id);
 
-            var levels = Utils.GetEnumerator<Level>();
-            var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();
             var routes = Utils.GetEnumerator<Route>();
             var routesWithTotal = Utils.GetEnumerator<RouteWithTotal>();
             var stagesWithTotal = Utils.GetEnumerator<StageWithTotal>();
 
-            LevelPattern = string.Join(
-                string.Empty, levels.Select(lv => lv.ToShortName()).ToArray());
-            LevelWithTotalPattern = string.Join(
-                string.Empty, levelsWithTotal.Select(lv => lv.ToShortName()).ToArray());
             RoutePattern = string.Join(
                 "|", routes.Select(rt => rt.ToShortName()).ToArray());
             RouteWithTotalPattern = string.Join(
@@ -318,10 +308,6 @@ namespace ThScoreFileConverter
 
             var comparisonType = StringComparison.OrdinalIgnoreCase;
 
-            ToLevel = (shortName =>
-                levels.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
-            ToLevelWithTotal = (shortName =>
-                levelsWithTotal.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
             ToRoute = (shortName =>
                 routes.First(rt => rt.ToShortName().Equals(shortName, comparisonType)));
             ToRouteWithTotal = (shortName =>
@@ -332,25 +318,6 @@ namespace ThScoreFileConverter
 
         public Th128Converter()
         {
-        }
-
-        public enum Level
-        {
-            [EnumAltName("E")] Easy,
-            [EnumAltName("N")] Normal,
-            [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic,
-            [EnumAltName("X")] Extra
-        }
-
-        public enum LevelWithTotal
-        {
-            [EnumAltName("E")] Easy,
-            [EnumAltName("N")] Normal,
-            [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic,
-            [EnumAltName("X")] Extra,
-            [EnumAltName("T")] Total
         }
 
         public enum Route

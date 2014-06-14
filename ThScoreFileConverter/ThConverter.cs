@@ -7,6 +7,7 @@
 namespace ThScoreFileConverter
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Linq;
     using ThScoreFileConverter.Properties;
@@ -16,6 +17,50 @@ namespace ThScoreFileConverter
     /// </summary>
     internal class ThConverter
     {
+        /// <summary>
+        /// Represents a regular expression of <see cref="Level"/>.
+        /// </summary>
+        protected static readonly string LevelPattern;
+
+        /// <summary>
+        /// Represents a regular expression of <see cref="LevelWithTotal"/>.
+        /// </summary>
+        protected static readonly string LevelWithTotalPattern;
+
+        /// <summary>
+        /// Converts from the string matched with <see cref="LevelPattern"/> to a value of
+        /// <see cref="Level"/>.
+        /// </summary>
+        protected static readonly Func<string, Level> ToLevel;
+
+        /// <summary>
+        /// Converts from the string matched with <see cref="LevelWithTotalPattern"/> to a value of
+        /// <see cref="LevelWithTotal"/>.
+        /// </summary>
+        protected static readonly Func<string, LevelWithTotal> ToLevelWithTotal;
+
+        /// <summary>
+        /// Initializes static members of the <see cref="ThConverter"/> class.
+        /// </summary>
+        [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = "Reviewed.")]
+        static ThConverter()
+        {
+            var levels = Utils.GetEnumerator<Level>();
+            var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();
+
+            LevelPattern = string.Join(
+                string.Empty, levels.Select(lv => lv.ToShortName()).ToArray());
+            LevelWithTotalPattern = string.Join(
+                string.Empty, levelsWithTotal.Select(lv => lv.ToShortName()).ToArray());
+
+            var comparisonType = StringComparison.OrdinalIgnoreCase;
+
+            ToLevel = (shortName) =>
+                levels.First(lv => lv.ToShortName().Equals(shortName, comparisonType));
+            ToLevelWithTotal = (shortName) =>
+                levelsWithTotal.First(lv => lv.ToShortName().Equals(shortName, comparisonType));
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ThConverter"/> class.
         /// </summary>
@@ -37,6 +82,84 @@ namespace ThScoreFileConverter
         /// Represents the event that an exception has occurred.
         /// </summary>
         public event EventHandler<ExceptionOccurredEventArgs> ExceptionOccurred;
+
+        /// <summary>
+        /// Represents level.
+        /// </summary>
+        public enum Level
+        {
+            /// <summary>
+            /// Represents level Easy.
+            /// </summary>
+            [EnumAltName("E")]
+            Easy,
+
+            /// <summary>
+            /// Represents level Normal.
+            /// </summary>
+            [EnumAltName("N")]
+            Normal,
+
+            /// <summary>
+            /// Represents level Hard.
+            /// </summary>
+            [EnumAltName("H")]
+            Hard,
+
+            /// <summary>
+            /// Represents level Lunatic.
+            /// </summary>
+            [EnumAltName("L")]
+            Lunatic,
+
+            /// <summary>
+            /// Represents level Extra.
+            /// </summary>
+            [EnumAltName("X")]
+            Extra
+        }
+
+        /// <summary>
+        /// Represents level and total.
+        /// </summary>
+        public enum LevelWithTotal
+        {
+            /// <summary>
+            /// Represents level Easy.
+            /// </summary>
+            [EnumAltName("E")]
+            Easy,
+
+            /// <summary>
+            /// Represents level Normal.
+            /// </summary>
+            [EnumAltName("N")]
+            Normal,
+
+            /// <summary>
+            /// Represents level Hard.
+            /// </summary>
+            [EnumAltName("H")]
+            Hard,
+
+            /// <summary>
+            /// Represents level Lunatic.
+            /// </summary>
+            [EnumAltName("L")]
+            Lunatic,
+
+            /// <summary>
+            /// Represents level Extra.
+            /// </summary>
+            [EnumAltName("X")]
+            Extra,
+
+            /// <summary>
+            /// Represents total across levels.
+            /// </summary>
+            [EnumAltName("T")]
+            Total
+        }
 
         /// <summary>
         /// Gets the string indicating the supported version of the score file to convert.

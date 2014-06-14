@@ -28,10 +28,10 @@ namespace ThScoreFileConverter
     {
         private static readonly Dictionary<LevelScenePair, EnemyCardPair> SpellCards;
 
-        private static readonly string LevelPattern;
+        private static readonly new string LevelPattern;
         private static readonly string LevelLongPattern;
 
-        private static readonly Func<string, Level> ToLevel;
+        private static readonly new Func<string, Level> ToLevel;
 
         private AllScoreData allScoreData = null;
         private Dictionary<LevelScenePair, BestShotPair> bestshots = null;
@@ -144,7 +144,7 @@ namespace ThScoreFileConverter
         {
         }
 
-        public enum Level
+        public new enum Level
         {
             [EnumAltName("1", LongName = "01")] Lv1,
             [EnumAltName("2", LongName = "02")] Lv2,

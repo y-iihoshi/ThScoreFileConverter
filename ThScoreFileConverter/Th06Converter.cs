@@ -18,19 +18,17 @@ namespace ThScoreFileConverter
     using System.Linq;
     using System.Text;
     using System.Text.RegularExpressions;
-    using CardInfo = SpellCardInfo<Th06Converter.Stage, Th06Converter.Level>;
+    using CardInfo = SpellCardInfo<Th06Converter.Stage, ThConverter.Level>;
 
     internal class Th06Converter : ThConverter
     {
         private static readonly Dictionary<int, CardInfo> CardTable;
         private static readonly List<HighScore> InitialRanking;
 
-        private static readonly string LevelPattern;
         private static readonly string CharaPattern;
         private static readonly string StagePattern;
         private static readonly string StageWithTotalPattern;
 
-        private static readonly Func<string, Level> ToLevel;
         private static readonly Func<string, Chara> ToChara;
         private static readonly Func<string, Stage> ToStage;
         private static readonly Func<string, StageWithTotal> ToStageWithTotal;
@@ -126,13 +124,10 @@ namespace ThScoreFileConverter
                 new HighScore( 100000)
             };
 
-            var levels = Utils.GetEnumerator<Level>();
             var charas = Utils.GetEnumerator<Chara>();
             var stages = Utils.GetEnumerator<Stage>();
             var stagesWithTotal = Utils.GetEnumerator<StageWithTotal>();
 
-            LevelPattern = string.Join(
-                string.Empty, levels.Select(lv => lv.ToShortName()).ToArray());
             CharaPattern = string.Join(
                 "|", charas.Select(ch => ch.ToShortName()).ToArray());
             StagePattern = string.Join(
@@ -142,8 +137,6 @@ namespace ThScoreFileConverter
 
             var comparisonType = StringComparison.OrdinalIgnoreCase;
 
-            ToLevel = (shortName =>
-                levels.First(lv => lv.ToShortName().Equals(shortName, comparisonType)));
             ToChara = (shortName =>
                 charas.First(ch => ch.ToShortName().Equals(shortName, comparisonType)));
             ToStage = (shortName =>
@@ -154,25 +147,6 @@ namespace ThScoreFileConverter
 
         public Th06Converter()
         {
-        }
-
-        public enum Level
-        {
-            [EnumAltName("E")] Easy,
-            [EnumAltName("N")] Normal,
-            [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic,
-            [EnumAltName("X")] Extra
-        }
-
-        public enum LevelWithTotal
-        {
-            [EnumAltName("E")] Easy,
-            [EnumAltName("N")] Normal,
-            [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic,
-            [EnumAltName("X")] Extra,
-            [EnumAltName("T")] Total
         }
 
         public enum Chara
