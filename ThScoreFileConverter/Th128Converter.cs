@@ -597,7 +597,7 @@ namespace ThScoreFileConverter
                         return match.ToString();
                 }
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T128C[xxx][z]
@@ -631,7 +631,7 @@ namespace ThScoreFileConverter
                 else
                     return match.ToString();
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T128CARD[xxx][y]
@@ -663,7 +663,7 @@ namespace ThScoreFileConverter
                 else
                     return match.ToString();
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T128CRG[x][yyy][z]
@@ -716,7 +716,7 @@ namespace ThScoreFileConverter
                 return this.allScoreData.CardData.Cards.Values.Count(and)
                     .ToString(CultureInfo.CurrentCulture);
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T128CLEAR[x][yy]
@@ -741,7 +741,7 @@ namespace ThScoreFileConverter
 
                 return stageProgress.ToShortName();
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T128ROUTE[xx][y]
@@ -782,7 +782,7 @@ namespace ThScoreFileConverter
 
                 return toString(getValueByRoute(this.allScoreData));
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T128ROUTEEX[x][yy][z]
@@ -836,7 +836,7 @@ namespace ThScoreFileConverter
 
                 return toString(getValueByRoute(this.allScoreData));
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T128TIMEPLY
@@ -847,7 +847,7 @@ namespace ThScoreFileConverter
             {
                 return new Time(this.allScoreData.Status.TotalPlayTime * 10, false).ToLongString();
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         private class AllScoreData

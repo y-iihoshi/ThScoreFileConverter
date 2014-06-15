@@ -285,9 +285,9 @@ namespace ThScoreFileConverter
         protected override string[] FilterBestShotFiles(string[] files)
         {
             var pattern = Utils.Format(@"bs2?_({0})_[1-9].dat", LevelLongPattern);
-            var regex = new Regex(pattern, RegexOptions.IgnoreCase);
 
-            return files.Where(file => regex.IsMatch(Path.GetFileName(file))).ToArray();
+            return files.Where(file => Regex.IsMatch(
+                Path.GetFileName(file), pattern, RegexOptions.IgnoreCase)).ToArray();
         }
 
         protected override void ConvertBestShot(Stream input, Stream output)
@@ -484,7 +484,7 @@ namespace ThScoreFileConverter
                         return match.ToString();
                 }
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T125SCRTL[x][y][z]
@@ -554,7 +554,7 @@ namespace ThScoreFileConverter
                         return match.ToString();
                 }
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T125CARD[x][y][z]
@@ -579,7 +579,7 @@ namespace ThScoreFileConverter
 
                 return (type == 1) ? SpellCards[key].Enemy.ToLongName() : SpellCards[key].Card;
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T125TIMEPLY
@@ -590,7 +590,7 @@ namespace ThScoreFileConverter
             {
                 return new Time(this.allScoreData.Status.TotalPlayTime * 10, false).ToLongString();
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T125SHOT[x][y][z]
@@ -624,7 +624,7 @@ namespace ThScoreFileConverter
                 else
                     return string.Empty;
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T125SHOTEX[w][x][y][z]
@@ -719,7 +719,7 @@ namespace ThScoreFileConverter
                         default: return match.ToString();
                     }
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         private class LevelScenePair : Pair<Level, int>

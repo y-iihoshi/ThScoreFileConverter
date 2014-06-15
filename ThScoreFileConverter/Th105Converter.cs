@@ -830,7 +830,7 @@ namespace ThScoreFileConverter
                         return match.ToString();
                 }
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T105CARD[xxx][yy][z]
@@ -864,7 +864,7 @@ namespace ThScoreFileConverter
                 else
                     return match.ToString();
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T105CRG[x][yy][z]
@@ -896,7 +896,7 @@ namespace ThScoreFileConverter
                 return this.ToNumberString(this.allScoreData.ClearData[chara]
                     .SpellCardResults.Where(findByLevel).Count(countByType));
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T105DC[ww][x][yy][z]
@@ -955,7 +955,7 @@ namespace ThScoreFileConverter
                         return match.ToString();
                 }
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         private class CharaCardIdPair : Pair<Chara, int>

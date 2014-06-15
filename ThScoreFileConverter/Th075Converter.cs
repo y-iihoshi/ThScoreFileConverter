@@ -537,7 +537,7 @@ namespace ThScoreFileConverter
                         return match.ToString();
                 }
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T75C[xxx][yy][z]
@@ -599,7 +599,7 @@ namespace ThScoreFileConverter
                 else
                     return match.ToString();
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T75CARD[xxx][yy][z]
@@ -633,7 +633,7 @@ namespace ThScoreFileConverter
                 else
                     return match.ToString();
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T75CRG[x][yy][z]
@@ -697,7 +697,7 @@ namespace ThScoreFileConverter
                     }
                 }
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T75CHR[x][yy][z]
@@ -730,7 +730,7 @@ namespace ThScoreFileConverter
                         return match.ToString();
                 }
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         private class SpellCardInfo

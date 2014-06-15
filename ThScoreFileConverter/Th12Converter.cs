@@ -392,7 +392,7 @@ namespace ThScoreFileConverter
                         return match.ToString();
                 }
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T12C[xxx][yy][z]
@@ -426,7 +426,7 @@ namespace ThScoreFileConverter
                 else
                     return match.ToString();
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T12CARD[xxx][y]
@@ -458,7 +458,7 @@ namespace ThScoreFileConverter
                 else
                     return match.ToString();
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T12CRG[w][xx][y][z]
@@ -513,7 +513,7 @@ namespace ThScoreFileConverter
                 return this.allScoreData.ClearData[chara].Cards.Values.Count(and)
                     .ToString(CultureInfo.CurrentCulture);
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T12CLEAR[x][yy]
@@ -532,7 +532,7 @@ namespace ThScoreFileConverter
 
                 return (stageProgress == StageProgress.Extra) ? "Not Clear" : stageProgress.ToShortName();
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T12CHARA[xx][y]
@@ -573,7 +573,7 @@ namespace ThScoreFileConverter
 
                 return toString(getValueByChara(this.allScoreData));
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T12CHARAEX[x][yy][z]
@@ -618,7 +618,7 @@ namespace ThScoreFileConverter
 
                 return toString(getValueByChara(this.allScoreData));
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T12PRAC[x][yy][z]
@@ -647,7 +647,7 @@ namespace ThScoreFileConverter
                 else
                     return "0";
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         private class LevelStagePair : Pair<Level, Stage>

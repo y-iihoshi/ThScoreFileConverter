@@ -333,9 +333,9 @@ namespace ThScoreFileConverter
         protected override string[] FilterBestShotFiles(string[] files)
         {
             var pattern = Utils.Format(@"sc({0})_\d{{2}}.dat", DayLongPattern);
-            var regex = new Regex(pattern, RegexOptions.IgnoreCase);
 
-            return files.Where(file => regex.IsMatch(Path.GetFileName(file))).ToArray();
+            return files.Where(file => Regex.IsMatch(
+                Path.GetFileName(file), pattern, RegexOptions.IgnoreCase)).ToArray();
         }
 
         protected override void ConvertBestShot(Stream input, Stream output)
@@ -525,7 +525,7 @@ namespace ThScoreFileConverter
                         return match.ToString();
                 }
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T143SCRTL[x][y]
@@ -556,7 +556,7 @@ namespace ThScoreFileConverter
                         return match.ToString();
                 }
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T143CARD[x][y][z]
@@ -592,7 +592,7 @@ namespace ThScoreFileConverter
                 else
                     return SpellCards[key].Card;
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T143NICK[xx]
@@ -609,7 +609,7 @@ namespace ThScoreFileConverter
                 else
                     return match.ToString();
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T143TIMEPLY
@@ -620,7 +620,7 @@ namespace ThScoreFileConverter
             {
                 return new Time(this.allScoreData.Status.TotalPlayTime * 10, false).ToLongString();
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T143SHOT[x][y]
@@ -648,7 +648,7 @@ namespace ThScoreFileConverter
                 else
                     return string.Empty;
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T143SHOTEX[w][x][y]
@@ -692,7 +692,7 @@ namespace ThScoreFileConverter
                         default: return match.ToString();
                     }
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         private class DayScenePair : Pair<Day, int>

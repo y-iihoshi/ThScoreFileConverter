@@ -362,7 +362,7 @@ namespace ThScoreFileConverter
                         return match.ToString();
                 }
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T06C[xx][y]
@@ -394,7 +394,7 @@ namespace ThScoreFileConverter
                 else
                     return match.ToString();
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T06CARD[xx][y]
@@ -423,7 +423,7 @@ namespace ThScoreFileConverter
                 else
                     return match.ToString();
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T06CRG[x][y]
@@ -454,7 +454,7 @@ namespace ThScoreFileConverter
                 var and = Utils.MakeAndPredicate(findByStage, findByType);
                 return this.allScoreData.CardAttacks.Values.Count(and).ToString(CultureInfo.CurrentCulture);
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T06CLEAR[x][yy]
@@ -478,7 +478,7 @@ namespace ThScoreFileConverter
                 else
                     return StageProgress.None.ToShortName();
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T06PRAC[x][yy][z]
@@ -507,7 +507,7 @@ namespace ThScoreFileConverter
                 else
                     return "0";
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         private class CharaLevelPair : Pair<Chara, Level>

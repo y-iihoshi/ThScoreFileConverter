@@ -679,7 +679,7 @@ namespace ThScoreFileConverter
                         return match.ToString();
                 }
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T08C[w][xxx][yy][z]
@@ -727,7 +727,7 @@ namespace ThScoreFileConverter
                 else
                     return match.ToString();
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T08CARD[xxx][y]
@@ -761,7 +761,7 @@ namespace ThScoreFileConverter
                 else
                     return match.ToString();
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T08CRG[v][w][xx][yy][z]
@@ -837,7 +837,7 @@ namespace ThScoreFileConverter
                 var and = Utils.MakeAndPredicate(findByKindType, findByLevel, findByStage);
                 return this.allScoreData.CardAttacks.Values.Count(and).ToString(CultureInfo.CurrentCulture);
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T08CLEAR[x][yy]
@@ -872,7 +872,7 @@ namespace ThScoreFileConverter
                 else
                     return "-------";
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T08PLAY[x][yy]
@@ -905,7 +905,7 @@ namespace ThScoreFileConverter
                         }
                 }
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T08TIME(ALL|PLY)
@@ -920,7 +920,7 @@ namespace ThScoreFileConverter
                     ? this.allScoreData.PlayStatus.TotalRunningTime.ToLongString()
                     : this.allScoreData.PlayStatus.TotalPlayTime.ToLongString();
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         // %T08PRAC[w][xx][yy][z]
@@ -957,7 +957,7 @@ namespace ThScoreFileConverter
                 else
                     return "0";
             });
-            return new Regex(pattern, RegexOptions.IgnoreCase).Replace(input, evaluator);
+            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
         }
 
         private class CharaLevelPair : Pair<Chara, Level>
