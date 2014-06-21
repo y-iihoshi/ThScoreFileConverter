@@ -21,11 +21,14 @@ namespace ThScoreFileConverter
 
     internal class Th075Converter : ThConverter
     {
+        private const string CharTable =
+            @"ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+            @"abcdefghijklmnopqrstuvwxyz" +
+            @"0123456789+-/*=%#!?.,:;_@$" +
+            @"(){}[]<>&\|~^             ";
+
         private static readonly Dictionary<int, SpellCardInfo> CardTable;
         private static readonly Dictionary<Chara, IEnumerable<int>> CardIdTable;
-
-        [SuppressMessage("Microsoft.Performance", "CA1802:UseLiteralsWhereAppropriate", Justification = "Reviewed.")]
-        private static readonly string CharTable;
 
         private static readonly new EnumShortNameParser<Level> LevelParser;
         private static readonly new EnumShortNameParser<LevelWithTotal> LevelWithTotalParser;
@@ -368,12 +371,6 @@ namespace ThScoreFileConverter
                             return null;    // unreachable
                     }
                 }));
-
-            CharTable =
-                @"ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-                @"abcdefghijklmnopqrstuvwxyz" +
-                @"0123456789+-/*=%#!?.,:;_@$" +
-                @"(){}[]<>&\|~^             ";
 
             LevelParser = new EnumShortNameParser<Level>();
             LevelWithTotalParser = new EnumShortNameParser<LevelWithTotal>();
