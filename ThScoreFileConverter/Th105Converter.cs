@@ -685,26 +685,16 @@ namespace ThScoreFileConverter
             }
         }
 
-        protected override void Convert(Stream input, Stream output, bool hideUntriedCards)
+        protected override IEnumerable<IStringReplaceable> CreateReplacers(
+            bool hideUntriedCards, string outputFilePath)
         {
-            var reader = new StreamReader(input, Encoding.GetEncoding("shift_jis"));
-            var writer = new StreamWriter(output, Encoding.GetEncoding("shift_jis"));
-            var replacers = new List<IStringReplaceable>
+            return new List<IStringReplaceable>
             {
                 new CareerReplacer(this),
                 new CardReplacer(this, hideUntriedCards),
                 new CollectRateReplacer(this),
                 new CardForDeckReplacer(this, hideUntriedCards)
             };
-
-            var allLines = reader.ReadToEnd();
-
-            foreach (var replacer in replacers)
-                allLines = replacer.Replace(allLines);
-
-            writer.Write(allLines);
-            writer.Flush();
-            writer.BaseStream.SetLength(writer.BaseStream.Position);
         }
 
         private static bool Decrypt(Stream input, Stream output)

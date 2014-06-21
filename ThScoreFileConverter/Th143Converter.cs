@@ -307,13 +307,10 @@ namespace ThScoreFileConverter
             }
         }
 
-        protected override void Convert(Stream input, Stream output, bool hideUntriedCards)
+        protected override IEnumerable<IStringReplaceable> CreateReplacers(
+            bool hideUntriedCards, string outputFilePath)
         {
-            var reader = new StreamReader(input, Encoding.GetEncoding("shift_jis"));
-            var writer = new StreamWriter(output, Encoding.GetEncoding("shift_jis"));
-            var outputFile = output as FileStream;
-            var outputFilePath = (outputFile != null) ? outputFile.Name : string.Empty;
-            var replacers = new List<IStringReplaceable>
+            return new List<IStringReplaceable>
             {
                 new ScoreReplacer(this),
                 new ScoreTotalReplacer(this),
@@ -323,15 +320,6 @@ namespace ThScoreFileConverter
                 new ShotReplacer(this, outputFilePath),
                 new ShotExReplacer(this, outputFilePath)
             };
-
-            var allLines = reader.ReadToEnd();
-
-            foreach (var replacer in replacers)
-                allLines = replacer.Replace(allLines);
-
-            writer.Write(allLines);
-            writer.Flush();
-            writer.BaseStream.SetLength(writer.BaseStream.Position);
         }
 
         protected override string[] FilterBestShotFiles(string[] files)

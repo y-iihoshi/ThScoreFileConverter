@@ -7,9 +7,11 @@
 namespace ThScoreFileConverter
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Linq;
+    using System.Text;
     using ThScoreFileConverter.Properties;
 
     /// <summary>
@@ -333,7 +335,20 @@ namespace ThScoreFileConverter
         /// <param name="hideUntriedCards"><c>true</c> if it hides untried spell cards.</param>
         protected virtual void Convert(Stream input, Stream output, bool hideUntriedCards)
         {
-            throw new NotImplementedException();
+            var reader = new StreamReader(input, Encoding.GetEncoding("shift_jis"));
+            var writer = new StreamWriter(output, Encoding.GetEncoding("shift_jis"));
+            var outputFile = output as FileStream;
+            var outputFilePath = (outputFile != null) ? outputFile.Name : string.Empty;
+            var replacers = this.CreateReplacers(hideUntriedCards, outputFilePath);
+
+            var allLines = reader.ReadToEnd();
+
+            foreach (var replacer in replacers)
+                allLines = replacer.Replace(allLines);
+
+            writer.Write(allLines);
+            writer.Flush();
+            writer.BaseStream.SetLength(writer.BaseStream.Position);
         }
 
         /// <summary>
@@ -343,6 +358,18 @@ namespace ThScoreFileConverter
         /// <param name="input">The input stream that treats the best shot data to convert.</param>
         /// <param name="output">The stream for outputting converted best shot data.</param>
         protected virtual void ConvertBestShot(Stream input, Stream output)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Creates the instances which implement IStringReplaceable interface.
+        /// </summary>
+        /// <param name="hideUntriedCards"><c>true</c> if it hides untried spell cards.</param>
+        /// <param name="outputFilePath">The file path for outputting the converted data.</param>
+        /// <returns>The created instances which implement IStringReplaceable interface.</returns>
+        protected virtual IEnumerable<IStringReplaceable> CreateReplacers(
+            bool hideUntriedCards, string outputFilePath)
         {
             throw new NotImplementedException();
         }
