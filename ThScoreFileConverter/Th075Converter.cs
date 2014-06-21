@@ -22,7 +22,7 @@ namespace ThScoreFileConverter
     internal class Th075Converter : ThConverter
     {
         private static readonly Dictionary<int, SpellCardInfo> CardTable;
-        private static readonly Dictionary<Chara, IEnumerable<int>> CardNumberTable;
+        private static readonly Dictionary<Chara, IEnumerable<int>> CardIdTable;
 
         [SuppressMessage("Microsoft.Performance", "CA1802:UseLiteralsWhereAppropriate", Justification = "Reviewed.")]
         private static readonly string CharTable;
@@ -343,7 +343,7 @@ namespace ThScoreFileConverter
                 }
             };
 
-            CardNumberTable = charaStageEnemyTable.ToDictionary(
+            CardIdTable = charaStageEnemyTable.ToDictionary(
                 charaStageEnemyPair => charaStageEnemyPair.Key,
                 charaStageEnemyPair => charaStageEnemyPair.Value.SelectMany(stageEnemyPair =>
                 {
@@ -472,13 +472,19 @@ namespace ThScoreFileConverter
         {
             var reader = new StreamReader(input, Encoding.GetEncoding("shift_jis"));
             var writer = new StreamWriter(output, Encoding.GetEncoding("shift_jis"));
+            var replacers = new List<IStringReplaceable>
+            {
+                new ScoreReplacer(this),
+                new CareerReplacer(this),
+                new CardReplacer(this, hideUntriedCards),
+                new CollectRateReplacer(this),
+                new CharaReplacer(this)
+            };
 
             var allLines = reader.ReadToEnd();
-            allLines = this.ReplaceScore(allLines);
-            allLines = this.ReplaceCareer(allLines);
-            allLines = this.ReplaceCard(allLines, hideUntriedCards);
-            allLines = this.ReplaceCollectRate(allLines);
-            allLines = this.ReplaceChara(allLines);
+
+            foreach (var replacer in replacers)
+                allLines = replacer.Replace(allLines);
 
             writer.Write(allLines);
             writer.Flush();
@@ -508,229 +514,281 @@ namespace ThScoreFileConverter
         }
 
         // %T75SCR[w][xx][y][z]
-        private string ReplaceScore(string input)
+        private class ScoreReplacer : IStringReplaceable
         {
-            var pattern = Utils.Format(
+            private static readonly string Pattern = Utils.Format(
                 @"%T75SCR({0})({1})(\d)([1-3])", LevelParser.Pattern, CharaParser.Pattern);
-            var evaluator = new MatchEvaluator(match =>
+
+            private readonly MatchEvaluator evaluator;
+
+            public ScoreReplacer(Th075Converter parent)
             {
-                var level = LevelParser.Parse(match.Groups[1].Value);
-                var chara = CharaParser.Parse(match.Groups[2].Value);
-                var rank = Utils.ToZeroBased(int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
-                var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
-
-                if (chara == Chara.Meiling)
-                    return match.ToString();
-
-                var key = new CharaLevelPair(chara, level);
-                var score = this.allScoreData.ClearData[key].Ranking[rank];
-
-                switch (type)
+                this.evaluator = new MatchEvaluator(match =>
                 {
-                    case 1:     // name
-                        return score.Name;
-                    case 2:     // score
-                        return this.ToNumberString(score.Score);
-                    case 3:     // date
-                        return Utils.Format("{0:D2}/{1:D2}", score.Month, score.Day);
-                    default:    // unreachable
+                    var level = LevelParser.Parse(match.Groups[1].Value);
+                    var chara = CharaParser.Parse(match.Groups[2].Value);
+                    var rank = Utils.ToZeroBased(
+                        int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
+                    var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
+
+                    if (chara == Chara.Meiling)
                         return match.ToString();
-                }
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
+
+                    var key = new CharaLevelPair(chara, level);
+                    var score = parent.allScoreData.ClearData[key].Ranking[rank];
+
+                    switch (type)
+                    {
+                        case 1:     // name
+                            return score.Name;
+                        case 2:     // score
+                            return parent.ToNumberString(score.Score);
+                        case 3:     // date
+                            return Utils.Format("{0:D2}/{1:D2}", score.Month, score.Day);
+                        default:    // unreachable
+                            return match.ToString();
+                    }
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
         }
 
         // %T75C[xxx][yy][z]
-        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-        private string ReplaceCareer(string input)
+        private class CareerReplacer : IStringReplaceable
         {
-            var pattern = Utils.Format(@"%T75C(\d{{3}})({0})([1-4])", CharaParser.Pattern);
-            var evaluator = new MatchEvaluator(match =>
+            private static readonly string Pattern = Utils.Format(
+                @"%T75C(\d{{3}})({0})([1-4])", CharaParser.Pattern);
+
+            private readonly MatchEvaluator evaluator;
+
+            [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
+            public CareerReplacer(Th075Converter parent)
             {
-                var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
-                var chara = CharaParser.Parse(match.Groups[2].Value);
-                var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
-
-                if (chara == Chara.Meiling)
-                    return match.ToString();
-
-                var clearDataList = this.allScoreData.ClearData
-                    .Where(entry => entry.Key.Chara == chara)
-                    .Select(entry => entry.Value);
-
-                if (number == 0)
+                this.evaluator = new MatchEvaluator(match =>
                 {
-                    switch (type)
+                    var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
+                    var chara = CharaParser.Parse(match.Groups[2].Value);
+                    var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
+
+                    if (chara == Chara.Meiling)
+                        return match.ToString();
+
+                    var dataList = parent.allScoreData.ClearData
+                        .Where(entry => entry.Key.Chara == chara)
+                        .Select(entry => entry.Value);
+
+                    if (number == 0)
                     {
-                        case 1:
-                            return this.ToNumberString(
-                                clearDataList.Sum(data => data.MaxBonuses.Sum()));
-                        case 2:
-                            return this.ToNumberString(
-                                clearDataList.Sum(data => data.CardGotCount.Sum(count => (int)count)));
-                        case 3:
-                            return this.ToNumberString(
-                                clearDataList.Sum(data => data.CardTrialCount.Sum(count => (int)count)));
-                        case 4:
-                        default:
-                            return match.ToString();
+                        switch (type)
+                        {
+                            case 1:
+                                return parent.ToNumberString(
+                                    dataList.Sum(data => data.MaxBonuses.Sum()));
+                            case 2:
+                                return parent.ToNumberString(
+                                    dataList.Sum(data => data.CardGotCount.Sum(count => (int)count)));
+                            case 3:
+                                return parent.ToNumberString(
+                                    dataList.Sum(data => data.CardTrialCount.Sum(count => (int)count)));
+                            case 4:
+                            default:
+                                return match.ToString();
+                        }
                     }
-                }
-                else if (number <= CardNumberTable[chara].Count())
-                {
-                    switch (type)
+                    else if (number <= CardIdTable[chara].Count())
                     {
-                        case 1:
-                            return this.ToNumberString(
-                                clearDataList.Sum(data => data.MaxBonuses[number - 1]));
-                        case 2:
-                            return this.ToNumberString(
-                                clearDataList.Sum(data => (int)data.CardGotCount[number - 1]));
-                        case 3:
-                            return this.ToNumberString(
-                                clearDataList.Sum(data => (int)data.CardTrialCount[number - 1]));
-                        case 4:
-                            return clearDataList.Any(data => data.CardTrulyGot[number - 1] != 0x00)
-                                ? "★" : string.Empty;
-                        default:
-                            return match.ToString();
+                        switch (type)
+                        {
+                            case 1:
+                                return parent.ToNumberString(
+                                    dataList.Sum(data => data.MaxBonuses[number - 1]));
+                            case 2:
+                                return parent.ToNumberString(
+                                    dataList.Sum(data => (int)data.CardGotCount[number - 1]));
+                            case 3:
+                                return parent.ToNumberString(
+                                    dataList.Sum(data => (int)data.CardTrialCount[number - 1]));
+                            case 4:
+                                return dataList.Any(data => data.CardTrulyGot[number - 1] != 0x00)
+                                    ? "★" : string.Empty;
+                            default:
+                                return match.ToString();
+                        }
                     }
-                }
-                else
-                    return match.ToString();
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
+                    else
+                        return match.ToString();
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
         }
 
         // %T75CARD[xxx][yy][z]
-        private string ReplaceCard(string input, bool hideUntriedCards)
+        private class CardReplacer : IStringReplaceable
         {
-            var pattern = Utils.Format(@"%T75CARD(\d{{3}})({0})([NR])", CharaParser.Pattern);
-            var evaluator = new MatchEvaluator(match =>
+            private static readonly string Pattern = Utils.Format(
+                @"%T75CARD(\d{{3}})({0})([NR])", CharaParser.Pattern);
+
+            private readonly MatchEvaluator evaluator;
+
+            public CardReplacer(Th075Converter parent, bool hideUntriedCards)
             {
-                var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
-                var chara = CharaParser.Parse(match.Groups[2].Value);
-                var type = match.Groups[3].Value.ToUpperInvariant();
-
-                if (chara == Chara.Meiling)
-                    return match.ToString();
-
-                if (number <= CardNumberTable[chara].Count())
+                this.evaluator = new MatchEvaluator(match =>
                 {
-                    if (hideUntriedCards)
-                    {
-                        var clearDataList = this.allScoreData.ClearData
-                            .Where(pair => pair.Key.Chara == chara)
-                            .Select(pair => pair.Value);
-                        if (clearDataList.All(data => data.CardTrialCount[number - 1] <= 0))
-                            return (type == "N") ? "??????????" : "?????";
-                    }
+                    var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
+                    var chara = CharaParser.Parse(match.Groups[2].Value);
+                    var type = match.Groups[3].Value.ToUpperInvariant();
 
-                    var cardNumber = CardNumberTable[chara].ElementAt(number - 1);
-                    return (type == "N")
-                        ? CardTable[cardNumber].Name : CardTable[cardNumber].Level.ToString();
-                }
-                else
-                    return match.ToString();
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
+                    if (chara == Chara.Meiling)
+                        return match.ToString();
+
+                    if (number <= CardIdTable[chara].Count())
+                    {
+                        if (hideUntriedCards)
+                        {
+                            var dataList = parent.allScoreData.ClearData
+                                .Where(pair => pair.Key.Chara == chara)
+                                .Select(pair => pair.Value);
+                            if (dataList.All(data => data.CardTrialCount[number - 1] <= 0))
+                                return (type == "N") ? "??????????" : "?????";
+                        }
+
+                        var cardId = CardIdTable[chara].ElementAt(number - 1);
+                        return (type == "N") ? CardTable[cardId].Name : CardTable[cardId].Level.ToString();
+                    }
+                    else
+                        return match.ToString();
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
         }
 
         // %T75CRG[x][yy][z]
-        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-        private string ReplaceCollectRate(string input)
+        private class CollectRateReplacer : IStringReplaceable
         {
-            var pattern = Utils.Format(
+            private static readonly string Pattern = Utils.Format(
                 @"%T75CRG({0})({1})([1-3])", LevelWithTotalParser.Pattern, CharaParser.Pattern);
-            var evaluator = new MatchEvaluator(match =>
+
+            private readonly MatchEvaluator evaluator;
+
+            [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
+            public CollectRateReplacer(Th075Converter parent)
             {
-                var level = LevelWithTotalParser.Parse(match.Groups[1].Value);
-                var chara = CharaParser.Parse(match.Groups[2].Value);
-                var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
-
-                if (chara == Chara.Meiling)
-                    return match.ToString();
-
-                if (level == LevelWithTotal.Total)
+                this.evaluator = new MatchEvaluator(match =>
                 {
-                    var clearDataList = this.allScoreData.ClearData
-                        .Where(pair => pair.Key.Chara == chara)
-                        .Select(pair => pair.Value);
-                    switch (type)
+                    var level = LevelWithTotalParser.Parse(match.Groups[1].Value);
+                    var chara = CharaParser.Parse(match.Groups[2].Value);
+                    var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
+
+                    if (chara == Chara.Meiling)
+                        return match.ToString();
+
+                    if (level == LevelWithTotal.Total)
                     {
-                        case 1:
-                            return this.ToNumberString(
-                                clearDataList.Sum(data => data.CardGotCount.Count(count => count > 0)));
-                        case 2:
-                            return this.ToNumberString(
-                                clearDataList.Sum(data => data.CardTrialCount.Count(count => count > 0)));
-                        case 3:
-                            return this.ToNumberString(
-                                clearDataList.Sum(data => data.CardTrulyGot.Count(got => got > 0)));
-                        default:
-                            return match.ToString();
+                        var dataList = parent.allScoreData.ClearData
+                            .Where(pair => pair.Key.Chara == chara)
+                            .Select(pair => pair.Value);
+                        switch (type)
+                        {
+                            case 1:
+                                return parent.ToNumberString(
+                                    dataList.Sum(data => data.CardGotCount.Count(count => count > 0)));
+                            case 2:
+                                return parent.ToNumberString(
+                                    dataList.Sum(data => data.CardTrialCount.Count(count => count > 0)));
+                            case 3:
+                                return parent.ToNumberString(
+                                    dataList.Sum(data => data.CardTrulyGot.Count(got => got > 0)));
+                            default:
+                                return match.ToString();
+                        }
                     }
-                }
-                else
-                {
-                    var key = new CharaLevelPair(chara, Level.Easy);
-                    var data = this.allScoreData.ClearData[key];
-                    var cardIndexNumberPairs = CardNumberTable[chara]
-                        .Select((number, index) => new KeyValuePair<int, int>(index, number))
-                        .Where(pair => CardTable[pair.Value].Level == (Level)level);
-                    switch (type)
+                    else
                     {
-                        case 1:
-                            return this.ToNumberString(data.CardGotCount
-                                .Where((count, index) => cardIndexNumberPairs.Any(pair => pair.Key == index))
-                                .Count(count => count > 0));
-                        case 2:
-                            return this.ToNumberString(data.CardTrialCount
-                                .Where((count, index) => cardIndexNumberPairs.Any(pair => pair.Key == index))
-                                .Count(count => count > 0));
-                        case 3:
-                            return this.ToNumberString(data.CardTrulyGot
-                                .Where((got, index) => cardIndexNumberPairs.Any(pair => pair.Key == index))
-                                .Count(got => got > 0));
-                        default:
-                            return match.ToString();
+                        var key = new CharaLevelPair(chara, Level.Easy);
+                        var data = parent.allScoreData.ClearData[key];
+                        var cardIndexIdPairs = CardIdTable[chara]
+                            .Select((id, index) => new KeyValuePair<int, int>(index, id))
+                            .Where(pair => CardTable[pair.Value].Level == (Level)level);
+                        switch (type)
+                        {
+                            case 1:
+                                return parent.ToNumberString(data.CardGotCount
+                                    .Where((count, index) => cardIndexIdPairs.Any(pair => pair.Key == index))
+                                    .Count(count => count > 0));
+                            case 2:
+                                return parent.ToNumberString(data.CardTrialCount
+                                    .Where((count, index) => cardIndexIdPairs.Any(pair => pair.Key == index))
+                                    .Count(count => count > 0));
+                            case 3:
+                                return parent.ToNumberString(data.CardTrulyGot
+                                    .Where((got, index) => cardIndexIdPairs.Any(pair => pair.Key == index))
+                                    .Count(got => got > 0));
+                            default:
+                                return match.ToString();
+                        }
                     }
-                }
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
         }
 
         // %T75CHR[x][yy][z]
-        private string ReplaceChara(string input)
+        private class CharaReplacer : IStringReplaceable
         {
-            var pattern = Utils.Format(
+            private static readonly string Pattern = Utils.Format(
                 @"%T75CHR({0})({1})([1-4])", LevelParser.Pattern, CharaParser.Pattern);
-            var evaluator = new MatchEvaluator(match =>
+
+            private readonly MatchEvaluator evaluator;
+
+            public CharaReplacer(Th075Converter parent)
             {
-                var level = LevelParser.Parse(match.Groups[1].Value);
-                var chara = CharaParser.Parse(match.Groups[2].Value);
-                var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
-
-                if (chara == Chara.Meiling)
-                    return match.ToString();
-
-                var key = new CharaLevelPair(chara, level);
-                var data = this.allScoreData.ClearData[key];
-                switch (type)
+                this.evaluator = new MatchEvaluator(match =>
                 {
-                    case 1:
-                        return this.ToNumberString(data.UseCount);
-                    case 2:
-                        return this.ToNumberString(data.ClearCount);
-                    case 3:
-                        return this.ToNumberString(data.MaxCombo);
-                    case 4:
-                        return this.ToNumberString(data.MaxDamage);
-                    default:
+                    var level = LevelParser.Parse(match.Groups[1].Value);
+                    var chara = CharaParser.Parse(match.Groups[2].Value);
+                    var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
+
+                    if (chara == Chara.Meiling)
                         return match.ToString();
-                }
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
+
+                    var key = new CharaLevelPair(chara, level);
+                    var data = parent.allScoreData.ClearData[key];
+                    switch (type)
+                    {
+                        case 1:
+                            return parent.ToNumberString(data.UseCount);
+                        case 2:
+                            return parent.ToNumberString(data.ClearCount);
+                        case 3:
+                            return parent.ToNumberString(data.MaxCombo);
+                        case 4:
+                            return parent.ToNumberString(data.MaxDamage);
+                        default:
+                            return match.ToString();
+                    }
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
         }
 
         private class SpellCardInfo

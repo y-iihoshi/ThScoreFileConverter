@@ -428,16 +428,22 @@ namespace ThScoreFileConverter
         {
             var reader = new StreamReader(input, Encoding.GetEncoding("shift_jis"));
             var writer = new StreamWriter(output, Encoding.GetEncoding("shift_jis"));
+            var replacers = new List<IStringReplaceable>
+            {
+                new ScoreReplacer(this),
+                new CareerReplacer(this),
+                new CardReplacer(this, hideUntriedCards),
+                new CollectRateReplacer(this),
+                new ClearReplacer(this),
+                new RouteReplacer(this),
+                new RouteExReplacer(this),
+                new TimeReplacer(this)
+            };
 
             var allLines = reader.ReadToEnd();
-            allLines = this.ReplaceScore(allLines);
-            allLines = this.ReplaceCareer(allLines);
-            allLines = this.ReplaceCard(allLines, hideUntriedCards);
-            allLines = this.ReplaceCollectRate(allLines);
-            allLines = this.ReplaceClear(allLines);
-            allLines = this.ReplaceRoute(allLines);
-            allLines = this.ReplaceRouteEx(allLines);
-            allLines = this.ReplaceTime(allLines);
+
+            foreach (var replacer in replacers)
+                allLines = replacer.Replace(allLines);
 
             writer.Write(allLines);
             writer.Flush();
@@ -554,300 +560,382 @@ namespace ThScoreFileConverter
         }
 
         // %T128SCR[w][xx][y][z]
-        private string ReplaceScore(string input)
+        private class ScoreReplacer : IStringReplaceable
         {
-            var pattern = Utils.Format(
+            private static readonly string Pattern = Utils.Format(
                 @"%T128SCR({0})({1})(\d)([1-5])", LevelParser.Pattern, RouteParser.Pattern);
-            var evaluator = new MatchEvaluator(match =>
+
+            private readonly MatchEvaluator evaluator;
+
+            public ScoreReplacer(Th128Converter parent)
             {
-                var level = LevelParser.Parse(match.Groups[1].Value);
-                var route = (RouteWithTotal)RouteParser.Parse(match.Groups[2].Value);
-                var rank = Utils.ToZeroBased(int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
-                var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
-
-                if ((level == Level.Extra) && (route != RouteWithTotal.Extra))
-                    return match.ToString();
-                if ((route == RouteWithTotal.Extra) && (level != Level.Extra))
-                    return match.ToString();
-
-                var ranking = this.allScoreData.ClearData[route].Rankings[level][rank];
-                switch (type)
+                this.evaluator = new MatchEvaluator(match =>
                 {
-                    case 1:     // name
-                        return Encoding.Default.GetString(ranking.Name).Split('\0')[0];
-                    case 2:     // score
-                        return this.ToNumberString((ranking.Score * 10) + ranking.ContinueCount);
-                    case 3:     // stage
-                        if (ranking.DateTime > 0)
-                            return ranking.StageProgress.ToShortName();
-                        else
-                            return StageProgress.None.ToShortName();
-                    case 4:     // date & time
-                        if (ranking.DateTime > 0)
-                            return new DateTime(1970, 1, 1).AddSeconds(ranking.DateTime)
-                                .ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
-                        else
-                            return "----/--/-- --:--:--";
-                    case 5:     // slow
-                        if (ranking.DateTime > 0)
-                            return Utils.Format("{0:F3}%", ranking.SlowRate);
-                        else
-                            return "-----%";
-                    default:    // unreachable
+                    var level = LevelParser.Parse(match.Groups[1].Value);
+                    var route = (RouteWithTotal)RouteParser.Parse(match.Groups[2].Value);
+                    var rank = Utils.ToZeroBased(
+                        int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
+                    var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
+
+                    if ((level == Level.Extra) && (route != RouteWithTotal.Extra))
                         return match.ToString();
-                }
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
+                    if ((route == RouteWithTotal.Extra) && (level != Level.Extra))
+                        return match.ToString();
+
+                    var ranking = parent.allScoreData.ClearData[route].Rankings[level][rank];
+                    switch (type)
+                    {
+                        case 1:     // name
+                            return Encoding.Default.GetString(ranking.Name).Split('\0')[0];
+                        case 2:     // score
+                            return parent.ToNumberString((ranking.Score * 10) + ranking.ContinueCount);
+                        case 3:     // stage
+                            if (ranking.DateTime > 0)
+                                return ranking.StageProgress.ToShortName();
+                            else
+                                return StageProgress.None.ToShortName();
+                        case 4:     // date & time
+                            if (ranking.DateTime > 0)
+                                return new DateTime(1970, 1, 1).AddSeconds(ranking.DateTime).ToLocalTime()
+                                    .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
+                            else
+                                return "----/--/-- --:--:--";
+                        case 5:     // slow
+                            if (ranking.DateTime > 0)
+                                return Utils.Format("{0:F3}%", ranking.SlowRate);
+                            else
+                                return "-----%";
+                        default:    // unreachable
+                            return match.ToString();
+                    }
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
         }
 
         // %T128C[xxx][z]
-        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-        private string ReplaceCareer(string input)
+        private class CareerReplacer : IStringReplaceable
         {
-            var pattern = @"%T128C(\d{3})([1-3])";
-            var evaluator = new MatchEvaluator(match =>
+            private const string Pattern = @"%T128C(\d{3})([1-3])";
+
+            private readonly MatchEvaluator evaluator;
+
+            [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
+            public CareerReplacer(Th128Converter parent)
             {
-                var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
-                var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
-
-                Func<SpellCard, int> getCount = (card => 0);
-                if (type == 1)
-                    getCount = (card => card.NoIceCount);
-                else if (type == 2)
-                    getCount = (card => card.NoMissCount);
-                else
-                    getCount = (card => card.TrialCount);
-
-                if (number == 0)
-                    return this.ToNumberString(this.allScoreData.CardData.Cards.Values.Sum(getCount));
-                else if (CardTable.ContainsKey(number))
+                this.evaluator = new MatchEvaluator(match =>
                 {
-                    SpellCard card;
-                    if (this.allScoreData.CardData.Cards.TryGetValue(number, out card))
-                        return this.ToNumberString(getCount(card));
+                    var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
+                    var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
+
+                    Func<SpellCard, int> getCount = (card => 0);
+                    if (type == 1)
+                        getCount = (card => card.NoIceCount);
+                    else if (type == 2)
+                        getCount = (card => card.NoMissCount);
                     else
-                        return "0";
-                }
-                else
-                    return match.ToString();
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
+                        getCount = (card => card.TrialCount);
+
+                    if (number == 0)
+                        return parent.ToNumberString(
+                            parent.allScoreData.CardData.Cards.Values.Sum(getCount));
+                    else if (CardTable.ContainsKey(number))
+                    {
+                        SpellCard card;
+                        if (parent.allScoreData.CardData.Cards.TryGetValue(number, out card))
+                            return parent.ToNumberString(getCount(card));
+                        else
+                            return "0";
+                    }
+                    else
+                        return match.ToString();
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
         }
 
         // %T128CARD[xxx][y]
-        private string ReplaceCard(string input, bool hideUntriedCards)
+        private class CardReplacer : IStringReplaceable
         {
-            var pattern = @"%T128CARD(\d{3})([NR])";
-            var evaluator = new MatchEvaluator(match =>
+            private const string Pattern = @"%T128CARD(\d{3})([NR])";
+
+            private readonly MatchEvaluator evaluator;
+
+            public CardReplacer(Th128Converter parent, bool hideUntriedCards)
             {
-                var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
-                var type = match.Groups[2].Value.ToUpperInvariant();
-
-                if (CardTable.ContainsKey(number))
+                this.evaluator = new MatchEvaluator(match =>
                 {
-                    if (type == "N")
-                    {
-                        if (hideUntriedCards)
-                        {
-                            var cards = this.allScoreData.CardData.Cards;
-                            SpellCard card;
-                            if (!cards.TryGetValue(number, out card) || !card.HasTried())
-                                return "??????????";
-                        }
+                    var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
+                    var type = match.Groups[2].Value.ToUpperInvariant();
 
-                        return CardTable[number].Name;
+                    if (CardTable.ContainsKey(number))
+                    {
+                        if (type == "N")
+                        {
+                            if (hideUntriedCards)
+                            {
+                                var cards = parent.allScoreData.CardData.Cards;
+                                SpellCard card;
+                                if (!cards.TryGetValue(number, out card) || !card.HasTried())
+                                    return "??????????";
+                            }
+
+                            return CardTable[number].Name;
+                        }
+                        else
+                            return CardTable[number].Level.ToString();
                     }
                     else
-                        return CardTable[number].Level.ToString();
-                }
-                else
-                    return match.ToString();
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
+                        return match.ToString();
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
         }
 
         // %T128CRG[x][yyy][z]
-        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-        private string ReplaceCollectRate(string input)
+        private class CollectRateReplacer : IStringReplaceable
         {
-            var pattern = Utils.Format(
+            private static readonly string Pattern = Utils.Format(
                 @"%T128CRG({0})({1})([1-3])", LevelWithTotalParser.Pattern, StageWithTotalParser.Pattern);
-            var evaluator = new MatchEvaluator(match =>
+
+            private readonly MatchEvaluator evaluator;
+
+            [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
+            public CollectRateReplacer(Th128Converter parent)
             {
-                var level = LevelWithTotalParser.Parse(match.Groups[1].Value);
-                var stage = StageWithTotalParser.Parse(match.Groups[2].Value);
-                var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
-
-                if (stage == StageWithTotal.Extra)
-                    return match.ToString();
-
-                Func<SpellCard, bool> findByLevel = (card => true);
-                Func<SpellCard, bool> findByStage = (card => true);
-                Func<SpellCard, bool> findByType = (card => true);
-
-                if (stage == StageWithTotal.Total)
+                this.evaluator = new MatchEvaluator(match =>
                 {
-                    // Do nothing
-                }
-                else
-                    findByStage = (card => CardTable[card.Id].Stage == (Stage)stage);
+                    var level = LevelWithTotalParser.Parse(match.Groups[1].Value);
+                    var stage = StageWithTotalParser.Parse(match.Groups[2].Value);
+                    var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                switch (level)
-                {
-                    case LevelWithTotal.Total:
+                    if (stage == StageWithTotal.Extra)
+                        return match.ToString();
+
+                    Func<SpellCard, bool> findByLevel = (card => true);
+                    Func<SpellCard, bool> findByStage = (card => true);
+                    Func<SpellCard, bool> findByType = (card => true);
+
+                    if (stage == StageWithTotal.Total)
+                    {
                         // Do nothing
-                        break;
-                    case LevelWithTotal.Extra:
-                        findByStage = (card => CardTable[card.Id].Stage == Stage.Extra);
-                        break;
-                    default:
-                        findByLevel = (card => card.Level == (Level)level);
-                        break;
-                }
+                    }
+                    else
+                        findByStage = (card => CardTable[card.Id].Stage == (Stage)stage);
 
-                if (type == 1)
-                    findByType = (card => card.NoIceCount > 0);
-                else if (type == 2)
-                    findByType = (card => card.NoMissCount > 0);
-                else
-                    findByType = (card => card.TrialCount > 0);
+                    switch (level)
+                    {
+                        case LevelWithTotal.Total:
+                            // Do nothing
+                            break;
+                        case LevelWithTotal.Extra:
+                            findByStage = (card => CardTable[card.Id].Stage == Stage.Extra);
+                            break;
+                        default:
+                            findByLevel = (card => card.Level == (Level)level);
+                            break;
+                    }
 
-                var and = Utils.MakeAndPredicate(findByLevel, findByStage, findByType);
-                return this.allScoreData.CardData.Cards.Values.Count(and)
-                    .ToString(CultureInfo.CurrentCulture);
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
+                    if (type == 1)
+                        findByType = (card => card.NoIceCount > 0);
+                    else if (type == 2)
+                        findByType = (card => card.NoMissCount > 0);
+                    else
+                        findByType = (card => card.TrialCount > 0);
+
+                    return parent.allScoreData.CardData.Cards.Values
+                        .Count(Utils.MakeAndPredicate(findByLevel, findByStage, findByType))
+                        .ToString(CultureInfo.CurrentCulture);
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
         }
 
         // %T128CLEAR[x][yy]
-        private string ReplaceClear(string input)
+        private class ClearReplacer : IStringReplaceable
         {
-            var pattern = Utils.Format(
+            private static readonly string Pattern = Utils.Format(
                 @"%T128CLEAR({0})({1})", LevelParser.Pattern, RouteParser.Pattern);
-            var evaluator = new MatchEvaluator(match =>
+
+            private readonly MatchEvaluator evaluator;
+
+            public ClearReplacer(Th128Converter parent)
             {
-                var level = LevelParser.Parse(match.Groups[1].Value);
-                var route = (RouteWithTotal)RouteParser.Parse(match.Groups[2].Value);
+                this.evaluator = new MatchEvaluator(match =>
+                {
+                    var level = LevelParser.Parse(match.Groups[1].Value);
+                    var route = (RouteWithTotal)RouteParser.Parse(match.Groups[2].Value);
 
-                if ((level == Level.Extra) && (route != RouteWithTotal.Extra))
-                    return match.ToString();
-                if ((route == RouteWithTotal.Extra) && (level != Level.Extra))
-                    return match.ToString();
+                    if ((level == Level.Extra) && (route != RouteWithTotal.Extra))
+                        return match.ToString();
+                    if ((route == RouteWithTotal.Extra) && (level != Level.Extra))
+                        return match.ToString();
 
-                var rankings = this.allScoreData.ClearData[route].Rankings[level]
-                    .Where(ranking => ranking.DateTime > 0);
-                var stageProgress = (rankings.Count() > 0)
-                    ? rankings.Max(ranking => ranking.StageProgress) : StageProgress.None;
+                    var rankings = parent.allScoreData.ClearData[route].Rankings[level]
+                        .Where(ranking => ranking.DateTime > 0);
+                    var stageProgress = (rankings.Count() > 0)
+                        ? rankings.Max(ranking => ranking.StageProgress) : StageProgress.None;
 
-                return stageProgress.ToShortName();
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
+                    return stageProgress.ToShortName();
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
         }
 
         // %T128ROUTE[xx][y]
-        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-        private string ReplaceRoute(string input)
+        private class RouteReplacer : IStringReplaceable
         {
-            var pattern = Utils.Format(
+            private static readonly string Pattern = Utils.Format(
                 @"%T128ROUTE({0})([1-3])", RouteWithTotalParser.Pattern);
-            var evaluator = new MatchEvaluator(match =>
+
+            private readonly MatchEvaluator evaluator;
+
+            [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
+            public RouteReplacer(Th128Converter parent)
             {
-                var route = RouteWithTotalParser.Parse(match.Groups[1].Value);
-                var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
-
-                Func<ClearData, long> getValueByType = (data => 0L);
-                Func<long, string> toString = (value => string.Empty);
-                if (type == 1)
+                this.evaluator = new MatchEvaluator(match =>
                 {
-                    getValueByType = (data => data.TotalPlayCount);
-                    toString = (value => this.ToNumberString(value));
-                }
-                else if (type == 2)
-                {
-                    getValueByType = (data => data.PlayTime);
-                    toString = (value => new Time(value).ToString());
-                }
-                else
-                {
-                    getValueByType = (data => data.ClearCounts.Values.Sum());
-                    toString = (value => this.ToNumberString(value));
-                }
+                    var route = RouteWithTotalParser.Parse(match.Groups[1].Value);
+                    var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
-                Func<AllScoreData, long> getValueByRoute = (allData => 0L);
-                if (route == RouteWithTotal.Total)
-                    getValueByRoute = (allData => allData.ClearData.Values.Sum(
-                        data => (data.Route != route) ? getValueByType(data) : 0L));
-                else
-                    getValueByRoute = (allData => getValueByType(allData.ClearData[route]));
+                    Func<ClearData, long> getValueByType = (data => 0L);
+                    Func<long, string> toString = (value => string.Empty);
+                    if (type == 1)
+                    {
+                        getValueByType = (data => data.TotalPlayCount);
+                        toString = (value => parent.ToNumberString(value));
+                    }
+                    else if (type == 2)
+                    {
+                        getValueByType = (data => data.PlayTime);
+                        toString = (value => new Time(value).ToString());
+                    }
+                    else
+                    {
+                        getValueByType = (data => data.ClearCounts.Values.Sum());
+                        toString = (value => parent.ToNumberString(value));
+                    }
 
-                return toString(getValueByRoute(this.allScoreData));
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
+                    Func<AllScoreData, long> getValueByRoute = (allData => 0L);
+                    if (route == RouteWithTotal.Total)
+                        getValueByRoute = (allData => allData.ClearData.Values.Sum(
+                            data => (data.Route != route) ? getValueByType(data) : 0L));
+                    else
+                        getValueByRoute = (allData => getValueByType(allData.ClearData[route]));
+
+                    return toString(getValueByRoute(parent.allScoreData));
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
         }
 
         // %T128ROUTEEX[x][yy][z]
-        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-        private string ReplaceRouteEx(string input)
+        private class RouteExReplacer : IStringReplaceable
         {
-            var pattern = Utils.Format(
+            private static readonly string Pattern = Utils.Format(
                 @"%T128ROUTEEX({0})({1})([1-3])",
                 LevelWithTotalParser.Pattern,
                 RouteWithTotalParser.Pattern);
-            var evaluator = new MatchEvaluator(match =>
+
+            private readonly MatchEvaluator evaluator;
+
+            [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
+            public RouteExReplacer(Th128Converter parent)
             {
-                var level = LevelWithTotalParser.Parse(match.Groups[1].Value);
-                var route = RouteWithTotalParser.Parse(match.Groups[2].Value);
-                var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
+                this.evaluator = new MatchEvaluator(match =>
+                {
+                    var level = LevelWithTotalParser.Parse(match.Groups[1].Value);
+                    var route = RouteWithTotalParser.Parse(match.Groups[2].Value);
+                    var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                if ((level == LevelWithTotal.Extra) &&
-                    ((route != RouteWithTotal.Extra) && (route != RouteWithTotal.Total)))
-                    return match.ToString();
-                if ((route == RouteWithTotal.Extra) &&
-                    ((level != LevelWithTotal.Extra) && (level != LevelWithTotal.Total)))
-                    return match.ToString();
+                    if ((level == LevelWithTotal.Extra) &&
+                        ((route != RouteWithTotal.Extra) && (route != RouteWithTotal.Total)))
+                        return match.ToString();
+                    if ((route == RouteWithTotal.Extra) &&
+                        ((level != LevelWithTotal.Extra) && (level != LevelWithTotal.Total)))
+                        return match.ToString();
 
-                Func<ClearData, long> getValueByType = (data => 0L);
-                Func<long, string> toString = (value => string.Empty);
-                if (type == 1)
-                {
-                    getValueByType = (data => data.TotalPlayCount);
-                    toString = (value => this.ToNumberString(value));
-                }
-                else if (type == 2)
-                {
-                    getValueByType = (data => data.PlayTime);
-                    toString = (value => new Time(value).ToString());
-                }
-                else
-                {
-                    if (level == LevelWithTotal.Total)
-                        getValueByType = (data => data.ClearCounts.Values.Sum());
+                    Func<ClearData, long> getValueByType = (data => 0L);
+                    Func<long, string> toString = (value => string.Empty);
+                    if (type == 1)
+                    {
+                        getValueByType = (data => data.TotalPlayCount);
+                        toString = (value => parent.ToNumberString(value));
+                    }
+                    else if (type == 2)
+                    {
+                        getValueByType = (data => data.PlayTime);
+                        toString = (value => new Time(value).ToString());
+                    }
                     else
-                        getValueByType = (data => data.ClearCounts[(Level)level]);
-                    toString = (value => this.ToNumberString(value));
-                }
+                    {
+                        if (level == LevelWithTotal.Total)
+                            getValueByType = (data => data.ClearCounts.Values.Sum());
+                        else
+                            getValueByType = (data => data.ClearCounts[(Level)level]);
+                        toString = (value => parent.ToNumberString(value));
+                    }
 
-                Func<AllScoreData, long> getValueByRoute = (allData => 0L);
-                if (route == RouteWithTotal.Total)
-                    getValueByRoute = (allData => allData.ClearData.Values.Sum(
-                        data => (data.Route != route) ? getValueByType(data) : 0L));
-                else
-                    getValueByRoute = (allData => getValueByType(allData.ClearData[route]));
+                    Func<AllScoreData, long> getValueByRoute = (allData => 0L);
+                    if (route == RouteWithTotal.Total)
+                        getValueByRoute = (allData => allData.ClearData.Values.Sum(
+                            data => (data.Route != route) ? getValueByType(data) : 0L));
+                    else
+                        getValueByRoute = (allData => getValueByType(allData.ClearData[route]));
 
-                return toString(getValueByRoute(this.allScoreData));
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
+                    return toString(getValueByRoute(parent.allScoreData));
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
         }
 
         // %T128TIMEPLY
-        private string ReplaceTime(string input)
+        private class TimeReplacer : IStringReplaceable
         {
-            var pattern = @"%T128TIMEPLY";
-            var evaluator = new MatchEvaluator(match =>
+            private const string Pattern = @"%T128TIMEPLY";
+
+            private readonly MatchEvaluator evaluator;
+
+            public TimeReplacer(Th128Converter parent)
             {
-                return new Time(this.allScoreData.Status.TotalPlayTime * 10, false).ToLongString();
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
+                this.evaluator = new MatchEvaluator(match =>
+                {
+                    return new Time(parent.allScoreData.Status.TotalPlayTime * 10, false).ToLongString();
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
         }
 
         private class AllScoreData

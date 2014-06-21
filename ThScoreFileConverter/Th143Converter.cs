@@ -312,18 +312,22 @@ namespace ThScoreFileConverter
             var reader = new StreamReader(input, Encoding.GetEncoding("shift_jis"));
             var writer = new StreamWriter(output, Encoding.GetEncoding("shift_jis"));
             var outputFile = output as FileStream;
+            var outputFilePath = (outputFile != null) ? outputFile.Name : string.Empty;
+            var replacers = new List<IStringReplaceable>
+            {
+                new ScoreReplacer(this),
+                new ScoreTotalReplacer(this),
+                new CardReplacer(this, hideUntriedCards),
+                new NicknameReplacer(this),
+                new TimeReplacer(this),
+                new ShotReplacer(this, outputFilePath),
+                new ShotExReplacer(this, outputFilePath)
+            };
 
             var allLines = reader.ReadToEnd();
-            allLines = this.ReplaceScore(allLines);
-            allLines = this.ReplaceScoreTotal(allLines);
-            allLines = this.ReplaceCard(allLines, hideUntriedCards);
-            allLines = this.ReplaceNickname(allLines);
-            allLines = this.ReplaceTime(allLines);
-            if (outputFile != null)
-            {
-                allLines = this.ReplaceShot(allLines, outputFile.Name);
-                allLines = this.ReplaceShotEx(allLines, outputFile.Name);
-            }
+
+            foreach (var replacer in replacers)
+                allLines = replacer.Replace(allLines);
 
             writer.Write(allLines);
             writer.Flush();
@@ -493,206 +497,291 @@ namespace ThScoreFileConverter
         }
 
         // %T143SCR[w][x][y][z]
-        private string ReplaceScore(string input)
+        private class ScoreReplacer : IStringReplaceable
         {
-            var pattern = Utils.Format(
+            private static readonly string Pattern = Utils.Format(
                 @"%T143SCR({0})([0-9])({1})([1-3])", DayParser.Pattern, ItemWithTotalParser.Pattern);
-            var evaluator = new MatchEvaluator(match =>
+
+            private readonly MatchEvaluator evaluator;
+
+            public ScoreReplacer(Th143Converter parent)
             {
-                var day = DayParser.Parse(match.Groups[1].Value);
-                var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
-                scene = (scene == 0) ? 10 : scene;
-                var item = ItemWithTotalParser.Parse(match.Groups[3].Value);
-                var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
-
-                var key = new DayScenePair(day, scene);
-                var score = this.allScoreData.Scores.Find(elem =>
-                    (elem != null) && ((0 < elem.Number) && (elem.Number <= SpellCards.Count)) &&
-                    SpellCards.ElementAt(elem.Number - 1).Key.Equals(key));
-
-                switch (type)
+                this.evaluator = new MatchEvaluator(match =>
                 {
-                    case 1:     // high score
-                        return (score != null) ? this.ToNumberString(score.HighScore * 10) : "0";
-                    case 2:     // challenge count
-                        if (item == ItemWithTotal.NoItem)
-                            return "-";
-                        else
-                            return (score != null) ? this.ToNumberString(score.ChallengeCounts[item]) : "0";
-                    case 3:     // cleared count
-                        return (score != null) ? this.ToNumberString(score.ClearCounts[item]) : "0";
-                    default:    // unreachable
-                        return match.ToString();
-                }
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
-        }
+                    var day = DayParser.Parse(match.Groups[1].Value);
+                    var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
+                    scene = (scene == 0) ? 10 : scene;
+                    var item = ItemWithTotalParser.Parse(match.Groups[3].Value);
+                    var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
-        // %T143SCRTL[x][y]
-        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-        private string ReplaceScoreTotal(string input)
-        {
-            var pattern = Utils.Format(@"%T143SCRTL({0})([1-4])", ItemWithTotalParser.Pattern);
-            var evaluator = new MatchEvaluator(match =>
-            {
-                var item = ItemWithTotalParser.Parse(match.Groups[1].Value);
-                var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
-
-                switch (type)
-                {
-                    case 1:     // total score
-                        return this.ToNumberString(
-                            this.allScoreData.Scores.Sum(score => score.HighScore * 10L));
-                    case 2:     // total of challenge counts
-                        if (item == ItemWithTotal.NoItem)
-                            return "-";
-                        else
-                            return this.ToNumberString(this.allScoreData.ItemStatuses[item].UseCount);
-                    case 3:     // total of cleared counts
-                        return this.ToNumberString(this.allScoreData.ItemStatuses[item].ClearedCount);
-                    case 4:     // num of cleared scenes
-                        return this.ToNumberString(this.allScoreData.ItemStatuses[item].ClearedScenes);
-                    default:    // unreachable
-                        return match.ToString();
-                }
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
-        }
-
-        // %T143CARD[x][y][z]
-        private string ReplaceCard(string input, bool hideUntriedCards)
-        {
-            var pattern = Utils.Format(@"%T143CARD({0})([0-9])([12])", DayParser.Pattern);
-            var evaluator = new MatchEvaluator(match =>
-            {
-                var day = DayParser.Parse(match.Groups[1].Value);
-                var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
-                scene = (scene == 0) ? 10 : scene;
-                var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
-
-                var key = new DayScenePair(day, scene);
-
-                if (hideUntriedCards)
-                {
-                    var score = this.allScoreData.Scores.Find(elem =>
+                    var key = new DayScenePair(day, scene);
+                    var score = parent.allScoreData.Scores.Find(elem =>
                         (elem != null) && ((0 < elem.Number) && (elem.Number <= SpellCards.Count)) &&
                         SpellCards.ElementAt(elem.Number - 1).Key.Equals(key));
-                    if ((score == null) || (score.ChallengeCounts[ItemWithTotal.Total] <= 0))
-                        return "??????????";
-                }
 
-                if (type == 1)
-                {
-                    var enemies = SpellCards[key].Enemies;
-                    if (enemies.Length == 1)
-                        return SpellCards[key].Enemy.ToLongName();
-                    else
-                        return string.Join(" &amp; ", enemies.Select(enemy => enemy.ToLongName()).ToArray());
-                }
-                else
-                    return SpellCards[key].Card;
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
-        }
-
-        // %T143NICK[xx]
-        private string ReplaceNickname(string input)
-        {
-            var pattern = @"%T143NICK(\d{2})";
-            var evaluator = new MatchEvaluator(match =>
-            {
-                var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
-
-                if ((0 < number) && (number <= Nicknames.Count))
-                    return (this.allScoreData.Status.NicknameFlags[number] > 0)
-                        ? Nicknames[number - 1] : "??????????";
-                else
-                    return match.ToString();
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
-        }
-
-        // %T143TIMEPLY
-        private string ReplaceTime(string input)
-        {
-            var pattern = @"%T143TIMEPLY";
-            var evaluator = new MatchEvaluator(match =>
-            {
-                return new Time(this.allScoreData.Status.TotalPlayTime * 10, false).ToLongString();
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
-        }
-
-        // %T143SHOT[x][y]
-        private string ReplaceShot(string input, string outputFilePath)
-        {
-            var pattern = Utils.Format(@"%T143SHOT({0})([0-9])", DayParser.Pattern);
-            var evaluator = new MatchEvaluator(match =>
-            {
-                var day = DayParser.Parse(match.Groups[1].Value);
-                var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
-                scene = (scene == 0) ? 10 : scene;
-
-                var key = new DayScenePair(day, scene);
-
-                if ((this.bestshots != null) && this.bestshots.ContainsKey(key))
-                {
-                    var relativePath = new Uri(outputFilePath)
-                        .MakeRelativeUri(new Uri(this.bestshots[key].Path)).OriginalString;
-                    var alternativeString = Utils.Format("SpellName: {0}", SpellCards[key].Card);
-                    return Utils.Format(
-                        "<img src=\"{0}\" alt=\"{1}\" title=\"{1}\" border=0>",
-                        relativePath,
-                        alternativeString);
-                }
-                else
-                    return string.Empty;
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
-        }
-
-        // %T143SHOTEX[w][x][y]
-        [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine", Justification = "Reviewed.")]
-        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-        private string ReplaceShotEx(string input, string outputFilePath)
-        {
-            var pattern = Utils.Format(@"%T143SHOTEX({0})([0-9])([1-4])", DayParser.Pattern);
-            var evaluator = new MatchEvaluator(match =>
-            {
-                var day = DayParser.Parse(match.Groups[1].Value);
-                var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
-                scene = (scene == 0) ? 10 : scene;
-                var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
-
-                var key = new DayScenePair(day, scene);
-
-                if ((this.bestshots != null) && this.bestshots.ContainsKey(key))
                     switch (type)
                     {
-                        case 1:     // relative path to the bestshot file
-                            return new Uri(outputFilePath)
-                                .MakeRelativeUri(new Uri(this.bestshots[key].Path)).OriginalString;
-                        case 2:     // width
-                            return this.bestshots[key].Header.Width.ToString(CultureInfo.InvariantCulture);
-                        case 3:     // height
-                            return this.bestshots[key].Header.Height.ToString(CultureInfo.InvariantCulture);
-                        case 4:     // date & time
-                            return new DateTime(1970, 1, 1).AddSeconds(this.bestshots[key].Header.DateTime)
-                                .ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
+                        case 1:     // high score
+                            return (score != null) ? parent.ToNumberString(score.HighScore * 10) : "0";
+                        case 2:     // challenge count
+                            if (item == ItemWithTotal.NoItem)
+                                return "-";
+                            else
+                                return (score != null)
+                                    ? parent.ToNumberString(score.ChallengeCounts[item]) : "0";
+                        case 3:     // cleared count
+                            return (score != null) ? parent.ToNumberString(score.ClearCounts[item]) : "0";
                         default:    // unreachable
                             return match.ToString();
                     }
-                else
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
+        }
+
+        // %T143SCRTL[x][y]
+        private class ScoreTotalReplacer : IStringReplaceable
+        {
+            private static readonly string Pattern = Utils.Format(
+                @"%T143SCRTL({0})([1-4])", ItemWithTotalParser.Pattern);
+
+            private readonly MatchEvaluator evaluator;
+
+            [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
+            public ScoreTotalReplacer(Th143Converter parent)
+            {
+                this.evaluator = new MatchEvaluator(match =>
+                {
+                    var item = ItemWithTotalParser.Parse(match.Groups[1].Value);
+                    var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
+
                     switch (type)
                     {
-                        case 1: return string.Empty;
-                        case 2: return "0";
-                        case 3: return "0";
-                        case 4: return "----/--/-- --:--:--";
-                        default: return match.ToString();
+                        case 1:     // total score
+                            return parent.ToNumberString(
+                                parent.allScoreData.Scores.Sum(score => score.HighScore * 10L));
+                        case 2:     // total of challenge counts
+                            if (item == ItemWithTotal.NoItem)
+                                return "-";
+                            else
+                                return parent.ToNumberString(
+                                    parent.allScoreData.ItemStatuses[item].UseCount);
+                        case 3:     // total of cleared counts
+                            return parent.ToNumberString(
+                                parent.allScoreData.ItemStatuses[item].ClearedCount);
+                        case 4:     // num of cleared scenes
+                            return parent.ToNumberString(
+                                parent.allScoreData.ItemStatuses[item].ClearedScenes);
+                        default:    // unreachable
+                            return match.ToString();
                     }
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
+        }
+
+        // %T143CARD[x][y][z]
+        private class CardReplacer : IStringReplaceable
+        {
+            private static readonly string Pattern = Utils.Format(
+                @"%T143CARD({0})([0-9])([12])", DayParser.Pattern);
+
+            private readonly MatchEvaluator evaluator;
+
+            public CardReplacer(Th143Converter parent, bool hideUntriedCards)
+            {
+                this.evaluator = new MatchEvaluator(match =>
+                {
+                    var day = DayParser.Parse(match.Groups[1].Value);
+                    var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
+                    scene = (scene == 0) ? 10 : scene;
+                    var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
+
+                    var key = new DayScenePair(day, scene);
+
+                    if (hideUntriedCards)
+                    {
+                        var score = parent.allScoreData.Scores.Find(elem =>
+                            (elem != null) && ((0 < elem.Number) && (elem.Number <= SpellCards.Count)) &&
+                            SpellCards.ElementAt(elem.Number - 1).Key.Equals(key));
+                        if ((score == null) || (score.ChallengeCounts[ItemWithTotal.Total] <= 0))
+                            return "??????????";
+                    }
+
+                    if (type == 1)
+                    {
+                        var enemies = SpellCards[key].Enemies;
+                        if (enemies.Length == 1)
+                            return SpellCards[key].Enemy.ToLongName();
+                        else
+                            return string.Join(
+                                " &amp; ", enemies.Select(enemy => enemy.ToLongName()).ToArray());
+                    }
+                    else
+                        return SpellCards[key].Card;
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
+        }
+
+        // %T143NICK[xx]
+        private class NicknameReplacer : IStringReplaceable
+        {
+            private const string Pattern = @"%T143NICK(\d{2})";
+
+            private readonly MatchEvaluator evaluator;
+
+            public NicknameReplacer(Th143Converter parent)
+            {
+                this.evaluator = new MatchEvaluator(match =>
+                {
+                    var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
+
+                    if ((0 < number) && (number <= Nicknames.Count))
+                        return (parent.allScoreData.Status.NicknameFlags[number] > 0)
+                            ? Nicknames[number - 1] : "??????????";
+                    else
+                        return match.ToString();
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
+        }
+
+        // %T143TIMEPLY
+        private class TimeReplacer : IStringReplaceable
+        {
+            private const string Pattern = @"%T143TIMEPLY";
+
+            private readonly MatchEvaluator evaluator;
+
+            public TimeReplacer(Th143Converter parent)
+            {
+                this.evaluator = new MatchEvaluator(match =>
+                {
+                    return new Time(parent.allScoreData.Status.TotalPlayTime * 10, false).ToLongString();
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
+        }
+
+        // %T143SHOT[x][y]
+        private class ShotReplacer : IStringReplaceable
+        {
+            private static readonly string Pattern = Utils.Format(
+                @"%T143SHOT({0})([0-9])", DayParser.Pattern);
+
+            private readonly MatchEvaluator evaluator;
+
+            public ShotReplacer(Th143Converter parent, string outputFilePath)
+            {
+                this.evaluator = new MatchEvaluator(match =>
+                {
+                    var day = DayParser.Parse(match.Groups[1].Value);
+                    var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
+                    scene = (scene == 0) ? 10 : scene;
+
+                    var key = new DayScenePair(day, scene);
+
+                    if (!string.IsNullOrEmpty(outputFilePath) &&
+                        (parent.bestshots != null) &&
+                        parent.bestshots.ContainsKey(key))
+                    {
+                        var relativePath = new Uri(outputFilePath)
+                            .MakeRelativeUri(new Uri(parent.bestshots[key].Path)).OriginalString;
+                        var alternativeString = Utils.Format("SpellName: {0}", SpellCards[key].Card);
+                        return Utils.Format(
+                            "<img src=\"{0}\" alt=\"{1}\" title=\"{1}\" border=0>",
+                            relativePath,
+                            alternativeString);
+                    }
+                    else
+                        return string.Empty;
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
+        }
+
+        // %T143SHOTEX[w][x][y]
+        private class ShotExReplacer : IStringReplaceable
+        {
+            private static readonly string Pattern = Utils.Format(
+                @"%T143SHOTEX({0})([0-9])([1-4])", DayParser.Pattern);
+
+            private readonly MatchEvaluator evaluator;
+
+            [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
+            public ShotExReplacer(Th143Converter parent, string outputFilePath)
+            {
+                this.evaluator = new MatchEvaluator(match =>
+                {
+                    var day = DayParser.Parse(match.Groups[1].Value);
+                    var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
+                    scene = (scene == 0) ? 10 : scene;
+                    var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
+
+                    var key = new DayScenePair(day, scene);
+
+                    if (!string.IsNullOrEmpty(outputFilePath) &&
+                        (parent.bestshots != null) &&
+                        parent.bestshots.ContainsKey(key))
+                        switch (type)
+                        {
+                            case 1:     // relative path to the bestshot file
+                                return new Uri(outputFilePath)
+                                    .MakeRelativeUri(new Uri(parent.bestshots[key].Path)).OriginalString;
+                            case 2:     // width
+                                return parent.bestshots[key]
+                                    .Header.Width.ToString(CultureInfo.InvariantCulture);
+                            case 3:     // height
+                                return parent.bestshots[key]
+                                    .Header.Height.ToString(CultureInfo.InvariantCulture);
+                            case 4:     // date & time
+                                return new DateTime(1970, 1, 1)
+                                    .AddSeconds(parent.bestshots[key].Header.DateTime).ToLocalTime()
+                                    .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
+                            default:    // unreachable
+                                return match.ToString();
+                        }
+                    else
+                        switch (type)
+                        {
+                            case 1: return string.Empty;
+                            case 2: return "0";
+                            case 3: return "0";
+                            case 4: return "----/--/-- --:--:--";
+                            default: return match.ToString();
+                        }
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
         }
 
         private class DayScenePair : Pair<Day, int>

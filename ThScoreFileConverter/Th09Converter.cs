@@ -96,11 +96,17 @@ namespace ThScoreFileConverter
         {
             var reader = new StreamReader(input, Encoding.GetEncoding("shift_jis"));
             var writer = new StreamWriter(output, Encoding.GetEncoding("shift_jis"));
+            var replacers = new List<IStringReplaceable>
+            {
+                new ScoreReplacer(this),
+                new TimeReplacer(this),
+                new ClearReplacer(this)
+            };
 
             var allLines = reader.ReadToEnd();
-            allLines = this.ReplaceScore(allLines);
-            allLines = this.ReplaceTime(allLines);
-            allLines = this.ReplaceClear(allLines);
+
+            foreach (var replacer in replacers)
+                allLines = replacer.Replace(allLines);
 
             writer.Write(allLines);
             writer.Flush();
@@ -240,81 +246,113 @@ namespace ThScoreFileConverter
         }
 
         // %T09SCR[w][xx][y][z]
-        [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine", Justification = "Reviewed.")]
-        private string ReplaceScore(string input)
+        private class ScoreReplacer : IStringReplaceable
         {
-            var pattern = Utils.Format(
+            private static readonly string Pattern = Utils.Format(
                 @"%T09SCR({0})({1})([1-5])([1-3])", LevelParser.Pattern, CharaParser.Pattern);
-            var evaluator = new MatchEvaluator(match =>
+
+            private readonly MatchEvaluator evaluator;
+
+            [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine", Justification = "Reviewed.")]
+            public ScoreReplacer(Th09Converter parent)
             {
-                var level = LevelParser.Parse(match.Groups[1].Value);
-                var chara = CharaParser.Parse(match.Groups[2].Value);
-                var rank = Utils.ToZeroBased(int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
-                var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
-
-                var score = this.allScoreData.Rankings[new CharaLevelPair(chara, level)][rank];
-
-                switch (type)
+                this.evaluator = new MatchEvaluator(match =>
                 {
-                    case 1:     // name
-                        return Encoding.Default.GetString(score.Name).Split('\0')[0];
-                    case 2:     // score
-                        return this.ToNumberString((score.Score * 10) + score.ContinueCount);
-                    case 3:     // date
-                        {
-                            var date = Encoding.Default.GetString(score.Date).Split('\0')[0];
-                            return (date != "--/--") ? date : "--/--/--";
-                        }
-                    default:    // unreachable
-                        return match.ToString();
-                }
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
+                    var level = LevelParser.Parse(match.Groups[1].Value);
+                    var chara = CharaParser.Parse(match.Groups[2].Value);
+                    var rank = Utils.ToZeroBased(
+                        int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
+                    var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
+
+                    var score = parent.allScoreData.Rankings[new CharaLevelPair(chara, level)][rank];
+
+                    switch (type)
+                    {
+                        case 1:     // name
+                            return Encoding.Default.GetString(score.Name).Split('\0')[0];
+                        case 2:     // score
+                            return parent.ToNumberString((score.Score * 10) + score.ContinueCount);
+                        case 3:     // date
+                            {
+                                var date = Encoding.Default.GetString(score.Date).Split('\0')[0];
+                                return (date != "--/--") ? date : "--/--/--";
+                            }
+                        default:    // unreachable
+                            return match.ToString();
+                    }
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
         }
 
         // %T09TIMEALL
-        private string ReplaceTime(string input)
+        private class TimeReplacer : IStringReplaceable
         {
-            var pattern = @"%T09TIMEALL";
-            var evaluator = new MatchEvaluator(match =>
+            private const string Pattern = @"%T09TIMEALL";
+
+            private readonly MatchEvaluator evaluator;
+
+            public TimeReplacer(Th09Converter parent)
             {
-                return this.allScoreData.PlayStatus.TotalRunningTime.ToLongString();
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
+                this.evaluator = new MatchEvaluator(match =>
+                {
+                    return parent.allScoreData.PlayStatus.TotalRunningTime.ToLongString();
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
         }
 
         // %T09CLEAR[x][yy][z]
-        [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine", Justification = "Reviewed.")]
-        private string ReplaceClear(string input)
+        private class ClearReplacer : IStringReplaceable
         {
-            var pattern = Utils.Format(
+            private static readonly string Pattern = Utils.Format(
                 @"%T09CLEAR({0})({1})([12])", LevelParser.Pattern, CharaParser.Pattern);
-            var evaluator = new MatchEvaluator(match =>
+
+            private readonly MatchEvaluator evaluator;
+
+            [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine", Justification = "Reviewed.")]
+            public ClearReplacer(Th09Converter parent)
             {
-                var level = LevelParser.Parse(match.Groups[1].Value);
-                var chara = CharaParser.Parse(match.Groups[2].Value);
-                var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
-
-                var count = this.allScoreData.PlayStatus.ClearCounts[chara].Counts[level];
-
-                switch (type)
+                this.evaluator = new MatchEvaluator(match =>
                 {
-                    case 1:     // clear count
-                        return this.ToNumberString(count);
-                    case 2:     // clear flag
-                        if (count > 0)
-                            return "Cleared";
-                        else
-                        {
-                            var score = this.allScoreData.Rankings[new CharaLevelPair(chara, level)][0];
-                            var date = Encoding.Default.GetString(score.Date).TrimEnd('\0');
-                            return (date != "--/--") ? "Not Cleared" : "-------";
-                        }
-                    default:    // unreachable
-                        return match.ToString();
-                }
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
+                    var level = LevelParser.Parse(match.Groups[1].Value);
+                    var chara = CharaParser.Parse(match.Groups[2].Value);
+                    var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
+
+                    var count = parent.allScoreData.PlayStatus.ClearCounts[chara].Counts[level];
+
+                    switch (type)
+                    {
+                        case 1:     // clear count
+                            return parent.ToNumberString(count);
+                        case 2:     // clear flag
+                            if (count > 0)
+                                return "Cleared";
+                            else
+                            {
+                                var score = parent.allScoreData
+                                    .Rankings[new CharaLevelPair(chara, level)][0];
+                                var date = Encoding.Default.GetString(score.Date).TrimEnd('\0');
+                                return (date != "--/--") ? "Not Cleared" : "-------";
+                            }
+                        default:    // unreachable
+                            return match.ToString();
+                    }
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
         }
 
         private class CharaLevelPair : Pair<Chara, Level>

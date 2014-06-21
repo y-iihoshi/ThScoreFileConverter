@@ -277,16 +277,22 @@ namespace ThScoreFileConverter
         {
             var reader = new StreamReader(input, Encoding.GetEncoding("shift_jis"));
             var writer = new StreamWriter(output, Encoding.GetEncoding("shift_jis"));
+            var replacers = new List<IStringReplaceable>
+            {
+                new ScoreReplacer(this),
+                new CareerReplacer(this),
+                new CardReplacer(this, hideUntriedCards),
+                new CollectRateReplacer(this),
+                new ClearReplacer(this),
+                new CharaReplacer(this),
+                new CharaExReplacer(this),
+                new PracticeReplacer(this)
+            };
 
             var allLines = reader.ReadToEnd();
-            allLines = this.ReplaceScore(allLines);
-            allLines = this.ReplaceCareer(allLines);
-            allLines = this.ReplaceCard(allLines, hideUntriedCards);
-            allLines = this.ReplaceCollectRate(allLines);
-            allLines = this.ReplaceClear(allLines);
-            allLines = this.ReplaceChara(allLines);
-            allLines = this.ReplaceCharaEx(allLines);
-            allLines = this.ReplacePractice(allLines);
+
+            foreach (var replacer in replacers)
+                allLines = replacer.Replace(allLines);
 
             writer.Write(allLines);
             writer.Flush();
@@ -399,348 +405,431 @@ namespace ThScoreFileConverter
         }
 
         // %T13SCR[w][xx][y][z]
-        private string ReplaceScore(string input)
+        private class ScoreReplacer : IStringReplaceable
         {
-            var pattern = Utils.Format(
+            private static readonly string Pattern = Utils.Format(
                 @"%T13SCR({0})({1})(\d)([1-5])", LevelParser.Pattern, CharaParser.Pattern);
-            var evaluator = new MatchEvaluator(match =>
-            {
-                var level = (LevelPracticeWithTotal)LevelParser.Parse(match.Groups[1].Value);
-                var chara = (CharaWithTotal)CharaParser.Parse(match.Groups[2].Value);
-                var rank = Utils.ToZeroBased(int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
-                var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
-                var ranking = this.allScoreData.ClearData[chara].Rankings[level][rank];
-                switch (type)
+            private readonly MatchEvaluator evaluator;
+
+            public ScoreReplacer(Th13Converter parent)
+            {
+                this.evaluator = new MatchEvaluator(match =>
                 {
-                    case 1:     // name
-                        return Encoding.Default.GetString(ranking.Name).Split('\0')[0];
-                    case 2:     // score
-                        return this.ToNumberString((ranking.Score * 10) + ranking.ContinueCount);
-                    case 3:     // stage
-                        if (ranking.DateTime > 0)
-                        {
-                            if (ranking.StageProgress == StageProgress.Extra)
-                                return "Not Clear";
-                            else if (ranking.StageProgress == StageProgress.ExtraClear)
-                                return StageProgress.Clear.ToShortName();
+                    var level = (LevelPracticeWithTotal)LevelParser.Parse(match.Groups[1].Value);
+                    var chara = (CharaWithTotal)CharaParser.Parse(match.Groups[2].Value);
+                    var rank = Utils.ToZeroBased(
+                        int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
+                    var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
+
+                    var ranking = parent.allScoreData.ClearData[chara].Rankings[level][rank];
+                    switch (type)
+                    {
+                        case 1:     // name
+                            return Encoding.Default.GetString(ranking.Name).Split('\0')[0];
+                        case 2:     // score
+                            return parent.ToNumberString((ranking.Score * 10) + ranking.ContinueCount);
+                        case 3:     // stage
+                            if (ranking.DateTime > 0)
+                            {
+                                if (ranking.StageProgress == StageProgress.Extra)
+                                    return "Not Clear";
+                                else if (ranking.StageProgress == StageProgress.ExtraClear)
+                                    return StageProgress.Clear.ToShortName();
+                                else
+                                    return ranking.StageProgress.ToShortName();
+                            }
                             else
-                                return ranking.StageProgress.ToShortName();
-                        }
-                        else
-                            return StageProgress.None.ToShortName();
-                    case 4:     // date & time
-                        if (ranking.DateTime > 0)
-                            return new DateTime(1970, 1, 1).AddSeconds(ranking.DateTime)
-                                .ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
-                        else
-                            return "----/--/-- --:--:--";
-                    case 5:     // slow
-                        if (ranking.DateTime > 0)
-                            return Utils.Format("{0:F3}%", ranking.SlowRate);
-                        else
-                            return "-----%";
-                    default:    // unreachable
-                        return match.ToString();
-                }
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
+                                return StageProgress.None.ToShortName();
+                        case 4:     // date & time
+                            if (ranking.DateTime > 0)
+                                return new DateTime(1970, 1, 1).AddSeconds(ranking.DateTime).ToLocalTime()
+                                    .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
+                            else
+                                return "----/--/-- --:--:--";
+                        case 5:     // slow
+                            if (ranking.DateTime > 0)
+                                return Utils.Format("{0:F3}%", ranking.SlowRate);
+                            else
+                                return "-----%";
+                        default:    // unreachable
+                            return match.ToString();
+                    }
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
         }
 
         // %T13C[w][xxx][yy][z]
-        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-        private string ReplaceCareer(string input)
+        private class CareerReplacer : IStringReplaceable
         {
-            var pattern = Utils.Format(
+            private static readonly string Pattern = Utils.Format(
                 @"%T13C([SP])(\d{{3}})({0})([12])", CharaWithTotalParser.Pattern);
-            var evaluator = new MatchEvaluator(match =>
+
+            private readonly MatchEvaluator evaluator;
+
+            [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
+            public CareerReplacer(Th13Converter parent)
             {
-                var kind = match.Groups[1].Value.ToUpperInvariant();
-                var number = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
-                var chara = CharaWithTotalParser.Parse(match.Groups[3].Value);
-                var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
+                this.evaluator = new MatchEvaluator(match =>
+                {
+                    var kind = match.Groups[1].Value.ToUpperInvariant();
+                    var number = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
+                    var chara = CharaWithTotalParser.Parse(match.Groups[3].Value);
+                    var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
-                Func<SpellCard, bool> isValidLevel = (card => true);
-                Func<SpellCard, int> getCount = (card => 0);
-                if (kind == "S")
-                {
-                    isValidLevel = (card => card.Level != LevelPractice.OverDrive);
-                    if (type == 1)
-                        getCount = (card => card.ClearCount);
+                    Func<SpellCard, bool> isValidLevel = (card => true);
+                    Func<SpellCard, int> getCount = (card => 0);
+                    if (kind == "S")
+                    {
+                        isValidLevel = (card => card.Level != LevelPractice.OverDrive);
+                        if (type == 1)
+                            getCount = (card => card.ClearCount);
+                        else
+                            getCount = (card => card.TrialCount);
+                    }
                     else
-                        getCount = (card => card.TrialCount);
-                }
-                else
-                {
-                    if (type == 1)
-                        getCount = (card => card.PracticeClearCount);
-                    else
-                        getCount = (card => card.PracticeTrialCount);
-                }
+                    {
+                        if (type == 1)
+                            getCount = (card => card.PracticeClearCount);
+                        else
+                            getCount = (card => card.PracticeTrialCount);
+                    }
 
-                var cards = this.allScoreData.ClearData[chara].Cards;
-                if (number == 0)
-                    return this.ToNumberString(cards.Values.Where(isValidLevel).Sum(getCount));
-                else if (CardTable.ContainsKey(number))
-                {
-                    SpellCard card;
-                    if (cards.TryGetValue(number, out card))
-                        return isValidLevel(card) ? this.ToNumberString(getCount(card)) : match.ToString();
+                    var cards = parent.allScoreData.ClearData[chara].Cards;
+                    if (number == 0)
+                        return parent.ToNumberString(cards.Values.Where(isValidLevel).Sum(getCount));
+                    else if (CardTable.ContainsKey(number))
+                    {
+                        SpellCard card;
+                        if (cards.TryGetValue(number, out card))
+                            return isValidLevel(card)
+                                ? parent.ToNumberString(getCount(card)) : match.ToString();
+                        else
+                            return "0";
+                    }
                     else
-                        return "0";
-                }
-                else
-                    return match.ToString();
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
+                        return match.ToString();
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
         }
 
         // %T13CARD[xxx][y]
-        private string ReplaceCard(string input, bool hideUntriedCards)
+        private class CardReplacer : IStringReplaceable
         {
-            var pattern = @"%T13CARD(\d{3})([NR])";
-            var evaluator = new MatchEvaluator(match =>
+            private const string Pattern = @"%T13CARD(\d{3})([NR])";
+
+            private readonly MatchEvaluator evaluator;
+
+            public CardReplacer(Th13Converter parent, bool hideUntriedCards)
             {
-                var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
-                var type = match.Groups[2].Value.ToUpperInvariant();
-
-                if (CardTable.ContainsKey(number))
+                this.evaluator = new MatchEvaluator(match =>
                 {
-                    if (type == "N")
-                    {
-                        if (hideUntriedCards)
-                        {
-                            var cards = this.allScoreData.ClearData[CharaWithTotal.Total].Cards;
-                            SpellCard card;
-                            if (!cards.TryGetValue(number, out card) || !card.HasTried())
-                                return "??????????";
-                        }
+                    var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
+                    var type = match.Groups[2].Value.ToUpperInvariant();
 
-                        return CardTable[number].Name;
+                    if (CardTable.ContainsKey(number))
+                    {
+                        if (type == "N")
+                        {
+                            if (hideUntriedCards)
+                            {
+                                var cards = parent.allScoreData.ClearData[CharaWithTotal.Total].Cards;
+                                SpellCard card;
+                                if (!cards.TryGetValue(number, out card) || !card.HasTried())
+                                    return "??????????";
+                            }
+
+                            return CardTable[number].Name;
+                        }
+                        else
+                        {
+                            var level = CardTable[number].Level;
+                            var levelName = level.ToLongName();
+                            return (levelName.Length > 0) ? levelName : level.ToString();
+                        }
                     }
                     else
-                    {
-                        var level = CardTable[number].Level;
-                        var levelName = level.ToLongName();
-                        return (levelName.Length > 0) ? levelName : level.ToString();
-                    }
-                }
-                else
-                    return match.ToString();
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
+                        return match.ToString();
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
         }
 
         // %T13CRG[v][w][xx][y][z]
-        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-        private string ReplaceCollectRate(string input)
+        private class CollectRateReplacer : IStringReplaceable
         {
-            var pattern = Utils.Format(
+            private static readonly string Pattern = Utils.Format(
                 @"%T13CRG([SP])({0})({1})({2})([12])",
                 LevelPracticeWithTotalParser.Pattern,
                 CharaWithTotalParser.Pattern,
                 StageWithTotalParser.Pattern);
-            var evaluator = new MatchEvaluator(match =>
+
+            private readonly MatchEvaluator evaluator;
+
+            [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
+            public CollectRateReplacer(Th13Converter parent)
             {
-                var kind = match.Groups[1].Value.ToUpperInvariant();
-                var level = LevelPracticeWithTotalParser.Parse(match.Groups[2].Value);
-                var chara = CharaWithTotalParser.Parse(match.Groups[3].Value);
-                var stage = StageWithTotalParser.Parse(match.Groups[4].Value);
-                var type = int.Parse(match.Groups[5].Value, CultureInfo.InvariantCulture);
-
-                if (stage == StageWithTotal.Extra)
-                    return match.ToString();
-                if ((kind == "S") && (level == LevelPracticeWithTotal.OverDrive))
-                    return match.ToString();
-
-                Func<SpellCard, bool> findByKindType = (card => true);
-                Func<SpellCard, bool> findByLevel = (card => true);
-                Func<SpellCard, bool> findByStage = (card => true);
-
-                if (kind == "S")
+                this.evaluator = new MatchEvaluator(match =>
                 {
-                    if (type == 1)
-                        findByKindType = (card =>
-                            (card.Level != LevelPractice.OverDrive) && (card.ClearCount > 0));
+                    var kind = match.Groups[1].Value.ToUpperInvariant();
+                    var level = LevelPracticeWithTotalParser.Parse(match.Groups[2].Value);
+                    var chara = CharaWithTotalParser.Parse(match.Groups[3].Value);
+                    var stage = StageWithTotalParser.Parse(match.Groups[4].Value);
+                    var type = int.Parse(match.Groups[5].Value, CultureInfo.InvariantCulture);
+
+                    if (stage == StageWithTotal.Extra)
+                        return match.ToString();
+                    if ((kind == "S") && (level == LevelPracticeWithTotal.OverDrive))
+                        return match.ToString();
+
+                    Func<SpellCard, bool> findByKindType = (card => true);
+                    Func<SpellCard, bool> findByLevel = (card => true);
+                    Func<SpellCard, bool> findByStage = (card => true);
+
+                    if (kind == "S")
+                    {
+                        if (type == 1)
+                            findByKindType = (card =>
+                                (card.Level != LevelPractice.OverDrive) && (card.ClearCount > 0));
+                        else
+                            findByKindType = (card =>
+                                (card.Level != LevelPractice.OverDrive) && (card.TrialCount > 0));
+                    }
                     else
-                        findByKindType = (card =>
-                            (card.Level != LevelPractice.OverDrive) && (card.TrialCount > 0));
-                }
-                else
-                {
-                    if (type == 1)
-                        findByKindType = (card => card.PracticeClearCount > 0);
-                    else
-                        findByKindType = (card => card.PracticeTrialCount > 0);
-                }
+                    {
+                        if (type == 1)
+                            findByKindType = (card => card.PracticeClearCount > 0);
+                        else
+                            findByKindType = (card => card.PracticeTrialCount > 0);
+                    }
 
-                if (stage == StageWithTotal.Total)
-                {
-                    // Do nothing
-                }
-                else
-                    findByStage = (card => CardTable[card.Id].Stage == (StagePractice)stage);
-
-                switch (level)
-                {
-                    case LevelPracticeWithTotal.Total:
+                    if (stage == StageWithTotal.Total)
+                    {
                         // Do nothing
-                        break;
-                    case LevelPracticeWithTotal.Extra:
-                        findByStage = (card => CardTable[card.Id].Stage == StagePractice.Extra);
-                        break;
-                    case LevelPracticeWithTotal.OverDrive:
-                        findByStage = (card => CardTable[card.Id].Stage == StagePractice.OverDrive);
-                        break;
-                    default:
-                        findByLevel = (card => card.Level == (LevelPractice)level);
-                        break;
-                }
+                    }
+                    else
+                        findByStage = (card => CardTable[card.Id].Stage == (StagePractice)stage);
 
-                var and = Utils.MakeAndPredicate(findByKindType, findByLevel, findByStage);
-                return this.allScoreData.ClearData[chara].Cards.Values.Count(and)
-                    .ToString(CultureInfo.CurrentCulture);
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
+                    switch (level)
+                    {
+                        case LevelPracticeWithTotal.Total:
+                            // Do nothing
+                            break;
+                        case LevelPracticeWithTotal.Extra:
+                            findByStage = (card => CardTable[card.Id].Stage == StagePractice.Extra);
+                            break;
+                        case LevelPracticeWithTotal.OverDrive:
+                            findByStage = (card => CardTable[card.Id].Stage == StagePractice.OverDrive);
+                            break;
+                        default:
+                            findByLevel = (card => card.Level == (LevelPractice)level);
+                            break;
+                    }
+
+                    return parent.allScoreData.ClearData[chara].Cards.Values
+                        .Count(Utils.MakeAndPredicate(findByKindType, findByLevel, findByStage))
+                        .ToString(CultureInfo.CurrentCulture);
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
         }
 
         // %T13CLEAR[x][yy]
-        private string ReplaceClear(string input)
+        private class ClearReplacer : IStringReplaceable
         {
-            var pattern = Utils.Format(@"%T13CLEAR({0})({1})", LevelParser.Pattern, CharaParser.Pattern);
-            var evaluator = new MatchEvaluator(match =>
+            private static readonly string Pattern = Utils.Format(
+                @"%T13CLEAR({0})({1})", LevelParser.Pattern, CharaParser.Pattern);
+
+            private readonly MatchEvaluator evaluator;
+
+            public ClearReplacer(Th13Converter parent)
             {
-                var level = (LevelPracticeWithTotal)LevelParser.Parse(match.Groups[1].Value);
-                var chara = (CharaWithTotal)CharaParser.Parse(match.Groups[2].Value);
+                this.evaluator = new MatchEvaluator(match =>
+                {
+                    var level = (LevelPracticeWithTotal)LevelParser.Parse(match.Groups[1].Value);
+                    var chara = (CharaWithTotal)CharaParser.Parse(match.Groups[2].Value);
 
-                var rankings = this.allScoreData.ClearData[chara].Rankings[level]
-                    .Where(ranking => ranking.DateTime > 0);
-                var stageProgress = (rankings.Count() > 0)
-                    ? rankings.Max(ranking => ranking.StageProgress) : StageProgress.None;
+                    var rankings = parent.allScoreData.ClearData[chara].Rankings[level]
+                        .Where(ranking => ranking.DateTime > 0);
+                    var stageProgress = (rankings.Count() > 0)
+                        ? rankings.Max(ranking => ranking.StageProgress) : StageProgress.None;
 
-                if (stageProgress == StageProgress.Extra)
-                    return "Not Clear";
-                else if (stageProgress == StageProgress.ExtraClear)
-                    return StageProgress.Clear.ToShortName();
-                else
-                    return stageProgress.ToShortName();
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
+                    if (stageProgress == StageProgress.Extra)
+                        return "Not Clear";
+                    else if (stageProgress == StageProgress.ExtraClear)
+                        return StageProgress.Clear.ToShortName();
+                    else
+                        return stageProgress.ToShortName();
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
         }
 
         // %T13CHARA[xx][y]
-        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-        private string ReplaceChara(string input)
+        private class CharaReplacer : IStringReplaceable
         {
-            var pattern = Utils.Format(
+            private static readonly string Pattern = Utils.Format(
                 @"%T13CHARA({0})([1-3])", CharaWithTotalParser.Pattern);
-            var evaluator = new MatchEvaluator(match =>
+
+            private readonly MatchEvaluator evaluator;
+
+            [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
+            public CharaReplacer(Th13Converter parent)
             {
-                var chara = CharaWithTotalParser.Parse(match.Groups[1].Value);
-                var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
-
-                Func<ClearData, long> getValueByType = (data => 0L);
-                Func<long, string> toString = (value => string.Empty);
-                if (type == 1)
+                this.evaluator = new MatchEvaluator(match =>
                 {
-                    getValueByType = (data => data.TotalPlayCount);
-                    toString = (value => this.ToNumberString(value));
-                }
-                else if (type == 2)
-                {
-                    getValueByType = (data => data.PlayTime);
-                    toString = (value => new Time(value).ToString());
-                }
-                else
-                {
-                    getValueByType = (data => data.ClearCounts.Values.Sum());
-                    toString = (value => this.ToNumberString(value));
-                }
+                    var chara = CharaWithTotalParser.Parse(match.Groups[1].Value);
+                    var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
-                Func<AllScoreData, long> getValueByChara = (allData => 0L);
-                if (chara == CharaWithTotal.Total)
-                    getValueByChara = (allData => allData.ClearData.Values.Sum(
-                        data => (data.Chara != chara) ? getValueByType(data) : 0L));
-                else
-                    getValueByChara = (allData => getValueByType(allData.ClearData[chara]));
+                    Func<ClearData, long> getValueByType = (data => 0L);
+                    Func<long, string> toString = (value => string.Empty);
+                    if (type == 1)
+                    {
+                        getValueByType = (data => data.TotalPlayCount);
+                        toString = (value => parent.ToNumberString(value));
+                    }
+                    else if (type == 2)
+                    {
+                        getValueByType = (data => data.PlayTime);
+                        toString = (value => new Time(value).ToString());
+                    }
+                    else
+                    {
+                        getValueByType = (data => data.ClearCounts.Values.Sum());
+                        toString = (value => parent.ToNumberString(value));
+                    }
 
-                return toString(getValueByChara(this.allScoreData));
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
+                    Func<AllScoreData, long> getValueByChara = (allData => 0L);
+                    if (chara == CharaWithTotal.Total)
+                        getValueByChara = (allData => allData.ClearData.Values.Sum(
+                            data => (data.Chara != chara) ? getValueByType(data) : 0L));
+                    else
+                        getValueByChara = (allData => getValueByType(allData.ClearData[chara]));
+
+                    return toString(getValueByChara(parent.allScoreData));
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
         }
 
         // %T13CHARAEX[x][yy][z]
-        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-        private string ReplaceCharaEx(string input)
+        private class CharaExReplacer : IStringReplaceable
         {
-            var pattern = Utils.Format(
+            private static readonly string Pattern = Utils.Format(
                 @"%T13CHARAEX({0})({1})([1-3])", LevelWithTotalParser.Pattern, CharaWithTotalParser.Pattern);
-            var evaluator = new MatchEvaluator(match =>
+
+            private readonly MatchEvaluator evaluator;
+
+            [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
+            public CharaExReplacer(Th13Converter parent)
             {
-                var level = LevelWithTotalParser.Parse(match.Groups[1].Value);
-                var chara = CharaWithTotalParser.Parse(match.Groups[2].Value);
-                var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
+                this.evaluator = new MatchEvaluator(match =>
+                {
+                    var level = LevelWithTotalParser.Parse(match.Groups[1].Value);
+                    var chara = CharaWithTotalParser.Parse(match.Groups[2].Value);
+                    var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                Func<ClearData, long> getValueByType = (data => 0L);
-                Func<long, string> toString = (value => string.Empty);
-                if (type == 1)
-                {
-                    getValueByType = (data => data.TotalPlayCount);
-                    toString = (value => this.ToNumberString(value));
-                }
-                else if (type == 2)
-                {
-                    getValueByType = (data => data.PlayTime);
-                    toString = (value => new Time(value).ToString());
-                }
-                else
-                {
-                    if (level == LevelWithTotal.Total)
-                        getValueByType = (data => data.ClearCounts.Values.Sum());
+                    Func<ClearData, long> getValueByType = (data => 0L);
+                    Func<long, string> toString = (value => string.Empty);
+                    if (type == 1)
+                    {
+                        getValueByType = (data => data.TotalPlayCount);
+                        toString = (value => parent.ToNumberString(value));
+                    }
+                    else if (type == 2)
+                    {
+                        getValueByType = (data => data.PlayTime);
+                        toString = (value => new Time(value).ToString());
+                    }
                     else
-                        getValueByType = (data => data.ClearCounts[(LevelPracticeWithTotal)level]);
-                    toString = (value => this.ToNumberString(value));
-                }
+                    {
+                        if (level == LevelWithTotal.Total)
+                            getValueByType = (data => data.ClearCounts.Values.Sum());
+                        else
+                            getValueByType = (data => data.ClearCounts[(LevelPracticeWithTotal)level]);
+                        toString = (value => parent.ToNumberString(value));
+                    }
 
-                Func<AllScoreData, long> getValueByChara = (allData => 0L);
-                if (chara == CharaWithTotal.Total)
-                    getValueByChara = (allData => allData.ClearData.Values.Sum(
-                        data => (data.Chara != chara) ? getValueByType(data) : 0L));
-                else
-                    getValueByChara = (allData => getValueByType(allData.ClearData[chara]));
+                    Func<AllScoreData, long> getValueByChara = (allData => 0L);
+                    if (chara == CharaWithTotal.Total)
+                        getValueByChara = (allData => allData.ClearData.Values.Sum(
+                            data => (data.Chara != chara) ? getValueByType(data) : 0L));
+                    else
+                        getValueByChara = (allData => getValueByType(allData.ClearData[chara]));
 
-                return toString(getValueByChara(this.allScoreData));
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
+                    return toString(getValueByChara(parent.allScoreData));
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
         }
 
         // %T13PRAC[x][yy][z]
-        private string ReplacePractice(string input)
+        private class PracticeReplacer : IStringReplaceable
         {
-            var pattern = Utils.Format(
+            private static readonly string Pattern = Utils.Format(
                 @"%T13PRAC({0})({1})({2})", LevelParser.Pattern, CharaParser.Pattern, StageParser.Pattern);
-            var evaluator = new MatchEvaluator(match =>
+
+            private readonly MatchEvaluator evaluator;
+
+            public PracticeReplacer(Th13Converter parent)
             {
-                var level = (LevelPractice)LevelParser.Parse(match.Groups[1].Value);
-                var chara = (CharaWithTotal)CharaParser.Parse(match.Groups[2].Value);
-                var stage = (StagePractice)StageParser.Parse(match.Groups[3].Value);
-
-                if (level == LevelPractice.Extra)
-                    return match.ToString();
-                if (stage == StagePractice.Extra)
-                    return match.ToString();
-
-                if (this.allScoreData.ClearData.ContainsKey(chara))
+                this.evaluator = new MatchEvaluator(match =>
                 {
-                    var key = new LevelStagePair(level, stage);
-                    var practices = this.allScoreData.ClearData[chara].Practices;
-                    return practices.ContainsKey(key)
-                        ? this.ToNumberString(practices[key].Score * 10) : "0";
-                }
-                else
-                    return "0";
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
+                    var level = (LevelPractice)LevelParser.Parse(match.Groups[1].Value);
+                    var chara = (CharaWithTotal)CharaParser.Parse(match.Groups[2].Value);
+                    var stage = (StagePractice)StageParser.Parse(match.Groups[3].Value);
+
+                    if (level == LevelPractice.Extra)
+                        return match.ToString();
+                    if (stage == StagePractice.Extra)
+                        return match.ToString();
+
+                    if (parent.allScoreData.ClearData.ContainsKey(chara))
+                    {
+                        var key = new LevelStagePair(level, stage);
+                        var practices = parent.allScoreData.ClearData[chara].Practices;
+                        return practices.ContainsKey(key)
+                            ? parent.ToNumberString(practices[key].Score * 10) : "0";
+                    }
+                    else
+                        return "0";
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
         }
 
         private class LevelStagePair : Pair<LevelPractice, StagePractice>

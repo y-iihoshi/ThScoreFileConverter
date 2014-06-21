@@ -225,16 +225,20 @@ namespace ThScoreFileConverter
             var reader = new StreamReader(input, Encoding.GetEncoding("shift_jis"));
             var writer = new StreamWriter(output, Encoding.GetEncoding("shift_jis"));
             var outputFile = output as FileStream;
+            var outputFilePath = (outputFile != null) ? outputFile.Name : string.Empty;
+            var replacers = new List<IStringReplaceable>
+            {
+                new ScoreReplacer(this),
+                new ScoreTotalReplacer(this),
+                new CardReplacer(this, hideUntriedCards),
+                new ShotReplacer(this, outputFilePath),
+                new ShotExReplacer(this, outputFilePath)
+            };
 
             var allLines = reader.ReadToEnd();
-            allLines = this.ReplaceScore(allLines);
-            allLines = this.ReplaceScoreTotal(allLines);
-            allLines = this.ReplaceCard(allLines, hideUntriedCards);
-            if (outputFile != null)
-            {
-                allLines = this.ReplaceShot(allLines, outputFile.Name);
-                allLines = this.ReplaceShotEx(allLines, outputFile.Name);
-            }
+
+            foreach (var replacer in replacers)
+                allLines = replacer.Replace(allLines);
 
             writer.Write(allLines);
             writer.Flush();
@@ -407,178 +411,239 @@ namespace ThScoreFileConverter
         }
 
         // %T95SCR[x][y][z]
-        private string ReplaceScore(string input)
+        private class ScoreReplacer : IStringReplaceable
         {
-            var pattern = Utils.Format(@"%T95SCR({0})([1-9])([1-4])", LevelParser.Pattern);
-            var evaluator = new MatchEvaluator(match =>
+            private static readonly string Pattern = Utils.Format(
+                @"%T95SCR({0})([1-9])([1-4])", LevelParser.Pattern);
+
+            private readonly MatchEvaluator evaluator;
+
+            public ScoreReplacer(Th095Converter parent)
             {
-                var level = LevelParser.Parse(match.Groups[1].Value);
-                var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
-                var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
-
-                var key = new LevelScenePair(level, scene);
-                var score = this.allScoreData.Scores.Find(
-                    elem => (elem != null) && elem.LevelScene.Equals(key));
-
-                switch (type)
+                this.evaluator = new MatchEvaluator(match =>
                 {
-                    case 1:     // high score
-                        return (score != null) ? this.ToNumberString(score.HighScore) : "0";
-                    case 2:     // bestshot score
-                        return (score != null) ? this.ToNumberString(score.BestshotScore) : "0";
-                    case 3:     // num of shots
-                        return (score != null) ? this.ToNumberString(score.TrialCount) : "0";
-                    case 4:     // slow rate
-                        return (score != null) ? Utils.Format("{0:F3}%", score.SlowRate2) : "-----%";
-                    default:    // unreachable
-                        return match.ToString();
-                }
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
-        }
+                    var level = LevelParser.Parse(match.Groups[1].Value);
+                    var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
+                    var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-        // %T95SCRTL[x]
-        private string ReplaceScoreTotal(string input)
-        {
-            var pattern = @"%T95SCRTL([1-4])";
-            var evaluator = new MatchEvaluator(match =>
-            {
-                var type = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
-
-                switch (type)
-                {
-                    case 1:     // total score
-                        return this.ToNumberString(
-                            this.allScoreData.Scores.Sum(
-                                score => (score != null) ? (long)score.HighScore : 0L));
-                    case 2:     // total of bestshot scores
-                        return this.ToNumberString(
-                            this.allScoreData.Scores.Sum(
-                                score => (score != null) ? (long)score.BestshotScore : 0L));
-                    case 3:     // total of num of shots
-                        return this.ToNumberString(
-                            this.allScoreData.Scores.Sum(
-                                score => (score != null) ? score.TrialCount : 0));
-                    case 4:     // num of succeeded scenes
-                        return this.allScoreData.Scores
-                            .Count(score => (score != null) && (score.HighScore > 0))
-                            .ToString(CultureInfo.CurrentCulture);
-                    default:    // unreachable
-                        return match.ToString();
-                }
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
-        }
-
-        // %T95CARD[x][y][z]
-        private string ReplaceCard(string input, bool hideUntriedCards)
-        {
-            var pattern = Utils.Format(@"%T95CARD({0})([1-9])([12])", LevelParser.Pattern);
-            var evaluator = new MatchEvaluator(match =>
-            {
-                var level = LevelParser.Parse(match.Groups[1].Value);
-                var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
-                var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
-
-                var key = new LevelScenePair(level, scene);
-
-                if (hideUntriedCards)
-                {
-                    var score = this.allScoreData.Scores.Find(
+                    var key = new LevelScenePair(level, scene);
+                    var score = parent.allScoreData.Scores.Find(
                         elem => (elem != null) && elem.LevelScene.Equals(key));
-                    if (score == null)
-                        return "??????????";
-                }
 
-                return (type == 1) ? SpellCards[key].Enemy.ToLongName() : SpellCards[key].Card;
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
-        }
-
-        // %T95SHOT[x][y]
-        private string ReplaceShot(string input, string outputFilePath)
-        {
-            var pattern = Utils.Format(@"%T95SHOT({0})([1-9])", LevelParser.Pattern);
-            var evaluator = new MatchEvaluator(match =>
-            {
-                var level = LevelParser.Parse(match.Groups[1].Value);
-                var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
-
-                var key = new LevelScenePair(level, scene);
-
-                if ((this.bestshots != null) && this.bestshots.ContainsKey(key))
-                {
-                    var relativePath = new Uri(outputFilePath)
-                        .MakeRelativeUri(new Uri(this.bestshots[key].Path)).OriginalString;
-                    var alternativeString = Utils.Format(
-                        "ClearData: {0}\nSlow: {1:F6}%\nSpellName: {2}",
-                        this.ToNumberString(this.bestshots[key].Header.Score),
-                        this.bestshots[key].Header.SlowRate,
-                        Encoding.Default.GetString(this.bestshots[key].Header.CardName).TrimEnd('\0'));
-                    return Utils.Format(
-                        "<img src=\"{0}\" alt=\"{1}\" title=\"{1}\" border=0>",
-                        relativePath,
-                        alternativeString);
-                }
-                else
-                    return string.Empty;
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
-        }
-
-        // %T95SHOTEX[x][y][z]
-        [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine", Justification = "Reviewed.")]
-        private string ReplaceShotEx(string input, string outputFilePath)
-        {
-            var pattern = Utils.Format(@"%T95SHOTEX({0})([1-9])([1-6])", LevelParser.Pattern);
-            var evaluator = new MatchEvaluator(match =>
-            {
-                var level = LevelParser.Parse(match.Groups[1].Value);
-                var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
-                var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
-
-                var key = new LevelScenePair(level, scene);
-
-                if ((this.bestshots != null) && this.bestshots.ContainsKey(key))
                     switch (type)
                     {
-                        case 1:     // relative path to the bestshot file
-                            return new Uri(outputFilePath)
-                                .MakeRelativeUri(new Uri(this.bestshots[key].Path)).OriginalString;
-                        case 2:     // width
-                            return this.bestshots[key].Header.Width.ToString(CultureInfo.InvariantCulture);
-                        case 3:     // height
-                            return this.bestshots[key].Header.Height.ToString(CultureInfo.InvariantCulture);
-                        case 4:     // score
-                            return this.ToNumberString(this.bestshots[key].Header.Score);
-                        case 5:     // slow rate
-                            return Utils.Format("{0:F6}%", this.bestshots[key].Header.SlowRate);
-                        case 6:     // date & time
-                            {
-                                var score = this.allScoreData.Scores.Find(
-                                    elem => (elem != null) && elem.LevelScene.Equals(key));
-                                if (score != null)
-                                    return new DateTime(1970, 1, 1).AddSeconds(score.DateTime).ToLocalTime()
-                                        .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
-                                else
-                                    return "----/--/-- --:--:--";
-                            }
+                        case 1:     // high score
+                            return (score != null) ? parent.ToNumberString(score.HighScore) : "0";
+                        case 2:     // bestshot score
+                            return (score != null) ? parent.ToNumberString(score.BestshotScore) : "0";
+                        case 3:     // num of shots
+                            return (score != null) ? parent.ToNumberString(score.TrialCount) : "0";
+                        case 4:     // slow rate
+                            return (score != null) ? Utils.Format("{0:F3}%", score.SlowRate2) : "-----%";
                         default:    // unreachable
                             return match.ToString();
                     }
-                else
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
+        }
+
+        // %T95SCRTL[x]
+        private class ScoreTotalReplacer : IStringReplaceable
+        {
+            private const string Pattern = @"%T95SCRTL([1-4])";
+
+            private readonly MatchEvaluator evaluator;
+
+            public ScoreTotalReplacer(Th095Converter parent)
+            {
+                this.evaluator = new MatchEvaluator(match =>
+                {
+                    var type = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
+
                     switch (type)
                     {
-                        case 1: return string.Empty;
-                        case 2: return "0";
-                        case 3: return "0";
-                        case 4: return "--------";
-                        case 5: return "-----%";
-                        case 6: return "----/--/-- --:--:--";
-                        default: return match.ToString();
+                        case 1:     // total score
+                            return parent.ToNumberString(
+                                parent.allScoreData.Scores.Sum(
+                                    score => (score != null) ? (long)score.HighScore : 0L));
+                        case 2:     // total of bestshot scores
+                            return parent.ToNumberString(
+                                parent.allScoreData.Scores.Sum(
+                                    score => (score != null) ? (long)score.BestshotScore : 0L));
+                        case 3:     // total of num of shots
+                            return parent.ToNumberString(
+                                parent.allScoreData.Scores.Sum(
+                                    score => (score != null) ? score.TrialCount : 0));
+                        case 4:     // num of succeeded scenes
+                            return parent.allScoreData.Scores
+                                .Count(score => (score != null) && (score.HighScore > 0))
+                                .ToString(CultureInfo.CurrentCulture);
+                        default:    // unreachable
+                            return match.ToString();
                     }
-            });
-            return Regex.Replace(input, pattern, evaluator, RegexOptions.IgnoreCase);
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
+        }
+
+        // %T95CARD[x][y][z]
+        private class CardReplacer : IStringReplaceable
+        {
+            private static readonly string Pattern = Utils.Format(
+                @"%T95CARD({0})([1-9])([12])", LevelParser.Pattern);
+
+            private readonly MatchEvaluator evaluator;
+
+            public CardReplacer(Th095Converter parent, bool hideUntriedCards)
+            {
+                this.evaluator = new MatchEvaluator(match =>
+                {
+                    var level = LevelParser.Parse(match.Groups[1].Value);
+                    var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
+                    var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
+
+                    var key = new LevelScenePair(level, scene);
+
+                    if (hideUntriedCards)
+                    {
+                        var score = parent.allScoreData.Scores.Find(
+                            elem => (elem != null) && elem.LevelScene.Equals(key));
+                        if (score == null)
+                            return "??????????";
+                    }
+
+                    return (type == 1) ? SpellCards[key].Enemy.ToLongName() : SpellCards[key].Card;
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
+        }
+
+        // %T95SHOT[x][y]
+        private class ShotReplacer : IStringReplaceable
+        {
+            private static readonly string Pattern = Utils.Format(
+                @"%T95SHOT({0})([1-9])", LevelParser.Pattern);
+
+            private readonly MatchEvaluator evaluator;
+
+            public ShotReplacer(Th095Converter parent, string outputFilePath)
+            {
+                this.evaluator = new MatchEvaluator(match =>
+                {
+                    var level = LevelParser.Parse(match.Groups[1].Value);
+                    var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
+
+                    var key = new LevelScenePair(level, scene);
+
+                    if (!string.IsNullOrEmpty(outputFilePath) &&
+                        (parent.bestshots != null) &&
+                        parent.bestshots.ContainsKey(key))
+                    {
+                        var relativePath = new Uri(outputFilePath)
+                            .MakeRelativeUri(new Uri(parent.bestshots[key].Path)).OriginalString;
+                        var alternativeString = Utils.Format(
+                            "ClearData: {0}\nSlow: {1:F6}%\nSpellName: {2}",
+                            parent.ToNumberString(parent.bestshots[key].Header.Score),
+                            parent.bestshots[key].Header.SlowRate,
+                            Encoding.Default.GetString(parent.bestshots[key].Header.CardName).TrimEnd('\0'));
+                        return Utils.Format(
+                            "<img src=\"{0}\" alt=\"{1}\" title=\"{1}\" border=0>",
+                            relativePath,
+                            alternativeString);
+                    }
+                    else
+                        return string.Empty;
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
+        }
+
+        // %T95SHOTEX[x][y][z]
+        private class ShotExReplacer : IStringReplaceable
+        {
+            private static readonly string Pattern = Utils.Format(
+                @"%T95SHOTEX({0})([1-9])([1-6])", LevelParser.Pattern);
+
+            private readonly MatchEvaluator evaluator;
+
+            [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine", Justification = "Reviewed.")]
+            public ShotExReplacer(Th095Converter parent, string outputFilePath)
+            {
+                this.evaluator = new MatchEvaluator(match =>
+                {
+                    var level = LevelParser.Parse(match.Groups[1].Value);
+                    var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
+                    var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
+
+                    var key = new LevelScenePair(level, scene);
+
+                    if (!string.IsNullOrEmpty(outputFilePath) &&
+                        (parent.bestshots != null) &&
+                        parent.bestshots.ContainsKey(key))
+                        switch (type)
+                        {
+                            case 1:     // relative path to the bestshot file
+                                return new Uri(outputFilePath)
+                                    .MakeRelativeUri(new Uri(parent.bestshots[key].Path)).OriginalString;
+                            case 2:     // width
+                                return parent.bestshots[key]
+                                    .Header.Width.ToString(CultureInfo.InvariantCulture);
+                            case 3:     // height
+                                return parent.bestshots[key]
+                                    .Header.Height.ToString(CultureInfo.InvariantCulture);
+                            case 4:     // score
+                                return parent.ToNumberString(parent.bestshots[key].Header.Score);
+                            case 5:     // slow rate
+                                return Utils.Format("{0:F6}%", parent.bestshots[key].Header.SlowRate);
+                            case 6:     // date & time
+                                {
+                                    var score = parent.allScoreData.Scores.Find(
+                                        elem => (elem != null) && elem.LevelScene.Equals(key));
+                                    if (score != null)
+                                        return new DateTime(1970, 1, 1)
+                                            .AddSeconds(score.DateTime).ToLocalTime()
+                                            .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
+                                    else
+                                        return "----/--/-- --:--:--";
+                                }
+                            default:    // unreachable
+                                return match.ToString();
+                        }
+                    else
+                        switch (type)
+                        {
+                            case 1: return string.Empty;
+                            case 2: return "0";
+                            case 3: return "0";
+                            case 4: return "--------";
+                            case 5: return "-----%";
+                            case 6: return "----/--/-- --:--:--";
+                            default: return match.ToString();
+                        }
+                });
+            }
+
+            public string Replace(string input)
+            {
+                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+            }
         }
 
         private class LevelScenePair : Pair<Level, int>

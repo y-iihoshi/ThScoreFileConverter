@@ -81,6 +81,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IBinaryReadable.cs" />
     <Compile Include="IBinaryWritable.cs" />
+    <Compile Include="IStringReplaceable.cs" />
     <Compile Include="Pair.cs" />
     <Compile Include="Profiler.cs" />
     <Compile Include="SettingsPerTitle.cs" />
