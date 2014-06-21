@@ -225,7 +225,8 @@ namespace ThScoreFileConverter
             var charaStageEnemyTable = new Dictionary<Chara, List<StageEnemyPair>>
             {
                 {
-                    Chara.Reimu, new List<StageEnemyPair>
+                    Chara.Reimu,
+                    new List<StageEnemyPair>
                     {
                         new StageEnemyPair(Stage.St1, Chara.Marisa),
                         new StageEnemyPair(Stage.St2, Chara.Alice),
@@ -237,7 +238,8 @@ namespace ThScoreFileConverter
                     }
                 },
                 {
-                    Chara.Marisa, new List<StageEnemyPair>
+                    Chara.Marisa,
+                    new List<StageEnemyPair>
                     {
                         new StageEnemyPair(Stage.St1, Chara.Alice),
                         new StageEnemyPair(Stage.St2, Chara.Sakuya),
@@ -249,7 +251,8 @@ namespace ThScoreFileConverter
                     }
                 },
                 {
-                    Chara.Sakuya, new List<StageEnemyPair>
+                    Chara.Sakuya,
+                    new List<StageEnemyPair>
                     {
                         new StageEnemyPair(Stage.St1, Chara.Reimu),
                         new StageEnemyPair(Stage.St2, Chara.Alice),
@@ -261,7 +264,8 @@ namespace ThScoreFileConverter
                     }
                 },
                 {
-                    Chara.Alice, new List<StageEnemyPair>
+                    Chara.Alice,
+                    new List<StageEnemyPair>
                     {
                         new StageEnemyPair(Stage.St1, Chara.Marisa),
                         new StageEnemyPair(Stage.St2, Chara.Reimu),
@@ -273,7 +277,8 @@ namespace ThScoreFileConverter
                     }
                 },
                 {
-                    Chara.Patchouli, new List<StageEnemyPair>
+                    Chara.Patchouli,
+                    new List<StageEnemyPair>
                     {
                         new StageEnemyPair(Stage.St1, Chara.Marisa),
                         new StageEnemyPair(Stage.St2, Chara.Sakuya),
@@ -285,7 +290,8 @@ namespace ThScoreFileConverter
                     }
                 },
                 {
-                    Chara.Youmu, new List<StageEnemyPair>
+                    Chara.Youmu,
+                    new List<StageEnemyPair>
                     {
                         new StageEnemyPair(Stage.St1, Chara.Reimu),
                         new StageEnemyPair(Stage.St2, Chara.Marisa),
@@ -297,7 +303,8 @@ namespace ThScoreFileConverter
                     }
                 },
                 {
-                    Chara.Remilia, new List<StageEnemyPair>
+                    Chara.Remilia,
+                    new List<StageEnemyPair>
                     {
                         new StageEnemyPair(Stage.St1, Chara.Sakuya),
                         new StageEnemyPair(Stage.St2, Chara.Marisa),
@@ -309,7 +316,8 @@ namespace ThScoreFileConverter
                     }
                 },
                 {
-                    Chara.Yuyuko, new List<StageEnemyPair>
+                    Chara.Yuyuko,
+                    new List<StageEnemyPair>
                     {
                         new StageEnemyPair(Stage.St1, Chara.Youmu),
                         new StageEnemyPair(Stage.St2, Chara.Marisa),
@@ -321,7 +329,8 @@ namespace ThScoreFileConverter
                     }
                 },
                 {
-                    Chara.Yukari, new List<StageEnemyPair>
+                    Chara.Yukari,
+                    new List<StageEnemyPair>
                     {
                         new StageEnemyPair(Stage.St1, Chara.Remilia),
                         new StageEnemyPair(Stage.St2, Chara.Alice),
@@ -333,7 +342,8 @@ namespace ThScoreFileConverter
                     }
                 },
                 {
-                    Chara.Suika, new List<StageEnemyPair>
+                    Chara.Suika,
+                    new List<StageEnemyPair>
                     {
                         new StageEnemyPair(Stage.St1, Chara.Sakuya),
                         new StageEnemyPair(Stage.St2, Chara.Alice),
@@ -346,27 +356,26 @@ namespace ThScoreFileConverter
                 }
             };
 
+            var cardNumberTable = CardTable.ToLookup(pair => pair.Value.Enemy, pair => pair.Key);
+
             CardIdTable = charaStageEnemyTable.ToDictionary(
                 charaStageEnemyPair => charaStageEnemyPair.Key,
                 charaStageEnemyPair => charaStageEnemyPair.Value.SelectMany(stageEnemyPair =>
                 {
-                    var cardNumbers = CardTable
-                        .Where(cardPair => cardPair.Value.Enemy == stageEnemyPair.Enemy)
-                        .Select(cardPair => cardPair.Key);
                     switch (stageEnemyPair.Stage)
                     {
                         case Stage.St1:
                         case Stage.St2:
-                            return cardNumbers.Take(8);
+                            return cardNumberTable[stageEnemyPair.Enemy].Take(8);
                         case Stage.St3:
                         case Stage.St4:
-                            return cardNumbers.Take(12);
+                            return cardNumberTable[stageEnemyPair.Enemy].Take(12);
                         case Stage.St5:
-                            return cardNumbers.Take(16);
+                            return cardNumberTable[stageEnemyPair.Enemy].Take(16);
                         case Stage.St6:
-                            return cardNumbers.Take(20);
+                            return cardNumberTable[stageEnemyPair.Enemy].Take(20);
                         case Stage.St7:
-                            return cardNumbers.Take(24);
+                            return cardNumberTable[stageEnemyPair.Enemy].Take(24);
                         default:
                             return null;    // unreachable
                     }
