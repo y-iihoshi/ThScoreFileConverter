@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+ <head>
+  <meta charset="Shift_JIS">
+  <title>弾幕アマノジャククリア状況一覧</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" type="text/css" href="th143.css">
+<style>
+<!--
+    canvas { background-color: #000; }
+    table.score_per_level caption { text-align: left; font-size: large; }
+    table.score_per_level td.column_head { min-width: 70px; }
+    table.score_total td.count { min-width: 70px; }
+    table.score_total td.score { text-align: center; }
+    table.nickname { float: left; }
+    table.nickname td.number { min-width: 20px; }
+    table.nickname td.nickname { min-width: 150px; }
+-->
+</style>
+  <script src="jquery-1.11.1.min.js"></script>
+  <script src="jcanvas.min.js"></script>
+<script>
+<!--
+	$(document).ready(function(){
+		var defaultSize = 220;
+		var originX = defaultSize / 2;
+		var originY = defaultSize / 2;
+		var triangleRadius = 80;
+		var clearRadius = 15;
+		var notClearRadius = 5;
+		var noItemRadius = 25;
+		var triangleColor = 'rgba(128, 48, 192, 0.6)';
+		var itemColors = [
+			'rgb( 96,  48, 255)',
+			'rgb(224, 224,  48)',
+			'rgb(255,  48,  96)',
+			'rgb(128,  48, 192)',
+			'rgb(192, 128, 128)',
+			'rgb(255, 112,  48)',
+			'rgb(128,  96, 192)',
+			'rgb(224, 160,  48)',
+			'rgb(192,  48, 160)'
+		];
+		var noItemColor = 'rgb(48, 255, 48)';
+		var numItems = itemColors.length;
+		var itemIndexMap = [ 0, 3, 6, 2, 5, 7, 1, 4, 8 ];
+
+		var drawGraph = function(args) {
+			if (args.clearCounts.length != 10)
+				return;
+			for (var i = 0; i < args.clearCounts.length; i++)
+				args.clearCounts[i].replace(',', '');
+
+			$(args.id).scaleCanvas({
+				scale: Math.min($(args.id).width(), $(args.id).height()) / defaultSize
+			});
+
+			for (var i = 0; i < 3; i++)
+				$(args.id).drawPolygon({
+					fillStyle: triangleColor,
+					x: originX,
+					y: originY,
+					radius: triangleRadius,
+					sides: 3,
+					rotate: (360 * i / numItems)
+				});
+
+			for (var i = 0; i < numItems; i++) {
+				var angle = 2 * Math.PI * i / numItems;
+				var count = args.clearCounts[itemIndexMap[i]];
+				$(args.id).drawArc({
+					fillStyle: itemColors[itemIndexMap[i]],
+					x: (triangleRadius *  Math.sin(angle) + originX),
+					y: (triangleRadius * -Math.cos(angle) + originY),
+					radius: ((count > 0) ? clearRadius: notClearRadius)
+				});
+			}
+
+			if (args.clearCounts[9] > 0)
+				$(args.id).drawArc({
+					fillStyle: noItemColor,
+					x: originX,
+					y: originY,
+					radius: noItemRadius
+				});
+		};
+
+		drawGraph({
+			id: '#T143GRAPH11',
+			clearCounts: [ '%T143SCR1113', '%T143SCR1123', '%T143SCR1133', '%T143SCR1143', '%T143SCR1153', '%T143SCR1163', '%T143SCR1173', '%T143SCR1183', '%T143SCR1193', '%T143SCR1103' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH12',
+			clearCounts: [ '%T143SCR1213', '%T143SCR1223', '%T143SCR1233', '%T143SCR1243', '%T143SCR1253', '%T143SCR1263', '%T143SCR1273', '%T143SCR1283', '%T143SCR1293', '%T143SCR1203' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH13',
+			clearCounts: [ '%T143SCR1313', '%T143SCR1323', '%T143SCR1333', '%T143SCR1343', '%T143SCR1353', '%T143SCR1363', '%T143SCR1373', '%T143SCR1383', '%T143SCR1393', '%T143SCR1303' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH14',
+			clearCounts: [ '%T143SCR1413', '%T143SCR1423', '%T143SCR1433', '%T143SCR1443', '%T143SCR1453', '%T143SCR1463', '%T143SCR1473', '%T143SCR1483', '%T143SCR1493', '%T143SCR1403' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH15',
+			clearCounts: [ '%T143SCR1513', '%T143SCR1523', '%T143SCR1533', '%T143SCR1543', '%T143SCR1553', '%T143SCR1563', '%T143SCR1573', '%T143SCR1583', '%T143SCR1593', '%T143SCR1503' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH16',
+			clearCounts: [ '%T143SCR1613', '%T143SCR1623', '%T143SCR1633', '%T143SCR1643', '%T143SCR1653', '%T143SCR1663', '%T143SCR1673', '%T143SCR1683', '%T143SCR1693', '%T143SCR1603' ]
+		});
+
+		drawGraph({
+			id: '#T143GRAPH21',
+			clearCounts: [ '%T143SCR2113', '%T143SCR2123', '%T143SCR2133', '%T143SCR2143', '%T143SCR2153', '%T143SCR2163', '%T143SCR2173', '%T143SCR2183', '%T143SCR2193', '%T143SCR2103' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH22',
+			clearCounts: [ '%T143SCR2213', '%T143SCR2223', '%T143SCR2233', '%T143SCR2243', '%T143SCR2253', '%T143SCR2263', '%T143SCR2273', '%T143SCR2283', '%T143SCR2293', '%T143SCR2203' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH23',
+			clearCounts: [ '%T143SCR2313', '%T143SCR2323', '%T143SCR2333', '%T143SCR2343', '%T143SCR2353', '%T143SCR2363', '%T143SCR2373', '%T143SCR2383', '%T143SCR2393', '%T143SCR2303' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH24',
+			clearCounts: [ '%T143SCR2413', '%T143SCR2423', '%T143SCR2433', '%T143SCR2443', '%T143SCR2453', '%T143SCR2463', '%T143SCR2473', '%T143SCR2483', '%T143SCR2493', '%T143SCR2403' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH25',
+			clearCounts: [ '%T143SCR2513', '%T143SCR2523', '%T143SCR2533', '%T143SCR2543', '%T143SCR2553', '%T143SCR2563', '%T143SCR2573', '%T143SCR2583', '%T143SCR2593', '%T143SCR2503' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH26',
+			clearCounts: [ '%T143SCR2613', '%T143SCR2623', '%T143SCR2633', '%T143SCR2643', '%T143SCR2653', '%T143SCR2663', '%T143SCR2673', '%T143SCR2683', '%T143SCR2693', '%T143SCR2603' ]
+		});
+
+		drawGraph({
+			id: '#T143GRAPH31',
+			clearCounts: [ '%T143SCR3113', '%T143SCR3123', '%T143SCR3133', '%T143SCR3143', '%T143SCR3153', '%T143SCR3163', '%T143SCR3173', '%T143SCR3183', '%T143SCR3193', '%T143SCR3103' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH32',
+			clearCounts: [ '%T143SCR3213', '%T143SCR3223', '%T143SCR3233', '%T143SCR3243', '%T143SCR3253', '%T143SCR3263', '%T143SCR3273', '%T143SCR3283', '%T143SCR3293', '%T143SCR3203' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH33',
+			clearCounts: [ '%T143SCR3313', '%T143SCR3323', '%T143SCR3333', '%T143SCR3343', '%T143SCR3353', '%T143SCR3363', '%T143SCR3373', '%T143SCR3383', '%T143SCR3393', '%T143SCR3303' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH34',
+			clearCounts: [ '%T143SCR3413', '%T143SCR3423', '%T143SCR3433', '%T143SCR3443', '%T143SCR3453', '%T143SCR3463', '%T143SCR3473', '%T143SCR3483', '%T143SCR3493', '%T143SCR3403' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH35',
+			clearCounts: [ '%T143SCR3513', '%T143SCR3523', '%T143SCR3533', '%T143SCR3543', '%T143SCR3553', '%T143SCR3563', '%T143SCR3573', '%T143SCR3583', '%T143SCR3593', '%T143SCR3503' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH36',
+			clearCounts: [ '%T143SCR3613', '%T143SCR3623', '%T143SCR3633', '%T143SCR3643', '%T143SCR3653', '%T143SCR3663', '%T143SCR3673', '%T143SCR3683', '%T143SCR3693', '%T143SCR3603' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH37',
+			clearCounts: [ '%T143SCR3713', '%T143SCR3723', '%T143SCR3733', '%T143SCR3743', '%T143SCR3753', '%T143SCR3763', '%T143SCR3773', '%T143SCR3783', '%T143SCR3793', '%T143SCR3703' ]
+		});
+
+		drawGraph({
+			id: '#T143GRAPH41',
+			clearCounts: [ '%T143SCR4113', '%T143SCR4123', '%T143SCR4133', '%T143SCR4143', '%T143SCR4153', '%T143SCR4163', '%T143SCR4173', '%T143SCR4183', '%T143SCR4193', '%T143SCR4103' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH42',
+			clearCounts: [ '%T143SCR4213', '%T143SCR4223', '%T143SCR4233', '%T143SCR4243', '%T143SCR4253', '%T143SCR4263', '%T143SCR4273', '%T143SCR4283', '%T143SCR4293', '%T143SCR4203' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH43',
+			clearCounts: [ '%T143SCR4313', '%T143SCR4323', '%T143SCR4333', '%T143SCR4343', '%T143SCR4353', '%T143SCR4363', '%T143SCR4373', '%T143SCR4383', '%T143SCR4393', '%T143SCR4303' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH44',
+			clearCounts: [ '%T143SCR4413', '%T143SCR4423', '%T143SCR4433', '%T143SCR4443', '%T143SCR4453', '%T143SCR4463', '%T143SCR4473', '%T143SCR4483', '%T143SCR4493', '%T143SCR4403' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH45',
+			clearCounts: [ '%T143SCR4513', '%T143SCR4523', '%T143SCR4533', '%T143SCR4543', '%T143SCR4553', '%T143SCR4563', '%T143SCR4573', '%T143SCR4583', '%T143SCR4593', '%T143SCR4503' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH46',
+			clearCounts: [ '%T143SCR4613', '%T143SCR4623', '%T143SCR4633', '%T143SCR4643', '%T143SCR4653', '%T143SCR4663', '%T143SCR4673', '%T143SCR4683', '%T143SCR4693', '%T143SCR4603' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH47',
+			clearCounts: [ '%T143SCR4713', '%T143SCR4723', '%T143SCR4733', '%T143SCR4743', '%T143SCR4753', '%T143SCR4763', '%T143SCR4773', '%T143SCR4783', '%T143SCR4793', '%T143SCR4703' ]
+		});
+
+		drawGraph({
+			id: '#T143GRAPH51',
+			clearCounts: [ '%T143SCR5113', '%T143SCR5123', '%T143SCR5133', '%T143SCR5143', '%T143SCR5153', '%T143SCR5163', '%T143SCR5173', '%T143SCR5183', '%T143SCR5193', '%T143SCR5103' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH52',
+			clearCounts: [ '%T143SCR5213', '%T143SCR5223', '%T143SCR5233', '%T143SCR5243', '%T143SCR5253', '%T143SCR5263', '%T143SCR5273', '%T143SCR5283', '%T143SCR5293', '%T143SCR5203' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH53',
+			clearCounts: [ '%T143SCR5313', '%T143SCR5323', '%T143SCR5333', '%T143SCR5343', '%T143SCR5353', '%T143SCR5363', '%T143SCR5373', '%T143SCR5383', '%T143SCR5393', '%T143SCR5303' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH54',
+			clearCounts: [ '%T143SCR5413', '%T143SCR5423', '%T143SCR5433', '%T143SCR5443', '%T143SCR5453', '%T143SCR5463', '%T143SCR5473', '%T143SCR5483', '%T143SCR5493', '%T143SCR5403' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH55',
+			clearCounts: [ '%T143SCR5513', '%T143SCR5523', '%T143SCR5533', '%T143SCR5543', '%T143SCR5553', '%T143SCR5563', '%T143SCR5573', '%T143SCR5583', '%T143SCR5593', '%T143SCR5503' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH56',
+			clearCounts: [ '%T143SCR5613', '%T143SCR5623', '%T143SCR5633', '%T143SCR5643', '%T143SCR5653', '%T143SCR5663', '%T143SCR5673', '%T143SCR5683', '%T143SCR5693', '%T143SCR5603' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH57',
+			clearCounts: [ '%T143SCR5713', '%T143SCR5723', '%T143SCR5733', '%T143SCR5743', '%T143SCR5753', '%T143SCR5763', '%T143SCR5773', '%T143SCR5783', '%T143SCR5793', '%T143SCR5703' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH58',
+			clearCounts: [ '%T143SCR5813', '%T143SCR5823', '%T143SCR5833', '%T143SCR5843', '%T143SCR5853', '%T143SCR5863', '%T143SCR5873', '%T143SCR5883', '%T143SCR5893', '%T143SCR5803' ]
+		});
+
+		drawGraph({
+			id: '#T143GRAPH61',
+			clearCounts: [ '%T143SCR6113', '%T143SCR6123', '%T143SCR6133', '%T143SCR6143', '%T143SCR6153', '%T143SCR6163', '%T143SCR6173', '%T143SCR6183', '%T143SCR6193', '%T143SCR6103' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH62',
+			clearCounts: [ '%T143SCR6213', '%T143SCR6223', '%T143SCR6233', '%T143SCR6243', '%T143SCR6253', '%T143SCR6263', '%T143SCR6273', '%T143SCR6283', '%T143SCR6293', '%T143SCR6203' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH63',
+			clearCounts: [ '%T143SCR6313', '%T143SCR6323', '%T143SCR6333', '%T143SCR6343', '%T143SCR6353', '%T143SCR6363', '%T143SCR6373', '%T143SCR6383', '%T143SCR6393', '%T143SCR6303' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH64',
+			clearCounts: [ '%T143SCR6413', '%T143SCR6423', '%T143SCR6433', '%T143SCR6443', '%T143SCR6453', '%T143SCR6463', '%T143SCR6473', '%T143SCR6483', '%T143SCR6493', '%T143SCR6403' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH65',
+			clearCounts: [ '%T143SCR6513', '%T143SCR6523', '%T143SCR6533', '%T143SCR6543', '%T143SCR6553', '%T143SCR6563', '%T143SCR6573', '%T143SCR6583', '%T143SCR6593', '%T143SCR6503' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH66',
+			clearCounts: [ '%T143SCR6613', '%T143SCR6623', '%T143SCR6633', '%T143SCR6643', '%T143SCR6653', '%T143SCR6663', '%T143SCR6673', '%T143SCR6683', '%T143SCR6693', '%T143SCR6603' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH67',
+			clearCounts: [ '%T143SCR6713', '%T143SCR6723', '%T143SCR6733', '%T143SCR6743', '%T143SCR6753', '%T143SCR6763', '%T143SCR6773', '%T143SCR6783', '%T143SCR6793', '%T143SCR6703' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH68',
+			clearCounts: [ '%T143SCR6813', '%T143SCR6823', '%T143SCR6833', '%T143SCR6843', '%T143SCR6853', '%T143SCR6863', '%T143SCR6873', '%T143SCR6883', '%T143SCR6893', '%T143SCR6803' ]
+		});
+
+		drawGraph({
+			id: '#T143GRAPH71',
+			clearCounts: [ '%T143SCR7113', '%T143SCR7123', '%T143SCR7133', '%T143SCR7143', '%T143SCR7153', '%T143SCR7163', '%T143SCR7173', '%T143SCR7183', '%T143SCR7193', '%T143SCR7103' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH72',
+			clearCounts: [ '%T143SCR7213', '%T143SCR7223', '%T143SCR7233', '%T143SCR7243', '%T143SCR7253', '%T143SCR7263', '%T143SCR7273', '%T143SCR7283', '%T143SCR7293', '%T143SCR7203' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH73',
+			clearCounts: [ '%T143SCR7313', '%T143SCR7323', '%T143SCR7333', '%T143SCR7343', '%T143SCR7353', '%T143SCR7363', '%T143SCR7373', '%T143SCR7383', '%T143SCR7393', '%T143SCR7303' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH74',
+			clearCounts: [ '%T143SCR7413', '%T143SCR7423', '%T143SCR7433', '%T143SCR7443', '%T143SCR7453', '%T143SCR7463', '%T143SCR7473', '%T143SCR7483', '%T143SCR7493', '%T143SCR7403' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH75',
+			clearCounts: [ '%T143SCR7513', '%T143SCR7523', '%T143SCR7533', '%T143SCR7543', '%T143SCR7553', '%T143SCR7563', '%T143SCR7573', '%T143SCR7583', '%T143SCR7593', '%T143SCR7503' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH76',
+			clearCounts: [ '%T143SCR7613', '%T143SCR7623', '%T143SCR7633', '%T143SCR7643', '%T143SCR7653', '%T143SCR7663', '%T143SCR7673', '%T143SCR7683', '%T143SCR7693', '%T143SCR7603' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH77',
+			clearCounts: [ '%T143SCR7713', '%T143SCR7723', '%T143SCR7733', '%T143SCR7743', '%T143SCR7753', '%T143SCR7763', '%T143SCR7773', '%T143SCR7783', '%T143SCR7793', '%T143SCR7703' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH78',
+			clearCounts: [ '%T143SCR7813', '%T143SCR7823', '%T143SCR7833', '%T143SCR7843', '%T143SCR7853', '%T143SCR7863', '%T143SCR7873', '%T143SCR7883', '%T143SCR7893', '%T143SCR7803' ]
+		});
+
+		drawGraph({
+			id: '#T143GRAPH81',
+			clearCounts: [ '%T143SCR8113', '%T143SCR8123', '%T143SCR8133', '%T143SCR8143', '%T143SCR8153', '%T143SCR8163', '%T143SCR8173', '%T143SCR8183', '%T143SCR8193', '%T143SCR8103' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH82',
+			clearCounts: [ '%T143SCR8213', '%T143SCR8223', '%T143SCR8233', '%T143SCR8243', '%T143SCR8253', '%T143SCR8263', '%T143SCR8273', '%T143SCR8283', '%T143SCR8293', '%T143SCR8203' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH83',
+			clearCounts: [ '%T143SCR8313', '%T143SCR8323', '%T143SCR8333', '%T143SCR8343', '%T143SCR8353', '%T143SCR8363', '%T143SCR8373', '%T143SCR8383', '%T143SCR8393', '%T143SCR8303' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH84',
+			clearCounts: [ '%T143SCR8413', '%T143SCR8423', '%T143SCR8433', '%T143SCR8443', '%T143SCR8453', '%T143SCR8463', '%T143SCR8473', '%T143SCR8483', '%T143SCR8493', '%T143SCR8403' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH85',
+			clearCounts: [ '%T143SCR8513', '%T143SCR8523', '%T143SCR8533', '%T143SCR8543', '%T143SCR8553', '%T143SCR8563', '%T143SCR8573', '%T143SCR8583', '%T143SCR8593', '%T143SCR8503' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH86',
+			clearCounts: [ '%T143SCR8613', '%T143SCR8623', '%T143SCR8633', '%T143SCR8643', '%T143SCR8653', '%T143SCR8663', '%T143SCR8673', '%T143SCR8683', '%T143SCR8693', '%T143SCR8603' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH87',
+			clearCounts: [ '%T143SCR8713', '%T143SCR8723', '%T143SCR8733', '%T143SCR8743', '%T143SCR8753', '%T143SCR8763', '%T143SCR8773', '%T143SCR8783', '%T143SCR8793', '%T143SCR8703' ]
+		});
+
+		drawGraph({
+			id: '#T143GRAPH91',
+			clearCounts: [ '%T143SCR9113', '%T143SCR9123', '%T143SCR9133', '%T143SCR9143', '%T143SCR9153', '%T143SCR9163', '%T143SCR9173', '%T143SCR9183', '%T143SCR9193', '%T143SCR9103' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH92',
+			clearCounts: [ '%T143SCR9213', '%T143SCR9223', '%T143SCR9233', '%T143SCR9243', '%T143SCR9253', '%T143SCR9263', '%T143SCR9273', '%T143SCR9283', '%T143SCR9293', '%T143SCR9203' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH93',
+			clearCounts: [ '%T143SCR9313', '%T143SCR9323', '%T143SCR9333', '%T143SCR9343', '%T143SCR9353', '%T143SCR9363', '%T143SCR9373', '%T143SCR9383', '%T143SCR9393', '%T143SCR9303' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH94',
+			clearCounts: [ '%T143SCR9413', '%T143SCR9423', '%T143SCR9433', '%T143SCR9443', '%T143SCR9453', '%T143SCR9463', '%T143SCR9473', '%T143SCR9483', '%T143SCR9493', '%T143SCR9403' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH95',
+			clearCounts: [ '%T143SCR9513', '%T143SCR9523', '%T143SCR9533', '%T143SCR9543', '%T143SCR9553', '%T143SCR9563', '%T143SCR9573', '%T143SCR9583', '%T143SCR9593', '%T143SCR9503' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH96',
+			clearCounts: [ '%T143SCR9613', '%T143SCR9623', '%T143SCR9633', '%T143SCR9643', '%T143SCR9653', '%T143SCR9663', '%T143SCR9673', '%T143SCR9683', '%T143SCR9693', '%T143SCR9603' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH97',
+			clearCounts: [ '%T143SCR9713', '%T143SCR9723', '%T143SCR9733', '%T143SCR9743', '%T143SCR9753', '%T143SCR9763', '%T143SCR9773', '%T143SCR9783', '%T143SCR9793', '%T143SCR9703' ]
+		});
+		drawGraph({
+			id: '#T143GRAPH98',
+			clearCounts: [ '%T143SCR9813', '%T143SCR9823', '%T143SCR9833', '%T143SCR9843', '%T143SCR9853', '%T143SCR9863', '%T143SCR9873', '%T143SCR9883', '%T143SCR9893', '%T143SCR9803' ]
+		});
+
+		drawGraph({
+			id: '#T143GRAPHL1',
+			clearCounts: [ '%T143SCRL113', '%T143SCRL123', '%T143SCRL133', '%T143SCRL143', '%T143SCRL153', '%T143SCRL163', '%T143SCRL173', '%T143SCRL183', '%T143SCRL193', '%T143SCRL103' ]
+		});
+		drawGraph({
+			id: '#T143GRAPHL2',
+			clearCounts: [ '%T143SCRL213', '%T143SCRL223', '%T143SCRL233', '%T143SCRL243', '%T143SCRL253', '%T143SCRL263', '%T143SCRL273', '%T143SCRL283', '%T143SCRL293', '%T143SCRL203' ]
+		});
+		drawGraph({
+			id: '#T143GRAPHL3',
+			clearCounts: [ '%T143SCRL313', '%T143SCRL323', '%T143SCRL333', '%T143SCRL343', '%T143SCRL353', '%T143SCRL363', '%T143SCRL373', '%T143SCRL383', '%T143SCRL393', '%T143SCRL303' ]
+		});
+		drawGraph({
+			id: '#T143GRAPHL4',
+			clearCounts: [ '%T143SCRL413', '%T143SCRL423', '%T143SCRL433', '%T143SCRL443', '%T143SCRL453', '%T143SCRL463', '%T143SCRL473', '%T143SCRL483', '%T143SCRL493', '%T143SCRL403' ]
+		});
+		drawGraph({
+			id: '#T143GRAPHL5',
+			clearCounts: [ '%T143SCRL513', '%T143SCRL523', '%T143SCRL533', '%T143SCRL543', '%T143SCRL553', '%T143SCRL563', '%T143SCRL573', '%T143SCRL583', '%T143SCRL593', '%T143SCRL503' ]
+		});
+		drawGraph({
+			id: '#T143GRAPHL6',
+			clearCounts: [ '%T143SCRL613', '%T143SCRL623', '%T143SCRL633', '%T143SCRL643', '%T143SCRL653', '%T143SCRL663', '%T143SCRL673', '%T143SCRL683', '%T143SCRL693', '%T143SCRL603' ]
+		});
+		drawGraph({
+			id: '#T143GRAPHL7',
+			clearCounts: [ '%T143SCRL713', '%T143SCRL723', '%T143SCRL733', '%T143SCRL743', '%T143SCRL753', '%T143SCRL763', '%T143SCRL773', '%T143SCRL783', '%T143SCRL793', '%T143SCRL703' ]
+		});
+		drawGraph({
+			id: '#T143GRAPHL8',
+			clearCounts: [ '%T143SCRL813', '%T143SCRL823', '%T143SCRL833', '%T143SCRL843', '%T143SCRL853', '%T143SCRL863', '%T143SCRL873', '%T143SCRL883', '%T143SCRL893', '%T143SCRL803' ]
+		});
+		drawGraph({
+			id: '#T143GRAPHL9',
+			clearCounts: [ '%T143SCRL913', '%T143SCRL923', '%T143SCRL933', '%T143SCRL943', '%T143SCRL953', '%T143SCRL963', '%T143SCRL973', '%T143SCRL983', '%T143SCRL993', '%T143SCRL903' ]
+		});
+		drawGraph({
+			id: '#T143GRAPHL0',
+			clearCounts: [ '%T143SCRL013', '%T143SCRL023', '%T143SCRL033', '%T143SCRL043', '%T143SCRL053', '%T143SCRL063', '%T143SCRL073', '%T143SCRL083', '%T143SCRL093', '%T143SCRL003' ]
+		});
+	});
+//-->
+</script>
+ </head>
+
+ <body>
+
+  <h1>弾幕アマノジャククリア状況一覧</h1>
+
+  <hr />
+
+  <div class="section">
+   <p>
+    <a href="th143score1.html">スコアデータ全般</a> /
+    クリア状況一覧 /
+    <a href="th143screenshot.html">スクリーンショット一覧</a><br />
+    <a href="#Day1">一日目</a> /
+    <a href="#Day2">二日目</a> /
+    <a href="#Day3">三日目</a> /
+    <a href="#Day4">四日目</a> /
+    <a href="#Day5">五日目</a> /
+    <a href="#Day6">六日目</a> /
+    <a href="#Day7">七日目</a> /
+    <a href="#Day8">八日目</a> /
+    <a href="#Day9">九日目</a> /
+    <a href="#LastDay">最終日</a>
+   </p>
+  </div>
+
+  <hr />
+
+  <div class="section">
+   <h2>日付別スコア</h2>
+
+   <table class="score_per_level">
+    <caption id="Day1">一日目</caption>
+    <tbody>
+     <tr>
+      <td class="column_head">シーン</td>
+      <td class="scene">シーン 1</td>
+      <td class="scene">シーン 2</td>
+      <td class="scene">シーン 3</td>
+      <td class="scene">シーン 4</td>
+      <td class="scene">シーン 5</td>
+      <td class="scene">シーン 6</td>
+     </tr>
+     <tr>
+      <td class="column_head">Clear</td>
+      <td class="count">%T143SCR11T3</td>
+      <td class="count">%T143SCR12T3</td>
+      <td class="count">%T143SCR13T3</td>
+      <td class="count">%T143SCR14T3</td>
+      <td class="count">%T143SCR15T3</td>
+      <td class="count">%T143SCR16T3</td>
+     </tr>
+     <tr>
+      <td class="column_head">Challenge</td>
+      <td class="count">%T143SCR11T2</td>
+      <td class="count">%T143SCR12T2</td>
+      <td class="count">%T143SCR13T2</td>
+      <td class="count">%T143SCR14T2</td>
+      <td class="count">%T143SCR15T2</td>
+      <td class="count">%T143SCR16T2</td>
+     </tr>
+     <tr>
+      <td class="column_head">Score</td>
+      <td class="count">%T143SCR11T1</td>
+      <td class="count">%T143SCR12T1</td>
+      <td class="count">%T143SCR13T1</td>
+      <td class="count">%T143SCR14T1</td>
+      <td class="count">%T143SCR15T1</td>
+      <td class="count">%T143SCR16T1</td>
+     </tr>
+     <tr>
+      <td class="column_head">クリア状況</td>
+      <td><canvas id="T143GRAPH11" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH12" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH13" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH14" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH15" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH16" width="110" height="110"></canvas></td>
+     </tr>
+    </tbody>
+   </table>
+
+   <table class="score_per_level">
+    <caption id="Day2">二日目</caption>
+    <tbody>
+     <tr>
+      <td class="column_head">シーン</td>
+      <td class="scene">シーン 1</td>
+      <td class="scene">シーン 2</td>
+      <td class="scene">シーン 3</td>
+      <td class="scene">シーン 4</td>
+      <td class="scene">シーン 5</td>
+      <td class="scene">シーン 6</td>
+     </tr>
+     <tr>
+      <td class="column_head">Clear</td>
+      <td class="count">%T143SCR21T3</td>
+      <td class="count">%T143SCR22T3</td>
+      <td class="count">%T143SCR23T3</td>
+      <td class="count">%T143SCR24T3</td>
+      <td class="count">%T143SCR25T3</td>
+      <td class="count">%T143SCR26T3</td>
+     </tr>
+     <tr>
+      <td class="column_head">Challenge</td>
+      <td class="count">%T143SCR21T2</td>
+      <td class="count">%T143SCR22T2</td>
+      <td class="count">%T143SCR23T2</td>
+      <td class="count">%T143SCR24T2</td>
+      <td class="count">%T143SCR25T2</td>
+      <td class="count">%T143SCR26T2</td>
+     </tr>
+     <tr>
+      <td class="column_head">Score</td>
+      <td class="count">%T143SCR21T1</td>
+      <td class="count">%T143SCR22T1</td>
+      <td class="count">%T143SCR23T1</td>
+      <td class="count">%T143SCR24T1</td>
+      <td class="count">%T143SCR25T1</td>
+      <td class="count">%T143SCR26T1</td>
+     </tr>
+     <tr>
+      <td class="column_head">クリア状況</td>
+      <td><canvas id="T143GRAPH21" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH22" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH23" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH24" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH25" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH26" width="110" height="110"></canvas></td>
+     </tr>
+    </tbody>
+   </table>
+
+   <table class="score_per_level">
+    <caption id="Day3">三日目</caption>
+    <tbody>
+     <tr>
+      <td class="column_head">シーン</td>
+      <td class="scene">シーン 1</td>
+      <td class="scene">シーン 2</td>
+      <td class="scene">シーン 3</td>
+      <td class="scene">シーン 4</td>
+      <td class="scene">シーン 5</td>
+      <td class="scene">シーン 6</td>
+      <td class="scene">シーン 7</td>
+     </tr>
+     <tr>
+      <td class="column_head">Clear</td>
+      <td class="count">%T143SCR31T3</td>
+      <td class="count">%T143SCR32T3</td>
+      <td class="count">%T143SCR33T3</td>
+      <td class="count">%T143SCR34T3</td>
+      <td class="count">%T143SCR35T3</td>
+      <td class="count">%T143SCR36T3</td>
+      <td class="count">%T143SCR37T3</td>
+     </tr>
+     <tr>
+      <td class="column_head">Challenge</td>
+      <td class="count">%T143SCR31T2</td>
+      <td class="count">%T143SCR32T2</td>
+      <td class="count">%T143SCR33T2</td>
+      <td class="count">%T143SCR34T2</td>
+      <td class="count">%T143SCR35T2</td>
+      <td class="count">%T143SCR36T2</td>
+      <td class="count">%T143SCR37T2</td>
+     </tr>
+     <tr>
+      <td class="column_head">Score</td>
+      <td class="count">%T143SCR31T1</td>
+      <td class="count">%T143SCR32T1</td>
+      <td class="count">%T143SCR33T1</td>
+      <td class="count">%T143SCR34T1</td>
+      <td class="count">%T143SCR35T1</td>
+      <td class="count">%T143SCR36T1</td>
+      <td class="count">%T143SCR37T1</td>
+     </tr>
+     <tr>
+      <td class="column_head">クリア状況</td>
+      <td><canvas id="T143GRAPH31" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH32" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH33" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH34" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH35" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH36" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH37" width="110" height="110"></canvas></td>
+     </tr>
+    </tbody>
+   </table>
+
+   <table class="score_per_level">
+    <caption id="Day4">四日目</caption>
+    <tbody>
+     <tr>
+      <td class="column_head">シーン</td>
+      <td class="scene">シーン 1</td>
+      <td class="scene">シーン 2</td>
+      <td class="scene">シーン 3</td>
+      <td class="scene">シーン 4</td>
+      <td class="scene">シーン 5</td>
+      <td class="scene">シーン 6</td>
+      <td class="scene">シーン 7</td>
+     </tr>
+     <tr>
+      <td class="column_head">Clear</td>
+      <td class="count">%T143SCR41T3</td>
+      <td class="count">%T143SCR42T3</td>
+      <td class="count">%T143SCR43T3</td>
+      <td class="count">%T143SCR44T3</td>
+      <td class="count">%T143SCR45T3</td>
+      <td class="count">%T143SCR46T3</td>
+      <td class="count">%T143SCR47T3</td>
+     </tr>
+     <tr>
+      <td class="column_head">Challenge</td>
+      <td class="count">%T143SCR41T2</td>
+      <td class="count">%T143SCR42T2</td>
+      <td class="count">%T143SCR43T2</td>
+      <td class="count">%T143SCR44T2</td>
+      <td class="count">%T143SCR45T2</td>
+      <td class="count">%T143SCR46T2</td>
+      <td class="count">%T143SCR47T2</td>
+     </tr>
+     <tr>
+      <td class="column_head">Score</td>
+      <td class="count">%T143SCR41T1</td>
+      <td class="count">%T143SCR42T1</td>
+      <td class="count">%T143SCR43T1</td>
+      <td class="count">%T143SCR44T1</td>
+      <td class="count">%T143SCR45T1</td>
+      <td class="count">%T143SCR46T1</td>
+      <td class="count">%T143SCR47T1</td>
+     </tr>
+     <tr>
+      <td class="column_head">クリア状況</td>
+      <td><canvas id="T143GRAPH41" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH42" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH43" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH44" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH45" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH46" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH47" width="110" height="110"></canvas></td>
+     </tr>
+    </tbody>
+   </table>
+
+   <table class="score_per_level">
+    <caption id="Day5">五日目</caption>
+    <tbody>
+     <tr>
+      <td class="column_head">シーン</td>
+      <td class="scene">シーン 1</td>
+      <td class="scene">シーン 2</td>
+      <td class="scene">シーン 3</td>
+      <td class="scene">シーン 4</td>
+      <td class="scene">シーン 5</td>
+      <td class="scene">シーン 6</td>
+      <td class="scene">シーン 7</td>
+      <td class="scene">シーン 8</td>
+     </tr>
+     <tr>
+      <td class="column_head">Clear</td>
+      <td class="count">%T143SCR51T3</td>
+      <td class="count">%T143SCR52T3</td>
+      <td class="count">%T143SCR53T3</td>
+      <td class="count">%T143SCR54T3</td>
+      <td class="count">%T143SCR55T3</td>
+      <td class="count">%T143SCR56T3</td>
+      <td class="count">%T143SCR57T3</td>
+      <td class="count">%T143SCR58T3</td>
+     </tr>
+     <tr>
+      <td class="column_head">Challenge</td>
+      <td class="count">%T143SCR51T2</td>
+      <td class="count">%T143SCR52T2</td>
+      <td class="count">%T143SCR53T2</td>
+      <td class="count">%T143SCR54T2</td>
+      <td class="count">%T143SCR55T2</td>
+      <td class="count">%T143SCR56T2</td>
+      <td class="count">%T143SCR57T2</td>
+      <td class="count">%T143SCR58T2</td>
+     </tr>
+     <tr>
+      <td class="column_head">Score</td>
+      <td class="count">%T143SCR51T1</td>
+      <td class="count">%T143SCR52T1</td>
+      <td class="count">%T143SCR53T1</td>
+      <td class="count">%T143SCR54T1</td>
+      <td class="count">%T143SCR55T1</td>
+      <td class="count">%T143SCR56T1</td>
+      <td class="count">%T143SCR57T1</td>
+      <td class="count">%T143SCR58T1</td>
+     </tr>
+     <tr>
+      <td class="column_head">クリア状況</td>
+      <td><canvas id="T143GRAPH51" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH52" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH53" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH54" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH55" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH56" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH57" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH58" width="110" height="110"></canvas></td>
+     </tr>
+    </tbody>
+   </table>
+
+   <table class="score_per_level">
+    <caption id="Day6">六日目</caption>
+    <tbody>
+     <tr>
+      <td class="column_head">シーン</td>
+      <td class="scene">シーン 1</td>
+      <td class="scene">シーン 2</td>
+      <td class="scene">シーン 3</td>
+      <td class="scene">シーン 4</td>
+      <td class="scene">シーン 5</td>
+      <td class="scene">シーン 6</td>
+      <td class="scene">シーン 7</td>
+      <td class="scene">シーン 8</td>
+     </tr>
+     <tr>
+      <td class="column_head">Clear</td>
+      <td class="count">%T143SCR61T3</td>
+      <td class="count">%T143SCR62T3</td>
+      <td class="count">%T143SCR63T3</td>
+      <td class="count">%T143SCR64T3</td>
+      <td class="count">%T143SCR65T3</td>
+      <td class="count">%T143SCR66T3</td>
+      <td class="count">%T143SCR67T3</td>
+      <td class="count">%T143SCR68T3</td>
+     </tr>
+     <tr>
+      <td class="column_head">Challenge</td>
+      <td class="count">%T143SCR61T2</td>
+      <td class="count">%T143SCR62T2</td>
+      <td class="count">%T143SCR63T2</td>
+      <td class="count">%T143SCR64T2</td>
+      <td class="count">%T143SCR65T2</td>
+      <td class="count">%T143SCR66T2</td>
+      <td class="count">%T143SCR67T2</td>
+      <td class="count">%T143SCR68T2</td>
+     </tr>
+     <tr>
+      <td class="column_head">Score</td>
+      <td class="count">%T143SCR61T1</td>
+      <td class="count">%T143SCR62T1</td>
+      <td class="count">%T143SCR63T1</td>
+      <td class="count">%T143SCR64T1</td>
+      <td class="count">%T143SCR65T1</td>
+      <td class="count">%T143SCR66T1</td>
+      <td class="count">%T143SCR67T1</td>
+      <td class="count">%T143SCR68T1</td>
+     </tr>
+     <tr>
+      <td class="column_head">クリア状況</td>
+      <td><canvas id="T143GRAPH61" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH62" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH63" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH64" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH65" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH66" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH67" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH68" width="110" height="110"></canvas></td>
+     </tr>
+    </tbody>
+   </table>
+
+   <table class="score_per_level">
+    <caption id="Day7">七日目</caption>
+    <tbody>
+     <tr>
+      <td class="column_head">シーン</td>
+      <td class="scene">シーン 1</td>
+      <td class="scene">シーン 2</td>
+      <td class="scene">シーン 3</td>
+      <td class="scene">シーン 4</td>
+      <td class="scene">シーン 5</td>
+      <td class="scene">シーン 6</td>
+      <td class="scene">シーン 7</td>
+      <td class="scene">シーン 8</td>
+     </tr>
+     <tr>
+      <td class="column_head">Clear</td>
+      <td class="count">%T143SCR71T3</td>
+      <td class="count">%T143SCR72T3</td>
+      <td class="count">%T143SCR73T3</td>
+      <td class="count">%T143SCR74T3</td>
+      <td class="count">%T143SCR75T3</td>
+      <td class="count">%T143SCR76T3</td>
+      <td class="count">%T143SCR77T3</td>
+      <td class="count">%T143SCR78T3</td>
+     </tr>
+     <tr>
+      <td class="column_head">Challenge</td>
+      <td class="count">%T143SCR71T2</td>
+      <td class="count">%T143SCR72T2</td>
+      <td class="count">%T143SCR73T2</td>
+      <td class="count">%T143SCR74T2</td>
+      <td class="count">%T143SCR75T2</td>
+      <td class="count">%T143SCR76T2</td>
+      <td class="count">%T143SCR77T2</td>
+      <td class="count">%T143SCR78T2</td>
+     </tr>
+     <tr>
+      <td class="column_head">Score</td>
+      <td class="count">%T143SCR71T1</td>
+      <td class="count">%T143SCR72T1</td>
+      <td class="count">%T143SCR73T1</td>
+      <td class="count">%T143SCR74T1</td>
+      <td class="count">%T143SCR75T1</td>
+      <td class="count">%T143SCR76T1</td>
+      <td class="count">%T143SCR77T1</td>
+      <td class="count">%T143SCR78T1</td>
+     </tr>
+     <tr>
+      <td class="column_head">クリア状況</td>
+      <td><canvas id="T143GRAPH71" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH72" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH73" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH74" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH75" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH76" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH77" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH78" width="110" height="110"></canvas></td>
+     </tr>
+    </tbody>
+   </table>
+
+   <table class="score_per_level">
+    <caption id="Day8">八日目</caption>
+    <tbody>
+     <tr>
+      <td class="column_head">シーン</td>
+      <td class="scene">シーン 1</td>
+      <td class="scene">シーン 2</td>
+      <td class="scene">シーン 3</td>
+      <td class="scene">シーン 4</td>
+      <td class="scene">シーン 5</td>
+      <td class="scene">シーン 6</td>
+      <td class="scene">シーン 7</td>
+     </tr>
+     <tr>
+      <td class="column_head">Clear</td>
+      <td class="count">%T143SCR81T3</td>
+      <td class="count">%T143SCR82T3</td>
+      <td class="count">%T143SCR83T3</td>
+      <td class="count">%T143SCR84T3</td>
+      <td class="count">%T143SCR85T3</td>
+      <td class="count">%T143SCR86T3</td>
+      <td class="count">%T143SCR87T3</td>
+     </tr>
+     <tr>
+      <td class="column_head">Challenge</td>
+      <td class="count">%T143SCR81T2</td>
+      <td class="count">%T143SCR82T2</td>
+      <td class="count">%T143SCR83T2</td>
+      <td class="count">%T143SCR84T2</td>
+      <td class="count">%T143SCR85T2</td>
+      <td class="count">%T143SCR86T2</td>
+      <td class="count">%T143SCR87T2</td>
+     </tr>
+     <tr>
+      <td class="column_head">Score</td>
+      <td class="count">%T143SCR81T1</td>
+      <td class="count">%T143SCR82T1</td>
+      <td class="count">%T143SCR83T1</td>
+      <td class="count">%T143SCR84T1</td>
+      <td class="count">%T143SCR85T1</td>
+      <td class="count">%T143SCR86T1</td>
+      <td class="count">%T143SCR87T1</td>
+     </tr>
+     <tr>
+      <td class="column_head">クリア状況</td>
+      <td><canvas id="T143GRAPH81" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH82" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH83" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH84" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH85" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH86" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH87" width="110" height="110"></canvas></td>
+     </tr>
+    </tbody>
+   </table>
+
+   <table class="score_per_level">
+    <caption id="Day9">九日目</caption>
+    <tbody>
+     <tr>
+      <td class="column_head">シーン</td>
+      <td class="scene">シーン 1</td>
+      <td class="scene">シーン 2</td>
+      <td class="scene">シーン 3</td>
+      <td class="scene">シーン 4</td>
+      <td class="scene">シーン 5</td>
+      <td class="scene">シーン 6</td>
+      <td class="scene">シーン 7</td>
+      <td class="scene">シーン 8</td>
+     </tr>
+     <tr>
+      <td class="column_head">Clear</td>
+      <td class="count">%T143SCR91T3</td>
+      <td class="count">%T143SCR92T3</td>
+      <td class="count">%T143SCR93T3</td>
+      <td class="count">%T143SCR94T3</td>
+      <td class="count">%T143SCR95T3</td>
+      <td class="count">%T143SCR96T3</td>
+      <td class="count">%T143SCR97T3</td>
+      <td class="count">%T143SCR98T3</td>
+     </tr>
+     <tr>
+      <td class="column_head">Challenge</td>
+      <td class="count">%T143SCR91T2</td>
+      <td class="count">%T143SCR92T2</td>
+      <td class="count">%T143SCR93T2</td>
+      <td class="count">%T143SCR94T2</td>
+      <td class="count">%T143SCR95T2</td>
+      <td class="count">%T143SCR96T2</td>
+      <td class="count">%T143SCR97T2</td>
+      <td class="count">%T143SCR98T2</td>
+     </tr>
+     <tr>
+      <td class="column_head">Score</td>
+      <td class="count">%T143SCR91T1</td>
+      <td class="count">%T143SCR92T1</td>
+      <td class="count">%T143SCR93T1</td>
+      <td class="count">%T143SCR94T1</td>
+      <td class="count">%T143SCR95T1</td>
+      <td class="count">%T143SCR96T1</td>
+      <td class="count">%T143SCR97T1</td>
+      <td class="count">%T143SCR98T1</td>
+     </tr>
+     <tr>
+      <td class="column_head">クリア状況</td>
+      <td><canvas id="T143GRAPH91" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH92" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH93" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH94" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH95" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH96" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH97" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPH98" width="110" height="110"></canvas></td>
+     </tr>
+    </tbody>
+   </table>
+
+   <table class="score_per_level">
+    <caption id="LastDay">最終日</caption>
+    <tbody>
+     <tr>
+      <td class="column_head">シーン</td>
+      <td class="scene">シーン 1</td>
+      <td class="scene">シーン 2</td>
+      <td class="scene">シーン 3</td>
+      <td class="scene">シーン 4</td>
+      <td class="scene">シーン 5</td>
+      <td class="scene">シーン 6</td>
+      <td class="scene">シーン 7</td>
+      <td class="scene">シーン 8</td>
+      <td class="scene">シーン 9</td>
+      <td class="scene">シーン 10</td>
+     </tr>
+     <tr>
+      <td class="column_head">Clear</td>
+      <td class="count">%T143SCRL1T3</td>
+      <td class="count">%T143SCRL2T3</td>
+      <td class="count">%T143SCRL3T3</td>
+      <td class="count">%T143SCRL4T3</td>
+      <td class="count">%T143SCRL5T3</td>
+      <td class="count">%T143SCRL6T3</td>
+      <td class="count">%T143SCRL7T3</td>
+      <td class="count">%T143SCRL8T3</td>
+      <td class="count">%T143SCRL9T3</td>
+      <td class="count">%T143SCRL0T3</td>
+     </tr>
+     <tr>
+      <td class="column_head">Challenge</td>
+      <td class="count">%T143SCRL1T2</td>
+      <td class="count">%T143SCRL2T2</td>
+      <td class="count">%T143SCRL3T2</td>
+      <td class="count">%T143SCRL4T2</td>
+      <td class="count">%T143SCRL5T2</td>
+      <td class="count">%T143SCRL6T2</td>
+      <td class="count">%T143SCRL7T2</td>
+      <td class="count">%T143SCRL8T2</td>
+      <td class="count">%T143SCRL9T2</td>
+      <td class="count">%T143SCRL0T2</td>
+     </tr>
+     <tr>
+      <td class="column_head">Score</td>
+      <td class="count">%T143SCRL1T1</td>
+      <td class="count">%T143SCRL2T1</td>
+      <td class="count">%T143SCRL3T1</td>
+      <td class="count">%T143SCRL4T1</td>
+      <td class="count">%T143SCRL5T1</td>
+      <td class="count">%T143SCRL6T1</td>
+      <td class="count">%T143SCRL7T1</td>
+      <td class="count">%T143SCRL8T1</td>
+      <td class="count">%T143SCRL9T1</td>
+      <td class="count">%T143SCRL0T1</td>
+     </tr>
+     <tr>
+      <td class="column_head">クリア状況</td>
+      <td><canvas id="T143GRAPHL1" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPHL2" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPHL3" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPHL4" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPHL5" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPHL6" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPHL7" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPHL8" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPHL9" width="110" height="110"></canvas></td>
+      <td><canvas id="T143GRAPHL0" width="110" height="110"></canvas></td>
+     </tr>
+    </tbody>
+   </table>
+  </div>
+
+  <hr />
+
+  <div class="section">
+   <p>
+    Data output by <a href="http://www.colorless-sight.jp/touhou/ThSFC/">ThScoreFileConverter</a>.
+<script type="text/javascript">
+<!--
+    document.write("Last updated: ", document.lastModified, ".");
+//-->
+</script>
+   </p>
+  </div>
+
+ </body>
+</html>
