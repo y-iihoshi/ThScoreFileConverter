@@ -6,9 +6,9 @@
 
 namespace ThScoreFileConverter
 {
-    using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Runtime.Serialization;
     using System.Windows;
     using System.Xml;
@@ -57,7 +57,7 @@ namespace ThScoreFileConverter
         /// <summary>
         /// Gets the valid code page identifiers for this application.
         /// </summary>
-        public static int[] ValidCodePageIds
+        public static IEnumerable<int> ValidCodePageIds
         {
             get
             {
@@ -134,10 +134,10 @@ namespace ThScoreFileConverter
                         if (settings.OutputNumberGroupSeparator.HasValue)
                             this.OutputNumberGroupSeparator = settings.OutputNumberGroupSeparator.Value;
                         if (settings.InputCodePageId.HasValue &&
-                            Array.Exists(ValidCodePageIds, id => id == settings.InputCodePageId.Value))
+                            ValidCodePageIds.Any(id => id == settings.InputCodePageId.Value))
                             this.InputCodePageId = settings.InputCodePageId.Value;
                         if (settings.OutputCodePageId.HasValue &&
-                            Array.Exists(ValidCodePageIds, id => id == settings.OutputCodePageId.Value))
+                            ValidCodePageIds.Any(id => id == settings.OutputCodePageId.Value))
                             this.OutputCodePageId = settings.OutputCodePageId.Value;
                     }
                 }
