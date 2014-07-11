@@ -14,7 +14,7 @@
             <RowDefinition Height="45"/>
         </Grid.RowDefinitions>
 
-        <ComboBox x:Name="cmbTitle" HorizontalAlignment="Left" Margin="10,10,0,10" Width="150" Height="25" MaxDropDownHeight="296" IsReadOnly="True" SelectionChanged="CmbTitle_SelectionChanged">
+        <ComboBox x:Name="cmbTitle" HorizontalAlignment="Left" Margin="10,10,0,10" Width="150" Height="25" IsReadOnly="True" SelectionChanged="CmbTitle_SelectionChanged">
             <ComboBoxItem Name="TH06" Content="東方紅魔郷"/>
             <ComboBoxItem Name="TH07" Content="東方妖々夢"/>
             <ComboBoxItem Name="TH08" Content="東方永夜抄"/>
