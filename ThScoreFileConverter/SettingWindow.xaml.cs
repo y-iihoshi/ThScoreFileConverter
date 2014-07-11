@@ -127,8 +127,12 @@ namespace ThScoreFileConverter
                     this.FontDialog_Apply(sender, e);
                     break;
                 case WinForms.DialogResult.Cancel:
-                    ((App)App.Current).UpdateResources(oldFont);
-                    break;
+                    {
+                        var app = App.Current as App;
+                        if (app != null)
+                            app.UpdateResources(oldFont);
+                        break;
+                    }
             }
 
             this.Focus();
@@ -141,7 +145,9 @@ namespace ThScoreFileConverter
         /// <param name="e">The event data.</param>
         private void FontDialog_Apply(object sender, EventArgs e)
         {
-            ((App)App.Current).UpdateResources(this.fontDialog.Font);
+            var app = App.Current as App;
+            if (app != null)
+                app.UpdateResources(this.fontDialog.Font);
         }
 
         /// <summary>
@@ -151,7 +157,9 @@ namespace ThScoreFileConverter
         /// <param name="e">The event data.</param>
         private void BtnFontReset_Click(object sender, RoutedEventArgs e)
         {
-            ((App)App.Current).UpdateResources(SystemFonts.MessageFontFamily, SystemFonts.MessageFontSize);
+            var app = App.Current as App;
+            if (app != null)
+                app.UpdateResources(SystemFonts.MessageFontFamily, SystemFonts.MessageFontSize);
         }
 
         #endregion

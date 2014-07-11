@@ -81,7 +81,7 @@ namespace ThScoreFileConverter
                         .ToLookup(a => a.attr.GetType());
 
                     Cache = lookup[typeof(TAttribute)]
-                        .ToDictionary(a => a.enumValue, a => (TAttribute)a.attr);
+                        .ToDictionary(a => a.enumValue, a => a.attr as TAttribute);
                 }
                 else
                 {

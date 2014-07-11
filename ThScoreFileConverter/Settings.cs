@@ -104,14 +104,18 @@ namespace ThScoreFileConverter
                     XmlDictionaryReader.CreateTextReader(stream, new XmlDictionaryReaderQuotas()))
                 {
                     var serializer = new DataContractSerializer(typeof(Settings));
-                    var settings = (Settings)serializer.ReadObject(reader);
-                    this.LastTitle = settings.LastTitle;
-                    this.Dictionary = settings.Dictionary;
-                    this.FontFamilyName = settings.FontFamilyName ?? SystemFonts.MessageFontFamily.Source;
-                    this.FontSize = settings.FontSize ?? SystemFonts.MessageFontSize;
-                    this.OutputNumberGroupSeparator = settings.OutputNumberGroupSeparator ?? true;
-                    this.InputCodePageId = settings.InputCodePageId ?? 932;
-                    this.OutputCodePageId = settings.OutputCodePageId ?? 932;
+                    var settings = serializer.ReadObject(reader) as Settings;
+                    if (settings != null)
+                    {
+                        this.LastTitle = settings.LastTitle;
+                        this.Dictionary = settings.Dictionary;
+                        this.FontFamilyName =
+                            settings.FontFamilyName ?? SystemFonts.MessageFontFamily.Source;
+                        this.FontSize = settings.FontSize ?? SystemFonts.MessageFontSize;
+                        this.OutputNumberGroupSeparator = settings.OutputNumberGroupSeparator ?? true;
+                        this.InputCodePageId = settings.InputCodePageId ?? 932;
+                        this.OutputCodePageId = settings.OutputCodePageId ?? 932;
+                    }
                 }
             }
             catch (FileNotFoundException)

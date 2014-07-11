@@ -41,12 +41,16 @@ namespace ThScoreFileConverter
 
             this.imgIcon.Source = Imaging.CreateBitmapSourceFromHIcon(
                 SystemIcons.Application.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+
             var thisAsm = Assembly.GetExecutingAssembly();
             var asmName = thisAsm.GetName();
             var attrs = thisAsm.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), true);
+            var copyrightAttr = attrs[0] as AssemblyCopyrightAttribute;
+
             this.txtName.Text = asmName.Name;
             this.txtVersion.Text = Prop.Resources.strVersionPrefix + asmName.Version.ToString();
-            this.txtCopyright.Text = ((AssemblyCopyrightAttribute)attrs[0]).Copyright;
+            if (copyrightAttr != null)
+                this.txtCopyright.Text = copyrightAttr.Copyright;
         }
 
         /// <summary>

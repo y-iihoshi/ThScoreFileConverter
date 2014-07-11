@@ -50,8 +50,9 @@ namespace ThScoreFileConverter
                         firstEnabledItem.IsSelected = true;
                 }
 
-                ((App)App.Current).UpdateResources(
-                    Settings.Instance.FontFamilyName, Settings.Instance.FontSize);
+                var app = App.Current as App;
+                if (app != null)
+                    app.UpdateResources(Settings.Instance.FontFamilyName, Settings.Instance.FontSize);
             }
             catch (Exception ex)
             {
@@ -69,7 +70,7 @@ namespace ThScoreFileConverter
         {
             try
             {
-                this.UpdateSettingsFromControls((ComboBoxItem)this.cmbTitle.SelectedItem);
+                this.UpdateSettingsFromControls(this.cmbTitle.SelectedItem as ComboBoxItem);
                 Settings.Instance.FontFamilyName = App.Current.Resources["FontFamilyKey"].ToString();
                 Settings.Instance.FontSize =
                     Convert.ToDouble(App.Current.Resources["FontSizeKey"], CultureInfo.InvariantCulture);
@@ -91,19 +92,21 @@ namespace ThScoreFileConverter
         private void CmbTitle_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.RemovedItems.Count > 0)
-                this.UpdateSettingsFromControls((ComboBoxItem)e.RemovedItems[0]);
+                this.UpdateSettingsFromControls(e.RemovedItems[0] as ComboBoxItem);
 
             if (e.AddedItems.Count > 0)
             {
-                var item = (ComboBoxItem)e.AddedItems[0];
+                var item = e.AddedItems[0] as ComboBoxItem;
+                if (item != null)
+                {
+                    this.converter = ThConverterFactory.Create(item.Name);
+                    this.converter.ConvertFinished += this.ThConverter_ConvertFinished;
+                    this.converter.ConvertAllFinished += this.ThConverter_ConvertAllFinished;
+                    this.converter.ExceptionOccurred += this.ThConverter_ExceptionOccurred;
 
-                this.converter = ThConverterFactory.Create(item.Name);
-                this.converter.ConvertFinished += this.ThConverter_ConvertFinished;
-                this.converter.ConvertAllFinished += this.ThConverter_ConvertAllFinished;
-                this.converter.ExceptionOccurred += this.ThConverter_ExceptionOccurred;
-
-                Settings.Instance.LastTitle = item.Name;
-                this.UpdateControlsFromSettings(item);
+                    Settings.Instance.LastTitle = item.Name;
+                    this.UpdateControlsFromSettings(item);
+                }
             }
         }
 
@@ -172,10 +175,13 @@ namespace ThScoreFileConverter
             {
                 if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 {
-                    var droppedPaths = (string[])e.Data.GetData(DataFormats.FileDrop);
-                    var scorePath = droppedPaths.FirstOrDefault(path => File.Exists(path));
-                    if (scorePath != null)
-                        this.txtScore.Text = scorePath;
+                    var droppedPaths = e.Data.GetData(DataFormats.FileDrop) as string[];
+                    if (droppedPaths != null)
+                    {
+                        var scorePath = droppedPaths.FirstOrDefault(path => File.Exists(path));
+                        if (scorePath != null)
+                            this.txtScore.Text = scorePath;
+                    }
                 }
             }
             catch (Exception ex)
@@ -260,10 +266,13 @@ namespace ThScoreFileConverter
             {
                 if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 {
-                    var droppedPaths = (string[])e.Data.GetData(DataFormats.FileDrop);
-                    var bestShotPath = droppedPaths.FirstOrDefault(path => Directory.Exists(path));
-                    if (bestShotPath != null)
-                        this.txtBestShot.Text = bestShotPath;
+                    var droppedPaths = e.Data.GetData(DataFormats.FileDrop) as string[];
+                    if (droppedPaths != null)
+                    {
+                        var bestShotPath = droppedPaths.FirstOrDefault(path => Directory.Exists(path));
+                        if (bestShotPath != null)
+                            this.txtBestShot.Text = bestShotPath;
+                    }
                 }
             }
             catch (Exception ex)
@@ -301,8 +310,8 @@ namespace ThScoreFileConverter
                 dialog.Multiselect = true;
                 if (this.lstTemplate.Items.Count > 0)
                 {
-                    var templatePath = (string)this.lstTemplate.Items[this.lstTemplate.Items.Count - 1];
-                    if (templatePath.Length > 0)
+                    var templatePath = this.lstTemplate.Items[this.lstTemplate.Items.Count - 1] as string;
+                    if ((templatePath != null) && (templatePath.Length > 0))
                         dialog.InitialDirectory = Path.GetDirectoryName(templatePath);
                 }
 
@@ -397,11 +406,14 @@ namespace ThScoreFileConverter
             {
                 if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 {
-                    var droppedPaths = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-                    foreach (var path in droppedPaths)
-                        if (File.Exists(path) && !this.lstTemplate.Items.Contains(path))
-                            this.lstTemplate.Items.Add(path);
-                    this.UpdateBtnConvertIsEnabled();
+                    var droppedPaths = e.Data.GetData(DataFormats.FileDrop, false) as string[];
+                    if (droppedPaths != null)
+                    {
+                        foreach (var path in droppedPaths)
+                            if (File.Exists(path) && !this.lstTemplate.Items.Contains(path))
+                                this.lstTemplate.Items.Add(path);
+                        this.UpdateBtnConvertIsEnabled();
+                    }
                 }
             }
             catch (Exception ex)
@@ -486,10 +498,13 @@ namespace ThScoreFileConverter
             {
                 if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 {
-                    var droppedPaths = (string[])e.Data.GetData(DataFormats.FileDrop);
-                    var outputPath = droppedPaths.FirstOrDefault(path => Directory.Exists(path));
-                    if (outputPath != null)
-                        this.txtOutput.Text = outputPath;
+                    var droppedPaths = e.Data.GetData(DataFormats.FileDrop) as string[];
+                    if (droppedPaths != null)
+                    {
+                        var outputPath = droppedPaths.FirstOrDefault(path => Directory.Exists(path));
+                        if (outputPath != null)
+                            this.txtOutput.Text = outputPath;
+                    }
                 }
             }
             catch (Exception ex)
@@ -526,11 +541,14 @@ namespace ThScoreFileConverter
                 this.txtLog.Clear();
                 this.AddLogLine(Prop.Resources.msgStartConversion);
 
-                var selectedItem = (ComboBoxItem)this.cmbTitle.SelectedItem;
-                this.UpdateSettingsFromControls(selectedItem);
+                var selectedItem = this.cmbTitle.SelectedItem as ComboBoxItem;
+                if (selectedItem != null)
+                {
+                    this.UpdateSettingsFromControls(selectedItem);
 
-                new Thread(new ParameterizedThreadStart(this.converter.Convert))
-                    .Start(Settings.Instance.Dictionary[selectedItem.Name]);
+                    new Thread(new ParameterizedThreadStart(this.converter.Convert))
+                        .Start(Settings.Instance.Dictionary[selectedItem.Name]);
+                }
             }
             catch (Exception ex)
             {
@@ -733,8 +751,9 @@ namespace ThScoreFileConverter
                     ? entry.ImageOutputDirectory : Prop.Resources.strBestShotDirectory;
             this.chkHideUntriedCards.IsChecked = entry.HideUntriedCards;
 
-            ((App)App.Current).UpdateResources(
-                Settings.Instance.FontFamilyName, Settings.Instance.FontSize);
+            var app = App.Current as App;
+            if (app != null)
+                app.UpdateResources(Settings.Instance.FontFamilyName, Settings.Instance.FontSize);
         }
 
         /// <summary>
