@@ -103,6 +103,42 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
+        /// Gets or sets the code page identifier for input files.
+        /// </summary>
+        public int InputCodePageId
+        {
+            get
+            {
+                return ((this.settings != null) && this.settings.InputCodePageId.HasValue)
+                    ? this.settings.InputCodePageId.Value : 932;
+            }
+
+            set
+            {
+                if (this.settings != null)
+                    this.settings.InputCodePageId = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the code page identifier for output files.
+        /// </summary>
+        public int OutputCodePageId
+        {
+            get
+            {
+                return ((this.settings != null) && this.settings.OutputCodePageId.HasValue)
+                    ? this.settings.OutputCodePageId.Value : 932;
+            }
+
+            set
+            {
+                if (this.settings != null)
+                    this.settings.OutputCodePageId = value;
+            }
+        }
+
+        /// <summary>
         /// Handles the closing event of this window.
         /// </summary>
         /// <param name="sender">The instance where the event handler is attached.</param>

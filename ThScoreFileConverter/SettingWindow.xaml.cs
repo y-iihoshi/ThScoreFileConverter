@@ -8,7 +8,10 @@ namespace ThScoreFileConverter
 {
     using System;
     using System.Globalization;
+    using System.Linq;
+    using System.Text;
     using System.Windows;
+    using System.Windows.Controls;
     using System.Windows.Input;
     using SysDraw = System.Drawing;
     using WinForms = System.Windows.Forms;
@@ -37,6 +40,8 @@ namespace ThScoreFileConverter
         {
             this.Owner = owner;
             this.chkOutputNumberGroupSeparator.IsChecked = ((MainWindow)owner).OutputNumberGroupSeparator;
+            this.cmbInputEncoding.SelectedValue = ((MainWindow)owner).InputCodePageId;
+            this.cmbOutputEncoding.SelectedValue = ((MainWindow)owner).OutputCodePageId;
         }
 
         /// <summary>
@@ -53,6 +58,15 @@ namespace ThScoreFileConverter
             this.fontDialog.ShowEffects = false;
 
             this.disposed = false;
+
+            var encodings = new int[] { 65001, 932, 51932 }
+                .Select(cp => new { CodePage = cp, EncodingName = Encoding.GetEncoding(cp).EncodingName });
+            foreach (var cmb in new ComboBox[] { this.cmbInputEncoding, this.cmbOutputEncoding })
+            {
+                cmb.ItemsSource = encodings;
+                cmb.DisplayMemberPath = "EncodingName";
+                cmb.SelectedValuePath = "CodePage";
+            }
 
             this.chkOutputNumberGroupSeparator.Click += this.ChkOutputNumberGroupSeparator_Click;
         }
@@ -152,6 +166,32 @@ namespace ThScoreFileConverter
         {
             ((MainWindow)this.Owner).OutputNumberGroupSeparator =
                 this.chkOutputNumberGroupSeparator.IsChecked.Value;
+        }
+
+        #endregion
+
+        #region Character encoding settings
+
+        /// <summary>
+        /// Handles the <c>SelectionChanged</c> routed event of the <see cref="cmbInputEncoding"/> member.
+        /// </summary>
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void CmbInputEncoding_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if ((e.RemovedItems.Count > 0) && (e.AddedItems.Count > 0))
+                ((MainWindow)this.Owner).InputCodePageId = (int)this.cmbInputEncoding.SelectedValue;
+        }
+
+        /// <summary>
+        /// Handles the <c>SelectionChanged</c> routed event of the <see cref="cmbOutputEncoding"/> member.
+        /// </summary>
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void CmbOutputEncoding_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if ((e.RemovedItems.Count > 0) && (e.AddedItems.Count > 0))
+                ((MainWindow)this.Owner).OutputCodePageId = (int)this.cmbOutputEncoding.SelectedValue;
         }
 
         #endregion

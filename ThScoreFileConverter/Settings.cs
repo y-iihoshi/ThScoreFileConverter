@@ -28,6 +28,8 @@ namespace ThScoreFileConverter
             this.FontFamilyName = SystemFonts.MessageFontFamily.Source;
             this.FontSize = SystemFonts.MessageFontSize;
             this.OutputNumberGroupSeparator = true;
+            this.InputCodePageId = 932;
+            this.OutputCodePageId = 932;
         }
 
         /// <summary>
@@ -62,6 +64,18 @@ namespace ThScoreFileConverter
         public bool? OutputNumberGroupSeparator { get; set; }
 
         /// <summary>
+        /// Gets or sets the code page identifier for input files.
+        /// </summary>
+        [DataMember(Order = 5)]
+        public int? InputCodePageId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the code page identifier for output files.
+        /// </summary>
+        [DataMember(Order = 6)]
+        public int? OutputCodePageId { get; set; }
+
+        /// <summary>
         /// Loads the settings from the specified XML file.
         /// </summary>
         /// <param name="path">The path of the XML file to load.</param>
@@ -80,6 +94,8 @@ namespace ThScoreFileConverter
                     this.FontFamilyName = settings.FontFamilyName ?? SystemFonts.MessageFontFamily.Source;
                     this.FontSize = settings.FontSize ?? SystemFonts.MessageFontSize;
                     this.OutputNumberGroupSeparator = settings.OutputNumberGroupSeparator ?? true;
+                    this.InputCodePageId = settings.InputCodePageId ?? 932;
+                    this.OutputCodePageId = settings.OutputCodePageId ?? 932;
                 }
             }
             catch (FileNotFoundException)
