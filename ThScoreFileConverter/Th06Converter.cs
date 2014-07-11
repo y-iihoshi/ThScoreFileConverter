@@ -357,7 +357,7 @@ namespace ThScoreFileConverter
                         case 1:     // name
                             return Encoding.Default.GetString(score.Name).Split('\0')[0];
                         case 2:     // score
-                            return parent.ToNumberString(score.Score);
+                            return Utils.ToNumberString(score.Score);
                         case 3:     // stage
                             return score.StageProgress.ToShortName();
                         default:    // unreachable
@@ -394,12 +394,12 @@ namespace ThScoreFileConverter
                         getCount = (attack => attack.TrialCount);
 
                     if (number == 0)
-                        return parent.ToNumberString(parent.allScoreData.CardAttacks.Values.Sum(getCount));
+                        return Utils.ToNumberString(parent.allScoreData.CardAttacks.Values.Sum(getCount));
                     else if (CardTable.ContainsKey(number))
                     {
                         CardAttack attack;
                         if (parent.allScoreData.CardAttacks.TryGetValue(number, out attack))
-                            return parent.ToNumberString(getCount(attack));
+                            return Utils.ToNumberString(getCount(attack));
                         else
                             return "0";
                     }
@@ -559,7 +559,7 @@ namespace ThScoreFileConverter
                     {
                         var scores = parent.allScoreData.PracticeScores[key];
                         return scores.ContainsKey(stage)
-                            ? parent.ToNumberString(scores[stage].HighScore) : "0";
+                            ? Utils.ToNumberString(scores[stage].HighScore) : "0";
                     }
                     else
                         return "0";

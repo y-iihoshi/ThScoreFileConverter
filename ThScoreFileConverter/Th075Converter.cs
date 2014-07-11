@@ -538,7 +538,7 @@ namespace ThScoreFileConverter
                         case 1:     // name
                             return score.Name;
                         case 2:     // score
-                            return parent.ToNumberString(score.Score);
+                            return Utils.ToNumberString(score.Score);
                         case 3:     // date
                             return Utils.Format("{0:D2}/{1:D2}", score.Month, score.Day);
                         default:    // unreachable
@@ -582,13 +582,13 @@ namespace ThScoreFileConverter
                         switch (type)
                         {
                             case 1:
-                                return parent.ToNumberString(
+                                return Utils.ToNumberString(
                                     dataList.Sum(data => data.MaxBonuses.Sum()));
                             case 2:
-                                return parent.ToNumberString(
+                                return Utils.ToNumberString(
                                     dataList.Sum(data => data.CardGotCount.Sum(count => (int)count)));
                             case 3:
-                                return parent.ToNumberString(
+                                return Utils.ToNumberString(
                                     dataList.Sum(data => data.CardTrialCount.Sum(count => (int)count)));
                             case 4:
                             default:
@@ -600,13 +600,13 @@ namespace ThScoreFileConverter
                         switch (type)
                         {
                             case 1:
-                                return parent.ToNumberString(
+                                return Utils.ToNumberString(
                                     dataList.Sum(data => data.MaxBonuses[number - 1]));
                             case 2:
-                                return parent.ToNumberString(
+                                return Utils.ToNumberString(
                                     dataList.Sum(data => (int)data.CardGotCount[number - 1]));
                             case 3:
-                                return parent.ToNumberString(
+                                return Utils.ToNumberString(
                                     dataList.Sum(data => (int)data.CardTrialCount[number - 1]));
                             case 4:
                                 return dataList.Any(data => data.CardTrulyGot[number - 1] != 0x00)
@@ -698,13 +698,13 @@ namespace ThScoreFileConverter
                         switch (type)
                         {
                             case 1:
-                                return parent.ToNumberString(
+                                return Utils.ToNumberString(
                                     dataList.Sum(data => data.CardGotCount.Count(count => count > 0)));
                             case 2:
-                                return parent.ToNumberString(
+                                return Utils.ToNumberString(
                                     dataList.Sum(data => data.CardTrialCount.Count(count => count > 0)));
                             case 3:
-                                return parent.ToNumberString(
+                                return Utils.ToNumberString(
                                     dataList.Sum(data => data.CardTrulyGot.Count(got => got > 0)));
                             default:
                                 return match.ToString();
@@ -720,15 +720,15 @@ namespace ThScoreFileConverter
                         switch (type)
                         {
                             case 1:
-                                return parent.ToNumberString(data.CardGotCount
+                                return Utils.ToNumberString(data.CardGotCount
                                     .Where((count, index) => cardIndexIdPairs.Any(pair => pair.Key == index))
                                     .Count(count => count > 0));
                             case 2:
-                                return parent.ToNumberString(data.CardTrialCount
+                                return Utils.ToNumberString(data.CardTrialCount
                                     .Where((count, index) => cardIndexIdPairs.Any(pair => pair.Key == index))
                                     .Count(count => count > 0));
                             case 3:
-                                return parent.ToNumberString(data.CardTrulyGot
+                                return Utils.ToNumberString(data.CardTrulyGot
                                     .Where((got, index) => cardIndexIdPairs.Any(pair => pair.Key == index))
                                     .Count(got => got > 0));
                             default:
@@ -768,13 +768,13 @@ namespace ThScoreFileConverter
                     switch (type)
                     {
                         case 1:
-                            return parent.ToNumberString(data.UseCount);
+                            return Utils.ToNumberString(data.UseCount);
                         case 2:
-                            return parent.ToNumberString(data.ClearCount);
+                            return Utils.ToNumberString(data.ClearCount);
                         case 3:
-                            return parent.ToNumberString(data.MaxCombo);
+                            return Utils.ToNumberString(data.MaxCombo);
                         case 4:
-                            return parent.ToNumberString(data.MaxDamage);
+                            return Utils.ToNumberString(data.MaxDamage);
                         default:
                             return match.ToString();
                     }

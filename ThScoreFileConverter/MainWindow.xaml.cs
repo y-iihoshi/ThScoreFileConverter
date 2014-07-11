@@ -98,8 +98,6 @@ namespace ThScoreFileConverter
                 var item = (ComboBoxItem)e.AddedItems[0];
 
                 this.converter = ThConverterFactory.Create(item.Name);
-                this.converter.OutputNumberGroupSeparator =
-                    Settings.Instance.OutputNumberGroupSeparator.Value;
                 this.converter.ConvertFinished += this.ThConverter_ConvertFinished;
                 this.converter.ConvertAllFinished += this.ThConverter_ConvertAllFinished;
                 this.converter.ExceptionOccurred += this.ThConverter_ExceptionOccurred;

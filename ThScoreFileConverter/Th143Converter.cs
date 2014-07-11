@@ -514,15 +514,15 @@ namespace ThScoreFileConverter
                     switch (type)
                     {
                         case 1:     // high score
-                            return (score != null) ? parent.ToNumberString(score.HighScore * 10) : "0";
+                            return (score != null) ? Utils.ToNumberString(score.HighScore * 10) : "0";
                         case 2:     // challenge count
                             if (item == ItemWithTotal.NoItem)
                                 return "-";
                             else
                                 return (score != null)
-                                    ? parent.ToNumberString(score.ChallengeCounts[item]) : "0";
+                                    ? Utils.ToNumberString(score.ChallengeCounts[item]) : "0";
                         case 3:     // cleared count
-                            return (score != null) ? parent.ToNumberString(score.ClearCounts[item]) : "0";
+                            return (score != null) ? Utils.ToNumberString(score.ClearCounts[item]) : "0";
                         default:    // unreachable
                             return match.ToString();
                     }
@@ -554,19 +554,18 @@ namespace ThScoreFileConverter
                     switch (type)
                     {
                         case 1:     // total score
-                            return parent.ToNumberString(
+                            return Utils.ToNumberString(
                                 parent.allScoreData.Scores.Sum(score => score.HighScore * 10L));
                         case 2:     // total of challenge counts
                             if (item == ItemWithTotal.NoItem)
                                 return "-";
                             else
-                                return parent.ToNumberString(
-                                    parent.allScoreData.ItemStatuses[item].UseCount);
+                                return Utils.ToNumberString(parent.allScoreData.ItemStatuses[item].UseCount);
                         case 3:     // total of cleared counts
-                            return parent.ToNumberString(
+                            return Utils.ToNumberString(
                                 parent.allScoreData.ItemStatuses[item].ClearedCount);
                         case 4:     // num of cleared scenes
-                            return parent.ToNumberString(
+                            return Utils.ToNumberString(
                                 parent.allScoreData.ItemStatuses[item].ClearedScenes);
                         default:    // unreachable
                             return match.ToString();

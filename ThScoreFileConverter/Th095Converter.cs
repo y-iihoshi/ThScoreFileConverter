@@ -421,11 +421,11 @@ namespace ThScoreFileConverter
                     switch (type)
                     {
                         case 1:     // high score
-                            return (score != null) ? parent.ToNumberString(score.HighScore) : "0";
+                            return (score != null) ? Utils.ToNumberString(score.HighScore) : "0";
                         case 2:     // bestshot score
-                            return (score != null) ? parent.ToNumberString(score.BestshotScore) : "0";
+                            return (score != null) ? Utils.ToNumberString(score.BestshotScore) : "0";
                         case 3:     // num of shots
-                            return (score != null) ? parent.ToNumberString(score.TrialCount) : "0";
+                            return (score != null) ? Utils.ToNumberString(score.TrialCount) : "0";
                         case 4:     // slow rate
                             return (score != null) ? Utils.Format("{0:F3}%", score.SlowRate2) : "-----%";
                         default:    // unreachable
@@ -456,15 +456,15 @@ namespace ThScoreFileConverter
                     switch (type)
                     {
                         case 1:     // total score
-                            return parent.ToNumberString(
+                            return Utils.ToNumberString(
                                 parent.allScoreData.Scores.Sum(
                                     score => (score != null) ? (long)score.HighScore : 0L));
                         case 2:     // total of bestshot scores
-                            return parent.ToNumberString(
+                            return Utils.ToNumberString(
                                 parent.allScoreData.Scores.Sum(
                                     score => (score != null) ? (long)score.BestshotScore : 0L));
                         case 3:     // total of num of shots
-                            return parent.ToNumberString(
+                            return Utils.ToNumberString(
                                 parent.allScoreData.Scores.Sum(
                                     score => (score != null) ? score.TrialCount : 0));
                         case 4:     // num of succeeded scenes
@@ -544,7 +544,7 @@ namespace ThScoreFileConverter
                             .MakeRelativeUri(new Uri(parent.bestshots[key].Path)).OriginalString;
                         var alternativeString = Utils.Format(
                             "ClearData: {0}\nSlow: {1:F6}%\nSpellName: {2}",
-                            parent.ToNumberString(parent.bestshots[key].Header.Score),
+                            Utils.ToNumberString(parent.bestshots[key].Header.Score),
                             parent.bestshots[key].Header.SlowRate,
                             Encoding.Default.GetString(parent.bestshots[key].Header.CardName).TrimEnd('\0'));
                         return Utils.Format(
@@ -597,7 +597,7 @@ namespace ThScoreFileConverter
                                 return parent.bestshots[key]
                                     .Header.Height.ToString(CultureInfo.InvariantCulture);
                             case 4:     // score
-                                return parent.ToNumberString(parent.bestshots[key].Header.Score);
+                                return Utils.ToNumberString(parent.bestshots[key].Header.Score);
                             case 5:     // slow rate
                                 return Utils.Format("{0:F6}%", parent.bestshots[key].Header.SlowRate);
                             case 6:     // date & time

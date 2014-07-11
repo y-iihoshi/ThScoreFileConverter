@@ -636,7 +636,7 @@ namespace ThScoreFileConverter
                         case "1":   // name
                             return Encoding.Default.GetString(score.Name).Split('\0')[0];
                         case "2":   // score
-                            return parent.ToNumberString((score.Score * 10) + score.ContinueCount);
+                            return Utils.ToNumberString((score.Score * 10) + score.ContinueCount);
                         case "3":   // stage
                             if ((level == Level.Extra) &&
                                 (Encoding.Default.GetString(score.Date).TrimEnd('\0') == "--/--"))
@@ -652,9 +652,9 @@ namespace ThScoreFileConverter
                         case "7":   // initial number of players
                             return (score.PlayerNum + 1).ToString(CultureInfo.CurrentCulture);
                         case "8":   // point items
-                            return parent.ToNumberString(score.PointItem);
+                            return Utils.ToNumberString(score.PointItem);
                         case "9":   // time point
-                            return parent.ToNumberString(score.TimePoint);
+                            return Utils.ToNumberString(score.TimePoint);
                         case "0":   // miss count
                             return score.MissCount.ToString(CultureInfo.CurrentCulture);
                         case "A":   // bomb count
@@ -662,7 +662,7 @@ namespace ThScoreFileConverter
                         case "B":   // last spell count
                             return score.LastSpellCount.ToString(CultureInfo.CurrentCulture);
                         case "C":   // pause count
-                            return parent.ToNumberString(score.PauseCount);
+                            return Utils.ToNumberString(score.PauseCount);
                         case "D":   // continue count
                             return score.ContinueCount.ToString(CultureInfo.CurrentCulture);
                         case "E":   // human rate
@@ -726,14 +726,14 @@ namespace ThScoreFileConverter
                         getValue = (attack => getCareer(attack).TrialCounts[chara]);
 
                     if (number == 0)
-                        return parent.ToNumberString(
+                        return Utils.ToNumberString(
                             parent.allScoreData.CardAttacks.Values.Where(isValidLevel).Sum(getValue));
                     else if (CardTable.ContainsKey(number))
                     {
                         CardAttack attack;
                         if (parent.allScoreData.CardAttacks.TryGetValue(number, out attack))
                             return isValidLevel(attack)
-                                ? parent.ToNumberString(getValue(attack)) : match.ToString();
+                                ? Utils.ToNumberString(getValue(attack)) : match.ToString();
                         else
                             return "0";
                     }
@@ -948,15 +948,15 @@ namespace ThScoreFileConverter
                     switch (charaAndMore)
                     {
                         case "CL":  // clear count
-                            return parent.ToNumberString(playCount.TotalClear);
+                            return Utils.ToNumberString(playCount.TotalClear);
                         case "CN":  // continue count
-                            return parent.ToNumberString(playCount.TotalContinue);
+                            return Utils.ToNumberString(playCount.TotalContinue);
                         case "PR":  // practice count
-                            return parent.ToNumberString(playCount.TotalPractice);
+                            return Utils.ToNumberString(playCount.TotalPractice);
                         default:
                             {
                                 var chara = CharaWithTotalParser.Parse(match.Groups[2].Value);
-                                return parent.ToNumberString((chara == CharaWithTotal.Total)
+                                return Utils.ToNumberString((chara == CharaWithTotal.Total)
                                     ? playCount.TotalTrial : playCount.Trials[(Chara)chara]);
                             }
                     }
@@ -1025,10 +1025,10 @@ namespace ThScoreFileConverter
                         var key = new StageLevelPair(stage, level);
                         if (type == 1)
                             return scores.HighScores.ContainsKey(key)
-                                ? parent.ToNumberString(scores.HighScores[key] * 10) : "0";
+                                ? Utils.ToNumberString(scores.HighScores[key] * 10) : "0";
                         else
                             return scores.PlayCounts.ContainsKey(key)
-                                ? parent.ToNumberString(scores.PlayCounts[key]) : "0";
+                                ? Utils.ToNumberString(scores.PlayCounts[key]) : "0";
                     }
                     else
                         return "0";

@@ -506,7 +506,7 @@ namespace ThScoreFileConverter
                         case 1:     // name
                             return Encoding.Default.GetString(score.Name).Split('\0')[0];
                         case 2:     // score
-                            return parent.ToNumberString((score.Score * 10) + score.ContinueCount);
+                            return Utils.ToNumberString((score.Score * 10) + score.ContinueCount);
                         case 3:     // stage
                             return score.StageProgress.ToShortName();
                         case 4:     // date
@@ -551,12 +551,12 @@ namespace ThScoreFileConverter
                         getValue = (attack => attack.TrialCounts[chara]);
 
                     if (number == 0)
-                        return parent.ToNumberString(parent.allScoreData.CardAttacks.Values.Sum(getValue));
+                        return Utils.ToNumberString(parent.allScoreData.CardAttacks.Values.Sum(getValue));
                     else if (CardTable.ContainsKey(number))
                     {
                         CardAttack attack;
                         if (parent.allScoreData.CardAttacks.TryGetValue(number, out attack))
-                            return parent.ToNumberString(getValue(attack));
+                            return Utils.ToNumberString(getValue(attack));
                         else
                             return "0";
                     }
@@ -734,17 +734,17 @@ namespace ThScoreFileConverter
                     switch (charaAndMore)
                     {
                         case "CL":  // clear count
-                            return parent.ToNumberString(playCount.TotalClear);
+                            return Utils.ToNumberString(playCount.TotalClear);
                         case "CN":  // continue count
-                            return parent.ToNumberString(playCount.TotalContinue);
+                            return Utils.ToNumberString(playCount.TotalContinue);
                         case "PR":  // practice count
-                            return parent.ToNumberString(playCount.TotalPractice);
+                            return Utils.ToNumberString(playCount.TotalPractice);
                         case "RT":  // retry count
-                            return parent.ToNumberString(playCount.TotalRetry);
+                            return Utils.ToNumberString(playCount.TotalRetry);
                         default:
                             {
                                 var chara = CharaWithTotalParser.Parse(match.Groups[2].Value);
-                                return parent.ToNumberString((chara == CharaWithTotal.Total)
+                                return Utils.ToNumberString((chara == CharaWithTotal.Total)
                                     ? playCount.TotalTrial : playCount.Trials[(Chara)chara]);
                             }
                     }
@@ -813,10 +813,10 @@ namespace ThScoreFileConverter
                         var scores = parent.allScoreData.PracticeScores[key];
                         if (type == 1)
                             return scores.ContainsKey(stage)
-                                ? parent.ToNumberString(scores[stage].HighScore * 10) : "0";
+                                ? Utils.ToNumberString(scores[stage].HighScore * 10) : "0";
                         else
                             return scores.ContainsKey(stage)
-                                ? parent.ToNumberString(scores[stage].TrialCount) : "0";
+                                ? Utils.ToNumberString(scores[stage].TrialCount) : "0";
                     }
                     else
                         return "0";

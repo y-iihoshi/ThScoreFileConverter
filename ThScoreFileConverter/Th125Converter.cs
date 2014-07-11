@@ -464,13 +464,13 @@ namespace ThScoreFileConverter
                     switch (type)
                     {
                         case 1:     // high score
-                            return (score != null) ? parent.ToNumberString(score.HighScore) : "0";
+                            return (score != null) ? Utils.ToNumberString(score.HighScore) : "0";
                         case 2:     // bestshot score
-                            return (score != null) ? parent.ToNumberString(score.BestshotScore) : "0";
+                            return (score != null) ? Utils.ToNumberString(score.BestshotScore) : "0";
                         case 3:     // num of shots
-                            return (score != null) ? parent.ToNumberString(score.TrialCount) : "0";
+                            return (score != null) ? Utils.ToNumberString(score.TrialCount) : "0";
                         case 4:     // num of shots for the first success
-                            return (score != null) ? parent.ToNumberString(score.FirstSuccess) : "0";
+                            return (score != null) ? Utils.ToNumberString(score.FirstSuccess) : "0";
                         case 5:     // date & time
                             if (score != null)
                                 return new DateTime(1970, 1, 1).AddSeconds(score.DateTime).ToLocalTime()
@@ -537,20 +537,20 @@ namespace ThScoreFileConverter
                     switch (type)
                     {
                         case 1:     // total score
-                            return parent.ToNumberString(
+                            return Utils.ToNumberString(
                                 parent.allScoreData.Scores.Sum(
                                     score => (isTarget(score) && triedAndSucceeded(score))
                                         ? (long)score.HighScore : 0L));
                         case 2:     // total of bestshot scores
-                            return parent.ToNumberString(
+                            return Utils.ToNumberString(
                                 parent.allScoreData.Scores.Sum(
                                     score => isTarget(score) ? (long)score.BestshotScore : 0L));
                         case 3:     // total of num of shots
-                            return parent.ToNumberString(
+                            return Utils.ToNumberString(
                                 parent.allScoreData.Scores.Sum(
                                     score => isTarget(score) ? score.TrialCount : 0));
                         case 4:     // total of num of shots for the first success
-                            return parent.ToNumberString(
+                            return Utils.ToNumberString(
                                 parent.allScoreData.Scores.Sum(
                                     score => (isTarget(score) && triedAndSucceeded(score))
                                         ? (long)score.FirstSuccess : 0L));
@@ -654,7 +654,7 @@ namespace ThScoreFileConverter
                             .MakeRelativeUri(new Uri(bestshots[key].Path)).OriginalString;
                         var alternativeString = Utils.Format(
                             "ClearData: {0}\nSlow: {1:F6}%\nSpellName: {2}",
-                            parent.ToNumberString(bestshots[key].Header.ResultScore),
+                            Utils.ToNumberString(bestshots[key].Header.ResultScore),
                             bestshots[key].Header.SlowRate,
                             Encoding.Default.GetString(bestshots[key].Header.CardName).TrimEnd('\0'));
                         return Utils.Format(
@@ -738,7 +738,7 @@ namespace ThScoreFileConverter
                             case 3:     // height
                                 return bestshots[key].Header.Height.ToString(CultureInfo.InvariantCulture);
                             case 4:     // score
-                                return parent.ToNumberString(bestshots[key].Header.ResultScore);
+                                return Utils.ToNumberString(bestshots[key].Header.ResultScore);
                             case 5:     // slow rate
                                 return Utils.Format("{0:F6}%", bestshots[key].Header.SlowRate);
                             case 6:     // date & time
@@ -757,7 +757,7 @@ namespace ThScoreFileConverter
                             case 7:     // detail info
                                 {
                                     var detailStrings =
-                                        detailList(bestshots[key].Header, parent.ToNumberString)
+                                        detailList(bestshots[key].Header, Utils.ToNumberString)
                                             .Where(detail => detail.Outputs)
                                             .Select(detail => Utils.Format(detail.Format, detail.Value));
                                     return string.Join("\r\n", detailStrings.ToArray());

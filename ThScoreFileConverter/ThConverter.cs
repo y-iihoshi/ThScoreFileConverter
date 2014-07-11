@@ -288,12 +288,6 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether a numeric value is output with thousand separator
-        /// characters.
-        /// </summary>
-        public bool OutputNumberGroupSeparator { get; set; }
-
-        /// <summary>
         /// Converts a score file.
         /// </summary>
         /// <param name="threadArg">An instance of the <see cref="SettingsPerTitle"/> class.</param>
@@ -385,17 +379,6 @@ namespace ThScoreFileConverter
         protected virtual string[] FilterBestShotFiles(string[] files)
         {
             throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Returns a string that represents the specified numeric value.
-        /// </summary>
-        /// <typeparam name="T">The type of <paramref name="number"/>.</typeparam>
-        /// <param name="number">A numeric value.</param>
-        /// <returns>A string that represents <paramref name="number"/>.</returns>
-        protected string ToNumberString<T>(T number) where T : struct
-        {
-            return Utils.ToNumberString(number, this.OutputNumberGroupSeparator);
         }
 
         /// <summary>

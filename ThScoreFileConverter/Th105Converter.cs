@@ -791,12 +791,12 @@ namespace ThScoreFileConverter
                     if (type == 1)
                     {
                         getValue = (result => result.GotCount);
-                        toString = parent.ToNumberString;
+                        toString = Utils.ToNumberString;
                     }
                     else if (type == 2)
                     {
                         getValue = (result => result.TrialCount);
-                        toString = parent.ToNumberString;
+                        toString = Utils.ToNumberString;
                     }
                     else
                     {
@@ -915,7 +915,7 @@ namespace ThScoreFileConverter
                     else
                         countByType = (pair => pair.Value.TrialCount > 0);
 
-                    return parent.ToNumberString(parent.allScoreData.ClearData[chara]
+                    return Utils.ToNumberString(parent.allScoreData.ClearData[chara]
                         .SpellCardResults.Where(findByLevel).Count(countByType));
                 });
             }
@@ -959,7 +959,7 @@ namespace ThScoreFileConverter
                                 return SystemCardNameTable[number - 1];
                             }
                             else
-                                return parent.ToNumberString(card.MaxNumber);
+                                return Utils.ToNumberString(card.MaxNumber);
                         }
                         else
                             return match.ToString();
@@ -981,7 +981,7 @@ namespace ThScoreFileConverter
                                 return CardNameTable[key];
                             }
                             else
-                                return parent.ToNumberString(card.MaxNumber);
+                                return Utils.ToNumberString(card.MaxNumber);
                         }
                         else
                             return match.ToString();

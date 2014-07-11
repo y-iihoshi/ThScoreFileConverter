@@ -71,6 +71,17 @@ namespace ThScoreFileConverter
         /// </summary>
         /// <typeparam name="T">The type of <paramref name="number"/>.</typeparam>
         /// <param name="number">A numeric value.</param>
+        /// <returns>A string that represents <paramref name="number"/>.</returns>
+        public static string ToNumberString<T>(T number) where T : struct
+        {
+            return ToNumberString(number, Settings.Instance.OutputNumberGroupSeparator.Value);
+        }
+
+        /// <summary>
+        /// Returns a string that represents the specified numeric value.
+        /// </summary>
+        /// <typeparam name="T">The type of <paramref name="number"/>.</typeparam>
+        /// <param name="number">A numeric value.</param>
         /// <param name="outputSeparator">
         /// <c>true</c> if use a thousand separator character; otherwise, <c>false</c>.
         /// </param>
