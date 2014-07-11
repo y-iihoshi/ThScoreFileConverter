@@ -39,9 +39,10 @@ namespace ThScoreFileConverter
             : this()
         {
             this.Owner = owner;
-            this.chkOutputNumberGroupSeparator.IsChecked = ((MainWindow)owner).OutputNumberGroupSeparator;
-            this.cmbInputEncoding.SelectedValue = ((MainWindow)owner).InputCodePageId;
-            this.cmbOutputEncoding.SelectedValue = ((MainWindow)owner).OutputCodePageId;
+            this.chkOutputNumberGroupSeparator.IsChecked =
+                Settings.Instance.OutputNumberGroupSeparator.Value;
+            this.cmbInputEncoding.SelectedValue = Settings.Instance.InputCodePageId.Value;
+            this.cmbOutputEncoding.SelectedValue = Settings.Instance.OutputCodePageId.Value;
         }
 
         /// <summary>
@@ -164,7 +165,7 @@ namespace ThScoreFileConverter
         /// <param name="e">The event data.</param>
         private void ChkOutputNumberGroupSeparator_Click(object sender, RoutedEventArgs e)
         {
-            ((MainWindow)this.Owner).OutputNumberGroupSeparator =
+            Settings.Instance.OutputNumberGroupSeparator =
                 this.chkOutputNumberGroupSeparator.IsChecked.Value;
         }
 
@@ -180,7 +181,7 @@ namespace ThScoreFileConverter
         private void CmbInputEncoding_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if ((e.RemovedItems.Count > 0) && (e.AddedItems.Count > 0))
-                ((MainWindow)this.Owner).InputCodePageId = (int)this.cmbInputEncoding.SelectedValue;
+                Settings.Instance.InputCodePageId = (int)this.cmbInputEncoding.SelectedValue;
         }
 
         /// <summary>
@@ -191,7 +192,7 @@ namespace ThScoreFileConverter
         private void CmbOutputEncoding_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if ((e.RemovedItems.Count > 0) && (e.AddedItems.Count > 0))
-                ((MainWindow)this.Owner).OutputCodePageId = (int)this.cmbOutputEncoding.SelectedValue;
+                Settings.Instance.OutputCodePageId = (int)this.cmbOutputEncoding.SelectedValue;
         }
 
         #endregion

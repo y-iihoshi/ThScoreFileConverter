@@ -16,12 +16,17 @@ namespace ThScoreFileConverter
     /// Represents the settings of this application.
     /// </summary>
     [DataContract]
-    public class Settings
+    public sealed class Settings
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Settings"/> class.
+        /// Only one instance of this class.
         /// </summary>
-        public Settings()
+        private static readonly Settings InstanceImpl = new Settings();
+
+        /// <summary>
+        /// Prevents a default instance of the <see cref="Settings" /> class from being created.
+        /// </summary>
+        private Settings()
         {
             this.LastTitle = string.Empty;
             this.Dictionary = new Dictionary<string, SettingsPerTitle>();
@@ -30,6 +35,17 @@ namespace ThScoreFileConverter
             this.OutputNumberGroupSeparator = true;
             this.InputCodePageId = 932;
             this.OutputCodePageId = 932;
+        }
+
+        /// <summary>
+        /// Gets the instance.
+        /// </summary>
+        public static Settings Instance
+        {
+            get
+            {
+                return InstanceImpl;
+            }
         }
 
         /// <summary>

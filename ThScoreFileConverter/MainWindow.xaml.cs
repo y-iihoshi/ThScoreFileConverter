@@ -25,11 +25,6 @@ namespace ThScoreFileConverter
     public partial class MainWindow : Window
     {
         /// <summary>
-        /// Represents the all settings for this application.
-        /// </summary>
-        private Settings settings = null;
-
-        /// <summary>
         /// The instance that executes a conversion process.
         /// </summary>
         private ThConverter converter = null;
@@ -43,25 +38,8 @@ namespace ThScoreFileConverter
 
             try
             {
-                this.settings = new Settings();
-                try
-                {
-                    this.settings.Load(Prop.Resources.strSettingFile);
-                }
-                catch (InvalidDataException)
-                {
-                    var backup = Path.ChangeExtension(
-                        Prop.Resources.strSettingFile, Prop.Resources.strBackupFileExtension);
-                    File.Delete(backup);
-                    File.Move(Prop.Resources.strSettingFile, backup);
-                    var message = Utils.Format(
-                        Prop.Resources.msgFmtBrokenSettingFile, Prop.Resources.strSettingFile, backup);
-                    MessageBox.Show(
-                        message, Prop.Resources.msgTitleWarning, MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-
                 var lastTitleItem = this.cmbTitle.Items.OfType<ComboBoxItem>()
-                    .FirstOrDefault(item => item.Name == this.settings.LastTitle);
+                    .FirstOrDefault(item => item.Name == Settings.Instance.LastTitle);
                 if (lastTitleItem != null)
                     lastTitleItem.IsSelected = true;
                 else
@@ -72,69 +50,13 @@ namespace ThScoreFileConverter
                         firstEnabledItem.IsSelected = true;
                 }
 
-                ((App)App.Current).UpdateResources(this.settings.FontFamilyName, this.settings.FontSize);
+                ((App)App.Current).UpdateResources(
+                    Settings.Instance.FontFamilyName, Settings.Instance.FontSize);
             }
             catch (Exception ex)
             {
                 this.ShowExceptionMessage(ex);
                 throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether thousand separator characters are contained in the
-        /// string that represents a numeric value.
-        /// </summary>
-        public bool OutputNumberGroupSeparator
-        {
-            get
-            {
-                return ((this.settings != null) && this.settings.OutputNumberGroupSeparator.HasValue)
-                    ? this.settings.OutputNumberGroupSeparator.Value : true;
-            }
-
-            set
-            {
-                if (this.settings != null)
-                    this.settings.OutputNumberGroupSeparator = value;
-                if (this.converter != null)
-                    this.converter.OutputNumberGroupSeparator = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the code page identifier for input files.
-        /// </summary>
-        public int InputCodePageId
-        {
-            get
-            {
-                return ((this.settings != null) && this.settings.InputCodePageId.HasValue)
-                    ? this.settings.InputCodePageId.Value : 932;
-            }
-
-            set
-            {
-                if (this.settings != null)
-                    this.settings.InputCodePageId = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the code page identifier for output files.
-        /// </summary>
-        public int OutputCodePageId
-        {
-            get
-            {
-                return ((this.settings != null) && this.settings.OutputCodePageId.HasValue)
-                    ? this.settings.OutputCodePageId.Value : 932;
-            }
-
-            set
-            {
-                if (this.settings != null)
-                    this.settings.OutputCodePageId = value;
             }
         }
 
@@ -148,10 +70,9 @@ namespace ThScoreFileConverter
             try
             {
                 this.UpdateSettingsFromControls((ComboBoxItem)this.cmbTitle.SelectedItem);
-                this.settings.FontFamilyName = App.Current.Resources["FontFamilyKey"].ToString();
-                this.settings.FontSize =
+                Settings.Instance.FontFamilyName = App.Current.Resources["FontFamilyKey"].ToString();
+                Settings.Instance.FontSize =
                     Convert.ToDouble(App.Current.Resources["FontSizeKey"], CultureInfo.InvariantCulture);
-                this.settings.Save(Prop.Resources.strSettingFile);
             }
             catch (Exception ex)
             {
@@ -177,12 +98,13 @@ namespace ThScoreFileConverter
                 var item = (ComboBoxItem)e.AddedItems[0];
 
                 this.converter = ThConverterFactory.Create(item.Name);
-                this.converter.OutputNumberGroupSeparator = this.settings.OutputNumberGroupSeparator.Value;
+                this.converter.OutputNumberGroupSeparator =
+                    Settings.Instance.OutputNumberGroupSeparator.Value;
                 this.converter.ConvertFinished += this.ThConverter_ConvertFinished;
                 this.converter.ConvertAllFinished += this.ThConverter_ConvertAllFinished;
                 this.converter.ExceptionOccurred += this.ThConverter_ExceptionOccurred;
 
-                this.settings.LastTitle = item.Name;
+                Settings.Instance.LastTitle = item.Name;
                 this.UpdateControlsFromSettings(item);
             }
         }
@@ -609,8 +531,8 @@ namespace ThScoreFileConverter
                 var selectedItem = (ComboBoxItem)this.cmbTitle.SelectedItem;
                 this.UpdateSettingsFromControls(selectedItem);
 
-                new Thread(new ParameterizedThreadStart(this.converter.Convert)).Start(
-                    this.settings.Dictionary[selectedItem.Name]);
+                new Thread(new ParameterizedThreadStart(this.converter.Convert))
+                    .Start(Settings.Instance.Dictionary[selectedItem.Name]);
             }
             catch (Exception ex)
             {
@@ -747,10 +669,10 @@ namespace ThScoreFileConverter
         /// <param name="item">The currently selected item of the "Work" combo box.</param>
         private void UpdateSettingsFromControls(ComboBoxItem item)
         {
-            if (!this.settings.Dictionary.ContainsKey(item.Name))
-                this.settings.Dictionary.Add(item.Name, new SettingsPerTitle());
+            if (!Settings.Instance.Dictionary.ContainsKey(item.Name))
+                Settings.Instance.Dictionary.Add(item.Name, new SettingsPerTitle());
 
-            var entry = this.settings.Dictionary[item.Name];
+            var entry = Settings.Instance.Dictionary[item.Name];
             entry.ScoreFile = this.txtScore.Text;
             entry.BestShotDirectory = this.txtBestShot.Text;
             entry.TemplateFiles = this.lstTemplate.Items.Cast<string>().ToList();
@@ -765,8 +687,8 @@ namespace ThScoreFileConverter
         /// <param name="item">The currently selected item of the "Work" combo box.</param>
         private void UpdateControlsFromSettings(ComboBoxItem item)
         {
-            if (!this.settings.Dictionary.ContainsKey(item.Name))
-                this.settings.Dictionary.Add(item.Name, new SettingsPerTitle());
+            if (!Settings.Instance.Dictionary.ContainsKey(item.Name))
+                Settings.Instance.Dictionary.Add(item.Name, new SettingsPerTitle());
 
             this.txtScore.Clear();
             this.lblSupportedVersion.Content = string.Empty;
@@ -795,7 +717,7 @@ namespace ThScoreFileConverter
 
             this.chkHideUntriedCards.IsEnabled = this.converter.HasCardReplacer;
 
-            var entry = this.settings.Dictionary[item.Name];
+            var entry = Settings.Instance.Dictionary[item.Name];
             if (File.Exists(entry.ScoreFile))
                 this.txtScore.Text = entry.ScoreFile;
             if (this.converter != null)
@@ -813,7 +735,8 @@ namespace ThScoreFileConverter
                     ? entry.ImageOutputDirectory : Prop.Resources.strBestShotDirectory;
             this.chkHideUntriedCards.IsChecked = entry.HideUntriedCards;
 
-            ((App)App.Current).UpdateResources(this.settings.FontFamilyName, this.settings.FontSize);
+            ((App)App.Current).UpdateResources(
+                Settings.Instance.FontFamilyName, Settings.Instance.FontSize);
         }
 
         /// <summary>

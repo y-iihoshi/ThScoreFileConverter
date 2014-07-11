@@ -6,8 +6,10 @@
 
 namespace ThScoreFileConverter
 {
+    using System.IO;
     using System.Windows;
     using System.Windows.Media;
+    using Prop = ThScoreFileConverter.Properties;
     using SysDraw = System.Drawing;
 
     /// <summary>
@@ -47,6 +49,40 @@ namespace ThScoreFileConverter
         public void UpdateResources(SysDraw.Font font)
         {
             this.UpdateResources(new FontFamily(font.FontFamily.Name), font.Size);
+        }
+
+        /// <summary>
+        /// Handles the <c>Startup</c> event of this application.
+        /// </summary>
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void App_Startup(object sender, StartupEventArgs e)
+        {
+            try
+            {
+                Settings.Instance.Load(Prop.Resources.strSettingFile);
+            }
+            catch (InvalidDataException)
+            {
+                var backup = Path.ChangeExtension(
+                    Prop.Resources.strSettingFile, Prop.Resources.strBackupFileExtension);
+                File.Delete(backup);
+                File.Move(Prop.Resources.strSettingFile, backup);
+                var message = Utils.Format(
+                    Prop.Resources.msgFmtBrokenSettingFile, Prop.Resources.strSettingFile, backup);
+                MessageBox.Show(
+                    message, Prop.Resources.msgTitleWarning, MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        /// <summary>
+        /// Handles the <c>Exit</c> event of this application.
+        /// </summary>
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void App_Exit(object sender, ExitEventArgs e)
+        {
+            Settings.Instance.Save(Prop.Resources.strSettingFile);
         }
     }
 }
