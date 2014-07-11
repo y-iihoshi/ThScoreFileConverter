@@ -10,6 +10,7 @@ namespace ThScoreFileConverter
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
+    using System.Text;
 
     /// <summary>
     /// Provides static methods for convenience.
@@ -140,6 +141,17 @@ namespace ThScoreFileConverter
                 throw new ArgumentOutOfRangeException("input");
 
             return (input + 1) % 10;
+        }
+
+        /// <summary>
+        /// Returns the encoding associated with the specified code page identifier.
+        /// </summary>
+        /// <param name="codePage">The code page identifier of the preferred encoding.</param>
+        /// <returns>The <c>Encoding</c> associated with <paramref name="codePage"/>.</returns>
+        public static Encoding GetEncoding(int codePage)
+        {
+            // To prevent BOM output for UTF-8
+            return (codePage == 65001) ? new UTF8Encoding(false) : Encoding.GetEncoding(codePage);
         }
     }
 }

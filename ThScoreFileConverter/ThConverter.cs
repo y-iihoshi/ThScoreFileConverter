@@ -329,8 +329,10 @@ namespace ThScoreFileConverter
         /// <param name="hideUntriedCards"><c>true</c> if it hides untried spell cards.</param>
         protected virtual void Convert(Stream input, Stream output, bool hideUntriedCards)
         {
-            var reader = new StreamReader(input, Encoding.GetEncoding("shift_jis"));
-            var writer = new StreamWriter(output, Encoding.GetEncoding("shift_jis"));
+            var reader = new StreamReader(
+                input, Utils.GetEncoding(Settings.Instance.InputCodePageId.Value));
+            var writer = new StreamWriter(
+                output, Utils.GetEncoding(Settings.Instance.OutputCodePageId.Value));
             var outputFile = output as FileStream;
             var outputFilePath = (outputFile != null) ? outputFile.Name : string.Empty;
             var replacers = this.CreateReplacers(hideUntriedCards, outputFilePath);

@@ -61,7 +61,7 @@ namespace ThScoreFileConverter
             this.disposed = false;
 
             var encodings = Settings.ValidCodePageIds
-                .Select(id => new { CodePageId = id, EncodingName = Encoding.GetEncoding(id).EncodingName });
+                .Select(id => new { CodePageId = id, EncodingName = Utils.GetEncoding(id).EncodingName });
             foreach (var cmb in new ComboBox[] { this.cmbInputEncoding, this.cmbOutputEncoding })
             {
                 cmb.ItemsSource = encodings;
