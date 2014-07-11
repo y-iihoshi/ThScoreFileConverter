@@ -60,13 +60,13 @@ namespace ThScoreFileConverter
 
             this.disposed = false;
 
-            var encodings = new int[] { 65001, 932, 51932 }
-                .Select(cp => new { CodePage = cp, EncodingName = Encoding.GetEncoding(cp).EncodingName });
+            var encodings = Settings.ValidCodePageIds
+                .Select(id => new { CodePageId = id, EncodingName = Encoding.GetEncoding(id).EncodingName });
             foreach (var cmb in new ComboBox[] { this.cmbInputEncoding, this.cmbOutputEncoding })
             {
                 cmb.ItemsSource = encodings;
                 cmb.DisplayMemberPath = "EncodingName";
-                cmb.SelectedValuePath = "CodePage";
+                cmb.SelectedValuePath = "CodePageId";
             }
 
             this.chkOutputNumberGroupSeparator.Click += this.ChkOutputNumberGroupSeparator_Click;

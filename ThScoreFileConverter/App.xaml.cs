@@ -24,8 +24,10 @@ namespace ThScoreFileConverter
         /// <param name="fontSize">The font size used for the UI of this application.</param>
         public void UpdateResources(FontFamily fontFamily, double? fontSize)
         {
-            this.Resources["FontFamilyKey"] = fontFamily ?? SystemFonts.MessageFontFamily;
-            this.Resources["FontSizeKey"] = fontSize ?? SystemFonts.MessageFontSize;
+            if (fontFamily != null)
+                this.Resources["FontFamilyKey"] = fontFamily;
+            if (fontSize.HasValue)
+                this.Resources["FontSizeKey"] = fontSize.Value;
             this.Resources["FontInfoKey"] =
                 this.Resources["FontFamilyKey"] + ", " + this.Resources["FontSizeKey"];
         }

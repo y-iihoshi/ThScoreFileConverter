@@ -6,6 +6,7 @@
 
 namespace ThScoreFileConverter
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Runtime.Serialization;
@@ -22,6 +23,11 @@ namespace ThScoreFileConverter
         /// Only one instance of this class.
         /// </summary>
         private static readonly Settings InstanceImpl = new Settings();
+
+        /// <summary>
+        /// Valid code page identifiers for this application.
+        /// </summary>
+        private static readonly int[] ValidCodePageIdsImpl = new int[] { 65001, 932, 51932 };
 
         /// <summary>
         /// Prevents a default instance of the <see cref="Settings" /> class from being created.
@@ -45,6 +51,17 @@ namespace ThScoreFileConverter
             get
             {
                 return InstanceImpl;
+            }
+        }
+
+        /// <summary>
+        /// Gets the valid code page identifiers for this application.
+        /// </summary>
+        public static int[] ValidCodePageIds
+        {
+            get
+            {
+                return ValidCodePageIdsImpl;
             }
         }
 
@@ -109,12 +126,19 @@ namespace ThScoreFileConverter
                     {
                         this.LastTitle = settings.LastTitle;
                         this.Dictionary = settings.Dictionary;
-                        this.FontFamilyName =
-                            settings.FontFamilyName ?? SystemFonts.MessageFontFamily.Source;
-                        this.FontSize = settings.FontSize ?? SystemFonts.MessageFontSize;
-                        this.OutputNumberGroupSeparator = settings.OutputNumberGroupSeparator ?? true;
-                        this.InputCodePageId = settings.InputCodePageId ?? 932;
-                        this.OutputCodePageId = settings.OutputCodePageId ?? 932;
+
+                        if (!string.IsNullOrEmpty(settings.FontFamilyName))
+                            this.FontFamilyName = settings.FontFamilyName;
+                        if (settings.FontSize.HasValue)
+                            this.FontSize = settings.FontSize.Value;
+                        if (settings.OutputNumberGroupSeparator.HasValue)
+                            this.OutputNumberGroupSeparator = settings.OutputNumberGroupSeparator.Value;
+                        if (settings.InputCodePageId.HasValue &&
+                            Array.Exists(ValidCodePageIds, id => id == settings.InputCodePageId.Value))
+                            this.InputCodePageId = settings.InputCodePageId.Value;
+                        if (settings.OutputCodePageId.HasValue &&
+                            Array.Exists(ValidCodePageIds, id => id == settings.OutputCodePageId.Value))
+                            this.OutputCodePageId = settings.OutputCodePageId.Value;
                     }
                 }
             }
