@@ -22,19 +22,10 @@ namespace ThScoreFileConverter
 
     internal class Th06Converter : ThConverter
     {
-        private static readonly Dictionary<int, CardInfo> CardTable;
-        private static readonly List<HighScore> InitialRanking;
-
-        private static readonly EnumShortNameParser<Chara> CharaParser;
-
-        private AllScoreData allScoreData = null;
-
-        [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = "Reviewed.")]
+        // Thanks to thwiki.info
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1008:OpeningParenthesisMustBeSpacedCorrectly", Justification = "Reviewed.")]
-        static Th06Converter()
-        {
-            // Thanks to thwiki.info
-            var cardList = new List<CardInfo>()
+        private static readonly Dictionary<int, CardInfo> CardTable =
+            new List<CardInfo>()
             {
                 new CardInfo( 1, "月符「ムーンライトレイ」",         Stage.St1,   Level.Hard, Level.Lunatic),
                 new CardInfo( 2, "夜符「ナイトバード」",             Stage.St1,   Level.Easy, Level.Normal, Level.Hard, Level.Lunatic),
@@ -100,10 +91,11 @@ namespace ThScoreFileConverter
                 new CardInfo(62, "禁弾「過去を刻む時計」",           Stage.Extra, Level.Extra),
                 new CardInfo(63, "秘弾「そして誰もいなくなるか？」", Stage.Extra, Level.Extra),
                 new CardInfo(64, "ＱＥＤ「４９５年の波紋」",         Stage.Extra, Level.Extra)
-            };
-            CardTable = cardList.ToDictionary(card => card.Id);
+            }.ToDictionary(card => card.Id);
 
-            InitialRanking = new List<HighScore>()
+        [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1008:OpeningParenthesisMustBeSpacedCorrectly", Justification = "Reviewed.")]
+        private static readonly List<HighScore> InitialRanking =
+            new List<HighScore>()
             {
                 new HighScore(1000000),
                 new HighScore( 900000),
@@ -117,8 +109,9 @@ namespace ThScoreFileConverter
                 new HighScore( 100000)
             };
 
-            CharaParser = new EnumShortNameParser<Chara>();
-        }
+        private static readonly EnumShortNameParser<Chara> CharaParser = new EnumShortNameParser<Chara>();
+
+        private AllScoreData allScoreData = null;
 
         public Th06Converter()
         {

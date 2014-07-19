@@ -22,19 +22,11 @@ namespace ThScoreFileConverter
 
     internal class Th14Converter : ThConverter
     {
-        private static readonly Dictionary<int, CardInfo> CardTable;
-
-        private static readonly EnumShortNameParser<Chara> CharaParser;
-        private static readonly EnumShortNameParser<CharaWithTotal> CharaWithTotalParser;
-
-        private AllScoreData allScoreData = null;
-
-        [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = "Reviewed.")]
+        // Thanks to thwiki.info
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1008:OpeningParenthesisMustBeSpacedCorrectly", Justification = "Reviewed.")]
-        static Th14Converter()
-        {
-            var cardList = new List<CardInfo>()
+        private static readonly Dictionary<int, CardInfo> CardTable =
+            new List<CardInfo>()
             {
                 new CardInfo(  1, "氷符「アルティメットブリザード」",   Stage.St1,   Level.Hard),
                 new CardInfo(  2, "氷符「アルティメットブリザード」",   Stage.St1,   Level.Lunatic),
@@ -156,12 +148,15 @@ namespace ThScoreFileConverter
                 new CardInfo(118, "八鼓「雷神の怒り」",                 Stage.Extra, Level.Extra),
                 new CardInfo(119, "「ブルーレディショー」",             Stage.Extra, Level.Extra),
                 new CardInfo(120, "「プリスティンビート」",             Stage.Extra, Level.Extra)
-            };
-            CardTable = cardList.ToDictionary(card => card.Id);
+            }.ToDictionary(card => card.Id);
 
-            CharaParser = new EnumShortNameParser<Chara>();
-            CharaWithTotalParser = new EnumShortNameParser<CharaWithTotal>();
-        }
+        private static readonly EnumShortNameParser<Chara> CharaParser =
+            new EnumShortNameParser<Chara>();
+
+        private static readonly EnumShortNameParser<CharaWithTotal> CharaWithTotalParser =
+            new EnumShortNameParser<CharaWithTotal>();
+
+        private AllScoreData allScoreData = null;
 
         public Th14Converter()
         {

@@ -62,13 +62,13 @@ namespace ThScoreFileConverter
             /// <summary>
             /// Caches attribute information collected by reflection.
             /// </summary>
-            public static readonly Dictionary<TEnum, TAttribute> Cache;
+            public static readonly Dictionary<TEnum, TAttribute> Cache = InitializeCache();
 
             /// <summary>
-            /// Initializes static members of the <see cref="AttributeCache{TEnum,TAttribute}"/> class.
+            /// Initializes the cache.
             /// </summary>
-            [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = "Reviewed.")]
-            static AttributeCache()
+            /// <returns>The cache of attribute information.</returns>
+            private static Dictionary<TEnum, TAttribute> InitializeCache()
             {
                 var type = typeof(TEnum);
                 if (type.IsEnum)
@@ -80,12 +80,12 @@ namespace ThScoreFileConverter
                             (field, attr) => new { enumValue = (TEnum)field.GetValue(null), attr })
                         .ToLookup(a => a.attr.GetType());
 
-                    Cache = lookup[typeof(TAttribute)]
+                    return lookup[typeof(TAttribute)]
                         .ToDictionary(a => a.enumValue, a => a.attr as TAttribute);
                 }
                 else
                 {
-                    // Should not raise any exception from here.
+                    return new Dictionary<TEnum, TAttribute>();
                 }
             }
         }

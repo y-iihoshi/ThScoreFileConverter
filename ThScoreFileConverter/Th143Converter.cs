@@ -27,22 +27,9 @@ namespace ThScoreFileConverter
 
     internal class Th143Converter : ThConverter
     {
-        private static readonly Dictionary<DayScenePair, EnemiesCardPair> SpellCards;
-        private static readonly List<string> Nicknames;
-
-        private static readonly EnumShortNameParser<Day> DayParser;
-        private static readonly EnumShortNameParser<ItemWithTotal> ItemWithTotalParser;
-
-        private static readonly string DayLongPattern;
-
-        private AllScoreData allScoreData = null;
-        private Dictionary<DayScenePair, BestShotPair> bestshots = null;
-
-        [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = "Reviewed.")]
-        static Th143Converter()
-        {
-            // Thanks to thwiki.info
-            SpellCards = new Dictionary<DayScenePair, EnemiesCardPair>()
+        // Thanks to thwiki.info
+        private static readonly Dictionary<DayScenePair, EnemiesCardPair> SpellCards =
+            new Dictionary<DayScenePair, EnemiesCardPair>()
             {
                 { new DayScenePair(Day.Day1,  1), new EnemiesCardPair(Enemy.Yatsuhashi,   string.Empty) },
                 { new DayScenePair(Day.Day1,  2), new EnemiesCardPair(Enemy.Wakasagihime, "水符「ルナティックレッドスラップ」") },
@@ -121,7 +108,8 @@ namespace ThScoreFileConverter
                 { new DayScenePair(Day.Last, 10), new EnemiesCardPair(Enemy.Yukari,       "「運鈍根の捕物帖」") }
             };
 
-            Nicknames = new List<string>
+        private static readonly List<string> Nicknames =
+            new List<string>
             {
                 "弾幕アマノジャク",
                 "ひよっこアマノジャク",
@@ -195,12 +183,17 @@ namespace ThScoreFileConverter
                 "究極反則生命体"
             };
 
-            DayParser = new EnumShortNameParser<Day>();
-            ItemWithTotalParser = new EnumShortNameParser<ItemWithTotal>();
+        private static readonly EnumShortNameParser<Day> DayParser =
+            new EnumShortNameParser<Day>();
 
-            var days = Utils.GetEnumerator<Day>();
-            DayLongPattern = string.Join("|", days.Select(day => day.ToLongName()).ToArray());
-        }
+        private static readonly EnumShortNameParser<ItemWithTotal> ItemWithTotalParser =
+            new EnumShortNameParser<ItemWithTotal>();
+
+        private static readonly string DayLongPattern =
+            string.Join("|", Utils.GetEnumerator<Day>().Select(day => day.ToLongName()).ToArray());
+
+        private AllScoreData allScoreData = null;
+        private Dictionary<DayScenePair, BestShotPair> bestshots = null;
 
         public Th143Converter()
         {

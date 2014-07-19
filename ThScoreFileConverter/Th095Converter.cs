@@ -26,20 +26,9 @@ namespace ThScoreFileConverter
 
     internal class Th095Converter : ThConverter
     {
-        private static readonly Dictionary<LevelScenePair, EnemyCardPair> SpellCards;
-
-        private static readonly new EnumShortNameParser<Level> LevelParser;
-
-        private static readonly string LevelLongPattern;
-
-        private AllScoreData allScoreData = null;
-        private Dictionary<LevelScenePair, BestShotPair> bestshots = null;
-
-        [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = "Reviewed.")]
-        static Th095Converter()
-        {
-            // Thanks to thwiki.info
-            SpellCards = new Dictionary<LevelScenePair, EnemyCardPair>()
+        // Thanks to thwiki.info
+        private static readonly Dictionary<LevelScenePair, EnemyCardPair> SpellCards =
+            new Dictionary<LevelScenePair, EnemyCardPair>()
             {
                 { new LevelScenePair(Level.Lv1,   1), new EnemyCardPair(Enemy.Wriggle,   string.Empty) },
                 { new LevelScenePair(Level.Lv1,   2), new EnemyCardPair(Enemy.Rumia,     string.Empty) },
@@ -128,11 +117,14 @@ namespace ThScoreFileConverter
                 { new LevelScenePair(Level.Extra, 8), new EnemyCardPair(Enemy.Suika,     "「百万鬼夜行」") }
             };
 
-            LevelParser = new EnumShortNameParser<Level>();
+        private static readonly new EnumShortNameParser<Level> LevelParser =
+            new EnumShortNameParser<Level>();
 
-            var levels = Utils.GetEnumerator<Level>();
-            LevelLongPattern = string.Join("|", levels.Select(lv => lv.ToLongName()).ToArray());
-        }
+        private static readonly string LevelLongPattern =
+            string.Join("|", Utils.GetEnumerator<Level>().Select(lv => lv.ToLongName()).ToArray());
+
+        private AllScoreData allScoreData = null;
+        private Dictionary<LevelScenePair, BestShotPair> bestshots = null;
 
         public Th095Converter()
         {

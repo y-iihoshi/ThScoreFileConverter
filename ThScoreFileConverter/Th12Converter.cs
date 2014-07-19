@@ -22,19 +22,11 @@ namespace ThScoreFileConverter
 
     internal class Th12Converter : ThConverter
     {
-        private static readonly Dictionary<int, CardInfo> CardTable;
-
-        private static readonly EnumShortNameParser<Chara> CharaParser;
-        private static readonly EnumShortNameParser<CharaWithTotal> CharaWithTotalParser;
-
-        private AllScoreData allScoreData = null;
-
-        [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = "Reviewed.")]
+        // Thanks to thwiki.info
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1008:OpeningParenthesisMustBeSpacedCorrectly", Justification = "Reviewed.")]
-        static Th12Converter()
-        {
-            var cardList = new List<CardInfo>()
+        private static readonly Dictionary<int, CardInfo> CardTable =
+            new List<CardInfo>()
             {
                 new CardInfo(  1, "棒符「ビジーロッド」",                 Stage.St1,   Level.Hard),
                 new CardInfo(  2, "棒符「ビジーロッド」",                 Stage.St1,   Level.Lunatic),
@@ -149,12 +141,15 @@ namespace ThScoreFileConverter
                 new CardInfo(111, "正体不明「恐怖の虹色ＵＦＯ襲来」",     Stage.Extra, Level.Extra),
                 new CardInfo(112, "「平安京の悪夢」",                     Stage.Extra, Level.Extra),
                 new CardInfo(113, "恨弓「源三位頼政の弓」",               Stage.Extra, Level.Extra)
-            };
-            CardTable = cardList.ToDictionary(card => card.Id);
+            }.ToDictionary(card => card.Id);
 
-            CharaParser = new EnumShortNameParser<Chara>();
-            CharaWithTotalParser = new EnumShortNameParser<CharaWithTotal>();
-        }
+        private static readonly EnumShortNameParser<Chara> CharaParser =
+            new EnumShortNameParser<Chara>();
+
+        private static readonly EnumShortNameParser<CharaWithTotal> CharaWithTotalParser =
+            new EnumShortNameParser<CharaWithTotal>();
+
+        private AllScoreData allScoreData = null;
 
         public Th12Converter()
         {

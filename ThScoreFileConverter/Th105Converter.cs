@@ -22,23 +22,9 @@ namespace ThScoreFileConverter
 
     internal class Th105Converter : ThConverter
     {
-        private static readonly Dictionary<int, string> SystemCardNameTable;
-        private static readonly Dictionary<CharaCardIdPair, string> CardNameTable;
-        private static readonly Dictionary<Chara, List<StageInfo>> StageInfoTable;
-        private static readonly Dictionary<Chara, IEnumerable<CharaCardIdPair>> EnemyCardIdTable;
-
-        private static readonly new EnumShortNameParser<LevelWithTotal> LevelWithTotalParser;
-        private static readonly EnumShortNameParser<Chara> CharaParser;
-        private static readonly EnumShortNameParser<CardType> CardTypeParser;
-
-        private AllScoreData allScoreData = null;
-
-        [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = "Reviewed.")]
-        [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
-        static Th105Converter()
-        {
-            // Thanks to en.touhouwiki.net
-            SystemCardNameTable = new Dictionary<int, string>
+        // Thanks to en.touhouwiki.net
+        private static readonly Dictionary<int, string> SystemCardNameTable =
+            new Dictionary<int, string>
             {
                 { 0, "「気質発現」" },
                 { 1, "「霊撃」" },
@@ -48,8 +34,10 @@ namespace ThScoreFileConverter
                 { 5, "「霊力回復」" }
             };
 
-            // Thanks to th3_5154.txt, www.toho-motoneta.net and en.touhouwiki.net
-            CardNameTable = new Dictionary<CharaCardIdPair, string>
+        // Thanks to th3_5154.txt, www.toho-motoneta.net and en.touhouwiki.net
+        [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
+        private static readonly Dictionary<CharaCardIdPair, string> CardNameTable =
+            new Dictionary<CharaCardIdPair, string>
             {
                 { new CharaCardIdPair(Chara.Reimu,   0), "祈願「厄除け祈願」" },
                 { new CharaCardIdPair(Chara.Reimu,   1), "宝符「躍る陰陽玉」" },
@@ -385,8 +373,9 @@ namespace ThScoreFileConverter
                 { new CharaCardIdPair(Chara.Tenshi, 207), "「全人類の緋想天」" }
             };
 
-            // Thanks to en.touhouwiki.net
-            StageInfoTable = new Dictionary<Chara, List<StageInfo>>
+        // Thanks to en.touhouwiki.net
+        private static readonly Dictionary<Chara, List<StageInfo>> StageInfoTable =
+            new Dictionary<Chara, List<StageInfo>>
             {
                 {
                     Chara.Reimu,
@@ -568,15 +557,22 @@ namespace ThScoreFileConverter
                 }
             };
 
-            EnemyCardIdTable = StageInfoTable.ToDictionary(
+        private static readonly Dictionary<Chara, IEnumerable<CharaCardIdPair>> EnemyCardIdTable =
+            StageInfoTable.ToDictionary(
                 stageInfoPair => stageInfoPair.Key,
                 stageInfoPair => stageInfoPair.Value.SelectMany(
                     stageInfo => stageInfo.CardIds.Select(id => new CharaCardIdPair(stageInfo.Enemy, id))));
 
-            LevelWithTotalParser = new EnumShortNameParser<LevelWithTotal>();
-            CharaParser = new EnumShortNameParser<Chara>();
-            CardTypeParser = new EnumShortNameParser<CardType>();
-        }
+        private static readonly new EnumShortNameParser<LevelWithTotal> LevelWithTotalParser =
+            new EnumShortNameParser<LevelWithTotal>();
+
+        private static readonly EnumShortNameParser<Chara> CharaParser =
+            new EnumShortNameParser<Chara>();
+
+        private static readonly EnumShortNameParser<CardType> CardTypeParser =
+            new EnumShortNameParser<CardType>();
+
+        private AllScoreData allScoreData = null;
 
         public Th105Converter()
         {

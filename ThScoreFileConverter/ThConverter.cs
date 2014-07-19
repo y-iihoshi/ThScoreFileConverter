@@ -22,34 +22,26 @@ namespace ThScoreFileConverter
         /// <summary>
         /// Parser of <see cref="Level"/>.
         /// </summary>
-        protected static readonly EnumShortNameParser<Level> LevelParser;
+        protected static readonly EnumShortNameParser<Level> LevelParser =
+            new EnumShortNameParser<Level>();
 
         /// <summary>
         /// Parser of <see cref="LevelWithTotal"/>.
         /// </summary>
-        protected static readonly EnumShortNameParser<LevelWithTotal> LevelWithTotalParser;
+        protected static readonly EnumShortNameParser<LevelWithTotal> LevelWithTotalParser =
+            new EnumShortNameParser<LevelWithTotal>();
 
         /// <summary>
         /// Parser of <see cref="Stage"/>.
         /// </summary>
-        protected static readonly EnumShortNameParser<Stage> StageParser;
+        protected static readonly EnumShortNameParser<Stage> StageParser =
+            new EnumShortNameParser<Stage>();
 
         /// <summary>
         /// Parser of <see cref="StageWithTotal"/>.
         /// </summary>
-        protected static readonly EnumShortNameParser<StageWithTotal> StageWithTotalParser;
-
-        /// <summary>
-        /// Initializes static members of the <see cref="ThConverter"/> class.
-        /// </summary>
-        [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = "Reviewed.")]
-        static ThConverter()
-        {
-            LevelParser = new EnumShortNameParser<Level>();
-            LevelWithTotalParser = new EnumShortNameParser<LevelWithTotal>();
-            StageParser = new EnumShortNameParser<Stage>();
-            StageWithTotalParser = new EnumShortNameParser<StageWithTotal>();
-        }
+        protected static readonly EnumShortNameParser<StageWithTotal> StageWithTotalParser =
+            new EnumShortNameParser<StageWithTotal>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ThConverter"/> class.

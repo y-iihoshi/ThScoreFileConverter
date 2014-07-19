@@ -27,22 +27,11 @@ namespace ThScoreFileConverter
             @"0123456789+-/*=%#!?.,:;_@$" +
             @"(){}[]<>&\|~^             ";
 
-        private static readonly Dictionary<int, SpellCardInfo> CardTable;
-        private static readonly Dictionary<Chara, IEnumerable<int>> CardIdTable;
-
-        private static readonly new EnumShortNameParser<Level> LevelParser;
-        private static readonly new EnumShortNameParser<LevelWithTotal> LevelWithTotalParser;
-        private static readonly EnumShortNameParser<Chara> CharaParser;
-
-        private AllScoreData allScoreData = null;
-
-        [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = "Reviewed.")]
+        // Thanks to thwiki.info
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1008:OpeningParenthesisMustBeSpacedCorrectly", Justification = "Reviewed.")]
-        static Th075Converter()
-        {
-            // Thanks to thwiki.info
-            CardTable = new Dictionary<int, SpellCardInfo>()
+        private static readonly Dictionary<int, SpellCardInfo> CardTable =
+            new Dictionary<int, SpellCardInfo>()
             {
                 {   1, new SpellCardInfo("符の壱「夢想妙珠連」-Easy-",                        Chara.Reimu,     Level.Easy) },
                 {   2, new SpellCardInfo("符の壱「夢想妙珠連」",                              Chara.Reimu,     Level.Normal) },
@@ -222,6 +211,122 @@ namespace ThScoreFileConverter
                 { 176, new SpellCardInfo("「百万鬼夜行」",                                    Chara.Suika,     Level.Lunatic) }
             };
 
+        private static readonly Dictionary<Chara, IEnumerable<int>> CardIdTable = InitializeCardIdTable();
+
+        private static readonly new EnumShortNameParser<Level> LevelParser =
+            new EnumShortNameParser<Level>();
+
+        private static readonly new EnumShortNameParser<LevelWithTotal> LevelWithTotalParser =
+            new EnumShortNameParser<LevelWithTotal>();
+
+        private static readonly EnumShortNameParser<Chara> CharaParser =
+            new EnumShortNameParser<Chara>();
+
+        private AllScoreData allScoreData = null;
+
+        public Th075Converter()
+        {
+        }
+
+        public new enum Level
+        {
+            [EnumAltName("E")] Easy,
+            [EnumAltName("N")] Normal,
+            [EnumAltName("H")] Hard,
+            [EnumAltName("L")] Lunatic
+        }
+
+        public new enum LevelWithTotal
+        {
+            [EnumAltName("E")] Easy,
+            [EnumAltName("N")] Normal,
+            [EnumAltName("H")] Hard,
+            [EnumAltName("L")] Lunatic,
+            [EnumAltName("T")] Total
+        }
+
+        public enum Chara
+        {
+            [EnumAltName("RM")] Reimu,
+            [EnumAltName("MR")] Marisa,
+            [EnumAltName("SK")] Sakuya,
+            [EnumAltName("AL")] Alice,
+            [EnumAltName("PC")] Patchouli,
+            [EnumAltName("YM")] Youmu,
+            [EnumAltName("RL")] Remilia,
+            [EnumAltName("YU")] Yuyuko,
+            [EnumAltName("YK")] Yukari,
+            [EnumAltName("SU")] Suika,
+            [EnumAltName("ML")] Meiling
+        }
+
+        public enum CharaWithTotal
+        {
+            [EnumAltName("RM")] Reimu,
+            [EnumAltName("MR")] Marisa,
+            [EnumAltName("SK")] Sakuya,
+            [EnumAltName("AL")] Alice,
+            [EnumAltName("PC")] Patchouli,
+            [EnumAltName("YM")] Youmu,
+            [EnumAltName("RL")] Remilia,
+            [EnumAltName("YU")] Yuyuko,
+            [EnumAltName("YK")] Yukari,
+            [EnumAltName("SU")] Suika,
+            [EnumAltName("ML")] Meiling,
+            [EnumAltName("TL")] Total
+        }
+
+        public new enum Stage
+        {
+            [EnumAltName("1")] St1,
+            [EnumAltName("2")] St2,
+            [EnumAltName("3")] St3,
+            [EnumAltName("4")] St4,
+            [EnumAltName("5")] St5,
+            [EnumAltName("6")] St6,
+            [EnumAltName("7")] St7
+        }
+
+        public override string SupportedVersions
+        {
+            get { return "1.11"; }
+        }
+
+        protected override bool ReadScoreFile(Stream input)
+        {
+#if DEBUG
+            using (var decoded = new FileStream("th075decoded.dat", FileMode.Create, FileAccess.ReadWrite))
+            {
+                var size = (int)input.Length;
+                var data = new byte[size];
+                input.Read(data, 0, size);
+                decoded.Write(data, 0, size);
+                decoded.Flush();
+                decoded.SetLength(decoded.Position);
+            }
+#endif
+
+            input.Seek(0, SeekOrigin.Begin);
+            this.allScoreData = Read(input);
+
+            return this.allScoreData != null;
+        }
+
+        protected override IEnumerable<IStringReplaceable> CreateReplacers(
+            bool hideUntriedCards, string outputFilePath)
+        {
+            return new List<IStringReplaceable>
+            {
+                new ScoreReplacer(this),
+                new CareerReplacer(this),
+                new CardReplacer(this, hideUntriedCards),
+                new CollectRateReplacer(this),
+                new CharaReplacer(this)
+            };
+        }
+
+        private static Dictionary<Chara, IEnumerable<int>> InitializeCardIdTable()
+        {
             var charaStageEnemyTable = new Dictionary<Chara, List<StageEnemyPair>>
             {
                 {
@@ -358,7 +463,7 @@ namespace ThScoreFileConverter
 
             var cardNumberTable = CardTable.ToLookup(pair => pair.Value.Enemy, pair => pair.Key);
 
-            CardIdTable = charaStageEnemyTable.ToDictionary(
+            return charaStageEnemyTable.ToDictionary(
                 charaStageEnemyPair => charaStageEnemyPair.Key,
                 charaStageEnemyPair => charaStageEnemyPair.Value.SelectMany(stageEnemyPair =>
                 {
@@ -380,111 +485,6 @@ namespace ThScoreFileConverter
                             return null;    // unreachable
                     }
                 }));
-
-            LevelParser = new EnumShortNameParser<Level>();
-            LevelWithTotalParser = new EnumShortNameParser<LevelWithTotal>();
-            CharaParser = new EnumShortNameParser<Chara>();
-        }
-
-        public Th075Converter()
-        {
-        }
-
-        public new enum Level
-        {
-            [EnumAltName("E")] Easy,
-            [EnumAltName("N")] Normal,
-            [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic
-        }
-
-        public new enum LevelWithTotal
-        {
-            [EnumAltName("E")] Easy,
-            [EnumAltName("N")] Normal,
-            [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic,
-            [EnumAltName("T")] Total
-        }
-
-        public enum Chara
-        {
-            [EnumAltName("RM")] Reimu,
-            [EnumAltName("MR")] Marisa,
-            [EnumAltName("SK")] Sakuya,
-            [EnumAltName("AL")] Alice,
-            [EnumAltName("PC")] Patchouli,
-            [EnumAltName("YM")] Youmu,
-            [EnumAltName("RL")] Remilia,
-            [EnumAltName("YU")] Yuyuko,
-            [EnumAltName("YK")] Yukari,
-            [EnumAltName("SU")] Suika,
-            [EnumAltName("ML")] Meiling
-        }
-
-        public enum CharaWithTotal
-        {
-            [EnumAltName("RM")] Reimu,
-            [EnumAltName("MR")] Marisa,
-            [EnumAltName("SK")] Sakuya,
-            [EnumAltName("AL")] Alice,
-            [EnumAltName("PC")] Patchouli,
-            [EnumAltName("YM")] Youmu,
-            [EnumAltName("RL")] Remilia,
-            [EnumAltName("YU")] Yuyuko,
-            [EnumAltName("YK")] Yukari,
-            [EnumAltName("SU")] Suika,
-            [EnumAltName("ML")] Meiling,
-            [EnumAltName("TL")] Total
-        }
-
-        public new enum Stage
-        {
-            [EnumAltName("1")] St1,
-            [EnumAltName("2")] St2,
-            [EnumAltName("3")] St3,
-            [EnumAltName("4")] St4,
-            [EnumAltName("5")] St5,
-            [EnumAltName("6")] St6,
-            [EnumAltName("7")] St7
-        }
-
-        public override string SupportedVersions
-        {
-            get { return "1.11"; }
-        }
-
-        protected override bool ReadScoreFile(Stream input)
-        {
-#if DEBUG
-            using (var decoded = new FileStream("th075decoded.dat", FileMode.Create, FileAccess.ReadWrite))
-            {
-                var size = (int)input.Length;
-                var data = new byte[size];
-                input.Read(data, 0, size);
-                decoded.Write(data, 0, size);
-                decoded.Flush();
-                decoded.SetLength(decoded.Position);
-            }
-#endif
-
-            input.Seek(0, SeekOrigin.Begin);
-            this.allScoreData = Read(input);
-
-            return this.allScoreData != null;
-        }
-
-        protected override IEnumerable<IStringReplaceable> CreateReplacers(
-            bool hideUntriedCards, string outputFilePath)
-        {
-            return new List<IStringReplaceable>
-            {
-                new ScoreReplacer(this),
-                new CareerReplacer(this),
-                new CardReplacer(this, hideUntriedCards),
-                new CollectRateReplacer(this),
-                new CharaReplacer(this)
-            };
         }
 
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]

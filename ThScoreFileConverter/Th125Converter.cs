@@ -27,21 +27,9 @@ namespace ThScoreFileConverter
 
     internal class Th125Converter : ThConverter
     {
-        private static readonly Dictionary<LevelScenePair, EnemyCardPair> SpellCards;
-
-        private static readonly new EnumShortNameParser<Level> LevelParser;
-        private static readonly EnumShortNameParser<Chara> CharaParser;
-
-        private static readonly string LevelLongPattern;
-
-        private AllScoreData allScoreData = null;
-        private Dictionary<Chara, Dictionary<LevelScenePair, BestShotPair>> bestshots = null;
-
-        [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = "Reviewed.")]
-        static Th125Converter()
-        {
-            // Thanks to thwiki.info
-            SpellCards = new Dictionary<LevelScenePair, EnemyCardPair>()
+        // Thanks to thwiki.info
+        private static readonly Dictionary<LevelScenePair, EnemyCardPair> SpellCards =
+            new Dictionary<LevelScenePair, EnemyCardPair>()
             {
                 { new LevelScenePair(Level.Lv1,     1), new EnemyCardPair(Enemy.Minoriko,  string.Empty) },
                 { new LevelScenePair(Level.Lv1,     2), new EnemyCardPair(Enemy.Minoriko,  string.Empty) },
@@ -153,12 +141,17 @@ namespace ThScoreFileConverter
                 { new LevelScenePair(Level.Spoiler, 9), new EnemyCardPair(Enemy.Aya,       "「幻想風靡」") }
             };
 
-            LevelParser = new EnumShortNameParser<Level>();
-            CharaParser = new EnumShortNameParser<Chara>();
+        private static readonly new EnumShortNameParser<Level> LevelParser =
+            new EnumShortNameParser<Level>();
 
-            var levels = Utils.GetEnumerator<Level>();
-            LevelLongPattern = string.Join("|", levels.Select(lv => lv.ToLongName()).ToArray());
-        }
+        private static readonly EnumShortNameParser<Chara> CharaParser =
+            new EnumShortNameParser<Chara>();
+
+        private static readonly string LevelLongPattern =
+            string.Join("|", Utils.GetEnumerator<Level>().Select(lv => lv.ToLongName()).ToArray());
+
+        private AllScoreData allScoreData = null;
+        private Dictionary<Chara, Dictionary<LevelScenePair, BestShotPair>> bestshots = null;
 
         public Th125Converter()
         {

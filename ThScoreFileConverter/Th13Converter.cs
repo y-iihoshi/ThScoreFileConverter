@@ -22,20 +22,11 @@ namespace ThScoreFileConverter
 
     internal class Th13Converter : ThConverter
     {
-        private static readonly Dictionary<int, CardInfo> CardTable;
-
-        private static readonly EnumShortNameParser<LevelPracticeWithTotal> LevelPracticeWithTotalParser;
-        private static readonly EnumShortNameParser<Chara> CharaParser;
-        private static readonly EnumShortNameParser<CharaWithTotal> CharaWithTotalParser;
-
-        private AllScoreData allScoreData = null;
-
-        [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = "Reviewed.")]
+        // Thanks to thwiki.info
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1008:OpeningParenthesisMustBeSpacedCorrectly", Justification = "Reviewed.")]
-        static Th13Converter()
-        {
-            var cardList = new List<CardInfo>()
+        private static readonly Dictionary<int, CardInfo> CardTable =
+            new List<CardInfo>()
             {
                 new CardInfo(  1, "符牒「死蝶の舞」",                     StagePractice.St1,       LevelPractice.Easy),
                 new CardInfo(  2, "符牒「死蝶の舞」",                     StagePractice.St1,       LevelPractice.Normal),
@@ -164,13 +155,18 @@ namespace ThScoreFileConverter
                 new CardInfo(125, "聖童女「太陽神の贄」",                 StagePractice.OverDrive, LevelPractice.OverDrive),
                 new CardInfo(126, "「神霊大宇宙」",                       StagePractice.OverDrive, LevelPractice.OverDrive),
                 new CardInfo(127, "「ワイルドカーペット」",               StagePractice.OverDrive, LevelPractice.OverDrive)
-            };
-            CardTable = cardList.ToDictionary(card => card.Id);
+            }.ToDictionary(card => card.Id);
 
-            LevelPracticeWithTotalParser = new EnumShortNameParser<LevelPracticeWithTotal>();
-            CharaParser = new EnumShortNameParser<Chara>();
-            CharaWithTotalParser = new EnumShortNameParser<CharaWithTotal>();
-        }
+        private static readonly EnumShortNameParser<LevelPracticeWithTotal> LevelPracticeWithTotalParser =
+            new EnumShortNameParser<LevelPracticeWithTotal>();
+
+        private static readonly EnumShortNameParser<Chara> CharaParser =
+            new EnumShortNameParser<Chara>();
+
+        private static readonly EnumShortNameParser<CharaWithTotal> CharaWithTotalParser =
+            new EnumShortNameParser<CharaWithTotal>();
+
+        private AllScoreData allScoreData = null;
 
         public Th13Converter()
         {

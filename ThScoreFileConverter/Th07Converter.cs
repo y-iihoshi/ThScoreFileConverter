@@ -22,25 +22,11 @@ namespace ThScoreFileConverter
 
     internal class Th07Converter : ThConverter
     {
-        private static readonly Dictionary<int, CardInfo> CardTable;
-        private static readonly List<HighScore> InitialRanking;
-
-        private static readonly new EnumShortNameParser<Level> LevelParser;
-        private static readonly new EnumShortNameParser<LevelWithTotal> LevelWithTotalParser;
-        private static readonly EnumShortNameParser<Chara> CharaParser;
-        private static readonly EnumShortNameParser<CharaWithTotal> CharaWithTotalParser;
-        private static readonly new EnumShortNameParser<Stage> StageParser;
-        private static readonly new EnumShortNameParser<StageWithTotal> StageWithTotalParser;
-
-        private AllScoreData allScoreData = null;
-
-        [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = "Reviewed.")]
+        // Thanks to thwiki.info and www57.atwiki.jp/2touhoukouryaku
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1008:OpeningParenthesisMustBeSpacedCorrectly", Justification = "Reviewed.")]
-        static Th07Converter()
-        {
-            // Thanks to thwiki.info and www57.atwiki.jp/2touhoukouryaku
-            var cardList = new List<CardInfo>()
+        private static readonly Dictionary<int, CardInfo> CardTable =
+            new List<CardInfo>()
             {
                 new CardInfo(  1, "霜符「フロストコラムス」",                   Stage.St1,      Level.Hard),
                 new CardInfo(  2, "霜符「フロストコラムス -Lunatic-」",         Stage.St1,      Level.Lunatic),
@@ -183,10 +169,11 @@ namespace ThScoreFileConverter
                 new CardInfo(139, "「人間と妖怪の境界」",                       Stage.Phantasm, Level.Phantasm),
                 new CardInfo(140, "結界「生と死の境界」",                       Stage.Phantasm, Level.Phantasm),
                 new CardInfo(141, "紫奥義「弾幕結界」",                         Stage.Phantasm, Level.Phantasm)
-            };
-            CardTable = cardList.ToDictionary(card => card.Id);
+            }.ToDictionary(card => card.Id);
 
-            InitialRanking = new List<HighScore>()
+        [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1008:OpeningParenthesisMustBeSpacedCorrectly", Justification = "Reviewed.")]
+        private static readonly List<HighScore> InitialRanking =
+            new List<HighScore>()
             {
                 new HighScore(100000),
                 new HighScore( 90000),
@@ -200,13 +187,25 @@ namespace ThScoreFileConverter
                 new HighScore( 10000)
             };
 
-            LevelParser = new EnumShortNameParser<Level>();
-            LevelWithTotalParser = new EnumShortNameParser<LevelWithTotal>();
-            CharaParser = new EnumShortNameParser<Chara>();
-            CharaWithTotalParser = new EnumShortNameParser<CharaWithTotal>();
-            StageParser = new EnumShortNameParser<Stage>();
-            StageWithTotalParser = new EnumShortNameParser<StageWithTotal>();
-        }
+        private static readonly new EnumShortNameParser<Level> LevelParser =
+            new EnumShortNameParser<Level>();
+
+        private static readonly new EnumShortNameParser<LevelWithTotal> LevelWithTotalParser =
+            new EnumShortNameParser<LevelWithTotal>();
+
+        private static readonly EnumShortNameParser<Chara> CharaParser =
+            new EnumShortNameParser<Chara>();
+
+        private static readonly EnumShortNameParser<CharaWithTotal> CharaWithTotalParser =
+            new EnumShortNameParser<CharaWithTotal>();
+
+        private static readonly new EnumShortNameParser<Stage> StageParser =
+            new EnumShortNameParser<Stage>();
+
+        private static readonly new EnumShortNameParser<StageWithTotal> StageWithTotalParser =
+            new EnumShortNameParser<StageWithTotal>();
+
+        private AllScoreData allScoreData = null;
 
         public Th07Converter()
         {

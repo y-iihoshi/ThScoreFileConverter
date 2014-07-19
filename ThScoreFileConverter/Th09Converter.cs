@@ -21,15 +21,9 @@ namespace ThScoreFileConverter
 
     internal class Th09Converter : ThConverter
     {
-        private static readonly EnumShortNameParser<Chara> CharaParser;
+        private static readonly EnumShortNameParser<Chara> CharaParser = new EnumShortNameParser<Chara>();
 
         private AllScoreData allScoreData = null;
-
-        [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = "Reviewed.")]
-        static Th09Converter()
-        {
-            CharaParser = new EnumShortNameParser<Chara>();
-        }
 
         public Th09Converter()
         {

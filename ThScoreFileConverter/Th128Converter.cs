@@ -22,20 +22,11 @@ namespace ThScoreFileConverter
 
     internal class Th128Converter : ThConverter
     {
-        private static readonly Dictionary<int, CardInfo> CardTable;
-
-        private static readonly EnumShortNameParser<Route> RouteParser;
-        private static readonly EnumShortNameParser<RouteWithTotal> RouteWithTotalParser;
-        private static readonly new EnumShortNameParser<StageWithTotal> StageWithTotalParser;
-
-        private AllScoreData allScoreData = null;
-
-        [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = "Reviewed.")]
+        // Thanks to thwiki.info
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1008:OpeningParenthesisMustBeSpacedCorrectly", Justification = "Reviewed.")]
-        static Th128Converter()
-        {
-            var cardList = new List<CardInfo>()
+        private static readonly Dictionary<int, CardInfo> CardTable =
+            new List<CardInfo>()
             {
                 new CardInfo(  1, "月符「ルナティックレイン」",               Stage.A_1,   Level.Easy),
                 new CardInfo(  2, "月符「ルナティックレイン」",               Stage.A_1,   Level.Normal),
@@ -287,13 +278,18 @@ namespace ThScoreFileConverter
                 new CardInfo(248, "流星「スーパーペルセイド」",               Stage.Extra, Level.Extra),
                 new CardInfo(249, "「ブレイジングスターのような鬼ごっこ」",   Stage.Extra, Level.Extra),
                 new CardInfo(250, "「妖精尽滅光」",                           Stage.Extra, Level.Extra)
-            };
-            CardTable = cardList.ToDictionary(card => card.Id);
+            }.ToDictionary(card => card.Id);
 
-            RouteParser = new EnumShortNameParser<Route>();
-            RouteWithTotalParser = new EnumShortNameParser<RouteWithTotal>();
-            StageWithTotalParser = new EnumShortNameParser<StageWithTotal>();
-        }
+        private static readonly EnumShortNameParser<Route> RouteParser =
+            new EnumShortNameParser<Route>();
+
+        private static readonly EnumShortNameParser<RouteWithTotal> RouteWithTotalParser =
+            new EnumShortNameParser<RouteWithTotal>();
+
+        private static readonly new EnumShortNameParser<StageWithTotal> StageWithTotalParser =
+            new EnumShortNameParser<StageWithTotal>();
+
+        private AllScoreData allScoreData = null;
 
         public Th128Converter()
         {
