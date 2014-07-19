@@ -574,10 +574,6 @@ namespace ThScoreFileConverter
 
         private AllScoreData allScoreData = null;
 
-        public Th105Converter()
-        {
-        }
-
         public new enum Level
         {
             [EnumAltName("E")] Easy,

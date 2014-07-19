@@ -151,10 +151,6 @@ namespace ThScoreFileConverter
 
         private AllScoreData allScoreData = null;
 
-        public Th12Converter()
-        {
-        }
-
         public enum Chara
         {
             [EnumAltName("RA")] ReimuA,

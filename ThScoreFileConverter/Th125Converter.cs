@@ -151,11 +151,8 @@ namespace ThScoreFileConverter
             string.Join("|", Utils.GetEnumerator<Level>().Select(lv => lv.ToLongName()).ToArray());
 
         private AllScoreData allScoreData = null;
-        private Dictionary<Chara, Dictionary<LevelScenePair, BestShotPair>> bestshots = null;
 
-        public Th125Converter()
-        {
-        }
+        private Dictionary<Chara, Dictionary<LevelScenePair, BestShotPair>> bestshots = null;
 
         public new enum Level
         {

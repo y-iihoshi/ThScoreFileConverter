@@ -291,10 +291,6 @@ namespace ThScoreFileConverter
 
         private AllScoreData allScoreData = null;
 
-        public Th128Converter()
-        {
-        }
-
         public enum Route
         {
             [EnumAltName("A1")] A1,

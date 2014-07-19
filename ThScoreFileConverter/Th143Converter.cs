@@ -193,11 +193,8 @@ namespace ThScoreFileConverter
             string.Join("|", Utils.GetEnumerator<Day>().Select(day => day.ToLongName()).ToArray());
 
         private AllScoreData allScoreData = null;
-        private Dictionary<DayScenePair, BestShotPair> bestshots = null;
 
-        public Th143Converter()
-        {
-        }
+        private Dictionary<DayScenePair, BestShotPair> bestshots = null;
 
         public enum Day
         {

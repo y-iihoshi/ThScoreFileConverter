@@ -158,10 +158,6 @@ namespace ThScoreFileConverter
 
         private AllScoreData allScoreData = null;
 
-        public Th14Converter()
-        {
-        }
-
         public enum LevelPractice
         {
             [EnumAltName("E")] Easy,

@@ -25,10 +25,6 @@ namespace ThScoreFileConverter
 
         private AllScoreData allScoreData = null;
 
-        public Th09Converter()
-        {
-        }
-
         public enum Chara
         {
             [EnumAltName("RM")] Reimu,

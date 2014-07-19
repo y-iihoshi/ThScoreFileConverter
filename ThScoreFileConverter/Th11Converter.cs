@@ -213,10 +213,6 @@ namespace ThScoreFileConverter
 
         private AllScoreData allScoreData = null;
 
-        public Th11Converter()
-        {
-        }
-
         public enum Chara
         {
             [EnumAltName("RY")] ReimuYukari,
