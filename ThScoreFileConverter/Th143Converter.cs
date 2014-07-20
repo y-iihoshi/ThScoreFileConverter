@@ -682,13 +682,13 @@ namespace ThScoreFileConverter
                     scene = (scene == 0) ? 10 : scene;
 
                     var key = new DayScenePair(day, scene);
+                    BestShotPair bestshot;
 
                     if (!string.IsNullOrEmpty(outputFilePath) &&
-                        (parent.bestshots != null) &&
-                        parent.bestshots.ContainsKey(key))
+                        parent.bestshots.TryGetValue(key, out bestshot))
                     {
                         var relativePath = new Uri(outputFilePath)
-                            .MakeRelativeUri(new Uri(parent.bestshots[key].Path)).OriginalString;
+                            .MakeRelativeUri(new Uri(bestshot.Path)).OriginalString;
                         var alternativeString = Utils.Format("SpellName: {0}", SpellCards[key].Card);
                         return Utils.Format(
                             "<img src=\"{0}\" alt=\"{1}\" title=\"{1}\" border=0>",
@@ -725,24 +725,22 @@ namespace ThScoreFileConverter
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                     var key = new DayScenePair(day, scene);
+                    BestShotPair bestshot;
 
                     if (!string.IsNullOrEmpty(outputFilePath) &&
-                        (parent.bestshots != null) &&
-                        parent.bestshots.ContainsKey(key))
+                        parent.bestshots.TryGetValue(key, out bestshot))
                         switch (type)
                         {
                             case 1:     // relative path to the bestshot file
                                 return new Uri(outputFilePath)
-                                    .MakeRelativeUri(new Uri(parent.bestshots[key].Path)).OriginalString;
+                                    .MakeRelativeUri(new Uri(bestshot.Path)).OriginalString;
                             case 2:     // width
-                                return parent.bestshots[key]
-                                    .Header.Width.ToString(CultureInfo.InvariantCulture);
+                                return bestshot.Header.Width.ToString(CultureInfo.InvariantCulture);
                             case 3:     // height
-                                return parent.bestshots[key]
-                                    .Header.Height.ToString(CultureInfo.InvariantCulture);
+                                return bestshot.Header.Height.ToString(CultureInfo.InvariantCulture);
                             case 4:     // date & time
                                 return new DateTime(1970, 1, 1)
-                                    .AddSeconds(parent.bestshots[key].Header.DateTime).ToLocalTime()
+                                    .AddSeconds(bestshot.Header.DateTime).ToLocalTime()
                                     .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
                             default:    // unreachable
                                 return match.ToString();

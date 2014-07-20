@@ -537,7 +537,7 @@ namespace ThScoreFileConverter
                     var chara = CharaWithTotalParser.Parse(match.Groups[2].Value);
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                    Func<CardAttack, long> getValue = (attack => 0L);
+                    Func<CardAttack, long> getValue;
                     if (type == 1)
                         getValue = (attack => attack.MaxBonuses[chara]);
                     else if (type == 2)
@@ -627,17 +627,13 @@ namespace ThScoreFileConverter
                     if ((stage == StageWithTotal.Extra) || (stage == StageWithTotal.Phantasm))
                         return match.ToString();
 
-                    Func<CardAttack, bool> findByLevel = (attack => true);
-                    Func<CardAttack, bool> findByStage = (attack => true);
-                    Func<CardAttack, bool> findByType = (attack => true);
-
+                    Func<CardAttack, bool> findByStage;
                     if (stage == StageWithTotal.Total)
-                    {
-                        // Do nothing
-                    }
+                        findByStage = (attack => true);
                     else
                         findByStage = (attack => CardTable[attack.CardId].Stage == (Stage)stage);
 
+                    Func<CardAttack, bool> findByLevel = (attack => true);
                     switch (level)
                     {
                         case LevelWithTotal.Total:
@@ -654,6 +650,7 @@ namespace ThScoreFileConverter
                             break;
                     }
 
+                    Func<CardAttack, bool> findByType;
                     if (type == 1)
                         findByType = (attack => attack.ClearCounts[chara] > 0);
                     else

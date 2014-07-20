@@ -778,8 +778,8 @@ namespace ThScoreFileConverter
                     var chara = CharaParser.Parse(match.Groups[2].Value);
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                    Func<SpellCardResult, long> getValue = (result => 0L);
-                    Func<long, string> toString = (value => string.Empty);
+                    Func<SpellCardResult, long> getValue;
+                    Func<long, string> toString;
                     if (type == 1)
                     {
                         getValue = (result => result.GotCount);

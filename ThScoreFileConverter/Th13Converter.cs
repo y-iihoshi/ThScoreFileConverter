@@ -464,8 +464,8 @@ namespace ThScoreFileConverter
                     var chara = CharaWithTotalParser.Parse(match.Groups[3].Value);
                     var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
-                    Func<SpellCard, bool> isValidLevel = (card => true);
-                    Func<SpellCard, int> getCount = (card => 0);
+                    Func<SpellCard, bool> isValidLevel;
+                    Func<SpellCard, int> getCount;
                     if (kind == "S")
                     {
                         isValidLevel = (card => card.Level != LevelPractice.OverDrive);
@@ -476,6 +476,7 @@ namespace ThScoreFileConverter
                     }
                     else
                     {
+                        isValidLevel = (card => true);
                         if (type == 1)
                             getCount = (card => card.PracticeClearCount);
                         else
@@ -560,6 +561,25 @@ namespace ThScoreFileConverter
                 CharaWithTotalParser.Pattern,
                 StageWithTotalParser.Pattern);
 
+            private static readonly Func<SpellCard, string, int, bool> FindByKindTypeImpl =
+                (card, kind, type) =>
+                {
+                    if (kind == "S")
+                    {
+                        if (type == 1)
+                            return (card.Level != LevelPractice.OverDrive) && (card.ClearCount > 0);
+                        else
+                            return (card.Level != LevelPractice.OverDrive) && (card.TrialCount > 0);
+                    }
+                    else
+                    {
+                        if (type == 1)
+                            return card.PracticeClearCount > 0;
+                        else
+                            return card.PracticeTrialCount > 0;
+                    }
+                };
+
             private readonly MatchEvaluator evaluator;
 
             [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
@@ -578,34 +598,15 @@ namespace ThScoreFileConverter
                     if ((kind == "S") && (level == LevelPracticeWithTotal.OverDrive))
                         return match.ToString();
 
-                    Func<SpellCard, bool> findByKindType = (card => true);
-                    Func<SpellCard, bool> findByLevel = (card => true);
-                    Func<SpellCard, bool> findByStage = (card => true);
+                    Func<SpellCard, bool> findByKindType = (card => FindByKindTypeImpl(card, kind, type));
 
-                    if (kind == "S")
-                    {
-                        if (type == 1)
-                            findByKindType = (card =>
-                                (card.Level != LevelPractice.OverDrive) && (card.ClearCount > 0));
-                        else
-                            findByKindType = (card =>
-                                (card.Level != LevelPractice.OverDrive) && (card.TrialCount > 0));
-                    }
-                    else
-                    {
-                        if (type == 1)
-                            findByKindType = (card => card.PracticeClearCount > 0);
-                        else
-                            findByKindType = (card => card.PracticeTrialCount > 0);
-                    }
-
+                    Func<SpellCard, bool> findByStage;
                     if (stage == StageWithTotal.Total)
-                    {
-                        // Do nothing
-                    }
+                        findByStage = (card => true);
                     else
                         findByStage = (card => CardTable[card.Id].Stage == (StagePractice)stage);
 
+                    Func<SpellCard, bool> findByLevel = (card => true);
                     switch (level)
                     {
                         case LevelPracticeWithTotal.Total:
@@ -685,12 +686,12 @@ namespace ThScoreFileConverter
                     var chara = CharaWithTotalParser.Parse(match.Groups[1].Value);
                     var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
-                    Func<ClearData, long> getValueByType = (data => 0L);
-                    Func<long, string> toString = (value => string.Empty);
+                    Func<ClearData, long> getValueByType;
+                    Func<long, string> toString;
                     if (type == 1)
                     {
                         getValueByType = (data => data.TotalPlayCount);
-                        toString = (value => Utils.ToNumberString(value));
+                        toString = Utils.ToNumberString;
                     }
                     else if (type == 2)
                     {
@@ -700,13 +701,13 @@ namespace ThScoreFileConverter
                     else
                     {
                         getValueByType = (data => data.ClearCounts.Values.Sum());
-                        toString = (value => Utils.ToNumberString(value));
+                        toString = Utils.ToNumberString;
                     }
 
-                    Func<AllScoreData, long> getValueByChara = (allData => 0L);
+                    Func<AllScoreData, long> getValueByChara;
                     if (chara == CharaWithTotal.Total)
-                        getValueByChara = (allData => allData.ClearData.Values.Sum(
-                            data => (data.Chara != chara) ? getValueByType(data) : 0L));
+                        getValueByChara = (allData => allData.ClearData.Values
+                            .Where(data => data.Chara != chara).Sum(getValueByType));
                     else
                         getValueByChara = (allData => getValueByType(allData.ClearData[chara]));
 
@@ -737,12 +738,12 @@ namespace ThScoreFileConverter
                     var chara = CharaWithTotalParser.Parse(match.Groups[2].Value);
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                    Func<ClearData, long> getValueByType = (data => 0L);
-                    Func<long, string> toString = (value => string.Empty);
+                    Func<ClearData, long> getValueByType;
+                    Func<long, string> toString;
                     if (type == 1)
                     {
                         getValueByType = (data => data.TotalPlayCount);
-                        toString = (value => Utils.ToNumberString(value));
+                        toString = Utils.ToNumberString;
                     }
                     else if (type == 2)
                     {
@@ -755,13 +756,13 @@ namespace ThScoreFileConverter
                             getValueByType = (data => data.ClearCounts.Values.Sum());
                         else
                             getValueByType = (data => data.ClearCounts[(LevelPracticeWithTotal)level]);
-                        toString = (value => Utils.ToNumberString(value));
+                        toString = Utils.ToNumberString;
                     }
 
-                    Func<AllScoreData, long> getValueByChara = (allData => 0L);
+                    Func<AllScoreData, long> getValueByChara;
                     if (chara == CharaWithTotal.Total)
-                        getValueByChara = (allData => allData.ClearData.Values.Sum(
-                            data => (data.Chara != chara) ? getValueByType(data) : 0L));
+                        getValueByChara = (allData => allData.ClearData.Values
+                            .Where(data => data.Chara != chara).Sum(getValueByType));
                     else
                         getValueByChara = (allData => getValueByType(allData.ClearData[chara]));
 

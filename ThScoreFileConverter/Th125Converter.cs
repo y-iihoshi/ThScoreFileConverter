@@ -485,6 +485,33 @@ namespace ThScoreFileConverter
             private static readonly string Pattern = Utils.Format(
                 @"%T125SCRTL({0})([12])([1-5])", CharaParser.Pattern);
 
+            private static readonly Func<Score, Chara, int, bool> IsTargetImpl =
+                (score, chara, method) =>
+                {
+                    if (score == null)
+                        return false;
+
+                    if (method == 1)
+                    {
+                        if (score.LevelScene.Level == Level.Spoiler)
+                        {
+                            if (chara == Chara.Aya)
+                            {
+                                if (score.LevelScene.Scene <= 4)
+                                    return score.Chara == Chara.Aya;
+                                else
+                                    return score.Chara == Chara.Hatate;
+                            }
+                            else
+                                return false;
+                        }
+                        else
+                            return score.Chara == chara;
+                    }
+                    else
+                        return score.Chara == chara;
+                };
+
             private readonly MatchEvaluator evaluator;
 
             [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
@@ -496,41 +523,16 @@ namespace ThScoreFileConverter
                     var method = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                    Func<Score, bool> triedAndSucceeded = (score =>
-                        (score.TrialCount > 0) && (score.FirstSuccess > 0));
-                    Func<Score, bool> isTarget = (score =>
-                    {
-                        if (score == null)
-                            return false;
-
-                        if (method == 1)
-                        {
-                            if (score.LevelScene.Level == Level.Spoiler)
-                            {
-                                if (chara == Chara.Aya)
-                                {
-                                    if (score.LevelScene.Scene <= 4)
-                                        return score.Chara == Chara.Aya;
-                                    else
-                                        return score.Chara == Chara.Hatate;
-                                }
-                                else
-                                    return false;
-                            }
-                            else
-                                return score.Chara == chara;
-                        }
-                        else
-                            return score.Chara == chara;
-                    });
+                    Func<Score, bool> isTarget = (score => IsTargetImpl(score, chara, method));
+                    Func<Score, bool> triedAndSucceeded =
+                        (score => isTarget(score) && (score.TrialCount > 0) && (score.FirstSuccess > 0));
 
                     switch (type)
                     {
                         case 1:     // total score
                             return Utils.ToNumberString(
                                 parent.allScoreData.Scores.Sum(
-                                    score => (isTarget(score) && triedAndSucceeded(score))
-                                        ? (long)score.HighScore : 0L));
+                                    score => triedAndSucceeded(score) ? (long)score.HighScore : 0L));
                         case 2:     // total of bestshot scores
                             return Utils.ToNumberString(
                                 parent.allScoreData.Scores.Sum(
@@ -542,11 +544,10 @@ namespace ThScoreFileConverter
                         case 4:     // total of num of shots for the first success
                             return Utils.ToNumberString(
                                 parent.allScoreData.Scores.Sum(
-                                    score => (isTarget(score) && triedAndSucceeded(score))
-                                        ? (long)score.FirstSuccess : 0L));
+                                    score => triedAndSucceeded(score) ? (long)score.FirstSuccess : 0L));
                         case 5:     // num of succeeded scenes
                             return parent.allScoreData.Scores
-                                .Count(score => isTarget(score) && triedAndSucceeded(score))
+                                .Count(triedAndSucceeded)
                                 .ToString(CultureInfo.CurrentCulture);
                         default:    // unreachable
                             return match.ToString();
@@ -633,20 +634,21 @@ namespace ThScoreFileConverter
                     var level = LevelParser.Parse(match.Groups[2].Value);
                     var scene = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                    var bestshots = parent.bestshots.ContainsKey(chara) ? parent.bestshots[chara] : null;
                     var key = new LevelScenePair(level, scene);
+                    Dictionary<LevelScenePair, BestShotPair> bestshots;
+                    BestShotPair bestshot;
 
                     if (!string.IsNullOrEmpty(outputFilePath) &&
-                        (bestshots != null) &&
-                        bestshots.ContainsKey(key))
+                        parent.bestshots.TryGetValue(chara, out bestshots) &&
+                        bestshots.TryGetValue(key, out bestshot))
                     {
                         var relativePath = new Uri(outputFilePath)
-                            .MakeRelativeUri(new Uri(bestshots[key].Path)).OriginalString;
+                            .MakeRelativeUri(new Uri(bestshot.Path)).OriginalString;
                         var alternativeString = Utils.Format(
                             "ClearData: {0}\nSlow: {1:F6}%\nSpellName: {2}",
-                            Utils.ToNumberString(bestshots[key].Header.ResultScore),
-                            bestshots[key].Header.SlowRate,
-                            Encoding.Default.GetString(bestshots[key].Header.CardName).TrimEnd('\0'));
+                            Utils.ToNumberString(bestshot.Header.ResultScore),
+                            bestshot.Header.SlowRate,
+                            Encoding.Default.GetString(bestshot.Header.CardName).TrimEnd('\0'));
                         return Utils.Format(
                             "<img src=\"{0}\" alt=\"{1}\" title=\"{1}\" border=0>",
                             relativePath,
@@ -664,18 +666,15 @@ namespace ThScoreFileConverter
         }
 
         // %T125SHOTEX[w][x][y][z]
-        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
         private class ShotExReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
                 @"%T125SHOTEX({0})({1})([1-9])([1-7])", CharaParser.Pattern, LevelParser.Pattern);
 
-            private readonly MatchEvaluator evaluator;
-
-            private Func<BestShotHeader, Func<int, string>, List<Detail>> detailList =
-                ((header, toNumString) => new List<Detail>
+            private static readonly Func<BestShotHeader, List<Detail>> DetailList =
+                header => new List<Detail>
                 {
-                    new Detail(true,                       "Base Point    {0,9}", toNumString(header.BasePoint)),
+                    new Detail(true,                       "Base Point    {0,9}", Utils.ToNumberString(header.BasePoint)),
                     new Detail(header.Fields.ClearShot,    "Clear Shot!   {0,9}", Utils.Format("+ {0}", header.ClearShot)),
                     new Detail(header.Fields.SoloShot,     "Solo Shot     {0,9}", "+ 100"),
                     new Detail(header.Fields.RedShot,      "Red Shot      {0,9}", "+ 300"),
@@ -686,9 +685,9 @@ namespace ThScoreFileConverter
                     new Detail(header.Fields.YellowShot,   "Yellow Shot   {0,9}", "+ 300"),
                     new Detail(header.Fields.OrangeShot,   "Orange Shot   {0,9}", "+ 300"),
                     new Detail(header.Fields.ColorfulShot, "Colorful Shot {0,9}", "+ 900"),
-                    new Detail(header.Fields.RainbowShot,  "Rainbow Shot  {0,9}", Utils.Format("+ {0}", toNumString(2100))),
-                    new Detail(header.Fields.RiskBonus,    "Risk Bonus    {0,9}", Utils.Format("+ {0}", toNumString(header.RiskBonus))),
-                    new Detail(header.Fields.MacroBonus,   "Macro Bonus   {0,9}", Utils.Format("+ {0}", toNumString(header.MacroBonus))),
+                    new Detail(header.Fields.RainbowShot,  "Rainbow Shot  {0,9}", Utils.Format("+ {0}", Utils.ToNumberString(2100))),
+                    new Detail(header.Fields.RiskBonus,    "Risk Bonus    {0,9}", Utils.Format("+ {0}", Utils.ToNumberString(header.RiskBonus))),
+                    new Detail(header.Fields.MacroBonus,   "Macro Bonus   {0,9}", Utils.Format("+ {0}", Utils.ToNumberString(header.MacroBonus))),
                     new Detail(header.Fields.FrontShot,    "Front Shot    {0,9}", Utils.Format("+ {0}", header.FrontSideBackShot)),
                     new Detail(header.Fields.SideShot,     "Side Shot     {0,9}", Utils.Format("+ {0}", header.FrontSideBackShot)),
                     new Detail(header.Fields.BackShot,     "Back Shot     {0,9}", Utils.Format("+ {0}", header.FrontSideBackShot)),
@@ -699,10 +698,13 @@ namespace ThScoreFileConverter
                     new Detail(header.Fields.NiceShot,     "Nice Shot!    {0,9}", Utils.Format("* {0:F2}", header.NiceShot)),
                     new Detail(true,                       "Angle Bonus   {0,9}", Utils.Format("* {0:F2}", header.AngleBonus)),
                     new Detail(true,                       string.Empty,          string.Empty),
-                    new Detail(true,                       "Result Score  {0,9}", toNumString(header.ResultScore))
-                });
+                    new Detail(true,                       "Result Score  {0,9}", Utils.ToNumberString(header.ResultScore))
+                };
+
+            private readonly MatchEvaluator evaluator;
 
             [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine", Justification = "Reviewed.")]
+            [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
             public ShotExReplacer(Th125Converter parent, string outputFilePath)
             {
                 this.evaluator = new MatchEvaluator(match =>
@@ -712,25 +714,26 @@ namespace ThScoreFileConverter
                     var scene = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
                     var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
-                    var bestshots = parent.bestshots.ContainsKey(chara) ? parent.bestshots[chara] : null;
                     var key = new LevelScenePair(level, scene);
+                    Dictionary<LevelScenePair, BestShotPair> bestshots;
+                    BestShotPair bestshot;
 
                     if (!string.IsNullOrEmpty(outputFilePath) &&
-                        (bestshots != null) &&
-                        bestshots.ContainsKey(key))
+                        parent.bestshots.TryGetValue(chara, out bestshots) &&
+                        bestshots.TryGetValue(key, out bestshot))
                         switch (type)
                         {
                             case 1:     // relative path to the bestshot file
                                 return new Uri(outputFilePath)
-                                    .MakeRelativeUri(new Uri(bestshots[key].Path)).OriginalString;
+                                    .MakeRelativeUri(new Uri(bestshot.Path)).OriginalString;
                             case 2:     // width
-                                return bestshots[key].Header.Width.ToString(CultureInfo.InvariantCulture);
+                                return bestshot.Header.Width.ToString(CultureInfo.InvariantCulture);
                             case 3:     // height
-                                return bestshots[key].Header.Height.ToString(CultureInfo.InvariantCulture);
+                                return bestshot.Header.Height.ToString(CultureInfo.InvariantCulture);
                             case 4:     // score
-                                return Utils.ToNumberString(bestshots[key].Header.ResultScore);
+                                return Utils.ToNumberString(bestshot.Header.ResultScore);
                             case 5:     // slow rate
-                                return Utils.Format("{0:F6}%", bestshots[key].Header.SlowRate);
+                                return Utils.Format("{0:F6}%", bestshot.Header.SlowRate);
                             case 6:     // date & time
                                 {
                                     var score = parent.allScoreData.Scores.Find(elem =>
@@ -747,7 +750,7 @@ namespace ThScoreFileConverter
                             case 7:     // detail info
                                 {
                                     var detailStrings =
-                                        detailList(bestshots[key].Header, Utils.ToNumberString)
+                                        DetailList(bestshot.Header)
                                             .Where(detail => detail.Outputs)
                                             .Select(detail => Utils.Format(detail.Format, detail.Value));
                                     return string.Join("\r\n", detailStrings.ToArray());

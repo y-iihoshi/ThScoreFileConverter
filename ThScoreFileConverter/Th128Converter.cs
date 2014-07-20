@@ -614,7 +614,7 @@ namespace ThScoreFileConverter
                     var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
                     var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
-                    Func<SpellCard, int> getCount = (card => 0);
+                    Func<SpellCard, int> getCount;
                     if (type == 1)
                         getCount = (card => card.NoIceCount);
                     else if (type == 2)
@@ -706,17 +706,13 @@ namespace ThScoreFileConverter
                     if (stage == StageWithTotal.Extra)
                         return match.ToString();
 
-                    Func<SpellCard, bool> findByLevel = (card => true);
-                    Func<SpellCard, bool> findByStage = (card => true);
-                    Func<SpellCard, bool> findByType = (card => true);
-
+                    Func<SpellCard, bool> findByStage;
                     if (stage == StageWithTotal.Total)
-                    {
-                        // Do nothing
-                    }
+                        findByStage = (card => true);
                     else
                         findByStage = (card => CardTable[card.Id].Stage == (Stage)stage);
 
+                    Func<SpellCard, bool> findByLevel = (card => true);
                     switch (level)
                     {
                         case LevelWithTotal.Total:
@@ -730,6 +726,7 @@ namespace ThScoreFileConverter
                             break;
                     }
 
+                    Func<SpellCard, bool> findByType;
                     if (type == 1)
                         findByType = (card => card.NoIceCount > 0);
                     else if (type == 2)
@@ -800,12 +797,12 @@ namespace ThScoreFileConverter
                     var route = RouteWithTotalParser.Parse(match.Groups[1].Value);
                     var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
-                    Func<ClearData, long> getValueByType = (data => 0L);
-                    Func<long, string> toString = (value => string.Empty);
+                    Func<ClearData, long> getValueByType;
+                    Func<long, string> toString;
                     if (type == 1)
                     {
                         getValueByType = (data => data.TotalPlayCount);
-                        toString = (value => Utils.ToNumberString(value));
+                        toString = Utils.ToNumberString;
                     }
                     else if (type == 2)
                     {
@@ -815,13 +812,13 @@ namespace ThScoreFileConverter
                     else
                     {
                         getValueByType = (data => data.ClearCounts.Values.Sum());
-                        toString = (value => Utils.ToNumberString(value));
+                        toString = Utils.ToNumberString;
                     }
 
-                    Func<AllScoreData, long> getValueByRoute = (allData => 0L);
+                    Func<AllScoreData, long> getValueByRoute;
                     if (route == RouteWithTotal.Total)
-                        getValueByRoute = (allData => allData.ClearData.Values.Sum(
-                            data => (data.Route != route) ? getValueByType(data) : 0L));
+                        getValueByRoute = (allData => allData.ClearData.Values
+                            .Where(data => data.Route != route).Sum(getValueByType));
                     else
                         getValueByRoute = (allData => getValueByType(allData.ClearData[route]));
 
@@ -861,12 +858,12 @@ namespace ThScoreFileConverter
                         ((level != LevelWithTotal.Extra) && (level != LevelWithTotal.Total)))
                         return match.ToString();
 
-                    Func<ClearData, long> getValueByType = (data => 0L);
-                    Func<long, string> toString = (value => string.Empty);
+                    Func<ClearData, long> getValueByType;
+                    Func<long, string> toString;
                     if (type == 1)
                     {
                         getValueByType = (data => data.TotalPlayCount);
-                        toString = (value => Utils.ToNumberString(value));
+                        toString = Utils.ToNumberString;
                     }
                     else if (type == 2)
                     {
@@ -879,13 +876,13 @@ namespace ThScoreFileConverter
                             getValueByType = (data => data.ClearCounts.Values.Sum());
                         else
                             getValueByType = (data => data.ClearCounts[(Level)level]);
-                        toString = (value => Utils.ToNumberString(value));
+                        toString = Utils.ToNumberString;
                     }
 
-                    Func<AllScoreData, long> getValueByRoute = (allData => 0L);
+                    Func<AllScoreData, long> getValueByRoute;
                     if (route == RouteWithTotal.Total)
-                        getValueByRoute = (allData => allData.ClearData.Values.Sum(
-                            data => (data.Route != route) ? getValueByType(data) : 0L));
+                        getValueByRoute = (allData => allData.ClearData.Values
+                            .Where(data => data.Route != route).Sum(getValueByType));
                     else
                         getValueByRoute = (allData => getValueByType(allData.ClearData[route]));
 

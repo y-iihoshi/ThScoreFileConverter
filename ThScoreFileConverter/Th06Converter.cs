@@ -226,10 +226,13 @@ namespace ThScoreFileConverter
 
             header.WriteTo(writer);
 
-            // Lzss.Extract(input, output);
+#if false
+            Lzss.Extract(input, output);
+#else
             var body = new byte[header.DecodedAllSize - header.Size];
             input.Read(body, 0, body.Length);
             output.Write(body, 0, body.Length);
+#endif
             output.Flush();
             output.SetLength(output.Position);
 
@@ -376,7 +379,7 @@ namespace ThScoreFileConverter
                     var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
                     var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
-                    Func<CardAttack, int> getCount = (attack => 0);
+                    Func<CardAttack, int> getCount;
                     if (type == 1)
                         getCount = (attack => attack.ClearCount);
                     else
@@ -459,16 +462,13 @@ namespace ThScoreFileConverter
                     var stage = StageWithTotalParser.Parse(match.Groups[1].Value);
                     var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
-                    Func<CardAttack, bool> findByStage = (attack => true);
-                    Func<CardAttack, bool> findByType = (attack => true);
-
+                    Func<CardAttack, bool> findByStage;
                     if (stage == StageWithTotal.Total)
-                    {
-                        // Do nothing
-                    }
+                        findByStage = (attack => true);
                     else
                         findByStage = (attack => CardTable[attack.CardId].Stage == (Stage)stage);
 
+                    Func<CardAttack, bool> findByType;
                     if (type == 1)
                         findByType = (attack => attack.ClearCount > 0);
                     else

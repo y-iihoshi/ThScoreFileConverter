@@ -498,7 +498,7 @@ namespace ThScoreFileConverter
             }
 
             var numPairs = Enum.GetValues(typeof(Chara)).Length * Enum.GetValues(typeof(Level)).Length;
-            if ((allScoreData.ClearData.Count == numPairs) &&
+            if ((allScoreData.ClearData.Sum(data => data.Value.Count) == numPairs) &&
                 (allScoreData.Status != null))
                 return allScoreData;
             else
@@ -526,8 +526,7 @@ namespace ThScoreFileConverter
                     if (chara == Chara.Meiling)
                         return match.ToString();
 
-                    var key = new CharaLevelPair(chara, level);
-                    var score = parent.allScoreData.ClearData[key].Ranking[rank];
+                    var score = parent.allScoreData.ClearData[chara][level].Ranking[rank];
 
                     switch (type)
                     {
@@ -569,48 +568,31 @@ namespace ThScoreFileConverter
                     if (chara == Chara.Meiling)
                         return match.ToString();
 
-                    var dataList = parent.allScoreData.ClearData
-                        .Where(entry => entry.Key.Chara == chara)
-                        .Select(entry => entry.Value);
+                    if (type == 4)
+                    {
+                        if ((0 < number) && (number <= CardIdTable[chara].Count()))
+                            return parent.allScoreData.ClearData[chara].Values
+                                .Any(data => data.CardTrulyGot[number - 1] != 0x00) ? "★" : string.Empty;
+                        else
+                            return match.ToString();
+                    }
+
+                    Func<short, int> toInteger = (value => (int)value);
+                    Func<ClearData, IEnumerable<int>> getValues;
+                    if (type == 1)
+                        getValues = (data => data.MaxBonuses);
+                    else if (type == 2)
+                        getValues = (data => data.CardGotCount.Select(toInteger));
+                    else
+                        getValues = (data => data.CardTrialCount.Select(toInteger));
 
                     if (number == 0)
-                    {
-                        switch (type)
-                        {
-                            case 1:
-                                return Utils.ToNumberString(
-                                    dataList.Sum(data => data.MaxBonuses.Sum()));
-                            case 2:
-                                return Utils.ToNumberString(
-                                    dataList.Sum(data => data.CardGotCount.Sum(count => (int)count)));
-                            case 3:
-                                return Utils.ToNumberString(
-                                    dataList.Sum(data => data.CardTrialCount.Sum(count => (int)count)));
-                            case 4:
-                            default:
-                                return match.ToString();
-                        }
-                    }
+                        return Utils.ToNumberString(
+                            parent.allScoreData.ClearData[chara].Values.Sum(data => getValues(data).Sum()));
                     else if (number <= CardIdTable[chara].Count())
-                    {
-                        switch (type)
-                        {
-                            case 1:
-                                return Utils.ToNumberString(
-                                    dataList.Sum(data => data.MaxBonuses[number - 1]));
-                            case 2:
-                                return Utils.ToNumberString(
-                                    dataList.Sum(data => (int)data.CardGotCount[number - 1]));
-                            case 3:
-                                return Utils.ToNumberString(
-                                    dataList.Sum(data => (int)data.CardTrialCount[number - 1]));
-                            case 4:
-                                return dataList.Any(data => data.CardTrulyGot[number - 1] != 0x00)
-                                    ? "★" : string.Empty;
-                            default:
-                                return match.ToString();
-                        }
-                    }
+                        return Utils.ToNumberString(
+                            parent.allScoreData.ClearData[chara].Values.Sum(data =>
+                                getValues(data).ElementAt(number - 1)));
                     else
                         return match.ToString();
                 });
@@ -645,8 +627,7 @@ namespace ThScoreFileConverter
                     {
                         if (hideUntriedCards)
                         {
-                            var dataList = parent.allScoreData.ClearData
-                                .Where(pair => pair.Key.Chara == chara)
+                            var dataList = parent.allScoreData.ClearData[chara]
                                 .Select(pair => pair.Value);
                             if (dataList.All(data => data.CardTrialCount[number - 1] <= 0))
                                 return (type == "N") ? "??????????" : "?????";
@@ -686,50 +667,29 @@ namespace ThScoreFileConverter
                     if (chara == Chara.Meiling)
                         return match.ToString();
 
+                    Func<ClearData, IEnumerable<short>> getValues;
+                    if (type == 1)
+                        getValues = (data => data.CardGotCount);
+                    else if (type == 2)
+                        getValues = (data => data.CardTrialCount);
+                    else
+                        getValues = (data => data.CardTrulyGot.Select(got => (short)got));
+
+                    Func<short, bool> isPositive = (value => value > 0);
+
                     if (level == LevelWithTotal.Total)
-                    {
-                        var dataList = parent.allScoreData.ClearData
-                            .Where(pair => pair.Key.Chara == chara)
-                            .Select(pair => pair.Value);
-                        switch (type)
-                        {
-                            case 1:
-                                return Utils.ToNumberString(
-                                    dataList.Sum(data => data.CardGotCount.Count(count => count > 0)));
-                            case 2:
-                                return Utils.ToNumberString(
-                                    dataList.Sum(data => data.CardTrialCount.Count(count => count > 0)));
-                            case 3:
-                                return Utils.ToNumberString(
-                                    dataList.Sum(data => data.CardTrulyGot.Count(got => got > 0)));
-                            default:
-                                return match.ToString();
-                        }
-                    }
+                        return Utils.ToNumberString(
+                            parent.allScoreData.ClearData[chara].Values.Sum(data =>
+                                getValues(data).Count(isPositive)));
                     else
                     {
-                        var key = new CharaLevelPair(chara, Level.Easy);
-                        var data = parent.allScoreData.ClearData[key];
                         var cardIndexIdPairs = CardIdTable[chara]
                             .Select((id, index) => new KeyValuePair<int, int>(index, id))
                             .Where(pair => CardTable[pair.Value].Level == (Level)level);
-                        switch (type)
-                        {
-                            case 1:
-                                return Utils.ToNumberString(data.CardGotCount
-                                    .Where((count, index) => cardIndexIdPairs.Any(pair => pair.Key == index))
-                                    .Count(count => count > 0));
-                            case 2:
-                                return Utils.ToNumberString(data.CardTrialCount
-                                    .Where((count, index) => cardIndexIdPairs.Any(pair => pair.Key == index))
-                                    .Count(count => count > 0));
-                            case 3:
-                                return Utils.ToNumberString(data.CardTrulyGot
-                                    .Where((got, index) => cardIndexIdPairs.Any(pair => pair.Key == index))
-                                    .Count(got => got > 0));
-                            default:
-                                return match.ToString();
-                        }
+                        return Utils.ToNumberString(
+                            getValues(parent.allScoreData.ClearData[chara][Level.Easy])
+                                .Where((value, index) => cardIndexIdPairs.Any(pair => pair.Key == index))
+                                .Count(isPositive));
                     }
                 });
             }
@@ -759,8 +719,7 @@ namespace ThScoreFileConverter
                     if (chara == Chara.Meiling)
                         return match.ToString();
 
-                    var key = new CharaLevelPair(chara, level);
-                    var data = parent.allScoreData.ClearData[key];
+                    var data = parent.allScoreData.ClearData[chara][level];
                     switch (type)
                     {
                         case 1:
@@ -819,35 +778,18 @@ namespace ThScoreFileConverter
             }
         }
 
-        private class CharaLevelPair : Pair<Chara, Level>
-        {
-            public CharaLevelPair(Chara chara, Level level)
-                : base(chara, level)
-            {
-            }
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public Chara Chara
-            {
-                get { return this.First; }
-            }
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public Level Level
-            {
-                get { return this.Second; }
-            }
-        }
-
         private class AllScoreData : IBinaryReadable
         {
             public AllScoreData()
             {
-                var numPairs = Enum.GetValues(typeof(Chara)).Length * Enum.GetValues(typeof(Level)).Length;
-                this.ClearData = new Dictionary<CharaLevelPair, ClearData>(numPairs);
+                var charas = Utils.GetEnumerator<Chara>();
+                var numLevels = Enum.GetValues(typeof(Level)).Length;
+                this.ClearData = new Dictionary<Chara, Dictionary<Level, ClearData>>(charas.Count());
+                foreach (var chara in charas)
+                    this.ClearData.Add(chara, new Dictionary<Level, ClearData>(numLevels));
             }
 
-            public Dictionary<CharaLevelPair, ClearData> ClearData { get; private set; }
+            public Dictionary<Chara, Dictionary<Level, ClearData>> ClearData { get; private set; }
 
             public Status Status { get; private set; }
 
@@ -861,9 +803,8 @@ namespace ThScoreFileConverter
                     {
                         var clearData = new ClearData();
                         clearData.ReadFrom(reader);
-                        var key = new CharaLevelPair(chara, level);
-                        if (!this.ClearData.ContainsKey(key))
-                            this.ClearData.Add(key, clearData);
+                        if (!this.ClearData[chara].ContainsKey(level))
+                            this.ClearData[chara].Add(level, clearData);
                     }
 
                 foreach (var unknownChara in Enumerable.Range(1, 4))

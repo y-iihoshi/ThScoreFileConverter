@@ -524,18 +524,18 @@ namespace ThScoreFileConverter
                     var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
                     var key = new LevelScenePair(level, scene);
+                    BestShotPair bestshot;
 
                     if (!string.IsNullOrEmpty(outputFilePath) &&
-                        (parent.bestshots != null) &&
-                        parent.bestshots.ContainsKey(key))
+                        parent.bestshots.TryGetValue(key, out bestshot))
                     {
                         var relativePath = new Uri(outputFilePath)
-                            .MakeRelativeUri(new Uri(parent.bestshots[key].Path)).OriginalString;
+                            .MakeRelativeUri(new Uri(bestshot.Path)).OriginalString;
                         var alternativeString = Utils.Format(
                             "ClearData: {0}\nSlow: {1:F6}%\nSpellName: {2}",
-                            Utils.ToNumberString(parent.bestshots[key].Header.Score),
-                            parent.bestshots[key].Header.SlowRate,
-                            Encoding.Default.GetString(parent.bestshots[key].Header.CardName).TrimEnd('\0'));
+                            Utils.ToNumberString(bestshot.Header.Score),
+                            bestshot.Header.SlowRate,
+                            Encoding.Default.GetString(bestshot.Header.CardName).TrimEnd('\0'));
                         return Utils.Format(
                             "<img src=\"{0}\" alt=\"{1}\" title=\"{1}\" border=0>",
                             relativePath,
@@ -570,25 +570,23 @@ namespace ThScoreFileConverter
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                     var key = new LevelScenePair(level, scene);
+                    BestShotPair bestshot;
 
                     if (!string.IsNullOrEmpty(outputFilePath) &&
-                        (parent.bestshots != null) &&
-                        parent.bestshots.ContainsKey(key))
+                        parent.bestshots.TryGetValue(key, out bestshot))
                         switch (type)
                         {
                             case 1:     // relative path to the bestshot file
                                 return new Uri(outputFilePath)
-                                    .MakeRelativeUri(new Uri(parent.bestshots[key].Path)).OriginalString;
+                                    .MakeRelativeUri(new Uri(bestshot.Path)).OriginalString;
                             case 2:     // width
-                                return parent.bestshots[key]
-                                    .Header.Width.ToString(CultureInfo.InvariantCulture);
+                                return bestshot.Header.Width.ToString(CultureInfo.InvariantCulture);
                             case 3:     // height
-                                return parent.bestshots[key]
-                                    .Header.Height.ToString(CultureInfo.InvariantCulture);
+                                return bestshot.Header.Height.ToString(CultureInfo.InvariantCulture);
                             case 4:     // score
-                                return Utils.ToNumberString(parent.bestshots[key].Header.Score);
+                                return Utils.ToNumberString(bestshot.Header.Score);
                             case 5:     // slow rate
-                                return Utils.Format("{0:F6}%", parent.bestshots[key].Header.SlowRate);
+                                return Utils.Format("{0:F6}%", bestshot.Header.SlowRate);
                             case 6:     // date & time
                                 {
                                     var score = parent.allScoreData.Scores.Find(

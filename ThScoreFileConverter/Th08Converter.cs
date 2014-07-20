@@ -701,17 +701,20 @@ namespace ThScoreFileConverter
                     var chara = CharaWithTotalParser.Parse(match.Groups[3].Value);
                     var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
-                    Func<CardAttack, bool> isValidLevel = (attack => true);
-                    Func<CardAttack, CardAttackCareer> getCareer = (attack => null);
+                    Func<CardAttack, bool> isValidLevel;
+                    Func<CardAttack, CardAttackCareer> getCareer;
                     if (kind == "S")
                     {
                         isValidLevel = (attack => CardTable[attack.CardId].Level != LevelPractice.LastWord);
                         getCareer = (attack => attack.StoryCareer);
                     }
                     else
+                    {
+                        isValidLevel = (attack => true);
                         getCareer = (attack => attack.PracticeCareer);
+                    }
 
-                    Func<CardAttack, long> getValue = (attack => 0L);
+                    Func<CardAttack, long> getValue;
                     if (type == 1)
                         getValue = (attack => getCareer(attack).MaxBonuses[chara]);
                     else if (type == 2)
@@ -795,6 +798,23 @@ namespace ThScoreFileConverter
                 CharaWithTotalParser.Pattern,
                 StageWithTotalParser.Pattern);
 
+            [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
+            private static readonly Func<CardAttack, CharaWithTotal, string, int, bool> FindByKindTypeImpl =
+                (attack, chara, kind, type) =>
+                {
+                    Func<CardAttackCareer, int> getCount;
+                    if (type == 1)
+                        getCount = (career => career.ClearCounts[chara]);
+                    else
+                        getCount = (career => career.TrialCounts[chara]);
+
+                    if (kind == "S")
+                        return (CardTable[attack.CardId].Level != LevelPractice.LastWord)
+                            && (getCount(attack.StoryCareer) > 0);
+                    else
+                        return getCount(attack.PracticeCareer) > 0;
+                };
+
             private readonly MatchEvaluator evaluator;
 
             [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
@@ -813,36 +833,16 @@ namespace ThScoreFileConverter
                     if ((kind == "S") && (level == LevelPracticeWithTotal.LastWord))
                         return match.ToString();
 
-                    Func<CardAttack, bool> findByKindType = (attack => true);
-                    Func<CardAttack, bool> findByLevel = (attack => true);
-                    Func<CardAttack, bool> findByStage = (attack => true);
+                    Func<CardAttack, bool> findByKindType =
+                        (attack => FindByKindTypeImpl(attack, chara, kind, type));
 
-                    if (kind == "S")
-                    {
-                        if (type == 1)
-                            findByKindType = (attack =>
-                                (CardTable[attack.CardId].Level != LevelPractice.LastWord) &&
-                                (attack.StoryCareer.ClearCounts[chara] > 0));
-                        else
-                            findByKindType = (attack =>
-                                (CardTable[attack.CardId].Level != LevelPractice.LastWord) &&
-                                (attack.StoryCareer.TrialCounts[chara] > 0));
-                    }
-                    else
-                    {
-                        if (type == 1)
-                            findByKindType = (attack => attack.PracticeCareer.ClearCounts[chara] > 0);
-                        else
-                            findByKindType = (attack => attack.PracticeCareer.TrialCounts[chara] > 0);
-                    }
-
+                    Func<CardAttack, bool> findByStage;
                     if (stage == StageWithTotal.Total)
-                    {
-                        // Do nothing
-                    }
+                        findByStage = (attack => true);
                     else
                         findByStage = (attack => CardTable[attack.CardId].Stage == (StagePractice)stage);
 
+                    Func<CardAttack, bool> findByLevel = (attack => true);
                     switch (level)
                     {
                         case LevelPracticeWithTotal.Total:
