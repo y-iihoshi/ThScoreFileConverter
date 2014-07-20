@@ -703,8 +703,6 @@ namespace ThScoreFileConverter
 
             private readonly MatchEvaluator evaluator;
 
-            [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine", Justification = "Reviewed.")]
-            [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
             public ShotExReplacer(Th125Converter parent, string outputFilePath)
             {
                 this.evaluator = new MatchEvaluator(match =>
@@ -721,6 +719,9 @@ namespace ThScoreFileConverter
                     if (!string.IsNullOrEmpty(outputFilePath) &&
                         parent.bestshots.TryGetValue(chara, out bestshots) &&
                         bestshots.TryGetValue(key, out bestshot))
+                    {
+                        Score score;
+                        IEnumerable<string> detailStrings;
                         switch (type)
                         {
                             case 1:     // relative path to the bestshot file
@@ -735,30 +736,27 @@ namespace ThScoreFileConverter
                             case 5:     // slow rate
                                 return Utils.Format("{0:F6}%", bestshot.Header.SlowRate);
                             case 6:     // date & time
-                                {
-                                    var score = parent.allScoreData.Scores.Find(elem =>
-                                        (elem != null) &&
-                                        (elem.Chara == chara) &&
-                                        elem.LevelScene.Equals(key));
-                                    if (score != null)
-                                        return new DateTime(1970, 1, 1)
-                                            .AddSeconds(score.DateTime).ToLocalTime()
-                                            .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
-                                    else
-                                        return "----/--/-- --:--:--";
-                                }
+                                score = parent.allScoreData.Scores.Find(elem =>
+                                    (elem != null) &&
+                                    (elem.Chara == chara) &&
+                                    elem.LevelScene.Equals(key));
+                                if (score != null)
+                                    return new DateTime(1970, 1, 1)
+                                        .AddSeconds(score.DateTime).ToLocalTime()
+                                        .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
+                                else
+                                    return "----/--/-- --:--:--";
                             case 7:     // detail info
-                                {
-                                    var detailStrings =
-                                        DetailList(bestshot.Header)
-                                            .Where(detail => detail.Outputs)
-                                            .Select(detail => Utils.Format(detail.Format, detail.Value));
-                                    return string.Join("\r\n", detailStrings.ToArray());
-                                }
+                                detailStrings = DetailList(bestshot.Header)
+                                    .Where(detail => detail.Outputs)
+                                    .Select(detail => Utils.Format(detail.Format, detail.Value));
+                                return string.Join("\r\n", detailStrings.ToArray());
                             default:    // unreachable
                                 return match.ToString();
                         }
+                    }
                     else
+                    {
                         switch (type)
                         {
                             case 1: return string.Empty;
@@ -770,6 +768,7 @@ namespace ThScoreFileConverter
                             case 7: return string.Empty;
                             default: return match.ToString();
                         }
+                    }
                 });
             }
 

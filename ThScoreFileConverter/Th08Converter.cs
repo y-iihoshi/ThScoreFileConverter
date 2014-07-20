@@ -610,7 +610,6 @@ namespace ThScoreFileConverter
 
             private readonly MatchEvaluator evaluator;
 
-            [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine", Justification = "Reviewed.")]
             public ScoreReplacer(Th08Converter parent)
             {
                 this.evaluator = new MatchEvaluator(match =>
@@ -624,6 +623,7 @@ namespace ThScoreFileConverter
                     var key = new CharaLevelPair(chara, level);
                     var score = parent.allScoreData.Rankings.ContainsKey(key)
                         ? parent.allScoreData.Rankings[key][rank] : InitialRanking[rank];
+                    IEnumerable<string> cardStrings;
 
                     switch (type)
                     {
@@ -662,12 +662,10 @@ namespace ThScoreFileConverter
                         case "E":   // human rate
                             return Utils.Format("{0:F2}%", score.HumanRate / 100.0);
                         case "F":   // got spell cards
-                            {
-                                var list = CardTable.Values
-                                    .Where(card => score.CardFlags[card.Id] > 0)
-                                    .Select(card => Utils.Format("No.{0:D3} {1}", card.Id, card.Name));
-                                return string.Join("\n", list.ToArray());
-                            }
+                            cardStrings = CardTable.Values
+                                .Where(card => score.CardFlags[card.Id] > 0)
+                                .Select(card => Utils.Format("No.{0:D3} {1}", card.Id, card.Name));
+                            return string.Join("\n", cardStrings.ToArray());
                         case "G":   // number of got spell cards
                             return score.CardFlags.Values.Count(flag => flag > 0)
                                 .ToString(CultureInfo.CurrentCulture);

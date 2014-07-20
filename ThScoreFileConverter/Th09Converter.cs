@@ -233,7 +233,6 @@ namespace ThScoreFileConverter
 
             private readonly MatchEvaluator evaluator;
 
-            [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine", Justification = "Reviewed.")]
             public ScoreReplacer(Th09Converter parent)
             {
                 this.evaluator = new MatchEvaluator(match =>
@@ -245,6 +244,7 @@ namespace ThScoreFileConverter
                     var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
                     var score = parent.allScoreData.Rankings[new CharaLevelPair(chara, level)][rank];
+                    var date = string.Empty;
 
                     switch (type)
                     {
@@ -253,10 +253,8 @@ namespace ThScoreFileConverter
                         case 2:     // score
                             return Utils.ToNumberString((score.Score * 10) + score.ContinueCount);
                         case 3:     // date
-                            {
-                                var date = Encoding.Default.GetString(score.Date).Split('\0')[0];
-                                return (date != "--/--") ? date : "--/--/--";
-                            }
+                            date = Encoding.Default.GetString(score.Date).Split('\0')[0];
+                            return (date != "--/--") ? date : "--/--/--";
                         default:    // unreachable
                             return match.ToString();
                     }
@@ -298,7 +296,6 @@ namespace ThScoreFileConverter
 
             private readonly MatchEvaluator evaluator;
 
-            [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine", Justification = "Reviewed.")]
             public ClearReplacer(Th09Converter parent)
             {
                 this.evaluator = new MatchEvaluator(match =>
@@ -309,22 +306,18 @@ namespace ThScoreFileConverter
 
                     var count = parent.allScoreData.PlayStatus.ClearCounts[chara].Counts[level];
 
-                    switch (type)
+                    if (type == 1)
+                        return Utils.ToNumberString(count);
+                    else
                     {
-                        case 1:     // clear count
-                            return Utils.ToNumberString(count);
-                        case 2:     // clear flag
-                            if (count > 0)
-                                return "Cleared";
-                            else
-                            {
-                                var score = parent.allScoreData
-                                    .Rankings[new CharaLevelPair(chara, level)][0];
-                                var date = Encoding.Default.GetString(score.Date).TrimEnd('\0');
-                                return (date != "--/--") ? "Not Cleared" : "-------";
-                            }
-                        default:    // unreachable
-                            return match.ToString();
+                        if (count > 0)
+                            return "Cleared";
+                        else
+                        {
+                            var score = parent.allScoreData.Rankings[new CharaLevelPair(chara, level)][0];
+                            var date = Encoding.Default.GetString(score.Date).TrimEnd('\0');
+                            return (date != "--/--") ? "Not Cleared" : "-------";
+                        }
                     }
                 });
             }
