@@ -665,7 +665,7 @@ namespace ThScoreFileConverter
                             cardStrings = CardTable.Values
                                 .Where(card => score.CardFlags[card.Id] > 0)
                                 .Select(card => Utils.Format("No.{0:D3} {1}", card.Id, card.Name));
-                            return string.Join("\n", cardStrings.ToArray());
+                            return string.Join(Environment.NewLine, cardStrings.ToArray());
                         case "G":   // number of got spell cards
                             return score.CardFlags.Values.Count(flag => flag > 0)
                                 .ToString(CultureInfo.CurrentCulture);

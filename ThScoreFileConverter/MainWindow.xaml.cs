@@ -623,7 +623,7 @@ namespace ThScoreFileConverter
             var dispatcher = this.txtLog.Dispatcher;
             if (dispatcher.CheckAccess())
             {
-                this.txtLog.AppendText(log + "\n");
+                this.txtLog.AppendText(log + Environment.NewLine);
                 this.txtLog.ScrollToEnd();
             }
             else

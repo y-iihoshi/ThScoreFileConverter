@@ -532,10 +532,11 @@ namespace ThScoreFileConverter
                         var relativePath = new Uri(outputFilePath)
                             .MakeRelativeUri(new Uri(bestshot.Path)).OriginalString;
                         var alternativeString = Utils.Format(
-                            "ClearData: {0}\nSlow: {1:F6}%\nSpellName: {2}",
+                            "ClearData: {0}{3}Slow: {1:F6}%{3}SpellName: {2}",
                             Utils.ToNumberString(bestshot.Header.Score),
                             bestshot.Header.SlowRate,
-                            Encoding.Default.GetString(bestshot.Header.CardName).TrimEnd('\0'));
+                            Encoding.Default.GetString(bestshot.Header.CardName).TrimEnd('\0'),
+                            Environment.NewLine);
                         return Utils.Format(
                             "<img src=\"{0}\" alt=\"{1}\" title=\"{1}\" border=0>",
                             relativePath,
