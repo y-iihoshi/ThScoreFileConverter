@@ -623,7 +623,7 @@ namespace ThScoreFileConverter
                     if (chara == Chara.Meiling)
                         return match.ToString();
 
-                    if (number <= CardIdTable[chara].Count())
+                    if ((0 < number) && (number <= CardIdTable[chara].Count()))
                     {
                         if (hideUntriedCards)
                         {
