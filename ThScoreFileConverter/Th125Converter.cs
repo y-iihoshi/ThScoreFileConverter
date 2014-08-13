@@ -448,6 +448,9 @@ namespace ThScoreFileConverter
                     var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
                     var key = new LevelScenePair(level, scene);
+                    if (!SpellCards.ContainsKey(key))
+                        return match.ToString();
+
                     var score = parent.allScoreData.Scores.Find(elem =>
                         (elem != null) && (elem.Chara == chara) && elem.LevelScene.Equals(key));
 
@@ -578,6 +581,8 @@ namespace ThScoreFileConverter
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                     var key = new LevelScenePair(level, scene);
+                    if (!SpellCards.ContainsKey(key))
+                        return match.ToString();
 
                     if (hideUntriedCards)
                     {
@@ -635,9 +640,11 @@ namespace ThScoreFileConverter
                     var scene = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                     var key = new LevelScenePair(level, scene);
+                    if (!SpellCards.ContainsKey(key))
+                        return match.ToString();
+
                     Dictionary<LevelScenePair, BestShotPair> bestshots;
                     BestShotPair bestshot;
-
                     if (!string.IsNullOrEmpty(outputFilePath) &&
                         parent.bestshots.TryGetValue(chara, out bestshots) &&
                         bestshots.TryGetValue(key, out bestshot))
@@ -714,9 +721,11 @@ namespace ThScoreFileConverter
                     var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
                     var key = new LevelScenePair(level, scene);
+                    if (!SpellCards.ContainsKey(key))
+                        return match.ToString();
+
                     Dictionary<LevelScenePair, BestShotPair> bestshots;
                     BestShotPair bestshot;
-
                     if (!string.IsNullOrEmpty(outputFilePath) &&
                         parent.bestshots.TryGetValue(chara, out bestshots) &&
                         bestshots.TryGetValue(key, out bestshot))
