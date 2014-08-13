@@ -847,6 +847,9 @@ namespace ThScoreFileConverter
                     var chara = CharaParser.Parse(match.Groups[2].Value);
                     var type = match.Groups[3].Value.ToUpperInvariant();
 
+                    if (number <= 0)
+                        return match.ToString();
+
                     var numLevels = Enum.GetValues(typeof(Level)).Length;
                     var index = (number - 1) / numLevels;
                     if ((0 <= index) && (index < EnemyCardIdTable[chara].Count()))
