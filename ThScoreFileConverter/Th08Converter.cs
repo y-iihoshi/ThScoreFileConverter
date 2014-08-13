@@ -662,9 +662,14 @@ namespace ThScoreFileConverter
                         case "E":   // human rate
                             return Utils.Format("{0:F2}%", score.HumanRate / 100.0);
                         case "F":   // got spell cards
-                            cardStrings = CardTable.Values
-                                .Where(card => score.CardFlags[card.Id] > 0)
-                                .Select(card => Utils.Format("No.{0:D3} {1}", card.Id, card.Name));
+                            cardStrings = score.CardFlags
+                                .Where(pair => pair.Value > 0)
+                                .Select(pair =>
+                                {
+                                    CardInfo card;
+                                    return CardTable.TryGetValue(pair.Key, out card)
+                                        ? Utils.Format("No.{0:D3} {1}", card.Id, card.Name) : string.Empty;
+                                });
                             return string.Join(Environment.NewLine, cardStrings.ToArray());
                         case "G":   // number of got spell cards
                             return score.CardFlags.Values.Count(flag => flag > 0)
@@ -1296,7 +1301,7 @@ namespace ThScoreFileConverter
                 if (this.Size1 != ValidSize)
                     throw new InvalidDataException("Size1");
 
-                this.CardFlags = new Dictionary<int, byte>(CardTable.Count);
+                this.CardFlags = new Dictionary<int, byte>();
 
                 using (var stream = new MemoryStream(this.Data, false))
                 using (var reader = new BinaryReader(stream))
@@ -1343,7 +1348,7 @@ namespace ThScoreFileConverter
                 this.Score = score;
                 this.Name = Encoding.Default.GetBytes("--------\0");
                 this.Date = Encoding.Default.GetBytes("--/--\0");
-                this.CardFlags = new Dictionary<int, byte>(CardTable.Count);
+                this.CardFlags = new Dictionary<int, byte>();
             }
 
             public uint Score { get; private set; }                     // * 10
