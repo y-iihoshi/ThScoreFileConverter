@@ -404,6 +404,9 @@ namespace ThScoreFileConverter
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                     var key = new LevelScenePair(level, scene);
+                    if (!SpellCards.ContainsKey(key))
+                        return match.ToString();
+
                     var score = parent.allScoreData.Scores.Find(
                         elem => (elem != null) && elem.LevelScene.Equals(key));
 
@@ -489,6 +492,8 @@ namespace ThScoreFileConverter
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                     var key = new LevelScenePair(level, scene);
+                    if (!SpellCards.ContainsKey(key))
+                        return match.ToString();
 
                     if (hideUntriedCards)
                     {
@@ -524,8 +529,10 @@ namespace ThScoreFileConverter
                     var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
                     var key = new LevelScenePair(level, scene);
-                    BestShotPair bestshot;
+                    if (!SpellCards.ContainsKey(key))
+                        return match.ToString();
 
+                    BestShotPair bestshot;
                     if (!string.IsNullOrEmpty(outputFilePath) &&
                         parent.bestshots.TryGetValue(key, out bestshot))
                     {
@@ -571,8 +578,10 @@ namespace ThScoreFileConverter
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                     var key = new LevelScenePair(level, scene);
-                    BestShotPair bestshot;
+                    if (!SpellCards.ContainsKey(key))
+                        return match.ToString();
 
+                    BestShotPair bestshot;
                     if (!string.IsNullOrEmpty(outputFilePath) &&
                         parent.bestshots.TryGetValue(key, out bestshot))
                         switch (type)
