@@ -497,6 +497,9 @@ namespace ThScoreFileConverter
                     var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
                     var key = new DayScenePair(day, scene);
+                    if (!SpellCards.ContainsKey(key))
+                        return match.ToString();
+
                     var score = parent.allScoreData.Scores.Find(elem =>
                         (elem != null) && ((0 < elem.Number) && (elem.Number <= SpellCards.Count)) &&
                         SpellCards.ElementAt(elem.Number - 1).Key.Equals(key));
@@ -587,6 +590,8 @@ namespace ThScoreFileConverter
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                     var key = new DayScenePair(day, scene);
+                    if (!SpellCards.ContainsKey(key))
+                        return match.ToString();
 
                     if (hideUntriedCards)
                     {
@@ -682,8 +687,10 @@ namespace ThScoreFileConverter
                     scene = (scene == 0) ? 10 : scene;
 
                     var key = new DayScenePair(day, scene);
-                    BestShotPair bestshot;
+                    if (!SpellCards.ContainsKey(key))
+                        return match.ToString();
 
+                    BestShotPair bestshot;
                     if (!string.IsNullOrEmpty(outputFilePath) &&
                         parent.bestshots.TryGetValue(key, out bestshot))
                     {
@@ -725,8 +732,10 @@ namespace ThScoreFileConverter
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                     var key = new DayScenePair(day, scene);
-                    BestShotPair bestshot;
+                    if (!SpellCards.ContainsKey(key))
+                        return match.ToString();
 
+                    BestShotPair bestshot;
                     if (!string.IsNullOrEmpty(outputFilePath) &&
                         parent.bestshots.TryGetValue(key, out bestshot))
                         switch (type)
