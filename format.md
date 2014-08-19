@@ -3019,7 +3019,7 @@ SpellName: %T95CARD122" border=0&gt;
  <li>キャラが異なると、スペルカードの番号が同じでもその中身は異なります。</li>
  <li>存在しないキャラと番号の組み合わせ（霊夢の No.77 など）は無視されます。</li>
  <li>
-  残り時間は分秒が「<samp>mm:ss</samp>」の形式で出力されます。<br />
+  残り時間は分秒およびミリ秒が「<samp>mm:ss.ddd</samp>」の形式で出力されます。<br />
   なお、スコアファイルにはフレーム数単位で保存されているため、60fps 固定と見なして換算した結果を出力しています。
  </li>
 </ul>
@@ -4279,6 +4279,280 @@ SpellName: %T95CARD122" border=0&gt;
  <dt><code>%T12PRACNRA4</code></dt>
  <dd>Normal 霊夢（夢）の Stage 4 のプラクティススコア</dd>
 </dl>
+  </td>
+ </tr>
+</table>
+
+----------------------------------------
+
+## 東方非想天則用テンプレート書式 {: #Th123Formats }
+
+### 御札戦歴 {: #T123C }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="4">書式</td>
+  <td colspan="2"><code>%T123C[xx][yy][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[xx]</code></td>
+  <td>
+   スペルカードの番号など
+<dl class="format">
+ <dt><code>[00]</code></dt><dd>全スペルカードの合計値</dd>
+ <dt><code>[01～64]</code></dt><dd>スペルカードの番号</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[yy]</code></td>
+  <td>
+   キャラの名前
+<dl class="format">
+ <dt><code>[SN]</code></dt><dd>早苗</dd>
+ <dt><code>[CI]</code></dt><dd>チルノ</dd>
+ <dt><code>[ML]</code></dt><dd>美鈴</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[1]</code></dt><dd>取得回数（勝率の分子）</dd>
+ <dt><code>[2]</code></dt><dd>挑戦回数（勝率の分母）</dd>
+ <dt><code>[3]</code></dt><dd>残り時間</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T123C01SN1</code></dt>
+ <dd>早苗の氷符「アイシクルフォール」(Easy) の取得回数</dd>
+ <dt><code>%T123C08CI2</code></dt>
+ <dd>チルノの奇跡「ファフロッキーズの奇跡」(Lunatic) の挑戦回数</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>キャラが異なると、スペルカードの番号が同じでもその中身は異なります。</li>
+ <li>
+  残り時間は分秒およびミリ秒が「<samp>mm:ss.ddd</samp>」の形式で出力されます。<br />
+  なお、スコアファイルにはフレーム数単位で保存されているため、60fps 固定と見なして換算した結果を出力しています。
+ </li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+### スペルカード基本情報 {: #T123CARD }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="4">書式</td>
+  <td colspan="2"><code>%T123CARD[xx][yy][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[xx]</code></td>
+  <td>
+   スペルカードの番号
+<dl class="format">
+ <dt><code>[01～64]</code></dt><dd>スペルカードの番号</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[yy]</code></td>
+  <td>
+   キャラの名前
+<dl class="format">
+ <dt><code>[SN]</code></dt><dd>早苗</dd>
+ <dt><code>[CI]</code></dt><dd>チルノ</dd>
+ <dt><code>[ML]</code></dt><dd>美鈴</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[N]</code></dt><dd>スペルカードの名前</dd>
+ <dt><code>[R]</code></dt>
+ <dd>スペルカードの難易度 (Easy, Normal, Hard, Lunatic)</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T123CARD01SNN</code></dt><dd>氷符「アイシクルフォール」</dd>
+ <dt><code>%T123CARD01SNR</code></dt><dd>Easy</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>キャラが異なると、スペルカードの番号が同じでもその中身は異なります。</li>
+ <li><a href="../manual.html#HowToUse">未挑戦のスペルカード名を出力しない</a>設定にしている場合、該当するものは名前・難易度ともに「<samp>?????</samp>」のように出力されます。（一応ネタバレ防止のため。）</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+### スペルカード蒐集率 {: #T123CRG }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="4">書式</td>
+  <td colspan="2"><code>%T123CRG[x][yy][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   難易度など
+<dl class="format">
+ <dt><code>[E]</code></dt><dd>Easy</dd>
+ <dt><code>[N]</code></dt><dd>Normal</dd>
+ <dt><code>[H]</code></dt><dd>Hard</dd>
+ <dt><code>[L]</code></dt><dd>Lunatic</dd>
+ <dt><code>[T]</code></dt><dd>Total</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[yy]</code></td>
+  <td>
+   キャラの名前
+<dl class="format">
+ <dt><code>[SN]</code></dt><dd>早苗</dd>
+ <dt><code>[CI]</code></dt><dd>チルノ</dd>
+ <dt><code>[ML]</code></dt><dd>美鈴</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[1]</code></dt><dd>取得数（勝率の分子）</dd>
+ <dt><code>[2]</code></dt><dd>挑戦数（勝率の分母）</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T123CRGESN1</code></dt><dd>Easy 早苗の取得数</dd>
+ <dt><code>%T123CRGHCI2</code></dt><dd>Hard チルノの挑戦数</dd>
+</dl>
+  </td>
+ </tr>
+</table>
+
+### デッキ用カード蒐集歴 {: #T123DC }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="5">書式</td>
+  <td colspan="2"><code>%T123DC[ww][x][yy][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[ww]</code></td>
+  <td>
+   キャラの名前
+<dl class="format">
+ <dt><code>[RM]</code></dt><dd>霊夢</dd>
+ <dt><code>[MR]</code></dt><dd>魔理沙</dd>
+ <dt><code>[SK]</code></dt><dd>咲夜</dd>
+ <dt><code>[AL]</code></dt><dd>アリス</dd>
+ <dt><code>[PC]</code></dt><dd>パチュリー</dd>
+ <dt><code>[YM]</code></dt><dd>妖夢</dd>
+ <dt><code>[RL]</code></dt><dd>レミリア</dd>
+ <dt><code>[YU]</code></dt><dd>幽々子</dd>
+ <dt><code>[YK]</code></dt><dd>紫</dd>
+ <dt><code>[SU]</code></dt><dd>萃香</dd>
+ <dt><code>[RS]</code></dt><dd>鈴仙</dd>
+ <dt><code>[AY]</code></dt><dd>文</dd>
+ <dt><code>[KM]</code></dt><dd>小町</dd>
+ <dt><code>[IK]</code></dt><dd>衣玖</dd>
+ <dt><code>[TN]</code></dt><dd>天子</dd>
+ <dt><code>[SN]</code></dt><dd>早苗</dd>
+ <dt><code>[CI]</code></dt><dd>チルノ</dd>
+ <dt><code>[ML]</code></dt><dd>美鈴</dd>
+ <dt><code>[UT]</code></dt><dd>空</dd>
+ <dt><code>[SW]</code></dt><dd>諏訪子</dd>
+</dl>
+   （System ではこの指定は無視されます。）
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   カードの種類
+<dl class="format">
+ <dt><code>[Y]</code></dt><dd>System</dd>
+ <dt><code>[K]</code></dt><dd>Skill</dd>
+ <dt><code>[P]</code></dt><dd>Spell</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[yy]</code></td>
+  <td>
+   カードの番号
+<dl class="format">
+ <dt><code>[01～21]</code></dt><dd>カードの番号</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[N]</code></dt><dd>カードの名前</dd>
+ <dt><code>[C]</code></dt><dd>蒐集枚数</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T123DCRMY01N</code></dt><dd>「霊撃札」</dd>
+ <dt><code>%T123DCMRK02N</code></dt><dd>ナロースパーク</dd>
+ <dt><code>%T123DCSKP03C</code></dt><dd>奇術「エターナルミーク」の蒐集枚数</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>キャラが異なると、カードの番号が同じでもその中身は異なります。（System は除く。）</li>
+ <li>存在しないカードの指定（霊夢の Spell No.11 など）は無視されます。</li>
+ <li><a href="../manual.html#HowToUse">未挑戦のスペルカード名を出力しない</a>設定にしている場合、未入手のカードの名前が「<samp>?????</samp>」のように出力されます。（一応ネタバレ防止のため。）</li>
+</ul>
   </td>
  </tr>
 </table>

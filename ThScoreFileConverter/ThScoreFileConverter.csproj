@@ -97,6 +97,7 @@
     <Compile Include="Th095Converter.cs" />
     <Compile Include="Th09Converter.cs" />
     <Compile Include="Th105Converter.cs" />
+    <Compile Include="Th123Converter.cs" />
     <Compile Include="Th125Converter.cs" />
     <Compile Include="Th128Converter.cs" />
     <Compile Include="Th12Converter.cs" />
