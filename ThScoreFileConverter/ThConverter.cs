@@ -285,20 +285,20 @@ namespace ThScoreFileConverter
         /// <param name="threadArg">An instance of the <see cref="SettingsPerTitle"/> class.</param>
         public void Convert(object threadArg)
         {
+#if DEBUG
+            using (var profiler = new Profiler("Convert"))
+                this.Convert(threadArg as SettingsPerTitle);
+#else
             try
             {
-#if DEBUG
-                using (var profiler = new Profiler("Convert"))
-                    this.Convert(threadArg as SettingsPerTitle);
-#else
                 this.Convert(threadArg as SettingsPerTitle);
-#endif
             }
             catch (Exception e)
             {
                 this.OnExceptionOccurred(new ExceptionOccurredEventArgs(e));
                 throw;
             }
+#endif
         }
 
         /// <summary>
