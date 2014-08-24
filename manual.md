@@ -195,6 +195,11 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 ## ChangeLog {: #ChangeLog }
 
+2014/08/24 ver. 1.9.1.0
+
+* 東方非想天則
+    * スペルカード名の誤記を修正
+
 2014/08/20 ver. 1.9.0.0
 
 * 東方非想天則に対応
