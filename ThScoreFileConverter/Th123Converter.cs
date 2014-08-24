@@ -55,7 +55,7 @@ namespace ThScoreFileConverter
         private static readonly Dictionary<CharaCardIdPair, string> CardNameTable =
             new Dictionary<CharaCardIdPair, string>
             {
-                { new CharaCardIdPair(Chara.Reimu,   0), "御守｢妖怪足止めお守り｣" },
+                { new CharaCardIdPair(Chara.Reimu,   0), "御守「妖怪足止めお守り」" },
                 { new CharaCardIdPair(Chara.Reimu,   1), "霊符「夢想封印　円」" },
                 { new CharaCardIdPair(Chara.Reimu,   2), "神霊「夢想封印　瞬」" },
                 { new CharaCardIdPair(Chara.Reimu,   3), "「最も凶悪なびっくり巫女玉」" },
@@ -377,8 +377,8 @@ namespace ThScoreFileConverter
                 { new CharaCardIdPair(Chara.Aya, 203), "突符「天狗のマクロバースト」" },
                 { new CharaCardIdPair(Chara.Aya, 205), "風符「天狗道の開風」" },
                 { new CharaCardIdPair(Chara.Aya, 206), "「幻想風靡」" },
-                { new CharaCardIdPair(Chara.Aya, 207), "風符｢天狗報即日限｣" },
-                { new CharaCardIdPair(Chara.Aya, 208), "鴉符｢暗夜のデイメア｣" },
+                { new CharaCardIdPair(Chara.Aya, 207), "風符「天狗報即日限」" },
+                { new CharaCardIdPair(Chara.Aya, 208), "鴉符「暗夜のデイメア」" },
                 { new CharaCardIdPair(Chara.Aya, 211), "魔獣「鎌鼬ベーリング」" },
                 { new CharaCardIdPair(Chara.Aya, 212), "突風「猿田彦の先導」" },
                 { new CharaCardIdPair(Chara.Komachi,   0), "霊符「古き地縛霊の目覚め」" },
