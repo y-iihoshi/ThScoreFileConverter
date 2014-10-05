@@ -36,10 +36,6 @@ ThScoreFileConverter （以下、本ツール）は、東方 Project の各作�
 
 ## Supported Titles {: #SupportedTitles }
 
-### 対応済み {: #Supported }
-
-対応している東方 Project の作品名・バージョン：
-
 * 東方紅魔郷 ver. 1.02h
 * 東方妖々夢 ver. 1.00b
 * 東方萃夢想 ver. 1.11
@@ -56,12 +52,7 @@ ThScoreFileConverter （以下、本ツール）は、東方 Project の各作�
 * 東方神霊廟 ver. 1.00c
 * 東方輝針城 ver. 1.00b
 * 弾幕アマノジャク ver. 1.00a
-
-### 対応予定あり {: #WillSupport }
-
-以下作品については、本ツール作者の原作プレイ進捗状況に伴って今後対応予定です：
-
-* 東方心綺楼
+* 東方心綺楼 ver. 1.34b
 
 ----------------------------------------
 
@@ -194,6 +185,10 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 ----------------------------------------
 
 ## ChangeLog {: #ChangeLog }
+
+2014/10/05 ver. 1.10.0.0
+
+* 東方心綺楼に対応
 
 2014/08/24 ver. 1.9.1.0
 
