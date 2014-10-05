@@ -5951,6 +5951,73 @@ SpellName: %T125CARD122" border=0&gt;
 
 ----------------------------------------
 
+## 東方心綺楼用テンプレート書式 {: #Th135Formats }
+
+### クリア達成度 {: #T135CLEAR }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="3">書式</td>
+  <td colspan="2"><code>%T135CLEAR[x][yy]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   難易度
+<dl class="format">
+ <dt><code>[E]</code></dt><dd>Easy</dd>
+ <dt><code>[N]</code></dt><dd>Normal</dd>
+ <dt><code>[H]</code></dt><dd>Hard</dd>
+ <dt><code>[L]</code></dt><dd>Lunatic</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[yy]</code></td>
+  <td>
+   キャラの名前
+<dl class="format">
+ <dt><code>[RM]</code></dt><dd>霊夢</dd>
+ <dt><code>[MR]</code></dt><dd>魔理沙</dd>
+ <dt><code>[IU]</code></dt><dd>一輪 &amp; 雲山</dd>
+ <dt><code>[BY]</code></dt><dd>白蓮</dd>
+ <dt><code>[FT]</code></dt><dd>布都</dd>
+ <dt><code>[MK]</code></dt><dd>神子</dd>
+ <dt><code>[NT]</code></dt><dd>にとり</dd>
+ <dt><code>[KO]</code></dt><dd>こいし</dd>
+ <dt><code>[MM]</code></dt><dd>マミゾウ</dd>
+ <dt><code>[KK]</code></dt><dd>こころ</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T135CLEAREMR</code></dt><dd>Easy 魔理沙のクリア達成度</dd>
+ <dt><code>%T135CLEARNRM</code></dt><dd>Normal 霊夢のクリア達成度</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>
+  ストーリーモードのクリア達成度（ゲームの進行状況）に応じて以下の文字列が出力されます。
+  <p class="legends">
+   <samp>Not Clear</samp>, <samp>Clear</samp>
+  </p>
+ </li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+----------------------------------------
+
 ## 東方輝針城用テンプレート書式 {: #Th14Formats }
 
 ### スコアランキング {: #T14SCR }

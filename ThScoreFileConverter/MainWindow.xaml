@@ -32,7 +32,7 @@
             <ComboBoxItem Name="TH075" Content="東方萃夢想"/>
             <ComboBoxItem Name="TH105" Content="東方緋想天"/>
             <ComboBoxItem Name="TH123" Content="東方非想天則"/>
-            <ComboBoxItem Name="TH135" Content="東方心綺楼" IsEnabled="False"/>
+            <ComboBoxItem Name="TH135" Content="東方心綺楼"/>
         </ComboBox>
         <Label x:Name="lblSupportedVersion" Content="" Margin="165,10,10,10"/>
 
