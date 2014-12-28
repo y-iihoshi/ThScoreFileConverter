@@ -1290,8 +1290,9 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Size1");
 
                 using (var stream = new MemoryStream(this.Data, false))
-                using (var reader = new BinaryReader(stream))
                 {
+                    var reader = new BinaryReader(stream);
+
                     reader.ReadUInt32();    // always 0x00000001?
                 }
             }
@@ -1313,8 +1314,9 @@ namespace ThScoreFileConverter
                 this.CardFlags = new Dictionary<int, byte>();
 
                 using (var stream = new MemoryStream(this.Data, false))
-                using (var reader = new BinaryReader(stream))
                 {
+                    var reader = new BinaryReader(stream);
+
                     reader.ReadUInt32();    // always 0x00000004?
                     this.Score = reader.ReadUInt32();
                     this.SlowRate = reader.ReadSingle();
@@ -1416,8 +1418,9 @@ namespace ThScoreFileConverter
                 this.PracticeFlags = new Dictionary<Level, PlayableStages>(numLevels);
 
                 using (var stream = new MemoryStream(this.Data, false))
-                using (var reader = new BinaryReader(stream))
                 {
+                    var reader = new BinaryReader(stream);
+
                     reader.ReadUInt32();    // always 0x00000004?
                     foreach (var level in levels)
                         this.StoryFlags.Add(level, (PlayableStages)reader.ReadUInt16());
@@ -1453,8 +1456,9 @@ namespace ThScoreFileConverter
                 this.PracticeCareer = new CardAttackCareer();
 
                 using (var stream = new MemoryStream(this.Data, false))
-                using (var reader = new BinaryReader(stream))
                 {
+                    var reader = new BinaryReader(stream);
+
                     reader.ReadUInt32();    // always 0x00000003?
                     this.CardId = (short)(reader.ReadInt16() + 1);
                     reader.ReadByte();
@@ -1543,8 +1547,9 @@ namespace ThScoreFileConverter
                 this.HighScores = new Dictionary<StageLevelPair, int>(numPairs);
 
                 using (var stream = new MemoryStream(this.Data, false))
-                using (var reader = new BinaryReader(stream))
                 {
+                    var reader = new BinaryReader(stream);
+
                     //// The fields for Stage.Extra and Level.Extra actually exist...
 
                     reader.ReadUInt32();    // always 0x00000002?
@@ -1593,8 +1598,9 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Size1");
 
                 using (var stream = new MemoryStream(this.Data, false))
-                using (var reader = new BinaryReader(stream))
                 {
+                    var reader = new BinaryReader(stream);
+
                     reader.ReadBytes(0x18);
                 }
             }
@@ -1619,8 +1625,9 @@ namespace ThScoreFileConverter
                 this.TotalPlayCount = new PlayCount();
 
                 using (var stream = new MemoryStream(this.Data, false))
-                using (var reader = new BinaryReader(stream))
                 {
+                    var reader = new BinaryReader(stream);
+
                     reader.ReadUInt32();    // always 0x00000002?
                     var hours = reader.ReadInt32();
                     var minutes = reader.ReadInt32();
@@ -1706,8 +1713,9 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Size1");
 
                 using (var stream = new MemoryStream(this.Data, false))
-                using (var reader = new BinaryReader(stream))
                 {
+                    var reader = new BinaryReader(stream);
+
                     reader.ReadUInt32();    // always 0x00000001?
                     this.Name = reader.ReadBytes(12);
                 }
@@ -1731,8 +1739,9 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Size1");
 
                 using (var stream = new MemoryStream(this.Data, false))
-                using (var reader = new BinaryReader(stream))
                 {
+                    var reader = new BinaryReader(stream);
+
                     reader.ReadUInt32();    // always 0x00000001?
                     this.Version = reader.ReadBytes(6);
                     reader.ReadBytes(3);

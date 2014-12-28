@@ -414,7 +414,6 @@ namespace ThScoreFileConverter
         private void Convert(SettingsPerTitle settings)
         {
             using (var scr = new FileStream(settings.ScoreFile, FileMode.Open, FileAccess.Read))
-            using (var reader = new BinaryReader(scr))
             {
                 scr.Seek(0, SeekOrigin.Begin);
                 if (!this.ReadScoreFile(scr))

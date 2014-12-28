@@ -519,8 +519,9 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Size1");
 
                 using (var stream = new MemoryStream(this.Data, false))
-                using (var reader = new BinaryReader(stream))
                 {
+                    var reader = new BinaryReader(stream);
+
                     reader.ReadByte();      // always 0x01?
                     reader.ReadBytes(3);
                 }
@@ -541,8 +542,9 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Size1");
 
                 using (var stream = new MemoryStream(this.Data, false))
-                using (var reader = new BinaryReader(stream))
                 {
+                    var reader = new BinaryReader(stream);
+
                     reader.ReadUInt32();    // always 0x00000002?
                     this.Score = reader.ReadUInt32();
                     reader.ReadUInt32();    // always 0x00000000?
@@ -592,8 +594,9 @@ namespace ThScoreFileConverter
                 this.ClearCounts = new Dictionary<Chara, ClearCount>(numCharas);
 
                 using (var stream = new MemoryStream(this.Data, false))
-                using (var reader = new BinaryReader(stream))
                 {
+                    var reader = new BinaryReader(stream);
+
                     reader.ReadUInt32();    // always 0x00000003?
                     var hours = reader.ReadInt32();
                     var minutes = reader.ReadInt32();
@@ -673,8 +676,9 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Size1");
 
                 using (var stream = new MemoryStream(this.Data, false))
-                using (var reader = new BinaryReader(stream))
                 {
+                    var reader = new BinaryReader(stream);
+
                     reader.ReadUInt32();    // always 0x00000001?
                     this.Name = reader.ReadBytes(12);
                 }
@@ -698,8 +702,9 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Size1");
 
                 using (var stream = new MemoryStream(this.Data, false))
-                using (var reader = new BinaryReader(stream))
                 {
+                    var reader = new BinaryReader(stream);
+
                     reader.ReadUInt16();    // always 0x0001?
                     reader.ReadUInt16();    // always 0x0018?
                     this.Version = reader.ReadBytes(6);

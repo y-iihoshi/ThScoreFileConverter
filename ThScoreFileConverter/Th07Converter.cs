@@ -1062,8 +1062,9 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Size1");
 
                 using (var stream = new MemoryStream(this.Data, false))
-                using (var reader = new BinaryReader(stream))
                 {
+                    var reader = new BinaryReader(stream);
+
                     reader.ReadUInt32();    // always 0x00000001?
                 }
             }
@@ -1083,8 +1084,9 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Size1");
 
                 using (var stream = new MemoryStream(this.Data, false))
-                using (var reader = new BinaryReader(stream))
                 {
+                    var reader = new BinaryReader(stream);
+
                     reader.ReadUInt32();    // always 0x00000001?
                     this.Score = reader.ReadUInt32();
                     this.SlowRate = reader.ReadSingle();
@@ -1141,8 +1143,9 @@ namespace ThScoreFileConverter
                 this.PracticeFlags = new Dictionary<Level, byte>(numLevels);
 
                 using (var stream = new MemoryStream(this.Data, false))
-                using (var reader = new BinaryReader(stream))
                 {
+                    var reader = new BinaryReader(stream);
+
                     reader.ReadUInt32();    // always 0x00000001?
                     foreach (var level in levels)
                         this.StoryFlags.Add(level, reader.ReadByte());
@@ -1181,8 +1184,9 @@ namespace ThScoreFileConverter
                 this.ClearCounts = new Dictionary<CharaWithTotal, ushort>(numCharas);
 
                 using (var stream = new MemoryStream(this.Data, false))
-                using (var reader = new BinaryReader(stream))
                 {
+                    var reader = new BinaryReader(stream);
+
                     reader.ReadUInt32();    // always 0x00000001?
                     foreach (var chara in charas)
                         this.MaxBonuses.Add(chara, reader.ReadUInt32());
@@ -1228,8 +1232,9 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Size1");
 
                 using (var stream = new MemoryStream(this.Data, false))
-                using (var reader = new BinaryReader(stream))
                 {
+                    var reader = new BinaryReader(stream);
+
                     reader.ReadUInt32();    // always 0x00000001?
                     this.TrialCount = reader.ReadInt32();
                     this.HighScore = reader.ReadInt32();
@@ -1269,8 +1274,9 @@ namespace ThScoreFileConverter
                 this.PlayCounts = new Dictionary<LevelWithTotal, PlayCount>(numLevels);
 
                 using (var stream = new MemoryStream(this.Data, false))
-                using (var reader = new BinaryReader(stream))
                 {
+                    var reader = new BinaryReader(stream);
+
                     reader.ReadUInt32();    // always 0x00000001?
                     var hours = reader.ReadInt32();
                     var minutes = reader.ReadInt32();
@@ -1347,8 +1353,9 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Size1");
 
                 using (var stream = new MemoryStream(this.Data, false))
-                using (var reader = new BinaryReader(stream))
                 {
+                    var reader = new BinaryReader(stream);
+
                     reader.ReadUInt32();    // always 0x00000001?
                     this.Name = reader.ReadBytes(12);
                 }
@@ -1372,8 +1379,9 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Size1");
 
                 using (var stream = new MemoryStream(this.Data, false))
-                using (var reader = new BinaryReader(stream))
                 {
+                    var reader = new BinaryReader(stream);
+
                     reader.ReadUInt16();    // always 0x0001?
                     reader.ReadUInt16();
                     this.Version = reader.ReadBytes(6);

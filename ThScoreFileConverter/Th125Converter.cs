@@ -1004,8 +1004,9 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Size");
 
                 using (var stream = new MemoryStream(this.Data, false))
-                using (var reader = new BinaryReader(stream))
                 {
+                    var reader = new BinaryReader(stream);
+
                     var number = reader.ReadInt32();
                     this.LevelScene = new LevelScenePair((Level)(number / 10), (number % 10) + 1);
                     this.HighScore = reader.ReadInt32();
@@ -1063,8 +1064,9 @@ namespace ThScoreFileConverter
                     throw new InvalidDataException("Size");
 
                 using (var stream = new MemoryStream(this.Data, false))
-                using (var reader = new BinaryReader(stream))
                 {
+                    var reader = new BinaryReader(stream);
+
                     this.LastName = reader.ReadBytes(10);
                     reader.ReadBytes(2);
                     this.BgmFlags = reader.ReadBytes(6);
