@@ -797,6 +797,9 @@ namespace ThScoreFileConverter
 
             public void ReadFrom(BinaryReader reader)
             {
+                if (reader == null)
+                    throw new ArgumentNullException("reader");
+
                 this.Signature = Encoding.Default.GetString(reader.ReadBytes(SignatureSize));
                 this.EncodedAllSize = reader.ReadInt32();
                 this.unknown1 = reader.ReadUInt32();
@@ -807,6 +810,9 @@ namespace ThScoreFileConverter
 
             public void WriteTo(BinaryWriter writer)
             {
+                if (writer == null)
+                    throw new ArgumentNullException("writer");
+
                 writer.Write(Encoding.Default.GetBytes(this.Signature));
                 writer.Write(this.EncodedAllSize);
                 writer.Write(this.unknown1);
@@ -860,6 +866,9 @@ namespace ThScoreFileConverter
 
             public void ReadFrom(BinaryReader reader)
             {
+                if (reader == null)
+                    throw new ArgumentNullException("reader");
+
                 this.Signature = Encoding.Default.GetString(reader.ReadBytes(SignatureSize));
                 this.Version = reader.ReadUInt16();
                 this.Checksum = reader.ReadUInt32();
@@ -1022,6 +1031,9 @@ namespace ThScoreFileConverter
 
             public void ReadFrom(BinaryReader reader)
             {
+                if (reader == null)
+                    throw new ArgumentNullException("reader");
+
                 this.Score = reader.ReadUInt32();
                 this.StageProgress = (StageProgress)reader.ReadByte();
                 this.ContinueCount = reader.ReadByte();
@@ -1047,6 +1059,9 @@ namespace ThScoreFileConverter
 
             public void ReadFrom(BinaryReader reader)
             {
+                if (reader == null)
+                    throw new ArgumentNullException("reader");
+
                 this.Name = reader.ReadBytes(0x80);
                 this.ClearCount = reader.ReadInt32();
                 this.TrialCount = reader.ReadInt32();
@@ -1069,6 +1084,9 @@ namespace ThScoreFileConverter
 
             public void ReadFrom(BinaryReader reader)
             {
+                if (reader == null)
+                    throw new ArgumentNullException("reader");
+
                 this.Score = reader.ReadUInt32();
                 this.StageFlag = reader.ReadUInt32();
             }

@@ -1445,6 +1445,9 @@ namespace ThScoreFileConverter
 
             public void ReadFrom(BinaryReader reader)
             {
+                if (reader == null)
+                    throw new ArgumentNullException("reader");
+
                 var validNumCharas = Enum.GetValues(typeof(Chara)).Length - 1;  // Except Oonamazu
 
                 reader.ReadUInt32();            // version? (0xD2 == 210 --> ver.1.10?)
@@ -1512,6 +1515,9 @@ namespace ThScoreFileConverter
 
             public void ReadFrom(BinaryReader reader)
             {
+                if (reader == null)
+                    throw new ArgumentNullException("reader");
+
                 var numCards = reader.ReadInt32();
                 this.CardsForDeck = new Dictionary<int, CardForDeck>(numCards);
                 for (var index = 0; index < numCards; index++)
@@ -1547,6 +1553,9 @@ namespace ThScoreFileConverter
 
             public void ReadFrom(BinaryReader reader)
             {
+                if (reader == null)
+                    throw new ArgumentNullException("reader");
+
                 this.Id = reader.ReadInt32();
                 this.MaxNumber = reader.ReadInt32();
             }
@@ -1572,6 +1581,9 @@ namespace ThScoreFileConverter
 
             public void ReadFrom(BinaryReader reader)
             {
+                if (reader == null)
+                    throw new ArgumentNullException("reader");
+
                 this.Enemy = (Chara)reader.ReadInt32();
                 this.Level = (Level)reader.ReadInt32();
                 this.Id = reader.ReadInt32();

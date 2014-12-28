@@ -849,6 +849,9 @@ namespace ThScoreFileConverter
             [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "num", Justification = "Reviewed.")]
             public void ReadFrom(BinaryReader reader)
             {
+                if (reader == null)
+                    throw new ArgumentNullException("reader");
+
                 var numbers = Enumerable.Range(1, 100);
 
                 this.UseCount = reader.ReadInt32();
@@ -894,6 +897,9 @@ namespace ThScoreFileConverter
 
             public void ReadFrom(BinaryReader reader)
             {
+                if (reader == null)
+                    throw new ArgumentNullException("reader");
+
                 this.Name = new string(reader.ReadBytes(8).Select(ch => CharTable[ch]).ToArray());
                 this.Month = reader.ReadByte();
                 this.Day = reader.ReadByte();
@@ -917,6 +923,9 @@ namespace ThScoreFileConverter
             [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "unknownEnemy", Justification = "Reviewed.")]
             public void ReadFrom(BinaryReader reader)
             {
+                if (reader == null)
+                    throw new ArgumentNullException("reader");
+
                 var charas = Utils.GetEnumerator<Chara>();
                 var unknownCharas = Enumerable.Range(1, 4);
                 var numScores = charas.Count() + unknownCharas.Count();

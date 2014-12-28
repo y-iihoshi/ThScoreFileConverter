@@ -6,6 +6,7 @@
 
 namespace ThScoreFileConverter
 {
+    using System;
     using System.IO;
     using System.Windows;
     using System.Windows.Media;
@@ -50,6 +51,8 @@ namespace ThScoreFileConverter
         /// </param>
         public void UpdateResources(SysDraw.Font font)
         {
+            if (font == null)
+                throw new ArgumentNullException("font");
             this.UpdateResources(new FontFamily(font.FontFamily.Name), font.Size);
         }
 

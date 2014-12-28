@@ -878,6 +878,9 @@ namespace ThScoreFileConverter
 
             public void ReadFrom(BinaryReader reader)
             {
+                if (reader == null)
+                    throw new ArgumentNullException("reader");
+
                 this.unknown1 = reader.ReadUInt16();
                 this.Checksum = reader.ReadUInt16();
                 this.Version = reader.ReadInt16();
@@ -891,6 +894,9 @@ namespace ThScoreFileConverter
 
             public void WriteTo(BinaryWriter writer)
             {
+                if (writer == null)
+                    throw new ArgumentNullException("writer");
+
                 writer.Write(this.unknown1);
                 writer.Write(this.Checksum);
                 writer.Write(this.Version);
@@ -1032,6 +1038,9 @@ namespace ThScoreFileConverter
 
             public void ReadFrom(BinaryReader reader)
             {
+                if (reader == null)
+                    throw new ArgumentNullException("reader");
+
                 this.Signature = Encoding.Default.GetString(reader.ReadBytes(4));
                 this.Size1 = reader.ReadInt16();
                 this.Size2 = reader.ReadInt16();
@@ -1311,6 +1320,9 @@ namespace ThScoreFileConverter
 
             public void ReadFrom(BinaryReader reader)
             {
+                if (reader == null)
+                    throw new ArgumentNullException("reader");
+
                 this.TotalTrial = reader.ReadInt32();
                 foreach (var chara in Utils.GetEnumerator<Chara>())
                     this.Trials.Add(chara, reader.ReadInt32());
