@@ -299,29 +299,31 @@ namespace ThScoreFileConverter
                 Lzss.Extract(input, decoded);
 
                 decoded.Seek(0, SeekOrigin.Begin);
-                var bitmap = new Bitmap(header.Width, header.Height, PixelFormat.Format32bppArgb);
-                try
+                using (var bitmap = new Bitmap(header.Width, header.Height, PixelFormat.Format32bppArgb))
                 {
-                    var permission = new SecurityPermission(SecurityPermissionFlag.UnmanagedCode);
-                    permission.Demand();
+                    try
+                    {
+                        var permission = new SecurityPermission(SecurityPermissionFlag.UnmanagedCode);
+                        permission.Demand();
 
-                    var bitmapData = bitmap.LockBits(
-                        new Rectangle(0, 0, header.Width, header.Height),
-                        ImageLockMode.WriteOnly,
-                        bitmap.PixelFormat);
-                    var source = decoded.ToArray();
-                    var destination = bitmapData.Scan0;
-                    Marshal.Copy(source, 0, destination, source.Length);
-                    bitmap.UnlockBits(bitmapData);
-                }
-                catch (SecurityException e)
-                {
-                    Console.WriteLine(e.ToString());
-                }
+                        var bitmapData = bitmap.LockBits(
+                            new Rectangle(0, 0, header.Width, header.Height),
+                            ImageLockMode.WriteOnly,
+                            bitmap.PixelFormat);
+                        var source = decoded.ToArray();
+                        var destination = bitmapData.Scan0;
+                        Marshal.Copy(source, 0, destination, source.Length);
+                        bitmap.UnlockBits(bitmapData);
+                    }
+                    catch (SecurityException e)
+                    {
+                        Console.WriteLine(e.ToString());
+                    }
 
-                bitmap.Save(output, ImageFormat.Png);
-                output.Flush();
-                output.SetLength(output.Position);
+                    bitmap.Save(output, ImageFormat.Png);
+                    output.Flush();
+                    output.SetLength(output.Position);
+                }
             }
         }
 

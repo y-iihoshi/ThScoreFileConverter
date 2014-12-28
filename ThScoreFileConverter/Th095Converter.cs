@@ -249,36 +249,38 @@ namespace ThScoreFileConverter
                 Lzss.Extract(input, decoded);
 
                 decoded.Seek(0, SeekOrigin.Begin);
-                var bitmap = new Bitmap(header.Width, header.Height, PixelFormat.Format24bppRgb);
-                try
+                using (var bitmap = new Bitmap(header.Width, header.Height, PixelFormat.Format24bppRgb))
                 {
-                    var permission = new SecurityPermission(SecurityPermissionFlag.UnmanagedCode);
-                    permission.Demand();
-
-                    var bitmapData = bitmap.LockBits(
-                        new Rectangle(0, 0, header.Width, header.Height),
-                        ImageLockMode.WriteOnly,
-                        bitmap.PixelFormat);
-
-                    var source = decoded.ToArray();
-                    var sourceStride = 3 * header.Width;    // "3" means 24bpp.
-                    var destination = bitmapData.Scan0;
-                    for (var sourceIndex = 0; sourceIndex < source.Length; sourceIndex += sourceStride)
+                    try
                     {
-                        Marshal.Copy(source, sourceIndex, destination, sourceStride);
-                        destination = new IntPtr(destination.ToInt32() + bitmapData.Stride);
+                        var permission = new SecurityPermission(SecurityPermissionFlag.UnmanagedCode);
+                        permission.Demand();
+
+                        var bitmapData = bitmap.LockBits(
+                            new Rectangle(0, 0, header.Width, header.Height),
+                            ImageLockMode.WriteOnly,
+                            bitmap.PixelFormat);
+
+                        var source = decoded.ToArray();
+                        var sourceStride = 3 * header.Width;    // "3" means 24bpp.
+                        var destination = bitmapData.Scan0;
+                        for (var sourceIndex = 0; sourceIndex < source.Length; sourceIndex += sourceStride)
+                        {
+                            Marshal.Copy(source, sourceIndex, destination, sourceStride);
+                            destination = new IntPtr(destination.ToInt32() + bitmapData.Stride);
+                        }
+
+                        bitmap.UnlockBits(bitmapData);
+                    }
+                    catch (SecurityException e)
+                    {
+                        Console.WriteLine(e.ToString());
                     }
 
-                    bitmap.UnlockBits(bitmapData);
+                    bitmap.Save(output, ImageFormat.Png);
+                    output.Flush();
+                    output.SetLength(output.Position);
                 }
-                catch (SecurityException e)
-                {
-                    Console.WriteLine(e.ToString());
-                }
-
-                bitmap.Save(output, ImageFormat.Png);
-                output.Flush();
-                output.SetLength(output.Position);
             }
         }
 
