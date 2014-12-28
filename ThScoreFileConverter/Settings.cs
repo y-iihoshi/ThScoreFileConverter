@@ -168,8 +168,7 @@ namespace ThScoreFileConverter
                 var serializer = new DataContractSerializer(typeof(Settings));
                 serializer.WriteObject(writer, this);
                 writer.WriteWhitespace(writer.Settings.NewLineChars);
-                stream.Flush();
-                stream.SetLength(stream.Position);
+                writer.Flush();
             }
         }
     }
