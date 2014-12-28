@@ -123,14 +123,16 @@ namespace ThScoreFileConverter
         {
             try
             {
-                var dialog = new WinForms.OpenFileDialog();
-                dialog.Filter = Prop.Resources.fltScoreFile;
-                if (this.txtScore.Text.Length > 0)
-                    dialog.InitialDirectory = Path.GetDirectoryName(this.txtScore.Text);
+                using (var dialog = new WinForms.OpenFileDialog())
+                {
+                    dialog.Filter = Prop.Resources.fltScoreFile;
+                    if (this.txtScore.Text.Length > 0)
+                        dialog.InitialDirectory = Path.GetDirectoryName(this.txtScore.Text);
 
-                var result = dialog.ShowDialog(new Win32Window(this));
-                if (result == WinForms.DialogResult.OK)
-                    this.txtScore.Text = dialog.FileName;
+                    var result = dialog.ShowDialog(new Win32Window(this));
+                    if (result == WinForms.DialogResult.OK)
+                        this.txtScore.Text = dialog.FileName;
+                }
             }
             catch (Exception ex)
             {
@@ -214,14 +216,16 @@ namespace ThScoreFileConverter
         {
             try
             {
-                var dialog = new WinForms.FolderBrowserDialog();
-                dialog.Description = Prop.Resources.msgSelectBestShotDirectory;
-                if (Directory.Exists(this.txtBestShot.Text))
-                    dialog.SelectedPath = this.txtBestShot.Text;
+                using (var dialog = new WinForms.FolderBrowserDialog())
+                {
+                    dialog.Description = Prop.Resources.msgSelectBestShotDirectory;
+                    if (Directory.Exists(this.txtBestShot.Text))
+                        dialog.SelectedPath = this.txtBestShot.Text;
 
-                var result = dialog.ShowDialog(new Win32Window(this));
-                if (result == WinForms.DialogResult.OK)
-                    this.txtBestShot.Text = dialog.SelectedPath;
+                    var result = dialog.ShowDialog(new Win32Window(this));
+                    if (result == WinForms.DialogResult.OK)
+                        this.txtBestShot.Text = dialog.SelectedPath;
+                }
             }
             catch (Exception ex)
             {
@@ -305,23 +309,25 @@ namespace ThScoreFileConverter
         {
             try
             {
-                var dialog = new WinForms.OpenFileDialog();
-                dialog.Filter = Prop.Resources.fltTemplateFile;
-                dialog.Multiselect = true;
-                if (this.lstTemplate.Items.Count > 0)
+                using (var dialog = new WinForms.OpenFileDialog())
                 {
-                    var templatePath = this.lstTemplate.Items[this.lstTemplate.Items.Count - 1] as string;
-                    if ((templatePath != null) && (templatePath.Length > 0))
-                        dialog.InitialDirectory = Path.GetDirectoryName(templatePath);
-                }
+                    dialog.Filter = Prop.Resources.fltTemplateFile;
+                    dialog.Multiselect = true;
+                    if (this.lstTemplate.Items.Count > 0)
+                    {
+                        var templatePath = this.lstTemplate.Items[this.lstTemplate.Items.Count - 1] as string;
+                        if ((templatePath != null) && (templatePath.Length > 0))
+                            dialog.InitialDirectory = Path.GetDirectoryName(templatePath);
+                    }
 
-                var result = dialog.ShowDialog(new Win32Window(this));
-                if (result == WinForms.DialogResult.OK)
-                {
-                    foreach (var name in dialog.FileNames)
-                        if (!this.lstTemplate.Items.Contains(name))
-                            this.lstTemplate.Items.Add(name);
-                    this.UpdateBtnConvertIsEnabled();
+                    var result = dialog.ShowDialog(new Win32Window(this));
+                    if (result == WinForms.DialogResult.OK)
+                    {
+                        foreach (var name in dialog.FileNames)
+                            if (!this.lstTemplate.Items.Contains(name))
+                                this.lstTemplate.Items.Add(name);
+                        this.UpdateBtnConvertIsEnabled();
+                    }
                 }
             }
             catch (Exception ex)
@@ -446,14 +452,16 @@ namespace ThScoreFileConverter
         {
             try
             {
-                var dialog = new WinForms.FolderBrowserDialog();
-                dialog.Description = Prop.Resources.msgSelectOutputDirectory;
-                if (Directory.Exists(this.txtOutput.Text))
-                    dialog.SelectedPath = this.txtOutput.Text;
+                using (var dialog = new WinForms.FolderBrowserDialog())
+                {
+                    dialog.Description = Prop.Resources.msgSelectOutputDirectory;
+                    if (Directory.Exists(this.txtOutput.Text))
+                        dialog.SelectedPath = this.txtOutput.Text;
 
-                var result = dialog.ShowDialog(new Win32Window(this));
-                if (result == WinForms.DialogResult.OK)
-                    this.txtOutput.Text = dialog.SelectedPath;
+                    var result = dialog.ShowDialog(new Win32Window(this));
+                    if (result == WinForms.DialogResult.OK)
+                        this.txtOutput.Text = dialog.SelectedPath;
+                }
             }
             catch (Exception ex)
             {
@@ -599,7 +607,8 @@ namespace ThScoreFileConverter
         /// <param name="e">The event data.</param>
         private void BtnSetting_Click(object sender, RoutedEventArgs e)
         {
-            new SettingWindow(this).ShowDialog();
+            using (var window = new SettingWindow(this))
+                window.ShowDialog();
         }
 
         /// <summary>
