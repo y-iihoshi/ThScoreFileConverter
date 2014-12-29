@@ -1,4 +1,4 @@
-﻿<Window x:Class="ThScoreFileConverter.SettingWindow"
+﻿<Window x:Class="ThScoreFileConverter.Views.SettingWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Settings" Height="340" Width="420" Style="{DynamicResource WindowStyleKey}" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" PreviewKeyDown="Window_PreviewKeyDown">

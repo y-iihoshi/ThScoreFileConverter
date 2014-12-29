@@ -4,7 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter
+namespace ThScoreFileConverter.Views
 {
     using System;
     using System.ComponentModel;

@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:p="clr-namespace:ThScoreFileConverter.Properties"
-        xmlns:Specialized="clr-namespace:System.Collections.Specialized;assembly=System" x:Name="wndMain" x:Class="ThScoreFileConverter.MainWindow"
+        xmlns:Specialized="clr-namespace:System.Collections.Specialized;assembly=System" x:Name="wndMain" x:Class="ThScoreFileConverter.Views.MainWindow"
         Title="ThScoreFileConverter" Height="558" Width="505" ResizeMode="CanMinimize" Closing="WndMain_Closing" Background="#FFEEEEEE" Style="{DynamicResource WindowStyleKey}">
     <Grid Margin="10,10,10,0" VerticalAlignment="Top">
         <Grid.RowDefinitions>
