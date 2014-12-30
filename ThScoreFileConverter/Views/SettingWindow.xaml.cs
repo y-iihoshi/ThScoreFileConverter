@@ -8,10 +8,7 @@ namespace ThScoreFileConverter.Views
 {
     using System;
     using System.Globalization;
-    using System.Linq;
-    using System.Text;
     using System.Windows;
-    using System.Windows.Controls;
     using System.Windows.Input;
     using SysDraw = System.Drawing;
     using WinForms = System.Windows.Forms;
@@ -39,10 +36,6 @@ namespace ThScoreFileConverter.Views
             : this()
         {
             this.Owner = owner;
-            this.chkOutputNumberGroupSeparator.IsChecked =
-                Settings.Instance.OutputNumberGroupSeparator.Value;
-            this.cmbInputEncoding.SelectedValue = Settings.Instance.InputCodePageId.Value;
-            this.cmbOutputEncoding.SelectedValue = Settings.Instance.OutputCodePageId.Value;
         }
 
         /// <summary>
@@ -59,17 +52,6 @@ namespace ThScoreFileConverter.Views
             this.fontDialog.ShowEffects = false;
 
             this.disposed = false;
-
-            var encodings = Settings.ValidCodePageIds
-                .Select(id => new { CodePageId = id, EncodingName = Utils.GetEncoding(id).EncodingName });
-            foreach (var cmb in new ComboBox[] { this.cmbInputEncoding, this.cmbOutputEncoding })
-            {
-                cmb.ItemsSource = encodings;
-                cmb.DisplayMemberPath = "EncodingName";
-                cmb.SelectedValuePath = "CodePageId";
-            }
-
-            this.chkOutputNumberGroupSeparator.Click += this.ChkOutputNumberGroupSeparator_Click;
         }
 
         /// <summary>
@@ -160,47 +142,6 @@ namespace ThScoreFileConverter.Views
             var app = App.Current as App;
             if (app != null)
                 app.UpdateResources(SystemFonts.MessageFontFamily, SystemFonts.MessageFontSize);
-        }
-
-        #endregion
-
-        #region Output format settings
-
-        /// <summary>
-        /// Handles the <c>Click</c> routed event of the <see cref="chkOutputNumberGroupSeparator"/> member.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void ChkOutputNumberGroupSeparator_Click(object sender, RoutedEventArgs e)
-        {
-            Settings.Instance.OutputNumberGroupSeparator =
-                this.chkOutputNumberGroupSeparator.IsChecked.Value;
-        }
-
-        #endregion
-
-        #region Character encoding settings
-
-        /// <summary>
-        /// Handles the <c>SelectionChanged</c> routed event of the <see cref="cmbInputEncoding"/> member.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void CmbInputEncoding_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if ((e.RemovedItems.Count > 0) && (e.AddedItems.Count > 0))
-                Settings.Instance.InputCodePageId = (int)this.cmbInputEncoding.SelectedValue;
-        }
-
-        /// <summary>
-        /// Handles the <c>SelectionChanged</c> routed event of the <see cref="cmbOutputEncoding"/> member.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void CmbOutputEncoding_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if ((e.RemovedItems.Count > 0) && (e.AddedItems.Count > 0))
-                Settings.Instance.OutputCodePageId = (int)this.cmbOutputEncoding.SelectedValue;
         }
 
         #endregion
