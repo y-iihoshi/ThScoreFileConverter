@@ -104,6 +104,7 @@
     <Compile Include="Pair.cs" />
     <Compile Include="Profiler.cs" />
     <Compile Include="SettingsPerTitle.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\SettingWindow.xaml.cs">
       <DependentUpon>SettingWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
