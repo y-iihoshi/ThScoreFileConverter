@@ -81,6 +81,8 @@ namespace ThScoreFileConverter.ViewModels
                 new DelegateCommand(this.SelectScoreFile, this.CanSelectScoreFile);
             this.SelectBestShotDirectoryCommand =
                 new DelegateCommand(this.SelectBestShotDirectory, this.CanSelectBestShotDirectory);
+            this.TemplateFilesSelectionChangedCommand =
+                new DelegateCommand(this.OnTemplateFilesSelectionChanged);
             this.AddTemplateFilesCommand =
                 new DelegateCommand(this.AddTemplateFiles, this.CanAddTemplateFiles);
             this.DeleteTemplateFilesCommand =
@@ -317,6 +319,11 @@ namespace ThScoreFileConverter.ViewModels
         public DelegateCommand SelectBestShotDirectoryCommand { get; private set; }
 
         /// <summary>
+        /// Gets the command invoked when the selection of template files is changed.
+        /// </summary>
+        public DelegateCommand TemplateFilesSelectionChangedCommand { get; private set; }
+
+        /// <summary>
         /// Gets the command to add some files to the list of template files.
         /// </summary>
         public DelegateCommand AddTemplateFilesCommand { get; private set; }
@@ -404,6 +411,14 @@ namespace ThScoreFileConverter.ViewModels
         private void SelectBestShotDirectory()
         {
             // FIXME: Implement here instead of MainWindow.BtnBestShot_Click().
+        }
+
+        /// <summary>
+        /// Invoked when the selection of template files is changed.
+        /// </summary>
+        private void OnTemplateFilesSelectionChanged()
+        {
+            this.DeleteTemplateFilesCommand.RaiseCanExecuteChanged();
         }
 
         /// <summary>

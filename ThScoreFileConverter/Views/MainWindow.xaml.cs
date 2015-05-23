@@ -314,19 +314,6 @@ namespace ThScoreFileConverter.Views
             }
         }
 
-        /// <summary>
-        /// Handles the <c>SelectionChanged</c> routed event of the <see cref="lstTemplate"/> member.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void LstTemplate_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            // FIXME: Should consider about using EventTrigger instead of the codes below.
-            var vm = this.DataContext as ViewModels.MainWindowViewModel;
-            if (vm != null)
-                vm.DeleteTemplateFilesCommand.RaiseCanExecuteChanged();
-        }
-
         #endregion
 
         #region Output directory

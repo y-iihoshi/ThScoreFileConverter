@@ -1,6 +1,7 @@
 ﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:vm="clr-namespace:ThScoreFileConverter.ViewModels"
         xmlns:Specialized="clr-namespace:System.Collections.Specialized;assembly=System" x:Name="wndMain" x:Class="ThScoreFileConverter.Views.MainWindow"
         Title="{Binding Title}" IsEnabled="{Binding IsIdle}" Height="558" Width="505" ResizeMode="CanMinimize" Closing="WndMain_Closing" Background="#FFEEEEEE" Style="{DynamicResource WindowStyleKey}">
@@ -48,7 +49,13 @@
         <Button x:Name="btnBestShot" Command="{Binding SelectBestShotDirectoryCommand}" Content="開く(_O)..." Margin="0,40,10,0" Grid.Row="1" Width="75" HorizontalAlignment="Right" IsEnabled="{Binding CanHandleBestShot}" Click="BtnBestShot_Click" Height="25" VerticalAlignment="Top"/>
 
         <Label Content="テンプレート(_T):" HorizontalAlignment="Left" Margin="10,70,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" Target="{Binding ElementName=lstTemplate, Mode=OneWay}" Height="25"/>
-        <ListBox x:Name="lstTemplate" ItemsSource="{Binding TemplateFiles, Mode=TwoWay}" Margin="0,70,95,0" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionMode="Multiple" Drop="LstTemplate_Drop" SelectionChanged="LstTemplate_SelectionChanged" PreviewDragEnter="LstTemplate_Dragging" PreviewDragOver="LstTemplate_Dragging" HorizontalAlignment="Right" Width="245" AllowDrop="True" Height="100" VerticalAlignment="Top"/>
+        <ListBox x:Name="lstTemplate" ItemsSource="{Binding TemplateFiles, Mode=TwoWay}" Margin="0,70,95,0" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionMode="Multiple" Drop="LstTemplate_Drop" PreviewDragEnter="LstTemplate_Dragging" PreviewDragOver="LstTemplate_Dragging" HorizontalAlignment="Right" Width="245" AllowDrop="True" Height="100" VerticalAlignment="Top">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding TemplateFilesSelectionChangedCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ListBox>
         <Button x:Name="btnTemplateAdd" Command="{Binding AddTemplateFilesCommand}" Content="追加(_A)..." HorizontalAlignment="Right" Margin="0,70,10,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="BtnTemplateAdd_Click" Height="25"/>
         <Button x:Name="btnTemplateClear" Command="{Binding DeleteTemplateFilesCommand}" CommandParameter="{Binding SelectedItems, ElementName=lstTemplate}" Content="削除(_C)" HorizontalAlignment="Right" Margin="0,100,10,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Height="25"/>
         <Button x:Name="btnTemplateClearAll" Command="{Binding DeleteAllTemplateFilesCommand}" Content="全て削除(_L)" Margin="0,130,10,0" Grid.Row="1" HorizontalAlignment="Right" Width="75" VerticalAlignment="Top" Height="25"/>
