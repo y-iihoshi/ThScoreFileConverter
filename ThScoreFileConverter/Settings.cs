@@ -12,6 +12,7 @@ namespace ThScoreFileConverter
     using System.Runtime.Serialization;
     using System.Windows;
     using System.Xml;
+    using ThScoreFileConverter.Models;
 
     /// <summary>
     /// Represents the settings of this application.

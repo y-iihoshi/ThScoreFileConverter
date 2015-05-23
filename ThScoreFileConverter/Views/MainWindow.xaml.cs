@@ -15,6 +15,7 @@ namespace ThScoreFileConverter.Views
     using System.Windows.Controls;
     using System.Windows.Data;
     using System.Windows.Threading;
+    using ThScoreFileConverter.Models;
     using Prop = ThScoreFileConverter.Properties;
     using WinForms = System.Windows.Forms;
 

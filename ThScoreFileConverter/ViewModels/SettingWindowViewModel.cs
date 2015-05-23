@@ -10,6 +10,7 @@ namespace ThScoreFileConverter.ViewModels
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Microsoft.Practices.Prism.Mvvm;
+    using ThScoreFileConverter.Models;
 
     /// <summary>
     /// The view model class for <see cref="ThScoreFileConverter.Views.SettingWindow"/>.

@@ -96,48 +96,48 @@
     <Compile Include="Views\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EnumAltNameAttribute.cs" />
-    <Compile Include="EnumExtensions.cs" />
-    <Compile Include="EnumShortNameParser.cs" />
-    <Compile Include="ExceptionOccurredEventArgs.cs" />
+    <Compile Include="Models\EnumAltNameAttribute.cs" />
+    <Compile Include="Models\EnumExtensions.cs" />
+    <Compile Include="Models\EnumShortNameParser.cs" />
+    <Compile Include="Models\ExceptionOccurredEventArgs.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="IBinaryReadable.cs" />
-    <Compile Include="IBinaryWritable.cs" />
-    <Compile Include="IStringReplaceable.cs" />
-    <Compile Include="Pair.cs" />
-    <Compile Include="Profiler.cs" />
+    <Compile Include="Models\IBinaryReadable.cs" />
+    <Compile Include="Models\IBinaryWritable.cs" />
+    <Compile Include="Models\IStringReplaceable.cs" />
+    <Compile Include="Models\Pair.cs" />
+    <Compile Include="Models\Profiler.cs" />
     <Compile Include="SettingsPerTitle.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\SettingWindow.xaml.cs">
       <DependentUpon>SettingWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="SpellCardInfo.cs" />
-    <Compile Include="Th06Converter.cs" />
-    <Compile Include="Th075Converter.cs" />
-    <Compile Include="Th07Converter.cs" />
-    <Compile Include="Th08Converter.cs" />
-    <Compile Include="Th095Converter.cs" />
-    <Compile Include="Th09Converter.cs" />
-    <Compile Include="Th105Converter.cs" />
-    <Compile Include="Th123Converter.cs" />
-    <Compile Include="Th125Converter.cs" />
-    <Compile Include="Th128Converter.cs" />
-    <Compile Include="Th12Converter.cs" />
-    <Compile Include="Th135Converter.cs" />
-    <Compile Include="Th13Converter.cs" />
-    <Compile Include="Th143Converter.cs" />
-    <Compile Include="Th14Converter.cs" />
-    <Compile Include="ThConverterEventArgs.cs" />
-    <Compile Include="ThConverterFactory.cs" />
-    <Compile Include="Time.cs" />
-    <Compile Include="Utils.cs" />
-    <Compile Include="Win32Window.cs" />
+    <Compile Include="Models\SpellCardInfo.cs" />
+    <Compile Include="Models\Th06Converter.cs" />
+    <Compile Include="Models\Th075Converter.cs" />
+    <Compile Include="Models\Th07Converter.cs" />
+    <Compile Include="Models\Th08Converter.cs" />
+    <Compile Include="Models\Th095Converter.cs" />
+    <Compile Include="Models\Th09Converter.cs" />
+    <Compile Include="Models\Th105Converter.cs" />
+    <Compile Include="Models\Th123Converter.cs" />
+    <Compile Include="Models\Th125Converter.cs" />
+    <Compile Include="Models\Th128Converter.cs" />
+    <Compile Include="Models\Th12Converter.cs" />
+    <Compile Include="Models\Th135Converter.cs" />
+    <Compile Include="Models\Th13Converter.cs" />
+    <Compile Include="Models\Th143Converter.cs" />
+    <Compile Include="Models\Th14Converter.cs" />
+    <Compile Include="Models\ThConverterEventArgs.cs" />
+    <Compile Include="Models\ThConverterFactory.cs" />
+    <Compile Include="Models\Time.cs" />
+    <Compile Include="Models\Utils.cs" />
+    <Compile Include="Models\Win32Window.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="ThConverter.cs" />
-    <Compile Include="Th10Converter.cs" />
-    <Compile Include="ThCrypt.cs" />
-    <Compile Include="Th11Converter.cs" />
+    <Compile Include="Models\ThConverter.cs" />
+    <Compile Include="Models\Th10Converter.cs" />
+    <Compile Include="Models\ThCrypt.cs" />
+    <Compile Include="Models\Th11Converter.cs" />
     <Page Include="Views\AboutWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -150,8 +150,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BitReader.cs" />
-    <Compile Include="Lzss.cs" />
+    <Compile Include="Models\BitReader.cs" />
+    <Compile Include="Models\Lzss.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

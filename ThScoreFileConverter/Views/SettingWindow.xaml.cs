@@ -10,6 +10,7 @@ namespace ThScoreFileConverter.Views
     using System.Globalization;
     using System.Windows;
     using System.Windows.Input;
+    using ThScoreFileConverter.Models;
     using SysDraw = System.Drawing;
     using WinForms = System.Windows.Forms;
 
