@@ -11,10 +11,9 @@ namespace ThScoreFileConverter.Views
     using System.Globalization;
     using System.IO;
     using System.Linq;
-    using System.Threading;
     using System.Windows;
     using System.Windows.Controls;
-    using System.Windows.Input;
+    using System.Windows.Data;
     using System.Windows.Threading;
     using Prop = ThScoreFileConverter.Properties;
     using WinForms = System.Windows.Forms;
@@ -25,11 +24,6 @@ namespace ThScoreFileConverter.Views
     public partial class MainWindow : Window
     {
         /// <summary>
-        /// The instance that executes a conversion process.
-        /// </summary>
-        private ThConverter converter = null;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
         /// </summary>
         public MainWindow()
@@ -38,18 +32,6 @@ namespace ThScoreFileConverter.Views
 
             try
             {
-                var lastTitleItem = this.cmbTitle.Items.OfType<ComboBoxItem>()
-                    .FirstOrDefault(item => item.Name == Settings.Instance.LastTitle);
-                if (lastTitleItem != null)
-                    lastTitleItem.IsSelected = true;
-                else
-                {
-                    var firstEnabledItem = this.cmbTitle.Items.OfType<ComboBoxItem>()
-                        .FirstOrDefault(item => item.IsEnabled);
-                    if (firstEnabledItem != null)
-                        firstEnabledItem.IsSelected = true;
-                }
-
                 var app = App.Current as App;
                 if (app != null)
                     app.UpdateResources(Settings.Instance.FontFamilyName, Settings.Instance.FontSize);
@@ -70,7 +52,6 @@ namespace ThScoreFileConverter.Views
         {
             try
             {
-                this.UpdateSettingsFromControls(this.cmbTitle.SelectedItem as ComboBoxItem);
                 Settings.Instance.FontFamilyName = App.Current.Resources["FontFamilyKey"].ToString();
                 Settings.Instance.FontSize =
                     Convert.ToDouble(App.Current.Resources["FontSizeKey"], CultureInfo.InvariantCulture);
@@ -81,36 +62,6 @@ namespace ThScoreFileConverter.Views
                 throw;
             }
         }
-
-        #region Work combo box
-
-        /// <summary>
-        /// Handles the <c>SelectionChanged</c> routed event of the <see cref="cmbTitle"/> member.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void CmbTitle_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (e.RemovedItems.Count > 0)
-                this.UpdateSettingsFromControls(e.RemovedItems[0] as ComboBoxItem);
-
-            if (e.AddedItems.Count > 0)
-            {
-                var item = e.AddedItems[0] as ComboBoxItem;
-                if (item != null)
-                {
-                    this.converter = ThConverterFactory.Create(item.Name);
-                    this.converter.ConvertFinished += this.ThConverter_ConvertFinished;
-                    this.converter.ConvertAllFinished += this.ThConverter_ConvertAllFinished;
-                    this.converter.ExceptionOccurred += this.ThConverter_ExceptionOccurred;
-
-                    Settings.Instance.LastTitle = item.Name;
-                    this.UpdateControlsFromSettings(item);
-                }
-            }
-        }
-
-        #endregion
 
         #region Score file
 
@@ -191,16 +142,6 @@ namespace ThScoreFileConverter.Views
                 this.ShowExceptionMessage(ex);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Handles the <c>TextChanged</c> routed event of the <see cref="txtScore"/> member.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void TxtScore_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            this.UpdateBtnConvertIsEnabled();
         }
 
         #endregion
@@ -286,16 +227,6 @@ namespace ThScoreFileConverter.Views
             }
         }
 
-        /// <summary>
-        /// Handles the <c>TextChanged</c> routed event of the <see cref="txtBestShot"/> member.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void TxtBestShot_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            this.UpdateBtnConvertIsEnabled();
-        }
-
         #endregion
 
         #region Template files
@@ -322,52 +253,9 @@ namespace ThScoreFileConverter.Views
 
                     var result = dialog.ShowDialog(new Win32Window(this));
                     if (result == WinForms.DialogResult.OK)
-                    {
-                        foreach (var name in dialog.FileNames)
-                            if (!this.lstTemplate.Items.Contains(name))
-                                this.lstTemplate.Items.Add(name);
-                        this.UpdateBtnConvertIsEnabled();
-                    }
+                        this.lstTemplate.ItemsSource = this.lstTemplate.ItemsSource.Cast<string>()
+                            .Union(dialog.FileNames);
                 }
-            }
-            catch (Exception ex)
-            {
-                this.ShowExceptionMessage(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Handles the <c>Click</c> routed event of the <see cref="btnTemplateClear"/> member.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void BtnTemplateClear_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                for (var index = this.lstTemplate.SelectedItems.Count - 1; index >= 0; index--)
-                    this.lstTemplate.Items.Remove(this.lstTemplate.SelectedItems[index]);
-                this.UpdateBtnConvertIsEnabled();
-            }
-            catch (Exception ex)
-            {
-                this.ShowExceptionMessage(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Handles the <c>Click</c> routed event of the <see cref="btnTemplateClearAll"/> member.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void BtnTemplateClearAll_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                this.lstTemplate.Items.Clear();
-                this.UpdateBtnConvertIsEnabled();
             }
             catch (Exception ex)
             {
@@ -414,12 +302,8 @@ namespace ThScoreFileConverter.Views
                 {
                     var droppedPaths = e.Data.GetData(DataFormats.FileDrop, false) as string[];
                     if (droppedPaths != null)
-                    {
-                        foreach (var path in droppedPaths)
-                            if (File.Exists(path) && !this.lstTemplate.Items.Contains(path))
-                                this.lstTemplate.Items.Add(path);
-                        this.UpdateBtnConvertIsEnabled();
-                    }
+                        this.lstTemplate.ItemsSource = this.lstTemplate.ItemsSource.Cast<string>()
+                            .Union(droppedPaths.Where(path => File.Exists(path)));
                 }
             }
             catch (Exception ex)
@@ -436,7 +320,10 @@ namespace ThScoreFileConverter.Views
         /// <param name="e">The event data.</param>
         private void LstTemplate_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            btnTemplateClear.IsEnabled = this.lstTemplate.SelectedItems.Count > 0;
+            // FIXME: Should consider about using EventTrigger instead of the codes below.
+            var vm = this.DataContext as ViewModels.MainWindowViewModel;
+            if (vm != null)
+                vm.DeleteTemplateFilesCommand.RaiseCanExecuteChanged();
         }
 
         #endregion
@@ -522,82 +409,16 @@ namespace ThScoreFileConverter.Views
             }
         }
 
-        /// <summary>
-        /// Handles the <c>TextChanged</c> routed event of the <see cref="txtOutput"/> member.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void TxtOutput_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            this.UpdateBtnConvertIsEnabled();
-        }
-
         #endregion
 
         /// <summary>
-        /// Handles the <c>Click</c> routed event of the <see cref="btnConvert"/> member.
+        /// Handles the <c>TargetUpdated</c> routed event of the <see cref="txtLog"/> member.
         /// </summary>
         /// <param name="sender">The instance where the event handler is attached.</param>
         /// <param name="e">The event data.</param>
-        private void BtnConvert_Click(object sender, RoutedEventArgs e)
+        private void TxtLog_TargetUpdated(object sender, DataTransferEventArgs e)
         {
-            try
-            {
-                this.ChangeCursor(Cursors.Wait);
-                this.SetAllControlsEnabled(false);
-
-                this.txtLog.Clear();
-                this.AddLogLine(Prop.Resources.msgStartConversion);
-
-                var selectedItem = this.cmbTitle.SelectedItem as ComboBoxItem;
-                if (selectedItem != null)
-                {
-                    this.UpdateSettingsFromControls(selectedItem);
-
-                    new Thread(new ParameterizedThreadStart(this.converter.Convert))
-                        .Start(Settings.Instance.Dictionary[selectedItem.Name]);
-                }
-            }
-            catch (Exception ex)
-            {
-                this.ShowExceptionMessage(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Handles the event indicating the conversion process per file has finished.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void ThConverter_ConvertFinished(object sender, ThConverterEventArgs e)
-        {
-            this.AddLogLine(e.Message);
-        }
-
-        /// <summary>
-        /// Handles the event indicating the all conversion process has finished.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void ThConverter_ConvertAllFinished(object sender, ThConverterEventArgs e)
-        {
-            this.AddLogLine(Prop.Resources.msgEndConversion);
-            this.SetAllControlsEnabled(true);
-            this.ChangeCursor(null);
-        }
-
-        /// <summary>
-        /// Handles the event indicating an exception has occurred.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void ThConverter_ExceptionOccurred(object sender, ExceptionOccurredEventArgs e)
-        {
-            this.ShowExceptionMessage(e.Exception);
-            this.AddLogLine(Prop.Resources.msgErrUnhandledException);
-            this.SetAllControlsEnabled(true);
-            this.ChangeCursor(null);
+            this.txtLog.ScrollToEnd();
         }
 
         /// <summary>
@@ -624,51 +445,6 @@ namespace ThScoreFileConverter.Views
         #region Utility
 
         /// <summary>
-        /// Outputs one line to the text box for logging.
-        /// </summary>
-        /// <param name="log">The log text to output.</param>
-        private void AddLogLine(string log)
-        {
-            var dispatcher = this.txtLog.Dispatcher;
-            if (dispatcher.CheckAccess())
-            {
-                this.txtLog.AppendText(log + Environment.NewLine);
-                this.txtLog.ScrollToEnd();
-            }
-            else
-                dispatcher.Invoke(
-                    DispatcherPriority.Normal, new Action<string>(this.AddLogLine), log);
-        }
-
-        /// <summary>
-        /// Changes the mouse cursor.
-        /// </summary>
-        /// <param name="cursor">The <see cref="Cursor"/> instance to set.</param>
-        private void ChangeCursor(Cursor cursor)
-        {
-            var dispatcher = this.Dispatcher;
-            if (dispatcher.CheckAccess())
-                Mouse.OverrideCursor = cursor;
-            else
-                dispatcher.Invoke(
-                    DispatcherPriority.Normal, new Action<Cursor>(this.ChangeCursor), cursor);
-        }
-
-        /// <summary>
-        /// Sets the <c>IsEnabled</c> properties of all controls.
-        /// </summary>
-        /// <param name="isEnabled">The value to set.</param>
-        private void SetAllControlsEnabled(bool isEnabled)
-        {
-            var dispatcher = this.Dispatcher;
-            if (dispatcher.CheckAccess())
-                this.IsEnabled = isEnabled;
-            else
-                dispatcher.Invoke(
-                    DispatcherPriority.Normal, new Action<bool>(this.SetAllControlsEnabled), isEnabled);
-        }
-
-        /// <summary>
         /// Shows a message that represents the occurred exception.
         /// </summary>
         /// <param name="e">The occurred exception.</param>
@@ -686,96 +462,6 @@ namespace ThScoreFileConverter.Views
             else
                 dispatcher.Invoke(
                     DispatcherPriority.Normal, new Action<Exception>(this.ShowExceptionMessage), e);
-        }
-
-        /// <summary>
-        /// Updates the settings of this application by statuses of the controls on this window.
-        /// </summary>
-        /// <param name="item">The currently selected item of the "Work" combo box.</param>
-        private void UpdateSettingsFromControls(ComboBoxItem item)
-        {
-            if (!Settings.Instance.Dictionary.ContainsKey(item.Name))
-                Settings.Instance.Dictionary.Add(item.Name, new SettingsPerTitle());
-
-            var entry = Settings.Instance.Dictionary[item.Name];
-            entry.ScoreFile = this.txtScore.Text;
-            entry.BestShotDirectory = this.txtBestShot.Text;
-            entry.TemplateFiles = this.lstTemplate.Items.Cast<string>().ToList();
-            entry.OutputDirectory = this.txtOutput.Text;
-            entry.ImageOutputDirectory = this.txtImageOutput.Text;
-            entry.HideUntriedCards = this.chkHideUntriedCards.IsChecked.Value;
-        }
-
-        /// <summary>
-        /// Updates the controls on this window by the settings of this application.
-        /// </summary>
-        /// <param name="item">The currently selected item of the "Work" combo box.</param>
-        private void UpdateControlsFromSettings(ComboBoxItem item)
-        {
-            if (!Settings.Instance.Dictionary.ContainsKey(item.Name))
-                Settings.Instance.Dictionary.Add(item.Name, new SettingsPerTitle());
-
-            this.txtScore.Clear();
-            this.lblSupportedVersion.Content = string.Empty;
-            this.txtBestShot.Clear();
-            this.lstTemplate.Items.Clear();
-            this.txtOutput.Clear();
-            this.txtImageOutput.Clear();
-            this.txtLog.Clear();
-
-            if (this.converter.HasBestShotConverter)
-            {
-                this.lblBestShot.IsEnabled = true;
-                this.txtBestShot.IsEnabled = true;
-                this.btnBestShot.IsEnabled = true;
-                this.lblImageOutput.IsEnabled = true;
-                this.txtImageOutput.IsEnabled = true;
-            }
-            else
-            {
-                this.lblBestShot.IsEnabled = false;
-                this.txtBestShot.IsEnabled = false;
-                this.btnBestShot.IsEnabled = false;
-                this.lblImageOutput.IsEnabled = false;
-                this.txtImageOutput.IsEnabled = false;
-            }
-
-            this.chkHideUntriedCards.IsEnabled = this.converter.HasCardReplacer;
-
-            var entry = Settings.Instance.Dictionary[item.Name];
-            if (File.Exists(entry.ScoreFile))
-                this.txtScore.Text = entry.ScoreFile;
-            if (this.converter != null)
-                this.lblSupportedVersion.Content =
-                    Prop.Resources.strSupportedVersions + this.converter.SupportedVersions;
-            if (this.txtBestShot.IsEnabled && Directory.Exists(entry.BestShotDirectory))
-                this.txtBestShot.Text = entry.BestShotDirectory;
-            foreach (var template in entry.TemplateFiles)
-                if (File.Exists(template))
-                    this.lstTemplate.Items.Add(template);
-            if (Directory.Exists(entry.OutputDirectory))
-                this.txtOutput.Text = entry.OutputDirectory;
-            if (this.txtImageOutput.IsEnabled)
-                this.txtImageOutput.Text = (entry.ImageOutputDirectory.Length > 0)
-                    ? entry.ImageOutputDirectory : Prop.Resources.strBestShotDirectory;
-            this.chkHideUntriedCards.IsChecked = entry.HideUntriedCards;
-
-            var app = App.Current as App;
-            if (app != null)
-                app.UpdateResources(Settings.Instance.FontFamilyName, Settings.Instance.FontSize);
-        }
-
-        /// <summary>
-        /// Updates the value of <see cref="btnConvert"/><c>.IsEnabled</c>.
-        /// </summary>
-        private void UpdateBtnConvertIsEnabled()
-        {
-            btnConvert.IsEnabled =
-                (this.txtScore.Text.Length > 0) &&
-                this.lstTemplate.HasItems &&
-                (this.txtOutput.Text.Length > 0) &&
-                (!this.txtBestShot.IsEnabled || (this.txtBestShot.Text.Length > 0)) &&
-                (!this.txtImageOutput.IsEnabled || (this.txtImageOutput.Text.Length > 0));
         }
 
         #endregion

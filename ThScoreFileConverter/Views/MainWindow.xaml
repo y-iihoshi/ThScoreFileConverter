@@ -2,9 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:ThScoreFileConverter.ViewModels"
-        xmlns:p="clr-namespace:ThScoreFileConverter.Properties"
         xmlns:Specialized="clr-namespace:System.Collections.Specialized;assembly=System" x:Name="wndMain" x:Class="ThScoreFileConverter.Views.MainWindow"
-        Title="{Binding Title}" Height="558" Width="505" ResizeMode="CanMinimize" Closing="WndMain_Closing" Background="#FFEEEEEE" Style="{DynamicResource WindowStyleKey}">
+        Title="{Binding Title}" IsEnabled="{Binding IsIdle}" Height="558" Width="505" ResizeMode="CanMinimize" Closing="WndMain_Closing" Background="#FFEEEEEE" Style="{DynamicResource WindowStyleKey}">
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
@@ -18,55 +17,53 @@
             <RowDefinition Height="45"/>
         </Grid.RowDefinitions>
 
-        <ComboBox x:Name="cmbTitle" HorizontalAlignment="Left" Margin="10,10,0,10" Width="150" Height="25" SelectionChanged="CmbTitle_SelectionChanged">
-            <ComboBoxItem Name="TH06" Content="東方紅魔郷"/>
-            <ComboBoxItem Name="TH07" Content="東方妖々夢"/>
-            <ComboBoxItem Name="TH08" Content="東方永夜抄"/>
-            <ComboBoxItem Name="TH09" Content="東方花映塚"/>
-            <ComboBoxItem Name="TH095" Content="東方文花帖"/>
-            <ComboBoxItem Name="TH10" Content="東方風神録"/>
-            <ComboBoxItem Name="TH11" Content="東方地霊殿"/>
-            <ComboBoxItem Name="TH12" Content="東方星蓮船"/>
-            <ComboBoxItem Name="TH125" Content="ダブルスポイラー"/>
-            <ComboBoxItem Name="TH128" Content="妖精大戦争"/>
-            <ComboBoxItem Name="TH13" Content="東方神霊廟"/>
-            <ComboBoxItem Name="TH14" Content="東方輝針城"/>
-            <ComboBoxItem Name="TH143" Content="弾幕アマノジャク"/>
-            <ComboBoxItem Name="TH15" Content="東方紺珠伝" IsEnabled="False"/>
-            <Separator/>
-            <ComboBoxItem Name="TH075" Content="東方萃夢想"/>
-            <ComboBoxItem Name="TH105" Content="東方緋想天"/>
-            <ComboBoxItem Name="TH123" Content="東方非想天則"/>
-            <ComboBoxItem Name="TH135" Content="東方心綺楼"/>
-            <ComboBoxItem Name="TH145" Content="東方深秘録" IsEnabled="False"/>
+        <ComboBox x:Name="cmbTitle" ItemsSource="{Binding Works}" DisplayMemberPath="Title" SelectedValuePath="Number" SelectedValue="{Binding LastWorkNumber, Mode=TwoWay}" HorizontalAlignment="Left" Margin="10,10,0,10" Width="150" Height="25">
+            <ComboBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ComboBoxItem}">
+                    <Style.Setters>
+                        <Setter Property="IsEnabled" Value="{Binding IsSupported}"/>
+                    </Style.Setters>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Title}" Value="">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                                        <Separator/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ComboBox.ItemContainerStyle>
         </ComboBox>
-        <Label x:Name="lblSupportedVersion" Content="" Margin="165,10,10,10"/>
+        <Label x:Name="lblSupportedVersion" Content="{Binding SupportedVersion}" Margin="165,10,10,10"/>
 
         <Label Content="スコア(_S):" Grid.Row="1" HorizontalAlignment="Left" Margin="10,10,0,0" Target="{Binding ElementName=txtScore, Mode=OneWay}" Width="120" Height="25" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtScore" Grid.Row="1" HorizontalAlignment="Right" Margin="0,10,95,0" Width="245" Drop="TxtScore_Drop" IsReadOnly="True" TextChanged="TxtScore_TextChanged" PreviewDragEnter="TxtScore_Dragging" PreviewDragOver="TxtScore_Dragging" Height="25" VerticalAlignment="Top"/>
-        <Button x:Name="btnScore" Content="開く(_O)..." Grid.Row="1" HorizontalAlignment="Right" Margin="0,10,10,0" Width="75" Click="BtnScore_Click" Height="25" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtScore" Text="{Binding ScoreFile, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" HorizontalAlignment="Right" Margin="0,10,95,0" Width="245" Drop="TxtScore_Drop" IsReadOnly="True" PreviewDragEnter="TxtScore_Dragging" PreviewDragOver="TxtScore_Dragging" Height="25" VerticalAlignment="Top"/>
+        <Button x:Name="btnScore" Command="{Binding SelectScoreFileCommand}" Content="開く(_O)..." Grid.Row="1" HorizontalAlignment="Right" Margin="0,10,10,0" Width="75" Click="BtnScore_Click" Height="25" VerticalAlignment="Top"/>
 
-        <Label x:Name="lblBestShot" Content="ベストショット(_B):" HorizontalAlignment="Left" Margin="10,40,0,0" Grid.Row="1" Height="25" Width="120" IsEnabled="False" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtBestShot" HorizontalAlignment="Right" Height="25" Margin="0,40,95,0" Grid.Row="1" Width="245" IsEnabled="False" TextChanged="TxtBestShot_TextChanged" IsReadOnly="True" Drop="TxtBestShot_Drop" PreviewDragEnter="TxtBestShot_Dragging" PreviewDragOver="TxtBestShot_Dragging" VerticalAlignment="Top"/>
-        <Button x:Name="btnBestShot" Content="開く(_O)..." Margin="0,40,10,0" Grid.Row="1" Width="75" HorizontalAlignment="Right" IsEnabled="False" Click="BtnBestShot_Click" Height="25" VerticalAlignment="Top"/>
+        <Label x:Name="lblBestShot" Content="ベストショット(_B):" HorizontalAlignment="Left" Margin="10,40,0,0" Grid.Row="1" Height="25" Width="120" IsEnabled="{Binding CanHandleBestShot}" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtBestShot" Text="{Binding BestShotDirectory, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" Height="25" Margin="0,40,95,0" Grid.Row="1" Width="245" IsEnabled="{Binding CanHandleBestShot}" IsReadOnly="True" Drop="TxtBestShot_Drop" PreviewDragEnter="TxtBestShot_Dragging" PreviewDragOver="TxtBestShot_Dragging" VerticalAlignment="Top"/>
+        <Button x:Name="btnBestShot" Command="{Binding SelectBestShotDirectoryCommand}" Content="開く(_O)..." Margin="0,40,10,0" Grid.Row="1" Width="75" HorizontalAlignment="Right" IsEnabled="{Binding CanHandleBestShot}" Click="BtnBestShot_Click" Height="25" VerticalAlignment="Top"/>
 
         <Label Content="テンプレート(_T):" HorizontalAlignment="Left" Margin="10,70,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" Target="{Binding ElementName=lstTemplate, Mode=OneWay}" Height="25"/>
-        <ListBox x:Name="lstTemplate" Margin="0,70,95,0" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionMode="Multiple" Drop="LstTemplate_Drop" SelectionChanged="LstTemplate_SelectionChanged" PreviewDragEnter="LstTemplate_Dragging" PreviewDragOver="LstTemplate_Dragging" HorizontalAlignment="Right" Width="245" AllowDrop="True" Height="100" VerticalAlignment="Top"/>
-        <Button x:Name="btnTemplateAdd" Content="追加(_A)..." HorizontalAlignment="Right" Margin="0,70,10,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="BtnTemplateAdd_Click" Height="25"/>
-        <Button x:Name="btnTemplateClear" Content="削除(_C)" HorizontalAlignment="Right" Margin="0,100,10,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="BtnTemplateClear_Click" IsEnabled="False" Height="25"/>
-        <Button x:Name="btnTemplateClearAll" Content="全て削除(_L)" Margin="0,130,10,0" Grid.Row="1" IsEnabled="{Binding HasItems, ElementName=lstTemplate}" Click="BtnTemplateClearAll_Click" HorizontalAlignment="Right" Width="75" VerticalAlignment="Top" Height="25"/>
+        <ListBox x:Name="lstTemplate" ItemsSource="{Binding TemplateFiles, Mode=TwoWay}" Margin="0,70,95,0" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionMode="Multiple" Drop="LstTemplate_Drop" SelectionChanged="LstTemplate_SelectionChanged" PreviewDragEnter="LstTemplate_Dragging" PreviewDragOver="LstTemplate_Dragging" HorizontalAlignment="Right" Width="245" AllowDrop="True" Height="100" VerticalAlignment="Top"/>
+        <Button x:Name="btnTemplateAdd" Command="{Binding AddTemplateFilesCommand}" Content="追加(_A)..." HorizontalAlignment="Right" Margin="0,70,10,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="BtnTemplateAdd_Click" Height="25"/>
+        <Button x:Name="btnTemplateClear" Command="{Binding DeleteTemplateFilesCommand}" CommandParameter="{Binding SelectedItems, ElementName=lstTemplate}" Content="削除(_C)" HorizontalAlignment="Right" Margin="0,100,10,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Height="25"/>
+        <Button x:Name="btnTemplateClearAll" Command="{Binding DeleteAllTemplateFilesCommand}" Content="全て削除(_L)" Margin="0,130,10,0" Grid.Row="1" HorizontalAlignment="Right" Width="75" VerticalAlignment="Top" Height="25"/>
 
         <Label Content="出力先(_O):" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="2" Width="120" Target="{Binding ElementName=txtOutput, Mode=OneWay}" Height="25" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtOutput" HorizontalAlignment="Right" Margin="0,10,95,0" Grid.Row="2" Width="245" IsReadOnly="True" TextChanged="TxtOutput_TextChanged" PreviewDragEnter="TxtOutput_Dragging" PreviewDragOver="TxtOutput_Dragging" Drop="TxtOutput_Drop" Height="25" VerticalAlignment="Top"/>
-        <Button x:Name="btnOutput" Content="開く(_O)..." Margin="0,10,10,0" Grid.Row="2" Click="BtnOutput_Click" HorizontalAlignment="Right" Width="75" Height="25" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtOutput" Text="{Binding OutputDirectory, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" Margin="0,10,95,0" Grid.Row="2" Width="245" IsReadOnly="True" PreviewDragEnter="TxtOutput_Dragging" PreviewDragOver="TxtOutput_Dragging" Drop="TxtOutput_Drop" Height="25" VerticalAlignment="Top"/>
+        <Button x:Name="btnOutput" Command="{Binding SelectOutputDirectoryCommand}" Content="開く(_O)..." Margin="0,10,10,0" Grid.Row="2" Click="BtnOutput_Click" HorizontalAlignment="Right" Width="75" Height="25" VerticalAlignment="Top"/>
 
-        <Label x:Name="lblImageOutput" Content="画像出力先(_I):" HorizontalAlignment="Left" Margin="10,40,0,0" Grid.Row="2" Width="120" Target="{Binding ElementName=txtOutput, Mode=OneWay}" Height="25" VerticalAlignment="Top" IsEnabled="False"/>
-        <TextBox x:Name="txtImageOutput" HorizontalAlignment="Right" Margin="0,40,95,0" Grid.Row="2" Width="245" TextChanged="TxtOutput_TextChanged" PreviewDragEnter="TxtOutput_Dragging" PreviewDragOver="TxtOutput_Dragging" Drop="TxtOutput_Drop" Height="25" VerticalAlignment="Top" IsEnabled="False"/>
-        <CheckBox x:Name="chkHideUntriedCards" Content="未挑戦のスペルカード名を出力しない(_H)" Margin="0,70,10,0" Grid.Row="2" VerticalAlignment="Top" RenderTransformOrigin="0.298,0.556" IsChecked="True" HorizontalAlignment="Right" Width="330"/>
+        <Label x:Name="lblImageOutput" Content="画像出力先(_I):" HorizontalAlignment="Left" Margin="10,40,0,0" Grid.Row="2" Width="120" Target="{Binding ElementName=txtOutput, Mode=OneWay}" Height="25" VerticalAlignment="Top" IsEnabled="{Binding CanHandleBestShot}"/>
+        <TextBox x:Name="txtImageOutput" Text="{Binding ImageOutputDirectory, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" Margin="0,40,95,0" Grid.Row="2" Width="245" PreviewDragEnter="TxtOutput_Dragging" PreviewDragOver="TxtOutput_Dragging" Drop="TxtOutput_Drop" Height="25" VerticalAlignment="Top" IsEnabled="{Binding CanHandleBestShot}"/>
+        <CheckBox x:Name="chkHideUntriedCards" Content="未挑戦のスペルカード名を出力しない(_H)" Margin="0,70,10,0" Grid.Row="2" VerticalAlignment="Top" RenderTransformOrigin="0.298,0.556" IsEnabled="{Binding CanReplaceCardNames}" IsChecked="{Binding HidesUntriedCards}" HorizontalAlignment="Right" Width="330"/>
 
-        <Button x:Name="btnConvert" Content="変換(_V)" HorizontalAlignment="Center" Grid.Row="3" Margin="0,10" Grid.Column="1" Width="100" IsEnabled="False" Click="BtnConvert_Click" IsDefault="True" Height="25"/>
+        <Button x:Name="btnConvert" Command="{Binding ConvertCommand}" Content="変換(_V)" HorizontalAlignment="Center" Grid.Row="3" Margin="0,10" Grid.Column="1" Width="100" IsDefault="True" Height="25"/>
 
-        <TextBox x:Name="txtLog" Margin="10" Grid.Row="4" TextWrapping="Wrap" IsUndoEnabled="False" IsReadOnly="True" VerticalScrollBarVisibility="Visible" AllowDrop="False" FontSize="10"/>
+        <TextBox x:Name="txtLog" Text="{Binding Log, NotifyOnTargetUpdated=True}" Margin="10" Grid.Row="4" TextWrapping="Wrap" IsUndoEnabled="False" IsReadOnly="True" VerticalScrollBarVisibility="Visible" AllowDrop="False" FontSize="10" TargetUpdated="TxtLog_TargetUpdated"/>
 
         <Button x:Name="btnSetting" Content="設定(_S)..." HorizontalAlignment="Right" Margin="0,10,75,10" Grid.Row="5" Width="75" Click="BtnSetting_Click" Height="25"/>
         <Button x:Name="btnAbout" Content="_About..." Margin="0,10,10,10" Click="BtnAbout_Click" HorizontalAlignment="Right" Width="60" Height="25" Grid.Row="5"/>
