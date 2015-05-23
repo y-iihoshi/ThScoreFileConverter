@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:vm="clr-namespace:ThScoreFileConverter.ViewModels"
+        xmlns:b="clr-namespace:ThScoreFileConverter.Behaviors"
         xmlns:Specialized="clr-namespace:System.Collections.Specialized;assembly=System" x:Name="wndMain" x:Class="ThScoreFileConverter.Views.MainWindow"
         Title="{Binding Title}" IsEnabled="{Binding IsIdle}" Height="558" Width="505" ResizeMode="CanMinimize" Closing="WndMain_Closing" Background="#FFEEEEEE" Style="{DynamicResource WindowStyleKey}">
     <Window.DataContext>
@@ -41,15 +42,26 @@
         <Label x:Name="lblSupportedVersion" Content="{Binding SupportedVersion}" Margin="165,10,10,10"/>
 
         <Label Content="スコア(_S):" Grid.Row="1" HorizontalAlignment="Left" Margin="10,10,0,0" Target="{Binding ElementName=txtScore, Mode=OneWay}" Width="120" Height="25" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtScore" Text="{Binding ScoreFile, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" HorizontalAlignment="Right" Margin="0,10,95,0" Width="245" Drop="TxtScore_Drop" IsReadOnly="True" PreviewDragEnter="TxtScore_Dragging" PreviewDragOver="TxtScore_Dragging" Height="25" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtScore" Text="{Binding ScoreFile, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" HorizontalAlignment="Right" Margin="0,10,95,0" Width="245" IsReadOnly="True" Height="25" VerticalAlignment="Top">
+            <i:Interaction.Behaviors>
+                <b:UIElementDropBehavior PreviewDragEnterCommand="{Binding DraggingCommand}" PreviewDragOverCommand="{Binding DraggingCommand}" DropCommand="{Binding DropScoreFileCommand}"/>
+            </i:Interaction.Behaviors>
+        </TextBox>
         <Button x:Name="btnScore" Command="{Binding SelectScoreFileCommand}" Content="開く(_O)..." Grid.Row="1" HorizontalAlignment="Right" Margin="0,10,10,0" Width="75" Click="BtnScore_Click" Height="25" VerticalAlignment="Top"/>
 
         <Label x:Name="lblBestShot" Content="ベストショット(_B):" HorizontalAlignment="Left" Margin="10,40,0,0" Grid.Row="1" Height="25" Width="120" IsEnabled="{Binding CanHandleBestShot}" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtBestShot" Text="{Binding BestShotDirectory, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" Height="25" Margin="0,40,95,0" Grid.Row="1" Width="245" IsEnabled="{Binding CanHandleBestShot}" IsReadOnly="True" Drop="TxtBestShot_Drop" PreviewDragEnter="TxtBestShot_Dragging" PreviewDragOver="TxtBestShot_Dragging" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtBestShot" Text="{Binding BestShotDirectory, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" Height="25" Margin="0,40,95,0" Grid.Row="1" Width="245" IsEnabled="{Binding CanHandleBestShot}" IsReadOnly="True" VerticalAlignment="Top">
+            <i:Interaction.Behaviors>
+                <b:UIElementDropBehavior PreviewDragEnterCommand="{Binding DraggingCommand}" PreviewDragOverCommand="{Binding DraggingCommand}" DropCommand="{Binding DropBestShotDirectoryCommand}"/>
+            </i:Interaction.Behaviors>
+        </TextBox>
         <Button x:Name="btnBestShot" Command="{Binding SelectBestShotDirectoryCommand}" Content="開く(_O)..." Margin="0,40,10,0" Grid.Row="1" Width="75" HorizontalAlignment="Right" IsEnabled="{Binding CanHandleBestShot}" Click="BtnBestShot_Click" Height="25" VerticalAlignment="Top"/>
 
         <Label Content="テンプレート(_T):" HorizontalAlignment="Left" Margin="10,70,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" Target="{Binding ElementName=lstTemplate, Mode=OneWay}" Height="25"/>
-        <ListBox x:Name="lstTemplate" ItemsSource="{Binding TemplateFiles, Mode=TwoWay}" Margin="0,70,95,0" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionMode="Multiple" Drop="LstTemplate_Drop" PreviewDragEnter="LstTemplate_Dragging" PreviewDragOver="LstTemplate_Dragging" HorizontalAlignment="Right" Width="245" AllowDrop="True" Height="100" VerticalAlignment="Top">
+        <ListBox x:Name="lstTemplate" ItemsSource="{Binding TemplateFiles, Mode=TwoWay}" Margin="0,70,95,0" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectionMode="Multiple" HorizontalAlignment="Right" Width="245" AllowDrop="True" Height="100" VerticalAlignment="Top">
+            <i:Interaction.Behaviors>
+                <b:UIElementDropBehavior PreviewDragEnterCommand="{Binding DraggingCommand}" PreviewDragOverCommand="{Binding DraggingCommand}" DropCommand="{Binding DropTemplateFilesCommand}"/>
+            </i:Interaction.Behaviors>
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
                     <i:InvokeCommandAction Command="{Binding TemplateFilesSelectionChangedCommand}"/>
@@ -61,11 +73,15 @@
         <Button x:Name="btnTemplateClearAll" Command="{Binding DeleteAllTemplateFilesCommand}" Content="全て削除(_L)" Margin="0,130,10,0" Grid.Row="1" HorizontalAlignment="Right" Width="75" VerticalAlignment="Top" Height="25"/>
 
         <Label Content="出力先(_O):" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="2" Width="120" Target="{Binding ElementName=txtOutput, Mode=OneWay}" Height="25" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtOutput" Text="{Binding OutputDirectory, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" Margin="0,10,95,0" Grid.Row="2" Width="245" IsReadOnly="True" PreviewDragEnter="TxtOutput_Dragging" PreviewDragOver="TxtOutput_Dragging" Drop="TxtOutput_Drop" Height="25" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtOutput" Text="{Binding OutputDirectory, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" Margin="0,10,95,0" Grid.Row="2" Width="245" IsReadOnly="True" Height="25" VerticalAlignment="Top">
+            <i:Interaction.Behaviors>
+                <b:UIElementDropBehavior PreviewDragEnterCommand="{Binding DraggingCommand}" PreviewDragOverCommand="{Binding DraggingCommand}" DropCommand="{Binding DropOutputDirectoryCommand}"/>
+            </i:Interaction.Behaviors>
+        </TextBox>
         <Button x:Name="btnOutput" Command="{Binding SelectOutputDirectoryCommand}" Content="開く(_O)..." Margin="0,10,10,0" Grid.Row="2" Click="BtnOutput_Click" HorizontalAlignment="Right" Width="75" Height="25" VerticalAlignment="Top"/>
 
         <Label x:Name="lblImageOutput" Content="画像出力先(_I):" HorizontalAlignment="Left" Margin="10,40,0,0" Grid.Row="2" Width="120" Target="{Binding ElementName=txtOutput, Mode=OneWay}" Height="25" VerticalAlignment="Top" IsEnabled="{Binding CanHandleBestShot}"/>
-        <TextBox x:Name="txtImageOutput" Text="{Binding ImageOutputDirectory, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" Margin="0,40,95,0" Grid.Row="2" Width="245" PreviewDragEnter="TxtOutput_Dragging" PreviewDragOver="TxtOutput_Dragging" Drop="TxtOutput_Drop" Height="25" VerticalAlignment="Top" IsEnabled="{Binding CanHandleBestShot}"/>
+        <TextBox x:Name="txtImageOutput" Text="{Binding ImageOutputDirectory, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" Margin="0,40,95,0" Grid.Row="2" Width="245" Height="25" VerticalAlignment="Top" IsEnabled="{Binding CanHandleBestShot}"/>
         <CheckBox x:Name="chkHideUntriedCards" Content="未挑戦のスペルカード名を出力しない(_H)" Margin="0,70,10,0" Grid.Row="2" VerticalAlignment="Top" RenderTransformOrigin="0.298,0.556" IsEnabled="{Binding CanReplaceCardNames}" IsChecked="{Binding HidesUntriedCards}" HorizontalAlignment="Right" Width="330"/>
 
         <Button x:Name="btnConvert" Command="{Binding ConvertCommand}" Content="変換(_V)" HorizontalAlignment="Center" Grid.Row="3" Margin="0,10" Grid.Column="1" Width="100" IsDefault="True" Height="25"/>

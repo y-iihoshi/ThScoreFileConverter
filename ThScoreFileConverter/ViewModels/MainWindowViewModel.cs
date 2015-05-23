@@ -14,6 +14,7 @@ namespace ThScoreFileConverter.ViewModels
     using System.Linq;
     using System.Reflection;
     using System.Threading;
+    using System.Windows;
     using System.Windows.Input;
     using Microsoft.Practices.Prism.Commands;
     using Microsoft.Practices.Prism.Mvvm;
@@ -93,6 +94,17 @@ namespace ThScoreFileConverter.ViewModels
                 new DelegateCommand(this.SelectOutputDirectory, this.CanSelectOutputDirectory);
             this.ConvertCommand =
                 new DelegateCommand(this.Convert, this.CanConvert);
+
+            this.DraggingCommand =
+                new DelegateCommand<DragEventArgs>(this.OnDragging);
+            this.DropScoreFileCommand =
+                new DelegateCommand<DragEventArgs>(this.OnDropScoreFile);
+            this.DropBestShotDirectoryCommand =
+                new DelegateCommand<DragEventArgs>(this.OnDropBestShotDirectory);
+            this.DropTemplateFilesCommand =
+                new DelegateCommand<DragEventArgs>(this.OnDropTemplateFiles);
+            this.DropOutputDirectoryCommand =
+                new DelegateCommand<DragEventArgs>(this.OnDropOutputDirectory);
 
             this.PropertyChanged += this.OnPropertyChanged;
 
@@ -348,6 +360,31 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public DelegateCommand ConvertCommand { get; private set; }
 
+        /// <summary>
+        /// Gets the command invoked when a dragging event is occurred on an UI element.
+        /// </summary>
+        public DelegateCommand<DragEventArgs> DraggingCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the command invoked when a score file is dropped on an UI element.
+        /// </summary>
+        public DelegateCommand<DragEventArgs> DropScoreFileCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the command invoked when a best shot directory is dropped on an UI element.
+        /// </summary>
+        public DelegateCommand<DragEventArgs> DropBestShotDirectoryCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the command invoked when some template files are dropped on an UI element.
+        /// </summary>
+        public DelegateCommand<DragEventArgs> DropTemplateFilesCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the command invoked when an output directory is dropped on an UI element.
+        /// </summary>
+        public DelegateCommand<DragEventArgs> DropOutputDirectoryCommand { get; private set; }
+
         #endregion
 
         #endregion
@@ -523,6 +560,130 @@ namespace ThScoreFileConverter.ViewModels
             this.IsIdle = false;
             this.Log = Resources.msgStartConversion + Environment.NewLine;
             new Thread(new ParameterizedThreadStart(this.converter.Convert)).Start(CurrentSetting);
+        }
+
+        /// <summary>
+        /// Invoked when a dragging event is occurred.
+        /// </summary>
+        /// <param name="e">The event data.</param>
+        private void OnDragging(DragEventArgs e)
+        {
+            try
+            {
+                if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                {
+                    e.Effects = DragDropEffects.Copy;
+                    e.Handled = true;
+                }
+                else
+                    e.Effects = DragDropEffects.None;
+            }
+            catch (Exception ex)
+            {
+                this.Log += ex.Message + Environment.NewLine;
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Invoked when a score file is dropped on an UI element.
+        /// </summary>
+        /// <param name="e">The event data.</param>
+        private void OnDropScoreFile(DragEventArgs e)
+        {
+            try
+            {
+                if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                {
+                    var droppedPaths = e.Data.GetData(DataFormats.FileDrop) as string[];
+                    if (droppedPaths != null)
+                    {
+                        var filePath = droppedPaths.FirstOrDefault(path => File.Exists(path));
+                        if (filePath != null)
+                            this.ScoreFile = filePath;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                this.Log += ex.Message + Environment.NewLine;
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Invoked when a best shot directory is dropped on an UI element.
+        /// </summary>
+        /// <param name="e">The event data.</param>
+        private void OnDropBestShotDirectory(DragEventArgs e)
+        {
+            try
+            {
+                if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                {
+                    var droppedPaths = e.Data.GetData(DataFormats.FileDrop) as string[];
+                    if (droppedPaths != null)
+                    {
+                        var dirPath = droppedPaths.FirstOrDefault(path => Directory.Exists(path));
+                        if (dirPath != null)
+                            this.BestShotDirectory = dirPath;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                this.Log += ex.Message + Environment.NewLine;
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Invoked when some template files are dropped on an UI element.
+        /// </summary>
+        /// <param name="e">The event data.</param>
+        private void OnDropTemplateFiles(DragEventArgs e)
+        {
+            try
+            {
+                if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                {
+                    var droppedPaths = e.Data.GetData(DataFormats.FileDrop) as string[];
+                    if (droppedPaths != null)
+                        this.TemplateFiles = this.TemplateFiles
+                            .Union(droppedPaths.Where(path => File.Exists(path)));
+                }
+            }
+            catch (Exception ex)
+            {
+                this.Log += ex.Message + Environment.NewLine;
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Invoked when an output directory is dropped on an UI element.
+        /// </summary>
+        /// <param name="e">The event data.</param>
+        private void OnDropOutputDirectory(DragEventArgs e)
+        {
+            try
+            {
+                if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                {
+                    var droppedPaths = e.Data.GetData(DataFormats.FileDrop) as string[];
+                    if (droppedPaths != null)
+                    {
+                        var dirPath = droppedPaths.FirstOrDefault(path => Directory.Exists(path));
+                        if (dirPath != null)
+                            this.OutputDirectory = dirPath;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                this.Log += ex.Message + Environment.NewLine;
+                throw;
+            }
         }
 
         #endregion

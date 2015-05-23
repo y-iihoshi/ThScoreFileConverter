@@ -93,58 +93,6 @@ namespace ThScoreFileConverter.Views
             }
         }
 
-        /// <summary>
-        /// Handles the <c>PreviewDragEnter</c> and <c>PreviewDragOver</c> routed event of the
-        /// <see cref="txtScore"/> member.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void TxtScore_Dragging(object sender, DragEventArgs e)
-        {
-            try
-            {
-                if (e.Data.GetDataPresent(DataFormats.FileDrop))
-                {
-                    e.Effects = DragDropEffects.Copy;
-                    e.Handled = true;
-                }
-                else
-                    e.Effects = DragDropEffects.None;
-            }
-            catch (Exception ex)
-            {
-                this.ShowExceptionMessage(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Handles the <c>Drop</c> routed event of the <see cref="txtScore"/> member.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void TxtScore_Drop(object sender, DragEventArgs e)
-        {
-            try
-            {
-                if (e.Data.GetDataPresent(DataFormats.FileDrop))
-                {
-                    var droppedPaths = e.Data.GetData(DataFormats.FileDrop) as string[];
-                    if (droppedPaths != null)
-                    {
-                        var scorePath = droppedPaths.FirstOrDefault(path => File.Exists(path));
-                        if (scorePath != null)
-                            this.txtScore.Text = scorePath;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                this.ShowExceptionMessage(ex);
-                throw;
-            }
-        }
-
         #endregion
 
         #region Best shot directory
@@ -167,58 +115,6 @@ namespace ThScoreFileConverter.Views
                     var result = dialog.ShowDialog(new Win32Window(this));
                     if (result == WinForms.DialogResult.OK)
                         this.txtBestShot.Text = dialog.SelectedPath;
-                }
-            }
-            catch (Exception ex)
-            {
-                this.ShowExceptionMessage(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Handles the <c>PreviewDragEnter</c> and <c>PreviewDragOver</c> routed event of the
-        /// <see cref="txtBestShot"/> member.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void TxtBestShot_Dragging(object sender, DragEventArgs e)
-        {
-            try
-            {
-                if (e.Data.GetDataPresent(DataFormats.FileDrop))
-                {
-                    e.Effects = DragDropEffects.Copy;
-                    e.Handled = true;
-                }
-                else
-                    e.Effects = DragDropEffects.None;
-            }
-            catch (Exception ex)
-            {
-                this.ShowExceptionMessage(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Handles the <c>Drop</c> routed event of the <see cref="txtBestShot"/> member.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void TxtBestShot_Drop(object sender, DragEventArgs e)
-        {
-            try
-            {
-                if (e.Data.GetDataPresent(DataFormats.FileDrop))
-                {
-                    var droppedPaths = e.Data.GetData(DataFormats.FileDrop) as string[];
-                    if (droppedPaths != null)
-                    {
-                        var bestShotPath = droppedPaths.FirstOrDefault(path => Directory.Exists(path));
-                        if (bestShotPath != null)
-                            this.txtBestShot.Text = bestShotPath;
-                    }
                 }
             }
             catch (Exception ex)
@@ -265,55 +161,6 @@ namespace ThScoreFileConverter.Views
             }
         }
 
-        /// <summary>
-        /// Handles the <c>PreviewDragEnter</c> and <c>PreviewDragOver</c> routed event of the
-        /// <see cref="lstTemplate"/> member.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void LstTemplate_Dragging(object sender, DragEventArgs e)
-        {
-            try
-            {
-                if (e.Data.GetDataPresent(DataFormats.FileDrop))
-                {
-                    e.Effects = DragDropEffects.Copy;
-                    e.Handled = true;
-                }
-                else
-                    e.Effects = DragDropEffects.None;
-            }
-            catch (Exception ex)
-            {
-                this.ShowExceptionMessage(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Handles the <c>Drop</c> routed event of the <see cref="lstTemplate"/> member.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void LstTemplate_Drop(object sender, DragEventArgs e)
-        {
-            try
-            {
-                if (e.Data.GetDataPresent(DataFormats.FileDrop))
-                {
-                    var droppedPaths = e.Data.GetData(DataFormats.FileDrop, false) as string[];
-                    if (droppedPaths != null)
-                        this.lstTemplate.ItemsSource = this.lstTemplate.ItemsSource.Cast<string>()
-                            .Union(droppedPaths.Where(path => File.Exists(path)));
-                }
-            }
-            catch (Exception ex)
-            {
-                this.ShowExceptionMessage(ex);
-                throw;
-            }
-        }
-
         #endregion
 
         #region Output directory
@@ -336,58 +183,6 @@ namespace ThScoreFileConverter.Views
                     var result = dialog.ShowDialog(new Win32Window(this));
                     if (result == WinForms.DialogResult.OK)
                         this.txtOutput.Text = dialog.SelectedPath;
-                }
-            }
-            catch (Exception ex)
-            {
-                this.ShowExceptionMessage(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Handles the <c>PreviewDragEnter</c> and <c>PreviewDragOver</c> routed event of the
-        /// <see cref="txtOutput"/> member.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void TxtOutput_Dragging(object sender, DragEventArgs e)
-        {
-            try
-            {
-                if (e.Data.GetDataPresent(DataFormats.FileDrop))
-                {
-                    e.Effects = DragDropEffects.Copy;
-                    e.Handled = true;
-                }
-                else
-                    e.Effects = DragDropEffects.None;
-            }
-            catch (Exception ex)
-            {
-                this.ShowExceptionMessage(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Handles the <c>Drop</c> routed event of the <see cref="txtOutput"/> member.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void TxtOutput_Drop(object sender, DragEventArgs e)
-        {
-            try
-            {
-                if (e.Data.GetDataPresent(DataFormats.FileDrop))
-                {
-                    var droppedPaths = e.Data.GetData(DataFormats.FileDrop) as string[];
-                    if (droppedPaths != null)
-                    {
-                        var outputPath = droppedPaths.FirstOrDefault(path => Directory.Exists(path));
-                        if (outputPath != null)
-                            this.txtOutput.Text = outputPath;
-                    }
                 }
             }
             catch (Exception ex)
