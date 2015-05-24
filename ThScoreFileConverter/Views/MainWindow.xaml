@@ -255,12 +255,10 @@
                   IsEnabled="{Binding CanReplaceCardNames}"
                   IsChecked="{Binding HidesUntriedCards}"
                   Margin="0,70,10,0"
-                  RenderTransformOrigin="0.298,0.556"
                   VerticalAlignment="Top"
                   Width="330"/>
 
         <Button x:Name="btnConvert"
-                Grid.Column="1"
                 Grid.Row="3"
                 Command="{Binding ConvertCommand}"
                 Content="変換(_V)"
