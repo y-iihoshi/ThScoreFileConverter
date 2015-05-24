@@ -39,7 +39,7 @@
                 </Style>
             </ComboBox.ItemContainerStyle>
         </ComboBox>
-        <Label x:Name="lblSupportedVersion" Content="{Binding SupportedVersion}" Margin="165,10,10,10"/>
+        <Label x:Name="lblSupportedVersion" Content="{Binding SupportedVersions}" Margin="165,10,10,10"/>
 
         <Label Content="スコア(_S):" Grid.Row="1" HorizontalAlignment="Left" Margin="10,10,0,0" Target="{Binding ElementName=txtScore, Mode=OneWay}" Width="120" Height="25" VerticalAlignment="Top"/>
         <TextBox x:Name="txtScore" Text="{Binding ScoreFile, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" HorizontalAlignment="Right" Margin="0,10,95,0" Width="245" IsReadOnly="True" Height="25" VerticalAlignment="Top">

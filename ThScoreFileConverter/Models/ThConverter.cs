@@ -246,7 +246,7 @@ namespace ThScoreFileConverter.Models
         }
 
         /// <summary>
-        /// Gets the string indicating the supported version of the score file to convert.
+        /// Gets the string indicating the supported versions of the score file to convert.
         /// </summary>
         /// <remarks>It is required to override this property by a subclass.</remarks>
         public virtual string SupportedVersions

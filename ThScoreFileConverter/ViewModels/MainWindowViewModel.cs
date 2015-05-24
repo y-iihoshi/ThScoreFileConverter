@@ -171,13 +171,15 @@ namespace ThScoreFileConverter.ViewModels
         }
 
         /// <summary>
-        /// Gets a string indicating the supported version of the score file to convert.
+        /// Gets a string indicating the supported versions of the score file to convert.
         /// </summary>
-        public string SupportedVersion
+        public string SupportedVersions
         {
             get
             {
-                return (this.converter != null) ? this.converter.SupportedVersions : string.Empty;
+                return (this.converter != null)
+                    ? Resources.strSupportedVersions + this.converter.SupportedVersions
+                    : string.Empty;
             }
         }
 
@@ -711,7 +713,7 @@ namespace ThScoreFileConverter.ViewModels
                     this.IsIdle = true;
                     this.Log = string.Empty;
 
-                    this.OnPropertyChanged(() => this.SupportedVersion);
+                    this.OnPropertyChanged(() => this.SupportedVersions);
                     this.OnPropertyChanged(() => this.ScoreFile);
                     this.OnPropertyChanged(() => this.CanHandleBestShot);
                     this.OnPropertyChanged(() => this.BestShotDirectory);
