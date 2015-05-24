@@ -49,7 +49,7 @@
         </TextBox>
         <Button x:Name="btnScore" Command="{Binding SelectScoreFileCommand}" Content="開く(_O)..." Grid.Row="1" HorizontalAlignment="Right" Margin="0,10,10,0" Width="75" Click="BtnScore_Click" Height="25" VerticalAlignment="Top"/>
 
-        <Label x:Name="lblBestShot" Content="ベストショット(_B):" HorizontalAlignment="Left" Margin="10,40,0,0" Grid.Row="1" Height="25" Width="120" IsEnabled="{Binding CanHandleBestShot}" VerticalAlignment="Top"/>
+        <Label x:Name="lblBestShot" Content="ベストショット(_B):" HorizontalAlignment="Left" Margin="10,40,0,0" Grid.Row="1" Height="25" Width="120" IsEnabled="{Binding CanHandleBestShot}" VerticalAlignment="Top" Target="{Binding ElementName=txtBestShot, Mode=OneWay}"/>
         <TextBox x:Name="txtBestShot" Text="{Binding BestShotDirectory, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" Height="25" Margin="0,40,95,0" Grid.Row="1" Width="245" IsEnabled="{Binding CanHandleBestShot}" IsReadOnly="True" VerticalAlignment="Top">
             <i:Interaction.Behaviors>
                 <b:UIElementDropBehavior PreviewDragEnterCommand="{Binding DraggingCommand}" PreviewDragOverCommand="{Binding DraggingCommand}" DropCommand="{Binding DropBestShotDirectoryCommand}"/>
@@ -80,7 +80,7 @@
         </TextBox>
         <Button x:Name="btnOutput" Command="{Binding SelectOutputDirectoryCommand}" Content="開く(_O)..." Margin="0,10,10,0" Grid.Row="2" Click="BtnOutput_Click" HorizontalAlignment="Right" Width="75" Height="25" VerticalAlignment="Top"/>
 
-        <Label x:Name="lblImageOutput" Content="画像出力先(_I):" HorizontalAlignment="Left" Margin="10,40,0,0" Grid.Row="2" Width="120" Target="{Binding ElementName=txtOutput, Mode=OneWay}" Height="25" VerticalAlignment="Top" IsEnabled="{Binding CanHandleBestShot}"/>
+        <Label x:Name="lblImageOutput" Content="画像出力先(_I):" HorizontalAlignment="Left" Margin="10,40,0,0" Grid.Row="2" Width="120" Target="{Binding ElementName=txtImageOutput, Mode=OneWay}" Height="25" VerticalAlignment="Top" IsEnabled="{Binding CanHandleBestShot}"/>
         <TextBox x:Name="txtImageOutput" Text="{Binding ImageOutputDirectory, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" Margin="0,40,95,0" Grid.Row="2" Width="245" Height="25" VerticalAlignment="Top" IsEnabled="{Binding CanHandleBestShot}"/>
         <CheckBox x:Name="chkHideUntriedCards" Content="未挑戦のスペルカード名を出力しない(_H)" Margin="0,70,10,0" Grid.Row="2" VerticalAlignment="Top" RenderTransformOrigin="0.298,0.556" IsEnabled="{Binding CanReplaceCardNames}" IsChecked="{Binding HidesUntriedCards}" HorizontalAlignment="Right" Width="330"/>
 
