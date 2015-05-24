@@ -2,9 +2,9 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             StartupUri="Views\MainWindow.xaml"
+             Exit="App_Exit"
              Startup="App_Startup"
-             Exit="App_Exit">
+             StartupUri="Views\MainWindow.xaml">
     <Application.Resources>
 
         <FontFamily x:Key="FontFamilyKey">Meiryo</FontFamily>
