@@ -2,7 +2,14 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:ThScoreFileConverter.ViewModels"
-        Title="{Binding Title}" Height="340" Width="420" Style="{DynamicResource WindowStyleKey}" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" PreviewKeyDown="Window_PreviewKeyDown">
+        Title="{Binding Title}"
+        Height="340"
+        Width="420"
+        Style="{DynamicResource WindowStyleKey}"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterOwner"
+        PreviewKeyDown="Window_PreviewKeyDown">
     <Window.DataContext>
         <vm:SettingWindowViewModel/>
     </Window.DataContext>
@@ -16,24 +23,80 @@
 
         <GroupBox Header="フォント設定">
             <Grid>
-                <TextBox x:Name="txtFontInfo" Text="{DynamicResource FontInfoKey}" Margin="10,10,0,0" HorizontalAlignment="Left" Width="190" IsReadOnly="True" Height="25" VerticalAlignment="Top"/>
-                <Button x:Name="btnFontChange" Content="変更(_C)..." Margin="0,10,90,0" Click="BtnFontChange_Click" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75"/>
-                <Button x:Name="btnFontReset" Content="リセット(_R)" Margin="0,10,10,0" Click="BtnFontReset_Click" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75"/>
+                <TextBox x:Name="txtFontInfo"
+                         Text="{DynamicResource FontInfoKey}"
+                         Margin="10,10,0,0"
+                         HorizontalAlignment="Left"
+                         Width="190"
+                         IsReadOnly="True"
+                         Height="25"
+                         VerticalAlignment="Top"/>
+                <Button x:Name="btnFontChange"
+                        Content="変更(_C)..."
+                        Margin="0,10,90,0"
+                        Click="BtnFontChange_Click"
+                        Height="25"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Right"
+                        Width="75"/>
+                <Button x:Name="btnFontReset"
+                        Content="リセット(_R)"
+                        Margin="0,10,10,0"
+                        Click="BtnFontReset_Click"
+                        Height="25"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Right"
+                        Width="75"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="出力書式設定" Grid.Row="1">
+        <GroupBox Header="出力書式設定"
+                  Grid.Row="1">
             <Grid>
-                <CheckBox IsChecked="{Binding OutputNumberGroupSeparator}" Content="数値を桁区切り形式で出力する(_S)" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                <CheckBox IsChecked="{Binding OutputNumberGroupSeparator}"
+                          Content="数値を桁区切り形式で出力する(_S)"
+                          HorizontalAlignment="Left"
+                          Margin="10,10,0,0"
+                          VerticalAlignment="Top"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="文字エンコーディング設定" Grid.Row="2">
+        <GroupBox Header="文字エンコーディング設定"
+                  Grid.Row="2">
             <Grid>
-                <Label Content="入力ファイル(_I):" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                <ComboBox ItemsSource="{Binding InputEncodings}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding InputCodePageId, Mode=TwoWay}" Margin="0,12,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="155"/>
-                <Label Content="出力ファイル(_O):" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top"/>
-                <ComboBox ItemsSource="{Binding OutputEncodings}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding OutputCodePageId, Mode=TwoWay}" HorizontalAlignment="Right" Margin="0,45,10,0" VerticalAlignment="Top" Width="155"/>
+                <Label Content="入力ファイル(_I):"
+                       HorizontalAlignment="Left"
+                       Margin="10,10,0,0"
+                       VerticalAlignment="Top"/>
+                <ComboBox ItemsSource="{Binding InputEncodings}"
+                          DisplayMemberPath="Value"
+                          SelectedValuePath="Key"
+                          SelectedValue="{Binding InputCodePageId, Mode=TwoWay}"
+                          Margin="0,12,10,0"
+                          VerticalAlignment="Top"
+                          HorizontalAlignment="Right"
+                          Width="155"/>
+                <Label Content="出力ファイル(_O):"
+                       HorizontalAlignment="Left"
+                       Margin="10,43,0,0"
+                       VerticalAlignment="Top"/>
+                <ComboBox ItemsSource="{Binding OutputEncodings}"
+                          DisplayMemberPath="Value"
+                          SelectedValuePath="Key"
+                          SelectedValue="{Binding OutputCodePageId, Mode=TwoWay}"
+                          HorizontalAlignment="Right"
+                          Margin="0,45,10,0"
+                          VerticalAlignment="Top"
+                          Width="155"/>
             </Grid>
         </GroupBox>
-        <Button x:Name="btnOK" Content="OK" Margin="0,10,0,0" Grid.Row="3" Height="25" VerticalAlignment="Top" IsDefault="True" Click="BtnOK_Click" HorizontalAlignment="Center" Width="75"/>
+        <Button x:Name="btnOK"
+                Content="OK"
+                Margin="0,10,0,0"
+                Grid.Row="3"
+                Height="25"
+                VerticalAlignment="Top"
+                IsDefault="True"
+                Click="BtnOK_Click"
+                HorizontalAlignment="Center"
+                Width="75"/>
     </Grid>
 </Window>

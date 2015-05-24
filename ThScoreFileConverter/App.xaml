@@ -2,16 +2,22 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             StartupUri="Views\MainWindow.xaml" Startup="App_Startup" Exit="App_Exit">
+             StartupUri="Views\MainWindow.xaml"
+             Startup="App_Startup"
+             Exit="App_Exit">
     <Application.Resources>
 
         <FontFamily x:Key="FontFamilyKey">Meiryo</FontFamily>
         <sys:Double x:Key="FontSizeKey">12</sys:Double>
         <sys:String x:Key="FontInfoKey">Meiryo, 12</sys:String>
-        <Style x:Key="WindowStyleKey" TargetType="Window">
-            <Setter Property="Background" Value="#FFEEEEEE"/>
-            <Setter Property="FontFamily" Value="{DynamicResource FontFamilyKey}"/>
-            <Setter Property="FontSize" Value="{DynamicResource FontSizeKey}"/>
+        <Style x:Key="WindowStyleKey"
+               TargetType="Window">
+            <Setter Property="Background"
+                    Value="#FFEEEEEE"/>
+            <Setter Property="FontFamily"
+                    Value="{DynamicResource FontFamilyKey}"/>
+            <Setter Property="FontSize"
+                    Value="{DynamicResource FontSizeKey}"/>
         </Style>
 
     </Application.Resources>
