@@ -12,8 +12,6 @@ namespace ThScoreFileConverter.Views
     using System.IO;
     using System.Linq;
     using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Data;
     using System.Windows.Threading;
     using ThScoreFileConverter.Models;
     using Prop = ThScoreFileConverter.Properties;
@@ -193,16 +191,6 @@ namespace ThScoreFileConverter.Views
         }
 
         #endregion
-
-        /// <summary>
-        /// Handles the <c>TargetUpdated</c> routed event of the <see cref="txtLog"/> member.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void TxtLog_TargetUpdated(object sender, DataTransferEventArgs e)
-        {
-            this.txtLog.ScrollToEnd();
-        }
 
         /// <summary>
         /// Handles the <c>Click</c> routed event of the <see cref="btnSetting"/> member.
