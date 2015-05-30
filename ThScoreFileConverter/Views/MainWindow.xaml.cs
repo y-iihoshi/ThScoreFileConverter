@@ -203,16 +203,6 @@ namespace ThScoreFileConverter.Views
                 window.ShowDialog();
         }
 
-        /// <summary>
-        /// Handles the <c>Click</c> routed event of the <see cref="btnAbout"/> member.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void BtnAbout_Click(object sender, RoutedEventArgs e)
-        {
-            new AboutWindow(this).ShowDialog();
-        }
-
         #region Utility
 
         /// <summary>

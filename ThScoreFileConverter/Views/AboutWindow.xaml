@@ -1,21 +1,17 @@
-﻿<Window x:Class="ThScoreFileConverter.Views.AboutWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:c="clr-namespace:ThScoreFileConverter.Commands"
-        xmlns:vm="clr-namespace:ThScoreFileConverter.ViewModels"
-        Height="120"
-        Style="{StaticResource DialogStyleKey}"
-        Title="{Binding Title}"
-        Width="320"
-        WindowStartupLocation="CenterOwner">
-    <Window.DataContext>
-        <vm:AboutWindowViewModel/>
-    </Window.DataContext>
-    <Window.InputBindings>
+﻿<UserControl x:Class="ThScoreFileConverter.Views.AboutWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mdb="clr-namespace:MvvmDialogBehavior;assembly=MvvmDialogBehavior"
+             xmlns:c="clr-namespace:ThScoreFileConverter.Commands"
+             xmlns:vm="clr-namespace:ThScoreFileConverter.ViewModels"
+             FocusManager.FocusedElement="{Binding ElementName=Link}">
+
+    <UserControl.InputBindings>
         <KeyBinding Command="{x:Static c:CloseWindowCommand.Instance}"
                     CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
                     Key="Escape"/>
-    </Window.InputBindings>
+    </UserControl.InputBindings>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="72"/>
@@ -36,10 +32,11 @@
             <LineBreak/>
             <TextBlock Text="{Binding Copyright}"/>
             <LineBreak/>
-            <Hyperlink Command="{Binding OpenUriCommand}"
+            <Hyperlink x:Name="Link"
+                       Command="{Binding OpenUriCommand}"
                        CommandParameter="{Binding Uri}">
                 <TextBlock Text="{Binding Uri}"/>
             </Hyperlink>
         </TextBlock>
     </Grid>
-</Window>
+</UserControl>

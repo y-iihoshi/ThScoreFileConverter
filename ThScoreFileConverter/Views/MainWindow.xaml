@@ -3,7 +3,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:Specialized="clr-namespace:System.Collections.Specialized;assembly=System"
+        xmlns:mdb="clr-namespace:MvvmDialogBehavior;assembly=MvvmDialogBehavior"
         xmlns:b="clr-namespace:ThScoreFileConverter.Behaviors"
         xmlns:vm="clr-namespace:ThScoreFileConverter.ViewModels"
         Closing="WndMain_Closing"
@@ -13,9 +13,27 @@
         Style="{StaticResource WindowStyleKey}"
         Title="{Binding Title}"
         Width="505">
+
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
+
+    <i:Interaction.Behaviors>
+        <mdb:DialogBehavior Content="{Binding AboutWindowViewModel}"
+                            Owner="{Binding MainWindow, Source={x:Static Application.Current}}"
+                            WindowStartupLocation="CenterOwner">
+            <mdb:DialogBehavior.Style>
+                <Style BasedOn="{StaticResource DialogStyleKey}"
+                       TargetType="{x:Type Window}">
+                    <Setter Property="SizeToContent"
+                            Value="WidthAndHeight"/>
+                    <Setter Property="Title"
+                            Value="{Binding Content.Title, RelativeSource={x:Static RelativeSource.Self}}"/>
+                </Style>
+            </mdb:DialogBehavior.Style>
+        </mdb:DialogBehavior>
+    </i:Interaction.Behaviors>
+
     <Grid Margin="10,10,10,0"
           VerticalAlignment="Top">
         <Grid.RowDefinitions>
@@ -292,7 +310,7 @@
                 Width="75"/>
         <Button x:Name="btnAbout"
                 Grid.Row="5"
-                Click="BtnAbout_Click"
+                Command="{Binding OpenAboutWindowCommand}"
                 Content="_About..."
                 Height="25"
                 HorizontalAlignment="Right"

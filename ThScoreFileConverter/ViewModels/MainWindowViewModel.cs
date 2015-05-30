@@ -69,6 +69,11 @@ namespace ThScoreFileConverter.ViewModels
         private string log;
 
         /// <summary>
+        /// A view model for <see cref="Views.AboutWindow"/>.
+        /// </summary>
+        private BindableBase aboutWindowViewModel;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
         /// </summary>
         public MainWindowViewModel()
@@ -105,6 +110,8 @@ namespace ThScoreFileConverter.ViewModels
                 new DelegateCommand<DragEventArgs>(this.OnDropTemplateFiles);
             this.DropOutputDirectoryCommand =
                 new DelegateCommand<DragEventArgs>(this.OnDropOutputDirectory);
+
+            this.OpenAboutWindowCommand = new DelegateCommand(this.OpenAboutWindow);
 
             this.PropertyChanged += this.OnPropertyChanged;
 
@@ -320,6 +327,15 @@ namespace ThScoreFileConverter.ViewModels
             private set { this.SetProperty(ref this.log, value); }
         }
 
+        /// <summary>
+        /// Gets a view model for <see cref="Views.AboutWindow"/>.
+        /// </summary>
+        public BindableBase AboutWindowViewModel
+        {
+            get { return this.aboutWindowViewModel; }
+            private set { this.SetProperty(ref this.aboutWindowViewModel, value); }
+        }
+
         #region Commands
 
         /// <summary>
@@ -386,6 +402,11 @@ namespace ThScoreFileConverter.ViewModels
         /// Gets the command invoked when an output directory is dropped on an UI element.
         /// </summary>
         public DelegateCommand<DragEventArgs> DropOutputDirectoryCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the command to open an about window.
+        /// </summary>
+        public DelegateCommand OpenAboutWindowCommand { get; private set; }
 
         #endregion
 
@@ -686,6 +707,14 @@ namespace ThScoreFileConverter.ViewModels
                 this.Log += ex.Message + Environment.NewLine;
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Invoked when opening an about window is requested.
+        /// </summary>
+        private void OpenAboutWindow()
+        {
+            this.AboutWindowViewModel = new AboutWindowViewModel();
         }
 
         #endregion
