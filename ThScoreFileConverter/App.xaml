@@ -11,13 +11,21 @@
         <sys:Double x:Key="FontSizeKey">12</sys:Double>
         <sys:String x:Key="FontInfoKey">Meiryo, 12</sys:String>
         <Style x:Key="WindowStyleKey"
-               TargetType="Window">
+               TargetType="{x:Type Window}">
             <Setter Property="Background"
                     Value="#FFEEEEEE"/>
             <Setter Property="FontFamily"
                     Value="{DynamicResource FontFamilyKey}"/>
             <Setter Property="FontSize"
                     Value="{DynamicResource FontSizeKey}"/>
+        </Style>
+        <Style x:Key="DialogStyleKey"
+               BasedOn="{StaticResource WindowStyleKey}"
+               TargetType="{x:Type Window}">
+            <Setter Property="ResizeMode"
+                    Value="NoResize"/>
+            <Setter Property="ShowInTaskbar"
+                    Value="False"/>
         </Style>
 
     </Application.Resources>

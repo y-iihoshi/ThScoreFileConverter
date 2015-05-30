@@ -4,9 +4,7 @@
         xmlns:c="clr-namespace:ThScoreFileConverter.Commands"
         xmlns:vm="clr-namespace:ThScoreFileConverter.ViewModels"
         Height="120"
-        ResizeMode="NoResize"
-        ShowInTaskbar="False"
-        Style="{DynamicResource WindowStyleKey}"
+        Style="{StaticResource DialogStyleKey}"
         Title="{Binding Title}"
         Width="320"
         WindowStartupLocation="CenterOwner">

@@ -6,12 +6,11 @@
         xmlns:Specialized="clr-namespace:System.Collections.Specialized;assembly=System"
         xmlns:b="clr-namespace:ThScoreFileConverter.Behaviors"
         xmlns:vm="clr-namespace:ThScoreFileConverter.ViewModels"
-        Background="#FFEEEEEE"
         Closing="WndMain_Closing"
         Height="558"
         IsEnabled="{Binding IsIdle}"
         ResizeMode="CanMinimize"
-        Style="{DynamicResource WindowStyleKey}"
+        Style="{StaticResource WindowStyleKey}"
         Title="{Binding Title}"
         Width="505">
     <Window.DataContext>
