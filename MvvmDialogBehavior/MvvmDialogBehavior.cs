@@ -95,6 +95,32 @@ namespace MvvmDialogBehavior
                 typeof(DialogBehavior),
                 new UIPropertyMetadata(true, null));
 
+        public Window Owner
+        {
+            get { return (Window)GetValue(OwnerProperty); }
+            set { SetValue(OwnerProperty, value); }
+        }
+
+        public static readonly DependencyProperty OwnerProperty =
+            DependencyProperty.Register(
+                "Owner",
+                typeof(Window),
+                typeof(DialogBehavior),
+                new UIPropertyMetadata(null, null));
+
+        public WindowStartupLocation WindowStartupLocation
+        {
+            get { return (WindowStartupLocation)GetValue(WindowStartupLocationProperty); }
+            set { SetValue(WindowStartupLocationProperty, value); }
+        }
+
+        public static readonly DependencyProperty WindowStartupLocationProperty =
+            DependencyProperty.Register(
+                "WindowStartupLocation",
+                typeof(WindowStartupLocation),
+                typeof(DialogBehavior),
+                new UIPropertyMetadata(WindowStartupLocation.Manual, null));
+
         private Window _Dialog;
         private bool _IsAttached;
 
@@ -148,6 +174,8 @@ namespace MvvmDialogBehavior
             _Dialog.Closed += Closed;
 
             _Dialog.Content = Content;
+            _Dialog.Owner = Owner;
+            _Dialog.WindowStartupLocation = WindowStartupLocation;
 
             Dispatcher.BeginInvoke(new Action(() =>
             {
