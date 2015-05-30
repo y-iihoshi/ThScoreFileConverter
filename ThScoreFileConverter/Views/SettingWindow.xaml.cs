@@ -145,15 +145,5 @@ namespace ThScoreFileConverter.Views
         }
 
         #endregion
-
-        /// <summary>
-        /// Handles the <c>Click</c> routed event of the <see cref="btnOK"/> member.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void BtnOK_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
     }
 }
