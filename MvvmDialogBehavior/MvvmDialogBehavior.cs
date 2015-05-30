@@ -92,7 +92,7 @@ namespace MvvmDialogBehavior
             DependencyProperty.Register(
                 "IsModal",
                 typeof(bool),
-                typeof(WindowStyleBehavior),
+                typeof(DialogBehavior),
                 new UIPropertyMetadata(true, null));
 
         private Window _Dialog;
