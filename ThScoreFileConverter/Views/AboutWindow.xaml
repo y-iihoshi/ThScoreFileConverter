@@ -1,9 +1,9 @@
 ﻿<Window x:Class="ThScoreFileConverter.Views.AboutWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:c="clr-namespace:ThScoreFileConverter.Commands"
         xmlns:vm="clr-namespace:ThScoreFileConverter.ViewModels"
         Height="120"
-        PreviewKeyDown="Window_PreviewKeyDown"
         ResizeMode="NoResize"
         ShowInTaskbar="False"
         Style="{DynamicResource WindowStyleKey}"
@@ -13,6 +13,11 @@
     <Window.DataContext>
         <vm:AboutWindowViewModel/>
     </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Command="{x:Static c:CloseWindowCommand.Instance}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                    Key="Escape"/>
+    </Window.InputBindings>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="72"/>

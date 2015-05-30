@@ -7,7 +7,6 @@
 namespace ThScoreFileConverter.Views
 {
     using System.Windows;
-    using System.Windows.Input;
 
     /// <summary>
     /// Interaction logic for AboutWindow.xaml
@@ -30,17 +29,6 @@ namespace ThScoreFileConverter.Views
         private AboutWindow()
         {
             this.InitializeComponent();
-        }
-
-        /// <summary>
-        /// Handles the <c>PreviewKeyDown</c> routed event of the current window.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Escape)
-                this.Close();
         }
     }
 }

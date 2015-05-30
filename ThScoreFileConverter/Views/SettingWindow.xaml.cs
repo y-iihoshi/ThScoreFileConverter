@@ -9,7 +9,6 @@ namespace ThScoreFileConverter.Views
     using System;
     using System.Globalization;
     using System.Windows;
-    using System.Windows.Input;
     using ThScoreFileConverter.Models;
     using SysDraw = System.Drawing;
     using WinForms = System.Windows.Forms;
@@ -155,17 +154,6 @@ namespace ThScoreFileConverter.Views
         private void BtnOK_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-        }
-
-        /// <summary>
-        /// Handles the <c>PreviewKeyDown</c> routed event of the current window.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Escape)
-                this.Close();
         }
     }
 }
