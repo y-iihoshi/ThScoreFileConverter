@@ -199,8 +199,7 @@ namespace ThScoreFileConverter.Views
         /// <param name="e">The event data.</param>
         private void BtnSetting_Click(object sender, RoutedEventArgs e)
         {
-            using (var window = new SettingWindow(this))
-                window.ShowDialog();
+            new SettingWindow(this).ShowDialog();
         }
 
         #region Utility

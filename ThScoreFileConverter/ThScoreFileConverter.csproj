@@ -89,6 +89,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Actions\FontDialogActionResult.cs" />
+    <Compile Include="Actions\FontDialogAction.cs" />
     <Compile Include="Behaviors\TextBoxBaseScrollBehavior.cs" />
     <Compile Include="Behaviors\UIElementDropBehavior.cs" />
     <Compile Include="Commands\CloseWindowCommand.cs" />

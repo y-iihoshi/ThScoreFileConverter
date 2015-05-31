@@ -6,11 +6,17 @@
 
 namespace ThScoreFileConverter.ViewModels
 {
+    using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
     using System.Linq;
+    using System.Windows;
+    using Microsoft.Practices.Prism.Commands;
     using Microsoft.Practices.Prism.Mvvm;
+    using ThScoreFileConverter.Actions;
     using ThScoreFileConverter.Models;
+    using SysDraw = System.Drawing;
 
     /// <summary>
     /// The view model class for <see cref="ThScoreFileConverter.Views.SettingWindow"/>.
@@ -28,13 +34,33 @@ namespace ThScoreFileConverter.ViewModels
                 .ToDictionary(id => id, id => Utils.GetEncoding(id).EncodingName);
             this.InputEncodings = encodings;
             this.OutputEncodings = encodings;
+
+            this.FontDialogOkCommand = new DelegateCommand<FontDialogActionResult>(this.ApplyFont);
+            this.FontDialogApplyCommand = new DelegateCommand<FontDialogActionResult>(this.ApplyFont);
+            this.FontDialogCancelCommand = new DelegateCommand<FontDialogActionResult>(this.ApplyFont);
+            this.ResetFontCommand = new DelegateCommand(this.ResetFont);
         }
+
+        #region Properties to bind a view
 
         /// <summary>
         /// Gets a title of the Settings window.
         /// </summary>
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For bindings.")]
         public string Title { get; private set; }
+
+        /// <summary>
+        /// Gets the current font.
+        /// </summary>
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "For binding.")]
+        public SysDraw.Font Font
+        {
+            get
+            {
+                return new SysDraw.Font(
+                    App.Current.Resources["FontFamilyKey"].ToString(),
+                    Convert.ToSingle(App.Current.Resources["FontSizeKey"], CultureInfo.InvariantCulture));
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether numeric values is output with thousand separator
@@ -108,5 +134,62 @@ namespace ThScoreFileConverter.ViewModels
                 }
             }
         }
+
+        #region Commands
+
+        /// <summary>
+        /// Gets the command invoked when the user clicks an <c>OK</c> button of the font dialog box.
+        /// </summary>
+        public DelegateCommand<FontDialogActionResult> FontDialogOkCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the command invoked when the user clicks an <c>Apply</c> button of the font dialog box.
+        /// </summary>
+        public DelegateCommand<FontDialogActionResult> FontDialogApplyCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the command invoked when the user cancels the font choice.
+        /// </summary>
+        public DelegateCommand<FontDialogActionResult> FontDialogCancelCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the command to reset the UI font.
+        /// </summary>
+        public DelegateCommand ResetFontCommand { get; private set; }
+
+        #endregion
+
+        #endregion
+
+        #region Methods for command implementation
+
+        /// <summary>
+        /// Applies the UI font change.
+        /// </summary>
+        /// <param name="result">A tuple of the new font family name and size.</param>
+        private void ApplyFont(FontDialogActionResult result)
+        {
+            var app = App.Current as App;
+            if (app != null)
+            {
+                app.UpdateResources(result.Font.FontFamily.Name, result.Font.Size);
+                this.OnPropertyChanged(() => this.Font);
+            }
+        }
+
+        /// <summary>
+        /// Resets the UI font.
+        /// </summary>
+        private void ResetFont()
+        {
+            var app = App.Current as App;
+            if (app != null)
+            {
+                app.UpdateResources(SystemFonts.MessageFontFamily, SystemFonts.MessageFontSize);
+                this.OnPropertyChanged(() => this.Font);
+            }
+        }
+
+        #endregion
     }
 }
