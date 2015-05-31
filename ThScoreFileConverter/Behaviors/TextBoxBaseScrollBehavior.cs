@@ -33,7 +33,7 @@ namespace ThScoreFileConverter.Behaviors
         }
 
         /// <summary>
-        /// Called after the behavior is attached to an <see cref="Behavior{T}.AssociatedObject"/>.
+        /// Called after the behavior is attached to a <see cref="Behavior{T}.AssociatedObject"/>.
         /// </summary>
         protected override void OnAttached()
         {

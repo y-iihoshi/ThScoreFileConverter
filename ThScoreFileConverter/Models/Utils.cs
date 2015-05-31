@@ -118,9 +118,9 @@ namespace ThScoreFileConverter.Models
         }
 
         /// <summary>
-        /// Converts an one digit value from one-based to zero-based.
+        /// Converts a one digit value from one-based to zero-based.
         /// </summary>
-        /// <param name="input">An one digit value to convert.</param>
+        /// <param name="input">A one digit value to convert.</param>
         /// <returns>A converted one digit value.</returns>
         public static int ToZeroBased(int input)
         {
@@ -131,9 +131,9 @@ namespace ThScoreFileConverter.Models
         }
 
         /// <summary>
-        /// Converts an one digit value from zero-based to one-based.
+        /// Converts a one digit value from zero-based to one-based.
         /// </summary>
-        /// <param name="input">An one digit value to convert.</param>
+        /// <param name="input">A one digit value to convert.</param>
         /// <returns>A converted one digit value.</returns>
         public static int ToOneBased(int input)
         {

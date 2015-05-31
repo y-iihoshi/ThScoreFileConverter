@@ -379,27 +379,27 @@ namespace ThScoreFileConverter.ViewModels
         public DelegateCommand ConvertCommand { get; private set; }
 
         /// <summary>
-        /// Gets the command invoked when a dragging event is occurred on an UI element.
+        /// Gets the command invoked when a dragging event is occurred on a UI element.
         /// </summary>
         public DelegateCommand<DragEventArgs> DraggingCommand { get; private set; }
 
         /// <summary>
-        /// Gets the command invoked when a score file is dropped on an UI element.
+        /// Gets the command invoked when a score file is dropped on a UI element.
         /// </summary>
         public DelegateCommand<DragEventArgs> DropScoreFileCommand { get; private set; }
 
         /// <summary>
-        /// Gets the command invoked when a best shot directory is dropped on an UI element.
+        /// Gets the command invoked when a best shot directory is dropped on a UI element.
         /// </summary>
         public DelegateCommand<DragEventArgs> DropBestShotDirectoryCommand { get; private set; }
 
         /// <summary>
-        /// Gets the command invoked when some template files are dropped on an UI element.
+        /// Gets the command invoked when some template files are dropped on a UI element.
         /// </summary>
         public DelegateCommand<DragEventArgs> DropTemplateFilesCommand { get; private set; }
 
         /// <summary>
-        /// Gets the command invoked when an output directory is dropped on an UI element.
+        /// Gets the command invoked when an output directory is dropped on a UI element.
         /// </summary>
         public DelegateCommand<DragEventArgs> DropOutputDirectoryCommand { get; private set; }
 
@@ -609,7 +609,7 @@ namespace ThScoreFileConverter.ViewModels
         }
 
         /// <summary>
-        /// Invoked when a score file is dropped on an UI element.
+        /// Invoked when a score file is dropped on a UI element.
         /// </summary>
         /// <param name="e">The event data.</param>
         private void OnDropScoreFile(DragEventArgs e)
@@ -635,7 +635,7 @@ namespace ThScoreFileConverter.ViewModels
         }
 
         /// <summary>
-        /// Invoked when a best shot directory is dropped on an UI element.
+        /// Invoked when a best shot directory is dropped on a UI element.
         /// </summary>
         /// <param name="e">The event data.</param>
         private void OnDropBestShotDirectory(DragEventArgs e)
@@ -661,7 +661,7 @@ namespace ThScoreFileConverter.ViewModels
         }
 
         /// <summary>
-        /// Invoked when some template files are dropped on an UI element.
+        /// Invoked when some template files are dropped on a UI element.
         /// </summary>
         /// <param name="e">The event data.</param>
         private void OnDropTemplateFiles(DragEventArgs e)
@@ -684,7 +684,7 @@ namespace ThScoreFileConverter.ViewModels
         }
 
         /// <summary>
-        /// Invoked when an output directory is dropped on an UI element.
+        /// Invoked when an output directory is dropped on a UI element.
         /// </summary>
         /// <param name="e">The event data.</param>
         private void OnDropOutputDirectory(DragEventArgs e)

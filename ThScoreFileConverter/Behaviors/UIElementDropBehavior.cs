@@ -12,7 +12,7 @@ namespace ThScoreFileConverter.Behaviors
     using System.Windows.Interactivity;
 
     /// <summary>
-    /// Encapsulates state information and drag-and-drop related <see cref="ICommand"/>s into an
+    /// Encapsulates state information and drag-and-drop related <see cref="ICommand"/>s into a
     /// <see cref="UIElement"/> object.
     /// </summary>
     public class UIElementDropBehavior : Behavior<UIElement>
@@ -157,7 +157,7 @@ namespace ThScoreFileConverter.Behaviors
         #endregion
 
         /// <summary>
-        /// Called after the behavior is attached to an <see cref="Behavior{T}.AssociatedObject"/>.
+        /// Called after the behavior is attached to a <see cref="Behavior{T}.AssociatedObject"/>.
         /// </summary>
         protected override void OnAttached()
         {
@@ -216,7 +216,7 @@ namespace ThScoreFileConverter.Behaviors
         }
 
         /// <summary>
-        /// Handles an <see cref="UIElement.DragEnter"/> event.
+        /// Handles a <see cref="UIElement.DragEnter"/> event.
         /// </summary>
         /// <param name="sender">The object where the event handler is attached.</param>
         /// <param name="e">The event data.</param>
@@ -226,7 +226,7 @@ namespace ThScoreFileConverter.Behaviors
         }
 
         /// <summary>
-        /// Handles an <see cref="UIElement.DragLeave"/> event.
+        /// Handles a <see cref="UIElement.DragLeave"/> event.
         /// </summary>
         /// <param name="sender">The object where the event handler is attached.</param>
         /// <param name="e">The event data.</param>
@@ -236,7 +236,7 @@ namespace ThScoreFileConverter.Behaviors
         }
 
         /// <summary>
-        /// Handles an <see cref="UIElement.DragOver"/> event.
+        /// Handles a <see cref="UIElement.DragOver"/> event.
         /// </summary>
         /// <param name="sender">The object where the event handler is attached.</param>
         /// <param name="e">The event data.</param>
@@ -246,7 +246,7 @@ namespace ThScoreFileConverter.Behaviors
         }
 
         /// <summary>
-        /// Handles an <see cref="UIElement.Drop"/> event.
+        /// Handles a <see cref="UIElement.Drop"/> event.
         /// </summary>
         /// <param name="sender">The object where the event handler is attached.</param>
         /// <param name="e">The event data.</param>
@@ -256,7 +256,7 @@ namespace ThScoreFileConverter.Behaviors
         }
 
         /// <summary>
-        /// Handles an <see cref="UIElement.PreviewDragEnter"/> event.
+        /// Handles a <see cref="UIElement.PreviewDragEnter"/> event.
         /// </summary>
         /// <param name="sender">The object where the event handler is attached.</param>
         /// <param name="e">The event data.</param>
@@ -266,7 +266,7 @@ namespace ThScoreFileConverter.Behaviors
         }
 
         /// <summary>
-        /// Handles an <see cref="UIElement.PreviewDragLeave"/> event.
+        /// Handles a <see cref="UIElement.PreviewDragLeave"/> event.
         /// </summary>
         /// <param name="sender">The object where the event handler is attached.</param>
         /// <param name="e">The event data.</param>
@@ -276,7 +276,7 @@ namespace ThScoreFileConverter.Behaviors
         }
 
         /// <summary>
-        /// Handles an <see cref="UIElement.PreviewDragOver"/> event.
+        /// Handles a <see cref="UIElement.PreviewDragOver"/> event.
         /// </summary>
         /// <param name="sender">The object where the event handler is attached.</param>
         /// <param name="e">The event data.</param>
@@ -286,7 +286,7 @@ namespace ThScoreFileConverter.Behaviors
         }
 
         /// <summary>
-        /// Handles an <see cref="UIElement.PreviewDrop"/> event.
+        /// Handles a <see cref="UIElement.PreviewDrop"/> event.
         /// </summary>
         /// <param name="sender">The object where the event handler is attached.</param>
         /// <param name="e">The event data.</param>

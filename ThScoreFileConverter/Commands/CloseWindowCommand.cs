@@ -47,7 +47,7 @@ namespace ThScoreFileConverter.Commands
         /// <summary>
         /// Determines whether the command can execute in its current state.
         /// </summary>
-        /// <param name="parameter">An <see cref="Window"/> instance which will be closed.</param>
+        /// <param name="parameter">A <see cref="Window"/> instance which will be closed.</param>
         /// <returns><c>true</c> if this command can be executed; otherwise, <c>false</c>.</returns>
         public bool CanExecute(object parameter)
         {
@@ -57,7 +57,7 @@ namespace ThScoreFileConverter.Commands
         /// <summary>
         /// Called when the command is invoked.
         /// </summary>
-        /// <param name="parameter">An <see cref="Window"/> instance which is closed.</param>
+        /// <param name="parameter">A <see cref="Window"/> instance which is closed.</param>
         public void Execute(object parameter)
         {
             if (this.CanExecute(parameter))

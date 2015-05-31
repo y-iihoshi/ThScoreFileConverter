@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="AboutWindowViewModel.cs" company="None">
-//     (c) 2014 IIHOSHI Yoshinori
+//     (c) 2014-2015 IIHOSHI Yoshinori
 // </copyright>
 //-----------------------------------------------------------------------
 
@@ -102,7 +102,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Opens the specified URI.
         /// </summary>
-        /// <param name="uri">An URI to open.</param>
+        /// <param name="uri">A URI to open.</param>
         private void OpenUri(object uri)
         {
             Process.Start(uri as string);
