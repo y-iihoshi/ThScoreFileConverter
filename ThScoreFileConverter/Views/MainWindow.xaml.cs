@@ -192,16 +192,6 @@ namespace ThScoreFileConverter.Views
 
         #endregion
 
-        /// <summary>
-        /// Handles the <c>Click</c> routed event of the <see cref="btnSetting"/> member.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void BtnSetting_Click(object sender, RoutedEventArgs e)
-        {
-            new SettingWindow(this).ShowDialog();
-        }
-
         #region Utility
 
         /// <summary>

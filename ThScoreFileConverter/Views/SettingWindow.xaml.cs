@@ -6,27 +6,17 @@
 
 namespace ThScoreFileConverter.Views
 {
-    using System.Windows;
+    using System.Windows.Controls;
 
     /// <summary>
     /// Interaction logic for SettingWindow.xaml
     /// </summary>
-    public partial class SettingWindow : Window
+    public partial class SettingWindow : UserControl
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SettingWindow"/> class.
         /// </summary>
-        /// <param name="owner">The instance of the owner window.</param>
-        public SettingWindow(Window owner)
-            : this()
-        {
-            this.Owner = owner;
-        }
-
-        /// <summary>
-        /// Prevents a default instance of the <see cref="SettingWindow"/> class from being created.
-        /// </summary>
-        private SettingWindow()
+        public SettingWindow()
         {
             this.InitializeComponent();
         }

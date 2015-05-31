@@ -32,6 +32,21 @@
                 </Style>
             </mdb:DialogBehavior.Style>
         </mdb:DialogBehavior>
+        <mdb:DialogBehavior Content="{Binding SettingWindowViewModel}"
+                            Owner="{Binding MainWindow, Source={x:Static Application.Current}}"
+                            WindowStartupLocation="CenterOwner">
+            <mdb:DialogBehavior.Style>
+                <Style BasedOn="{StaticResource DialogStyleKey}"
+                       TargetType="{x:Type Window}">
+                    <Setter Property="Height"
+                            Value="340"/>
+                    <Setter Property="Title"
+                            Value="{Binding Content.Title, RelativeSource={x:Static RelativeSource.Self}}"/>
+                    <Setter Property="Width"
+                            Value="420"/>
+                </Style>
+            </mdb:DialogBehavior.Style>
+        </mdb:DialogBehavior>
     </i:Interaction.Behaviors>
 
     <Grid Margin="10,10,10,0"
@@ -302,7 +317,7 @@
 
         <Button x:Name="btnSetting"
                 Grid.Row="5"
-                Click="BtnSetting_Click"
+                Command="{Binding OpenSettingWindowCommand}"
                 Content="設定(_S)..."
                 Height="25"
                 HorizontalAlignment="Right"

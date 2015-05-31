@@ -74,6 +74,11 @@ namespace ThScoreFileConverter.ViewModels
         private BindableBase aboutWindowViewModel;
 
         /// <summary>
+        /// A view model for <see cref="Views.SettingWindow"/>.
+        /// </summary>
+        private BindableBase settingWindowViewModel;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
         /// </summary>
         public MainWindowViewModel()
@@ -112,6 +117,7 @@ namespace ThScoreFileConverter.ViewModels
                 new DelegateCommand<DragEventArgs>(this.OnDropOutputDirectory);
 
             this.OpenAboutWindowCommand = new DelegateCommand(this.OpenAboutWindow);
+            this.OpenSettingWindowCommand = new DelegateCommand(this.OpenSettingWindow);
 
             this.PropertyChanged += this.OnPropertyChanged;
 
@@ -336,6 +342,15 @@ namespace ThScoreFileConverter.ViewModels
             private set { this.SetProperty(ref this.aboutWindowViewModel, value); }
         }
 
+        /// <summary>
+        /// Gets a view model for <see cref="Views.SettingWindow"/>.
+        /// </summary>
+        public BindableBase SettingWindowViewModel
+        {
+            get { return this.settingWindowViewModel; }
+            private set { this.SetProperty(ref this.settingWindowViewModel, value); }
+        }
+
         #region Commands
 
         /// <summary>
@@ -407,6 +422,11 @@ namespace ThScoreFileConverter.ViewModels
         /// Gets the command to open an about window.
         /// </summary>
         public DelegateCommand OpenAboutWindowCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the command to open a setting window.
+        /// </summary>
+        public DelegateCommand OpenSettingWindowCommand { get; private set; }
 
         #endregion
 
@@ -715,6 +735,14 @@ namespace ThScoreFileConverter.ViewModels
         private void OpenAboutWindow()
         {
             this.AboutWindowViewModel = new AboutWindowViewModel();
+        }
+
+        /// <summary>
+        /// Invoked when opening a setting window is requested.
+        /// </summary>
+        private void OpenSettingWindow()
+        {
+            this.SettingWindowViewModel = new SettingWindowViewModel();
         }
 
         #endregion
