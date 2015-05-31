@@ -11,7 +11,6 @@
 
         <FontFamily x:Key="FontFamilyKey">Meiryo</FontFamily>
         <sys:Double x:Key="FontSizeKey">12</sys:Double>
-        <sys:String x:Key="FontInfoKey">Meiryo, 12</sys:String>
         <Style x:Key="WindowStyleKey"
                TargetType="{x:Type Window}">
             <Setter Property="Background"

@@ -6,13 +6,11 @@
 
 namespace ThScoreFileConverter
 {
-    using System;
     using System.IO;
     using System.Windows;
     using System.Windows.Media;
     using ThScoreFileConverter.Models;
     using Prop = ThScoreFileConverter.Properties;
-    using SysDraw = System.Drawing;
 
     /// <summary>
     /// Interaction logic for App.xaml
@@ -30,8 +28,6 @@ namespace ThScoreFileConverter
                 this.Resources["FontFamilyKey"] = fontFamily;
             if (fontSize.HasValue)
                 this.Resources["FontSizeKey"] = fontSize.Value;
-            this.Resources["FontInfoKey"] =
-                this.Resources["FontFamilyKey"] + ", " + this.Resources["FontSizeKey"];
         }
 
         /// <summary>
@@ -42,19 +38,6 @@ namespace ThScoreFileConverter
         public void UpdateResources(string fontFamilyName, double? fontSize)
         {
             this.UpdateResources(new FontFamily(fontFamilyName), fontSize);
-        }
-
-        /// <summary>
-        /// Updates the resources of this application.
-        /// </summary>
-        /// <param name="font">
-        /// The value of the <see cref="System.Drawing.Font"/> type used for the UI of this application.
-        /// </param>
-        public void UpdateResources(SysDraw.Font font)
-        {
-            if (font == null)
-                throw new ArgumentNullException("font");
-            this.UpdateResources(new FontFamily(font.FontFamily.Name), font.Size);
         }
 
         /// <summary>

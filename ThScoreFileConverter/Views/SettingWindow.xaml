@@ -33,7 +33,7 @@
                          HorizontalAlignment="Left"
                          IsReadOnly="True"
                          Margin="10,10,0,0"
-                         Text="{DynamicResource FontInfoKey}"
+                         Text="{Binding Font, Mode=OneWay}"
                          VerticalAlignment="Top"
                          Width="190"/>
                 <Button x:Name="btnFontChange"
