@@ -4,7 +4,6 @@
         	 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         	 xmlns:a="clr-namespace:ThScoreFileConverter.Actions"
         	 xmlns:c="clr-namespace:ThScoreFileConverter.Commands"
-        	 xmlns:vm="clr-namespace:ThScoreFileConverter.ViewModels"
              FocusManager.FocusedElement="{Binding ElementName=btnOK}">
 
     <UserControl.InputBindings>
