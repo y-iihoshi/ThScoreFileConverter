@@ -5,8 +5,7 @@
              xmlns:vm="clr-namespace:ThScoreFileConverter.ViewModels"
              xmlns:v="clr-namespace:ThScoreFileConverter.Views"
              Exit="App_Exit"
-             Startup="App_Startup"
-             StartupUri="Views\MainWindow.xaml">
+             Startup="App_Startup">
     <Application.Resources>
 
         <FontFamily x:Key="FontFamilyKey">Meiryo</FontFamily>

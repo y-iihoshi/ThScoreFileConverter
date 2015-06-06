@@ -7,7 +7,6 @@
         xmlns:b="clr-namespace:ThScoreFileConverter.Behaviors"
         xmlns:prop="clr-namespace:ThScoreFileConverter.Properties"
         xmlns:vm="clr-namespace:ThScoreFileConverter.ViewModels"
-        Closing="WndMain_Closing"
         Height="558"
         IsEnabled="{Binding IsIdle}"
         ResizeMode="CanMinimize"

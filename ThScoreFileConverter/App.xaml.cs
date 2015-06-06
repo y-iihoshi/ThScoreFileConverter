@@ -6,10 +6,13 @@
 
 namespace ThScoreFileConverter
 {
+    using System;
+    using System.Globalization;
     using System.IO;
     using System.Windows;
     using System.Windows.Media;
     using ThScoreFileConverter.Models;
+    using ThScoreFileConverter.Views;
     using Prop = ThScoreFileConverter.Properties;
 
     /// <summary>
@@ -62,6 +65,11 @@ namespace ThScoreFileConverter
                 MessageBox.Show(
                     message, Prop.Resources.msgTitleWarning, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+
+            this.UpdateResources(Settings.Instance.FontFamilyName, Settings.Instance.FontSize);
+
+            this.MainWindow = new MainWindow();
+            this.MainWindow.Show();
         }
 
         /// <summary>
@@ -71,6 +79,10 @@ namespace ThScoreFileConverter
         /// <param name="e">The event data.</param>
         private void App_Exit(object sender, ExitEventArgs e)
         {
+            Settings.Instance.FontFamilyName = this.Resources["FontFamilyKey"].ToString();
+            Settings.Instance.FontSize =
+                Convert.ToDouble(this.Resources["FontSizeKey"], CultureInfo.InvariantCulture);
+
             Settings.Instance.Save(Prop.Resources.strSettingFile);
         }
     }
