@@ -8,7 +8,6 @@ namespace ThScoreFileConverter.Actions
 {
     using System;
     using System.Windows;
-    using ThScoreFileConverter.Models;
     using WinForms = System.Windows.Forms;
 
     /// <summary>

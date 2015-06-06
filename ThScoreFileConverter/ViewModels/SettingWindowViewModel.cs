@@ -166,7 +166,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Applies the UI font change.
         /// </summary>
-        /// <param name="result">A tuple of the new font family name and size.</param>
+        /// <param name="result">A result of <see cref="FontDialogAction"/>.</param>
         private void ApplyFont(FontDialogActionResult result)
         {
             var app = App.Current as App;

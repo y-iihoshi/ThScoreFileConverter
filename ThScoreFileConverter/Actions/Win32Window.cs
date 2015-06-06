@@ -4,7 +4,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models
+namespace ThScoreFileConverter.Actions
 {
     using System;
     using System.Windows;

@@ -140,7 +140,7 @@
     <Compile Include="Models\ThConverterFactory.cs" />
     <Compile Include="Models\Time.cs" />
     <Compile Include="Models\Utils.cs" />
-    <Compile Include="Models\Win32Window.cs" />
+    <Compile Include="Actions\Win32Window.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Models\ThConverter.cs" />
     <Compile Include="Models\Th10Converter.cs" />

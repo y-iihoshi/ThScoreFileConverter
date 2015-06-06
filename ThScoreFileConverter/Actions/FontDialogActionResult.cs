@@ -6,10 +6,6 @@
 
 namespace ThScoreFileConverter.Actions
 {
-    using System;
-    using System.ComponentModel;
-    using System.Windows;
-    using System.Windows.Media;
     using SysDraw = System.Drawing;
 
     /// <summary>
