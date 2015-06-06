@@ -7,11 +7,8 @@
 namespace ThScoreFileConverter.Actions
 {
     using System;
-    using System.ComponentModel;
     using System.Windows;
     using System.Windows.Input;
-    using System.Windows.Interactivity;
-    using System.Windows.Media;
     using ThScoreFileConverter.Models;
     using SysDraw = System.Drawing;
     using WinForms = System.Windows.Forms;
@@ -19,27 +16,15 @@ namespace ThScoreFileConverter.Actions
     /// <summary>
     /// Encapsulates the handling of <see cref="System.Windows.Forms.FontDialog"/>.
     /// </summary>
-    public class FontDialogAction : TriggerAction<UIElement>
+    public class FontDialogAction : CommonDialogAction
     {
         #region Dependency properties
-
-        /// <summary>
-        /// Identifies the <see cref="OkCommand"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty OkCommandProperty = DependencyProperty.Register(
-            "OkCommand", typeof(ICommand), typeof(FontDialogAction), new UIPropertyMetadata(null));
 
         /// <summary>
         /// Identifies the <see cref="ApplyCommand"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty ApplyCommandProperty = DependencyProperty.Register(
             "ApplyCommand", typeof(ICommand), typeof(FontDialogAction), new UIPropertyMetadata(null));
-
-        /// <summary>
-        /// Identifies the <see cref="CancelCommand"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty CancelCommandProperty = DependencyProperty.Register(
-            "CancelCommand", typeof(ICommand), typeof(FontDialogAction), new UIPropertyMetadata(null));
 
         /// <summary>
         /// Identifies the <see cref="AllowScriptChange"/> dependency property.
@@ -110,12 +95,6 @@ namespace ThScoreFileConverter.Actions
             "MinSize", typeof(int), typeof(FontDialogAction), new UIPropertyMetadata(0));
 
         /// <summary>
-        /// Identifies the <see cref="Owner"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty OwnerProperty = DependencyProperty.Register(
-            "Owner", typeof(Window), typeof(FontDialogAction), new UIPropertyMetadata(null));
-
-        /// <summary>
         /// Identifies the <see cref="ScriptsOnly"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty ScriptsOnlyProperty = DependencyProperty.Register(
@@ -145,30 +124,9 @@ namespace ThScoreFileConverter.Actions
         public static readonly DependencyProperty ShowHelpProperty = DependencyProperty.Register(
             "ShowHelp", typeof(bool), typeof(FontDialogAction), new UIPropertyMetadata(false));
 
-        /// <summary>
-        /// Identifies the <see cref="Site"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty SiteProperty = DependencyProperty.Register(
-            "Site", typeof(ISite), typeof(FontDialogAction), new UIPropertyMetadata(null));
-
-        /// <summary>
-        /// Identifies the <see cref="Tag"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty TagProperty = DependencyProperty.Register(
-            "Tag", typeof(object), typeof(FontDialogAction), new UIPropertyMetadata(null));
-
         #endregion
 
         #region CLR properties
-
-        /// <summary>
-        /// Gets or sets the command invoked when the user clicks the <c>OK</c> button in the font dialog box.
-        /// </summary>
-        public ICommand OkCommand
-        {
-            get { return this.GetValue(OkCommandProperty) as ICommand; }
-            set { this.SetValue(OkCommandProperty, value); }
-        }
 
         /// <summary>
         /// Gets or sets the command invoked when the user clicks the <c>Apply</c> button in the font dialog
@@ -178,16 +136,6 @@ namespace ThScoreFileConverter.Actions
         {
             get { return this.GetValue(ApplyCommandProperty) as ICommand; }
             set { this.SetValue(ApplyCommandProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets the command invoked when the user clicks the <c>Cancel</c> button in the font dialog
-        /// box.
-        /// </summary>
-        public ICommand CancelCommand
-        {
-            get { return this.GetValue(CancelCommandProperty) as ICommand; }
-            set { this.SetValue(CancelCommandProperty, value); }
         }
 
         /// <summary>
@@ -286,15 +234,6 @@ namespace ThScoreFileConverter.Actions
         }
 
         /// <summary>
-        /// Gets or sets the window which owns the font dialog box.
-        /// </summary>
-        public Window Owner
-        {
-            get { return this.GetValue(OwnerProperty) as Window; }
-            set { this.SetValue(OwnerProperty, value); }
-        }
-
-        /// <summary>
         /// Gets or sets a value indicating whether the dialog box allows selection of fonts for all non-OEM
         /// and Symbol character sets, as well as the ANSI character set.
         /// </summary>
@@ -339,24 +278,6 @@ namespace ThScoreFileConverter.Actions
         {
             get { return (bool)this.GetValue(ShowHelpProperty); }
             set { this.SetValue(ShowHelpProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets the <see cref="ISite"/> of the <see cref="Component"/>.
-        /// </summary>
-        public ISite Site
-        {
-            get { return this.GetValue(SiteProperty) as ISite; }
-            set { this.SetValue(SiteProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets an object that contains data about the control.
-        /// </summary>
-        public object Tag
-        {
-            get { return this.GetValue(TagProperty); }
-            set { this.SetValue(TagProperty, value); }
         }
 
         #endregion

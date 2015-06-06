@@ -7,31 +7,16 @@
 namespace ThScoreFileConverter.Actions
 {
     using System;
-    using System.ComponentModel;
     using System.Windows;
-    using System.Windows.Input;
-    using System.Windows.Interactivity;
     using ThScoreFileConverter.Models;
     using WinForms = System.Windows.Forms;
 
     /// <summary>
     /// Encapsulates the handling of <see cref="System.Windows.Forms.OpenFileDialog"/>.
     /// </summary>
-    public class OpenFileDialogAction : TriggerAction<UIElement>
+    public class OpenFileDialogAction : CommonDialogAction
     {
         #region Dependency properties
-
-        /// <summary>
-        /// Identifies the <see cref="OkCommand"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty OkCommandProperty = DependencyProperty.Register(
-            "OkCommand", typeof(ICommand), typeof(OpenFileDialogAction), new UIPropertyMetadata(null));
-
-        /// <summary>
-        /// Identifies the <see cref="CancelCommand"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty CancelCommandProperty = DependencyProperty.Register(
-            "CancelCommand", typeof(ICommand), typeof(OpenFileDialogAction), new UIPropertyMetadata(null));
 
         /// <summary>
         /// Identifies the <see cref="AddExtension"/> dependency property.
@@ -104,12 +89,6 @@ namespace ThScoreFileConverter.Actions
             "Multiselect", typeof(bool), typeof(OpenFileDialogAction), new UIPropertyMetadata(false));
 
         /// <summary>
-        /// Identifies the <see cref="Owner"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty OwnerProperty = DependencyProperty.Register(
-            "Owner", typeof(Window), typeof(OpenFileDialogAction), new UIPropertyMetadata(null));
-
-        /// <summary>
         /// Identifies the <see cref="ReadOnlyChecked"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty ReadOnlyCheckedProperty = DependencyProperty.Register(
@@ -134,12 +113,6 @@ namespace ThScoreFileConverter.Actions
             "ShowReadOnly", typeof(bool), typeof(OpenFileDialogAction), new UIPropertyMetadata(false));
 
         /// <summary>
-        /// Identifies the <see cref="Site"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty SiteProperty = DependencyProperty.Register(
-            "Site", typeof(ISite), typeof(OpenFileDialogAction), new UIPropertyMetadata(null));
-
-        /// <summary>
         /// Identifies the <see cref="SupportMultiDottedExtensions"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty SupportMultiDottedExtensionsProperty =
@@ -148,12 +121,6 @@ namespace ThScoreFileConverter.Actions
                 typeof(bool),
                 typeof(OpenFileDialogAction),
                 new UIPropertyMetadata(false));
-
-        /// <summary>
-        /// Identifies the <see cref="Tag"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty TagProperty = DependencyProperty.Register(
-            "Tag", typeof(object), typeof(OpenFileDialogAction), new UIPropertyMetadata(null));
 
         /// <summary>
         /// Identifies the <see cref="Title"/> dependency property.
@@ -170,24 +137,6 @@ namespace ThScoreFileConverter.Actions
         #endregion
 
         #region CLR properties
-
-        /// <summary>
-        /// Gets or sets the command invoked when the user clicks the <c>OK</c> button in the dialog box.
-        /// </summary>
-        public ICommand OkCommand
-        {
-            get { return this.GetValue(OkCommandProperty) as ICommand; }
-            set { this.SetValue(OkCommandProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets the command invoked when the user clicks the <c>Cancel</c> button in the dialog box.
-        /// </summary>
-        public ICommand CancelCommand
-        {
-            get { return this.GetValue(CancelCommandProperty) as ICommand; }
-            set { this.SetValue(CancelCommandProperty, value); }
-        }
 
         /// <summary>
         /// Gets or sets a value indicating whether the dialog box automatically adds an extension to a file
@@ -295,15 +244,6 @@ namespace ThScoreFileConverter.Actions
         }
 
         /// <summary>
-        /// Gets or sets the window which owns the font dialog box.
-        /// </summary>
-        public Window Owner
-        {
-            get { return this.GetValue(OwnerProperty) as Window; }
-            set { this.SetValue(OwnerProperty, value); }
-        }
-
-        /// <summary>
         /// Gets or sets a value indicating whether the read-only check box is selected.
         /// </summary>
         public bool ReadOnlyChecked
@@ -342,15 +282,6 @@ namespace ThScoreFileConverter.Actions
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="ISite"/> of the <see cref="Component"/>.
-        /// </summary>
-        public ISite Site
-        {
-            get { return this.GetValue(SiteProperty) as ISite; }
-            set { this.SetValue(SiteProperty, value); }
-        }
-
-        /// <summary>
         /// Gets or sets a value indicating whether the dialog box supports displaying and saving files that
         /// have multiple file name extensions.
         /// </summary>
@@ -358,15 +289,6 @@ namespace ThScoreFileConverter.Actions
         {
             get { return (bool)this.GetValue(SupportMultiDottedExtensionsProperty); }
             set { this.SetValue(SupportMultiDottedExtensionsProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets an object that contains data about the control.
-        /// </summary>
-        public object Tag
-        {
-            get { return this.GetValue(TagProperty); }
-            set { this.SetValue(TagProperty, value); }
         }
 
         /// <summary>

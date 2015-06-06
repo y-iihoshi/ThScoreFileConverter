@@ -89,6 +89,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Actions\CommonDialogAction.cs" />
     <Compile Include="Actions\FolderBrowserDialogAction.cs" />
     <Compile Include="Actions\FolderBrowserDialogActionResult.cs" />
     <Compile Include="Actions\FontDialogActionResult.cs" />
