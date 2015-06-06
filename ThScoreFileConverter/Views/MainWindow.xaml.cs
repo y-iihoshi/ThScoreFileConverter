@@ -9,12 +9,9 @@ namespace ThScoreFileConverter.Views
     using System;
     using System.ComponentModel;
     using System.Globalization;
-    using System.IO;
     using System.Windows;
     using System.Windows.Threading;
-    using ThScoreFileConverter.Models;
     using Prop = ThScoreFileConverter.Properties;
-    using WinForms = System.Windows.Forms;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -60,68 +57,6 @@ namespace ThScoreFileConverter.Views
                 throw;
             }
         }
-
-        #region Best shot directory
-
-        /// <summary>
-        /// Handles the <c>Click</c> routed event of the <see cref="btnBestShot"/> member.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void BtnBestShot_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                using (var dialog = new WinForms.FolderBrowserDialog())
-                {
-                    dialog.Description = Prop.Resources.msgSelectBestShotDirectory;
-                    if (Directory.Exists(this.txtBestShot.Text))
-                        dialog.SelectedPath = this.txtBestShot.Text;
-
-                    var result = dialog.ShowDialog(new Win32Window(this));
-                    if (result == WinForms.DialogResult.OK)
-                        this.txtBestShot.Text = dialog.SelectedPath;
-                }
-            }
-            catch (Exception ex)
-            {
-                this.ShowExceptionMessage(ex);
-                throw;
-            }
-        }
-
-        #endregion
-
-        #region Output directory
-
-        /// <summary>
-        /// Handles the <c>Click</c> routed event of the <see cref="btnOutput"/> member.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void BtnOutput_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                using (var dialog = new WinForms.FolderBrowserDialog())
-                {
-                    dialog.Description = Prop.Resources.msgSelectOutputDirectory;
-                    if (Directory.Exists(this.txtOutput.Text))
-                        dialog.SelectedPath = this.txtOutput.Text;
-
-                    var result = dialog.ShowDialog(new Win32Window(this));
-                    if (result == WinForms.DialogResult.OK)
-                        this.txtOutput.Text = dialog.SelectedPath;
-                }
-            }
-            catch (Exception ex)
-            {
-                this.ShowExceptionMessage(ex);
-                throw;
-            }
-        }
-
-        #endregion
 
         #region Utility
 

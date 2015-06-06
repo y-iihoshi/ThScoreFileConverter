@@ -92,7 +92,7 @@ namespace ThScoreFileConverter.ViewModels
             this.SelectScoreFileCommand =
                 new DelegateCommand<OpenFileDialogActionResult>(this.SelectScoreFile);
             this.SelectBestShotDirectoryCommand =
-                new DelegateCommand(this.SelectBestShotDirectory, this.CanSelectBestShotDirectory);
+                new DelegateCommand<FolderBrowserDialogActionResult>(this.SelectBestShotDirectory);
             this.TemplateFilesSelectionChangedCommand =
                 new DelegateCommand(this.OnTemplateFilesSelectionChanged);
             this.AddTemplateFilesCommand =
@@ -102,7 +102,7 @@ namespace ThScoreFileConverter.ViewModels
             this.DeleteAllTemplateFilesCommand =
                 new DelegateCommand(this.DeleteAllTemplateFiles, this.CanDeleteAllTemplateFiles);
             this.SelectOutputDirectoryCommand =
-                new DelegateCommand(this.SelectOutputDirectory, this.CanSelectOutputDirectory);
+                new DelegateCommand<FolderBrowserDialogActionResult>(this.SelectOutputDirectory);
             this.ConvertCommand =
                 new DelegateCommand(this.Convert, this.CanConvert);
 
@@ -378,7 +378,10 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets the command to select a best shot directory.
         /// </summary>
-        public DelegateCommand SelectBestShotDirectoryCommand { get; private set; }
+        public DelegateCommand<FolderBrowserDialogActionResult> SelectBestShotDirectoryCommand
+        {
+            get; private set;
+        }
 
         /// <summary>
         /// Gets the command invoked when the selection of template files is changed.
@@ -403,7 +406,10 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets the command to select an output directory.
         /// </summary>
-        public DelegateCommand SelectOutputDirectoryCommand { get; private set; }
+        public DelegateCommand<FolderBrowserDialogActionResult> SelectOutputDirectoryCommand
+        {
+            get; private set;
+        }
 
         /// <summary>
         /// Gets the command to convert the score file.
@@ -482,22 +488,12 @@ namespace ThScoreFileConverter.ViewModels
         }
 
         /// <summary>
-        /// Returns a value indicating whether <see cref="SelectBestShotDirectory"/> can be invoked.
-        /// </summary>
-        /// <returns>
-        /// <c>true</c> if <see cref="SelectBestShotDirectory"/> can be invoked; otherwise, <c>false</c>.
-        /// </returns>
-        private bool CanSelectBestShotDirectory()
-        {
-            return (this.converter != null) && this.converter.HasBestShotConverter;
-        }
-
-        /// <summary>
         /// Selects a best shot directory.
         /// </summary>
-        private void SelectBestShotDirectory()
+        /// <param name="result">A result of <see cref="FolderBrowserDialogAction"/>.</param>
+        private void SelectBestShotDirectory(FolderBrowserDialogActionResult result)
         {
-            // FIXME: Implement here instead of MainWindow.BtnBestShot_Click().
+            this.BestShotDirectory = result.SelectedPath;
         }
 
         /// <summary>
@@ -559,22 +555,12 @@ namespace ThScoreFileConverter.ViewModels
         }
 
         /// <summary>
-        /// Returns a value indicating whether <see cref="SelectOutputDirectory"/> can be invoked.
-        /// </summary>
-        /// <returns>
-        /// <c>true</c> if <see cref="SelectOutputDirectory"/> can be invoked; otherwise, <c>false</c>.
-        /// </returns>
-        private bool CanSelectOutputDirectory()
-        {
-            return true;
-        }
-
-        /// <summary>
         /// Selects an output directory.
         /// </summary>
-        private void SelectOutputDirectory()
+        /// <param name="result">A result of <see cref="FolderBrowserDialogAction"/>.</param>
+        private void SelectOutputDirectory(FolderBrowserDialogActionResult result)
         {
-            // FIXME: Implement here instead of MainWindow.BtnOutput_Click().
+            this.OutputDirectory = result.SelectedPath;
         }
 
         /// <summary>
@@ -786,7 +772,6 @@ namespace ThScoreFileConverter.ViewModels
                     break;
 
                 case "BestShotDirectory":
-                    this.SelectBestShotDirectoryCommand.RaiseCanExecuteChanged();
                     this.ConvertCommand.RaiseCanExecuteChanged();
                     break;
 
@@ -798,7 +783,6 @@ namespace ThScoreFileConverter.ViewModels
                     break;
 
                 case "OutputDirectory":
-                    this.SelectOutputDirectoryCommand.RaiseCanExecuteChanged();
                     this.ConvertCommand.RaiseCanExecuteChanged();
                     break;
 

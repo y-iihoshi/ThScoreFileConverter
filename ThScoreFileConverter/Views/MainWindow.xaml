@@ -164,15 +164,23 @@
         </TextBox>
         <Button x:Name="btnBestShot"
                 Grid.Row="1"
-                Click="BtnBestShot_Click"
-                Command="{Binding SelectBestShotDirectoryCommand}"
                 Content="開く(_O)..."
                 Height="25"
                 HorizontalAlignment="Right"
                 IsEnabled="{Binding CanHandleBestShot}"
                 Margin="0,40,10,0"
                 VerticalAlignment="Top"
-                Width="75"/>
+                Width="75">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <a:FolderBrowserDialogAction Description="{x:Static prop:Resources.msgSelectBestShotDirectory}"
+                                                 OkCommand="{Binding SelectBestShotDirectoryCommand}"
+                                                 Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                 SelectedPath="{Binding Text, ElementName=txtBestShot}"
+                                                 ShowNewFolderButton="False"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Button>
 
         <Label Grid.Row="1"
                Content="テンプレート(_T):"
@@ -268,14 +276,21 @@
         </TextBox>
         <Button x:Name="btnOutput"
                 Grid.Row="2"
-                Click="BtnOutput_Click"
-                Command="{Binding SelectOutputDirectoryCommand}"
                 Content="開く(_O)..."
                 Height="25"
                 HorizontalAlignment="Right"
                 Margin="0,10,10,0"
                 VerticalAlignment="Top"
-                Width="75"/>
+                Width="75">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <a:FolderBrowserDialogAction Description="{x:Static prop:Resources.msgSelectOutputDirectory}"
+                                                 OkCommand="{Binding SelectOutputDirectoryCommand}"
+                                                 Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                 SelectedPath="{Binding Text, ElementName=txtOutput}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Button>
 
         <Label x:Name="lblImageOutput"
                Grid.Row="2"
