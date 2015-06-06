@@ -10,7 +10,6 @@ namespace ThScoreFileConverter.Views
     using System.ComponentModel;
     using System.Globalization;
     using System.IO;
-    using System.Linq;
     using System.Windows;
     using System.Windows.Threading;
     using ThScoreFileConverter.Models;
@@ -62,37 +61,6 @@ namespace ThScoreFileConverter.Views
             }
         }
 
-        #region Score file
-
-        /// <summary>
-        /// Handles the <c>Click</c> routed event of the <see cref="btnScore"/> member.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void BtnScore_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                using (var dialog = new WinForms.OpenFileDialog())
-                {
-                    dialog.Filter = Prop.Resources.fltScoreFile;
-                    if (this.txtScore.Text.Length > 0)
-                        dialog.InitialDirectory = Path.GetDirectoryName(this.txtScore.Text);
-
-                    var result = dialog.ShowDialog(new Win32Window(this));
-                    if (result == WinForms.DialogResult.OK)
-                        this.txtScore.Text = dialog.FileName;
-                }
-            }
-            catch (Exception ex)
-            {
-                this.ShowExceptionMessage(ex);
-                throw;
-            }
-        }
-
-        #endregion
-
         #region Best shot directory
 
         /// <summary>
@@ -113,43 +81,6 @@ namespace ThScoreFileConverter.Views
                     var result = dialog.ShowDialog(new Win32Window(this));
                     if (result == WinForms.DialogResult.OK)
                         this.txtBestShot.Text = dialog.SelectedPath;
-                }
-            }
-            catch (Exception ex)
-            {
-                this.ShowExceptionMessage(ex);
-                throw;
-            }
-        }
-
-        #endregion
-
-        #region Template files
-
-        /// <summary>
-        /// Handles the <c>Click</c> routed event of the <see cref="btnTemplateAdd"/> member.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void BtnTemplateAdd_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                using (var dialog = new WinForms.OpenFileDialog())
-                {
-                    dialog.Filter = Prop.Resources.fltTemplateFile;
-                    dialog.Multiselect = true;
-                    if (this.lstTemplate.Items.Count > 0)
-                    {
-                        var templatePath = this.lstTemplate.Items[this.lstTemplate.Items.Count - 1] as string;
-                        if ((templatePath != null) && (templatePath.Length > 0))
-                            dialog.InitialDirectory = Path.GetDirectoryName(templatePath);
-                    }
-
-                    var result = dialog.ShowDialog(new Win32Window(this));
-                    if (result == WinForms.DialogResult.OK)
-                        this.lstTemplate.ItemsSource = this.lstTemplate.ItemsSource.Cast<string>()
-                            .Union(dialog.FileNames);
                 }
             }
             catch (Exception ex)

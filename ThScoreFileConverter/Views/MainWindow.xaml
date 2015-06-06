@@ -3,7 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:mdb="clr-namespace:MvvmDialogBehavior;assembly=MvvmDialogBehavior"
+        xmlns:a="clr-namespace:ThScoreFileConverter.Actions"
         xmlns:b="clr-namespace:ThScoreFileConverter.Behaviors"
+        xmlns:prop="clr-namespace:ThScoreFileConverter.Properties"
         xmlns:vm="clr-namespace:ThScoreFileConverter.ViewModels"
         Closing="WndMain_Closing"
         Height="558"
@@ -118,14 +120,21 @@
         </TextBox>
         <Button x:Name="btnScore"
                 Grid.Row="1"
-                Click="BtnScore_Click"
-                Command="{Binding SelectScoreFileCommand}"
                 Content="開く(_O)..."
                 Height="25"
                 HorizontalAlignment="Right"
                 Margin="0,10,10,0"
                 VerticalAlignment="Top"
-                Width="75"/>
+                Width="75">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <a:OpenFileDialogAction Filter="{x:Static prop:Resources.fltScoreFile}"
+                                            InitialDirectory="{Binding OpenScoreFileDialogInitialDirectory}"
+                                            OkCommand="{Binding SelectScoreFileCommand}"
+                                            Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Button>
 
         <Label x:Name="lblBestShot"
                Grid.Row="1"
@@ -198,14 +207,22 @@
         </ListBox>
         <Button x:Name="btnTemplateAdd"
                 Grid.Row="1"
-                Click="BtnTemplateAdd_Click"
-                Command="{Binding AddTemplateFilesCommand}"
                 Content="追加(_A)..."
                 Height="25"
                 HorizontalAlignment="Right"
                 Margin="0,70,10,0"
                 VerticalAlignment="Top"
-                Width="75"/>
+                Width="75">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <a:OpenFileDialogAction Filter="{x:Static prop:Resources.fltTemplateFile}"
+                                            InitialDirectory="{Binding OpenTemplateFilesDialogInitialDirectory}"
+                                            Multiselect="True"
+                                            OkCommand="{Binding AddTemplateFilesCommand}"
+                                            Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Button>
         <Button x:Name="btnTemplateClear"
                 Grid.Row="1"
                 Command="{Binding DeleteTemplateFilesCommand}"

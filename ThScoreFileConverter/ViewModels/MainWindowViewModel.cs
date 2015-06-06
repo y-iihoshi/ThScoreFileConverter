@@ -18,6 +18,7 @@ namespace ThScoreFileConverter.ViewModels
     using System.Windows.Input;
     using Microsoft.Practices.Prism.Commands;
     using Microsoft.Practices.Prism.Mvvm;
+    using ThScoreFileConverter.Actions;
     using ThScoreFileConverter.Models;
     using ThScoreFileConverter.Properties;
 
@@ -89,13 +90,13 @@ namespace ThScoreFileConverter.ViewModels
             this.Works = WorksImpl;
 
             this.SelectScoreFileCommand =
-                new DelegateCommand(this.SelectScoreFile, this.CanSelectScoreFile);
+                new DelegateCommand<OpenFileDialogActionResult>(this.SelectScoreFile);
             this.SelectBestShotDirectoryCommand =
                 new DelegateCommand(this.SelectBestShotDirectory, this.CanSelectBestShotDirectory);
             this.TemplateFilesSelectionChangedCommand =
                 new DelegateCommand(this.OnTemplateFilesSelectionChanged);
             this.AddTemplateFilesCommand =
-                new DelegateCommand(this.AddTemplateFiles, this.CanAddTemplateFiles);
+                new DelegateCommand<OpenFileDialogActionResult>(this.AddTemplateFiles);
             this.DeleteTemplateFilesCommand =
                 new DelegateCommand<IList>(this.DeleteTemplateFiles, this.CanDeleteTemplateFiles);
             this.DeleteAllTemplateFilesCommand =
@@ -217,6 +218,14 @@ namespace ThScoreFileConverter.ViewModels
         }
 
         /// <summary>
+        /// Gets the initial directory to select a score file.
+        /// </summary>
+        public string OpenScoreFileDialogInitialDirectory
+        {
+            get { return Path.GetDirectoryName(this.ScoreFile); }
+        }
+
+        /// <summary>
         /// Gets a path of the best shot directory.
         /// </summary>
         public string BestShotDirectory
@@ -248,9 +257,17 @@ namespace ThScoreFileConverter.ViewModels
 
             private set
             {
-                CurrentSetting.TemplateFiles = value.Where(elem => File.Exists(elem));
+                CurrentSetting.TemplateFiles = value.Where(elem => File.Exists(elem)).ToArray();
                 this.OnPropertyChanged(() => this.TemplateFiles);
             }
+        }
+
+        /// <summary>
+        /// Gets the initial directory to select template files.
+        /// </summary>
+        public string OpenTemplateFilesDialogInitialDirectory
+        {
+            get { return Path.GetDirectoryName(this.TemplateFiles.LastOrDefault()); }
         }
 
         /// <summary>
@@ -356,7 +373,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets the command to select a score file.
         /// </summary>
-        public DelegateCommand SelectScoreFileCommand { get; private set; }
+        public DelegateCommand<OpenFileDialogActionResult> SelectScoreFileCommand { get; private set; }
 
         /// <summary>
         /// Gets the command to select a best shot directory.
@@ -371,7 +388,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets the command to add some files to the list of template files.
         /// </summary>
-        public DelegateCommand AddTemplateFilesCommand { get; private set; }
+        public DelegateCommand<OpenFileDialogActionResult> AddTemplateFilesCommand { get; private set; }
 
         /// <summary>
         /// Gets the command to delete some files from the list of template files.
@@ -456,22 +473,12 @@ namespace ThScoreFileConverter.ViewModels
         #region Methods for command implementation
 
         /// <summary>
-        /// Returns a value indicating whether <see cref="SelectScoreFile"/> can be invoked.
-        /// </summary>
-        /// <returns>
-        /// <c>true</c> if <see cref="SelectScoreFile"/> can be invoked; otherwise, <c>false</c>.
-        /// </returns>
-        private bool CanSelectScoreFile()
-        {
-            return true;
-        }
-
-        /// <summary>
         /// Selects a score file.
         /// </summary>
-        private void SelectScoreFile()
+        /// <param name="result">A result of <see cref="OpenFileDialogAction"/></param>
+        private void SelectScoreFile(OpenFileDialogActionResult result)
         {
-            // FIXME: Implement here instead of MainWindow.BtnScore_Click().
+            this.ScoreFile = result.FileName;
         }
 
         /// <summary>
@@ -502,22 +509,12 @@ namespace ThScoreFileConverter.ViewModels
         }
 
         /// <summary>
-        /// Returns a value indicating whether <see cref="AddTemplateFiles"/> can be invoked.
-        /// </summary>
-        /// <returns>
-        /// <c>true</c> if <see cref="AddTemplateFiles"/> can be invoked; otherwise, <c>false</c>.
-        /// </returns>
-        private bool CanAddTemplateFiles()
-        {
-            return true;
-        }
-
-        /// <summary>
         /// Adds some files to the list of template files.
         /// </summary>
-        private void AddTemplateFiles()
+        /// <param name="result">A result of <see cref="OpenFileDialogAction"/>.</param>
+        private void AddTemplateFiles(OpenFileDialogActionResult result)
         {
-            // FIXME: Implement here instead of MainWindow.BtnTemplateAdd_Click().
+            this.TemplateFiles = this.TemplateFiles.Union(result.FileNames);
         }
 
         /// <summary>
@@ -784,7 +781,7 @@ namespace ThScoreFileConverter.ViewModels
                     break;
 
                 case "ScoreFile":
-                    this.SelectScoreFileCommand.RaiseCanExecuteChanged();
+                    this.OnPropertyChanged(() => this.OpenScoreFileDialogInitialDirectory);
                     this.ConvertCommand.RaiseCanExecuteChanged();
                     break;
 
@@ -794,6 +791,7 @@ namespace ThScoreFileConverter.ViewModels
                     break;
 
                 case "TemplateFiles":
+                    this.OnPropertyChanged(() => this.OpenTemplateFilesDialogInitialDirectory);
                     this.DeleteTemplateFilesCommand.RaiseCanExecuteChanged();
                     this.DeleteAllTemplateFilesCommand.RaiseCanExecuteChanged();
                     this.ConvertCommand.RaiseCanExecuteChanged();
