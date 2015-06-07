@@ -79,7 +79,8 @@
                        HorizontalAlignment="Left"
                        Target="{Binding ElementName=cmbOutputEncodings, Mode=OneWay}"
                        VerticalAlignment="Center"/>
-                <ComboBox x:Name="cmbOutputEncodings" Grid.Column="1"
+                <ComboBox x:Name="cmbOutputEncodings"
+                          Grid.Column="1"
                           Grid.Row="1"
                           DisplayMemberPath="Value"
                           ItemsSource="{Binding OutputEncodings}"
