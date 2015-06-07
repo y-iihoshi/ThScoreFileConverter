@@ -7,12 +7,11 @@
         xmlns:b="clr-namespace:ThScoreFileConverter.Behaviors"
         xmlns:prop="clr-namespace:ThScoreFileConverter.Properties"
         xmlns:vm="clr-namespace:ThScoreFileConverter.ViewModels"
-        Height="558"
         IsEnabled="{Binding IsIdle}"
         ResizeMode="CanMinimize"
+        SizeToContent="WidthAndHeight"
         Style="{StaticResource WindowStyleKey}"
-        Title="{Binding Title}"
-        Width="505">
+        Title="{Binding Title}">
 
     <Window.DataContext>
         <vm:MainWindowViewModel/>
@@ -25,8 +24,6 @@
             <mdb:DialogBehavior.Style>
                 <Style BasedOn="{StaticResource DialogStyleKey}"
                        TargetType="{x:Type Window}">
-                    <Setter Property="SizeToContent"
-                            Value="WidthAndHeight"/>
                     <Setter Property="Title"
                             Value="{Binding Content.Title, RelativeSource={x:Static RelativeSource.Self}}"/>
                 </Style>
@@ -38,305 +35,275 @@
             <mdb:DialogBehavior.Style>
                 <Style BasedOn="{StaticResource DialogStyleKey}"
                        TargetType="{x:Type Window}">
-                    <Setter Property="Height"
-                            Value="340"/>
                     <Setter Property="Title"
                             Value="{Binding Content.Title, RelativeSource={x:Static RelativeSource.Self}}"/>
-                    <Setter Property="Width"
-                            Value="420"/>
                 </Style>
             </mdb:DialogBehavior.Style>
         </mdb:DialogBehavior>
     </i:Interaction.Behaviors>
 
-    <Grid Margin="10,10,10,0"
-          VerticalAlignment="Top">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="45"/>
-            <RowDefinition Height="180"/>
-            <RowDefinition Height="95"/>
-            <RowDefinition Height="45"/>
-            <RowDefinition Height="90"/>
-            <RowDefinition Height="45"/>
-        </Grid.RowDefinitions>
+    <StackPanel Margin="10"
+                Style="{StaticResource VerticalStackPanelStyle}">
+        <StackPanel Style="{StaticResource HorizontalStackPanelStyle}">
+            <ComboBox x:Name="cmbTitle"
+                      DisplayMemberPath="Title"
+                      ItemsSource="{Binding Works}"
+                      MinWidth="150"
+                      SelectedValue="{Binding LastWorkNumber, Mode=TwoWay}"
+                      SelectedValuePath="Number"
+                      VerticalAlignment="Center">
+                <ComboBox.ItemContainerStyle>
+                    <Style TargetType="{x:Type ComboBoxItem}">
+                        <Style.Setters>
+                            <Setter Property="IsEnabled"
+                                    Value="{Binding IsSupported}"/>
+                        </Style.Setters>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Title}"
+                                         Value="">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                                            <Separator/>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ComboBox.ItemContainerStyle>
+            </ComboBox>
+            <Separator/>
+            <Label x:Name="lblSupportedVersion"
+                   Content="{Binding SupportedVersions}"/>
+        </StackPanel>
 
-        <ComboBox x:Name="cmbTitle"
-                  DisplayMemberPath="Title"
-                  Height="25"
-                  HorizontalAlignment="Left"
-                  ItemsSource="{Binding Works}"
-                  Margin="10,10,0,10"
-                  SelectedValue="{Binding LastWorkNumber, Mode=TwoWay}"
-                  SelectedValuePath="Number"
-                  Width="150">
-            <ComboBox.ItemContainerStyle>
-                <Style TargetType="{x:Type ComboBoxItem}">
-                    <Style.Setters>
-                        <Setter Property="IsEnabled"
-                                Value="{Binding IsSupported}"/>
-                    </Style.Setters>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding Title}"
-                                     Value="">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type ComboBoxItem}">
-                                        <Separator/>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </DataTrigger>
-                    </Style.Triggers>
+        <Separator/>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.Resources>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Margin"
+                            Value="5,2,0,2"/>
                 </Style>
-            </ComboBox.ItemContainerStyle>
-        </ComboBox>
-        <Label x:Name="lblSupportedVersion"
-               Content="{Binding SupportedVersions}"
-               Margin="165,10,10,10"/>
+                <Style TargetType="{x:Type ListBox}">
+                    <Setter Property="Margin"
+                            Value="0,2"/>
+                </Style>
+                <Style TargetType="{x:Type TextBox}">
+                    <Setter Property="Margin"
+                            Value="0,2"/>
+                </Style>
+            </Grid.Resources>
 
-        <Label Grid.Row="1"
-               Content="スコア(_S):"
-               Height="25"
-               HorizontalAlignment="Left"
-               Margin="10,10,0,0"
-               Target="{Binding ElementName=txtScore, Mode=OneWay}"
-               VerticalAlignment="Top"
-               Width="120"/>
-        <TextBox x:Name="txtScore"
-                 Grid.Row="1"
-                 Height="25"
-                 HorizontalAlignment="Right"
-                 IsReadOnly="True"
-                 Margin="0,10,95,0"
-                 Text="{Binding ScoreFile, UpdateSourceTrigger=PropertyChanged}"
-                 VerticalAlignment="Top"
-                 Width="245">
-            <i:Interaction.Behaviors>
-                <b:UIElementDropBehavior DropCommand="{Binding DropScoreFileCommand}"
-                                         PreviewDragEnterCommand="{Binding DraggingCommand}"
-                                         PreviewDragOverCommand="{Binding DraggingCommand}"/>
-            </i:Interaction.Behaviors>
-        </TextBox>
-        <Button x:Name="btnScore"
-                Grid.Row="1"
-                Content="開く(_O)..."
-                Height="25"
-                HorizontalAlignment="Right"
-                Margin="0,10,10,0"
-                VerticalAlignment="Top"
-                Width="75">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="Click">
-                    <a:OpenFileDialogAction Filter="{x:Static prop:Resources.fltScoreFile}"
-                                            InitialDirectory="{Binding OpenScoreFileDialogInitialDirectory}"
-                                            OkCommand="{Binding SelectScoreFileCommand}"
-                                            Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </Button>
+            <Label Grid.Column="0"
+                   Grid.Row="0"
+                   Content="スコア(_S):"
+                   HorizontalAlignment="Left"
+                   Target="{Binding ElementName=txtScore, Mode=OneWay}"
+                   VerticalAlignment="Center"/>
+            <TextBox x:Name="txtScore"
+                     Grid.Column="1"
+                     Grid.Row="0"
+                     IsReadOnly="True"
+                     Text="{Binding ScoreFile, UpdateSourceTrigger=PropertyChanged}"
+                     VerticalAlignment="Center">
+                <i:Interaction.Behaviors>
+                    <b:UIElementDropBehavior DropCommand="{Binding DropScoreFileCommand}"
+                                             PreviewDragEnterCommand="{Binding DraggingCommand}"
+                                             PreviewDragOverCommand="{Binding DraggingCommand}"/>
+                </i:Interaction.Behaviors>
+            </TextBox>
+            <Button x:Name="btnScore"
+                    Grid.Column="2"
+                    Grid.Row="0"
+                    Content="開く(_O)..."
+                    VerticalAlignment="Center">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <a:OpenFileDialogAction Filter="{x:Static prop:Resources.fltScoreFile}"
+                                                InitialDirectory="{Binding OpenScoreFileDialogInitialDirectory}"
+                                                OkCommand="{Binding SelectScoreFileCommand}"
+                                                Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
 
-        <Label x:Name="lblBestShot"
-               Grid.Row="1"
-               Content="ベストショット(_B):"
-               Height="25"
-               HorizontalAlignment="Left"
-               IsEnabled="{Binding CanHandleBestShot}"
-               Margin="10,40,0,0"
-               Target="{Binding ElementName=txtBestShot, Mode=OneWay}"
-               VerticalAlignment="Top"
-               Width="120"/>
-        <TextBox x:Name="txtBestShot"
-                 Grid.Row="1"
-                 Height="25"
-                 HorizontalAlignment="Right"
-                 IsEnabled="{Binding CanHandleBestShot}"
-                 IsReadOnly="True"
-                 Margin="0,40,95,0"
-                 Text="{Binding BestShotDirectory, UpdateSourceTrigger=PropertyChanged}"
-                 VerticalAlignment="Top"
-                 Width="245">
-            <i:Interaction.Behaviors>
-                <b:UIElementDropBehavior DropCommand="{Binding DropBestShotDirectoryCommand}"
-                                         PreviewDragEnterCommand="{Binding DraggingCommand}"
-                                         PreviewDragOverCommand="{Binding DraggingCommand}"/>
-            </i:Interaction.Behaviors>
-        </TextBox>
-        <Button x:Name="btnBestShot"
-                Grid.Row="1"
-                Content="開く(_O)..."
-                Height="25"
-                HorizontalAlignment="Right"
-                IsEnabled="{Binding CanHandleBestShot}"
-                Margin="0,40,10,0"
-                VerticalAlignment="Top"
-                Width="75">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="Click">
-                    <a:FolderBrowserDialogAction Description="{x:Static prop:Resources.msgSelectBestShotDirectory}"
-                                                 OkCommand="{Binding SelectBestShotDirectoryCommand}"
-                                                 Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
-                                                 SelectedPath="{Binding Text, ElementName=txtBestShot}"
-                                                 ShowNewFolderButton="False"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </Button>
+            <Label x:Name="lblBestShot"
+                   Grid.Column="0"
+                   Grid.Row="1"
+                   Content="ベストショット(_B):"
+                   HorizontalAlignment="Left"
+                   IsEnabled="{Binding CanHandleBestShot}"
+                   Target="{Binding ElementName=txtBestShot, Mode=OneWay}"
+                   VerticalAlignment="Center"/>
+            <TextBox x:Name="txtBestShot"
+                     Grid.Column="1"
+                     Grid.Row="1"
+                     IsEnabled="{Binding CanHandleBestShot}"
+                     IsReadOnly="True"
+                     Text="{Binding BestShotDirectory, UpdateSourceTrigger=PropertyChanged}"
+                     VerticalAlignment="Center">
+                <i:Interaction.Behaviors>
+                    <b:UIElementDropBehavior DropCommand="{Binding DropBestShotDirectoryCommand}"
+                                             PreviewDragEnterCommand="{Binding DraggingCommand}"
+                                             PreviewDragOverCommand="{Binding DraggingCommand}"/>
+                </i:Interaction.Behaviors>
+            </TextBox>
+            <Button x:Name="btnBestShot"
+                    Grid.Column="2"
+                    Grid.Row="1"
+                    Content="開く(_O)..."
+                    IsEnabled="{Binding CanHandleBestShot}"
+                    VerticalAlignment="Center">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <a:FolderBrowserDialogAction Description="{x:Static prop:Resources.msgSelectBestShotDirectory}"
+                                                     OkCommand="{Binding SelectBestShotDirectoryCommand}"
+                                                     Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                     SelectedPath="{Binding Text, ElementName=txtBestShot}"
+                                                     ShowNewFolderButton="False"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
 
-        <Label Grid.Row="1"
-               Content="テンプレート(_T):"
-               Height="25"
-               HorizontalAlignment="Left"
-               Margin="10,70,0,0"
-               Target="{Binding ElementName=lstTemplate, Mode=OneWay}"
-               VerticalAlignment="Top"
-               Width="120"/>
-        <ListBox x:Name="lstTemplate"
-                 Grid.Row="1"
-                 ScrollViewer.HorizontalScrollBarVisibility="Visible"
-                 ScrollViewer.VerticalScrollBarVisibility="Auto"
-                 AllowDrop="True"
-                 Height="100"
-                 HorizontalAlignment="Right"
-                 ItemsSource="{Binding TemplateFiles, Mode=TwoWay}"
-                 Margin="0,70,95,0"
-                 SelectionMode="Multiple"
-                 VerticalAlignment="Top"
-                 Width="245">
-            <i:Interaction.Behaviors>
-                <b:UIElementDropBehavior DropCommand="{Binding DropTemplateFilesCommand}"
-                                         PreviewDragEnterCommand="{Binding DraggingCommand}"
-                                         PreviewDragOverCommand="{Binding DraggingCommand}"/>
-            </i:Interaction.Behaviors>
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="SelectionChanged">
-                    <i:InvokeCommandAction Command="{Binding TemplateFilesSelectionChangedCommand}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </ListBox>
-        <Button x:Name="btnTemplateAdd"
-                Grid.Row="1"
-                Content="追加(_A)..."
-                Height="25"
-                HorizontalAlignment="Right"
-                Margin="0,70,10,0"
-                VerticalAlignment="Top"
-                Width="75">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="Click">
-                    <a:OpenFileDialogAction Filter="{x:Static prop:Resources.fltTemplateFile}"
-                                            InitialDirectory="{Binding OpenTemplateFilesDialogInitialDirectory}"
-                                            Multiselect="True"
-                                            OkCommand="{Binding AddTemplateFilesCommand}"
-                                            Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </Button>
-        <Button x:Name="btnTemplateClear"
-                Grid.Row="1"
-                Command="{Binding DeleteTemplateFilesCommand}"
-                CommandParameter="{Binding SelectedItems, ElementName=lstTemplate}"
-                Content="削除(_C)"
-                Height="25"
-                HorizontalAlignment="Right"
-                Margin="0,100,10,0"
-                VerticalAlignment="Top"
-                Width="75"/>
-        <Button x:Name="btnTemplateClearAll"
-                Grid.Row="1"
-                Command="{Binding DeleteAllTemplateFilesCommand}"
-                Content="全て削除(_L)"
-                Height="25"
-                HorizontalAlignment="Right"
-                Margin="0,130,10,0"
-                VerticalAlignment="Top"
-                Width="75"/>
+            <Label Grid.Column="0"
+                   Grid.Row="2"
+                   Content="テンプレート(_T):"
+                   HorizontalAlignment="Left"
+                   Target="{Binding ElementName=lstTemplate, Mode=OneWay}"
+                   VerticalAlignment="Top"/>
+            <ListBox x:Name="lstTemplate"
+                     Grid.Column="1"
+                     Grid.Row="2"
+                     ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                     AllowDrop="True"
+                     Height="100"
+                     ItemsSource="{Binding TemplateFiles, Mode=TwoWay}"
+                     SelectionMode="Multiple"
+                     VerticalAlignment="Top">
+                <i:Interaction.Behaviors>
+                    <b:UIElementDropBehavior DropCommand="{Binding DropTemplateFilesCommand}"
+                                             PreviewDragEnterCommand="{Binding DraggingCommand}"
+                                             PreviewDragOverCommand="{Binding DraggingCommand}"/>
+                </i:Interaction.Behaviors>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding TemplateFilesSelectionChangedCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ListBox>
+            <StackPanel Grid.Column="2"
+                        Grid.Row="2">
+                <Button x:Name="btnTemplateAdd"
+                        Content="追加(_A)...">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <a:OpenFileDialogAction Filter="{x:Static prop:Resources.fltTemplateFile}"
+                                                    InitialDirectory="{Binding OpenTemplateFilesDialogInitialDirectory}"
+                                                    Multiselect="True"
+                                                    OkCommand="{Binding AddTemplateFilesCommand}"
+                                                    Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button x:Name="btnTemplateClear"
+                        Command="{Binding DeleteTemplateFilesCommand}"
+                        CommandParameter="{Binding SelectedItems, ElementName=lstTemplate}"
+                        Content="削除(_C)"/>
+                <Button x:Name="btnTemplateClearAll"
+                        Command="{Binding DeleteAllTemplateFilesCommand}"
+                        Content="全て削除(_L)"/>
+            </StackPanel>
 
-        <Label Grid.Row="2"
-               Content="出力先(_O):"
-               Height="25"
-               HorizontalAlignment="Left"
-               Margin="10,10,0,0"
-               Target="{Binding ElementName=txtOutput, Mode=OneWay}"
-               VerticalAlignment="Top"
-               Width="120"/>
-        <TextBox x:Name="txtOutput"
-                 Grid.Row="2"
-                 Height="25"
-                 HorizontalAlignment="Right"
-                 IsReadOnly="True"
-                 Margin="0,10,95,0"
-                 Text="{Binding OutputDirectory, UpdateSourceTrigger=PropertyChanged}"
-                 VerticalAlignment="Top"
-                 Width="245">
-            <i:Interaction.Behaviors>
-                <b:UIElementDropBehavior DropCommand="{Binding DropOutputDirectoryCommand}"
-                                         PreviewDragEnterCommand="{Binding DraggingCommand}"
-                                         PreviewDragOverCommand="{Binding DraggingCommand}"/>
-            </i:Interaction.Behaviors>
-        </TextBox>
-        <Button x:Name="btnOutput"
-                Grid.Row="2"
-                Content="開く(_O)..."
-                Height="25"
-                HorizontalAlignment="Right"
-                Margin="0,10,10,0"
-                VerticalAlignment="Top"
-                Width="75">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="Click">
-                    <a:FolderBrowserDialogAction Description="{x:Static prop:Resources.msgSelectOutputDirectory}"
-                                                 OkCommand="{Binding SelectOutputDirectoryCommand}"
-                                                 Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
-                                                 SelectedPath="{Binding Text, ElementName=txtOutput}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </Button>
+            <Label Grid.Column="0"
+                   Grid.Row="3"
+                   Content="出力先(_O):"
+                   HorizontalAlignment="Left"
+                   Target="{Binding ElementName=txtOutput, Mode=OneWay}"
+                   VerticalAlignment="Center"/>
+            <TextBox x:Name="txtOutput"
+                     Grid.Column="1"
+                     Grid.Row="3"
+                     IsReadOnly="True"
+                     Text="{Binding OutputDirectory, UpdateSourceTrigger=PropertyChanged}"
+                     VerticalAlignment="Center">
+                <i:Interaction.Behaviors>
+                    <b:UIElementDropBehavior DropCommand="{Binding DropOutputDirectoryCommand}"
+                                             PreviewDragEnterCommand="{Binding DraggingCommand}"
+                                             PreviewDragOverCommand="{Binding DraggingCommand}"/>
+                </i:Interaction.Behaviors>
+            </TextBox>
+            <Button x:Name="btnOutput"
+                    Grid.Column="2"
+                    Grid.Row="3"
+                    Content="開く(_O)..."
+                    VerticalAlignment="Center">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <a:FolderBrowserDialogAction Description="{x:Static prop:Resources.msgSelectOutputDirectory}"
+                                                     OkCommand="{Binding SelectOutputDirectoryCommand}"
+                                                     Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                                     SelectedPath="{Binding Text, ElementName=txtOutput}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
 
-        <Label x:Name="lblImageOutput"
-               Grid.Row="2"
-               Content="画像出力先(_I):"
-               Height="25"
-               HorizontalAlignment="Left"
-               IsEnabled="{Binding CanHandleBestShot}"
-               Margin="10,40,0,0"
-               Target="{Binding ElementName=txtImageOutput, Mode=OneWay}"
-               VerticalAlignment="Top"
-               Width="120"/>
-        <TextBox x:Name="txtImageOutput"
-                 Grid.Row="2"
-                 Height="25"
-                 HorizontalAlignment="Right"
-                 IsEnabled="{Binding CanHandleBestShot}"
-                 Margin="0,40,95,0"
-                 Text="{Binding ImageOutputDirectory, UpdateSourceTrigger=PropertyChanged}"
-                 VerticalAlignment="Top"
-                 Width="245"/>
-        <CheckBox x:Name="chkHideUntriedCards"
-                  Grid.Row="2"
-                  Content="未挑戦のスペルカード名を出力しない(_H)"
-                  HorizontalAlignment="Right"
-                  IsEnabled="{Binding CanReplaceCardNames}"
-                  IsChecked="{Binding HidesUntriedCards}"
-                  Margin="0,70,10,0"
-                  VerticalAlignment="Top"
-                  Width="330"/>
+            <Label x:Name="lblImageOutput"
+                   Grid.Column="0"
+                   Grid.Row="4"
+                   Content="画像出力先(_I):"
+                   HorizontalAlignment="Left"
+                   IsEnabled="{Binding CanHandleBestShot}"
+                   Target="{Binding ElementName=txtImageOutput, Mode=OneWay}"
+                   VerticalAlignment="Center"/>
+            <TextBox x:Name="txtImageOutput"
+                     Grid.Column="1"
+                     Grid.Row="4"
+                     IsEnabled="{Binding CanHandleBestShot}"
+                     Text="{Binding ImageOutputDirectory, UpdateSourceTrigger=PropertyChanged}"
+                     VerticalAlignment="Center"/>
+            <CheckBox x:Name="chkHideUntriedCards"
+                      Grid.Column="1"
+                      Grid.ColumnSpan="2"
+                      Grid.Row="5"
+                      Content="未挑戦のスペルカード名を出力しない(_H)"
+                      IsChecked="{Binding HidesUntriedCards}"
+                      IsEnabled="{Binding CanReplaceCardNames}"/>
+        </Grid>
+
+        <Separator/>
 
         <Button x:Name="btnConvert"
-                Grid.Row="3"
                 Command="{Binding ConvertCommand}"
                 Content="変換(_V)"
-                Height="25"
                 HorizontalAlignment="Center"
                 IsDefault="True"
-                Margin="0,10"
-                Width="100"/>
+                MinWidth="100"/>
+
+        <Separator/>
 
         <TextBox x:Name="txtLog"
-                 Grid.Row="4"
                  AllowDrop="False"
                  FontSize="10"
+                 Height="70"
                  IsReadOnly="True"
                  IsUndoEnabled="False"
-                 Margin="10"
                  Text="{Binding Log, NotifyOnTargetUpdated=True}"
                  TextWrapping="Wrap"
                  VerticalScrollBarVisibility="Visible">
@@ -345,21 +312,23 @@
             </i:Interaction.Behaviors>
         </TextBox>
 
-        <Button x:Name="btnSetting"
-                Grid.Row="5"
-                Command="{Binding OpenSettingWindowCommand}"
-                Content="設定(_S)..."
-                Height="25"
-                HorizontalAlignment="Right"
-                Margin="0,10,75,10"
-                Width="75"/>
-        <Button x:Name="btnAbout"
-                Grid.Row="5"
-                Command="{Binding OpenAboutWindowCommand}"
-                Content="_About..."
-                Height="25"
-                HorizontalAlignment="Right"
-                Margin="0,10,10,10"
-                Width="60"/>
-    </Grid>
+        <Separator/>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="1"
+                        Style="{StaticResource HorizontalStackPanelStyle}">
+                <Button x:Name="btnSetting"
+                        Command="{Binding OpenSettingWindowCommand}"
+                        Content="設定(_S)..."/>
+                <Separator/>
+                <Button x:Name="btnAbout"
+                        Command="{Binding OpenAboutWindowCommand}"
+                        Content="_About..."/>
+            </StackPanel>
+        </Grid>
+    </StackPanel>
 </Window>

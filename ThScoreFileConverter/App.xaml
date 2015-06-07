@@ -27,6 +27,42 @@
                     Value="NoResize"/>
             <Setter Property="ShowInTaskbar"
                     Value="False"/>
+            <Setter Property="SizeToContent"
+                    Value="WidthAndHeight"/>
+        </Style>
+        <Style x:Key="HorizontalStackPanelStyle"
+               TargetType="{x:Type StackPanel}">
+            <Style.Resources>
+                <Style TargetType="Separator">
+                    <Setter Property="Margin"
+                            Value="2,0"/>
+                    <Setter Property="Opacity"
+                            Value="0"/>
+                </Style>
+            </Style.Resources>
+            <Setter Property="Orientation"
+                    Value="Horizontal"/>
+        </Style>
+        <Style x:Key="VerticalStackPanelStyle"
+               TargetType="{x:Type StackPanel}">
+            <Style.Resources>
+                <Style TargetType="Separator">
+                    <Setter Property="Margin"
+                            Value="0,5"/>
+                    <Setter Property="Opacity"
+                            Value="0"/>
+                </Style>
+            </Style.Resources>
+            <Setter Property="Orientation"
+                    Value="Vertical"/>
+        </Style>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="MinWidth"
+                    Value="75"/>
+        </Style>
+        <Style TargetType="{x:Type GroupBox}">
+            <Setter Property="Padding"
+                    Value="5"/>
         </Style>
 
         <DataTemplate DataType="{x:Type vm:AboutWindowViewModel}">

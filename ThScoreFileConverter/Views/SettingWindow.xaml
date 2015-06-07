@@ -12,31 +12,17 @@
                     Key="Escape"/>
     </UserControl.InputBindings>
 
-    <Grid Margin="10,10,10,10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="70"/>
-            <RowDefinition Height="63"/>
-            <RowDefinition Height="106"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
+    <StackPanel Margin="10"
+                Style="{StaticResource VerticalStackPanelStyle}">
         <GroupBox Header="フォント設定">
-            <Grid>
+            <StackPanel Style="{StaticResource HorizontalStackPanelStyle}">
                 <TextBox x:Name="txtFontInfo"
-                         Height="25"
-                         HorizontalAlignment="Left"
                          IsReadOnly="True"
-                         Margin="10,10,0,0"
-                         Text="{Binding Font, Mode=OneWay}"
-                         VerticalAlignment="Top"
-                         Width="190"/>
+                         MinWidth="190"
+                         Text="{Binding Font, Mode=OneWay}"/>
+                <Separator/>
                 <Button x:Name="btnFontChange"
-                        Content="変更(_C)..."
-                        Height="25"
-                        HorizontalAlignment="Right"
-                        Margin="0,10,90,0"
-                        VerticalAlignment="Top"
-                        Width="75">
+                        Content="変更(_C)...">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <a:FontDialogAction ApplyCommand="{Binding FontDialogApplyCommand}"
@@ -50,64 +36,62 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
+                <Separator/>
                 <Button x:Name="btnFontReset"
                         Command="{Binding ResetFontCommand}"
-                        Content="リセット(_R)"
-                        Height="25"
-                        HorizontalAlignment="Right"
-                        Margin="0,10,10,0"
-                        VerticalAlignment="Top"
-                        Width="75"/>
-            </Grid>
+                        Content="リセット(_R)"/>
+            </StackPanel>
         </GroupBox>
-        <GroupBox Grid.Row="1"
-                  Header="出力書式設定">
-            <Grid>
-                <CheckBox Content="数値を桁区切り形式で出力する(_S)"
-                          HorizontalAlignment="Left"
-                          IsChecked="{Binding OutputNumberGroupSeparator}"
-                          Margin="10,10,0,0"
-                          VerticalAlignment="Top"/>
-            </Grid>
+
+        <Separator/>
+
+        <GroupBox Header="出力書式設定">
+            <CheckBox Content="数値を桁区切り形式で出力する(_S)"
+                      HorizontalAlignment="Left"
+                      IsChecked="{Binding OutputNumberGroupSeparator}"/>
         </GroupBox>
-        <GroupBox Grid.Row="2"
-                  Header="文字エンコーディング設定">
+
+        <Separator/>
+
+        <GroupBox Header="文字エンコーディング設定">
             <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
                 <Label Content="入力ファイル(_I):"
                        HorizontalAlignment="Left"
-                       Margin="10,10,0,0"
-                       VerticalAlignment="Top"/>
-                <ComboBox DisplayMemberPath="Value"
-                          HorizontalAlignment="Right"
+                       VerticalAlignment="Center"/>
+                <ComboBox Grid.Column="1"
+                          DisplayMemberPath="Value"
                           ItemsSource="{Binding InputEncodings}"
-                          Margin="0,12,10,0"
                           SelectedValue="{Binding InputCodePageId, Mode=TwoWay}"
                           SelectedValuePath="Key"
-                          VerticalAlignment="Top"
-                          Width="155"/>
-                <Label Content="出力ファイル(_O):"
+                          VerticalAlignment="Center"/>
+                <Label Grid.Row="1"
+                       Content="出力ファイル(_O):"
                        HorizontalAlignment="Left"
-                       Margin="10,43,0,0"
-                       VerticalAlignment="Top"/>
-                <ComboBox DisplayMemberPath="Value"
+                       VerticalAlignment="Center"/>
+                <ComboBox Grid.Column="1"
+                          Grid.Row="1"
+                          DisplayMemberPath="Value"
                           ItemsSource="{Binding OutputEncodings}"
-                          HorizontalAlignment="Right"
-                          Margin="0,45,10,0"
                           SelectedValue="{Binding OutputCodePageId, Mode=TwoWay}"
                           SelectedValuePath="Key"
-                          VerticalAlignment="Top"
-                          Width="155"/>
+                          VerticalAlignment="Center"/>
             </Grid>
         </GroupBox>
+
+        <Separator/>
+
         <Button x:Name="btnOK"
-                Grid.Row="3"
                 Content="OK"
-                Height="25"
                 HorizontalAlignment="Center"
-                IsDefault="True"
-                Margin="0,10,0,0"
-                VerticalAlignment="Top"
-                Width="75">
+                IsDefault="True">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Click">
                     <i:InvokeCommandAction Command="{x:Static c:CloseWindowCommand.Instance}"
@@ -115,5 +99,5 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Button>
-    </Grid>
+    </StackPanel>
 </UserControl>
