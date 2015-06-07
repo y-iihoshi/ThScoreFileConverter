@@ -65,8 +65,10 @@
                 </Grid.RowDefinitions>
                 <Label Content="入力ファイル(_I):"
                        HorizontalAlignment="Left"
+                       Target="{Binding ElementName=cmbInputEncodings, Mode=OneWay}"
                        VerticalAlignment="Center"/>
-                <ComboBox Grid.Column="1"
+                <ComboBox x:Name="cmbInputEncodings"
+                          Grid.Column="1"
                           DisplayMemberPath="Value"
                           ItemsSource="{Binding InputEncodings}"
                           SelectedValue="{Binding InputCodePageId, Mode=TwoWay}"
@@ -75,8 +77,9 @@
                 <Label Grid.Row="1"
                        Content="出力ファイル(_O):"
                        HorizontalAlignment="Left"
+                       Target="{Binding ElementName=cmbOutputEncodings, Mode=OneWay}"
                        VerticalAlignment="Center"/>
-                <ComboBox Grid.Column="1"
+                <ComboBox x:Name="cmbOutputEncodings" Grid.Column="1"
                           Grid.Row="1"
                           DisplayMemberPath="Value"
                           ItemsSource="{Binding OutputEncodings}"
