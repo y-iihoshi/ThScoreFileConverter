@@ -16,13 +16,11 @@
                 Style="{StaticResource VerticalStackPanelStyle}">
         <GroupBox Header="フォント設定">
             <StackPanel Style="{StaticResource HorizontalStackPanelStyle}">
-                <TextBox x:Name="txtFontInfo"
-                         IsReadOnly="True"
+                <TextBox IsReadOnly="True"
                          MinWidth="190"
                          Text="{Binding Font, Mode=OneWay}"/>
                 <Separator/>
-                <Button x:Name="btnFontChange"
-                        Content="変更(_C)...">
+                <Button Content="変更(_C)...">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <a:FontDialogAction ApplyCommand="{Binding FontDialogApplyCommand}"
@@ -37,8 +35,7 @@
                     </i:Interaction.Triggers>
                 </Button>
                 <Separator/>
-                <Button x:Name="btnFontReset"
-                        Command="{Binding ResetFontCommand}"
+                <Button Command="{Binding ResetFontCommand}"
                         Content="リセット(_R)"/>
             </StackPanel>
         </GroupBox>

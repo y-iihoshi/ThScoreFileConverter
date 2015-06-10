@@ -45,8 +45,7 @@
     <StackPanel Margin="10"
                 Style="{StaticResource VerticalStackPanelStyle}">
         <StackPanel Style="{StaticResource HorizontalStackPanelStyle}">
-            <ComboBox x:Name="cmbTitle"
-                      DisplayMemberPath="Title"
+            <ComboBox DisplayMemberPath="Title"
                       ItemsSource="{Binding Works}"
                       MinWidth="150"
                       SelectedValue="{Binding LastWorkNumber, Mode=TwoWay}"
@@ -74,8 +73,7 @@
                 </ComboBox.ItemContainerStyle>
             </ComboBox>
             <Separator/>
-            <Label x:Name="lblSupportedVersion"
-                   Content="{Binding SupportedVersions}"/>
+            <Label Content="{Binding SupportedVersions}"/>
         </StackPanel>
 
         <Separator/>
@@ -128,8 +126,7 @@
                                              PreviewDragOverCommand="{Binding DraggingCommand}"/>
                 </i:Interaction.Behaviors>
             </TextBox>
-            <Button x:Name="btnScore"
-                    Grid.Column="2"
+            <Button Grid.Column="2"
                     Grid.Row="0"
                     Content="開く(_O)..."
                     VerticalAlignment="Center">
@@ -143,8 +140,7 @@
                 </i:Interaction.Triggers>
             </Button>
 
-            <Label x:Name="lblBestShot"
-                   Grid.Column="0"
+            <Label Grid.Column="0"
                    Grid.Row="1"
                    Content="ベストショット(_B):"
                    HorizontalAlignment="Left"
@@ -164,8 +160,7 @@
                                              PreviewDragOverCommand="{Binding DraggingCommand}"/>
                 </i:Interaction.Behaviors>
             </TextBox>
-            <Button x:Name="btnBestShot"
-                    Grid.Column="2"
+            <Button Grid.Column="2"
                     Grid.Row="1"
                     Content="開く(_O)..."
                     IsEnabled="{Binding CanHandleBestShot}"
@@ -210,8 +205,7 @@
             </ListBox>
             <StackPanel Grid.Column="2"
                         Grid.Row="2">
-                <Button x:Name="btnTemplateAdd"
-                        Content="追加(_A)...">
+                <Button Content="追加(_A)...">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <a:OpenFileDialogAction Filter="{x:Static prop:Resources.fltTemplateFile}"
@@ -222,12 +216,10 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
-                <Button x:Name="btnTemplateClear"
-                        Command="{Binding DeleteTemplateFilesCommand}"
+                <Button Command="{Binding DeleteTemplateFilesCommand}"
                         CommandParameter="{Binding SelectedItems, ElementName=lstTemplate}"
                         Content="削除(_C)"/>
-                <Button x:Name="btnTemplateClearAll"
-                        Command="{Binding DeleteAllTemplateFilesCommand}"
+                <Button Command="{Binding DeleteAllTemplateFilesCommand}"
                         Content="全て削除(_L)"/>
             </StackPanel>
 
@@ -249,8 +241,7 @@
                                              PreviewDragOverCommand="{Binding DraggingCommand}"/>
                 </i:Interaction.Behaviors>
             </TextBox>
-            <Button x:Name="btnOutput"
-                    Grid.Column="2"
+            <Button Grid.Column="2"
                     Grid.Row="3"
                     Content="開く(_O)..."
                     VerticalAlignment="Center">
@@ -264,8 +255,7 @@
                 </i:Interaction.Triggers>
             </Button>
 
-            <Label x:Name="lblImageOutput"
-                   Grid.Column="0"
+            <Label Grid.Column="0"
                    Grid.Row="4"
                    Content="画像出力先(_I):"
                    HorizontalAlignment="Left"
@@ -278,8 +268,7 @@
                      IsEnabled="{Binding CanHandleBestShot}"
                      Text="{Binding ImageOutputDirectory, UpdateSourceTrigger=PropertyChanged}"
                      VerticalAlignment="Center"/>
-            <CheckBox x:Name="chkHideUntriedCards"
-                      Grid.Column="1"
+            <CheckBox Grid.Column="1"
                       Grid.ColumnSpan="2"
                       Grid.Row="5"
                       Content="未挑戦のスペルカード名を出力しない(_H)"
@@ -289,8 +278,7 @@
 
         <Separator/>
 
-        <Button x:Name="btnConvert"
-                Command="{Binding ConvertCommand}"
+        <Button Command="{Binding ConvertCommand}"
                 Content="変換(_V)"
                 HorizontalAlignment="Center"
                 IsDefault="True"
@@ -298,8 +286,7 @@
 
         <Separator/>
 
-        <TextBox x:Name="txtLog"
-                 AllowDrop="False"
+        <TextBox AllowDrop="False"
                  FontSize="10"
                  Height="70"
                  IsReadOnly="True"
@@ -321,12 +308,10 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="1"
                         Style="{StaticResource HorizontalStackPanelStyle}">
-                <Button x:Name="btnSetting"
-                        Command="{Binding OpenSettingWindowCommand}"
+                <Button Command="{Binding OpenSettingWindowCommand}"
                         Content="設定(_S)..."/>
                 <Separator/>
-                <Button x:Name="btnAbout"
-                        Command="{Binding OpenAboutWindowCommand}"
+                <Button Command="{Binding OpenAboutWindowCommand}"
                         Content="_About..."/>
             </StackPanel>
         </Grid>
