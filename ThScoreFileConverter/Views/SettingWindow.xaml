@@ -4,7 +4,7 @@
         	 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         	 xmlns:a="clr-namespace:ThScoreFileConverter.Actions"
         	 xmlns:c="clr-namespace:ThScoreFileConverter.Commands"
-             FocusManager.FocusedElement="{Binding ElementName=btnOK}">
+             FocusManager.FocusedElement="{Binding ElementName=OkButton}">
 
     <UserControl.InputBindings>
         <KeyBinding Command="{x:Static c:CloseWindowCommand.Instance}"
@@ -62,9 +62,9 @@
                 </Grid.RowDefinitions>
                 <Label Content="入力ファイル(_I):"
                        HorizontalAlignment="Left"
-                       Target="{Binding ElementName=cmbInputEncodings, Mode=OneWay}"
+                       Target="{Binding ElementName=InputEncodingsComboBox, Mode=OneWay}"
                        VerticalAlignment="Center"/>
-                <ComboBox x:Name="cmbInputEncodings"
+                <ComboBox x:Name="InputEncodingsComboBox"
                           Grid.Column="1"
                           DisplayMemberPath="Value"
                           ItemsSource="{Binding InputEncodings}"
@@ -74,9 +74,9 @@
                 <Label Grid.Row="1"
                        Content="出力ファイル(_O):"
                        HorizontalAlignment="Left"
-                       Target="{Binding ElementName=cmbOutputEncodings, Mode=OneWay}"
+                       Target="{Binding ElementName=OutputEncodingsComboBox, Mode=OneWay}"
                        VerticalAlignment="Center"/>
-                <ComboBox x:Name="cmbOutputEncodings"
+                <ComboBox x:Name="OutputEncodingsComboBox"
                           Grid.Column="1"
                           Grid.Row="1"
                           DisplayMemberPath="Value"
@@ -89,7 +89,7 @@
 
         <Separator/>
 
-        <Button x:Name="btnOK"
+        <Button x:Name="OkButton"
                 Content="OK"
                 HorizontalAlignment="Center"
                 IsDefault="True">

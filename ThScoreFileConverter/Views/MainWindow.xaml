@@ -112,9 +112,9 @@
                    Grid.Row="0"
                    Content="スコア(_S):"
                    HorizontalAlignment="Left"
-                   Target="{Binding ElementName=txtScore, Mode=OneWay}"
+                   Target="{Binding ElementName=ScoreTextBox, Mode=OneWay}"
                    VerticalAlignment="Center"/>
-            <TextBox x:Name="txtScore"
+            <TextBox x:Name="ScoreTextBox"
                      Grid.Column="1"
                      Grid.Row="0"
                      IsReadOnly="True"
@@ -145,9 +145,9 @@
                    Content="ベストショット(_B):"
                    HorizontalAlignment="Left"
                    IsEnabled="{Binding CanHandleBestShot}"
-                   Target="{Binding ElementName=txtBestShot, Mode=OneWay}"
+                   Target="{Binding ElementName=BestShotTextBox, Mode=OneWay}"
                    VerticalAlignment="Center"/>
-            <TextBox x:Name="txtBestShot"
+            <TextBox x:Name="BestShotTextBox"
                      Grid.Column="1"
                      Grid.Row="1"
                      IsEnabled="{Binding CanHandleBestShot}"
@@ -170,7 +170,7 @@
                         <a:FolderBrowserDialogAction Description="{x:Static prop:Resources.msgSelectBestShotDirectory}"
                                                      OkCommand="{Binding SelectBestShotDirectoryCommand}"
                                                      Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
-                                                     SelectedPath="{Binding Text, ElementName=txtBestShot}"
+                                                     SelectedPath="{Binding Text, ElementName=BestShotTextBox}"
                                                      ShowNewFolderButton="False"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
@@ -180,9 +180,9 @@
                    Grid.Row="2"
                    Content="テンプレート(_T):"
                    HorizontalAlignment="Left"
-                   Target="{Binding ElementName=lstTemplate, Mode=OneWay}"
+                   Target="{Binding ElementName=TemplateListBox, Mode=OneWay}"
                    VerticalAlignment="Top"/>
-            <ListBox x:Name="lstTemplate"
+            <ListBox x:Name="TemplateListBox"
                      Grid.Column="1"
                      Grid.Row="2"
                      ScrollViewer.HorizontalScrollBarVisibility="Visible"
@@ -217,7 +217,7 @@
                     </i:Interaction.Triggers>
                 </Button>
                 <Button Command="{Binding DeleteTemplateFilesCommand}"
-                        CommandParameter="{Binding SelectedItems, ElementName=lstTemplate}"
+                        CommandParameter="{Binding SelectedItems, ElementName=TemplateListBox}"
                         Content="削除(_C)"/>
                 <Button Command="{Binding DeleteAllTemplateFilesCommand}"
                         Content="全て削除(_L)"/>
@@ -227,9 +227,9 @@
                    Grid.Row="3"
                    Content="出力先(_O):"
                    HorizontalAlignment="Left"
-                   Target="{Binding ElementName=txtOutput, Mode=OneWay}"
+                   Target="{Binding ElementName=OutputTextBox, Mode=OneWay}"
                    VerticalAlignment="Center"/>
-            <TextBox x:Name="txtOutput"
+            <TextBox x:Name="OutputTextBox"
                      Grid.Column="1"
                      Grid.Row="3"
                      IsReadOnly="True"
@@ -250,7 +250,7 @@
                         <a:FolderBrowserDialogAction Description="{x:Static prop:Resources.msgSelectOutputDirectory}"
                                                      OkCommand="{Binding SelectOutputDirectoryCommand}"
                                                      Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
-                                                     SelectedPath="{Binding Text, ElementName=txtOutput}"/>
+                                                     SelectedPath="{Binding Text, ElementName=OutputTextBox}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
@@ -260,9 +260,9 @@
                    Content="画像出力先(_I):"
                    HorizontalAlignment="Left"
                    IsEnabled="{Binding CanHandleBestShot}"
-                   Target="{Binding ElementName=txtImageOutput, Mode=OneWay}"
+                   Target="{Binding ElementName=ImageOutputTextBox, Mode=OneWay}"
                    VerticalAlignment="Center"/>
-            <TextBox x:Name="txtImageOutput"
+            <TextBox x:Name="ImageOutputTextBox"
                      Grid.Column="1"
                      Grid.Row="4"
                      IsEnabled="{Binding CanHandleBestShot}"
