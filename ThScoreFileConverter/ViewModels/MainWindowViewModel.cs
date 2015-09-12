@@ -222,7 +222,17 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public string OpenScoreFileDialogInitialDirectory
         {
-            get { return Path.GetDirectoryName(this.ScoreFile); }
+            get
+            {
+                try
+                {
+                    return Path.GetDirectoryName(this.ScoreFile);
+                }
+                catch (Exception)
+                {
+                    return string.Empty;
+                }
+            }
         }
 
         /// <summary>
@@ -267,7 +277,17 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public string OpenTemplateFilesDialogInitialDirectory
         {
-            get { return Path.GetDirectoryName(this.TemplateFiles.LastOrDefault()); }
+            get
+            {
+                try
+                {
+                    return Path.GetDirectoryName(this.TemplateFiles.LastOrDefault());
+                }
+                catch (Exception)
+                {
+                    return string.Empty;
+                }
+            }
         }
 
         /// <summary>
