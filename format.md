@@ -6922,3 +6922,564 @@ SpellName: %T125CARD122" border=0&gt;
   </td>
  </tr>
 </table>
+
+----------------------------------------
+
+## 東方紺珠伝用テンプレート書式 {: #Th15Formats }
+
+### スコアランキング {: #T15SCR }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="6">書式</td>
+  <td colspan="2"><code>%T15SCR[v][w][xx][y][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[v]</code></td>
+  <td>
+   ゲームモード
+<dl class="format">
+ <dt><code>[P]</code></dt><dd>完全無欠モード</dd>
+ <dt><code>[L]</code></dt><dd>レガシーモード</dd>
+</dl>
+   （Extra ではこの指定は無視されます。）
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[w]</code></td>
+  <td>
+   難易度
+<dl class="format">
+ <dt><code>[E]</code></dt><dd>Easy</dd>
+ <dt><code>[N]</code></dt><dd>Normal</dd>
+ <dt><code>[H]</code></dt><dd>Hard</dd>
+ <dt><code>[L]</code></dt><dd>Lunatic</dd>
+ <dt><code>[X]</code></dt><dd>Extra</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[xx]</code></td>
+  <td>
+   キャラの名前
+<dl class="format">
+ <dt><code>[RM]</code></dt><dd>霊夢</dd>
+ <dt><code>[MR]</code></dt><dd>魔理沙</dd>
+ <dt><code>[SN]</code></dt><dd>早苗</dd>
+ <dt><code>[RS]</code></dt><dd>鈴仙</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[y]</code></td>
+  <td>
+   順位
+<dl class="format">
+ <dt><code>[1～9]</code></dt><dd>1～9 位</dd>
+ <dt><code>[0]</code></dt><dd>10 位</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[1]</code></dt><dd>登録名</dd>
+ <dt><code>[2]</code></dt><dd>スコア</dd>
+ <dt><code>[3]</code></dt><dd>到達ステージ</dd>
+ <dt><code>[4]</code></dt><dd>日時</dd>
+ <dt><code>[5]</code></dt><dd>処理落ち率</dd>
+ <dt><code>[6]</code></dt><dd>リトライ回数</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T15SCRPNSN12</code></dt><dd>完全無欠モード Normal 早苗の 1 位のスコア</dd>
+ <dt><code>%T15SCRLLRM44</code></dt><dd>レガシーモード Lunatic 霊夢の 4 位の日時</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>スコアの 1 の位には、原作と同様にコンティニュー回数が出力されます。</li>
+ <li>日時は年月日及び時分秒が「<samp>yyyy/mm/dd hh:mm:ss</samp>」の形式で出力されます。</li>
+ <li>処理落ち率は小数点以下第 3 位まで（% 記号付きで）出力されます。今後、この桁数を設定可能にするかも知れません。</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+### 御札戦歴 {: #T15C }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="5">書式</td>
+  <td colspan="2"><code>%T15C[w][xxx][yy][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[w]</code></td>
+  <td>
+   ゲームモード
+<dl class="format">
+ <dt><code>[P]</code></dt><dd>完全無欠モード</dd>
+ <dt><code>[L]</code></dt><dd>レガシーモード</dd>
+</dl>
+   （Extra ではこの指定は無視されます。）
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[xxx]</code></td>
+  <td>
+   スペルカードの番号など
+<dl class="format">
+ <dt><code>[000]</code></dt><dd>全スペルカードの合計値</dd>
+ <dt><code>[001～119]</code></dt><dd>スペルカードの番号</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[yy]</code></td>
+  <td>
+   キャラの名前など
+<dl class="format">
+ <dt><code>[TL]</code></dt><dd>全主人公合計</dd>
+ <dt><code>[RM]</code></dt><dd>霊夢</dd>
+ <dt><code>[MR]</code></dt><dd>魔理沙</dd>
+ <dt><code>[SN]</code></dt><dd>早苗</dd>
+ <dt><code>[RS]</code></dt><dd>鈴仙</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[1]</code></dt><dd>取得回数（勝率の分子）</dd>
+ <dt><code>[2]</code></dt><dd>挑戦回数（勝率の分母）</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T15CP003TL1</code></dt>
+ <dd>完全無欠モード 全主人公合計の弾符「イーグルシューティング」(Easy) の取得回数</dd>
+ <dt><code>%T15CL003SN2</code></dt>
+ <dd>レガシーモード 早苗の弾符「イーグルシューティング」(Easy) の挑戦回数</dd>
+</dl>
+  </td>
+ </tr>
+</table>
+
+### スペルカード基本情報 {: #T15CARD }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="3">書式</td>
+  <td colspan="2"><code>%T15CARD[xxx][y]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[xxx]</code></td>
+  <td>
+   スペルカードの番号
+<dl class="format">
+ <dt><code>[001～119]</code></dt><dd>スペルカードの番号</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[y]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[N]</code></dt><dd>スペルカードの名前</dd>
+ <dt><code>[R]</code></dt>
+ <dd>スペルカードの難易度 (Easy, Normal, Hard, Lunatic, Extra)</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T15CARD003N</code></dt><dd>弾符「イーグルシューティング」</dd>
+ <dt><code>%T15CARD003R</code></dt><dd>Easy</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li><a href="../manual.html#HowToUse">未挑戦のスペルカード名を出力しない</a>設定にしている場合、該当するものは名前が「<samp>?????</samp>」のように出力されます。（一応ネタバレ防止のため。）</li>
+ <li>一方、スペルカードの難易度は、未挑戦かどうかにかかわらず常に出力されます。原作でも Result 画面を見れば難易度はバレるので、このような仕様にしています。</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+### スペルカード蒐集率 {: #T15CRG }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="6">書式</td>
+  <td colspan="2"><code>%T15CRG[v][w][xx][y][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[v]</code></td>
+  <td>
+   ゲームモード
+<dl class="format">
+ <dt><code>[P]</code></dt><dd>完全無欠モード</dd>
+ <dt><code>[L]</code></dt><dd>レガシーモード</dd>
+</dl>
+   （Extra ではこの指定は無視されます。）
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[w]</code></td>
+  <td>
+   難易度など
+<dl class="format">
+ <dt><code>[E]</code></dt><dd>Easy</dd>
+ <dt><code>[N]</code></dt><dd>Normal</dd>
+ <dt><code>[H]</code></dt><dd>Hard</dd>
+ <dt><code>[L]</code></dt><dd>Lunatic</dd>
+ <dt><code>[X]</code></dt><dd>Extra</dd>
+ <dt><code>[T]</code></dt><dd>Total</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[xx]</code></td>
+  <td>
+   キャラの名前など
+<dl class="format">
+ <dt><code>[TL]</code></dt><dd>全主人公合計</dd>
+ <dt><code>[RM]</code></dt><dd>霊夢</dd>
+ <dt><code>[MR]</code></dt><dd>魔理沙</dd>
+ <dt><code>[SN]</code></dt><dd>早苗</dd>
+ <dt><code>[RS]</code></dt><dd>鈴仙</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[y]</code></td>
+  <td>
+   ステージ
+<dl class="format">
+ <dt><code>[0]</code></dt><dd>全ステージ合計</dd>
+ <dt><code>[1～6]</code></dt><dd>Stage 1～6</dd>
+</dl>
+   （Extra ではこの指定は無視され、Total ではそのステージの Easy～Lunatic
+   の合計が出力されます。）
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[1]</code></dt><dd>取得数（勝率の分子）</dd>
+ <dt><code>[2]</code></dt><dd>挑戦数（勝率の分母）</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T15CRGPERM01</code></dt>
+ <dd>完全無欠モード Easy 霊夢の全ステージ合計の取得数</dd>
+ <dt><code>%T15CRGPTSN41</code></dt>
+ <dd>完全無欠モード 早苗の Stage 4 の全難易度合計の取得数</dd>
+ <dt><code>%T15CRGLTTL02</code></dt>
+ <dd>レガシーモード 全難易度・全キャラ・全ステージ合計の挑戦数</dd>
+</dl>
+  </td>
+ </tr>
+</table>
+
+### クリア達成度 {: #T15CLEAR }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="4">書式</td>
+  <td colspan="2"><code>%T15CLEAR[x][y][zz]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   ゲームモード
+<dl class="format">
+ <dt><code>[P]</code></dt><dd>完全無欠モード</dd>
+ <dt><code>[L]</code></dt><dd>レガシーモード</dd>
+</dl>
+   （Extra ではこの指定は無視されます。）
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[y]</code></td>
+  <td>
+   難易度
+<dl class="format">
+ <dt><code>[E]</code></dt><dd>Easy</dd>
+ <dt><code>[N]</code></dt><dd>Normal</dd>
+ <dt><code>[H]</code></dt><dd>Hard</dd>
+ <dt><code>[L]</code></dt><dd>Lunatic</dd>
+ <dt><code>[X]</code></dt><dd>Extra</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[zz]</code></td>
+  <td>
+   キャラの名前
+<dl class="format">
+ <dt><code>[RM]</code></dt><dd>霊夢</dd>
+ <dt><code>[MR]</code></dt><dd>魔理沙</dd>
+ <dt><code>[SN]</code></dt><dd>早苗</dd>
+ <dt><code>[RS]</code></dt><dd>鈴仙</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T15CLEARPXMR</code></dt><dd>Extra 魔理沙のクリア達成度</dd>
+ <dt><code>%T15CLEARLNRM</code></dt><dd>レガシーモード Normal 霊夢のクリア達成度</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>
+  クリア達成度（ゲームの進行状況）に応じて以下の文字列が出力されます。
+  <p class="legends">
+   <samp>-------</samp>（未プレイ）, <samp>Stage 1</samp>,
+   <samp>Stage 2</samp>, <samp>Stage 3</samp>, <samp>Stage 4</samp>,
+   <samp>Stage 5</samp>, <samp>Stage 6</samp>, <samp>All Clear</samp>,
+   <samp>Not Clear</samp>（Extra 未クリア）
+  </p>
+ </li>
+ <li>本ツールでは、ランキングを基にクリア達成度を算出しているため、実際はクリア済みでもランキング上に存在していなければ未クリア扱いになってしまいます。</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+### キャラごとの個別データ {: #T15CHARA }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="4">書式</td>
+  <td colspan="2"><code>%T15CHARA[x][yy][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   ゲームモード
+<dl class="format">
+ <dt><code>[P]</code></dt><dd>完全無欠モード</dd>
+ <dt><code>[L]</code></dt><dd>レガシーモード</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[yy]</code></td>
+  <td>
+   キャラの名前など
+<dl class="format">
+ <dt><code>[TL]</code></dt><dd>全主人公合計</dd>
+ <dt><code>[RM]</code></dt><dd>霊夢</dd>
+ <dt><code>[MR]</code></dt><dd>魔理沙</dd>
+ <dt><code>[SN]</code></dt><dd>早苗</dd>
+ <dt><code>[RS]</code></dt><dd>鈴仙</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[1]</code></dt><dd>総プレイ回数</dd>
+ <dt><code>[2]</code></dt><dd>プレイ時間</dd>
+ <dt><code>[3]</code></dt><dd>クリア回数</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T15CHARAPTL2</code></dt><dd>完全無欠モード 全主人公合計のプレイ時間</dd>
+ <dt><code>%T15CHARALRM1</code></dt><dd>霊夢の総プレイ回数</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>プレイ時間は時分秒が「<samp>h:mm:ss</samp>」の形式で出力されます。</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+### キャラごとの個別データ（詳細版） {: #T15CHARAEX }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="5">書式</td>
+  <td colspan="2"><code>%T15CHARAEX[w][x][yy][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[w]</code></td>
+  <td>
+   ゲームモード
+<dl class="format">
+ <dt><code>[P]</code></dt><dd>完全無欠モード</dd>
+ <dt><code>[L]</code></dt><dd>レガシーモード</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   難易度など
+<dl class="format">
+ <dt><code>[E]</code></dt><dd>Easy</dd>
+ <dt><code>[N]</code></dt><dd>Normal</dd>
+ <dt><code>[H]</code></dt><dd>Hard</dd>
+ <dt><code>[L]</code></dt><dd>Lunatic</dd>
+ <dt><code>[X]</code></dt><dd>Extra</dd>
+ <dt><code>[T]</code></dt><dd>Total</dd>
+</dl>
+   （総プレイ回数とプレイ時間ではこの指定は無視されます。）
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[yy]</code></td>
+  <td>
+   キャラの名前など
+<dl class="format">
+ <dt><code>[TL]</code></dt><dd>全主人公合計</dd>
+ <dt><code>[RM]</code></dt><dd>霊夢</dd>
+ <dt><code>[MR]</code></dt><dd>魔理沙</dd>
+ <dt><code>[SN]</code></dt><dd>早苗</dd>
+ <dt><code>[RS]</code></dt><dd>鈴仙</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   項目
+<dl class="format">
+ <dt><code>[1]</code></dt><dd>総プレイ回数</dd>
+ <dt><code>[2]</code></dt><dd>プレイ時間</dd>
+ <dt><code>[3]</code></dt><dd>クリア回数</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T15CHARAEXPETL2</code></dt><dd>完全無欠モード 全主人公合計のプレイ時間</dd>
+ <dt><code>%T15CHARAEXLERM1</code></dt><dd>霊夢の総プレイ回数</dd>
+ <dt><code>%T15CHARAEXLTSN3</code></dt><dd>レガシーモード 早苗の全難易度合計のクリア回数</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>補足</td>
+  <td colspan="2">
+<ul>
+ <li>プレイ時間は時分秒が「<samp>h:mm:ss</samp>」の形式で出力されます。</li>
+</ul>
+  </td>
+ </tr>
+</table>
+
+### プラクティススコア {: #T15PRAC }
+
+<table>
+ <colgroup class="header"></colgroup>
+ <colgroup span="2"></colgroup>
+ <tr>
+  <td rowspan="4">書式</td>
+  <td colspan="2"><code>%T15PRAC[x][yy][z]</code></td>
+ </tr>
+ <tr>
+  <td class="format"><code>[x]</code></td>
+  <td>
+   難易度
+<dl class="format">
+ <dt><code>[E]</code></dt><dd>Easy</dd>
+ <dt><code>[N]</code></dt><dd>Normal</dd>
+ <dt><code>[H]</code></dt><dd>Hard</dd>
+ <dt><code>[L]</code></dt><dd>Lunatic</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[yy]</code></td>
+  <td>
+   キャラの名前
+<dl class="format">
+ <dt><code>[RM]</code></dt><dd>霊夢</dd>
+ <dt><code>[MR]</code></dt><dd>魔理沙</dd>
+ <dt><code>[SN]</code></dt><dd>早苗</dd>
+ <dt><code>[RS]</code></dt><dd>鈴仙</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td class="format"><code>[z]</code></td>
+  <td>
+   ステージ
+<dl class="format">
+ <dt><code>[1～6]</code></dt><dd>Stage 1～6</dd>
+</dl>
+  </td>
+ </tr>
+ <tr>
+  <td>例</td>
+  <td colspan="2">
+<dl class="example">
+ <dt><code>%T15PRACESN1</code></dt>
+ <dd>Easy 早苗の Stage 1 のプラクティススコア</dd>
+ <dt><code>%T15PRACNRM4</code></dt>
+ <dd>Normal 霊夢の Stage 4 のプラクティススコア</dd>
+</dl>
+  </td>
+ </tr>
+</table>

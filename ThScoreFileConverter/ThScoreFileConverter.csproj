@@ -99,6 +99,7 @@
     <Compile Include="Behaviors\TextBoxBaseScrollBehavior.cs" />
     <Compile Include="Behaviors\UIElementDropBehavior.cs" />
     <Compile Include="Commands\CloseWindowCommand.cs" />
+    <Compile Include="Models\Th15Converter.cs" />
     <Compile Include="Models\Work.cs" />
     <Compile Include="ViewModels\AboutWindowViewModel.cs" />
     <Compile Include="ViewModels\SettingWindowViewModel.cs" />

@@ -1,0 +1,36 @@
+/*
+ * th15.css
+ *	Cascading style sheet for TH15 result files
+ */
+
+td.character {
+	min-width: 150px;
+}
+
+td.name {
+	min-width: 70px;
+}
+
+td.score {
+	min-width: 70px;
+}
+
+td.level {
+	min-width: 70px;
+}
+
+td.stage {
+	min-width: 70px;
+}
+
+td.retry {
+	min-width: 50px;
+}
+
+td.date {
+	min-width: 120px;
+}
+
+td.slow {
+	min-width: 50px;
+}
