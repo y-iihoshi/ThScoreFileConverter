@@ -1,8 +1,6 @@
-<style type="text/css">
-<!--
-    div.toc ul ul ul li { display: inline; }
--->
-</style>
+Title: ThScoreFileConverter User's Manual
+CSS: div.toc ul ul ul li { display: inline; }
+     del { color: #888; }
 
 # ThScoreFileConverter User's Manual {: #UsersManual }
 

@@ -1,21 +1,18 @@
-<style type="text/css">
-<!--
-	div.toc ul ul ul li { display: inline; }
-	table { border: 1px solid #000; margin: 1em; }
-	colgroup.header { width: 60px; background-color: #eee; }
-	td { border: 1px solid #999; vertical-align: top; }
-	td.format { width: 60px; }
-	td ul { margin: 0; padding-left: 2em; }
-	td dl { margin: 0; }
-	td pre { margin: 0 0 0 2em; }
-	td p.legends { margin: 0 0 0 2em; }
-	dl.format dt { display: inline; }
-	dl.format dt:after { content: ": "; }
-	dl.format dd { display: inline; margin: 0 0.5em 0 0; }
-	dl.example dt { float: left; clear: both; }
-	dl.example dt:after { content: "\00a0…\00a0"; }
--->
-</style>
+Title: テンプレート書式
+CSS: div.toc ul ul ul li { display: inline; }
+     table { border: 1px solid #000; margin: 1em; }
+     colgroup.header { width: 60px; background-color: #eee; }
+     td { border: 1px solid #999; vertical-align: top; }
+     td.format { width: 60px; }
+     td ul { margin: 0; padding-left: 2em; }
+     td dl { margin: 0; }
+     td pre { margin: 0 0 0 2em; }
+     td p.legends { margin: 0 0 0 2em; }
+     dl.format dt { display: inline; }
+     dl.format dt:after { content: ": "; }
+     dl.format dd { display: inline; margin: 0 0.5em 0 0; }
+     dl.example dt { float: left; clear: both; }
+     dl.example dt:after { content: "\00a0…\00a0"; }
 
 # テンプレート書式 {: #TemplateFormats }
 
