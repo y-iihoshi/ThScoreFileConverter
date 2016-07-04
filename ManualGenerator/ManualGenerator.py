@@ -1,6 +1,7 @@
 ﻿import os
 import codecs
 import markdown
+import argparse
 
 MARKDOWN_KWARGS = {
     'output_format': 'xhtml1',
@@ -45,7 +46,7 @@ HTML_TEMPLATE = u'''<?xml version="1.0" encoding="UTF-8"?>
 def get_meta(md, key, sep='\n'):
     return sep.join(md.Meta.get(key, [])) if hasattr(md, 'Meta') else ''
 
-def generate(md_path):
+def generate(md_path, output_dir_path):
     md_file = codecs.open(md_path, 'r', encoding='utf-8')
     md_text = md_file.read()
     md_file.close()
@@ -55,16 +56,27 @@ def generate(md_path):
     html_text = HTML_TEMPLATE.format(
         title=get_meta(md, 'title'), css=get_meta(md, 'css'), body=html_body)
 
-    html_path = os.path.normpath(os.path.splitext(md_path)[0] + '.html')
+    html_name = os.path.splitext(os.path.basename(md_path))[0] + '.html'
+    html_path = os.path.join(output_dir_path, html_name)
     html_file = codecs.open(html_path, 'w', encoding='utf-8', errors='xmlcharrefreplace')
     html_file.write(html_text)
     html_file.close()
 
-def generate_all(dir_path):
-    for rootpath, dirs, files in os.walk(dir_path):
+def generate_all(input_dir_path, output_dir_path):
+    for rootpath, dirs, files in os.walk(input_dir_path):
         for file in files:
             if file.endswith('.md'):
-                generate(os.path.join(rootpath, file))
+                output_rootpath = rootpath.replace(input_dir_path, output_dir_path)
+                if not os.path.isdir(output_rootpath):
+                    os.mkdir(output_rootpath)
+                generate(os.path.join(rootpath, file), output_rootpath)
+
+def parse_arguments():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--input-dir', default=os.getcwdu())
+    parser.add_argument('--output-dir', default=os.getcwdu())
+    return parser.parse_args()
 
 if __name__ == '__main__':
-    generate_all(os.getcwdu())
+    args = parse_arguments()
+    generate_all(args.input_dir, args.output_dir)
