@@ -1,8 +1,9 @@
 ﻿import os
-import sys
 import codecs
-import markdown
 import argparse
+import traceback
+
+import markdown
 
 MARKDOWN_KWARGS = {
     'output_format': 'xhtml1',
@@ -83,4 +84,4 @@ if __name__ == '__main__':
         args = parse_arguments()
         generate_all(args.input_dir, args.output_dir)
     except:
-        print "Uncaught exception: ", sys.exc_info()[0]
+        traceback.print_exc()
