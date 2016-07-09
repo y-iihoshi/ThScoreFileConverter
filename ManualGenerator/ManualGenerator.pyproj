@@ -41,10 +41,10 @@
   <Target Name="CoreCompile">
     <RunPythonCommand Target="$(StartupFile)"
                       TargetType="script"
-                      ExecuteIn="console"
+                      ExecuteIn="none"
                       Arguments="--input-dir=$(WorkingDirectory) --output-dir=$(OutputPath)"
-                      RequiredPackages=""
-                      ConsoleToMSBuild="true">
+                      RequiredPackages="markdown"
+                      ConsoleToMSBuild="false">
       <Output TaskParameter="ConsoleOutput" PropertyName="OutputText" />
       <Output TaskParameter="ConsoleError" PropertyName="ErrorText" />
     </RunPythonCommand>
