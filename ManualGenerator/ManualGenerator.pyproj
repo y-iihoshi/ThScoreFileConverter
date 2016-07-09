@@ -29,6 +29,9 @@
     <None Include="format.md" />
     <None Include="manual.md" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="requirements.txt" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
@@ -43,7 +46,6 @@
                       TargetType="script"
                       ExecuteIn="none"
                       Arguments="--input-dir=$(WorkingDirectory) --output-dir=$(OutputPath)"
-                      RequiredPackages="markdown"
                       ConsoleToMSBuild="false">
       <Output TaskParameter="ConsoleOutput" PropertyName="OutputText" />
       <Output TaskParameter="ConsoleError" PropertyName="ErrorText" />
