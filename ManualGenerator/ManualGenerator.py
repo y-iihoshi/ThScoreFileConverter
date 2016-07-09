@@ -1,4 +1,5 @@
 ﻿import os
+import sys
 import codecs
 import markdown
 import argparse
@@ -78,5 +79,8 @@ def parse_arguments():
     return parser.parse_args()
 
 if __name__ == '__main__':
-    args = parse_arguments()
-    generate_all(args.input_dir, args.output_dir)
+    try:
+        args = parse_arguments()
+        generate_all(args.input_dir, args.output_dir)
+    except:
+        print "Uncaught exception: ", sys.exc_info()[0]
