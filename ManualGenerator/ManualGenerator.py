@@ -75,8 +75,8 @@ def generate_all(input_dir_path, output_dir_path):
 
 def parse_arguments():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--input-dir', default=os.getcwdu())
-    parser.add_argument('--output-dir', default=os.getcwdu())
+    parser.add_argument('--input-dir', default=os.getcwd())
+    parser.add_argument('--output-dir', default=os.getcwd())
     return parser.parse_args()
 
 if __name__ == '__main__':
