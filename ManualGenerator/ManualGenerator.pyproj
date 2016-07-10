@@ -61,6 +61,28 @@
     <RemoveDir Directories="$(OutputPath)" />
   </Target>
   <Target Name="BeforeBuild">
+    <ResolveEnvironment>
+      <Output TaskParameter="PrefixPath" PropertyName="PrefixPath" />
+      <Output TaskParameter="ProjectRelativePrefixPath" PropertyName="ProjectRelativePrefixPath" />
+      <Output TaskParameter="InterpreterPath" PropertyName="InterpreterPath" />
+      <Output TaskParameter="WindowsInterpreterPath" PropertyName="WindowsInterpreterPath" />
+      <Output TaskParameter="LibraryPath" PropertyName="LibraryPath" />
+      <Output TaskParameter="Architecture" PropertyName="Architecture" />
+      <Output TaskParameter="PathEnvironmentVariable" PropertyName="PathEnvironmentVariable" />
+      <Output TaskParameter="Description" PropertyName="Description" />
+      <Output TaskParameter="MajorVersion" PropertyName="MajorVersion" />
+      <Output TaskParameter="MinorVersion" PropertyName="MinorVersion" />
+    </ResolveEnvironment>
+    <Message Text="PrefixPath: $(PrefixPath)" />
+    <Message Text="ProjectRelativePrefixPath: $(ProjectRelativePrefixPath)" />
+    <Message Text="InterpreterPath: $(InterpreterPath)" />
+    <Message Text="WindowsInterpreterPath: $(WindowsInterpreterPath)" />
+    <Message Text="LibraryPath: $(LibraryPath)" />
+    <Message Text="Architecture: $(Architecture)" />
+    <Message Text="PathEnvironmentVariable: $(PathEnvironmentVariable)" />
+    <Message Text="Description: $(Description)" />
+    <Message Text="MajorVersion: $(MajorVersion)" />
+    <Message Text="MinorVersion: $(MinorVersion)" />
   </Target>
   <Target Name="AfterBuild">
   </Target>
