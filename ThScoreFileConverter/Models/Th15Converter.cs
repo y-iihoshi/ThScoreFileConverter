@@ -212,7 +212,7 @@ namespace ThScoreFileConverter.Models
 
         public override string SupportedVersions
         {
-            get { return "1.00a"; }
+            get { return "1.00b"; }
         }
 
         protected override bool ReadScoreFile(Stream input)

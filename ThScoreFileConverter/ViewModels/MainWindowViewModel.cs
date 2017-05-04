@@ -46,12 +46,14 @@ namespace ThScoreFileConverter.ViewModels
             new Work { Number = "TH14", Title = "東方輝針城", IsSupported = true },
             new Work { Number = "TH143", Title = "弾幕アマノジャク", IsSupported = true },
             new Work { Number = "TH15", Title = "東方紺珠伝", IsSupported = true },
+            new Work { Number = "TH16", Title = "東方天空璋", IsSupported = false },
             new Work { Number = string.Empty, Title = string.Empty, IsSupported = false },
             new Work { Number = "TH075", Title = "東方萃夢想", IsSupported = true },
             new Work { Number = "TH105", Title = "東方緋想天", IsSupported = true },
             new Work { Number = "TH123", Title = "東方非想天則", IsSupported = true },
             new Work { Number = "TH135", Title = "東方心綺楼", IsSupported = true },
             new Work { Number = "TH145", Title = "東方深秘録", IsSupported = false },
+            new Work { Number = "TH155", Title = "東方憑依華", IsSupported = false },
         };
 
         /// <summary>
