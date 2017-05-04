@@ -64,7 +64,7 @@
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="{x:Type ComboBoxItem}">
-                                            <Separator/>
+                                            <Separator Style="{x:Null}"/>
                                         </ControlTemplate>
                                     </Setter.Value>
                                 </Setter>
