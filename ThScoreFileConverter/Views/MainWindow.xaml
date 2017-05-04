@@ -11,7 +11,8 @@
         ResizeMode="CanMinimize"
         SizeToContent="WidthAndHeight"
         Style="{StaticResource WindowStyleKey}"
-        Title="{Binding Title}">
+        Title="{Binding Title}"
+        UseLayoutRounding="True">
 
     <Window.DataContext>
         <vm:MainWindowViewModel/>

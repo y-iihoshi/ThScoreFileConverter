@@ -4,7 +4,8 @@
         	 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         	 xmlns:a="clr-namespace:ThScoreFileConverter.Actions"
         	 xmlns:c="clr-namespace:ThScoreFileConverter.Commands"
-             FocusManager.FocusedElement="{Binding ElementName=OkButton}">
+             FocusManager.FocusedElement="{Binding ElementName=OkButton}"
+             UseLayoutRounding="True">
 
     <UserControl.InputBindings>
         <KeyBinding Command="{x:Static c:CloseWindowCommand.Instance}"
