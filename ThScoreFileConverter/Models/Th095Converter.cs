@@ -267,7 +267,7 @@ namespace ThScoreFileConverter.Models
                         for (var sourceIndex = 0; sourceIndex < source.Length; sourceIndex += sourceStride)
                         {
                             Marshal.Copy(source, sourceIndex, destination, sourceStride);
-                            destination = new IntPtr(destination.ToInt32() + bitmapData.Stride);
+                            destination = destination + bitmapData.Stride;
                         }
 
                         bitmap.UnlockBits(bitmapData);
