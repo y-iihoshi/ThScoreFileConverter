@@ -53,7 +53,8 @@
                       SelectedValuePath="Number"
                       VerticalAlignment="Center">
                 <ComboBox.ItemContainerStyle>
-                    <Style TargetType="{x:Type ComboBoxItem}">
+                    <Style BasedOn="{StaticResource {x:Type ComboBoxItem}}"
+                           TargetType="{x:Type ComboBoxItem}">
                         <Style.Setters>
                             <Setter Property="IsEnabled"
                                     Value="{Binding IsSupported}"/>
@@ -95,15 +96,18 @@
             </Grid.RowDefinitions>
 
             <Grid.Resources>
-                <Style TargetType="{x:Type Button}">
+                <Style BasedOn="{StaticResource {x:Type Button}}"
+                       TargetType="{x:Type Button}">
                     <Setter Property="Margin"
                             Value="5,2,0,2"/>
                 </Style>
-                <Style TargetType="{x:Type ListBox}">
+                <Style BasedOn="{StaticResource {x:Type ListBox}}"
+                       TargetType="{x:Type ListBox}">
                     <Setter Property="Margin"
                             Value="0,2"/>
                 </Style>
-                <Style TargetType="{x:Type TextBox}">
+                <Style BasedOn="{StaticResource {x:Type TextBox}}"
+                       TargetType="{x:Type TextBox}">
                     <Setter Property="Margin"
                             Value="0,2"/>
                 </Style>

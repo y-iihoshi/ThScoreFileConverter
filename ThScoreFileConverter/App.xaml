@@ -12,6 +12,7 @@
         <sys:Double x:Key="FontSizeKey">12</sys:Double>
 
         <Style x:Key="WindowStyleKey"
+               BasedOn="{StaticResource {x:Type Window}}"
                TargetType="{x:Type Window}">
             <Setter Property="Background"
                     Value="#FFEEEEEE"/>
@@ -56,11 +57,20 @@
             <Setter Property="Orientation"
                     Value="Vertical"/>
         </Style>
-        <Style TargetType="{x:Type Button}">
+        <Style BasedOn="{StaticResource {x:Type Button}}"
+               TargetType="{x:Type Button}">
             <Setter Property="MinWidth"
                     Value="75"/>
+            <Setter Property="Padding"
+                    Value="5,1"/>
         </Style>
-        <Style TargetType="{x:Type GroupBox}">
+        <Style BasedOn="{StaticResource {x:Type CheckBox}}"
+               TargetType="{x:Type CheckBox}">
+            <Setter Property="VerticalContentAlignment"
+                    Value="Center"/>
+        </Style>
+        <Style BasedOn="{StaticResource {x:Type GroupBox}}"
+               TargetType="{x:Type GroupBox}">
             <Setter Property="Padding"
                     Value="5"/>
         </Style>

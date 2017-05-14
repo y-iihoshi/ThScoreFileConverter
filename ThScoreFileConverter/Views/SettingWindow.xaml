@@ -45,7 +45,6 @@
 
         <GroupBox Header="出力書式設定">
             <CheckBox Content="数値を桁区切り形式で出力する(_S)"
-                      HorizontalAlignment="Left"
                       IsChecked="{Binding OutputNumberGroupSeparator}"/>
         </GroupBox>
 
