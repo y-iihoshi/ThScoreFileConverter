@@ -1,0 +1,27 @@
+table.field-list
+{
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+}
+
+table.field-list col.field-name
+{
+    width: 5em;
+}
+
+table.field-list table.field-list col.field-name
+{
+    width: auto;
+}
+
+table.field-list .line-block
+{
+    margin-bottom: 0;
+}
+
+.guilabel
+{
+    background-color: #ecf0f3;
+    font-size: 0.95em;
+    padding: 0 1px;
+}
