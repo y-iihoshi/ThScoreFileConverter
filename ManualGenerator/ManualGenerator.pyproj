@@ -74,10 +74,10 @@
        Visual Studio and specify your pre- and post-build commands in
        the BeforeBuild and AfterBuild targets below. -->
   <Target Name="CoreCompile">
-    <Exec Command="make.bat html" />
+    <Exec Command="(set SPHINXBUILD=$(PrefixPath)\python -msphinx) &amp; make.bat html" IgnoreExitCode="False" />
   </Target>
-  <Target Name="Clean">
-    <Exec Command="make.bat clean" />
+  <Target Name="CoreClean">
+    <Exec Command="(set SPHINXBUILD=$(PrefixPath)\python -msphinx) &amp; make.bat clean" IgnoreExitCode="False" />
   </Target>
   <Target Name="BeforeBuild">
     <ResolveEnvironment>
@@ -104,6 +104,12 @@
     <Message Text="MinorVersion: $(MinorVersion)" />
   </Target>
   <Target Name="AfterBuild">
+  </Target>
+  <Target Name="BeforeClean">
+    <ResolveEnvironment>
+      <Output TaskParameter="PrefixPath" PropertyName="PrefixPath" />
+    </ResolveEnvironment>
+    <Message Text="PrefixPath: $(PrefixPath)" />
   </Target>
   <PropertyGroup>
     <ResolveReferencesDependsOn />
