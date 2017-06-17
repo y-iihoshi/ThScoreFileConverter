@@ -21,7 +21,7 @@ build:
   verbosity: minimal
 after_build:
   - cmd: >-
-      xcopy ThScoreFileConverter\bin\$(configuration) publish /e /i /q
+      xcopy ThScoreFileConverter\bin\%CONFIGURATION% publish /e /i /q
 
       xcopy ManualGenerator\_build\html publish\doc /e /i /q
 
