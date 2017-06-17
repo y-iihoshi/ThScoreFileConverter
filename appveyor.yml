@@ -12,6 +12,7 @@ environment:
 install:
   - cmd: >-
       %PYTHON%\python -m pip install -U pip
+
       %PYTHON%\python -m pip install -r ManualGenerator\requirements.txt
 
 before_build:
