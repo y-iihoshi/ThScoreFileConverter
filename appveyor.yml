@@ -1,0 +1,27 @@
+version: '{build}'
+branches:
+  only:
+    - master
+
+image: Visual Studio 2015
+configuration:
+  - Debug
+  - Release
+environment:
+  PYTHON: C:\Python35-x64
+install:
+  - cmd: >-
+      %PYTHON%\python -m pip install -U pip
+      %PYTHON%\python -m pip install -r ManualGenerator\requirements.txt
+
+before_build:
+  - cmd: nuget restore
+build:
+  parallel: true
+  verbosity: minimal
+
+artifacts:
+  - path: ThScoreFileConverter\bin\Release
+    name: Release
+  - path: ManualGenerator\_build
+    name: Manual
