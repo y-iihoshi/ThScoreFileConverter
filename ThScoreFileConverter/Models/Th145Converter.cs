@@ -417,6 +417,7 @@ namespace ThScoreFileConverter.Models
                 get { return this.GetValue<bool>("enable_kokoro"); }
             }
 
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public Dictionary<int, bool> BgmFlags { get; private set; }
 
             public Dictionary<Level, Dictionary<Chara, int>> ClearRanks { get; private set; }
@@ -442,82 +443,70 @@ namespace ThScoreFileConverter.Models
                         .Where(pair => pair.Key is string)
                         .ToDictionary(pair => pair.Key as string, pair => pair.Value);
 
-                    object counts;
-                    if (this.allData.TryGetValue("story_clear", out counts))
+                    this.ParseStoryClear();
+                    this.ParseEnableBgm();
+                    this.ParseClearRank();
+                    this.ParseClearTime();
+                }
+            }
+
+            private void ParseStoryClear()
+            {
+                object counts;
+                if (this.allData.TryGetValue("story_clear", out counts))
+                {
+                    var storyClearFlags = counts as object[];
+                    if (storyClearFlags != null)
                     {
-                        var storyClearFlags = counts as object[];
-                        if (storyClearFlags != null)
+                        this.StoryClearFlags =
+                            new Dictionary<Chara, LevelFlag>(Enum.GetValues(typeof(Chara)).Length);
+                        for (var index = 0; index < storyClearFlags.Length; index++)
                         {
-                            this.StoryClearFlags =
-                                new Dictionary<Chara, LevelFlag>(Enum.GetValues(typeof(Chara)).Length);
-                            for (var index = 0; index < storyClearFlags.Length; index++)
-                            {
-                                if (storyClearFlags[index] is int)
-                                    this.StoryClearFlags[(Chara)index] = (LevelFlag)storyClearFlags[index];
-                            }
+                            if (storyClearFlags[index] is int)
+                                this.StoryClearFlags[(Chara)index] = (LevelFlag)storyClearFlags[index];
                         }
                     }
+                }
+            }
 
-                    object flags;
-                    if (this.allData.TryGetValue("enable_bgm", out flags))
+            private void ParseEnableBgm()
+            {
+                object flags;
+                if (this.allData.TryGetValue("enable_bgm", out flags))
+                {
+                    var bgmFlags = flags as Dictionary<object, object>;
+                    if (bgmFlags != null)
                     {
-                        var bgmFlags = flags as Dictionary<object, object>;
-                        if (bgmFlags != null)
-                        {
-                            this.BgmFlags = bgmFlags
-                                .Where(pair => (pair.Key is int) && (pair.Value is bool))
-                                .ToDictionary(pair => (int)pair.Key, pair => (bool)pair.Value);
-                        }
+                        this.BgmFlags = bgmFlags
+                            .Where(pair => (pair.Key is int) && (pair.Value is bool))
+                            .ToDictionary(pair => (int)pair.Key, pair => (bool)pair.Value);
                     }
+                }
+            }
 
-                    object ranks;
-                    if (this.allData.TryGetValue("clear_rank", out ranks))
+            private void ParseClearRank()
+            {
+                object ranks;
+                if (this.allData.TryGetValue("clear_rank", out ranks))
+                {
+                    var clearRanks = ranks as object[];
+                    if (clearRanks != null)
                     {
-                        var clearRanks = ranks as object[];
-                        if (clearRanks != null)
+                        this.ClearRanks =
+                            new Dictionary<Level, Dictionary<Chara, int>>(Enum.GetValues(typeof(Level)).Length);
+                        for (var index = 0; index < clearRanks.Length; index++)
                         {
-                            this.ClearRanks =
-                                new Dictionary<Level, Dictionary<Chara, int>>(Enum.GetValues(typeof(Level)).Length);
-                            for (var index = 0; index < clearRanks.Length; index++)
+                            var clearRanksPerChara = clearRanks[index] as object[];
+                            if (clearRanksPerChara != null)
                             {
-                                var clearRanksPerChara = clearRanks[index] as object[];
-                                if (clearRanksPerChara != null)
+                                this.ClearRanks[(Level)index] =
+                                    new Dictionary<Chara, int>(Enum.GetValues(typeof(Chara)).Length);
+                                for (var charaIndex = 0; charaIndex < clearRanksPerChara.Length; charaIndex++)
                                 {
-                                    this.ClearRanks[(Level)index] =
-                                        new Dictionary<Chara, int>(Enum.GetValues(typeof(Chara)).Length);
-                                    for (var charaIndex = 0; charaIndex < clearRanksPerChara.Length; charaIndex++)
+                                    if (clearRanksPerChara[charaIndex] is int)
                                     {
-                                        if (clearRanksPerChara[charaIndex] is int)
-                                        {
-                                            this.ClearRanks[(Level)index][(Chara)charaIndex] = (int)clearRanksPerChara[charaIndex];
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    object times;
-                    if (this.allData.TryGetValue("clear_time", out times))
-                    {
-                        var clearTimes = times as object[];
-                        if (clearTimes != null)
-                        {
-                            this.ClearTimes =
-                                new Dictionary<Level, Dictionary<Chara, int>>(Enum.GetValues(typeof(Level)).Length);
-                            for (var index = 0; index < clearTimes.Length; index++)
-                            {
-                                var clearTimesPerChara = clearTimes[index] as object[];
-                                if (clearTimesPerChara != null)
-                                {
-                                    this.ClearTimes[(Level)index] =
-                                        new Dictionary<Chara, int>(Enum.GetValues(typeof(Chara)).Length);
-                                    for (var charaIndex = 0; charaIndex < clearTimesPerChara.Length; charaIndex++)
-                                    {
-                                        if (clearTimesPerChara[charaIndex] is int)
-                                        {
-                                            this.ClearTimes[(Level)index][(Chara)charaIndex] = (int)clearTimesPerChara[charaIndex];
-                                        }
+                                        this.ClearRanks[(Level)index][(Chara)charaIndex] =
+                                            (int)clearRanksPerChara[charaIndex];
                                     }
                                 }
                             }
@@ -526,6 +515,38 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
+            private void ParseClearTime()
+            {
+                object times;
+                if (this.allData.TryGetValue("clear_time", out times))
+                {
+                    var clearTimes = times as object[];
+                    if (clearTimes != null)
+                    {
+                        this.ClearTimes =
+                            new Dictionary<Level, Dictionary<Chara, int>>(Enum.GetValues(typeof(Level)).Length);
+                        for (var index = 0; index < clearTimes.Length; index++)
+                        {
+                            var clearTimesPerChara = clearTimes[index] as object[];
+                            if (clearTimesPerChara != null)
+                            {
+                                this.ClearTimes[(Level)index] =
+                                    new Dictionary<Chara, int>(Enum.GetValues(typeof(Chara)).Length);
+                                for (var charaIndex = 0; charaIndex < clearTimesPerChara.Length; charaIndex++)
+                                {
+                                    if (clearTimesPerChara[charaIndex] is int)
+                                    {
+                                        this.ClearTimes[(Level)index][(Chara)charaIndex] =
+                                            (int)clearTimesPerChara[charaIndex];
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             private T GetValue<T>(string key)
                 where T : struct
             {
