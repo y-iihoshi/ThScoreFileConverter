@@ -232,6 +232,15 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
+        ///   TH145 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string keyTh145 {
+            get {
+                return ResourceManager.GetString("keyTh145", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   TH15 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string keyTh15 {

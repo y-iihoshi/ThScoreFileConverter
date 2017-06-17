@@ -53,6 +53,7 @@
     <Content Include="format\th135.rst" />
     <Content Include="format\th14.rst" />
     <Content Include="format\th143.rst" />
+    <Content Include="format\th145.rst" />
     <Content Include="format\th15.rst" />
     <Folder Include="_static\" />
     <Content Include="_static\custom.css" />

@@ -52,7 +52,7 @@ namespace ThScoreFileConverter.ViewModels
             new Work { Number = "TH105", Title = "東方緋想天", IsSupported = true },
             new Work { Number = "TH123", Title = "東方非想天則", IsSupported = true },
             new Work { Number = "TH135", Title = "東方心綺楼", IsSupported = true },
-            new Work { Number = "TH145", Title = "東方深秘録", IsSupported = false },
+            new Work { Number = "TH145", Title = "東方深秘録", IsSupported = true },
             new Work { Number = "TH155", Title = "東方憑依華", IsSupported = false },
         };
 
