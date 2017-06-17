@@ -18,7 +18,8 @@ Web からダウンロードした zip ファイルを任意の場所に展開�
       |     |-- *.html      (テンプレートファイル)
       |     |-- *.css       (テンプレートファイルや変換後のファイルが参照するスタイルシートファイル)
       |     `-- *.js        (テンプレートファイルや変換後のファイルが参照する JavaScript ファイル)
-      `-- ThScoreFileConverter.exe
+      |-- ThScoreFileConverter.exe
+      `-- ...
 
 
 アップデート方法
