@@ -250,6 +250,15 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
+        ///   TH16 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string keyTh16 {
+            get {
+                return ResourceManager.GetString("keyTh16", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   出力が完了しました。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string msgEndConversion {

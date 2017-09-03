@@ -36,6 +36,7 @@ namespace ThScoreFileConverter.Models
             { Resources.keyTh14,  typeof(Th14Converter)  },
             { Resources.keyTh143, typeof(Th143Converter) },
             { Resources.keyTh15,  typeof(Th15Converter)  },
+            { Resources.keyTh16,  typeof(Th16Converter)  },
             { Resources.keyTh075, typeof(Th075Converter) },
             { Resources.keyTh105, typeof(Th105Converter) },
             { Resources.keyTh123, typeof(Th123Converter) },

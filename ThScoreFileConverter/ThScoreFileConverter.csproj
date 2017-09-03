@@ -139,6 +139,7 @@
     <Compile Include="Models\Th143Converter.cs" />
     <Compile Include="Models\Th145Converter.cs" />
     <Compile Include="Models\Th15Converter.cs" />
+    <Compile Include="Models\Th16Converter.cs" />
     <Compile Include="Models\ThConverter.cs" />
     <Compile Include="Models\ThConverterEventArgs.cs" />
     <Compile Include="Models\ThConverterFactory.cs" />
