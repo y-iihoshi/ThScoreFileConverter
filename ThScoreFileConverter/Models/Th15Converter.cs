@@ -599,7 +599,7 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        // %T15CLEAR[x][yy]
+        // %T15CLEAR[x][y][zz]
         private class ClearReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
