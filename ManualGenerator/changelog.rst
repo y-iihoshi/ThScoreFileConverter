@@ -3,6 +3,9 @@
 変更履歴
 ========
 
+v2.1.0 (2017/9/24)
+    * 東方天空璋に対応
+
 v2.0.0 (2017/6/18)
     * :abbr:`MVVM (Model-View-ViewModel)` に則ってソフトウェアの構成を変更
     * マニュアルの作成に `Sphinx <http://www.sphinx-doc.org/ja/stable/>`_
