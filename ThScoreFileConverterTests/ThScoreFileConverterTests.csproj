@@ -51,6 +51,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Models\TimeTests.cs" />
+    <Compile Include="Models\UtilsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
