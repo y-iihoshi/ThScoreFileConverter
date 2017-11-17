@@ -3,6 +3,7 @@
 using System;
 using System.Reflection;
 using System.Resources;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
 
@@ -56,3 +57,7 @@ using System.Windows;
 
 [assembly: CLSCompliant(true)]
 [assembly: NeutralResourcesLanguage("ja-JP")]
+
+#if DEBUG
+[assembly: InternalsVisibleTo("ThScoreFileConverterTests")]
+#endif
