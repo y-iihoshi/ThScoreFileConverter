@@ -59,6 +59,7 @@
     <Compile Include="Models\PairTests.cs" />
     <Compile Include="Models\TimeTests.cs" />
     <Compile Include="Models\ThConverterTests.cs" />
+    <Compile Include="Models\LzssTests.cs" />
     <Compile Include="Models\UtilsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
