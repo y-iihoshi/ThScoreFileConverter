@@ -1,4 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Globalization;
 
 namespace ThScoreFileConverter.Models.Tests
 {
@@ -17,31 +19,42 @@ namespace ThScoreFileConverter.Models.Tests
         [TestMethod()]
         public void EqualsTest()
         {
-            var obj1 = new PrivateObject(typeof(Pair<int, uint>), 1, 2u);
-            var obj2 = new PrivateObject(typeof(Pair<uint, int>), 1u, 2);
-            var obj3 = new PrivateObject(typeof(Pair<int, uint>), 1, 2u);
-            var obj4 = new PrivateObject(typeof(Pair<int, uint>), 1, 3u);
-            var obj5 = new PrivateObject(typeof(Pair<int, uint>), 3, 2u);
-            var obj6 = new PrivateObject(typeof(Pair<int, uint>), 3, 4u);
+            var IntUIntPairType = typeof(Pair<int, uint>);
+            var UIntIntPairType = typeof(Pair<uint, int>);
 
-            Assert.IsFalse((bool)obj1.Invoke("Equals", new object[] { null }));
-            Assert.IsTrue((bool)obj1.Invoke("Equals", obj1.Target));
-            Assert.IsFalse((bool)obj1.Invoke("Equals", obj2.Target));
-            Assert.IsTrue((bool)obj1.Invoke("Equals", obj3.Target));
-            Assert.IsFalse((bool)obj1.Invoke("Equals", obj4.Target));
-            Assert.IsFalse((bool)obj1.Invoke("Equals", obj5.Target));
-            Assert.IsFalse((bool)obj1.Invoke("Equals", obj6.Target));
+            var obj1 = new PrivateObject(IntUIntPairType, 1, 2u);
+            var obj2 = new PrivateObject(UIntIntPairType, 1u, 2);
+            var obj3 = new PrivateObject(IntUIntPairType, 1, 2u);
+            var obj4 = new PrivateObject(IntUIntPairType, 1, 3u);
+            var obj5 = new PrivateObject(IntUIntPairType, 3, 2u);
+            var obj6 = new PrivateObject(IntUIntPairType, 3, 4u);
+
+            Func<PrivateObject, object, bool> equals =
+                (pobj, arg) => (bool)pobj.Invoke("Equals", new object[] { arg }, CultureInfo.InvariantCulture);
+
+            Assert.IsFalse(equals(obj1, null));
+            Assert.IsTrue(equals(obj1, obj1.Target));
+            Assert.IsFalse(equals(obj1, obj2.Target));
+            Assert.IsTrue(equals(obj1, obj3.Target));
+            Assert.IsFalse(equals(obj1, obj4.Target));
+            Assert.IsFalse(equals(obj1, obj5.Target));
+            Assert.IsFalse(equals(obj1, obj6.Target));
         }
 
         [TestMethod()]
         public void GetHashCodeTest()
         {
-            var obj1 = new PrivateObject(typeof(Pair<int, uint>), 1, 2u);
-            var obj2 = new PrivateObject(typeof(Pair<int, uint>), 1, 2u);
-            var obj3 = new PrivateObject(typeof(Pair<int, uint>), 3, 4u);
+            var type = typeof(Pair<int, uint>);
 
-            Assert.IsTrue((int)obj1.Invoke("GetHashCode") == (int)obj2.Invoke("GetHashCode"));
-            Assert.IsTrue((int)obj1.Invoke("GetHashCode") != (int)obj3.Invoke("GetHashCode"));
+            var obj1 = new PrivateObject(type, 1, 2u);
+            var obj2 = new PrivateObject(type, 1, 2u);
+            var obj3 = new PrivateObject(type, 3, 4u);
+
+            Func<PrivateObject, int> getHashCode =
+                pobj => (int)pobj.Invoke("GetHashCode", new object[] { }, CultureInfo.InvariantCulture);
+
+            Assert.IsTrue(getHashCode(obj1) == getHashCode(obj2));
+            Assert.IsTrue(getHashCode(obj1) != getHashCode(obj3));
         }
     }
 }

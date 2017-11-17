@@ -19,7 +19,7 @@ namespace ThScoreFileConverter.Models.Tests
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void BitReaderTest_NoStream()
+        public void BitReaderTestNoStream()
         {
             using (var reader = new BitReader(null))
             {
@@ -29,7 +29,7 @@ namespace ThScoreFileConverter.Models.Tests
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentException))]
-        public void BitReaderTest_Unreadable()
+        public void BitReaderTestUnreadable()
         {
             using (var stream = new MemoryStream())
             {
@@ -49,13 +49,13 @@ namespace ThScoreFileConverter.Models.Tests
             using (var reader = new BitReader(stream))
             {
                 reader.Dispose();
-                var bit = reader.ReadBits(1);
+                reader.ReadBits(1);
                 Assert.Fail("Unreachable");
             }
         }
 
         [TestMethod()]
-        public void ReadBitsTest_OneBit()
+        public void ReadBitsTestOneBit()
         {
             using (var stream = new MemoryStream(new byte[] { 0x53 }))
             using (var reader = new BitReader(stream))
@@ -73,7 +73,7 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [TestMethod()]
-        public void ReadBitsTest_ZeroBit()
+        public void ReadBitsTestZeroBit()
         {
             using (var stream = new MemoryStream(new byte[] { 0xFF }))
             using (var reader = new BitReader(stream))
@@ -93,7 +93,7 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [TestMethod()]
-        public void ReadBitsTest_MultiBits()
+        public void ReadBitsTestMultiBits()
         {
             // var buffer = new byte[2] { 0b_0101_0011, 0b_1100_1010 };
             var buffer = new byte[2] { 0x53, 0xCA };
@@ -108,7 +108,7 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [TestMethod()]
-        public void ReadBitsTest_MultiBytes()
+        public void ReadBitsTestMultiBytes()
         {
             var buffer = new byte[6] { 0x53, 0xCA, 0xAC, 0x35, 0x5A, 0xA5 };
             using (var stream = new MemoryStream(buffer))
@@ -121,39 +121,39 @@ namespace ThScoreFileConverter.Models.Tests
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void ReadBitsTest_NegativeNumBits()
+        public void ReadBitsTestNegativeNumBits()
         {
             using (var stream = new MemoryStream(new byte[] { 0x53 }))
             using (var reader = new BitReader(stream))
             {
-                var value = reader.ReadBits(-1);
+                reader.ReadBits(-1);
                 Assert.Fail("Unreachable");
             }
         }
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void ReadBitsTest_ExceededNumBits()
+        public void ReadBitsTestExceededNumBits()
         {
             var buffer = new byte[6] { 0x53, 0xCA, 0xAC, 0x35, 0x5A, 0xA5 };
             using (var stream = new MemoryStream(buffer))
             using (var reader = new BitReader(stream))
             {
-                var value = reader.ReadBits(33);
+                reader.ReadBits(33);
                 Assert.Fail("Unreachable");
             }
         }
 
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void ReadBitsTest_EndOfStream()
+        public void ReadBitsTestEndOfStream()
         {
             using (var stream = new MemoryStream(new byte[] { 0x53 }))
             using (var reader = new BitReader(stream))
             {
                 Assert.AreEqual(0x53, reader.ReadBits(8));
 
-                var value = reader.ReadBits(1);
+                reader.ReadBits(1);
                 Assert.Fail("Unreachable");
             }
         }

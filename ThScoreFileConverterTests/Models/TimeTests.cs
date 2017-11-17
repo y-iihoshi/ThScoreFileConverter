@@ -1,20 +1,23 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ThScoreFileConverter.Models.Tests
 {
     [TestClass()]
     public class TimeTests
     {
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void TimeTest_Negative()
+        public void TimeTestNegative()
         {
             var time = new Time(-1);
+            Assert.Fail("Unreachable");
         }
 
         [TestMethod()]
-        public void TimeTest_Zero()
+        public void TimeTestZero()
         {
             var time = new Time(0);
 
@@ -27,7 +30,7 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [TestMethod()]
-        public void TimeTest_MillionAndOne()
+        public void TimeTestMillionAndOne()
         {
             var time = new Time(1000 * 1000 + 1);
 
@@ -39,15 +42,17 @@ namespace ThScoreFileConverter.Models.Tests
             Assert.IsTrue(time.IsFrames);
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void TimeTest_Frame_Negative()
+        public void TimeTestNegativeFrame()
         {
             var time = new Time(-1, true);
+            Assert.Fail("Unreachable");
         }
 
         [TestMethod()]
-        public void TimeTest_Frame_Zero()
+        public void TimeTestZeroFrame()
         {
             var time = new Time(0, true);
 
@@ -60,7 +65,7 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [TestMethod()]
-        public void TimeTest_Frame_MillionAndOne()
+        public void TimeTestMillionAndOneFrames()
         {
             var time = new Time(1000 * 1000 + 1, true);
 
@@ -72,15 +77,17 @@ namespace ThScoreFileConverter.Models.Tests
             Assert.IsTrue(time.IsFrames);
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void TimeTest_Millisecond_Negative()
+        public void TimeTestNegativeMillisecond()
         {
             var time = new Time(-1, false);
+            Assert.Fail("Unreachable");
         }
 
         [TestMethod()]
-        public void TimeTest_Millisecond_Zero()
+        public void TimeTestZeroMillisecond()
         {
             var time = new Time(0, false);
 
@@ -93,7 +100,7 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [TestMethod()]
-        public void TimeTest_Millisecond_MillionAndOne()
+        public void TimeTestMillionAndOneMilliseconds()
         {
             var time = new Time(1000 * 1000 + 1, false);
 
@@ -106,7 +113,7 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [TestMethod()]
-        public void TimeTest_Time()
+        public void TimeTestComponents()
         {
             var time = new Time(12, 34, 56, 43);
 
@@ -118,15 +125,17 @@ namespace ThScoreFileConverter.Models.Tests
             Assert.IsTrue(time.IsFrames);
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void TimeTest_Time_NegativeHour()
+        public void TimeTestComponentsNegativeHour()
         {
             var time = new Time(-1, 34, 56, 43);
+            Assert.Fail("Unreachable");
         }
 
         [TestMethod()]
-        public void TimeTest_Time_ExceededHour()
+        public void TimeTestComponentsExceededHours()
         {
             var time = new Time(24, 34, 56, 43);
 
@@ -138,50 +147,62 @@ namespace ThScoreFileConverter.Models.Tests
             Assert.IsTrue(time.IsFrames);
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void TimeTest_Time_NegativeMinute()
+        public void TimeTestComponentsNegativeMinute()
         {
             var time = new Time(12, -1, 56, 43);
+            Assert.Fail("Unreachable");
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void TimeTest_Time_ExceededMinute()
+        public void TimeTestComponentsExceededMinutes()
         {
             var time = new Time(12, 60, 56, 43);
+            Assert.Fail("Unreachable");
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void TimeTest_Time_NegativeSecond()
+        public void TimeTestComponentsNegativeSecond()
         {
             var time = new Time(12, 34, -1, 43);
+            Assert.Fail("Unreachable");
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void TimeTest_Time_ExceededSecond()
+        public void TimeTestComponentsExceededSeconds()
         {
             var time = new Time(12, 34, 60, 43);
+            Assert.Fail("Unreachable");
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void TimeTest_Time_NegativeFrame()
+        public void TimeTestComponentsNegativeFrame()
         {
             var time = new Time(12, 34, 56, -1);
+            Assert.Fail("Unreachable");
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void TimeTest_Time_ExceededFrame()
+        public void TimeTestComponentsExceededFrames()
         {
             var time = new Time(12, 34, 56, 60);
+            Assert.Fail("Unreachable");
         }
 
         [TestMethod()]
-        public void TimeTest_TimeWithFrames()
+        public void TimeTestComponentsWithFrames()
         {
             var time = new Time(12, 34, 56, 43, true);
 
@@ -193,15 +214,17 @@ namespace ThScoreFileConverter.Models.Tests
             Assert.IsTrue(time.IsFrames);
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void TimeTest_TimeWithFrames_NegativeHour()
+        public void TimeTestComponentsWithFramesNegativeHour()
         {
             var time = new Time(-1, 34, 56, 43, true);
+            Assert.Fail("Unreachable");
         }
 
         [TestMethod()]
-        public void TimeTest_TimeWithFrames_ExceededHour()
+        public void TimeTestComponentsWithFramesExceededHours()
         {
             var time = new Time(24, 34, 56, 43, true);
 
@@ -213,50 +236,62 @@ namespace ThScoreFileConverter.Models.Tests
             Assert.IsTrue(time.IsFrames);
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void TimeTest_TimeWithFrames_NegativeMinute()
+        public void TimeTestComponentsWithFramesNegativeMinute()
         {
             var time = new Time(12, -1, 56, 43, true);
+            Assert.Fail("Unreachable");
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void TimeTest_TimeWithFrames_ExceededMinute()
+        public void TimeTestComponentsWithFramesExceededMinutes()
         {
             var time = new Time(12, 60, 56, 43, true);
+            Assert.Fail("Unreachable");
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void TimeTest_TimeWithFrames_NegativeSecond()
+        public void TimeTestComponentsWithFramesNegativeSecond()
         {
             var time = new Time(12, 34, -1, 43, true);
+            Assert.Fail("Unreachable");
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void TimeTest_TimeWithFrames_ExceededSecond()
+        public void TimeTestComponentsWithFramesExceededSeconds()
         {
             var time = new Time(12, 34, 60, 43, true);
+            Assert.Fail("Unreachable");
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void TimeTest_TimeWithFrames_NegativeFrame()
+        public void TimeTestComponentsWithFramesNegativeFrame()
         {
             var time = new Time(12, 34, 56, -1, true);
+            Assert.Fail("Unreachable");
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void TimeTest_TimeWithFrames_ExceededFrame()
+        public void TimeTestComponentsWithFramesExceededFrames()
         {
             var time = new Time(12, 34, 56, 60, true);
+            Assert.Fail("Unreachable");
         }
 
         [TestMethod()]
-        public void TimeTest_TimeWithMilliseconds()
+        public void TimeTestComponentsWithMilliseconds()
         {
             var time = new Time(12, 34, 56, 789, false);
 
@@ -268,15 +303,17 @@ namespace ThScoreFileConverter.Models.Tests
             Assert.IsFalse(time.IsFrames);
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void TimeTest_TimeWithMilliseconds_NegativeHour()
+        public void TimeTestComponentsWithMillisecondsNegativeHour()
         {
             var time = new Time(-1, 34, 56, 789, false);
+            Assert.Fail("Unreachable");
         }
 
         [TestMethod()]
-        public void TimeTest_TimeWithMilliseconds_ExceededHour()
+        public void TimeTestComponentsWithMillisecondsExceededHours()
         {
             var time = new Time(24, 34, 56, 789, false);
 
@@ -288,50 +325,62 @@ namespace ThScoreFileConverter.Models.Tests
             Assert.IsFalse(time.IsFrames);
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void TimeTest_TimeWithMilliseconds_NegativeMinute()
+        public void TimeTestComponentsWithMillisecondsNegativeMinute()
         {
             var time = new Time(12, -1, 56, 789, false);
+            Assert.Fail("Unreachable");
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void TimeTest_TimeWithMilliseconds_ExceededMinute()
+        public void TimeTestComponentsWithMillisecondsExceededMinutes()
         {
             var time = new Time(12, 60, 56, 789, false);
+            Assert.Fail("Unreachable");
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void TimeTest_TimeWithMilliseconds_NegativeSecond()
+        public void TimeTestComponentsWithMillisecondsNegativeSecond()
         {
             var time = new Time(12, 34, -1, 789, false);
+            Assert.Fail("Unreachable");
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void TimeTest_TimeWithMilliseconds_ExceededSecond()
+        public void TimeTestComponentsWithMillisecondsExceededSeconds()
         {
             var time = new Time(12, 34, 60, 789, false);
+            Assert.Fail("Unreachable");
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void TimeTest_TimeWithMilliseconds_NegativeMillisecond()
+        public void TimeTestComponentsWithMillisecondsNegativeMillisecond()
         {
             var time = new Time(12, 34, 56, -1, false);
+            Assert.Fail("Unreachable");
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void TimeTest_TimeWithMilliseconds_ExceededMillisecond()
+        public void TimeTestComponentsWithMillisecondsExceededMilliseconds()
         {
             var time = new Time(12, 34, 56, 1000, false);
+            Assert.Fail("Unreachable");
         }
 
         [TestMethod()]
-        public void ToStringTest_OneDigit()
+        public void ToStringTestOneDigit()
         {
             var time = new Time(1, 2, 3, 0);
 
@@ -339,7 +388,7 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [TestMethod()]
-        public void ToStringTest_TwoDigits()
+        public void ToStringTestTwoDigits()
         {
             var time = new Time(12, 34, 56, 0);
 
@@ -347,7 +396,7 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [TestMethod()]
-        public void ToLongStringTest_Frame_OneDigit()
+        public void ToLongStringTestOneDigitFrames()
         {
             var time = new Time(1, 2, 3, 4, true);
 
@@ -355,7 +404,7 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [TestMethod()]
-        public void ToLongStringTest_Frame_TwoDigits()
+        public void ToLongStringTestTwoDigitFrames()
         {
             var time = new Time(12, 34, 56, 43, true);
 
@@ -363,7 +412,7 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [TestMethod()]
-        public void ToLongStringTest_Millisecond_OneDigit()
+        public void ToLongStringTestOneDigitMilliseconds()
         {
             var time = new Time(1, 2, 3, 4, false);
 
@@ -371,7 +420,7 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [TestMethod()]
-        public void ToLongStringTest_Millisecond_TwoDigits()
+        public void ToLongStringTestTwoDigitMilliseconds()
         {
             var time = new Time(12, 34, 56, 78, false);
 
@@ -379,7 +428,7 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [TestMethod()]
-        public void ToLongStringTest_Millisecond_ThreeDigits()
+        public void ToLongStringTestThreeDigitMilliseconds()
         {
             var time = new Time(12, 34, 56, 789, false);
 

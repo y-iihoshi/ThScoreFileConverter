@@ -23,47 +23,51 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [TestMethod()]
-        public void ParseEnumTest_ValidName()
+        public void ParseEnumTestValidName()
         {
             Assert.AreEqual(DayOfWeek.Sunday, Utils.ParseEnum<DayOfWeek>("Sunday"));
         }
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentException))]
-        public void ParseEnumTest_InvalidName()
+        public void ParseEnumTestInvalidName()
         {
-            var value = Utils.ParseEnum<DayOfWeek>("Sun");
+            Utils.ParseEnum<DayOfWeek>("Sun");
+            Assert.Fail("Unreachable");
         }
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentException))]
-        public void ParseEnumTest_Empty()
+        public void ParseEnumTestEmpty()
         {
-            var value = Utils.ParseEnum<DayOfWeek>(string.Empty);
+            Utils.ParseEnum<DayOfWeek>(string.Empty);
+            Assert.Fail("Unreachable");
         }
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ParseEnumTest_Null()
+        public void ParseEnumTestNull()
         {
-            var value = Utils.ParseEnum<DayOfWeek>(null);
+            Utils.ParseEnum<DayOfWeek>(null);
+            Assert.Fail("Unreachable");
         }
 
         [TestMethod()]
-        public void ParseEnumTest_CaseSensitive_ValidName()
+        public void ParseEnumTestCaseSensitiveValidName()
         {
             Assert.AreEqual(DayOfWeek.Sunday, Utils.ParseEnum<DayOfWeek>("Sunday", false));
         }
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentException))]
-        public void ParseEnumTest_CaseSensitive_InvalidName()
+        public void ParseEnumTestCaseSensitiveInvalidName()
         {
-            var value = Utils.ParseEnum<DayOfWeek>("sunday", false);
+            Utils.ParseEnum<DayOfWeek>("sunday", false);
+            Assert.Fail("Unreachable");
         }
 
         [TestMethod()]
-        public void ParseEnumTest_CaseInsensitive_ValidName()
+        public void ParseEnumTestCaseInsensitiveValidName()
         {
             Assert.AreEqual(DayOfWeek.Sunday, Utils.ParseEnum<DayOfWeek>("Sunday", true));
             Assert.AreEqual(DayOfWeek.Sunday, Utils.ParseEnum<DayOfWeek>("sunday", true));
@@ -92,20 +96,21 @@ namespace ThScoreFileConverter.Models.Tests
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void ToNumberStringTest_Unset()
+        public void ToNumberStringTestUnset()
         {
             Settings.Instance.OutputNumberGroupSeparator = null;
-            var value = Utils.ToNumberString(1234);
+            Utils.ToNumberString(1234);
+            Assert.Fail("Unreachable");
         }
 
         [TestMethod()]
-        public void ToNumberStringTest_WithSeparator()
+        public void ToNumberStringTestWithSeparator()
         {
             Assert.AreEqual("12,345,678", Utils.ToNumberString(12345678, true));
         }
 
         [TestMethod()]
-        public void ToNumberStringTest_WithoutSeparator()
+        public void ToNumberStringTestWithoutSeparator()
         {
             Assert.AreEqual("12345678", Utils.ToNumberString(12345678, false));
         }
@@ -139,16 +144,18 @@ namespace ThScoreFileConverter.Models.Tests
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void ToZeroBasedTest_Negative()
+        public void ToZeroBasedTestNegative()
         {
-            var value = Utils.ToZeroBased(-1);
+            Utils.ToZeroBased(-1);
+            Assert.Fail("Unreachable");
         }
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void ToZeroBasedTest_Exceeded()
+        public void ToZeroBasedTestExceeded()
         {
-            var value = Utils.ToZeroBased(10);
+            Utils.ToZeroBased(10);
+            Assert.Fail("Unreachable");
         }
 
         [TestMethod()]
@@ -162,16 +169,18 @@ namespace ThScoreFileConverter.Models.Tests
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void ToOneBasedTest_Negative()
+        public void ToOneBasedTestNegative()
         {
-            var value = Utils.ToOneBased(-1);
+            Utils.ToOneBased(-1);
+            Assert.Fail("Unreachable");
         }
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void ToOneBasedTest_Exceeded()
+        public void ToOneBasedTestExceeded()
         {
-            var value = Utils.ToOneBased(10);
+            Utils.ToOneBased(10);
+            Assert.Fail("Unreachable");
         }
 
         [TestMethod()]
