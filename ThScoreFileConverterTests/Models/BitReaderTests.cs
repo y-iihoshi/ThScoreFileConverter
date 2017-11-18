@@ -31,13 +31,11 @@ namespace ThScoreFileConverter.Models.Tests
         [ExpectedException(typeof(ArgumentException))]
         public void BitReaderTestUnreadable()
         {
-            using (var stream = new MemoryStream())
+            var stream = new MemoryStream();
+            stream.Close();
+            using (var reader = new BitReader(stream))
             {
-                stream.Close();
-                using (var reader = new BitReader(stream))
-                {
-                    Assert.Fail("Unreachable");
-                }
+                Assert.Fail("Unreachable");
             }
         }
 
@@ -46,8 +44,8 @@ namespace ThScoreFileConverter.Models.Tests
         public void DisposeTest()
         {
             using (var stream = new MemoryStream())
-            using (var reader = new BitReader(stream))
             {
+                var reader = new BitReader(stream);
                 reader.Dispose();
                 reader.ReadBits(1);
                 Assert.Fail("Unreachable");

@@ -7,6 +7,12 @@ namespace ThScoreFileConverter.Models.Tests
     [TestClass()]
     public class LzssTests
     {
+        // "AbcAbc"
+        private readonly byte[] decompressed = new byte[]
+        {
+            0x41, 0x62, 0x63, 0x41, 0x62, 0x63
+        };
+
         // f <- ch -->
         // 1 0100_0001
         // 1 0110_0010
@@ -14,7 +20,7 @@ namespace ThScoreFileConverter.Models.Tests
         // f <--- offset ---> len>
         // 0 0_0000_0000_0001 0000
         // 0 0_0000_0000_0000
-        private byte[] compressed = new byte[]
+        private readonly byte[] compressed = new byte[]
         {
             0xA0, 0xD8, 0xAC, 0x60, 0x00, 0x80, 0x00, 0x00
         };
@@ -23,8 +29,12 @@ namespace ThScoreFileConverter.Models.Tests
         [ExpectedException(typeof(NotImplementedException))]
         public void CompressTest()
         {
-            Lzss.Compress(null, null);
-            Assert.Fail("Unreachable");
+            using (var input = new MemoryStream(this.decompressed))
+            using (var output = new MemoryStream())
+            {
+                Lzss.Compress(input, output);
+                Assert.Fail("Unreachable");
+            }
         }
 
         [TestMethod()]
@@ -35,24 +45,13 @@ namespace ThScoreFileConverter.Models.Tests
             {
                 // FIXME: Should be renamed
                 Lzss.Extract(input, output);
-                Assert.AreEqual(6, output.Length);
 
-                output.Seek(0, SeekOrigin.Begin);
-                Assert.AreEqual('A', (char)output.ReadByte());
-                Assert.AreEqual('b', (char)output.ReadByte());
-                Assert.AreEqual('c', (char)output.ReadByte());
-                Assert.AreEqual('A', (char)output.ReadByte());
-                Assert.AreEqual('b', (char)output.ReadByte());
-                Assert.AreEqual('c', (char)output.ReadByte());
+                var actual = new byte[output.Length];
+                output.Position = 0;
+                output.Read(actual, 0, actual.Length);
+
+                CollectionAssert.AreEqual(this.decompressed, actual);
             }
-        }
-
-        [TestMethod()]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void ExtractTestNullBoth()
-        {
-            Lzss.Extract(null, null);
-            Assert.Fail("Unreachable");
         }
 
         [TestMethod()]
@@ -63,6 +62,16 @@ namespace ThScoreFileConverter.Models.Tests
             {
                 Lzss.Extract(null, output);
                 Assert.Fail("Unreachable");
+            }
+        }
+
+        [TestMethod()]
+        public void ExtractTestNullStreamInput()
+        {
+            using (var output = new MemoryStream())
+            {
+                Lzss.Extract(Stream.Null, output);
+                Assert.AreEqual(0, output.Length);
             }
         }
 
@@ -82,9 +91,21 @@ namespace ThScoreFileConverter.Models.Tests
         [ExpectedException(typeof(ArgumentException))]
         public void ExtractTestUnreadableInput()
         {
-            using (var input = new MemoryStream())
+            using (var input = new UnreadableMemoryStream())
             using (var output = new MemoryStream())
             {
+                Lzss.Extract(input, output);
+                Assert.Fail("Unreachable");
+            }
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ExtractTestClosedInput()
+        {
+            using (var output = new MemoryStream())
+            {
+                var input = new MemoryStream(this.compressed);
                 input.Close();
                 Lzss.Extract(input, output);
                 Assert.Fail("Unreachable");
@@ -93,13 +114,33 @@ namespace ThScoreFileConverter.Models.Tests
 
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void ExtractTestInvalidInput()
+        public void ExtractTestShortenedInput()
         {
             using (var input = new MemoryStream(this.compressed, 0, this.compressed.Length - 1))
             using (var output = new MemoryStream())
             {
                 Lzss.Extract(input, output);
                 Assert.Fail("Unreachable");
+            }
+        }
+
+        [TestMethod()]
+        public void ExtractTestInvalidInput()
+        {
+            var invalid = new byte[this.compressed.Length];
+            this.compressed.CopyTo(invalid, 0);
+            invalid[invalid.Length - 1] ^= 0x80;
+
+            using (var input = new MemoryStream(invalid))
+            using (var output = new MemoryStream())
+            {
+                Lzss.Extract(input, output);
+
+                var actual = new byte[output.Length];
+                output.Position = 0;
+                output.Read(actual, 0, actual.Length);
+
+                CollectionAssert.AreNotEqual(this.decompressed, actual);
             }
         }
 
@@ -121,6 +162,19 @@ namespace ThScoreFileConverter.Models.Tests
             using (var input = new MemoryStream(this.compressed))
             using (var output = new MemoryStream(new byte[] { }, false))
             {
+                Lzss.Extract(input, output);
+                Assert.Fail("Unreachable");
+            }
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(ObjectDisposedException))]
+        public void ExtractTestClosedOutput()
+        {
+            using (var input = new MemoryStream(this.compressed))
+            {
+                var output = new MemoryStream();
+                output.Close();
                 Lzss.Extract(input, output);
                 Assert.Fail("Unreachable");
             }
