@@ -61,6 +61,8 @@
     <Compile Include="Models\ThConverterTests.cs" />
     <Compile Include="Models\LzssTests.cs" />
     <Compile Include="Models\ThCryptTests.cs" />
+    <Compile Include="Models\ExceptionOccurredEventArgsTests.cs" />
+    <Compile Include="Models\ThConverterEventArgsTests.cs" />
     <Compile Include="Models\UnreadableMemoryStream.cs" />
     <Compile Include="Models\UtilsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
