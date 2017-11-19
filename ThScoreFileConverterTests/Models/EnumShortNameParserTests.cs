@@ -3,14 +3,7 @@ using System;
 
 namespace ThScoreFileConverter.Models.Tests
 {
-    public enum Level
-    {
-        [EnumAltName("E")] Easy,
-        [EnumAltName("N")] Normal,
-        [EnumAltName("H")] Hard,
-        [EnumAltName("L")] Lunatic,
-        [EnumAltName("X")] Extra
-    }
+    using Level = ThConverter.Level;
 
     [TestClass()]
     public class EnumShortNameParserTests
