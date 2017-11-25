@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
 namespace ThScoreFileConverter.Models.Tests
@@ -10,10 +11,18 @@ namespace ThScoreFileConverter.Models.Tests
         [TestMethod()]
         public void BitReaderTest()
         {
-            using (var stream = new MemoryStream())
-            using (var reader = new BitReader(stream))
+            MemoryStream stream = null;
+            try
             {
-                // do nothing
+                stream = new MemoryStream();
+                using (var reader = new BitReader(stream))
+                {
+                    stream = null;
+                }
+            }
+            finally
+            {
+                stream?.Dispose();
             }
         }
 
@@ -27,6 +36,7 @@ namespace ThScoreFileConverter.Models.Tests
             }
         }
 
+        [SuppressMessage("Microsoft.Usage", "CA2202:DoNotDisposeObjectsMultipleTimes")]
         [TestMethod()]
         [ExpectedException(typeof(ArgumentException))]
         public void BitReaderTestUnreadable()
@@ -43,77 +53,127 @@ namespace ThScoreFileConverter.Models.Tests
         [ExpectedException(typeof(ObjectDisposedException))]
         public void DisposeTest()
         {
-            using (var stream = new MemoryStream())
+            MemoryStream stream = null;
+            try
             {
+                stream = new MemoryStream();
                 var reader = new BitReader(stream);
+                stream = null;
+
                 reader.Dispose();
                 reader.ReadBits(1);
                 Assert.Fail("Unreachable");
+            }
+            finally
+            {
+                stream?.Dispose();
             }
         }
 
         [TestMethod()]
         public void ReadBitsTestOneBit()
         {
-            using (var stream = new MemoryStream(new byte[] { 0x53 }))
-            using (var reader = new BitReader(stream))
+            MemoryStream stream = null;
+            try
             {
-                Assert.AreEqual(0x0, reader.ReadBits(1));
-                Assert.AreEqual(0x1, reader.ReadBits(1));
-                Assert.AreEqual(0x0, reader.ReadBits(1));
-                Assert.AreEqual(0x1, reader.ReadBits(1));
+                stream = new MemoryStream(new byte[] { 0x53 });
+                using (var reader = new BitReader(stream))
+                {
+                    stream = null;
 
-                Assert.AreEqual(0x0, reader.ReadBits(1));
-                Assert.AreEqual(0x0, reader.ReadBits(1));
-                Assert.AreEqual(0x1, reader.ReadBits(1));
-                Assert.AreEqual(0x1, reader.ReadBits(1));
+                    Assert.AreEqual(0x0, reader.ReadBits(1));
+                    Assert.AreEqual(0x1, reader.ReadBits(1));
+                    Assert.AreEqual(0x0, reader.ReadBits(1));
+                    Assert.AreEqual(0x1, reader.ReadBits(1));
+
+                    Assert.AreEqual(0x0, reader.ReadBits(1));
+                    Assert.AreEqual(0x0, reader.ReadBits(1));
+                    Assert.AreEqual(0x1, reader.ReadBits(1));
+                    Assert.AreEqual(0x1, reader.ReadBits(1));
+                }
+            }
+            finally
+            {
+                stream?.Dispose();
             }
         }
 
         [TestMethod()]
         public void ReadBitsTestZeroBit()
         {
-            using (var stream = new MemoryStream(new byte[] { 0xFF }))
-            using (var reader = new BitReader(stream))
+            MemoryStream stream = null;
+            try
             {
-                Assert.AreEqual(0x0, reader.ReadBits(0));
-                Assert.AreEqual(0x0, reader.ReadBits(0));
-                Assert.AreEqual(0x0, reader.ReadBits(0));
-                Assert.AreEqual(0x0, reader.ReadBits(0));
+                stream = new MemoryStream(new byte[] { 0xFF });
+                using (var reader = new BitReader(stream))
+                {
+                    stream = null;
 
-                Assert.AreEqual(0x0, reader.ReadBits(0));
-                Assert.AreEqual(0x0, reader.ReadBits(0));
-                Assert.AreEqual(0x0, reader.ReadBits(0));
-                Assert.AreEqual(0x0, reader.ReadBits(0));
+                    Assert.AreEqual(0x0, reader.ReadBits(0));
+                    Assert.AreEqual(0x0, reader.ReadBits(0));
+                    Assert.AreEqual(0x0, reader.ReadBits(0));
+                    Assert.AreEqual(0x0, reader.ReadBits(0));
 
-                Assert.AreEqual(0xFF, reader.ReadBits(8));
+                    Assert.AreEqual(0x0, reader.ReadBits(0));
+                    Assert.AreEqual(0x0, reader.ReadBits(0));
+                    Assert.AreEqual(0x0, reader.ReadBits(0));
+                    Assert.AreEqual(0x0, reader.ReadBits(0));
+
+                    Assert.AreEqual(0xFF, reader.ReadBits(8));
+                }
+            }
+            finally
+            {
+                stream?.Dispose();
             }
         }
 
         [TestMethod()]
         public void ReadBitsTestMultiBits()
         {
-            // var buffer = new byte[2] { 0b_0101_0011, 0b_1100_1010 };
-            var buffer = new byte[2] { 0x53, 0xCA };
-            using (var stream = new MemoryStream(buffer))
-            using (var reader = new BitReader(stream))
+            MemoryStream stream = null;
+            try
             {
-                Assert.AreEqual(0x1, reader.ReadBits(2));
-                Assert.AreEqual(0x2, reader.ReadBits(3));
-                Assert.AreEqual(0x3C, reader.ReadBits(7));
-                Assert.AreEqual(0xA, reader.ReadBits(4));
+                // var buffer = new byte[2] { 0b_0101_0011, 0b_1100_1010 };
+                var buffer = new byte[2] { 0x53, 0xCA };
+
+                stream = new MemoryStream(buffer);
+                using (var reader = new BitReader(stream))
+                {
+                    stream = null;
+
+                    Assert.AreEqual(0x1, reader.ReadBits(2));
+                    Assert.AreEqual(0x2, reader.ReadBits(3));
+                    Assert.AreEqual(0x3C, reader.ReadBits(7));
+                    Assert.AreEqual(0xA, reader.ReadBits(4));
+                }
+            }
+            finally
+            {
+                stream?.Dispose();
             }
         }
 
         [TestMethod()]
         public void ReadBitsTestMultiBytes()
         {
-            var buffer = new byte[6] { 0x53, 0xCA, 0xAC, 0x35, 0x5A, 0xA5 };
-            using (var stream = new MemoryStream(buffer))
-            using (var reader = new BitReader(stream))
+            MemoryStream stream = null;
+            try
             {
-                Assert.AreEqual(0x53CA, reader.ReadBits(16));
-                Assert.AreEqual(0xAC355AA5, reader.ReadBits(32));
+                var buffer = new byte[6] { 0x53, 0xCA, 0xAC, 0x35, 0x5A, 0xA5 };
+
+                stream = new MemoryStream(buffer);
+                using (var reader = new BitReader(stream))
+                {
+                    stream = null;
+
+                    Assert.AreEqual(0x53CA, reader.ReadBits(16));
+                    Assert.AreEqual(0xAC355AA5, reader.ReadBits(32));
+                }
+            }
+            finally
+            {
+                stream?.Dispose();
             }
         }
 
@@ -121,11 +181,21 @@ namespace ThScoreFileConverter.Models.Tests
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ReadBitsTestNegativeNumBits()
         {
-            using (var stream = new MemoryStream(new byte[] { 0x53 }))
-            using (var reader = new BitReader(stream))
+            MemoryStream stream = null;
+            try
             {
-                reader.ReadBits(-1);
-                Assert.Fail("Unreachable");
+                stream = new MemoryStream(new byte[] { 0x53 });
+                using (var reader = new BitReader(stream))
+                {
+                    stream = null;
+
+                    reader.ReadBits(-1);
+                    Assert.Fail("Unreachable");
+                }
+            }
+            finally
+            {
+                stream?.Dispose();
             }
         }
 
@@ -133,12 +203,23 @@ namespace ThScoreFileConverter.Models.Tests
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ReadBitsTestExceededNumBits()
         {
-            var buffer = new byte[6] { 0x53, 0xCA, 0xAC, 0x35, 0x5A, 0xA5 };
-            using (var stream = new MemoryStream(buffer))
-            using (var reader = new BitReader(stream))
+            MemoryStream stream = null;
+            try
             {
-                reader.ReadBits(33);
-                Assert.Fail("Unreachable");
+                var buffer = new byte[6] { 0x53, 0xCA, 0xAC, 0x35, 0x5A, 0xA5 };
+
+                stream = new MemoryStream(buffer);
+                using (var reader = new BitReader(stream))
+                {
+                    stream = null;
+
+                    reader.ReadBits(33);
+                    Assert.Fail("Unreachable");
+                }
+            }
+            finally
+            {
+                stream?.Dispose();
             }
         }
 
@@ -146,13 +227,23 @@ namespace ThScoreFileConverter.Models.Tests
         [ExpectedException(typeof(EndOfStreamException))]
         public void ReadBitsTestEndOfStream()
         {
-            using (var stream = new MemoryStream(new byte[] { 0x53 }))
-            using (var reader = new BitReader(stream))
+            MemoryStream stream = null;
+            try
             {
-                Assert.AreEqual(0x53, reader.ReadBits(8));
+                stream = new MemoryStream(new byte[] { 0x53 });
+                using (var reader = new BitReader(stream))
+                {
+                    stream = null;
 
-                reader.ReadBits(1);
-                Assert.Fail("Unreachable");
+                    Assert.AreEqual(0x53, reader.ReadBits(8));
+
+                    reader.ReadBits(1);
+                    Assert.Fail("Unreachable");
+                }
+            }
+            finally
+            {
+                stream?.Dispose();
             }
         }
     }
