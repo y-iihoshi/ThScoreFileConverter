@@ -10,8 +10,8 @@ namespace ThScoreFileConverter.Models.Tests
         {
             var pobj = new PrivateObject(typeof(Pair<int, uint>), 1, 2u);
 
-            Assert.AreEqual(1, pobj.GetProperty("First"));
-            Assert.AreEqual(2u, pobj.GetProperty("Second"));
+            Assert.AreEqual(1, pobj.GetProperty("First") as int?);
+            Assert.AreEqual(2u, pobj.GetProperty("Second") as uint?);
         }
 
         [TestMethod()]
