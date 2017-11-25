@@ -1,129 +1,16 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.ExceptionServices;
-using System.Text;
 
 namespace ThScoreFileConverter.Models.Tests
 {
-    public sealed class Th095ChapterWrapper<TParent>
-    {
-        private static Type ParentType = typeof(TParent);
-        private static string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
-        private static string TypeNameToTest = ParentType.FullName + "+Chapter";
-
-        private PrivateObject pobj = null;
-
-        private Th095ChapterWrapper(params object[] args)
-        {
-            this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, args);
-        }
-
-        public Th095ChapterWrapper()
-            : this(new object[] { })
-        {
-        }
-
-        public Th095ChapterWrapper(Th095ChapterWrapper<TParent> chapter)
-            : this(new object[] { chapter?.Target })
-        {
-        }
-
-        public object Target => this.pobj.Target;
-
-        public string Signature
-            => this.pobj.GetProperty(nameof(this.Signature)) as string;
-        public ushort? Version
-            => this.pobj.GetProperty(nameof(this.Version)) as ushort?;
-        public int? Size
-            => this.pobj.GetProperty(nameof(this.Size)) as int?;
-        public uint? Checksum
-            => this.pobj.GetProperty(nameof(this.Checksum)) as uint?;
-        public bool? IsValid
-            => this.pobj.GetProperty(nameof(this.IsValid)) as bool?;
-        public IReadOnlyCollection<byte> Data
-            => this.pobj.GetProperty(nameof(this.Data)) as byte[];
-
-        public void ReadFrom(BinaryReader reader)
-            => this.pobj.Invoke(
-                nameof(this.ReadFrom),
-                new object[] { reader },
-                CultureInfo.InvariantCulture);
-    }
-
     [TestClass()]
     public class Th095ChapterTests
     {
-        public static byte[] MakeByteArray(
-            string signature,
-            ushort version,
-            int size,
-            uint checksum,
-            byte[] data)
-        {
-            if (signature == null)
-                throw new ArgumentNullException(nameof(signature));
-
-            if (data == null)
-                throw new ArgumentNullException(nameof(data));
-
-            byte[] array = null;
-
-            MemoryStream stream = null;
-            try
-            {
-                stream = new MemoryStream();
-                using (var writer = new BinaryWriter(stream, Encoding.Default))
-                {
-                    stream = null;
-
-                    writer.Write(signature.ToCharArray());
-                    writer.Write(version);
-                    writer.Write(size);
-                    writer.Write(checksum);
-                    writer.Write(data);
-                    writer.Flush();
-
-                    array = new byte[writer.BaseStream.Length];
-                    writer.BaseStream.Position = 0;
-                    writer.BaseStream.Read(array, 0, array.Length);
-                }
-            }
-            finally
-            {
-                stream?.Dispose();
-            }
-
-            return array;
-        }
-
-        public static Th095ChapterWrapper<TParent> Create<TParent>(byte[] array)
-        {
-            var chapter = new Th095ChapterWrapper<TParent>();
-
-            MemoryStream stream = null;
-            try
-            {
-                stream = new MemoryStream(array);
-                using (var reader = new BinaryReader(stream))
-                {
-                    stream = null;
-                    chapter.ReadFrom(reader);
-                }
-            }
-            finally
-            {
-                stream?.Dispose();
-            }
-
-            return chapter;
-        }
-
         public static void Validate<TParent>(
             Th095ChapterWrapper<TParent> chapter,
             string signature,
@@ -202,8 +89,8 @@ namespace ThScoreFileConverter.Models.Tests
                 var checksum = 0xC16CBAA7u;
                 var data = new byte[] { 0x56, 0x78, 0x9A, 0xBC };
 
-                var chapter = Create<TParent>(
-                    MakeByteArray(signature, version, size, checksum, data));
+                var chapter = Th095ChapterWrapper<TParent>.Create(
+                    TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
 
                 Validate(chapter, signature, version, size, checksum, data, true);
             }
@@ -247,7 +134,8 @@ namespace ThScoreFileConverter.Models.Tests
 
                 // The actual value of the Size property becomes negative,
                 // so ArgumentOutOfRangeException will be thrown.
-                Create<TParent>(MakeByteArray(signature, version, size, checksum, data));
+                Th095ChapterWrapper<TParent>.Create(
+                    TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
 
                 Assert.Fail("Unreachable");
             }
@@ -275,7 +163,8 @@ namespace ThScoreFileConverter.Models.Tests
 
                 // The actual value of the Size property becomes negative,
                 // so ArgumentOutOfRangeException will be thrown.
-                Create<TParent>(MakeByteArray(signature, version, size, checksum, data));
+                Th095ChapterWrapper<TParent>.Create(
+                    TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
 
                 Assert.Fail("Unreachable");
             }
@@ -303,7 +192,8 @@ namespace ThScoreFileConverter.Models.Tests
 
                 // The actual value of the Size property becomes too large,
                 // so EndOfStreamException will be thrown.
-                Create<TParent>(MakeByteArray(signature, version, size, checksum, data));
+                Th095ChapterWrapper<TParent>.Create(
+                    TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
 
                 Assert.Fail("Unreachable");
             }
@@ -325,7 +215,8 @@ namespace ThScoreFileConverter.Models.Tests
                 var checksum = 0xC16CBAA7u;
                 var data = new byte[] { 0x56, 0x78, 0x9A, 0xBC };
 
-                Create<TParent>(MakeByteArray(signature, version, size, checksum, data));
+                Th095ChapterWrapper<TParent>.Create(
+                    TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
 
                 Assert.Fail("Unreached");
             }
@@ -347,7 +238,8 @@ namespace ThScoreFileConverter.Models.Tests
                 var checksum = 0xC16CBAA7u;
                 var data = new byte[] { 0x56, 0x78, 0x9A, 0xBC };
 
-                Create<TParent>(MakeByteArray(signature, version, size, checksum, data));
+                Th095ChapterWrapper<TParent>.Create(
+                    TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
 
                 Assert.Fail("Unreached");
             }
@@ -369,8 +261,8 @@ namespace ThScoreFileConverter.Models.Tests
                 var checksum = 0xC16CBAA7u;
                 var data = new byte[] { 0x56, 0x78, 0x9A, 0xBC };
 
-                var chapter = Create<TParent>(
-                    MakeByteArray(signature, version, size, checksum, data));
+                var chapter = Th095ChapterWrapper<TParent>.Create(
+                    TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
 
                 Assert.AreEqual(signature, chapter.Signature);
                 Assert.AreEqual(version, chapter.Version);
@@ -397,7 +289,8 @@ namespace ThScoreFileConverter.Models.Tests
                 var checksum = 0xC16CBAA7u;
                 var data = new byte[] { 0x56, 0x78, 0x9A, 0xBC };
 
-                Create<TParent>(MakeByteArray(signature, version, size, checksum, data));
+                Th095ChapterWrapper<TParent>.Create(
+                    TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
 
                 Assert.Fail("Unreachable");
             }
@@ -419,8 +312,8 @@ namespace ThScoreFileConverter.Models.Tests
                 var checksum = 0xC16CBAA6u;
                 var data = new byte[] { 0x56, 0x78, 0x9A, 0xBC };
 
-                var chapter = Create<TParent>(
-                    MakeByteArray(signature, version, size, checksum, data));
+                var chapter = Th095ChapterWrapper<TParent>.Create(
+                    TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
 
                 Assert.AreEqual(signature, chapter.Signature);
                 Assert.AreEqual(version, chapter.Version);
@@ -447,8 +340,8 @@ namespace ThScoreFileConverter.Models.Tests
                 var checksum = 0x04D2424Du;
                 var data = new byte[] { };
 
-                var chapter = Create<TParent>(
-                    MakeByteArray(signature, version, size, checksum, data));
+                var chapter = Th095ChapterWrapper<TParent>.Create(
+                    TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
 
                 Assert.AreEqual(signature, chapter.Signature);
                 Assert.AreEqual(version, chapter.Version);
@@ -475,8 +368,8 @@ namespace ThScoreFileConverter.Models.Tests
                 var checksum = 0x056CBAA7u;
                 var data = new byte[] { 0x56, 0x78, 0x9A };
 
-                var chapter = Create<TParent>(
-                    MakeByteArray(signature, version, size, checksum, data));
+                var chapter = Th095ChapterWrapper<TParent>.Create(
+                    TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
 
                 Assert.AreEqual(signature, chapter.Signature);
                 Assert.AreEqual(version, chapter.Version);

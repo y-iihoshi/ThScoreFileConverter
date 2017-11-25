@@ -60,9 +60,13 @@
     <Compile Include="Models\LzssTests.cs" />
     <Compile Include="Models\PairTests.cs" />
     <Compile Include="Models\SpellCardInfoTests.cs" />
+    <Compile Include="Models\TestUtils.cs" />
     <Compile Include="Models\Th06ChapterTests.cs" />
+    <Compile Include="Models\Th06ChapterWrapper.cs" />
     <Compile Include="Models\Th095ChapterTests.cs" />
+    <Compile Include="Models\Th095ChapterWrapper.cs" />
     <Compile Include="Models\Th10ChapterTests.cs" />
+    <Compile Include="Models\Th10ChapterWrapper.cs" />
     <Compile Include="Models\ThConverterEventArgsTests.cs" />
     <Compile Include="Models\ThConverterTests.cs" />
     <Compile Include="Models\ThCryptTests.cs" />
