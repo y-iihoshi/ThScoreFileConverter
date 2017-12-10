@@ -385,6 +385,8 @@ namespace ThScoreFileConverter.Models.Tests
             }
         }
 
+        #region Th10
+
         [TestMethod()]
         public void Th10ChapterTest()
         {
@@ -482,6 +484,10 @@ namespace ThScoreFileConverter.Models.Tests
         {
             ReadFromTestMisalignedDataHelper<Th10Converter>();
         }
+
+        #endregion
+
+        #region Th11
 
         [TestMethod()]
         public void Th11ChapterTest()
@@ -581,6 +587,10 @@ namespace ThScoreFileConverter.Models.Tests
             ReadFromTestMisalignedDataHelper<Th11Converter>();
         }
 
+        #endregion
+
+        #region Th12
+
         [TestMethod()]
         public void Th12ChapterTest()
         {
@@ -678,6 +688,10 @@ namespace ThScoreFileConverter.Models.Tests
         {
             ReadFromTestMisalignedDataHelper<Th12Converter>();
         }
+
+        #endregion
+
+        #region Th128
 
         [TestMethod()]
         public void Th128ChapterTest()
@@ -777,6 +791,10 @@ namespace ThScoreFileConverter.Models.Tests
             ReadFromTestMisalignedDataHelper<Th128Converter>();
         }
 
+        #endregion
+
+        #region Th13
+
         [TestMethod()]
         public void Th13ChapterTest()
         {
@@ -874,6 +892,10 @@ namespace ThScoreFileConverter.Models.Tests
         {
             ReadFromTestMisalignedDataHelper<Th13Converter>();
         }
+
+        #endregion
+
+        #region Th14
 
         [TestMethod()]
         public void Th14ChapterTest()
@@ -973,6 +995,10 @@ namespace ThScoreFileConverter.Models.Tests
             ReadFromTestMisalignedDataHelper<Th14Converter>();
         }
 
+        #endregion
+
+        #region Th143
+
         [TestMethod()]
         public void Th143ChapterTest()
         {
@@ -1070,6 +1096,10 @@ namespace ThScoreFileConverter.Models.Tests
         {
             ReadFromTestMisalignedDataHelper<Th143Converter>();
         }
+
+        #endregion
+
+        #region Th15
 
         [TestMethod()]
         public void Th15ChapterTest()
@@ -1169,6 +1199,10 @@ namespace ThScoreFileConverter.Models.Tests
             ReadFromTestMisalignedDataHelper<Th15Converter>();
         }
 
+        #endregion
+
+        #region Th16
+
         [TestMethod()]
         public void Th16ChapterTest()
         {
@@ -1266,5 +1300,7 @@ namespace ThScoreFileConverter.Models.Tests
         {
             ReadFromTestMisalignedDataHelper<Th16Converter>();
         }
+
+        #endregion
     }
 }

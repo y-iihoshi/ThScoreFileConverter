@@ -63,8 +63,12 @@
     <Compile Include="Models\TestUtils.cs" />
     <Compile Include="Models\Th06ChapterTests.cs" />
     <Compile Include="Models\Th06ChapterWrapper.cs" />
+    <Compile Include="Models\Th06HeaderTests.cs" />
+    <Compile Include="Models\Th06HeaderWrapper.cs" />
     <Compile Include="Models\Th095ChapterTests.cs" />
     <Compile Include="Models\Th095ChapterWrapper.cs" />
+    <Compile Include="Models\Th095HeaderTests.cs" />
+    <Compile Include="Models\Th095HeaderWrapper.cs" />
     <Compile Include="Models\Th10ChapterTests.cs" />
     <Compile Include="Models\Th10ChapterWrapper.cs" />
     <Compile Include="Models\ThConverterEventArgsTests.cs" />

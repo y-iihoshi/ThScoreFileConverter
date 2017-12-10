@@ -421,6 +421,8 @@ namespace ThScoreFileConverter.Models.Tests
             }
         }
 
+        #region Th06
+
         [TestMethod()]
         public void Th06ChapterTest()
         {
@@ -537,6 +539,10 @@ namespace ThScoreFileConverter.Models.Tests
         {
             ReadFromTestMisalignedDataHelper<Th06Converter>();
         }
+
+        #endregion
+
+        #region Th07
 
         [TestMethod()]
         public void Th07ChapterTest()
@@ -655,6 +661,10 @@ namespace ThScoreFileConverter.Models.Tests
             ReadFromTestMisalignedDataHelper<Th07Converter>();
         }
 
+        #endregion
+
+        #region Th08
+
         [TestMethod()]
         public void Th08ChapterTest()
         {
@@ -772,6 +782,10 @@ namespace ThScoreFileConverter.Models.Tests
             ReadFromTestMisalignedDataHelper<Th08Converter>();
         }
 
+        #endregion
+
+        #region Th09
+
         [TestMethod()]
         public void Th09ChapterTest()
         {
@@ -888,5 +902,7 @@ namespace ThScoreFileConverter.Models.Tests
         {
             ReadFromTestMisalignedDataHelper<Th09Converter>();
         }
+
+        #endregion
     }
 }
