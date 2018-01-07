@@ -11,7 +11,7 @@
     <OutputPath>.</OutputPath>
     <Name>ManualGenerator</Name>
     <RootNamespace>ManualGenerator</RootNamespace>
-    <InterpreterId>Global|PythonCore|3.5</InterpreterId>
+    <InterpreterId>Global|PythonCore|3.6</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -62,7 +62,7 @@
     <Folder Include="_templates\" />
   </ItemGroup>
   <ItemGroup>
-    <InterpreterReference Include="Global|PythonCore|3.5" />
+    <InterpreterReference Include="Global|PythonCore|3.6" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -72,21 +72,21 @@
        Visual Studio and specify your pre- and post-build commands in
        the BeforeBuild and AfterBuild targets below. -->
   <Target Name="CoreCompile">
-    <Exec Command="(set SPHINXBUILD=$(PrefixPath)\python -msphinx) &amp; make.bat html" IgnoreExitCode="False" />
+    <Exec Command="(set SPHINXBUILD=$(InterpreterPath) -msphinx) &amp; make.bat html" IgnoreExitCode="False" />
   </Target>
   <Target Name="CoreClean">
-    <Exec Command="(set SPHINXBUILD=$(PrefixPath)\python -msphinx) &amp; make.bat clean" IgnoreExitCode="False" />
+    <Exec Command="(set SPHINXBUILD=$(InterpreterPath) -msphinx) &amp; make.bat clean" IgnoreExitCode="False" />
   </Target>
   <Target Name="BeforeBuild">
     <ResolveEnvironment>
-      <Output TaskParameter="PrefixPath" PropertyName="PrefixPath" />
+      <Output TaskParameter="InterpreterPath" PropertyName="InterpreterPath" />
     </ResolveEnvironment>
   </Target>
   <Target Name="AfterBuild">
   </Target>
   <Target Name="BeforeClean">
     <ResolveEnvironment>
-      <Output TaskParameter="PrefixPath" PropertyName="PrefixPath" />
+      <Output TaskParameter="InterpreterPath" PropertyName="InterpreterPath" />
     </ResolveEnvironment>
   </Target>
   <PropertyGroup>
