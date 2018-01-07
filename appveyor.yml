@@ -3,11 +3,11 @@ branches:
   only:
     - master
 
-image: Visual Studio 2015
+image: Visual Studio 2017
 configuration:
   - Release
 environment:
-  PYTHON: C:\Python35-x64
+  PYTHON: C:\Python36-x64
 install:
   - cmd: >-
       %PYTHON%\python -m pip install -U pip
