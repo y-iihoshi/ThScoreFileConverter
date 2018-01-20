@@ -389,101 +389,71 @@ namespace ThScoreFileConverter.Models.Tests
 
         [TestMethod()]
         public void Th095ChapterTest()
-        {
-            ChapterTestHelper<Th095Converter>();
-        }
+            => ChapterTestHelper<Th095Converter>();
 
         [TestMethod()]
         public void Th095ChapterTestCopy()
-        {
-            ChapterTestCopyHelper<Th095Converter>();
-        }
+            => ChapterTestCopyHelper<Th095Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th095ChapterTestNull()
-        {
-            ChapterTestNullHelper<Th095Converter>();
-        }
+            => ChapterTestNullHelper<Th095Converter>();
 
         [TestMethod()]
         public void Th095ChapterReadFromTest()
-        {
-            ReadFromTestHelper<Th095Converter>();
-        }
+            => ReadFromTestHelper<Th095Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th095ChapterReadFromTestNull()
-        {
-            ReadFromTestNullHelper<Th095Converter>();
-        }
+            => ReadFromTestNullHelper<Th095Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th095ChapterReadFromTestEmptySignature()
-        {
-            ReadFromTestEmptySignatureHelper<Th095Converter>();
-        }
+            => ReadFromTestEmptySignatureHelper<Th095Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th095ChapterReadFromTestShortenedSignature()
-        {
-            ReadFromTestShortenedSignatureHelper<Th095Converter>();
-        }
+            => ReadFromTestShortenedSignatureHelper<Th095Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th095ChapterReadFromTestExceededSignature()
-        {
-            ReadFromTestExceededSignatureHelper<Th095Converter>();
-        }
+            => ReadFromTestExceededSignatureHelper<Th095Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th095ChapterReadFromTestNegativeSize()
-        {
-            ReadFromTestNegativeSizeHelper<Th095Converter>();
-        }
+            => ReadFromTestNegativeSizeHelper<Th095Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th095ChapterReadFromTestZeroSize()
-        {
-            ReadFromTestZeroSizeHelper<Th095Converter>();
-        }
+            => ReadFromTestZeroSizeHelper<Th095Converter>();
 
         [TestMethod()]
         public void Th095ChapterReadFromTestShortenedSize()
-        {
-            ReadFromTestShortenedSizeHelper<Th095Converter>();
-        }
+            => ReadFromTestShortenedSizeHelper<Th095Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th095ChapterReadFromTestExceededSize()
-        {
-            ReadFromTestExceededSizeHelper<Th095Converter>();
-        }
+            => ReadFromTestExceededSizeHelper<Th095Converter>();
 
         [TestMethod()]
         public void Th095ChapterReadFromTestInvalidChecksum()
-        {
-            ReadFromTestInvalidChecksumHelper<Th095Converter>();
-        }
+            => ReadFromTestInvalidChecksumHelper<Th095Converter>();
 
         [TestMethod()]
         public void Th095ChapterReadFromTestEmptyData()
-        {
-            ReadFromTestEmptyDataHelper<Th095Converter>();
-        }
+            => ReadFromTestEmptyDataHelper<Th095Converter>();
 
         [TestMethod()]
         public void Th095ChapterReadFromTestMisalignedData()
-        {
-            ReadFromTestMisalignedDataHelper<Th095Converter>();
-        }
+            => ReadFromTestMisalignedDataHelper<Th095Converter>();
 
         #endregion
 
@@ -491,101 +461,71 @@ namespace ThScoreFileConverter.Models.Tests
 
         [TestMethod()]
         public void Th125ChapterTest()
-        {
-            ChapterTestHelper<Th125Converter>();
-        }
+            => ChapterTestHelper<Th125Converter>();
 
         [TestMethod()]
         public void Th125ChapterTestCopy()
-        {
-            ChapterTestCopyHelper<Th125Converter>();
-        }
+            => ChapterTestCopyHelper<Th125Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th125ChapterTestNull()
-        {
-            ChapterTestNullHelper<Th125Converter>();
-        }
+            => ChapterTestNullHelper<Th125Converter>();
 
         [TestMethod()]
         public void Th125ChapterReadFromTest()
-        {
-            ReadFromTestHelper<Th125Converter>();
-        }
+            => ReadFromTestHelper<Th125Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th125ChapterReadFromTestNull()
-        {
-            ReadFromTestNullHelper<Th125Converter>();
-        }
+            => ReadFromTestNullHelper<Th125Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th125ChapterReadFromTestEmptySignature()
-        {
-            ReadFromTestEmptySignatureHelper<Th125Converter>();
-        }
+            => ReadFromTestEmptySignatureHelper<Th125Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th125ChapterReadFromTestShortenedSignature()
-        {
-            ReadFromTestShortenedSignatureHelper<Th125Converter>();
-        }
+            => ReadFromTestShortenedSignatureHelper<Th125Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th125ChapterReadFromTestExceededSignature()
-        {
-            ReadFromTestExceededSignatureHelper<Th125Converter>();
-        }
+            => ReadFromTestExceededSignatureHelper<Th125Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th125ChapterReadFromTestNegativeSize()
-        {
-            ReadFromTestNegativeSizeHelper<Th125Converter>();
-        }
+            => ReadFromTestNegativeSizeHelper<Th125Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th125ChapterReadFromTestZeroSize()
-        {
-            ReadFromTestZeroSizeHelper<Th125Converter>();
-        }
+            => ReadFromTestZeroSizeHelper<Th125Converter>();
 
         [TestMethod()]
         public void Th125ChapterReadFromTestShortenedSize()
-        {
-            ReadFromTestShortenedSizeHelper<Th125Converter>();
-        }
+            => ReadFromTestShortenedSizeHelper<Th125Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th125ChapterReadFromTestExceededSize()
-        {
-            ReadFromTestExceededSizeHelper<Th125Converter>();
-        }
+            => ReadFromTestExceededSizeHelper<Th125Converter>();
 
         [TestMethod()]
         public void Th125ChapterReadFromTestInvalidChecksum()
-        {
-            ReadFromTestInvalidChecksumHelper<Th125Converter>();
-        }
+            => ReadFromTestInvalidChecksumHelper<Th125Converter>();
 
         [TestMethod()]
         public void Th125ChapterReadFromTestEmptyData()
-        {
-            ReadFromTestEmptyDataHelper<Th125Converter>();
-        }
+            => ReadFromTestEmptyDataHelper<Th125Converter>();
 
         [TestMethod()]
         public void Th125ChapterReadFromTestMisalignedData()
-        {
-            ReadFromTestMisalignedDataHelper<Th125Converter>();
-        }
+            => ReadFromTestMisalignedDataHelper<Th125Converter>();
 
         #endregion
     }

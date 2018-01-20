@@ -113,30 +113,22 @@ namespace ThScoreFileConverter.Models.Tests
 
         [TestMethod()]
         public void Th06HeaderTest()
-        {
-            Th06HeaderTestHelper<Th06Converter>("TH6K");
-        }
+            => Th06HeaderTestHelper<Th06Converter>("TH6K");
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th06HeaderTestNull()
-        {
-            Th06HeaderTestNullHelper<Th06Converter>();
-        }
+            => Th06HeaderTestNullHelper<Th06Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th06HeaderTestInvalidSignature()
-        {
-            Th06HeaderTestInvalidSignatureHelper<Th06Converter>("TH6k");
-        }
+            => Th06HeaderTestInvalidSignatureHelper<Th06Converter>("TH6k");
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th06HeaderTestInvalidSize1()
-        {
-            Th06HeaderTestInvalidSize1Helper<Th06Converter>("TH6K");
-        }
+            => Th06HeaderTestInvalidSize1Helper<Th06Converter>("TH6K");
 
         #endregion
 
@@ -144,30 +136,22 @@ namespace ThScoreFileConverter.Models.Tests
 
         [TestMethod()]
         public void Th07HeaderTest()
-        {
-            Th06HeaderTestHelper<Th07Converter>("TH7K");
-        }
+            => Th06HeaderTestHelper<Th07Converter>("TH7K");
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th07HeaderTestNull()
-        {
-            Th06HeaderTestNullHelper<Th07Converter>();
-        }
+            => Th06HeaderTestNullHelper<Th07Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th07HeaderTestInvalidSignature()
-        {
-            Th06HeaderTestInvalidSignatureHelper<Th07Converter>("TH7k");
-        }
+            => Th06HeaderTestInvalidSignatureHelper<Th07Converter>("TH7k");
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th07HeaderTestInvalidSize1()
-        {
-            Th06HeaderTestInvalidSize1Helper<Th07Converter>("TH7K");
-        }
+            => Th06HeaderTestInvalidSize1Helper<Th07Converter>("TH7K");
 
         #endregion
 
@@ -175,30 +159,22 @@ namespace ThScoreFileConverter.Models.Tests
 
         [TestMethod()]
         public void Th08HeaderTest()
-        {
-            Th06HeaderTestHelper<Th08Converter>("TH8K");
-        }
+            => Th06HeaderTestHelper<Th08Converter>("TH8K");
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th08HeaderTestNull()
-        {
-            Th06HeaderTestNullHelper<Th08Converter>();
-        }
+            => Th06HeaderTestNullHelper<Th08Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th08HeaderTestInvalidSignature()
-        {
-            Th06HeaderTestInvalidSignatureHelper<Th08Converter>("TH8k");
-        }
+            => Th06HeaderTestInvalidSignatureHelper<Th08Converter>("TH8k");
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th08HeaderTestInvalidSize1()
-        {
-            Th06HeaderTestInvalidSize1Helper<Th08Converter>("TH8K");
-        }
+            => Th06HeaderTestInvalidSize1Helper<Th08Converter>("TH8K");
 
         #endregion
 
@@ -206,30 +182,22 @@ namespace ThScoreFileConverter.Models.Tests
 
         [TestMethod()]
         public void Th09HeaderTest()
-        {
-            Th06HeaderTestHelper<Th09Converter>("TH9K");
-        }
+            => Th06HeaderTestHelper<Th09Converter>("TH9K");
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th09HeaderTestNull()
-        {
-            Th06HeaderTestNullHelper<Th09Converter>();
-        }
+            => Th06HeaderTestNullHelper<Th09Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th09HeaderTestInvalidSignature()
-        {
-            Th06HeaderTestInvalidSignatureHelper<Th09Converter>("TH9k");
-        }
+            => Th06HeaderTestInvalidSignatureHelper<Th09Converter>("TH9k");
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th09HeaderTestInvalidSize1()
-        {
-            Th06HeaderTestInvalidSize1Helper<Th09Converter>("TH9K");
-        }
+            => Th06HeaderTestInvalidSize1Helper<Th09Converter>("TH9K");
 
         #endregion
     }

@@ -15,12 +15,10 @@ namespace ThScoreFileConverter.Models.Tests
         private PrivateObject pobj = null;
 
         public Th075HighScoreWrapper()
-        {
-            this.pobj = new PrivateObject(
+            => this.pobj = new PrivateObject(
                 AssemblyNameToTest,
                 TypeNameToTest,
                 new object[] { });
-        }
 
         // NOTE: Enabling the following causes CA1811.
         // public object Target => this.pobj.Target;

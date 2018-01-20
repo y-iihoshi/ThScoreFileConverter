@@ -39,9 +39,7 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         private Th10ChapterWrapper(params object[] args)
-        {
-            this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, args);
-        }
+            => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, args);
 
         public Th10ChapterWrapper()
             : this(new object[] { })

@@ -425,120 +425,84 @@ namespace ThScoreFileConverter.Models.Tests
 
         [TestMethod()]
         public void Th06ChapterTest()
-        {
-            ChapterTestHelper<Th06Converter>();
-        }
+            => ChapterTestHelper<Th06Converter>();
 
         [TestMethod()]
         public void Th06ChapterTestCopy()
-        {
-            ChapterTestCopyHelper<Th06Converter>();
-        }
+            => ChapterTestCopyHelper<Th06Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th06ChapterTestNull()
-        {
-            ChapterTestNullHelper<Th06Converter>();
-        }
+            => ChapterTestNullHelper<Th06Converter>();
 
         [TestMethod()]
         public void Th06ChapterReadFromTest()
-        {
-            ReadFromTestHelper<Th06Converter>();
-        }
+            => ReadFromTestHelper<Th06Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th06ChapterReadFromTestNull()
-        {
-            ReadFromTestNullHelper<Th06Converter>();
-        }
+            => ReadFromTestNullHelper<Th06Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th06ChapterReadFromTestEmptySignature()
-        {
-            ReadFromTestEmptySignatureHelper<Th06Converter>();
-        }
+            => ReadFromTestEmptySignatureHelper<Th06Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th06ChapterReadFromTestShortenedSignature()
-        {
-            ReadFromTestShortenedSignatureHelper<Th06Converter>();
-        }
+            => ReadFromTestShortenedSignatureHelper<Th06Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th06ChapterReadFromTestExceededSignature()
-        {
-            ReadFromTestExceededSignatureHelper<Th06Converter>();
-        }
+            => ReadFromTestExceededSignatureHelper<Th06Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th06ChapterReadFromTestNegativeSize1()
-        {
-            ReadFromTestNegativeSize1Helper<Th06Converter>();
-        }
+            => ReadFromTestNegativeSize1Helper<Th06Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th06ChapterReadFromTestZeroSize1()
-        {
-            ReadFromTestZeroSize1Helper<Th06Converter>();
-        }
+            => ReadFromTestZeroSize1Helper<Th06Converter>();
 
         [TestMethod()]
         public void Th06ChapterReadFromTestShortenedSize1()
-        {
-            ReadFromTestShortenedSize1Helper<Th06Converter>();
-        }
+            => ReadFromTestShortenedSize1Helper<Th06Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th06ChapterReadFromTestExceededSize1()
-        {
-            ReadFromTestExceededSize1Helper<Th06Converter>();
-        }
+            => ReadFromTestExceededSize1Helper<Th06Converter>();
 
         [TestMethod()]
         public void Th06ChapterReadFromTestNegativeSize2()
-        {
-            ReadFromTestNegativeSize2Helper<Th06Converter>();
-        }
+            => ReadFromTestNegativeSize2Helper<Th06Converter>();
 
         [TestMethod()]
         public void Th06ChapterReadFromTestZeroSize2()
-        {
-            ReadFromTestZeroSize2Helper<Th06Converter>();
-        }
+            => ReadFromTestZeroSize2Helper<Th06Converter>();
 
         [TestMethod()]
         public void Th06ChapterReadFromTestShortenedSize2()
-        {
-            ReadFromTestShortenedSize2Helper<Th06Converter>();
-        }
+            => ReadFromTestShortenedSize2Helper<Th06Converter>();
 
         [TestMethod()]
         public void Th06ChapterReadFromTestExceededSize2()
-        {
-            ReadFromTestExceededSize2Helper<Th06Converter>();
-        }
+            => ReadFromTestExceededSize2Helper<Th06Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th06ChapterReadFromTestEmptyData()
-        {
-            ReadFromTestEmptyDataHelper<Th06Converter>();
-        }
+            => ReadFromTestEmptyDataHelper<Th06Converter>();
 
         [TestMethod()]
         public void Th06ChapterReadFromTestMisalignedData()
-        {
-            ReadFromTestMisalignedDataHelper<Th06Converter>();
-        }
+            => ReadFromTestMisalignedDataHelper<Th06Converter>();
 
         #endregion
 
@@ -546,120 +510,84 @@ namespace ThScoreFileConverter.Models.Tests
 
         [TestMethod()]
         public void Th07ChapterTest()
-        {
-            ChapterTestHelper<Th07Converter>();
-        }
+            => ChapterTestHelper<Th07Converter>();
 
         [TestMethod()]
         public void Th07ChapterTestCopy()
-        {
-            ChapterTestCopyHelper<Th07Converter>();
-        }
+            => ChapterTestCopyHelper<Th07Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th07ChapterTestNull()
-        {
-            ChapterTestNullHelper<Th07Converter>();
-        }
+            => ChapterTestNullHelper<Th07Converter>();
 
         [TestMethod()]
         public void Th07ChapterReadFromTest()
-        {
-            ReadFromTestHelper<Th07Converter>();
-        }
+            => ReadFromTestHelper<Th07Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th07ChapterReadFromTestNull()
-        {
-            ReadFromTestNullHelper<Th07Converter>();
-        }
+            => ReadFromTestNullHelper<Th07Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th07ChapterReadFromTestEmptySignature()
-        {
-            ReadFromTestEmptySignatureHelper<Th07Converter>();
-        }
+            => ReadFromTestEmptySignatureHelper<Th07Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th07ChapterReadFromTestShortenedSignature()
-        {
-            ReadFromTestShortenedSignatureHelper<Th07Converter>();
-        }
+            => ReadFromTestShortenedSignatureHelper<Th07Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th07ChapterReadFromTestExceededSignature()
-        {
-            ReadFromTestExceededSignatureHelper<Th07Converter>();
-        }
+            => ReadFromTestExceededSignatureHelper<Th07Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th07ChapterReadFromTestNegativeSize1()
-        {
-            ReadFromTestNegativeSize1Helper<Th07Converter>();
-        }
+            => ReadFromTestNegativeSize1Helper<Th07Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th07ChapterReadFromTestZeroSize1()
-        {
-            ReadFromTestZeroSize1Helper<Th07Converter>();
-        }
+            => ReadFromTestZeroSize1Helper<Th07Converter>();
 
         [TestMethod()]
         public void Th07ChapterReadFromTestShortenedSize1()
-        {
-            ReadFromTestShortenedSize1Helper<Th07Converter>();
-        }
+            => ReadFromTestShortenedSize1Helper<Th07Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th07ChapterReadFromTestExceededSize1()
-        {
-            ReadFromTestExceededSize1Helper<Th07Converter>();
-        }
+            => ReadFromTestExceededSize1Helper<Th07Converter>();
 
         [TestMethod()]
         public void Th07ChapterReadFromTestNegativeSize2()
-        {
-            ReadFromTestNegativeSize2Helper<Th07Converter>();
-        }
+            => ReadFromTestNegativeSize2Helper<Th07Converter>();
 
         [TestMethod()]
         public void Th07ChapterReadFromTestZeroSize2()
-        {
-            ReadFromTestZeroSize2Helper<Th07Converter>();
-        }
+            => ReadFromTestZeroSize2Helper<Th07Converter>();
 
         [TestMethod()]
         public void Th07ChapterReadFromTestShortenedSize2()
-        {
-            ReadFromTestShortenedSize2Helper<Th07Converter>();
-        }
+            => ReadFromTestShortenedSize2Helper<Th07Converter>();
 
         [TestMethod()]
         public void Th07ChapterReadFromTestExceededSize2()
-        {
-            ReadFromTestExceededSize2Helper<Th07Converter>();
-        }
+            => ReadFromTestExceededSize2Helper<Th07Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th07ChapterReadFromTestEmptyData()
-        {
-            ReadFromTestEmptyDataHelper<Th07Converter>();
-        }
+            => ReadFromTestEmptyDataHelper<Th07Converter>();
 
         [TestMethod()]
         public void Th07ChapterReadFromTestMisalignedData()
-        {
-            ReadFromTestMisalignedDataHelper<Th07Converter>();
-        }
+            => ReadFromTestMisalignedDataHelper<Th07Converter>();
 
         #endregion
 
@@ -667,120 +595,84 @@ namespace ThScoreFileConverter.Models.Tests
 
         [TestMethod()]
         public void Th08ChapterTest()
-        {
-            ChapterTestHelper<Th08Converter>();
-        }
+            => ChapterTestHelper<Th08Converter>();
 
         [TestMethod()]
         public void Th08ChapterTestCopy()
-        {
-            ChapterTestCopyHelper<Th08Converter>();
-        }
+            => ChapterTestCopyHelper<Th08Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th08ChapterTestNull()
-        {
-            ChapterTestNullHelper<Th08Converter>();
-        }
+            => ChapterTestNullHelper<Th08Converter>();
 
         [TestMethod()]
         public void Th08ChapterReadFromTest()
-        {
-            ReadFromTestHelper<Th08Converter>();
-        }
+            => ReadFromTestHelper<Th08Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th08ChapterReadFromTestNull()
-        {
-            ReadFromTestNullHelper<Th08Converter>();
-        }
+            => ReadFromTestNullHelper<Th08Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th08ChapterReadFromTestEmptySignature()
-        {
-            ReadFromTestEmptySignatureHelper<Th08Converter>();
-        }
+            => ReadFromTestEmptySignatureHelper<Th08Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th08ChapterReadFromTestShortenedSignature()
-        {
-            ReadFromTestShortenedSignatureHelper<Th08Converter>();
-        }
+            => ReadFromTestShortenedSignatureHelper<Th08Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th08ChapterReadFromTestExceededSignature()
-        {
-            ReadFromTestExceededSignatureHelper<Th08Converter>();
-        }
+            => ReadFromTestExceededSignatureHelper<Th08Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th08ChapterReadFromTestNegativeSize1()
-        {
-            ReadFromTestNegativeSize1Helper<Th08Converter>();
-        }
+            => ReadFromTestNegativeSize1Helper<Th08Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th08ChapterReadFromTestZeroSize1()
-        {
-            ReadFromTestZeroSize1Helper<Th08Converter>();
-        }
+            => ReadFromTestZeroSize1Helper<Th08Converter>();
 
         [TestMethod()]
         public void Th08ChapterReadFromTestShortenedSize1()
-        {
-            ReadFromTestShortenedSize1Helper<Th08Converter>();
-        }
+            => ReadFromTestShortenedSize1Helper<Th08Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th08ChapterReadFromTestExceededSize1()
-        {
-            ReadFromTestExceededSize1Helper<Th08Converter>();
-        }
+            => ReadFromTestExceededSize1Helper<Th08Converter>();
 
         [TestMethod()]
         public void Th08ChapterReadFromTestNegativeSize2()
-        {
-            ReadFromTestNegativeSize2Helper<Th08Converter>();
-        }
+            => ReadFromTestNegativeSize2Helper<Th08Converter>();
 
         [TestMethod()]
         public void Th08ChapterReadFromTestZeroSize2()
-        {
-            ReadFromTestZeroSize2Helper<Th08Converter>();
-        }
+            => ReadFromTestZeroSize2Helper<Th08Converter>();
 
         [TestMethod()]
         public void Th08ChapterReadFromTestShortenedSize2()
-        {
-            ReadFromTestShortenedSize2Helper<Th08Converter>();
-        }
+            => ReadFromTestShortenedSize2Helper<Th08Converter>();
 
         [TestMethod()]
         public void Th08ChapterReadFromTestExceededSize2()
-        {
-            ReadFromTestExceededSize2Helper<Th08Converter>();
-        }
+            => ReadFromTestExceededSize2Helper<Th08Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th08ChapterReadFromTestEmptyData()
-        {
-            ReadFromTestEmptyDataHelper<Th08Converter>();
-        }
+            => ReadFromTestEmptyDataHelper<Th08Converter>();
 
         [TestMethod()]
         public void Th08ChapterReadFromTestMisalignedData()
-        {
-            ReadFromTestMisalignedDataHelper<Th08Converter>();
-        }
+            => ReadFromTestMisalignedDataHelper<Th08Converter>();
 
         #endregion
 
@@ -788,120 +680,84 @@ namespace ThScoreFileConverter.Models.Tests
 
         [TestMethod()]
         public void Th09ChapterTest()
-        {
-            ChapterTestHelper<Th09Converter>();
-        }
+            => ChapterTestHelper<Th09Converter>();
 
         [TestMethod()]
         public void Th09ChapterTestCopy()
-        {
-            ChapterTestCopyHelper<Th09Converter>();
-        }
+            => ChapterTestCopyHelper<Th09Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th09ChapterTestNull()
-        {
-            ChapterTestNullHelper<Th09Converter>();
-        }
+            => ChapterTestNullHelper<Th09Converter>();
 
         [TestMethod()]
         public void Th09ChapterReadFromTest()
-        {
-            ReadFromTestHelper<Th09Converter>();
-        }
+            => ReadFromTestHelper<Th09Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th09ChapterReadFromTestNull()
-        {
-            ReadFromTestNullHelper<Th09Converter>();
-        }
+            => ReadFromTestNullHelper<Th09Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th09ChapterReadFromTestEmptySignature()
-        {
-            ReadFromTestEmptySignatureHelper<Th09Converter>();
-        }
+            => ReadFromTestEmptySignatureHelper<Th09Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th09ChapterReadFromTestShortenedSignature()
-        {
-            ReadFromTestShortenedSignatureHelper<Th09Converter>();
-        }
+            => ReadFromTestShortenedSignatureHelper<Th09Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th09ChapterReadFromTestExceededSignature()
-        {
-            ReadFromTestExceededSignatureHelper<Th09Converter>();
-        }
+            => ReadFromTestExceededSignatureHelper<Th09Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th09ChapterReadFromTestNegativeSize1()
-        {
-            ReadFromTestNegativeSize1Helper<Th09Converter>();
-        }
+            => ReadFromTestNegativeSize1Helper<Th09Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th09ChapterReadFromTestZeroSize1()
-        {
-            ReadFromTestZeroSize1Helper<Th09Converter>();
-        }
+            => ReadFromTestZeroSize1Helper<Th09Converter>();
 
         [TestMethod()]
         public void Th09ChapterReadFromTestShortenedSize1()
-        {
-            ReadFromTestShortenedSize1Helper<Th09Converter>();
-        }
+            => ReadFromTestShortenedSize1Helper<Th09Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th09ChapterReadFromTestExceededSize1()
-        {
-            ReadFromTestExceededSize1Helper<Th09Converter>();
-        }
+            => ReadFromTestExceededSize1Helper<Th09Converter>();
 
         [TestMethod()]
         public void Th09ChapterReadFromTestNegativeSize2()
-        {
-            ReadFromTestNegativeSize2Helper<Th09Converter>();
-        }
+            => ReadFromTestNegativeSize2Helper<Th09Converter>();
 
         [TestMethod()]
         public void Th09ChapterReadFromTestZeroSize2()
-        {
-            ReadFromTestZeroSize2Helper<Th09Converter>();
-        }
+            => ReadFromTestZeroSize2Helper<Th09Converter>();
 
         [TestMethod()]
         public void Th09ChapterReadFromTestShortenedSize2()
-        {
-            ReadFromTestShortenedSize2Helper<Th09Converter>();
-        }
+            => ReadFromTestShortenedSize2Helper<Th09Converter>();
 
         [TestMethod()]
         public void Th09ChapterReadFromTestExceededSize2()
-        {
-            ReadFromTestExceededSize2Helper<Th09Converter>();
-        }
+            => ReadFromTestExceededSize2Helper<Th09Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th09ChapterReadFromTestEmptyData()
-        {
-            ReadFromTestEmptyDataHelper<Th09Converter>();
-        }
+            => ReadFromTestEmptyDataHelper<Th09Converter>();
 
         [TestMethod()]
         public void Th09ChapterReadFromTestMisalignedData()
-        {
-            ReadFromTestMisalignedDataHelper<Th09Converter>();
-        }
+            => ReadFromTestMisalignedDataHelper<Th09Converter>();
 
         #endregion
     }
