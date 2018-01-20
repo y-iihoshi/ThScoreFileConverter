@@ -85,7 +85,7 @@ namespace ThScoreFileConverter.Models.Tests
             {
                 var header = new Th095HeaderWrapper<TParent>();
                 header.ReadFrom(null);
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
             catch (TargetInvocationException ex)
             {
@@ -121,7 +121,7 @@ namespace ThScoreFileConverter.Models.Tests
                         encodedBodySize,
                         decodedBodySize));
 
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
             catch (TargetInvocationException ex)
             {
@@ -163,7 +163,7 @@ namespace ThScoreFileConverter.Models.Tests
                         encodedBodySize,
                         decodedBodySize));
 
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
             catch (TargetInvocationException ex)
             {
@@ -242,7 +242,7 @@ namespace ThScoreFileConverter.Models.Tests
                         encodedBodySize,
                         decodedBodySize));
 
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
             catch (TargetInvocationException ex)
             {
@@ -382,7 +382,7 @@ namespace ThScoreFileConverter.Models.Tests
                         encodedBodySize,
                         decodedBodySize));
 
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
             catch (TargetInvocationException ex)
             {
@@ -522,7 +522,7 @@ namespace ThScoreFileConverter.Models.Tests
                         encodedBodySize,
                         decodedBodySize));
 
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
             catch (TargetInvocationException ex)
             {
@@ -646,7 +646,7 @@ namespace ThScoreFileConverter.Models.Tests
 
                 var header = Th095HeaderWrapper<TParent>.Create(TestUtils.MakeByteArray(byteArray));
                 header.WriteTo(null);
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
 
             }
             catch (TargetInvocationException ex)

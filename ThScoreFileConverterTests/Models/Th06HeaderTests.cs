@@ -48,7 +48,7 @@ namespace ThScoreFileConverter.Models.Tests
             {
                 var header = new Th06HeaderWrapper<TParent>(null);
 
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
             catch (TargetInvocationException ex)
             {
@@ -74,7 +74,7 @@ namespace ThScoreFileConverter.Models.Tests
                     TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
                 var header = new Th06HeaderWrapper<TParent>(chapter);
 
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
             catch (TargetInvocationException ex)
             {
@@ -100,7 +100,7 @@ namespace ThScoreFileConverter.Models.Tests
                     TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
                 var header = new Th06HeaderWrapper<TParent>(chapter);
 
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
             catch (TargetInvocationException ex)
             {

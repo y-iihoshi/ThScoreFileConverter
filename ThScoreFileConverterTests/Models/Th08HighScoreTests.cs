@@ -114,7 +114,7 @@ namespace ThScoreFileConverter.Models.Tests
             {
                 var highScore = new Th08HighScoreWrapper(null);
 
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
             catch (TargetInvocationException ex)
             {
@@ -235,7 +235,7 @@ namespace ThScoreFileConverter.Models.Tests
                     TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
                 var highScore = new Th08HighScoreWrapper(chapter);
 
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
             catch (TargetInvocationException ex)
             {
@@ -308,7 +308,7 @@ namespace ThScoreFileConverter.Models.Tests
                     TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
                 var highScore = new Th08HighScoreWrapper(chapter);
 
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
             catch (TargetInvocationException ex)
             {
@@ -381,7 +381,7 @@ namespace ThScoreFileConverter.Models.Tests
                     TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
                 var highScore = new Th08HighScoreWrapper(chapter);
 
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
             catch (TargetInvocationException ex)
             {
@@ -454,7 +454,7 @@ namespace ThScoreFileConverter.Models.Tests
                     TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
                 var highScore = new Th08HighScoreWrapper(chapter);
 
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
             catch (TargetInvocationException ex)
             {
@@ -527,7 +527,7 @@ namespace ThScoreFileConverter.Models.Tests
                     TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
                 var highScore = new Th08HighScoreWrapper(chapter);
 
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
             catch (TargetInvocationException ex)
             {

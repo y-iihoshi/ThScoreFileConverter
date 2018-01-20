@@ -40,7 +40,7 @@ namespace ThScoreFileConverter.Models.Tests
             using (var output = new MemoryStream())
             {
                 Lzss.Compress(input, output);
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
         }
 
@@ -68,7 +68,7 @@ namespace ThScoreFileConverter.Models.Tests
             using (var output = new MemoryStream())
             {
                 Lzss.Extract(null, output);
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
         }
 
@@ -90,7 +90,7 @@ namespace ThScoreFileConverter.Models.Tests
             using (var output = new MemoryStream())
             {
                 Lzss.Extract(input, output);
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
         }
 
@@ -102,7 +102,7 @@ namespace ThScoreFileConverter.Models.Tests
             using (var output = new MemoryStream())
             {
                 Lzss.Extract(input, output);
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
         }
 
@@ -115,7 +115,7 @@ namespace ThScoreFileConverter.Models.Tests
                 var input = new MemoryStream(this.compressed);
                 input.Close();
                 Lzss.Extract(input, output);
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
         }
 
@@ -127,7 +127,7 @@ namespace ThScoreFileConverter.Models.Tests
             using (var output = new MemoryStream())
             {
                 Lzss.Extract(input, output);
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
         }
 
@@ -158,7 +158,7 @@ namespace ThScoreFileConverter.Models.Tests
             using (var input = new MemoryStream(this.compressed))
             {
                 Lzss.Extract(input, null);
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
         }
 
@@ -170,7 +170,7 @@ namespace ThScoreFileConverter.Models.Tests
             using (var output = new MemoryStream(new byte[] { }, false))
             {
                 Lzss.Extract(input, output);
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
         }
 
@@ -183,7 +183,7 @@ namespace ThScoreFileConverter.Models.Tests
                 var output = new MemoryStream();
                 output.Close();
                 Lzss.Extract(input, output);
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
         }
     }

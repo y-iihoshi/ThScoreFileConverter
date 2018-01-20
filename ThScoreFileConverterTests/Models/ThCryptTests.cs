@@ -36,7 +36,7 @@ namespace ThScoreFileConverter.Models.Tests
             using (var output = new MemoryStream())
             {
                 ThCrypt.Encrypt(input, output, (int)input.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
         }
 
@@ -64,7 +64,7 @@ namespace ThScoreFileConverter.Models.Tests
             using (var output = new MemoryStream())
             {
                 ThCrypt.Decrypt(null, output, encryptedBySmallBlock.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
         }
 
@@ -86,7 +86,7 @@ namespace ThScoreFileConverter.Models.Tests
             using (var output = new MemoryStream())
             {
                 ThCrypt.Decrypt(input, output, encryptedBySmallBlock.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
         }
 
@@ -98,7 +98,7 @@ namespace ThScoreFileConverter.Models.Tests
             using (var output = new MemoryStream())
             {
                 ThCrypt.Decrypt(input, output, encryptedBySmallBlock.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
         }
 
@@ -111,7 +111,7 @@ namespace ThScoreFileConverter.Models.Tests
                 var input = new MemoryStream(this.encryptedBySmallBlock);
                 input.Close();
                 ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
         }
 
@@ -159,7 +159,7 @@ namespace ThScoreFileConverter.Models.Tests
             using (var input = new MemoryStream(this.encryptedBySmallBlock))
             {
                 ThCrypt.Decrypt(input, null, (int)input.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
         }
 
@@ -171,7 +171,7 @@ namespace ThScoreFileConverter.Models.Tests
             using (var output = new MemoryStream(new byte[] { }, false))
             {
                 ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
         }
 
@@ -184,7 +184,7 @@ namespace ThScoreFileConverter.Models.Tests
                 var output = new MemoryStream();
                 output.Close();
                 ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
         }
 
@@ -196,7 +196,7 @@ namespace ThScoreFileConverter.Models.Tests
             using (var output = new MemoryStream())
             {
                 ThCrypt.Decrypt(input, output, -1, KEY, STEP, SMALL_BLOCK, LIMIT);
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
         }
 
@@ -235,7 +235,7 @@ namespace ThScoreFileConverter.Models.Tests
             using (var output = new MemoryStream())
             {
                 ThCrypt.Decrypt(input, output, (int)input.Length + 1, KEY, STEP, SMALL_BLOCK, LIMIT);
-                Assert.Fail("Unreached");
+                Assert.Fail(TestUtils.Unreachable);
             }
         }
 
@@ -315,7 +315,7 @@ namespace ThScoreFileConverter.Models.Tests
             using (var output = new MemoryStream())
             {
                 ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, -1, LIMIT);
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
         }
 
@@ -327,7 +327,7 @@ namespace ThScoreFileConverter.Models.Tests
             using (var output = new MemoryStream())
             {
                 ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, 0, LIMIT);
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
         }
 
@@ -402,7 +402,7 @@ namespace ThScoreFileConverter.Models.Tests
             using (var output = new MemoryStream())
             {
                 ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, SMALL_BLOCK, -1);
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
         }
 

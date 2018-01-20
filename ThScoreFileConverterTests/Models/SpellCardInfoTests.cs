@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace ThScoreFileConverter.Models.Tests
 {
-    using Stage = ThConverter.Stage;
-    using Level = ThConverter.Level;
     using CardInfo = SpellCardInfo<ThConverter.Stage, ThConverter.Level>;
+    using Level = ThConverter.Level;
+    using Stage = ThConverter.Stage;
 
     [TestClass()]
     public class SpellCardInfoTests
@@ -30,7 +30,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void SpellCardInfoTestNegativeId()
         {
             var info = new CardInfo(-1, "月符「ムーンライトレイ」", Stage.St1, Level.Hard, Level.Lunatic);
-            Assert.Fail("Unreached");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "info")]
@@ -39,7 +39,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void SpellCardInfoTestZeroId()
         {
             var info = new CardInfo(0, "月符「ムーンライトレイ」", Stage.St1, Level.Hard, Level.Lunatic);
-            Assert.Fail("Unreached");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "info")]
@@ -48,7 +48,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void SpellCardInfoTestNullName()
         {
             var info = new CardInfo(1, null, Stage.St1, Level.Hard, Level.Lunatic);
-            Assert.Fail("Unreached");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "info")]
@@ -57,7 +57,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void SpellCardInfoTestEmptyName()
         {
             var info = new CardInfo(1, string.Empty, Stage.St1, Level.Hard, Level.Lunatic);
-            Assert.Fail("Unreached");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "info")]
@@ -67,7 +67,7 @@ namespace ThScoreFileConverter.Models.Tests
         {
             var invalid = (Stage)(Enum.GetValues(typeof(Stage)).Cast<int>().Max() + 1);
             var info = new CardInfo(1, "月符「ムーンライトレイ」", invalid, Level.Hard, Level.Lunatic);
-            Assert.Fail("Unreached");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "info")]
@@ -77,7 +77,7 @@ namespace ThScoreFileConverter.Models.Tests
         {
             var invalid = (Level)(Enum.GetValues(typeof(Level)).Cast<int>().Max() + 1);
             var info = new CardInfo(1, "月符「ムーンライトレイ」", Stage.St1, Level.Hard, invalid);
-            Assert.Fail("Unreached");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod()]

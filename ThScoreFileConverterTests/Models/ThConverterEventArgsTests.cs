@@ -29,7 +29,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void ThConverterEventArgsTestNullPath()
         {
             var args = new ThConverterEventArgs(null, 2, 5);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "args")]
@@ -38,7 +38,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void ThConverterEventArgsTestEmptyPath()
         {
             var args = new ThConverterEventArgs(string.Empty, 2, 5);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "args")]
@@ -47,7 +47,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void ThConverterEventArgsTestNegativeCurrent()
         {
             var args = new ThConverterEventArgs(@"path\to\file", -1, 5);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "args")]
@@ -56,7 +56,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void ThConverterEventArgsTestZeroCurrent()
         {
             var args = new ThConverterEventArgs(@"path\to\file", 0, 5);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "args")]
@@ -65,7 +65,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void ThConverterEventArgsTestExtendedCurrent()
         {
             var args = new ThConverterEventArgs(@"path\to\file", 6, 5);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "args")]
@@ -74,7 +74,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void ThConverterEventArgsTestNegativeTotal()
         {
             var args = new ThConverterEventArgs(@"path\to\file", 2, -1);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "args")]
@@ -83,7 +83,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void ThConverterEventArgsTestZeroTotal()
         {
             var args = new ThConverterEventArgs(@"path\to\file", 2, 0);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
     }
 }

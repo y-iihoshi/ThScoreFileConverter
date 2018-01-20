@@ -66,7 +66,7 @@ namespace ThScoreFileConverter.Models.Tests
             try
             {
                 var chapter = new Th06ChapterWrapper<TParent>(null);
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
             catch (TargetInvocationException ex)
             {
@@ -104,7 +104,7 @@ namespace ThScoreFileConverter.Models.Tests
             {
                 var chapter = new Th06ChapterWrapper<TParent>();
                 chapter.ReadFrom(null);
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
             catch (TargetInvocationException ex)
             {
@@ -133,7 +133,7 @@ namespace ThScoreFileConverter.Models.Tests
                 Th06ChapterWrapper<TParent>.Create(
                     TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
 
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
             catch (TargetInvocationException ex)
             {
@@ -161,7 +161,7 @@ namespace ThScoreFileConverter.Models.Tests
                 Th06ChapterWrapper<TParent>.Create(
                     TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
 
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
             catch (TargetInvocationException ex)
             {
@@ -189,7 +189,7 @@ namespace ThScoreFileConverter.Models.Tests
                 Th06ChapterWrapper<TParent>.Create(
                     TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
 
-                Assert.Fail("Unreached");
+                Assert.Fail(TestUtils.Unreachable);
             }
             catch (TargetInvocationException ex)
             {
@@ -211,7 +211,7 @@ namespace ThScoreFileConverter.Models.Tests
                 Th06ChapterWrapper<TParent>.Create(
                     TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
 
-                Assert.Fail("Unreached");
+                Assert.Fail(TestUtils.Unreachable);
             }
             catch (TargetInvocationException ex)
             {
@@ -233,7 +233,7 @@ namespace ThScoreFileConverter.Models.Tests
                 Th06ChapterWrapper<TParent>.Create(
                     TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
 
-                Assert.Fail("Unreached");
+                Assert.Fail(TestUtils.Unreachable);
             }
             catch (TargetInvocationException ex)
             {

@@ -82,7 +82,7 @@ namespace ThScoreFileConverter.Models.Tests
             {
                 var highScore = new Th075HighScoreWrapper();
                 highScore.ReadFrom(null);
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
             catch (TargetInvocationException ex)
             {
@@ -107,7 +107,7 @@ namespace ThScoreFileConverter.Models.Tests
                     highScore,
                     TestUtils.MakeByteArray(name, month, day, unknown, score));
 
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
             catch (TargetInvocationException ex)
             {
@@ -159,7 +159,7 @@ namespace ThScoreFileConverter.Models.Tests
                     highScore,
                     TestUtils.MakeByteArray(name, month, day, unknown, score));
 
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
             catch (TargetInvocationException ex)
             {
@@ -238,7 +238,7 @@ namespace ThScoreFileConverter.Models.Tests
                     highScore,
                     TestUtils.MakeByteArray(name, month, day, unknown, score));
 
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
             catch (TargetInvocationException ex)
             {
@@ -263,7 +263,7 @@ namespace ThScoreFileConverter.Models.Tests
                     highScore,
                     TestUtils.MakeByteArray(name, month, day, unknown, score));
 
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
             catch (TargetInvocationException ex)
             {
@@ -343,7 +343,7 @@ namespace ThScoreFileConverter.Models.Tests
                     highScore,
                     TestUtils.MakeByteArray(name, month, day, unknown, score));
 
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
             catch (TargetInvocationException ex)
             {

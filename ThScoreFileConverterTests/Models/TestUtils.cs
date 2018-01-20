@@ -6,6 +6,8 @@ namespace ThScoreFileConverter.Models.Tests
 {
     public static class TestUtils
     {
+        public static string Unreachable => nameof(Unreachable);
+
         public static byte[] MakeByteArray(params object[] args)
         {
             if (args == null)

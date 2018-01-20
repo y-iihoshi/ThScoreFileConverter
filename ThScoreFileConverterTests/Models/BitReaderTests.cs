@@ -32,7 +32,7 @@ namespace ThScoreFileConverter.Models.Tests
         {
             using (var reader = new BitReader(null))
             {
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
         }
 
@@ -45,7 +45,7 @@ namespace ThScoreFileConverter.Models.Tests
             stream.Close();
             using (var reader = new BitReader(stream))
             {
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
         }
 
@@ -62,7 +62,7 @@ namespace ThScoreFileConverter.Models.Tests
 
                 reader.Dispose();
                 reader.ReadBits(1);
-                Assert.Fail("Unreachable");
+                Assert.Fail(TestUtils.Unreachable);
             }
             finally
             {
@@ -189,7 +189,7 @@ namespace ThScoreFileConverter.Models.Tests
                     stream = null;
 
                     reader.ReadBits(-1);
-                    Assert.Fail("Unreachable");
+                    Assert.Fail(TestUtils.Unreachable);
                 }
             }
             finally
@@ -213,7 +213,7 @@ namespace ThScoreFileConverter.Models.Tests
                     stream = null;
 
                     reader.ReadBits(33);
-                    Assert.Fail("Unreachable");
+                    Assert.Fail(TestUtils.Unreachable);
                 }
             }
             finally
@@ -237,7 +237,7 @@ namespace ThScoreFileConverter.Models.Tests
                     Assert.AreEqual(0x53, reader.ReadBits(8));
 
                     reader.ReadBits(1);
-                    Assert.Fail("Unreachable");
+                    Assert.Fail(TestUtils.Unreachable);
                 }
             }
             finally

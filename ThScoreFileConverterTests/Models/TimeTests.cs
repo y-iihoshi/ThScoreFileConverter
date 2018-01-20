@@ -13,7 +13,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void TimeTestNegative()
         {
             var time = new Time(-1);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod()]
@@ -48,7 +48,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void TimeTestNegativeFrame()
         {
             var time = new Time(-1, true);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod()]
@@ -83,7 +83,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void TimeTestNegativeMillisecond()
         {
             var time = new Time(-1, false);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod()]
@@ -131,7 +131,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void TimeTestComponentsNegativeHour()
         {
             var time = new Time(-1, 34, 56, 43);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod()]
@@ -153,7 +153,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void TimeTestComponentsNegativeMinute()
         {
             var time = new Time(12, -1, 56, 43);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
@@ -162,7 +162,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void TimeTestComponentsExceededMinutes()
         {
             var time = new Time(12, 60, 56, 43);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
@@ -171,7 +171,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void TimeTestComponentsNegativeSecond()
         {
             var time = new Time(12, 34, -1, 43);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
@@ -180,7 +180,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void TimeTestComponentsExceededSeconds()
         {
             var time = new Time(12, 34, 60, 43);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
@@ -189,7 +189,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void TimeTestComponentsNegativeFrame()
         {
             var time = new Time(12, 34, 56, -1);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
@@ -198,7 +198,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void TimeTestComponentsExceededFrames()
         {
             var time = new Time(12, 34, 56, 60);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod()]
@@ -220,7 +220,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void TimeTestComponentsWithFramesNegativeHour()
         {
             var time = new Time(-1, 34, 56, 43, true);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod()]
@@ -242,7 +242,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void TimeTestComponentsWithFramesNegativeMinute()
         {
             var time = new Time(12, -1, 56, 43, true);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
@@ -251,7 +251,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void TimeTestComponentsWithFramesExceededMinutes()
         {
             var time = new Time(12, 60, 56, 43, true);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
@@ -260,7 +260,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void TimeTestComponentsWithFramesNegativeSecond()
         {
             var time = new Time(12, 34, -1, 43, true);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
@@ -269,7 +269,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void TimeTestComponentsWithFramesExceededSeconds()
         {
             var time = new Time(12, 34, 60, 43, true);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
@@ -278,7 +278,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void TimeTestComponentsWithFramesNegativeFrame()
         {
             var time = new Time(12, 34, 56, -1, true);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
@@ -287,7 +287,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void TimeTestComponentsWithFramesExceededFrames()
         {
             var time = new Time(12, 34, 56, 60, true);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod()]
@@ -309,7 +309,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void TimeTestComponentsWithMillisecondsNegativeHour()
         {
             var time = new Time(-1, 34, 56, 789, false);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod()]
@@ -331,7 +331,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void TimeTestComponentsWithMillisecondsNegativeMinute()
         {
             var time = new Time(12, -1, 56, 789, false);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
@@ -340,7 +340,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void TimeTestComponentsWithMillisecondsExceededMinutes()
         {
             var time = new Time(12, 60, 56, 789, false);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
@@ -349,7 +349,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void TimeTestComponentsWithMillisecondsNegativeSecond()
         {
             var time = new Time(12, 34, -1, 789, false);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
@@ -358,7 +358,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void TimeTestComponentsWithMillisecondsExceededSeconds()
         {
             var time = new Time(12, 34, 60, 789, false);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
@@ -367,7 +367,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void TimeTestComponentsWithMillisecondsNegativeMillisecond()
         {
             var time = new Time(12, 34, 56, -1, false);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "time")]
@@ -376,7 +376,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void TimeTestComponentsWithMillisecondsExceededMilliseconds()
         {
             var time = new Time(12, 34, 56, 1000, false);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod()]

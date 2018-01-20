@@ -29,7 +29,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void ParseEnumTestInvalidName()
         {
             Utils.ParseEnum<DayOfWeek>("Sun");
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod()]
@@ -37,7 +37,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void ParseEnumTestEmpty()
         {
             Utils.ParseEnum<DayOfWeek>(string.Empty);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod()]
@@ -45,7 +45,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void ParseEnumTestNull()
         {
             Utils.ParseEnum<DayOfWeek>(null);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod()]
@@ -59,7 +59,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void ParseEnumTestCaseSensitiveInvalidName()
         {
             Utils.ParseEnum<DayOfWeek>("sunday", false);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod()]
@@ -96,7 +96,7 @@ namespace ThScoreFileConverter.Models.Tests
         {
             Settings.Instance.OutputNumberGroupSeparator = null;
             Utils.ToNumberString(1234);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod()]
@@ -143,7 +143,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void ToZeroBasedTestNegative()
         {
             Utils.ToZeroBased(-1);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod()]
@@ -151,7 +151,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void ToZeroBasedTestExceeded()
         {
             Utils.ToZeroBased(10);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod()]
@@ -168,7 +168,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void ToOneBasedTestNegative()
         {
             Utils.ToOneBased(-1);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod()]
@@ -176,7 +176,7 @@ namespace ThScoreFileConverter.Models.Tests
         public void ToOneBasedTestExceeded()
         {
             Utils.ToOneBased(10);
-            Assert.Fail("Unreachable");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod()]
