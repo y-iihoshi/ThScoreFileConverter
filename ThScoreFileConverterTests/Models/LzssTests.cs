@@ -22,7 +22,14 @@ namespace ThScoreFileConverter.Models.Tests
         // 0 0_0000_0000_0000
         private readonly byte[] compressed = new byte[]
         {
-            0xA0, 0xD8, 0xAC, 0x60, 0x00, 0x80, 0x00, 0x00
+            0b_1010_0000,
+            0b_1101_1000,
+            0b_1010_1100,
+            0b_0110_0000,
+            0b_0000_0000,
+            0b_1000_0000,
+            0b_0000_0000,
+            0b_0000_0000
         };
 
         [TestMethod()]

@@ -76,20 +76,20 @@ namespace ThScoreFileConverter.Models.Tests
             MemoryStream stream = null;
             try
             {
-                stream = new MemoryStream(new byte[] { 0x53 });
+                stream = new MemoryStream(new byte[] { 0b_0101_0011 });
                 using (var reader = new BitReader(stream))
                 {
                     stream = null;
 
-                    Assert.AreEqual(0x0, reader.ReadBits(1));
-                    Assert.AreEqual(0x1, reader.ReadBits(1));
-                    Assert.AreEqual(0x0, reader.ReadBits(1));
-                    Assert.AreEqual(0x1, reader.ReadBits(1));
+                    Assert.AreEqual(0b0, reader.ReadBits(1));
+                    Assert.AreEqual(0b1, reader.ReadBits(1));
+                    Assert.AreEqual(0b0, reader.ReadBits(1));
+                    Assert.AreEqual(0b1, reader.ReadBits(1));
 
-                    Assert.AreEqual(0x0, reader.ReadBits(1));
-                    Assert.AreEqual(0x0, reader.ReadBits(1));
-                    Assert.AreEqual(0x1, reader.ReadBits(1));
-                    Assert.AreEqual(0x1, reader.ReadBits(1));
+                    Assert.AreEqual(0b0, reader.ReadBits(1));
+                    Assert.AreEqual(0b0, reader.ReadBits(1));
+                    Assert.AreEqual(0b1, reader.ReadBits(1));
+                    Assert.AreEqual(0b1, reader.ReadBits(1));
                 }
             }
             finally
@@ -109,15 +109,15 @@ namespace ThScoreFileConverter.Models.Tests
                 {
                     stream = null;
 
-                    Assert.AreEqual(0x0, reader.ReadBits(0));
-                    Assert.AreEqual(0x0, reader.ReadBits(0));
-                    Assert.AreEqual(0x0, reader.ReadBits(0));
-                    Assert.AreEqual(0x0, reader.ReadBits(0));
+                    Assert.AreEqual(0, reader.ReadBits(0));
+                    Assert.AreEqual(0, reader.ReadBits(0));
+                    Assert.AreEqual(0, reader.ReadBits(0));
+                    Assert.AreEqual(0, reader.ReadBits(0));
 
-                    Assert.AreEqual(0x0, reader.ReadBits(0));
-                    Assert.AreEqual(0x0, reader.ReadBits(0));
-                    Assert.AreEqual(0x0, reader.ReadBits(0));
-                    Assert.AreEqual(0x0, reader.ReadBits(0));
+                    Assert.AreEqual(0, reader.ReadBits(0));
+                    Assert.AreEqual(0, reader.ReadBits(0));
+                    Assert.AreEqual(0, reader.ReadBits(0));
+                    Assert.AreEqual(0, reader.ReadBits(0));
 
                     Assert.AreEqual(0xFF, reader.ReadBits(8));
                 }
@@ -134,18 +134,17 @@ namespace ThScoreFileConverter.Models.Tests
             MemoryStream stream = null;
             try
             {
-                // var buffer = new byte[2] { 0b_0101_0011, 0b_1100_1010 };
-                var buffer = new byte[2] { 0x53, 0xCA };
+                var buffer = new byte[2] { 0b_0101_0011, 0b_1100_1010 };
 
                 stream = new MemoryStream(buffer);
                 using (var reader = new BitReader(stream))
                 {
                     stream = null;
 
-                    Assert.AreEqual(0x1, reader.ReadBits(2));
-                    Assert.AreEqual(0x2, reader.ReadBits(3));
-                    Assert.AreEqual(0x3C, reader.ReadBits(7));
-                    Assert.AreEqual(0xA, reader.ReadBits(4));
+                    Assert.AreEqual(0b01, reader.ReadBits(2));
+                    Assert.AreEqual(0b010, reader.ReadBits(3));
+                    Assert.AreEqual(0b_011_1100, reader.ReadBits(7));
+                    Assert.AreEqual(0b1010, reader.ReadBits(4));
                 }
             }
             finally
@@ -168,7 +167,7 @@ namespace ThScoreFileConverter.Models.Tests
                     stream = null;
 
                     Assert.AreEqual(0x53CA, reader.ReadBits(16));
-                    Assert.AreEqual(0xAC355AA5, reader.ReadBits(32));
+                    Assert.AreEqual(0x_AC35_5AA5, reader.ReadBits(32));
                 }
             }
             finally
