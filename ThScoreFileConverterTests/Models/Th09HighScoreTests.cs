@@ -1,10 +1,10 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.ExceptionServices;
-using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using System.Linq;
 
 namespace ThScoreFileConverter.Models.Tests
 {
