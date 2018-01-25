@@ -41,9 +41,7 @@ namespace ThScoreFileConverter.Models.Tests
                 var pauseCount = 3;
                 var timePoint = 65432;
                 var humanRate = 7890;
-                var cardFlags = new byte[222];
-                var random = new Random();
-                random.NextBytes(cardFlags);
+                var cardFlags = TestUtils.MakeRandomArray<byte>(222);
                 var unknown5 = new byte[2];
                 var data = TestUtils.MakeByteArray(
                     unknown1,
@@ -202,9 +200,7 @@ namespace ThScoreFileConverter.Models.Tests
                 var pauseCount = 3;
                 var timePoint = 65432;
                 var humanRate = 7890;
-                var cardFlags = new byte[222];
-                var random = new Random();
-                random.NextBytes(cardFlags);
+                var cardFlags = TestUtils.MakeRandomArray<byte>(222);
                 var unknown5 = new byte[2];
                 var data = TestUtils.MakeByteArray(
                     unknown1,
@@ -275,9 +271,7 @@ namespace ThScoreFileConverter.Models.Tests
                 var pauseCount = 3;
                 var timePoint = 65432;
                 var humanRate = 7890;
-                var cardFlags = new byte[222];
-                var random = new Random();
-                random.NextBytes(cardFlags);
+                var cardFlags = TestUtils.MakeRandomArray<byte>(222);
                 var unknown5 = new byte[2];
                 var data = TestUtils.MakeByteArray(
                     unknown1,
@@ -348,9 +342,7 @@ namespace ThScoreFileConverter.Models.Tests
                 var pauseCount = 3;
                 var timePoint = 65432;
                 var humanRate = 7890;
-                var cardFlags = new byte[222];
-                var random = new Random();
-                random.NextBytes(cardFlags);
+                var cardFlags = TestUtils.MakeRandomArray<byte>(222);
                 var unknown5 = new byte[2];
                 var data = TestUtils.MakeByteArray(
                     unknown1,
@@ -421,9 +413,7 @@ namespace ThScoreFileConverter.Models.Tests
                 var pauseCount = 3;
                 var timePoint = 65432;
                 var humanRate = 7890;
-                var cardFlags = new byte[222];
-                var random = new Random();
-                random.NextBytes(cardFlags);
+                var cardFlags = TestUtils.MakeRandomArray<byte>(222);
                 var unknown5 = new byte[2];
                 var data = TestUtils.MakeByteArray(
                     unknown1,
@@ -494,9 +484,7 @@ namespace ThScoreFileConverter.Models.Tests
                 var pauseCount = 3;
                 var timePoint = 65432;
                 var humanRate = 7890;
-                var cardFlags = new byte[222];
-                var random = new Random();
-                random.NextBytes(cardFlags);
+                var cardFlags = TestUtils.MakeRandomArray<byte>(222);
                 var unknown5 = new byte[2];
                 var data = TestUtils.MakeByteArray(
                     unknown1,

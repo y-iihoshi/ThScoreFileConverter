@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace ThScoreFileConverter.Models.Tests
@@ -93,6 +94,36 @@ namespace ThScoreFileConverter.Models.Tests
             }
 
             return array;
+        }
+
+        public static TResult[] MakeRandomArray<TResult>(int length)
+            where TResult : struct
+        {
+            var maxValue = 0;
+            switch (default(TResult))
+            {
+                case byte _:
+                    maxValue = byte.MaxValue;
+                    break;
+                case short _:
+                    maxValue = short.MaxValue;
+                    break;
+                case ushort _:
+                    maxValue = ushort.MaxValue;
+                    break;
+                case int _:
+                    maxValue = int.MaxValue;
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+
+            var random = new Random();
+            var resultType = typeof(TResult);
+            return Enumerable
+                .Repeat(default(TResult), length)
+                .Select(i => (TResult)Convert.ChangeType(random.Next(maxValue), resultType))
+                .ToArray();
         }
     }
 }
