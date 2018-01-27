@@ -25,11 +25,11 @@ namespace ThScoreFileConverter.Models.Tests
             var converter = pobj.Target as ThConverter;
 
             converter.ConvertFinished +=
-                (sender, e) => Assert.Fail($"{nameof(converter.ConvertFinished)}: {TestUtils.Unreachable}");
+                (sender, e) => Assert.Fail(nameof(converter.ConvertFinished) + ": " + TestUtils.Unreachable);
             converter.ConvertAllFinished +=
-                (sender, e) => Assert.Fail($"{nameof(converter.ConvertAllFinished)}: {TestUtils.Unreachable}");
+                (sender, e) => Assert.Fail(nameof(converter.ConvertAllFinished) + ": " + TestUtils.Unreachable);
             converter.ExceptionOccurred +=
-                (sender, e) => Assert.Fail($"{nameof(converter.ExceptionOccurred)}: {TestUtils.Unreachable}");
+                (sender, e) => Assert.Fail(nameof(converter.ExceptionOccurred) + ": " + TestUtils.Unreachable);
 
             converter.Convert(null);
 
@@ -44,11 +44,11 @@ namespace ThScoreFileConverter.Models.Tests
             var converter = pobj.Target as ThConverter;
 
             converter.ConvertFinished +=
-                (sender, e) => Assert.Fail($"{nameof(converter.ConvertFinished)}: {TestUtils.Unreachable}");
+                (sender, e) => Assert.Fail(nameof(converter.ConvertFinished) + ": " + TestUtils.Unreachable);
             converter.ConvertAllFinished +=
-                (sender, e) => Assert.Fail($"{nameof(converter.ConvertAllFinished)}: {TestUtils.Unreachable}");
+                (sender, e) => Assert.Fail(nameof(converter.ConvertAllFinished) + ": " + TestUtils.Unreachable);
             converter.ExceptionOccurred +=
-                (sender, e) => Assert.Fail($"{nameof(converter.ExceptionOccurred)}: {TestUtils.Unreachable}");
+                (sender, e) => Assert.Fail(nameof(converter.ExceptionOccurred) + ": " + TestUtils.Unreachable);
 
             converter.Convert(1);
 
@@ -63,11 +63,11 @@ namespace ThScoreFileConverter.Models.Tests
             var converter = pobj.Target as ThConverter;
 
             converter.ConvertFinished +=
-                (sender, e) => Assert.Fail($"{nameof(converter.ConvertFinished)}: {TestUtils.Unreachable}");
+                (sender, e) => Assert.Fail(nameof(converter.ConvertFinished) + ": " + TestUtils.Unreachable);
             converter.ConvertAllFinished +=
-                (sender, e) => Assert.Fail($"{nameof(converter.ConvertAllFinished)}: {TestUtils.Unreachable}");
+                (sender, e) => Assert.Fail(nameof(converter.ConvertAllFinished) + ": " + TestUtils.Unreachable);
             converter.ExceptionOccurred +=
-                (sender, e) => Assert.Fail($"{nameof(converter.ExceptionOccurred)}: {TestUtils.Unreachable}");
+                (sender, e) => Assert.Fail(nameof(converter.ExceptionOccurred) + ": " + TestUtils.Unreachable);
 
             converter.Convert(new SettingsPerTitle());
 

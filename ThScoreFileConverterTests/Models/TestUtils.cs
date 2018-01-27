@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -9,6 +11,7 @@ namespace ThScoreFileConverter.Models.Tests
     {
         public static string Unreachable => nameof(Unreachable);
 
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public static byte[] MakeByteArray(params object[] args)
         {
             if (args == null)
@@ -122,7 +125,8 @@ namespace ThScoreFileConverter.Models.Tests
             var resultType = typeof(TResult);
             return Enumerable
                 .Repeat(default(TResult), length)
-                .Select(i => (TResult)Convert.ChangeType(random.Next(maxValue), resultType))
+                .Select(i => (TResult)Convert.ChangeType(
+                    random.Next(maxValue), resultType, CultureInfo.InvariantCulture))
                 .ToArray();
         }
     }
