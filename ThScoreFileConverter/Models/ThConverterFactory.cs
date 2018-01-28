@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="ThConverterFactory.cs" company="None">
-//     (c) 2014-2015 IIHOSHI Yoshinori
+//     (c) 2014-2018 IIHOSHI Yoshinori
 // </copyright>
 //-----------------------------------------------------------------------
 
@@ -41,7 +41,8 @@ namespace ThScoreFileConverter.Models
             { Resources.keyTh105, typeof(Th105Converter) },
             { Resources.keyTh123, typeof(Th123Converter) },
             { Resources.keyTh135, typeof(Th135Converter) },
-            { Resources.keyTh145, typeof(Th145Converter) }
+            { Resources.keyTh145, typeof(Th145Converter) },
+            { Resources.keyTh155, typeof(Th155Converter) }
         };
 
         /// <summary>

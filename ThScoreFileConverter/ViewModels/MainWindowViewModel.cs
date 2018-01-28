@@ -1,11 +1,13 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="MainWindowViewModel.cs" company="None">
-//     (c) 2014-2015 IIHOSHI Yoshinori
+//     (c) 2014-2018 IIHOSHI Yoshinori
 // </copyright>
 //-----------------------------------------------------------------------
 
 namespace ThScoreFileConverter.ViewModels
 {
+    using Microsoft.Practices.Prism.Commands;
+    using Microsoft.Practices.Prism.Mvvm;
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -16,8 +18,6 @@ namespace ThScoreFileConverter.ViewModels
     using System.Threading;
     using System.Windows;
     using System.Windows.Input;
-    using Microsoft.Practices.Prism.Commands;
-    using Microsoft.Practices.Prism.Mvvm;
     using ThScoreFileConverter.Actions;
     using ThScoreFileConverter.Models;
     using ThScoreFileConverter.Properties;
@@ -53,7 +53,7 @@ namespace ThScoreFileConverter.ViewModels
             new Work { Number = "TH123", Title = "東方非想天則", IsSupported = true },
             new Work { Number = "TH135", Title = "東方心綺楼", IsSupported = true },
             new Work { Number = "TH145", Title = "東方深秘録", IsSupported = true },
-            new Work { Number = "TH155", Title = "東方憑依華", IsSupported = false },
+            new Work { Number = "TH155", Title = "東方憑依華", IsSupported = true },
         };
 
         /// <summary>
