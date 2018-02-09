@@ -41,7 +41,8 @@ deploy:
     appveyor_repo_tag: true
 
 for:
-  branches:
-    except: master
+- branches:
+    except:
+    - master
   configuration: Debug
   deploy: off
