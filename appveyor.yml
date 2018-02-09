@@ -39,3 +39,9 @@ deploy:
   description: ''
   on:
     appveyor_repo_tag: true
+
+for:
+  branches:
+    except: master
+  configuration: Debug
+  deploy: off
