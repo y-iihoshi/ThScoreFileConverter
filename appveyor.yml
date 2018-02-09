@@ -34,3 +34,12 @@ after_build:
 artifacts:
   - path: publish
     name: ThScoreFileConverter
+
+deploy:
+  provider: GitHub
+  auth_token:
+    secure: XBLZ1KuCOmvayGOFMZwYC+QyZxCmr0og6vKt53trP9I3WgF77pN+aVZvim2UP2Dm
+  description: $(appveyor_repo_commit_message)
+  on:
+    branch: master
+    appveyor_repo_tag: true
