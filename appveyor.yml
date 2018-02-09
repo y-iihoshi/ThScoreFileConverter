@@ -1,7 +1,4 @@
 version: '{build}'
-branches:
-  only:
-    - master
 
 image: Visual Studio 2017
 configuration:
@@ -41,5 +38,4 @@ deploy:
     secure: XBLZ1KuCOmvayGOFMZwYC+QyZxCmr0og6vKt53trP9I3WgF77pN+aVZvim2UP2Dm
   description: $(appveyor_repo_commit_message)
   on:
-    branch: master
     appveyor_repo_tag: true
