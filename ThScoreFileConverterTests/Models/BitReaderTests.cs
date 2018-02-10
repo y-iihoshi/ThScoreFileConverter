@@ -167,7 +167,9 @@ namespace ThScoreFileConverter.Models.Tests
                     stream = null;
 
                     Assert.AreEqual(0x53CA, reader.ReadBits(16));
-                    Assert.AreEqual(0x_AC35_5AA5, reader.ReadBits(32));
+
+                    // NOTE: Changing the return type to uint makes BItReader.ReadBits() to CLS-noncompliant.
+                    Assert.AreEqual(0x_AC35_5AA5, (uint)reader.ReadBits(32));
                 }
             }
             finally
@@ -199,21 +201,26 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ReadBitsTestExceededNumBits()
         {
             MemoryStream stream = null;
             try
             {
-                var buffer = new byte[6] { 0x53, 0xCA, 0xAC, 0x35, 0x5A, 0xA5 };
+                var buffer = new byte[5]
+                {
+                    0b_0101_0011,
+                    0b_1100_1010,
+                    0b_1010_1100,
+                    0b_0011_0101,
+                    0b_0101_1010
+                };
 
                 stream = new MemoryStream(buffer);
                 using (var reader = new BitReader(stream))
                 {
                     stream = null;
 
-                    reader.ReadBits(33);
-                    Assert.Fail(TestUtils.Unreachable);
+                    Assert.AreEqual(0b_1010_0111_1001_0101_0101_1000_0110_1010, (uint)reader.ReadBits(33));
                 }
             }
             finally
@@ -223,7 +230,6 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(EndOfStreamException))]
         public void ReadBitsTestEndOfStream()
         {
             MemoryStream stream = null;
@@ -235,9 +241,7 @@ namespace ThScoreFileConverter.Models.Tests
                     stream = null;
 
                     Assert.AreEqual(0x53, reader.ReadBits(8));
-
-                    reader.ReadBits(1);
-                    Assert.Fail(TestUtils.Unreachable);
+                    Assert.AreEqual(0, reader.ReadBits(1));
                 }
             }
             finally
