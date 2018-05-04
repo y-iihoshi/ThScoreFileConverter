@@ -42,7 +42,8 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("E")] Easy,
             [EnumAltName("N")] Normal,
             [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic
+            [EnumAltName("L")] Lunatic,
+            [EnumAltName("D")] OverDrive
         }
 
         public new enum LevelWithTotal
@@ -51,6 +52,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("N")] Normal,
             [EnumAltName("H")] Hard,
             [EnumAltName("L")] Lunatic,
+            [EnumAltName("D")] OverDrive,
             [EnumAltName("T")] Total
         }
 
@@ -61,7 +63,8 @@ namespace ThScoreFileConverter.Models
             Easy = 1,
             Normal = 2,
             Hard = 4,
-            Lunatic = 8
+            Lunatic = 8,
+            OverDrive = 16
         }
 
         public enum StoryChara
@@ -97,7 +100,7 @@ namespace ThScoreFileConverter.Models
 
         public override string SupportedVersions
         {
-            get { return "1.03"; }
+            get { return "1.10c"; }
         }
 
         public override bool HasCardReplacer
@@ -217,6 +220,8 @@ namespace ThScoreFileConverter.Models
                                 return LevelFlag.Hard;
                             case Level.Lunatic:
                                 return LevelFlag.Lunatic;
+                            case Level.OverDrive:
+                                return LevelFlag.OverDrive;
                             default:
                                 return LevelFlag.None;
                         }
@@ -428,6 +433,10 @@ namespace ThScoreFileConverter.Models
                                 story.ed = (LevelFlag)ed;
                             if ((key == "available") && (pair.Value is bool available))
                                 story.available = available;
+                            if ((key == "overdrive") && (pair.Value is int overDrive))
+                                story.overDrive = overDrive;
+                            if ((key == "stage_overdrive") && (pair.Value is int stageOverDrive))
+                                story.stageOverDrive = stageOverDrive;
                         }
                     }
                 }
@@ -508,6 +517,8 @@ namespace ThScoreFileConverter.Models
                 public int stage;
                 public LevelFlag ed;
                 public bool available;
+                public int overDrive;
+                public int stageOverDrive;
             }
         }
     }
