@@ -44,6 +44,5 @@ for:
   configuration: Debug
   test_script:
     - cmd: OpenCover.bat %CONFIGURATION% coverage.xml
-    - cmd: choco install codecov
-    - cmd: codecov -f coverage.xml -v
+    - cmd: .\packages\Codecov.1.0.3\tools\codecov.exe -f coverage.xml -v
   deploy: off
