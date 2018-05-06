@@ -5,9 +5,10 @@ configuration:
   - Release
 environment:
   PYTHON: C:\Python36-x64
+  VSINSTALLDIR: %ProgramFiles(x86)%\Microsoft Visual Studio\2017\Community
 install:
   - cmd: curl -LO https://aka.ms/vs/15/release/vs_community.exe
-  - cmd: vs_community.exe modify --installPath "%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Community" --add Microsoft.VisualStudio.Workload.Python --quiet --wait
+  - cmd: vs_community.exe modify --installPath %VSINSTALLDIR% --add Microsoft.VisualStudio.Workload.Python --quiet --wait
   - cmd: set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
   - cmd: python --version
   - cmd: python -m pip install -U pip
@@ -15,6 +16,7 @@ install:
 
 before_build:
   - cmd: nuget restore
+  - cmd: choco install codecov
 build:
   parallel: true
   verbosity: minimal
@@ -22,6 +24,10 @@ after_build:
   - cmd: xcopy ThScoreFileConverter\bin\%CONFIGURATION% publish /e /i /q
   - cmd: xcopy ManualGenerator\_build\html publish\doc /e /i /q
   - cmd: xcopy template publish\template /e /i /q
+
+test_script:
+  - cmd: OpenCover.bat %CONFIGURATION% coverage.xml
+  - cmd: codecov -f coverage.xml
 
 artifacts:
   - path: publish
