@@ -5,7 +5,7 @@ configuration:
   - Release
 environment:
   PYTHON: C:\Python36-x64
-  VSINSTALLDIR: %ProgramFiles(x86)%\Microsoft Visual Studio\2017\Community
+  VSINSTALLDIR: C:\Program Files(x86)\Microsoft Visual Studio\2017\Community
 install:
   - cmd: curl -LO https://aka.ms/vs/15/release/vs_community.exe
   - cmd: vs_community.exe modify --installPath %VSINSTALLDIR% --add Microsoft.VisualStudio.Workload.Python --quiet --wait
@@ -16,7 +16,6 @@ install:
 
 before_build:
   - cmd: nuget restore
-  - cmd: choco install codecov
 build:
   parallel: true
   verbosity: minimal
@@ -25,6 +24,8 @@ after_build:
   - cmd: xcopy ManualGenerator\_build\html publish\doc /e /i /q
   - cmd: xcopy template publish\template /e /i /q
 
+before_test:
+  - cmd: choco install codecov
 test_script:
   - cmd: OpenCover.bat %CONFIGURATION% coverage.xml
   - cmd: codecov -f coverage.xml
