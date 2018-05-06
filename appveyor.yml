@@ -45,5 +45,5 @@ for:
   test_script:
     - cmd: OpenCover.bat %CONFIGURATION% coverage.xml
     - cmd: choco install codecov
-    - cmd: codecov -f coverage.xml
+    - cmd: codecov -f coverage.xml -v
   deploy: off
