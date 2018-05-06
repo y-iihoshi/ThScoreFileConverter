@@ -6,14 +6,12 @@ configuration:
 environment:
   PYTHON: C:\Python36-x64
 install:
-  - cmd: >-
-      curl -O https://download.visualstudio.microsoft.com/download/pr/100473929/045b56eb413191d03850ecc425172a7d/vs_Community.exe
-
-      vs_Community.exe modify --installPath "%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Community" --add Microsoft.VisualStudio.Workload.Python --quiet --wait
-
-      %PYTHON%\python -m pip install -U pip
-
-      %PYTHON%\python -m pip install -r ManualGenerator\requirements.txt
+  - cmd: curl -LO https://aka.ms/vs/15/release/vs_community.exe
+  - cmd: vs_community.exe modify --installPath "%ProgramFiles(x86)%\Microsoft Visual Studio\2017\Community" --add Microsoft.VisualStudio.Workload.Python --quiet --wait
+  - cmd: set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
+  - cmd: python --version
+  - cmd: python -m pip install -U pip
+  - cmd: python -m pip install -r ManualGenerator\requirements.txt
 
 before_build:
   - cmd: nuget restore
@@ -21,12 +19,9 @@ build:
   parallel: true
   verbosity: minimal
 after_build:
-  - cmd: >-
-      xcopy ThScoreFileConverter\bin\%CONFIGURATION% publish /e /i /q
-
-      xcopy ManualGenerator\_build\html publish\doc /e /i /q
-
-      xcopy template publish\template /e /i /q
+  - cmd: xcopy ThScoreFileConverter\bin\%CONFIGURATION% publish /e /i /q
+  - cmd: xcopy ManualGenerator\_build\html publish\doc /e /i /q
+  - cmd: xcopy template publish\template /e /i /q
 
 artifacts:
   - path: publish

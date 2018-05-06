@@ -16,6 +16,7 @@
         :``[N]``: Normal
         :``[H]``: Hard
         :``[L]``: Lunatic
+        :``[D]``: OverDrive
 
     :``[yy]``: キャラの名前
 

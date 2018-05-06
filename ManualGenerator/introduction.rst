@@ -26,13 +26,13 @@ ThSFC を利用するには .NET Framework 4.5 以降が必要です。
 * `Tech TIPS：.NET Frameworkのバージョンを整理する (1/2) - ＠IT
   <http://www.atmarkit.co.jp/ait/articles/1211/16/news093.html>`_
 
-2018 年 1 月現在、 ThSFC は下記環境でのみ開発及び動作確認を実施しています。
+2018 年 5 月現在、 ThSFC は下記環境でのみ開発及び動作確認を実施しています。
 下記以外の環境で動作しないなどのご報告を受けても対応できない可能性があります。
 
-* Windows 10 Pro Version 1709 (64bit)
-* .NET Framework 4.7.1
-* Visual Studio Community 2017 Version 15.5.5
-* Python 3.6.4
+* Windows 10 Pro Version 1803 (64bit)
+* .NET Framework 4.7.2
+* Visual Studio Community 2017 Version 15.6.7
+* Python 3.6.5
 
 免責事項
 --------

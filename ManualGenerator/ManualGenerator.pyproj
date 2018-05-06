@@ -1,5 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
@@ -11,6 +10,7 @@
     <OutputPath>.</OutputPath>
     <Name>ManualGenerator</Name>
     <RootNamespace>ManualGenerator</RootNamespace>
+    <IsWindowsApplication>False</IsWindowsApplication>
     <InterpreterId>Global|PythonCore|3.6</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -61,13 +61,11 @@
     <Content Include="_static\mainwindow.png" />
     <Content Include="_static\settingwindow.png" />
     <Folder Include="_templates\" />
+    <None Include="_templates\.keep" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="Global|PythonCore|3.6" />
   </ItemGroup>
-  <PropertyGroup>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
-  </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- This task seems not necessary for *.pyproj. -->
   <Target Name="_GenerateCompileDependencyCache" />
@@ -75,25 +73,13 @@
        Visual Studio and specify your pre- and post-build commands in
        the BeforeBuild and AfterBuild targets below. -->
   <Target Name="CoreCompile">
-    <Exec Command="(set SPHINXBUILD=$(InterpreterPath) -msphinx) &amp; make.bat html" IgnoreExitCode="False" />
+    <Exec Command="make.bat html" IgnoreExitCode="False" />
   </Target>
   <Target Name="CoreClean">
-    <Exec Command="(set SPHINXBUILD=$(InterpreterPath) -msphinx) &amp; make.bat clean" IgnoreExitCode="False" />
+    <Exec Command="make.bat clean" IgnoreExitCode="False" />
   </Target>
   <Target Name="BeforeBuild">
-    <ResolveEnvironment>
-      <Output TaskParameter="InterpreterPath" PropertyName="InterpreterPath" />
-    </ResolveEnvironment>
   </Target>
   <Target Name="AfterBuild">
   </Target>
-  <Target Name="BeforeClean">
-    <ResolveEnvironment>
-      <Output TaskParameter="InterpreterPath" PropertyName="InterpreterPath" />
-    </ResolveEnvironment>
-  </Target>
-  <PropertyGroup>
-    <ResolveReferencesDependsOn />
-    <PrepareResourcesDependsOn />
-  </PropertyGroup>
 </Project>
