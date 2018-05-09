@@ -71,6 +71,25 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [TestMethod()]
+        public void DisposeTestTwice()
+        {
+            MemoryStream stream = null;
+            try
+            {
+                stream = new MemoryStream();
+                using (var reader = new BitReader(stream))
+                {
+                    stream = null;
+                    reader.Dispose();
+                }
+            }
+            finally
+            {
+                stream?.Dispose();
+            }
+        }
+
+        [TestMethod()]
         public void ReadBitsTestOneBit()
         {
             MemoryStream stream = null;

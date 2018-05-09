@@ -22,6 +22,7 @@ namespace ThScoreFileConverter.Models.Tests
         [TestMethod()]
         public void ToShortNameTest()
         {
+            Assert.AreEqual(string.Empty, 1.ToShortName());
             Assert.AreEqual(string.Empty, DayOfWeek.Sunday.ToShortName());
             Assert.AreEqual("RM", Protagonist.Reimu.ToShortName());
             Assert.AreEqual("MR", Protagonist.Marisa.ToShortName());
@@ -33,6 +34,7 @@ namespace ThScoreFileConverter.Models.Tests
         [TestMethod()]
         public void ToLongNameTest()
         {
+            Assert.AreEqual(string.Empty, 1.ToShortName());
             Assert.AreEqual(string.Empty, DayOfWeek.Sunday.ToLongName());
             Assert.AreEqual("博麗 霊夢", Protagonist.Reimu.ToLongName());
             Assert.AreEqual("霧雨 魔理沙", Protagonist.Marisa.ToLongName());
