@@ -13,7 +13,7 @@ namespace ThScoreFileConverter.Models.Tests
         private static string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
         private static string TypeNameToTest = ParentType.FullName + "+Chapter";
 
-        private PrivateObject pobj = null;
+        private readonly PrivateObject pobj = null;
 
         [SuppressMessage("Microsoft.Design", "CA1000:DoNotDeclareStaticMembersOnGenericTypes")]
         public static Th10ChapterWrapper<TParent> Create(byte[] array)

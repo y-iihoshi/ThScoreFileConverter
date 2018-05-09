@@ -11,7 +11,7 @@ namespace ThScoreFileConverter.Models.Tests
         private static string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
         private static string TypeNameToTest = ParentType.FullName + "+HighScore";
 
-        private PrivateObject pobj = null;
+        private readonly PrivateObject pobj = null;
 
         public Th07HighScoreWrapper(Th06ChapterWrapper<Th07Converter> chapter)
         {

@@ -13,7 +13,7 @@ namespace ThScoreFileConverter.Models.Tests
         private static string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
         private static string TypeNameToTest = ParentType.FullName + "+ClearData";
 
-        private PrivateObject pobj = null;
+        private readonly PrivateObject pobj = null;
 
         public Th08ClearDataWrapper(Th06ChapterWrapper<Th08Converter> chapter)
         {

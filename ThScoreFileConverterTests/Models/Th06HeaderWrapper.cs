@@ -10,7 +10,7 @@ namespace ThScoreFileConverter.Models.Tests
         private static string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
         private static string TypeNameToTest = ParentType.FullName + "+Header";
 
-        private PrivateObject pobj = null;
+        private readonly PrivateObject pobj = null;
 
         private Th06HeaderWrapper(params object[] args)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, args);
