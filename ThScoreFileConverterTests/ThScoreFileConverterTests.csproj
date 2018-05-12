@@ -66,6 +66,8 @@
     <Compile Include="Models\PairTests.cs" />
     <Compile Include="Models\SpellCardInfoTests.cs" />
     <Compile Include="Models\TestUtils.cs" />
+    <Compile Include="Models\Th06CardAttackTests.cs" />
+    <Compile Include="Models\Th06CardAttackWrapper.cs" />
     <Compile Include="Models\Th06ChapterTests.cs" />
     <Compile Include="Models\Th06ChapterWrapper.cs" />
     <Compile Include="Models\Th06ClearDataTests.cs" />
@@ -78,10 +80,16 @@
     <Compile Include="Models\Th075ClearDataWrapper.cs" />
     <Compile Include="Models\Th075HighScoreTests.cs" />
     <Compile Include="Models\Th075HighScoreWrapper.cs" />
+    <Compile Include="Models\Th07CardAttackTests.cs" />
+    <Compile Include="Models\Th07CardAttackWrapper.cs" />
     <Compile Include="Models\Th07ClearDataTests.cs" />
     <Compile Include="Models\Th07ClearDataWrapper.cs" />
     <Compile Include="Models\Th07HighScoreTests.cs" />
     <Compile Include="Models\Th07HighScoreWrapper.cs" />
+    <Compile Include="Models\Th08CardAttackCareerTests.cs" />
+    <Compile Include="Models\Th08CardAttackCareerWrapper.cs" />
+    <Compile Include="Models\Th08CardAttackTests.cs" />
+    <Compile Include="Models\Th08CardAttackWrapper.cs" />
     <Compile Include="Models\Th08ClearDataTests.cs" />
     <Compile Include="Models\Th08ClearDataWrapper.cs" />
     <Compile Include="Models\Th08HighScoreTests.cs" />
