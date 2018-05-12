@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.ExceptionServices;
@@ -85,6 +86,96 @@ namespace ThScoreFileConverter.Models.Tests
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "highScore")]
         [TestMethod()]
+        [ExpectedException(typeof(InvalidDataException))]
+        public void Th09HighScoreTestInvalidSignature()
+        {
+            try
+            {
+                var signature = "hscr";
+                short size1 = 0x2C;
+                short size2 = 0x2C;
+                var unknown1 = 0u;
+                var score = 1234567u;
+                var unknown2 = 0u;
+                var chara = Th09Converter.Chara.Marisa;
+                var level = ThConverter.Level.Hard;
+                short rank = 987;
+                var name = "Player1\0\0";
+                var date = "06/01/23\0";
+                byte unknown3 = 0;
+                byte continueCount = 2;
+                var data = TestUtils.MakeByteArray(
+                    unknown1,
+                    score,
+                    unknown2,
+                    (byte)chara,
+                    (byte)level,
+                    rank,
+                    name.ToCharArray(),
+                    date.ToCharArray(),
+                    unknown3,
+                    continueCount);
+
+                var chapter = Th06ChapterWrapper<Th09Converter>.Create(
+                    TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+                var highScore = new Th09HighScoreWrapper(chapter);
+
+                Assert.Fail(TestUtils.Unreachable);
+            }
+            catch (TargetInvocationException ex)
+            {
+                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
+                throw;
+            }
+        }
+
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "highScore")]
+        [TestMethod()]
+        [ExpectedException(typeof(InvalidDataException))]
+        public void Th09HighScoreTestInvalidSize()
+        {
+            try
+            {
+                var signature = "HSCR";
+                short size1 = 0x2D;
+                short size2 = 0x2C;
+                var unknown1 = 0u;
+                var score = 1234567u;
+                var unknown2 = 0u;
+                var chara = Th09Converter.Chara.Marisa;
+                var level = ThConverter.Level.Hard;
+                short rank = 987;
+                var name = "Player1\0\0";
+                var date = "06/01/23\0";
+                byte unknown3 = 0;
+                byte continueCount = 2;
+                var data = TestUtils.MakeByteArray(
+                    unknown1,
+                    score,
+                    unknown2,
+                    (byte)chara,
+                    (byte)level,
+                    rank,
+                    name.ToCharArray(),
+                    date.ToCharArray(),
+                    unknown3,
+                    continueCount);
+
+                var chapter = Th06ChapterWrapper<Th09Converter>.Create(
+                    TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+                var highScore = new Th09HighScoreWrapper(chapter);
+
+                Assert.Fail(TestUtils.Unreachable);
+            }
+            catch (TargetInvocationException ex)
+            {
+                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
+                throw;
+            }
+        }
+
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "highScore")]
+        [TestMethod()]
         [ExpectedException(typeof(InvalidCastException))]
         public void Th09HighScoreTestInvalidChara()
         {
@@ -146,7 +237,8 @@ namespace ThScoreFileConverter.Models.Tests
                 short rank = 987;
                 var name = "Player1\0\0";
                 var date = "06/01/23\0";
-                ushort continueCount = 2;
+                byte unknown3 = 0;
+                byte continueCount = 2;
                 var data = TestUtils.MakeByteArray(
                     unknown1,
                     score,
@@ -156,6 +248,7 @@ namespace ThScoreFileConverter.Models.Tests
                     rank,
                     name.ToCharArray(),
                     date.ToCharArray(),
+                    unknown3,
                     continueCount);
 
                 var chapter = Th06ChapterWrapper<Th09Converter>.Create(
