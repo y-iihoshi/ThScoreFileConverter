@@ -11,6 +11,8 @@ namespace ThScoreFileConverter.Models.Tests
     {
         public static string Unreachable => nameof(Unreachable);
 
+        public static Random Random => new Random();
+
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public static byte[] MakeByteArray(params object[] args)
         {
@@ -110,7 +112,6 @@ namespace ThScoreFileConverter.Models.Tests
         public static TResult[] MakeRandomArray<TResult>(int length)
             where TResult : struct
         {
-            var random = new Random();
             var defaultValue = default(TResult);
             var maxValue = 0;
             Func<object> getNextValue;
@@ -118,21 +119,21 @@ namespace ThScoreFileConverter.Models.Tests
             switch (defaultValue)
             {
                 case byte _:
-                    getNextValue = () => random.Next(byte.MaxValue + 1);
+                    getNextValue = () => Random.Next(byte.MaxValue + 1);
                     break;
                 case short _:
-                    getNextValue = () => random.Next(short.MaxValue + 1);
+                    getNextValue = () => Random.Next(short.MaxValue + 1);
                     break;
                 case ushort _:
-                    getNextValue = () => random.Next(ushort.MaxValue + 1);
+                    getNextValue = () => Random.Next(ushort.MaxValue + 1);
                     break;
                 case int _:
                     maxValue = ushort.MaxValue + 1;
-                    getNextValue = () => ((random.Next(maxValue) << 16) | random.Next(maxValue));
+                    getNextValue = () => ((Random.Next(maxValue) << 16) | Random.Next(maxValue));
                     break;
                 case uint _:
                     maxValue = ushort.MaxValue + 1;
-                    getNextValue = () => (((uint)random.Next(maxValue) << 16) | (uint)random.Next(maxValue));
+                    getNextValue = () => (((uint)Random.Next(maxValue) << 16) | (uint)Random.Next(maxValue));
                     break;
                 default:
                     throw new NotImplementedException();
