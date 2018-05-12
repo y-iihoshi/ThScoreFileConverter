@@ -76,6 +76,8 @@
     <Compile Include="Models\Th06HeaderWrapper.cs" />
     <Compile Include="Models\Th06HighScoreTests.cs" />
     <Compile Include="Models\Th06HighScoreWrapper.cs" />
+    <Compile Include="Models\Th06PracticeScoreTests.cs" />
+    <Compile Include="Models\Th06PracticeScoreWrapper.cs" />
     <Compile Include="Models\Th075ClearDataTests.cs" />
     <Compile Include="Models\Th075ClearDataWrapper.cs" />
     <Compile Include="Models\Th075HighScoreTests.cs" />
@@ -86,6 +88,8 @@
     <Compile Include="Models\Th07ClearDataWrapper.cs" />
     <Compile Include="Models\Th07HighScoreTests.cs" />
     <Compile Include="Models\Th07HighScoreWrapper.cs" />
+    <Compile Include="Models\Th07PracticeScoreTests.cs" />
+    <Compile Include="Models\Th07PracticeScoreWrapper.cs" />
     <Compile Include="Models\Th08CardAttackCareerTests.cs" />
     <Compile Include="Models\Th08CardAttackCareerWrapper.cs" />
     <Compile Include="Models\Th08CardAttackTests.cs" />
@@ -94,6 +98,10 @@
     <Compile Include="Models\Th08ClearDataWrapper.cs" />
     <Compile Include="Models\Th08HighScoreTests.cs" />
     <Compile Include="Models\Th08HighScoreWrapper.cs" />
+    <Compile Include="Models\Th08PracticeScoreTests.cs" />
+    <Compile Include="Models\Th08PracticeScoreWrapper.cs" />
+    <Compile Include="Models\Th08StageLevelPairTests.cs" />
+    <Compile Include="Models\Th08StageLevelPairWrapper.cs" />
     <Compile Include="Models\Th095ChapterTests.cs" />
     <Compile Include="Models\Th095ChapterWrapper.cs" />
     <Compile Include="Models\Th095HeaderTests.cs" />
