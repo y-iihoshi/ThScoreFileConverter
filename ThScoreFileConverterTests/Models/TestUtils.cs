@@ -111,8 +111,8 @@ namespace ThScoreFileConverter.Models.Tests
             where TResult : struct
         {
             var random = new Random();
-            var resultType = typeof(TResult);
             var defaultValue = default(TResult);
+            var maxValue = 0;
             Func<object> getNextValue;
 
             switch (defaultValue)
@@ -127,8 +127,11 @@ namespace ThScoreFileConverter.Models.Tests
                     getNextValue = () => random.Next(ushort.MaxValue + 1);
                     break;
                 case int _:
+                    maxValue = ushort.MaxValue + 1;
+                    getNextValue = () => ((random.Next(maxValue) << 16) | random.Next(maxValue));
+                    break;
                 case uint _:
-                    var maxValue = ushort.MaxValue + 1;
+                    maxValue = ushort.MaxValue + 1;
                     getNextValue = () => (((uint)random.Next(maxValue) << 16) | (uint)random.Next(maxValue));
                     break;
                 default:
@@ -137,7 +140,7 @@ namespace ThScoreFileConverter.Models.Tests
 
             return Enumerable
                 .Repeat(defaultValue, length)
-                .Select(i => (TResult)Convert.ChangeType(getNextValue(), resultType, CultureInfo.InvariantCulture))
+                .Select(i => (TResult)Convert.ChangeType(getNextValue(), typeof(TResult), CultureInfo.InvariantCulture))
                 .ToArray();
         }
     }
