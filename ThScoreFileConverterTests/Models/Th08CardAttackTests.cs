@@ -202,6 +202,7 @@ namespace ThScoreFileConverter.Models.Tests
             }
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "cardAttack")]
         [TestMethod()]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th08CardAttackTestInvalidLevel()

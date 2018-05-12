@@ -123,5 +123,35 @@ namespace ThScoreFileConverter.Models.Tests
                 throw;
             }
         }
+
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
+        [TestMethod()]
+        [ExpectedException(typeof(InvalidDataException))]
+        public void Th08PracticeScoreTestInvalidChara()
+        {
+            try
+            {
+                var signature = "PSCR";
+                short size1 = 0x178;
+                short size2 = 0x178;
+                var unknown1 = 1u;
+                var playCounts = TestUtils.MakeRandomArray<int>(45);
+                var highScores = TestUtils.MakeRandomArray<int>(45);
+                var chara = (Th08Converter.Chara)(-1);
+                var unknown2 = TestUtils.MakeRandomArray<byte>(3);
+                var data = TestUtils.MakeByteArray(unknown1, playCounts, highScores, (byte)chara, unknown2);
+
+                var chapter = Th06ChapterWrapper<Th08Converter>.Create(
+                    TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+                var score = new Th08PracticeScoreWrapper(chapter);
+
+                Assert.Fail(TestUtils.Unreachable);
+            }
+            catch (TargetInvocationException ex)
+            {
+                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
+                throw;
+            }
+        }
     }
 }
