@@ -70,6 +70,7 @@ namespace ThScoreFileConverter.Models.Tests
             }
         }
 
+        [SuppressMessage("Microsoft.Usage", "CA2202:DoNotDisposeObjectsMultipleTimes")]
         [TestMethod()]
         public void DisposeTestTwice()
         {
