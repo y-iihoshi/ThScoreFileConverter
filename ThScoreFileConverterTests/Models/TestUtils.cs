@@ -110,31 +110,34 @@ namespace ThScoreFileConverter.Models.Tests
         public static TResult[] MakeRandomArray<TResult>(int length)
             where TResult : struct
         {
-            var maxValue = 0;
-            switch (default(TResult))
+            var random = new Random();
+            var resultType = typeof(TResult);
+            var defaultValue = default(TResult);
+            Func<object> getNextValue;
+
+            switch (defaultValue)
             {
                 case byte _:
-                    maxValue = byte.MaxValue;
+                    getNextValue = () => random.Next(byte.MaxValue + 1);
                     break;
                 case short _:
-                    maxValue = short.MaxValue;
+                    getNextValue = () => random.Next(short.MaxValue + 1);
                     break;
                 case ushort _:
-                    maxValue = ushort.MaxValue;
+                    getNextValue = () => random.Next(ushort.MaxValue + 1);
                     break;
                 case int _:
-                    maxValue = int.MaxValue;
+                case uint _:
+                    var maxValue = ushort.MaxValue + 1;
+                    getNextValue = () => (((uint)random.Next(maxValue) << 16) | (uint)random.Next(maxValue));
                     break;
                 default:
                     throw new NotImplementedException();
             }
 
-            var random = new Random();
-            var resultType = typeof(TResult);
             return Enumerable
-                .Repeat(default(TResult), length)
-                .Select(i => (TResult)Convert.ChangeType(
-                    random.Next(maxValue), resultType, CultureInfo.InvariantCulture))
+                .Repeat(defaultValue, length)
+                .Select(i => (TResult)Convert.ChangeType(getNextValue(), resultType, CultureInfo.InvariantCulture))
                 .ToArray();
         }
     }
