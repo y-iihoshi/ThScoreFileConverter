@@ -96,6 +96,8 @@
     <Compile Include="Models\Th07PlayStatusWrapper.cs" />
     <Compile Include="Models\Th07PracticeScoreTests.cs" />
     <Compile Include="Models\Th07PracticeScoreWrapper.cs" />
+    <Compile Include="Models\Th07VersionInfoTests.cs" />
+    <Compile Include="Models\Th07VersionInfoWrapper.cs" />
     <Compile Include="Models\Th08CardAttackCareerTests.cs" />
     <Compile Include="Models\Th08CardAttackCareerWrapper.cs" />
     <Compile Include="Models\Th08CardAttackTests.cs" />
