@@ -83,6 +83,19 @@ namespace ThScoreFileConverter.Models.Tests
             }
         }
 
+        [TestMethod()]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void FinalizerTest()
+        {
+            void preprocess() => throw new NotImplementedException();
+
+            using (var profiler = new Profiler(preprocess, null))
+            {
+            }
+
+            Assert.Fail(TestUtils.Unreachable);
+        }
+
         [SuppressMessage("Microsoft.Globalization", "CA1303:DoNotPassLiteralsAsLocalizedParameters", MessageId = "ThScoreFileConverter.Models.Profiler.#ctor(System.String)")]
         [TestMethod()]
         public void DisposeTest()
