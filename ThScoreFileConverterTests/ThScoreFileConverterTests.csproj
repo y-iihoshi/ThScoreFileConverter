@@ -104,6 +104,8 @@
     <Compile Include="Models\Th08CardAttackWrapper.cs" />
     <Compile Include="Models\Th08ClearDataTests.cs" />
     <Compile Include="Models\Th08ClearDataWrapper.cs" />
+    <Compile Include="Models\Th08FlspTests.cs" />
+    <Compile Include="Models\Th08FlspWrapper.cs" />
     <Compile Include="Models\Th08HighScoreTests.cs" />
     <Compile Include="Models\Th08HighScoreWrapper.cs" />
     <Compile Include="Models\Th08PlayCountTests.cs" />
