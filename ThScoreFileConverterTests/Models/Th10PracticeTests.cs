@@ -7,18 +7,17 @@ using System.Runtime.ExceptionServices;
 namespace ThScoreFileConverter.Models.Tests
 {
     [TestClass()]
-    public class Th13PracticeTests
+    public class Th10PracticeTests
     {
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void Th13PracticeTestHelper<TParent>()
+        public static void Th10PracticeTestHelper<TParent>()
         {
             try
             {
-                var practice = new Th13PracticeWrapper<TParent>();
+                var practice = new Th10PracticeWrapper<TParent>();
 
                 Assert.AreEqual(0u, practice.Score);
-                Assert.AreEqual((byte)0, practice.ClearFlag);
-                Assert.AreEqual((byte)0, practice.EnableFlag);
+                Assert.AreEqual(0u, practice.StageFlag);
             }
             catch (TargetInvocationException ex)
             {
@@ -28,21 +27,17 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void Th13PracticeReadFromTestHelper<TParent>()
+        public static void Th10PracticeReadFromTestHelper<TParent>()
         {
             try
             {
                 var score = 123456u;
-                byte clearFlag = 7;
-                byte enableFlag = 8;
-                ushort unknown = 9;
+                var stageFlag = 789u;
 
-                var practice = Th13PracticeWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(score, clearFlag, enableFlag, unknown));
+                var practice = Th10PracticeWrapper<TParent>.Create(TestUtils.MakeByteArray(score, stageFlag));
 
                 Assert.AreEqual(score, practice.Score);
-                Assert.AreEqual(clearFlag, practice.ClearFlag);
-                Assert.AreEqual(enableFlag, practice.EnableFlag);
+                Assert.AreEqual(stageFlag, practice.StageFlag);
             }
             catch (TargetInvocationException ex)
             {
@@ -52,11 +47,11 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void Th13PracticeReadFromTestNullHelper<TParent>()
+        public static void Th10PracticeReadFromTestNullHelper<TParent>()
         {
             try
             {
-                var practice = new Th13PracticeWrapper<TParent>();
+                var practice = new Th10PracticeWrapper<TParent>();
                 practice.ReadFrom(null);
                 Assert.Fail(TestUtils.Unreachable);
             }
@@ -67,71 +62,54 @@ namespace ThScoreFileConverter.Models.Tests
             }
         }
 
-        #region Th13
+        #region Th10
 
         [TestMethod()]
-        public void Th13PracticeTest()
-            => Th13PracticeTestHelper<Th13Converter>();
+        public void Th10PracticeTest()
+            => Th10PracticeTestHelper<Th10Converter>();
 
         [TestMethod()]
-        public void Th13PracticeReadFromTest()
-            => Th13PracticeReadFromTestHelper<Th13Converter>();
+        public void Th10PracticeReadFromTest()
+            => Th10PracticeReadFromTestHelper<Th10Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th13PracticeReadFromTestNull()
-            => Th13PracticeReadFromTestNullHelper<Th13Converter>();
+        public void Th10PracticeReadFromTestNull()
+            => Th10PracticeReadFromTestNullHelper<Th10Converter>();
 
         #endregion
 
-        #region Th14
+        #region Th11
 
         [TestMethod()]
-        public void Th14PracticeTest()
-            => Th13PracticeTestHelper<Th14Converter>();
+        public void Th11PracticeTest()
+            => Th10PracticeTestHelper<Th11Converter>();
 
         [TestMethod()]
-        public void Th14PracticeReadFromTest()
-            => Th13PracticeReadFromTestHelper<Th14Converter>();
+        public void Th11PracticeReadFromTest()
+            => Th10PracticeReadFromTestHelper<Th11Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th14PracticeReadFromTestNull()
-            => Th13PracticeReadFromTestNullHelper<Th14Converter>();
+        public void Th11PracticeReadFromTestNull()
+            => Th10PracticeReadFromTestNullHelper<Th11Converter>();
 
         #endregion
 
-        #region Th15
+        #region Th12
 
         [TestMethod()]
-        public void Th15PracticeTest()
-            => Th13PracticeTestHelper<Th15Converter>();
+        public void Th12PracticeTest()
+            => Th10PracticeTestHelper<Th12Converter>();
 
         [TestMethod()]
-        public void Th15PracticeReadFromTest()
-            => Th13PracticeReadFromTestHelper<Th15Converter>();
-
-        [TestMethod()]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Th15PracticeReadFromTestNull()
-            => Th13PracticeReadFromTestNullHelper<Th15Converter>();
-
-        #endregion
-
-        #region Th16
-
-        [TestMethod()]
-        public void Th16PracticeTest()
-            => Th13PracticeTestHelper<Th16Converter>();
-
-        [TestMethod()]
-        public void Th16PracticeReadFromTest()
-            => Th13PracticeReadFromTestHelper<Th16Converter>();
+        public void Th12PracticeReadFromTest()
+            => Th10PracticeReadFromTestHelper<Th12Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th16PracticeReadFromTestNull()
-            => Th13PracticeReadFromTestNullHelper<Th16Converter>();
+        public void Th12PracticeReadFromTestNull()
+            => Th10PracticeReadFromTestNullHelper<Th12Converter>();
 
         #endregion
     }
