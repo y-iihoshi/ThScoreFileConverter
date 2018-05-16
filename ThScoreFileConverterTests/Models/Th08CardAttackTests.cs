@@ -69,7 +69,7 @@ namespace ThScoreFileConverter.Models.Tests
                 CollectionAssert.AreEqual(practiceMaxBonuses, cardAttack.PracticeCareer.MaxBonuses.Values.ToArray());
                 CollectionAssert.AreEqual(practiceTrialCounts, cardAttack.PracticeCareer.TrialCounts.Values.ToArray());
                 CollectionAssert.AreEqual(practiceClearCounts, cardAttack.PracticeCareer.ClearCounts.Values.ToArray());
-                Assert.IsTrue(cardAttack.HasTried.Value);
+                Assert.IsTrue(cardAttack.HasTried().Value);
             }
             catch (TargetInvocationException ex)
             {
@@ -313,7 +313,7 @@ namespace ThScoreFileConverter.Models.Tests
                 CollectionAssert.AreEqual(practiceMaxBonuses, cardAttack.PracticeCareer.MaxBonuses.Values.ToArray());
                 CollectionAssert.AreEqual(practiceTrialCounts, cardAttack.PracticeCareer.TrialCounts.Values.ToArray());
                 CollectionAssert.AreEqual(practiceClearCounts, cardAttack.PracticeCareer.ClearCounts.Values.ToArray());
-                Assert.IsFalse(cardAttack.HasTried.Value);
+                Assert.IsFalse(cardAttack.HasTried().Value);
             }
             catch (TargetInvocationException ex)
             {

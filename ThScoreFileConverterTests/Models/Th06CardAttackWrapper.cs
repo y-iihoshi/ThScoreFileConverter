@@ -56,7 +56,8 @@ namespace ThScoreFileConverter.Models.Tests
             => this.pobj.GetProperty(nameof(TrialCount)) as ushort?;
         public ushort? ClearCount
             => this.pobj.GetProperty(nameof(ClearCount)) as ushort?;
-        public bool? HasTried
+
+        public bool? HasTried()
             => this.pobj.Invoke(nameof(HasTried), new object[] { }, CultureInfo.InvariantCulture) as bool?;
     }
 }

@@ -58,5 +58,7 @@ namespace ThScoreFileConverter.Models.Tests
 
         public void ReadFrom(BinaryReader reader)
             => this.pobj.Invoke(nameof(ReadFrom), new object[] { reader }, CultureInfo.InvariantCulture);
+        public bool? HasTried()
+            => this.pobj.Invoke(nameof(HasTried), new object[] { }, CultureInfo.InvariantCulture) as bool?;
     }
 }

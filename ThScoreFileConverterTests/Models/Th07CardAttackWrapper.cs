@@ -58,7 +58,8 @@ namespace ThScoreFileConverter.Models.Tests
             => this.pobj.GetProperty(nameof(TrialCounts)) as Dictionary<Th07Converter.CharaWithTotal, ushort>;
         public IReadOnlyDictionary<Th07Converter.CharaWithTotal, ushort> ClearCounts
             => this.pobj.GetProperty(nameof(ClearCounts)) as Dictionary<Th07Converter.CharaWithTotal, ushort>;
-        public bool? HasTried
+
+        public bool? HasTried()
             => this.pobj.Invoke(nameof(HasTried), new object[] { }, CultureInfo.InvariantCulture) as bool?;
     }
 }

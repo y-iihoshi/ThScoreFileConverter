@@ -51,7 +51,7 @@ namespace ThScoreFileConverter.Models.Tests
                 CollectionAssert.AreEqual(cardName, cardAttack.CardName.ToArray());
                 CollectionAssert.AreEqual(trialCounts, cardAttack.TrialCounts.Values.ToArray());
                 CollectionAssert.AreEqual(clearCounts, cardAttack.ClearCounts.Values.ToArray());
-                Assert.IsTrue(cardAttack.HasTried.Value);
+                Assert.IsTrue(cardAttack.HasTried().Value);
             }
             catch (TargetInvocationException ex)
             {
@@ -200,7 +200,7 @@ namespace ThScoreFileConverter.Models.Tests
                 CollectionAssert.AreEqual(cardName, cardAttack.CardName.ToArray());
                 CollectionAssert.AreEqual(trialCounts, cardAttack.TrialCounts.Values.ToArray());
                 CollectionAssert.AreEqual(clearCounts, cardAttack.ClearCounts.Values.ToArray());
-                Assert.IsFalse(cardAttack.HasTried.Value);
+                Assert.IsFalse(cardAttack.HasTried().Value);
             }
             catch (TargetInvocationException ex)
             {

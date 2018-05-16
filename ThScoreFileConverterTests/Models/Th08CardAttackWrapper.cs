@@ -62,7 +62,8 @@ namespace ThScoreFileConverter.Models.Tests
             => new Th08CardAttackCareerWrapper(this.pobj.GetProperty(nameof(StoryCareer)));
         public Th08CardAttackCareerWrapper PracticeCareer
             => new Th08CardAttackCareerWrapper(this.pobj.GetProperty(nameof(PracticeCareer)));
-        public bool? HasTried
+
+        public bool? HasTried()
             => this.pobj.Invoke(nameof(HasTried), new object[] { }, CultureInfo.InvariantCulture) as bool?;
     }
 }

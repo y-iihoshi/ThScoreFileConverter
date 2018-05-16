@@ -27,6 +27,7 @@ namespace ThScoreFileConverter.Models.Tests
                 Assert.AreEqual(0, spellCard.Id);
                 Assert.AreEqual(default, spellCard.Level.Value);
                 Assert.AreEqual(0, spellCard.PracticeScore);
+                Assert.IsFalse(spellCard.HasTried().Value);
             }
             catch (TargetInvocationException ex)
             {
@@ -69,6 +70,7 @@ namespace ThScoreFileConverter.Models.Tests
                 Assert.AreEqual(id, spellCard.Id);
                 Assert.AreEqual(Enum.ToObject(typeof(TLevel), level), spellCard.Level.Value);
                 Assert.AreEqual(practiceScore, spellCard.PracticeScore);
+                Assert.IsTrue(spellCard.HasTried().Value);
             }
             catch (TargetInvocationException ex)
             {
