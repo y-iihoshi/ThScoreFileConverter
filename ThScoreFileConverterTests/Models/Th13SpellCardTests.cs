@@ -37,7 +37,7 @@ namespace ThScoreFileConverter.Models.Tests
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         public static void Th13SpellCardReadFromTestHelper<TParent, TLevel>()
-            where TLevel : struct, Enum
+            where TLevel : struct, IComparable, IFormattable, IConvertible
         {
             try
             {
@@ -80,7 +80,7 @@ namespace ThScoreFileConverter.Models.Tests
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         public static void Th13SpellCardReadFromTestNullHelper<TParent, TLevel>()
-            where TLevel : struct, Enum
+            where TLevel : struct, IComparable, IFormattable, IConvertible
         {
             try
             {
@@ -98,7 +98,7 @@ namespace ThScoreFileConverter.Models.Tests
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "spellCard")]
         public static void Th13SpellCardReadFromTestInvalidLevelHelper<TParent, TLevel>()
-            where TLevel : struct, Enum
+            where TLevel : struct, IComparable, IFormattable, IConvertible
         {
             try
             {
