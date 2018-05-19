@@ -9,7 +9,7 @@ namespace ThScoreFileConverter.Models.Tests
 {
     // NOTE: Setting the accessibility as public causes CS0053.
     internal sealed class Th13SpellCardWrapper<TParent, TLevel>
-        where TLevel : struct, IComparable, IFormattable, IConvertible
+        where TLevel : struct, Enum
     {
         private static Type ParentType = typeof(TParent);
         private static string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
