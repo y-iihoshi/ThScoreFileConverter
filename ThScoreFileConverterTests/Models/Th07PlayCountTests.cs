@@ -18,12 +18,12 @@ namespace ThScoreFileConverter.Models.Tests
             {
                 var playCount = new Th07PlayCountWrapper();
 
-                Assert.AreEqual(0, playCount.TotalTrial.Value);
+                Assert.AreEqual(default, playCount.TotalTrial.Value);
                 Assert.AreEqual(0, playCount.Trials.Count);
-                Assert.AreEqual(0, playCount.TotalRetry.Value);
-                Assert.AreEqual(0, playCount.TotalClear.Value);
-                Assert.AreEqual(0, playCount.TotalContinue.Value);
-                Assert.AreEqual(0, playCount.TotalPractice.Value);
+                Assert.AreEqual(default, playCount.TotalRetry.Value);
+                Assert.AreEqual(default, playCount.TotalClear.Value);
+                Assert.AreEqual(default, playCount.TotalContinue.Value);
+                Assert.AreEqual(default, playCount.TotalPractice.Value);
             }
             catch (TargetInvocationException ex)
             {

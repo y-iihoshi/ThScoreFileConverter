@@ -20,13 +20,13 @@ namespace ThScoreFileConverter.Models.Tests
                 var spellCard = new Th13SpellCardWrapper<TParent, TLevel>();
 
                 Assert.IsNull(spellCard.Name);
-                Assert.AreEqual(0, spellCard.ClearCount);
-                Assert.AreEqual(0, spellCard.PracticeClearCount);
-                Assert.AreEqual(0, spellCard.TrialCount);
-                Assert.AreEqual(0, spellCard.PracticeTrialCount);
-                Assert.AreEqual(0, spellCard.Id);
+                Assert.AreEqual(default, spellCard.ClearCount.Value);
+                Assert.AreEqual(default, spellCard.PracticeClearCount.Value);
+                Assert.AreEqual(default, spellCard.TrialCount.Value);
+                Assert.AreEqual(default, spellCard.PracticeTrialCount.Value);
+                Assert.AreEqual(default, spellCard.Id.Value);
                 Assert.AreEqual(default, spellCard.Level.Value);
-                Assert.AreEqual(0, spellCard.PracticeScore);
+                Assert.AreEqual(default, spellCard.PracticeScore.Value);
                 Assert.IsFalse(spellCard.HasTried().Value);
             }
             catch (TargetInvocationException ex)

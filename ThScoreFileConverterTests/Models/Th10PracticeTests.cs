@@ -16,8 +16,8 @@ namespace ThScoreFileConverter.Models.Tests
             {
                 var practice = new Th10PracticeWrapper<TParent>();
 
-                Assert.AreEqual(0u, practice.Score);
-                Assert.AreEqual(0u, practice.StageFlag);
+                Assert.AreEqual(default, practice.Score.Value);
+                Assert.AreEqual(default, practice.StageFlag.Value);
             }
             catch (TargetInvocationException ex)
             {

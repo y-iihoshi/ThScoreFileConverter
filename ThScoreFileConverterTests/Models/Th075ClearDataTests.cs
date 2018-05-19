@@ -18,10 +18,10 @@ namespace ThScoreFileConverter.Models.Tests
             {
                 var clearData = new Th075ClearDataWrapper();
 
-                Assert.AreEqual(0, clearData.UseCount);
-                Assert.AreEqual(0, clearData.ClearCount);
-                Assert.AreEqual(0, clearData.MaxCombo);
-                Assert.AreEqual(0, clearData.MaxDamage);
+                Assert.AreEqual(default, clearData.UseCount.Value);
+                Assert.AreEqual(default, clearData.ClearCount.Value);
+                Assert.AreEqual(default, clearData.MaxCombo.Value);
+                Assert.AreEqual(default, clearData.MaxDamage.Value);
                 Assert.AreEqual(0, clearData.MaxBonuses.Count);
                 Assert.AreEqual(0, clearData.CardGotCount.Count);
                 Assert.AreEqual(0, clearData.CardTrialCount.Count);

@@ -16,9 +16,9 @@ namespace ThScoreFileConverter.Models.Tests
             {
                 var practice = new Th13PracticeWrapper<TParent>();
 
-                Assert.AreEqual(0u, practice.Score);
-                Assert.AreEqual((byte)0, practice.ClearFlag);
-                Assert.AreEqual((byte)0, practice.EnableFlag);
+                Assert.AreEqual(default, practice.Score.Value);
+                Assert.AreEqual(default, practice.ClearFlag.Value);
+                Assert.AreEqual(default, practice.EnableFlag.Value);
             }
             catch (TargetInvocationException ex)
             {

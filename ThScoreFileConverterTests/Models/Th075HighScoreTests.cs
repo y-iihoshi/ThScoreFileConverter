@@ -17,9 +17,9 @@ namespace ThScoreFileConverter.Models.Tests
                 var highScore = new Th075HighScoreWrapper();
 
                 Assert.IsNull(highScore.Name);
-                Assert.AreEqual((byte)0, highScore.Month);
-                Assert.AreEqual((byte)0, highScore.Day);
-                Assert.AreEqual(0, highScore.Score);
+                Assert.AreEqual(default, highScore.Month.Value);
+                Assert.AreEqual(default, highScore.Day.Value);
+                Assert.AreEqual(default, highScore.Score.Value);
             }
             catch (TargetInvocationException ex)
             {
