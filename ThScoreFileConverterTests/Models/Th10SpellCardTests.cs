@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.ExceptionServices;
@@ -77,6 +78,59 @@ namespace ThScoreFileConverter.Models.Tests
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "spellCard")]
+        public static void Th10SpellCardReadFromTestShortenedNameHelper<TParent>()
+        {
+            try
+            {
+                var name = TestUtils.MakeRandomArray<byte>(0x7F);
+                var clearCount = 123;
+                var trialCount = 456;
+                var id = 789;
+                var level = ThConverter.Level.Normal;
+
+                var spellCard = Th10SpellCardWrapper<TParent>.Create(
+                    TestUtils.MakeByteArray(name, clearCount, trialCount, id - 1, (int)level));
+
+                Assert.Fail(TestUtils.Unreachable);
+            }
+            catch (TargetInvocationException ex)
+            {
+                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
+                throw;
+            }
+        }
+
+        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
+        public static void Th10SpellCardReadFromTestExceededNameHelper<TParent>()
+        {
+            try
+            {
+                var name = TestUtils.MakeRandomArray<byte>(0x81);
+                var clearCount = 123;
+                var trialCount = 456;
+                var id = 789;
+                var level = ThConverter.Level.Normal;
+
+                var spellCard = Th10SpellCardWrapper<TParent>.Create(
+                    TestUtils.MakeByteArray(name, clearCount, trialCount, id - 1, (int)level));
+
+                CollectionAssert.AreNotEqual(name, spellCard.Name.ToArray());
+                CollectionAssert.AreEqual(name.Take(0x80).ToArray(), spellCard.Name.ToArray());
+                Assert.AreNotEqual(clearCount, spellCard.ClearCount);
+                Assert.AreNotEqual(trialCount, spellCard.TrialCount);
+                Assert.AreNotEqual(id, spellCard.Id);
+                Assert.AreNotEqual(level, spellCard.Level.Value);
+                Assert.IsTrue(spellCard.HasTried().Value);
+            }
+            catch (TargetInvocationException ex)
+            {
+                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
+                throw;
+            }
+        }
+
+        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "spellCard")]
         public static void Th10SpellCardReadFromTestInvalidLevelHelper<TParent>()
         {
             try
@@ -115,6 +169,15 @@ namespace ThScoreFileConverter.Models.Tests
             => Th10SpellCardReadFromTestNullHelper<Th10Converter>();
 
         [TestMethod()]
+        [ExpectedException(typeof(EndOfStreamException))]
+        public void Th10SpellCardReadFromTestShortenedName()
+            => Th10SpellCardReadFromTestShortenedNameHelper<Th10Converter>();
+
+        [TestMethod()]
+        public void Th10SpellCardReadFromTestExceededName()
+            => Th10SpellCardReadFromTestExceededNameHelper<Th10Converter>();
+
+        [TestMethod()]
         [ExpectedException(typeof(InvalidCastException))]
         public void Th10SpellCardReadFromTestInvalidLevel()
             => Th10SpellCardReadFromTestInvalidLevelHelper<Th10Converter>();
@@ -137,6 +200,15 @@ namespace ThScoreFileConverter.Models.Tests
             => Th10SpellCardReadFromTestNullHelper<Th11Converter>();
 
         [TestMethod()]
+        [ExpectedException(typeof(EndOfStreamException))]
+        public void Th11SpellCardReadFromTestShortenedName()
+            => Th10SpellCardReadFromTestShortenedNameHelper<Th11Converter>();
+
+        [TestMethod()]
+        public void Th11SpellCardReadFromTestExceededName()
+            => Th10SpellCardReadFromTestExceededNameHelper<Th11Converter>();
+
+        [TestMethod()]
         [ExpectedException(typeof(InvalidCastException))]
         public void Th11SpellCardReadFromTestInvalidLevel()
             => Th10SpellCardReadFromTestInvalidLevelHelper<Th11Converter>();
@@ -157,6 +229,15 @@ namespace ThScoreFileConverter.Models.Tests
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th12SpellCardReadFromTestNull()
             => Th10SpellCardReadFromTestNullHelper<Th12Converter>();
+
+        [TestMethod()]
+        [ExpectedException(typeof(EndOfStreamException))]
+        public void Th12SpellCardReadFromTestShortenedName()
+            => Th10SpellCardReadFromTestShortenedNameHelper<Th12Converter>();
+
+        [TestMethod()]
+        public void Th12SpellCardReadFromTestExceededName()
+            => Th10SpellCardReadFromTestExceededNameHelper<Th12Converter>();
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidCastException))]

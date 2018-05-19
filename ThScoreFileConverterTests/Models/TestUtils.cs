@@ -152,7 +152,7 @@ namespace ThScoreFileConverter.Models.Tests
             if (type.IsEnum)
                 return (TResult)Enum.ToObject(type, value);
 
-            return (TResult)Convert.ChangeType(value, type);
+            return (TResult)Convert.ChangeType(value, type, CultureInfo.InvariantCulture);
         }
     }
 }

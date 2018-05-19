@@ -107,6 +107,7 @@ namespace ThScoreFileConverter.Models.Tests
 
         // NOTE: Setting the accessibility as public causes CS0703.
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "scoreData")]
         internal static void Th10ScoreDataReadFromTestShortenedNameHelper<TParent, TStageProgress>()
             where TParent : ThConverter
             where TStageProgress : struct, Enum
