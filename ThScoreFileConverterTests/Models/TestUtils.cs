@@ -90,7 +90,7 @@ namespace ThScoreFileConverter.Models.Tests
                                 writer.Write(decimalArg);
                                 break;
                             default:
-                                break;
+                                throw new NotImplementedException();
                         }
                     }
 
@@ -143,6 +143,16 @@ namespace ThScoreFileConverter.Models.Tests
                 .Repeat(defaultValue, length)
                 .Select(i => (TResult)Convert.ChangeType(getNextValue(), typeof(TResult), CultureInfo.InvariantCulture))
                 .ToArray();
+        }
+
+        public static TResult Cast<TResult>(object value)
+            where TResult : struct
+        {
+            var type = typeof(TResult);
+            if (type.IsEnum)
+                return (TResult)Enum.ToObject(type, value);
+
+            return (TResult)Convert.ChangeType(value, type);
         }
     }
 }
