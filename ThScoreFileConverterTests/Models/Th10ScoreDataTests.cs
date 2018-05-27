@@ -11,7 +11,6 @@ namespace ThScoreFileConverter.Models.Tests
     [TestClass()]
     public class Th10ScoreDataTests
     {
-        // NOTE: Setting the accessibility as public causes CS0703.
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void Th10ScoreDataTestHelper<TParent, TStageProgress>()
             where TParent : ThConverter
@@ -35,7 +34,6 @@ namespace ThScoreFileConverter.Models.Tests
             }
         }
 
-        // NOTE: Setting the accessibility as public causes CS0703.
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void Th10ScoreDataReadFromTestHelper<TParent, TStageProgress>()
             where TParent : ThConverter
@@ -86,7 +84,6 @@ namespace ThScoreFileConverter.Models.Tests
             }
         }
 
-        // NOTE: Setting the accessibility as public causes CS0703.
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void Th10ScoreDataReadFromTestNullHelper<TParent, TStageProgress>()
             where TParent : ThConverter
@@ -105,7 +102,6 @@ namespace ThScoreFileConverter.Models.Tests
             }
         }
 
-        // NOTE: Setting the accessibility as public causes CS0703.
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "scoreData")]
         internal static void Th10ScoreDataReadFromTestShortenedNameHelper<TParent, TStageProgress>()
@@ -152,7 +148,6 @@ namespace ThScoreFileConverter.Models.Tests
             }
         }
 
-        // NOTE: Setting the accessibility as public causes CS0703.
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void Th10ScoreDataReadFromTestExceededNameHelper<TParent, TStageProgress>()
             where TParent : ThConverter
@@ -204,7 +199,6 @@ namespace ThScoreFileConverter.Models.Tests
             }
         }
 
-        // NOTE: Setting the accessibility as public causes CS0703.
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "scoreData")]
         internal static void Th10ScoreDataReadFromTestInvalidStageProgressHelper<TParent, TStageProgress>()

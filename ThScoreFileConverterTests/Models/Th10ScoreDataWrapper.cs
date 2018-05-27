@@ -44,7 +44,6 @@ namespace ThScoreFileConverter.Models.Tests
         public Th10ScoreDataWrapper()
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
 
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public object Target
             => this.pobj.Target;
         public uint? Score

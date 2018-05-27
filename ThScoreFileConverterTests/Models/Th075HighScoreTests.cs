@@ -28,7 +28,6 @@ namespace ThScoreFileConverter.Models.Tests
             }
         }
 
-        // NOTE: Setting the accessibility as public causes CS0051.
         internal static void ReadFromTestHelper(Th075HighScoreWrapper highScore, byte[] array)
         {
             MemoryStream stream = null;

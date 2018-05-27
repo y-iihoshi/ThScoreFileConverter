@@ -12,7 +12,8 @@ namespace ThScoreFileConverter.Models.Tests
     public class Th10SpellCardTests
     {
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void Th10SpellCardTestHelper<TParent>()
+        internal static void Th10SpellCardTestHelper<TParent>()
+            where TParent : ThConverter
         {
             try
             {
@@ -33,7 +34,8 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void Th10SpellCardReadFromTestHelper<TParent>()
+        internal static void Th10SpellCardReadFromTestHelper<TParent>()
+            where TParent : ThConverter
         {
             try
             {
@@ -61,7 +63,8 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void Th10SpellCardReadFromTestNullHelper<TParent>()
+        internal static void Th10SpellCardReadFromTestNullHelper<TParent>()
+            where TParent : ThConverter
         {
             try
             {
@@ -78,7 +81,8 @@ namespace ThScoreFileConverter.Models.Tests
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "spellCard")]
-        public static void Th10SpellCardReadFromTestShortenedNameHelper<TParent>()
+        internal static void Th10SpellCardReadFromTestShortenedNameHelper<TParent>()
+            where TParent : ThConverter
         {
             try
             {
@@ -101,7 +105,8 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void Th10SpellCardReadFromTestExceededNameHelper<TParent>()
+        internal static void Th10SpellCardReadFromTestExceededNameHelper<TParent>()
+            where TParent : ThConverter
         {
             try
             {
@@ -131,7 +136,8 @@ namespace ThScoreFileConverter.Models.Tests
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "spellCard")]
-        public static void Th10SpellCardReadFromTestInvalidLevelHelper<TParent>()
+        internal static void Th10SpellCardReadFromTestInvalidLevelHelper<TParent>()
+            where TParent : ThConverter
         {
             try
             {

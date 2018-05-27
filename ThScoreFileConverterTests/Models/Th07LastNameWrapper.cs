@@ -4,7 +4,9 @@ using System.Collections.Generic;
 
 namespace ThScoreFileConverter.Models.Tests
 {
-    public sealed class Th07LastNameWrapper<TParent>
+    // NOTE: Setting the accessibility as public causes CS0703.
+    internal sealed class Th07LastNameWrapper<TParent>
+        where TParent : ThConverter
     {
         private static Type ParentType = typeof(TParent);
         private static string AssemblyNameToTest = ParentType.Assembly.GetName().Name;

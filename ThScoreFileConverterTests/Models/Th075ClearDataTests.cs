@@ -35,7 +35,6 @@ namespace ThScoreFileConverter.Models.Tests
             }
         }
 
-        // NOTE: Setting the accessibility as public causes CS0051.
         internal static void ReadFromTestHelper(Th075ClearDataWrapper clearData, byte[] array)
         {
             MemoryStream stream = null;

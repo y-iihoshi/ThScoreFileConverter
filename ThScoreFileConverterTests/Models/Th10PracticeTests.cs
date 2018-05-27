@@ -10,7 +10,8 @@ namespace ThScoreFileConverter.Models.Tests
     public class Th10PracticeTests
     {
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void Th10PracticeTestHelper<TParent>()
+        internal static void Th10PracticeTestHelper<TParent>()
+            where TParent : ThConverter
         {
             try
             {
@@ -27,7 +28,8 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void Th10PracticeReadFromTestHelper<TParent>()
+        internal static void Th10PracticeReadFromTestHelper<TParent>()
+            where TParent : ThConverter
         {
             try
             {
@@ -47,7 +49,8 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void Th10PracticeReadFromTestNullHelper<TParent>()
+        internal static void Th10PracticeReadFromTestNullHelper<TParent>()
+            where TParent : ThConverter
         {
             try
             {

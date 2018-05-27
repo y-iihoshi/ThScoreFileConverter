@@ -12,7 +12,8 @@ namespace ThScoreFileConverter.Models.Tests
     public class Th07LastNameTests
     {
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void LastNameTestChapterHelper<TParent>()
+        internal static void LastNameTestChapterHelper<TParent>()
+            where TParent : ThConverter
         {
             try
             {
@@ -43,7 +44,8 @@ namespace ThScoreFileConverter.Models.Tests
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "lastName")]
-        public static void LastNameTestNullChapterHelper<TParent>()
+        internal static void LastNameTestNullChapterHelper<TParent>()
+            where TParent : ThConverter
         {
             try
             {
@@ -60,7 +62,8 @@ namespace ThScoreFileConverter.Models.Tests
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "lastName")]
-        public static void LastNameTestInvalidSignatureHelper<TParent>()
+        internal static void LastNameTestInvalidSignatureHelper<TParent>()
+            where TParent : ThConverter
         {
             try
             {
@@ -86,7 +89,8 @@ namespace ThScoreFileConverter.Models.Tests
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "lastName")]
-        public static void LastNameTestInvalidSize1Helper<TParent>()
+        internal static void LastNameTestInvalidSize1Helper<TParent>()
+            where TParent : ThConverter
         {
             try
             {

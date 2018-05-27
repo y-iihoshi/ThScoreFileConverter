@@ -7,8 +7,9 @@ using System.IO;
 
 namespace ThScoreFileConverter.Models.Tests
 {
-    // NOTE: Setting the accessibility as public causes CS0053.
+    // NOTE: Setting the accessibility as public causes CS0053 and CS0703.
     internal sealed class Th10SpellCardWrapper<TParent>
+        where TParent : ThConverter
     {
         private static Type ParentType = typeof(TParent);
         private static string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
@@ -42,7 +43,6 @@ namespace ThScoreFileConverter.Models.Tests
         public Th10SpellCardWrapper()
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
 
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public object Target
             => this.pobj.Target;
         public IReadOnlyCollection<byte> Name

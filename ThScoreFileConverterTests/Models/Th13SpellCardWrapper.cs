@@ -7,7 +7,9 @@ using System.IO;
 
 namespace ThScoreFileConverter.Models.Tests
 {
-    public sealed class Th13SpellCardWrapper<TParent, TLevel>
+    // NOTE: Setting the accessibility as public causes CS0703.
+    internal sealed class Th13SpellCardWrapper<TParent, TLevel>
+        where TParent : ThConverter
         where TLevel : struct, Enum
     {
         private static Type ParentType = typeof(TParent);

@@ -12,7 +12,8 @@ namespace ThScoreFileConverter.Models.Tests
     public class Th13SpellCardTests
     {
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void Th13SpellCardTestHelper<TParent, TLevel>()
+        internal static void Th13SpellCardTestHelper<TParent, TLevel>()
+            where TParent : ThConverter
             where TLevel : struct, Enum
         {
             try
@@ -37,7 +38,8 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void Th13SpellCardReadFromTestHelper<TParent, TLevel>()
+        internal static void Th13SpellCardReadFromTestHelper<TParent, TLevel>()
+            where TParent : ThConverter
             where TLevel : struct, Enum
         {
             try
@@ -80,7 +82,8 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void Th13SpellCardReadFromTestNullHelper<TParent, TLevel>()
+        internal static void Th13SpellCardReadFromTestNullHelper<TParent, TLevel>()
+            where TParent : ThConverter
             where TLevel : struct, Enum
         {
             try
@@ -98,7 +101,8 @@ namespace ThScoreFileConverter.Models.Tests
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "spellCard")]
-        public static void Th13SpellCardReadFromTestShortenedNameHelper<TParent, TLevel>()
+        internal static void Th13SpellCardReadFromTestShortenedNameHelper<TParent, TLevel>()
+            where TParent : ThConverter
             where TLevel : struct, Enum
         {
             try
@@ -133,7 +137,8 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void Th13SpellCardReadFromTestExceededNameHelper<TParent, TLevel>()
+        internal static void Th13SpellCardReadFromTestExceededNameHelper<TParent, TLevel>()
+            where TParent : ThConverter
             where TLevel : struct, Enum
         {
             try
@@ -178,7 +183,8 @@ namespace ThScoreFileConverter.Models.Tests
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "spellCard")]
-        public static void Th13SpellCardReadFromTestInvalidLevelHelper<TParent, TLevel>()
+        internal static void Th13SpellCardReadFromTestInvalidLevelHelper<TParent, TLevel>()
+            where TParent : ThConverter
             where TLevel : struct, Enum
         {
             try
@@ -213,27 +219,33 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void Th13SpellCardTestHelper<TParent>()
+        internal static void Th13SpellCardTestHelper<TParent>()
+            where TParent : ThConverter
             => Th13SpellCardTestHelper<TParent, ThConverter.Level>();
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void Th13SpellCardReadFromTestHelper<TParent>()
+        internal static void Th13SpellCardReadFromTestHelper<TParent>()
+            where TParent : ThConverter
             => Th13SpellCardReadFromTestHelper<TParent, ThConverter.Level>();
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void Th13SpellCardReadFromTestNullHelper<TParent>()
+        internal static void Th13SpellCardReadFromTestNullHelper<TParent>()
+            where TParent : ThConverter
             => Th13SpellCardReadFromTestNullHelper<TParent, ThConverter.Level>();
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void Th13SpellCardReadFromTestShortenedNameHelper<TParent>()
+        internal static void Th13SpellCardReadFromTestShortenedNameHelper<TParent>()
+            where TParent : ThConverter
             => Th13SpellCardReadFromTestShortenedNameHelper<TParent, ThConverter.Level>();
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void Th13SpellCardReadFromTestExceededNameHelper<TParent>()
+        internal static void Th13SpellCardReadFromTestExceededNameHelper<TParent>()
+            where TParent : ThConverter
             => Th13SpellCardReadFromTestExceededNameHelper<TParent, ThConverter.Level>();
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void Th13SpellCardReadFromTestInvalidLevelHelper<TParent>()
+        internal static void Th13SpellCardReadFromTestInvalidLevelHelper<TParent>()
+            where TParent : ThConverter
             => Th13SpellCardReadFromTestInvalidLevelHelper<TParent, ThConverter.Level>();
 
         #region Th13

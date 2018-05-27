@@ -12,7 +12,8 @@ namespace ThScoreFileConverter.Models.Tests
     public class Th06HeaderTests
     {
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void Th06HeaderTestHelper<TParent>(string signature)
+        internal static void Th06HeaderTestHelper<TParent>(string signature)
+            where TParent : ThConverter
         {
             if (signature == null)
                 throw new ArgumentNullException(nameof(signature));
@@ -42,7 +43,8 @@ namespace ThScoreFileConverter.Models.Tests
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "header")]
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void Th06HeaderTestNullHelper<TParent>()
+        internal static void Th06HeaderTestNullHelper<TParent>()
+            where TParent : ThConverter
         {
             try
             {
@@ -59,7 +61,8 @@ namespace ThScoreFileConverter.Models.Tests
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "header")]
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void Th06HeaderTestInvalidSignatureHelper<TParent>(string signature)
+        internal static void Th06HeaderTestInvalidSignatureHelper<TParent>(string signature)
+            where TParent : ThConverter
         {
             if (signature == null)
                 throw new ArgumentNullException(nameof(signature));
@@ -85,7 +88,8 @@ namespace ThScoreFileConverter.Models.Tests
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "header")]
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void Th06HeaderTestInvalidSize1Helper<TParent>(string signature)
+        internal static void Th06HeaderTestInvalidSize1Helper<TParent>(string signature)
+            where TParent : ThConverter
         {
             if (signature == null)
                 throw new ArgumentNullException(nameof(signature));

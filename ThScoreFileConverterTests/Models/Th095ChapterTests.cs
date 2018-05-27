@@ -11,7 +11,7 @@ namespace ThScoreFileConverter.Models.Tests
     [TestClass()]
     public class Th095ChapterTests
     {
-        public static void Validate<TParent>(
+        internal static void Validate<TParent>(
             Th095ChapterWrapper<TParent> chapter,
             string signature,
             ushort version,
@@ -19,6 +19,7 @@ namespace ThScoreFileConverter.Models.Tests
             uint checksum,
             byte[] data,
             bool isValid)
+            where TParent : ThConverter
         {
             if (chapter == null)
                 throw new ArgumentNullException(nameof(chapter));
@@ -32,7 +33,8 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void ChapterTestHelper<TParent>()
+        internal static void ChapterTestHelper<TParent>()
+            where TParent : ThConverter
         {
             try
             {
@@ -47,7 +49,8 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void ChapterTestCopyHelper<TParent>()
+        internal static void ChapterTestCopyHelper<TParent>()
+            where TParent : ThConverter
         {
             try
             {
@@ -64,7 +67,8 @@ namespace ThScoreFileConverter.Models.Tests
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "chapter")]
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void ChapterTestNullHelper<TParent>()
+        internal static void ChapterTestNullHelper<TParent>()
+            where TParent : ThConverter
         {
             try
             {
@@ -79,7 +83,8 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void ReadFromTestHelper<TParent>()
+        internal static void ReadFromTestHelper<TParent>()
+            where TParent : ThConverter
         {
             try
             {
@@ -102,7 +107,8 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void ReadFromTestNullHelper<TParent>()
+        internal static void ReadFromTestNullHelper<TParent>()
+            where TParent : ThConverter
         {
             try
             {
@@ -118,7 +124,8 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void ReadFromTestEmptySignatureHelper<TParent>()
+        internal static void ReadFromTestEmptySignatureHelper<TParent>()
+            where TParent : ThConverter
         {
             try
             {
@@ -147,7 +154,8 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void ReadFromTestShortenedSignatureHelper<TParent>()
+        internal static void ReadFromTestShortenedSignatureHelper<TParent>()
+            where TParent : ThConverter
         {
             try
             {
@@ -176,7 +184,8 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void ReadFromTestExceededSignatureHelper<TParent>()
+        internal static void ReadFromTestExceededSignatureHelper<TParent>()
+            where TParent : ThConverter
         {
             try
             {
@@ -205,7 +214,8 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void ReadFromTestNegativeSizeHelper<TParent>()
+        internal static void ReadFromTestNegativeSizeHelper<TParent>()
+            where TParent : ThConverter
         {
             try
             {
@@ -228,7 +238,8 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void ReadFromTestZeroSizeHelper<TParent>()
+        internal static void ReadFromTestZeroSizeHelper<TParent>()
+            where TParent : ThConverter
         {
             try
             {
@@ -251,7 +262,8 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void ReadFromTestShortenedSizeHelper<TParent>()
+        internal static void ReadFromTestShortenedSizeHelper<TParent>()
+            where TParent : ThConverter
         {
             try
             {
@@ -279,7 +291,8 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void ReadFromTestExceededSizeHelper<TParent>()
+        internal static void ReadFromTestExceededSizeHelper<TParent>()
+            where TParent : ThConverter
         {
             try
             {
@@ -302,7 +315,8 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void ReadFromTestInvalidChecksumHelper<TParent>()
+        internal static void ReadFromTestInvalidChecksumHelper<TParent>()
+            where TParent : ThConverter
         {
             try
             {
@@ -330,7 +344,8 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void ReadFromTestEmptyDataHelper<TParent>()
+        internal static void ReadFromTestEmptyDataHelper<TParent>()
+            where TParent : ThConverter
         {
             try
             {
@@ -358,7 +373,8 @@ namespace ThScoreFileConverter.Models.Tests
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        public static void ReadFromTestMisalignedDataHelper<TParent>()
+        internal static void ReadFromTestMisalignedDataHelper<TParent>()
+            where TParent : ThConverter
         {
             try
             {
