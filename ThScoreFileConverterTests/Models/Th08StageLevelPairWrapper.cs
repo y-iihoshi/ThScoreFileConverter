@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ThScoreFileConverter.Models.Tests
 {
@@ -15,9 +16,9 @@ namespace ThScoreFileConverter.Models.Tests
         public Th08StageLevelPairWrapper(Th08Converter.Stage stage, ThConverter.Level level)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { stage, level });
 
-        // NOTE: Enabling the following causes CA1811.
-        // public object Target => this.pobj.Target;
-
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public object Target
+            => this.pobj.Target;
         public Th08Converter.Stage? Stage
             => this.pobj.GetProperty(nameof(Stage)) as Th08Converter.Stage?;
         public ThConverter.Level? Level

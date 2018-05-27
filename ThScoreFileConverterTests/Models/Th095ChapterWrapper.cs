@@ -51,8 +51,8 @@ namespace ThScoreFileConverter.Models.Tests
         {
         }
 
-        public object Target => this.pobj.Target;
-
+        public object Target
+            => this.pobj.Target;
         public string Signature
             => this.pobj.GetProperty(nameof(this.Signature)) as string;
         public ushort? Version
@@ -67,9 +67,6 @@ namespace ThScoreFileConverter.Models.Tests
             => this.pobj.GetProperty(nameof(this.Data)) as byte[];
 
         public void ReadFrom(BinaryReader reader)
-            => this.pobj.Invoke(
-                nameof(this.ReadFrom),
-                new object[] { reader },
-                CultureInfo.InvariantCulture);
+            => this.pobj.Invoke(nameof(this.ReadFrom), new object[] { reader }, CultureInfo.InvariantCulture);
     }
 }

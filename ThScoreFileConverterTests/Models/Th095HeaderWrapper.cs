@@ -45,8 +45,8 @@ namespace ThScoreFileConverter.Models.Tests
         {
         }
 
-        public object Target => this.pobj.Target;
-
+        public object Target
+            => this.pobj.Target;
         public string Signature
             => this.pobj.GetProperty(nameof(this.Signature)) as string;
         public int? EncodedAllSize
@@ -59,15 +59,8 @@ namespace ThScoreFileConverter.Models.Tests
             => this.pobj.GetProperty(nameof(this.IsValid)) as bool?;
 
         public void ReadFrom(BinaryReader reader)
-            => this.pobj.Invoke(
-                nameof(this.ReadFrom),
-                new object[] { reader },
-                CultureInfo.InvariantCulture);
-
+            => this.pobj.Invoke(nameof(this.ReadFrom), new object[] { reader }, CultureInfo.InvariantCulture);
         public void WriteTo(BinaryWriter writer)
-            => this.pobj.Invoke(
-                nameof(this.WriteTo),
-                new object[] { writer },
-                CultureInfo.InvariantCulture);
+            => this.pobj.Invoke(nameof(this.WriteTo), new object[] { writer }, CultureInfo.InvariantCulture);
     }
 }

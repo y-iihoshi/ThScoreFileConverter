@@ -42,9 +42,9 @@ namespace ThScoreFileConverter.Models.Tests
         public Th16ScoreDataWrapper()
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
 
-        // NOTE: Enabling the following causes CA1811.
-        // public object Target => this.pobj.Target;
-
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public object Target
+            => this.pobj.Target;
         public uint? Score
             => this.pobj.GetProperty(nameof(Score)) as uint?;
         public Th16Converter.StageProgress? StageProgress

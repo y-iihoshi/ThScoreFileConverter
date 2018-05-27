@@ -7,8 +7,7 @@ using System.IO;
 
 namespace ThScoreFileConverter.Models.Tests
 {
-    // NOTE: Setting the accessibility as public causes CS0053.
-    internal sealed class Th13SpellCardWrapper<TParent, TLevel>
+    public sealed class Th13SpellCardWrapper<TParent, TLevel>
         where TLevel : struct, Enum
     {
         private static Type ParentType = typeof(TParent);
@@ -43,9 +42,8 @@ namespace ThScoreFileConverter.Models.Tests
         public Th13SpellCardWrapper()
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
 
-        // NOTE: Enabling the following causes CA1811.
-        // public object Target => this.pobj.Target;
-
+        public object Target
+            => this.pobj.Target;
         public IReadOnlyCollection<byte> Name
             => this.pobj.GetProperty(nameof(Name)) as byte[];
         public int? ClearCount

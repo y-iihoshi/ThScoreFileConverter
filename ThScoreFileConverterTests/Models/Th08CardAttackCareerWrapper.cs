@@ -1,12 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 
 namespace ThScoreFileConverter.Models.Tests
 {
-    // NOTE: Setting the accessibility as public causes CS0051 and CS0053.
+    // NOTE: Setting the accessibility as public causes CS0053.
     internal sealed class Th08CardAttackCareerWrapper
     {
         private static Type ParentType = typeof(Th08Converter);
@@ -42,9 +43,9 @@ namespace ThScoreFileConverter.Models.Tests
         public Th08CardAttackCareerWrapper(object obj)
             => this.pobj = new PrivateObject(obj);
 
-        // NOTE: Enabling the following causes CA1811.
-        // public object Target => this.pobj.Target;
-
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public object Target
+            => this.pobj.Target;
         public IReadOnlyDictionary<Th08Converter.CharaWithTotal, uint> MaxBonuses
             => this.pobj.GetProperty(nameof(MaxBonuses)) as Dictionary<Th08Converter.CharaWithTotal, uint>;
         public IReadOnlyDictionary<Th08Converter.CharaWithTotal, int> TrialCounts

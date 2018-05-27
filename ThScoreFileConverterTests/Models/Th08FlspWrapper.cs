@@ -4,8 +4,7 @@ using System.Collections.Generic;
 
 namespace ThScoreFileConverter.Models.Tests
 {
-    // NOTE: Setting the accessibility as public causes CS0051 and CS0053.
-    internal sealed class Th08FlspWrapper<TParent>
+    public sealed class Th08FlspWrapper<TParent>
     {
         private static Type ParentType = typeof(TParent);
         private static string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
@@ -34,9 +33,8 @@ namespace ThScoreFileConverter.Models.Tests
             }
         }
 
-        // NOTE: Enabling the following causes CA1811.
-        // public object Target => this.pobj.Target;
-
+        public object Target
+            => this.pobj.Target;
         public string Signature
             => this.pobj.GetProperty(nameof(Signature)) as string;
         public short? Size1

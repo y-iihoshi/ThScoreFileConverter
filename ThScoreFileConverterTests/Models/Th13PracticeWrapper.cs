@@ -40,9 +40,8 @@ namespace ThScoreFileConverter.Models.Tests
         public Th13PracticeWrapper()
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
 
-        // NOTE: Enabling the following causes CA1811.
-        // public object Target => this.pobj.Target;
-
+        public object Target
+            => this.pobj.Target;
         public uint? Score
             => this.pobj.GetProperty(nameof(Score)) as uint?;
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag")]

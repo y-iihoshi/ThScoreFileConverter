@@ -1,10 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ThScoreFileConverter.Models.Tests
 {
-    // NOTE: Setting the accessibility as public causes CS0051 and CS0053.
+    // NOTE: Setting the accessibility as public causes CS0050, CS0051 and CS0053.
     internal sealed class Th08PlayStatusWrapper
     {
         private static Type ParentType = typeof(Th08Converter);
@@ -34,9 +35,9 @@ namespace ThScoreFileConverter.Models.Tests
             }
         }
 
-        // NOTE: Enabling the following causes CA1811.
-        // public object Target => this.pobj.Target;
-
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public object Target
+            => this.pobj.Target;
         public string Signature
             => this.pobj.GetProperty(nameof(Signature)) as string;
         public short? Size1

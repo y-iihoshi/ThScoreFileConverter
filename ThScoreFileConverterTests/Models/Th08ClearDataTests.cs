@@ -136,7 +136,6 @@ namespace ThScoreFileConverter.Models.Tests
                     TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
                 var clearData = new Th08ClearDataWrapper(chapter);
 
-
                 Assert.Fail(TestUtils.Unreachable);
             }
             catch (TargetInvocationException ex)

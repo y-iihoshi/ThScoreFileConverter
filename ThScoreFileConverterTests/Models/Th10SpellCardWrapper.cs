@@ -42,9 +42,9 @@ namespace ThScoreFileConverter.Models.Tests
         public Th10SpellCardWrapper()
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
 
-        // NOTE: Enabling the following causes CA1811.
-        // public object Target => this.pobj.Target;
-
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public object Target
+            => this.pobj.Target;
         public IReadOnlyCollection<byte> Name
             => this.pobj.GetProperty(nameof(Name)) as byte[];
         public int? ClearCount

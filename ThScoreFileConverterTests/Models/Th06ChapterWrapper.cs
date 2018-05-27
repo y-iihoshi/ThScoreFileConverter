@@ -51,8 +51,8 @@ namespace ThScoreFileConverter.Models.Tests
         {
         }
 
-        public object Target => this.pobj.Target;
-
+        public object Target
+            => this.pobj.Target;
         public string Signature
             => this.pobj.GetProperty(nameof(Signature)) as string;
         public short? Size1
@@ -65,9 +65,6 @@ namespace ThScoreFileConverter.Models.Tests
             => this.pobj.GetProperty(nameof(Data)) as byte[];
 
         public void ReadFrom(BinaryReader reader)
-            => this.pobj.Invoke(
-                nameof(ReadFrom),
-                new object[] { reader },
-                CultureInfo.InvariantCulture);
+            => this.pobj.Invoke(nameof(ReadFrom), new object[] { reader }, CultureInfo.InvariantCulture);
     }
 }

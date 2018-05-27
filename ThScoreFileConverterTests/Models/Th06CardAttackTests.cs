@@ -138,7 +138,6 @@ namespace ThScoreFileConverter.Models.Tests
                     TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
                 var cardAttack = new Th06CardAttackWrapper(chapter);
 
-
                 Assert.Fail(TestUtils.Unreachable);
             }
             catch (TargetInvocationException ex)

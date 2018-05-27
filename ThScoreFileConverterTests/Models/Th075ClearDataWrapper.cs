@@ -6,8 +6,7 @@ using System.IO;
 
 namespace ThScoreFileConverter.Models.Tests
 {
-    // NOTE: Setting the accessibility as public causes CS0051 and CS0053.
-    internal sealed class Th075ClearDataWrapper
+    public sealed class Th075ClearDataWrapper
     {
         private static Type ParentType = typeof(Th075Converter);
         private static string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
@@ -16,14 +15,10 @@ namespace ThScoreFileConverter.Models.Tests
         private readonly PrivateObject pobj = null;
 
         public Th075ClearDataWrapper()
-            => this.pobj = new PrivateObject(
-                AssemblyNameToTest,
-                TypeNameToTest,
-                new object[] { });
+            => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { });
 
-        // NOTE: Enabling the following causes CA1811.
-        // public object Target => this.pobj.Target;
-
+        public object Target
+            => this.pobj.Target;
         public int? UseCount
             => this.pobj.GetProperty(nameof(UseCount)) as int?;
         public int? ClearCount
@@ -52,9 +47,6 @@ namespace ThScoreFileConverter.Models.Tests
                 this.Ranking.GetType().GetProperty("Item").GetValue(this.Ranking, new object[] { index }));
 
         public void ReadFrom(BinaryReader reader)
-            => this.pobj.Invoke(
-                nameof(ReadFrom),
-                new object[] { reader },
-                CultureInfo.InvariantCulture);
+            => this.pobj.Invoke(nameof(ReadFrom), new object[] { reader }, CultureInfo.InvariantCulture);
     }
 }

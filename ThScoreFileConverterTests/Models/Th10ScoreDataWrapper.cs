@@ -7,7 +7,7 @@ using System.IO;
 
 namespace ThScoreFileConverter.Models.Tests
 {
-    // NOTE: Setting the accessibility as public causes CS0053.
+    // NOTE: Setting the accessibility as public causes CS0703.
     internal sealed class Th10ScoreDataWrapper<TParent, TStageProgress>
         where TParent : ThConverter
         where TStageProgress : struct, Enum
@@ -44,9 +44,9 @@ namespace ThScoreFileConverter.Models.Tests
         public Th10ScoreDataWrapper()
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
 
-        // NOTE: Enabling the following causes CA1811.
-        // public object Target => this.pobj.Target;
-
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public object Target
+            => this.pobj.Target;
         public uint? Score
             => this.pobj.GetProperty(nameof(Score)) as uint?;
         public TStageProgress? StageProgress
