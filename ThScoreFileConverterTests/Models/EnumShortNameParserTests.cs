@@ -1,7 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using ThScoreFileConverter.Models;
 
-namespace ThScoreFileConverter.Models.Tests
+namespace ThScoreFileConverterTests.Models
 {
     using Level = ThConverter.Level;
 

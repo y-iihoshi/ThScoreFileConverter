@@ -3,8 +3,9 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
+using ThScoreFileConverter.Models;
 
-namespace ThScoreFileConverter.Models.Tests
+namespace ThScoreFileConverterTests.Models
 {
     public sealed class Th075HighScoreWrapper
     {

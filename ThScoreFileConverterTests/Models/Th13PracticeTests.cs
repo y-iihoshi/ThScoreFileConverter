@@ -3,8 +3,9 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Runtime.ExceptionServices;
+using ThScoreFileConverter.Models;
 
-namespace ThScoreFileConverter.Models.Tests
+namespace ThScoreFileConverterTests.Models
 {
     [TestClass()]
     public class Th13PracticeTests

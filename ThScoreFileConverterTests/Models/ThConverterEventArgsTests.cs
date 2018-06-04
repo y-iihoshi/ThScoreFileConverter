@@ -1,8 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using ThScoreFileConverter.Models;
 
-namespace ThScoreFileConverter.Models.Tests
+namespace ThScoreFileConverterTests.Models
 {
     [TestClass()]
     public class ThConverterEventArgsTests

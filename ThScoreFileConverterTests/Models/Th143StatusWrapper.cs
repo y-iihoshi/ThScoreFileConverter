@@ -3,8 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using ThScoreFileConverter.Models;
 
-namespace ThScoreFileConverter.Models.Tests
+namespace ThScoreFileConverterTests.Models
 {
     // NOTE: Setting the accessibility as public causes CS0051 and CS0053.
     internal sealed class Th143StatusWrapper

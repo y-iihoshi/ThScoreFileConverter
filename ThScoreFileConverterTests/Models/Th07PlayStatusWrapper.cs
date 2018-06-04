@@ -2,8 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using ThScoreFileConverter.Models;
 
-namespace ThScoreFileConverter.Models.Tests
+namespace ThScoreFileConverterTests.Models
 {
     // NOTE: Setting the accessibility as public causes CS0050 and CS0051.
     internal sealed class Th07PlayStatusWrapper

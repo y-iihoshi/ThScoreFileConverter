@@ -2,8 +2,10 @@
 using System;
 using System.Globalization;
 using System.Text;
+using ThScoreFileConverter;
+using ThScoreFileConverter.Models;
 
-namespace ThScoreFileConverter.Models.Tests
+namespace ThScoreFileConverterTests.Models
 {
     [TestClass()]
     public class UtilsTests

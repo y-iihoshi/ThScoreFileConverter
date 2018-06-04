@@ -2,8 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using ThScoreFileConverter.Models;
 
-namespace ThScoreFileConverter.Models.Tests
+namespace ThScoreFileConverterTests.Models
 {
     // NOTE: Setting the accessibility as public causes CS0703.
     internal sealed class Th128StatusWrapper<TParent>

@@ -2,8 +2,9 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using ThScoreFileConverter.Models;
 
-namespace ThScoreFileConverter.Models.Tests
+namespace ThScoreFileConverterTests.Models
 {
     [TestClass()]
     public class BitReaderTests

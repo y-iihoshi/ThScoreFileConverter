@@ -4,7 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.ExceptionServices;
 
-namespace ThScoreFileConverter.Models.Tests
+namespace ThScoreFileConverterTests.Models
 {
     [TestClass()]
     public class Th075HighScoreTests

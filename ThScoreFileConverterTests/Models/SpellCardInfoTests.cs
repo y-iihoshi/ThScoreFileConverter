@@ -2,8 +2,9 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using ThScoreFileConverter.Models;
 
-namespace ThScoreFileConverter.Models.Tests
+namespace ThScoreFileConverterTests.Models
 {
     using CardInfo = SpellCardInfo<ThConverter.Stage, ThConverter.Level>;
     using Level = ThConverter.Level;
