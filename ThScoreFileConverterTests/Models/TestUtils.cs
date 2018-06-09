@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.ExceptionServices;
 using System.Text;
 
 namespace ThScoreFileConverterTests.Models
@@ -154,5 +157,25 @@ namespace ThScoreFileConverterTests.Models
 
             return (TResult)Convert.ChangeType(value, type, CultureInfo.InvariantCulture);
         }
+
+        public static IEnumerable<object[]> GetInvalidEnumerators(Type type)
+        {
+            var values = Enum.GetValues(type).Cast<int>();
+            yield return new object[] { values.Min() - 1 };
+            yield return new object[] { values.Max() + 1 };
+        }
+
+        public static Action<Action> Wrap => (action) =>
+        {
+            try
+            {
+                action();
+            }
+            catch (TargetInvocationException ex)
+            {
+                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
+                throw;
+            }
+        };
     }
 }

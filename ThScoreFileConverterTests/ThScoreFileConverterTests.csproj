@@ -125,6 +125,8 @@
     <Compile Include="Models\Th09HighScoreWrapper.cs" />
     <Compile Include="Models\Th09PlayStatusTests.cs" />
     <Compile Include="Models\Th09PlayStatusWrapper.cs" />
+    <Compile Include="Models\Th095BestShotHeaderTests.cs" />
+    <Compile Include="Models\Th095BestShotHeaderWrapper.cs" />
     <Compile Include="Models\Th095ChapterTests.cs" />
     <Compile Include="Models\Th095ChapterWrapper.cs" />
     <Compile Include="Models\Th095HeaderTests.cs" />
@@ -141,6 +143,10 @@
     <Compile Include="Models\Th10SpellCardWrapper.cs" />
     <Compile Include="Models\Th10StatusTests.cs" />
     <Compile Include="Models\Th10StatusWrapper.cs" />
+    <Compile Include="Models\Th125BestShotHeaderTests.cs" />
+    <Compile Include="Models\Th125BestShotHeaderWrapper.cs" />
+    <Compile Include="Models\Th125BonusFieldsTests.cs" />
+    <Compile Include="Models\Th125BonusFieldsWrapper.cs" />
     <Compile Include="Models\Th125StatusTests.cs" />
     <Compile Include="Models\Th125StatusWrapper.cs" />
     <Compile Include="Models\Th128StatusTests.cs" />
@@ -149,6 +155,8 @@
     <Compile Include="Models\Th13PracticeWrapper.cs" />
     <Compile Include="Models\Th13SpellCardTests.cs" />
     <Compile Include="Models\Th13SpellCardWrapper.cs" />
+    <Compile Include="Models\Th143BestShotHeaderTests.cs" />
+    <Compile Include="Models\Th143BestShotHeaderWrapper.cs" />
     <Compile Include="Models\Th143StatusTests.cs" />
     <Compile Include="Models\Th143StatusWrapper.cs" />
     <Compile Include="Models\Th15ScoreDataTests.cs" />
