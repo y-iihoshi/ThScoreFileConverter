@@ -2,8 +2,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Reflection;
-using System.Runtime.ExceptionServices;
 using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
@@ -33,30 +31,16 @@ namespace ThScoreFileConverterTests.Models
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void HeaderTestHelper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var header = new Th095HeaderWrapper<TParent>();
                 Validate(header, string.Empty, 0, 0, 0, false);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestHelper<TParent>(string signature)
             where TParent : ThConverter
-        {
-            if (signature == null)
-                throw new ArgumentNullException(nameof(signature));
-
-            if (signature.Length != 4)
-                throw new ArgumentException("invalid length", nameof(signature));
-
-            try
+            => TestUtils.Wrap(() =>
             {
                 var encodedAllSize = 36;
                 var unknown1 = 0u;
@@ -74,36 +58,22 @@ namespace ThScoreFileConverterTests.Models
                         decodedBodySize));
 
                 Validate(header, signature, encodedAllSize, encodedBodySize, decodedBodySize, true);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestNullHelper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var header = new Th095HeaderWrapper<TParent>();
                 header.ReadFrom(null);
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestEmptySignatureHelper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var signature = string.Empty;
                 var encodedAllSize = 36;
@@ -128,25 +98,12 @@ namespace ThScoreFileConverterTests.Models
                         decodedBodySize));
 
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestShortenedSignatureHelper<TParent>(string signature)
             where TParent : ThConverter
-        {
-            if (signature == null)
-                throw new ArgumentNullException(nameof(signature));
-
-            if (signature.Length != 4)
-                throw new ArgumentException("invalid length", nameof(signature));
-
-            try
+            => TestUtils.Wrap(() =>
             {
                 var shortenedSignature = signature.Substring(0, 3);
                 var encodedAllSize = 36;
@@ -171,25 +128,12 @@ namespace ThScoreFileConverterTests.Models
                         decodedBodySize));
 
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestExceededSignatureHelper<TParent>(string signature)
             where TParent : ThConverter
-        {
-            if (signature == null)
-                throw new ArgumentNullException(nameof(signature));
-
-            if (signature.Length != 4)
-                throw new ArgumentException("invalid length", nameof(signature));
-
-            try
+            => TestUtils.Wrap(() =>
             {
                 var exceededSignature = signature + "E";
                 var encodedAllSize = 36;
@@ -216,25 +160,12 @@ namespace ThScoreFileConverterTests.Models
                 Assert.AreNotEqual(encodedBodySize, header.EncodedBodySize);
                 Assert.AreNotEqual(decodedBodySize, header.DecodedBodySize);
                 Assert.IsFalse(header.IsValid.Value);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestNegativeEncodedAllSizeHelper<TParent>(string signature)
             where TParent : ThConverter
-        {
-            if (signature == null)
-                throw new ArgumentNullException(nameof(signature));
-
-            if (signature.Length != 4)
-                throw new ArgumentException("invalid length", nameof(signature));
-
-            try
+            => TestUtils.Wrap(() =>
             {
                 var encodedAllSize = -1;
                 var unknown1 = 0u;
@@ -252,25 +183,12 @@ namespace ThScoreFileConverterTests.Models
                         decodedBodySize));
 
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestZeroEncodedAllSizeHelper<TParent>(string signature)
             where TParent : ThConverter
-        {
-            if (signature == null)
-                throw new ArgumentNullException(nameof(signature));
-
-            if (signature.Length != 4)
-                throw new ArgumentException("invalid length", nameof(signature));
-
-            try
+            => TestUtils.Wrap(() =>
             {
                 var encodedAllSize = 0;
                 var unknown1 = 0u;
@@ -288,25 +206,12 @@ namespace ThScoreFileConverterTests.Models
                         decodedBodySize));
 
                 Validate(header, signature, encodedAllSize, encodedBodySize, decodedBodySize, false);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestShortenedEncodedAllSizeHelper<TParent>(string signature)
             where TParent : ThConverter
-        {
-            if (signature == null)
-                throw new ArgumentNullException(nameof(signature));
-
-            if (signature.Length != 4)
-                throw new ArgumentException("invalid length", nameof(signature));
-
-            try
+            => TestUtils.Wrap(() =>
             {
                 var encodedAllSize = 35;
                 var unknown1 = 0u;
@@ -324,25 +229,12 @@ namespace ThScoreFileConverterTests.Models
                         decodedBodySize));
 
                 Validate(header, signature, encodedAllSize, encodedBodySize, decodedBodySize, false);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestExceededEncodedAllSizeHelper<TParent>(string signature)
             where TParent : ThConverter
-        {
-            if (signature == null)
-                throw new ArgumentNullException(nameof(signature));
-
-            if (signature.Length != 4)
-                throw new ArgumentException("invalid length", nameof(signature));
-
-            try
+            => TestUtils.Wrap(() =>
             {
                 var encodedAllSize = 37;
                 var unknown1 = 0u;
@@ -360,25 +252,12 @@ namespace ThScoreFileConverterTests.Models
                         decodedBodySize));
 
                 Validate(header, signature, encodedAllSize, encodedBodySize, decodedBodySize, false);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestNegativeEncodedBodySizeHelper<TParent>(string signature)
             where TParent : ThConverter
-        {
-            if (signature == null)
-                throw new ArgumentNullException(nameof(signature));
-
-            if (signature.Length != 4)
-                throw new ArgumentException("invalid length", nameof(signature));
-
-            try
+            => TestUtils.Wrap(() =>
             {
                 var encodedAllSize = 36;
                 var unknown1 = 0u;
@@ -396,25 +275,12 @@ namespace ThScoreFileConverterTests.Models
                         decodedBodySize));
 
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestZeroEncodedBodySizeHelper<TParent>(string signature)
             where TParent : ThConverter
-        {
-            if (signature == null)
-                throw new ArgumentNullException(nameof(signature));
-
-            if (signature.Length != 4)
-                throw new ArgumentException("invalid length", nameof(signature));
-
-            try
+            => TestUtils.Wrap(() =>
             {
                 var encodedAllSize = 36;
                 var unknown1 = 0u;
@@ -432,25 +298,12 @@ namespace ThScoreFileConverterTests.Models
                         decodedBodySize));
 
                 Validate(header, signature, encodedAllSize, encodedBodySize, decodedBodySize, false);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestShortenedEncodedBodySizeHelper<TParent>(string signature)
             where TParent : ThConverter
-        {
-            if (signature == null)
-                throw new ArgumentNullException(nameof(signature));
-
-            if (signature.Length != 4)
-                throw new ArgumentException("invalid length", nameof(signature));
-
-            try
+            => TestUtils.Wrap(() =>
             {
                 var encodedAllSize = 36;
                 var unknown1 = 0u;
@@ -468,25 +321,12 @@ namespace ThScoreFileConverterTests.Models
                         decodedBodySize));
 
                 Validate(header, signature, encodedAllSize, encodedBodySize, decodedBodySize, false);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestExceededEncodedBodySizeHelper<TParent>(string signature)
             where TParent : ThConverter
-        {
-            if (signature == null)
-                throw new ArgumentNullException(nameof(signature));
-
-            if (signature.Length != 4)
-                throw new ArgumentException("invalid length", nameof(signature));
-
-            try
+            => TestUtils.Wrap(() =>
             {
                 var encodedAllSize = 36;
                 var unknown1 = 0u;
@@ -504,25 +344,12 @@ namespace ThScoreFileConverterTests.Models
                         decodedBodySize));
 
                 Validate(header, signature, encodedAllSize, encodedBodySize, decodedBodySize, false);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestNegativeDecodedBodySizeHelper<TParent>(string signature)
             where TParent : ThConverter
-        {
-            if (signature == null)
-                throw new ArgumentNullException(nameof(signature));
-
-            if (signature.Length != 4)
-                throw new ArgumentException("invalid length", nameof(signature));
-
-            try
+            => TestUtils.Wrap(() =>
             {
                 var encodedAllSize = 36;
                 var unknown1 = 0u;
@@ -540,25 +367,12 @@ namespace ThScoreFileConverterTests.Models
                         decodedBodySize));
 
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestZeroDecodedBodySizeHelper<TParent>(string signature)
             where TParent : ThConverter
-        {
-            if (signature == null)
-                throw new ArgumentNullException(nameof(signature));
-
-            if (signature.Length != 4)
-                throw new ArgumentException("invalid length", nameof(signature));
-
-            try
+            => TestUtils.Wrap(() =>
             {
                 var encodedAllSize = 36;
                 var unknown1 = 0u;
@@ -576,25 +390,12 @@ namespace ThScoreFileConverterTests.Models
                         decodedBodySize));
 
                 Validate(header, signature, encodedAllSize, encodedBodySize, decodedBodySize, true);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void WriteToTestHelper<TParent>(string signature)
             where TParent : ThConverter
-        {
-            if (signature == null)
-                throw new ArgumentNullException(nameof(signature));
-
-            if (signature.Length != 4)
-                throw new ArgumentException("invalid length", nameof(signature));
-
-            try
+            => TestUtils.Wrap(() =>
             {
                 var encodedAllSize = 36;
                 var unknown1 = 78u;
@@ -631,25 +432,12 @@ namespace ThScoreFileConverterTests.Models
                 {
                     stream?.Dispose();
                 }
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void WriteToTestNullHelper<TParent>(string signature)
             where TParent : ThConverter
-        {
-            if (signature == null)
-                throw new ArgumentNullException(nameof(signature));
-
-            if (signature.Length != 4)
-                throw new ArgumentException("invalid length", nameof(signature));
-
-            try
+            => TestUtils.Wrap(() =>
             {
                 var encodedAllSize = 36;
                 var unknown1 = 78u;
@@ -668,13 +456,7 @@ namespace ThScoreFileConverterTests.Models
                 header.WriteTo(null);
                 Assert.Fail(TestUtils.Unreachable);
 
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         #region Th095
 

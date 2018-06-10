@@ -3,8 +3,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.ExceptionServices;
 using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
@@ -15,8 +13,7 @@ namespace ThScoreFileConverterTests.Models
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void Th10SpellCardTestHelper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var spellCard = new Th10SpellCardWrapper<TParent>();
 
@@ -26,19 +23,12 @@ namespace ThScoreFileConverterTests.Models
                 Assert.AreEqual(default, spellCard.Id.Value);
                 Assert.AreEqual(default, spellCard.Level.Value);
                 Assert.IsFalse(spellCard.HasTried().Value);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void Th10SpellCardReadFromTestHelper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var name = TestUtils.MakeRandomArray<byte>(0x80);
                 var clearCount = 123;
@@ -55,37 +45,23 @@ namespace ThScoreFileConverterTests.Models
                 Assert.AreEqual(id, spellCard.Id);
                 Assert.AreEqual(level, spellCard.Level.Value);
                 Assert.IsTrue(spellCard.HasTried().Value);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void Th10SpellCardReadFromTestNullHelper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var spellCard = new Th10SpellCardWrapper<TParent>();
                 spellCard.ReadFrom(null);
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "spellCard")]
         internal static void Th10SpellCardReadFromTestShortenedNameHelper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var name = TestUtils.MakeRandomArray<byte>(0x7F);
                 var clearCount = 123;
@@ -97,19 +73,12 @@ namespace ThScoreFileConverterTests.Models
                     TestUtils.MakeByteArray(name, clearCount, trialCount, id - 1, (int)level));
 
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void Th10SpellCardReadFromTestExceededNameHelper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var name = TestUtils.MakeRandomArray<byte>(0x81);
                 var clearCount = 123;
@@ -127,20 +96,13 @@ namespace ThScoreFileConverterTests.Models
                 Assert.AreNotEqual(id, spellCard.Id);
                 Assert.AreNotEqual(level, spellCard.Level.Value);
                 Assert.IsTrue(spellCard.HasTried().Value);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "spellCard")]
         internal static void Th10SpellCardReadFromTestInvalidLevelHelper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var name = TestUtils.MakeRandomArray<byte>(0x80);
                 var clearCount = 123;
@@ -152,13 +114,7 @@ namespace ThScoreFileConverterTests.Models
                     TestUtils.MakeByteArray(name, clearCount, trialCount, id - 1, (int)level));
 
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         #region Th10
 

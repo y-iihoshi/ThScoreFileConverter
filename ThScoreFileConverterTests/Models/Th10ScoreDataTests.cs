@@ -3,8 +3,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.ExceptionServices;
 using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
@@ -16,8 +14,7 @@ namespace ThScoreFileConverterTests.Models
         internal static void Th10ScoreDataTestHelper<TParent, TStageProgress>()
             where TParent : ThConverter
             where TStageProgress : struct, Enum
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var scoreData = new Th10ScoreDataWrapper<TParent, TStageProgress>();
 
@@ -27,20 +24,13 @@ namespace ThScoreFileConverterTests.Models
                 Assert.IsNull(scoreData.Name);
                 Assert.AreEqual(default, scoreData.DateTime.Value);
                 Assert.AreEqual(default, scoreData.SlowRate.Value);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void Th10ScoreDataReadFromTestHelper<TParent, TStageProgress>()
             where TParent : ThConverter
             where TStageProgress : struct, Enum
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var score = 12u;
                 var stageProgress = TestUtils.Cast<TStageProgress>(3);
@@ -77,39 +67,25 @@ namespace ThScoreFileConverterTests.Models
                 CollectionAssert.AreEqual(name, scoreData.Name.ToArray());
                 Assert.AreEqual(dateTime, scoreData.DateTime);
                 Assert.AreEqual(slowRate, scoreData.SlowRate);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void Th10ScoreDataReadFromTestNullHelper<TParent, TStageProgress>()
             where TParent : ThConverter
             where TStageProgress : struct, Enum
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var scoreData = new Th10ScoreDataWrapper<TParent, TStageProgress>();
                 scoreData.ReadFrom(null);
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "scoreData")]
         internal static void Th10ScoreDataReadFromTestShortenedNameHelper<TParent, TStageProgress>()
             where TParent : ThConverter
             where TStageProgress : struct, Enum
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var score = 12u;
                 var stageProgress = TestUtils.Cast<TStageProgress>(3);
@@ -141,20 +117,13 @@ namespace ThScoreFileConverterTests.Models
                 var scoreData = Th10ScoreDataWrapper<TParent, TStageProgress>.Create(data);
 
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void Th10ScoreDataReadFromTestExceededNameHelper<TParent, TStageProgress>()
             where TParent : ThConverter
             where TStageProgress : struct, Enum
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var score = 12u;
                 var stageProgress = TestUtils.Cast<TStageProgress>(3);
@@ -192,21 +161,14 @@ namespace ThScoreFileConverterTests.Models
                 CollectionAssert.AreEqual(name.Take(10).ToArray(), scoreData.Name.ToArray());
                 Assert.AreNotEqual(dateTime, scoreData.DateTime);
                 Assert.AreNotEqual(slowRate, scoreData.SlowRate);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "scoreData")]
         internal static void Th10ScoreDataReadFromTestInvalidStageProgressHelper<TParent, TStageProgress>()
             where TParent : ThConverter
             where TStageProgress : struct, Enum
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var score = 12u;
                 var stageProgress = TestUtils.Cast<TStageProgress>(byte.MaxValue);
@@ -238,13 +200,7 @@ namespace ThScoreFileConverterTests.Models
                 var scoreData = Th10ScoreDataWrapper<TParent, TStageProgress>.Create(data);
 
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         #region Th10
 

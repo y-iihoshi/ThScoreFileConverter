@@ -3,8 +3,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.ExceptionServices;
 using System.Text;
 using ThScoreFileConverter.Models;
 
@@ -14,142 +12,101 @@ namespace ThScoreFileConverterTests.Models
     public class Th095StatusTests
     {
         [TestMethod()]
-        public void Th095StatusTestChapter()
+        public void Th095StatusTestChapter() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var signature = "ST";
-                var version = (ushort)0;
-                var size = 0x458;
-                var checksum = 0u;
-                var lastName = "Player1\0\0\0";
-                var unknown = TestUtils.MakeRandomArray<byte>(0x442);
-                var data = TestUtils.MakeByteArray(lastName.ToCharArray(), unknown);
+            var signature = "ST";
+            var version = (ushort)0;
+            var size = 0x458;
+            var checksum = 0u;
+            var lastName = "Player1\0\0\0";
+            var unknown = TestUtils.MakeRandomArray<byte>(0x442);
+            var data = TestUtils.MakeByteArray(lastName.ToCharArray(), unknown);
 
-                var chapter = Th095ChapterWrapper<Th095Converter>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
-                var status = new Th095StatusWrapper(chapter);
+            var chapter = Th095ChapterWrapper<Th095Converter>.Create(
+                TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
+            var status = new Th095StatusWrapper(chapter);
 
-                Assert.AreEqual(signature, status.Signature);
-                Assert.AreEqual(version, status.Version);
-                Assert.AreEqual(size, status.Size);
-                Assert.AreEqual(checksum, status.Checksum);
-                Assert.IsFalse(status.IsValid.Value);
-                CollectionAssert.AreEqual(data, status.Data.ToArray());
-                CollectionAssert.AreEqual(Encoding.Default.GetBytes(lastName), status.LastName.ToArray());
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.AreEqual(signature, status.Signature);
+            Assert.AreEqual(version, status.Version);
+            Assert.AreEqual(size, status.Size);
+            Assert.AreEqual(checksum, status.Checksum);
+            Assert.IsFalse(status.IsValid.Value);
+            CollectionAssert.AreEqual(data, status.Data.ToArray());
+            CollectionAssert.AreEqual(Encoding.Default.GetBytes(lastName), status.LastName.ToArray());
+        });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th095StatusTestNullChapter()
+        public void Th095StatusTestNullChapter() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var status = new Th095StatusWrapper(null);
+            var status = new Th095StatusWrapper(null);
 
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
         [TestMethod()]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th095StatusTestInvalidSignature()
+        public void Th095StatusTestInvalidSignature() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var signature = "st";
-                var version = (ushort)0;
-                var size = 0x458;
-                var checksum = 0u;
-                var lastName = "Player1\0\0\0";
-                var unknown = TestUtils.MakeRandomArray<byte>(0x442);
-                var data = TestUtils.MakeByteArray(lastName.ToCharArray(), unknown);
+            var signature = "st";
+            var version = (ushort)0;
+            var size = 0x458;
+            var checksum = 0u;
+            var lastName = "Player1\0\0\0";
+            var unknown = TestUtils.MakeRandomArray<byte>(0x442);
+            var data = TestUtils.MakeByteArray(lastName.ToCharArray(), unknown);
 
-                var chapter = Th095ChapterWrapper<Th095Converter>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
-                var status = new Th095StatusWrapper(chapter);
+            var chapter = Th095ChapterWrapper<Th095Converter>.Create(
+                TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
+            var status = new Th095StatusWrapper(chapter);
 
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
         [TestMethod()]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th095StatusTestInvalidVersion()
+        public void Th095StatusTestInvalidVersion() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var signature = "ST";
-                var version = (ushort)1;
-                var size = 0x458;
-                var checksum = 0u;
-                var lastName = "Player1\0\0\0";
-                var unknown = TestUtils.MakeRandomArray<byte>(0x442);
-                var data = TestUtils.MakeByteArray(lastName.ToCharArray(), unknown);
+            var signature = "ST";
+            var version = (ushort)1;
+            var size = 0x458;
+            var checksum = 0u;
+            var lastName = "Player1\0\0\0";
+            var unknown = TestUtils.MakeRandomArray<byte>(0x442);
+            var data = TestUtils.MakeByteArray(lastName.ToCharArray(), unknown);
 
-                var chapter = Th095ChapterWrapper<Th095Converter>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
-                var status = new Th095StatusWrapper(chapter);
+            var chapter = Th095ChapterWrapper<Th095Converter>.Create(
+                TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
+            var status = new Th095StatusWrapper(chapter);
 
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
         [TestMethod()]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th095StatusTestInvalidSize()
+        public void Th095StatusTestInvalidSize() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var signature = "ST";
-                var version = (ushort)0;
-                var size = 0x459;
-                var checksum = 0u;
-                var lastName = "Player1\0\0\0";
-                var unknown = TestUtils.MakeRandomArray<byte>(0x442);
-                var data = TestUtils.MakeByteArray(lastName.ToCharArray(), unknown);
+            var signature = "ST";
+            var version = (ushort)0;
+            var size = 0x459;
+            var checksum = 0u;
+            var lastName = "Player1\0\0\0";
+            var unknown = TestUtils.MakeRandomArray<byte>(0x442);
+            var data = TestUtils.MakeByteArray(lastName.ToCharArray(), unknown);
 
-                var chapter = Th095ChapterWrapper<Th095Converter>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
-                var status = new Th095StatusWrapper(chapter);
+            var chapter = Th095ChapterWrapper<Th095Converter>.Create(
+                TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
+            var status = new Th095StatusWrapper(chapter);
 
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         internal static void CanInitializeTestHelper(string signature, ushort version, int size, bool expected)
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var checksum = 0u;
                 var data = new byte[size];
@@ -158,13 +115,7 @@ namespace ThScoreFileConverterTests.Models
                     TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
 
                 Assert.AreEqual(expected, Th095StatusWrapper.CanInitialize(chapter));
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [TestMethod()]
         public void Th095StatusCanInitializeTest()

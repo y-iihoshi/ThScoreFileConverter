@@ -3,8 +3,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.ExceptionServices;
 using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
@@ -15,8 +13,7 @@ namespace ThScoreFileConverterTests.Models
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void VersionInfoTestChapterHelper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var signature = "VRSM";
                 short size1 = 0x1C;
@@ -38,38 +35,24 @@ namespace ThScoreFileConverterTests.Models
                 CollectionAssert.AreEqual(data, versionInfo.Data.ToArray());
                 Assert.AreEqual(data[0], versionInfo.FirstByteOfData);
                 CollectionAssert.AreEqual(version, versionInfo.Version.ToArray());
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "versionInfo")]
         internal static void VersionInfoTestNullChapterHelper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var versionInfo = new Th07VersionInfoWrapper<TParent>(null);
 
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "versionInfo")]
         internal static void VersionInfoTestInvalidSignatureHelper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var signature = "vrsm";
                 short size1 = 0x1C;
@@ -86,20 +69,13 @@ namespace ThScoreFileConverterTests.Models
                 var versionInfo = new Th07VersionInfoWrapper<TParent>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "versionInfo")]
         internal static void VersionInfoTestInvalidSize1Helper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var signature = "VRSM";
                 short size1 = 0x1D;
@@ -116,13 +92,7 @@ namespace ThScoreFileConverterTests.Models
                 var versionInfo = new Th07VersionInfoWrapper<TParent>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         #region Th07
 

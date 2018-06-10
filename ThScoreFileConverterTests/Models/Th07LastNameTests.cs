@@ -3,8 +3,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.ExceptionServices;
 using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
@@ -15,8 +13,7 @@ namespace ThScoreFileConverterTests.Models
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void LastNameTestChapterHelper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var signature = "LSNM";
                 short size1 = 0x18;
@@ -35,38 +32,24 @@ namespace ThScoreFileConverterTests.Models
                 CollectionAssert.AreEqual(data, lastName.Data.ToArray());
                 Assert.AreEqual(data[0], lastName.FirstByteOfData);
                 CollectionAssert.AreEqual(name, lastName.Name.ToArray());
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "lastName")]
         internal static void LastNameTestNullChapterHelper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var lastName = new Th07LastNameWrapper<TParent>(null);
 
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "lastName")]
         internal static void LastNameTestInvalidSignatureHelper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var signature = "lsnm";
                 short size1 = 0x18;
@@ -80,20 +63,13 @@ namespace ThScoreFileConverterTests.Models
                 var lastName = new Th07LastNameWrapper<TParent>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "lastName")]
         internal static void LastNameTestInvalidSize1Helper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var signature = "LSNM";
                 short size1 = 0x19;
@@ -107,13 +83,7 @@ namespace ThScoreFileConverterTests.Models
                 var lastName = new Th07LastNameWrapper<TParent>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         #region Th07
 

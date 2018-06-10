@@ -3,8 +3,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.ExceptionServices;
 using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
@@ -33,58 +31,36 @@ namespace ThScoreFileConverterTests.Models
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ChapterTestHelper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var chapter = new Th06ChapterWrapper<TParent>();
                 Validate(chapter, string.Empty, 0, 0, new byte[] { });
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ChapterTestCopyHelper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var chapter1 = new Th06ChapterWrapper<TParent>();
                 var chapter2 = new Th06ChapterWrapper<TParent>(chapter1);
                 Validate(chapter2, string.Empty, 0, 0, new byte[] { });
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "chapter")]
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ChapterTestNullHelper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var chapter = new Th06ChapterWrapper<TParent>(null);
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestHelper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var signature = "ABCD";
                 short size1 = 12;
@@ -95,36 +71,22 @@ namespace ThScoreFileConverterTests.Models
                     TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
 
                 Validate(chapter, signature, size1, size2, data);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestNullHelper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var chapter = new Th06ChapterWrapper<TParent>();
                 chapter.ReadFrom(null);
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestEmptySignatureHelper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var signature = string.Empty;
                 short size1 = 12;
@@ -142,19 +104,12 @@ namespace ThScoreFileConverterTests.Models
                     TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
 
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestShortenedSignatureHelper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var signature = "ABC";
                 short size1 = 12;
@@ -171,19 +126,12 @@ namespace ThScoreFileConverterTests.Models
                     TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
 
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestExceededSignatureHelper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var signature = "ABCDE";
                 short size1 = 12;
@@ -200,19 +148,12 @@ namespace ThScoreFileConverterTests.Models
                     TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
 
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestNegativeSize1Helper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var signature = "ABCD";
                 short size1 = -1;
@@ -223,19 +164,12 @@ namespace ThScoreFileConverterTests.Models
                     TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
 
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestZeroSize1Helper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var signature = "ABCD";
                 short size1 = 0;
@@ -246,19 +180,12 @@ namespace ThScoreFileConverterTests.Models
                     TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
 
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestShortenedSize1Helper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var signature = "ABCD";
                 short size1 = 11;
@@ -272,19 +199,12 @@ namespace ThScoreFileConverterTests.Models
                 Assert.AreEqual(size1, chapter.Size1);
                 Assert.AreEqual(size2, chapter.Size2);
                 CollectionAssert.AreNotEqual(data, chapter.Data.ToArray());
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestExceededSize1Helper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var signature = "ABCD";
                 short size1 = 13;
@@ -295,19 +215,12 @@ namespace ThScoreFileConverterTests.Models
                     TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
 
                 Validate(chapter, signature, size1, size2, data);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestNegativeSize2Helper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var signature = "ABCD";
                 short size1 = 12;
@@ -318,19 +231,12 @@ namespace ThScoreFileConverterTests.Models
                     TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
 
                 Validate(chapter, signature, size1, size2, data);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestZeroSize2Helper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var signature = "ABCD";
                 short size1 = 12;
@@ -341,19 +247,12 @@ namespace ThScoreFileConverterTests.Models
                     TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
 
                 Validate(chapter, signature, size1, size2, data);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestShortenedSize2Helper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var signature = "ABCD";
                 short size1 = 12;
@@ -364,19 +263,12 @@ namespace ThScoreFileConverterTests.Models
                     TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
 
                 Validate(chapter, signature, size1, size2, data);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestExceededSize2Helper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var signature = "ABCD";
                 short size1 = 12;
@@ -387,19 +279,12 @@ namespace ThScoreFileConverterTests.Models
                     TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
 
                 Validate(chapter, signature, size1, size2, data);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestEmptyDataHelper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var signature = "ABCD";
                 short size1 = 12;
@@ -410,19 +295,12 @@ namespace ThScoreFileConverterTests.Models
                     TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
 
                 Validate(chapter, signature, size1, size2, data);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestMisalignedDataHelper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var signature = "ABCD";
                 short size1 = 11;
@@ -433,13 +311,7 @@ namespace ThScoreFileConverterTests.Models
                     TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
 
                 Validate(chapter, signature, size1, size2, data);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         #region Th06
 

@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.ExceptionServices;
 using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
@@ -13,21 +11,13 @@ namespace ThScoreFileConverterTests.Models
     public class Th075StatusTests
     {
         [TestMethod()]
-        public void Th075StatusTest()
+        public void Th075StatusTest() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var status = new Th075StatusWrapper();
+            var status = new Th075StatusWrapper();
 
-                Assert.IsNull(status.LastName);
-                Assert.IsNull(status.ArcadeScores);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.IsNull(status.LastName);
+            Assert.IsNull(status.ArcadeScores);
+        });
 
         internal static void ReadFromTestHelper(Th075StatusWrapper status, byte[] array)
         {
@@ -54,174 +44,126 @@ namespace ThScoreFileConverterTests.Models
             => scores.Where((_, index) => IsValidRange(index, offset)).Select(score => score - 10).ToArray();
 
         [TestMethod()]
-        public void ReadFromTest()
+        public void ReadFromTest() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var status = new Th075StatusWrapper();
-                var lastName = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 };
-                var arcadeScores = TestUtils.MakeRandomArray<int>(15 * 15);
-                var unknown = TestUtils.MakeRandomArray<byte>(0x128);
+            var status = new Th075StatusWrapper();
+            var lastName = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 };
+            var arcadeScores = TestUtils.MakeRandomArray<int>(15 * 15);
+            var unknown = TestUtils.MakeRandomArray<byte>(0x128);
 
-                ReadFromTestHelper(status, TestUtils.MakeByteArray(lastName, arcadeScores, unknown));
+            ReadFromTestHelper(status, TestUtils.MakeByteArray(lastName, arcadeScores, unknown));
 
-                Assert.AreEqual("Player1 ", status.LastName);
-                CollectionAssert.AreEqual(
-                    GetExpectedScores(arcadeScores, 0), status.ArcadeScores[Th075Converter.Chara.Reimu].Values);
-                CollectionAssert.AreEqual(
-                    GetExpectedScores(arcadeScores, 15), status.ArcadeScores[Th075Converter.Chara.Marisa].Values);
-                CollectionAssert.AreEqual(
-                    GetExpectedScores(arcadeScores, 30), status.ArcadeScores[Th075Converter.Chara.Sakuya].Values);
-                CollectionAssert.AreEqual(
-                    GetExpectedScores(arcadeScores, 45), status.ArcadeScores[Th075Converter.Chara.Alice].Values);
-                CollectionAssert.AreEqual(
-                    GetExpectedScores(arcadeScores, 60), status.ArcadeScores[Th075Converter.Chara.Patchouli].Values);
-                CollectionAssert.AreEqual(
-                    GetExpectedScores(arcadeScores, 75), status.ArcadeScores[Th075Converter.Chara.Youmu].Values);
-                CollectionAssert.AreEqual(
-                    GetExpectedScores(arcadeScores, 90), status.ArcadeScores[Th075Converter.Chara.Remilia].Values);
-                CollectionAssert.AreEqual(
-                    GetExpectedScores(arcadeScores, 105), status.ArcadeScores[Th075Converter.Chara.Yuyuko].Values);
-                CollectionAssert.AreEqual(
-                    GetExpectedScores(arcadeScores, 120), status.ArcadeScores[Th075Converter.Chara.Yukari].Values);
-                CollectionAssert.AreEqual(
-                    GetExpectedScores(arcadeScores, 135), status.ArcadeScores[Th075Converter.Chara.Suika].Values);
-                CollectionAssert.AreEqual(
-                    GetExpectedScores(arcadeScores, 150), status.ArcadeScores[Th075Converter.Chara.Meiling].Values);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.AreEqual("Player1 ", status.LastName);
+            CollectionAssert.AreEqual(
+                GetExpectedScores(arcadeScores, 0), status.ArcadeScores[Th075Converter.Chara.Reimu].Values);
+            CollectionAssert.AreEqual(
+                GetExpectedScores(arcadeScores, 15), status.ArcadeScores[Th075Converter.Chara.Marisa].Values);
+            CollectionAssert.AreEqual(
+                GetExpectedScores(arcadeScores, 30), status.ArcadeScores[Th075Converter.Chara.Sakuya].Values);
+            CollectionAssert.AreEqual(
+                GetExpectedScores(arcadeScores, 45), status.ArcadeScores[Th075Converter.Chara.Alice].Values);
+            CollectionAssert.AreEqual(
+                GetExpectedScores(arcadeScores, 60), status.ArcadeScores[Th075Converter.Chara.Patchouli].Values);
+            CollectionAssert.AreEqual(
+                GetExpectedScores(arcadeScores, 75), status.ArcadeScores[Th075Converter.Chara.Youmu].Values);
+            CollectionAssert.AreEqual(
+                GetExpectedScores(arcadeScores, 90), status.ArcadeScores[Th075Converter.Chara.Remilia].Values);
+            CollectionAssert.AreEqual(
+                GetExpectedScores(arcadeScores, 105), status.ArcadeScores[Th075Converter.Chara.Yuyuko].Values);
+            CollectionAssert.AreEqual(
+                GetExpectedScores(arcadeScores, 120), status.ArcadeScores[Th075Converter.Chara.Yukari].Values);
+            CollectionAssert.AreEqual(
+                GetExpectedScores(arcadeScores, 135), status.ArcadeScores[Th075Converter.Chara.Suika].Values);
+            CollectionAssert.AreEqual(
+                GetExpectedScores(arcadeScores, 150), status.ArcadeScores[Th075Converter.Chara.Meiling].Values);
+        });
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ReadFromTestNull()
+        public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var status = new Th075StatusWrapper();
-                status.ReadFrom(null);
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            var status = new Th075StatusWrapper();
+            status.ReadFrom(null);
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void ReadFromTestShortenedName()
+        public void ReadFromTestShortenedName() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var status = new Th075StatusWrapper();
-                var lastName = new byte[] { 15, 37, 26, 50, 30, 43, 53 };
-                var arcadeScores = TestUtils.MakeRandomArray<int>(15 * 15);
-                var unknown = TestUtils.MakeRandomArray<byte>(0x128);
+            var status = new Th075StatusWrapper();
+            var lastName = new byte[] { 15, 37, 26, 50, 30, 43, 53 };
+            var arcadeScores = TestUtils.MakeRandomArray<int>(15 * 15);
+            var unknown = TestUtils.MakeRandomArray<byte>(0x128);
 
-                ReadFromTestHelper(status, TestUtils.MakeByteArray(lastName, arcadeScores, unknown));
+            ReadFromTestHelper(status, TestUtils.MakeByteArray(lastName, arcadeScores, unknown));
 
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [TestMethod()]
-        public void ReadFromTestExceededName()
+        public void ReadFromTestExceededName() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var status = new Th075StatusWrapper();
-                var lastName = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103, 1 };
-                var arcadeScores = TestUtils.MakeRandomArray<int>(15 * 15);
-                var unknown = TestUtils.MakeRandomArray<byte>(0x128);
+            var status = new Th075StatusWrapper();
+            var lastName = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103, 1 };
+            var arcadeScores = TestUtils.MakeRandomArray<int>(15 * 15);
+            var unknown = TestUtils.MakeRandomArray<byte>(0x128);
 
-                ReadFromTestHelper(status, TestUtils.MakeByteArray(lastName, arcadeScores, unknown));
+            ReadFromTestHelper(status, TestUtils.MakeByteArray(lastName, arcadeScores, unknown));
 
-                Assert.AreEqual("Player1 ", status.LastName);
-                CollectionAssert.AreNotEqual(
-                    arcadeScores.Take(11).Select(score => score - 10).ToArray(),
-                    status.ArcadeScores[Th075Converter.Chara.Reimu].Values);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.AreEqual("Player1 ", status.LastName);
+            CollectionAssert.AreNotEqual(
+                arcadeScores.Take(11).Select(score => score - 10).ToArray(),
+                status.ArcadeScores[Th075Converter.Chara.Reimu].Values);
+        });
 
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void ReadFromTestShortenedArcadeScores()
+        public void ReadFromTestShortenedArcadeScores() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var status = new Th075StatusWrapper();
-                var lastName = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 };
-                var arcadeScores = TestUtils.MakeRandomArray<int>(15 * 15 - 1);
-                var unknown = TestUtils.MakeRandomArray<byte>(0x128);
+            var status = new Th075StatusWrapper();
+            var lastName = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 };
+            var arcadeScores = TestUtils.MakeRandomArray<int>(15 * 15 - 1);
+            var unknown = TestUtils.MakeRandomArray<byte>(0x128);
 
-                ReadFromTestHelper(status, TestUtils.MakeByteArray(lastName, arcadeScores, unknown));
+            ReadFromTestHelper(status, TestUtils.MakeByteArray(lastName, arcadeScores, unknown));
 
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [TestMethod()]
-        public void ReadFromTestExceededArcadeScores()
+        public void ReadFromTestExceededArcadeScores() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var status = new Th075StatusWrapper();
-                var lastName = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 };
-                var arcadeScores = TestUtils.MakeRandomArray<int>(15 * 15 + 1);
-                var unknown = TestUtils.MakeRandomArray<byte>(0x128);
+            var status = new Th075StatusWrapper();
+            var lastName = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 };
+            var arcadeScores = TestUtils.MakeRandomArray<int>(15 * 15 + 1);
+            var unknown = TestUtils.MakeRandomArray<byte>(0x128);
 
-                ReadFromTestHelper(status, TestUtils.MakeByteArray(lastName, arcadeScores, unknown));
+            ReadFromTestHelper(status, TestUtils.MakeByteArray(lastName, arcadeScores, unknown));
 
-                Assert.AreEqual("Player1 ", status.LastName);
-                CollectionAssert.AreEqual(
-                    GetExpectedScores(arcadeScores, 0), status.ArcadeScores[Th075Converter.Chara.Reimu].Values);
-                CollectionAssert.AreEqual(
-                    GetExpectedScores(arcadeScores, 15), status.ArcadeScores[Th075Converter.Chara.Marisa].Values);
-                CollectionAssert.AreEqual(
-                    GetExpectedScores(arcadeScores, 30), status.ArcadeScores[Th075Converter.Chara.Sakuya].Values);
-                CollectionAssert.AreEqual(
-                    GetExpectedScores(arcadeScores, 45), status.ArcadeScores[Th075Converter.Chara.Alice].Values);
-                CollectionAssert.AreEqual(
-                    GetExpectedScores(arcadeScores, 60), status.ArcadeScores[Th075Converter.Chara.Patchouli].Values);
-                CollectionAssert.AreEqual(
-                    GetExpectedScores(arcadeScores, 75), status.ArcadeScores[Th075Converter.Chara.Youmu].Values);
-                CollectionAssert.AreEqual(
-                    GetExpectedScores(arcadeScores, 90), status.ArcadeScores[Th075Converter.Chara.Remilia].Values);
-                CollectionAssert.AreEqual(
-                    GetExpectedScores(arcadeScores, 105), status.ArcadeScores[Th075Converter.Chara.Yuyuko].Values);
-                CollectionAssert.AreEqual(
-                    GetExpectedScores(arcadeScores, 120), status.ArcadeScores[Th075Converter.Chara.Yukari].Values);
-                CollectionAssert.AreEqual(
-                    GetExpectedScores(arcadeScores, 135), status.ArcadeScores[Th075Converter.Chara.Suika].Values);
-                CollectionAssert.AreEqual(
-                    GetExpectedScores(arcadeScores, 150), status.ArcadeScores[Th075Converter.Chara.Meiling].Values);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.AreEqual("Player1 ", status.LastName);
+            CollectionAssert.AreEqual(
+                GetExpectedScores(arcadeScores, 0), status.ArcadeScores[Th075Converter.Chara.Reimu].Values);
+            CollectionAssert.AreEqual(
+                GetExpectedScores(arcadeScores, 15), status.ArcadeScores[Th075Converter.Chara.Marisa].Values);
+            CollectionAssert.AreEqual(
+                GetExpectedScores(arcadeScores, 30), status.ArcadeScores[Th075Converter.Chara.Sakuya].Values);
+            CollectionAssert.AreEqual(
+                GetExpectedScores(arcadeScores, 45), status.ArcadeScores[Th075Converter.Chara.Alice].Values);
+            CollectionAssert.AreEqual(
+                GetExpectedScores(arcadeScores, 60), status.ArcadeScores[Th075Converter.Chara.Patchouli].Values);
+            CollectionAssert.AreEqual(
+                GetExpectedScores(arcadeScores, 75), status.ArcadeScores[Th075Converter.Chara.Youmu].Values);
+            CollectionAssert.AreEqual(
+                GetExpectedScores(arcadeScores, 90), status.ArcadeScores[Th075Converter.Chara.Remilia].Values);
+            CollectionAssert.AreEqual(
+                GetExpectedScores(arcadeScores, 105), status.ArcadeScores[Th075Converter.Chara.Yuyuko].Values);
+            CollectionAssert.AreEqual(
+                GetExpectedScores(arcadeScores, 120), status.ArcadeScores[Th075Converter.Chara.Yukari].Values);
+            CollectionAssert.AreEqual(
+                GetExpectedScores(arcadeScores, 135), status.ArcadeScores[Th075Converter.Chara.Suika].Values);
+            CollectionAssert.AreEqual(
+                GetExpectedScores(arcadeScores, 150), status.ArcadeScores[Th075Converter.Chara.Meiling].Values);
+        });
     }
 }

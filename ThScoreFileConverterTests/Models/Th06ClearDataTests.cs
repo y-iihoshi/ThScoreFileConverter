@@ -3,8 +3,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.ExceptionServices;
 using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
@@ -13,158 +11,118 @@ namespace ThScoreFileConverterTests.Models
     public class Th06ClearDataTests
     {
         [TestMethod()]
-        public void Th06ClearDataTestChapter()
+        public void Th06ClearDataTestChapter() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var signature = "CLRD";
-                short size1 = 0x18;
-                short size2 = 0x18;
-                var unknown = 0u;
-                var storyFlags = TestUtils.MakeRandomArray<byte>(5);
-                var practiceFlags = TestUtils.MakeRandomArray<byte>(5);
-                var chara = Th06Converter.Chara.ReimuB;
-                var data = TestUtils.MakeByteArray(
-                    unknown,
-                    storyFlags,
-                    practiceFlags,
-                    (short)chara);
+            var signature = "CLRD";
+            short size1 = 0x18;
+            short size2 = 0x18;
+            var unknown = 0u;
+            var storyFlags = TestUtils.MakeRandomArray<byte>(5);
+            var practiceFlags = TestUtils.MakeRandomArray<byte>(5);
+            var chara = Th06Converter.Chara.ReimuB;
+            var data = TestUtils.MakeByteArray(
+                unknown,
+                storyFlags,
+                practiceFlags,
+                (short)chara);
 
-                var chapter = Th06ChapterWrapper<Th06Converter>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
-                var clearData = new Th06ClearDataWrapper(chapter);
+            var chapter = Th06ChapterWrapper<Th06Converter>.Create(
+                TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+            var clearData = new Th06ClearDataWrapper(chapter);
 
-                Assert.AreEqual(signature, clearData.Signature);
-                Assert.AreEqual(size1, clearData.Size1);
-                Assert.AreEqual(size2, clearData.Size2);
-                CollectionAssert.AreEqual(data, clearData.Data.ToArray());
-                Assert.AreEqual(data[0], clearData.FirstByteOfData);
-                CollectionAssert.AreEqual(storyFlags, clearData.StoryFlags.Values.ToArray());
-                CollectionAssert.AreEqual(practiceFlags, clearData.PracticeFlags.Values.ToArray());
-                Assert.AreEqual(chara, clearData.Chara);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.AreEqual(signature, clearData.Signature);
+            Assert.AreEqual(size1, clearData.Size1);
+            Assert.AreEqual(size2, clearData.Size2);
+            CollectionAssert.AreEqual(data, clearData.Data.ToArray());
+            Assert.AreEqual(data[0], clearData.FirstByteOfData);
+            CollectionAssert.AreEqual(storyFlags, clearData.StoryFlags.Values.ToArray());
+            CollectionAssert.AreEqual(practiceFlags, clearData.PracticeFlags.Values.ToArray());
+            Assert.AreEqual(chara, clearData.Chara);
+        });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th06ClearDataTestNullChapter()
+        public void Th06ClearDataTestNullChapter() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var clearData = new Th06ClearDataWrapper(null);
+            var clearData = new Th06ClearDataWrapper(null);
 
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
         [TestMethod()]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th06ClearDataTestInvalidSignature()
+        public void Th06ClearDataTestInvalidSignature() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var signature = "clrd";
-                short size1 = 0x18;
-                short size2 = 0x18;
-                var unknown = 0u;
-                var storyFlags = TestUtils.MakeRandomArray<byte>(5);
-                var practiceFlags = TestUtils.MakeRandomArray<byte>(5);
-                var chara = Th06Converter.Chara.ReimuB;
-                var data = TestUtils.MakeByteArray(
-                    unknown,
-                    storyFlags,
-                    practiceFlags,
-                    (short)chara);
+            var signature = "clrd";
+            short size1 = 0x18;
+            short size2 = 0x18;
+            var unknown = 0u;
+            var storyFlags = TestUtils.MakeRandomArray<byte>(5);
+            var practiceFlags = TestUtils.MakeRandomArray<byte>(5);
+            var chara = Th06Converter.Chara.ReimuB;
+            var data = TestUtils.MakeByteArray(
+                unknown,
+                storyFlags,
+                practiceFlags,
+                (short)chara);
 
-                var chapter = Th06ChapterWrapper<Th06Converter>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
-                var clearData = new Th06ClearDataWrapper(chapter);
+            var chapter = Th06ChapterWrapper<Th06Converter>.Create(
+                TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+            var clearData = new Th06ClearDataWrapper(chapter);
 
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
         [TestMethod()]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th06ClearDataTestInvalidSize1()
+        public void Th06ClearDataTestInvalidSize1() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var signature = "CLRD";
-                short size1 = 0x19;
-                short size2 = 0x18;
-                var unknown = 0u;
-                var storyFlags = TestUtils.MakeRandomArray<byte>(5);
-                var practiceFlags = TestUtils.MakeRandomArray<byte>(5);
-                var chara = Th06Converter.Chara.ReimuB;
-                var data = TestUtils.MakeByteArray(
-                    unknown,
-                    storyFlags,
-                    practiceFlags,
-                    (short)chara);
+            var signature = "CLRD";
+            short size1 = 0x19;
+            short size2 = 0x18;
+            var unknown = 0u;
+            var storyFlags = TestUtils.MakeRandomArray<byte>(5);
+            var practiceFlags = TestUtils.MakeRandomArray<byte>(5);
+            var chara = Th06Converter.Chara.ReimuB;
+            var data = TestUtils.MakeByteArray(
+                unknown,
+                storyFlags,
+                practiceFlags,
+                (short)chara);
 
-                var chapter = Th06ChapterWrapper<Th06Converter>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
-                var clearData = new Th06ClearDataWrapper(chapter);
+            var chapter = Th06ChapterWrapper<Th06Converter>.Create(
+                TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+            var clearData = new Th06ClearDataWrapper(chapter);
 
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
         [TestMethod()]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th06ClearDataTestInvalidChara()
+        public void Th06ClearDataTestInvalidChara() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var signature = "CLRD";
-                short size1 = 0x18;
-                short size2 = 0x18;
-                var unknown = 0u;
-                var storyFlags = TestUtils.MakeRandomArray<byte>(5);
-                var practiceFlags = TestUtils.MakeRandomArray<byte>(5);
-                var chara = (Th06Converter.Chara)(-1);
-                var data = TestUtils.MakeByteArray(
-                    unknown,
-                    storyFlags,
-                    practiceFlags,
-                    (short)chara);
+            var signature = "CLRD";
+            short size1 = 0x18;
+            short size2 = 0x18;
+            var unknown = 0u;
+            var storyFlags = TestUtils.MakeRandomArray<byte>(5);
+            var practiceFlags = TestUtils.MakeRandomArray<byte>(5);
+            var chara = (Th06Converter.Chara)(-1);
+            var data = TestUtils.MakeByteArray(
+                unknown,
+                storyFlags,
+                practiceFlags,
+                (short)chara);
 
-                var chapter = Th06ChapterWrapper<Th06Converter>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
-                var clearData = new Th06ClearDataWrapper(chapter);
+            var chapter = Th06ChapterWrapper<Th06Converter>.Create(
+                TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+            var clearData = new Th06ClearDataWrapper(chapter);
 
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.Fail(TestUtils.Unreachable);
+        });
     }
 }

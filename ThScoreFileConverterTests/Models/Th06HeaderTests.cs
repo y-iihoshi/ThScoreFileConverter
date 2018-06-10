@@ -3,8 +3,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.ExceptionServices;
 using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
@@ -15,11 +13,7 @@ namespace ThScoreFileConverterTests.Models
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void Th06HeaderTestHelper<TParent>(string signature)
             where TParent : ThConverter
-        {
-            if (signature == null)
-                throw new ArgumentNullException(nameof(signature));
-
-            try
+            => TestUtils.Wrap(() =>
             {
                 short size1 = 12;
                 short size2 = 12;
@@ -34,41 +28,24 @@ namespace ThScoreFileConverterTests.Models
                 Assert.AreEqual(size2, header.Size2);
                 CollectionAssert.AreEqual(data, header.Data.ToArray());
                 Assert.AreEqual(data[0], header.FirstByteOfData);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "header")]
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void Th06HeaderTestNullHelper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var header = new Th06HeaderWrapper<TParent>(null);
 
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "header")]
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void Th06HeaderTestInvalidSignatureHelper<TParent>(string signature)
             where TParent : ThConverter
-        {
-            if (signature == null)
-                throw new ArgumentNullException(nameof(signature));
-
-            try
+            => TestUtils.Wrap(() =>
             {
                 short size1 = 12;
                 short size2 = 12;
@@ -79,23 +56,13 @@ namespace ThScoreFileConverterTests.Models
                 var header = new Th06HeaderWrapper<TParent>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "header")]
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void Th06HeaderTestInvalidSize1Helper<TParent>(string signature)
             where TParent : ThConverter
-        {
-            if (signature == null)
-                throw new ArgumentNullException(nameof(signature));
-
-            try
+            => TestUtils.Wrap(() =>
             {
                 short size1 = 13;
                 short size2 = 12;
@@ -106,13 +73,7 @@ namespace ThScoreFileConverterTests.Models
                 var header = new Th06HeaderWrapper<TParent>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         #region Th06
 

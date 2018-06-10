@@ -3,8 +3,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.ExceptionServices;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -12,97 +10,57 @@ namespace ThScoreFileConverterTests.Models
     public class Th09ClearCountTests
     {
         [TestMethod()]
-        public void Th09ClearCountTest()
+        public void Th09ClearCountTest() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var clearCount = new Th09ClearCountWrapper();
+            var clearCount = new Th09ClearCountWrapper();
 
-                Assert.AreEqual(0, clearCount.Counts.Count);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.AreEqual(0, clearCount.Counts.Count);
+        });
 
         [TestMethod()]
-        public void Th09ClearCountReadFromTest()
+        public void Th09ClearCountReadFromTest() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var counts = TestUtils.MakeRandomArray<int>(5);
-                var unknown = 1u;
+            var counts = TestUtils.MakeRandomArray<int>(5);
+            var unknown = 1u;
 
-                var clearCount = Th09ClearCountWrapper.Create(TestUtils.MakeByteArray(counts, unknown));
+            var clearCount = Th09ClearCountWrapper.Create(TestUtils.MakeByteArray(counts, unknown));
 
-                CollectionAssert.AreEqual(counts, clearCount.Counts.Values.ToArray());
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            CollectionAssert.AreEqual(counts, clearCount.Counts.Values.ToArray());
+        });
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th09ClearCountReadFromTestNull()
+        public void Th09ClearCountReadFromTestNull() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var clearCount = new Th09ClearCountWrapper();
-                clearCount.ReadFrom(null);
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            var clearCount = new Th09ClearCountWrapper();
+            clearCount.ReadFrom(null);
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearCount")]
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th09ClearCountReadFromTestShortenedTrials()
+        public void Th09ClearCountReadFromTestShortenedTrials() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var counts = TestUtils.MakeRandomArray<int>(4);
-                var unknown = 1u;
+            var counts = TestUtils.MakeRandomArray<int>(4);
+            var unknown = 1u;
 
-                var clearCount = Th09ClearCountWrapper.Create(TestUtils.MakeByteArray(counts, unknown));
+            var clearCount = Th09ClearCountWrapper.Create(TestUtils.MakeByteArray(counts, unknown));
 
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [TestMethod()]
-        public void Th09ClearCountReadFromTestExceededTrials()
+        public void Th09ClearCountReadFromTestExceededTrials() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var counts = TestUtils.MakeRandomArray<int>(6);
-                var unknown = 1u;
+            var counts = TestUtils.MakeRandomArray<int>(6);
+            var unknown = 1u;
 
-                var clearCount = Th09ClearCountWrapper.Create(
-                    TestUtils.MakeByteArray(counts, unknown));
+            var clearCount = Th09ClearCountWrapper.Create(
+                TestUtils.MakeByteArray(counts, unknown));
 
-                CollectionAssert.AreNotEqual(counts, clearCount.Counts.Values.ToArray());
-                CollectionAssert.AreEqual(counts.Take(5).ToArray(), clearCount.Counts.Values.ToArray());
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            CollectionAssert.AreNotEqual(counts, clearCount.Counts.Values.ToArray());
+            CollectionAssert.AreEqual(counts.Take(5).ToArray(), clearCount.Counts.Values.ToArray());
+        });
     }
 }

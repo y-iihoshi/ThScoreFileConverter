@@ -3,8 +3,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.ExceptionServices;
 using System.Text;
 using ThScoreFileConverter.Models;
 
@@ -15,8 +13,7 @@ namespace ThScoreFileConverterTests.Models
     {
         internal static void StatusTestChapterHelper<TParent>(ushort version, int size, int numBgms)
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var signature = "ST";
                 var checksum = 0u;
@@ -40,36 +37,22 @@ namespace ThScoreFileConverterTests.Models
                 CollectionAssert.AreEqual(data, status.Data.ToArray());
                 CollectionAssert.AreEqual(Encoding.Default.GetBytes(lastName), status.LastName.ToArray());
                 CollectionAssert.AreEqual(bgmFlags, status.BgmFlags.ToArray());
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
         internal static void StatusTestNullChapterHelper<TParent>()
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var status = new Th10StatusWrapper<TParent>(null);
 
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
         internal static void StatusTestInvalidSignatureHelper<TParent>(ushort version, int size, int numBgms)
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var signature = "st";
                 var checksum = 0u;
@@ -87,19 +70,12 @@ namespace ThScoreFileConverterTests.Models
                 var status = new Th10StatusWrapper<TParent>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
         internal static void StatusTestInvalidVersionHelper<TParent>(ushort version, int size, int numBgms)
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var signature = "ST";
                 var checksum = 0u;
@@ -117,19 +93,12 @@ namespace ThScoreFileConverterTests.Models
                 var status = new Th10StatusWrapper<TParent>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
         internal static void StatusTestInvalidSizeHelper<TParent>(ushort version, int size, int numBgms)
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var signature = "ST";
                 var checksum = 0u;
@@ -147,18 +116,11 @@ namespace ThScoreFileConverterTests.Models
                 var status = new Th10StatusWrapper<TParent>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         internal static void CanInitializeTestHelper<TParent>(string signature, ushort version, int size, bool expected)
             where TParent : ThConverter
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var checksum = 0u;
                 var data = new byte[size];
@@ -167,13 +129,7 @@ namespace ThScoreFileConverterTests.Models
                     TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
 
                 Assert.AreEqual(expected, Th10StatusWrapper<TParent>.CanInitialize(chapter));
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         #region Th10
 

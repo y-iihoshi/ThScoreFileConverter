@@ -3,8 +3,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.ExceptionServices;
 using System.Text;
 using ThScoreFileConverter.Models;
 
@@ -14,164 +12,123 @@ namespace ThScoreFileConverterTests.Models
     public class Th125StatusTests
     {
         [TestMethod()]
-        public void Th125StatusTestChapter()
+        public void Th125StatusTestChapter() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var signature = "ST";
-                var version = (ushort)1;
-                var size = 0x474;
-                var checksum = 0u;
-                var lastName = "Player1\0\0\0";
-                var unknown1 = TestUtils.MakeRandomArray<byte>(0x2);
-                var bgmFlags = TestUtils.MakeRandomArray<byte>(6);
-                var unknown2 = TestUtils.MakeRandomArray<byte>(0x2E);
-                var totalPlayTime = 12345678;
-                var unknown3 = TestUtils.MakeRandomArray<byte>(0x424);
-                var data = TestUtils.MakeByteArray(
-                    lastName.ToCharArray(), unknown1, bgmFlags, unknown2, totalPlayTime, unknown3);
+            var signature = "ST";
+            var version = (ushort)1;
+            var size = 0x474;
+            var checksum = 0u;
+            var lastName = "Player1\0\0\0";
+            var unknown1 = TestUtils.MakeRandomArray<byte>(0x2);
+            var bgmFlags = TestUtils.MakeRandomArray<byte>(6);
+            var unknown2 = TestUtils.MakeRandomArray<byte>(0x2E);
+            var totalPlayTime = 12345678;
+            var unknown3 = TestUtils.MakeRandomArray<byte>(0x424);
+            var data = TestUtils.MakeByteArray(
+                lastName.ToCharArray(), unknown1, bgmFlags, unknown2, totalPlayTime, unknown3);
 
-                var chapter = Th095ChapterWrapper<Th125Converter>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
-                var status = new Th125StatusWrapper(chapter);
+            var chapter = Th095ChapterWrapper<Th125Converter>.Create(
+                TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
+            var status = new Th125StatusWrapper(chapter);
 
-                Assert.AreEqual(signature, status.Signature);
-                Assert.AreEqual(version, status.Version);
-                Assert.AreEqual(size, status.Size);
-                Assert.AreEqual(checksum, status.Checksum);
-                Assert.IsFalse(status.IsValid.Value);
-                CollectionAssert.AreEqual(data, status.Data.ToArray());
-                CollectionAssert.AreEqual(Encoding.Default.GetBytes(lastName), status.LastName.ToArray());
-                CollectionAssert.AreEqual(bgmFlags, status.BgmFlags.ToArray());
-                Assert.AreEqual(totalPlayTime, status.TotalPlayTime);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.AreEqual(signature, status.Signature);
+            Assert.AreEqual(version, status.Version);
+            Assert.AreEqual(size, status.Size);
+            Assert.AreEqual(checksum, status.Checksum);
+            Assert.IsFalse(status.IsValid.Value);
+            CollectionAssert.AreEqual(data, status.Data.ToArray());
+            CollectionAssert.AreEqual(Encoding.Default.GetBytes(lastName), status.LastName.ToArray());
+            CollectionAssert.AreEqual(bgmFlags, status.BgmFlags.ToArray());
+            Assert.AreEqual(totalPlayTime, status.TotalPlayTime);
+        });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th125StatusTestNullChapter()
+        public void Th125StatusTestNullChapter() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var status = new Th125StatusWrapper(null);
+            var status = new Th125StatusWrapper(null);
 
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
         [TestMethod()]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th125StatusTestInvalidSignature()
+        public void Th125StatusTestInvalidSignature() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var signature = "st";
-                var version = (ushort)1;
-                var size = 0x474;
-                var checksum = 0u;
-                var lastName = "Player1\0\0\0";
-                var unknown1 = TestUtils.MakeRandomArray<byte>(0x2);
-                var bgmFlags = TestUtils.MakeRandomArray<byte>(6);
-                var unknown2 = TestUtils.MakeRandomArray<byte>(0x2E);
-                var totalPlayTime = 12345678;
-                var unknown3 = TestUtils.MakeRandomArray<byte>(0x424);
-                var data = TestUtils.MakeByteArray(
-                    lastName.ToCharArray(), unknown1, bgmFlags, unknown2, totalPlayTime, unknown3);
+            var signature = "st";
+            var version = (ushort)1;
+            var size = 0x474;
+            var checksum = 0u;
+            var lastName = "Player1\0\0\0";
+            var unknown1 = TestUtils.MakeRandomArray<byte>(0x2);
+            var bgmFlags = TestUtils.MakeRandomArray<byte>(6);
+            var unknown2 = TestUtils.MakeRandomArray<byte>(0x2E);
+            var totalPlayTime = 12345678;
+            var unknown3 = TestUtils.MakeRandomArray<byte>(0x424);
+            var data = TestUtils.MakeByteArray(
+                lastName.ToCharArray(), unknown1, bgmFlags, unknown2, totalPlayTime, unknown3);
 
-                var chapter = Th095ChapterWrapper<Th125Converter>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
-                var status = new Th125StatusWrapper(chapter);
+            var chapter = Th095ChapterWrapper<Th125Converter>.Create(
+                TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
+            var status = new Th125StatusWrapper(chapter);
 
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
         [TestMethod()]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th125StatusTestInvalidVersion()
+        public void Th125StatusTestInvalidVersion() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var signature = "ST";
-                var version = (ushort)0;
-                var size = 0x474;
-                var checksum = 0u;
-                var lastName = "Player1\0\0\0";
-                var unknown1 = TestUtils.MakeRandomArray<byte>(0x2);
-                var bgmFlags = TestUtils.MakeRandomArray<byte>(6);
-                var unknown2 = TestUtils.MakeRandomArray<byte>(0x2E);
-                var totalPlayTime = 12345678;
-                var unknown3 = TestUtils.MakeRandomArray<byte>(0x424);
-                var data = TestUtils.MakeByteArray(
-                    lastName.ToCharArray(), unknown1, bgmFlags, unknown2, totalPlayTime, unknown3);
+            var signature = "ST";
+            var version = (ushort)0;
+            var size = 0x474;
+            var checksum = 0u;
+            var lastName = "Player1\0\0\0";
+            var unknown1 = TestUtils.MakeRandomArray<byte>(0x2);
+            var bgmFlags = TestUtils.MakeRandomArray<byte>(6);
+            var unknown2 = TestUtils.MakeRandomArray<byte>(0x2E);
+            var totalPlayTime = 12345678;
+            var unknown3 = TestUtils.MakeRandomArray<byte>(0x424);
+            var data = TestUtils.MakeByteArray(
+                lastName.ToCharArray(), unknown1, bgmFlags, unknown2, totalPlayTime, unknown3);
 
-                var chapter = Th095ChapterWrapper<Th125Converter>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
-                var status = new Th125StatusWrapper(chapter);
+            var chapter = Th095ChapterWrapper<Th125Converter>.Create(
+                TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
+            var status = new Th125StatusWrapper(chapter);
 
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
         [TestMethod()]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th125StatusTestInvalidSize()
+        public void Th125StatusTestInvalidSize() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var signature = "ST";
-                var version = (ushort)1;
-                var size = 0x475;
-                var checksum = 0u;
-                var lastName = "Player1\0\0\0";
-                var unknown1 = TestUtils.MakeRandomArray<byte>(0x2);
-                var bgmFlags = TestUtils.MakeRandomArray<byte>(6);
-                var unknown2 = TestUtils.MakeRandomArray<byte>(0x2E);
-                var totalPlayTime = 12345678;
-                var unknown3 = TestUtils.MakeRandomArray<byte>(0x424);
-                var data = TestUtils.MakeByteArray(
-                    lastName.ToCharArray(), unknown1, bgmFlags, unknown2, totalPlayTime, unknown3);
+            var signature = "ST";
+            var version = (ushort)1;
+            var size = 0x475;
+            var checksum = 0u;
+            var lastName = "Player1\0\0\0";
+            var unknown1 = TestUtils.MakeRandomArray<byte>(0x2);
+            var bgmFlags = TestUtils.MakeRandomArray<byte>(6);
+            var unknown2 = TestUtils.MakeRandomArray<byte>(0x2E);
+            var totalPlayTime = 12345678;
+            var unknown3 = TestUtils.MakeRandomArray<byte>(0x424);
+            var data = TestUtils.MakeByteArray(
+                lastName.ToCharArray(), unknown1, bgmFlags, unknown2, totalPlayTime, unknown3);
 
-                var chapter = Th095ChapterWrapper<Th125Converter>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
-                var status = new Th125StatusWrapper(chapter);
+            var chapter = Th095ChapterWrapper<Th125Converter>.Create(
+                TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
+            var status = new Th125StatusWrapper(chapter);
 
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         internal static void CanInitializeTestHelper(string signature, ushort version, int size, bool expected)
-        {
-            try
+            => TestUtils.Wrap(() =>
             {
                 var checksum = 0u;
                 var data = new byte[size];
@@ -180,13 +137,7 @@ namespace ThScoreFileConverterTests.Models
                     TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
 
                 Assert.AreEqual(expected, Th125StatusWrapper.CanInitialize(chapter));
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            });
 
         [TestMethod()]
         public void Th125StatusCanInitializeTest()

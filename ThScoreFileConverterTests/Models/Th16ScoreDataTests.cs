@@ -3,8 +3,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.ExceptionServices;
 using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
@@ -13,226 +11,170 @@ namespace ThScoreFileConverterTests.Models
     public class Th16ScoreDataTests
     {
         [TestMethod()]
-        public void Th16ScoreDataTest()
+        public void Th16ScoreDataTest() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var scoreData = new Th16ScoreDataWrapper();
+            var scoreData = new Th16ScoreDataWrapper();
 
-                Assert.AreEqual(default, scoreData.Score.Value);
-                Assert.AreEqual(default, scoreData.StageProgress.Value);
-                Assert.AreEqual(default, scoreData.ContinueCount.Value);
-                Assert.IsNull(scoreData.Name);
-                Assert.AreEqual(default, scoreData.DateTime.Value);
-                Assert.AreEqual(default, scoreData.SlowRate.Value);
-                Assert.AreEqual(default, scoreData.Season.Value);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.AreEqual(default, scoreData.Score.Value);
+            Assert.AreEqual(default, scoreData.StageProgress.Value);
+            Assert.AreEqual(default, scoreData.ContinueCount.Value);
+            Assert.IsNull(scoreData.Name);
+            Assert.AreEqual(default, scoreData.DateTime.Value);
+            Assert.AreEqual(default, scoreData.SlowRate.Value);
+            Assert.AreEqual(default, scoreData.Season.Value);
+        });
 
         [TestMethod()]
-        public void Th16ScoreDataReadFromTest()
+        public void Th16ScoreDataReadFromTest() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var score = 12u;
-                var stageProgress = Th16Converter.StageProgress.St3;
-                var continueCount = (byte)4;
-                var name = TestUtils.MakeRandomArray<byte>(10);
-                var dateTime = 567u;
-                var unknown = 0u;
-                var slowRate = 8.9f;
-                var season = Th16Converter.Season.Full;
+            var score = 12u;
+            var stageProgress = Th16Converter.StageProgress.St3;
+            var continueCount = (byte)4;
+            var name = TestUtils.MakeRandomArray<byte>(10);
+            var dateTime = 567u;
+            var unknown = 0u;
+            var slowRate = 8.9f;
+            var season = Th16Converter.Season.Full;
 
-                var scoreData = Th16ScoreDataWrapper.Create(
-                    TestUtils.MakeByteArray(
-                        score,
-                        TestUtils.Cast<byte>(stageProgress),
-                        continueCount,
-                        name,
-                        dateTime,
-                        unknown,
-                        slowRate,
-                        TestUtils.Cast<uint>(season)));
+            var scoreData = Th16ScoreDataWrapper.Create(
+                TestUtils.MakeByteArray(
+                    score,
+                    TestUtils.Cast<byte>(stageProgress),
+                    continueCount,
+                    name,
+                    dateTime,
+                    unknown,
+                    slowRate,
+                    TestUtils.Cast<uint>(season)));
 
-                Assert.AreEqual(score, scoreData.Score);
-                Assert.AreEqual(stageProgress, scoreData.StageProgress);
-                Assert.AreEqual(continueCount, scoreData.ContinueCount);
-                CollectionAssert.AreEqual(name, scoreData.Name.ToArray());
-                Assert.AreEqual(dateTime, scoreData.DateTime);
-                Assert.AreEqual(slowRate, scoreData.SlowRate);
-                Assert.AreEqual(season, scoreData.Season);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.AreEqual(score, scoreData.Score);
+            Assert.AreEqual(stageProgress, scoreData.StageProgress);
+            Assert.AreEqual(continueCount, scoreData.ContinueCount);
+            CollectionAssert.AreEqual(name, scoreData.Name.ToArray());
+            Assert.AreEqual(dateTime, scoreData.DateTime);
+            Assert.AreEqual(slowRate, scoreData.SlowRate);
+            Assert.AreEqual(season, scoreData.Season);
+        });
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th16ScoreDataReadFromTestNull()
+        public void Th16ScoreDataReadFromTestNull() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var scoreData = new Th16ScoreDataWrapper();
-                scoreData.ReadFrom(null);
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            var scoreData = new Th16ScoreDataWrapper();
+            scoreData.ReadFrom(null);
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "scoreData")]
         [TestMethod()]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th16ScoreDataReadFromTestInvalidStageProgress()
+        public void Th16ScoreDataReadFromTestInvalidStageProgress() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var score = 12u;
-                var stageProgress = (Th16Converter.StageProgress)byte.MaxValue;
-                var continueCount = (byte)4;
-                var name = TestUtils.MakeRandomArray<byte>(10);
-                var dateTime = 567u;
-                var unknown = 0u;
-                var slowRate = 8.9f;
-                var season = Th16Converter.Season.Full;
+            var score = 12u;
+            var stageProgress = (Th16Converter.StageProgress)byte.MaxValue;
+            var continueCount = (byte)4;
+            var name = TestUtils.MakeRandomArray<byte>(10);
+            var dateTime = 567u;
+            var unknown = 0u;
+            var slowRate = 8.9f;
+            var season = Th16Converter.Season.Full;
 
-                var scoreData = Th16ScoreDataWrapper.Create(
-                    TestUtils.MakeByteArray(
-                        score,
-                        TestUtils.Cast<byte>(stageProgress),
-                        continueCount,
-                        name,
-                        dateTime,
-                        unknown,
-                        slowRate,
-                        TestUtils.Cast<uint>(season)));
+            var scoreData = Th16ScoreDataWrapper.Create(
+                TestUtils.MakeByteArray(
+                    score,
+                    TestUtils.Cast<byte>(stageProgress),
+                    continueCount,
+                    name,
+                    dateTime,
+                    unknown,
+                    slowRate,
+                    TestUtils.Cast<uint>(season)));
 
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "scoreData")]
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th16ScoreDataReadFromTestShortenedName()
+        public void Th16ScoreDataReadFromTestShortenedName() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var score = 12u;
-                var stageProgress = Th16Converter.StageProgress.St3;
-                var continueCount = (byte)4;
-                var name = TestUtils.MakeRandomArray<byte>(9);
-                var dateTime = 567u;
-                var unknown = 0u;
-                var slowRate = 8.9f;
-                var season = Th16Converter.Season.Full;
+            var score = 12u;
+            var stageProgress = Th16Converter.StageProgress.St3;
+            var continueCount = (byte)4;
+            var name = TestUtils.MakeRandomArray<byte>(9);
+            var dateTime = 567u;
+            var unknown = 0u;
+            var slowRate = 8.9f;
+            var season = Th16Converter.Season.Full;
 
-                var scoreData = Th16ScoreDataWrapper.Create(
-                    TestUtils.MakeByteArray(
-                        score,
-                        TestUtils.Cast<byte>(stageProgress),
-                        continueCount,
-                        name,
-                        dateTime,
-                        unknown,
-                        slowRate,
-                        TestUtils.Cast<uint>(season)));
+            var scoreData = Th16ScoreDataWrapper.Create(
+                TestUtils.MakeByteArray(
+                    score,
+                    TestUtils.Cast<byte>(stageProgress),
+                    continueCount,
+                    name,
+                    dateTime,
+                    unknown,
+                    slowRate,
+                    TestUtils.Cast<uint>(season)));
 
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "scoreData")]
         [TestMethod()]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th16ScoreDataReadFromTestExceededName()
+        public void Th16ScoreDataReadFromTestExceededName() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var score = 12u;
-                var stageProgress = Th16Converter.StageProgress.St3;
-                var continueCount = (byte)4;
-                var name = TestUtils.MakeRandomArray<byte>(11);
-                var dateTime = 567u;
-                var unknown = 0u;
-                var slowRate = 8.9f;
-                var season = Th16Converter.Season.Full;
+            var score = 12u;
+            var stageProgress = Th16Converter.StageProgress.St3;
+            var continueCount = (byte)4;
+            var name = TestUtils.MakeRandomArray<byte>(11);
+            var dateTime = 567u;
+            var unknown = 0u;
+            var slowRate = 8.9f;
+            var season = Th16Converter.Season.Full;
 
-                var scoreData = Th16ScoreDataWrapper.Create(
-                    TestUtils.MakeByteArray(
-                        score,
-                        TestUtils.Cast<byte>(stageProgress),
-                        continueCount,
-                        name,
-                        dateTime,
-                        unknown,
-                        slowRate,
-                        TestUtils.Cast<uint>(season)));
+            var scoreData = Th16ScoreDataWrapper.Create(
+                TestUtils.MakeByteArray(
+                    score,
+                    TestUtils.Cast<byte>(stageProgress),
+                    continueCount,
+                    name,
+                    dateTime,
+                    unknown,
+                    slowRate,
+                    TestUtils.Cast<uint>(season)));
 
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "scoreData")]
         [TestMethod()]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th16ScoreDataReadFromTestInvalidSeason()
+        public void Th16ScoreDataReadFromTestInvalidSeason() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var score = 12u;
-                var stageProgress = Th16Converter.StageProgress.St3;
-                var continueCount = (byte)4;
-                var name = TestUtils.MakeRandomArray<byte>(10);
-                var dateTime = 567u;
-                var unknown = 0u;
-                var slowRate = 8.9f;
-                var season = TestUtils.Cast<Th16Converter.Season>(int.MaxValue);
+            var score = 12u;
+            var stageProgress = Th16Converter.StageProgress.St3;
+            var continueCount = (byte)4;
+            var name = TestUtils.MakeRandomArray<byte>(10);
+            var dateTime = 567u;
+            var unknown = 0u;
+            var slowRate = 8.9f;
+            var season = TestUtils.Cast<Th16Converter.Season>(int.MaxValue);
 
-                var scoreData = Th16ScoreDataWrapper.Create(
-                    TestUtils.MakeByteArray(
-                        score,
-                        TestUtils.Cast<byte>(stageProgress),
-                        continueCount,
-                        name,
-                        dateTime,
-                        unknown,
-                        slowRate,
-                        TestUtils.Cast<uint>(season)));
+            var scoreData = Th16ScoreDataWrapper.Create(
+                TestUtils.MakeByteArray(
+                    score,
+                    TestUtils.Cast<byte>(stageProgress),
+                    continueCount,
+                    name,
+                    dateTime,
+                    unknown,
+                    slowRate,
+                    TestUtils.Cast<uint>(season)));
 
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.Fail(TestUtils.Unreachable);
+        });
     }
 }

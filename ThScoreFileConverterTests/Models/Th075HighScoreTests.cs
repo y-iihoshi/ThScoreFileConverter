@@ -1,8 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
-using System.Reflection;
-using System.Runtime.ExceptionServices;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -10,23 +8,15 @@ namespace ThScoreFileConverterTests.Models
     public class Th075HighScoreTests
     {
         [TestMethod()]
-        public void Th075HighScoreTest()
+        public void Th075HighScoreTest() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var highScore = new Th075HighScoreWrapper();
+            var highScore = new Th075HighScoreWrapper();
 
-                Assert.IsNull(highScore.Name);
-                Assert.AreEqual(default, highScore.Month.Value);
-                Assert.AreEqual(default, highScore.Day.Value);
-                Assert.AreEqual(default, highScore.Score.Value);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.IsNull(highScore.Name);
+            Assert.AreEqual(default, highScore.Month.Value);
+            Assert.AreEqual(default, highScore.Day.Value);
+            Assert.AreEqual(default, highScore.Score.Value);
+        });
 
         internal static void ReadFromTestHelper(Th075HighScoreWrapper highScore, byte[] array)
         {
@@ -47,308 +37,212 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod()]
-        public void ReadFromTest()
+        public void ReadFromTest() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var highScore = new Th075HighScoreWrapper();
-                var name = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 };
-                byte month = 6;
-                byte day = 15;
-                var unknown = new byte[2];
-                var score = 1234567;
-                ReadFromTestHelper(
-                    highScore,
-                    TestUtils.MakeByteArray(name, month, day, unknown, score));
+            var highScore = new Th075HighScoreWrapper();
+            var name = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 };
+            byte month = 6;
+            byte day = 15;
+            var unknown = new byte[2];
+            var score = 1234567;
+            ReadFromTestHelper(
+                highScore,
+                TestUtils.MakeByteArray(name, month, day, unknown, score));
 
-                Assert.AreEqual("Player1 ", highScore.Name);
-                Assert.AreEqual(month, highScore.Month);
-                Assert.AreEqual(day, highScore.Day);
-                Assert.AreEqual(score, highScore.Score);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.AreEqual("Player1 ", highScore.Name);
+            Assert.AreEqual(month, highScore.Month);
+            Assert.AreEqual(day, highScore.Day);
+            Assert.AreEqual(score, highScore.Score);
+        });
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ReadFromTestNull()
+        public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var highScore = new Th075HighScoreWrapper();
-                highScore.ReadFrom(null);
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            var highScore = new Th075HighScoreWrapper();
+            highScore.ReadFrom(null);
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void ReadFromTestShortenedName()
+        public void ReadFromTestShortenedName() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var highScore = new Th075HighScoreWrapper();
-                var name = new byte[] { 15, 37, 26, 50, 30, 43, 53 };
-                byte month = 6;
-                byte day = 15;
-                var unknown = new byte[2];
-                var score = 1234567;
-                ReadFromTestHelper(
-                    highScore,
-                    TestUtils.MakeByteArray(name, month, day, unknown, score));
+            var highScore = new Th075HighScoreWrapper();
+            var name = new byte[] { 15, 37, 26, 50, 30, 43, 53 };
+            byte month = 6;
+            byte day = 15;
+            var unknown = new byte[2];
+            var score = 1234567;
+            ReadFromTestHelper(
+                highScore,
+                TestUtils.MakeByteArray(name, month, day, unknown, score));
 
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [TestMethod()]
-        public void ReadFromTestExceededName()
+        public void ReadFromTestExceededName() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var highScore = new Th075HighScoreWrapper();
-                var name = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103, 1 };
-                byte month = 6;
-                byte day = 15;
-                var unknown = new byte[2];
-                var score = 1234567;
-                ReadFromTestHelper(
-                    highScore,
-                    TestUtils.MakeByteArray(name, month, day, unknown, score));
+            var highScore = new Th075HighScoreWrapper();
+            var name = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103, 1 };
+            byte month = 6;
+            byte day = 15;
+            var unknown = new byte[2];
+            var score = 1234567;
+            ReadFromTestHelper(
+                highScore,
+                TestUtils.MakeByteArray(name, month, day, unknown, score));
 
-                Assert.AreEqual("Player1 ", highScore.Name);
-                Assert.AreNotEqual(month, highScore.Month);
-                Assert.AreNotEqual(day, highScore.Day);
-                Assert.AreNotEqual(score, highScore.Score);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.AreEqual("Player1 ", highScore.Name);
+            Assert.AreNotEqual(month, highScore.Month);
+            Assert.AreNotEqual(day, highScore.Day);
+            Assert.AreNotEqual(score, highScore.Score);
+        });
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidDataException))]
-        public void ReadFromTestZeroMonth()
+        public void ReadFromTestZeroMonth() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var highScore = new Th075HighScoreWrapper();
-                var name = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 };
-                byte month = 0;
-                byte day = 15;
-                var unknown = new byte[2];
-                var score = 1234567;
-                ReadFromTestHelper(
-                    highScore,
-                    TestUtils.MakeByteArray(name, month, day, unknown, score));
+            var highScore = new Th075HighScoreWrapper();
+            var name = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 };
+            byte month = 0;
+            byte day = 15;
+            var unknown = new byte[2];
+            var score = 1234567;
+            ReadFromTestHelper(
+                highScore,
+                TestUtils.MakeByteArray(name, month, day, unknown, score));
 
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [TestMethod()]
-        public void ReadFromTestJanuary()
+        public void ReadFromTestJanuary() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var highScore = new Th075HighScoreWrapper();
-                var name = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 };
-                byte month = 1;
-                byte day = 15;
-                var unknown = new byte[2];
-                var score = 1234567;
-                ReadFromTestHelper(
-                    highScore,
-                    TestUtils.MakeByteArray(name, month, day, unknown, score));
+            var highScore = new Th075HighScoreWrapper();
+            var name = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 };
+            byte month = 1;
+            byte day = 15;
+            var unknown = new byte[2];
+            var score = 1234567;
+            ReadFromTestHelper(
+                highScore,
+                TestUtils.MakeByteArray(name, month, day, unknown, score));
 
-                Assert.AreEqual("Player1 ", highScore.Name);
-                Assert.AreEqual(month, highScore.Month);
-                Assert.AreEqual(day, highScore.Day);
-                Assert.AreEqual(score, highScore.Score);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.AreEqual("Player1 ", highScore.Name);
+            Assert.AreEqual(month, highScore.Month);
+            Assert.AreEqual(day, highScore.Day);
+            Assert.AreEqual(score, highScore.Score);
+        });
 
         [TestMethod()]
-        public void ReadFromTestDecember()
+        public void ReadFromTestDecember() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var highScore = new Th075HighScoreWrapper();
-                var name = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 };
-                byte month = 12;
-                byte day = 15;
-                var unknown = new byte[2];
-                var score = 1234567;
-                ReadFromTestHelper(
-                    highScore,
-                    TestUtils.MakeByteArray(name, month, day, unknown, score));
+            var highScore = new Th075HighScoreWrapper();
+            var name = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 };
+            byte month = 12;
+            byte day = 15;
+            var unknown = new byte[2];
+            var score = 1234567;
+            ReadFromTestHelper(
+                highScore,
+                TestUtils.MakeByteArray(name, month, day, unknown, score));
 
-                Assert.AreEqual("Player1 ", highScore.Name);
-                Assert.AreEqual(month, highScore.Month);
-                Assert.AreEqual(day, highScore.Day);
-                Assert.AreEqual(score, highScore.Score);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.AreEqual("Player1 ", highScore.Name);
+            Assert.AreEqual(month, highScore.Month);
+            Assert.AreEqual(day, highScore.Day);
+            Assert.AreEqual(score, highScore.Score);
+        });
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidDataException))]
-        public void ReadFromTestInvalidMonth()
+        public void ReadFromTestInvalidMonth() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var highScore = new Th075HighScoreWrapper();
-                var name = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 };
-                byte month = 13;
-                byte day = 15;
-                var unknown = new byte[2];
-                var score = 1234567;
-                ReadFromTestHelper(
-                    highScore,
-                    TestUtils.MakeByteArray(name, month, day, unknown, score));
+            var highScore = new Th075HighScoreWrapper();
+            var name = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 };
+            byte month = 13;
+            byte day = 15;
+            var unknown = new byte[2];
+            var score = 1234567;
+            ReadFromTestHelper(
+                highScore,
+                TestUtils.MakeByteArray(name, month, day, unknown, score));
 
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidDataException))]
-        public void ReadFromTestZeroDay()
+        public void ReadFromTestZeroDay() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var highScore = new Th075HighScoreWrapper();
-                var name = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 };
-                byte month = 6;
-                byte day = 0;
-                var unknown = new byte[2];
-                var score = 1234567;
-                ReadFromTestHelper(
-                    highScore,
-                    TestUtils.MakeByteArray(name, month, day, unknown, score));
+            var highScore = new Th075HighScoreWrapper();
+            var name = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 };
+            byte month = 6;
+            byte day = 0;
+            var unknown = new byte[2];
+            var score = 1234567;
+            ReadFromTestHelper(
+                highScore,
+                TestUtils.MakeByteArray(name, month, day, unknown, score));
 
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [TestMethod()]
-        public void ReadFromTestFirstDay()
+        public void ReadFromTestFirstDay() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var highScore = new Th075HighScoreWrapper();
-                var name = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 };
-                byte month = 6;
-                byte day = 1;
-                var unknown = new byte[2];
-                var score = 1234567;
-                ReadFromTestHelper(
-                    highScore,
-                    TestUtils.MakeByteArray(name, month, day, unknown, score));
+            var highScore = new Th075HighScoreWrapper();
+            var name = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 };
+            byte month = 6;
+            byte day = 1;
+            var unknown = new byte[2];
+            var score = 1234567;
+            ReadFromTestHelper(
+                highScore,
+                TestUtils.MakeByteArray(name, month, day, unknown, score));
 
-                Assert.AreEqual("Player1 ", highScore.Name);
-                Assert.AreEqual(month, highScore.Month);
-                Assert.AreEqual(day, highScore.Day);
-                Assert.AreEqual(score, highScore.Score);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.AreEqual("Player1 ", highScore.Name);
+            Assert.AreEqual(month, highScore.Month);
+            Assert.AreEqual(day, highScore.Day);
+            Assert.AreEqual(score, highScore.Score);
+        });
 
         [TestMethod()]
-        public void ReadFromTestLastDay()
+        public void ReadFromTestLastDay() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                // Yes, I know June 31 is invalid.
-                var highScore = new Th075HighScoreWrapper();
-                var name = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 };
-                byte month = 6;
-                byte day = 31;
-                var unknown = new byte[2];
-                var score = 1234567;
-                ReadFromTestHelper(
-                    highScore,
-                    TestUtils.MakeByteArray(name, month, day, unknown, score));
+            // Yes, I know June 31 is invalid.
+            var highScore = new Th075HighScoreWrapper();
+            var name = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 };
+            byte month = 6;
+            byte day = 31;
+            var unknown = new byte[2];
+            var score = 1234567;
+            ReadFromTestHelper(
+                highScore,
+                TestUtils.MakeByteArray(name, month, day, unknown, score));
 
-                Assert.AreEqual("Player1 ", highScore.Name);
-                Assert.AreEqual(month, highScore.Month);
-                Assert.AreEqual(day, highScore.Day);
-                Assert.AreEqual(score, highScore.Score);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.AreEqual("Player1 ", highScore.Name);
+            Assert.AreEqual(month, highScore.Month);
+            Assert.AreEqual(day, highScore.Day);
+            Assert.AreEqual(score, highScore.Score);
+        });
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidDataException))]
-        public void ReadFromTestInvalidDay()
+        public void ReadFromTestInvalidDay() => TestUtils.Wrap(() =>
         {
-            try
-            {
-                var highScore = new Th075HighScoreWrapper();
-                var name = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 };
-                byte month = 6;
-                byte day = 32;
-                var unknown = new byte[2];
-                var score = 1234567;
-                ReadFromTestHelper(
-                    highScore,
-                    TestUtils.MakeByteArray(name, month, day, unknown, score));
+            var highScore = new Th075HighScoreWrapper();
+            var name = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 };
+            byte month = 6;
+            byte day = 32;
+            var unknown = new byte[2];
+            var score = 1234567;
+            ReadFromTestHelper(
+                highScore,
+                TestUtils.MakeByteArray(name, month, day, unknown, score));
 
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
+            Assert.Fail(TestUtils.Unreachable);
+        });
     }
 }
