@@ -16,7 +16,7 @@ namespace ThScoreFileConverterTests.Models
         private readonly PrivateObject pobj = null;
 
         public Th075HighScoreWrapper()
-            => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { });
+            => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
         [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "obj")]
         public Th075HighScoreWrapper(object obj)
             => this.pobj = new PrivateObject(obj);

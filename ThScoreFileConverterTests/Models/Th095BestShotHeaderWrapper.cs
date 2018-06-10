@@ -39,13 +39,8 @@ namespace ThScoreFileConverterTests.Models
             return header;
         }
 
-        private Th095BestShotHeaderWrapper(params object[] args)
-            => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, args);
-
         public Th095BestShotHeaderWrapper()
-            : this(new object[] { })
-        {
-        }
+            => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public object Target

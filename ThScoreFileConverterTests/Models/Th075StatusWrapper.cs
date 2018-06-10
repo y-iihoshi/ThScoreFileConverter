@@ -18,7 +18,7 @@ namespace ThScoreFileConverterTests.Models
         private readonly PrivateObject pobj = null;
 
         public Th075StatusWrapper()
-            => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { });
+            => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public object Target

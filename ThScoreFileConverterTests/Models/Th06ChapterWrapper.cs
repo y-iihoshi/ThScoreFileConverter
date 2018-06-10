@@ -41,18 +41,10 @@ namespace ThScoreFileConverterTests.Models
             return chapter;
         }
 
-        private Th06ChapterWrapper(params object[] args)
-            => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, args);
-
         public Th06ChapterWrapper()
-            : this(new object[] { })
-        {
-        }
-
+            => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
         public Th06ChapterWrapper(Th06ChapterWrapper<TParent> chapter)
-            : this(new object[] { chapter?.Target })
-        {
-        }
+            => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { chapter?.Target });
 
         public object Target
             => this.pobj.Target;

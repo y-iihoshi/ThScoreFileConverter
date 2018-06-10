@@ -16,18 +16,9 @@ namespace ThScoreFileConverterTests.Models
         private readonly PrivateObject pobj = null;
 
         public Th07HighScoreWrapper(Th06ChapterWrapper<Th07Converter> chapter)
-            => this.pobj = new PrivateObject(
-                AssemblyNameToTest,
-                TypeNameToTest,
-                new Type[] { (chapter ?? new Th06ChapterWrapper<Th07Converter>()).Target.GetType() },
-                new object[] { chapter?.Target });
-
+            => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { chapter?.Target });
         public Th07HighScoreWrapper(uint score)
-            => this.pobj = new PrivateObject(
-                AssemblyNameToTest,
-                TypeNameToTest,
-                new Type[] { score.GetType() },
-                new object[] { score });
+            => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { score });
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public object Target
