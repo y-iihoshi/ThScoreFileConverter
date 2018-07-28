@@ -46,6 +46,7 @@ for:
     CODECOV_TOKEN:
       secure: yXCs8FBlLFVrjJ3nOjqOVGDV892aCCsBvlT7yF6xEFKC1Opq2mJuOt0gR4A7xBkS
   test_script:
-    - cmd: OpenCover.bat %CONFIGURATION% coverage.xml
-    - cmd: .\packages\Codecov.*\tools\codecov.exe -f coverage.xml -t %CODECOV_TOKEN%
+    - ps: & .\OpenCover.bat $env:CONFIGURATION coverage.xml
+    - ps: $codecov = (Resolve-Path .\packages\Codecov.*\tools\codecov.exe).ToString()
+    - ps: & $codecov -f coverage.xml -t $env:CODECOV_TOKEN
   deploy: off
