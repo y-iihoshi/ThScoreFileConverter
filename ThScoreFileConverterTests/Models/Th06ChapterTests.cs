@@ -10,22 +10,45 @@ namespace ThScoreFileConverterTests.Models
     [TestClass()]
     public class Th06ChapterTests
     {
-        internal static void Validate<TParent>(
-            Th06ChapterWrapper<TParent> chapter,
-            string signature,
-            short size1,
-            short size2,
-            byte[] data)
+        internal struct Properties
+        {
+            public string signature;
+            public short size1;
+            public short size2;
+            public byte[] data;
+        };
+
+        internal static Properties DefaultProperties => new Properties()
+        {
+            signature = string.Empty,
+            size1 = default,
+            size2 = default,
+            data = new byte[] { }
+        };
+
+        internal static Properties ValidProperties => new Properties()
+        {
+            signature = "ABCD",
+            size1 = 12,
+            size2 = 34,
+            data = new byte[] { 0x56, 0x78, 0x9A, 0xBC }
+        };
+
+        internal static byte[] MakeByteArray(in Properties properties)
+            => TestUtils.MakeByteArray(
+                properties.signature.ToCharArray(),
+                properties.size1,
+                properties.size2,
+                properties.data);
+
+        internal static void Validate<TParent>(in Th06ChapterWrapper<TParent> chapter, in Properties properties)
             where TParent : ThConverter
         {
-            if (chapter == null)
-                throw new ArgumentNullException(nameof(chapter));
-
-            Assert.AreEqual(signature, chapter.Signature);
-            Assert.AreEqual(size1, chapter.Size1);
-            Assert.AreEqual(size2, chapter.Size2);
-            CollectionAssert.AreEqual(data, chapter.Data.ToArray());
-            Assert.AreEqual((data?.Length > 0 ? data[0] : (byte)0), chapter.FirstByteOfData);
+            Assert.AreEqual(properties.signature, chapter.Signature);
+            Assert.AreEqual(properties.size1, chapter.Size1);
+            Assert.AreEqual(properties.size2, chapter.Size2);
+            CollectionAssert.AreEqual(properties.data, chapter.Data.ToArray());
+            Assert.AreEqual((properties.data?.Length > 0 ? properties.data[0] : default), chapter.FirstByteOfData);
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -34,7 +57,8 @@ namespace ThScoreFileConverterTests.Models
             => TestUtils.Wrap(() =>
             {
                 var chapter = new Th06ChapterWrapper<TParent>();
-                Validate(chapter, string.Empty, 0, 0, new byte[] { });
+
+                Validate(chapter, DefaultProperties);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -44,7 +68,8 @@ namespace ThScoreFileConverterTests.Models
             {
                 var chapter1 = new Th06ChapterWrapper<TParent>();
                 var chapter2 = new Th06ChapterWrapper<TParent>(chapter1);
-                Validate(chapter2, string.Empty, 0, 0, new byte[] { });
+
+                Validate(chapter2, DefaultProperties);
             });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "chapter")]
@@ -54,6 +79,7 @@ namespace ThScoreFileConverterTests.Models
             => TestUtils.Wrap(() =>
             {
                 var chapter = new Th06ChapterWrapper<TParent>(null);
+
                 Assert.Fail(TestUtils.Unreachable);
             });
 
@@ -62,15 +88,9 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var signature = "ABCD";
-                short size1 = 12;
-                short size2 = 34;
-                var data = new byte[] { 0x56, 0x78, 0x9A, 0xBC };
+                var chapter = Th06ChapterWrapper<TParent>.Create(MakeByteArray(ValidProperties));
 
-                var chapter = Th06ChapterWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
-
-                Validate(chapter, signature, size1, size2, data);
+                Validate(chapter, ValidProperties);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -80,6 +100,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 var chapter = new Th06ChapterWrapper<TParent>();
                 chapter.ReadFrom(null);
+
                 Assert.Fail(TestUtils.Unreachable);
             });
 
@@ -88,10 +109,8 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var signature = string.Empty;
-                short size1 = 12;
-                short size2 = 34;
-                var data = new byte[] { 0x56, 0x78, 0x9A, 0xBC };
+                var properties = ValidProperties;
+                properties.signature = string.Empty;
 
                 // <-- sig --> size1 size2 <- data -->
                 // __ __ __ __ 0c 00 22 00 56 78 9a bc
@@ -100,8 +119,7 @@ namespace ThScoreFileConverterTests.Models
                 // The actual value of the Size1 property becomes too large and
                 // the Data property becomes empty,
                 // so EndOfStreamException will be thrown.
-                Th06ChapterWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+                Th06ChapterWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -111,19 +129,16 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var signature = "ABC";
-                short size1 = 12;
-                short size2 = 34;
-                var data = new byte[] { 0x56, 0x78, 0x9A, 0xBC };
+                var properties = ValidProperties;
+                properties.signature = properties.signature.Substring(0, properties.signature.Length - 1);
 
                 // <-- sig --> size1 size2 <- data -->
                 // __ 41 42 43 0c 00 22 00 56 78 9a bc
                 //    <-- sig --> size1 size2 < dat ->
 
-                // The actual value of the Size property becomes too large,
+                // The actual value of the Size1 property becomes too large,
                 // so EndOfStreamException will be thrown.
-                Th06ChapterWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+                Th06ChapterWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -133,19 +148,16 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var signature = "ABCDE";
-                short size1 = 12;
-                short size2 = 34;
-                var data = new byte[] { 0x56, 0x78, 0x9A, 0xBC };
+                var properties = ValidProperties;
+                properties.signature += "E";
 
                 // <--- sig ----> size1 size2 <- data -->
                 // 41 42 43 44 45 0c 00 22 00 56 78 9a bc
                 // <-- sig --> size1 size2 <---- data ---->
 
-                // The actual value of the Size property becomes too large,
+                // The actual value of the Size1 property becomes too large,
                 // so EndOfStreamException will be thrown.
-                Th06ChapterWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+                Th06ChapterWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -155,13 +167,10 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var signature = "ABCD";
-                short size1 = -1;
-                short size2 = 34;
-                var data = new byte[] { 0x56, 0x78, 0x9A, 0xBC };
+                var properties = ValidProperties;
+                properties.size1 = -1;
 
-                Th06ChapterWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+                Th06ChapterWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -171,13 +180,10 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var signature = "ABCD";
-                short size1 = 0;
-                short size2 = 34;
-                var data = new byte[] { 0x56, 0x78, 0x9A, 0xBC };
+                var properties = ValidProperties;
+                properties.size1 = 0;
 
-                Th06ChapterWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+                Th06ChapterWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -187,18 +193,15 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var signature = "ABCD";
-                short size1 = 11;
-                short size2 = 34;
-                var data = new byte[] { 0x56, 0x78, 0x9A, 0xBC };
+                var properties = ValidProperties;
+                --properties.size1;
 
-                var chapter = Th06ChapterWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+                var chapter = Th06ChapterWrapper<TParent>.Create(MakeByteArray(properties));
 
-                Assert.AreEqual(signature, chapter.Signature);
-                Assert.AreEqual(size1, chapter.Size1);
-                Assert.AreEqual(size2, chapter.Size2);
-                CollectionAssert.AreNotEqual(data, chapter.Data.ToArray());
+                Assert.AreEqual(properties.signature, chapter.Signature);
+                Assert.AreEqual(properties.size1, chapter.Size1);
+                Assert.AreEqual(properties.size2, chapter.Size2);
+                CollectionAssert.AreNotEqual(properties.data, chapter.Data.ToArray());
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -206,15 +209,12 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var signature = "ABCD";
-                short size1 = 13;
-                short size2 = 34;
-                var data = new byte[] { 0x56, 0x78, 0x9A, 0xBC };
+                var properties = ValidProperties;
+                ++properties.size1;
 
-                var chapter = Th06ChapterWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+                Th06ChapterWrapper<TParent>.Create(MakeByteArray(properties));
 
-                Validate(chapter, signature, size1, size2, data);
+                Assert.Fail(TestUtils.Unreachable);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -222,15 +222,12 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var signature = "ABCD";
-                short size1 = 12;
-                short size2 = -1;
-                var data = new byte[] { 0x56, 0x78, 0x9A, 0xBC };
+                var properties = ValidProperties;
+                properties.size2 = -1;
 
-                var chapter = Th06ChapterWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+                var chapter = Th06ChapterWrapper<TParent>.Create(MakeByteArray(properties));
 
-                Validate(chapter, signature, size1, size2, data);
+                Validate(chapter, properties);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -238,15 +235,12 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var signature = "ABCD";
-                short size1 = 12;
-                short size2 = 0;
-                var data = new byte[] { 0x56, 0x78, 0x9A, 0xBC };
+                var properties = ValidProperties;
+                properties.size2 = 0;
 
-                var chapter = Th06ChapterWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+                var chapter = Th06ChapterWrapper<TParent>.Create(MakeByteArray(properties));
 
-                Validate(chapter, signature, size1, size2, data);
+                Validate(chapter, properties);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -254,15 +248,12 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var signature = "ABCD";
-                short size1 = 12;
-                short size2 = 33;
-                var data = new byte[] { 0x56, 0x78, 0x9A, 0xBC };
+                var properties = ValidProperties;
+                --properties.size2;
 
-                var chapter = Th06ChapterWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+                var chapter = Th06ChapterWrapper<TParent>.Create(MakeByteArray(properties));
 
-                Validate(chapter, signature, size1, size2, data);
+                Validate(chapter, properties);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -270,15 +261,12 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var signature = "ABCD";
-                short size1 = 12;
-                short size2 = 35;
-                var data = new byte[] { 0x56, 0x78, 0x9A, 0xBC };
+                var properties = ValidProperties;
+                ++properties.size2;
 
-                var chapter = Th06ChapterWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+                var chapter = Th06ChapterWrapper<TParent>.Create(MakeByteArray(properties));
 
-                Validate(chapter, signature, size1, size2, data);
+                Validate(chapter, properties);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -286,15 +274,12 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var signature = "ABCD";
-                short size1 = 12;
-                short size2 = 34;
-                var data = new byte[] { };
+                var properties = ValidProperties;
+                properties.data = new byte[] { };
 
-                var chapter = Th06ChapterWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+                Th06ChapterWrapper<TParent>.Create(MakeByteArray(properties));
 
-                Validate(chapter, signature, size1, size2, data);
+                Assert.Fail(TestUtils.Unreachable);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -302,15 +287,13 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var signature = "ABCD";
-                short size1 = 11;
-                short size2 = 34;
-                var data = new byte[] { 0x56, 0x78, 0x9A };
+                var properties = ValidProperties;
+                --properties.size1;
+                properties.data = properties.data.Take(properties.data.Length - 1).ToArray();
 
-                var chapter = Th06ChapterWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+                var chapter = Th06ChapterWrapper<TParent>.Create(MakeByteArray(properties));
 
-                Validate(chapter, signature, size1, size2, data);
+                Validate(chapter, properties);
             });
 
         #region Th06

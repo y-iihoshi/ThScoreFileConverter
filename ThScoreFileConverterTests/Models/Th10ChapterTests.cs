@@ -10,25 +10,49 @@ namespace ThScoreFileConverterTests.Models
     [TestClass()]
     public class Th10ChapterTests
     {
-        internal static void Validate<TParent>(
-            Th10ChapterWrapper<TParent> chapter,
-            string signature,
-            ushort version,
-            uint checksum,
-            int size,
-            byte[] data,
-            bool isValid)
+        internal struct Properties
+        {
+            public string signature;
+            public ushort version;
+            public uint checksum;
+            public int size;
+            public byte[] data;
+        };
+
+        internal static Properties DefaultProperties => new Properties()
+        {
+            signature = string.Empty,
+            version = default,
+            checksum = default,
+            size = default,
+            data = new byte[] { }
+        };
+
+        internal static Properties ValidProperties => new Properties()
+        {
+            signature = "AB",
+            version = 1234,
+            checksum = 0x234u,
+            size = 16,
+            data = new byte[] { 0x56, 0x78, 0x9A, 0xBC }
+        };
+
+        internal static byte[] MakeByteArray(in Properties properties)
+            => TestUtils.MakeByteArray(
+                properties.signature.ToCharArray(),
+                properties.version,
+                properties.checksum,
+                properties.size,
+                properties.data);
+
+        internal static void Validate<TParent>(in Th10ChapterWrapper<TParent> chapter, in Properties properties)
             where TParent : ThConverter
         {
-            if (chapter == null)
-                throw new ArgumentNullException(nameof(chapter));
-
-            Assert.AreEqual(signature, chapter.Signature);
-            Assert.AreEqual(version, chapter.Version);
-            Assert.AreEqual(checksum, chapter.Checksum);
-            Assert.AreEqual(size, chapter.Size);
-            CollectionAssert.AreEqual(data, chapter.Data.ToArray());
-            Assert.AreEqual(isValid, chapter.IsValid);
+            Assert.AreEqual(properties.signature, chapter.Signature);
+            Assert.AreEqual(properties.version, chapter.Version);
+            Assert.AreEqual(properties.checksum, chapter.Checksum);
+            Assert.AreEqual(properties.size, chapter.Size);
+            CollectionAssert.AreEqual(properties.data, chapter.Data.ToArray());
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -37,7 +61,9 @@ namespace ThScoreFileConverterTests.Models
             => TestUtils.Wrap(() =>
             {
                 var chapter = new Th10ChapterWrapper<TParent>();
-                Validate(chapter, string.Empty, 0, 0, 0, new byte[] { }, true);
+
+                Validate(chapter, DefaultProperties);
+                Assert.IsTrue(chapter.IsValid.Value);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -47,7 +73,9 @@ namespace ThScoreFileConverterTests.Models
             {
                 var chapter1 = new Th10ChapterWrapper<TParent>();
                 var chapter2 = new Th10ChapterWrapper<TParent>(chapter1);
-                Validate(chapter2, string.Empty, 0, 0, 0, new byte[] { }, true);
+
+                Validate(chapter2, DefaultProperties);
+                Assert.IsTrue(chapter2.IsValid.Value);
             });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "chapter")]
@@ -57,6 +85,7 @@ namespace ThScoreFileConverterTests.Models
             => TestUtils.Wrap(() =>
             {
                 var chapter = new Th10ChapterWrapper<TParent>(null);
+
                 Assert.Fail(TestUtils.Unreachable);
             });
 
@@ -65,16 +94,10 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var signature = "AB";
-                var version = (ushort)1234;
-                var checksum = 0x234u;
-                var size = 16;
-                var data = new byte[] { 0x56, 0x78, 0x9A, 0xBC };
+                var chapter = Th10ChapterWrapper<TParent>.Create(MakeByteArray(ValidProperties));
 
-                var chapter = Th10ChapterWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
-
-                Validate(chapter, signature, version, checksum, size, data, true);
+                Validate(chapter, ValidProperties);
+                Assert.IsTrue(chapter.IsValid.Value);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -84,6 +107,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 var chapter = new Th10ChapterWrapper<TParent>();
                 chapter.ReadFrom(null);
+
                 Assert.Fail(TestUtils.Unreachable);
             });
 
@@ -92,11 +116,8 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var signature = string.Empty;
-                var version = (ushort)1234;
-                var checksum = 0x234u;
-                var size = 16;
-                var data = new byte[] { 0x56, 0x78, 0x9A, 0xBC };
+                var properties = ValidProperties;
+                properties.signature = string.Empty;
 
                 // <sig> <ver> < chksum -> <- size --> <- data -->
                 // __ __ d2 04 34 02 00 00 10 00 00 00 56 78 9a bc
@@ -104,8 +125,7 @@ namespace ThScoreFileConverterTests.Models
 
                 // The actual value of the Size property becomes too large,
                 // so EndOfStreamException will be thrown.
-                Th10ChapterWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
+                Th10ChapterWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -115,11 +135,8 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var signature = "A";
-                var version = (ushort)1234;
-                var checksum = 0x234u;
-                var size = 16;
-                var data = new byte[] { 0x56, 0x78, 0x9A, 0xBC };
+                var properties = ValidProperties;
+                properties.signature = properties.signature.Substring(0, properties.signature.Length - 1);
 
                 // <sig> <ver> < chksum -> <- size --> <- data -->
                 // __ 41 d2 04 34 02 00 00 10 00 00 00 56 78 9a bc
@@ -127,8 +144,7 @@ namespace ThScoreFileConverterTests.Models
 
                 // The actual value of the Size property becomes too large,
                 // so EndOfStreamException will be thrown.
-                Th10ChapterWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
+                Th10ChapterWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -138,11 +154,8 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var signature = "ABC";
-                var version = (ushort)1234;
-                var checksum = 0x234u;
-                var size = 16;
-                var data = new byte[] { 0x56, 0x78, 0x9A, 0xBC };
+                var properties = ValidProperties;
+                properties.signature += "C";
 
                 // < sig -> <ver> < chksum -> <- size --> <- data -->
                 // 41 42 43 d2 04 34 02 00 00 10 00 00 00 56 78 9a bc
@@ -150,8 +163,7 @@ namespace ThScoreFileConverterTests.Models
 
                 // The actual value of the Size property becomes too large,
                 // so EndOfStreamException will be thrown.
-                Th10ChapterWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
+                Th10ChapterWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -161,14 +173,10 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var signature = "AB";
-                var version = (ushort)1234;
-                var checksum = 0x234u;
-                var size = -1;
-                var data = new byte[] { 0x56, 0x78, 0x9A, 0xBC };
+                var properties = ValidProperties;
+                properties.size = -1;
 
-                Th10ChapterWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
+                Th10ChapterWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -178,14 +186,10 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var signature = "AB";
-                var version = (ushort)1234;
-                var checksum = 0x234u;
-                var size = 0;
-                var data = new byte[] { 0x56, 0x78, 0x9A, 0xBC };
+                var properties = ValidProperties;
+                properties.size = 0;
 
-                Th10ChapterWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
+                Th10ChapterWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -195,20 +199,16 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var signature = "AB";
-                var version = (ushort)1234;
-                var checksum = 0x234u;
-                var size = 15;
-                var data = new byte[] { 0x56, 0x78, 0x9A, 0xBC };
+                var properties = ValidProperties;
+                --properties.size;
 
-                var chapter = Th10ChapterWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
+                var chapter = Th10ChapterWrapper<TParent>.Create(MakeByteArray(properties));
 
-                Assert.AreEqual(signature, chapter.Signature);
-                Assert.AreEqual(version, chapter.Version);
-                Assert.AreEqual(checksum, chapter.Checksum);
-                Assert.AreEqual(size, chapter.Size);
-                CollectionAssert.AreNotEqual(data, chapter.Data.ToArray());
+                Assert.AreEqual(properties.signature, chapter.Signature);
+                Assert.AreEqual(properties.version, chapter.Version);
+                Assert.AreEqual(properties.checksum, chapter.Checksum);
+                Assert.AreEqual(properties.size, chapter.Size);
+                CollectionAssert.AreNotEqual(properties.data, chapter.Data.ToArray());
                 Assert.IsFalse(chapter.IsValid.Value);
             });
 
@@ -217,14 +217,10 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var signature = "AB";
-                var version = (ushort)1234;
-                var checksum = 0x234u;
-                var size = 17;
-                var data = new byte[] { 0x56, 0x78, 0x9A, 0xBC };
+                var properties = ValidProperties;
+                ++properties.size;
 
-                Th10ChapterWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
+                Th10ChapterWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -234,20 +230,12 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var signature = "AB";
-                var version = (ushort)1234;
-                var checksum = 0x233u;
-                var size = 16;
-                var data = new byte[] { 0x56, 0x78, 0x9A, 0xBC };
+                var properties = ValidProperties;
+                --properties.checksum;
 
-                var chapter = Th10ChapterWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
+                var chapter = Th10ChapterWrapper<TParent>.Create(MakeByteArray(properties));
 
-                Assert.AreEqual(signature, chapter.Signature);
-                Assert.AreEqual(version, chapter.Version);
-                Assert.AreEqual(checksum, chapter.Checksum);
-                Assert.AreEqual(size, chapter.Size);
-                CollectionAssert.AreEqual(data, chapter.Data.ToArray());
+                Validate(chapter, properties);
                 Assert.IsFalse(chapter.IsValid.Value);
             });
 
@@ -256,21 +244,12 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var signature = "AB";
-                var version = (ushort)1234;
-                var checksum = 0x0Cu;
-                var size = 12;
-                var data = new byte[] { };
+                var properties = ValidProperties;
+                properties.data = new byte[] { };
 
-                var chapter = Th10ChapterWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
+                Th10ChapterWrapper<TParent>.Create(MakeByteArray(properties));
 
-                Assert.AreEqual(signature, chapter.Signature);
-                Assert.AreEqual(version, chapter.Version);
-                Assert.AreEqual(checksum, chapter.Checksum);
-                Assert.AreEqual(size, chapter.Size);
-                CollectionAssert.AreEqual(data, chapter.Data.ToArray());
-                Assert.IsTrue(chapter.IsValid.Value);
+                Assert.Fail(TestUtils.Unreachable);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -278,20 +257,13 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var signature = "AB";
-                var version = (ushort)1234;
-                var checksum = 0x17Du;
-                var size = 15;
-                var data = new byte[] { 0x56, 0x78, 0x9A };
+                var properties = ValidProperties;
+                --properties.size;
+                properties.data = properties.data.Take(properties.data.Length - 1).ToArray();
 
-                var chapter = Th10ChapterWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
+                var chapter = Th10ChapterWrapper<TParent>.Create(MakeByteArray(properties));
 
-                Assert.AreEqual(signature, chapter.Signature);
-                Assert.AreEqual(version, chapter.Version);
-                Assert.AreEqual(checksum, chapter.Checksum);
-                Assert.AreEqual(size, chapter.Size);
-                CollectionAssert.AreEqual(data, chapter.Data.ToArray());
+                Validate(chapter, properties);
                 Assert.IsFalse(chapter.IsValid.Value);
             });
 
@@ -358,6 +330,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededSizeHelper<Th10Converter>();
 
         [TestMethod()]
+        [ExpectedException(typeof(EndOfStreamException))]
         public void Th10ChapterReadFromTestEmptyData()
             => ReadFromTestEmptyDataHelper<Th10Converter>();
 
@@ -430,6 +403,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededSizeHelper<Th11Converter>();
 
         [TestMethod()]
+        [ExpectedException(typeof(EndOfStreamException))]
         public void Th11ChapterReadFromTestEmptyData()
             => ReadFromTestEmptyDataHelper<Th11Converter>();
 
@@ -502,6 +476,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededSizeHelper<Th12Converter>();
 
         [TestMethod()]
+        [ExpectedException(typeof(EndOfStreamException))]
         public void Th12ChapterReadFromTestEmptyData()
             => ReadFromTestEmptyDataHelper<Th12Converter>();
 
@@ -574,6 +549,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededSizeHelper<Th128Converter>();
 
         [TestMethod()]
+        [ExpectedException(typeof(EndOfStreamException))]
         public void Th128ChapterReadFromTestEmptyData()
             => ReadFromTestEmptyDataHelper<Th128Converter>();
 
@@ -646,6 +622,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededSizeHelper<Th13Converter>();
 
         [TestMethod()]
+        [ExpectedException(typeof(EndOfStreamException))]
         public void Th13ChapterReadFromTestEmptyData()
             => ReadFromTestEmptyDataHelper<Th13Converter>();
 
@@ -718,6 +695,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededSizeHelper<Th14Converter>();
 
         [TestMethod()]
+        [ExpectedException(typeof(EndOfStreamException))]
         public void Th14ChapterReadFromTestEmptyData()
             => ReadFromTestEmptyDataHelper<Th14Converter>();
 
@@ -790,6 +768,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededSizeHelper<Th143Converter>();
 
         [TestMethod()]
+        [ExpectedException(typeof(EndOfStreamException))]
         public void Th143ChapterReadFromTestEmptyData()
             => ReadFromTestEmptyDataHelper<Th143Converter>();
 
@@ -862,6 +841,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededSizeHelper<Th15Converter>();
 
         [TestMethod()]
+        [ExpectedException(typeof(EndOfStreamException))]
         public void Th15ChapterReadFromTestEmptyData()
             => ReadFromTestEmptyDataHelper<Th15Converter>();
 
@@ -934,6 +914,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededSizeHelper<Th16Converter>();
 
         [TestMethod()]
+        [ExpectedException(typeof(EndOfStreamException))]
         public void Th16ChapterReadFromTestEmptyData()
             => ReadFromTestEmptyDataHelper<Th16Converter>();
 
