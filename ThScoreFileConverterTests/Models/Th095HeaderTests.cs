@@ -9,23 +9,48 @@ namespace ThScoreFileConverterTests.Models
     [TestClass()]
     public class Th095HeaderTests
     {
-        internal static void Validate<TParent>(
-            Th095HeaderWrapper<TParent> header,
-            string signature,
-            int encodedAllSize,
-            int encodedBodySize,
-            int decodedBodySize,
-            bool isValid)
+        internal struct Properties
+        {
+            public string signature;
+            public int encodedAllSize;
+            public int encodedBodySize;
+            public int decodedBodySize;
+        };
+
+        internal static Properties DefaultProperties
+            => new Properties()
+            {
+                signature = string.Empty,
+                encodedAllSize = default,
+                encodedBodySize = default,
+                decodedBodySize = default
+            };
+
+        internal static Properties GetValidProperties(string signature)
+            => new Properties()
+            {
+                signature = signature,
+                encodedAllSize = 36,
+                encodedBodySize = 12,
+                decodedBodySize = 56
+            };
+
+        internal static byte[] MakeByteArray(in Properties properties)
+            => TestUtils.MakeByteArray(
+                properties.signature.ToCharArray(),
+                properties.encodedAllSize,
+                0u,
+                0u,
+                properties.encodedBodySize,
+                properties.decodedBodySize);
+
+        internal static void Validate<TParent>(in Th095HeaderWrapper<TParent> header, in Properties properties)
             where TParent : ThConverter
         {
-            if (header == null)
-                throw new ArgumentNullException(nameof(header));
-
-            Assert.AreEqual(signature, header.Signature);
-            Assert.AreEqual(encodedAllSize, header.EncodedAllSize);
-            Assert.AreEqual(encodedBodySize, header.EncodedBodySize);
-            Assert.AreEqual(decodedBodySize, header.DecodedBodySize);
-            Assert.AreEqual(isValid, header.IsValid);
+            Assert.AreEqual(properties.signature, header.Signature);
+            Assert.AreEqual(properties.encodedAllSize, header.EncodedAllSize);
+            Assert.AreEqual(properties.encodedBodySize, header.EncodedBodySize);
+            Assert.AreEqual(properties.decodedBodySize, header.DecodedBodySize);
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -34,7 +59,9 @@ namespace ThScoreFileConverterTests.Models
             => TestUtils.Wrap(() =>
             {
                 var header = new Th095HeaderWrapper<TParent>();
-                Validate(header, string.Empty, 0, 0, 0, false);
+
+                Validate(header, DefaultProperties);
+                Assert.IsFalse(header.IsValid.Value);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -42,22 +69,12 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var encodedAllSize = 36;
-                var unknown1 = 0u;
-                var unknown2 = 0u;
-                var encodedBodySize = 12;
-                var decodedBodySize = 56;
+                var properties = GetValidProperties(signature);
 
-                var header = Th095HeaderWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(
-                        signature.ToCharArray(),
-                        encodedAllSize,
-                        unknown1,
-                        unknown2,
-                        encodedBodySize,
-                        decodedBodySize));
+                var header = Th095HeaderWrapper<TParent>.Create(MakeByteArray(properties));
 
-                Validate(header, signature, encodedAllSize, encodedBodySize, decodedBodySize, true);
+                Validate(header, properties);
+                Assert.IsTrue(header.IsValid.Value);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -67,6 +84,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 var header = new Th095HeaderWrapper<TParent>();
                 header.ReadFrom(null);
+
                 Assert.Fail(TestUtils.Unreachable);
             });
 
@@ -75,12 +93,7 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var signature = string.Empty;
-                var encodedAllSize = 36;
-                var unknown1 = 0u;
-                var unknown2 = 0u;
-                var encodedBodySize = 12;
-                var decodedBodySize = 56;
+                var properties = GetValidProperties(string.Empty);
 
                 // <-- sig --> < encAll -> <- unk1 --> <- unk2 --> < encBody > < decBody >
                 // __ __ __ __ 24 00 00 00 00 00 00 00 00 00 00 00 0c 00 00 00 38 00 00 00
@@ -88,14 +101,7 @@ namespace ThScoreFileConverterTests.Models
 
                 // The actual value of the DecodedBodySize property can not be read.
                 // so EndOfStreamException will be thrown.
-                Th095HeaderWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(
-                        signature.ToCharArray(),
-                        encodedAllSize,
-                        unknown1,
-                        unknown2,
-                        encodedBodySize,
-                        decodedBodySize));
+                Th095HeaderWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -105,12 +111,7 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var shortenedSignature = signature.Substring(0, 3);
-                var encodedAllSize = 36;
-                var unknown1 = 0u;
-                var unknown2 = 0u;
-                var encodedBodySize = 12;
-                var decodedBodySize = 56;
+                var properties = GetValidProperties(signature.Substring(0, signature.Length - 1));
 
                 // <-- sig --> < encAll -> <- unk1 --> <- unk2 --> < encBody > < decBody >
                 // __ xx xx xx 24 00 00 00 00 00 00 00 00 00 00 00 0c 00 00 00 38 00 00 00
@@ -118,14 +119,7 @@ namespace ThScoreFileConverterTests.Models
 
                 // The actual value of the DecodedBodySize property can not be read.
                 // so EndOfStreamException will be thrown.
-                Th095HeaderWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(
-                        shortenedSignature.ToCharArray(),
-                        encodedAllSize,
-                        unknown1,
-                        unknown2,
-                        encodedBodySize,
-                        decodedBodySize));
+                Th095HeaderWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -135,30 +129,18 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var exceededSignature = signature + "E";
-                var encodedAllSize = 36;
-                var unknown1 = 0u;
-                var unknown2 = 0u;
-                var encodedBodySize = 12;
-                var decodedBodySize = 56;
+                var properties = GetValidProperties(signature + "E");
 
                 // <--- sig ----> < encAll -> <- unk1 --> <- unk2 --> < encBody > < decBody >
                 // xx xx xx xx 45 24 00 00 00 00 00 00 00 00 00 00 00 0c 00 00 00 38 00 00 00
                 // <-- sig --> < encAll -> <- unk1 --> <- unk2 --> < encBody > < decBody >
 
-                var header = Th095HeaderWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(
-                        exceededSignature.ToCharArray(),
-                        encodedAllSize,
-                        unknown1,
-                        unknown2,
-                        encodedBodySize,
-                        decodedBodySize));
+                var header = Th095HeaderWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Assert.AreEqual(signature, header.Signature);
-                Assert.AreNotEqual(encodedAllSize, header.EncodedAllSize);
-                Assert.AreNotEqual(encodedBodySize, header.EncodedBodySize);
-                Assert.AreNotEqual(decodedBodySize, header.DecodedBodySize);
+                Assert.AreNotEqual(properties.encodedAllSize, header.EncodedAllSize);
+                Assert.AreNotEqual(properties.encodedBodySize, header.EncodedBodySize);
+                Assert.AreNotEqual(properties.decodedBodySize, header.DecodedBodySize);
                 Assert.IsFalse(header.IsValid.Value);
             });
 
@@ -167,20 +149,10 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var encodedAllSize = -1;
-                var unknown1 = 0u;
-                var unknown2 = 0u;
-                var encodedBodySize = 12;
-                var decodedBodySize = 56;
+                var properties = GetValidProperties(signature);
+                properties.encodedAllSize = -1;
 
-                Th095HeaderWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(
-                        signature.ToCharArray(),
-                        encodedAllSize,
-                        unknown1,
-                        unknown2,
-                        encodedBodySize,
-                        decodedBodySize));
+                Th095HeaderWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -190,22 +162,13 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var encodedAllSize = 0;
-                var unknown1 = 0u;
-                var unknown2 = 0u;
-                var encodedBodySize = 12;
-                var decodedBodySize = 56;
+                var properties = GetValidProperties(signature);
+                properties.encodedAllSize = 0;
 
-                var header = Th095HeaderWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(
-                        signature.ToCharArray(),
-                        encodedAllSize,
-                        unknown1,
-                        unknown2,
-                        encodedBodySize,
-                        decodedBodySize));
+                var header = Th095HeaderWrapper<TParent>.Create(MakeByteArray(properties));
 
-                Validate(header, signature, encodedAllSize, encodedBodySize, decodedBodySize, false);
+                Validate(header, properties);
+                Assert.IsFalse(header.IsValid.Value);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -213,22 +176,13 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var encodedAllSize = 35;
-                var unknown1 = 0u;
-                var unknown2 = 0u;
-                var encodedBodySize = 12;
-                var decodedBodySize = 56;
+                var properties = GetValidProperties(signature);
+                --properties.encodedAllSize;
 
-                var header = Th095HeaderWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(
-                        signature.ToCharArray(),
-                        encodedAllSize,
-                        unknown1,
-                        unknown2,
-                        encodedBodySize,
-                        decodedBodySize));
+                var header = Th095HeaderWrapper<TParent>.Create(MakeByteArray(properties));
 
-                Validate(header, signature, encodedAllSize, encodedBodySize, decodedBodySize, false);
+                Validate(header, properties);
+                Assert.IsFalse(header.IsValid.Value);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -236,22 +190,13 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var encodedAllSize = 37;
-                var unknown1 = 0u;
-                var unknown2 = 0u;
-                var encodedBodySize = 12;
-                var decodedBodySize = 56;
+                var properties = GetValidProperties(signature);
+                ++properties.encodedAllSize;
 
-                var header = Th095HeaderWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(
-                        signature.ToCharArray(),
-                        encodedAllSize,
-                        unknown1,
-                        unknown2,
-                        encodedBodySize,
-                        decodedBodySize));
+                var header = Th095HeaderWrapper<TParent>.Create(MakeByteArray(properties));
 
-                Validate(header, signature, encodedAllSize, encodedBodySize, decodedBodySize, false);
+                Validate(header, properties);
+                Assert.IsFalse(header.IsValid.Value);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -259,20 +204,10 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var encodedAllSize = 36;
-                var unknown1 = 0u;
-                var unknown2 = 0u;
-                var encodedBodySize = -1;
-                var decodedBodySize = 56;
+                var properties = GetValidProperties(signature);
+                properties.encodedBodySize = -1;
 
-                Th095HeaderWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(
-                        signature.ToCharArray(),
-                        encodedAllSize,
-                        unknown1,
-                        unknown2,
-                        encodedBodySize,
-                        decodedBodySize));
+                Th095HeaderWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -282,22 +217,13 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var encodedAllSize = 36;
-                var unknown1 = 0u;
-                var unknown2 = 0u;
-                var encodedBodySize = 0;
-                var decodedBodySize = 56;
+                var properties = GetValidProperties(signature);
+                properties.encodedBodySize = 0;
 
-                var header = Th095HeaderWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(
-                        signature.ToCharArray(),
-                        encodedAllSize,
-                        unknown1,
-                        unknown2,
-                        encodedBodySize,
-                        decodedBodySize));
+                var header = Th095HeaderWrapper<TParent>.Create(MakeByteArray(properties));
 
-                Validate(header, signature, encodedAllSize, encodedBodySize, decodedBodySize, false);
+                Validate(header, properties);
+                Assert.IsFalse(header.IsValid.Value);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -305,22 +231,13 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var encodedAllSize = 36;
-                var unknown1 = 0u;
-                var unknown2 = 0u;
-                var encodedBodySize = 11;
-                var decodedBodySize = 56;
+                var properties = GetValidProperties(signature);
+                --properties.encodedBodySize;
 
-                var header = Th095HeaderWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(
-                        signature.ToCharArray(),
-                        encodedAllSize,
-                        unknown1,
-                        unknown2,
-                        encodedBodySize,
-                        decodedBodySize));
+                var header = Th095HeaderWrapper<TParent>.Create(MakeByteArray(properties));
 
-                Validate(header, signature, encodedAllSize, encodedBodySize, decodedBodySize, false);
+                Validate(header, properties);
+                Assert.IsFalse(header.IsValid.Value);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -328,22 +245,13 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var encodedAllSize = 36;
-                var unknown1 = 0u;
-                var unknown2 = 0u;
-                var encodedBodySize = 13;
-                var decodedBodySize = 56;
+                var properties = GetValidProperties(signature);
+                ++properties.encodedBodySize;
 
-                var header = Th095HeaderWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(
-                        signature.ToCharArray(),
-                        encodedAllSize,
-                        unknown1,
-                        unknown2,
-                        encodedBodySize,
-                        decodedBodySize));
+                var header = Th095HeaderWrapper<TParent>.Create(MakeByteArray(properties));
 
-                Validate(header, signature, encodedAllSize, encodedBodySize, decodedBodySize, false);
+                Validate(header, properties);
+                Assert.IsFalse(header.IsValid.Value);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -351,20 +259,10 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var encodedAllSize = 36;
-                var unknown1 = 0u;
-                var unknown2 = 0u;
-                var encodedBodySize = 12;
-                var decodedBodySize = -1;
+                var properties = GetValidProperties(signature);
+                properties.decodedBodySize = -1;
 
-                Th095HeaderWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(
-                        signature.ToCharArray(),
-                        encodedAllSize,
-                        unknown1,
-                        unknown2,
-                        encodedBodySize,
-                        decodedBodySize));
+                Th095HeaderWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -374,22 +272,13 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var encodedAllSize = 36;
-                var unknown1 = 0u;
-                var unknown2 = 0u;
-                var encodedBodySize = 12;
-                var decodedBodySize = 0;
+                var properties = GetValidProperties(signature);
+                properties.decodedBodySize = 0;
 
-                var header = Th095HeaderWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(
-                        signature.ToCharArray(),
-                        encodedAllSize,
-                        unknown1,
-                        unknown2,
-                        encodedBodySize,
-                        decodedBodySize));
+                var header = Th095HeaderWrapper<TParent>.Create(MakeByteArray(properties));
 
-                Validate(header, signature, encodedAllSize, encodedBodySize, decodedBodySize, true);
+                Validate(header, properties);
+                Assert.IsTrue(header.IsValid.Value);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -397,20 +286,10 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var encodedAllSize = 36;
-                var unknown1 = 78u;
-                var unknown2 = 90u;
-                var encodedBodySize = 12;
-                var decodedBodySize = 56;
-                var byteArray = TestUtils.MakeByteArray(
-                    signature.ToCharArray(),
-                    encodedAllSize,
-                    unknown1,
-                    unknown2,
-                    encodedBodySize,
-                    decodedBodySize);
+                var properties = GetValidProperties(signature);
+                var byteArray = MakeByteArray(properties);
 
-                var header = Th095HeaderWrapper<TParent>.Create(TestUtils.MakeByteArray(byteArray));
+                var header = Th095HeaderWrapper<TParent>.Create(byteArray);
 
                 MemoryStream stream = null;
                 try
@@ -439,26 +318,18 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var encodedAllSize = 36;
-                var unknown1 = 78u;
-                var unknown2 = 90u;
-                var encodedBodySize = 12;
-                var decodedBodySize = 56;
-                var byteArray = TestUtils.MakeByteArray(
-                    signature.ToCharArray(),
-                    encodedAllSize,
-                    unknown1,
-                    unknown2,
-                    encodedBodySize,
-                    decodedBodySize);
+                var properties = GetValidProperties(signature);
+                var byteArray = MakeByteArray(properties);
 
-                var header = Th095HeaderWrapper<TParent>.Create(TestUtils.MakeByteArray(byteArray));
+                var header = Th095HeaderWrapper<TParent>.Create(byteArray);
                 header.WriteTo(null);
-                Assert.Fail(TestUtils.Unreachable);
 
+                Assert.Fail(TestUtils.Unreachable);
             });
 
         #region Th095
+
+        private const string th095ValidSignature = "TH95";
 
         [TestMethod()]
         public void Th095HeaderTest()
@@ -466,7 +337,7 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod()]
         public void Th095ReadFromTest()
-            => ReadFromTestHelper<Th095Converter>("TH95");
+            => ReadFromTestHelper<Th095Converter>(th095ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -481,67 +352,69 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th095ReadFromTestShortenedSignature()
-            => ReadFromTestShortenedSignatureHelper<Th095Converter>("TH95");
+            => ReadFromTestShortenedSignatureHelper<Th095Converter>(th095ValidSignature);
 
         [TestMethod()]
         public void Th095ReadFromTestExceededSignature()
-            => ReadFromTestExceededSignatureHelper<Th095Converter>("TH95");
+            => ReadFromTestExceededSignatureHelper<Th095Converter>(th095ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th095ReadFromTestNegativeEncodedAllSize()
-            => ReadFromTestNegativeEncodedAllSizeHelper<Th095Converter>("TH95");
+            => ReadFromTestNegativeEncodedAllSizeHelper<Th095Converter>(th095ValidSignature);
 
         [TestMethod()]
         public void Th095ReadFromTestZeroEncodedAllSize()
-            => ReadFromTestZeroEncodedAllSizeHelper<Th095Converter>("TH95");
+            => ReadFromTestZeroEncodedAllSizeHelper<Th095Converter>(th095ValidSignature);
 
         [TestMethod()]
         public void Th095ReadFromTestShortenedEncodedAllSize()
-            => ReadFromTestShortenedEncodedAllSizeHelper<Th095Converter>("TH95");
+            => ReadFromTestShortenedEncodedAllSizeHelper<Th095Converter>(th095ValidSignature);
 
         [TestMethod()]
         public void Th095ReadFromTestExceededEncodedAllSize()
-            => ReadFromTestExceededEncodedAllSizeHelper<Th095Converter>("TH95");
+            => ReadFromTestExceededEncodedAllSizeHelper<Th095Converter>(th095ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th095ReadFromTestNegativeEncodedBodySize()
-            => ReadFromTestNegativeEncodedBodySizeHelper<Th095Converter>("TH95");
+            => ReadFromTestNegativeEncodedBodySizeHelper<Th095Converter>(th095ValidSignature);
 
         [TestMethod()]
         public void Th095ReadFromTestZeroEncodedBodySize()
-            => ReadFromTestZeroEncodedBodySizeHelper<Th095Converter>("TH95");
+            => ReadFromTestZeroEncodedBodySizeHelper<Th095Converter>(th095ValidSignature);
 
         [TestMethod()]
         public void Th095ReadFromTestShortenedEncodedBodySize()
-            => ReadFromTestShortenedEncodedBodySizeHelper<Th095Converter>("TH95");
+            => ReadFromTestShortenedEncodedBodySizeHelper<Th095Converter>(th095ValidSignature);
 
         [TestMethod()]
         public void Th095ReadFromTestExceededEncodedBodySize()
-            => ReadFromTestExceededEncodedBodySizeHelper<Th095Converter>("TH95");
+            => ReadFromTestExceededEncodedBodySizeHelper<Th095Converter>(th095ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th095ReadFromTestNegativeDecodedBodySize()
-            => ReadFromTestNegativeDecodedBodySizeHelper<Th095Converter>("TH95");
+            => ReadFromTestNegativeDecodedBodySizeHelper<Th095Converter>(th095ValidSignature);
 
         [TestMethod()]
         public void Th095ReadFromTestZeroDecodedBodySize()
-            => ReadFromTestZeroDecodedBodySizeHelper<Th095Converter>("TH95");
+            => ReadFromTestZeroDecodedBodySizeHelper<Th095Converter>(th095ValidSignature);
 
         [TestMethod()]
         public void Th095WriteToTest()
-            => WriteToTestHelper<Th095Converter>("TH95");
+            => WriteToTestHelper<Th095Converter>(th095ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th095WriteToTestNull()
-            => WriteToTestNullHelper<Th095Converter>("TH95");
+            => WriteToTestNullHelper<Th095Converter>(th095ValidSignature);
 
         #endregion
 
         #region Th10
+
+        private const string th10ValidSignature = "TH10";
 
         [TestMethod()]
         public void Th10HeaderTest()
@@ -549,7 +422,7 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod()]
         public void Th10ReadFromTest()
-            => ReadFromTestHelper<Th10Converter>("TH10");
+            => ReadFromTestHelper<Th10Converter>(th10ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -564,67 +437,69 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th10ReadFromTestShortenedSignature()
-            => ReadFromTestShortenedSignatureHelper<Th10Converter>("TH10");
+            => ReadFromTestShortenedSignatureHelper<Th10Converter>(th10ValidSignature);
 
         [TestMethod()]
         public void Th10ReadFromTestExceededSignature()
-            => ReadFromTestExceededSignatureHelper<Th10Converter>("TH10");
+            => ReadFromTestExceededSignatureHelper<Th10Converter>(th10ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th10ReadFromTestNegativeEncodedAllSize()
-            => ReadFromTestNegativeEncodedAllSizeHelper<Th10Converter>("TH10");
+            => ReadFromTestNegativeEncodedAllSizeHelper<Th10Converter>(th10ValidSignature);
 
         [TestMethod()]
         public void Th10ReadFromTestZeroEncodedAllSize()
-            => ReadFromTestZeroEncodedAllSizeHelper<Th10Converter>("TH10");
+            => ReadFromTestZeroEncodedAllSizeHelper<Th10Converter>(th10ValidSignature);
 
         [TestMethod()]
         public void Th10ReadFromTestShortenedEncodedAllSize()
-            => ReadFromTestShortenedEncodedAllSizeHelper<Th10Converter>("TH10");
+            => ReadFromTestShortenedEncodedAllSizeHelper<Th10Converter>(th10ValidSignature);
 
         [TestMethod()]
         public void Th10ReadFromTestExceededEncodedAllSize()
-            => ReadFromTestExceededEncodedAllSizeHelper<Th10Converter>("TH10");
+            => ReadFromTestExceededEncodedAllSizeHelper<Th10Converter>(th10ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th10ReadFromTestNegativeEncodedBodySize()
-            => ReadFromTestNegativeEncodedBodySizeHelper<Th10Converter>("TH10");
+            => ReadFromTestNegativeEncodedBodySizeHelper<Th10Converter>(th10ValidSignature);
 
         [TestMethod()]
         public void Th10ReadFromTestZeroEncodedBodySize()
-            => ReadFromTestZeroEncodedBodySizeHelper<Th10Converter>("TH10");
+            => ReadFromTestZeroEncodedBodySizeHelper<Th10Converter>(th10ValidSignature);
 
         [TestMethod()]
         public void Th10ReadFromTestShortenedEncodedBodySize()
-            => ReadFromTestShortenedEncodedBodySizeHelper<Th10Converter>("TH10");
+            => ReadFromTestShortenedEncodedBodySizeHelper<Th10Converter>(th10ValidSignature);
 
         [TestMethod()]
         public void Th10ReadFromTestExceededEncodedBodySize()
-            => ReadFromTestExceededEncodedBodySizeHelper<Th10Converter>("TH10");
+            => ReadFromTestExceededEncodedBodySizeHelper<Th10Converter>(th10ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th10ReadFromTestNegativeDecodedBodySize()
-            => ReadFromTestNegativeDecodedBodySizeHelper<Th10Converter>("TH10");
+            => ReadFromTestNegativeDecodedBodySizeHelper<Th10Converter>(th10ValidSignature);
 
         [TestMethod()]
         public void Th10ReadFromTestZeroDecodedBodySize()
-            => ReadFromTestZeroDecodedBodySizeHelper<Th10Converter>("TH10");
+            => ReadFromTestZeroDecodedBodySizeHelper<Th10Converter>(th10ValidSignature);
 
         [TestMethod()]
         public void Th10WriteToTest()
-            => WriteToTestHelper<Th10Converter>("TH10");
+            => WriteToTestHelper<Th10Converter>(th10ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th10WriteToTestNull()
-            => WriteToTestNullHelper<Th10Converter>("TH10");
+            => WriteToTestNullHelper<Th10Converter>(th10ValidSignature);
 
         #endregion
 
         #region Th11
+
+        private const string th11ValidSignature = "TH11";
 
         [TestMethod()]
         public void Th11HeaderTest()
@@ -632,7 +507,7 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod()]
         public void Th11ReadFromTest()
-            => ReadFromTestHelper<Th11Converter>("TH11");
+            => ReadFromTestHelper<Th11Converter>(th11ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -647,67 +522,69 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th11ReadFromTestShortenedSignature()
-            => ReadFromTestShortenedSignatureHelper<Th11Converter>("TH11");
+            => ReadFromTestShortenedSignatureHelper<Th11Converter>(th11ValidSignature);
 
         [TestMethod()]
         public void Th11ReadFromTestExceededSignature()
-            => ReadFromTestExceededSignatureHelper<Th11Converter>("TH11");
+            => ReadFromTestExceededSignatureHelper<Th11Converter>(th11ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th11ReadFromTestNegativeEncodedAllSize()
-            => ReadFromTestNegativeEncodedAllSizeHelper<Th11Converter>("TH11");
+            => ReadFromTestNegativeEncodedAllSizeHelper<Th11Converter>(th11ValidSignature);
 
         [TestMethod()]
         public void Th11ReadFromTestZeroEncodedAllSize()
-            => ReadFromTestZeroEncodedAllSizeHelper<Th11Converter>("TH11");
+            => ReadFromTestZeroEncodedAllSizeHelper<Th11Converter>(th11ValidSignature);
 
         [TestMethod()]
         public void Th11ReadFromTestShortenedEncodedAllSize()
-            => ReadFromTestShortenedEncodedAllSizeHelper<Th11Converter>("TH11");
+            => ReadFromTestShortenedEncodedAllSizeHelper<Th11Converter>(th11ValidSignature);
 
         [TestMethod()]
         public void Th11ReadFromTestExceededEncodedAllSize()
-            => ReadFromTestExceededEncodedAllSizeHelper<Th11Converter>("TH11");
+            => ReadFromTestExceededEncodedAllSizeHelper<Th11Converter>(th11ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th11ReadFromTestNegativeEncodedBodySize()
-            => ReadFromTestNegativeEncodedBodySizeHelper<Th11Converter>("TH11");
+            => ReadFromTestNegativeEncodedBodySizeHelper<Th11Converter>(th11ValidSignature);
 
         [TestMethod()]
         public void Th11ReadFromTestZeroEncodedBodySize()
-            => ReadFromTestZeroEncodedBodySizeHelper<Th11Converter>("TH11");
+            => ReadFromTestZeroEncodedBodySizeHelper<Th11Converter>(th11ValidSignature);
 
         [TestMethod()]
         public void Th11ReadFromTestShortenedEncodedBodySize()
-            => ReadFromTestShortenedEncodedBodySizeHelper<Th11Converter>("TH11");
+            => ReadFromTestShortenedEncodedBodySizeHelper<Th11Converter>(th11ValidSignature);
 
         [TestMethod()]
         public void Th11ReadFromTestExceededEncodedBodySize()
-            => ReadFromTestExceededEncodedBodySizeHelper<Th11Converter>("TH11");
+            => ReadFromTestExceededEncodedBodySizeHelper<Th11Converter>(th11ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th11ReadFromTestNegativeDecodedBodySize()
-            => ReadFromTestNegativeDecodedBodySizeHelper<Th11Converter>("TH11");
+            => ReadFromTestNegativeDecodedBodySizeHelper<Th11Converter>(th11ValidSignature);
 
         [TestMethod()]
         public void Th11ReadFromTestZeroDecodedBodySize()
-            => ReadFromTestZeroDecodedBodySizeHelper<Th11Converter>("TH11");
+            => ReadFromTestZeroDecodedBodySizeHelper<Th11Converter>(th11ValidSignature);
 
         [TestMethod()]
         public void Th11WriteToTest()
-            => WriteToTestHelper<Th11Converter>("TH11");
+            => WriteToTestHelper<Th11Converter>(th11ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th11WriteToTestNull()
-            => WriteToTestNullHelper<Th11Converter>("TH11");
+            => WriteToTestNullHelper<Th11Converter>(th11ValidSignature);
 
         #endregion
 
         #region Th12
+
+        private const string th12ValidSignature = "TH21";
 
         [TestMethod()]
         public void Th12HeaderTest()
@@ -715,7 +592,7 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod()]
         public void Th12ReadFromTest()
-            => ReadFromTestHelper<Th12Converter>("TH21");
+            => ReadFromTestHelper<Th12Converter>(th12ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -730,67 +607,69 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th12ReadFromTestShortenedSignature()
-            => ReadFromTestShortenedSignatureHelper<Th12Converter>("TH21");
+            => ReadFromTestShortenedSignatureHelper<Th12Converter>(th12ValidSignature);
 
         [TestMethod()]
         public void Th12ReadFromTestExceededSignature()
-            => ReadFromTestExceededSignatureHelper<Th12Converter>("TH21");
+            => ReadFromTestExceededSignatureHelper<Th12Converter>(th12ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th12ReadFromTestNegativeEncodedAllSize()
-            => ReadFromTestNegativeEncodedAllSizeHelper<Th12Converter>("TH21");
+            => ReadFromTestNegativeEncodedAllSizeHelper<Th12Converter>(th12ValidSignature);
 
         [TestMethod()]
         public void Th12ReadFromTestZeroEncodedAllSize()
-            => ReadFromTestZeroEncodedAllSizeHelper<Th12Converter>("TH21");
+            => ReadFromTestZeroEncodedAllSizeHelper<Th12Converter>(th12ValidSignature);
 
         [TestMethod()]
         public void Th12ReadFromTestShortenedEncodedAllSize()
-            => ReadFromTestShortenedEncodedAllSizeHelper<Th12Converter>("TH21");
+            => ReadFromTestShortenedEncodedAllSizeHelper<Th12Converter>(th12ValidSignature);
 
         [TestMethod()]
         public void Th12ReadFromTestExceededEncodedAllSize()
-            => ReadFromTestExceededEncodedAllSizeHelper<Th12Converter>("TH21");
+            => ReadFromTestExceededEncodedAllSizeHelper<Th12Converter>(th12ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th12ReadFromTestNegativeEncodedBodySize()
-            => ReadFromTestNegativeEncodedBodySizeHelper<Th12Converter>("TH21");
+            => ReadFromTestNegativeEncodedBodySizeHelper<Th12Converter>(th12ValidSignature);
 
         [TestMethod()]
         public void Th12ReadFromTestZeroEncodedBodySize()
-            => ReadFromTestZeroEncodedBodySizeHelper<Th12Converter>("TH21");
+            => ReadFromTestZeroEncodedBodySizeHelper<Th12Converter>(th12ValidSignature);
 
         [TestMethod()]
         public void Th12ReadFromTestShortenedEncodedBodySize()
-            => ReadFromTestShortenedEncodedBodySizeHelper<Th12Converter>("TH21");
+            => ReadFromTestShortenedEncodedBodySizeHelper<Th12Converter>(th12ValidSignature);
 
         [TestMethod()]
         public void Th12ReadFromTestExceededEncodedBodySize()
-            => ReadFromTestExceededEncodedBodySizeHelper<Th12Converter>("TH21");
+            => ReadFromTestExceededEncodedBodySizeHelper<Th12Converter>(th12ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th12ReadFromTestNegativeDecodedBodySize()
-            => ReadFromTestNegativeDecodedBodySizeHelper<Th12Converter>("TH21");
+            => ReadFromTestNegativeDecodedBodySizeHelper<Th12Converter>(th12ValidSignature);
 
         [TestMethod()]
         public void Th12ReadFromTestZeroDecodedBodySize()
-            => ReadFromTestZeroDecodedBodySizeHelper<Th12Converter>("TH21");
+            => ReadFromTestZeroDecodedBodySizeHelper<Th12Converter>(th12ValidSignature);
 
         [TestMethod()]
         public void Th12WriteToTest()
-            => WriteToTestHelper<Th12Converter>("TH21");
+            => WriteToTestHelper<Th12Converter>(th12ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th12WriteToTestNull()
-            => WriteToTestNullHelper<Th12Converter>("TH21");
+            => WriteToTestNullHelper<Th12Converter>(th12ValidSignature);
 
         #endregion
 
         #region Th125
+
+        private const string th125ValidSignature = "T125";
 
         [TestMethod()]
         public void Th125HeaderTest()
@@ -798,7 +677,7 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod()]
         public void Th125ReadFromTest()
-            => ReadFromTestHelper<Th125Converter>("T125");
+            => ReadFromTestHelper<Th125Converter>(th125ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -813,67 +692,69 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th125ReadFromTestShortenedSignature()
-            => ReadFromTestShortenedSignatureHelper<Th125Converter>("T125");
+            => ReadFromTestShortenedSignatureHelper<Th125Converter>(th125ValidSignature);
 
         [TestMethod()]
         public void Th125ReadFromTestExceededSignature()
-            => ReadFromTestExceededSignatureHelper<Th125Converter>("T125");
+            => ReadFromTestExceededSignatureHelper<Th125Converter>(th125ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th125ReadFromTestNegativeEncodedAllSize()
-            => ReadFromTestNegativeEncodedAllSizeHelper<Th125Converter>("T125");
+            => ReadFromTestNegativeEncodedAllSizeHelper<Th125Converter>(th125ValidSignature);
 
         [TestMethod()]
         public void Th125ReadFromTestZeroEncodedAllSize()
-            => ReadFromTestZeroEncodedAllSizeHelper<Th125Converter>("T125");
+            => ReadFromTestZeroEncodedAllSizeHelper<Th125Converter>(th125ValidSignature);
 
         [TestMethod()]
         public void Th125ReadFromTestShortenedEncodedAllSize()
-            => ReadFromTestShortenedEncodedAllSizeHelper<Th125Converter>("T125");
+            => ReadFromTestShortenedEncodedAllSizeHelper<Th125Converter>(th125ValidSignature);
 
         [TestMethod()]
         public void Th125ReadFromTestExceededEncodedAllSize()
-            => ReadFromTestExceededEncodedAllSizeHelper<Th125Converter>("T125");
+            => ReadFromTestExceededEncodedAllSizeHelper<Th125Converter>(th125ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th125ReadFromTestNegativeEncodedBodySize()
-            => ReadFromTestNegativeEncodedBodySizeHelper<Th125Converter>("T125");
+            => ReadFromTestNegativeEncodedBodySizeHelper<Th125Converter>(th125ValidSignature);
 
         [TestMethod()]
         public void Th125ReadFromTestZeroEncodedBodySize()
-            => ReadFromTestZeroEncodedBodySizeHelper<Th125Converter>("T125");
+            => ReadFromTestZeroEncodedBodySizeHelper<Th125Converter>(th125ValidSignature);
 
         [TestMethod()]
         public void Th125ReadFromTestShortenedEncodedBodySize()
-            => ReadFromTestShortenedEncodedBodySizeHelper<Th125Converter>("T125");
+            => ReadFromTestShortenedEncodedBodySizeHelper<Th125Converter>(th125ValidSignature);
 
         [TestMethod()]
         public void Th125ReadFromTestExceededEncodedBodySize()
-            => ReadFromTestExceededEncodedBodySizeHelper<Th125Converter>("T125");
+            => ReadFromTestExceededEncodedBodySizeHelper<Th125Converter>(th125ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th125ReadFromTestNegativeDecodedBodySize()
-            => ReadFromTestNegativeDecodedBodySizeHelper<Th125Converter>("T125");
+            => ReadFromTestNegativeDecodedBodySizeHelper<Th125Converter>(th125ValidSignature);
 
         [TestMethod()]
         public void Th125ReadFromTestZeroDecodedBodySize()
-            => ReadFromTestZeroDecodedBodySizeHelper<Th125Converter>("T125");
+            => ReadFromTestZeroDecodedBodySizeHelper<Th125Converter>(th125ValidSignature);
 
         [TestMethod()]
         public void Th125WriteToTest()
-            => WriteToTestHelper<Th125Converter>("T125");
+            => WriteToTestHelper<Th125Converter>(th125ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th125WriteToTestNull()
-            => WriteToTestNullHelper<Th125Converter>("T125");
+            => WriteToTestNullHelper<Th125Converter>(th125ValidSignature);
 
         #endregion
 
         #region Th128
+
+        private const string th128ValidSignature = "T821";
 
         [TestMethod()]
         public void Th128HeaderTest()
@@ -881,7 +762,7 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod()]
         public void Th128ReadFromTest()
-            => ReadFromTestHelper<Th128Converter>("T821");
+            => ReadFromTestHelper<Th128Converter>(th128ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -896,67 +777,69 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th128ReadFromTestShortenedSignature()
-            => ReadFromTestShortenedSignatureHelper<Th128Converter>("T821");
+            => ReadFromTestShortenedSignatureHelper<Th128Converter>(th128ValidSignature);
 
         [TestMethod()]
         public void Th128ReadFromTestExceededSignature()
-            => ReadFromTestExceededSignatureHelper<Th128Converter>("T821");
+            => ReadFromTestExceededSignatureHelper<Th128Converter>(th128ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th128ReadFromTestNegativeEncodedAllSize()
-            => ReadFromTestNegativeEncodedAllSizeHelper<Th128Converter>("T821");
+            => ReadFromTestNegativeEncodedAllSizeHelper<Th128Converter>(th128ValidSignature);
 
         [TestMethod()]
         public void Th128ReadFromTestZeroEncodedAllSize()
-            => ReadFromTestZeroEncodedAllSizeHelper<Th128Converter>("T821");
+            => ReadFromTestZeroEncodedAllSizeHelper<Th128Converter>(th128ValidSignature);
 
         [TestMethod()]
         public void Th128ReadFromTestShortenedEncodedAllSize()
-            => ReadFromTestShortenedEncodedAllSizeHelper<Th128Converter>("T821");
+            => ReadFromTestShortenedEncodedAllSizeHelper<Th128Converter>(th128ValidSignature);
 
         [TestMethod()]
         public void Th128ReadFromTestExceededEncodedAllSize()
-            => ReadFromTestExceededEncodedAllSizeHelper<Th128Converter>("T821");
+            => ReadFromTestExceededEncodedAllSizeHelper<Th128Converter>(th128ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th128ReadFromTestNegativeEncodedBodySize()
-            => ReadFromTestNegativeEncodedBodySizeHelper<Th128Converter>("T821");
+            => ReadFromTestNegativeEncodedBodySizeHelper<Th128Converter>(th128ValidSignature);
 
         [TestMethod()]
         public void Th128ReadFromTestZeroEncodedBodySize()
-            => ReadFromTestZeroEncodedBodySizeHelper<Th128Converter>("T821");
+            => ReadFromTestZeroEncodedBodySizeHelper<Th128Converter>(th128ValidSignature);
 
         [TestMethod()]
         public void Th128ReadFromTestShortenedEncodedBodySize()
-            => ReadFromTestShortenedEncodedBodySizeHelper<Th128Converter>("T821");
+            => ReadFromTestShortenedEncodedBodySizeHelper<Th128Converter>(th128ValidSignature);
 
         [TestMethod()]
         public void Th128ReadFromTestExceededEncodedBodySize()
-            => ReadFromTestExceededEncodedBodySizeHelper<Th128Converter>("T821");
+            => ReadFromTestExceededEncodedBodySizeHelper<Th128Converter>(th128ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th128ReadFromTestNegativeDecodedBodySize()
-            => ReadFromTestNegativeDecodedBodySizeHelper<Th128Converter>("T821");
+            => ReadFromTestNegativeDecodedBodySizeHelper<Th128Converter>(th128ValidSignature);
 
         [TestMethod()]
         public void Th128ReadFromTestZeroDecodedBodySize()
-            => ReadFromTestZeroDecodedBodySizeHelper<Th128Converter>("T821");
+            => ReadFromTestZeroDecodedBodySizeHelper<Th128Converter>(th128ValidSignature);
 
         [TestMethod()]
         public void Th128WriteToTest()
-            => WriteToTestHelper<Th128Converter>("T821");
+            => WriteToTestHelper<Th128Converter>(th128ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th128WriteToTestNull()
-            => WriteToTestNullHelper<Th128Converter>("T821");
+            => WriteToTestNullHelper<Th128Converter>(th128ValidSignature);
 
         #endregion
 
         #region Th13
+
+        private const string th13ValidSignature = "TH31";
 
         [TestMethod()]
         public void Th13HeaderTest()
@@ -964,7 +847,7 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod()]
         public void Th13ReadFromTest()
-            => ReadFromTestHelper<Th13Converter>("TH31");
+            => ReadFromTestHelper<Th13Converter>(th13ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -979,67 +862,69 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th13ReadFromTestShortenedSignature()
-            => ReadFromTestShortenedSignatureHelper<Th13Converter>("TH31");
+            => ReadFromTestShortenedSignatureHelper<Th13Converter>(th13ValidSignature);
 
         [TestMethod()]
         public void Th13ReadFromTestExceededSignature()
-            => ReadFromTestExceededSignatureHelper<Th13Converter>("TH31");
+            => ReadFromTestExceededSignatureHelper<Th13Converter>(th13ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th13ReadFromTestNegativeEncodedAllSize()
-            => ReadFromTestNegativeEncodedAllSizeHelper<Th13Converter>("TH31");
+            => ReadFromTestNegativeEncodedAllSizeHelper<Th13Converter>(th13ValidSignature);
 
         [TestMethod()]
         public void Th13ReadFromTestZeroEncodedAllSize()
-            => ReadFromTestZeroEncodedAllSizeHelper<Th13Converter>("TH31");
+            => ReadFromTestZeroEncodedAllSizeHelper<Th13Converter>(th13ValidSignature);
 
         [TestMethod()]
         public void Th13ReadFromTestShortenedEncodedAllSize()
-            => ReadFromTestShortenedEncodedAllSizeHelper<Th13Converter>("TH31");
+            => ReadFromTestShortenedEncodedAllSizeHelper<Th13Converter>(th13ValidSignature);
 
         [TestMethod()]
         public void Th13ReadFromTestExceededEncodedAllSize()
-            => ReadFromTestExceededEncodedAllSizeHelper<Th13Converter>("TH31");
+            => ReadFromTestExceededEncodedAllSizeHelper<Th13Converter>(th13ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th13ReadFromTestNegativeEncodedBodySize()
-            => ReadFromTestNegativeEncodedBodySizeHelper<Th13Converter>("TH31");
+            => ReadFromTestNegativeEncodedBodySizeHelper<Th13Converter>(th13ValidSignature);
 
         [TestMethod()]
         public void Th13ReadFromTestZeroEncodedBodySize()
-            => ReadFromTestZeroEncodedBodySizeHelper<Th13Converter>("TH31");
+            => ReadFromTestZeroEncodedBodySizeHelper<Th13Converter>(th13ValidSignature);
 
         [TestMethod()]
         public void Th13ReadFromTestShortenedEncodedBodySize()
-            => ReadFromTestShortenedEncodedBodySizeHelper<Th13Converter>("TH31");
+            => ReadFromTestShortenedEncodedBodySizeHelper<Th13Converter>(th13ValidSignature);
 
         [TestMethod()]
         public void Th13ReadFromTestExceededEncodedBodySize()
-            => ReadFromTestExceededEncodedBodySizeHelper<Th13Converter>("TH31");
+            => ReadFromTestExceededEncodedBodySizeHelper<Th13Converter>(th13ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th13ReadFromTestNegativeDecodedBodySize()
-            => ReadFromTestNegativeDecodedBodySizeHelper<Th13Converter>("TH31");
+            => ReadFromTestNegativeDecodedBodySizeHelper<Th13Converter>(th13ValidSignature);
 
         [TestMethod()]
         public void Th13ReadFromTestZeroDecodedBodySize()
-            => ReadFromTestZeroDecodedBodySizeHelper<Th13Converter>("TH31");
+            => ReadFromTestZeroDecodedBodySizeHelper<Th13Converter>(th13ValidSignature);
 
         [TestMethod()]
         public void Th13WriteToTest()
-            => WriteToTestHelper<Th13Converter>("TH31");
+            => WriteToTestHelper<Th13Converter>(th13ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th13WriteToTestNull()
-            => WriteToTestNullHelper<Th13Converter>("TH31");
+            => WriteToTestNullHelper<Th13Converter>(th13ValidSignature);
 
         #endregion
 
         #region Th14
+
+        private const string th14ValidSignature = "TH41";
 
         [TestMethod()]
         public void Th14HeaderTest()
@@ -1047,7 +932,7 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod()]
         public void Th14ReadFromTest()
-            => ReadFromTestHelper<Th14Converter>("TH41");
+            => ReadFromTestHelper<Th14Converter>(th14ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -1062,67 +947,69 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th14ReadFromTestShortenedSignature()
-            => ReadFromTestShortenedSignatureHelper<Th14Converter>("TH41");
+            => ReadFromTestShortenedSignatureHelper<Th14Converter>(th14ValidSignature);
 
         [TestMethod()]
         public void Th14ReadFromTestExceededSignature()
-            => ReadFromTestExceededSignatureHelper<Th14Converter>("TH41");
+            => ReadFromTestExceededSignatureHelper<Th14Converter>(th14ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th14ReadFromTestNegativeEncodedAllSize()
-            => ReadFromTestNegativeEncodedAllSizeHelper<Th14Converter>("TH41");
+            => ReadFromTestNegativeEncodedAllSizeHelper<Th14Converter>(th14ValidSignature);
 
         [TestMethod()]
         public void Th14ReadFromTestZeroEncodedAllSize()
-            => ReadFromTestZeroEncodedAllSizeHelper<Th14Converter>("TH41");
+            => ReadFromTestZeroEncodedAllSizeHelper<Th14Converter>(th14ValidSignature);
 
         [TestMethod()]
         public void Th14ReadFromTestShortenedEncodedAllSize()
-            => ReadFromTestShortenedEncodedAllSizeHelper<Th14Converter>("TH41");
+            => ReadFromTestShortenedEncodedAllSizeHelper<Th14Converter>(th14ValidSignature);
 
         [TestMethod()]
         public void Th14ReadFromTestExceededEncodedAllSize()
-            => ReadFromTestExceededEncodedAllSizeHelper<Th14Converter>("TH41");
+            => ReadFromTestExceededEncodedAllSizeHelper<Th14Converter>(th14ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th14ReadFromTestNegativeEncodedBodySize()
-            => ReadFromTestNegativeEncodedBodySizeHelper<Th14Converter>("TH41");
+            => ReadFromTestNegativeEncodedBodySizeHelper<Th14Converter>(th14ValidSignature);
 
         [TestMethod()]
         public void Th14ReadFromTestZeroEncodedBodySize()
-            => ReadFromTestZeroEncodedBodySizeHelper<Th14Converter>("TH41");
+            => ReadFromTestZeroEncodedBodySizeHelper<Th14Converter>(th14ValidSignature);
 
         [TestMethod()]
         public void Th14ReadFromTestShortenedEncodedBodySize()
-            => ReadFromTestShortenedEncodedBodySizeHelper<Th14Converter>("TH41");
+            => ReadFromTestShortenedEncodedBodySizeHelper<Th14Converter>(th14ValidSignature);
 
         [TestMethod()]
         public void Th14ReadFromTestExceededEncodedBodySize()
-            => ReadFromTestExceededEncodedBodySizeHelper<Th14Converter>("TH41");
+            => ReadFromTestExceededEncodedBodySizeHelper<Th14Converter>(th14ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th14ReadFromTestNegativeDecodedBodySize()
-            => ReadFromTestNegativeDecodedBodySizeHelper<Th14Converter>("TH41");
+            => ReadFromTestNegativeDecodedBodySizeHelper<Th14Converter>(th14ValidSignature);
 
         [TestMethod()]
         public void Th14ReadFromTestZeroDecodedBodySize()
-            => ReadFromTestZeroDecodedBodySizeHelper<Th14Converter>("TH41");
+            => ReadFromTestZeroDecodedBodySizeHelper<Th14Converter>(th14ValidSignature);
 
         [TestMethod()]
         public void Th14WriteToTest()
-            => WriteToTestHelper<Th14Converter>("TH41");
+            => WriteToTestHelper<Th14Converter>(th14ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th14WriteToTestNull()
-            => WriteToTestNullHelper<Th14Converter>("TH41");
+            => WriteToTestNullHelper<Th14Converter>(th14ValidSignature);
 
         #endregion
 
         #region Th143
+
+        private const string th143ValidSignature = "T341";
 
         [TestMethod()]
         public void Th143HeaderTest()
@@ -1130,7 +1017,7 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod()]
         public void Th143ReadFromTest()
-            => ReadFromTestHelper<Th143Converter>("T341");
+            => ReadFromTestHelper<Th143Converter>(th143ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -1145,67 +1032,69 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th143ReadFromTestShortenedSignature()
-            => ReadFromTestShortenedSignatureHelper<Th143Converter>("T341");
+            => ReadFromTestShortenedSignatureHelper<Th143Converter>(th143ValidSignature);
 
         [TestMethod()]
         public void Th143ReadFromTestExceededSignature()
-            => ReadFromTestExceededSignatureHelper<Th143Converter>("T341");
+            => ReadFromTestExceededSignatureHelper<Th143Converter>(th143ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th143ReadFromTestNegativeEncodedAllSize()
-            => ReadFromTestNegativeEncodedAllSizeHelper<Th143Converter>("T341");
+            => ReadFromTestNegativeEncodedAllSizeHelper<Th143Converter>(th143ValidSignature);
 
         [TestMethod()]
         public void Th143ReadFromTestZeroEncodedAllSize()
-            => ReadFromTestZeroEncodedAllSizeHelper<Th143Converter>("T341");
+            => ReadFromTestZeroEncodedAllSizeHelper<Th143Converter>(th143ValidSignature);
 
         [TestMethod()]
         public void Th143ReadFromTestShortenedEncodedAllSize()
-            => ReadFromTestShortenedEncodedAllSizeHelper<Th143Converter>("T341");
+            => ReadFromTestShortenedEncodedAllSizeHelper<Th143Converter>(th143ValidSignature);
 
         [TestMethod()]
         public void Th143ReadFromTestExceededEncodedAllSize()
-            => ReadFromTestExceededEncodedAllSizeHelper<Th143Converter>("T341");
+            => ReadFromTestExceededEncodedAllSizeHelper<Th143Converter>(th143ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th143ReadFromTestNegativeEncodedBodySize()
-            => ReadFromTestNegativeEncodedBodySizeHelper<Th143Converter>("T341");
+            => ReadFromTestNegativeEncodedBodySizeHelper<Th143Converter>(th143ValidSignature);
 
         [TestMethod()]
         public void Th143ReadFromTestZeroEncodedBodySize()
-            => ReadFromTestZeroEncodedBodySizeHelper<Th143Converter>("T341");
+            => ReadFromTestZeroEncodedBodySizeHelper<Th143Converter>(th143ValidSignature);
 
         [TestMethod()]
         public void Th143ReadFromTestShortenedEncodedBodySize()
-            => ReadFromTestShortenedEncodedBodySizeHelper<Th143Converter>("T341");
+            => ReadFromTestShortenedEncodedBodySizeHelper<Th143Converter>(th143ValidSignature);
 
         [TestMethod()]
         public void Th143ReadFromTestExceededEncodedBodySize()
-            => ReadFromTestExceededEncodedBodySizeHelper<Th143Converter>("T341");
+            => ReadFromTestExceededEncodedBodySizeHelper<Th143Converter>(th143ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th143ReadFromTestNegativeDecodedBodySize()
-            => ReadFromTestNegativeDecodedBodySizeHelper<Th143Converter>("T341");
+            => ReadFromTestNegativeDecodedBodySizeHelper<Th143Converter>(th143ValidSignature);
 
         [TestMethod()]
         public void Th143ReadFromTestZeroDecodedBodySize()
-            => ReadFromTestZeroDecodedBodySizeHelper<Th143Converter>("T341");
+            => ReadFromTestZeroDecodedBodySizeHelper<Th143Converter>(th143ValidSignature);
 
         [TestMethod()]
         public void Th143WriteToTest()
-            => WriteToTestHelper<Th143Converter>("T341");
+            => WriteToTestHelper<Th143Converter>(th143ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th143WriteToTestNull()
-            => WriteToTestNullHelper<Th143Converter>("T341");
+            => WriteToTestNullHelper<Th143Converter>(th143ValidSignature);
 
         #endregion
 
         #region Th15
+
+        private const string th15ValidSignature = "TH51";
 
         [TestMethod()]
         public void Th15HeaderTest()
@@ -1213,7 +1102,7 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod()]
         public void Th15ReadFromTest()
-            => ReadFromTestHelper<Th15Converter>("TH51");
+            => ReadFromTestHelper<Th15Converter>(th15ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -1228,67 +1117,69 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th15ReadFromTestShortenedSignature()
-            => ReadFromTestShortenedSignatureHelper<Th15Converter>("TH51");
+            => ReadFromTestShortenedSignatureHelper<Th15Converter>(th15ValidSignature);
 
         [TestMethod()]
         public void Th15ReadFromTestExceededSignature()
-            => ReadFromTestExceededSignatureHelper<Th15Converter>("TH51");
+            => ReadFromTestExceededSignatureHelper<Th15Converter>(th15ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th15ReadFromTestNegativeEncodedAllSize()
-            => ReadFromTestNegativeEncodedAllSizeHelper<Th15Converter>("TH51");
+            => ReadFromTestNegativeEncodedAllSizeHelper<Th15Converter>(th15ValidSignature);
 
         [TestMethod()]
         public void Th15ReadFromTestZeroEncodedAllSize()
-            => ReadFromTestZeroEncodedAllSizeHelper<Th15Converter>("TH51");
+            => ReadFromTestZeroEncodedAllSizeHelper<Th15Converter>(th15ValidSignature);
 
         [TestMethod()]
         public void Th15ReadFromTestShortenedEncodedAllSize()
-            => ReadFromTestShortenedEncodedAllSizeHelper<Th15Converter>("TH51");
+            => ReadFromTestShortenedEncodedAllSizeHelper<Th15Converter>(th15ValidSignature);
 
         [TestMethod()]
         public void Th15ReadFromTestExceededEncodedAllSize()
-            => ReadFromTestExceededEncodedAllSizeHelper<Th15Converter>("TH51");
+            => ReadFromTestExceededEncodedAllSizeHelper<Th15Converter>(th15ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th15ReadFromTestNegativeEncodedBodySize()
-            => ReadFromTestNegativeEncodedBodySizeHelper<Th15Converter>("TH51");
+            => ReadFromTestNegativeEncodedBodySizeHelper<Th15Converter>(th15ValidSignature);
 
         [TestMethod()]
         public void Th15ReadFromTestZeroEncodedBodySize()
-            => ReadFromTestZeroEncodedBodySizeHelper<Th15Converter>("TH51");
+            => ReadFromTestZeroEncodedBodySizeHelper<Th15Converter>(th15ValidSignature);
 
         [TestMethod()]
         public void Th15ReadFromTestShortenedEncodedBodySize()
-            => ReadFromTestShortenedEncodedBodySizeHelper<Th15Converter>("TH51");
+            => ReadFromTestShortenedEncodedBodySizeHelper<Th15Converter>(th15ValidSignature);
 
         [TestMethod()]
         public void Th15ReadFromTestExceededEncodedBodySize()
-            => ReadFromTestExceededEncodedBodySizeHelper<Th15Converter>("TH51");
+            => ReadFromTestExceededEncodedBodySizeHelper<Th15Converter>(th15ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th15ReadFromTestNegativeDecodedBodySize()
-            => ReadFromTestNegativeDecodedBodySizeHelper<Th15Converter>("TH51");
+            => ReadFromTestNegativeDecodedBodySizeHelper<Th15Converter>(th15ValidSignature);
 
         [TestMethod()]
         public void Th15ReadFromTestZeroDecodedBodySize()
-            => ReadFromTestZeroDecodedBodySizeHelper<Th15Converter>("TH51");
+            => ReadFromTestZeroDecodedBodySizeHelper<Th15Converter>(th15ValidSignature);
 
         [TestMethod()]
         public void Th15WriteToTest()
-            => WriteToTestHelper<Th15Converter>("TH51");
+            => WriteToTestHelper<Th15Converter>(th15ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th15WriteToTestNull()
-            => WriteToTestNullHelper<Th15Converter>("TH51");
+            => WriteToTestNullHelper<Th15Converter>(th15ValidSignature);
 
         #endregion
 
         #region Th16
+
+        private const string th16ValidSignature = "TH61";
 
         [TestMethod()]
         public void Th16HeaderTest()
@@ -1296,7 +1187,7 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod()]
         public void Th16ReadFromTest()
-            => ReadFromTestHelper<Th16Converter>("TH61");
+            => ReadFromTestHelper<Th16Converter>(th16ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -1311,63 +1202,63 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod()]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th16ReadFromTestShortenedSignature()
-            => ReadFromTestShortenedSignatureHelper<Th16Converter>("TH61");
+            => ReadFromTestShortenedSignatureHelper<Th16Converter>(th16ValidSignature);
 
         [TestMethod()]
         public void Th16ReadFromTestExceededSignature()
-            => ReadFromTestExceededSignatureHelper<Th16Converter>("TH61");
+            => ReadFromTestExceededSignatureHelper<Th16Converter>(th16ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th16ReadFromTestNegativeEncodedAllSize()
-            => ReadFromTestNegativeEncodedAllSizeHelper<Th16Converter>("TH61");
+            => ReadFromTestNegativeEncodedAllSizeHelper<Th16Converter>(th16ValidSignature);
 
         [TestMethod()]
         public void Th16ReadFromTestZeroEncodedAllSize()
-            => ReadFromTestZeroEncodedAllSizeHelper<Th16Converter>("TH61");
+            => ReadFromTestZeroEncodedAllSizeHelper<Th16Converter>(th16ValidSignature);
 
         [TestMethod()]
         public void Th16ReadFromTestShortenedEncodedAllSize()
-            => ReadFromTestShortenedEncodedAllSizeHelper<Th16Converter>("TH61");
+            => ReadFromTestShortenedEncodedAllSizeHelper<Th16Converter>(th16ValidSignature);
 
         [TestMethod()]
         public void Th16ReadFromTestExceededEncodedAllSize()
-            => ReadFromTestExceededEncodedAllSizeHelper<Th16Converter>("TH61");
+            => ReadFromTestExceededEncodedAllSizeHelper<Th16Converter>(th16ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th16ReadFromTestNegativeEncodedBodySize()
-            => ReadFromTestNegativeEncodedBodySizeHelper<Th16Converter>("TH61");
+            => ReadFromTestNegativeEncodedBodySizeHelper<Th16Converter>(th16ValidSignature);
 
         [TestMethod()]
         public void Th16ReadFromTestZeroEncodedBodySize()
-            => ReadFromTestZeroEncodedBodySizeHelper<Th16Converter>("TH61");
+            => ReadFromTestZeroEncodedBodySizeHelper<Th16Converter>(th16ValidSignature);
 
         [TestMethod()]
         public void Th16ReadFromTestShortenedEncodedBodySize()
-            => ReadFromTestShortenedEncodedBodySizeHelper<Th16Converter>("TH61");
+            => ReadFromTestShortenedEncodedBodySizeHelper<Th16Converter>(th16ValidSignature);
 
         [TestMethod()]
         public void Th16ReadFromTestExceededEncodedBodySize()
-            => ReadFromTestExceededEncodedBodySizeHelper<Th16Converter>("TH61");
+            => ReadFromTestExceededEncodedBodySizeHelper<Th16Converter>(th16ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Th16ReadFromTestNegativeDecodedBodySize()
-            => ReadFromTestNegativeDecodedBodySizeHelper<Th16Converter>("TH61");
+            => ReadFromTestNegativeDecodedBodySizeHelper<Th16Converter>(th16ValidSignature);
 
         [TestMethod()]
         public void Th16ReadFromTestZeroDecodedBodySize()
-            => ReadFromTestZeroDecodedBodySizeHelper<Th16Converter>("TH61");
+            => ReadFromTestZeroDecodedBodySizeHelper<Th16Converter>(th16ValidSignature);
 
         [TestMethod()]
         public void Th16WriteToTest()
-            => WriteToTestHelper<Th16Converter>("TH61");
+            => WriteToTestHelper<Th16Converter>(th16ValidSignature);
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th16WriteToTestNull()
-            => WriteToTestNullHelper<Th16Converter>("TH61");
+            => WriteToTestNullHelper<Th16Converter>(th16ValidSignature);
 
         #endregion
     }
