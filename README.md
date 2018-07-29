@@ -7,7 +7,9 @@ Score file converter for Touhou games
 
 * master branch:
 [![Build status](https://ci.appveyor.com/api/projects/status/58cq4cyakkp0b5lo/branch/master?svg=true)](https://ci.appveyor.com/project/y-iihoshi/thscorefileconverter/branch/master)
+[![AppVeyor tests branch](https://img.shields.io/appveyor/tests/y-iihoshi/thscorefileconverter/master.svg)](https://ci.appveyor.com/project/y-iihoshi/thscorefileconverter/branch/master)
 [![codecov](https://codecov.io/gh/y-iihoshi/ThScoreFileConverter/branch/master/graph/badge.svg)](https://codecov.io/gh/y-iihoshi/ThScoreFileConverter/branch/master)
 * add-unit-test branch:
 [![Build status](https://ci.appveyor.com/api/projects/status/58cq4cyakkp0b5lo/branch/add-unit-test?svg=true)](https://ci.appveyor.com/project/y-iihoshi/thscorefileconverter/branch/add-unit-test)
+[![AppVeyor tests branch](https://img.shields.io/appveyor/tests/y-iihoshi/thscorefileconverter/add-unit-test.svg)](https://ci.appveyor.com/project/y-iihoshi/thscorefileconverter/branch/add-unit-test)
 [![codecov](https://codecov.io/gh/y-iihoshi/ThScoreFileConverter/branch/add-unit-test/graph/badge.svg)](https://codecov.io/gh/y-iihoshi/ThScoreFileConverter/branch/add-unit-test)
