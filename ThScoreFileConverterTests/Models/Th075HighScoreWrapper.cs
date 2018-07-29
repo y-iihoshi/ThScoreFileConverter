@@ -15,6 +15,29 @@ namespace ThScoreFileConverterTests.Models
 
         private readonly PrivateObject pobj = null;
 
+        [SuppressMessage("Microsoft.Design", "CA1000:DoNotDeclareStaticMembersOnGenericTypes")]
+        public static Th075HighScoreWrapper Create(byte[] array)
+        {
+            var highScore = new Th075HighScoreWrapper();
+
+            MemoryStream stream = null;
+            try
+            {
+                stream = new MemoryStream(array);
+                using (var reader = new BinaryReader(stream))
+                {
+                    stream = null;
+                    highScore.ReadFrom(reader);
+                }
+            }
+            finally
+            {
+                stream?.Dispose();
+            }
+
+            return highScore;
+        }
+
         public Th075HighScoreWrapper()
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
         [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "obj")]

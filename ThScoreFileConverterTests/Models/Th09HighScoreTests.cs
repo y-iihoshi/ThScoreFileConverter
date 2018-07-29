@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -11,50 +12,78 @@ namespace ThScoreFileConverterTests.Models
     [TestClass()]
     public class Th09HighScoreTests
     {
+        internal struct Properties
+        {
+            public string signature;
+            public short size1;
+            public short size2;
+            public uint score;
+            public Th09Converter.Chara chara;
+            public ThConverter.Level level;
+            public short rank;
+            public byte[] name;
+            public byte[] date;
+            public byte continueCount;
+        };
+
+        internal static Properties ValidProperties => new Properties()
+        {
+            signature = "HSCR",
+            size1 = 0x2C,
+            size2 = 0x2C,
+            score = 1234567u,
+            chara = Th09Converter.Chara.Marisa,
+            level = ThConverter.Level.Hard,
+            rank = 987,
+            name = Encoding.Default.GetBytes("Player1\0\0"),
+            date = Encoding.Default.GetBytes("06/01/23\0"),
+            continueCount = 2,
+        };
+
+        internal static byte[] MakeData(in Properties properties)
+            => TestUtils.MakeByteArray(
+                0u,
+                properties.score,
+                0u,
+                (byte)properties.chara,
+                (byte)properties.level,
+                properties.rank,
+                properties.name,
+                properties.date,
+                (byte)0,
+                properties.continueCount);
+
+        internal static byte[] MakeByteArray(in Properties properties)
+            => TestUtils.MakeByteArray(
+                properties.signature.ToCharArray(), properties.size1, properties.size2, MakeData(properties));
+
+        internal static void Validate(in Th09HighScoreWrapper highScore, in Properties properties)
+        {
+            var data = MakeData(properties);
+
+            Assert.AreEqual(properties.signature, highScore.Signature);
+            Assert.AreEqual(properties.size1, highScore.Size1);
+            Assert.AreEqual(properties.size2, highScore.Size2);
+            CollectionAssert.AreEqual(data, highScore.Data.ToArray());
+            Assert.AreEqual(data[0], highScore.FirstByteOfData);
+            Assert.AreEqual(properties.score, highScore.Score);
+            Assert.AreEqual(properties.chara, highScore.Chara);
+            Assert.AreEqual(properties.level, highScore.Level);
+            Assert.AreEqual(properties.rank, highScore.Rank);
+            CollectionAssert.AreEqual(properties.name, highScore.Name.ToArray());
+            CollectionAssert.AreEqual(properties.date, highScore.Date.ToArray());
+            Assert.AreEqual(properties.continueCount, highScore.ContinueCount);
+        }
+
         [TestMethod()]
         public void Th09HighScoreTestChapter() => TestUtils.Wrap(() =>
         {
-            var signature = "HSCR";
-            short size1 = 0x2C;
-            short size2 = 0x2C;
-            var unknown1 = 0u;
-            var score = 1234567u;
-            var unknown2 = 0u;
-            var chara = Th09Converter.Chara.Marisa;
-            var level = ThConverter.Level.Hard;
-            short rank = 987;
-            var name = "Player1\0\0";
-            var date = "06/01/23\0";
-            byte unknown3 = 0;
-            byte continueCount = 2;
-            var data = TestUtils.MakeByteArray(
-                unknown1,
-                score,
-                unknown2,
-                (byte)chara,
-                (byte)level,
-                rank,
-                name.ToCharArray(),
-                date.ToCharArray(),
-                unknown3,
-                continueCount);
+            var properties = ValidProperties;
 
-            var chapter = Th06ChapterWrapper<Th09Converter>.Create(
-                TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+            var chapter = Th06ChapterWrapper<Th09Converter>.Create(MakeByteArray(properties));
             var highScore = new Th09HighScoreWrapper(chapter);
 
-            Assert.AreEqual(signature, highScore.Signature);
-            Assert.AreEqual(size1, highScore.Size1);
-            Assert.AreEqual(size2, highScore.Size2);
-            CollectionAssert.AreEqual(data, highScore.Data.ToArray());
-            Assert.AreEqual(data[0], highScore.FirstByteOfData);
-            Assert.AreEqual(score, highScore.Score);
-            Assert.AreEqual(chara, highScore.Chara);
-            Assert.AreEqual(level, highScore.Level);
-            Assert.AreEqual(rank, highScore.Rank);
-            CollectionAssert.AreEqual(Encoding.Default.GetBytes(name), highScore.Name.ToArray());
-            CollectionAssert.AreEqual(Encoding.Default.GetBytes(date), highScore.Date.ToArray());
-            Assert.AreEqual(continueCount, highScore.ContinueCount);
+            Validate(highScore, properties);
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "highScore")]
@@ -67,38 +96,16 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         });
 
+        [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "highScore")]
         [TestMethod()]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th09HighScoreTestInvalidSignature() => TestUtils.Wrap(() =>
         {
-            var signature = "hscr";
-            short size1 = 0x2C;
-            short size2 = 0x2C;
-            var unknown1 = 0u;
-            var score = 1234567u;
-            var unknown2 = 0u;
-            var chara = Th09Converter.Chara.Marisa;
-            var level = ThConverter.Level.Hard;
-            short rank = 987;
-            var name = "Player1\0\0";
-            var date = "06/01/23\0";
-            byte unknown3 = 0;
-            byte continueCount = 2;
-            var data = TestUtils.MakeByteArray(
-                unknown1,
-                score,
-                unknown2,
-                (byte)chara,
-                (byte)level,
-                rank,
-                name.ToCharArray(),
-                date.ToCharArray(),
-                unknown3,
-                continueCount);
+            var properties = ValidProperties;
+            properties.signature = properties.signature.ToLowerInvariant();
 
-            var chapter = Th06ChapterWrapper<Th09Converter>.Create(
-                TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+            var chapter = Th06ChapterWrapper<Th09Converter>.Create(MakeByteArray(properties));
             var highScore = new Th09HighScoreWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -109,107 +116,48 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(InvalidDataException))]
         public void Th09HighScoreTestInvalidSize() => TestUtils.Wrap(() =>
         {
-            var signature = "HSCR";
-            short size1 = 0x2D;
-            short size2 = 0x2C;
-            var unknown1 = 0u;
-            var score = 1234567u;
-            var unknown2 = 0u;
-            var chara = Th09Converter.Chara.Marisa;
-            var level = ThConverter.Level.Hard;
-            short rank = 987;
-            var name = "Player1\0\0";
-            var date = "06/01/23\0";
-            byte unknown3 = 0;
-            byte continueCount = 2;
-            var data = TestUtils.MakeByteArray(
-                unknown1,
-                score,
-                unknown2,
-                (byte)chara,
-                (byte)level,
-                rank,
-                name.ToCharArray(),
-                date.ToCharArray(),
-                unknown3,
-                continueCount);
+            var properties = ValidProperties;
+            ++properties.size1;
 
-            var chapter = Th06ChapterWrapper<Th09Converter>.Create(
-                TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+            var chapter = Th06ChapterWrapper<Th09Converter>.Create(MakeByteArray(properties));
             var highScore = new Th09HighScoreWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "highScore")]
-        [TestMethod()]
-        [ExpectedException(typeof(InvalidCastException))]
-        public void Th09HighScoreTestInvalidChara() => TestUtils.Wrap(() =>
-        {
-            var signature = "HSCR";
-            short size1 = 0x2C;
-            short size2 = 0x2C;
-            var unknown1 = 0u;
-            var score = 1234567u;
-            var unknown2 = 0u;
-            var chara = (Th09Converter.Chara)(-1);
-            var level = ThConverter.Level.Hard;
-            short rank = 987;
-            var name = "Player1\0\0";
-            var date = "06/01/23\0";
-            byte unknown3 = 0;
-            byte continueCount = 2;
-            var data = TestUtils.MakeByteArray(
-                unknown1,
-                score,
-                unknown2,
-                (byte)chara,
-                (byte)level,
-                rank,
-                name.ToCharArray(),
-                date.ToCharArray(),
-                unknown3,
-                continueCount);
+        public static IEnumerable<object[]> InvalidCharacters
+            => TestUtils.GetInvalidEnumerators(typeof(Th09Converter.Chara));
 
-            var chapter = Th06ChapterWrapper<Th09Converter>.Create(
-                TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "highScore")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        [DataTestMethod]
+        [DynamicData(nameof(InvalidCharacters))]
+        [ExpectedException(typeof(InvalidCastException))]
+        public void Th09HighScoreTestInvalidChara(int chara) => TestUtils.Wrap(() =>
+        {
+            var properties = ValidProperties;
+            properties.chara = TestUtils.Cast<Th09Converter.Chara>(chara);
+
+            var chapter = Th06ChapterWrapper<Th09Converter>.Create(MakeByteArray(properties));
             var highScore = new Th09HighScoreWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "highScore")]
-        [TestMethod()]
-        [ExpectedException(typeof(InvalidCastException))]
-        public void Th09HighScoreTestInvalidLevel() => TestUtils.Wrap(() =>
-        {
-            var signature = "HSCR";
-            short size1 = 0x2C;
-            short size2 = 0x2C;
-            var unknown1 = 0u;
-            var score = 1234567u;
-            var unknown2 = 0u;
-            var chara = Th09Converter.Chara.Marisa;
-            var level = (ThConverter.Level)(-1);
-            short rank = 987;
-            var name = "Player1\0\0";
-            var date = "06/01/23\0";
-            byte unknown3 = 0;
-            byte continueCount = 2;
-            var data = TestUtils.MakeByteArray(
-                unknown1,
-                score,
-                unknown2,
-                (byte)chara,
-                (byte)level,
-                rank,
-                name.ToCharArray(),
-                date.ToCharArray(),
-                unknown3,
-                continueCount);
+        public static IEnumerable<object[]> InvalidLevels
+            => TestUtils.GetInvalidEnumerators(typeof(ThConverter.Level));
 
-            var chapter = Th06ChapterWrapper<Th09Converter>.Create(
-                TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "highScore")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        [DataTestMethod]
+        [DynamicData(nameof(InvalidLevels))]
+        [ExpectedException(typeof(InvalidCastException))]
+        public void Th09HighScoreTestInvalidLevel(int level) => TestUtils.Wrap(() =>
+        {
+            var properties = ValidProperties;
+            properties.level = TestUtils.Cast<ThConverter.Level>(level);
+
+            var chapter = Th06ChapterWrapper<Th09Converter>.Create(MakeByteArray(properties));
             var highScore = new Th09HighScoreWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
