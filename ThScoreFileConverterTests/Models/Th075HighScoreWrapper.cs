@@ -15,7 +15,6 @@ namespace ThScoreFileConverterTests.Models
 
         private readonly PrivateObject pobj = null;
 
-        [SuppressMessage("Microsoft.Design", "CA1000:DoNotDeclareStaticMembersOnGenericTypes")]
         public static Th075HighScoreWrapper Create(byte[] array)
         {
             var highScore = new Th075HighScoreWrapper();
