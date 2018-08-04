@@ -10,39 +10,65 @@ namespace ThScoreFileConverterTests.Models
     [TestClass()]
     public class Th06CardAttackTests
     {
+        internal struct Properties
+        {
+            public string signature;
+            public short size1;
+            public short size2;
+            public short cardId;
+            public byte[] cardName;
+            public ushort trialCount;
+            public ushort clearCount;
+        };
+
+        internal static Properties ValidProperties => new Properties()
+        {
+            signature = "CATK",
+            size1 = 0x40,
+            size2 = 0x40,
+            cardId = 123,
+            cardName = TestUtils.MakeRandomArray<byte>(0x24),
+            trialCount = 789,
+            clearCount = 456
+        };
+
+        internal static byte[] MakeData(in Properties properties)
+            => TestUtils.MakeByteArray(
+                new byte[8],
+                (short)(properties.cardId - 1),
+                new byte[6],
+                properties.cardName,
+                properties.trialCount,
+                properties.clearCount);
+
+        internal static byte[] MakeByteArray(in Properties properties)
+            => TestUtils.MakeByteArray(
+                properties.signature.ToCharArray(), properties.size1, properties.size2, MakeData(properties));
+
+        internal static void Validate(in Th06CardAttackWrapper cardAttack, in Properties properties)
+        {
+            var data = MakeData(properties);
+
+            Assert.AreEqual(properties.signature, cardAttack.Signature);
+            Assert.AreEqual(properties.size1, cardAttack.Size1);
+            Assert.AreEqual(properties.size2, cardAttack.Size2);
+            CollectionAssert.AreEqual(data, cardAttack.Data.ToArray());
+            Assert.AreEqual(data[0], cardAttack.FirstByteOfData);
+            Assert.AreEqual(properties.cardId, cardAttack.CardId);
+            CollectionAssert.AreEqual(properties.cardName, cardAttack.CardName.ToArray());
+            Assert.AreEqual(properties.trialCount, cardAttack.TrialCount);
+            Assert.AreEqual(properties.clearCount, cardAttack.ClearCount);
+        }
+
         [TestMethod()]
         public void Th06CardAttackTestChapter() => TestUtils.Wrap(() =>
         {
-            var signature = "CATK";
-            short size1 = 0x40;
-            short size2 = 0x40;
-            var unknown1 = TestUtils.MakeRandomArray<byte>(8);
-            short cardId = 123;
-            var unknown2 = TestUtils.MakeRandomArray<byte>(6);
-            var cardName = TestUtils.MakeRandomArray<byte>(0x24);
-            ushort trialCount = 789;
-            ushort clearCount = 456;
-            var data = TestUtils.MakeByteArray(
-                unknown1,
-                (short)(cardId - 1),
-                unknown2,
-                cardName,
-                trialCount,
-                clearCount);
+            var properties = ValidProperties;
 
-            var chapter = Th06ChapterWrapper<Th06Converter>.Create(
-                TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+            var chapter = Th06ChapterWrapper<Th06Converter>.Create(MakeByteArray(properties));
             var cardAttack = new Th06CardAttackWrapper(chapter);
 
-            Assert.AreEqual(signature, cardAttack.Signature);
-            Assert.AreEqual(size1, cardAttack.Size1);
-            Assert.AreEqual(size2, cardAttack.Size2);
-            CollectionAssert.AreEqual(data, cardAttack.Data.ToArray());
-            Assert.AreEqual(data[0], cardAttack.FirstByteOfData);
-            Assert.AreEqual(cardId, cardAttack.CardId);
-            CollectionAssert.AreEqual(cardName, cardAttack.CardName.ToArray());
-            Assert.AreEqual(trialCount, cardAttack.TrialCount);
-            Assert.AreEqual(clearCount, cardAttack.ClearCount);
+            Validate(cardAttack, properties);
             Assert.IsTrue(cardAttack.HasTried().Value);
         });
 
@@ -56,30 +82,16 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         });
 
+        [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "cardAttack")]
         [TestMethod()]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th06CardAttackTestInvalidSignature() => TestUtils.Wrap(() =>
         {
-            var signature = "catk";
-            short size1 = 0x40;
-            short size2 = 0x40;
-            var unknown1 = TestUtils.MakeRandomArray<byte>(8);
-            short cardId = 123;
-            var unknown2 = TestUtils.MakeRandomArray<byte>(6);
-            var cardName = TestUtils.MakeRandomArray<byte>(0x24);
-            ushort trialCount = 789;
-            ushort clearCount = 456;
-            var data = TestUtils.MakeByteArray(
-                unknown1,
-                (short)(cardId - 1),
-                unknown2,
-                cardName,
-                trialCount,
-                clearCount);
+            var properties = ValidProperties;
+            properties.signature = properties.signature.ToLowerInvariant();
 
-            var chapter = Th06ChapterWrapper<Th06Converter>.Create(
-                TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+            var chapter = Th06ChapterWrapper<Th06Converter>.Create(MakeByteArray(properties));
             var cardAttack = new Th06CardAttackWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -90,25 +102,10 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(InvalidDataException))]
         public void Th06CardAttackTestInvalidSize1() => TestUtils.Wrap(() =>
         {
-            var signature = "CATK";
-            short size1 = 0x41;
-            short size2 = 0x40;
-            var unknown1 = TestUtils.MakeRandomArray<byte>(8);
-            short cardId = 123;
-            var unknown2 = TestUtils.MakeRandomArray<byte>(6);
-            var cardName = TestUtils.MakeRandomArray<byte>(0x24);
-            ushort trialCount = 789;
-            ushort clearCount = 456;
-            var data = TestUtils.MakeByteArray(
-                unknown1,
-                (short)(cardId - 1),
-                unknown2,
-                cardName,
-                trialCount,
-                clearCount);
+            var properties = ValidProperties;
+            ++properties.size1;
 
-            var chapter = Th06ChapterWrapper<Th06Converter>.Create(
-                TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+            var chapter = Th06ChapterWrapper<Th06Converter>.Create(MakeByteArray(properties));
             var cardAttack = new Th06CardAttackWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -117,36 +114,13 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod()]
         public void Th06CardAttackTestNotTried() => TestUtils.Wrap(() =>
         {
-            var signature = "CATK";
-            short size1 = 0x40;
-            short size2 = 0x40;
-            var unknown1 = TestUtils.MakeRandomArray<byte>(8);
-            short cardId = 123;
-            var unknown2 = TestUtils.MakeRandomArray<byte>(6);
-            var cardName = TestUtils.MakeRandomArray<byte>(0x24);
-            ushort trialCount = 0;
-            ushort clearCount = 456;
-            var data = TestUtils.MakeByteArray(
-                unknown1,
-                (short)(cardId - 1),
-                unknown2,
-                cardName,
-                trialCount,
-                clearCount);
+            var properties = ValidProperties;
+            properties.trialCount = 0;
 
-            var chapter = Th06ChapterWrapper<Th06Converter>.Create(
-                TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+            var chapter = Th06ChapterWrapper<Th06Converter>.Create(MakeByteArray(properties));
             var cardAttack = new Th06CardAttackWrapper(chapter);
 
-            Assert.AreEqual(signature, cardAttack.Signature);
-            Assert.AreEqual(size1, cardAttack.Size1);
-            Assert.AreEqual(size2, cardAttack.Size2);
-            CollectionAssert.AreEqual(data, cardAttack.Data.ToArray());
-            Assert.AreEqual(data[0], cardAttack.FirstByteOfData);
-            Assert.AreEqual(cardId, cardAttack.CardId);
-            CollectionAssert.AreEqual(cardName, cardAttack.CardName.ToArray());
-            Assert.AreEqual(trialCount, cardAttack.TrialCount);
-            Assert.AreEqual(clearCount, cardAttack.ClearCount);
+            Validate(cardAttack, properties);
             Assert.IsFalse(cardAttack.HasTried().Value);
         });
     }
