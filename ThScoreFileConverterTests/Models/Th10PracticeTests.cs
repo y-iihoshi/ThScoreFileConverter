@@ -8,15 +8,37 @@ namespace ThScoreFileConverterTests.Models
     [TestClass()]
     public class Th10PracticeTests
     {
+        internal struct Properties
+        {
+            public uint score;
+            public uint stageFlag;
+        };
+
+        internal static Properties ValidProperties => new Properties()
+        {
+            score = 123456u,
+            stageFlag = 789u
+        };
+
+        internal static byte[] MakeByteArray(in Properties properties)
+            => TestUtils.MakeByteArray(properties.score, properties.stageFlag);
+
+        internal static void Validate<TParent>(in Th10PracticeWrapper<TParent> practice, in Properties properties)
+            where TParent : ThConverter
+        {
+            Assert.AreEqual(properties.score, practice.Score);
+            Assert.AreEqual(properties.stageFlag, practice.StageFlag);
+        }
+
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void Th10PracticeTestHelper<TParent>()
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
+                var properties = new Properties();
                 var practice = new Th10PracticeWrapper<TParent>();
 
-                Assert.AreEqual(default, practice.Score.Value);
-                Assert.AreEqual(default, practice.StageFlag.Value);
+                Validate(practice, properties);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -24,13 +46,11 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var score = 123456u;
-                var stageFlag = 789u;
+                var properties = ValidProperties;
 
-                var practice = Th10PracticeWrapper<TParent>.Create(TestUtils.MakeByteArray(score, stageFlag));
+                var practice = Th10PracticeWrapper<TParent>.Create(MakeByteArray(properties));
 
-                Assert.AreEqual(score, practice.Score);
-                Assert.AreEqual(stageFlag, practice.StageFlag);
+                Validate(practice, properties);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -40,6 +60,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 var practice = new Th10PracticeWrapper<TParent>();
                 practice.ReadFrom(null);
+
                 Assert.Fail(TestUtils.Unreachable);
             });
 
