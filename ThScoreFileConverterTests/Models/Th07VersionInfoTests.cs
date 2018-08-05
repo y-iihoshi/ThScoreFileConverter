@@ -10,31 +10,53 @@ namespace ThScoreFileConverterTests.Models
     [TestClass()]
     public class Th07VersionInfoTests
     {
+        internal struct Properties
+        {
+            public string signature;
+            public short size1;
+            public short size2;
+            public byte[] version;
+        };
+
+        internal static Properties ValidProperties => new Properties()
+        {
+            signature = "VRSM",
+            size1 = 0x1C,
+            size2 = 0x1C,
+            version = TestUtils.MakeRandomArray<byte>(6)
+        };
+
+        internal static byte[] MakeData(in Properties properties)
+            => TestUtils.MakeByteArray(0u, properties.version, new byte[3], new byte[3], 0u);
+
+        internal static byte[] MakeByteArray(in Properties properties)
+            => TestUtils.MakeByteArray(
+                properties.signature.ToCharArray(), properties.size1, properties.size2, MakeData(properties));
+
+        internal static void Validate<TParent>(in Th07VersionInfoWrapper<TParent> versionInfo, in Properties properties)
+            where TParent : ThConverter
+        {
+            var data = MakeData(properties);
+
+            Assert.AreEqual(properties.signature, versionInfo.Signature);
+            Assert.AreEqual(properties.size1, versionInfo.Size1);
+            Assert.AreEqual(properties.size2, versionInfo.Size2);
+            CollectionAssert.AreEqual(data, versionInfo.Data.ToArray());
+            Assert.AreEqual(data[0], versionInfo.FirstByteOfData);
+            CollectionAssert.AreEqual(properties.version, versionInfo.Version.ToArray());
+        }
+
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void VersionInfoTestChapterHelper<TParent>()
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var signature = "VRSM";
-                short size1 = 0x1C;
-                short size2 = 0x1C;
-                var unknown1 = 1u;
-                var version = TestUtils.MakeRandomArray<byte>(6);
-                var unknown2 = TestUtils.MakeRandomArray<byte>(3);
-                var unknown3 = TestUtils.MakeRandomArray<byte>(3);
-                var unknown4 = 4u;
-                var data = TestUtils.MakeByteArray(unknown1, version, unknown2, unknown3, unknown4);
+                var properties = ValidProperties;
 
-                var chapter = Th06ChapterWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+                var chapter = Th06ChapterWrapper<TParent>.Create(MakeByteArray(properties));
                 var versionInfo = new Th07VersionInfoWrapper<TParent>(chapter);
 
-                Assert.AreEqual(signature, versionInfo.Signature);
-                Assert.AreEqual(size1, versionInfo.Size1);
-                Assert.AreEqual(size2, versionInfo.Size2);
-                CollectionAssert.AreEqual(data, versionInfo.Data.ToArray());
-                Assert.AreEqual(data[0], versionInfo.FirstByteOfData);
-                CollectionAssert.AreEqual(version, versionInfo.Version.ToArray());
+                Validate(versionInfo, properties);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -49,23 +71,16 @@ namespace ThScoreFileConverterTests.Models
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
+        [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "versionInfo")]
         internal static void VersionInfoTestInvalidSignatureHelper<TParent>()
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var signature = "vrsm";
-                short size1 = 0x1C;
-                short size2 = 0x1C;
-                var unknown1 = 1u;
-                var version = TestUtils.MakeRandomArray<byte>(6);
-                var unknown2 = TestUtils.MakeRandomArray<byte>(3);
-                var unknown3 = TestUtils.MakeRandomArray<byte>(3);
-                var unknown4 = 4u;
-                var data = TestUtils.MakeByteArray(unknown1, version, unknown2, unknown3, unknown4);
+                var properties = ValidProperties;
+                properties.signature = properties.signature.ToLowerInvariant();
 
-                var chapter = Th06ChapterWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+                var chapter = Th06ChapterWrapper<TParent>.Create(MakeByteArray(properties));
                 var versionInfo = new Th07VersionInfoWrapper<TParent>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
@@ -77,18 +92,10 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var signature = "VRSM";
-                short size1 = 0x1D;
-                short size2 = 0x1C;
-                var unknown1 = 1u;
-                var version = TestUtils.MakeRandomArray<byte>(6);
-                var unknown2 = TestUtils.MakeRandomArray<byte>(3);
-                var unknown3 = TestUtils.MakeRandomArray<byte>(3);
-                var unknown4 = 4u;
-                var data = TestUtils.MakeByteArray(unknown1, version, unknown2, unknown3, unknown4);
+                var properties = ValidProperties;
+                ++properties.size1;
 
-                var chapter = Th06ChapterWrapper<TParent>.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+                var chapter = Th06ChapterWrapper<TParent>.Create(MakeByteArray(properties));
                 var versionInfo = new Th07VersionInfoWrapper<TParent>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
