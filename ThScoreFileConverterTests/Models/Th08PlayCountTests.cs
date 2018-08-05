@@ -1,14 +1,64 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
     [TestClass()]
     public class Th08PlayCountTests
     {
+        internal struct Properties
+        {
+            public int totalTrial;
+            public Dictionary<Th08Converter.Chara, int> trials;
+            public int totalClear;
+            public int totalContinue;
+            public int totalPractice;
+
+            public Properties(in Properties properties)
+            {
+                this.totalTrial = properties.totalTrial;
+                this.trials = new Dictionary<Th08Converter.Chara, int>(properties.trials);
+                this.totalClear = properties.totalClear;
+                this.totalContinue = properties.totalContinue;
+                this.totalPractice = properties.totalPractice;
+            }
+        };
+
+        internal static Properties ValidProperties => new Properties()
+        {
+            totalTrial = 1,
+            trials = Enum.GetValues(typeof(Th08Converter.Chara))
+                .Cast<Th08Converter.Chara>()
+                .Select((chara, index) => new { chara, index })
+                .ToDictionary(pair => pair.chara, pair => pair.index),
+            totalClear = 3,
+            totalContinue = 4,
+            totalPractice = 5,
+        };
+
+        internal static byte[] MakeByteArray(in Properties properties)
+            => TestUtils.MakeByteArray(
+                properties.totalTrial,
+                properties.trials.Values.ToArray(),
+                0u,
+                properties.totalClear,
+                properties.totalContinue,
+                properties.totalPractice);
+
+        internal static void Validate(in Th08PlayCountWrapper playCount, in Properties properties)
+        {
+            Assert.AreEqual(properties.totalTrial, playCount.TotalTrial.Value);
+            CollectionAssert.AreEqual(properties.trials.Values, playCount.Trials.Values.ToArray());
+            Assert.AreEqual(properties.totalClear, playCount.TotalClear.Value);
+            Assert.AreEqual(properties.totalContinue, playCount.TotalContinue.Value);
+            Assert.AreEqual(properties.totalPractice, playCount.TotalPractice.Value);
+        }
+
         [TestMethod()]
         public void Th08PlayCountTest() => TestUtils.Wrap(() =>
         {
@@ -24,21 +74,11 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod()]
         public void Th08PlayCountReadFromTest() => TestUtils.Wrap(() =>
         {
-            var totalTrial = 1;
-            var trials = TestUtils.MakeRandomArray<int>(12);
-            var unknown = 2u;
-            var totalClear = 3;
-            var totalContinue = 4;
-            var totalPractice = 5;
+            var properties = ValidProperties;
 
-            var playCount = Th08PlayCountWrapper.Create(
-                TestUtils.MakeByteArray(totalTrial, trials, unknown, totalClear, totalContinue, totalPractice));
+            var playCount = Th08PlayCountWrapper.Create(MakeByteArray(properties));
 
-            Assert.AreEqual(totalTrial, playCount.TotalTrial.Value);
-            CollectionAssert.AreEqual(trials, playCount.Trials.Values.ToArray());
-            Assert.AreEqual(totalClear, playCount.TotalClear.Value);
-            Assert.AreEqual(totalContinue, playCount.TotalContinue.Value);
-            Assert.AreEqual(totalPractice, playCount.TotalPractice.Value);
+            Validate(playCount, properties);
         });
 
         [TestMethod()]
@@ -47,6 +87,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var playCount = new Th08PlayCountWrapper();
             playCount.ReadFrom(null);
+
             Assert.Fail(TestUtils.Unreachable);
         });
 
@@ -55,15 +96,10 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th08PlayCountReadFromTestShortenedTrials() => TestUtils.Wrap(() =>
         {
-            var totalTrial = 1;
-            var trials = TestUtils.MakeRandomArray<int>(11);
-            var unknown = 2u;
-            var totalClear = 3;
-            var totalContinue = 4;
-            var totalPractice = 5;
+            var properties = new Properties(ValidProperties);
+            properties.trials.Remove(Th08Converter.Chara.Yuyuko);
 
-            var playCount = Th08PlayCountWrapper.Create(
-                TestUtils.MakeByteArray(totalTrial, trials, unknown, totalClear, totalContinue, totalPractice));
+            var playCount = Th08PlayCountWrapper.Create(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -71,22 +107,19 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod()]
         public void Th08PlayCountReadFromTestExceededTrials() => TestUtils.Wrap(() =>
         {
-            var totalTrial = 1;
-            var trials = TestUtils.MakeRandomArray<int>(13);
-            var unknown = 2u;
-            var totalClear = 3;
-            var totalContinue = 4;
-            var totalPractice = 5;
+            var properties = new Properties(ValidProperties);
+            properties.trials.Add(TestUtils.Cast<Th08Converter.Chara>(99), 99);
 
-            var playCount = Th08PlayCountWrapper.Create(
-                TestUtils.MakeByteArray(totalTrial, trials, unknown, totalClear, totalContinue, totalPractice));
+            var playCount = Th08PlayCountWrapper.Create(MakeByteArray(properties));
 
-            Assert.AreEqual(totalTrial, playCount.TotalTrial.Value);
-            CollectionAssert.AreNotEqual(trials, playCount.Trials.Values.ToArray());
-            CollectionAssert.AreEqual(trials.Take(12).ToArray(), playCount.Trials.Values.ToArray());
-            Assert.AreNotEqual(totalClear, playCount.TotalClear.Value);
-            Assert.AreNotEqual(totalContinue, playCount.TotalContinue.Value);
-            Assert.AreNotEqual(totalPractice, playCount.TotalPractice.Value);
+            Assert.AreEqual(properties.totalTrial, playCount.TotalTrial.Value);
+            CollectionAssert.AreNotEqual(properties.trials.Values, playCount.Trials.Values.ToArray());
+            CollectionAssert.AreEqual(
+                properties.trials.Values.Take(properties.trials.Count - 1).ToArray(),
+                playCount.Trials.Values.ToArray());
+            Assert.AreNotEqual(properties.totalClear, playCount.TotalClear.Value);
+            Assert.AreNotEqual(properties.totalContinue, playCount.TotalContinue.Value);
+            Assert.AreNotEqual(properties.totalPractice, playCount.TotalPractice.Value);
         });
     }
 }

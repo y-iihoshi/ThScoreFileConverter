@@ -11,93 +11,93 @@ namespace ThScoreFileConverterTests.Models
     [TestClass()]
     public class Th08PlayStatusTests
     {
+        internal struct Properties
+        {
+            public string signature;
+            public short size1;
+            public short size2;
+            public Time totalRunningTime;
+            public Time totalPlayTime;
+            public Dictionary<ThConverter.Level, Th08PlayCountTests.Properties> playCounts;
+            public Th08PlayCountTests.Properties totalPlayCount;
+            public byte[] bgmFlags;
+        };
+
+        internal static Properties ValidProperties => new Properties()
+        {
+            signature = "PLST",
+            size1 = 0x228,
+            size2 = 0x228,
+            totalRunningTime = new Time(12, 34, 56, 789, false),
+            totalPlayTime = new Time(23, 45, 19, 876, false),
+            playCounts = Enum.GetValues(typeof(ThConverter.Level))
+                .Cast<ThConverter.Level>()
+                .ToDictionary(
+                    level => level,
+                    level => new Th08PlayCountTests.Properties(Th08PlayCountTests.ValidProperties)),
+            totalPlayCount = new Th08PlayCountTests.Properties(Th08PlayCountTests.ValidProperties),
+            bgmFlags = TestUtils.MakeRandomArray<byte>(21)
+        };
+
+        internal static byte[] MakeData(in Properties properties)
+            => TestUtils.MakeByteArray(
+                0u,
+                (int)properties.totalRunningTime.Hours,
+                properties.totalRunningTime.Minutes,
+                properties.totalRunningTime.Seconds,
+                properties.totalRunningTime.Milliseconds,
+                (int)properties.totalPlayTime.Hours,
+                properties.totalPlayTime.Minutes,
+                properties.totalPlayTime.Seconds,
+                properties.totalPlayTime.Milliseconds,
+                properties.playCounts.SelectMany(pair => Th08PlayCountTests.MakeByteArray(pair.Value)).ToArray(),
+                Th08PlayCountTests.MakeByteArray(Th08PlayCountTests.ValidProperties),
+                Th08PlayCountTests.MakeByteArray(properties.totalPlayCount),
+                properties.bgmFlags,
+                new byte[11]);
+
+        internal static byte[] MakeByteArray(in Properties properties)
+            => TestUtils.MakeByteArray(
+                properties.signature.ToCharArray(), properties.size1, properties.size2, MakeData(properties));
+
+        internal static void Validate(in Th08PlayStatusWrapper playStatus, in Properties properties)
+        {
+            var data = MakeData(properties);
+
+            Assert.AreEqual(properties.signature, playStatus.Signature);
+            Assert.AreEqual(properties.size1, playStatus.Size1);
+            Assert.AreEqual(properties.size2, playStatus.Size2);
+            CollectionAssert.AreEqual(data, playStatus.Data.ToArray());
+            Assert.AreEqual(data[0], playStatus.FirstByteOfData);
+            Assert.AreEqual(properties.totalRunningTime.Hours, playStatus.TotalRunningTime.Hours);
+            Assert.AreEqual(properties.totalRunningTime.Minutes, playStatus.TotalRunningTime.Minutes);
+            Assert.AreEqual(properties.totalRunningTime.Seconds, playStatus.TotalRunningTime.Seconds);
+            Assert.AreEqual(properties.totalRunningTime.Milliseconds, playStatus.TotalRunningTime.Milliseconds);
+            Assert.IsFalse(playStatus.TotalRunningTime.IsFrames);
+            Assert.AreEqual(properties.totalPlayTime.Hours, playStatus.TotalPlayTime.Hours);
+            Assert.AreEqual(properties.totalPlayTime.Minutes, playStatus.TotalPlayTime.Minutes);
+            Assert.AreEqual(properties.totalPlayTime.Seconds, playStatus.TotalPlayTime.Seconds);
+            Assert.AreEqual(properties.totalPlayTime.Milliseconds, playStatus.TotalPlayTime.Milliseconds);
+            Assert.IsFalse(playStatus.TotalPlayTime.IsFrames);
+
+            foreach (var key in properties.playCounts.Keys)
+            {
+                Th08PlayCountTests.Validate(playStatus.PlayCountsItem(key), properties.playCounts[key]);
+            }
+
+            Th08PlayCountTests.Validate(playStatus.TotalPlayCount, properties.totalPlayCount);
+            CollectionAssert.AreEqual(properties.bgmFlags, playStatus.BgmFlags.ToArray());
+        }
+
         [TestMethod()]
         public void Th08PlayStatusTestChapter() => TestUtils.Wrap(() =>
         {
-            var signature = "PLST";
-            short size1 = 0x228;
-            short size2 = 0x228;
-            var unknown1 = 1u;
-            var totalRunningTime = new Time(12, 34, 56, 789, false);
-            var totalPlayTime = new Time(23, 45, 19, 876, false);
-            var totalTrials = new int[7];
-            var trialsArray = new int[7][];
-            var unknown2s = new uint[7];
-            var totalClears = new int[7];
-            var totalContinues = new int[7];
-            var totalPractices = new int[7];
-            var playCounts = new List<byte>();
+            var properties = ValidProperties;
 
-            foreach (var index in Enumerable.Range(0, 7))
-            {
-                totalTrials[index] = 1 + index;
-                trialsArray[index] = TestUtils.MakeRandomArray<int>(12);
-                unknown2s[index] = 10u + (uint)index;
-                totalClears[index] = 100 + index;
-                totalContinues[index] = 1000 + index;
-                totalPractices[index] = 10000 + index;
-                playCounts.AddRange(
-                    TestUtils.MakeByteArray(
-                        totalTrials[index],
-                        trialsArray[index],
-                        unknown2s[index],
-                        totalClears[index],
-                        totalContinues[index],
-                        totalPractices[index]));
-            }
-
-            var bgmFlags = TestUtils.MakeRandomArray<byte>(21);
-            var unknown3 = TestUtils.MakeRandomArray<byte>(11);
-            var data = TestUtils.MakeByteArray(
-                unknown1,
-                (int)totalRunningTime.Hours,
-                totalRunningTime.Minutes,
-                totalRunningTime.Seconds,
-                totalRunningTime.Milliseconds,
-                (int)totalPlayTime.Hours,
-                totalPlayTime.Minutes,
-                totalPlayTime.Seconds,
-                totalPlayTime.Milliseconds,
-                playCounts.ToArray(),
-                bgmFlags,
-                unknown3);
-
-            var chapter = Th06ChapterWrapper<Th08Converter>.Create(
-                TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+            var chapter = Th06ChapterWrapper<Th08Converter>.Create(MakeByteArray(properties));
             var playStatus = new Th08PlayStatusWrapper(chapter);
 
-            Assert.AreEqual(signature, playStatus.Signature);
-            Assert.AreEqual(size1, playStatus.Size1);
-            Assert.AreEqual(size2, playStatus.Size2);
-            CollectionAssert.AreEqual(data, playStatus.Data.ToArray());
-            Assert.AreEqual(data[0], playStatus.FirstByteOfData);
-            Assert.AreEqual(totalRunningTime.Hours, playStatus.TotalRunningTime.Hours);
-            Assert.AreEqual(totalRunningTime.Minutes, playStatus.TotalRunningTime.Minutes);
-            Assert.AreEqual(totalRunningTime.Seconds, playStatus.TotalRunningTime.Seconds);
-            Assert.AreEqual(totalRunningTime.Milliseconds, playStatus.TotalRunningTime.Milliseconds);
-            Assert.IsFalse(playStatus.TotalRunningTime.IsFrames);
-            Assert.AreEqual(totalPlayTime.Hours, playStatus.TotalPlayTime.Hours);
-            Assert.AreEqual(totalPlayTime.Minutes, playStatus.TotalPlayTime.Minutes);
-            Assert.AreEqual(totalPlayTime.Seconds, playStatus.TotalPlayTime.Seconds);
-            Assert.AreEqual(totalPlayTime.Milliseconds, playStatus.TotalPlayTime.Milliseconds);
-            Assert.IsFalse(playStatus.TotalPlayTime.IsFrames);
-
-            foreach (var index in Enumerable.Range(0, 5))
-            {
-                var playCount = playStatus.PlayCountsItem((ThConverter.Level)index);
-                Assert.AreEqual(totalTrials[index], playCount.TotalTrial.Value);
-                CollectionAssert.AreEqual(trialsArray[index], playCount.Trials.Values.ToArray());
-                Assert.AreEqual(totalClears[index], playCount.TotalClear.Value);
-                Assert.AreEqual(totalContinues[index], playCount.TotalContinue.Value);
-                Assert.AreEqual(totalPractices[index], playCount.TotalPractice.Value);
-            }
-
-            Assert.AreEqual(totalTrials[6], playStatus.TotalPlayCount.TotalTrial.Value);
-            CollectionAssert.AreEqual(trialsArray[6], playStatus.TotalPlayCount.Trials.Values.ToArray());
-            Assert.AreEqual(totalClears[6], playStatus.TotalPlayCount.TotalClear.Value);
-            Assert.AreEqual(totalContinues[6], playStatus.TotalPlayCount.TotalContinue.Value);
-            Assert.AreEqual(totalPractices[6], playStatus.TotalPlayCount.TotalPractice.Value);
-            CollectionAssert.AreEqual(bgmFlags, playStatus.BgmFlags.ToArray());
+            Validate(playStatus, properties);
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "playStatus")]
@@ -110,57 +110,16 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         });
 
+        [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "playStatus")]
         [TestMethod()]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th08PlayStatusTestInvalidSignature() => TestUtils.Wrap(() =>
         {
-            var signature = "plst";
-            short size1 = 0x228;
-            short size2 = 0x228;
-            var unknown1 = 1u;
-            var totalRunningTime = new Time(12, 34, 56, 789, false);
-            var totalPlayTime = new Time(23, 45, 19, 876, false);
-            var totalTrials = new int[7];
-            var trialsArray = new int[7][];
-            var unknown2s = new uint[7];
-            var totalClears = new int[7];
-            var totalContinues = new int[7];
-            var totalPractices = new int[7];
-            var playCounts = new List<byte>();
+            var properties = ValidProperties;
+            properties.signature = properties.signature.ToLowerInvariant();
 
-            foreach (var index in Enumerable.Range(0, 7))
-            {
-                totalTrials[index] = 1 + index;
-                trialsArray[index] = TestUtils.MakeRandomArray<int>(6);
-                unknown2s[index] = 10u + (uint)index;
-                totalClears[index] = 100 + index;
-                totalContinues[index] = 1000 + index;
-                totalPractices[index] = 10000 + index;
-                playCounts.AddRange(
-                    TestUtils.MakeByteArray(
-                        totalTrials[index],
-                        trialsArray[index],
-                        unknown2s[index],
-                        totalClears[index],
-                        totalContinues[index],
-                        totalPractices[index]));
-            }
-
-            var data = TestUtils.MakeByteArray(
-                unknown1,
-                (int)totalRunningTime.Hours,
-                totalRunningTime.Minutes,
-                totalRunningTime.Seconds,
-                totalRunningTime.Milliseconds,
-                (int)totalPlayTime.Hours,
-                totalPlayTime.Minutes,
-                totalPlayTime.Seconds,
-                totalPlayTime.Milliseconds,
-                playCounts.ToArray());
-
-            var chapter = Th06ChapterWrapper<Th08Converter>.Create(
-                TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+            var chapter = Th06ChapterWrapper<Th08Converter>.Create(MakeByteArray(properties));
             var playStatus = new Th08PlayStatusWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -171,52 +130,10 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(InvalidDataException))]
         public void Th08PlayStatusTestInvalidSize1() => TestUtils.Wrap(() =>
         {
-            var signature = "PLST";
-            short size1 = 0x229;
-            short size2 = 0x228;
-            var unknown1 = 1u;
-            var totalRunningTime = new Time(12, 34, 56, 789, false);
-            var totalPlayTime = new Time(23, 45, 19, 876, false);
-            var totalTrials = new int[7];
-            var trialsArray = new int[7][];
-            var unknown2s = new uint[7];
-            var totalClears = new int[7];
-            var totalContinues = new int[7];
-            var totalPractices = new int[7];
-            var playCounts = new List<byte>();
+            var properties = ValidProperties;
+            ++properties.size1;
 
-            foreach (var index in Enumerable.Range(0, 7))
-            {
-                totalTrials[index] = 1 + index;
-                trialsArray[index] = TestUtils.MakeRandomArray<int>(6);
-                unknown2s[index] = 10u + (uint)index;
-                totalClears[index] = 100 + index;
-                totalContinues[index] = 1000 + index;
-                totalPractices[index] = 10000 + index;
-                playCounts.AddRange(
-                    TestUtils.MakeByteArray(
-                        totalTrials[index],
-                        trialsArray[index],
-                        unknown2s[index],
-                        totalClears[index],
-                        totalContinues[index],
-                        totalPractices[index]));
-            }
-
-            var data = TestUtils.MakeByteArray(
-                unknown1,
-                (int)totalRunningTime.Hours,
-                totalRunningTime.Minutes,
-                totalRunningTime.Seconds,
-                totalRunningTime.Milliseconds,
-                (int)totalPlayTime.Hours,
-                totalPlayTime.Minutes,
-                totalPlayTime.Seconds,
-                totalPlayTime.Milliseconds,
-                playCounts.ToArray());
-
-            var chapter = Th06ChapterWrapper<Th08Converter>.Create(
-                TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+            var chapter = Th06ChapterWrapper<Th08Converter>.Create(MakeByteArray(properties));
             var playStatus = new Th08PlayStatusWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);

@@ -11,77 +11,108 @@ namespace ThScoreFileConverterTests.Models
     [TestClass()]
     public class Th09PlayStatusTests
     {
+        internal struct Properties
+        {
+            public string signature;
+            public short size1;
+            public short size2;
+            public Time totalRunningTime;
+            public Time totalPlayTime;
+            public byte[] bgmFlags;
+            public Dictionary<Th09Converter.Chara, byte> matchFlags;
+            public Dictionary<Th09Converter.Chara, byte> storyFlags;
+            public Dictionary<Th09Converter.Chara, byte> extraFlags;
+            public Dictionary<Th09Converter.Chara, Th09ClearCountTests.Properties> clearCounts;
+        };
+
+        internal static Properties ValidProperties => new Properties()
+        {
+            signature = "PLST",
+            size1 = 0x1FC,
+            size2 = 0x1FC,
+            totalRunningTime = new Time(12, 34, 56, 789, false),
+            totalPlayTime = new Time(23, 45, 19, 876, false),
+            bgmFlags = TestUtils.MakeRandomArray<byte>(19),
+            matchFlags = Enum.GetValues(typeof(Th09Converter.Chara))
+                .Cast<Th09Converter.Chara>()
+                .Select((chara, index) => new { chara, index })
+                .ToDictionary(pair => pair.chara, pair => (byte)pair.index),
+            storyFlags = Enum.GetValues(typeof(Th09Converter.Chara))
+                .Cast<Th09Converter.Chara>()
+                .Select((chara, index) => new { chara, index })
+                .ToDictionary(pair => pair.chara, pair => (byte)(20 + pair.index)),
+            extraFlags = Enum.GetValues(typeof(Th09Converter.Chara))
+                .Cast<Th09Converter.Chara>()
+                .Select((chara, index) => new { chara, index })
+                .ToDictionary(pair => pair.chara, pair => (byte)(40 + pair.index)),
+            clearCounts = Enum.GetValues(typeof(Th09Converter.Chara))
+                .Cast<Th09Converter.Chara>()
+                .ToDictionary(
+                    level => level,
+                    level => new Th09ClearCountTests.Properties(Th09ClearCountTests.ValidProperties))
+        };
+
+        internal static byte[] MakeData(in Properties properties)
+            => TestUtils.MakeByteArray(
+                0u,
+                (int)properties.totalRunningTime.Hours,
+                properties.totalRunningTime.Minutes,
+                properties.totalRunningTime.Seconds,
+                properties.totalRunningTime.Milliseconds,
+                (int)properties.totalPlayTime.Hours,
+                properties.totalPlayTime.Minutes,
+                properties.totalPlayTime.Seconds,
+                properties.totalPlayTime.Milliseconds,
+                properties.bgmFlags,
+                new byte[13],
+                properties.matchFlags.Values.ToArray(),
+                properties.storyFlags.Values.ToArray(),
+                properties.extraFlags.Values.ToArray(),
+                properties.clearCounts.SelectMany(pair => Th09ClearCountTests.MakeByteArray(pair.Value)).ToArray());
+
+        internal static byte[] MakeByteArray(in Properties properties)
+            => TestUtils.MakeByteArray(
+                properties.signature.ToCharArray(), properties.size1, properties.size2, MakeData(properties));
+
+        internal static void Validate(in Th09PlayStatusWrapper playStatus, in Properties properties)
+        {
+            var data = MakeData(properties);
+
+            Assert.AreEqual(properties.signature, playStatus.Signature);
+            Assert.AreEqual(properties.size1, playStatus.Size1);
+            Assert.AreEqual(properties.size2, playStatus.Size2);
+            CollectionAssert.AreEqual(data, playStatus.Data.ToArray());
+            Assert.AreEqual(data[0], playStatus.FirstByteOfData);
+            Assert.AreEqual(properties.totalRunningTime.Hours, playStatus.TotalRunningTime.Hours);
+            Assert.AreEqual(properties.totalRunningTime.Minutes, playStatus.TotalRunningTime.Minutes);
+            Assert.AreEqual(properties.totalRunningTime.Seconds, playStatus.TotalRunningTime.Seconds);
+            Assert.AreEqual(properties.totalRunningTime.Milliseconds, playStatus.TotalRunningTime.Milliseconds);
+            Assert.IsFalse(playStatus.TotalRunningTime.IsFrames);
+            Assert.AreEqual(properties.totalPlayTime.Hours, playStatus.TotalPlayTime.Hours);
+            Assert.AreEqual(properties.totalPlayTime.Minutes, playStatus.TotalPlayTime.Minutes);
+            Assert.AreEqual(properties.totalPlayTime.Seconds, playStatus.TotalPlayTime.Seconds);
+            Assert.AreEqual(properties.totalPlayTime.Milliseconds, playStatus.TotalPlayTime.Milliseconds);
+            Assert.IsFalse(playStatus.TotalPlayTime.IsFrames);
+            CollectionAssert.AreEqual(properties.bgmFlags, playStatus.BgmFlags.ToArray());
+            CollectionAssert.AreEqual(properties.matchFlags.Values, playStatus.MatchFlags.Values.ToArray());
+            CollectionAssert.AreEqual(properties.storyFlags.Values, playStatus.StoryFlags.Values.ToArray());
+            CollectionAssert.AreEqual(properties.extraFlags.Values, playStatus.ExtraFlags.Values.ToArray());
+
+            foreach (var key in properties.clearCounts.Keys)
+            {
+                Th09ClearCountTests.Validate(playStatus.ClearCountsItem(key), properties.clearCounts[key]);
+            }
+        }
+
         [TestMethod()]
         public void Th09PlayStatusTestChapter() => TestUtils.Wrap(() =>
         {
-            var signature = "PLST";
-            short size1 = 0x1FC;
-            short size2 = 0x1FC;
-            var unknown1 = 1u;
-            var totalRunningTime = new Time(12, 34, 56, 789, false);
-            var totalPlayTime = new Time(23, 45, 19, 876, false);
-            var bgmFlags = TestUtils.MakeRandomArray<byte>(19);
-            var unknown2 = TestUtils.MakeRandomArray<byte>(13);
-            var matchFlags = TestUtils.MakeRandomArray<byte>(16);
-            var storyFlags = TestUtils.MakeRandomArray<byte>(16);
-            var extraFlags = TestUtils.MakeRandomArray<byte>(16);
-            var countsArray = new int[16][];
-            var unknown3s = new uint[16];
-            var clearCounts = new List<byte>();
+            var properties = ValidProperties;
 
-            foreach (var index in Enumerable.Range(0, 16))
-            {
-                countsArray[index] = TestUtils.MakeRandomArray<int>(5);
-                unknown3s[index] = 1u + (uint)index;
-                clearCounts.AddRange(TestUtils.MakeByteArray(countsArray[index], unknown3s[index]));
-            }
-
-            var data = TestUtils.MakeByteArray(
-                unknown1,
-                (int)totalRunningTime.Hours,
-                totalRunningTime.Minutes,
-                totalRunningTime.Seconds,
-                totalRunningTime.Milliseconds,
-                (int)totalPlayTime.Hours,
-                totalPlayTime.Minutes,
-                totalPlayTime.Seconds,
-                totalPlayTime.Milliseconds,
-                bgmFlags,
-                unknown2,
-                matchFlags,
-                storyFlags,
-                extraFlags,
-                clearCounts.ToArray());
-
-            var chapter = Th06ChapterWrapper<Th09Converter>.Create(
-                TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+            var chapter = Th06ChapterWrapper<Th09Converter>.Create(MakeByteArray(properties));
             var playStatus = new Th09PlayStatusWrapper(chapter);
 
-            Assert.AreEqual(signature, playStatus.Signature);
-            Assert.AreEqual(size1, playStatus.Size1);
-            Assert.AreEqual(size2, playStatus.Size2);
-            CollectionAssert.AreEqual(data, playStatus.Data.ToArray());
-            Assert.AreEqual(data[0], playStatus.FirstByteOfData);
-            Assert.AreEqual(totalRunningTime.Hours, playStatus.TotalRunningTime.Hours);
-            Assert.AreEqual(totalRunningTime.Minutes, playStatus.TotalRunningTime.Minutes);
-            Assert.AreEqual(totalRunningTime.Seconds, playStatus.TotalRunningTime.Seconds);
-            Assert.AreEqual(totalRunningTime.Milliseconds, playStatus.TotalRunningTime.Milliseconds);
-            Assert.IsFalse(playStatus.TotalRunningTime.IsFrames);
-            Assert.AreEqual(totalPlayTime.Hours, playStatus.TotalPlayTime.Hours);
-            Assert.AreEqual(totalPlayTime.Minutes, playStatus.TotalPlayTime.Minutes);
-            Assert.AreEqual(totalPlayTime.Seconds, playStatus.TotalPlayTime.Seconds);
-            Assert.AreEqual(totalPlayTime.Milliseconds, playStatus.TotalPlayTime.Milliseconds);
-            Assert.IsFalse(playStatus.TotalPlayTime.IsFrames);
-            CollectionAssert.AreEqual(bgmFlags, playStatus.BgmFlags.ToArray());
-            CollectionAssert.AreEqual(matchFlags, playStatus.MatchFlags.Values.ToArray());
-            CollectionAssert.AreEqual(storyFlags, playStatus.StoryFlags.Values.ToArray());
-            CollectionAssert.AreEqual(extraFlags, playStatus.ExtraFlags.Values.ToArray());
-
-            foreach (var index in Enumerable.Range(0, 16))
-            {
-                var clearCount = playStatus.ClearCountsItem((Th09Converter.Chara)index);
-                CollectionAssert.AreEqual(countsArray[index], clearCount.Counts.Values.ToArray());
-            }
+            Validate(playStatus, properties);
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "playStatus")]
@@ -94,52 +125,16 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         });
 
+        [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "playStatus")]
         [TestMethod()]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th09PlayStatusTestInvalidSignature() => TestUtils.Wrap(() =>
         {
-            var signature = "plst";
-            short size1 = 0x1FC;
-            short size2 = 0x1FC;
-            var unknown1 = 1u;
-            var totalRunningTime = new Time(12, 34, 56, 789, false);
-            var totalPlayTime = new Time(23, 45, 19, 876, false);
-            var bgmFlags = TestUtils.MakeRandomArray<byte>(19);
-            var unknown2 = TestUtils.MakeRandomArray<byte>(13);
-            var matchFlags = TestUtils.MakeRandomArray<byte>(16);
-            var storyFlags = TestUtils.MakeRandomArray<byte>(16);
-            var extraFlags = TestUtils.MakeRandomArray<byte>(16);
-            var countsArray = new int[16][];
-            var unknown3s = new uint[16];
-            var clearCounts = new List<byte>();
+            var properties = ValidProperties;
+            properties.signature = properties.signature.ToLowerInvariant();
 
-            foreach (var index in Enumerable.Range(0, 16))
-            {
-                countsArray[index] = TestUtils.MakeRandomArray<int>(5);
-                unknown3s[index] = 1u + (uint)index;
-                clearCounts.AddRange(TestUtils.MakeByteArray(countsArray[index], unknown3s[index]));
-            }
-
-            var data = TestUtils.MakeByteArray(
-                unknown1,
-                (int)totalRunningTime.Hours,
-                totalRunningTime.Minutes,
-                totalRunningTime.Seconds,
-                totalRunningTime.Milliseconds,
-                (int)totalPlayTime.Hours,
-                totalPlayTime.Minutes,
-                totalPlayTime.Seconds,
-                totalPlayTime.Milliseconds,
-                bgmFlags,
-                unknown2,
-                matchFlags,
-                storyFlags,
-                extraFlags,
-                clearCounts.ToArray());
-
-            var chapter = Th06ChapterWrapper<Th09Converter>.Create(
-                TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+            var chapter = Th06ChapterWrapper<Th09Converter>.Create(MakeByteArray(properties));
             var playStatus = new Th09PlayStatusWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -150,47 +145,10 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(InvalidDataException))]
         public void Th09PlayStatusTestInvalidSize1() => TestUtils.Wrap(() =>
         {
-            var signature = "PLST";
-            short size1 = 0x1FD;
-            short size2 = 0x1FC;
-            var unknown1 = 1u;
-            var totalRunningTime = new Time(12, 34, 56, 789, false);
-            var totalPlayTime = new Time(23, 45, 19, 876, false);
-            var bgmFlags = TestUtils.MakeRandomArray<byte>(19);
-            var unknown2 = TestUtils.MakeRandomArray<byte>(13);
-            var matchFlags = TestUtils.MakeRandomArray<byte>(16);
-            var storyFlags = TestUtils.MakeRandomArray<byte>(16);
-            var extraFlags = TestUtils.MakeRandomArray<byte>(16);
-            var countsArray = new int[16][];
-            var unknown3s = new uint[16];
-            var clearCounts = new List<byte>();
+            var properties = ValidProperties;
+            ++properties.size1;
 
-            foreach (var index in Enumerable.Range(0, 16))
-            {
-                countsArray[index] = TestUtils.MakeRandomArray<int>(5);
-                unknown3s[index] = 1u + (uint)index;
-                clearCounts.AddRange(TestUtils.MakeByteArray(countsArray[index], unknown3s[index]));
-            }
-
-            var data = TestUtils.MakeByteArray(
-                unknown1,
-                (int)totalRunningTime.Hours,
-                totalRunningTime.Minutes,
-                totalRunningTime.Seconds,
-                totalRunningTime.Milliseconds,
-                (int)totalPlayTime.Hours,
-                totalPlayTime.Minutes,
-                totalPlayTime.Seconds,
-                totalPlayTime.Milliseconds,
-                bgmFlags,
-                unknown2,
-                matchFlags,
-                storyFlags,
-                extraFlags,
-                clearCounts.ToArray());
-
-            var chapter = Th06ChapterWrapper<Th09Converter>.Create(
-                TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+            var chapter = Th06ChapterWrapper<Th09Converter>.Create(MakeByteArray(properties));
             var playStatus = new Th09PlayStatusWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
