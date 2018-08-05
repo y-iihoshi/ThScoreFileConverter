@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -10,50 +11,67 @@ namespace ThScoreFileConverterTests.Models
     [TestClass()]
     public class Th16ScoreDataTests
     {
+        internal struct Properties
+        {
+            public uint score;
+            public Th16Converter.StageProgress stageProgress;
+            public byte continueCount;
+            public byte[] name;
+            public uint dateTime;
+            public float slowRate;
+            public Th16Converter.Season season;
+        };
+
+        internal static Properties ValidProperties => new Properties()
+        {
+            score = 12u,
+            stageProgress = Th16Converter.StageProgress.St3,
+            continueCount = 4,
+            name = TestUtils.MakeRandomArray<byte>(10),
+            dateTime = 567u,
+            slowRate = 8.9f,
+            season = Th16Converter.Season.Full
+        };
+
+        internal static byte[] MakeByteArray(in Properties properties)
+            => TestUtils.MakeByteArray(
+                properties.score,
+                (byte)properties.stageProgress,
+                properties.continueCount,
+                properties.name,
+                properties.dateTime,
+                0u,
+                properties.slowRate,
+                (int)properties.season);
+
+        internal static void Validate(in Th16ScoreDataWrapper scoreData, in Properties properties)
+        {
+            Assert.AreEqual(properties.score, scoreData.Score);
+            Assert.AreEqual(properties.stageProgress, scoreData.StageProgress);
+            Assert.AreEqual(properties.continueCount, scoreData.ContinueCount);
+            CollectionAssert.AreEqual(properties.name, scoreData.Name?.ToArray());
+            Assert.AreEqual(properties.dateTime, scoreData.DateTime);
+            Assert.AreEqual(properties.slowRate, scoreData.SlowRate);
+            Assert.AreEqual(properties.season, scoreData.Season);
+        }
+
         [TestMethod()]
         public void Th16ScoreDataTest() => TestUtils.Wrap(() =>
         {
+            var properties = new Properties();
             var scoreData = new Th16ScoreDataWrapper();
 
-            Assert.AreEqual(default, scoreData.Score.Value);
-            Assert.AreEqual(default, scoreData.StageProgress.Value);
-            Assert.AreEqual(default, scoreData.ContinueCount.Value);
-            Assert.IsNull(scoreData.Name);
-            Assert.AreEqual(default, scoreData.DateTime.Value);
-            Assert.AreEqual(default, scoreData.SlowRate.Value);
-            Assert.AreEqual(default, scoreData.Season.Value);
+            Validate(scoreData, properties);
         });
 
         [TestMethod()]
         public void Th16ScoreDataReadFromTest() => TestUtils.Wrap(() =>
         {
-            var score = 12u;
-            var stageProgress = Th16Converter.StageProgress.St3;
-            var continueCount = (byte)4;
-            var name = TestUtils.MakeRandomArray<byte>(10);
-            var dateTime = 567u;
-            var unknown = 0u;
-            var slowRate = 8.9f;
-            var season = Th16Converter.Season.Full;
+            var properties = ValidProperties;
 
-            var scoreData = Th16ScoreDataWrapper.Create(
-                TestUtils.MakeByteArray(
-                    score,
-                    TestUtils.Cast<byte>(stageProgress),
-                    continueCount,
-                    name,
-                    dateTime,
-                    unknown,
-                    slowRate,
-                    TestUtils.Cast<uint>(season)));
+            var scoreData = Th16ScoreDataWrapper.Create(MakeByteArray(properties));
 
-            Assert.AreEqual(score, scoreData.Score);
-            Assert.AreEqual(stageProgress, scoreData.StageProgress);
-            Assert.AreEqual(continueCount, scoreData.ContinueCount);
-            CollectionAssert.AreEqual(name, scoreData.Name.ToArray());
-            Assert.AreEqual(dateTime, scoreData.DateTime);
-            Assert.AreEqual(slowRate, scoreData.SlowRate);
-            Assert.AreEqual(season, scoreData.Season);
+            Validate(scoreData, properties);
         });
 
         [TestMethod()]
@@ -62,33 +80,24 @@ namespace ThScoreFileConverterTests.Models
         {
             var scoreData = new Th16ScoreDataWrapper();
             scoreData.ReadFrom(null);
+
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "scoreData")]
-        [TestMethod()]
-        [ExpectedException(typeof(InvalidCastException))]
-        public void Th16ScoreDataReadFromTestInvalidStageProgress() => TestUtils.Wrap(() =>
-        {
-            var score = 12u;
-            var stageProgress = (Th16Converter.StageProgress)byte.MaxValue;
-            var continueCount = (byte)4;
-            var name = TestUtils.MakeRandomArray<byte>(10);
-            var dateTime = 567u;
-            var unknown = 0u;
-            var slowRate = 8.9f;
-            var season = Th16Converter.Season.Full;
+        public static IEnumerable<object[]> InvalidStageProgresses
+            => TestUtils.GetInvalidEnumerators(typeof(Th16Converter.StageProgress));
 
-            var scoreData = Th16ScoreDataWrapper.Create(
-                TestUtils.MakeByteArray(
-                    score,
-                    TestUtils.Cast<byte>(stageProgress),
-                    continueCount,
-                    name,
-                    dateTime,
-                    unknown,
-                    slowRate,
-                    TestUtils.Cast<uint>(season)));
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "scoreData")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        [DataTestMethod]
+        [DynamicData(nameof(InvalidStageProgresses))]
+        [ExpectedException(typeof(InvalidCastException))]
+        public void Th16ScoreDataReadFromTestInvalidStageProgress(int stageProgress) => TestUtils.Wrap(() =>
+        {
+            var properties = ValidProperties;
+            properties.stageProgress = TestUtils.Cast<Th16Converter.StageProgress>(stageProgress);
+
+            var scoreData = Th16ScoreDataWrapper.Create(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -98,25 +107,10 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th16ScoreDataReadFromTestShortenedName() => TestUtils.Wrap(() =>
         {
-            var score = 12u;
-            var stageProgress = Th16Converter.StageProgress.St3;
-            var continueCount = (byte)4;
-            var name = TestUtils.MakeRandomArray<byte>(9);
-            var dateTime = 567u;
-            var unknown = 0u;
-            var slowRate = 8.9f;
-            var season = Th16Converter.Season.Full;
+            var properties = ValidProperties;
+            properties.name = properties.name.Take(properties.name.Length - 1).ToArray();
 
-            var scoreData = Th16ScoreDataWrapper.Create(
-                TestUtils.MakeByteArray(
-                    score,
-                    TestUtils.Cast<byte>(stageProgress),
-                    continueCount,
-                    name,
-                    dateTime,
-                    unknown,
-                    slowRate,
-                    TestUtils.Cast<uint>(season)));
+            var scoreData = Th16ScoreDataWrapper.Create(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -126,53 +120,28 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(InvalidCastException))]
         public void Th16ScoreDataReadFromTestExceededName() => TestUtils.Wrap(() =>
         {
-            var score = 12u;
-            var stageProgress = Th16Converter.StageProgress.St3;
-            var continueCount = (byte)4;
-            var name = TestUtils.MakeRandomArray<byte>(11);
-            var dateTime = 567u;
-            var unknown = 0u;
-            var slowRate = 8.9f;
-            var season = Th16Converter.Season.Full;
+            var properties = ValidProperties;
+            properties.name = properties.name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
 
-            var scoreData = Th16ScoreDataWrapper.Create(
-                TestUtils.MakeByteArray(
-                    score,
-                    TestUtils.Cast<byte>(stageProgress),
-                    continueCount,
-                    name,
-                    dateTime,
-                    unknown,
-                    slowRate,
-                    TestUtils.Cast<uint>(season)));
+            var scoreData = Th16ScoreDataWrapper.Create(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "scoreData")]
-        [TestMethod()]
-        [ExpectedException(typeof(InvalidCastException))]
-        public void Th16ScoreDataReadFromTestInvalidSeason() => TestUtils.Wrap(() =>
-        {
-            var score = 12u;
-            var stageProgress = Th16Converter.StageProgress.St3;
-            var continueCount = (byte)4;
-            var name = TestUtils.MakeRandomArray<byte>(10);
-            var dateTime = 567u;
-            var unknown = 0u;
-            var slowRate = 8.9f;
-            var season = TestUtils.Cast<Th16Converter.Season>(int.MaxValue);
+        public static IEnumerable<object[]> InvalidSeasons
+            => TestUtils.GetInvalidEnumerators(typeof(Th16Converter.Season));
 
-            var scoreData = Th16ScoreDataWrapper.Create(
-                TestUtils.MakeByteArray(
-                    score,
-                    TestUtils.Cast<byte>(stageProgress),
-                    continueCount,
-                    name,
-                    dateTime,
-                    unknown,
-                    slowRate,
-                    TestUtils.Cast<uint>(season)));
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "scoreData")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        [DataTestMethod]
+        [DynamicData(nameof(InvalidSeasons))]
+        [ExpectedException(typeof(InvalidCastException))]
+        public void Th16ScoreDataReadFromTestInvalidSeason(int season) => TestUtils.Wrap(() =>
+        {
+            var properties = ValidProperties;
+            properties.season = TestUtils.Cast<Th16Converter.Season>(season);
+
+            var scoreData = Th16ScoreDataWrapper.Create(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
         });

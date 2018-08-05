@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -10,20 +11,82 @@ namespace ThScoreFileConverterTests.Models
     [TestClass()]
     public class Th10ScoreDataTests
     {
+        internal struct Properties<TStageProgress>
+            where TStageProgress : struct, Enum
+        {
+            public uint score;
+            public TStageProgress stageProgress;
+            public byte continueCount;
+            public byte[] name;
+            public uint dateTime;
+            public float slowRate;
+        };
+
+        internal static Properties<TStageProgress> GetValidProperties<TStageProgress>()
+            where TStageProgress : struct, Enum
+            => new Properties<TStageProgress>()
+            {
+                score = 12u,
+                stageProgress = TestUtils.Cast<TStageProgress>(3),
+                continueCount = 4,
+                name = TestUtils.MakeRandomArray<byte>(10),
+                dateTime = 567u,
+                slowRate = 8.9f
+            };
+
+        internal static byte[] MakeByteArray<TParent, TStageProgress>(in Properties<TStageProgress> properties)
+            where TParent : ThConverter
+            where TStageProgress : struct, Enum
+        {
+            var unknownSize = 0;
+
+            var type = typeof(TParent);
+            if (type == typeof(Th10Converter))
+            {
+                unknownSize = 0;
+            }
+            else if (type == typeof(Th128Converter))
+            {
+                unknownSize = 8;
+            }
+            else
+            {
+                unknownSize = 4;
+            }
+
+            return TestUtils.MakeByteArray(
+                properties.score,
+                TestUtils.Cast<byte>(properties.stageProgress),
+                properties.continueCount,
+                properties.name,
+                properties.dateTime,
+                properties.slowRate,
+                new byte[unknownSize]);
+        }
+
+        internal static void Validate<TParent, TStageProgress>(
+            in Th10ScoreDataWrapper<TParent, TStageProgress> scoreData, in Properties<TStageProgress> properties)
+            where TParent : ThConverter
+            where TStageProgress : struct, Enum
+        {
+            Assert.AreEqual(properties.score, scoreData.Score);
+            Assert.AreEqual(properties.stageProgress, scoreData.StageProgress);
+            Assert.AreEqual(properties.continueCount, scoreData.ContinueCount);
+            CollectionAssert.AreEqual(properties.name, scoreData.Name?.ToArray());
+            Assert.AreEqual(properties.dateTime, scoreData.DateTime);
+            Assert.AreEqual(properties.slowRate, scoreData.SlowRate);
+        }
+
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void Th10ScoreDataTestHelper<TParent, TStageProgress>()
             where TParent : ThConverter
             where TStageProgress : struct, Enum
             => TestUtils.Wrap(() =>
             {
+                var properties = new Properties<TStageProgress>();
                 var scoreData = new Th10ScoreDataWrapper<TParent, TStageProgress>();
 
-                Assert.AreEqual(default, scoreData.Score.Value);
-                Assert.AreEqual(default, scoreData.StageProgress.Value);
-                Assert.AreEqual(default, scoreData.ContinueCount.Value);
-                Assert.IsNull(scoreData.Name);
-                Assert.AreEqual(default, scoreData.DateTime.Value);
-                Assert.AreEqual(default, scoreData.SlowRate.Value);
+                Validate(scoreData, properties);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -32,41 +95,12 @@ namespace ThScoreFileConverterTests.Models
             where TStageProgress : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var score = 12u;
-                var stageProgress = TestUtils.Cast<TStageProgress>(3);
-                var continueCount = (byte)4;
-                var name = TestUtils.MakeRandomArray<byte>(10);
-                var dateTime = 567u;
-                var slowRate = 8.9f;
+                var properties = GetValidProperties<TStageProgress>();
 
-                byte[] data = null;
-                var type = typeof(TParent);
-                if (type == typeof(Th10Converter))
-                {
-                    data = TestUtils.MakeByteArray(
-                        score, TestUtils.Cast<byte>(stageProgress), continueCount, name, dateTime, slowRate);
-                }
-                else if (type == typeof(Th128Converter))
-                {
-                    var unknown = TestUtils.MakeRandomArray<byte>(8);
-                    data = TestUtils.MakeByteArray(
-                        score, TestUtils.Cast<byte>(stageProgress), continueCount, name, dateTime, slowRate, unknown);
-                }
-                else
-                {
-                    var unknown = default(uint);
-                    data = TestUtils.MakeByteArray(
-                        score, TestUtils.Cast<byte>(stageProgress), continueCount, name, dateTime, slowRate, unknown);
-                }
+                var scoreData = Th10ScoreDataWrapper<TParent, TStageProgress>.Create(
+                    MakeByteArray<TParent, TStageProgress>(properties));
 
-                var scoreData = Th10ScoreDataWrapper<TParent, TStageProgress>.Create(data);
-
-                Assert.AreEqual(score, scoreData.Score);
-                Assert.AreEqual(stageProgress, scoreData.StageProgress);
-                Assert.AreEqual(continueCount, scoreData.ContinueCount);
-                CollectionAssert.AreEqual(name, scoreData.Name.ToArray());
-                Assert.AreEqual(dateTime, scoreData.DateTime);
-                Assert.AreEqual(slowRate, scoreData.SlowRate);
+                Validate(scoreData, properties);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -77,6 +111,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 var scoreData = new Th10ScoreDataWrapper<TParent, TStageProgress>();
                 scoreData.ReadFrom(null);
+
                 Assert.Fail(TestUtils.Unreachable);
             });
 
@@ -87,34 +122,11 @@ namespace ThScoreFileConverterTests.Models
             where TStageProgress : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var score = 12u;
-                var stageProgress = TestUtils.Cast<TStageProgress>(3);
-                var continueCount = (byte)4;
-                var name = TestUtils.MakeRandomArray<byte>(9);
-                var dateTime = 567u;
-                var slowRate = 8.9f;
+                var properties = GetValidProperties<TStageProgress>();
+                properties.name = properties.name.Take(properties.name.Length - 1).ToArray();
 
-                byte[] data = null;
-                var type = typeof(TParent);
-                if (type == typeof(Th10Converter))
-                {
-                    data = TestUtils.MakeByteArray(
-                        score, TestUtils.Cast<byte>(stageProgress), continueCount, name, dateTime, slowRate);
-                }
-                else if (type == typeof(Th128Converter))
-                {
-                    var unknown = TestUtils.MakeRandomArray<byte>(8);
-                    data = TestUtils.MakeByteArray(
-                        score, TestUtils.Cast<byte>(stageProgress), continueCount, name, dateTime, slowRate, unknown);
-                }
-                else
-                {
-                    var unknown = default(uint);
-                    data = TestUtils.MakeByteArray(
-                        score, TestUtils.Cast<byte>(stageProgress), continueCount, name, dateTime, slowRate, unknown);
-                }
-
-                var scoreData = Th10ScoreDataWrapper<TParent, TStageProgress>.Create(data);
+                var scoreData = Th10ScoreDataWrapper<TParent, TStageProgress>.Create(
+                    MakeByteArray<TParent, TStageProgress>(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -125,82 +137,56 @@ namespace ThScoreFileConverterTests.Models
             where TStageProgress : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var score = 12u;
-                var stageProgress = TestUtils.Cast<TStageProgress>(3);
-                var continueCount = (byte)4;
-                var name = TestUtils.MakeRandomArray<byte>(11);
-                var dateTime = 567u;
-                var slowRate = 8.9f;
+                var properties = GetValidProperties<TStageProgress>();
+                properties.name = properties.name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
 
-                byte[] data = null;
-                var type = typeof(TParent);
-                if (type == typeof(Th10Converter))
-                {
-                    data = TestUtils.MakeByteArray(
-                        score, TestUtils.Cast<byte>(stageProgress), continueCount, name, dateTime, slowRate);
-                }
-                else if (type == typeof(Th128Converter))
-                {
-                    var unknown = TestUtils.MakeRandomArray<byte>(8);
-                    data = TestUtils.MakeByteArray(
-                        score, TestUtils.Cast<byte>(stageProgress), continueCount, name, dateTime, slowRate, unknown);
-                }
-                else
-                {
-                    var unknown = default(uint);
-                    data = TestUtils.MakeByteArray(
-                        score, TestUtils.Cast<byte>(stageProgress), continueCount, name, dateTime, slowRate, unknown);
-                }
+                var scoreData = Th10ScoreDataWrapper<TParent, TStageProgress>.Create(
+                    MakeByteArray<TParent, TStageProgress>(properties));
 
-                var scoreData = Th10ScoreDataWrapper<TParent, TStageProgress>.Create(data);
-
-                Assert.AreEqual(score, scoreData.Score);
-                Assert.AreEqual(stageProgress, scoreData.StageProgress);
-                Assert.AreEqual(continueCount, scoreData.ContinueCount);
-                CollectionAssert.AreNotEqual(name, scoreData.Name.ToArray());
-                CollectionAssert.AreEqual(name.Take(10).ToArray(), scoreData.Name.ToArray());
-                Assert.AreNotEqual(dateTime, scoreData.DateTime);
-                Assert.AreNotEqual(slowRate, scoreData.SlowRate);
+                Assert.AreEqual(properties.score, scoreData.Score);
+                Assert.AreEqual(properties.stageProgress, scoreData.StageProgress);
+                Assert.AreEqual(properties.continueCount, scoreData.ContinueCount);
+                CollectionAssert.AreNotEqual(properties.name, scoreData.Name.ToArray());
+                CollectionAssert.AreEqual(
+                    properties.name.Take(properties.name.Length - 1).ToArray(), scoreData.Name.ToArray());
+                Assert.AreNotEqual(properties.dateTime, scoreData.DateTime);
+                Assert.AreNotEqual(properties.slowRate, scoreData.SlowRate);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "scoreData")]
-        internal static void Th10ScoreDataReadFromTestInvalidStageProgressHelper<TParent, TStageProgress>()
+        internal static void Th10ScoreDataReadFromTestInvalidStageProgressHelper<TParent, TStageProgress>(
+            int stageProgress)
             where TParent : ThConverter
             where TStageProgress : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var score = 12u;
-                var stageProgress = TestUtils.Cast<TStageProgress>(byte.MaxValue);
-                var continueCount = (byte)4;
-                var name = TestUtils.MakeRandomArray<byte>(10);
-                var dateTime = 567u;
-                var slowRate = 8.9f;
+                var properties = GetValidProperties<TStageProgress>();
+                properties.stageProgress = TestUtils.Cast<TStageProgress>(stageProgress);
 
-                byte[] data = null;
-                var type = typeof(TParent);
-                if (type == typeof(Th10Converter))
-                {
-                    data = TestUtils.MakeByteArray(
-                        score, TestUtils.Cast<byte>(stageProgress), continueCount, name, dateTime, slowRate);
-                }
-                else if (type == typeof(Th128Converter))
-                {
-                    var unknown = TestUtils.MakeRandomArray<byte>(8);
-                    data = TestUtils.MakeByteArray(
-                        score, TestUtils.Cast<byte>(stageProgress), continueCount, name, dateTime, slowRate, unknown);
-                }
-                else
-                {
-                    var unknown = default(uint);
-                    data = TestUtils.MakeByteArray(
-                        score, TestUtils.Cast<byte>(stageProgress), continueCount, name, dateTime, slowRate, unknown);
-                }
-
-                var scoreData = Th10ScoreDataWrapper<TParent, TStageProgress>.Create(data);
+                var scoreData = Th10ScoreDataWrapper<TParent, TStageProgress>.Create(
+                    MakeByteArray<TParent, TStageProgress>(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
+
+        public static IEnumerable<object[]> Th10InvalidStageProgresses
+            => TestUtils.GetInvalidEnumerators(typeof(Th10Converter.StageProgress));
+
+        public static IEnumerable<object[]> Th11InvalidStageProgresses
+            => TestUtils.GetInvalidEnumerators(typeof(Th11Converter.StageProgress));
+
+        public static IEnumerable<object[]> Th12InvalidStageProgresses
+            => TestUtils.GetInvalidEnumerators(typeof(Th12Converter.StageProgress));
+
+        public static IEnumerable<object[]> Th128InvalidStageProgresses
+            => TestUtils.GetInvalidEnumerators(typeof(Th128Converter.StageProgress));
+
+        public static IEnumerable<object[]> Th13InvalidStageProgresses
+            => TestUtils.GetInvalidEnumerators(typeof(Th13Converter.StageProgress));
+
+        public static IEnumerable<object[]> Th14InvalidStageProgresses
+            => TestUtils.GetInvalidEnumerators(typeof(Th14Converter.StageProgress));
 
         #region Th10
 
@@ -226,10 +212,12 @@ namespace ThScoreFileConverterTests.Models
         public void Th10ScoreDataReadFromTestExceededName()
             => Th10ScoreDataReadFromTestExceededNameHelper<Th10Converter, Th10Converter.StageProgress>();
 
-        [TestMethod()]
+        [DataTestMethod]
+        [DynamicData(nameof(Th10InvalidStageProgresses))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th10ScoreDataReadFromTestInvalidStageProgress()
-            => Th10ScoreDataReadFromTestInvalidStageProgressHelper<Th10Converter, Th10Converter.StageProgress>();
+        public void Th10ScoreDataReadFromTestInvalidStageProgress(int stageProgress)
+            => Th10ScoreDataReadFromTestInvalidStageProgressHelper<Th10Converter, Th10Converter.StageProgress>(
+                stageProgress);
 
         #endregion
 
@@ -257,10 +245,12 @@ namespace ThScoreFileConverterTests.Models
         public void Th11ScoreDataReadFromTestExceededName()
             => Th10ScoreDataReadFromTestExceededNameHelper<Th11Converter, Th11Converter.StageProgress>();
 
-        [TestMethod()]
+        [DataTestMethod]
+        [DynamicData(nameof(Th10InvalidStageProgresses))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th11ScoreDataReadFromTestInvalidStageProgress()
-            => Th10ScoreDataReadFromTestInvalidStageProgressHelper<Th11Converter, Th11Converter.StageProgress>();
+        public void Th11ScoreDataReadFromTestInvalidStageProgress(int stageProgress)
+            => Th10ScoreDataReadFromTestInvalidStageProgressHelper<Th11Converter, Th11Converter.StageProgress>(
+                stageProgress);
 
         #endregion
 
@@ -288,10 +278,12 @@ namespace ThScoreFileConverterTests.Models
         public void Th12ScoreDataReadFromTestExceededName()
             => Th10ScoreDataReadFromTestExceededNameHelper<Th12Converter, Th12Converter.StageProgress>();
 
-        [TestMethod()]
+        [DataTestMethod]
+        [DynamicData(nameof(Th12InvalidStageProgresses))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th12ScoreDataReadFromTestInvalidStageProgress()
-            => Th10ScoreDataReadFromTestInvalidStageProgressHelper<Th12Converter, Th12Converter.StageProgress>();
+        public void Th12ScoreDataReadFromTestInvalidStageProgress(int stageProgress)
+            => Th10ScoreDataReadFromTestInvalidStageProgressHelper<Th12Converter, Th12Converter.StageProgress>(
+                stageProgress);
 
         #endregion
 
@@ -319,10 +311,12 @@ namespace ThScoreFileConverterTests.Models
         public void Th128ScoreDataReadFromTestExceededName()
             => Th10ScoreDataReadFromTestExceededNameHelper<Th128Converter, Th128Converter.StageProgress>();
 
-        [TestMethod()]
+        [DataTestMethod]
+        [DynamicData(nameof(Th128InvalidStageProgresses))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th128ScoreDataReadFromTestInvalidStageProgress()
-            => Th10ScoreDataReadFromTestInvalidStageProgressHelper<Th128Converter, Th128Converter.StageProgress>();
+        public void Th128ScoreDataReadFromTestInvalidStageProgress(int stageProgress)
+            => Th10ScoreDataReadFromTestInvalidStageProgressHelper<Th128Converter, Th128Converter.StageProgress>(
+                stageProgress);
 
         #endregion
 
@@ -350,10 +344,12 @@ namespace ThScoreFileConverterTests.Models
         public void Th13ScoreDataReadFromTestExceededName()
             => Th10ScoreDataReadFromTestExceededNameHelper<Th13Converter, Th13Converter.StageProgress>();
 
-        [TestMethod()]
+        [DataTestMethod]
+        [DynamicData(nameof(Th13InvalidStageProgresses))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th13ScoreDataReadFromTestInvalidStageProgress()
-            => Th10ScoreDataReadFromTestInvalidStageProgressHelper<Th13Converter, Th13Converter.StageProgress>();
+        public void Th13ScoreDataReadFromTestInvalidStageProgress(int stageProgress)
+            => Th10ScoreDataReadFromTestInvalidStageProgressHelper<Th13Converter, Th13Converter.StageProgress>(
+                stageProgress);
 
         #endregion
 
@@ -381,10 +377,12 @@ namespace ThScoreFileConverterTests.Models
         public void Th14ScoreDataReadFromTestExceededName()
             => Th10ScoreDataReadFromTestExceededNameHelper<Th14Converter, Th14Converter.StageProgress>();
 
-        [TestMethod()]
+        [DataTestMethod]
+        [DynamicData(nameof(Th14InvalidStageProgresses))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th14ScoreDataReadFromTestInvalidStageProgress()
-            => Th10ScoreDataReadFromTestInvalidStageProgressHelper<Th14Converter, Th14Converter.StageProgress>();
+        public void Th14ScoreDataReadFromTestInvalidStageProgress(int stageProgress)
+            => Th10ScoreDataReadFromTestInvalidStageProgressHelper<Th14Converter, Th14Converter.StageProgress>(
+                stageProgress);
 
         #endregion
     }
