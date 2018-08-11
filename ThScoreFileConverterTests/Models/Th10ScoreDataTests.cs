@@ -212,6 +212,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th10ScoreDataReadFromTestExceededName()
             => Th10ScoreDataReadFromTestExceededNameHelper<Th10Converter, Th10Converter.StageProgress>();
 
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(Th10InvalidStageProgresses))]
         [ExpectedException(typeof(InvalidCastException))]
@@ -245,6 +246,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th11ScoreDataReadFromTestExceededName()
             => Th10ScoreDataReadFromTestExceededNameHelper<Th11Converter, Th11Converter.StageProgress>();
 
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(Th10InvalidStageProgresses))]
         [ExpectedException(typeof(InvalidCastException))]
@@ -278,6 +280,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th12ScoreDataReadFromTestExceededName()
             => Th10ScoreDataReadFromTestExceededNameHelper<Th12Converter, Th12Converter.StageProgress>();
 
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(Th12InvalidStageProgresses))]
         [ExpectedException(typeof(InvalidCastException))]
@@ -311,6 +314,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th128ScoreDataReadFromTestExceededName()
             => Th10ScoreDataReadFromTestExceededNameHelper<Th128Converter, Th128Converter.StageProgress>();
 
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(Th128InvalidStageProgresses))]
         [ExpectedException(typeof(InvalidCastException))]
@@ -344,6 +348,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th13ScoreDataReadFromTestExceededName()
             => Th10ScoreDataReadFromTestExceededNameHelper<Th13Converter, Th13Converter.StageProgress>();
 
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(Th13InvalidStageProgresses))]
         [ExpectedException(typeof(InvalidCastException))]
@@ -377,6 +382,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th14ScoreDataReadFromTestExceededName()
             => Th10ScoreDataReadFromTestExceededNameHelper<Th14Converter, Th14Converter.StageProgress>();
 
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(Th14InvalidStageProgresses))]
         [ExpectedException(typeof(InvalidCastException))]
