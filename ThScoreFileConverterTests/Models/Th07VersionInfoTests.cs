@@ -7,7 +7,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class Th07VersionInfoTests
     {
         internal struct Properties
@@ -103,21 +103,21 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th07
 
-        [TestMethod()]
+        [TestMethod]
         public void Th07VersionInfoTestChapter()
             => VersionInfoTestChapterHelper<Th07Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th07VersionInfoTestNullChapter()
             => VersionInfoTestNullChapterHelper<Th07Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th07VersionInfoTestInvalidSignature()
             => VersionInfoTestInvalidSignatureHelper<Th07Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th07VersionInfoTestInvalidSize1()
             => VersionInfoTestInvalidSize1Helper<Th07Converter>();
@@ -126,21 +126,21 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th08
 
-        [TestMethod()]
+        [TestMethod]
         public void Th08VersionInfoTestChapter()
             => VersionInfoTestChapterHelper<Th08Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th08VersionInfoTestNullChapter()
             => VersionInfoTestNullChapterHelper<Th08Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th08VersionInfoTestInvalidSignature()
             => VersionInfoTestInvalidSignatureHelper<Th08Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th08VersionInfoTestInvalidSize1()
             => VersionInfoTestInvalidSize1Helper<Th08Converter>();
@@ -149,21 +149,21 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th09
 
-        [TestMethod()]
+        [TestMethod]
         public void Th09VersionInfoTestChapter()
             => VersionInfoTestChapterHelper<Th09Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th09VersionInfoTestNullChapter()
             => VersionInfoTestNullChapterHelper<Th09Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th09VersionInfoTestInvalidSignature()
             => VersionInfoTestInvalidSignatureHelper<Th09Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th09VersionInfoTestInvalidSize1()
             => VersionInfoTestInvalidSize1Helper<Th09Converter>();

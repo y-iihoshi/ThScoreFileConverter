@@ -7,7 +7,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class Th075StatusTests
     {
         internal struct Properties
@@ -80,7 +80,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Th075StatusTest() => TestUtils.Wrap(() =>
         {
             var status = new Th075StatusWrapper();
@@ -89,7 +89,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.IsNull(status.ArcadeScores);
         });
 
-        [TestMethod()]
+        [TestMethod]
         public void ReadFromTest() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
@@ -99,7 +99,7 @@ namespace ThScoreFileConverterTests.Models
             Validate(status, properties);
         });
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
@@ -109,7 +109,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortenedName() => TestUtils.Wrap(() =>
         {
@@ -122,7 +122,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [TestMethod()]
+        [TestMethod]
         public void ReadFromTestExceededName() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
@@ -136,7 +136,7 @@ namespace ThScoreFileConverterTests.Models
                 status.ArcadeScores[Th075Converter.Chara.Reimu].Values);
         });
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortenedArcadeScores() => TestUtils.Wrap(() =>
         {
@@ -148,7 +148,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [TestMethod()]
+        [TestMethod]
         public void ReadFromTestExceededArcadeScores() => TestUtils.Wrap(() =>
         {
             var properties = new Properties(ValidProperties);

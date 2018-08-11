@@ -6,7 +6,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class Th075ClearDataTests
     {
         internal struct Properties
@@ -94,7 +94,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Th075ClearDataTest() => TestUtils.Wrap(() =>
         {
             var clearData = new Th075ClearDataWrapper();
@@ -102,7 +102,7 @@ namespace ThScoreFileConverterTests.Models
             Validate(clearData, DefaultProperties);
         });
 
-        [TestMethod()]
+        [TestMethod]
         public void ReadFromTest() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
@@ -112,7 +112,7 @@ namespace ThScoreFileConverterTests.Models
             Validate(clearData, properties);
         });
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {

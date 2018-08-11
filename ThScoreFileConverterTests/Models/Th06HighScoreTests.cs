@@ -9,7 +9,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class Th06HighScoreTests
     {
         internal struct Properties
@@ -65,7 +65,7 @@ namespace ThScoreFileConverterTests.Models
             CollectionAssert.AreEqual(properties.name, highScore.Name.ToArray());
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Th06HighScoreTestChapter() => TestUtils.Wrap(() =>
         {
             var chapter = Th06ChapterWrapper<Th06Converter>.Create(MakeByteArray(ValidProperties));
@@ -75,7 +75,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "highScore")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th06HighScoreTestNullChapter() => TestUtils.Wrap(() =>
         {
@@ -84,7 +84,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [TestMethod()]
+        [TestMethod]
         public void Th06HighScoreTestScore() => TestUtils.Wrap(() =>
         {
             var score = 1234567u;
@@ -96,7 +96,7 @@ namespace ThScoreFileConverterTests.Models
             CollectionAssert.AreEqual(Encoding.Default.GetBytes(name), highScore.Name.ToArray());
         });
 
-        [TestMethod()]
+        [TestMethod]
         public void Th06HighScoreTestZeroScore() => TestUtils.Wrap(() =>
         {
             var score = 0u;
@@ -110,7 +110,7 @@ namespace ThScoreFileConverterTests.Models
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "highScore")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th06HighScoreTestInvalidSignature() => TestUtils.Wrap(() =>
         {
@@ -124,7 +124,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "highScore")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th06HighScoreTestInvalidSize1() => TestUtils.Wrap(() =>
         {

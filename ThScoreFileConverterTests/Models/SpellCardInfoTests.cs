@@ -10,10 +10,10 @@ namespace ThScoreFileConverterTests.Models
     using Level = ThConverter.Level;
     using Stage = ThConverter.Stage;
 
-    [TestClass()]
+    [TestClass]
     public class SpellCardInfoTests
     {
-        [TestMethod()]
+        [TestMethod]
         public void SpellCardInfoTest()
         {
             var info = new CardInfo(1, "月符「ムーンライトレイ」", Stage.St1, Level.Hard, Level.Lunatic);
@@ -26,7 +26,7 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "info")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void SpellCardInfoTestNegativeId()
         {
@@ -35,7 +35,7 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "info")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void SpellCardInfoTestZeroId()
         {
@@ -44,7 +44,7 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "info")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void SpellCardInfoTestNullName()
         {
@@ -53,7 +53,7 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "info")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void SpellCardInfoTestEmptyName()
         {
@@ -91,7 +91,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void SpellCardInfoTestOneLevel()
         {
             var info = new CardInfo(1, "霜符「フロストコラムス」", Stage.St1, Level.Hard);

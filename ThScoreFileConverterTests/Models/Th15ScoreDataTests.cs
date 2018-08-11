@@ -8,7 +8,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class Th15ScoreDataTests
     {
         internal struct Properties
@@ -55,7 +55,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.retryCount, scoreData.RetryCount);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Th15ScoreDataTest() => TestUtils.Wrap(() =>
         {
             var properties = new Properties();
@@ -64,7 +64,7 @@ namespace ThScoreFileConverterTests.Models
             Validate(scoreData, properties);
         });
 
-        [TestMethod()]
+        [TestMethod]
         public void Th15ScoreDataReadFromTest() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
@@ -74,7 +74,7 @@ namespace ThScoreFileConverterTests.Models
             Validate(scoreData, properties);
         });
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th15ScoreDataReadFromTestNull() => TestUtils.Wrap(() =>
         {
@@ -103,7 +103,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "scoreData")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th15ScoreDataReadFromTestShortenedName() => TestUtils.Wrap(() =>
         {
@@ -115,7 +115,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [TestMethod()]
+        [TestMethod]
         public void Th15ScoreDataReadFromTestExceededName() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;

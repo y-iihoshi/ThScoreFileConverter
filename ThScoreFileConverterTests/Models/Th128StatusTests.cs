@@ -8,7 +8,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class Th128StatusTests
     {
         internal struct Properties
@@ -161,26 +161,26 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th128
 
-        [TestMethod()]
+        [TestMethod]
         public void Th128StatusTestChapter()
             => StatusTestChapterHelper<Th128Converter>(2, 0x42C, 10, 0x10, 0x18);
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th128StatusTestNullChapter()
             => StatusTestNullChapterHelper<Th128Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th128StatusTestInvalidSignature()
             => StatusTestInvalidSignatureHelper<Th128Converter>(2, 0x42C, 10, 0x10, 0x18);
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th128StatusTestInvalidVersion()
             => StatusTestInvalidVersionHelper<Th128Converter>(2, 0x42C, 10, 0x10, 0x18);
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th128StatusTestInvalidSize()
             => StatusTestInvalidSizeHelper<Th128Converter>(2, 0x42C, 10, 0x10, 0x18);
@@ -198,26 +198,26 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th13
 
-        [TestMethod()]
+        [TestMethod]
         public void Th13StatusTestChapter()
             => StatusTestChapterHelper<Th13Converter>(1, 0x42C, 17, 0x10, 0x11);
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th13StatusTestNullChapter()
             => StatusTestNullChapterHelper<Th13Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th13StatusTestInvalidSignature()
             => StatusTestInvalidSignatureHelper<Th13Converter>(1, 0x42C, 17, 0x10, 0x11);
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th13StatusTestInvalidVersion()
             => StatusTestInvalidVersionHelper<Th13Converter>(1, 0x42C, 17, 0x10, 0x11);
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th13StatusTestInvalidSize()
             => StatusTestInvalidSizeHelper<Th13Converter>(1, 0x42C, 17, 0x10, 0x11);
@@ -235,26 +235,26 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th14
 
-        [TestMethod()]
+        [TestMethod]
         public void Th14StatusTestChapter()
             => StatusTestChapterHelper<Th14Converter>(1, 0x42C, 17, 0x10, 0x11);
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th14StatusTestNullChapter()
             => StatusTestNullChapterHelper<Th14Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th14StatusTestInvalidSignature()
             => StatusTestInvalidSignatureHelper<Th14Converter>(1, 0x42C, 17, 0x10, 0x11);
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th14StatusTestInvalidVersion()
             => StatusTestInvalidVersionHelper<Th14Converter>(1, 0x42C, 17, 0x10, 0x11);
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th14StatusTestInvalidSize()
             => StatusTestInvalidSizeHelper<Th14Converter>(1, 0x42C, 17, 0x10, 0x11);
@@ -272,26 +272,26 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th15
 
-        [TestMethod()]
+        [TestMethod]
         public void Th15StatusTestChapter()
             => StatusTestChapterHelper<Th15Converter>(1, 0x42C, 17, 0x10, 0x11);
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th15StatusTestNullChapter()
             => StatusTestNullChapterHelper<Th15Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th15StatusTestInvalidSignature()
             => StatusTestInvalidSignatureHelper<Th15Converter>(1, 0x42C, 17, 0x10, 0x11);
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th15StatusTestInvalidVersion()
             => StatusTestInvalidVersionHelper<Th15Converter>(1, 0x42C, 17, 0x10, 0x11);
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th15StatusTestInvalidSize()
             => StatusTestInvalidSizeHelper<Th15Converter>(1, 0x42C, 17, 0x10, 0x11);
@@ -309,26 +309,26 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th16
 
-        [TestMethod()]
+        [TestMethod]
         public void Th16StatusTestChapter()
             => StatusTestChapterHelper<Th16Converter>(1, 0x42C, 17, 0x10, 0x11);
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th16StatusTestNullChapter()
             => StatusTestNullChapterHelper<Th16Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th16StatusTestInvalidSignature()
             => StatusTestInvalidSignatureHelper<Th16Converter>(1, 0x42C, 17, 0x10, 0x11);
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th16StatusTestInvalidVersion()
             => StatusTestInvalidVersionHelper<Th16Converter>(1, 0x42C, 17, 0x10, 0x11);
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th16StatusTestInvalidSize()
             => StatusTestInvalidSizeHelper<Th16Converter>(1, 0x42C, 17, 0x10, 0x11);

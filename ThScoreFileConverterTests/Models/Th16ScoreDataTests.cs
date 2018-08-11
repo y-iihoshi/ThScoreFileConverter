@@ -8,7 +8,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class Th16ScoreDataTests
     {
         internal struct Properties
@@ -55,7 +55,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.season, scoreData.Season);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Th16ScoreDataTest() => TestUtils.Wrap(() =>
         {
             var properties = new Properties();
@@ -64,7 +64,7 @@ namespace ThScoreFileConverterTests.Models
             Validate(scoreData, properties);
         });
 
-        [TestMethod()]
+        [TestMethod]
         public void Th16ScoreDataReadFromTest() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
@@ -74,7 +74,7 @@ namespace ThScoreFileConverterTests.Models
             Validate(scoreData, properties);
         });
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th16ScoreDataReadFromTestNull() => TestUtils.Wrap(() =>
         {
@@ -103,7 +103,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "scoreData")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th16ScoreDataReadFromTestShortenedName() => TestUtils.Wrap(() =>
         {
@@ -116,7 +116,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "scoreData")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidCastException))]
         public void Th16ScoreDataReadFromTestExceededName() => TestUtils.Wrap(() =>
         {

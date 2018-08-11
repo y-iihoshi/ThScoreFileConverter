@@ -3,10 +3,10 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class PairTests
     {
-        [TestMethod()]
+        [TestMethod]
         public void PairTest()
         {
             var pobj = new PrivateObject(typeof(Pair<int, uint>), 1, 2u);
@@ -15,7 +15,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(2u, pobj.GetProperty("Second") as uint?);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void EqualsTestNull()
         {
             var pobj = new PrivateObject(typeof(Pair<int, uint>), 1, 2u);
@@ -24,7 +24,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.IsFalse(pair.Equals(null));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void EqualsTestNullObject()
         {
             var pobj = new PrivateObject(typeof(Pair<int, uint>), 1, 2u);
@@ -33,7 +33,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.IsFalse(pair.Equals(null as object));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void EqualsTestInvalidType()
         {
             var pobj = new PrivateObject(typeof(Pair<int, uint>), 1, 2u);
@@ -42,7 +42,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.IsFalse(pair.Equals(1));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void EqualsTestSelf()
         {
             var pobj = new PrivateObject(typeof(Pair<int, uint>), 1, 2u);
@@ -51,7 +51,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.IsTrue(pair.Equals(pair));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void EqualsTestSelfObject()
         {
             var pobj = new PrivateObject(typeof(Pair<int, uint>), 1, 2u);
@@ -60,7 +60,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.IsTrue(pair.Equals(pair as object));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void EqualsTestEqualBoth()
         {
             var pobj1 = new PrivateObject(typeof(Pair<int, uint>), 1, 2u);
@@ -72,7 +72,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.IsTrue(pair1.Equals(pair2));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void EqualsTestEqualBothObject()
         {
             var pobj1 = new PrivateObject(typeof(Pair<int, uint>), 1, 2u);
@@ -84,7 +84,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.IsTrue(pair1.Equals(pair2 as object));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void EqualsTestEqualFirst()
         {
             var pobj1 = new PrivateObject(typeof(Pair<int, uint>), 1, 2u);
@@ -96,7 +96,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.IsFalse(pair1.Equals(pair2));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void EqualsTestEqualSecond()
         {
             var pobj1 = new PrivateObject(typeof(Pair<int, uint>), 1, 2u);
@@ -108,7 +108,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.IsFalse(pair1.Equals(pair2));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void EqualsTestNotEqualBoth()
         {
             var pobj1 = new PrivateObject(typeof(Pair<int, uint>), 1, 2u);
@@ -120,7 +120,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.IsFalse(pair1.Equals(pair2));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void GetHashCodeTestEqual()
         {
             var obj1 = new PrivateObject(typeof(Pair<int, uint>), 1, 2u);
@@ -132,7 +132,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.IsTrue(pair1.GetHashCode() == pair2.GetHashCode());
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void GetHashCodeTestNotEqual()
         {
             var obj1 = new PrivateObject(typeof(Pair<int, uint>), 1, 2u);

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class Th075HighScoreTests
     {
         internal struct Properties
@@ -43,7 +43,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.score, highScore.Score);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Th075HighScoreTest() => TestUtils.Wrap(() =>
         {
             var highScore = new Th075HighScoreWrapper();
@@ -54,7 +54,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(default, highScore.Score.Value);
         });
 
-        [TestMethod()]
+        [TestMethod]
         public void ReadFromTest() => TestUtils.Wrap(() =>
         {
             var highScore = Th075HighScoreWrapper.Create(MakeByteArray(ValidProperties));
@@ -62,7 +62,7 @@ namespace ThScoreFileConverterTests.Models
             Validate(highScore, ValidProperties);
         });
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
@@ -72,7 +72,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortenedName() => TestUtils.Wrap(() =>
         {
@@ -84,7 +84,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [TestMethod()]
+        [TestMethod]
         public void ReadFromTestExceededName() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;

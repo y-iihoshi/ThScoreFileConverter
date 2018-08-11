@@ -7,7 +7,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class Th07LastNameTests
     {
         internal struct Properties
@@ -104,21 +104,21 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th07
 
-        [TestMethod()]
+        [TestMethod]
         public void Th07LastNameTestChapter()
             => LastNameTestChapterHelper<Th07Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th07LastNameTestNullChapter()
             => LastNameTestNullChapterHelper<Th07Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th07LastNameTestInvalidSignature()
             => LastNameTestInvalidSignatureHelper<Th07Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th07LastNameTestInvalidSize1()
             => LastNameTestInvalidSize1Helper<Th07Converter>();
@@ -127,21 +127,21 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th08
 
-        [TestMethod()]
+        [TestMethod]
         public void Th08LastNameTestChapter()
             => LastNameTestChapterHelper<Th08Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th08LastNameTestNullChapter()
             => LastNameTestNullChapterHelper<Th08Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th08LastNameTestInvalidSignature()
             => LastNameTestInvalidSignatureHelper<Th08Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th08LastNameTestInvalidSize1()
             => LastNameTestInvalidSize1Helper<Th08Converter>();
@@ -150,21 +150,21 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th09
 
-        [TestMethod()]
+        [TestMethod]
         public void Th09LastNameTestChapter()
             => LastNameTestChapterHelper<Th09Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th09LastNameTestNullChapter()
             => LastNameTestNullChapterHelper<Th09Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th09LastNameTestInvalidSignature()
             => LastNameTestInvalidSignatureHelper<Th09Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th09LastNameTestInvalidSize1()
             => LastNameTestInvalidSize1Helper<Th09Converter>();

@@ -5,10 +5,10 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class ThConverterEventArgsTests
     {
-        [TestMethod()]
+        [TestMethod]
         public void ThConverterEventArgsTest()
         {
             var args = new ThConverterEventArgs(@"path\to\file", 2, 5);
@@ -25,7 +25,7 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "args")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void ThConverterEventArgsTestNullPath()
         {
@@ -34,7 +34,7 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "args")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ThConverterEventArgsTestEmptyPath()
         {
@@ -43,7 +43,7 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "args")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ThConverterEventArgsTestNegativeCurrent()
         {
@@ -52,7 +52,7 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "args")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ThConverterEventArgsTestZeroCurrent()
         {
@@ -61,7 +61,7 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "args")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ThConverterEventArgsTestExtendedCurrent()
         {
@@ -70,7 +70,7 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "args")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ThConverterEventArgsTestNegativeTotal()
         {
@@ -79,7 +79,7 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "args")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ThConverterEventArgsTestZeroTotal()
         {

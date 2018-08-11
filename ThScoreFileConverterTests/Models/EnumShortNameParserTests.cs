@@ -6,24 +6,24 @@ namespace ThScoreFileConverterTests.Models
 {
     using Level = ThConverter.Level;
 
-    [TestClass()]
+    [TestClass]
     public class EnumShortNameParserTests
     {
-        [TestMethod()]
+        [TestMethod]
         public void PatternTest()
         {
             var parser = new EnumShortNameParser<Level>();
             Assert.AreEqual("E|N|H|L|X", parser.Pattern);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void PatternTestNoShortName()
         {
             var parser = new EnumShortNameParser<DayOfWeek>();
             Assert.AreEqual(string.Empty, parser.Pattern);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseTest()
         {
             var parser = new EnumShortNameParser<Level>();
@@ -34,7 +34,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(Level.Extra, parser.Parse("X"));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseTestMismatchedCase()
         {
             var parser = new EnumShortNameParser<Level>();
@@ -45,7 +45,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(Level.Extra, parser.Parse("x"));
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void ParseTestEmpty()
         {
@@ -54,7 +54,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void ParseTestUnknown()
         {

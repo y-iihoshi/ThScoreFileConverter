@@ -8,7 +8,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class Th08PlayCountTests
     {
         internal struct Properties
@@ -58,7 +58,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.totalPractice, playCount.TotalPractice.Value);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Th08PlayCountTest() => TestUtils.Wrap(() =>
         {
             var playCount = new Th08PlayCountWrapper();
@@ -70,7 +70,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(default, playCount.TotalPractice.Value);
         });
 
-        [TestMethod()]
+        [TestMethod]
         public void Th08PlayCountReadFromTest() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
@@ -80,7 +80,7 @@ namespace ThScoreFileConverterTests.Models
             Validate(playCount, properties);
         });
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th08PlayCountReadFromTestNull() => TestUtils.Wrap(() =>
         {
@@ -91,7 +91,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "playCount")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th08PlayCountReadFromTestShortenedTrials() => TestUtils.Wrap(() =>
         {
@@ -103,7 +103,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [TestMethod()]
+        [TestMethod]
         public void Th08PlayCountReadFromTestExceededTrials() => TestUtils.Wrap(() =>
         {
             var properties = new Properties(ValidProperties);

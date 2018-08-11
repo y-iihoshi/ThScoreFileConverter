@@ -17,10 +17,10 @@ namespace ThScoreFileConverterTests.Models
         [EnumAltName("Tokiko")] 名無しの本読み妖怪
     }
 
-    [TestClass()]
+    [TestClass]
     public class EnumExtensionsTests
     {
-        [TestMethod()]
+        [TestMethod]
         public void ToShortNameTest()
         {
             Assert.AreEqual(string.Empty, 1.ToShortName());
@@ -32,7 +32,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual("Tokiko", UnnamedCharacter.名無しの本読み妖怪.ToShortName());
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ToLongNameTest()
         {
             Assert.AreEqual(string.Empty, 1.ToShortName());

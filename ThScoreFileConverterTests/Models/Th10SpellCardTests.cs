@@ -8,7 +8,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class Th10SpellCardTests
     {
         internal struct Properties
@@ -137,25 +137,25 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th10
 
-        [TestMethod()]
+        [TestMethod]
         public void Th10SpellCardTest()
             => Th10SpellCardTestHelper<Th10Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th10SpellCardReadFromTest()
             => Th10SpellCardReadFromTestHelper<Th10Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th10SpellCardReadFromTestNull()
             => Th10SpellCardReadFromTestNullHelper<Th10Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th10SpellCardReadFromTestShortenedName()
             => Th10SpellCardReadFromTestShortenedNameHelper<Th10Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th10SpellCardReadFromTestExceededName()
             => Th10SpellCardReadFromTestExceededNameHelper<Th10Converter>();
 
@@ -170,25 +170,25 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th11
 
-        [TestMethod()]
+        [TestMethod]
         public void Th11SpellCardTest()
             => Th10SpellCardTestHelper<Th11Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th11SpellCardReadFromTest()
             => Th10SpellCardReadFromTestHelper<Th11Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th11SpellCardReadFromTestNull()
             => Th10SpellCardReadFromTestNullHelper<Th11Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th11SpellCardReadFromTestShortenedName()
             => Th10SpellCardReadFromTestShortenedNameHelper<Th11Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th11SpellCardReadFromTestExceededName()
             => Th10SpellCardReadFromTestExceededNameHelper<Th11Converter>();
 
@@ -203,25 +203,25 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th12
 
-        [TestMethod()]
+        [TestMethod]
         public void Th12SpellCardTest()
             => Th10SpellCardTestHelper<Th12Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th12SpellCardReadFromTest()
             => Th10SpellCardReadFromTestHelper<Th12Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th12SpellCardReadFromTestNull()
             => Th10SpellCardReadFromTestNullHelper<Th12Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th12SpellCardReadFromTestShortenedName()
             => Th10SpellCardReadFromTestShortenedNameHelper<Th12Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th12SpellCardReadFromTestExceededName()
             => Th10SpellCardReadFromTestExceededNameHelper<Th12Converter>();
 

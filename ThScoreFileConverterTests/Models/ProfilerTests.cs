@@ -5,10 +5,10 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class ProfilerTests
     {
-        [TestMethod()]
+        [TestMethod]
         public void ProfilerTest()
         {
             var value = 0L;
@@ -23,7 +23,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.IsTrue(value > 1L);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ProfilerTestNull()
         {
             using (var profiler = new Profiler(null, null))
@@ -31,7 +31,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ProfilerTestPreprocess()
         {
             var value = 0;
@@ -45,7 +45,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(1, value);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ProfilerTestPostprocess()
         {
             var value = 0L;
@@ -60,7 +60,7 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [SuppressMessage("Microsoft.Globalization", "CA1303:DoNotPassLiteralsAsLocalizedParameters", MessageId = "ThScoreFileConverter.Models.Profiler.#ctor(System.String)")]
-        [TestMethod()]
+        [TestMethod]
         public void ProfilerTestMessage()
         {
             using (var profiler = new Profiler(nameof(ProfilerTestMessage)))
@@ -68,7 +68,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ProfilerTestNullMessage()
         {
             using (var profiler = new Profiler(null))
@@ -76,7 +76,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ProfilerTestEmptyMessage()
         {
             using (var profiler = new Profiler(string.Empty))
@@ -84,7 +84,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(NotImplementedException))]
         public void FinalizerTest()
         {
@@ -98,7 +98,7 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [SuppressMessage("Microsoft.Globalization", "CA1303:DoNotPassLiteralsAsLocalizedParameters", MessageId = "ThScoreFileConverter.Models.Profiler.#ctor(System.String)")]
-        [TestMethod()]
+        [TestMethod]
         public void DisposeTest()
         {
             var profiler = new Profiler(nameof(DisposeTest));
@@ -107,7 +107,7 @@ namespace ThScoreFileConverterTests.Models
 
         [SuppressMessage("Microsoft.Globalization", "CA1303:DoNotPassLiteralsAsLocalizedParameters", MessageId = "ThScoreFileConverter.Models.Profiler.#ctor(System.String)")]
         [SuppressMessage("Microsoft.Usage", "CA2202:DoNotDisposeObjectsMultipleTimes")]
-        [TestMethod()]
+        [TestMethod]
         public void DisposeTestTwice()
         {
             using (var profiler = new Profiler(nameof(DisposeTest)))

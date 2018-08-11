@@ -7,7 +7,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class Th06HeaderTests
     {
         internal struct Properties
@@ -100,21 +100,21 @@ namespace ThScoreFileConverterTests.Models
 
         private const string th06ValidSignature = "TH6K";
 
-        [TestMethod()]
+        [TestMethod]
         public void Th06HeaderTest()
             => Th06HeaderTestHelper<Th06Converter>(th06ValidSignature);
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th06HeaderTestNull()
             => Th06HeaderTestNullHelper<Th06Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th06HeaderTestInvalidSignature()
             => Th06HeaderTestInvalidSignatureHelper<Th06Converter>(th06ValidSignature);
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th06HeaderTestInvalidSize1()
             => Th06HeaderTestInvalidSize1Helper<Th06Converter>(th06ValidSignature);
@@ -125,21 +125,21 @@ namespace ThScoreFileConverterTests.Models
 
         private const string th07ValidSignature = "TH7K";
 
-        [TestMethod()]
+        [TestMethod]
         public void Th07HeaderTest()
             => Th06HeaderTestHelper<Th07Converter>(th07ValidSignature);
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th07HeaderTestNull()
             => Th06HeaderTestNullHelper<Th07Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th07HeaderTestInvalidSignature()
             => Th06HeaderTestInvalidSignatureHelper<Th07Converter>(th07ValidSignature);
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th07HeaderTestInvalidSize1()
             => Th06HeaderTestInvalidSize1Helper<Th07Converter>(th07ValidSignature);
@@ -150,21 +150,21 @@ namespace ThScoreFileConverterTests.Models
 
         private const string th08ValidSignature = "TH8K";
 
-        [TestMethod()]
+        [TestMethod]
         public void Th08HeaderTest()
             => Th06HeaderTestHelper<Th08Converter>(th08ValidSignature);
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th08HeaderTestNull()
             => Th06HeaderTestNullHelper<Th08Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th08HeaderTestInvalidSignature()
             => Th06HeaderTestInvalidSignatureHelper<Th08Converter>(th08ValidSignature);
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th08HeaderTestInvalidSize1()
             => Th06HeaderTestInvalidSize1Helper<Th08Converter>(th08ValidSignature);
@@ -175,21 +175,21 @@ namespace ThScoreFileConverterTests.Models
 
         private const string th09ValidSignature = "TH9K";
 
-        [TestMethod()]
+        [TestMethod]
         public void Th09HeaderTest()
             => Th06HeaderTestHelper<Th09Converter>(th09ValidSignature);
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th09HeaderTestNull()
             => Th06HeaderTestNullHelper<Th09Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th09HeaderTestInvalidSignature()
             => Th06HeaderTestInvalidSignatureHelper<Th09Converter>(th09ValidSignature);
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th09HeaderTestInvalidSize1()
             => Th06HeaderTestInvalidSize1Helper<Th09Converter>(th09ValidSignature);

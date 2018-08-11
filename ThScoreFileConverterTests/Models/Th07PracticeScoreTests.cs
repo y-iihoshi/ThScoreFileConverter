@@ -8,7 +8,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class Th07PracticeScoreTests
     {
         internal struct Properties
@@ -65,7 +65,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.stage, score.Stage.Value);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Th07PracticeScoreTestChapter() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
@@ -77,7 +77,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th07PracticeScoreTestNullChapter() => TestUtils.Wrap(() =>
         {
@@ -88,7 +88,7 @@ namespace ThScoreFileConverterTests.Models
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th07PracticeScoreTestInvalidSignature() => TestUtils.Wrap(() =>
         {
@@ -102,7 +102,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th07PracticeScoreTestInvalidSize1() => TestUtils.Wrap(() =>
         {

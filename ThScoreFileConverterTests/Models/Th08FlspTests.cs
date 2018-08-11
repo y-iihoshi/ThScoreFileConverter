@@ -7,7 +7,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class Th08FlspTests
     {
         internal struct Properties
@@ -43,7 +43,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(data[0], flsp.FirstByteOfData);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Th08FlspTestChapter() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
@@ -55,7 +55,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "flsp")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th08FlspTestNullChapter() => TestUtils.Wrap(() =>
         {
@@ -66,7 +66,7 @@ namespace ThScoreFileConverterTests.Models
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "flsp")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th08FlspTestInvalidSignature() => TestUtils.Wrap(() =>
         {
@@ -80,7 +80,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "flsp")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th08FlspTestInvalidSize1() => TestUtils.Wrap(() =>
         {

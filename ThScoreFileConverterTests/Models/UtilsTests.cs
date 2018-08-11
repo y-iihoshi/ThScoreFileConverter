@@ -7,26 +7,26 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class UtilsTests
     {
         private bool? outputSeparator = null;
 
-        [TestInitialize()]
+        [TestInitialize]
         public void Initialize()
             => outputSeparator = Settings.Instance.OutputNumberGroupSeparator;
 
-        [TestCleanup()]
+        [TestCleanup]
         public void Cleanup()
             => Settings.Instance.OutputNumberGroupSeparator = outputSeparator;
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseEnumTestValidName()
         {
             Assert.AreEqual(DayOfWeek.Sunday, Utils.ParseEnum<DayOfWeek>("Sunday"));
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ParseEnumTestInvalidName()
         {
@@ -34,7 +34,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ParseEnumTestEmpty()
         {
@@ -42,7 +42,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void ParseEnumTestNull()
         {
@@ -50,13 +50,13 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseEnumTestCaseSensitiveValidName()
         {
             Assert.AreEqual(DayOfWeek.Sunday, Utils.ParseEnum<DayOfWeek>("Sunday", false));
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ParseEnumTestCaseSensitiveInvalidName()
         {
@@ -64,14 +64,14 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseEnumTestCaseInsensitiveValidName()
         {
             Assert.AreEqual(DayOfWeek.Sunday, Utils.ParseEnum<DayOfWeek>("Sunday", true));
             Assert.AreEqual(DayOfWeek.Sunday, Utils.ParseEnum<DayOfWeek>("sunday", true));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void GetEnumeratorTest()
         {
             // FIXME: The method to be tested should be renamed.
@@ -82,7 +82,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(7, i);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ToNumberStringTest()
         {
             Settings.Instance.OutputNumberGroupSeparator = true;
@@ -92,7 +92,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual("12345678", Utils.ToNumberString(12345678));
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void ToNumberStringTestUnset()
         {
@@ -101,19 +101,19 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ToNumberStringTestWithSeparator()
         {
             Assert.AreEqual("12,345,678", Utils.ToNumberString(12345678, true));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ToNumberStringTestWithoutSeparator()
         {
             Assert.AreEqual("12345678", Utils.ToNumberString(12345678, false));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void FormatTest()
         {
             var now = DateTime.Now;
@@ -122,7 +122,7 @@ namespace ThScoreFileConverterTests.Models
                 Utils.Format("{0:F}", now));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void MakeAndPredicateTest()
         {
             var pred = Utils.MakeAndPredicate<int>(x => (x > 3), x => (x < 5));
@@ -131,7 +131,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.IsFalse(pred(5));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ToZeroBasedTest()
         {
             Assert.AreEqual(0, Utils.ToZeroBased(1));
@@ -140,7 +140,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(9, Utils.ToZeroBased(0));   // Hmm...
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ToZeroBasedTestNegative()
         {
@@ -148,7 +148,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ToZeroBasedTestExceeded()
         {
@@ -156,7 +156,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ToOneBasedTest()
         {
             Assert.AreEqual(1, Utils.ToOneBased(0));
@@ -165,7 +165,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(0, Utils.ToOneBased(9));    // Hmm...
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ToOneBasedTestNegative()
         {
@@ -173,7 +173,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ToOneBasedTestExceeded()
         {
@@ -181,7 +181,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void GetEncodingTest()
         {
             var utf8 = Utils.GetEncoding(65001);

@@ -5,10 +5,10 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class ThConverterTests
     {
-        [TestMethod()]
+        [TestMethod]
         public void ThConverterTest()
         {
             var pobj = new PrivateObject(typeof(ThConverter));
@@ -19,7 +19,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.IsTrue(converter.HasCardReplacer);
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(NullReferenceException))]
         public void ConvertTestNull()
         {
@@ -38,7 +38,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(NullReferenceException))]
         public void ConvertTestInvalidType()
         {
@@ -57,7 +57,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ConvertTestNoSettings()
         {

@@ -6,10 +6,10 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class BitReaderTests
     {
-        [TestMethod()]
+        [TestMethod]
         public void BitReaderTest()
         {
             MemoryStream stream = null;
@@ -27,7 +27,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void BitReaderTestNoStream()
         {
@@ -38,7 +38,7 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [SuppressMessage("Microsoft.Usage", "CA2202:DoNotDisposeObjectsMultipleTimes")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void BitReaderTestUnreadable()
         {
@@ -50,7 +50,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ObjectDisposedException))]
         public void DisposeTest()
         {
@@ -72,7 +72,7 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [SuppressMessage("Microsoft.Usage", "CA2202:DoNotDisposeObjectsMultipleTimes")]
-        [TestMethod()]
+        [TestMethod]
         public void DisposeTestTwice()
         {
             MemoryStream stream = null;
@@ -91,7 +91,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ReadBitsTestOneBit()
         {
             MemoryStream stream = null;
@@ -119,7 +119,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ReadBitsTestZeroBit()
         {
             MemoryStream stream = null;
@@ -149,7 +149,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ReadBitsTestMultiBits()
         {
             MemoryStream stream = null;
@@ -174,7 +174,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ReadBitsTestMultiBytes()
         {
             MemoryStream stream = null;
@@ -199,7 +199,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ReadBitsTestNegativeNumBits()
         {
@@ -221,7 +221,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ReadBitsTestExceededNumBits()
         {
             MemoryStream stream = null;
@@ -250,7 +250,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ReadBitsTestEndOfStream()
         {
             MemoryStream stream = null;

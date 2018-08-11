@@ -8,7 +8,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class Th07CardAttackTests
     {
         internal struct Properties
@@ -72,7 +72,7 @@ namespace ThScoreFileConverterTests.Models
             CollectionAssert.AreEqual(properties.clearCounts.Values, cardAttack.ClearCounts.Values.ToArray());
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Th07CardAttackTestChapter() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
@@ -85,7 +85,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "cardAttack")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th07CardAttackTestNullChapter() => TestUtils.Wrap(() =>
         {
@@ -96,7 +96,7 @@ namespace ThScoreFileConverterTests.Models
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "cardAttack")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th07CardAttackTestInvalidSignature() => TestUtils.Wrap(() =>
         {
@@ -110,7 +110,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "cardAttack")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th07CardAttackTestInvalidSize1() => TestUtils.Wrap(() =>
         {
@@ -123,7 +123,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [TestMethod()]
+        [TestMethod]
         public void Th07CardAttackTestNotTried() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;

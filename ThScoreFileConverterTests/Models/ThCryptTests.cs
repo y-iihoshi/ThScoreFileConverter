@@ -5,7 +5,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class ThCryptTests
     {
         private readonly byte[] decrypted = new byte[]
@@ -29,7 +29,7 @@ namespace ThScoreFileConverterTests.Models
         private const int LARGE_BLOCK = 0x10;   // > this.decrypted.Length
         private const int LIMIT = 0x20;
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(NotImplementedException))]
         public void EncryptTest()
         {
@@ -41,7 +41,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DecryptTest()
         {
             using (var input = new MemoryStream(this.encryptedBySmallBlock))
@@ -58,7 +58,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(NullReferenceException))]
         public void DecryptTestNullInput()
         {
@@ -69,7 +69,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DecryptTestNullStreamInput()
         {
             using (var output = new MemoryStream())
@@ -79,7 +79,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void DecryptTestEmptyInput()
         {
@@ -91,7 +91,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(NotSupportedException))]
         public void DecryptTestUnreadableInput()
         {
@@ -103,7 +103,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ObjectDisposedException))]
         public void DecryptTestClosedInput()
         {
@@ -116,7 +116,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DecryptTestShortenedInput()
         {
             using (var input = new MemoryStream(this.encryptedBySmallBlock, 0, this.encryptedBySmallBlock.Length - 1))
@@ -132,7 +132,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DecryptTestInvalidInput()
         {
             var invalid = new byte[this.encryptedBySmallBlock.Length];
@@ -153,7 +153,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(NullReferenceException))]
         public void DecryptTestNullOutput()
         {
@@ -164,7 +164,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(NotSupportedException))]
         public void DecryptTestUnwritableOutput()
         {
@@ -176,7 +176,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ObjectDisposedException))]
         public void DecryptTestClosedOutput()
         {
@@ -189,7 +189,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void DecryptTestNegativeSize()
         {
@@ -201,7 +201,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DecryptTestZeroSize()
         {
             using (var input = new MemoryStream(this.encryptedBySmallBlock))
@@ -212,7 +212,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DecryptTestShortenedSize()
         {
             using (var input = new MemoryStream(this.encryptedBySmallBlock))
@@ -228,7 +228,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void DecryptTestExceededSize()
         {
@@ -240,7 +240,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DecryptTestZeroKey()
         {
             using (var input = new MemoryStream(this.encryptedBySmallBlock))
@@ -257,7 +257,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DecryptTestInvalidKey()
         {
             using (var input = new MemoryStream(this.encryptedBySmallBlock))
@@ -274,7 +274,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DecryptTestZeroStep()
         {
             using (var input = new MemoryStream(this.encryptedBySmallBlock))
@@ -291,7 +291,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DecryptTestInvalidStep()
         {
             using (var input = new MemoryStream(this.encryptedBySmallBlock))
@@ -308,7 +308,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void DecryptTestNegativeBlock()
         {
@@ -320,7 +320,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(DivideByZeroException))]
         public void DecryptTestZeroBlock()
         {
@@ -332,7 +332,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DecryptTestInvalidSmallBlock()
         {
             using (var input = new MemoryStream(this.encryptedBySmallBlock))
@@ -360,7 +360,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DecryptTestInvalidLargeBlock()
         {
             using (var input = new MemoryStream(this.encryptedByLargeBlock))
@@ -395,7 +395,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void DecryptTestNegativeLimit()
         {
@@ -407,7 +407,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DecryptTestZeroLimit()
         {
             using (var input = new MemoryStream(this.encryptedBySmallBlock))
@@ -425,7 +425,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DecryptTestInvalidLimitWithSmallBlock()
         {
             using (var input = new MemoryStream(this.encryptedBySmallBlock))
@@ -459,7 +459,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void DecryptTestInvalidLimitWithLargeBlock()
         {
             using (var input = new MemoryStream(this.encryptedByLargeBlock))

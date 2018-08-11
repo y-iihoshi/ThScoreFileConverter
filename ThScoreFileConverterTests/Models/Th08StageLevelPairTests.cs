@@ -3,7 +3,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class Th08StageLevelPairTests
     {
         internal struct Properties
@@ -24,7 +24,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.level, pair.Level);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Th08StageLevelPairTest() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;

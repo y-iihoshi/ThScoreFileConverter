@@ -6,10 +6,10 @@ using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class ThConverterFactoryTests
     {
-        [TestMethod()]
+        [TestMethod]
         public void CreateTest()
         {
             var converter = ThConverterFactory.Create(Resources.keyTh06);
@@ -18,7 +18,7 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "converter")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void CreateTestNull()
         {
@@ -27,7 +27,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void CreateTestEmptyKey()
         {
             var converter = ThConverterFactory.Create(string.Empty);
@@ -35,7 +35,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.IsNull(converter);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void CreateTestInvalidKey()
         {
             var converter = ThConverterFactory.Create("invalidKey");

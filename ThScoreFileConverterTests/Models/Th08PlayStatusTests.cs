@@ -8,7 +8,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class Th08PlayStatusTests
     {
         internal struct Properties
@@ -88,7 +88,7 @@ namespace ThScoreFileConverterTests.Models
             CollectionAssert.AreEqual(properties.bgmFlags, playStatus.BgmFlags.ToArray());
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Th08PlayStatusTestChapter() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
@@ -100,7 +100,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "playStatus")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th08PlayStatusTestNullChapter() => TestUtils.Wrap(() =>
         {
@@ -111,7 +111,7 @@ namespace ThScoreFileConverterTests.Models
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "playStatus")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th08PlayStatusTestInvalidSignature() => TestUtils.Wrap(() =>
         {
@@ -125,7 +125,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "playStatus")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th08PlayStatusTestInvalidSize1() => TestUtils.Wrap(() =>
         {

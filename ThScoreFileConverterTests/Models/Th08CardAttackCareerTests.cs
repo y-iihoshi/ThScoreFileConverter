@@ -8,7 +8,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class Th08CardAttackCareerTests
     {
         internal struct Properties
@@ -51,7 +51,7 @@ namespace ThScoreFileConverterTests.Models
             CollectionAssert.AreEqual(properties.clearCounts.Values, career.ClearCounts.Values.ToArray());
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Th08CardAttackCareerTest() => TestUtils.Wrap(() =>
         {
             var career = new Th08CardAttackCareerWrapper();
@@ -61,7 +61,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(0, career.ClearCounts.Count);
         });
 
-        [TestMethod()]
+        [TestMethod]
         public void Th08CardAttackCareerReadFromTest() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
@@ -71,7 +71,7 @@ namespace ThScoreFileConverterTests.Models
             Validate(career, properties);
         });
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th08CardAttackCareerReadFromTestNull() => TestUtils.Wrap(() =>
         {
@@ -82,7 +82,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "career")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th08CardAttackCareerReadFromTestShortenedMaxBonuses() => TestUtils.Wrap(() =>
         {
@@ -94,7 +94,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [TestMethod()]
+        [TestMethod]
         public void Th08CardAttackCareerReadFromTestExceededMaxBonuses() => TestUtils.Wrap(() =>
         {
             var properties = new Properties(ValidProperties);
@@ -111,7 +111,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "career")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th08CardAttackCareerReadFromTestShortenedTrialCounts() => TestUtils.Wrap(() =>
         {
@@ -123,7 +123,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [TestMethod()]
+        [TestMethod]
         public void Th08CardAttackCareerReadFromTestExceededTrialCounts() => TestUtils.Wrap(() =>
         {
             var properties = new Properties(ValidProperties);
@@ -140,7 +140,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "career")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th08CardAttackCareerReadFromTestShortenedClearCounts() => TestUtils.Wrap(() =>
         {
@@ -152,7 +152,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [TestMethod()]
+        [TestMethod]
         public void Th08CardAttackCareerReadFromTestExceededClearCounts() => TestUtils.Wrap(() =>
         {
             var properties = new Properties(ValidProperties);

@@ -8,7 +8,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class Th09ClearCountTests
     {
         internal struct Properties
@@ -36,7 +36,7 @@ namespace ThScoreFileConverterTests.Models
             CollectionAssert.AreEqual(properties.counts.Values, clearCount.Counts.Values.ToArray());
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Th09ClearCountTest() => TestUtils.Wrap(() =>
         {
             var clearCount = new Th09ClearCountWrapper();
@@ -44,7 +44,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(0, clearCount.Counts.Count);
         });
 
-        [TestMethod()]
+        [TestMethod]
         public void Th09ClearCountReadFromTest() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
@@ -54,7 +54,7 @@ namespace ThScoreFileConverterTests.Models
             Validate(clearCount, properties);
         });
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th09ClearCountReadFromTestNull() => TestUtils.Wrap(() =>
         {
@@ -65,7 +65,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearCount")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th09ClearCountReadFromTestShortenedTrials() => TestUtils.Wrap(() =>
         {
@@ -77,7 +77,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [TestMethod()]
+        [TestMethod]
         public void Th09ClearCountReadFromTestExceededTrials() => TestUtils.Wrap(() =>
         {
             var properties = new Properties(ValidProperties);

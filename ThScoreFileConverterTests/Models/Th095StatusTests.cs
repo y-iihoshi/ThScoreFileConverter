@@ -8,7 +8,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class Th095StatusTests
     {
         internal struct Properties
@@ -52,7 +52,7 @@ namespace ThScoreFileConverterTests.Models
             CollectionAssert.AreEqual(properties.lastName, status.LastName.ToArray());
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Th095StatusTestChapter() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
@@ -65,7 +65,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th095StatusTestNullChapter() => TestUtils.Wrap(() =>
         {
@@ -76,7 +76,7 @@ namespace ThScoreFileConverterTests.Models
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th095StatusTestInvalidSignature() => TestUtils.Wrap(() =>
         {
@@ -90,7 +90,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th095StatusTestInvalidVersion() => TestUtils.Wrap(() =>
         {
@@ -104,7 +104,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th095StatusTestInvalidSize() => TestUtils.Wrap(() =>
         {

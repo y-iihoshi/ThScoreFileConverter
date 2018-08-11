@@ -8,7 +8,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class Th125StatusTests
     {
         internal struct Properties
@@ -64,7 +64,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.totalPlayTime, status.TotalPlayTime);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Th125StatusTestChapter() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
@@ -77,7 +77,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th125StatusTestNullChapter() => TestUtils.Wrap(() =>
         {
@@ -88,7 +88,7 @@ namespace ThScoreFileConverterTests.Models
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th125StatusTestInvalidSignature() => TestUtils.Wrap(() =>
         {
@@ -102,7 +102,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th125StatusTestInvalidVersion() => TestUtils.Wrap(() =>
         {
@@ -116,7 +116,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th125StatusTestInvalidSize() => TestUtils.Wrap(() =>
         {

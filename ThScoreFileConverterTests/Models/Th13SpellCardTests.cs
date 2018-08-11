@@ -8,7 +8,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class Th13SpellCardTests
     {
         internal struct Properties<TLevel>
@@ -196,25 +196,25 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th13
 
-        [TestMethod()]
+        [TestMethod]
         public void Th13SpellCardTest()
             => Th13SpellCardTestHelper<Th13Converter, Th13Converter.LevelPractice>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th13SpellCardReadFromTest()
             => Th13SpellCardReadFromTestHelper<Th13Converter, Th13Converter.LevelPractice>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th13SpellCardReadFromTestNull()
             => Th13SpellCardReadFromTestNullHelper<Th13Converter, Th13Converter.LevelPractice>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th13SpellCardReadFromTestShortenedName()
             => Th13SpellCardReadFromTestShortenedNameHelper<Th13Converter, Th13Converter.LevelPractice>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th13SpellCardReadFromTestExceededName()
             => Th13SpellCardReadFromTestExceededNameHelper<Th13Converter, Th13Converter.LevelPractice>();
 
@@ -229,25 +229,25 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th14
 
-        [TestMethod()]
+        [TestMethod]
         public void Th14SpellCardTest()
             => Th13SpellCardTestHelper<Th14Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th14SpellCardReadFromTest()
             => Th13SpellCardReadFromTestHelper<Th14Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th14SpellCardReadFromTestNull()
             => Th13SpellCardReadFromTestNullHelper<Th14Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th14SpellCardReadFromTestShortenedName()
             => Th13SpellCardReadFromTestShortenedNameHelper<Th14Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th14SpellCardReadFromTestExceededName()
             => Th13SpellCardReadFromTestExceededNameHelper<Th14Converter>();
 
@@ -262,25 +262,25 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th15
 
-        [TestMethod()]
+        [TestMethod]
         public void Th15SpellCardTest()
             => Th13SpellCardTestHelper<Th15Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th15SpellCardReadFromTest()
             => Th13SpellCardReadFromTestHelper<Th15Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th15SpellCardReadFromTestNull()
             => Th13SpellCardReadFromTestNullHelper<Th15Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th15SpellCardReadFromTestShortenedName()
             => Th13SpellCardReadFromTestShortenedNameHelper<Th15Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th15SpellCardReadFromTestExceededName()
             => Th13SpellCardReadFromTestExceededNameHelper<Th15Converter>();
 
@@ -295,25 +295,25 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th16
 
-        [TestMethod()]
+        [TestMethod]
         public void Th16SpellCardTest()
             => Th13SpellCardTestHelper<Th16Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th16SpellCardReadFromTest()
             => Th13SpellCardReadFromTestHelper<Th16Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th16SpellCardReadFromTestNull()
             => Th13SpellCardReadFromTestNullHelper<Th16Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th16SpellCardReadFromTestShortenedName()
             => Th13SpellCardReadFromTestShortenedNameHelper<Th16Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th16SpellCardReadFromTestExceededName()
             => Th13SpellCardReadFromTestExceededNameHelper<Th16Converter>();
 

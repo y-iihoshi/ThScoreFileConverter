@@ -10,7 +10,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class Th143StatusTests
     {
         internal struct Properties
@@ -73,7 +73,7 @@ namespace ThScoreFileConverterTests.Models
             CollectionAssert.AreEqual(properties.nicknameFlags, status.NicknameFlags?.ToArray());
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Th143StatusTestChapter() => TestUtils.Wrap(() =>
         {
             var chapter = Th095ChapterWrapper<Th143Converter>.Create(MakeByteArray(ValidProperties));
@@ -84,7 +84,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th143StatusTestNullChapter() => TestUtils.Wrap(() =>
         {
@@ -95,7 +95,7 @@ namespace ThScoreFileConverterTests.Models
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th143StatusTestInvalidSignature() => TestUtils.Wrap(() =>
         {
@@ -109,7 +109,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th143StatusTestInvalidVersion() => TestUtils.Wrap(() =>
         {
@@ -123,7 +123,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th143StatusTestInvalidSize() => TestUtils.Wrap(() =>
         {

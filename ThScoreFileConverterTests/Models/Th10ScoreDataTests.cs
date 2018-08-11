@@ -8,7 +8,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class Th10ScoreDataTests
     {
         internal struct Properties<TStageProgress>
@@ -190,25 +190,25 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th10
 
-        [TestMethod()]
+        [TestMethod]
         public void Th10ScoreDataTest()
             => Th10ScoreDataTestHelper<Th10Converter, Th10Converter.StageProgress>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th10ScoreDataReadFromTest()
             => Th10ScoreDataReadFromTestHelper<Th10Converter, Th10Converter.StageProgress>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th10ScoreDataReadFromTestNull()
             => Th10ScoreDataReadFromTestNullHelper<Th10Converter, Th10Converter.StageProgress>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th10ScoreDataReadFromTestShortenedName()
             => Th10ScoreDataReadFromTestShortenedNameHelper<Th10Converter, Th10Converter.StageProgress>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th10ScoreDataReadFromTestExceededName()
             => Th10ScoreDataReadFromTestExceededNameHelper<Th10Converter, Th10Converter.StageProgress>();
 
@@ -224,25 +224,25 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th11
 
-        [TestMethod()]
+        [TestMethod]
         public void Th11ScoreDataTest()
             => Th10ScoreDataTestHelper<Th11Converter, Th11Converter.StageProgress>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th11ScoreDataReadFromTest()
             => Th10ScoreDataReadFromTestHelper<Th11Converter, Th11Converter.StageProgress>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th11ScoreDataReadFromTestNull()
             => Th10ScoreDataReadFromTestNullHelper<Th11Converter, Th11Converter.StageProgress>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th11ScoreDataReadFromTestShortenedName()
             => Th10ScoreDataReadFromTestShortenedNameHelper<Th11Converter, Th11Converter.StageProgress>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th11ScoreDataReadFromTestExceededName()
             => Th10ScoreDataReadFromTestExceededNameHelper<Th11Converter, Th11Converter.StageProgress>();
 
@@ -258,25 +258,25 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th12
 
-        [TestMethod()]
+        [TestMethod]
         public void Th12ScoreDataTest()
             => Th10ScoreDataTestHelper<Th12Converter, Th12Converter.StageProgress>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th12ScoreDataReadFromTest()
             => Th10ScoreDataReadFromTestHelper<Th12Converter, Th12Converter.StageProgress>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th12ScoreDataReadFromTestNull()
             => Th10ScoreDataReadFromTestNullHelper<Th12Converter, Th12Converter.StageProgress>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th12ScoreDataReadFromTestShortenedName()
             => Th10ScoreDataReadFromTestShortenedNameHelper<Th12Converter, Th12Converter.StageProgress>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th12ScoreDataReadFromTestExceededName()
             => Th10ScoreDataReadFromTestExceededNameHelper<Th12Converter, Th12Converter.StageProgress>();
 
@@ -292,25 +292,25 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th128
 
-        [TestMethod()]
+        [TestMethod]
         public void Th128ScoreDataTest()
             => Th10ScoreDataTestHelper<Th128Converter, Th128Converter.StageProgress>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th128ScoreDataReadFromTest()
             => Th10ScoreDataReadFromTestHelper<Th128Converter, Th128Converter.StageProgress>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th128ScoreDataReadFromTestNull()
             => Th10ScoreDataReadFromTestNullHelper<Th128Converter, Th128Converter.StageProgress>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th128ScoreDataReadFromTestShortenedName()
             => Th10ScoreDataReadFromTestShortenedNameHelper<Th128Converter, Th128Converter.StageProgress>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th128ScoreDataReadFromTestExceededName()
             => Th10ScoreDataReadFromTestExceededNameHelper<Th128Converter, Th128Converter.StageProgress>();
 
@@ -326,25 +326,25 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th13
 
-        [TestMethod()]
+        [TestMethod]
         public void Th13ScoreDataTest()
             => Th10ScoreDataTestHelper<Th13Converter, Th13Converter.StageProgress>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th13ScoreDataReadFromTest()
             => Th10ScoreDataReadFromTestHelper<Th13Converter, Th13Converter.StageProgress>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th13ScoreDataReadFromTestNull()
             => Th10ScoreDataReadFromTestNullHelper<Th13Converter, Th13Converter.StageProgress>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th13ScoreDataReadFromTestShortenedName()
             => Th10ScoreDataReadFromTestShortenedNameHelper<Th13Converter, Th13Converter.StageProgress>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th13ScoreDataReadFromTestExceededName()
             => Th10ScoreDataReadFromTestExceededNameHelper<Th13Converter, Th13Converter.StageProgress>();
 
@@ -360,25 +360,25 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th14
 
-        [TestMethod()]
+        [TestMethod]
         public void Th14ScoreDataTest()
             => Th10ScoreDataTestHelper<Th14Converter, Th14Converter.StageProgress>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th14ScoreDataReadFromTest()
             => Th10ScoreDataReadFromTestHelper<Th14Converter, Th14Converter.StageProgress>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th14ScoreDataReadFromTestNull()
             => Th10ScoreDataReadFromTestNullHelper<Th14Converter, Th14Converter.StageProgress>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th14ScoreDataReadFromTestShortenedName()
             => Th10ScoreDataReadFromTestShortenedNameHelper<Th14Converter, Th14Converter.StageProgress>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th14ScoreDataReadFromTestExceededName()
             => Th10ScoreDataReadFromTestExceededNameHelper<Th14Converter, Th14Converter.StageProgress>();
 

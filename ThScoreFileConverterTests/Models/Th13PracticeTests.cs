@@ -5,7 +5,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class Th13PracticeTests
     {
         internal struct Properties
@@ -68,15 +68,15 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th13
 
-        [TestMethod()]
+        [TestMethod]
         public void Th13PracticeTest()
             => Th13PracticeTestHelper<Th13Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th13PracticeReadFromTest()
             => Th13PracticeReadFromTestHelper<Th13Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th13PracticeReadFromTestNull()
             => Th13PracticeReadFromTestNullHelper<Th13Converter>();
@@ -85,15 +85,15 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th14
 
-        [TestMethod()]
+        [TestMethod]
         public void Th14PracticeTest()
             => Th13PracticeTestHelper<Th14Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th14PracticeReadFromTest()
             => Th13PracticeReadFromTestHelper<Th14Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th14PracticeReadFromTestNull()
             => Th13PracticeReadFromTestNullHelper<Th14Converter>();
@@ -102,15 +102,15 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th15
 
-        [TestMethod()]
+        [TestMethod]
         public void Th15PracticeTest()
             => Th13PracticeTestHelper<Th15Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th15PracticeReadFromTest()
             => Th13PracticeReadFromTestHelper<Th15Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th15PracticeReadFromTestNull()
             => Th13PracticeReadFromTestNullHelper<Th15Converter>();
@@ -119,15 +119,15 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th16
 
-        [TestMethod()]
+        [TestMethod]
         public void Th16PracticeTest()
             => Th13PracticeTestHelper<Th16Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th16PracticeReadFromTest()
             => Th13PracticeReadFromTestHelper<Th16Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th16PracticeReadFromTestNull()
             => Th13PracticeReadFromTestNullHelper<Th16Converter>();

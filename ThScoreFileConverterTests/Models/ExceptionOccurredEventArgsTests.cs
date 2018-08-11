@@ -4,10 +4,10 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class ExceptionOccurredEventArgsTests
     {
-        [TestMethod()]
+        [TestMethod]
         public void ExceptionOccurredEventArgsTest()
         {
             // NOTE: creating an Exception instance causes CA2201.
@@ -16,7 +16,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreSame(ex, args.Exception);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ExceptionOccurredEventArgsTestNull()
         {
             var args = new ExceptionOccurredEventArgs(null);

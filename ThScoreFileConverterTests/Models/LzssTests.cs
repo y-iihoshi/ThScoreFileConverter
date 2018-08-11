@@ -5,7 +5,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class LzssTests
     {
         // "AbcAbc"
@@ -33,7 +33,7 @@ namespace ThScoreFileConverterTests.Models
             0b_0000_0000
         };
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(NotImplementedException))]
         public void CompressTest()
         {
@@ -45,7 +45,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ExtractTest()
         {
             using (var input = new MemoryStream(this.compressed))
@@ -62,7 +62,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void ExtractTestNullInput()
         {
@@ -73,7 +73,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ExtractTestNullStreamInput()
         {
             using (var output = new MemoryStream())
@@ -83,7 +83,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void ExtractTestEmptyInput()
         {
@@ -95,7 +95,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ExtractTestUnreadableInput()
         {
@@ -107,7 +107,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ExtractTestClosedInput()
         {
@@ -120,7 +120,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void ExtractTestShortenedInput()
         {
@@ -132,7 +132,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ExtractTestInvalidInput()
         {
             var invalid = new byte[this.compressed.Length];
@@ -152,7 +152,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(NullReferenceException))]
         public void ExtractTestNullOutput()
         {
@@ -163,7 +163,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(NotSupportedException))]
         public void ExtractTestUnwritableOutput()
         {
@@ -175,7 +175,7 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ObjectDisposedException))]
         public void ExtractTestClosedOutput()
         {

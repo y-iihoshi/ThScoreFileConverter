@@ -7,7 +7,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class Th06CardAttackTests
     {
         internal struct Properties
@@ -60,7 +60,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.clearCount, cardAttack.ClearCount);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Th06CardAttackTestChapter() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
@@ -73,7 +73,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "cardAttack")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th06CardAttackTestNullChapter() => TestUtils.Wrap(() =>
         {
@@ -84,7 +84,7 @@ namespace ThScoreFileConverterTests.Models
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "cardAttack")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th06CardAttackTestInvalidSignature() => TestUtils.Wrap(() =>
         {
@@ -98,7 +98,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "cardAttack")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th06CardAttackTestInvalidSize1() => TestUtils.Wrap(() =>
         {
@@ -111,7 +111,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [TestMethod()]
+        [TestMethod]
         public void Th06CardAttackTestNotTried() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;

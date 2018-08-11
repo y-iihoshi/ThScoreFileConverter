@@ -5,7 +5,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class Th10PracticeTests
     {
         internal struct Properties
@@ -66,15 +66,15 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th10
 
-        [TestMethod()]
+        [TestMethod]
         public void Th10PracticeTest()
             => Th10PracticeTestHelper<Th10Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th10PracticeReadFromTest()
             => Th10PracticeReadFromTestHelper<Th10Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th10PracticeReadFromTestNull()
             => Th10PracticeReadFromTestNullHelper<Th10Converter>();
@@ -83,15 +83,15 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th11
 
-        [TestMethod()]
+        [TestMethod]
         public void Th11PracticeTest()
             => Th10PracticeTestHelper<Th11Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th11PracticeReadFromTest()
             => Th10PracticeReadFromTestHelper<Th11Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th11PracticeReadFromTestNull()
             => Th10PracticeReadFromTestNullHelper<Th11Converter>();
@@ -100,15 +100,15 @@ namespace ThScoreFileConverterTests.Models
 
         #region Th12
 
-        [TestMethod()]
+        [TestMethod]
         public void Th12PracticeTest()
             => Th10PracticeTestHelper<Th12Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         public void Th12PracticeReadFromTest()
             => Th10PracticeReadFromTestHelper<Th12Converter>();
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th12PracticeReadFromTestNull()
             => Th10PracticeReadFromTestNullHelper<Th12Converter>();

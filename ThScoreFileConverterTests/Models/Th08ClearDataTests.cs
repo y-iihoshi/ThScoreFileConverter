@@ -8,7 +8,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    [TestClass()]
+    [TestClass]
     public class Th08ClearDataTests
     {
         internal struct Properties
@@ -62,7 +62,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.chara, clearData.Chara);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Th08ClearDataTestChapter() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
@@ -74,7 +74,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th08ClearDataTestNullChapter() => TestUtils.Wrap(() =>
         {
@@ -85,7 +85,7 @@ namespace ThScoreFileConverterTests.Models
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th08ClearDataTestInvalidSignature() => TestUtils.Wrap(() =>
         {
@@ -99,7 +99,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th08ClearDataTestInvalidSize1() => TestUtils.Wrap(() =>
         {
