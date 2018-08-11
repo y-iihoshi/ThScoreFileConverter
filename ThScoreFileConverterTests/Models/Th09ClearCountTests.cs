@@ -23,8 +23,7 @@ namespace ThScoreFileConverterTests.Models
 
         internal static Properties ValidProperties => new Properties()
         {
-            counts = Enum.GetValues(typeof(ThConverter.Level))
-                .Cast<ThConverter.Level>()
+            counts = Utils.GetEnumerator<ThConverter.Level>()
                 .Select((level, index) => new { level, index })
                 .ToDictionary(pair => pair.level, pair => pair.index)
         };

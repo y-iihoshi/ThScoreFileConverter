@@ -33,20 +33,16 @@ namespace ThScoreFileConverterTests.Models
             totalRunningTime = new Time(12, 34, 56, 789, false),
             totalPlayTime = new Time(23, 45, 19, 876, false),
             bgmFlags = TestUtils.MakeRandomArray<byte>(19),
-            matchFlags = Enum.GetValues(typeof(Th09Converter.Chara))
-                .Cast<Th09Converter.Chara>()
+            matchFlags = Utils.GetEnumerator<Th09Converter.Chara>()
                 .Select((chara, index) => new { chara, index })
                 .ToDictionary(pair => pair.chara, pair => (byte)pair.index),
-            storyFlags = Enum.GetValues(typeof(Th09Converter.Chara))
-                .Cast<Th09Converter.Chara>()
+            storyFlags = Utils.GetEnumerator<Th09Converter.Chara>()
                 .Select((chara, index) => new { chara, index })
                 .ToDictionary(pair => pair.chara, pair => (byte)(20 + pair.index)),
-            extraFlags = Enum.GetValues(typeof(Th09Converter.Chara))
-                .Cast<Th09Converter.Chara>()
+            extraFlags = Utils.GetEnumerator<Th09Converter.Chara>()
                 .Select((chara, index) => new { chara, index })
                 .ToDictionary(pair => pair.chara, pair => (byte)(40 + pair.index)),
-            clearCounts = Enum.GetValues(typeof(Th09Converter.Chara))
-                .Cast<Th09Converter.Chara>()
+            clearCounts = Utils.GetEnumerator<Th09Converter.Chara>()
                 .ToDictionary(
                     level => level,
                     level => new Th09ClearCountTests.Properties(Th09ClearCountTests.ValidProperties))

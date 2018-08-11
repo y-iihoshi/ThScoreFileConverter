@@ -26,12 +26,10 @@ namespace ThScoreFileConverterTests.Models
             signature = "CLRD",
             size1 = 0x1C,
             size2 = 0x1C,
-            storyFlags = Enum.GetValues(typeof(Th07Converter.Level))
-                .Cast<Th07Converter.Level>()
+            storyFlags = Utils.GetEnumerator<Th07Converter.Level>()
                 .Select((level, index) => new { level, index })
                 .ToDictionary(pair => pair.level, pair => (byte)pair.index),
-            practiceFlags = Enum.GetValues(typeof(Th07Converter.Level))
-                .Cast<Th07Converter.Level>()
+            practiceFlags = Utils.GetEnumerator<Th07Converter.Level>()
                 .Select((level, index) => new { level, index })
                 .ToDictionary(pair => pair.level, pair => (byte)(10 - pair.index)),
             chara = Th07Converter.Chara.ReimuB

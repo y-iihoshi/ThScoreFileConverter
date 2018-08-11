@@ -27,16 +27,13 @@ namespace ThScoreFileConverterTests.Models
 
         internal static Properties ValidProperties = new Properties()
         {
-            maxBonuses = Enum.GetValues(typeof(Th08Converter.CharaWithTotal))
-                .Cast<Th08Converter.CharaWithTotal>()
+            maxBonuses = Utils.GetEnumerator<Th08Converter.CharaWithTotal>()
                 .Select((chara, index) => new { chara, index })
                 .ToDictionary(pair => pair.chara, pair => (uint)pair.index),
-            trialCounts = Enum.GetValues(typeof(Th08Converter.CharaWithTotal))
-                .Cast<Th08Converter.CharaWithTotal>()
+            trialCounts = Utils.GetEnumerator<Th08Converter.CharaWithTotal>()
                 .Select((chara, index) => new { chara, index })
                 .ToDictionary(pair => pair.chara, pair => (20 + pair.index)),
-            clearCounts = Enum.GetValues(typeof(Th08Converter.CharaWithTotal))
-                .Cast<Th08Converter.CharaWithTotal>()
+            clearCounts = Utils.GetEnumerator<Th08Converter.CharaWithTotal>()
                 .Select((chara, index) => new { chara, index })
                 .ToDictionary(pair => pair.chara, pair => (20 - pair.index))
         };

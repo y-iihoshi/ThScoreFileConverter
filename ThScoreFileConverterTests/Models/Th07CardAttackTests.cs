@@ -28,18 +28,15 @@ namespace ThScoreFileConverterTests.Models
             signature = "CATK",
             size1 = 0x78,
             size2 = 0x78,
-            maxBonuses = Enum.GetValues(typeof(Th07Converter.CharaWithTotal))
-                .Cast<Th07Converter.CharaWithTotal>()
+            maxBonuses = Utils.GetEnumerator<Th07Converter.CharaWithTotal>()
                 .Select((chara, index) => new { chara, index })
                 .ToDictionary(pair => pair.chara, pair => (uint)pair.index),
             cardId = 123,
             cardName = TestUtils.MakeRandomArray<byte>(0x30),
-            trialCounts = Enum.GetValues(typeof(Th07Converter.CharaWithTotal))
-                .Cast<Th07Converter.CharaWithTotal>()
+            trialCounts = Utils.GetEnumerator<Th07Converter.CharaWithTotal>()
                 .Select((chara, index) => new { chara, index })
                 .ToDictionary(pair => pair.chara, pair => (ushort)(10 + pair.index)),
-            clearCounts = Enum.GetValues(typeof(Th07Converter.CharaWithTotal))
-                .Cast<Th07Converter.CharaWithTotal>()
+            clearCounts = Utils.GetEnumerator<Th07Converter.CharaWithTotal>()
                 .Select((chara, index) => new { chara, index })
                 .ToDictionary(pair => pair.chara, pair => (ushort)(10 - pair.index))
         };

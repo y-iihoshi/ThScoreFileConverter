@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
@@ -61,22 +61,32 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
+        public static IEnumerable<object[]> InvalidStages
+            => TestUtils.GetInvalidEnumerators(typeof(Stage));
+
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "info")]
-        [TestMethod()]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        [DataTestMethod]
+        [DynamicData(nameof(InvalidStages))]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void SpellCardInfoTestInvalidStage()
+        public void SpellCardInfoTestInvalidStage(int stage)
         {
-            var invalid = (Stage)(Enum.GetValues(typeof(Stage)).Cast<int>().Max() + 1);
+            var invalid = TestUtils.Cast<Stage>(stage);
             var info = new CardInfo(1, "月符「ムーンライトレイ」", invalid, Level.Hard, Level.Lunatic);
             Assert.Fail(TestUtils.Unreachable);
         }
 
+        public static IEnumerable<object[]> InvalidLevels
+            => TestUtils.GetInvalidEnumerators(typeof(Level));
+
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "info")]
-        [TestMethod()]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        [DataTestMethod]
+        [DynamicData(nameof(InvalidLevels))]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void SpellCardInfoTestInvalidLevel()
+        public void SpellCardInfoTestInvalidLevel(int level)
         {
-            var invalid = (Level)(Enum.GetValues(typeof(Level)).Cast<int>().Max() + 1);
+            var invalid = TestUtils.Cast<Level>(level);
             var info = new CardInfo(1, "月符「ムーンライトレイ」", Stage.St1, Level.Hard, invalid);
             Assert.Fail(TestUtils.Unreachable);
         }

@@ -28,8 +28,7 @@ namespace ThScoreFileConverterTests.Models
             size2 = 0x160,
             totalRunningTime = new Time(12, 34, 56, 789, false),
             totalPlayTime = new Time(23, 45, 19, 876, false),
-            playCounts = Enum.GetValues(typeof(Th07Converter.LevelWithTotal))
-                .Cast<Th07Converter.LevelWithTotal>()
+            playCounts = Utils.GetEnumerator<Th07Converter.LevelWithTotal>()
                 .ToDictionary(
                     level => level,
                     level => new Th07PlayCountTests.Properties(Th07PlayCountTests.ValidProperties))
