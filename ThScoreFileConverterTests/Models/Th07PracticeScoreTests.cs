@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -10,36 +11,69 @@ namespace ThScoreFileConverterTests.Models
     [TestClass()]
     public class Th07PracticeScoreTests
     {
+        internal struct Properties
+        {
+            public string signature;
+            public short size1;
+            public short size2;
+            public int trialCount;
+            public int highScore;
+            public Th07Converter.Chara chara;
+            public Th07Converter.Level level;
+            public Th07Converter.Stage stage;
+        };
+
+        internal static Properties ValidProperties => new Properties()
+        {
+            signature = "PSCR",
+            size1 = 0x18,
+            size2 = 0x18,
+            trialCount = 987,
+            highScore = 123456,
+            chara = Th07Converter.Chara.ReimuB,
+            level = Th07Converter.Level.Hard,
+            stage = Th07Converter.Stage.Extra
+        };
+
+        internal static byte[] MakeData(in Properties properties)
+            => TestUtils.MakeByteArray(
+                0u,
+                properties.trialCount,
+                properties.highScore,
+                (byte)properties.chara,
+                (byte)properties.level,
+                (byte)properties.stage,
+                (byte)0);
+
+        internal static byte[] MakeByteArray(in Properties properties)
+            => TestUtils.MakeByteArray(
+                properties.signature.ToCharArray(), properties.size1, properties.size2, MakeData(properties));
+
+        internal static void Validate(in Th07PracticeScoreWrapper score, in Properties properties)
+        {
+            var data = MakeData(properties);
+
+            Assert.AreEqual(properties.signature, score.Signature);
+            Assert.AreEqual(properties.size1, score.Size1);
+            Assert.AreEqual(properties.size2, score.Size2);
+            CollectionAssert.AreEqual(data, score.Data.ToArray());
+            Assert.AreEqual(data[0], score.FirstByteOfData);
+            Assert.AreEqual(properties.trialCount, score.TrialCount.Value);
+            Assert.AreEqual(properties.highScore, score.HighScore.Value);
+            Assert.AreEqual(properties.chara, score.Chara.Value);
+            Assert.AreEqual(properties.level, score.Level.Value);
+            Assert.AreEqual(properties.stage, score.Stage.Value);
+        }
+
         [TestMethod()]
         public void Th07PracticeScoreTestChapter() => TestUtils.Wrap(() =>
         {
-            var signature = "PSCR";
-            short size1 = 0x18;
-            short size2 = 0x18;
-            var unknown1 = 1u;
-            var trialCount = 987;
-            var highScore = 123456;
-            var chara = Th07Converter.Chara.ReimuB;
-            var level = Th07Converter.Level.Hard;
-            var stage = Th07Converter.Stage.Extra;
-            byte unknown2 = 2;
-            var data = TestUtils.MakeByteArray(
-                unknown1, trialCount, highScore, (byte)chara, (byte)level, (byte)stage, unknown2);
+            var properties = ValidProperties;
 
-            var chapter = Th06ChapterWrapper<Th07Converter>.Create(
-                TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+            var chapter = Th06ChapterWrapper<Th07Converter>.Create(MakeByteArray(properties));
             var score = new Th07PracticeScoreWrapper(chapter);
 
-            Assert.AreEqual(signature, score.Signature);
-            Assert.AreEqual(size1, score.Size1);
-            Assert.AreEqual(size2, score.Size2);
-            CollectionAssert.AreEqual(data, score.Data.ToArray());
-            Assert.AreEqual(data[0], score.FirstByteOfData);
-            Assert.AreEqual(trialCount, score.TrialCount.Value);
-            Assert.AreEqual(highScore, score.HighScore.Value);
-            Assert.AreEqual(chara, score.Chara.Value);
-            Assert.AreEqual(level, score.Level.Value);
-            Assert.AreEqual(stage, score.Stage.Value);
+            Validate(score, properties);
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
@@ -52,26 +86,16 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         });
 
+        [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
         [TestMethod()]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th07PracticeScoreTestInvalidSignature() => TestUtils.Wrap(() =>
         {
-            var signature = "pscr";
-            short size1 = 0x18;
-            short size2 = 0x18;
-            var unknown1 = 1u;
-            var trialCount = 987;
-            var highScore = 123456;
-            var chara = Th07Converter.Chara.ReimuB;
-            var level = Th07Converter.Level.Hard;
-            var stage = Th07Converter.Stage.Extra;
-            byte unknown2 = 2;
-            var data = TestUtils.MakeByteArray(
-                unknown1, trialCount, highScore, (byte)chara, (byte)level, (byte)stage, unknown2);
+            var properties = ValidProperties;
+            properties.signature = properties.signature.ToLowerInvariant();
 
-            var chapter = Th06ChapterWrapper<Th07Converter>.Create(
-                TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+            var chapter = Th06ChapterWrapper<Th07Converter>.Create(MakeByteArray(properties));
             var score = new Th07PracticeScoreWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -82,96 +106,67 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(InvalidDataException))]
         public void Th07PracticeScoreTestInvalidSize1() => TestUtils.Wrap(() =>
         {
-            var signature = "PSCR";
-            short size1 = 0x19;
-            short size2 = 0x18;
-            var unknown1 = 1u;
-            var trialCount = 987;
-            var highScore = 123456;
-            var chara = Th07Converter.Chara.ReimuB;
-            var level = Th07Converter.Level.Hard;
-            var stage = Th07Converter.Stage.Extra;
-            byte unknown2 = 2;
-            var data = TestUtils.MakeByteArray(
-                unknown1, trialCount, highScore, (byte)chara, (byte)level, (byte)stage, unknown2);
+            var properties = ValidProperties;
+            ++properties.size1;
 
-            var chapter = Th06ChapterWrapper<Th07Converter>.Create(
-                TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+            var chapter = Th06ChapterWrapper<Th07Converter>.Create(MakeByteArray(properties));
             var score = new Th07PracticeScoreWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
-        [TestMethod()]
-        [ExpectedException(typeof(InvalidDataException))]
-        public void Th07PracticeScoreTestInvalidChara() => TestUtils.Wrap(() =>
-        {
-            var signature = "PSCR";
-            short size1 = 0x18;
-            short size2 = 0x18;
-            var unknown1 = 1u;
-            var trialCount = 987;
-            var highScore = 123456;
-            var chara = (Th07Converter.Chara)(-1);
-            var level = Th07Converter.Level.Hard;
-            var stage = Th07Converter.Stage.Extra;
-            byte unknown2 = 2;
-            var data = TestUtils.MakeByteArray(
-                unknown1, trialCount, highScore, (byte)chara, (byte)level, (byte)stage, unknown2);
+        public static IEnumerable<object[]> InvalidCharacters
+            => TestUtils.GetInvalidEnumerators(typeof(Th07Converter.Chara));
 
-            var chapter = Th06ChapterWrapper<Th07Converter>.Create(
-                TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        [DataTestMethod]
+        [DynamicData(nameof(InvalidCharacters))]
+        [ExpectedException(typeof(InvalidDataException))]
+        public void Th07PracticeScoreTestInvalidChara(int chara) => TestUtils.Wrap(() =>
+        {
+            var properties = ValidProperties;
+            properties.chara = TestUtils.Cast<Th07Converter.Chara>(chara);
+
+            var chapter = Th06ChapterWrapper<Th07Converter>.Create(MakeByteArray(properties));
             var score = new Th07PracticeScoreWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
-        [TestMethod()]
-        [ExpectedException(typeof(InvalidDataException))]
-        public void Th07PracticeScoreTestInvalidLevel() => TestUtils.Wrap(() =>
-        {
-            var signature = "PSCR";
-            short size1 = 0x18;
-            short size2 = 0x18;
-            var unknown1 = 1u;
-            var trialCount = 987;
-            var highScore = 123456;
-            var chara = Th07Converter.Chara.ReimuB;
-            var level = (Th07Converter.Level)(-1);
-            var stage = Th07Converter.Stage.Extra;
-            byte unknown2 = 2;
-            var data = TestUtils.MakeByteArray(
-                unknown1, trialCount, highScore, (byte)chara, (byte)level, (byte)stage, unknown2);
+        public static IEnumerable<object[]> InvalidLevels
+            => TestUtils.GetInvalidEnumerators(typeof(Th07Converter.Level));
 
-            var chapter = Th06ChapterWrapper<Th07Converter>.Create(
-                TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        [DataTestMethod]
+        [DynamicData(nameof(InvalidLevels))]
+        [ExpectedException(typeof(InvalidDataException))]
+        public void Th07PracticeScoreTestInvalidLevel(int level) => TestUtils.Wrap(() =>
+        {
+            var properties = ValidProperties;
+            properties.level = TestUtils.Cast<Th07Converter.Level>(level);
+
+            var chapter = Th06ChapterWrapper<Th07Converter>.Create(MakeByteArray(properties));
             var score = new Th07PracticeScoreWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
-        [TestMethod()]
-        [ExpectedException(typeof(InvalidDataException))]
-        public void Th07PracticeScoreTestInvalidStage() => TestUtils.Wrap(() =>
-        {
-            var signature = "PSCR";
-            short size1 = 0x18;
-            short size2 = 0x18;
-            var unknown1 = 1u;
-            var trialCount = 987;
-            var highScore = 123456;
-            var chara = Th07Converter.Chara.ReimuB;
-            var level = Th07Converter.Level.Hard;
-            var stage = (Th07Converter.Stage)(-1);
-            byte unknown2 = 2;
-            var data = TestUtils.MakeByteArray(
-                unknown1, trialCount, highScore, (byte)chara, (byte)level, (byte)stage, unknown2);
+        public static IEnumerable<object[]> InvalidStages
+            => TestUtils.GetInvalidEnumerators(typeof(Th07Converter.Stage));
 
-            var chapter = Th06ChapterWrapper<Th07Converter>.Create(
-                TestUtils.MakeByteArray(signature.ToCharArray(), size1, size2, data));
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        [DataTestMethod]
+        [DynamicData(nameof(InvalidStages))]
+        [ExpectedException(typeof(InvalidDataException))]
+        public void Th07PracticeScoreTestInvalidStage(int stage) => TestUtils.Wrap(() =>
+        {
+            var properties = ValidProperties;
+            properties.stage = TestUtils.Cast<Th07Converter.Stage>(stage);
+
+            var chapter = Th06ChapterWrapper<Th07Converter>.Create(MakeByteArray(properties));
             var score = new Th07PracticeScoreWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
