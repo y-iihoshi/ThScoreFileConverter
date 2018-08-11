@@ -25,7 +25,7 @@ namespace ThScoreFileConverterTests.Models
             }
         };
 
-        internal static Properties ValidProperties = new Properties()
+        internal static Properties ValidProperties => new Properties()
         {
             maxBonuses = Utils.GetEnumerator<Th08Converter.CharaWithTotal>()
                 .Select((chara, index) => new { chara, index })

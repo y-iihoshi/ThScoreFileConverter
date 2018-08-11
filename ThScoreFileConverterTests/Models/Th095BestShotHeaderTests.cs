@@ -23,7 +23,7 @@ namespace ThScoreFileConverterTests.Models
             public byte[] cardName;
         };
 
-        internal readonly static Properties ValidProperties = new Properties()
+        internal static Properties ValidProperties => new Properties()
         {
             signature = "BSTS",
             level = Th095Converter.Level.Lv2,

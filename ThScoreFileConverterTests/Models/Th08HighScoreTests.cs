@@ -37,7 +37,7 @@ namespace ThScoreFileConverterTests.Models
             public Dictionary<int, byte> cardFlags;
         };
 
-        internal static Properties ValidProperties = new Properties()
+        internal static Properties ValidProperties => new Properties()
         {
             signature = "HSCR",
             size1 = 0x0168,

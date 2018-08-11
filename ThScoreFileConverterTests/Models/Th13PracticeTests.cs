@@ -15,7 +15,7 @@ namespace ThScoreFileConverterTests.Models
             public byte enableFlag;
         };
 
-        internal static Properties ValidProperties => new Properties
+        internal static Properties ValidProperties => new Properties()
         {
             score = 123456u,
             clearFlag = 7,

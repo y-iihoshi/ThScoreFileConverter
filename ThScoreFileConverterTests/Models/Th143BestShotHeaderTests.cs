@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
 using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
@@ -22,7 +21,7 @@ namespace ThScoreFileConverterTests.Models
             public float slowRate;
         };
 
-        internal readonly static Properties ValidProperties = new Properties()
+        internal static Properties ValidProperties => new Properties()
         {
             signature = "BST3",
             day = Th143Converter.Day.Day2,
