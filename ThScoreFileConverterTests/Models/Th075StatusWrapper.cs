@@ -17,6 +17,28 @@ namespace ThScoreFileConverterTests.Models
 
         private readonly PrivateObject pobj = null;
 
+        public static Th075StatusWrapper Create(byte[] array)
+        {
+            var status = new Th075StatusWrapper();
+
+            MemoryStream stream = null;
+            try
+            {
+                stream = new MemoryStream(array);
+                using (var reader = new BinaryReader(stream))
+                {
+                    stream = null;
+                    status.ReadFrom(reader);
+                }
+            }
+            finally
+            {
+                stream?.Dispose();
+            }
+
+            return status;
+        }
+
         public Th075StatusWrapper()
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
 

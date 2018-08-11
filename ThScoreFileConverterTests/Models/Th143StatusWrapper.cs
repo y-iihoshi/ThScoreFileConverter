@@ -33,6 +33,7 @@ namespace ThScoreFileConverterTests.Models
             => this.pobj.GetProperty(nameof(this.Checksum)) as uint?;
         public bool? IsValid
             => this.pobj.GetProperty(nameof(this.IsValid)) as bool?;
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public IReadOnlyCollection<byte> Data
             => this.pobj.GetProperty(nameof(this.Data)) as byte[];
         public IReadOnlyCollection<byte> LastName

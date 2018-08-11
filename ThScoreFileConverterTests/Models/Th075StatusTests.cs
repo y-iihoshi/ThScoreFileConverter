@@ -10,6 +10,76 @@ namespace ThScoreFileConverterTests.Models
     [TestClass()]
     public class Th075StatusTests
     {
+        internal struct Properties
+        {
+            public byte[] encodedLastName;
+            public string decodedLastName;
+            public Dictionary<Th075Converter.Chara, Dictionary<Th075Converter.Chara, int>> arcadeScores;
+
+            public Properties(in Properties properties)
+            {
+                this.encodedLastName = properties.encodedLastName.ToArray();
+                this.decodedLastName = properties.decodedLastName;
+                this.arcadeScores = new Dictionary<Th075Converter.Chara, Dictionary<Th075Converter.Chara, int>>(
+                    properties.arcadeScores);
+            }
+        };
+
+        internal static Properties ValidProperties => new Properties()
+        {
+            encodedLastName = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 },
+            decodedLastName = "Player1 ",
+            arcadeScores = Utils.GetEnumerator<Th075Converter.Chara>().ToDictionary(
+                chara => chara,
+                chara => Utils.GetEnumerator<Th075Converter.Chara>().ToDictionary(
+                    enemy => enemy,
+                    enemy => (int)chara * 100 + (int)enemy))
+        };
+
+        internal static byte[] MakeByteArray(in Properties properties)
+        {
+            var numCharas = Enum.GetValues(typeof(Th075Converter.Chara)).Length;
+            var numUnknownCharas = 4;
+            int plus10(int value) => value + 10;
+
+            return TestUtils.MakeByteArray(
+                properties.encodedLastName,
+                properties.arcadeScores[Th075Converter.Chara.Reimu].Values.Select(plus10).ToArray(),
+                new int[numUnknownCharas],
+                properties.arcadeScores[Th075Converter.Chara.Marisa].Values.Select(plus10).ToArray(),
+                new int[numUnknownCharas],
+                properties.arcadeScores[Th075Converter.Chara.Sakuya].Values.Select(plus10).ToArray(),
+                new int[numUnknownCharas],
+                properties.arcadeScores[Th075Converter.Chara.Alice].Values.Select(plus10).ToArray(),
+                new int[numUnknownCharas],
+                properties.arcadeScores[Th075Converter.Chara.Patchouli].Values.Select(plus10).ToArray(),
+                new int[numUnknownCharas],
+                properties.arcadeScores[Th075Converter.Chara.Youmu].Values.Select(plus10).ToArray(),
+                new int[numUnknownCharas],
+                properties.arcadeScores[Th075Converter.Chara.Remilia].Values.Select(plus10).ToArray(),
+                new int[numUnknownCharas],
+                properties.arcadeScores[Th075Converter.Chara.Yuyuko].Values.Select(plus10).ToArray(),
+                new int[numUnknownCharas],
+                properties.arcadeScores[Th075Converter.Chara.Yukari].Values.Select(plus10).ToArray(),
+                new int[numUnknownCharas],
+                properties.arcadeScores[Th075Converter.Chara.Suika].Values.Select(plus10).ToArray(),
+                new int[numUnknownCharas],
+                properties.arcadeScores[Th075Converter.Chara.Meiling].Values.Select(plus10).ToArray(),
+                new int[numUnknownCharas],
+                new int[(numCharas + numUnknownCharas) * numUnknownCharas],
+                new byte[0x128]);
+        }
+
+        internal static void Validate(in Th075StatusWrapper status, in Properties properties)
+        {
+            Assert.AreEqual(properties.decodedLastName, status.LastName);
+
+            foreach (var chara in Utils.GetEnumerator<Th075Converter.Chara>())
+            {
+                CollectionAssert.AreEqual(properties.arcadeScores[chara].Values, status.ArcadeScores[chara].Values);
+            }
+        }
+
         [TestMethod()]
         public void Th075StatusTest() => TestUtils.Wrap(() =>
         {
@@ -19,63 +89,14 @@ namespace ThScoreFileConverterTests.Models
             Assert.IsNull(status.ArcadeScores);
         });
 
-        internal static void ReadFromTestHelper(Th075StatusWrapper status, byte[] array)
-        {
-            MemoryStream stream = null;
-            try
-            {
-                stream = new MemoryStream(array);
-                using (var reader = new BinaryReader(stream))
-                {
-                    stream = null;
-                    status.ReadFrom(reader);
-                }
-            }
-            finally
-            {
-                stream?.Dispose();
-            }
-        }
-
-        internal static bool IsValidRange(int index, int offset)
-            => (offset <= index) && (index < offset + 11);
-
-        internal static int[] GetExpectedScores(IEnumerable<int> scores, int offset)
-            => scores.Where((_, index) => IsValidRange(index, offset)).Select(score => score - 10).ToArray();
-
         [TestMethod()]
         public void ReadFromTest() => TestUtils.Wrap(() =>
         {
-            var status = new Th075StatusWrapper();
-            var lastName = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 };
-            var arcadeScores = TestUtils.MakeRandomArray<int>(15 * 15);
-            var unknown = TestUtils.MakeRandomArray<byte>(0x128);
+            var properties = ValidProperties;
 
-            ReadFromTestHelper(status, TestUtils.MakeByteArray(lastName, arcadeScores, unknown));
+            var status = Th075StatusWrapper.Create(MakeByteArray(properties));
 
-            Assert.AreEqual("Player1 ", status.LastName);
-            CollectionAssert.AreEqual(
-                GetExpectedScores(arcadeScores, 0), status.ArcadeScores[Th075Converter.Chara.Reimu].Values);
-            CollectionAssert.AreEqual(
-                GetExpectedScores(arcadeScores, 15), status.ArcadeScores[Th075Converter.Chara.Marisa].Values);
-            CollectionAssert.AreEqual(
-                GetExpectedScores(arcadeScores, 30), status.ArcadeScores[Th075Converter.Chara.Sakuya].Values);
-            CollectionAssert.AreEqual(
-                GetExpectedScores(arcadeScores, 45), status.ArcadeScores[Th075Converter.Chara.Alice].Values);
-            CollectionAssert.AreEqual(
-                GetExpectedScores(arcadeScores, 60), status.ArcadeScores[Th075Converter.Chara.Patchouli].Values);
-            CollectionAssert.AreEqual(
-                GetExpectedScores(arcadeScores, 75), status.ArcadeScores[Th075Converter.Chara.Youmu].Values);
-            CollectionAssert.AreEqual(
-                GetExpectedScores(arcadeScores, 90), status.ArcadeScores[Th075Converter.Chara.Remilia].Values);
-            CollectionAssert.AreEqual(
-                GetExpectedScores(arcadeScores, 105), status.ArcadeScores[Th075Converter.Chara.Yuyuko].Values);
-            CollectionAssert.AreEqual(
-                GetExpectedScores(arcadeScores, 120), status.ArcadeScores[Th075Converter.Chara.Yukari].Values);
-            CollectionAssert.AreEqual(
-                GetExpectedScores(arcadeScores, 135), status.ArcadeScores[Th075Converter.Chara.Suika].Values);
-            CollectionAssert.AreEqual(
-                GetExpectedScores(arcadeScores, 150), status.ArcadeScores[Th075Converter.Chara.Meiling].Values);
+            Validate(status, properties);
         });
 
         [TestMethod()]
@@ -84,6 +105,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var status = new Th075StatusWrapper();
             status.ReadFrom(null);
+
             Assert.Fail(TestUtils.Unreachable);
         });
 
@@ -91,12 +113,11 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortenedName() => TestUtils.Wrap(() =>
         {
-            var status = new Th075StatusWrapper();
-            var lastName = new byte[] { 15, 37, 26, 50, 30, 43, 53 };
-            var arcadeScores = TestUtils.MakeRandomArray<int>(15 * 15);
-            var unknown = TestUtils.MakeRandomArray<byte>(0x128);
+            var properties = ValidProperties;
+            properties.encodedLastName =
+                properties.encodedLastName.Take(properties.encodedLastName.Length - 1).ToArray();
 
-            ReadFromTestHelper(status, TestUtils.MakeByteArray(lastName, arcadeScores, unknown));
+            Th075StatusWrapper.Create(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -104,16 +125,14 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod()]
         public void ReadFromTestExceededName() => TestUtils.Wrap(() =>
         {
-            var status = new Th075StatusWrapper();
-            var lastName = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103, 1 };
-            var arcadeScores = TestUtils.MakeRandomArray<int>(15 * 15);
-            var unknown = TestUtils.MakeRandomArray<byte>(0x128);
+            var properties = ValidProperties;
+            properties.encodedLastName = properties.encodedLastName.Concat(new byte[1] { 1 }).ToArray();
 
-            ReadFromTestHelper(status, TestUtils.MakeByteArray(lastName, arcadeScores, unknown));
+            var status = Th075StatusWrapper.Create(MakeByteArray(properties));
 
             Assert.AreEqual("Player1 ", status.LastName);
             CollectionAssert.AreNotEqual(
-                arcadeScores.Take(11).Select(score => score - 10).ToArray(),
+                properties.arcadeScores[Th075Converter.Chara.Reimu].Values,
                 status.ArcadeScores[Th075Converter.Chara.Reimu].Values);
         });
 
@@ -121,12 +140,10 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortenedArcadeScores() => TestUtils.Wrap(() =>
         {
-            var status = new Th075StatusWrapper();
-            var lastName = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 };
-            var arcadeScores = TestUtils.MakeRandomArray<int>(15 * 15 - 1);
-            var unknown = TestUtils.MakeRandomArray<byte>(0x128);
+            var properties = new Properties(ValidProperties);
+            properties.arcadeScores[Th075Converter.Chara.Meiling].Remove(Th075Converter.Chara.Meiling);
 
-            ReadFromTestHelper(status, TestUtils.MakeByteArray(lastName, arcadeScores, unknown));
+            Th075StatusWrapper.Create(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -134,36 +151,12 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod()]
         public void ReadFromTestExceededArcadeScores() => TestUtils.Wrap(() =>
         {
-            var status = new Th075StatusWrapper();
-            var lastName = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 };
-            var arcadeScores = TestUtils.MakeRandomArray<int>(15 * 15 + 1);
-            var unknown = TestUtils.MakeRandomArray<byte>(0x128);
+            var properties = new Properties(ValidProperties);
+            properties.arcadeScores[Th075Converter.Chara.Meiling].Add(TestUtils.Cast<Th075Converter.Chara>(99), 99);
 
-            ReadFromTestHelper(status, TestUtils.MakeByteArray(lastName, arcadeScores, unknown));
+            var status = Th075StatusWrapper.Create(MakeByteArray(properties));
 
-            Assert.AreEqual("Player1 ", status.LastName);
-            CollectionAssert.AreEqual(
-                GetExpectedScores(arcadeScores, 0), status.ArcadeScores[Th075Converter.Chara.Reimu].Values);
-            CollectionAssert.AreEqual(
-                GetExpectedScores(arcadeScores, 15), status.ArcadeScores[Th075Converter.Chara.Marisa].Values);
-            CollectionAssert.AreEqual(
-                GetExpectedScores(arcadeScores, 30), status.ArcadeScores[Th075Converter.Chara.Sakuya].Values);
-            CollectionAssert.AreEqual(
-                GetExpectedScores(arcadeScores, 45), status.ArcadeScores[Th075Converter.Chara.Alice].Values);
-            CollectionAssert.AreEqual(
-                GetExpectedScores(arcadeScores, 60), status.ArcadeScores[Th075Converter.Chara.Patchouli].Values);
-            CollectionAssert.AreEqual(
-                GetExpectedScores(arcadeScores, 75), status.ArcadeScores[Th075Converter.Chara.Youmu].Values);
-            CollectionAssert.AreEqual(
-                GetExpectedScores(arcadeScores, 90), status.ArcadeScores[Th075Converter.Chara.Remilia].Values);
-            CollectionAssert.AreEqual(
-                GetExpectedScores(arcadeScores, 105), status.ArcadeScores[Th075Converter.Chara.Yuyuko].Values);
-            CollectionAssert.AreEqual(
-                GetExpectedScores(arcadeScores, 120), status.ArcadeScores[Th075Converter.Chara.Yukari].Values);
-            CollectionAssert.AreEqual(
-                GetExpectedScores(arcadeScores, 135), status.ArcadeScores[Th075Converter.Chara.Suika].Values);
-            CollectionAssert.AreEqual(
-                GetExpectedScores(arcadeScores, 150), status.ArcadeScores[Th075Converter.Chara.Meiling].Values);
+            Validate(status, ValidProperties);
         });
     }
 }

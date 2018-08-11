@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -11,53 +13,74 @@ namespace ThScoreFileConverterTests.Models
     [TestClass()]
     public class Th143StatusTests
     {
+        internal struct Properties
+        {
+            public string signature;
+            public ushort version;
+            public int size;
+            public uint checksum;
+            public byte[] lastName;
+            public byte[] bgmFlags;
+            public int totalPlayTime;
+            public Th143Converter.ItemWithTotal lastMainItem;
+            public Th143Converter.ItemWithTotal lastSubItem;
+            public byte[] nicknameFlags;
+        };
+
+        internal static Properties ValidProperties => new Properties()
+        {
+            signature = "ST",
+            version = 1,
+            size = 0x224,
+            checksum = 0u,
+            lastName = Encoding.Default.GetBytes("Player1     \0\0"),
+            bgmFlags = TestUtils.MakeRandomArray<byte>(9),
+            totalPlayTime = 12345678,
+            lastMainItem = Th143Converter.ItemWithTotal.Camera,
+            lastSubItem = Th143Converter.ItemWithTotal.Doll,
+            nicknameFlags = TestUtils.MakeRandomArray<byte>(71)
+        };
+
+        internal static byte[] MakeByteArray(in Properties properties)
+            => TestUtils.MakeByteArray(
+                properties.signature.ToCharArray(),
+                properties.version,
+                properties.checksum,
+                properties.size,
+                properties.lastName,
+                TestUtils.MakeRandomArray<byte>(0x12),
+                properties.bgmFlags,
+                TestUtils.MakeRandomArray<byte>(0x17),
+                properties.totalPlayTime,
+                0,
+                TestUtils.Cast<int>(properties.lastMainItem),
+                TestUtils.Cast<int>(properties.lastSubItem),
+                TestUtils.MakeRandomArray<byte>(0x54),
+                properties.nicknameFlags,
+                TestUtils.MakeRandomArray<byte>(0x12D));
+
+        internal static void Validate(in Th143StatusWrapper status, in Properties properties)
+        {
+            Assert.AreEqual(properties.signature, status.Signature);
+            Assert.AreEqual(properties.version, status.Version);
+            Assert.AreEqual(properties.size, status.Size);
+            Assert.AreEqual(properties.checksum, status.Checksum);
+            CollectionAssert.AreEqual(properties.lastName, status.LastName?.ToArray());
+            CollectionAssert.AreEqual(properties.bgmFlags, status.BgmFlags?.ToArray());
+            Assert.AreEqual(properties.totalPlayTime, status.TotalPlayTime);
+            Assert.AreEqual(properties.lastMainItem, status.LastMainItem);
+            Assert.AreEqual(properties.lastSubItem, status.LastSubItem);
+            CollectionAssert.AreEqual(properties.nicknameFlags, status.NicknameFlags?.ToArray());
+        }
+
         [TestMethod()]
         public void Th143StatusTestChapter() => TestUtils.Wrap(() =>
         {
-            var signature = "ST";
-            var version = (ushort)1;
-            var size = 0x224;
-            var checksum = 0u;
-            var lastName = "Player1     \0\0";
-            var unknown1 = TestUtils.MakeRandomArray<byte>(0x12);
-            var bgmFlags = TestUtils.MakeRandomArray<byte>(9);
-            var unknown2 = TestUtils.MakeRandomArray<byte>(0x17);
-            var totalPlayTime = 12345678;
-            var unknown3 = 0;
-            var lastMainItem = Th143Converter.ItemWithTotal.Camera;
-            var lastSubItem = Th143Converter.ItemWithTotal.Doll;
-            var unknown4 = TestUtils.MakeRandomArray<byte>(0x54);
-            var nicknameFlags = TestUtils.MakeRandomArray<byte>(71);
-            var unknown5 = TestUtils.MakeRandomArray<byte>(0x12D);
-            var data = TestUtils.MakeByteArray(
-                lastName.ToCharArray(),
-                unknown1,
-                bgmFlags,
-                unknown2,
-                totalPlayTime,
-                unknown3,
-                (int)lastMainItem,
-                (int)lastSubItem,
-                unknown4,
-                nicknameFlags,
-                unknown5);
-
-            var chapter = Th095ChapterWrapper<Th143Converter>.Create(
-                TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
+            var chapter = Th095ChapterWrapper<Th143Converter>.Create(MakeByteArray(ValidProperties));
             var status = new Th143StatusWrapper(chapter);
 
-            Assert.AreEqual(signature, status.Signature);
-            Assert.AreEqual(version, status.Version);
-            Assert.AreEqual(size, status.Size);
-            Assert.AreEqual(checksum, status.Checksum);
-            Assert.IsFalse(status.IsValid.Value);
-            CollectionAssert.AreEqual(data, status.Data.ToArray());
-            CollectionAssert.AreEqual(Encoding.Default.GetBytes(lastName), status.LastName.ToArray());
-            CollectionAssert.AreEqual(bgmFlags, status.BgmFlags.ToArray());
-            Assert.AreEqual(totalPlayTime, status.TotalPlayTime);
-            Assert.AreEqual(lastMainItem, status.LastMainItem);
-            Assert.AreEqual(lastSubItem, status.LastSubItem);
-            CollectionAssert.AreEqual(nicknameFlags, status.NicknameFlags.ToArray());
+            Validate(status, ValidProperties);
+            Assert.IsTrue(status.IsValid.Value);
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
@@ -70,41 +93,16 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         });
 
+        [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
         [TestMethod()]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th143StatusTestInvalidSignature() => TestUtils.Wrap(() =>
         {
-            var signature = "st";
-            var version = (ushort)1;
-            var size = 0x224;
-            var checksum = 0u;
-            var lastName = "Player1     \0\0";
-            var unknown1 = TestUtils.MakeRandomArray<byte>(0x12);
-            var bgmFlags = TestUtils.MakeRandomArray<byte>(9);
-            var unknown2 = TestUtils.MakeRandomArray<byte>(0x17);
-            var totalPlayTime = 12345678;
-            var unknown3 = 0;
-            var lastMainItem = Th143Converter.ItemWithTotal.Camera;
-            var lastSubItem = Th143Converter.ItemWithTotal.Doll;
-            var unknown4 = TestUtils.MakeRandomArray<byte>(0x54);
-            var nicknameFlags = TestUtils.MakeRandomArray<byte>(71);
-            var unknown5 = TestUtils.MakeRandomArray<byte>(0x12D);
-            var data = TestUtils.MakeByteArray(
-                lastName.ToCharArray(),
-                unknown1,
-                bgmFlags,
-                unknown2,
-                totalPlayTime,
-                unknown3,
-                (int)lastMainItem,
-                (int)lastSubItem,
-                unknown4,
-                nicknameFlags,
-                unknown5);
+            var properties = ValidProperties;
+            properties.signature = properties.signature.ToLower(CultureInfo.InvariantCulture);
 
-            var chapter = Th095ChapterWrapper<Th143Converter>.Create(
-                TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
+            var chapter = Th095ChapterWrapper<Th143Converter>.Create(MakeByteArray(properties));
             var status = new Th143StatusWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -115,36 +113,10 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(InvalidDataException))]
         public void Th143StatusTestInvalidVersion() => TestUtils.Wrap(() =>
         {
-            var signature = "ST";
-            var version = (ushort)0;
-            var size = 0x224;
-            var checksum = 0u;
-            var lastName = "Player1     \0\0";
-            var unknown1 = TestUtils.MakeRandomArray<byte>(0x12);
-            var bgmFlags = TestUtils.MakeRandomArray<byte>(9);
-            var unknown2 = TestUtils.MakeRandomArray<byte>(0x17);
-            var totalPlayTime = 12345678;
-            var unknown3 = 0;
-            var lastMainItem = Th143Converter.ItemWithTotal.Camera;
-            var lastSubItem = Th143Converter.ItemWithTotal.Doll;
-            var unknown4 = TestUtils.MakeRandomArray<byte>(0x54);
-            var nicknameFlags = TestUtils.MakeRandomArray<byte>(71);
-            var unknown5 = TestUtils.MakeRandomArray<byte>(0x12D);
-            var data = TestUtils.MakeByteArray(
-                lastName.ToCharArray(),
-                unknown1,
-                bgmFlags,
-                unknown2,
-                totalPlayTime,
-                unknown3,
-                (int)lastMainItem,
-                (int)lastSubItem,
-                unknown4,
-                nicknameFlags,
-                unknown5);
+            var properties = ValidProperties;
+            properties.version += 1;
 
-            var chapter = Th095ChapterWrapper<Th143Converter>.Create(
-                TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
+            var chapter = Th095ChapterWrapper<Th143Converter>.Create(MakeByteArray(properties));
             var status = new Th143StatusWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -155,42 +127,22 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(InvalidDataException))]
         public void Th143StatusTestInvalidSize() => TestUtils.Wrap(() =>
         {
-            var signature = "ST";
-            var version = (ushort)1;
-            var size = 0x225;
-            var checksum = 0u;
-            var lastName = "Player1     \0\0";
-            var unknown1 = TestUtils.MakeRandomArray<byte>(0x12);
-            var bgmFlags = TestUtils.MakeRandomArray<byte>(9);
-            var unknown2 = TestUtils.MakeRandomArray<byte>(0x17);
-            var totalPlayTime = 12345678;
-            var unknown3 = 0;
-            var lastMainItem = Th143Converter.ItemWithTotal.Camera;
-            var lastSubItem = Th143Converter.ItemWithTotal.Doll;
-            var unknown4 = TestUtils.MakeRandomArray<byte>(0x54);
-            var nicknameFlags = TestUtils.MakeRandomArray<byte>(71);
-            var unknown5 = TestUtils.MakeRandomArray<byte>(0x12D);
-            var data = TestUtils.MakeByteArray(
-                lastName.ToCharArray(),
-                unknown1,
-                bgmFlags,
-                unknown2,
-                totalPlayTime,
-                unknown3,
-                (int)lastMainItem,
-                (int)lastSubItem,
-                unknown4,
-                nicknameFlags,
-                unknown5);
+            var properties = ValidProperties;
+            properties.size += 1;
 
-            var chapter = Th095ChapterWrapper<Th143Converter>.Create(
-                TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
+            var chapter = Th095ChapterWrapper<Th143Converter>.Create(MakeByteArray(properties));
             var status = new Th143StatusWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        internal static void CanInitializeTestHelper(string signature, ushort version, int size, bool expected)
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        [DataTestMethod]
+        [DataRow("ST", (ushort)1, 0x224, true)]
+        [DataRow("st", (ushort)1, 0x224, false)]
+        [DataRow("ST", (ushort)0, 0x224, false)]
+        [DataRow("ST", (ushort)1, 0x225, false)]
+        public void Th143StatusCanInitializeTest(string signature, ushort version, int size, bool expected)
             => TestUtils.Wrap(() =>
             {
                 var checksum = 0u;
@@ -202,97 +154,36 @@ namespace ThScoreFileConverterTests.Models
                 Assert.AreEqual(expected, Th143StatusWrapper.CanInitialize(chapter));
             });
 
-        [TestMethod()]
-        public void Th143StatusCanInitializeTest()
-            => CanInitializeTestHelper("ST", 1, 0x224, true);
-
-        [TestMethod()]
-        public void Th143StatusCanInitializeTestInvalidSignature()
-            => CanInitializeTestHelper("st", 1, 0x224, false);
-
-        [TestMethod()]
-        public void Th143StatusCanInitializeTestInvalidVersion()
-            => CanInitializeTestHelper("ST", 0, 0x224, false);
-
-        [TestMethod()]
-        public void Th143StatusCanInitializeTestInvalidSize()
-            => CanInitializeTestHelper("ST", 1, 0x225, false);
+        public static IEnumerable<object[]> InvalidItems
+            => TestUtils.GetInvalidEnumerators(typeof(Th143Converter.ItemWithTotal));
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
-        [TestMethod()]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        [DataTestMethod]
+        [DynamicData(nameof(InvalidItems))]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th143StatusTestInvalidLastMainItem() => TestUtils.Wrap(() =>
+        public void Th143StatusTestInvalidLastMainItem(int item) => TestUtils.Wrap(() =>
         {
-            var signature = "ST";
-            var version = (ushort)1;
-            var size = 0x224;
-            var checksum = 0u;
-            var lastName = "Player1     \0\0";
-            var unknown1 = TestUtils.MakeRandomArray<byte>(0x12);
-            var bgmFlags = TestUtils.MakeRandomArray<byte>(9);
-            var unknown2 = TestUtils.MakeRandomArray<byte>(0x17);
-            var totalPlayTime = 12345678;
-            var unknown3 = 0;
-            var lastMainItem = (Th143Converter.ItemWithTotal)(-1);
-            var lastSubItem = Th143Converter.ItemWithTotal.Doll;
-            var unknown4 = TestUtils.MakeRandomArray<byte>(0x54);
-            var nicknameFlags = TestUtils.MakeRandomArray<byte>(71);
-            var unknown5 = TestUtils.MakeRandomArray<byte>(0x12D);
-            var data = TestUtils.MakeByteArray(
-                lastName.ToCharArray(),
-                unknown1,
-                bgmFlags,
-                unknown2,
-                totalPlayTime,
-                unknown3,
-                (int)lastMainItem,
-                (int)lastSubItem,
-                unknown4,
-                nicknameFlags,
-                unknown5);
+            var properties = ValidProperties;
+            properties.lastMainItem = TestUtils.Cast<Th143Converter.ItemWithTotal>(item);
 
-            var chapter = Th095ChapterWrapper<Th143Converter>.Create(
-                TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
+            var chapter = Th095ChapterWrapper<Th143Converter>.Create(MakeByteArray(properties));
             var status = new Th143StatusWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
-        [TestMethod()]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        [DataTestMethod]
+        [DynamicData(nameof(InvalidItems))]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th143StatusTestInvalidLastSubItem() => TestUtils.Wrap(() =>
+        public void Th143StatusTestInvalidLastSubItem(int item) => TestUtils.Wrap(() =>
         {
-            var signature = "ST";
-            var version = (ushort)1;
-            var size = 0x224;
-            var checksum = 0u;
-            var lastName = "Player1     \0\0";
-            var unknown1 = TestUtils.MakeRandomArray<byte>(0x12);
-            var bgmFlags = TestUtils.MakeRandomArray<byte>(9);
-            var unknown2 = TestUtils.MakeRandomArray<byte>(0x17);
-            var totalPlayTime = 12345678;
-            var unknown3 = 0;
-            var lastMainItem = Th143Converter.ItemWithTotal.Camera;
-            var lastSubItem = (Th143Converter.ItemWithTotal)(-1);
-            var unknown4 = TestUtils.MakeRandomArray<byte>(0x54);
-            var nicknameFlags = TestUtils.MakeRandomArray<byte>(71);
-            var unknown5 = TestUtils.MakeRandomArray<byte>(0x12D);
-            var data = TestUtils.MakeByteArray(
-                lastName.ToCharArray(),
-                unknown1,
-                bgmFlags,
-                unknown2,
-                totalPlayTime,
-                unknown3,
-                (int)lastMainItem,
-                (int)lastSubItem,
-                unknown4,
-                nicknameFlags,
-                unknown5);
+            var properties = ValidProperties;
+            properties.lastSubItem = TestUtils.Cast<Th143Converter.ItemWithTotal>(item);
 
-            var chapter = Th095ChapterWrapper<Th143Converter>.Create(
-                TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
+            var chapter = Th095ChapterWrapper<Th143Converter>.Create(MakeByteArray(properties));
             var status = new Th143StatusWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
