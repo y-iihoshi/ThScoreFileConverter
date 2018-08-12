@@ -147,6 +147,14 @@
     <Compile Include="Models\Th10SpellCardWrapper.cs" />
     <Compile Include="Models\Th10StatusTests.cs" />
     <Compile Include="Models\Th10StatusWrapper.cs" />
+    <Compile Include="Models\Th105CardForDeckTests.cs" />
+    <Compile Include="Models\Th105CardForDeckWrapper.cs" />
+    <Compile Include="Models\Th105CharaCardIdPairTests.cs" />
+    <Compile Include="Models\Th105CharaCardIdPairWrapper.cs" />
+    <Compile Include="Models\Th105ClearDataTests.cs" />
+    <Compile Include="Models\Th105ClearDataWrapper.cs" />
+    <Compile Include="Models\Th105SpellCardResultTests.cs" />
+    <Compile Include="Models\Th105SpellCardResultWrapper.cs" />
     <Compile Include="Models\Th125BestShotHeaderTests.cs" />
     <Compile Include="Models\Th125BestShotHeaderWrapper.cs" />
     <Compile Include="Models\Th125BonusFieldsTests.cs" />
