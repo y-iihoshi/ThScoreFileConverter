@@ -17,7 +17,7 @@ namespace ThScoreFileConverterTests.Models
             public ushort version;
             public int size;
             public uint checksum;
-            public Th125LevelScenePairTests.Properties levelScene;
+            public Th095LevelScenePairTests.Properties<Th125Converter.Level> levelScene;
             public int highScore;
             public Th125Converter.Chara chara;
             public int trialCount;
@@ -32,7 +32,7 @@ namespace ThScoreFileConverterTests.Models
             version = 0,
             size = 0x48,
             checksum = 0u,
-            levelScene = Th125LevelScenePairTests.ValidProperties,
+            levelScene = Th095LevelScenePairTests.GetValidProperties<Th125Converter.Level>(),
             highScore = 1234567,
             chara = Th125Converter.Chara.Hatate,
             trialCount = 9876,
@@ -151,6 +151,8 @@ namespace ThScoreFileConverterTests.Models
         public static IEnumerable<object[]> InvalidLevels
             => TestUtils.GetInvalidEnumerators(typeof(Th125Converter.Level));
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
         [ExpectedException(typeof(InvalidCastException))]
@@ -168,6 +170,8 @@ namespace ThScoreFileConverterTests.Models
         public static IEnumerable<object[]> InvalidCharacters
             => TestUtils.GetInvalidEnumerators(typeof(Th125Converter.Chara));
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidCharacters))]
         [ExpectedException(typeof(InvalidCastException))]

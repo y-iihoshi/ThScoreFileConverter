@@ -151,8 +151,6 @@
     <Compile Include="Models\Th125BestShotHeaderWrapper.cs" />
     <Compile Include="Models\Th125BonusFieldsTests.cs" />
     <Compile Include="Models\Th125BonusFieldsWrapper.cs" />
-    <Compile Include="Models\Th125LevelScenePairTests.cs" />
-    <Compile Include="Models\Th125LevelScenePairWrapper.cs" />
     <Compile Include="Models\Th125ScoreTests.cs" />
     <Compile Include="Models\Th125ScoreWrapper.cs" />
     <Compile Include="Models\Th125StatusTests.cs" />

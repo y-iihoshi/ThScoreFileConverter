@@ -17,7 +17,7 @@ namespace ThScoreFileConverterTests.Models
             public ushort version;
             public int size;
             public uint checksum;
-            public Th095LevelScenePairTests.Properties levelScene;
+            public Th095LevelScenePairTests.Properties<Th095Converter.Level> levelScene;
             public int highScore;
             public int bestshotScore;
             public uint dateTime;
@@ -32,7 +32,7 @@ namespace ThScoreFileConverterTests.Models
             version = 1,
             size = 0x60,
             checksum = 0u,
-            levelScene = Th095LevelScenePairTests.ValidProperties,
+            levelScene = Th095LevelScenePairTests.GetValidProperties<Th095Converter.Level>(),
             highScore = 1234567,
             bestshotScore = 23456,
             dateTime = 34567890,
@@ -150,6 +150,8 @@ namespace ThScoreFileConverterTests.Models
         public static IEnumerable<object[]> InvalidLevels
             => TestUtils.GetInvalidEnumerators(typeof(Th095Converter.Level));
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
         [ExpectedException(typeof(InvalidCastException))]

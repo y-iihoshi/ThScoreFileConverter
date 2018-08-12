@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
@@ -6,32 +7,48 @@ namespace ThScoreFileConverterTests.Models
     [TestClass]
     public class Th095LevelScenePairTests
     {
-        internal struct Properties
+        internal struct Properties<TLevel>
+            where TLevel : struct, Enum
         {
-            public Th095Converter.Level level;
+            public TLevel level;
             public int scene;
         };
 
-        internal static Properties ValidProperties => new Properties()
-        {
-            level = Th095Converter.Level.Lv9,
-            scene = 6
-        };
+        internal static Properties<TLevel> GetValidProperties<TLevel>()
+            where TLevel : struct, Enum
+            => new Properties<TLevel>()
+            {
+                level = TestUtils.Cast<TLevel>(8),
+                scene = 6
+            };
 
-        internal static void Validate(in Th095LevelScenePairWrapper pair, in Properties properties)
+        internal static void Validate<TParent, TLevel>(
+            in Th095LevelScenePairWrapper<TParent, TLevel> pair, in Properties<TLevel> properties)
+            where TParent : ThConverter
+            where TLevel : struct, Enum
         {
             Assert.AreEqual(properties.level, pair.Level);
             Assert.AreEqual(properties.scene, pair.Scene);
         }
 
+        internal static void LevelScenePairTestHelper<TParent, TLevel>()
+            where TParent : ThConverter
+            where TLevel : struct, Enum
+            => TestUtils.Wrap(() =>
+            {
+                var properties = GetValidProperties<TLevel>();
+
+                var pair = new Th095LevelScenePairWrapper<TParent, TLevel>(properties.level, properties.scene);
+
+                Validate(pair, properties);
+            });
+
         [TestMethod]
-        public void Th095LevelScenePairTest() => TestUtils.Wrap(() =>
-        {
-            var properties = ValidProperties;
+        public void Th095LevelScenePairTest()
+            => LevelScenePairTestHelper<Th095Converter, Th095Converter.Level>();
 
-            var pair = new Th095LevelScenePairWrapper(properties.level, properties.scene);
-
-            Validate(pair, properties);
-        });
+        [TestMethod]
+        public void Th125LevelScenePairTest()
+            => LevelScenePairTestHelper<Th125Converter, Th125Converter.Level>();
     }
 }
