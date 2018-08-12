@@ -143,6 +143,28 @@ namespace ThScoreFileConverterTests.Models
                 Validate(clearData, properties);
             });
 
+        internal static void ReadFromTestDuplicatedHelper<TParent, TChara, TLevel>()
+            where TParent : ThConverter
+            where TChara : struct, Enum
+            where TLevel : struct, Enum
+            => TestUtils.Wrap(() =>
+            {
+                var properties = GetValidProperties<TChara, TLevel>();
+                var array = TestUtils.MakeByteArray(
+                    properties.cardsForDeck.Count + 1,
+                    properties.cardsForDeck
+                        .SelectMany(pair => Th105CardForDeckTests.MakeByteArray(pair.Value)).ToArray(),
+                    Th105CardForDeckTests.MakeByteArray(properties.cardsForDeck.First().Value),
+                    properties.spellCardResults.Count + 1,
+                    properties.spellCardResults
+                        .SelectMany(pair => Th105SpellCardResultTests.MakeByteArray(pair.Value)).ToArray(),
+                    Th105SpellCardResultTests.MakeByteArray(properties.spellCardResults.First().Value));
+
+                var clearData = Th105ClearDataWrapper<TParent, TChara, TLevel>.Create(array);
+
+                Validate(clearData, properties);
+            });
+
         #region Th105
 
         [TestMethod]
@@ -166,6 +188,10 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th105ClearDataReadFromTestExceeded()
             => ReadFromTestExceededHelper<Th105Converter, Th105Converter.Chara, Th105Converter.Level>();
+
+        [TestMethod]
+        public void Th105ClearDataReadFromTestDuplicated()
+            => ReadFromTestDuplicatedHelper<Th105Converter, Th105Converter.Chara, Th105Converter.Level>();
 
         #endregion
 
@@ -192,6 +218,10 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th123ClearDataReadFromTestExceeded()
             => ReadFromTestExceededHelper<Th123Converter, Th123Converter.Chara, Th123Converter.Level>();
+
+        [TestMethod]
+        public void Th123ClearDataReadFromTestDuplicated()
+            => ReadFromTestDuplicatedHelper<Th123Converter, Th123Converter.Chara, Th123Converter.Level>();
 
         #endregion
     }
