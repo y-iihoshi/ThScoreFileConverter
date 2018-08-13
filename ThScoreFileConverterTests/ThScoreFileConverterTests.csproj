@@ -167,6 +167,8 @@
     <Compile Include="Models\Th125ScoreWrapper.cs" />
     <Compile Include="Models\Th125StatusTests.cs" />
     <Compile Include="Models\Th125StatusWrapper.cs" />
+    <Compile Include="Models\Th128ClearDataTests.cs" />
+    <Compile Include="Models\Th128ClearDataWrapper.cs" />
     <Compile Include="Models\Th128StatusTests.cs" />
     <Compile Include="Models\Th128StatusWrapper.cs" />
     <Compile Include="Models\Th13ClearDataTests.cs" />
