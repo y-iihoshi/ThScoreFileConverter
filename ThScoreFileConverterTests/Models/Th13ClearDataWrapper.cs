@@ -44,8 +44,8 @@ namespace ThScoreFileConverterTests.Models
         public TCharaWithTotal? Chara
             => this.pobj.GetProperty(nameof(Chara)) as TCharaWithTotal?;
         // NOTE: Th13Converter.ScoreData is a private class.
-        // public IReadOnlyDictionary<Level, ScoreData[]> Rankings
-        //     => this.pobj.GetProperty(nameof(Rankings)) as Dictionary<Level, ScoreData[]>;
+        // public IReadOnlyDictionary<LevelPracticeWithTotal, ScoreData[]> Rankings
+        //     => this.pobj.GetProperty(nameof(Rankings)) as Dictionary<LevelPracticeWithTotal, ScoreData[]>;
         public object Rankings
             => this.pobj.GetProperty(nameof(Rankings));
         public object[] Ranking(TLevelPracticeWithTotal level)

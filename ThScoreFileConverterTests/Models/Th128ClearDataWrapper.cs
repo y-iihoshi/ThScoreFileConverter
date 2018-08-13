@@ -7,7 +7,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    // NOTE: Setting the accessibility as public causes CS0050, CS0051, CS0053 and CS0703.
+    // NOTE: Setting the accessibility as public causes CS0050, CS0051 and CS0053.
     internal sealed class Th128ClearDataWrapper
     {
         private static Type ParentType = typeof(Th128Converter);

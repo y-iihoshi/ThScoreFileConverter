@@ -49,8 +49,8 @@ namespace ThScoreFileConverterTests.Models
         public object Target
             => this.pobj.Target;
         // NOTE: Th15Converter.ScoreData is a private class.
-        // public IReadOnlyDictionary<Level, ScoreData[]> Rankings
-        //     => this.pobj.GetProperty(nameof(Rankings)) as Dictionary<Level, ScoreData[]>;
+        // public IReadOnlyDictionary<LevelWithTotal, ScoreData[]> Rankings
+        //     => this.pobj.GetProperty(nameof(Rankings)) as Dictionary<LevelWithTotal, ScoreData[]>;
         public object Rankings
             => this.pobj.GetProperty(nameof(Rankings));
         public object[] Ranking(ThConverter.LevelWithTotal level)
