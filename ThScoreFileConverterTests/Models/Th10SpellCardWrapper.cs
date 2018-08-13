@@ -43,6 +43,8 @@ namespace ThScoreFileConverterTests.Models
 
         public Th10SpellCardWrapper()
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
+        public Th10SpellCardWrapper(object obj)
+            => this.pobj = new PrivateObject(obj);
 
         public object Target
             => this.pobj.Target;

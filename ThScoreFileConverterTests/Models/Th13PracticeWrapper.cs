@@ -42,6 +42,8 @@ namespace ThScoreFileConverterTests.Models
 
         public Th13PracticeWrapper()
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
+        public Th13PracticeWrapper(object obj)
+            => this.pobj = new PrivateObject(obj);
 
         public object Target
             => this.pobj.Target;

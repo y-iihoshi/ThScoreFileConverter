@@ -139,6 +139,10 @@
     <Compile Include="Models\Th095StatusWrapper.cs" />
     <Compile Include="Models\Th10ChapterTests.cs" />
     <Compile Include="Models\Th10ChapterWrapper.cs" />
+    <Compile Include="Models\Th10ClearDataTests.cs" />
+    <Compile Include="Models\Th10ClearDataWrapper.cs" />
+    <Compile Include="Models\Th10LevelStagePairTests.cs" />
+    <Compile Include="Models\Th10LevelStagePairWrapper.cs" />
     <Compile Include="Models\Th10PracticeTests.cs" />
     <Compile Include="Models\Th10PracticeWrapper.cs" />
     <Compile Include="Models\Th10ScoreDataTests.cs" />
@@ -165,6 +169,8 @@
     <Compile Include="Models\Th125StatusWrapper.cs" />
     <Compile Include="Models\Th128StatusTests.cs" />
     <Compile Include="Models\Th128StatusWrapper.cs" />
+    <Compile Include="Models\Th13ClearDataTests.cs" />
+    <Compile Include="Models\Th13ClearDataWrapper.cs" />
     <Compile Include="Models\Th13PracticeTests.cs" />
     <Compile Include="Models\Th13PracticeWrapper.cs" />
     <Compile Include="Models\Th13SpellCardTests.cs" />
@@ -175,8 +181,14 @@
     <Compile Include="Models\Th143ScoreWrapper.cs" />
     <Compile Include="Models\Th143StatusTests.cs" />
     <Compile Include="Models\Th143StatusWrapper.cs" />
+    <Compile Include="Models\Th15ClearDataPerGameModeTests.cs" />
+    <Compile Include="Models\Th15ClearDataPerGameModeWrapper.cs" />
+    <Compile Include="Models\Th15ClearDataTests.cs" />
+    <Compile Include="Models\Th15ClearDataWrapper.cs" />
     <Compile Include="Models\Th15ScoreDataTests.cs" />
     <Compile Include="Models\Th15ScoreDataWrapper.cs" />
+    <Compile Include="Models\Th16ClearDataTests.cs" />
+    <Compile Include="Models\Th16ClearDataWrapper.cs" />
     <Compile Include="Models\Th16ScoreDataTests.cs" />
     <Compile Include="Models\Th16ScoreDataWrapper.cs" />
     <Compile Include="Models\ThConverterEventArgsTests.cs" />

@@ -44,6 +44,8 @@ namespace ThScoreFileConverterTests.Models
 
         public Th10ScoreDataWrapper()
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
+        public Th10ScoreDataWrapper(object obj)
+            => this.pobj = new PrivateObject(obj);
 
         public object Target
             => this.pobj.Target;

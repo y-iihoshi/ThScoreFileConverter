@@ -17,7 +17,6 @@ namespace ThScoreFileConverterTests.Models
 
         private readonly PrivateObject pobj = null;
 
-        [SuppressMessage("Microsoft.Design", "CA1000:DoNotDeclareStaticMembersOnGenericTypes")]
         public static Th15ScoreDataWrapper Create(byte[] array)
         {
             var scoreData = new Th15ScoreDataWrapper();
@@ -42,6 +41,8 @@ namespace ThScoreFileConverterTests.Models
 
         public Th15ScoreDataWrapper()
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
+        public Th15ScoreDataWrapper(object obj)
+            => this.pobj = new PrivateObject(obj);
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public object Target

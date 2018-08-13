@@ -6,7 +6,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    // NOTE: Setting the accessibility as public causes CS0703.
+    // NOTE: Setting the accessibility as public causes CS0051 and CS0703.
     internal sealed class Th10StatusWrapper<TParent>
         where TParent : ThConverter
     {
