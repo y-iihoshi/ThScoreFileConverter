@@ -17,6 +17,8 @@ namespace ThScoreFileConverterTests.Models
 
         public Th06HeaderWrapper(Th06ChapterWrapper<TParent> chapter)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { chapter?.Target });
+        public Th06HeaderWrapper(object obj)
+            => this.pobj = new PrivateObject(obj);
 
         public object Target
             => this.pobj.Target;

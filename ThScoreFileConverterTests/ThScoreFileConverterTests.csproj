@@ -67,10 +67,14 @@
     <Compile Include="Models\ProfilerTests.cs" />
     <Compile Include="Models\SpellCardInfoTests.cs" />
     <Compile Include="Models\TestUtils.cs" />
+    <Compile Include="Models\Th06AllScoreDataTests.cs" />
+    <Compile Include="Models\Th06AllScoreDataWrapper.cs" />
     <Compile Include="Models\Th06CardAttackTests.cs" />
     <Compile Include="Models\Th06CardAttackWrapper.cs" />
     <Compile Include="Models\Th06ChapterTests.cs" />
     <Compile Include="Models\Th06ChapterWrapper.cs" />
+    <Compile Include="Models\Th06CharaLevelPairTests.cs" />
+    <Compile Include="Models\Th06CharaLevelPairWrapper.cs" />
     <Compile Include="Models\Th06ClearDataTests.cs" />
     <Compile Include="Models\Th06ClearDataWrapper.cs" />
     <Compile Include="Models\Th06HeaderTests.cs" />
