@@ -37,14 +37,14 @@ namespace ThScoreFileConverterTests.Models
         {
             var chapter = Th06ChapterWrapper<Th06Converter>.Create(
                 Th06HeaderTests.MakeByteArray(Th06HeaderTests.GetValidProperties("TH6K")));
-            var header = new Th06HeaderWrapper<Th06Converter>(chapter);
+            var header1 = new Th06HeaderWrapper<Th06Converter>(chapter);
             var header2 = new Th06HeaderWrapper<Th06Converter>(chapter);
 
             var allScoreData = new Th06AllScoreDataWrapper();
-            allScoreData.Set(header);
+            allScoreData.Set(header1);
             allScoreData.Set(header2);
 
-            Assert.AreNotSame(header.Target, allScoreData.Header.Target);
+            Assert.AreNotSame(header1.Target, allScoreData.Header.Target);
             Assert.AreSame(header2.Target, allScoreData.Header.Target);
         });
 
@@ -59,7 +59,8 @@ namespace ThScoreFileConverterTests.Models
             var allScoreData = new Th06AllScoreDataWrapper();
             allScoreData.Set(score);
 
-            var pair = new Th06CharaLevelPairWrapper(properties.chara, properties.level);
+            var pair = new Th06CharaLevelPairWrapper<Th06Converter, Th06Converter.Chara, ThConverter.Level>(
+                properties.chara, properties.level);
             Assert.AreSame(score.Target, allScoreData.RankingItem(pair, 2).Target);
         });
 
@@ -76,7 +77,8 @@ namespace ThScoreFileConverterTests.Models
             allScoreData.Set(score1);
             allScoreData.Set(score2);
 
-            var pair = new Th06CharaLevelPairWrapper(properties.chara, properties.level);
+            var pair = new Th06CharaLevelPairWrapper<Th06Converter, Th06Converter.Chara, ThConverter.Level>(
+                properties.chara, properties.level);
             Assert.AreSame(score1.Target, allScoreData.RankingItem(pair, 2).Target);
             Assert.AreSame(score2.Target, allScoreData.RankingItem(pair, 3).Target);
         });
@@ -151,7 +153,8 @@ namespace ThScoreFileConverterTests.Models
             var allScoreData = new Th06AllScoreDataWrapper();
             allScoreData.Set(score);
 
-            var pair = new Th06CharaLevelPairWrapper(properties.chara, properties.level);
+            var pair = new Th06CharaLevelPairWrapper<Th06Converter, Th06Converter.Chara, ThConverter.Level>(
+                properties.chara, properties.level);
             Assert.AreSame(score.Target, allScoreData.PracticeScore(pair, properties.stage).Target);
         });
 
@@ -169,7 +172,8 @@ namespace ThScoreFileConverterTests.Models
             allScoreData.Set(score1);
             allScoreData.Set(score2);
 
-            var pair = new Th06CharaLevelPairWrapper(properties.chara, properties.level);
+            var pair = new Th06CharaLevelPairWrapper<Th06Converter, Th06Converter.Chara, ThConverter.Level>(
+                properties.chara, properties.level);
             Assert.AreSame(score1.Target, allScoreData.PracticeScore(pair, properties.stage).Target);
             Assert.AreNotSame(score2.Target, allScoreData.PracticeScore(pair, properties.stage).Target);
         });

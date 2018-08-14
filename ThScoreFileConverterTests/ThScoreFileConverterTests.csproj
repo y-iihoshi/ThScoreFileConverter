@@ -83,6 +83,8 @@
     <Compile Include="Models\Th06HighScoreWrapper.cs" />
     <Compile Include="Models\Th06PracticeScoreTests.cs" />
     <Compile Include="Models\Th06PracticeScoreWrapper.cs" />
+    <Compile Include="Models\Th07AllScoreDataTests.cs" />
+    <Compile Include="Models\Th07AllScoreDataWrapper.cs" />
     <Compile Include="Models\Th07CardAttackTests.cs" />
     <Compile Include="Models\Th07CardAttackWrapper.cs" />
     <Compile Include="Models\Th07ClearDataTests.cs" />
