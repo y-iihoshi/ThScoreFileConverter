@@ -183,6 +183,8 @@
     <Compile Include="Models\Th13SpellCardWrapper.cs" />
     <Compile Include="Models\Th143BestShotHeaderTests.cs" />
     <Compile Include="Models\Th143BestShotHeaderWrapper.cs" />
+    <Compile Include="Models\Th143ItemStatusTests.cs" />
+    <Compile Include="Models\Th143ItemStatusWrapper.cs" />
     <Compile Include="Models\Th143ScoreTests.cs" />
     <Compile Include="Models\Th143ScoreWrapper.cs" />
     <Compile Include="Models\Th143StatusTests.cs" />
