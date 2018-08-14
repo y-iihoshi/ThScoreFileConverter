@@ -127,6 +127,8 @@
     <Compile Include="Models\Th08PracticeScoreWrapper.cs" />
     <Compile Include="Models\Th08StageLevelPairTests.cs" />
     <Compile Include="Models\Th08StageLevelPairWrapper.cs" />
+    <Compile Include="Models\Th09AllScoreDataTests.cs" />
+    <Compile Include="Models\Th09AllScoreDataWrapper.cs" />
     <Compile Include="Models\Th09ClearCountTests.cs" />
     <Compile Include="Models\Th09ClearCountWrapper.cs" />
     <Compile Include="Models\Th09HighScoreTests.cs" />
