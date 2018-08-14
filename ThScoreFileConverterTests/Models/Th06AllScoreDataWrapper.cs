@@ -73,7 +73,7 @@ namespace ThScoreFileConverterTests.Models
         // NOTE: Th06Converter.{CharaLevelPair,PracticeScore} are private classes.
         // public IReadOnlyDictionary<CharaLevelPair, Dictionary<Stage, PracticeScore>> PracticeScores
         //     => this.pobj.GetProperty(nameof(PracticeScores))
-        //         as Dictionary<CharaLevelPair, Dictionary<PracticeScore>>;
+        //         as Dictionary<CharaLevelPair, Dictionary<Stage, PracticeScore>>;
         public object PracticeScores
             => this.pobj.GetProperty(nameof(PracticeScores));
         public int? PracticeScoresCount

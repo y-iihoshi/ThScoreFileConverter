@@ -2,7 +2,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using ThScoreFileConverter.Models;
 
@@ -19,8 +18,9 @@ namespace ThScoreFileConverterTests.Models
 
         public Th08ClearDataWrapper(Th06ChapterWrapper<Th08Converter> chapter)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { chapter?.Target });
+        public Th08ClearDataWrapper(object obj)
+            => this.pobj = new PrivateObject(obj);
 
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public object Target
             => this.pobj.Target;
         public string Signature
