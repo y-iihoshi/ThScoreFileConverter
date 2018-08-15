@@ -183,6 +183,8 @@
     <Compile Include="Models\Th125ScoreWrapper.cs" />
     <Compile Include="Models\Th125StatusTests.cs" />
     <Compile Include="Models\Th125StatusWrapper.cs" />
+    <Compile Include="Models\Th128AllScoreDataTests.cs" />
+    <Compile Include="Models\Th128AllScoreDataWrapper.cs" />
     <Compile Include="Models\Th128CardDataTests.cs" />
     <Compile Include="Models\Th128CardDataWrapper.cs" />
     <Compile Include="Models\Th128ClearDataTests.cs" />

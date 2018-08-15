@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using ThScoreFileConverter.Models;
 
@@ -19,8 +18,9 @@ namespace ThScoreFileConverterTests.Models
 
         public Th128CardDataWrapper(Th10ChapterWrapper<Th128Converter> chapter)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { chapter?.Target });
+        public Th128CardDataWrapper(object obj)
+            => this.pobj = new PrivateObject(obj);
 
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public object Target
             => this.pobj.Target;
         public string Signature
