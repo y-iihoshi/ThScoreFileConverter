@@ -211,6 +211,8 @@
     <Compile Include="Models\Th15ClearDataWrapper.cs" />
     <Compile Include="Models\Th15ScoreDataTests.cs" />
     <Compile Include="Models\Th15ScoreDataWrapper.cs" />
+    <Compile Include="Models\Th16AllScoreDataTests.cs" />
+    <Compile Include="Models\Th16AllScoreDataWrapper.cs" />
     <Compile Include="Models\Th16ClearDataTests.cs" />
     <Compile Include="Models\Th16ClearDataWrapper.cs" />
     <Compile Include="Models\Th16ScoreDataTests.cs" />
