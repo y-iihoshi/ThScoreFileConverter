@@ -173,6 +173,8 @@
     <Compile Include="Models\Th105ClearDataWrapper.cs" />
     <Compile Include="Models\Th105SpellCardResultTests.cs" />
     <Compile Include="Models\Th105SpellCardResultWrapper.cs" />
+    <Compile Include="Models\Th125AllScoreDataTests.cs" />
+    <Compile Include="Models\Th125AllScoreDataWrapper.cs" />
     <Compile Include="Models\Th125BestShotHeaderTests.cs" />
     <Compile Include="Models\Th125BestShotHeaderWrapper.cs" />
     <Compile Include="Models\Th125BonusFieldsTests.cs" />
