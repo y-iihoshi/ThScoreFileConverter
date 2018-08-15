@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
 {
