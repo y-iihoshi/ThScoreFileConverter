@@ -203,6 +203,8 @@
     <Compile Include="Models\Th143ScoreWrapper.cs" />
     <Compile Include="Models\Th143StatusTests.cs" />
     <Compile Include="Models\Th143StatusWrapper.cs" />
+    <Compile Include="Models\Th15AllScoreDataTests.cs" />
+    <Compile Include="Models\Th15AllScoreDataWrapper.cs" />
     <Compile Include="Models\Th15ClearDataPerGameModeTests.cs" />
     <Compile Include="Models\Th15ClearDataPerGameModeWrapper.cs" />
     <Compile Include="Models\Th15ClearDataTests.cs" />
