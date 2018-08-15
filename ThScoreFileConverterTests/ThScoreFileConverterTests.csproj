@@ -199,6 +199,8 @@
     <Compile Include="Models\Th13PracticeWrapper.cs" />
     <Compile Include="Models\Th13SpellCardTests.cs" />
     <Compile Include="Models\Th13SpellCardWrapper.cs" />
+    <Compile Include="Models\Th143AllScoreDataTests.cs" />
+    <Compile Include="Models\Th143AllScoreDataWrapper.cs" />
     <Compile Include="Models\Th143BestShotHeaderTests.cs" />
     <Compile Include="Models\Th143BestShotHeaderWrapper.cs" />
     <Compile Include="Models\Th143ItemStatusTests.cs" />
