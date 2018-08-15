@@ -17,7 +17,7 @@ namespace ThScoreFileConverterTests.Models
 
         private readonly PrivateObject pobj = null;
 
-        public Th143StatusWrapper(Th095ChapterWrapper<Th143Converter> chapter)
+        public Th143StatusWrapper(Th10ChapterWrapper<Th143Converter> chapter)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { chapter?.Target });
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
@@ -27,13 +27,12 @@ namespace ThScoreFileConverterTests.Models
             => this.pobj.GetProperty(nameof(this.Signature)) as string;
         public ushort? Version
             => this.pobj.GetProperty(nameof(this.Version)) as ushort?;
-        public int? Size
-            => this.pobj.GetProperty(nameof(this.Size)) as int?;
         public uint? Checksum
             => this.pobj.GetProperty(nameof(this.Checksum)) as uint?;
+        public int? Size
+            => this.pobj.GetProperty(nameof(this.Size)) as int?;
         public bool? IsValid
             => this.pobj.GetProperty(nameof(this.IsValid)) as bool?;
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public IReadOnlyCollection<byte> Data
             => this.pobj.GetProperty(nameof(this.Data)) as byte[];
         public IReadOnlyCollection<byte> LastName
@@ -49,7 +48,7 @@ namespace ThScoreFileConverterTests.Models
         public IReadOnlyCollection<byte> NicknameFlags
             => this.pobj.GetProperty(nameof(this.NicknameFlags)) as byte[];
 
-        public static bool CanInitialize(Th095ChapterWrapper<Th143Converter> chapter)
+        public static bool CanInitialize(Th10ChapterWrapper<Th143Converter> chapter)
             => (bool)PrivateType.InvokeStatic(
                 nameof(CanInitialize), new object[] { chapter.Target }, CultureInfo.InvariantCulture);
     }

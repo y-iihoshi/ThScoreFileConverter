@@ -17,8 +17,8 @@ namespace ThScoreFileConverterTests.Models
         {
             public string signature;
             public ushort version;
-            public int size;
             public uint checksum;
+            public int size;
             public byte[] lastName;
             public byte[] bgmFlags;
             public int totalPlayTime;
@@ -31,8 +31,8 @@ namespace ThScoreFileConverterTests.Models
         {
             signature = "ST",
             version = 1,
-            size = 0x224,
             checksum = 0u,
+            size = 0x224,
             lastName = Encoding.Default.GetBytes("Player1     \0\0"),
             bgmFlags = TestUtils.MakeRandomArray<byte>(9),
             totalPlayTime = 12345678,
@@ -41,30 +41,37 @@ namespace ThScoreFileConverterTests.Models
             nicknameFlags = TestUtils.MakeRandomArray<byte>(71)
         };
 
+        internal static byte[] MakeData(in Properties properties)
+            => TestUtils.MakeByteArray(
+                properties.lastName,
+                new byte[0x12],
+                properties.bgmFlags,
+                new byte[0x17],
+                properties.totalPlayTime,
+                0,
+                TestUtils.Cast<int>(properties.lastMainItem),
+                TestUtils.Cast<int>(properties.lastSubItem),
+                new byte[0x54],
+                properties.nicknameFlags,
+                new byte[0x12D]);
+
         internal static byte[] MakeByteArray(in Properties properties)
             => TestUtils.MakeByteArray(
                 properties.signature.ToCharArray(),
                 properties.version,
                 properties.checksum,
                 properties.size,
-                properties.lastName,
-                TestUtils.MakeRandomArray<byte>(0x12),
-                properties.bgmFlags,
-                TestUtils.MakeRandomArray<byte>(0x17),
-                properties.totalPlayTime,
-                0,
-                TestUtils.Cast<int>(properties.lastMainItem),
-                TestUtils.Cast<int>(properties.lastSubItem),
-                TestUtils.MakeRandomArray<byte>(0x54),
-                properties.nicknameFlags,
-                TestUtils.MakeRandomArray<byte>(0x12D));
+                MakeData(properties));
 
         internal static void Validate(in Th143StatusWrapper status, in Properties properties)
         {
+            var data = MakeData(properties);
+
             Assert.AreEqual(properties.signature, status.Signature);
             Assert.AreEqual(properties.version, status.Version);
-            Assert.AreEqual(properties.size, status.Size);
             Assert.AreEqual(properties.checksum, status.Checksum);
+            Assert.AreEqual(properties.size, status.Size);
+            CollectionAssert.AreEqual(data, status.Data.ToArray());
             CollectionAssert.AreEqual(properties.lastName, status.LastName?.ToArray());
             CollectionAssert.AreEqual(properties.bgmFlags, status.BgmFlags?.ToArray());
             Assert.AreEqual(properties.totalPlayTime, status.TotalPlayTime);
@@ -76,11 +83,13 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th143StatusTestChapter() => TestUtils.Wrap(() =>
         {
-            var chapter = Th095ChapterWrapper<Th143Converter>.Create(MakeByteArray(ValidProperties));
+            var properties = ValidProperties;
+
+            var chapter = Th10ChapterWrapper<Th143Converter>.Create(MakeByteArray(properties));
             var status = new Th143StatusWrapper(chapter);
 
-            Validate(status, ValidProperties);
-            Assert.IsTrue(status.IsValid.Value);
+            Validate(status, properties);
+            Assert.IsFalse(status.IsValid.Value);
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
@@ -102,7 +111,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             properties.signature = properties.signature.ToLower(CultureInfo.InvariantCulture);
 
-            var chapter = Th095ChapterWrapper<Th143Converter>.Create(MakeByteArray(properties));
+            var chapter = Th10ChapterWrapper<Th143Converter>.Create(MakeByteArray(properties));
             var status = new Th143StatusWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -116,7 +125,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             properties.version += 1;
 
-            var chapter = Th095ChapterWrapper<Th143Converter>.Create(MakeByteArray(properties));
+            var chapter = Th10ChapterWrapper<Th143Converter>.Create(MakeByteArray(properties));
             var status = new Th143StatusWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -130,7 +139,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             properties.size += 1;
 
-            var chapter = Th095ChapterWrapper<Th143Converter>.Create(MakeByteArray(properties));
+            var chapter = Th10ChapterWrapper<Th143Converter>.Create(MakeByteArray(properties));
             var status = new Th143StatusWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -148,7 +157,7 @@ namespace ThScoreFileConverterTests.Models
                 var checksum = 0u;
                 var data = new byte[size];
 
-                var chapter = Th095ChapterWrapper<Th143Converter>.Create(
+                var chapter = Th10ChapterWrapper<Th143Converter>.Create(
                     TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
 
                 Assert.AreEqual(expected, Th143StatusWrapper.CanInitialize(chapter));
@@ -167,7 +176,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             properties.lastMainItem = TestUtils.Cast<Th143Converter.ItemWithTotal>(item);
 
-            var chapter = Th095ChapterWrapper<Th143Converter>.Create(MakeByteArray(properties));
+            var chapter = Th10ChapterWrapper<Th143Converter>.Create(MakeByteArray(properties));
             var status = new Th143StatusWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -183,7 +192,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             properties.lastSubItem = TestUtils.Cast<Th143Converter.ItemWithTotal>(item);
 
-            var chapter = Th095ChapterWrapper<Th143Converter>.Create(MakeByteArray(properties));
+            var chapter = Th10ChapterWrapper<Th143Converter>.Create(MakeByteArray(properties));
             var status = new Th143StatusWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
