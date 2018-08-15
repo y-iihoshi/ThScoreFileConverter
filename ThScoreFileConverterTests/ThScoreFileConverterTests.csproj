@@ -187,6 +187,8 @@
     <Compile Include="Models\Th128SpellCardWrapper.cs" />
     <Compile Include="Models\Th128StatusTests.cs" />
     <Compile Include="Models\Th128StatusWrapper.cs" />
+    <Compile Include="Models\Th13AllScoreDataTests.cs" />
+    <Compile Include="Models\Th13AllScoreDataWrapper.cs" />
     <Compile Include="Models\Th13ClearDataTests.cs" />
     <Compile Include="Models\Th13ClearDataWrapper.cs" />
     <Compile Include="Models\Th13PracticeTests.cs" />

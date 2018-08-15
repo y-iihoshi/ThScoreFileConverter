@@ -105,12 +105,12 @@ namespace ThScoreFileConverterTests.Models
             {
                 var chapter = Th10ChapterWrapper<TParent>.Create(
                     Th10StatusTests.MakeByteArray(Th10StatusTests.GetValidProperties(version, size, numBgms)));
-                var header = new Th10StatusWrapper<TParent>(chapter);
+                var status = new Th10StatusWrapper<TParent>(chapter);
 
                 var allScoreData = new Th10AllScoreDataWrapper<TParent, TCharaWithTotal, TStageProgress>();
-                allScoreData.Set(header);
+                allScoreData.Set(status);
 
-                Assert.AreSame(header.Target, allScoreData.Status.Target);
+                Assert.AreSame(status.Target, allScoreData.Status.Target);
             });
 
         internal static void Th10AllScoreDataSetStatusTestTwiceHelper<TParent, TCharaWithTotal, TStageProgress>(
@@ -122,15 +122,15 @@ namespace ThScoreFileConverterTests.Models
             {
                 var chapter = Th10ChapterWrapper<TParent>.Create(
                     Th10StatusTests.MakeByteArray(Th10StatusTests.GetValidProperties(version, size, numBgms)));
-                var header1 = new Th10StatusWrapper<TParent>(chapter);
-                var header2 = new Th10StatusWrapper<TParent>(chapter);
+                var status1 = new Th10StatusWrapper<TParent>(chapter);
+                var status2 = new Th10StatusWrapper<TParent>(chapter);
 
                 var allScoreData = new Th10AllScoreDataWrapper<TParent, TCharaWithTotal, TStageProgress>();
-                allScoreData.Set(header1);
-                allScoreData.Set(header2);
+                allScoreData.Set(status1);
+                allScoreData.Set(status2);
 
-                Assert.AreNotSame(header1.Target, allScoreData.Status.Target);
-                Assert.AreSame(header2.Target, allScoreData.Status.Target);
+                Assert.AreNotSame(status1.Target, allScoreData.Status.Target);
+                Assert.AreSame(status2.Target, allScoreData.Status.Target);
             });
 
         #region Th10
