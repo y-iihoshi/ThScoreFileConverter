@@ -147,6 +147,8 @@
     <Compile Include="Models\Th095ScoreWrapper.cs" />
     <Compile Include="Models\Th095StatusTests.cs" />
     <Compile Include="Models\Th095StatusWrapper.cs" />
+    <Compile Include="Models\Th10AllScoreDataTests.cs" />
+    <Compile Include="Models\Th10AllScoreDataWrapper.cs" />
     <Compile Include="Models\Th10ChapterTests.cs" />
     <Compile Include="Models\Th10ChapterWrapper.cs" />
     <Compile Include="Models\Th10ClearDataTests.cs" />
