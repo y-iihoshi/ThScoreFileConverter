@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using ThScoreFileConverter.Models;
@@ -39,6 +40,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         public Th075ClearDataWrapper()
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "obj")]
+        public Th075ClearDataWrapper(object obj)
+            => this.pobj = new PrivateObject(obj);
 
         public object Target
             => this.pobj.Target;
