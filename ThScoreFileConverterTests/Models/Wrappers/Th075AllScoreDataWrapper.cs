@@ -7,7 +7,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
-    // NOTE: Setting the accessibility as public causes CS0050, CS0051 and CS0053.
+    // NOTE: Setting the accessibility as public causes CS0051 and CS0053.
     internal sealed class Th075AllScoreDataWrapper
     {
         private static Type ParentType = typeof(Th075Converter);
