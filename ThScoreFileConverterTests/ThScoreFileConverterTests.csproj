@@ -135,6 +135,8 @@
     <Compile Include="Models\Th09HighScoreWrapper.cs" />
     <Compile Include="Models\Th09PlayStatusTests.cs" />
     <Compile Include="Models\Th09PlayStatusWrapper.cs" />
+    <Compile Include="Models\Th095AllScoreDataTests.cs" />
+    <Compile Include="Models\Th095AllScoreDataWrapper.cs" />
     <Compile Include="Models\Th095BestShotHeaderTests.cs" />
     <Compile Include="Models\Th095BestShotHeaderWrapper.cs" />
     <Compile Include="Models\Th095ChapterTests.cs" />

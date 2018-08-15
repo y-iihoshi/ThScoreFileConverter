@@ -335,6 +335,5 @@ namespace ThScoreFileConverterTests.Models
                 Th14Converter.StageProgress>(1, 0x42C, 17, 0x10, 0x11);
 
         #endregion
-
     }
 }
