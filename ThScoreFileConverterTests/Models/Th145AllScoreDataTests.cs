@@ -13,36 +13,54 @@ namespace ThScoreFileConverterTests.Models
     using SQ = Squirrel;
 
     [TestClass]
-    public class Th135AllScoreDataTests
+    public class Th145AllScoreDataTests
     {
         internal struct Properties
         {
             public int storyProgress;
-            public Dictionary<Th135Converter.Chara, Th135Converter.LevelFlag> storyClearFlags;
+            public Dictionary<Th145Converter.Chara, Th145Converter.LevelFlag> storyClearFlags;
             public int endingCount;
             public int ending2Count;
             public bool isEnabledStageTanuki1;
             public bool isEnabledStageTanuki2;
             public bool isEnabledStageKokoro;
+            public bool isEnabledSt27;
+            public bool isEnabledSt28;
             public bool isPlayableMamizou;
             public bool isPlayableKokoro;
             public Dictionary<int, bool> bgmFlags;
+            public Dictionary<Th145Converter.Level, Dictionary<Th145Converter.Chara, int>> clearRanks;
+            public Dictionary<Th145Converter.Level, Dictionary<Th145Converter.Chara, int>> clearTimes;
         };
 
-        internal static Properties GetValidProperties() => new Properties()
+        internal static Properties GetValidProperties()
         {
-            storyProgress = 1,
-            storyClearFlags = Utils.GetEnumerator<Th135Converter.Chara>().ToDictionary(
-                chara => chara, chara => TestUtils.Cast<Th135Converter.LevelFlag>(30 - (int)chara)),
-            endingCount = 2,
-            ending2Count = 3,
-            isEnabledStageTanuki1 = true,
-            isEnabledStageTanuki2 = true,
-            isEnabledStageKokoro = false,
-            isPlayableMamizou = true,
-            isPlayableKokoro = false,
-            bgmFlags = Enumerable.Range(1, 10).ToDictionary(id => id, id => id % 2 == 0)
-        };
+            var charas = Utils.GetEnumerator<Th145Converter.Chara>();
+            var levels = Utils.GetEnumerator<Th145Converter.Level>();
+
+            return new Properties()
+            {
+                storyProgress = 1,
+                storyClearFlags = charas.ToDictionary(
+                    chara => chara, chara => TestUtils.Cast<Th145Converter.LevelFlag>(30 - (int)chara)),
+                endingCount = 2,
+                ending2Count = 3,
+                isEnabledStageTanuki1 = true,
+                isEnabledStageTanuki2 = true,
+                isEnabledStageKokoro = false,
+                isEnabledSt27 = false,
+                isEnabledSt28 = false,
+                isPlayableMamizou = true,
+                isPlayableKokoro = false,
+                bgmFlags = Enumerable.Range(1, 10).ToDictionary(id => id, id => id % 2 == 0),
+                clearRanks = levels.ToDictionary(
+                    level => level, level => charas.ToDictionary(
+                        chara => chara, chara => (int)level * 100 + (int)chara)),
+                clearTimes = levels.ToDictionary(
+                    level => level, level => charas.ToDictionary(
+                        chara => chara, chara => (int)chara * 100 + (int)level))
+            };
+        }
 
         internal static byte[] MakeByteArray(in Properties properties)
         {
@@ -58,12 +76,34 @@ namespace ThScoreFileConverterTests.Models
             var enableStageTanuki1Key = Encoding.Default.GetBytes("enable_stage_tanuki1");
             var enableStageTanuki2Key = Encoding.Default.GetBytes("enable_stage_tanuki2");
             var enableStageKokoroKey = Encoding.Default.GetBytes("enable_stage_kokoro");
+            var enableSt27Key = Encoding.Default.GetBytes("enable_st27");
+            var enableSt28Key = Encoding.Default.GetBytes("enable_st28");
             var enableMamizouKey = Encoding.Default.GetBytes("enable_mamizou");
             var enableKokoroKey = Encoding.Default.GetBytes("enable_kokoro");
             var enableBgmKey = Encoding.Default.GetBytes("enable_bgm");
             var enableBgmValue = properties.bgmFlags.SelectMany(
                 pair => TestUtils.MakeByteArray(
                     (int)SQ.OTInteger, pair.Key, (int)SQ.OTBool, toByte(pair.Value))).ToArray();
+            var clearRankKey = Encoding.Default.GetBytes("clear_rank");
+            var clearRankValue = properties.clearRanks.SelectMany(
+                perLevelPair => TestUtils.MakeByteArray(
+                    (int)SQ.OTInteger, (int)perLevelPair.Key,
+                    (int)SQ.OTArray,
+                    perLevelPair.Value.SelectMany(
+                        perCharaPair => TestUtils.MakeByteArray(
+                            (int)SQ.OTInteger, (int)perCharaPair.Key,
+                            (int)SQ.OTInteger, perCharaPair.Value)).ToArray(),
+                    (int)SQ.OTNull)).ToArray();
+            var clearTimeKey = Encoding.Default.GetBytes("clear_time");
+            var clearTimeValue = properties.clearTimes.SelectMany(
+                perLevelPair => TestUtils.MakeByteArray(
+                    (int)SQ.OTInteger, (int)perLevelPair.Key,
+                    (int)SQ.OTArray,
+                    perLevelPair.Value.SelectMany(
+                        perCharaPair => TestUtils.MakeByteArray(
+                            (int)SQ.OTInteger, (int)perCharaPair.Key,
+                            (int)SQ.OTInteger, perCharaPair.Value)).ToArray(),
+                    (int)SQ.OTNull)).ToArray();
 
             return TestUtils.MakeByteArray(
                 // (int)SQ.OTTable,
@@ -81,16 +121,24 @@ namespace ThScoreFileConverterTests.Models
                 (int)SQ.OTBool, toByte(properties.isEnabledStageTanuki2),
                 (int)SQ.OTString, enableStageKokoroKey.Length, enableStageKokoroKey,
                 (int)SQ.OTBool, toByte(properties.isEnabledStageKokoro),
+                (int)SQ.OTString, enableSt27Key.Length, enableSt27Key,
+                (int)SQ.OTBool, toByte(properties.isEnabledSt27),
+                (int)SQ.OTString, enableSt28Key.Length, enableSt28Key,
+                (int)SQ.OTBool, toByte(properties.isEnabledSt28),
                 (int)SQ.OTString, enableMamizouKey.Length, enableMamizouKey,
                 (int)SQ.OTBool, toByte(properties.isPlayableMamizou),
                 (int)SQ.OTString, enableKokoroKey.Length, enableKokoroKey,
                 (int)SQ.OTBool, toByte(properties.isPlayableKokoro),
                 (int)SQ.OTString, enableBgmKey.Length, enableBgmKey,
                 (int)SQ.OTTable, enableBgmValue, (int)SQ.OTNull,
+                (int)SQ.OTString, clearRankKey.Length, clearRankKey,
+                (int)SQ.OTArray, properties.clearRanks.Count, clearRankValue, (int)SQ.OTNull,
+                (int)SQ.OTString, clearTimeKey.Length, clearTimeKey,
+                (int)SQ.OTArray, properties.clearTimes.Count, clearTimeValue, (int)SQ.OTNull,
                 (int)SQ.OTNull);
         }
 
-        internal static void Validate(in Th135AllScoreDataWrapper allScoreData, in Properties properties)
+        internal static void Validate(in Th145AllScoreDataWrapper allScoreData, in Properties properties)
         {
             Assert.AreEqual(properties.storyProgress, allScoreData.StoryProgress);
             CollectionAssert.AreEqual(properties.storyClearFlags.Keys, allScoreData.StoryClearFlags.Keys.ToArray());
@@ -100,13 +148,19 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.isEnabledStageTanuki1, allScoreData.IsEnabledStageTanuki1);
             Assert.AreEqual(properties.isEnabledStageTanuki2, allScoreData.IsEnabledStageTanuki2);
             Assert.AreEqual(properties.isEnabledStageKokoro, allScoreData.IsEnabledStageKokoro);
+            Assert.AreEqual(properties.isEnabledSt27, allScoreData.IsEnabledSt27);
+            Assert.AreEqual(properties.isEnabledSt28, allScoreData.IsEnabledSt28);
             Assert.AreEqual(properties.isPlayableMamizou, allScoreData.IsPlayableMamizou);
             Assert.AreEqual(properties.isPlayableKokoro, allScoreData.IsPlayableKokoro);
             CollectionAssert.AreEqual(properties.bgmFlags.Keys, allScoreData.BgmFlags.Keys.ToArray());
             CollectionAssert.AreEqual(properties.bgmFlags.Values, allScoreData.BgmFlags.Values.ToArray());
+            CollectionAssert.AreEqual(properties.clearRanks.Keys, allScoreData.ClearRanks.Keys.ToArray());
+            CollectionAssert.AreEqual(properties.clearRanks.Values, allScoreData.ClearRanks.Values.ToArray());
+            CollectionAssert.AreEqual(properties.clearTimes.Keys, allScoreData.ClearTimes.Keys.ToArray());
+            CollectionAssert.AreEqual(properties.clearTimes.Values, allScoreData.ClearTimes.Values.ToArray());
         }
 
-        internal static bool Th135AllScoreDataReadObjectHelper(byte[] array, out object obj)
+        internal static bool Th145AllScoreDataReadObjectHelper(byte[] array, out object obj)
         {
             var result = false;
 
@@ -117,7 +171,7 @@ namespace ThScoreFileConverterTests.Models
                 using (var reader = new BinaryReader(stream))
                 {
                     stream = null;
-                    result = Th135AllScoreDataWrapper.ReadObject(reader, out obj);
+                    result = Th145AllScoreDataWrapper.ReadObject(reader, out obj);
                 }
             }
             finally
@@ -129,9 +183,9 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        public void Th135AllScoreDataTest() => TestUtils.Wrap(() =>
+        public void Th145AllScoreDataTest() => TestUtils.Wrap(() =>
         {
-            var allScoreData = new Th135AllScoreDataWrapper();
+            var allScoreData = new Th145AllScoreDataWrapper();
 
             Assert.AreEqual(default, allScoreData.StoryProgress.Value);
             Assert.IsNull(allScoreData.StoryClearFlags);
@@ -147,26 +201,26 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th135AllScoreDataReadObjectTestNull() => TestUtils.Wrap(() =>
+        public void Th145AllScoreDataReadObjectTestNull() => TestUtils.Wrap(() =>
         {
-            Th135AllScoreDataWrapper.ReadObject(null, out object obj);
+            Th145AllScoreDataWrapper.ReadObject(null, out object obj);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th135AllScoreDataReadObjectTestEmpty() => TestUtils.Wrap(() =>
+        public void Th145AllScoreDataReadObjectTestEmpty() => TestUtils.Wrap(() =>
         {
-            Th135AllScoreDataReadObjectHelper(new byte[0], out object obj);
+            Th145AllScoreDataReadObjectHelper(new byte[0], out object obj);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
-        public void Th135AllScoreDataReadObjectTestOTNull() => TestUtils.Wrap(() =>
+        public void Th145AllScoreDataReadObjectTestOTNull() => TestUtils.Wrap(() =>
         {
-            var result = Th135AllScoreDataReadObjectHelper(TestUtils.MakeByteArray((int)SQ.OTNull), out object obj);
+            var result = Th145AllScoreDataReadObjectHelper(TestUtils.MakeByteArray((int)SQ.OTNull), out object obj);
 
             Assert.IsTrue(result);
             Assert.IsNotNull(obj);  // Hmm...
@@ -177,9 +231,9 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(0)]
         [DataRow(1)]
         [DataRow(-1)]
-        public void Th135AllScoreDataReadObjectTestOTInteger(int value) => TestUtils.Wrap(() =>
+        public void Th145AllScoreDataReadObjectTestOTInteger(int value) => TestUtils.Wrap(() =>
         {
-            var result = Th135AllScoreDataReadObjectHelper(
+            var result = Th145AllScoreDataReadObjectHelper(
                 TestUtils.MakeByteArray((int)SQ.OTInteger, value), out object obj);
 
             Assert.IsTrue(result);
@@ -189,9 +243,9 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th135AllScoreDataReadObjectTestOTIntegerInvalid() => TestUtils.Wrap(() =>
+        public void Th145AllScoreDataReadObjectTestOTIntegerInvalid() => TestUtils.Wrap(() =>
         {
-            Th135AllScoreDataReadObjectHelper(TestUtils.MakeByteArray((int)SQ.OTInteger, new byte[3]), out object obj);
+            Th145AllScoreDataReadObjectHelper(TestUtils.MakeByteArray((int)SQ.OTInteger, new byte[3]), out object obj);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -203,9 +257,9 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(-1f)]
         [DataRow(0.25f)]
         [DataRow(0.1f)]
-        public void Th135AllScoreDataReadObjectTestOTFloat(float value) => TestUtils.Wrap(() =>
+        public void Th145AllScoreDataReadObjectTestOTFloat(float value) => TestUtils.Wrap(() =>
         {
-            var result = Th135AllScoreDataReadObjectHelper(
+            var result = Th145AllScoreDataReadObjectHelper(
                 TestUtils.MakeByteArray((int)SQ.OTFloat, value), out object obj);
 
             Assert.IsTrue(result);
@@ -215,9 +269,9 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th135AllScoreDataReadObjectTestOTFloatInvalid() => TestUtils.Wrap(() =>
+        public void Th145AllScoreDataReadObjectTestOTFloatInvalid() => TestUtils.Wrap(() =>
         {
-            Th135AllScoreDataReadObjectHelper(TestUtils.MakeByteArray((int)SQ.OTFloat, new byte[3]), out object obj);
+            Th145AllScoreDataReadObjectHelper(TestUtils.MakeByteArray((int)SQ.OTFloat, new byte[3]), out object obj);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -227,9 +281,9 @@ namespace ThScoreFileConverterTests.Models
         [DataRow((byte)0x00, false)]
         [DataRow((byte)0x01, true)]
         [DataRow((byte)0x02, true)]
-        public void Th135AllScoreDataReadObjectTestOTBool(byte value, bool expected) => TestUtils.Wrap(() =>
+        public void Th145AllScoreDataReadObjectTestOTBool(byte value, bool expected) => TestUtils.Wrap(() =>
         {
-            var result = Th135AllScoreDataReadObjectHelper(
+            var result = Th145AllScoreDataReadObjectHelper(
                 TestUtils.MakeByteArray((int)SQ.OTBool, value), out object obj);
 
             Assert.IsTrue(result);
@@ -239,9 +293,9 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th135AllScoreDataReadObjectTestOTBoolInvalid() => TestUtils.Wrap(() =>
+        public void Th145AllScoreDataReadObjectTestOTBoolInvalid() => TestUtils.Wrap(() =>
         {
-            Th135AllScoreDataReadObjectHelper(TestUtils.MakeByteArray((int)SQ.OTBool), out object obj);
+            Th145AllScoreDataReadObjectHelper(TestUtils.MakeByteArray((int)SQ.OTBool), out object obj);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -254,11 +308,11 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(-1, "", "")]
         [DataRow(-1, "abc", "")]
         [DataRow(-1, null, "")]
-        public void Th135AllScoreDataReadObjectTestOTStringEmpty(int size, string value, string expected)
+        public void Th145AllScoreDataReadObjectTestOTStringEmpty(int size, string value, string expected)
             => TestUtils.Wrap(() =>
             {
                 var bytes = (value != null) ? Encoding.Default.GetBytes(value) : new byte[0];
-                var result = Th135AllScoreDataReadObjectHelper(
+                var result = Th145AllScoreDataReadObjectHelper(
                     TestUtils.MakeByteArray((int)SQ.OTString, size, bytes), out object obj);
                 var str = obj as string;
 
@@ -272,18 +326,18 @@ namespace ThScoreFileConverterTests.Models
         [DataRow("博麗 霊夢")]
         [DataRow("")]
         [DataRow("\0")]
-        public void Th135AllScoreDataReadObjectTestOTString(string value)
-            => Th135AllScoreDataReadObjectTestOTStringEmpty(Encoding.Default.GetByteCount(value), value, value);
+        public void Th145AllScoreDataReadObjectTestOTString(string value)
+            => Th145AllScoreDataReadObjectTestOTStringEmpty(Encoding.Default.GetByteCount(value), value, value);
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DataRow("abc")]
         [DataRow("博麗 霊夢")]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th135AllScoreDataReadObjectTestOTStringShortened(string value) => TestUtils.Wrap(() =>
+        public void Th145AllScoreDataReadObjectTestOTStringShortened(string value) => TestUtils.Wrap(() =>
         {
             var bytes = Encoding.Default.GetBytes(value);
-            Th135AllScoreDataReadObjectHelper(
+            Th145AllScoreDataReadObjectHelper(
                 TestUtils.MakeByteArray((int)SQ.OTString, bytes.Length + 1, bytes), out object obj);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -293,10 +347,10 @@ namespace ThScoreFileConverterTests.Models
         [DataTestMethod]
         [DataRow("abc")]
         [DataRow("博麗 霊夢")]
-        public void Th135AllScoreDataReadObjectTestOTStringExceeded(string value) => TestUtils.Wrap(() =>
+        public void Th145AllScoreDataReadObjectTestOTStringExceeded(string value) => TestUtils.Wrap(() =>
         {
             var bytes = Encoding.Default.GetBytes(value).Concat(new byte[1] { 1 }).ToArray();
-            var result = Th135AllScoreDataReadObjectHelper(
+            var result = Th145AllScoreDataReadObjectHelper(
                 TestUtils.MakeByteArray((int)SQ.OTString, bytes.Length - 1, bytes), out object obj);
             var str = obj as string;
 
@@ -326,10 +380,10 @@ namespace ThScoreFileConverterTests.Models
             new int[1] { 123 },
             new int[1] { 456 },
             DisplayName = "invalid sentinel")]
-        public void Th135AllScoreDataReadObjectTestOTTable(int[] array, int[] expectedKeys, int[] expectedValues)
+        public void Th145AllScoreDataReadObjectTestOTTable(int[] array, int[] expectedKeys, int[] expectedValues)
             => TestUtils.Wrap(() =>
             {
-                var result = Th135AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out object obj);
+                var result = Th145AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out object obj);
                 var dict = obj as Dictionary<object, object>;
 
                 Assert.IsTrue(result);
@@ -357,9 +411,9 @@ namespace ThScoreFileConverterTests.Models
             DisplayName = "missing key type and value data")]
         [DataRow(new int[2] { (int)SQ.OTTable, (int)SQ.OTNull },
             DisplayName = "empty")]
-        public void Th135AllScoreDataReadObjectTestOTTableEmpty(int[] array) => TestUtils.Wrap(() =>
+        public void Th145AllScoreDataReadObjectTestOTTableEmpty(int[] array) => TestUtils.Wrap(() =>
         {
-            var result = Th135AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out object obj);
+            var result = Th145AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out object obj);
             var dict = obj as Dictionary<object, object>;
 
             Assert.IsTrue(result);
@@ -384,9 +438,9 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(new int[1] { (int)SQ.OTTable },
             DisplayName = "empty and missing sentinel")]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th135AllScoreDataReadObjectTestOTTableInvalid(int[] array) => TestUtils.Wrap(() =>
+        public void Th145AllScoreDataReadObjectTestOTTableInvalid(int[] array) => TestUtils.Wrap(() =>
         {
-            Th135AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out object obj);
+            Th145AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out object obj);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -405,9 +459,9 @@ namespace ThScoreFileConverterTests.Models
                 (int)SQ.OTNull },
             new int[2] { 123, 456 },
             DisplayName = "two elements")]
-        public void Th135AllScoreDataReadObjectTestOTArray(int[] array, int[] expected) => TestUtils.Wrap(() =>
+        public void Th145AllScoreDataReadObjectTestOTArray(int[] array, int[] expected) => TestUtils.Wrap(() =>
         {
-            var result = Th135AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out object obj);
+            var result = Th145AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out object obj);
             var resultArray = obj as object[];
 
             Assert.IsTrue(result);
@@ -444,9 +498,9 @@ namespace ThScoreFileConverterTests.Models
             DisplayName = "missing index type and value data")]
         [DataRow(new int[3] { (int)SQ.OTArray, 0, (int)SQ.OTNull },
             DisplayName = "empty")]
-        public void Th135AllScoreDataReadObjectTestOTArrayEmpty(int[] array) => TestUtils.Wrap(() =>
+        public void Th145AllScoreDataReadObjectTestOTArrayEmpty(int[] array) => TestUtils.Wrap(() =>
         {
-            var result = Th135AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out object obj);
+            var result = Th145AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out object obj);
             var resultArray = obj as object[];
 
             Assert.IsTrue(result);
@@ -487,17 +541,17 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(new int[1] { (int)SQ.OTArray },
             DisplayName = "empty and only array type")]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th135AllScoreDataReadObjectTestOTArrayInvalid(int[] array) => TestUtils.Wrap(() =>
+        public void Th145AllScoreDataReadObjectTestOTArrayInvalid(int[] array) => TestUtils.Wrap(() =>
         {
-            Th135AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out object obj);
+            Th145AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out object obj);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
-        public void Th135AllScoreDataReadObjectTestOTInstance() => TestUtils.Wrap(() =>
+        public void Th145AllScoreDataReadObjectTestOTInstance() => TestUtils.Wrap(() =>
         {
-            var result = Th135AllScoreDataReadObjectHelper(TestUtils.MakeByteArray((int)SQ.OTInstance), out object obj);
+            var result = Th145AllScoreDataReadObjectHelper(TestUtils.MakeByteArray((int)SQ.OTInstance), out object obj);
 
             Assert.IsTrue(result);
             Assert.IsNotNull(obj);
@@ -516,29 +570,29 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(SQ.OTWeakRef)]
         [DataRow(SQ.OTOuter)]
         [DataRow((SQ.SQObjectType)999)]
-        public void Th135AllScoreDataReadObjectTestUnsupported(SQ.SQObjectType type) => TestUtils.Wrap(() =>
+        public void Th145AllScoreDataReadObjectTestUnsupported(SQ.SQObjectType type) => TestUtils.Wrap(() =>
         {
-            var result = Th135AllScoreDataReadObjectHelper(TestUtils.MakeByteArray((int)type), out object obj);
+            var result = Th145AllScoreDataReadObjectHelper(TestUtils.MakeByteArray((int)type), out object obj);
 
             Assert.IsFalse(result);
             Assert.IsNull(obj);
         });
 
         [TestMethod]
-        public void Th135AllScoreDataReadFromTest() => TestUtils.Wrap(() =>
+        public void Th145AllScoreDataReadFromTest() => TestUtils.Wrap(() =>
         {
             var properties = GetValidProperties();
 
-            var allScoreData = Th135AllScoreDataWrapper.Create(MakeByteArray(properties));
+            var allScoreData = Th145AllScoreDataWrapper.Create(MakeByteArray(properties));
 
             Validate(allScoreData, properties);
         });
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th135AllScoreDataReadFromTestNull() => TestUtils.Wrap(() =>
+        public void Th145AllScoreDataReadFromTestNull() => TestUtils.Wrap(() =>
         {
-            var allScoreData = new Th135AllScoreDataWrapper();
+            var allScoreData = new Th145AllScoreDataWrapper();
             allScoreData.ReadFrom(null);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -546,17 +600,17 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th135AllScoreDataReadFromTestEmpty() => TestUtils.Wrap(() =>
+        public void Th145AllScoreDataReadFromTestEmpty() => TestUtils.Wrap(() =>
         {
-            Th135AllScoreDataWrapper.Create(new byte[0]);
+            Th145AllScoreDataWrapper.Create(new byte[0]);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
-        public void Th135AllScoreDataReadFromTestNoKey() => TestUtils.Wrap(() =>
+        public void Th145AllScoreDataReadFromTestNoKey() => TestUtils.Wrap(() =>
         {
-            var allScoreData = Th135AllScoreDataWrapper.Create(TestUtils.MakeByteArray((int)SQ.OTNull));
+            var allScoreData = Th145AllScoreDataWrapper.Create(TestUtils.MakeByteArray((int)SQ.OTNull));
 
             Assert.AreEqual(default, allScoreData.StoryProgress.Value);
             Assert.IsNull(allScoreData.StoryClearFlags);
@@ -565,18 +619,22 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(default, allScoreData.IsEnabledStageTanuki1.Value);
             Assert.AreEqual(default, allScoreData.IsEnabledStageTanuki2.Value);
             Assert.AreEqual(default, allScoreData.IsEnabledStageKokoro.Value);
+            Assert.AreEqual(default, allScoreData.IsEnabledSt27.Value);
+            Assert.AreEqual(default, allScoreData.IsEnabledSt28.Value);
             Assert.AreEqual(default, allScoreData.IsPlayableMamizou.Value);
             Assert.AreEqual(default, allScoreData.IsPlayableKokoro.Value);
             Assert.IsNull(allScoreData.BgmFlags);
+            Assert.IsNull(allScoreData.ClearRanks);
+            Assert.IsNull(allScoreData.ClearTimes);
         });
 
         [TestMethod]
-        public void Th135AllScoreDataReadFromTestNoTables() => TestUtils.Wrap(() =>
+        public void Th145AllScoreDataReadFromTestNoTables() => TestUtils.Wrap(() =>
         {
             var stageProgressKey = Encoding.Default.GetBytes("story_progress");
             var stageProgressValue = 1;
 
-            var allScoreData = Th135AllScoreDataWrapper.Create(TestUtils.MakeByteArray(
+            var allScoreData = Th145AllScoreDataWrapper.Create(TestUtils.MakeByteArray(
                 // (int)SQ.OTTable,
                 (int)SQ.OTString, stageProgressKey.Length, stageProgressKey,
                 (int)SQ.OTInteger, stageProgressValue,
@@ -585,15 +643,17 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(stageProgressValue, allScoreData.StoryProgress);
             Assert.IsNull(allScoreData.StoryClearFlags);
             Assert.IsNull(allScoreData.BgmFlags);
+            Assert.IsNull(allScoreData.ClearRanks);
+            Assert.IsNull(allScoreData.ClearTimes);
         });
 
         [TestMethod]
-        public void Th135AllScoreDataReadFromTestInvalidStoryClear() => TestUtils.Wrap(() =>
+        public void Th145AllScoreDataReadFromTestInvalidStoryClear() => TestUtils.Wrap(() =>
         {
             var stageClearKey = Encoding.Default.GetBytes("story_clear");
             var stageClearValue = 1;
 
-            var allScoreData = Th135AllScoreDataWrapper.Create(TestUtils.MakeByteArray(
+            var allScoreData = Th145AllScoreDataWrapper.Create(TestUtils.MakeByteArray(
                 // (int)SQ.OTTable,
                 (int)SQ.OTString, stageClearKey.Length, stageClearKey,
                 (int)SQ.OTInteger, stageClearValue,
@@ -603,12 +663,12 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th135AllScoreDataReadFromTestInvalidStoryClearValue() => TestUtils.Wrap(() =>
+        public void Th145AllScoreDataReadFromTestInvalidStoryClearValue() => TestUtils.Wrap(() =>
         {
             var stageClearKey = Encoding.Default.GetBytes("story_clear");
             var stageClearValue = TestUtils.MakeByteArray((int)SQ.OTInteger, 0, (int)SQ.OTFloat, 123f);
 
-            var allScoreData = Th135AllScoreDataWrapper.Create(TestUtils.MakeByteArray(
+            var allScoreData = Th145AllScoreDataWrapper.Create(TestUtils.MakeByteArray(
                 // (int)SQ.OTTable,
                 (int)SQ.OTString, stageClearKey.Length, stageClearKey,
                 (int)SQ.OTArray, 1, stageClearValue, (int)SQ.OTNull,
@@ -619,18 +679,80 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th135AllScoreDataReadFromTestInvalidEnableBgm() => TestUtils.Wrap(() =>
+        public void Th145AllScoreDataReadFromTestInvalidEnableBgm() => TestUtils.Wrap(() =>
         {
             var enableBgmKey = Encoding.Default.GetBytes("enable_bgm");
             var enableBgmValue = 1;
 
-            var allScoreData = Th135AllScoreDataWrapper.Create(TestUtils.MakeByteArray(
+            var allScoreData = Th145AllScoreDataWrapper.Create(TestUtils.MakeByteArray(
                 // (int)SQ.OTTable,
                 (int)SQ.OTString, enableBgmKey.Length, enableBgmKey,
                 (int)SQ.OTInteger, enableBgmValue,
                 (int)SQ.OTNull));
 
             Assert.IsNull(allScoreData.BgmFlags);
+        });
+
+        [TestMethod]
+        public void Th145AllScoreDataReadFromTestInvalidClearRank() => TestUtils.Wrap(() =>
+        {
+            var clearRankKey = Encoding.Default.GetBytes("clear_rank");
+            var clearRankValue = 1;
+
+            var allScoreData = Th145AllScoreDataWrapper.Create(TestUtils.MakeByteArray(
+                // (int)SQ.OTTable,
+                (int)SQ.OTString, clearRankKey.Length, clearRankKey,
+                (int)SQ.OTInteger, clearRankValue,
+                (int)SQ.OTNull));
+
+            Assert.IsNull(allScoreData.ClearRanks);
+        });
+
+        [TestMethod]
+        public void Th145AllScoreDataReadFromTestInvalidClearRankValue() => TestUtils.Wrap(() =>
+        {
+            var clearRankKey = Encoding.Default.GetBytes("clear_rank");
+            var clearRankValue = TestUtils.MakeByteArray((int)SQ.OTInteger, 0, (int)SQ.OTFloat, 123f);
+
+            var allScoreData = Th145AllScoreDataWrapper.Create(TestUtils.MakeByteArray(
+                // (int)SQ.OTTable,
+                (int)SQ.OTString, clearRankKey.Length, clearRankKey,
+                (int)SQ.OTArray, 1, clearRankValue, (int)SQ.OTNull,
+                (int)SQ.OTNull));
+
+            Assert.IsNotNull(allScoreData.ClearRanks);
+            Assert.AreEqual(0, allScoreData.ClearRanks.Count);
+        });
+
+        [TestMethod]
+        public void Th145AllScoreDataReadFromTestInvalidClearTime() => TestUtils.Wrap(() =>
+        {
+            var clearTimeKey = Encoding.Default.GetBytes("clear_time");
+            var clearTimeValue = 1;
+
+            var allScoreData = Th145AllScoreDataWrapper.Create(TestUtils.MakeByteArray(
+                // (int)SQ.OTTable,
+                (int)SQ.OTString, clearTimeKey.Length, clearTimeKey,
+                (int)SQ.OTInteger, clearTimeValue,
+                (int)SQ.OTNull));
+
+            Assert.IsNull(allScoreData.ClearTimes);
+        });
+
+        [TestMethod]
+        public void Th145AllScoreDataReadFromTestInvalidClearTimeValue() => TestUtils.Wrap(() =>
+        {
+            var clearTimeKey = Encoding.Default.GetBytes("clear_time");
+            var clearTimeValue = TestUtils.MakeByteArray((int)SQ.OTInteger, 0, (int)SQ.OTFloat, 123f);
+
+            var allScoreData = Th145AllScoreDataWrapper.Create(TestUtils.MakeByteArray(
+                // (int)SQ.OTTable,
+                (int)SQ.OTString, clearTimeKey.Length, clearTimeKey,
+                (int)SQ.OTArray, 1, clearTimeValue, (int)SQ.OTNull,
+                (int)SQ.OTNull));
+
+            Assert.IsNotNull(allScoreData.ClearTimes);
+            Assert.AreEqual(0, allScoreData.ClearTimes.Count);
         });
     }
 }

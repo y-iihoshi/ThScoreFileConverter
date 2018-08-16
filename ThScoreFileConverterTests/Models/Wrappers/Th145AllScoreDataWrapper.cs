@@ -9,18 +9,18 @@ using ThScoreFileConverter.Models;
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
     // NOTE: Setting the accessibility as public causes CS0053.
-    internal sealed class Th135AllScoreDataWrapper
+    internal sealed class Th145AllScoreDataWrapper
     {
-        private static Type ParentType = typeof(Th135Converter);
+        private static Type ParentType = typeof(Th145Converter);
         private static string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
         private static string TypeNameToTest = ParentType.FullName + "+AllScoreData";
         private static readonly PrivateType PrivateType = new PrivateType(AssemblyNameToTest, TypeNameToTest);
 
         private readonly PrivateObject pobj = null;
 
-        public static Th135AllScoreDataWrapper Create(byte[] array)
+        public static Th145AllScoreDataWrapper Create(byte[] array)
         {
-            var allScoreData = new Th135AllScoreDataWrapper();
+            var allScoreData = new Th145AllScoreDataWrapper();
 
             MemoryStream stream = null;
             try
@@ -40,7 +40,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             return allScoreData;
         }
 
-        public Th135AllScoreDataWrapper()
+        public Th145AllScoreDataWrapper()
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
@@ -49,9 +49,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         public int? StoryProgress
             => this.pobj.GetProperty(nameof(StoryProgress)) as int?;
-        public IReadOnlyDictionary<Th135Converter.Chara, Th135Converter.LevelFlag> StoryClearFlags
+        public IReadOnlyDictionary<Th145Converter.Chara, Th145Converter.LevelFlag> StoryClearFlags
             => this.pobj.GetProperty(nameof(StoryClearFlags))
-                as Dictionary<Th135Converter.Chara, Th135Converter.LevelFlag>;
+                as Dictionary<Th145Converter.Chara, Th145Converter.LevelFlag>;
         public int? EndingCount
             => this.pobj.GetProperty(nameof(EndingCount)) as int?;
         public int? Ending2Count
@@ -62,12 +62,22 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(IsEnabledStageTanuki2)) as bool?;
         public bool? IsEnabledStageKokoro
             => this.pobj.GetProperty(nameof(IsEnabledStageKokoro)) as bool?;
+        public bool? IsEnabledSt27
+            => this.pobj.GetProperty(nameof(IsEnabledSt27)) as bool?;
+        public bool? IsEnabledSt28
+            => this.pobj.GetProperty(nameof(IsEnabledSt28)) as bool?;
         public bool? IsPlayableMamizou
             => this.pobj.GetProperty(nameof(IsPlayableMamizou)) as bool?;
         public bool? IsPlayableKokoro
             => this.pobj.GetProperty(nameof(IsPlayableKokoro)) as bool?;
         public IReadOnlyDictionary<int, bool> BgmFlags
             => this.pobj.GetProperty(nameof(BgmFlags)) as Dictionary<int, bool>;
+        public IReadOnlyDictionary<Th145Converter.Level, Dictionary<Th145Converter.Chara, int>> ClearRanks
+            => this.pobj.GetProperty(nameof(ClearRanks))
+                as Dictionary<Th145Converter.Level, Dictionary<Th145Converter.Chara, int>>;
+        public IReadOnlyDictionary<Th145Converter.Level, Dictionary<Th145Converter.Chara, int>> ClearTimes
+            => this.pobj.GetProperty(nameof(ClearTimes))
+                as Dictionary<Th145Converter.Level, Dictionary<Th145Converter.Chara, int>>;
 
         public static bool ReadObject(BinaryReader reader, out object obj)
         {

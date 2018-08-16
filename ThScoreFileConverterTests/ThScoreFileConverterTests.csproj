@@ -143,6 +143,7 @@
     <Compile Include="Models\Th143ItemStatusTests.cs" />
     <Compile Include="Models\Th143ScoreTests.cs" />
     <Compile Include="Models\Th143StatusTests.cs" />
+    <Compile Include="Models\Th145AllScoreDataTests.cs" />
     <Compile Include="Models\Th15AllScoreDataTests.cs" />
     <Compile Include="Models\Th15ClearDataPerGameModeTests.cs" />
     <Compile Include="Models\Th15ClearDataTests.cs" />
@@ -232,6 +233,7 @@
     <Compile Include="Models\Wrappers\Th143ItemStatusWrapper.cs" />
     <Compile Include="Models\Wrappers\Th143ScoreWrapper.cs" />
     <Compile Include="Models\Wrappers\Th143StatusWrapper.cs" />
+    <Compile Include="Models\Wrappers\Th145AllScoreDataWrapper.cs" />
     <Compile Include="Models\Wrappers\Th15AllScoreDataWrapper.cs" />
     <Compile Include="Models\Wrappers\Th15ClearDataPerGameModeWrapper.cs" />
     <Compile Include="Models\Wrappers\Th15ClearDataWrapper.cs" />
