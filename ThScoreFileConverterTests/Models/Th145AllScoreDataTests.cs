@@ -88,7 +88,7 @@ namespace ThScoreFileConverterTests.Models
             var clearRankValue = properties.clearRanks.SelectMany(
                 perLevelPair => TestUtils.MakeByteArray(
                     (int)SQ.OTInteger, (int)perLevelPair.Key,
-                    (int)SQ.OTArray,
+                    (int)SQ.OTArray, perLevelPair.Value.Count,
                     perLevelPair.Value.SelectMany(
                         perCharaPair => TestUtils.MakeByteArray(
                             (int)SQ.OTInteger, (int)perCharaPair.Key,
@@ -98,7 +98,7 @@ namespace ThScoreFileConverterTests.Models
             var clearTimeValue = properties.clearTimes.SelectMany(
                 perLevelPair => TestUtils.MakeByteArray(
                     (int)SQ.OTInteger, (int)perLevelPair.Key,
-                    (int)SQ.OTArray,
+                    (int)SQ.OTArray, perLevelPair.Value.Count,
                     perLevelPair.Value.SelectMany(
                         perCharaPair => TestUtils.MakeByteArray(
                             (int)SQ.OTInteger, (int)perCharaPair.Key,
@@ -155,9 +155,20 @@ namespace ThScoreFileConverterTests.Models
             CollectionAssert.AreEqual(properties.bgmFlags.Keys, allScoreData.BgmFlags.Keys.ToArray());
             CollectionAssert.AreEqual(properties.bgmFlags.Values, allScoreData.BgmFlags.Values.ToArray());
             CollectionAssert.AreEqual(properties.clearRanks.Keys, allScoreData.ClearRanks.Keys.ToArray());
-            CollectionAssert.AreEqual(properties.clearRanks.Values, allScoreData.ClearRanks.Values.ToArray());
+
+            foreach (var pair in properties.clearRanks)
+            {
+                CollectionAssert.AreEqual(pair.Value.Keys, allScoreData.ClearRanks[pair.Key].Keys);
+                CollectionAssert.AreEqual(pair.Value.Values, allScoreData.ClearRanks[pair.Key].Values);
+            }
+
             CollectionAssert.AreEqual(properties.clearTimes.Keys, allScoreData.ClearTimes.Keys.ToArray());
-            CollectionAssert.AreEqual(properties.clearTimes.Values, allScoreData.ClearTimes.Values.ToArray());
+
+            foreach (var pair in properties.clearTimes)
+            {
+                CollectionAssert.AreEqual(pair.Value.Keys, allScoreData.ClearTimes[pair.Key].Keys);
+                CollectionAssert.AreEqual(pair.Value.Values, allScoreData.ClearTimes[pair.Key].Values);
+            }
         }
 
         internal static bool Th145AllScoreDataReadObjectHelper(byte[] array, out object obj)
