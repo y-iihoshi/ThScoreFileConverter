@@ -720,7 +720,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th145AllScoreDataReadFromTestInvalidClearRankValue() => TestUtils.Wrap(() =>
+        public void Th145AllScoreDataReadFromTestInvalidClearRankValuePerLevel() => TestUtils.Wrap(() =>
         {
             var clearRankKey = Encoding.Default.GetBytes("clear_rank");
             var clearRankValue = TestUtils.MakeByteArray((int)SQ.OTInteger, 0, (int)SQ.OTFloat, 123f);
@@ -733,6 +733,26 @@ namespace ThScoreFileConverterTests.Models
 
             Assert.IsNotNull(allScoreData.ClearRanks);
             Assert.AreEqual(0, allScoreData.ClearRanks.Count);
+        });
+
+        [TestMethod]
+        public void Th145AllScoreDataReadFromTestInvalidClearRankValuePerChara() => TestUtils.Wrap(() =>
+        {
+            var clearRankKey = Encoding.Default.GetBytes("clear_rank");
+            var clearRankValue = TestUtils.MakeByteArray(
+                (int)SQ.OTInteger, 0,
+                (int)SQ.OTArray, 1, (int)SQ.OTInteger, 0, (int)SQ.OTFloat, 123f, (int)SQ.OTNull);
+
+            var allScoreData = Th145AllScoreDataWrapper.Create(TestUtils.MakeByteArray(
+                // (int)SQ.OTTable,
+                (int)SQ.OTString, clearRankKey.Length, clearRankKey,
+                (int)SQ.OTArray, 1, clearRankValue, (int)SQ.OTNull,
+                (int)SQ.OTNull));
+
+            Assert.IsNotNull(allScoreData.ClearRanks);
+            Assert.AreEqual(1, allScoreData.ClearRanks.Count);
+            Assert.IsNotNull(allScoreData.ClearRanks.First().Value);
+            Assert.AreEqual(0, allScoreData.ClearRanks.First().Value.Count);
         });
 
         [TestMethod]
@@ -751,7 +771,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th145AllScoreDataReadFromTestInvalidClearTimeValue() => TestUtils.Wrap(() =>
+        public void Th145AllScoreDataReadFromTestInvalidClearTimeValuePerLevel() => TestUtils.Wrap(() =>
         {
             var clearTimeKey = Encoding.Default.GetBytes("clear_time");
             var clearTimeValue = TestUtils.MakeByteArray((int)SQ.OTInteger, 0, (int)SQ.OTFloat, 123f);
@@ -764,6 +784,26 @@ namespace ThScoreFileConverterTests.Models
 
             Assert.IsNotNull(allScoreData.ClearTimes);
             Assert.AreEqual(0, allScoreData.ClearTimes.Count);
+        });
+
+        [TestMethod]
+        public void Th145AllScoreDataReadFromTestInvalidClearTimeValuePerChara() => TestUtils.Wrap(() =>
+        {
+            var clearTimeKey = Encoding.Default.GetBytes("clear_time");
+            var clearTimeValue = TestUtils.MakeByteArray(
+                (int)SQ.OTInteger, 0,
+                (int)SQ.OTArray, 1, (int)SQ.OTInteger, 0, (int)SQ.OTFloat, 123f, (int)SQ.OTNull);
+
+            var allScoreData = Th145AllScoreDataWrapper.Create(TestUtils.MakeByteArray(
+                // (int)SQ.OTTable,
+                (int)SQ.OTString, clearTimeKey.Length, clearTimeKey,
+                (int)SQ.OTArray, 1, clearTimeValue, (int)SQ.OTNull,
+                (int)SQ.OTNull));
+
+            Assert.IsNotNull(allScoreData.ClearTimes);
+            Assert.AreEqual(1, allScoreData.ClearTimes.Count);
+            Assert.IsNotNull(allScoreData.ClearTimes.First().Value);
+            Assert.AreEqual(0, allScoreData.ClearTimes.First().Value.Count);
         });
     }
 }
