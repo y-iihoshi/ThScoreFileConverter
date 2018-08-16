@@ -545,5 +545,94 @@ namespace ThScoreFileConverterTests.Models
 
             Assert.Fail(TestUtils.Unreachable);
         });
+
+        [TestMethod]
+        [ExpectedException(typeof(EndOfStreamException))]
+        public void Th135AllScoreDataReadFromTestEmpty() => TestUtils.Wrap(() =>
+        {
+            Th135AllScoreDataWrapper.Create(new byte[0]);
+
+            Assert.Fail(TestUtils.Unreachable);
+        });
+
+        [TestMethod]
+        public void Th135AllScoreDataReadFromTestNoKey() => TestUtils.Wrap(() =>
+        {
+            var allScoreData = Th135AllScoreDataWrapper.Create(TestUtils.MakeByteArray((int)SQ.OTNull));
+
+            Assert.AreEqual(default, allScoreData.StoryProgress.Value);
+            Assert.IsNull(allScoreData.StoryClearFlags);
+            Assert.AreEqual(default, allScoreData.EndingCount.Value);
+            Assert.AreEqual(default, allScoreData.Ending2Count.Value);
+            Assert.AreEqual(default, allScoreData.IsEnabledStageTanuki1.Value);
+            Assert.AreEqual(default, allScoreData.IsEnabledStageTanuki2.Value);
+            Assert.AreEqual(default, allScoreData.IsEnabledStageKokoro.Value);
+            Assert.AreEqual(default, allScoreData.IsPlayableMamizou.Value);
+            Assert.AreEqual(default, allScoreData.IsPlayableKokoro.Value);
+            Assert.IsNull(allScoreData.BgmFlags);
+        });
+
+        [TestMethod]
+        public void Th135AllScoreDataReadFromTestNoTables() => TestUtils.Wrap(() =>
+        {
+            var stageProgressKey = Encoding.Default.GetBytes("story_progress");
+            var stageProgressValue = 1;
+
+            var allScoreData = Th135AllScoreDataWrapper.Create(TestUtils.MakeByteArray(
+                // (int)SQ.OTTable,
+                (int)SQ.OTString, stageProgressKey.Length, stageProgressKey,
+                (int)SQ.OTInteger, stageProgressValue,
+                (int)SQ.OTNull));
+
+            Assert.AreEqual(stageProgressValue, allScoreData.StoryProgress);
+            Assert.IsNull(allScoreData.StoryClearFlags);
+            Assert.IsNull(allScoreData.BgmFlags);
+        });
+
+        [TestMethod]
+        public void Th135AllScoreDataReadFromTestInvalidStoryClear() => TestUtils.Wrap(() =>
+        {
+            var stageClearKey = Encoding.Default.GetBytes("story_clear");
+            var stageClearValue = 1;
+
+            var allScoreData = Th135AllScoreDataWrapper.Create(TestUtils.MakeByteArray(
+                // (int)SQ.OTTable,
+                (int)SQ.OTString, stageClearKey.Length, stageClearKey,
+                (int)SQ.OTInteger, stageClearValue,
+                (int)SQ.OTNull));
+
+            Assert.IsNull(allScoreData.StoryClearFlags);
+        });
+
+        [TestMethod]
+        public void Th135AllScoreDataReadFromTestInvalidStoryClearValue() => TestUtils.Wrap(() =>
+        {
+            var stageClearKey = Encoding.Default.GetBytes("story_clear");
+            var stageClearValue = TestUtils.MakeByteArray((int)SQ.OTInteger, 0, (int)SQ.OTFloat, 123f);
+
+            var allScoreData = Th135AllScoreDataWrapper.Create(TestUtils.MakeByteArray(
+                // (int)SQ.OTTable,
+                (int)SQ.OTString, stageClearKey.Length, stageClearKey,
+                (int)SQ.OTArray, 1, stageClearValue, (int)SQ.OTNull,
+                (int)SQ.OTNull));
+
+            Assert.IsNotNull(allScoreData.StoryClearFlags);
+            Assert.AreEqual(0, allScoreData.StoryClearFlags.Count);
+        });
+
+        [TestMethod]
+        public void Th135AllScoreDataReadFromTestInvalidEnableBgm() => TestUtils.Wrap(() =>
+        {
+            var enableBgmKey = Encoding.Default.GetBytes("enable_bgm");
+            var enableBgmValue = 1;
+
+            var allScoreData = Th135AllScoreDataWrapper.Create(TestUtils.MakeByteArray(
+                // (int)SQ.OTTable,
+                (int)SQ.OTString, enableBgmKey.Length, enableBgmKey,
+                (int)SQ.OTInteger, enableBgmValue,
+                (int)SQ.OTNull));
+
+            Assert.IsNull(allScoreData.BgmFlags);
+        });
     }
 }
