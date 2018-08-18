@@ -644,6 +644,19 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
+        public void Th155AllScoreDataReadFromTestInvalidStoryKey() => TestUtils.Wrap(() =>
+        {
+            var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
+                // .Concat(TestUtils.MakeByteArray((int)SQ.OTTable))
+                .Concat(TestUtils.MakeSQByteArray("story", new Dictionary<int, int>() { { 123, 456 } }))
+                .Concat(TestUtils.MakeByteArray((int)SQ.OTNull))
+                .ToArray());
+
+            Assert.IsNotNull(allScoreData.StoryDictionary);
+            Assert.AreEqual(0, allScoreData.StoryDictionaryCount);
+        });
+
+        [TestMethod]
         public void Th155AllScoreDataReadFromTestInvalidStoryChara() => TestUtils.Wrap(() =>
         {
             var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
@@ -681,7 +694,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th155AllScoreDataReadFromTestInvalidStoryKey() => TestUtils.Wrap(() =>
+        public void Th155AllScoreDataReadFromTestInvalidStoryFieldName() => TestUtils.Wrap(() =>
         {
             var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQ.OTTable))
@@ -708,7 +721,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th155AllScoreDataReadFromTestInvalidStoryValue() => TestUtils.Wrap(() =>
+        public void Th155AllScoreDataReadFromTestInvalidStoryFieldValue() => TestUtils.Wrap(() =>
         {
             var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQ.OTTable))
