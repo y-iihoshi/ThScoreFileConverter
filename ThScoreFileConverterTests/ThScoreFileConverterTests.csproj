@@ -148,6 +148,7 @@
     <Compile Include="Models\Th15ClearDataPerGameModeTests.cs" />
     <Compile Include="Models\Th15ClearDataTests.cs" />
     <Compile Include="Models\Th15ScoreDataTests.cs" />
+    <Compile Include="Models\Th155AllScoreDataTests.cs" />
     <Compile Include="Models\Th16AllScoreDataTests.cs" />
     <Compile Include="Models\Th16ClearDataTests.cs" />
     <Compile Include="Models\Th16ScoreDataTests.cs" />
@@ -238,6 +239,8 @@
     <Compile Include="Models\Wrappers\Th15ClearDataPerGameModeWrapper.cs" />
     <Compile Include="Models\Wrappers\Th15ClearDataWrapper.cs" />
     <Compile Include="Models\Wrappers\Th15ScoreDataWrapper.cs" />
+    <Compile Include="Models\Wrappers\Th155AllScoreDataWrapper.cs" />
+    <Compile Include="Models\Wrappers\Th155StoryWrapper.cs" />
     <Compile Include="Models\Wrappers\Th16AllScoreDataWrapper.cs" />
     <Compile Include="Models\Wrappers\Th16ClearDataWrapper.cs" />
     <Compile Include="Models\Wrappers\Th16ScoreDataWrapper.cs" />
