@@ -112,6 +112,74 @@ namespace ThScoreFileConverterTests.Models
             return array;
         }
 
+        public static IEnumerable<byte> MakeSQByteArray(params object[] args)
+        {
+            if (args == null)
+                throw new ArgumentNullException(nameof(args));
+
+            var currentType = typeof(TestUtils);
+            var bindingAttributes = BindingFlags.NonPublic | BindingFlags.Static;
+            var fromArray = currentType.GetMethod(nameof(MakeSQByteArrayFromArray), bindingAttributes);
+            var fromDictonary = currentType.GetMethod(nameof(MakeSQByteArrayFromDictionary), bindingAttributes);
+
+            IEnumerable<byte> byteArray = new byte[0];
+
+            foreach (var arg in args)
+            {
+                switch (arg)
+                {
+                    case int intValue:
+                        byteArray = byteArray.Concat(MakeByteArray((int)Squirrel.OTInteger, intValue));
+                        break;
+                    case float floatValue:
+                        byteArray = byteArray.Concat(MakeByteArray((int)Squirrel.OTFloat, floatValue));
+                        break;
+                    case bool boolValue:
+                        byteArray = byteArray.Concat(
+                            MakeByteArray((int)Squirrel.OTBool, (byte)(boolValue ? 0x01 : 0x00)));
+                        break;
+                    case string stringValue:
+                        {
+                            var bytes = Encoding.Default.GetBytes(stringValue);
+                            byteArray = byteArray.Concat(MakeByteArray((int)Squirrel.OTString, bytes.Length, bytes));
+                        }
+                        break;
+                    case Array array:
+                        if (array.Rank == 1)
+                        {
+                            byteArray = byteArray.Concat(
+                                fromArray.MakeGenericMethod(array.GetType().GetElementType())
+                                    .Invoke(null, new object[] { array }) as IEnumerable<byte>);
+                        }
+                        break;
+                    default:
+                        {
+                            var argType = arg.GetType();
+                            if (argType.IsGenericType && argType.GetGenericTypeDefinition() == typeof(Dictionary<,>))
+                            {
+                                byteArray = byteArray.Concat(
+                                    fromDictonary.MakeGenericMethod(argType.GetGenericArguments())
+                                        .Invoke(null, new object[] { arg }) as IEnumerable<byte>);
+                            }
+                        }
+                        break;
+                }
+            }
+
+            return byteArray;
+        }
+
+        private static IEnumerable<byte> MakeSQByteArrayFromArray<T>(in IEnumerable<T> array)
+            => MakeByteArray((int)Squirrel.OTArray, array.Count())
+                .Concat(array.SelectMany((element, index) => MakeSQByteArray(index).Concat(MakeSQByteArray(element))))
+                .Concat(MakeByteArray((int)Squirrel.OTNull));
+
+        private static IEnumerable<byte> MakeSQByteArrayFromDictionary<TKey, TValue>(
+            in Dictionary<TKey, TValue> dictionary)
+            => MakeByteArray((int)Squirrel.OTTable)
+                .Concat(dictionary.SelectMany(pair => MakeSQByteArray(pair.Key).Concat(MakeSQByteArray(pair.Value))))
+                .Concat(MakeByteArray((int)Squirrel.OTNull));
+
         public static TResult[] MakeRandomArray<TResult>(int length)
             where TResult : struct
         {
