@@ -88,6 +88,7 @@
     <Compile Include="Models\Th075AllScoreDataTests.cs" />
     <Compile Include="Models\Th075ClearDataTests.cs" />
     <Compile Include="Models\Th075HighScoreTests.cs" />
+    <Compile Include="Models\Th075StageEnemyPairTests.cs" />
     <Compile Include="Models\Th075StatusTests.cs" />
     <Compile Include="Models\Th08AllScoreDataTests.cs" />
     <Compile Include="Models\Th08CardAttackCareerTests.cs" />
@@ -105,7 +106,9 @@
     <Compile Include="Models\Th09PlayStatusTests.cs" />
     <Compile Include="Models\Th095AllScoreDataTests.cs" />
     <Compile Include="Models\Th095BestShotHeaderTests.cs" />
+    <Compile Include="Models\Th095BestShotPairTests.cs" />
     <Compile Include="Models\Th095ChapterTests.cs" />
+    <Compile Include="Models\Th095EnemyCardPairTests.cs" />
     <Compile Include="Models\Th095HeaderTests.cs" />
     <Compile Include="Models\Th095LevelScenePairTests.cs" />
     <Compile Include="Models\Th095ScoreTests.cs" />
@@ -125,6 +128,7 @@
     <Compile Include="Models\Th105SpellCardResultTests.cs" />
     <Compile Include="Models\Th125AllScoreDataTests.cs" />
     <Compile Include="Models\Th125BestShotHeaderTests.cs" />
+    <Compile Include="Models\Th125BestShotPairTests.cs" />
     <Compile Include="Models\Th125BonusFieldsTests.cs" />
     <Compile Include="Models\Th125ScoreTests.cs" />
     <Compile Include="Models\Th125StatusTests.cs" />
@@ -144,6 +148,9 @@
     <Compile Include="Models\Th143ScoreTests.cs" />
     <Compile Include="Models\Th143StatusTests.cs" />
     <Compile Include="Models\Th145AllScoreDataTests.cs" />
+    <Compile Include="Models\Th143BestShotPairTests.cs" />
+    <Compile Include="Models\Th143DayScenePairTests.cs" />
+    <Compile Include="Models\Th143EnemiesCardPairTests.cs" />
     <Compile Include="Models\Th15AllScoreDataTests.cs" />
     <Compile Include="Models\Th15ClearDataPerGameModeTests.cs" />
     <Compile Include="Models\Th15ClearDataTests.cs" />
@@ -179,6 +186,7 @@
     <Compile Include="Models\Wrappers\Th075AllScoreDataWrapper.cs" />
     <Compile Include="Models\Wrappers\Th075ClearDataWrapper.cs" />
     <Compile Include="Models\Wrappers\Th075HighScoreWrapper.cs" />
+    <Compile Include="Models\Wrappers\Th075StageEnemyPairWrapper.cs" />
     <Compile Include="Models\Wrappers\Th075StatusWrapper.cs" />
     <Compile Include="Models\Wrappers\Th08AllScoreDataWrapper.cs" />
     <Compile Include="Models\Wrappers\Th08CardAttackCareerWrapper.cs" />
@@ -196,7 +204,9 @@
     <Compile Include="Models\Wrappers\Th09PlayStatusWrapper.cs" />
     <Compile Include="Models\Wrappers\Th095AllScoreDataWrapper.cs" />
     <Compile Include="Models\Wrappers\Th095BestShotHeaderWrapper.cs" />
+    <Compile Include="Models\Wrappers\Th095BestShotPairWrapper.cs" />
     <Compile Include="Models\Wrappers\Th095ChapterWrapper.cs" />
+    <Compile Include="Models\Wrappers\Th095EnemyCardPairWrapper.cs" />
     <Compile Include="Models\Wrappers\Th095HeaderWrapper.cs" />
     <Compile Include="Models\Wrappers\Th095LevelScenePairWrapper.cs" />
     <Compile Include="Models\Wrappers\Th095ScoreWrapper.cs" />
@@ -216,6 +226,7 @@
     <Compile Include="Models\Wrappers\Th105SpellCardResultWrapper.cs" />
     <Compile Include="Models\Wrappers\Th125AllScoreDataWrapper.cs" />
     <Compile Include="Models\Wrappers\Th125BestShotHeaderWrapper.cs" />
+    <Compile Include="Models\Wrappers\Th125BestShotPairWrapper.cs" />
     <Compile Include="Models\Wrappers\Th125BonusFieldsWrapper.cs" />
     <Compile Include="Models\Wrappers\Th125ScoreWrapper.cs" />
     <Compile Include="Models\Wrappers\Th125StatusWrapper.cs" />
@@ -231,6 +242,9 @@
     <Compile Include="Models\Wrappers\Th135AllScoreDataWrapper.cs" />
     <Compile Include="Models\Wrappers\Th143AllScoreDataWrapper.cs" />
     <Compile Include="Models\Wrappers\Th143BestShotHeaderWrapper.cs" />
+    <Compile Include="Models\Wrappers\Th143BestShotPairWrapper.cs" />
+    <Compile Include="Models\Wrappers\Th143DayScenePairWrapper.cs" />
+    <Compile Include="Models\Wrappers\Th143EnemiesCardPairWrapper.cs" />
     <Compile Include="Models\Wrappers\Th143ItemStatusWrapper.cs" />
     <Compile Include="Models\Wrappers\Th143ScoreWrapper.cs" />
     <Compile Include="Models\Wrappers\Th143StatusWrapper.cs" />

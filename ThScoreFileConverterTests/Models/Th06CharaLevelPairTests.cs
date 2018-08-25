@@ -55,5 +55,13 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th07CharaLevelPairTest()
             => CharaLevelPairTestHelper<Th07Converter, Th07Converter.Chara, Th07Converter.Level>();
+
+        [TestMethod]
+        public void Th08CharaLevelPairTest()
+            => CharaLevelPairTestHelper<Th08Converter, Th08Converter.Chara, ThConverter.Level>();
+
+        [TestMethod]
+        public void Th09CharaLevelPairTest()
+            => CharaLevelPairTestHelper<Th09Converter, Th09Converter.Chara, ThConverter.Level>();
     }
 }
