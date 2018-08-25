@@ -73,12 +73,14 @@
     <Compile Include="Models\Th06ChapterTests.cs" />
     <Compile Include="Models\Th06CharaLevelPairTests.cs" />
     <Compile Include="Models\Th06ClearDataTests.cs" />
+    <Compile Include="Models\Th06FileHeaderTests.cs" />
     <Compile Include="Models\Th06HeaderTests.cs" />
     <Compile Include="Models\Th06HighScoreTests.cs" />
     <Compile Include="Models\Th06PracticeScoreTests.cs" />
     <Compile Include="Models\Th07AllScoreDataTests.cs" />
     <Compile Include="Models\Th07CardAttackTests.cs" />
     <Compile Include="Models\Th07ClearDataTests.cs" />
+    <Compile Include="Models\Th07FileHeaderTests.cs" />
     <Compile Include="Models\Th07HighScoreTests.cs" />
     <Compile Include="Models\Th07LastNameTests.cs" />
     <Compile Include="Models\Th07PlayCountTests.cs" />
@@ -102,6 +104,7 @@
     <Compile Include="Models\Th08StageLevelPairTests.cs" />
     <Compile Include="Models\Th09AllScoreDataTests.cs" />
     <Compile Include="Models\Th09ClearCountTests.cs" />
+    <Compile Include="Models\Th09FileHeaderTests.cs" />
     <Compile Include="Models\Th09HighScoreTests.cs" />
     <Compile Include="Models\Th09PlayStatusTests.cs" />
     <Compile Include="Models\Th095AllScoreDataTests.cs" />
@@ -171,12 +174,14 @@
     <Compile Include="Models\Wrappers\Th06ChapterWrapper.cs" />
     <Compile Include="Models\Wrappers\Th06CharaLevelPairWrapper.cs" />
     <Compile Include="Models\Wrappers\Th06ClearDataWrapper.cs" />
+    <Compile Include="Models\Wrappers\Th06FileHeaderWrapper.cs" />
     <Compile Include="Models\Wrappers\Th06HeaderWrapper.cs" />
     <Compile Include="Models\Wrappers\Th06HighScoreWrapper.cs" />
     <Compile Include="Models\Wrappers\Th06PracticeScoreWrapper.cs" />
     <Compile Include="Models\Wrappers\Th07AllScoreDataWrapper.cs" />
     <Compile Include="Models\Wrappers\Th07CardAttackWrapper.cs" />
     <Compile Include="Models\Wrappers\Th07ClearDataWrapper.cs" />
+    <Compile Include="Models\Wrappers\Th07FileHeaderWrapper.cs" />
     <Compile Include="Models\Wrappers\Th07HighScoreWrapper.cs" />
     <Compile Include="Models\Wrappers\Th07LastNameWrapper.cs" />
     <Compile Include="Models\Wrappers\Th07PlayCountWrapper.cs" />
@@ -200,6 +205,7 @@
     <Compile Include="Models\Wrappers\Th08StageLevelPairWrapper.cs" />
     <Compile Include="Models\Wrappers\Th09AllScoreDataWrapper.cs" />
     <Compile Include="Models\Wrappers\Th09ClearCountWrapper.cs" />
+    <Compile Include="Models\Wrappers\Th09FileHeaderWrapper.cs" />
     <Compile Include="Models\Wrappers\Th09HighScoreWrapper.cs" />
     <Compile Include="Models\Wrappers\Th09PlayStatusWrapper.cs" />
     <Compile Include="Models\Wrappers\Th095AllScoreDataWrapper.cs" />
