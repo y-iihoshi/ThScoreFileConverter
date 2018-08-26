@@ -135,6 +135,7 @@
     <Compile Include="Models\Th125BestShotHeaderTests.cs" />
     <Compile Include="Models\Th125BestShotPairTests.cs" />
     <Compile Include="Models\Th125BonusFieldsTests.cs" />
+    <Compile Include="Models\Th125DetailTests.cs" />
     <Compile Include="Models\Th125ScoreTests.cs" />
     <Compile Include="Models\Th125StatusTests.cs" />
     <Compile Include="Models\Th128AllScoreDataTests.cs" />
@@ -238,6 +239,7 @@
     <Compile Include="Models\Wrappers\Th125BestShotHeaderWrapper.cs" />
     <Compile Include="Models\Wrappers\Th125BestShotPairWrapper.cs" />
     <Compile Include="Models\Wrappers\Th125BonusFieldsWrapper.cs" />
+    <Compile Include="Models\Wrappers\Th125DetailWrapper.cs" />
     <Compile Include="Models\Wrappers\Th125ScoreWrapper.cs" />
     <Compile Include="Models\Wrappers\Th125StatusWrapper.cs" />
     <Compile Include="Models\Wrappers\Th128AllScoreDataWrapper.cs" />
