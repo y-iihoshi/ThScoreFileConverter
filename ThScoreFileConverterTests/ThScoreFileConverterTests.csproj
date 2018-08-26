@@ -130,6 +130,7 @@
     <Compile Include="Models\Th105CharaCardIdPairTests.cs" />
     <Compile Include="Models\Th105ClearDataTests.cs" />
     <Compile Include="Models\Th105SpellCardResultTests.cs" />
+    <Compile Include="Models\Th105StageInfoTests.cs" />
     <Compile Include="Models\Th125AllScoreDataTests.cs" />
     <Compile Include="Models\Th125BestShotHeaderTests.cs" />
     <Compile Include="Models\Th125BestShotPairTests.cs" />
@@ -232,6 +233,7 @@
     <Compile Include="Models\Wrappers\Th105CharaCardIdPairWrapper.cs" />
     <Compile Include="Models\Wrappers\Th105ClearDataWrapper.cs" />
     <Compile Include="Models\Wrappers\Th105SpellCardResultWrapper.cs" />
+    <Compile Include="Models\Wrappers\Th105StageInfoWrapper.cs" />
     <Compile Include="Models\Wrappers\Th125AllScoreDataWrapper.cs" />
     <Compile Include="Models\Wrappers\Th125BestShotHeaderWrapper.cs" />
     <Compile Include="Models\Wrappers\Th125BestShotPairWrapper.cs" />
