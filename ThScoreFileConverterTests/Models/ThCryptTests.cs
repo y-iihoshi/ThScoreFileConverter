@@ -80,14 +80,13 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
         public void DecryptTestEmptyInput()
         {
             using (var input = new MemoryStream())
             using (var output = new MemoryStream())
             {
                 ThCrypt.Decrypt(input, output, encryptedBySmallBlock.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
-                Assert.Fail(TestUtils.Unreachable);
+                Assert.AreEqual(0, output.Length);
             }
         }
 
@@ -229,14 +228,18 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void DecryptTestExceededSize()
         {
             using (var input = new MemoryStream(this.encryptedBySmallBlock))
             using (var output = new MemoryStream())
             {
                 ThCrypt.Decrypt(input, output, (int)input.Length + 1, KEY, STEP, SMALL_BLOCK, LIMIT);
-                Assert.Fail(TestUtils.Unreachable);
+
+                var actual = new byte[output.Length];
+                output.Position = 0;
+                output.Read(actual, 0, actual.Length);
+
+                CollectionAssert.AreEqual(this.decrypted, actual);
             }
         }
 
