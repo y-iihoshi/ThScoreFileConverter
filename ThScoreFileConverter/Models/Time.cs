@@ -18,6 +18,7 @@ namespace ThScoreFileConverter.Models
         /// Initializes a new instance of the <see cref="Time"/> class to a specified number of frames.
         /// </summary>
         /// <param name="frames">Number of frames</param>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="frames"/> is negative.</exception>
         public Time(long frames)
             : this(frames, true)
         {
@@ -32,8 +33,14 @@ namespace ThScoreFileConverter.Models
         /// <c>true</c> if treats <paramref name="framesOrMilliseconds"/> as a frames; <c>false</c> for
         /// milliseconds.
         /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="framesOrMilliseconds"/> is negative.
+        /// </exception>
         public Time(long framesOrMilliseconds, bool isFrames)
         {
+            if (framesOrMilliseconds < 0)
+                throw new ArgumentOutOfRangeException(nameof(framesOrMilliseconds));
+
             var seconds = framesOrMilliseconds / (isFrames ? 60 : 1000);
             var minutes = seconds / 60;
             var hours = minutes / 60;
@@ -63,6 +70,16 @@ namespace ThScoreFileConverter.Models
         /// <param name="minutes">Number of minutes.</param>
         /// <param name="seconds">Number of seconds.</param>
         /// <param name="frames">Number of frames.</param>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="hours"/> is negative.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="minutes"/> is negative or exceeds 59.
+        /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="seconds"/> is negative or exceeds 59.
+        /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="frames"/> is negative or exceeds 59.
+        /// </exception>
         public Time(long hours, int minutes, int seconds, int frames)
             : this(hours, minutes, seconds, frames, true)
         {
@@ -80,14 +97,27 @@ namespace ThScoreFileConverter.Models
         /// <c>true</c> if treats <paramref name="framesOrMilliseconds"/> as a frames; <c>false</c> for
         /// milliseconds.
         /// </param>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="hours"/> is negative.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="minutes"/> is negative or exceeds 59.
+        /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="seconds"/> is negative or exceeds 59.
+        /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="framesOrMilliseconds"/> is negative or exceeds the maximum value:
+        /// 59 if <paramref name="isFrames"/> is <c>true</c>; otherwise 999.
+        /// </exception>
         public Time(long hours, int minutes, int seconds, int framesOrMilliseconds, bool isFrames)
         {
-            if (minutes >= 60)
-                throw new ArgumentOutOfRangeException("minutes");
-            if (seconds >= 60)
-                throw new ArgumentOutOfRangeException("seconds");
-            if (framesOrMilliseconds >= (isFrames ? 60 : 1000))
-                throw new ArgumentOutOfRangeException("framesOrMilliseconds");
+            if (hours < 0)
+                throw new ArgumentOutOfRangeException(nameof(hours));
+            if ((minutes < 0) || (minutes >= 60))
+                throw new ArgumentOutOfRangeException(nameof(minutes));
+            if ((seconds < 0) || (seconds >= 60))
+                throw new ArgumentOutOfRangeException(nameof(seconds));
+            if ((framesOrMilliseconds < 0) || (framesOrMilliseconds >= (isFrames ? 60 : 1000)))
+                throw new ArgumentOutOfRangeException(nameof(framesOrMilliseconds));
 
             this.Hours = hours;
             this.Minutes = minutes;
