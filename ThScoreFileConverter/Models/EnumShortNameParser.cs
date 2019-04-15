@@ -27,7 +27,7 @@ namespace ThScoreFileConverter.Models
         /// A regular expression of the short names of <typeparamref name="TEnum"/>.
         /// </summary>
         private static readonly string PatternImpl =
-            string.Join("|", Elements.Select(elem => elem.ToShortName()).ToArray());
+            string.Join("|", Elements.Select(elem => elem.ToShortName()).Distinct().ToArray());
 
         /// <summary>
         /// Gets a regular expression of the short names of <typeparamref name="TEnum"/>.
