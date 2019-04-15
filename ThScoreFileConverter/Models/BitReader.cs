@@ -38,8 +38,8 @@ namespace ThScoreFileConverter.Models
         /// Initializes a new instance of the <see cref="BitReader"/> class.
         /// </summary>
         /// <param name="stream">The stream to read.</param>
-        /// <exception cref="ArgumentNullException"/>
-        /// <exception cref="ArgumentException"/>
+        /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="stream"/> is not readable.</exception>
         public BitReader(Stream stream)
         {
             if (stream == null)
@@ -75,8 +75,8 @@ namespace ThScoreFileConverter.Models
         /// </summary>
         /// <param name="num">The number of reading bits.</param>
         /// <returns>The value that is read from the stream.</returns>
-        /// <exception cref="ArgumentOutOfRangeException"/>
-        /// <exception cref="ObjectDisposedException"/>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="num"/> is negative.</exception>
+        /// <exception cref="ObjectDisposedException">Called after the stream was closed.</exception>
         public int ReadBits(int num)
         {
             if (num < 0)
