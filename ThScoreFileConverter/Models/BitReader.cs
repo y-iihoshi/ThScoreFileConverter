@@ -38,12 +38,14 @@ namespace ThScoreFileConverter.Models
         /// Initializes a new instance of the <see cref="BitReader"/> class.
         /// </summary>
         /// <param name="stream">The stream to read.</param>
+        /// <exception cref="ArgumentNullException"/>
+        /// <exception cref="ArgumentException"/>
         public BitReader(Stream stream)
         {
             if (stream == null)
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             if (!stream.CanRead)
-                throw new ArgumentException("stream must be readable", "stream");
+                throw new ArgumentException("stream must be readable", nameof(stream));
 
             this.stream = stream;
             this.disposed = false;
@@ -73,8 +75,12 @@ namespace ThScoreFileConverter.Models
         /// </summary>
         /// <param name="num">The number of reading bits.</param>
         /// <returns>The value that is read from the stream.</returns>
+        /// <exception cref="ArgumentOutOfRangeException"/>
+        /// <exception cref="ObjectDisposedException"/>
         public int ReadBits(int num)
         {
+            if (num < 0)
+                throw new ArgumentOutOfRangeException(nameof(num));
             if (this.disposed)
                 throw new ObjectDisposedException(this.ToString());
 
