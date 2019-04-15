@@ -44,9 +44,19 @@ namespace ThScoreFileConverter.Models
         /// <param name="step">The step.</param>
         /// <param name="block">The size of block.</param>
         /// <param name="limit">The limit value.</param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="size"/>, <paramref name="block"/> or <paramref name="limit"/> are negative.
+        /// </exception>
         public static void Decrypt(
             Stream input, Stream output, int size, byte key, byte step, int block, int limit)
         {
+            if (size < 0)
+                throw new ArgumentOutOfRangeException(nameof(size));
+            if (block < 0)
+                throw new ArgumentOutOfRangeException(nameof(block));
+            if (limit < 0)
+                throw new ArgumentOutOfRangeException(nameof(limit));
+
             var inBlock = new byte[block];
             var outBlock = new byte[block];
             int addup;
