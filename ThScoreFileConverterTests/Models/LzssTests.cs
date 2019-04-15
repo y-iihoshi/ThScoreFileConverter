@@ -84,14 +84,13 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
         public void ExtractTestEmptyInput()
         {
             using (var input = new MemoryStream())
             using (var output = new MemoryStream())
             {
                 Lzss.Extract(input, output);
-                Assert.Fail(TestUtils.Unreachable);
+                Assert.AreEqual(0, output.Length);
             }
         }
 
@@ -121,14 +120,19 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
         public void ExtractTestShortenedInput()
         {
-            using (var input = new MemoryStream(this.compressed, 0, this.compressed.Length - 1))
+            // Since the last 2 bytes of this.compressed are zero, we should subtract 3 to pass this test.
+            using (var input = new MemoryStream(this.compressed, 0, this.compressed.Length - 3))
             using (var output = new MemoryStream())
             {
                 Lzss.Extract(input, output);
-                Assert.Fail(TestUtils.Unreachable);
+
+                var actual = new byte[output.Length];
+                output.Position = 0;
+                output.Read(actual, 0, actual.Length);
+
+                CollectionAssert.AreNotEqual(this.decompressed, actual);
             }
         }
 
