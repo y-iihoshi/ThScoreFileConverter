@@ -24,16 +24,15 @@ namespace ThScoreFileConverter.Models
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="current"/> is not positive or greater than <paramref name="total"/>.
         /// </exception>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="total"/> is not positive.</exception>
         public ThConverterEventArgs(string path, int current, int total)
         {
             if (path is null)
                 throw new ArgumentNullException(nameof(path));
             if (path == string.Empty)
                 throw new ArgumentException(nameof(path));
-            if ((current <= 0) || (current > total))
+            if (current <= 0)
                 throw new ArgumentOutOfRangeException(nameof(current));
-            if (total <= 0)
+            if (total < current)
                 throw new ArgumentOutOfRangeException(nameof(total));
 
             this.Path = path;
