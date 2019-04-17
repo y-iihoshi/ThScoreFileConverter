@@ -1,18 +1,19 @@
-set CONFIGURATION=%1
-set OUTPUT=%2
+[string]$configuration = $args[0]
+[string]$output = $args[1]
 
-set OPENCOVER=.\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe
-set TARGET=%VSINSTALLDIR%\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe
-set TARGET_ARGS=.\ThScoreFileConverterTests\bin\%CONFIGURATION%\ThScoreFileConverterTests.dll
-set FILTER=+[*]* -[ThScoreFileConverterTests]*
+$opencover = (Resolve-Path ".\packages\OpenCover.*\tools\OpenCover.Console.exe").ToString()
+$target = "$env:VSINSTALLDIR\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe"
+$targetArgs = ".\ThScoreFileConverterTests\bin\$configuration\ThScoreFileConverterTests.dll"
+$filter = "+[*]* -[ThScoreFileConverterTests]*"
 
-if /i "%APPVEYOR%" == "true" (
-    set TARGET_ARGS=/logger:Appveyor %TARGET_ARGS%
-)
+if ($env:APPVEYOR -ieq "true")
+{
+    $targetArgs = "/logger:Appveyor $targetArgs"
+}
 
-%OPENCOVER% ^
-    -register:user ^
-    -target:"%TARGET%" ^
-    -targetargs:"%TARGET_ARGS%" ^
-    -filter:"%FILTER%" ^
-    -output:"%OUTPUT%"
+& $opencover `
+    -register:user `
+    -target:$target `
+    -targetargs:$targetArgs `
+    -filter:$filter `
+    -output:$output
