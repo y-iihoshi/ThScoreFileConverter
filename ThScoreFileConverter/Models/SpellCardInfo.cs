@@ -49,7 +49,7 @@ namespace ThScoreFileConverter.Models
                 throw new ArgumentOutOfRangeException(nameof(id));
             if (name is null)
                 throw new ArgumentNullException(nameof(name));
-            if (name == string.Empty)
+            if (string.IsNullOrEmpty(name))
                 throw new ArgumentException(nameof(name));
             if (!Enum.IsDefined(typeof(TStage), stage))
                 throw new ArgumentOutOfRangeException(nameof(stage));
