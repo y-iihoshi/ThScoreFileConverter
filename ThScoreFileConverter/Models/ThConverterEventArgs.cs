@@ -29,7 +29,7 @@ namespace ThScoreFileConverter.Models
             if (path is null)
                 throw new ArgumentNullException(nameof(path));
             if (string.IsNullOrEmpty(path))
-                throw new ArgumentException(nameof(path));
+                throw new ArgumentException("Path must not be empty", nameof(path));
             if (current <= 0)
                 throw new ArgumentOutOfRangeException(nameof(current));
             if (total < current)
