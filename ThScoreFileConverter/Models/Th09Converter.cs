@@ -473,6 +473,9 @@ namespace ThScoreFileConverter.Models
 
             protected Chapter(Chapter chapter)
             {
+                if (chapter is null)
+                    throw new ArgumentNullException(nameof(chapter));
+
                 this.Signature = chapter.Signature;
                 this.Size1 = chapter.Size1;
                 this.Size2 = chapter.Size2;
@@ -486,10 +489,7 @@ namespace ThScoreFileConverter.Models
 
             public short Size2 { get; private set; }        // always equal to size1?
 
-            public byte FirstByteOfData
-            {
-                get { return this.Data[0]; }
-            }
+            public byte FirstByteOfData => this.Data?.Length > 0 ? this.Data[0] : default(byte);
 
             protected byte[] Data { get; private set; }
 
@@ -498,10 +498,10 @@ namespace ThScoreFileConverter.Models
                 if (reader == null)
                     throw new ArgumentNullException("reader");
 
-                this.Signature = Encoding.Default.GetString(reader.ReadBytes(4));
+                this.Signature = Encoding.Default.GetString(reader.ReadExactBytes(4));
                 this.Size1 = reader.ReadInt16();
                 this.Size2 = reader.ReadInt16();
-                this.Data = reader.ReadBytes(this.Size1 - this.Signature.Length - (sizeof(short) * 2));
+                this.Data = reader.ReadExactBytes(this.Size1 - this.Signature.Length - (sizeof(short) * 2));
             }
         }
 
