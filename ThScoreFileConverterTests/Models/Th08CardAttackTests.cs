@@ -133,7 +133,7 @@ namespace ThScoreFileConverterTests.Models
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
-        [ExpectedException(typeof(InvalidDataException))]
+        [ExpectedException(typeof(InvalidCastException))]
         public void Th08CardAttackTestInvalidLevel(int level) => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;

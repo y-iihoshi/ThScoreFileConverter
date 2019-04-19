@@ -1462,10 +1462,10 @@ namespace ThScoreFileConverter.Models
                     reader.ReadUInt32();    // always 0x00000003?
                     this.CardId = (short)(reader.ReadInt16() + 1);
                     reader.ReadByte();
-                    this.Level = (LevelPracticeWithTotal)reader.ReadByte();     // Last Word == Normal...
-                    this.CardName = reader.ReadBytes(0x30);
-                    this.EnemyName = reader.ReadBytes(0x30);
-                    this.Comment = reader.ReadBytes(0x80);
+                    this.Level = Utils.ToEnum<LevelPracticeWithTotal>(reader.ReadByte());   // Last Word == Normal...
+                    this.CardName = reader.ReadExactBytes(0x30);
+                    this.EnemyName = reader.ReadExactBytes(0x30);
+                    this.Comment = reader.ReadExactBytes(0x80);
                     this.StoryCareer.ReadFrom(reader);
                     this.PracticeCareer.ReadFrom(reader);
                     reader.ReadUInt32();    // always 0x00000000?
