@@ -146,7 +146,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th07HighScoreTestInvalidSize1() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
-            ++properties.size1;
+            --properties.size1;
 
             var chapter = Th06ChapterWrapper<Th07Converter>.Create(MakeByteArray(properties));
             var highScore = new Th07HighScoreWrapper(chapter);
