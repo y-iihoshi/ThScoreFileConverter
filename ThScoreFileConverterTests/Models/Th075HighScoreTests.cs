@@ -74,7 +74,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void ReadFromTestShortenedName() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
@@ -86,6 +86,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
+        [ExpectedException(typeof(InvalidDataException))]
         public void ReadFromTestExceededName() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
@@ -93,10 +94,7 @@ namespace ThScoreFileConverterTests.Models
 
             var highScore = Th075HighScoreWrapper.Create(MakeByteArray(properties));
 
-            Assert.AreEqual(properties.decodedName, highScore.Name);
-            Assert.AreNotEqual(properties.month, highScore.Month);
-            Assert.AreNotEqual(properties.day, highScore.Day);
-            Assert.AreNotEqual(properties.score, highScore.Score);
+            Assert.Fail(TestUtils.Unreachable);
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
@@ -130,11 +128,24 @@ namespace ThScoreFileConverterTests.Models
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
-        [DataRow(1)]
-        [DataRow(31)]
-        public void ReadFromTestValidDay(int day) => TestUtils.Wrap(() =>
+        [DataRow(1, 1)]
+        [DataRow(1, 31)]
+        [DataRow(2, 28)]
+        [DataRow(2, 29)]
+        [DataRow(3, 31)]
+        [DataRow(4, 30)]
+        [DataRow(5, 31)]
+        [DataRow(6, 30)]
+        [DataRow(7, 31)]
+        [DataRow(8, 31)]
+        [DataRow(9, 30)]
+        [DataRow(10, 31)]
+        [DataRow(11, 30)]
+        [DataRow(12, 31)]
+        public void ReadFromTestValidDay(int month, int day) => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
+            properties.month = (byte)month;
             properties.day = (byte)day;
 
             var highScore = Th075HighScoreWrapper.Create(MakeByteArray(properties));
@@ -144,12 +155,24 @@ namespace ThScoreFileConverterTests.Models
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
-        [DataRow(0)]
-        [DataRow(32)]
+        [DataRow(1, 0)]
+        [DataRow(1, 32)]
+        [DataRow(2, 30)]
+        [DataRow(3, 32)]
+        [DataRow(4, 31)]
+        [DataRow(5, 32)]
+        [DataRow(6, 31)]
+        [DataRow(7, 32)]
+        [DataRow(8, 32)]
+        [DataRow(9, 31)]
+        [DataRow(10, 32)]
+        [DataRow(11, 31)]
+        [DataRow(12, 32)]
         [ExpectedException(typeof(InvalidDataException))]
-        public void ReadFromTestInvalidDay(int day) => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidDay(int month, int day) => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
+            properties.month = (byte)month;
             properties.day = (byte)day;
 
             Th075HighScoreWrapper.Create(MakeByteArray(properties));
