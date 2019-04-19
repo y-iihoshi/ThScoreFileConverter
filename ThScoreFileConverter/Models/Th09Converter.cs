@@ -548,11 +548,11 @@ namespace ThScoreFileConverter.Models
                     reader.ReadUInt32();    // always 0x00000002?
                     this.Score = reader.ReadUInt32();
                     reader.ReadUInt32();    // always 0x00000000?
-                    this.Chara = (Chara)reader.ReadByte();
-                    this.Level = (Level)reader.ReadByte();
+                    this.Chara = Utils.ToEnum<Chara>(reader.ReadByte());
+                    this.Level = Utils.ToEnum<Level>(reader.ReadByte());
                     this.Rank = reader.ReadInt16();
-                    this.Name = reader.ReadBytes(9);
-                    this.Date = reader.ReadBytes(9);
+                    this.Name = reader.ReadExactBytes(9);
+                    this.Date = reader.ReadExactBytes(9);
                     reader.ReadByte();      // always 0x00?
                     this.ContinueCount = reader.ReadByte();
                 }
