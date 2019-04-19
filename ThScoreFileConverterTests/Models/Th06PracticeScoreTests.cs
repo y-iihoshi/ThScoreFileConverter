@@ -104,7 +104,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th06PracticeScoreTestInvalidSize1() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
-            ++properties.size1;
+            --properties.size1;
 
             var chapter = Th06ChapterWrapper<Th06Converter>.Create(MakeByteArray(properties));
             var score = new Th06PracticeScoreWrapper(chapter);
@@ -119,7 +119,7 @@ namespace ThScoreFileConverterTests.Models
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidCharacters))]
-        [ExpectedException(typeof(InvalidDataException))]
+        [ExpectedException(typeof(InvalidCastException))]
         public void Th06PracticeScoreTestInvalidChara(int chara) => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
@@ -138,7 +138,7 @@ namespace ThScoreFileConverterTests.Models
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
-        [ExpectedException(typeof(InvalidDataException))]
+        [ExpectedException(typeof(InvalidCastException))]
         public void Th06PracticeScoreTestInvalidLevel(int level) => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
@@ -157,7 +157,7 @@ namespace ThScoreFileConverterTests.Models
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidStages))]
-        [ExpectedException(typeof(InvalidDataException))]
+        [ExpectedException(typeof(InvalidCastException))]
         public void Th06PracticeScoreTestInvalidStage(int stage) => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
