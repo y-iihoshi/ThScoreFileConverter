@@ -86,7 +86,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th08FlspTestInvalidSize1() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
-            ++properties.size1;
+            --properties.size1;
 
             var chapter = Th06ChapterWrapper<Th08Converter>.Create(MakeByteArray(properties));
             var flsp = new Th08FlspWrapper(chapter);
