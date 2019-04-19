@@ -937,7 +937,7 @@ namespace ThScoreFileConverter.Models
                 var unknownCharas = Enumerable.Range(1, 4);
                 var numScores = charas.Count() + unknownCharas.Count();
 
-                this.LastName = new string(reader.ReadBytes(8).Select(ch => CharTable[ch]).ToArray());
+                this.LastName = new string(reader.ReadExactBytes(8).Select(ch => CharTable[ch]).ToArray());
 
                 this.ArcadeScores = new Dictionary<Chara, Dictionary<Chara, int>>(numScores);
                 foreach (var chara in charas)
@@ -958,9 +958,9 @@ namespace ThScoreFileConverter.Models
                 }
 
                 // FIXME... BGM flags?
-                reader.ReadBytes(0x28);
+                reader.ReadExactBytes(0x28);
 
-                reader.ReadBytes(0x100);
+                reader.ReadExactBytes(0x100);
             }
         }
     }
