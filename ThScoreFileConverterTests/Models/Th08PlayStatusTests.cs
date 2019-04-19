@@ -131,7 +131,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th08PlayStatusTestInvalidSize1() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
-            ++properties.size1;
+            --properties.size1;
 
             var chapter = Th06ChapterWrapper<Th08Converter>.Create(MakeByteArray(properties));
             var playStatus = new Th08PlayStatusWrapper(chapter);

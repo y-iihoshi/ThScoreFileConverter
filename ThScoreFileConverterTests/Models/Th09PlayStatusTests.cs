@@ -143,7 +143,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th09PlayStatusTestInvalidSize1() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
-            ++properties.size1;
+            --properties.size1;
 
             var chapter = Th06ChapterWrapper<Th09Converter>.Create(MakeByteArray(properties));
             var playStatus = new Th09PlayStatusWrapper(chapter);
