@@ -920,9 +920,9 @@ namespace ThScoreFileConverter.Models
 
                     reader.ReadUInt32();    // always 0x00000010?
                     this.HighScore = reader.ReadInt32();
-                    this.Chara = (Chara)reader.ReadByte();
-                    this.Level = (Level)reader.ReadByte();
-                    this.Stage = (Stage)reader.ReadByte();
+                    this.Chara = Utils.ToEnum<Chara>(reader.ReadByte());
+                    this.Level = Utils.ToEnum<Level>(reader.ReadByte());
+                    this.Stage = Utils.ToEnum<Stage>(reader.ReadByte());
                     reader.ReadByte();
                 }
             }
