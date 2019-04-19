@@ -847,7 +847,7 @@ namespace ThScoreFileConverter.Models
                         this.StoryFlags.Add(level, reader.ReadByte());
                     foreach (var level in levels)
                         this.PracticeFlags.Add(level, reader.ReadByte());
-                    this.Chara = (Chara)reader.ReadInt16();
+                    this.Chara = Utils.ToEnum<Chara>(reader.ReadInt16());
                 }
             }
 

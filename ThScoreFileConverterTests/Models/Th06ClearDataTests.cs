@@ -103,7 +103,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th06ClearDataTestInvalidSize1() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
-            ++properties.size1;
+            --properties.size1;
 
             var chapter = Th06ChapterWrapper<Th06Converter>.Create(MakeByteArray(properties));
             var clearData = new Th06ClearDataWrapper(chapter);
