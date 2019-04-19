@@ -1427,7 +1427,7 @@ namespace ThScoreFileConverter.Models
                     foreach (var level in levels)
                         this.PracticeFlags.Add(level, (PlayableStages)reader.ReadUInt16());
                     reader.ReadByte();      // always 0x00?
-                    this.Chara = (CharaWithTotal)reader.ReadByte();
+                    this.Chara = Utils.ToEnum<CharaWithTotal>(reader.ReadByte());
                     reader.ReadUInt16();    // always 0x0000?
                 }
             }
