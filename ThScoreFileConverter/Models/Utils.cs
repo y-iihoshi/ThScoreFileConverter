@@ -53,6 +53,24 @@ namespace ThScoreFileConverter.Models
         }
 
         /// <summary>
+        /// Converts a given integral value to an equivalent enumerated instance.
+        /// </summary>
+        /// <typeparam name="TEnum">The enumeration type.</typeparam>
+        /// <param name="value">An integral value to convert.</param>
+        /// <returns>
+        /// An instance of <typeparamref name="TEnum"/> whose value is represented by
+        /// <paramref name="value"/>.
+        /// </returns>
+        /// <exception cref="InvalidCastException">No enumerator equal to <paramref name="value"/> exists.</exception>
+        [CLSCompliant(false)]
+        public static TEnum ToEnum<TEnum>(object value)
+            where TEnum : struct, IComparable, IFormattable, IConvertible
+        {
+            var underlying = Convert.ChangeType(value, typeof(TEnum).GetEnumUnderlyingType());
+            return Enum.IsDefined(typeof(TEnum), underlying) ? (TEnum)underlying : throw new InvalidCastException();
+        }
+
+        /// <summary>
         /// Gets the <c>IEnumerable{T}</c> instance to enumerate values of the <typeparamref name="TEnum"/>
         /// type.
         /// </summary>

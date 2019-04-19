@@ -795,10 +795,10 @@ namespace ThScoreFileConverter.Models
 
                     reader.ReadUInt32();    // always 0x00000001?
                     this.Score = reader.ReadUInt32();
-                    this.Chara = (Chara)reader.ReadByte();
-                    this.Level = (Level)reader.ReadByte();
-                    this.StageProgress = (StageProgress)reader.ReadByte();
-                    this.Name = reader.ReadBytes(9);
+                    this.Chara = Utils.ToEnum<Chara>(reader.ReadByte());
+                    this.Level = Utils.ToEnum<Level>(reader.ReadByte());
+                    this.StageProgress = Utils.ToEnum<StageProgress>(reader.ReadByte());
+                    this.Name = reader.ReadExactBytes(9);
                 }
             }
 
