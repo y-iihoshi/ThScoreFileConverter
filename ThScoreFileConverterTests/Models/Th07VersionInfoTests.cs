@@ -94,7 +94,7 @@ namespace ThScoreFileConverterTests.Models
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
-                ++properties.size1;
+                --properties.size1;
 
                 var chapter = Th06ChapterWrapper<TParent>.Create(MakeByteArray(properties));
                 var versionInfo = new Th07VersionInfoWrapper<TParent>(chapter);
