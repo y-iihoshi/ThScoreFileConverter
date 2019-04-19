@@ -1572,8 +1572,8 @@ namespace ThScoreFileConverter.Models
                             this.HighScores[key] = reader.ReadInt32();
                         }
 
-                    this.Chara = (Chara)reader.ReadByte();
-                    reader.ReadBytes(3);    // always 0x000001?
+                    this.Chara = Utils.ToEnum<Chara>(reader.ReadByte());
+                    reader.ReadExactBytes(3);   // always 0x000001?
                 }
             }
 
