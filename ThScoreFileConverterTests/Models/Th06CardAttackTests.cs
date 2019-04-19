@@ -104,7 +104,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th06CardAttackTestInvalidSize1() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
-            ++properties.size1;
+            --properties.size1;
 
             var chapter = Th06ChapterWrapper<Th06Converter>.Create(MakeByteArray(properties));
             var cardAttack = new Th06CardAttackWrapper(chapter);
