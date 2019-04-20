@@ -360,7 +360,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededSignatureHelper<Th095Converter>(th095ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th095ReadFromTestNegativeEncodedAllSize()
             => ReadFromTestNegativeEncodedAllSizeHelper<Th095Converter>(th095ValidSignature);
 
@@ -377,7 +377,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededEncodedAllSizeHelper<Th095Converter>(th095ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th095ReadFromTestNegativeEncodedBodySize()
             => ReadFromTestNegativeEncodedBodySizeHelper<Th095Converter>(th095ValidSignature);
 
@@ -394,7 +394,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededEncodedBodySizeHelper<Th095Converter>(th095ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th095ReadFromTestNegativeDecodedBodySize()
             => ReadFromTestNegativeDecodedBodySizeHelper<Th095Converter>(th095ValidSignature);
 
@@ -445,7 +445,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededSignatureHelper<Th10Converter>(th10ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th10ReadFromTestNegativeEncodedAllSize()
             => ReadFromTestNegativeEncodedAllSizeHelper<Th10Converter>(th10ValidSignature);
 
@@ -462,7 +462,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededEncodedAllSizeHelper<Th10Converter>(th10ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th10ReadFromTestNegativeEncodedBodySize()
             => ReadFromTestNegativeEncodedBodySizeHelper<Th10Converter>(th10ValidSignature);
 
@@ -479,7 +479,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededEncodedBodySizeHelper<Th10Converter>(th10ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th10ReadFromTestNegativeDecodedBodySize()
             => ReadFromTestNegativeDecodedBodySizeHelper<Th10Converter>(th10ValidSignature);
 
@@ -530,7 +530,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededSignatureHelper<Th11Converter>(th11ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th11ReadFromTestNegativeEncodedAllSize()
             => ReadFromTestNegativeEncodedAllSizeHelper<Th11Converter>(th11ValidSignature);
 
@@ -547,7 +547,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededEncodedAllSizeHelper<Th11Converter>(th11ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th11ReadFromTestNegativeEncodedBodySize()
             => ReadFromTestNegativeEncodedBodySizeHelper<Th11Converter>(th11ValidSignature);
 
@@ -564,7 +564,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededEncodedBodySizeHelper<Th11Converter>(th11ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th11ReadFromTestNegativeDecodedBodySize()
             => ReadFromTestNegativeDecodedBodySizeHelper<Th11Converter>(th11ValidSignature);
 
@@ -615,7 +615,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededSignatureHelper<Th12Converter>(th12ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th12ReadFromTestNegativeEncodedAllSize()
             => ReadFromTestNegativeEncodedAllSizeHelper<Th12Converter>(th12ValidSignature);
 
@@ -632,7 +632,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededEncodedAllSizeHelper<Th12Converter>(th12ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th12ReadFromTestNegativeEncodedBodySize()
             => ReadFromTestNegativeEncodedBodySizeHelper<Th12Converter>(th12ValidSignature);
 
@@ -649,7 +649,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededEncodedBodySizeHelper<Th12Converter>(th12ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th12ReadFromTestNegativeDecodedBodySize()
             => ReadFromTestNegativeDecodedBodySizeHelper<Th12Converter>(th12ValidSignature);
 
@@ -700,7 +700,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededSignatureHelper<Th125Converter>(th125ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th125ReadFromTestNegativeEncodedAllSize()
             => ReadFromTestNegativeEncodedAllSizeHelper<Th125Converter>(th125ValidSignature);
 
@@ -717,7 +717,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededEncodedAllSizeHelper<Th125Converter>(th125ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th125ReadFromTestNegativeEncodedBodySize()
             => ReadFromTestNegativeEncodedBodySizeHelper<Th125Converter>(th125ValidSignature);
 
@@ -734,7 +734,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededEncodedBodySizeHelper<Th125Converter>(th125ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th125ReadFromTestNegativeDecodedBodySize()
             => ReadFromTestNegativeDecodedBodySizeHelper<Th125Converter>(th125ValidSignature);
 
@@ -785,7 +785,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededSignatureHelper<Th128Converter>(th128ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th128ReadFromTestNegativeEncodedAllSize()
             => ReadFromTestNegativeEncodedAllSizeHelper<Th128Converter>(th128ValidSignature);
 
@@ -802,7 +802,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededEncodedAllSizeHelper<Th128Converter>(th128ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th128ReadFromTestNegativeEncodedBodySize()
             => ReadFromTestNegativeEncodedBodySizeHelper<Th128Converter>(th128ValidSignature);
 
@@ -819,7 +819,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededEncodedBodySizeHelper<Th128Converter>(th128ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th128ReadFromTestNegativeDecodedBodySize()
             => ReadFromTestNegativeDecodedBodySizeHelper<Th128Converter>(th128ValidSignature);
 
@@ -870,7 +870,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededSignatureHelper<Th13Converter>(th13ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th13ReadFromTestNegativeEncodedAllSize()
             => ReadFromTestNegativeEncodedAllSizeHelper<Th13Converter>(th13ValidSignature);
 
@@ -887,7 +887,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededEncodedAllSizeHelper<Th13Converter>(th13ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th13ReadFromTestNegativeEncodedBodySize()
             => ReadFromTestNegativeEncodedBodySizeHelper<Th13Converter>(th13ValidSignature);
 
@@ -904,7 +904,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededEncodedBodySizeHelper<Th13Converter>(th13ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th13ReadFromTestNegativeDecodedBodySize()
             => ReadFromTestNegativeDecodedBodySizeHelper<Th13Converter>(th13ValidSignature);
 
@@ -955,7 +955,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededSignatureHelper<Th14Converter>(th14ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th14ReadFromTestNegativeEncodedAllSize()
             => ReadFromTestNegativeEncodedAllSizeHelper<Th14Converter>(th14ValidSignature);
 
@@ -972,7 +972,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededEncodedAllSizeHelper<Th14Converter>(th14ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th14ReadFromTestNegativeEncodedBodySize()
             => ReadFromTestNegativeEncodedBodySizeHelper<Th14Converter>(th14ValidSignature);
 
@@ -989,7 +989,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededEncodedBodySizeHelper<Th14Converter>(th14ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th14ReadFromTestNegativeDecodedBodySize()
             => ReadFromTestNegativeDecodedBodySizeHelper<Th14Converter>(th14ValidSignature);
 
@@ -1040,7 +1040,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededSignatureHelper<Th143Converter>(th143ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th143ReadFromTestNegativeEncodedAllSize()
             => ReadFromTestNegativeEncodedAllSizeHelper<Th143Converter>(th143ValidSignature);
 
@@ -1057,7 +1057,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededEncodedAllSizeHelper<Th143Converter>(th143ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th143ReadFromTestNegativeEncodedBodySize()
             => ReadFromTestNegativeEncodedBodySizeHelper<Th143Converter>(th143ValidSignature);
 
@@ -1074,7 +1074,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededEncodedBodySizeHelper<Th143Converter>(th143ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th143ReadFromTestNegativeDecodedBodySize()
             => ReadFromTestNegativeDecodedBodySizeHelper<Th143Converter>(th143ValidSignature);
 
@@ -1125,7 +1125,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededSignatureHelper<Th15Converter>(th15ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th15ReadFromTestNegativeEncodedAllSize()
             => ReadFromTestNegativeEncodedAllSizeHelper<Th15Converter>(th15ValidSignature);
 
@@ -1142,7 +1142,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededEncodedAllSizeHelper<Th15Converter>(th15ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th15ReadFromTestNegativeEncodedBodySize()
             => ReadFromTestNegativeEncodedBodySizeHelper<Th15Converter>(th15ValidSignature);
 
@@ -1159,7 +1159,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededEncodedBodySizeHelper<Th15Converter>(th15ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th15ReadFromTestNegativeDecodedBodySize()
             => ReadFromTestNegativeDecodedBodySizeHelper<Th15Converter>(th15ValidSignature);
 
@@ -1210,7 +1210,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededSignatureHelper<Th16Converter>(th16ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th16ReadFromTestNegativeEncodedAllSize()
             => ReadFromTestNegativeEncodedAllSizeHelper<Th16Converter>(th16ValidSignature);
 
@@ -1227,7 +1227,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededEncodedAllSizeHelper<Th16Converter>(th16ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th16ReadFromTestNegativeEncodedBodySize()
             => ReadFromTestNegativeEncodedBodySizeHelper<Th16Converter>(th16ValidSignature);
 
@@ -1244,7 +1244,7 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestExceededEncodedBodySizeHelper<Th16Converter>(th16ValidSignature);
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th16ReadFromTestNegativeDecodedBodySize()
             => ReadFromTestNegativeDecodedBodySizeHelper<Th16Converter>(th16ValidSignature);
 
