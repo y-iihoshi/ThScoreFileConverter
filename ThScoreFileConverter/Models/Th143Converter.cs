@@ -961,6 +961,9 @@ namespace ThScoreFileConverter.Models
 
             protected Chapter(Chapter chapter)
             {
+                if (chapter is null)
+                    throw new ArgumentNullException(nameof(chapter));
+
                 this.Signature = chapter.Signature;
                 this.Version = chapter.Version;
                 this.Checksum = chapter.Checksum;
@@ -991,14 +994,14 @@ namespace ThScoreFileConverter.Models
 
             public void ReadFrom(BinaryReader reader)
             {
-                if (reader == null)
-                    throw new ArgumentNullException("reader");
+                if (reader is null)
+                    throw new ArgumentNullException(nameof(reader));
 
-                this.Signature = Encoding.Default.GetString(reader.ReadBytes(SignatureSize));
+                this.Signature = Encoding.Default.GetString(reader.ReadExactBytes(SignatureSize));
                 this.Version = reader.ReadUInt16();
                 this.Checksum = reader.ReadUInt32();
                 this.Size = reader.ReadInt32();
-                this.Data = reader.ReadBytes(
+                this.Data = reader.ReadExactBytes(
                     this.Size - SignatureSize - sizeof(ushort) - sizeof(uint) - sizeof(int));
             }
         }
