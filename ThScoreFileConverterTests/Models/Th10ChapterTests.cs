@@ -125,7 +125,7 @@ namespace ThScoreFileConverterTests.Models
                 //       <sig> <ver> < chksum -> <- size --> <dat>
 
                 // The actual value of the Size property becomes too large,
-                // so EndOfStreamException will be thrown.
+                // so OutOfMemoryException will be thrown.
                 Th10ChapterWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
@@ -144,7 +144,7 @@ namespace ThScoreFileConverterTests.Models
                 //    <sig> <ver> < chksum -> <- size --> < data >
 
                 // The actual value of the Size property becomes too large,
-                // so EndOfStreamException will be thrown.
+                // so OutOfMemoryException will be thrown.
                 Th10ChapterWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
@@ -162,7 +162,7 @@ namespace ThScoreFileConverterTests.Models
                 // 41 42 43 d2 04 34 02 00 00 10 00 00 00 56 78 9a bc
                 // <sig> <ver> < chksum -> <- size --> <---- data ---->
 
-                // The actual value of the Size property becomes too large,
+                // The actual value of the Size property becomes large,
                 // so EndOfStreamException will be thrown.
                 Th10ChapterWrapper<TParent>.Create(MakeByteArray(properties));
 
@@ -293,12 +293,12 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestNullHelper<Th10Converter>();
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
+        [ExpectedException(typeof(OutOfMemoryException))]
         public void Th10ChapterReadFromTestEmptySignature()
             => ReadFromTestEmptySignatureHelper<Th10Converter>();
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
+        [ExpectedException(typeof(OutOfMemoryException))]
         public void Th10ChapterReadFromTestShortenedSignature()
             => ReadFromTestShortenedSignatureHelper<Th10Converter>();
 
@@ -366,12 +366,12 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestNullHelper<Th11Converter>();
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
+        [ExpectedException(typeof(OutOfMemoryException))]
         public void Th11ChapterReadFromTestEmptySignature()
             => ReadFromTestEmptySignatureHelper<Th11Converter>();
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
+        [ExpectedException(typeof(OutOfMemoryException))]
         public void Th11ChapterReadFromTestShortenedSignature()
             => ReadFromTestShortenedSignatureHelper<Th11Converter>();
 
@@ -439,12 +439,12 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestNullHelper<Th12Converter>();
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
+        [ExpectedException(typeof(OutOfMemoryException))]
         public void Th12ChapterReadFromTestEmptySignature()
             => ReadFromTestEmptySignatureHelper<Th12Converter>();
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
+        [ExpectedException(typeof(OutOfMemoryException))]
         public void Th12ChapterReadFromTestShortenedSignature()
             => ReadFromTestShortenedSignatureHelper<Th12Converter>();
 
@@ -512,12 +512,12 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestNullHelper<Th128Converter>();
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
+        [ExpectedException(typeof(OutOfMemoryException))]
         public void Th128ChapterReadFromTestEmptySignature()
             => ReadFromTestEmptySignatureHelper<Th128Converter>();
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
+        [ExpectedException(typeof(OutOfMemoryException))]
         public void Th128ChapterReadFromTestShortenedSignature()
             => ReadFromTestShortenedSignatureHelper<Th128Converter>();
 
@@ -585,12 +585,12 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestNullHelper<Th13Converter>();
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
+        [ExpectedException(typeof(OutOfMemoryException))]
         public void Th13ChapterReadFromTestEmptySignature()
             => ReadFromTestEmptySignatureHelper<Th13Converter>();
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
+        [ExpectedException(typeof(OutOfMemoryException))]
         public void Th13ChapterReadFromTestShortenedSignature()
             => ReadFromTestShortenedSignatureHelper<Th13Converter>();
 
@@ -658,12 +658,12 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestNullHelper<Th14Converter>();
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
+        [ExpectedException(typeof(OutOfMemoryException))]
         public void Th14ChapterReadFromTestEmptySignature()
             => ReadFromTestEmptySignatureHelper<Th14Converter>();
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
+        [ExpectedException(typeof(OutOfMemoryException))]
         public void Th14ChapterReadFromTestShortenedSignature()
             => ReadFromTestShortenedSignatureHelper<Th14Converter>();
 
@@ -731,12 +731,12 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestNullHelper<Th143Converter>();
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
+        [ExpectedException(typeof(OutOfMemoryException))]
         public void Th143ChapterReadFromTestEmptySignature()
             => ReadFromTestEmptySignatureHelper<Th143Converter>();
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
+        [ExpectedException(typeof(OutOfMemoryException))]
         public void Th143ChapterReadFromTestShortenedSignature()
             => ReadFromTestShortenedSignatureHelper<Th143Converter>();
 
@@ -804,12 +804,12 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestNullHelper<Th15Converter>();
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
+        [ExpectedException(typeof(OutOfMemoryException))]
         public void Th15ChapterReadFromTestEmptySignature()
             => ReadFromTestEmptySignatureHelper<Th15Converter>();
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
+        [ExpectedException(typeof(OutOfMemoryException))]
         public void Th15ChapterReadFromTestShortenedSignature()
             => ReadFromTestShortenedSignatureHelper<Th15Converter>();
 
@@ -877,12 +877,12 @@ namespace ThScoreFileConverterTests.Models
             => ReadFromTestNullHelper<Th16Converter>();
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
+        [ExpectedException(typeof(OutOfMemoryException))]
         public void Th16ChapterReadFromTestEmptySignature()
             => ReadFromTestEmptySignatureHelper<Th16Converter>();
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
+        [ExpectedException(typeof(OutOfMemoryException))]
         public void Th16ChapterReadFromTestShortenedSignature()
             => ReadFromTestShortenedSignatureHelper<Th16Converter>();
 
