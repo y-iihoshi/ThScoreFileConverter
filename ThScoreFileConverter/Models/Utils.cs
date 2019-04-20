@@ -66,7 +66,8 @@ namespace ThScoreFileConverter.Models
         public static TEnum ToEnum<TEnum>(object value)
             where TEnum : struct, IComparable, IFormattable, IConvertible
         {
-            var underlying = Convert.ChangeType(value, typeof(TEnum).GetEnumUnderlyingType());
+            var underlying = Convert.ChangeType(
+                value, typeof(TEnum).GetEnumUnderlyingType(), CultureInfo.InvariantCulture);
             return Enum.IsDefined(typeof(TEnum), underlying) ? (TEnum)underlying : throw new InvalidCastException();
         }
 
