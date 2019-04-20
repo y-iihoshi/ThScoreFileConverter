@@ -120,6 +120,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th15ScoreDataReadFromTestExceededName() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
+            var validNameLength = properties.name.Length;
             properties.name = properties.name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
 
             var scoreData = Th15ScoreDataWrapper.Create(MakeByteArray(properties));
@@ -128,8 +129,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.stageProgress, scoreData.StageProgress);
             Assert.AreEqual(properties.continueCount, scoreData.ContinueCount);
             CollectionAssert.AreNotEqual(properties.name, scoreData.Name.ToArray());
-            CollectionAssert.AreEqual(
-                properties.name.Take(ValidProperties.name.Length).ToArray(), scoreData.Name.ToArray());
+            CollectionAssert.AreEqual(properties.name.Take(validNameLength).ToArray(), scoreData.Name.ToArray());
             Assert.AreNotEqual(properties.dateTime, scoreData.DateTime);
             Assert.AreNotEqual(properties.slowRate, scoreData.SlowRate);
             Assert.AreNotEqual(properties.retryCount, scoreData.RetryCount);

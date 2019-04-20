@@ -139,6 +139,7 @@ namespace ThScoreFileConverterTests.Models
             => TestUtils.Wrap(() =>
             {
                 var properties = GetValidProperties<TStageProgress>();
+                var validNameLength = properties.name.Length;
                 properties.name = properties.name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
 
                 var scoreData = Th10ScoreDataWrapper<TParent, TStageProgress>.Create(
@@ -148,8 +149,7 @@ namespace ThScoreFileConverterTests.Models
                 Assert.AreEqual(properties.stageProgress, scoreData.StageProgress);
                 Assert.AreEqual(properties.continueCount, scoreData.ContinueCount);
                 CollectionAssert.AreNotEqual(properties.name, scoreData.Name.ToArray());
-                CollectionAssert.AreEqual(
-                    properties.name.Take(properties.name.Length - 1).ToArray(), scoreData.Name.ToArray());
+                CollectionAssert.AreEqual(properties.name.Take(validNameLength).ToArray(), scoreData.Name.ToArray());
                 Assert.AreNotEqual(properties.dateTime, scoreData.DateTime);
                 Assert.AreNotEqual(properties.slowRate, scoreData.SlowRate);
             });

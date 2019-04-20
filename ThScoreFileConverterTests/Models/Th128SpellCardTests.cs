@@ -100,13 +100,13 @@ namespace ThScoreFileConverterTests.Models
         public void Th128SpellCardReadFromTestExceededName() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
+            var validNameLength = properties.name.Length;
             properties.name = properties.name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
 
             var spellCard = Th128SpellCardWrapper.Create(MakeByteArray(properties));
 
             CollectionAssert.AreNotEqual(properties.name, spellCard.Name.ToArray());
-            CollectionAssert.AreEqual(
-                properties.name.Take(properties.name.Length - 1).ToArray(), spellCard.Name.ToArray());
+            CollectionAssert.AreEqual(properties.name.Take(validNameLength).ToArray(), spellCard.Name.ToArray());
             Assert.AreNotEqual(properties.noMissCount, spellCard.NoMissCount);
             Assert.AreNotEqual(properties.noIceCount, spellCard.NoIceCount);
             Assert.AreNotEqual(properties.trialCount, spellCard.TrialCount);

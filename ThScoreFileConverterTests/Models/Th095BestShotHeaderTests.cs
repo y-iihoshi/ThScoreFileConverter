@@ -76,9 +76,11 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void ReadFromTest() => TestUtils.Wrap(() =>
         {
-            var header = Th095BestShotHeaderWrapper.Create(MakeByteArray(ValidProperties));
+            var properties = ValidProperties;
 
-            Validate(header, ValidProperties);
+            var header = Th095BestShotHeaderWrapper.Create(MakeByteArray(properties));
+
+            Validate(header, properties);
         });
 
         [TestMethod]
@@ -165,12 +167,13 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void ReadFromTestExceededCardName() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
+            var validProperties = ValidProperties;
+            var properties = validProperties;
             properties.cardName = properties.cardName.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
 
             var header = Th095BestShotHeaderWrapper.Create(MakeByteArray(properties));
 
-            Validate(header, ValidProperties);
+            Validate(header, validProperties);
         });
     }
 }
