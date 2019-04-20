@@ -211,7 +211,7 @@ namespace ThScoreFileConverter.Models
                 reader =>
                 {
                     var size = reader.ReadInt32();
-                    return (size > 0) ? Encoding.Default.GetString(reader.ReadBytes(size)) : string.Empty;
+                    return (size > 0) ? Encoding.Default.GetString(reader.ReadExactBytes(size)) : string.Empty;
                 };
 
             private static readonly Func<BinaryReader, object> ArrayReader =
@@ -270,7 +270,7 @@ namespace ThScoreFileConverter.Models
                 new Dictionary<uint, Func<BinaryReader, object>>
                 {
                     { 0x01000001, reader => new EndMark() },
-                    { 0x01000008, reader => reader.ReadByte() == 0x01 },
+                    { 0x01000008, reader => reader.ReadByte() != 0x00 },
                     { 0x05000002, reader => reader.ReadInt32() },
                     { 0x05000004, reader => reader.ReadSingle() },
                     { 0x08000010, StringReader },
@@ -283,7 +283,7 @@ namespace ThScoreFileConverter.Models
 
             public AllScoreData()
             {
-                this.allData = null;
+                this.allData = new Dictionary<string, object>();
                 this.StoryClearFlags = null;
                 this.BgmFlags = null;
             }
@@ -343,10 +343,13 @@ namespace ThScoreFileConverter.Models
 
             public static bool ReadObject(BinaryReader reader, out object obj)
             {
+                if (reader is null)
+                    throw new ArgumentNullException(nameof(reader));
+
                 var type = reader.ReadUInt32();
 
-                Func<BinaryReader, object> objectReader;
-                obj = ObjectReaders.TryGetValue(type, out objectReader) ? objectReader(reader) : null;
+                obj = ObjectReaders.TryGetValue(type, out Func<BinaryReader, object> objectReader)
+                    ? objectReader(reader) : null;
 
                 return obj != null;
             }
