@@ -1014,12 +1014,12 @@ namespace ThScoreFileConverter.Models
                 {
                     var reader = new BinaryReader(stream);
 
-                    var number = reader.ReadInt32();
-                    this.LevelScene = new LevelScenePair((Level)(number / 10), (number % 10) + 1);
+                    var number = reader.ReadUInt32();
+                    this.LevelScene = new LevelScenePair(Utils.ToEnum<Level>(number / 10), (int)((number % 10) + 1));
                     this.HighScore = reader.ReadInt32();
-                    reader.ReadBytes(0x04);
-                    this.Chara = (Chara)reader.ReadInt32();
-                    reader.ReadBytes(0x04);
+                    reader.ReadExactBytes(0x04);
+                    this.Chara = Utils.ToEnum<Chara>(reader.ReadInt32());
+                    reader.ReadExactBytes(0x04);
                     this.TrialCount = reader.ReadInt32();
                     this.FirstSuccess = reader.ReadInt32();
                     reader.ReadUInt32();    // always 0x00000000?
@@ -1028,7 +1028,7 @@ namespace ThScoreFileConverter.Models
                     reader.ReadUInt32();    // checksum of the bestshot file?
                     reader.ReadUInt32();    // always 0x00000001?
                     this.BestshotScore = reader.ReadInt32();
-                    reader.ReadBytes(0x08);
+                    reader.ReadExactBytes(0x08);
                 }
             }
 
