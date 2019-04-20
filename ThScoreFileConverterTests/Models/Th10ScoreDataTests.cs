@@ -57,7 +57,7 @@ namespace ThScoreFileConverterTests.Models
 
             return TestUtils.MakeByteArray(
                 properties.score,
-                TestUtils.Cast<byte>(properties.stageProgress),
+                (byte)TestUtils.Cast<int>(properties.stageProgress),
                 properties.continueCount,
                 properties.name,
                 properties.dateTime,
