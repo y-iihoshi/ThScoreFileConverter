@@ -850,6 +850,14 @@ namespace ThScoreFileConverter.Models
             private uint unknown1;
             private uint unknown2;
 
+            public Header()
+            {
+                this.Signature = string.Empty;
+                this.EncodedAllSize = 0;
+                this.EncodedBodySize = 0;
+                this.DecodedBodySize = 0;
+            }
+
             public string Signature { get; private set; }
 
             public int EncodedAllSize { get; private set; }
@@ -869,21 +877,27 @@ namespace ThScoreFileConverter.Models
 
             public void ReadFrom(BinaryReader reader)
             {
-                if (reader == null)
-                    throw new ArgumentNullException("reader");
+                if (reader is null)
+                    throw new ArgumentNullException(nameof(reader));
 
-                this.Signature = Encoding.Default.GetString(reader.ReadBytes(SignatureSize));
+                this.Signature = Encoding.Default.GetString(reader.ReadExactBytes(SignatureSize));
                 this.EncodedAllSize = reader.ReadInt32();
+                if (this.EncodedAllSize < 0)
+                    throw new InvalidDataException(nameof(this.EncodedAllSize));
                 this.unknown1 = reader.ReadUInt32();
                 this.unknown2 = reader.ReadUInt32();
                 this.EncodedBodySize = reader.ReadInt32();
+                if (this.EncodedBodySize < 0)
+                    throw new InvalidDataException(nameof(this.EncodedBodySize));
                 this.DecodedBodySize = reader.ReadInt32();
+                if (this.DecodedBodySize < 0)
+                    throw new InvalidDataException(nameof(this.DecodedBodySize));
             }
 
             public void WriteTo(BinaryWriter writer)
             {
-                if (writer == null)
-                    throw new ArgumentNullException("writer");
+                if (writer is null)
+                    throw new ArgumentNullException(nameof(writer));
 
                 writer.Write(Encoding.Default.GetBytes(this.Signature));
                 writer.Write(this.EncodedAllSize);
