@@ -956,22 +956,22 @@ namespace ThScoreFileConverter.Models
 
             public void ReadFrom(BinaryReader reader)
             {
-                if (reader == null)
-                    throw new ArgumentNullException("reader");
+                if (reader is null)
+                    throw new ArgumentNullException(nameof(reader));
 
-                this.Signature = Encoding.Default.GetString(reader.ReadBytes(SignatureSize));
-                if (this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
-                {
-                    reader.ReadUInt16();
-                    this.Level = (Level)(reader.ReadInt16() - 1);
-                    this.Scene = reader.ReadInt16();
-                    reader.ReadUInt16();    // 0x0102 ... Version?
-                    this.Width = reader.ReadInt16();
-                    this.Height = reader.ReadInt16();
-                    this.Score = reader.ReadInt32();
-                    this.SlowRate = reader.ReadSingle();
-                    this.CardName = reader.ReadBytes(0x50);
-                }
+                this.Signature = Encoding.Default.GetString(reader.ReadExactBytes(SignatureSize));
+                if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
+                    throw new InvalidDataException();
+
+                reader.ReadUInt16();
+                this.Level = Utils.ToEnum<Level>(reader.ReadInt16() - 1);
+                this.Scene = reader.ReadInt16();
+                reader.ReadUInt16();    // 0x0102 ... Version?
+                this.Width = reader.ReadInt16();
+                this.Height = reader.ReadInt16();
+                this.Score = reader.ReadInt32();
+                this.SlowRate = reader.ReadSingle();
+                this.CardName = reader.ReadExactBytes(0x50);
             }
         }
     }
