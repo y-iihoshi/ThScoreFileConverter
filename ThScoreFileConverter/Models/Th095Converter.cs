@@ -786,6 +786,9 @@ namespace ThScoreFileConverter.Models
 
             protected Chapter(Chapter chapter)
             {
+                if (chapter is null)
+                    throw new ArgumentNullException(nameof(chapter));
+
                 this.Signature = chapter.Signature;
                 this.Version = chapter.Version;
                 this.Size = chapter.Size;
@@ -809,7 +812,11 @@ namespace ThScoreFileConverter.Models
                     var sigVer = Encoding.Default.GetBytes(this.Signature)
                         .Concat(BitConverter.GetBytes(this.Version))
                         .ToArray();
+                    if (sigVer.Length < sizeof(uint))
+                        return false;
                     long sum = BitConverter.ToUInt32(sigVer, 0) + this.Size;
+                    if (this.Data.Length % sizeof(uint) != 0)
+                        return false;
                     for (var index = 0; index < this.Data.Length; index += sizeof(uint))
                         sum += BitConverter.ToUInt32(this.Data, index);
                     return (uint)sum == this.Checksum;
@@ -820,14 +827,14 @@ namespace ThScoreFileConverter.Models
 
             public void ReadFrom(BinaryReader reader)
             {
-                if (reader == null)
-                    throw new ArgumentNullException("reader");
+                if (reader is null)
+                    throw new ArgumentNullException(nameof(reader));
 
-                this.Signature = Encoding.Default.GetString(reader.ReadBytes(SignatureSize));
+                this.Signature = Encoding.Default.GetString(reader.ReadExactBytes(SignatureSize));
                 this.Version = reader.ReadUInt16();
                 this.Size = reader.ReadInt32();
                 this.Checksum = reader.ReadUInt32();
-                this.Data = reader.ReadBytes(
+                this.Data = reader.ReadExactBytes(
                     this.Size - SignatureSize - sizeof(ushort) - sizeof(int) - sizeof(uint));
             }
         }
