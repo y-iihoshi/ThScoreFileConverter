@@ -96,23 +96,17 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         });
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "spellCard")]
         [TestMethod]
+        [ExpectedException(typeof(InvalidCastException))]
         public void Th128SpellCardReadFromTestExceededName() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
-            var validNameLength = properties.name.Length;
             properties.name = properties.name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
 
             var spellCard = Th128SpellCardWrapper.Create(MakeByteArray(properties));
 
-            CollectionAssert.AreNotEqual(properties.name, spellCard.Name.ToArray());
-            CollectionAssert.AreEqual(properties.name.Take(validNameLength).ToArray(), spellCard.Name.ToArray());
-            Assert.AreNotEqual(properties.noMissCount, spellCard.NoMissCount);
-            Assert.AreNotEqual(properties.noIceCount, spellCard.NoIceCount);
-            Assert.AreNotEqual(properties.trialCount, spellCard.TrialCount);
-            Assert.AreNotEqual(properties.id, spellCard.Id);
-            Assert.AreNotEqual(properties.level, spellCard.Level.Value);
-            Assert.IsTrue(spellCard.HasTried().Value);
+            Assert.Fail(TestUtils.Unreachable);
         });
 
         public static IEnumerable<object[]> InvalidLevels

@@ -1283,16 +1283,16 @@ namespace ThScoreFileConverter.Models
 
             public void ReadFrom(BinaryReader reader)
             {
-                if (reader == null)
-                    throw new ArgumentNullException("reader");
+                if (reader is null)
+                    throw new ArgumentNullException(nameof(reader));
 
-                this.Name = reader.ReadBytes(0x80);
+                this.Name = reader.ReadExactBytes(0x80);
                 this.NoMissCount = reader.ReadInt32();
                 this.NoIceCount = reader.ReadInt32();
                 reader.ReadUInt32();
                 this.TrialCount = reader.ReadInt32();
                 this.Id = reader.ReadInt32() + 1;
-                this.Level = (Level)reader.ReadInt32();
+                this.Level = Utils.ToEnum<Level>(reader.ReadInt32());
             }
 
             public bool HasTried()
