@@ -85,6 +85,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         });
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "highScore")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void ReadFromTestExceededName() => TestUtils.Wrap(() =>
