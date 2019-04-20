@@ -94,7 +94,7 @@ namespace ThScoreFileConverterTests.Models
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "header")]
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void ReadFromTestEmptySignature() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
@@ -107,7 +107,7 @@ namespace ThScoreFileConverterTests.Models
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "header")]
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void ReadFromTestShortenedSignature() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
@@ -118,7 +118,9 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         });
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "header")]
         [TestMethod]
+        [ExpectedException(typeof(InvalidCastException))]
         public void ReadFromTestExceededSignature() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
@@ -126,15 +128,7 @@ namespace ThScoreFileConverterTests.Models
 
             var header = Th095BestShotHeaderWrapper.Create(MakeByteArray(properties));
 
-            Assert.AreNotEqual(properties.signature, header.Signature);
-            Assert.AreEqual(properties.signature.Substring(0, ValidProperties.signature.Length), header.Signature);
-            Assert.AreNotEqual(properties.level, header.Level);
-            Assert.AreNotEqual(properties.scene, header.Scene);
-            Assert.AreNotEqual(properties.width, header.Width);
-            Assert.AreNotEqual(properties.height, header.Height);
-            Assert.AreNotEqual(properties.score, header.Score);
-            Assert.AreNotEqual(properties.slowRate, header.SlowRate);
-            CollectionAssert.AreNotEqual(properties.cardName, header.CardName?.ToArray());
+            Assert.Fail(TestUtils.Unreachable);
         });
 
         public static IEnumerable<object[]> InvalidLevels
@@ -144,7 +138,7 @@ namespace ThScoreFileConverterTests.Models
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
-        [ExpectedException(typeof(InvalidDataException))]
+        [ExpectedException(typeof(InvalidCastException))]
         public void ReadFromTestInvalidLevel(int level) => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
