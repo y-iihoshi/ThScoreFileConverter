@@ -122,27 +122,18 @@ namespace ThScoreFileConverterTests.Models
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "spellCard")]
         internal static void Th13SpellCardReadFromTestExceededNameHelper<TParent, TLevel>()
             where TParent : ThConverter
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
                 var properties = GetValidProperties<TLevel>();
-                var validNameLength = properties.name.Length;
                 properties.name = properties.name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
 
                 var spellCard = Th13SpellCardWrapper<TParent, TLevel>.Create(MakeByteArray(properties));
 
-                CollectionAssert.AreNotEqual(properties.name, spellCard.Name.ToArray());
-                CollectionAssert.AreEqual(properties.name.Take(validNameLength).ToArray(), spellCard.Name.ToArray());
-                Assert.AreNotEqual(properties.clearCount, spellCard.ClearCount);
-                Assert.AreNotEqual(properties.practiceClearCount, spellCard.PracticeClearCount);
-                Assert.AreNotEqual(properties.trialCount, spellCard.TrialCount);
-                Assert.AreNotEqual(properties.practiceTrialCount, spellCard.PracticeTrialCount);
-                Assert.AreNotEqual(properties.id, spellCard.Id);
-                Assert.AreNotEqual(properties.level, spellCard.Level.Value);
-                Assert.AreNotEqual(properties.practiceScore, spellCard.PracticeScore);
-                Assert.IsTrue(spellCard.HasTried().Value);
+                Assert.Fail(TestUtils.Unreachable);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -212,11 +203,12 @@ namespace ThScoreFileConverterTests.Models
             => Th13SpellCardReadFromTestNullHelper<Th13Converter, Th13Converter.LevelPractice>();
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
+        [ExpectedException(typeof(InvalidCastException))]
         public void Th13SpellCardReadFromTestShortenedName()
             => Th13SpellCardReadFromTestShortenedNameHelper<Th13Converter, Th13Converter.LevelPractice>();
 
         [TestMethod]
+        [ExpectedException(typeof(InvalidCastException))]
         public void Th13SpellCardReadFromTestExceededName()
             => Th13SpellCardReadFromTestExceededNameHelper<Th13Converter, Th13Converter.LevelPractice>();
 
@@ -245,11 +237,12 @@ namespace ThScoreFileConverterTests.Models
             => Th13SpellCardReadFromTestNullHelper<Th14Converter>();
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
+        [ExpectedException(typeof(InvalidCastException))]
         public void Th14SpellCardReadFromTestShortenedName()
             => Th13SpellCardReadFromTestShortenedNameHelper<Th14Converter>();
 
         [TestMethod]
+        [ExpectedException(typeof(InvalidCastException))]
         public void Th14SpellCardReadFromTestExceededName()
             => Th13SpellCardReadFromTestExceededNameHelper<Th14Converter>();
 
@@ -278,11 +271,12 @@ namespace ThScoreFileConverterTests.Models
             => Th13SpellCardReadFromTestNullHelper<Th15Converter>();
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
+        [ExpectedException(typeof(InvalidCastException))]
         public void Th15SpellCardReadFromTestShortenedName()
             => Th13SpellCardReadFromTestShortenedNameHelper<Th15Converter>();
 
         [TestMethod]
+        [ExpectedException(typeof(InvalidCastException))]
         public void Th15SpellCardReadFromTestExceededName()
             => Th13SpellCardReadFromTestExceededNameHelper<Th15Converter>();
 
@@ -311,11 +305,12 @@ namespace ThScoreFileConverterTests.Models
             => Th13SpellCardReadFromTestNullHelper<Th16Converter>();
 
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
+        [ExpectedException(typeof(InvalidCastException))]
         public void Th16SpellCardReadFromTestShortenedName()
             => Th13SpellCardReadFromTestShortenedNameHelper<Th16Converter>();
 
         [TestMethod]
+        [ExpectedException(typeof(InvalidCastException))]
         public void Th16SpellCardReadFromTestExceededName()
             => Th13SpellCardReadFromTestExceededNameHelper<Th16Converter>();
 
