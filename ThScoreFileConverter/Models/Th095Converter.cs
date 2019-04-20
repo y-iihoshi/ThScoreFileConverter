@@ -859,18 +859,18 @@ namespace ThScoreFileConverter.Models
                 {
                     var reader = new BinaryReader(stream);
 
-                    var number = reader.ReadInt32();
-                    this.LevelScene = new LevelScenePair((Level)(number / 10), (number % 10) + 1);
+                    var number = reader.ReadUInt32();
+                    this.LevelScene = new LevelScenePair(Utils.ToEnum<Level>(number / 10), (int)((number % 10) + 1));
                     this.HighScore = reader.ReadInt32();
                     reader.ReadUInt32();    // always 0x00000000?
                     this.BestshotScore = reader.ReadInt32();
-                    reader.ReadBytes(0x20);
+                    reader.ReadExactBytes(0x20);
                     this.DateTime = reader.ReadUInt32();
                     reader.ReadUInt32();    // checksum of the bestshot file?
                     this.TrialCount = reader.ReadInt32();
                     this.SlowRate1 = reader.ReadSingle();
                     this.SlowRate2 = reader.ReadSingle();
-                    reader.ReadBytes(0x10);
+                    reader.ReadExactBytes(0x10);
                 }
             }
 
