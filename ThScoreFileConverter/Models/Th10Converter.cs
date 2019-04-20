@@ -1049,13 +1049,13 @@ namespace ThScoreFileConverter.Models
 
             public void ReadFrom(BinaryReader reader)
             {
-                if (reader == null)
-                    throw new ArgumentNullException("reader");
+                if (reader is null)
+                    throw new ArgumentNullException(nameof(reader));
 
                 this.Score = reader.ReadUInt32();
-                this.StageProgress = (StageProgress)reader.ReadByte();
+                this.StageProgress = Utils.ToEnum<StageProgress>(reader.ReadByte());
                 this.ContinueCount = reader.ReadByte();
-                this.Name = reader.ReadBytes(10);
+                this.Name = reader.ReadExactBytes(10);
                 this.DateTime = reader.ReadUInt32();
                 this.SlowRate = reader.ReadSingle();
             }
