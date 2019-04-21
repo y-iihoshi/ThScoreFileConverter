@@ -91,7 +91,7 @@ namespace ThScoreFileConverterTests.Models
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "header")]
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void ReadFromTestEmptySignature() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
@@ -104,7 +104,7 @@ namespace ThScoreFileConverterTests.Models
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "header")]
         [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void ReadFromTestShortenedSignature() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
@@ -115,7 +115,9 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         });
 
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "header")]
         [TestMethod]
+        [ExpectedException(typeof(InvalidCastException))]
         public void ReadFromTestExceededSignature() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
@@ -123,14 +125,7 @@ namespace ThScoreFileConverterTests.Models
 
             var header = Th143BestShotHeaderWrapper.Create(MakeByteArray(properties));
 
-            Assert.AreNotEqual(properties.signature, header.Signature);
-            Assert.AreEqual(properties.signature.Substring(0, ValidProperties.signature.Length), header.Signature);
-            Assert.AreNotEqual(properties.day, header.Day);
-            Assert.AreNotEqual(properties.scene, header.Scene);
-            Assert.AreNotEqual(properties.width, header.Width);
-            Assert.AreNotEqual(properties.height, header.Height);
-            Assert.AreNotEqual(properties.dateTime, header.DateTime);
-            Assert.AreNotEqual(properties.slowRate, header.SlowRate);
+            Assert.Fail(TestUtils.Unreachable);
         });
 
         public static IEnumerable<object[]> InvalidDays
@@ -140,7 +135,7 @@ namespace ThScoreFileConverterTests.Models
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidDays))]
-        [ExpectedException(typeof(InvalidDataException))]
+        [ExpectedException(typeof(InvalidCastException))]
         public void ReadFromTestInvalidDay(int day) => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;

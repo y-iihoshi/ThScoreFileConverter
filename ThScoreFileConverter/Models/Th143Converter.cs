@@ -1197,23 +1197,23 @@ namespace ThScoreFileConverter.Models
 
             public void ReadFrom(BinaryReader reader)
             {
-                if (reader == null)
-                    throw new ArgumentNullException("reader");
+                if (reader is null)
+                    throw new ArgumentNullException(nameof(reader));
 
-                this.Signature = Encoding.Default.GetString(reader.ReadBytes(SignatureSize));
-                if (this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
-                {
-                    reader.ReadUInt16();    // always 0xDF01?
-                    this.Day = (Day)reader.ReadInt16();
-                    this.Scene = (short)(reader.ReadInt16() + 1);
-                    reader.ReadUInt16();    // 0x0100 ... Version?
-                    this.Width = reader.ReadInt16();
-                    this.Height = reader.ReadInt16();
-                    reader.ReadUInt32();    // always 0x0005E800?
-                    this.DateTime = reader.ReadUInt32();
-                    this.SlowRate = reader.ReadSingle();    // really...?
-                    reader.ReadBytes(0x58);
-                }
+                this.Signature = Encoding.Default.GetString(reader.ReadExactBytes(SignatureSize));
+                if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
+                    throw new InvalidDataException();
+
+                reader.ReadUInt16();    // always 0xDF01?
+                this.Day = Utils.ToEnum<Day>(reader.ReadInt16());
+                this.Scene = (short)(reader.ReadInt16() + 1);
+                reader.ReadUInt16();    // 0x0100 ... Version?
+                this.Width = reader.ReadInt16();
+                this.Height = reader.ReadInt16();
+                reader.ReadUInt32();    // always 0x0005E800?
+                this.DateTime = reader.ReadUInt32();
+                this.SlowRate = reader.ReadSingle();    // really...?
+                reader.ReadExactBytes(0x58);
             }
         }
     }
