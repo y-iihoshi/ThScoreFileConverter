@@ -583,7 +583,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(InvalidDataException))]
         public void Th155AllScoreDataReadObjectTestUnsupported(SQ.SQObjectType type) => TestUtils.Wrap(() =>
         {
-            var result = Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray((int)type), out object obj);
+            Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray((int)type), out object obj);
 
             Assert.Fail(TestUtils.Unreachable);
         });
