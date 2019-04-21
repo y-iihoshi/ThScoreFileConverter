@@ -218,29 +218,32 @@ namespace ThScoreFileConverter.Models
                 reader =>
                 {
                     var num = reader.ReadInt32();
-                    if (num > 0)
-                    {
-                        var array = new object[num];
-                        for (var count = 0; count < num; count++)
-                        {
-                            object index;
-                            if (ReadObject(reader, out index))
-                            {
-                                object value;
-                                if (ReadObject(reader, out value))
-                                {
-                                    if ((index is int) && ((int)index < num))
-                                        array[(int)index] = value;
-                                }
-                            }
-                        }
+                    if (num < 0)
+                        throw new InvalidDataException("number of array must not be negative");
 
-                        object endmark;
-                        if (ReadObject(reader, out endmark) && (endmark is EndMark))
-                            return array;
+                    var array = new object[num];
+                    for (var count = 0; count < num; count++)
+                    {
+                        if (!ReadObject(reader, out object index))
+                            throw new InvalidDataException("failed to read index");
+                        if (!ReadObject(reader, out object value))
+                            throw new InvalidDataException("failed to read value");
+
+                        if (!(index is int i))
+                            throw new InvalidDataException("index is not an integer");
+                        if (i >= num)
+                            throw new InvalidDataException("index is out of range");
+
+                        array[i] = value;
                     }
 
-                    return new object[] { };
+                    if (!ReadObject(reader, out object endmark))
+                        throw new InvalidDataException("failed to read sentinel");
+
+                    if (endmark is EndMark)
+                        return array;
+                    else
+                        throw new InvalidDataException("sentinel is wrong");
                 };
 
             private static readonly Func<BinaryReader, object> DictionaryReader =
@@ -249,18 +252,13 @@ namespace ThScoreFileConverter.Models
                     var dictionary = new Dictionary<object, object>();
                     while (true)
                     {
-                        object key;
-                        if (ReadObject(reader, out key))
-                        {
-                            if (key is EndMark)
-                                break;
-
-                            object value;
-                            if (ReadObject(reader, out value))
-                                dictionary.Add(key, value);
-                        }
-                        else
+                        if (!ReadObject(reader, out object key))
+                            throw new InvalidDataException("failed to read key");
+                        if (key is EndMark)
                             break;
+                        if (!ReadObject(reader, out object value))
+                            throw new InvalidDataException("failed to read value");
+                        dictionary.Add(key, value);
                     }
 
                     return dictionary;
@@ -348,26 +346,25 @@ namespace ThScoreFileConverter.Models
 
                 var type = reader.ReadUInt32();
 
-                obj = ObjectReaders.TryGetValue(type, out Func<BinaryReader, object> objectReader)
-                    ? objectReader(reader) : null;
+                if (ObjectReaders.TryGetValue(type, out Func<BinaryReader, object> objectReader))
+                    obj = objectReader(reader);
+                else
+                    throw new InvalidDataException("wrong type");
 
                 return obj != null;
             }
 
             public void ReadFrom(BinaryReader reader)
             {
-                var dictionary = DictionaryReader(reader) as Dictionary<object, object>;
-                if (dictionary != null)
+                if (DictionaryReader(reader) is Dictionary<object, object> dictionary)
                 {
                     this.allData = dictionary
                         .Where(pair => pair.Key is string)
                         .ToDictionary(pair => pair.Key as string, pair => pair.Value);
 
-                    object counts;
-                    if (this.allData.TryGetValue("story_clear", out counts))
+                    if (this.allData.TryGetValue("story_clear", out object counts))
                     {
-                        var storyClearFlags = counts as object[];
-                        if (storyClearFlags != null)
+                        if (counts is object[] storyClearFlags)
                         {
                             this.StoryClearFlags =
                                 new Dictionary<Chara, LevelFlag>(Enum.GetValues(typeof(Chara)).Length);
@@ -379,11 +376,9 @@ namespace ThScoreFileConverter.Models
                         }
                     }
 
-                    object flags;
-                    if (this.allData.TryGetValue("enable_bgm", out flags))
+                    if (this.allData.TryGetValue("enable_bgm", out object flags))
                     {
-                        var bgmFlags = flags as Dictionary<object, object>;
-                        if (bgmFlags != null)
+                        if (flags is Dictionary<object, object> bgmFlags)
                         {
                             this.BgmFlags = bgmFlags
                                 .Where(pair => (pair.Key is int) && (pair.Value is bool))
@@ -397,8 +392,7 @@ namespace ThScoreFileConverter.Models
             private T GetValue<T>(string key)
                 where T : struct
             {
-                object value;
-                if (this.allData.TryGetValue(key, out value) && (value is T))
+                if (this.allData.TryGetValue(key, out object value) && (value is T))
                     return (T)value;
                 else
                     return default(T);
