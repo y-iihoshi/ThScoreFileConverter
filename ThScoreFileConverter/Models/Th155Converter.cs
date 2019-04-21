@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="Th155Converter.cs" company="None">
-//     (c) 2018 IIHOSHI Yoshinori
+//     (c) 2018-2019 IIHOSHI Yoshinori
 // </copyright>
 //-----------------------------------------------------------------------
 
@@ -248,33 +248,39 @@ namespace ThScoreFileConverter.Models
                 reader =>
                 {
                     var size = reader.ReadInt32();
-                    return (size > 0) ? Encoding.Default.GetString(reader.ReadBytes(size)) : string.Empty;
+                    return (size > 0) ? Encoding.Default.GetString(reader.ReadExactBytes(size)) : string.Empty;
                 };
 
             private static readonly Func<BinaryReader, object> ArrayReader =
                 reader =>
                 {
                     var num = reader.ReadInt32();
-                    if (num > 0)
-                    {
-                        var array = new object[num];
-                        for (var count = 0; count < num; count++)
-                        {
-                            if (ReadObject(reader, out object index))
-                            {
-                                if (ReadObject(reader, out object value))
-                                {
-                                    if ((index is int) && ((int)index < num))
-                                        array[(int)index] = value;
-                                }
-                            }
-                        }
+                    if (num < 0)
+                        throw new InvalidDataException("number of elements must not be negative");
 
-                        if (ReadObject(reader, out object endmark) && (endmark is EndMark))
-                            return array;
+                    var array = new object[num];
+                    for (var count = 0; count < num; count++)
+                    {
+                        if (!ReadObject(reader, out object index))
+                            throw new InvalidDataException("failed to read index");
+                        if (!ReadObject(reader, out object value))
+                            throw new InvalidDataException("failed to read value");
+
+                        if (!(index is int i))
+                            throw new InvalidDataException("index is not an integer");
+                        if (i >= num)
+                            throw new InvalidDataException("index is out of range");
+
+                        array[i] = value;
                     }
 
-                    return new object[] { };
+                    if (!ReadObject(reader, out object endmark))
+                        throw new InvalidDataException("failed to read sentinel");
+
+                    if (endmark is EndMark)
+                        return array;
+                    else
+                        throw new InvalidDataException("sentinel is wrong");
                 };
 
             private static readonly Func<BinaryReader, object> DictionaryReader =
@@ -283,16 +289,13 @@ namespace ThScoreFileConverter.Models
                     var dictionary = new Dictionary<object, object>();
                     while (true)
                     {
-                        if (ReadObject(reader, out object key))
-                        {
-                            if (key is EndMark)
-                                break;
-
-                            if (ReadObject(reader, out object value))
-                                dictionary.Add(key, value);
-                        }
-                        else
+                        if (!ReadObject(reader, out object key))
+                            throw new InvalidDataException("failed to read key");
+                        if (key is EndMark)
                             break;
+                        if (!ReadObject(reader, out object value))
+                            throw new InvalidDataException("failed to read value");
+                        dictionary.Add(key, value);
                     }
 
                     return dictionary;
@@ -302,7 +305,7 @@ namespace ThScoreFileConverter.Models
                 new Dictionary<uint, Func<BinaryReader, object>>
                 {
                     { 0x01000001, reader => new EndMark() },
-                    { 0x01000008, reader => reader.ReadByte() == 0x01 },
+                    { 0x01000008, reader => reader.ReadByte() != 0x00 },
                     { 0x05000002, reader => reader.ReadInt32() },
                     { 0x05000004, reader => reader.ReadSingle() },
                     { 0x08000010, StringReader },
@@ -342,10 +345,15 @@ namespace ThScoreFileConverter.Models
 
             public static bool ReadObject(BinaryReader reader, out object obj)
             {
+                if (reader is null)
+                    throw new ArgumentNullException(nameof(reader));
+
                 var type = reader.ReadUInt32();
 
-                obj = ObjectReaders.TryGetValue(type, out Func<BinaryReader, object> objectReader)
-                    ? objectReader(reader) : null;
+                if (ObjectReaders.TryGetValue(type, out Func<BinaryReader, object> objectReader))
+                    obj = objectReader(reader);
+                else
+                    throw new InvalidDataException("wrong type");
 
                 return obj != null;
             }

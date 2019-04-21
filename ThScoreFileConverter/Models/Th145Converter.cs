@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="Th145Converter.cs" company="None">
-//     (c) 2017 IIHOSHI Yoshinori
+//     (c) 2017-2019 IIHOSHI Yoshinori
 // </copyright>
 //-----------------------------------------------------------------------
 
@@ -285,7 +285,7 @@ namespace ThScoreFileConverter.Models
                 {
                     var num = reader.ReadInt32();
                     if (num < 0)
-                        throw new InvalidDataException("number of array must not be negative");
+                        throw new InvalidDataException("number of elements must not be negative");
 
                     var array = new object[num];
                     for (var count = 0; count < num; count++)
