@@ -1137,17 +1137,17 @@ namespace ThScoreFileConverter.Models
                 {
                     var reader = new BinaryReader(stream);
 
-                    this.LastName = reader.ReadBytes(14);
-                    reader.ReadBytes(0x12);
-                    this.BgmFlags = reader.ReadBytes(9);
-                    reader.ReadBytes(0x17);
+                    this.LastName = reader.ReadExactBytes(14);
+                    reader.ReadExactBytes(0x12);
+                    this.BgmFlags = reader.ReadExactBytes(9);
+                    reader.ReadExactBytes(0x17);
                     this.TotalPlayTime = reader.ReadInt32();
                     reader.ReadInt32();
-                    this.LastMainItem = (ItemWithTotal)reader.ReadInt32();
-                    this.LastSubItem = (ItemWithTotal)reader.ReadInt32();
-                    reader.ReadBytes(0x54);
-                    this.NicknameFlags = reader.ReadBytes(71);
-                    reader.ReadBytes(0x12D);
+                    this.LastMainItem = Utils.ToEnum<ItemWithTotal>(reader.ReadInt32());
+                    this.LastSubItem = Utils.ToEnum<ItemWithTotal>(reader.ReadInt32());
+                    reader.ReadExactBytes(0x54);
+                    this.NicknameFlags = reader.ReadExactBytes(71);
+                    reader.ReadExactBytes(0x12D);
                 }
             }
 

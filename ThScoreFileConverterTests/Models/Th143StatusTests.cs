@@ -138,7 +138,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th143StatusTestInvalidSize() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
-            properties.size += 1;
+            --properties.size;
 
             var chapter = Th10ChapterWrapper<Th143Converter>.Create(MakeByteArray(properties));
             var status = new Th143StatusWrapper(chapter);
@@ -171,7 +171,7 @@ namespace ThScoreFileConverterTests.Models
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidItems))]
-        [ExpectedException(typeof(InvalidDataException))]
+        [ExpectedException(typeof(InvalidCastException))]
         public void Th143StatusTestInvalidLastMainItem(int item) => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
@@ -187,7 +187,7 @@ namespace ThScoreFileConverterTests.Models
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidItems))]
-        [ExpectedException(typeof(InvalidDataException))]
+        [ExpectedException(typeof(InvalidCastException))]
         public void Th143StatusTestInvalidLastSubItem(int item) => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
