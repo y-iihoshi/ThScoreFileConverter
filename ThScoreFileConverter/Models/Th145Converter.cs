@@ -277,36 +277,39 @@ namespace ThScoreFileConverter.Models
                 reader =>
                 {
                     var size = reader.ReadInt32();
-                    return (size > 0) ? Encoding.Default.GetString(reader.ReadBytes(size)) : string.Empty;
+                    return (size > 0) ? Encoding.Default.GetString(reader.ReadExactBytes(size)) : string.Empty;
                 };
 
             private static readonly Func<BinaryReader, object> ArrayReader =
                 reader =>
                 {
                     var num = reader.ReadInt32();
-                    if (num > 0)
-                    {
-                        var array = new object[num];
-                        for (var count = 0; count < num; count++)
-                        {
-                            object index;
-                            if (ReadObject(reader, out index))
-                            {
-                                object value;
-                                if (ReadObject(reader, out value))
-                                {
-                                    if ((index is int) && ((int)index < num))
-                                        array[(int)index] = value;
-                                }
-                            }
-                        }
+                    if (num < 0)
+                        throw new InvalidDataException("number of array must not be negative");
 
-                        object endmark;
-                        if (ReadObject(reader, out endmark) && (endmark is EndMark))
-                            return array;
+                    var array = new object[num];
+                    for (var count = 0; count < num; count++)
+                    {
+                        if (!ReadObject(reader, out object index))
+                            throw new InvalidDataException("failed to read index");
+                        if (!ReadObject(reader, out object value))
+                            throw new InvalidDataException("failed to read value");
+
+                        if (!(index is int i))
+                            throw new InvalidDataException("index is not an integer");
+                        if (i >= num)
+                            throw new InvalidDataException("index is out of range");
+
+                        array[i] = value;
                     }
 
-                    return new object[] { };
+                    if (!ReadObject(reader, out object endmark))
+                        throw new InvalidDataException("failed to read sentinel");
+
+                    if (endmark is EndMark)
+                        return array;
+                    else
+                        throw new InvalidDataException("sentinel is wrong");
                 };
 
             private static readonly Func<BinaryReader, object> DictionaryReader =
@@ -315,18 +318,13 @@ namespace ThScoreFileConverter.Models
                     var dictionary = new Dictionary<object, object>();
                     while (true)
                     {
-                        object key;
-                        if (ReadObject(reader, out key))
-                        {
-                            if (key is EndMark)
-                                break;
-
-                            object value;
-                            if (ReadObject(reader, out value))
-                                dictionary.Add(key, value);
-                        }
-                        else
+                        if (!ReadObject(reader, out object key))
+                            throw new InvalidDataException("failed to read key");
+                        if (key is EndMark)
                             break;
+                        if (!ReadObject(reader, out object value))
+                            throw new InvalidDataException("failed to read value");
+                        dictionary.Add(key, value);
                     }
 
                     return dictionary;
@@ -336,7 +334,7 @@ namespace ThScoreFileConverter.Models
                 new Dictionary<uint, Func<BinaryReader, object>>
                 {
                     { 0x01000001, reader => new EndMark() },
-                    { 0x01000008, reader => reader.ReadByte() == 0x01 },
+                    { 0x01000008, reader => reader.ReadByte() != 0x00 },
                     { 0x05000002, reader => reader.ReadInt32() },
                     { 0x05000004, reader => reader.ReadSingle() },
                     { 0x08000010, StringReader },
@@ -349,7 +347,7 @@ namespace ThScoreFileConverter.Models
 
             public AllScoreData()
             {
-                this.allData = null;
+                this.allData = new Dictionary<string, object>();
                 this.StoryClearFlags = null;
                 this.BgmFlags = null;
             }
@@ -425,18 +423,22 @@ namespace ThScoreFileConverter.Models
 
             public static bool ReadObject(BinaryReader reader, out object obj)
             {
+                if (reader is null)
+                    throw new ArgumentNullException(nameof(reader));
+
                 var type = reader.ReadUInt32();
 
-                Func<BinaryReader, object> objectReader;
-                obj = ObjectReaders.TryGetValue(type, out objectReader) ? objectReader(reader) : null;
+                if (ObjectReaders.TryGetValue(type, out Func<BinaryReader, object> objectReader))
+                    obj = objectReader(reader);
+                else
+                    throw new InvalidDataException("wrong type");
 
                 return obj != null;
             }
 
             public void ReadFrom(BinaryReader reader)
             {
-                var dictionary = DictionaryReader(reader) as Dictionary<object, object>;
-                if (dictionary != null)
+                if (DictionaryReader(reader) is Dictionary<object, object> dictionary)
                 {
                     this.allData = dictionary
                         .Where(pair => pair.Key is string)
@@ -451,11 +453,9 @@ namespace ThScoreFileConverter.Models
 
             private void ParseStoryClear()
             {
-                object counts;
-                if (this.allData.TryGetValue("story_clear", out counts))
+                if (this.allData.TryGetValue("story_clear", out object counts))
                 {
-                    var storyClearFlags = counts as object[];
-                    if (storyClearFlags != null)
+                    if (counts is object[] storyClearFlags)
                     {
                         this.StoryClearFlags =
                             new Dictionary<Chara, LevelFlag>(Enum.GetValues(typeof(Chara)).Length);
@@ -470,11 +470,9 @@ namespace ThScoreFileConverter.Models
 
             private void ParseEnableBgm()
             {
-                object flags;
-                if (this.allData.TryGetValue("enable_bgm", out flags))
+                if (this.allData.TryGetValue("enable_bgm", out object flags))
                 {
-                    var bgmFlags = flags as Dictionary<object, object>;
-                    if (bgmFlags != null)
+                    if (flags is Dictionary<object, object> bgmFlags)
                     {
                         this.BgmFlags = bgmFlags
                             .Where(pair => (pair.Key is int) && (pair.Value is bool))
@@ -485,18 +483,15 @@ namespace ThScoreFileConverter.Models
 
             private void ParseClearRank()
             {
-                object ranks;
-                if (this.allData.TryGetValue("clear_rank", out ranks))
+                if (this.allData.TryGetValue("clear_rank", out object ranks))
                 {
-                    var clearRanks = ranks as object[];
-                    if (clearRanks != null)
+                    if (ranks is object[] clearRanks)
                     {
                         this.ClearRanks =
                             new Dictionary<Level, Dictionary<Chara, int>>(Enum.GetValues(typeof(Level)).Length);
                         for (var index = 0; index < clearRanks.Length; index++)
                         {
-                            var clearRanksPerChara = clearRanks[index] as object[];
-                            if (clearRanksPerChara != null)
+                            if (clearRanks[index] is object[] clearRanksPerChara)
                             {
                                 this.ClearRanks[(Level)index] =
                                     new Dictionary<Chara, int>(Enum.GetValues(typeof(Chara)).Length);
@@ -516,18 +511,15 @@ namespace ThScoreFileConverter.Models
 
             private void ParseClearTime()
             {
-                object times;
-                if (this.allData.TryGetValue("clear_time", out times))
+                if (this.allData.TryGetValue("clear_time", out object times))
                 {
-                    var clearTimes = times as object[];
-                    if (clearTimes != null)
+                    if (times is object[] clearTimes)
                     {
                         this.ClearTimes =
                             new Dictionary<Level, Dictionary<Chara, int>>(Enum.GetValues(typeof(Level)).Length);
                         for (var index = 0; index < clearTimes.Length; index++)
                         {
-                            var clearTimesPerChara = clearTimes[index] as object[];
-                            if (clearTimesPerChara != null)
+                            if (clearTimes[index] is object[] clearTimesPerChara)
                             {
                                 this.ClearTimes[(Level)index] =
                                     new Dictionary<Chara, int>(Enum.GetValues(typeof(Chara)).Length);
@@ -549,8 +541,7 @@ namespace ThScoreFileConverter.Models
             private T GetValue<T>(string key)
                 where T : struct
             {
-                object value;
-                if (this.allData.TryGetValue(key, out value) && (value is T))
+                if (this.allData.TryGetValue(key, out object value) && (value is T))
                     return (T)value;
                 else
                     return default(T);

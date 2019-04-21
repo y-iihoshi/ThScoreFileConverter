@@ -341,11 +341,6 @@ namespace ThScoreFileConverterTests.Models
             new int[2] { 123, 78 },
             new int[2] { 456, 90 },
             DisplayName = "two pairs")]
-        [DataRow(
-            new int[6] { (int)SQ.OTTable, (int)SQ.OTInteger, 123, (int)SQ.OTInteger, 456, 999 },
-            new int[1] { 123 },
-            new int[1] { 456 },
-            DisplayName = "invalid sentinel")]
         public void Th145AllScoreDataReadObjectTestOTTable(int[] array, int[] expectedKeys, int[] expectedValues)
             => TestUtils.Wrap(() =>
             {
@@ -361,20 +356,6 @@ namespace ThScoreFileConverterTests.Models
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
-        [DataRow(new int[6] { (int)SQ.OTTable, 999, 123, (int)SQ.OTInteger, 456, (int)SQ.OTNull },
-            DisplayName = "invalid key type")]
-        [DataRow(new int[6] { (int)SQ.OTTable, (int)SQ.OTInteger, 123, 999, 456, (int)SQ.OTNull },
-            DisplayName = "invalid value type")]
-        [DataRow(new int[5] { (int)SQ.OTTable, 123, (int)SQ.OTInteger, 456, (int)SQ.OTNull },
-            DisplayName = "missing key type")]
-        [DataRow(new int[5] { (int)SQ.OTTable, (int)SQ.OTInteger, (int)SQ.OTInteger, 456, (int)SQ.OTNull },
-            DisplayName = "missing key data")]
-        [DataRow(new int[5] { (int)SQ.OTTable, (int)SQ.OTInteger, 123, 456, (int)SQ.OTNull },
-            DisplayName = "missing value type")]
-        [DataRow(new int[4] { (int)SQ.OTTable, 123, (int)SQ.OTInteger, 456 },
-            DisplayName = "missing key type and sentinel")]
-        [DataRow(new int[4] { (int)SQ.OTTable, 123, (int)SQ.OTInteger, (int)SQ.OTNull },
-            DisplayName = "missing key type and value data")]
         [DataRow(new int[2] { (int)SQ.OTTable, (int)SQ.OTNull },
             DisplayName = "empty")]
         public void Th145AllScoreDataReadObjectTestOTTableEmpty(int[] array) => TestUtils.Wrap(() =>
@@ -393,10 +374,6 @@ namespace ThScoreFileConverterTests.Models
             DisplayName = "missing value data")]
         [DataRow(new int[5] { (int)SQ.OTTable, (int)SQ.OTInteger, 123, (int)SQ.OTInteger, 456 },
             DisplayName = "missing sentinel")]
-        [DataRow(new int[4] { (int)SQ.OTTable, (int)SQ.OTInteger, (int)SQ.OTInteger, 456 },
-            DisplayName = "missing key data and sentinel")]
-        [DataRow(new int[4] { (int)SQ.OTTable, (int)SQ.OTInteger, 123, 456 },
-            DisplayName = "missing value type and sentinel")]
         [DataRow(new int[4] { (int)SQ.OTTable, (int)SQ.OTInteger, 123, (int)SQ.OTInteger },
             DisplayName = "missing value data and sentinel")]
         [DataRow(new int[4] { (int)SQ.OTTable, (int)SQ.OTInteger, 123, (int)SQ.OTNull },
@@ -404,6 +381,36 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(new int[1] { (int)SQ.OTTable },
             DisplayName = "empty and missing sentinel")]
         [ExpectedException(typeof(EndOfStreamException))]
+        public void Th145AllScoreDataReadObjectTestOTTableShortened(int[] array) => TestUtils.Wrap(() =>
+        {
+            Th145AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out object obj);
+
+            Assert.Fail(TestUtils.Unreachable);
+        });
+
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        [DataTestMethod]
+        [DataRow(new int[6] { (int)SQ.OTTable, 999, 123, (int)SQ.OTInteger, 456, (int)SQ.OTNull },
+            DisplayName = "invalid key type")]
+        [DataRow(new int[6] { (int)SQ.OTTable, (int)SQ.OTInteger, 123, 999, 456, (int)SQ.OTNull },
+            DisplayName = "invalid value type")]
+        [DataRow(new int[6] { (int)SQ.OTTable, (int)SQ.OTInteger, 123, (int)SQ.OTInteger, 456, 999 },
+            DisplayName = "invalid sentinel")]
+        [DataRow(new int[5] { (int)SQ.OTTable, 123, (int)SQ.OTInteger, 456, (int)SQ.OTNull },
+            DisplayName = "missing key type")]
+        [DataRow(new int[5] { (int)SQ.OTTable, (int)SQ.OTInteger, (int)SQ.OTInteger, 456, (int)SQ.OTNull },
+            DisplayName = "missing key data")]
+        [DataRow(new int[5] { (int)SQ.OTTable, (int)SQ.OTInteger, 123, 456, (int)SQ.OTNull },
+            DisplayName = "missing value type")]
+        [DataRow(new int[4] { (int)SQ.OTTable, 123, (int)SQ.OTInteger, 456 },
+            DisplayName = "missing key type and sentinel")]
+        [DataRow(new int[4] { (int)SQ.OTTable, 123, (int)SQ.OTInteger, (int)SQ.OTNull },
+            DisplayName = "missing key type and value data")]
+        [DataRow(new int[4] { (int)SQ.OTTable, (int)SQ.OTInteger, (int)SQ.OTInteger, 456 },
+            DisplayName = "missing key data and sentinel")]
+        [DataRow(new int[4] { (int)SQ.OTTable, (int)SQ.OTInteger, 123, 456 },
+            DisplayName = "missing value type and sentinel")]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th145AllScoreDataReadObjectTestOTTableInvalid(int[] array) => TestUtils.Wrap(() =>
         {
             Th145AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out object obj);
@@ -438,6 +445,48 @@ namespace ThScoreFileConverterTests.Models
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
+        [DataRow(new int[3] { (int)SQ.OTArray, 0, (int)SQ.OTNull },
+            DisplayName = "empty")]
+        public void Th145AllScoreDataReadObjectTestOTArrayEmpty(int[] array) => TestUtils.Wrap(() =>
+        {
+            var result = Th145AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out object obj);
+            var resultArray = obj as object[];
+
+            Assert.IsTrue(result);
+            Assert.IsNotNull(resultArray);
+            Assert.AreEqual(0, resultArray.Length);
+        });
+
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        [DataTestMethod]
+        [DataRow(new int[7] { (int)SQ.OTArray, 999, (int)SQ.OTInteger, 0, (int)SQ.OTInteger, 123, (int)SQ.OTNull },
+            DisplayName = "invalid size")]
+        [DataRow(new int[6] { (int)SQ.OTArray, 1, (int)SQ.OTInteger, 0, (int)SQ.OTInteger, (int)SQ.OTNull },
+            DisplayName = "missing value data")]
+        [DataRow(new int[6] { (int)SQ.OTArray, 1, (int)SQ.OTInteger, 0, (int)SQ.OTInteger, 123 },
+            DisplayName = "missing sentinel")]
+        [DataRow(new int[5] { (int)SQ.OTArray, 1, (int)SQ.OTInteger, 0, (int)SQ.OTNull },
+            DisplayName = "missing value")]
+        [DataRow(new int[5] { (int)SQ.OTArray, 1, (int)SQ.OTInteger, 0, (int)SQ.OTInteger },
+            DisplayName = "missing value data and sentinel")]
+        [DataRow(new int[3] { (int)SQ.OTArray, 999, (int)SQ.OTNull },
+            DisplayName = "empty and invalid number of elements")]
+        [DataRow(new int[2] { (int)SQ.OTArray, (int)SQ.OTNull },
+            DisplayName = "empty and missing number of elements")]
+        [DataRow(new int[2] { (int)SQ.OTArray, 0 },
+            DisplayName = "empty and missing sentinel")]
+        [DataRow(new int[1] { (int)SQ.OTArray },
+            DisplayName = "empty and only array type")]
+        [ExpectedException(typeof(EndOfStreamException))]
+        public void Th145AllScoreDataReadObjectTestOTArrayShortened(int[] array) => TestUtils.Wrap(() =>
+        {
+            Th145AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out object obj);
+
+            Assert.Fail(TestUtils.Unreachable);
+        });
+
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        [DataTestMethod]
         [DataRow(new int[7] { (int)SQ.OTArray, 0, (int)SQ.OTInteger, 0, (int)SQ.OTInteger, 123, (int)SQ.OTNull },
             DisplayName = "zero size and one element")]
         [DataRow(new int[7] { (int)SQ.OTArray, -1, (int)SQ.OTInteger, 0, (int)SQ.OTInteger, 123, (int)SQ.OTNull },
@@ -456,57 +505,25 @@ namespace ThScoreFileConverterTests.Models
             DisplayName = "missing index data")]
         [DataRow(new int[6] { (int)SQ.OTArray, 1, (int)SQ.OTInteger, 0, 123, (int)SQ.OTNull },
             DisplayName = "missing value type")]
-        [DataRow(new int[5] { (int)SQ.OTArray, 1, 0, (int)SQ.OTInteger, 123 },
-            DisplayName = "missing index type and sentinel")]
-        [DataRow(new int[5] { (int)SQ.OTArray, 0, (int)SQ.OTInteger, 123, (int)SQ.OTNull },
-            DisplayName = "missing number of elements and index type")]
-        [DataRow(new int[5] { (int)SQ.OTArray, 1, 0, (int)SQ.OTInteger, (int)SQ.OTNull },
-            DisplayName = "missing index type and value data")]
-        [DataRow(new int[3] { (int)SQ.OTArray, 0, (int)SQ.OTNull },
-            DisplayName = "empty")]
-        public void Th145AllScoreDataReadObjectTestOTArrayEmpty(int[] array) => TestUtils.Wrap(() =>
-        {
-            var result = Th145AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out object obj);
-            var resultArray = obj as object[];
-
-            Assert.IsTrue(result);
-            Assert.IsNotNull(resultArray);
-            Assert.AreEqual(0, resultArray.Length);
-        });
-
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        [DataTestMethod]
-        [DataRow(new int[7] { (int)SQ.OTArray, 999, (int)SQ.OTInteger, 0, (int)SQ.OTInteger, 123, (int)SQ.OTNull },
-            DisplayName = "invalid size")]
         [DataRow(new int[6] { (int)SQ.OTArray, (int)SQ.OTInteger, 0, (int)SQ.OTInteger, 123, (int)SQ.OTNull },
             DisplayName = "missing number of elements")]
-        [DataRow(new int[6] { (int)SQ.OTArray, 1, (int)SQ.OTInteger, 0, (int)SQ.OTInteger, (int)SQ.OTNull },
-            DisplayName = "missing value data")]
-        [DataRow(new int[6] { (int)SQ.OTArray, 1, (int)SQ.OTInteger, 0, (int)SQ.OTInteger, 123 },
-            DisplayName = "missing sentinel")]
+        [DataRow(new int[5] { (int)SQ.OTArray, 0, (int)SQ.OTInteger, 123, (int)SQ.OTNull },
+            DisplayName = "missing number of elements and index type")]
         [DataRow(new int[5] { (int)SQ.OTArray, (int)SQ.OTInteger, 0, (int)SQ.OTInteger, 123 },
             DisplayName = "missing number of elements and sentinel")]
+        [DataRow(new int[5] { (int)SQ.OTArray, 1, 0, (int)SQ.OTInteger, (int)SQ.OTNull },
+            DisplayName = "missing index type and value data")]
+        [DataRow(new int[5] { (int)SQ.OTArray, 1, 0, (int)SQ.OTInteger, 123 },
+            DisplayName = "missing index type and sentinel")]
         [DataRow(new int[5] { (int)SQ.OTArray, 1, (int)SQ.OTInteger, (int)SQ.OTInteger, 123 },
             DisplayName = "missing index data and sentinel")]
         [DataRow(new int[5] { (int)SQ.OTArray, 1, (int)SQ.OTInteger, 0, 123 },
             DisplayName = "missing value type and sentinel")]
-        [DataRow(new int[5] { (int)SQ.OTArray, 1, (int)SQ.OTInteger, 0, (int)SQ.OTInteger },
-            DisplayName = "missing value data and sentinel")]
         [DataRow(new int[5] { (int)SQ.OTArray, 1, (int)SQ.OTInteger, 123, (int)SQ.OTNull },
             DisplayName = "missing index")]
-        [DataRow(new int[5] { (int)SQ.OTArray, 1, (int)SQ.OTInteger, 0, (int)SQ.OTNull },
-            DisplayName = "missing value")]
-        [DataRow(new int[3] { (int)SQ.OTArray, 999, (int)SQ.OTNull },
-            DisplayName = "empty and invalid number of elements")]
         [DataRow(new int[3] { (int)SQ.OTArray, 0, 999 },
             DisplayName = "empty and invalid sentinel")]
-        [DataRow(new int[2] { (int)SQ.OTArray, (int)SQ.OTNull },
-            DisplayName = "empty and missing number of elements")]
-        [DataRow(new int[2] { (int)SQ.OTArray, 0 },
-            DisplayName = "empty and missing sentinel")]
-        [DataRow(new int[1] { (int)SQ.OTArray },
-            DisplayName = "empty and only array type")]
-        [ExpectedException(typeof(EndOfStreamException))]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th145AllScoreDataReadObjectTestOTArrayInvalid(int[] array) => TestUtils.Wrap(() =>
         {
             Th145AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out object obj);
@@ -536,12 +553,12 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(SQ.OTWeakRef)]
         [DataRow(SQ.OTOuter)]
         [DataRow((SQ.SQObjectType)999)]
+        [ExpectedException(typeof(InvalidDataException))]
         public void Th145AllScoreDataReadObjectTestUnsupported(SQ.SQObjectType type) => TestUtils.Wrap(() =>
         {
-            var result = Th145AllScoreDataReadObjectHelper(TestUtils.MakeByteArray((int)type), out object obj);
+            Th145AllScoreDataReadObjectHelper(TestUtils.MakeByteArray((int)type), out object obj);
 
-            Assert.IsFalse(result);
-            Assert.IsNull(obj);
+            Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
