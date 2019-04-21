@@ -137,7 +137,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th143ItemStatusTestInvalidSize() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
-            ++properties.size;
+            --properties.size;
 
             var chapter = Th10ChapterWrapper<Th143Converter>.Create(MakeByteArray(properties));
             var itemStatus = new Th143ItemStatusWrapper(chapter);

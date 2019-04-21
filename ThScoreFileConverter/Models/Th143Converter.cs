@@ -1079,13 +1079,13 @@ namespace ThScoreFileConverter.Models
                 {
                     var reader = new BinaryReader(stream);
 
-                    this.Item = (ItemWithTotal)reader.ReadInt32();
+                    this.Item = Utils.ToEnum<ItemWithTotal>(reader.ReadInt32());
                     this.UseCount = reader.ReadInt32();
                     this.ClearedCount = reader.ReadInt32();
                     this.ClearedScenes = reader.ReadInt32();
                     this.ItemLevel = reader.ReadInt32();
                     reader.ReadInt32();
-                    this.AvaliableCount = reader.ReadInt32();
+                    this.AvailableCount = reader.ReadInt32();
                     this.FramesOrRanges = reader.ReadInt32();
                     reader.ReadInt32();                         // always 0?
                     reader.ReadInt32();                         // always 0?
@@ -1104,7 +1104,7 @@ namespace ThScoreFileConverter.Models
             public int ItemLevel { get; private set; }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public int AvaliableCount { get; private set; }
+            public int AvailableCount { get; private set; }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public int FramesOrRanges { get; private set; }
