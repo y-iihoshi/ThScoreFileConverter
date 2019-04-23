@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -311,7 +312,7 @@ namespace ThScoreFileConverterTests.Models
 
             Assert.IsTrue(result);
             Assert.IsNotNull(str);
-            Assert.AreEqual(value, str);
+            Assert.AreEqual(value, str, false, CultureInfo.InvariantCulture);
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
@@ -341,7 +342,7 @@ namespace ThScoreFileConverterTests.Models
 
             Assert.IsTrue(result);
             Assert.IsNotNull(str);
-            Assert.AreEqual(value, str);
+            Assert.AreEqual(value, str, false, CultureInfo.InvariantCulture);
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
