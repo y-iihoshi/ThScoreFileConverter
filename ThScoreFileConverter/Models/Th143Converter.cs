@@ -1039,7 +1039,7 @@ namespace ThScoreFileConverter.Models
                         this.ChallengeCounts.Add(item, reader.ReadInt32());
 
                     this.HighScore = reader.ReadInt32();
-                    reader.ReadBytes(0x548);    // always all 0x00?
+                    reader.ReadExactBytes(0x2A8);   // always all 0x00?
                 }
             }
 
