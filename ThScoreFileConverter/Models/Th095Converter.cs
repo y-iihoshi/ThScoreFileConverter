@@ -931,8 +931,8 @@ namespace ThScoreFileConverter.Models
                 {
                     var reader = new BinaryReader(stream);
 
-                    this.LastName = reader.ReadBytes(10);
-                    reader.ReadBytes(0x0442);
+                    this.LastName = reader.ReadExactBytes(10);
+                    reader.ReadExactBytes(0x0442);
                 }
             }
 

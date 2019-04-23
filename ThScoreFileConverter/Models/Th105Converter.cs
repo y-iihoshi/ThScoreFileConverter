@@ -1061,8 +1061,8 @@ namespace ThScoreFileConverter.Models
                     }
                 }
 
-                reader.ReadBytes(0x14);         // flags of story playable characters?
-                reader.ReadBytes(0x14);         // flags of versus/arcade playable characters?
+                reader.ReadExactBytes(0x14);    // flags of story playable characters?
+                reader.ReadExactBytes(0x14);    // flags of versus/arcade playable characters?
 
                 var numBgmFlags = reader.ReadInt32();
                 for (var index = 0; index < numBgmFlags; index++)

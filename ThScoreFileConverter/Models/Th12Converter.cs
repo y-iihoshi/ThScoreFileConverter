@@ -1013,10 +1013,10 @@ namespace ThScoreFileConverter.Models
                 {
                     var reader = new BinaryReader(stream);
 
-                    this.LastName = reader.ReadBytes(10);
-                    reader.ReadBytes(0x10);
-                    this.BgmFlags = reader.ReadBytes(17);
-                    reader.ReadBytes(0x0411);
+                    this.LastName = reader.ReadExactBytes(10);
+                    reader.ReadExactBytes(0x10);
+                    this.BgmFlags = reader.ReadExactBytes(17);
+                    reader.ReadExactBytes(0x0411);
                 }
             }
 

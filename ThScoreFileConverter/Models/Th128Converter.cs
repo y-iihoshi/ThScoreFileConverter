@@ -1212,12 +1212,12 @@ namespace ThScoreFileConverter.Models
                 {
                     var reader = new BinaryReader(stream);
 
-                    this.LastName = reader.ReadBytes(10);
-                    reader.ReadBytes(0x10);
-                    this.BgmFlags = reader.ReadBytes(10);
-                    reader.ReadBytes(0x18);
+                    this.LastName = reader.ReadExactBytes(10);
+                    reader.ReadExactBytes(0x10);
+                    this.BgmFlags = reader.ReadExactBytes(10);
+                    reader.ReadExactBytes(0x18);
                     this.TotalPlayTime = reader.ReadInt32();
-                    reader.ReadBytes(0x03E0);
+                    reader.ReadExactBytes(0x03E0);
                 }
             }
 

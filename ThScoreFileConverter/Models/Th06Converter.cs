@@ -295,7 +295,7 @@ namespace ThScoreFileConverter.Models
             var allScoreData = new AllScoreData();
             var chapter = new Chapter();
 
-            reader.ReadBytes(FileHeader.ValidSize);
+            reader.ReadExactBytes(FileHeader.ValidSize);
 
             try
             {
@@ -877,10 +877,10 @@ namespace ThScoreFileConverter.Models
                 {
                     var reader = new BinaryReader(stream);
 
-                    reader.ReadBytes(8);
+                    reader.ReadExactBytes(8);
                     this.CardId = (short)(reader.ReadInt16() + 1);
-                    reader.ReadBytes(6);
-                    this.CardName = reader.ReadBytes(0x24);
+                    reader.ReadExactBytes(6);
+                    this.CardName = reader.ReadExactBytes(0x24);
                     this.TrialCount = reader.ReadUInt16();
                     this.ClearCount = reader.ReadUInt16();
                 }

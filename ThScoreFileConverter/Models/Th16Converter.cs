@@ -1012,7 +1012,7 @@ namespace ThScoreFileConverter.Models
                         }
                     }
 
-                    reader.ReadBytes(0x140);
+                    reader.ReadExactBytes(0x140);
 
                     for (var number = 0; number < CardTable.Count; number++)
                     {
@@ -1099,12 +1099,12 @@ namespace ThScoreFileConverter.Models
                 {
                     var reader = new BinaryReader(stream);
 
-                    this.LastName = reader.ReadBytes(10);
-                    reader.ReadBytes(0x10);
-                    this.BgmFlags = reader.ReadBytes(17);
-                    reader.ReadBytes(0x11);
+                    this.LastName = reader.ReadExactBytes(10);
+                    reader.ReadExactBytes(0x10);
+                    this.BgmFlags = reader.ReadExactBytes(17);
+                    reader.ReadExactBytes(0x11);
                     this.TotalPlayTime = reader.ReadInt32();
-                    reader.ReadBytes(0x03E0);
+                    reader.ReadExactBytes(0x03E0);
                 }
             }
 

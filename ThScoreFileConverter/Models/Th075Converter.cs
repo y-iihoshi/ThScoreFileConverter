@@ -860,17 +860,17 @@ namespace ThScoreFileConverter.Models
                 this.MaxDamage = reader.ReadInt32();
                 foreach (var num in numbers)
                     this.MaxBonuses.Add(reader.ReadInt32());
-                reader.ReadBytes(0xC8);
+                reader.ReadExactBytes(0xC8);
                 foreach (var num in numbers)
                     this.CardGotCount.Add(reader.ReadInt16());
-                reader.ReadBytes(0x64);
+                reader.ReadExactBytes(0x64);
                 foreach (var num in numbers)
                     this.CardTrialCount.Add(reader.ReadInt16());
-                reader.ReadBytes(0x64);
+                reader.ReadExactBytes(0x64);
                 foreach (var num in numbers)
                     this.CardTrulyGot.Add(reader.ReadByte());
-                reader.ReadBytes(0x32);
-                reader.ReadBytes(6);    // 07 00 00 00 00 00
+                reader.ReadExactBytes(0x32);
+                reader.ReadExactBytes(6);   // 07 00 00 00 00 00
 
                 foreach (var num in Enumerable.Range(1, 10))
                 {

@@ -571,7 +571,7 @@ namespace ThScoreFileConverter.Models
             var allScoreData = new AllScoreData();
             var chapter = new Chapter();
 
-            reader.ReadBytes(FileHeader.ValidSize);
+            reader.ReadExactBytes(FileHeader.ValidSize);
 
             try
             {
@@ -1601,7 +1601,7 @@ namespace ThScoreFileConverter.Models
                 {
                     var reader = new BinaryReader(stream);
 
-                    reader.ReadBytes(0x18);
+                    reader.ReadExactBytes(0x18);
                 }
             }
         }
@@ -1650,8 +1650,8 @@ namespace ThScoreFileConverter.Models
 
                     new PlayCount().ReadFrom(reader);   // always all 0?
                     this.TotalPlayCount.ReadFrom(reader);
-                    this.BgmFlags = reader.ReadBytes(21);
-                    reader.ReadBytes(11);
+                    this.BgmFlags = reader.ReadExactBytes(21);
+                    reader.ReadExactBytes(11);
                 }
             }
 
@@ -1717,7 +1717,7 @@ namespace ThScoreFileConverter.Models
                     var reader = new BinaryReader(stream);
 
                     reader.ReadUInt32();    // always 0x00000001?
-                    this.Name = reader.ReadBytes(12);
+                    this.Name = reader.ReadExactBytes(12);
                 }
             }
 
@@ -1743,9 +1743,9 @@ namespace ThScoreFileConverter.Models
                     var reader = new BinaryReader(stream);
 
                     reader.ReadUInt32();    // always 0x00000001?
-                    this.Version = reader.ReadBytes(6);
-                    reader.ReadBytes(3);
-                    reader.ReadBytes(3);
+                    this.Version = reader.ReadExactBytes(6);
+                    reader.ReadExactBytes(3);
+                    reader.ReadExactBytes(3);
                     reader.ReadUInt32();
                 }
             }

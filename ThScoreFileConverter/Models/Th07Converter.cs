@@ -444,7 +444,7 @@ namespace ThScoreFileConverter.Models
             var allScoreData = new AllScoreData();
             var chapter = new Chapter();
 
-            reader.ReadBytes(FileHeader.ValidSize);
+            reader.ReadExactBytes(FileHeader.ValidSize);
 
             try
             {
@@ -1192,7 +1192,7 @@ namespace ThScoreFileConverter.Models
                         this.MaxBonuses.Add(chara, reader.ReadUInt32());
                     this.CardId = (short)(reader.ReadInt16() + 1);
                     reader.ReadByte();
-                    this.CardName = reader.ReadBytes(0x30);
+                    this.CardName = reader.ReadExactBytes(0x30);
                     reader.ReadByte();      // always 0x00?
                     foreach (var chara in charas)
                         this.TrialCounts.Add(chara, reader.ReadUInt16());
@@ -1357,7 +1357,7 @@ namespace ThScoreFileConverter.Models
                     var reader = new BinaryReader(stream);
 
                     reader.ReadUInt32();    // always 0x00000001?
-                    this.Name = reader.ReadBytes(12);
+                    this.Name = reader.ReadExactBytes(12);
                 }
             }
 
@@ -1384,9 +1384,9 @@ namespace ThScoreFileConverter.Models
 
                     reader.ReadUInt16();    // always 0x0001?
                     reader.ReadUInt16();
-                    this.Version = reader.ReadBytes(6);
-                    reader.ReadBytes(3);
-                    reader.ReadBytes(3);
+                    this.Version = reader.ReadExactBytes(6);
+                    reader.ReadExactBytes(3);
+                    reader.ReadExactBytes(3);
                     reader.ReadUInt32();
                 }
             }
