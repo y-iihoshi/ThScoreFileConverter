@@ -110,7 +110,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th095StatusTestInvalidSize() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
-            ++properties.size;
+            --properties.size;
 
             var chapter = Th095ChapterWrapper<Th095Converter>.Create(MakeByteArray(properties));
             var status = new Th095StatusWrapper(chapter);

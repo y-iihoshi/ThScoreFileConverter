@@ -107,7 +107,8 @@ namespace ThScoreFileConverterTests.Models
                 properties.clearFlags.Values.ToArray(),
                 0u,
                 properties.practices.Values.SelectMany(
-                    practice => Th13PracticeTests.MakeByteArray(practice)).ToArray());
+                    practice => Th13PracticeTests.MakeByteArray(practice)).ToArray(),
+                new byte[0x40]);
 
         internal static byte[] MakeByteArray(in Properties properties)
             => TestUtils.MakeByteArray(
@@ -212,7 +213,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th16ClearDataTestInvalidSize() => TestUtils.Wrap(() =>
         {
             var properties = GetValidProperties();
-            ++properties.size;
+            --properties.size;
 
             var chapter = Th10ChapterWrapper<Th16Converter>.Create(MakeByteArray(properties));
             var clearData = new Th16ClearDataWrapper(chapter);

@@ -126,7 +126,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th128CardDataTestInvalidSize() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
-            ++properties.size;
+            --properties.size;
 
             var chapter = Th10ChapterWrapper<Th128Converter>.Create(MakeByteArray(properties));
             var clearData = new Th128CardDataWrapper(chapter);

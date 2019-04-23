@@ -237,7 +237,7 @@ namespace ThScoreFileConverterTests.Models
             => TestUtils.Wrap(() =>
             {
                 var properties = GetValidProperties<TCharaWithTotal, TStageProgress>(version, size, numCards);
-                ++properties.size;
+                --properties.size;
 
                 var chapter = Th10ChapterWrapper<TParent>.Create(
                     MakeByteArray<TParent, TCharaWithTotal, TStageProgress>(properties));

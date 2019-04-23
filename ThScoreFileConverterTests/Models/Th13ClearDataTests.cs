@@ -297,7 +297,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 var properties =
                     GetValidProperties<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(version, size, numCards);
-                ++properties.size;
+                --properties.size;
 
                 var chapter = Th10ChapterWrapper<TParent>.Create(
                     MakeByteArray<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(properties));
