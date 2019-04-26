@@ -5,6 +5,8 @@ configuration: Release
 environment:
   PYTHON: C:\Python36-x64
   VSINSTALLDIR: C:\Program Files (x86)\Microsoft Visual Studio\2017\Community
+  CODECOV_TOKEN:
+    secure: yXCs8FBlLFVrjJ3nOjqOVGDV892aCCsBvlT7yF6xEFKC1Opq2mJuOt0gR4A7xBkS
 install:
   - cmd: |
       curl -LO https://aka.ms/vs/15/release/vs_community.exe
@@ -26,6 +28,14 @@ after_build:
       xcopy ManualGenerator\_build\html publish\doc /e /i /q
       xcopy template publish\template /e /i /q
 
+before_test:
+  - ps: .\PrintTestEnvironment.ps1
+test_script:
+  - ps: |
+      & .\OpenCover.ps1 $env:CONFIGURATION coverage.xml
+      $codecov = (Resolve-Path .\packages\Codecov.*\tools\codecov.exe).ToString()
+      & $codecov -f coverage.xml -t $env:CODECOV_TOKEN
+
 artifacts:
   - path: publish
     name: ThScoreFileConverter
@@ -43,14 +53,4 @@ for:
     except:
       - master
   configuration: Debug
-  environment:
-    CODECOV_TOKEN:
-      secure: yXCs8FBlLFVrjJ3nOjqOVGDV892aCCsBvlT7yF6xEFKC1Opq2mJuOt0gR4A7xBkS
-  before_test:
-    - ps: .\PrintTestEnvironment.ps1
-  test_script:
-    - ps: |
-        & .\OpenCover.ps1 $env:CONFIGURATION coverage.xml
-        $codecov = (Resolve-Path .\packages\Codecov.*\tools\codecov.exe).ToString()
-        & $codecov -f coverage.xml -t $env:CODECOV_TOKEN
   deploy: off
