@@ -250,7 +250,7 @@ namespace ThScoreFileConverterTests.Models
 
             Assert.IsTrue(result);
             Assert.IsNotNull(str);
-            Assert.AreEqual(value, str, false, CultureInfo.CurrentCulture);
+            Assert.AreEqual(value, str, false, CultureInfo.InvariantCulture);
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
@@ -280,7 +280,7 @@ namespace ThScoreFileConverterTests.Models
 
             Assert.IsTrue(result);
             Assert.IsNotNull(str);
-            Assert.AreEqual(value, str, false, CultureInfo.CurrentCulture);
+            Assert.AreEqual(value, str, false, CultureInfo.InvariantCulture);
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
