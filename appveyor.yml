@@ -1,7 +1,9 @@
 version: '{build}'
 
 image: Visual Studio 2017
-configuration: Release
+configuration:
+  - Debug
+  - Release
 environment:
   PYTHON: C:\Python36-x64
   VSINSTALLDIR: C:\Program Files (x86)\Microsoft Visual Studio\2017\Community
@@ -49,8 +51,18 @@ deploy:
     appveyor_repo_tag: true
 
 for:
-- branches:
+-
+  branches:
     except:
       - master
-  configuration: Debug
   deploy: off
+-
+  matrix:
+    only:
+      - configuration: Debug
+  deploy: off
+-
+  matrix:
+    only:
+      - configuration: Release
+  test: off
