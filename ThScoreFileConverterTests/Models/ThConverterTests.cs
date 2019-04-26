@@ -31,7 +31,7 @@ namespace ThScoreFileConverterTests.Models
             converter.ConvertAllFinished +=
                 (sender, e) => Assert.Fail(nameof(converter.ConvertAllFinished) + ": " + TestUtils.Unreachable);
             converter.ExceptionOccurred +=
-                (sender, e) => Assert.Fail(nameof(converter.ExceptionOccurred) + ": " + TestUtils.Unreachable);
+                (sender, e) => Console.WriteLine(nameof(converter.ExceptionOccurred) + ": " + e.Exception.ToString());
 
             converter.Convert(null);
 
@@ -50,7 +50,7 @@ namespace ThScoreFileConverterTests.Models
             converter.ConvertAllFinished +=
                 (sender, e) => Assert.Fail(nameof(converter.ConvertAllFinished) + ": " + TestUtils.Unreachable);
             converter.ExceptionOccurred +=
-                (sender, e) => Assert.Fail(nameof(converter.ExceptionOccurred) + ": " + TestUtils.Unreachable);
+                (sender, e) => Console.WriteLine(nameof(converter.ExceptionOccurred) + ": " + e.Exception.ToString());
 
             converter.Convert(1);
 
@@ -69,7 +69,7 @@ namespace ThScoreFileConverterTests.Models
             converter.ConvertAllFinished +=
                 (sender, e) => Assert.Fail(nameof(converter.ConvertAllFinished) + ": " + TestUtils.Unreachable);
             converter.ExceptionOccurred +=
-                (sender, e) => Assert.Fail(nameof(converter.ExceptionOccurred) + ": " + TestUtils.Unreachable);
+                (sender, e) => Console.WriteLine(nameof(converter.ExceptionOccurred) + ": " + e.Exception.ToString());
 
             converter.Convert(new SettingsPerTitle());
 

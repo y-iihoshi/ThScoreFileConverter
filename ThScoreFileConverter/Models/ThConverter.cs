@@ -285,10 +285,6 @@ namespace ThScoreFileConverter.Models
         /// <param name="threadArg">An instance of the <see cref="SettingsPerTitle"/> class.</param>
         public void Convert(object threadArg)
         {
-#if DEBUG
-            using (var profiler = new Profiler("Convert"))
-                this.Convert(threadArg as SettingsPerTitle);
-#else
             try
             {
                 this.Convert(threadArg as SettingsPerTitle);
@@ -298,7 +294,6 @@ namespace ThScoreFileConverter.Models
                 this.OnExceptionOccurred(new ExceptionOccurredEventArgs(e));
                 throw;
             }
-#endif
         }
 
         /// <summary>
