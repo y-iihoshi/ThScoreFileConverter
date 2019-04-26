@@ -5,7 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverterTests.Models.Wrappers;
 
@@ -289,7 +288,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th155AllScoreDataReadObjectTestOTStringEmpty(int size, string value, string expected)
             => TestUtils.Wrap(() =>
             {
-                var bytes = (value != null) ? Encoding.Default.GetBytes(value) : new byte[0];
+                var bytes = (value != null) ? TestUtils.CP932Encoding.GetBytes(value) : new byte[0];
                 var result = Th155AllScoreDataReadObjectHelper(
                     TestUtils.MakeByteArray((int)SQ.OTString, size, bytes), out object obj);
                 var str = obj as string;
@@ -322,7 +321,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th155AllScoreDataReadObjectTestOTStringShortened(string value) => TestUtils.Wrap(() =>
         {
-            var bytes = Encoding.Default.GetBytes(value);
+            var bytes = TestUtils.CP932Encoding.GetBytes(value);
             Th155AllScoreDataReadObjectHelper(
                 TestUtils.MakeByteArray((int)SQ.OTString, bytes.Length + 1, bytes), out object obj);
 
@@ -335,7 +334,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow("博麗 霊夢")]
         public void Th155AllScoreDataReadObjectTestOTStringExceeded(string value) => TestUtils.Wrap(() =>
         {
-            var bytes = Encoding.Default.GetBytes(value).Concat(new byte[1] { 1 }).ToArray();
+            var bytes = TestUtils.CP932Encoding.GetBytes(value).Concat(new byte[1] { 1 }).ToArray();
             var result = Th155AllScoreDataReadObjectHelper(
                 TestUtils.MakeByteArray((int)SQ.OTString, bytes.Length - 1, bytes), out object obj);
             var str = obj as string;

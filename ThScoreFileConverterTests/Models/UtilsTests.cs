@@ -3,7 +3,7 @@ using System;
 using System.Globalization;
 using System.Text;
 using ThScoreFileConverter;
-using ThScoreFileConverter.Models;
+using Utils = ThScoreFileConverter.Models.Utils;
 
 namespace ThScoreFileConverterTests.Models
 {

@@ -110,6 +110,7 @@
     <Compile Include="Commands\CloseWindowCommand.cs" />
     <Compile Include="Models\BinaryReaderExtensions.cs" />
     <Compile Include="Models\BitReader.cs" />
+    <Compile Include="Models\Encoding.cs" />
     <Compile Include="Models\EnumAltNameAttribute.cs" />
     <Compile Include="Models\EnumExtensions.cs" />
     <Compile Include="Models\EnumShortNameParser.cs" />

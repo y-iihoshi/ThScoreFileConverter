@@ -16,6 +16,8 @@ namespace ThScoreFileConverterTests.Models
 
         public static Random Random => new Random();
 
+        public static Encoding CP932Encoding => Encoding.GetEncoding(932);
+
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public static byte[] MakeByteArray(params object[] args)
         {
@@ -140,7 +142,7 @@ namespace ThScoreFileConverterTests.Models
                         break;
                     case string stringValue:
                         {
-                            var bytes = Encoding.Default.GetBytes(stringValue);
+                            var bytes = CP932Encoding.GetBytes(stringValue);
                             byteArray = byteArray.Concat(MakeByteArray((int)Squirrel.OTString, bytes.Length, bytes));
                         }
                         break;

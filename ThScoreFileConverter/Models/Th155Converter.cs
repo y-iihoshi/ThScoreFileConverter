@@ -16,7 +16,6 @@ namespace ThScoreFileConverter.Models
     using System.IO;
     using System.IO.Compression;
     using System.Linq;
-    using System.Text;
     using System.Text.RegularExpressions;
 
     internal class Th155Converter : ThConverter
@@ -248,7 +247,7 @@ namespace ThScoreFileConverter.Models
                 reader =>
                 {
                     var size = reader.ReadInt32();
-                    return (size > 0) ? Encoding.Default.GetString(reader.ReadExactBytes(size)) : string.Empty;
+                    return (size > 0) ? Encoding.CP932.GetString(reader.ReadExactBytes(size)) : string.Empty;
                 };
 
             private static readonly Func<BinaryReader, object> ArrayReader =

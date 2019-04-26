@@ -10,7 +10,6 @@ namespace ThScoreFileConverter.Models
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
-    using System.Text;
 
     /// <summary>
     /// Provides static methods for convenience.
@@ -167,10 +166,11 @@ namespace ThScoreFileConverter.Models
         /// </summary>
         /// <param name="codePage">The code page identifier of the preferred encoding.</param>
         /// <returns>The <c>Encoding</c> associated with <paramref name="codePage"/>.</returns>
-        public static Encoding GetEncoding(int codePage)
+        public static System.Text.Encoding GetEncoding(int codePage)
         {
             // To prevent BOM output for UTF-8
-            return (codePage == 65001) ? new UTF8Encoding(false) : Encoding.GetEncoding(codePage);
+            return (codePage == 65001)
+                ? new System.Text.UTF8Encoding(false) : System.Text.Encoding.GetEncoding(codePage);
         }
     }
 }
