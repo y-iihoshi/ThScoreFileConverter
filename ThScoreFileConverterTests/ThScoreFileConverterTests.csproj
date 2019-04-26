@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="Models\BinaryReaderExtensionsTests.cs" />
     <Compile Include="Models\BitReaderTests.cs" />
+    <Compile Include="Models\EncodingTests.cs" />
     <Compile Include="Models\EnumExtensionsTests.cs" />
     <Compile Include="Models\EnumShortNameParserTests.cs" />
     <Compile Include="Models\ExceptionOccurredEventArgsTests.cs" />
