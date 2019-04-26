@@ -903,12 +903,19 @@ namespace ThScoreFileConverter.Models
                 this.Name = new string(reader.ReadExactBytes(8).Select(ch => CharTable[ch]).ToArray());
 
                 this.Month = reader.ReadByte();
-                if ((this.Month <= 0) || (this.Month > 12))
-                    throw new InvalidDataException("Month is out of range");
-
                 this.Day = reader.ReadByte();
-                if ((this.Day <= 0) || (this.Day > DateTime.DaysInMonth(2000, this.Month)))
-                    throw new InvalidDataException("Day is out of range");
+                if ((this.Month == 0) && (this.Day == 0))
+                {
+                    // It's allowed.
+                }
+                else
+                {
+                    if ((this.Month <= 0) || (this.Month > 12))
+                        throw new InvalidDataException("Month is out of range");
+
+                    if ((this.Day <= 0) || (this.Day > DateTime.DaysInMonth(2000, this.Month)))
+                        throw new InvalidDataException("Day is out of range");
+                }
 
                 reader.ReadUInt16();    // always 0x0000?
                 this.Score = reader.ReadInt32();
