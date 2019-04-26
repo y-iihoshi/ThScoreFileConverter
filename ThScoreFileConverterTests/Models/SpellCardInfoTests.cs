@@ -102,5 +102,23 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(Level.Hard, info.Level);
             CollectionAssert.AreEqual(new Level[]{ Level.Hard }, info.Levels);
         }
+
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "info")]
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void SpellCardInfoTestZeroLevels()
+        {
+            var info = new CardInfo(1, "霜符「フロストコラムス」", Stage.St1);
+            Assert.Fail(TestUtils.Unreachable);
+        }
+
+        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "info")]
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void SpellCardInfoTestNullLevels()
+        {
+            var info = new CardInfo(1, "霜符「フロストコラムス」", Stage.St1, null);
+            Assert.Fail(TestUtils.Unreachable);
+        }
     }
 }
