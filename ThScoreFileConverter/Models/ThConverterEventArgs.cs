@@ -16,6 +16,16 @@ namespace ThScoreFileConverter.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="ThConverterEventArgs"/> class.
         /// </summary>
+        public ThConverterEventArgs()
+        {
+            this.Path = string.Empty;
+            this.Current = 0;
+            this.Total = 0;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ThConverterEventArgs"/> class with the specified parameters.
+        /// </summary>
         /// <param name="path">The path of the last output file.</param>
         /// <param name="current">The number of the files that have been output.</param>
         /// <param name="total">The total number of the files.</param>

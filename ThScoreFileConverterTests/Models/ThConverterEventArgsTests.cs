@@ -24,6 +24,16 @@ namespace ThScoreFileConverterTests.Models
             StringAssert.Contains(message, "5");
         }
 
+        [TestMethod]
+        public void ThConverterEventArgsTestDefault()
+        {
+            var args = new ThConverterEventArgs();
+
+            Assert.AreEqual(string.Empty, args.Path);
+            Assert.AreEqual(default, args.Current);
+            Assert.AreEqual(default, args.Total);
+        }
+
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "args")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]

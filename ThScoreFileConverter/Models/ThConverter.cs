@@ -451,7 +451,7 @@ namespace ThScoreFileConverter.Models
                     }
                 }
 
-                this.OnConvertAllFinished(new ThConverterEventArgs(string.Empty, 0, 0));
+                this.OnConvertAllFinished(new ThConverterEventArgs());
             }
         }
 
