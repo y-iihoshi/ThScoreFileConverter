@@ -33,7 +33,7 @@ namespace ThScoreFileConverterTests.Models
             version = 1,
             checksum = 0u,
             size = 0x224,
-            lastName = Encoding.Default.GetBytes("Player1     \0\0"),
+            lastName = TestUtils.CP932Encoding.GetBytes("Player1     \0\0"),
             bgmFlags = TestUtils.MakeRandomArray<byte>(9),
             totalPlayTime = 12345678,
             lastMainItem = Th143Converter.ItemWithTotal.Camera,

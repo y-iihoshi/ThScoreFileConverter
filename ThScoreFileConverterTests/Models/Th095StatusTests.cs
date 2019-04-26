@@ -26,7 +26,7 @@ namespace ThScoreFileConverterTests.Models
             version = 0,
             size = 0x458,
             checksum = 0u,
-            lastName = Encoding.Default.GetBytes("Player1\0\0\0")
+            lastName = TestUtils.CP932Encoding.GetBytes("Player1\0\0\0")
         };
 
         internal static byte[] MakeData(in Properties properties)

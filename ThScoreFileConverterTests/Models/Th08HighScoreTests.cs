@@ -47,8 +47,8 @@ namespace ThScoreFileConverterTests.Models
             chara = Th08Converter.Chara.MarisaAlice,
             level = ThConverter.Level.Hard,
             stageProgress = Th08Converter.StageProgress.St3,
-            name = Encoding.Default.GetBytes("Player1\0\0"),
-            date = Encoding.Default.GetBytes("01/23\0"),
+            name = TestUtils.CP932Encoding.GetBytes("Player1\0\0"),
+            date = TestUtils.CP932Encoding.GetBytes("01/23\0"),
             continueCount = 2,
             playerNum = 5,
             playTime = 987654u,
@@ -155,8 +155,8 @@ namespace ThScoreFileConverterTests.Models
             var highScore = new Th08HighScoreWrapper(score);
 
             Assert.AreEqual(score, highScore.Score);
-            CollectionAssert.AreEqual(Encoding.Default.GetBytes(name), highScore.Name.ToArray());
-            CollectionAssert.AreEqual(Encoding.Default.GetBytes(date), highScore.Date.ToArray());
+            CollectionAssert.AreEqual(TestUtils.CP932Encoding.GetBytes(name), highScore.Name.ToArray());
+            CollectionAssert.AreEqual(TestUtils.CP932Encoding.GetBytes(date), highScore.Date.ToArray());
             CollectionAssert.AreEqual(cardFlags, highScore.CardFlags.Values.ToArray());
         });
 
@@ -171,8 +171,8 @@ namespace ThScoreFileConverterTests.Models
             var highScore = new Th08HighScoreWrapper(score);
 
             Assert.AreEqual(score, highScore.Score);
-            CollectionAssert.AreEqual(Encoding.Default.GetBytes(name), highScore.Name.ToArray());
-            CollectionAssert.AreEqual(Encoding.Default.GetBytes(date), highScore.Date.ToArray());
+            CollectionAssert.AreEqual(TestUtils.CP932Encoding.GetBytes(name), highScore.Name.ToArray());
+            CollectionAssert.AreEqual(TestUtils.CP932Encoding.GetBytes(date), highScore.Date.ToArray());
             CollectionAssert.AreEqual(cardFlags, highScore.CardFlags.Values.ToArray());
         });
 

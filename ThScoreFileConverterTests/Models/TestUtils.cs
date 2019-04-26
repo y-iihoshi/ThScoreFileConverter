@@ -30,7 +30,7 @@ namespace ThScoreFileConverterTests.Models
             try
             {
                 stream = new MemoryStream();
-                using (var writer = new BinaryWriter(stream, Encoding.Default))
+                using (var writer = new BinaryWriter(stream, CP932Encoding))
                 {
                     stream = null;
 

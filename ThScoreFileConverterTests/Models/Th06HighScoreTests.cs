@@ -33,7 +33,7 @@ namespace ThScoreFileConverterTests.Models
             chara = Th06Converter.Chara.ReimuB,
             level = ThConverter.Level.Hard,
             stageProgress = Th06Converter.StageProgress.St3,
-            name = Encoding.Default.GetBytes("Player1\0\0")
+            name = TestUtils.CP932Encoding.GetBytes("Player1\0\0")
         };
 
         internal static byte[] MakeData(in Properties properties)
@@ -93,7 +93,7 @@ namespace ThScoreFileConverterTests.Models
             var highScore = new Th06HighScoreWrapper(score);
 
             Assert.AreEqual(score, highScore.Score);
-            CollectionAssert.AreEqual(Encoding.Default.GetBytes(name), highScore.Name.ToArray());
+            CollectionAssert.AreEqual(TestUtils.CP932Encoding.GetBytes(name), highScore.Name.ToArray());
         });
 
         [TestMethod]
@@ -105,7 +105,7 @@ namespace ThScoreFileConverterTests.Models
             var highScore = new Th06HighScoreWrapper(score);
 
             Assert.AreEqual(score, highScore.Score);
-            CollectionAssert.AreEqual(Encoding.Default.GetBytes(name), highScore.Name.ToArray());
+            CollectionAssert.AreEqual(TestUtils.CP932Encoding.GetBytes(name), highScore.Name.ToArray());
         });
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]

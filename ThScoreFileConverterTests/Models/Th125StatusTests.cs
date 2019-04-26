@@ -28,7 +28,7 @@ namespace ThScoreFileConverterTests.Models
             version = 1,
             size = 0x474,
             checksum = 0u,
-            lastName = Encoding.Default.GetBytes("Player1\0\0\0"),
+            lastName = TestUtils.CP932Encoding.GetBytes("Player1\0\0\0"),
             bgmFlags = TestUtils.MakeRandomArray<byte>(6),
             totalPlayTime = 12345678
         };

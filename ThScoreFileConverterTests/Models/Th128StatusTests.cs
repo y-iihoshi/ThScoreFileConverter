@@ -28,7 +28,7 @@ namespace ThScoreFileConverterTests.Models
             version = version,
             checksum = 0u,
             size = size,
-            lastName = Encoding.Default.GetBytes("Player1\0\0\0"),
+            lastName = TestUtils.CP932Encoding.GetBytes("Player1\0\0\0"),
             bgmFlags = TestUtils.MakeRandomArray<byte>(numBgms),
             totalPlayTime = 12345678
         };
@@ -37,7 +37,7 @@ namespace ThScoreFileConverterTests.Models
         {
             // NOTE: header == (signature, version, size, checksum)
             var headerSize =
-                Encoding.Default.GetByteCount(properties.signature) + sizeof(ushort) + sizeof(uint) + sizeof(int);
+                TestUtils.CP932Encoding.GetByteCount(properties.signature) + sizeof(ushort) + sizeof(uint) + sizeof(int);
             // NOTE: data == (lastName, gap1, bgms, gap2, totalPlayTime, gap3)
             var dataSize = properties.size - headerSize;
             var gap3Size =

@@ -37,8 +37,8 @@ namespace ThScoreFileConverterTests.Models
             chara = Th07Converter.Chara.ReimuB,
             level = Th07Converter.Level.Hard,
             stageProgress = Th07Converter.StageProgress.St3,
-            name = Encoding.Default.GetBytes("Player1\0\0"),
-            date = Encoding.Default.GetBytes("01/23\0"),
+            name = TestUtils.CP932Encoding.GetBytes("Player1\0\0"),
+            date = TestUtils.CP932Encoding.GetBytes("01/23\0"),
             continueCount = 2
         };
 
@@ -106,8 +106,8 @@ namespace ThScoreFileConverterTests.Models
             var highScore = new Th07HighScoreWrapper(score);
 
             Assert.AreEqual(score, highScore.Score);
-            CollectionAssert.AreEqual(Encoding.Default.GetBytes(name), highScore.Name.ToArray());
-            CollectionAssert.AreEqual(Encoding.Default.GetBytes(date), highScore.Date.ToArray());
+            CollectionAssert.AreEqual(TestUtils.CP932Encoding.GetBytes(name), highScore.Name.ToArray());
+            CollectionAssert.AreEqual(TestUtils.CP932Encoding.GetBytes(date), highScore.Date.ToArray());
         });
 
         [TestMethod]
@@ -120,8 +120,8 @@ namespace ThScoreFileConverterTests.Models
             var highScore = new Th07HighScoreWrapper(score);
 
             Assert.AreEqual(score, highScore.Score);
-            CollectionAssert.AreEqual(Encoding.Default.GetBytes(name), highScore.Name.ToArray());
-            CollectionAssert.AreEqual(Encoding.Default.GetBytes(date), highScore.Date.ToArray());
+            CollectionAssert.AreEqual(TestUtils.CP932Encoding.GetBytes(name), highScore.Name.ToArray());
+            CollectionAssert.AreEqual(TestUtils.CP932Encoding.GetBytes(date), highScore.Date.ToArray());
         });
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]

@@ -35,8 +35,8 @@ namespace ThScoreFileConverterTests.Models
             chara = Th09Converter.Chara.Marisa,
             level = ThConverter.Level.Hard,
             rank = 987,
-            name = Encoding.Default.GetBytes("Player1\0\0"),
-            date = Encoding.Default.GetBytes("06/01/23\0"),
+            name = TestUtils.CP932Encoding.GetBytes("Player1\0\0"),
+            date = TestUtils.CP932Encoding.GetBytes("06/01/23\0"),
             continueCount = 2,
         };
 
