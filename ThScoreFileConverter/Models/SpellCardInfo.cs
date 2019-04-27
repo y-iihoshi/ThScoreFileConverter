@@ -21,7 +21,7 @@ namespace ThScoreFileConverter.Models
         /// <summary>
         /// Indicates the level(s) which the current spell card is used.
         /// </summary>
-        private TLevel[] levels;
+        private readonly TLevel[] levels;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SpellCardInfo{TStage,TLevel}"/> class.

@@ -22,17 +22,17 @@ namespace ThScoreFileConverter.Models
         /// <summary>
         /// The instance of the <see cref="Stopwatch"/> class for measuring the processing time.
         /// </summary>
-        private Stopwatch watch;
+        private readonly Stopwatch watch;
 
         /// <summary>
         /// The delegate of the process called before the measuring.
         /// </summary>
-        private Action preprocess;
+        private readonly Action preprocess;
 
         /// <summary>
         /// The delegate of the process called after the measuring.
         /// </summary>
-        private Action<TimeSpan> postprocess;
+        private readonly Action<TimeSpan> postprocess;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Profiler"/> class.

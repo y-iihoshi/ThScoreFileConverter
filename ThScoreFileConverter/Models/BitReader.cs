@@ -17,7 +17,7 @@ namespace ThScoreFileConverter.Models
         /// <summary>
         /// The stream to read.
         /// </summary>
-        private Stream stream;
+        private readonly Stream stream;
 
         /// <summary>
         /// The flag that represents whether <see cref="Dispose(bool)"/> has been called.
