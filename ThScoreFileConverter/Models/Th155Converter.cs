@@ -424,6 +424,7 @@ namespace ThScoreFileConverter.Models
             private static Story ParseStory(object obj)
             {
                 var story = default(Story);
+
                 if (obj is Dictionary<object, object> dict)
                 {
                     foreach (var pair in dict)
@@ -443,6 +444,7 @@ namespace ThScoreFileConverter.Models
                         }
                     }
                 }
+
                 return story;
             }
 
