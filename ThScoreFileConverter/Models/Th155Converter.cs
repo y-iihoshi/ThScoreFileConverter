@@ -522,14 +522,6 @@ namespace ThScoreFileConverter.Models
                 where T : struct
                 => (this.allData.TryGetValue(key, out object value) && (value is T)) ? (T)value : default;
 
-            private class OptionalMark
-            {
-            }
-
-            private class EndMark
-            {
-            }
-
             public struct Story
             {
                 public int stage;
@@ -537,6 +529,14 @@ namespace ThScoreFileConverter.Models
                 public bool available;
                 public int overDrive;
                 public int stageOverDrive;
+            }
+
+            private class OptionalMark
+            {
+            }
+
+            private class EndMark
+            {
             }
         }
     }
