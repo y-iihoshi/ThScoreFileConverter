@@ -443,7 +443,7 @@ namespace ThScoreFileConverter.Models
                 var key = new CharaLevelPair(score.Chara, score.Level);
                 if (!this.Rankings.ContainsKey(key))
                     this.Rankings.Add(key, new HighScore[5]);
-                if ((0 <= score.Rank) && (score.Rank < 5))
+                if ((score.Rank >= 0) && (score.Rank < 5))
                     this.Rankings[key][score.Rank] = score;
             }
 

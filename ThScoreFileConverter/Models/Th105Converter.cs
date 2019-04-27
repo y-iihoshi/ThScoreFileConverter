@@ -814,7 +814,7 @@ namespace ThScoreFileConverter.Models
                     {
                         var numLevels = Enum.GetValues(typeof(Level)).Length;
                         var index = (number - 1) / numLevels;
-                        if ((0 <= index) && (index < EnemyCardIdTable[chara].Count()))
+                        if ((index >= 0) && (index < EnemyCardIdTable[chara].Count()))
                         {
                             var enemyCardIdPair = EnemyCardIdTable[chara].ElementAt(index);
                             var key = new CharaCardIdPair(
@@ -855,7 +855,7 @@ namespace ThScoreFileConverter.Models
 
                     var numLevels = Enum.GetValues(typeof(Level)).Length;
                     var index = (number - 1) / numLevels;
-                    if ((0 <= index) && (index < EnemyCardIdTable[chara].Count()))
+                    if ((index >= 0) && (index < EnemyCardIdTable[chara].Count()))
                     {
                         var level = (Level)((number - 1) % numLevels);
                         var enemyCardIdPair = EnemyCardIdTable[chara].ElementAt(index);

@@ -573,7 +573,7 @@ namespace ThScoreFileConverter.Models
 
                     if (type == 4)
                     {
-                        if ((0 < number) && (number <= CardIdTable[chara].Count()))
+                        if ((number > 0) && (number <= CardIdTable[chara].Count()))
                             return parent.allScoreData.ClearData[chara].Values
                                 .Any(data => data.CardTrulyGot[number - 1] != 0x00) ? "★" : string.Empty;
                         else
@@ -626,7 +626,7 @@ namespace ThScoreFileConverter.Models
                     if (chara == Chara.Meiling)
                         return match.ToString();
 
-                    if ((0 < number) && (number <= CardIdTable[chara].Count()))
+                    if ((number > 0) && (number <= CardIdTable[chara].Count()))
                     {
                         if (hideUntriedCards)
                         {

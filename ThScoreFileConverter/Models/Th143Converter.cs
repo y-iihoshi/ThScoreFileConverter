@@ -505,7 +505,7 @@ namespace ThScoreFileConverter.Models
                         return match.ToString();
 
                     var score = parent.allScoreData.Scores.Find(elem =>
-                        (elem != null) && ((0 < elem.Number) && (elem.Number <= SpellCards.Count)) &&
+                        (elem != null) && ((elem.Number > 0) && (elem.Number <= SpellCards.Count)) &&
                         SpellCards.ElementAt(elem.Number - 1).Key.Equals(key));
 
                     switch (type)
@@ -600,7 +600,7 @@ namespace ThScoreFileConverter.Models
                     if (hideUntriedCards)
                     {
                         var score = parent.allScoreData.Scores.Find(elem =>
-                            (elem != null) && ((0 < elem.Number) && (elem.Number <= SpellCards.Count)) &&
+                            (elem != null) && ((elem.Number > 0) && (elem.Number <= SpellCards.Count)) &&
                             SpellCards.ElementAt(elem.Number - 1).Key.Equals(key));
                         if ((score == null) || (score.ChallengeCounts[ItemWithTotal.Total] <= 0))
                             return "??????????";
@@ -639,7 +639,7 @@ namespace ThScoreFileConverter.Models
                 {
                     var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
 
-                    if ((0 < number) && (number <= Nicknames.Count))
+                    if ((number > 0) && (number <= Nicknames.Count))
                         return (parent.allScoreData.Status.NicknameFlags[number] > 0)
                             ? Nicknames[number - 1] : "??????????";
                     else
