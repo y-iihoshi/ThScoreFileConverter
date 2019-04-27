@@ -320,28 +320,29 @@ namespace ThScoreFileConverter.Actions
 
             try
             {
-                dialog = new WinForms.OpenFileDialog();
-
-                dialog.AddExtension = this.AddExtension;
-                dialog.AutoUpgradeEnabled = this.AutoUpgradeEnabled;
-                dialog.CheckFileExists = this.CheckFileExists;
-                dialog.CheckPathExists = this.CheckPathExists;
-                dialog.DefaultExt = this.DefaultExt;
-                dialog.DereferenceLinks = this.DereferenceLinks;
-                dialog.FileName = this.FileName;
-                dialog.Filter = this.Filter;
-                dialog.FilterIndex = this.FilterIndex;
-                dialog.InitialDirectory = this.InitialDirectory;
-                dialog.Multiselect = this.Multiselect;
-                dialog.ReadOnlyChecked = this.ReadOnlyChecked;
-                dialog.RestoreDirectory = this.RestoreDirectory;
-                dialog.ShowHelp = this.ShowHelp;
-                dialog.ShowReadOnly = this.ShowReadOnly;
-                dialog.Site = this.Site;
-                dialog.SupportMultiDottedExtensions = this.SupportMultiDottedExtensions;
-                dialog.Tag = this.Tag;
-                dialog.Title = this.Title;
-                dialog.ValidateNames = this.ValidateNames;
+                dialog = new WinForms.OpenFileDialog
+                {
+                    AddExtension = this.AddExtension,
+                    AutoUpgradeEnabled = this.AutoUpgradeEnabled,
+                    CheckFileExists = this.CheckFileExists,
+                    CheckPathExists = this.CheckPathExists,
+                    DefaultExt = this.DefaultExt,
+                    DereferenceLinks = this.DereferenceLinks,
+                    FileName = this.FileName,
+                    Filter = this.Filter,
+                    FilterIndex = this.FilterIndex,
+                    InitialDirectory = this.InitialDirectory,
+                    Multiselect = this.Multiselect,
+                    ReadOnlyChecked = this.ReadOnlyChecked,
+                    RestoreDirectory = this.RestoreDirectory,
+                    ShowHelp = this.ShowHelp,
+                    ShowReadOnly = this.ShowReadOnly,
+                    Site = this.Site,
+                    SupportMultiDottedExtensions = this.SupportMultiDottedExtensions,
+                    Tag = this.Tag,
+                    Title = this.Title,
+                    ValidateNames = this.ValidateNames
+                };
 
                 var dialogResult = dialog.ShowDialog(new Win32Window(this.Owner));
 

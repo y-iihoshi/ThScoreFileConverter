@@ -158,12 +158,16 @@ namespace MvvmDialogBehavior
         {
             _Dialog = new Window();
 
-            Binding styleBinding = new Binding("Style");
-            styleBinding.Source = this;
+            Binding styleBinding = new Binding("Style")
+            {
+                Source = this
+            };
             _Dialog.SetBinding(FrameworkElement.StyleProperty, styleBinding);
 
-            Binding contentTemplateBinding = new Binding("ContentTemplate");
-            contentTemplateBinding.Source = this;
+            Binding contentTemplateBinding = new Binding("ContentTemplate")
+            {
+                Source = this
+            };
             _Dialog.SetBinding(ContentControl.ContentTemplateProperty, contentTemplateBinding);
 
             if (Resources.Count > 0)
@@ -233,8 +237,10 @@ namespace MvvmDialogBehavior
         {
             _Dialog = Window.GetWindow(this.AssociatedObject);
 
-            Binding binding = new Binding("Style");
-            binding.Source = this;
+            Binding binding = new Binding("Style")
+            {
+                Source = this
+            };
             _Dialog.SetBinding(Window.StyleProperty, binding);
 
             this.AssociatedObject.Loaded -= OnLoaded;

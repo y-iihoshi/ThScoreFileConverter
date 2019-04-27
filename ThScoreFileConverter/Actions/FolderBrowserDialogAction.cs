@@ -110,14 +110,15 @@ namespace ThScoreFileConverter.Actions
 
             try
             {
-                dialog = new WinForms.FolderBrowserDialog();
-
-                dialog.Description = this.Description;
-                dialog.RootFolder = this.RootFolder;
-                dialog.SelectedPath = this.SelectedPath;
-                dialog.ShowNewFolderButton = this.ShowNewFolderButton;
-                dialog.Site = this.Site;
-                dialog.Tag = this.Tag;
+                dialog = new WinForms.FolderBrowserDialog
+                {
+                    Description = this.Description,
+                    RootFolder = this.RootFolder,
+                    SelectedPath = this.SelectedPath,
+                    ShowNewFolderButton = this.ShowNewFolderButton,
+                    Site = this.Site,
+                    Tag = this.Tag
+                };
 
                 var dialogResult = dialog.ShowDialog(new Win32Window(this.Owner));
 

@@ -291,25 +291,26 @@ namespace ThScoreFileConverter.Actions
 
             try
             {
-                dialog = new WinForms.FontDialog();
-
-                dialog.AllowScriptChange = this.AllowScriptChange;
-                dialog.AllowSimulations = this.AllowSimulations;
-                dialog.AllowVectorFonts = this.AllowVectorFonts;
-                dialog.AllowVerticalFonts = this.AllowVerticalFonts;
-                dialog.Color = this.Color;
-                dialog.FixedPitchOnly = this.FixedPitchOnly;
-                dialog.Font = this.Font;
-                dialog.FontMustExist = this.FontMustExist;
-                dialog.MaxSize = this.MaxSize;
-                dialog.MinSize = this.MinSize;
-                dialog.ScriptsOnly = this.ScriptsOnly;
-                dialog.ShowApply = this.ShowApply;
-                dialog.ShowColor = this.ShowColor;
-                dialog.ShowEffects = this.ShowEffects;
-                dialog.ShowHelp = this.ShowHelp;
-                dialog.Site = this.Site;
-                dialog.Tag = this.Tag;
+                dialog = new WinForms.FontDialog
+                {
+                    AllowScriptChange = this.AllowScriptChange,
+                    AllowSimulations = this.AllowSimulations,
+                    AllowVectorFonts = this.AllowVectorFonts,
+                    AllowVerticalFonts = this.AllowVerticalFonts,
+                    Color = this.Color,
+                    FixedPitchOnly = this.FixedPitchOnly,
+                    Font = this.Font,
+                    FontMustExist = this.FontMustExist,
+                    MaxSize = this.MaxSize,
+                    MinSize = this.MinSize,
+                    ScriptsOnly = this.ScriptsOnly,
+                    ShowApply = this.ShowApply,
+                    ShowColor = this.ShowColor,
+                    ShowEffects = this.ShowEffects,
+                    ShowHelp = this.ShowHelp,
+                    Site = this.Site,
+                    Tag = this.Tag
+                };
 
                 if (this.ShowApply && (this.ApplyCommand != null))
                 {
