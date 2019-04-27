@@ -49,7 +49,7 @@ namespace ThScoreFileConverter.Models
                 { 17, "「龍星」" },
                 { 18, "「制御棒」" },
                 { 19, "「三粒の天滴」" },
-                { 20, "「ナマズの大地震」" }
+                { 20, "「ナマズの大地震」" },
             };
 
         // Thanks to th3_5154.txt, th123_ai, www.toho-motoneta.net and en.touhouwiki.net
@@ -595,7 +595,7 @@ namespace ThScoreFileConverter.Models
                 { new CharaCardIdPair(Chara.Oonamazu, 1), "ナマズ「液状化現象で大地も泥のようじゃ！」" },
                 { new CharaCardIdPair(Chara.Oonamazu, 2), "ナマズ「発電だって頑張っちゃうぞ？」" },
                 { new CharaCardIdPair(Chara.Oonamazu, 3), "ナマズ「オール電化でエコロジーじゃ！」" },
-                { new CharaCardIdPair(Chara.Oonamazu, 4), "大ナマズ「これで浮き世もおしまいじゃあ！」" }
+                { new CharaCardIdPair(Chara.Oonamazu, 4), "大ナマズ「これで浮き世もおしまいじゃあ！」" },
             };
 
         private static readonly Dictionary<Chara, Dictionary<CardType, int[]>> CardOrderTable =
@@ -612,7 +612,7 @@ namespace ThScoreFileConverter.Models
                         {
                             CardType.Spell,
                             new int[] { 208, 200, 204, 209, 207, 214, 206, 210, 201, 219 }
-                        }
+                        },
                     }
                 },
                 {
@@ -626,7 +626,7 @@ namespace ThScoreFileConverter.Models
                         {
                             CardType.Spell,
                             new int[] { 208, 205, 211, 215, 200, 206, 209, 212, 204, 214, 202, 203, 207, 219 }
-                        }
+                        },
                     }
                 },
                 {
@@ -640,7 +640,7 @@ namespace ThScoreFileConverter.Models
                         {
                             CardType.Spell,
                             new int[] { 200, 206, 207, 201, 202, 208, 211, 212, 203, 205, 209, 210, 204 }
-                        }
+                        },
                     }
                 },
                 {
@@ -654,7 +654,7 @@ namespace ThScoreFileConverter.Models
                         {
                             CardType.Spell,
                             new int[] { 200, 201, 202, 206, 209, 203, 208, 204, 205, 207, 210, 211 }
-                        }
+                        },
                     }
                 },
                 {
@@ -668,7 +668,7 @@ namespace ThScoreFileConverter.Models
                         {
                             CardType.Spell,
                             new int[] { 201, 202, 200, 206, 207, 210, 211, 204, 212, 203, 205, 213 }
-                        }
+                        },
                     }
                 },
                 {
@@ -682,7 +682,7 @@ namespace ThScoreFileConverter.Models
                         {
                             CardType.Spell,
                             new int[] { 200, 202, 201, 206, 212, 204, 207, 203, 205, 208 }
-                        }
+                        },
                     }
                 },
                 {
@@ -696,7 +696,7 @@ namespace ThScoreFileConverter.Models
                         {
                             CardType.Spell,
                             new int[] { 201, 202, 200, 206, 207, 204, 208, 209, 203, 205 }
-                        }
+                        },
                     }
                 },
                 {
@@ -710,7 +710,7 @@ namespace ThScoreFileConverter.Models
                         {
                             CardType.Spell,
                             new int[] { 201, 200, 202, 206, 208, 219, 203, 205, 207, 204, 209 }
-                        }
+                        },
                     }
                 },
                 {
@@ -724,7 +724,7 @@ namespace ThScoreFileConverter.Models
                         {
                             CardType.Spell,
                             new int[] { 202, 204, 207, 200, 201, 205, 206, 203, 208, 215 }
-                        }
+                        },
                     }
                 },
                 {
@@ -738,7 +738,7 @@ namespace ThScoreFileConverter.Models
                         {
                             CardType.Spell,
                             new int[] { 206, 200, 201, 202, 212, 204, 205, 207, 203, 208 }
-                        }
+                        },
                     }
                 },
                 {
@@ -752,7 +752,7 @@ namespace ThScoreFileConverter.Models
                         {
                             CardType.Spell,
                             new int[] { 200, 206, 208, 211, 202, 203, 207, 209, 210, 204, 205 }
-                        }
+                        },
                     }
                 },
                 {
@@ -766,7 +766,7 @@ namespace ThScoreFileConverter.Models
                         {
                             CardType.Spell,
                             new int[] { 211, 205, 207, 200, 203, 212, 202, 208, 201, 206 }
-                        }
+                        },
                     }
                 },
                 {
@@ -780,7 +780,7 @@ namespace ThScoreFileConverter.Models
                         {
                             CardType.Spell,
                             new int[] { 200, 202, 203, 205, 211, 206, 207, 201, 204 }
-                        }
+                        },
                     }
                 },
                 {
@@ -794,7 +794,7 @@ namespace ThScoreFileConverter.Models
                         {
                             CardType.Spell,
                             new int[] { 200, 208, 206, 201, 202, 203, 209, 207, 211, 210 }
-                        }
+                        },
                     }
                 },
                 {
@@ -808,7 +808,7 @@ namespace ThScoreFileConverter.Models
                         {
                             CardType.Spell,
                             new int[] { 200, 201, 202, 208, 209, 204, 206, 203, 205, 207 }
-                        }
+                        },
                     }
                 },
                 {
@@ -822,7 +822,7 @@ namespace ThScoreFileConverter.Models
                         {
                             CardType.Spell,
                             new int[] { 200, 201, 203, 204, 206, 202, 207, 205, 210 }
-                        }
+                        },
                     }
                 },
                 {
@@ -836,7 +836,7 @@ namespace ThScoreFileConverter.Models
                         {
                             CardType.Spell,
                             new int[] { 200, 205, 202, 203, 207, 210, 213, 201, 206, 204, 208 }
-                        }
+                        },
                     }
                 },
                 {
@@ -850,7 +850,7 @@ namespace ThScoreFileConverter.Models
                         {
                             CardType.Spell,
                             new int[] { 200, 206, 202, 204, 207, 201, 208, 211, 203, 205, 209 }
-                        }
+                        },
                     }
                 },
                 {
@@ -864,7 +864,7 @@ namespace ThScoreFileConverter.Models
                         {
                             CardType.Spell,
                             new int[] { 206, 211, 213, 200, 203, 205, 208, 204, 207, 209, 210, 212, 201, 214 }
-                        }
+                        },
                     }
                 },
                 {
@@ -878,9 +878,9 @@ namespace ThScoreFileConverter.Models
                         {
                             CardType.Spell,
                             new int[] { 201, 204, 200, 202, 203, 205, 206, 207, 209, 212, 208 }
-                        }
+                        },
                     }
-                }
+                },
             };
 
         // Thanks to en.touhouwiki.net
@@ -895,7 +895,7 @@ namespace ThScoreFileConverter.Models
                         new StageInfo(Stage.St2, Chara.Meiling, Enumerable.Range(0, 2)),
                         new StageInfo(Stage.St3, Chara.Reimu,   Enumerable.Range(0, 3)),
                         new StageInfo(Stage.St4, Chara.Utsuho,  Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St5, Chara.Suwako,  Enumerable.Range(0, 5))
+                        new StageInfo(Stage.St5, Chara.Suwako,  Enumerable.Range(0, 5)),
                     }
                 },
                 {
@@ -906,7 +906,7 @@ namespace ThScoreFileConverter.Models
                         new StageInfo(Stage.St2, Chara.Meiling, Enumerable.Range(0, 2)),
                         new StageInfo(Stage.St3, Chara.Marisa,  Enumerable.Range(0, 3)),
                         new StageInfo(Stage.St4, Chara.Utsuho,  Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St5, Chara.Alice,   Enumerable.Range(0, 5))
+                        new StageInfo(Stage.St5, Chara.Alice,   Enumerable.Range(0, 5)),
                     }
                 },
                 {
@@ -917,9 +917,9 @@ namespace ThScoreFileConverter.Models
                         new StageInfo(Stage.St2, Chara.Alice,     Enumerable.Range(0, 2)),
                         new StageInfo(Stage.St3, Chara.Marisa,    Enumerable.Range(0, 3)),
                         new StageInfo(Stage.St4, Chara.Reimu,     Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St5, Chara.Oonamazu,  Enumerable.Range(0, 5))
+                        new StageInfo(Stage.St5, Chara.Oonamazu,  Enumerable.Range(0, 5)),
                     }
-                }
+                },
             };
 
         private static readonly Dictionary<Chara, IEnumerable<CharaCardIdPair>> EnemyCardIdTable =
@@ -945,7 +945,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("E")] Easy,
             [EnumAltName("N")] Normal,
             [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic
+            [EnumAltName("L")] Lunatic,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -956,7 +956,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("N")] Normal,
             [EnumAltName("H")] Hard,
             [EnumAltName("L")] Lunatic,
-            [EnumAltName("T")] Total
+            [EnumAltName("T")] Total,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -983,7 +983,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("ML")] Meiling,
             [EnumAltName("UT")] Utsuho,
             [EnumAltName("SW")] Suwako,
-            [EnumAltName("NM")] Oonamazu = 0x15
+            [EnumAltName("NM")] Oonamazu = 0x15,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -1011,7 +1011,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("UT")] Utsuho,
             [EnumAltName("SW")] Suwako,
             [EnumAltName("NM")] Oonamazu = 0x15,
-            [EnumAltName("TL")] Total
+            [EnumAltName("TL")] Total,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -1022,7 +1022,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("2")] St2,
             [EnumAltName("3")] St3,
             [EnumAltName("4")] St4,
-            [EnumAltName("5")] St5
+            [EnumAltName("5")] St5,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -1031,7 +1031,7 @@ namespace ThScoreFileConverter.Models
 #pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("Y")] System,
             [EnumAltName("K")] Skill,
-            [EnumAltName("P")] Spell
+            [EnumAltName("P")] Spell,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -1071,7 +1071,7 @@ namespace ThScoreFileConverter.Models
                 new CareerReplacer(this),
                 new CardReplacer(this, hideUntriedCards),
                 new CollectRateReplacer(this),
-                new CardForDeckReplacer(this, hideUntriedCards)
+                new CardForDeckReplacer(this, hideUntriedCards),
             };
         }
 

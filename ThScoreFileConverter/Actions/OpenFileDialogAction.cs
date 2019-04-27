@@ -342,7 +342,7 @@ namespace ThScoreFileConverter.Actions
                     SupportMultiDottedExtensions = this.SupportMultiDottedExtensions,
                     Tag = this.Tag,
                     Title = this.Title,
-                    ValidateNames = this.ValidateNames
+                    ValidateNames = this.ValidateNames,
                 };
 
                 var dialogResult = dialog.ShowDialog(new Win32Window(this.Owner));

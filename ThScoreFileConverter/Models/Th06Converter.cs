@@ -92,7 +92,7 @@ namespace ThScoreFileConverter.Models
                 new CardInfo(61, "禁弾「カタディオプトリック」",     Stage.Extra, Level.Extra),
                 new CardInfo(62, "禁弾「過去を刻む時計」",           Stage.Extra, Level.Extra),
                 new CardInfo(63, "秘弾「そして誰もいなくなるか？」", Stage.Extra, Level.Extra),
-                new CardInfo(64, "ＱＥＤ「４９５年の波紋」",         Stage.Extra, Level.Extra)
+                new CardInfo(64, "ＱＥＤ「４９５年の波紋」",         Stage.Extra, Level.Extra),
             }.ToDictionary(card => card.Id);
 
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1008:OpeningParenthesisMustBeSpacedCorrectly", Justification = "Reviewed.")]
@@ -108,7 +108,7 @@ namespace ThScoreFileConverter.Models
                 new HighScore( 400000),
                 new HighScore( 300000),
                 new HighScore( 200000),
-                new HighScore( 100000)
+                new HighScore( 100000),
             };
 
         private static readonly EnumShortNameParser<Chara> CharaParser = new EnumShortNameParser<Chara>();
@@ -121,7 +121,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("RA")] ReimuA,
             [EnumAltName("RB")] ReimuB,
             [EnumAltName("MA")] MarisaA,
-            [EnumAltName("MB")] MarisaB
+            [EnumAltName("MB")] MarisaB,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -132,7 +132,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("RB")] ReimuB,
             [EnumAltName("MA")] MarisaA,
             [EnumAltName("MB")] MarisaB,
-            [EnumAltName("TL")] Total
+            [EnumAltName("TL")] Total,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -148,7 +148,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("Stage 5")]     St5,
             [EnumAltName("Stage 6")]     St6,
             [EnumAltName("Extra Stage")] Extra,
-            [EnumAltName("All Clear")]   Clear = 99
+            [EnumAltName("All Clear")]   Clear = 99,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -194,7 +194,7 @@ namespace ThScoreFileConverter.Models
                 new CardReplacer(this, hideUntriedCards),
                 new CollectRateReplacer(this),
                 new ClearReplacer(this),
-                new PracticeReplacer(this)
+                new PracticeReplacer(this),
             };
         }
 
@@ -296,7 +296,7 @@ namespace ThScoreFileConverter.Models
                 { HighScore.ValidSignature,     (data, ch) => data.Set(new HighScore(ch))     },
                 { ClearData.ValidSignature,     (data, ch) => data.Set(new ClearData(ch))     },
                 { CardAttack.ValidSignature,    (data, ch) => data.Set(new CardAttack(ch))    },
-                { PracticeScore.ValidSignature, (data, ch) => data.Set(new PracticeScore(ch)) }
+                { PracticeScore.ValidSignature, (data, ch) => data.Set(new PracticeScore(ch)) },
             };
 
             var reader = new BinaryReader(input);

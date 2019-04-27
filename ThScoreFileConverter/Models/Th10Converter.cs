@@ -139,7 +139,7 @@ namespace ThScoreFileConverter.Models
                 new CardInfo(107, "土着神「ケロちゃん風雨に負けず」",         Stage.Extra, Level.Extra),
                 new CardInfo(108, "土着神「宝永四年の赤蛙」",                 Stage.Extra, Level.Extra),
                 new CardInfo(109, "「諏訪大戦　～ 土着神話 vs 中央神話」",    Stage.Extra, Level.Extra),
-                new CardInfo(110, "祟符「ミシャグジさま」",                   Stage.Extra, Level.Extra)
+                new CardInfo(110, "祟符「ミシャグジさま」",                   Stage.Extra, Level.Extra),
             }.ToDictionary(card => card.Id);
 
         private static readonly EnumShortNameParser<Chara> CharaParser =
@@ -158,7 +158,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("RC")] ReimuC,
             [EnumAltName("MA")] MarisaA,
             [EnumAltName("MB")] MarisaB,
-            [EnumAltName("MC")] MarisaC
+            [EnumAltName("MC")] MarisaC,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -171,7 +171,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("MA")] MarisaA,
             [EnumAltName("MB")] MarisaB,
             [EnumAltName("MC")] MarisaC,
-            [EnumAltName("TL")] Total
+            [EnumAltName("TL")] Total,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -187,7 +187,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("Stage 5")]     St5,
             [EnumAltName("Stage 6")]     St6,
             [EnumAltName("Extra Stage")] Extra,
-            [EnumAltName("All Clear")]   Clear
+            [EnumAltName("All Clear")]   Clear,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -235,7 +235,7 @@ namespace ThScoreFileConverter.Models
                 new ClearReplacer(this),
                 new CharaReplacer(this),
                 new CharaExReplacer(this),
-                new PracticeReplacer(this)
+                new PracticeReplacer(this),
             };
         }
 
@@ -310,7 +310,7 @@ namespace ThScoreFileConverter.Models
             var dictionary = new Dictionary<string, Action<AllScoreData, Chapter>>
             {
                 { ClearData.ValidSignature, (data, ch) => data.Set(new ClearData(ch)) },
-                { Status.ValidSignature,    (data, ch) => data.Set(new Status(ch))    }
+                { Status.ValidSignature,    (data, ch) => data.Set(new Status(ch))    },
             };
 
             var reader = new BinaryReader(input);

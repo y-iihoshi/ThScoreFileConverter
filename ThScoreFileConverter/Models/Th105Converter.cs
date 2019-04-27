@@ -33,7 +33,7 @@ namespace ThScoreFileConverter.Models
                 { 2, "「ガード反撃」" },
                 { 3, "「スペル増幅」" },
                 { 4, "「体力回復」" },
-                { 5, "「霊力回復」" }
+                { 5, "「霊力回復」" },
             };
 
         // Thanks to th3_5154.txt, www.toho-motoneta.net and en.touhouwiki.net
@@ -372,7 +372,7 @@ namespace ThScoreFileConverter.Models
                 { new CharaCardIdPair(Chara.Tenshi, 204), "気符「天啓気象の剣」" },
                 { new CharaCardIdPair(Chara.Tenshi, 205), "要石「天地開闢プレス」" },
                 { new CharaCardIdPair(Chara.Tenshi, 206), "気符「無念無想の境地」" },
-                { new CharaCardIdPair(Chara.Tenshi, 207), "「全人類の緋想天」" }
+                { new CharaCardIdPair(Chara.Tenshi, 207), "「全人類の緋想天」" },
             };
 
         // Thanks to en.touhouwiki.net
@@ -388,7 +388,7 @@ namespace ThScoreFileConverter.Models
                         new StageInfo(Stage.St3, Chara.Komachi, Enumerable.Range(0, 3)),
                         new StageInfo(Stage.St4, Chara.Aya,     Enumerable.Range(0, 3)),
                         new StageInfo(Stage.St5, Chara.Iku,     Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St6, Chara.Tenshi,  Enumerable.Range(0, 5))
+                        new StageInfo(Stage.St6, Chara.Tenshi,  Enumerable.Range(0, 5)),
                     }
                 },
                 {
@@ -400,7 +400,7 @@ namespace ThScoreFileConverter.Models
                         new StageInfo(Stage.St3, Chara.Reisen, Enumerable.Range(0, 3)),
                         new StageInfo(Stage.St4, Chara.Aya,    Enumerable.Range(0, 3)),
                         new StageInfo(Stage.St5, Chara.Iku,    Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St6, Chara.Tenshi, Enumerable.Range(0, 5))
+                        new StageInfo(Stage.St6, Chara.Tenshi, Enumerable.Range(0, 5)),
                     }
                 },
                 {
@@ -412,7 +412,7 @@ namespace ThScoreFileConverter.Models
                         new StageInfo(Stage.St3, Chara.Yuyuko, Enumerable.Range(0, 3)),
                         new StageInfo(Stage.St4, Chara.Aya,    Enumerable.Range(0, 3)),
                         new StageInfo(Stage.St5, Chara.Iku,    Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St6, Chara.Tenshi, Enumerable.Range(0, 5))
+                        new StageInfo(Stage.St6, Chara.Tenshi, Enumerable.Range(0, 5)),
                     }
                 },
                 {
@@ -424,7 +424,7 @@ namespace ThScoreFileConverter.Models
                         new StageInfo(Stage.St3, Chara.Patchouli, Enumerable.Range(0, 3)),
                         new StageInfo(Stage.St4, Chara.Sakuya,    Enumerable.Range(0, 3)),
                         new StageInfo(Stage.St5, Chara.Iku,       Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St6, Chara.Tenshi,    Enumerable.Range(0, 5))
+                        new StageInfo(Stage.St6, Chara.Tenshi,    Enumerable.Range(0, 5)),
                     }
                 },
                 {
@@ -436,7 +436,7 @@ namespace ThScoreFileConverter.Models
                         new StageInfo(Stage.St3, Chara.Marisa, Enumerable.Range(0, 3)),
                         new StageInfo(Stage.St4, Chara.Iku,    Enumerable.Range(0, 3)),
                         new StageInfo(Stage.St5, Chara.Tenshi, Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St6, Chara.Suika,  Enumerable.Range(0, 5))
+                        new StageInfo(Stage.St6, Chara.Suika,  Enumerable.Range(0, 5)),
                     }
                 },
                 {
@@ -448,7 +448,7 @@ namespace ThScoreFileConverter.Models
                         new StageInfo(Stage.St3, Chara.Komachi, Enumerable.Range(0, 3)),
                         new StageInfo(Stage.St4, Chara.Yukari,  Enumerable.Range(0, 3)),
                         new StageInfo(Stage.St5, Chara.Iku,     Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St6, Chara.Tenshi,  Enumerable.Range(0, 5))
+                        new StageInfo(Stage.St6, Chara.Tenshi,  Enumerable.Range(0, 5)),
                     }
                 },
                 {
@@ -462,7 +462,7 @@ namespace ThScoreFileConverter.Models
                         new StageInfo(Stage.St5, Chara.Youmu,     Enumerable.Range(0, 3)),
                         new StageInfo(Stage.St6, Chara.Komachi,   Enumerable.Range(0, 3)),
                         new StageInfo(Stage.St7, Chara.Reimu,     Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St8, Chara.Yukari,    Enumerable.Range(0, 5))
+                        new StageInfo(Stage.St8, Chara.Yukari,    Enumerable.Range(0, 5)),
                     }
                 },
                 {
@@ -474,7 +474,7 @@ namespace ThScoreFileConverter.Models
                         new StageInfo(Stage.St3, Chara.Komachi, Enumerable.Range(0, 3)),
                         new StageInfo(Stage.St4, Chara.Aya,     Enumerable.Range(0, 3)),
                         new StageInfo(Stage.St5, Chara.Iku,     Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St6, Chara.Tenshi,  Enumerable.Range(0, 5))
+                        new StageInfo(Stage.St6, Chara.Tenshi,  Enumerable.Range(0, 5)),
                     }
                 },
                 {
@@ -486,7 +486,7 @@ namespace ThScoreFileConverter.Models
                         new StageInfo(Stage.St3, Chara.Marisa,  Enumerable.Range(0, 3)),
                         new StageInfo(Stage.St4, Chara.Iku,     Enumerable.Range(0, 3)),
                         new StageInfo(Stage.St5, Chara.Suika,   Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St6, Chara.Tenshi,  Enumerable.Range(0, 5))
+                        new StageInfo(Stage.St6, Chara.Tenshi,  Enumerable.Range(0, 5)),
                     }
                 },
                 {
@@ -495,7 +495,7 @@ namespace ThScoreFileConverter.Models
                     {
                         new StageInfo(Stage.St1, Chara.Aya,    Enumerable.Range(0, 4)),
                         new StageInfo(Stage.St2, Chara.Iku,    Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St3, Chara.Tenshi, Enumerable.Range(0, 5))
+                        new StageInfo(Stage.St3, Chara.Tenshi, Enumerable.Range(0, 5)),
                     }
                 },
                 {
@@ -505,7 +505,7 @@ namespace ThScoreFileConverter.Models
                         new StageInfo(Stage.St1, Chara.Remilia, Enumerable.Range(0, 3)),
                         new StageInfo(Stage.St2, Chara.Yuyuko,  Enumerable.Range(0, 3)),
                         new StageInfo(Stage.St3, Chara.Yukari,  Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St4, Chara.Tenshi,  Enumerable.Range(0, 5))
+                        new StageInfo(Stage.St4, Chara.Tenshi,  Enumerable.Range(0, 5)),
                     }
                 },
                 {
@@ -516,7 +516,7 @@ namespace ThScoreFileConverter.Models
                         new StageInfo(Stage.St2, Chara.Marisa,  Enumerable.Range(0, 3)),
                         new StageInfo(Stage.St3, Chara.Sakuya,  Enumerable.Range(0, 3)),
                         new StageInfo(Stage.St4, Chara.Remilia, Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St5, Chara.Reimu,   Enumerable.Range(2, 3))     // FIXME
+                        new StageInfo(Stage.St5, Chara.Reimu,   Enumerable.Range(2, 3)),    // FIXME
                     }
                 },
                 {
@@ -528,7 +528,7 @@ namespace ThScoreFileConverter.Models
                         new StageInfo(Stage.St3, Chara.Youmu,  Enumerable.Range(0, 3)),
                         new StageInfo(Stage.St4, Chara.Reisen, Enumerable.Range(0, 3)),
                         new StageInfo(Stage.St5, Chara.Reimu,  Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St6, Chara.Tenshi, Enumerable.Range(0, 5))
+                        new StageInfo(Stage.St6, Chara.Tenshi, Enumerable.Range(0, 5)),
                     }
                 },
                 {
@@ -540,7 +540,7 @@ namespace ThScoreFileConverter.Models
                         new StageInfo(Stage.St3, Chara.Remilia, Enumerable.Range(0, 3)),
                         new StageInfo(Stage.St4, Chara.Yuyuko,  Enumerable.Range(0, 3)),
                         new StageInfo(Stage.St5, Chara.Yukari,  Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St6, Chara.Tenshi,  Enumerable.Range(0, 5))
+                        new StageInfo(Stage.St6, Chara.Tenshi,  Enumerable.Range(0, 5)),
                     }
                 },
                 {
@@ -554,9 +554,9 @@ namespace ThScoreFileConverter.Models
                         new StageInfo(Stage.St5, Chara.Marisa,    Enumerable.Range(0, 3)),
                         new StageInfo(Stage.St6, Chara.Sakuya,    Enumerable.Range(0, 4)),
                         new StageInfo(Stage.St7, Chara.Youmu,     Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St8, Chara.Reimu,     Enumerable.Range(0, 5))
+                        new StageInfo(Stage.St8, Chara.Reimu,     Enumerable.Range(0, 5)),
                     }
-                }
+                },
             };
 
         private static readonly Dictionary<Chara, IEnumerable<CharaCardIdPair>> EnemyCardIdTable =
@@ -582,7 +582,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("E")] Easy,
             [EnumAltName("N")] Normal,
             [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic
+            [EnumAltName("L")] Lunatic,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -593,7 +593,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("N")] Normal,
             [EnumAltName("H")] Hard,
             [EnumAltName("L")] Lunatic,
-            [EnumAltName("T")] Total
+            [EnumAltName("T")] Total,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -614,7 +614,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("AY")] Aya,
             [EnumAltName("KM")] Komachi,
             [EnumAltName("IK")] Iku,
-            [EnumAltName("TN")] Tenshi
+            [EnumAltName("TN")] Tenshi,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -636,7 +636,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("KM")] Komachi,
             [EnumAltName("IK")] Iku,
             [EnumAltName("TN")] Tenshi,
-            [EnumAltName("TL")] Total
+            [EnumAltName("TL")] Total,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -650,7 +650,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("5")] St5,
             [EnumAltName("6")] St6,
             [EnumAltName("7")] St7,
-            [EnumAltName("8")] St8
+            [EnumAltName("8")] St8,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -659,7 +659,7 @@ namespace ThScoreFileConverter.Models
 #pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("Y")] System,
             [EnumAltName("K")] Skill,
-            [EnumAltName("P")] Spell
+            [EnumAltName("P")] Spell,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -699,7 +699,7 @@ namespace ThScoreFileConverter.Models
                 new CareerReplacer(this),
                 new CardReplacer(this, hideUntriedCards),
                 new CollectRateReplacer(this),
-                new CardForDeckReplacer(this, hideUntriedCards)
+                new CardForDeckReplacer(this, hideUntriedCards),
             };
         }
 

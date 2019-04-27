@@ -210,7 +210,7 @@ namespace ThScoreFileConverter.Models
                 { 173, new SpellCardInfo("「百万鬼夜行」",                                    Chara.Suika,     Level.Easy) },
                 { 174, new SpellCardInfo("「百万鬼夜行」",                                    Chara.Suika,     Level.Normal) },
                 { 175, new SpellCardInfo("「百万鬼夜行」",                                    Chara.Suika,     Level.Hard) },
-                { 176, new SpellCardInfo("「百万鬼夜行」",                                    Chara.Suika,     Level.Lunatic) }
+                { 176, new SpellCardInfo("「百万鬼夜行」",                                    Chara.Suika,     Level.Lunatic) },
             };
 
         private static readonly Dictionary<Chara, IEnumerable<int>> CardIdTable = InitializeCardIdTable();
@@ -232,7 +232,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("E")] Easy,
             [EnumAltName("N")] Normal,
             [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic
+            [EnumAltName("L")] Lunatic,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -243,7 +243,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("N")] Normal,
             [EnumAltName("H")] Hard,
             [EnumAltName("L")] Lunatic,
-            [EnumAltName("T")] Total
+            [EnumAltName("T")] Total,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -260,7 +260,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("YU")] Yuyuko,
             [EnumAltName("YK")] Yukari,
             [EnumAltName("SU")] Suika,
-            [EnumAltName("ML")] Meiling
+            [EnumAltName("ML")] Meiling,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -278,7 +278,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("YK")] Yukari,
             [EnumAltName("SU")] Suika,
             [EnumAltName("ML")] Meiling,
-            [EnumAltName("TL")] Total
+            [EnumAltName("TL")] Total,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -291,7 +291,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("4")] St4,
             [EnumAltName("5")] St5,
             [EnumAltName("6")] St6,
-            [EnumAltName("7")] St7
+            [EnumAltName("7")] St7,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -329,7 +329,7 @@ namespace ThScoreFileConverter.Models
                 new CareerReplacer(this),
                 new CardReplacer(this, hideUntriedCards),
                 new CollectRateReplacer(this),
-                new CharaReplacer(this)
+                new CharaReplacer(this),
             };
         }
 
@@ -347,7 +347,7 @@ namespace ThScoreFileConverter.Models
                         new StageEnemyPair(Stage.St4, Chara.Sakuya),
                         new StageEnemyPair(Stage.St5, Chara.Remilia),
                         new StageEnemyPair(Stage.St6, Chara.Yukari),
-                        new StageEnemyPair(Stage.St7, Chara.Suika)
+                        new StageEnemyPair(Stage.St7, Chara.Suika),
                     }
                 },
                 {
@@ -360,7 +360,7 @@ namespace ThScoreFileConverter.Models
                         new StageEnemyPair(Stage.St4, Chara.Remilia),
                         new StageEnemyPair(Stage.St5, Chara.Reimu),
                         new StageEnemyPair(Stage.St6, Chara.Yukari),
-                        new StageEnemyPair(Stage.St7, Chara.Suika)
+                        new StageEnemyPair(Stage.St7, Chara.Suika),
                     }
                 },
                 {
@@ -373,7 +373,7 @@ namespace ThScoreFileConverter.Models
                         new StageEnemyPair(Stage.St4, Chara.Youmu),
                         new StageEnemyPair(Stage.St5, Chara.Yuyuko),
                         new StageEnemyPair(Stage.St6, Chara.Yukari),
-                        new StageEnemyPair(Stage.St7, Chara.Suika)
+                        new StageEnemyPair(Stage.St7, Chara.Suika),
                     }
                 },
                 {
@@ -386,7 +386,7 @@ namespace ThScoreFileConverter.Models
                         new StageEnemyPair(Stage.St4, Chara.Patchouli),
                         new StageEnemyPair(Stage.St5, Chara.Youmu),
                         new StageEnemyPair(Stage.St6, Chara.Yukari),
-                        new StageEnemyPair(Stage.St7, Chara.Suika)
+                        new StageEnemyPair(Stage.St7, Chara.Suika),
                     }
                 },
                 {
@@ -399,7 +399,7 @@ namespace ThScoreFileConverter.Models
                         new StageEnemyPair(Stage.St4, Chara.Youmu),
                         new StageEnemyPair(Stage.St5, Chara.Yuyuko),
                         new StageEnemyPair(Stage.St6, Chara.Yukari),
-                        new StageEnemyPair(Stage.St7, Chara.Suika)
+                        new StageEnemyPair(Stage.St7, Chara.Suika),
                     }
                 },
                 {
@@ -412,7 +412,7 @@ namespace ThScoreFileConverter.Models
                         new StageEnemyPair(Stage.St4, Chara.Sakuya),
                         new StageEnemyPair(Stage.St5, Chara.Remilia),
                         new StageEnemyPair(Stage.St6, Chara.Yukari),
-                        new StageEnemyPair(Stage.St7, Chara.Suika)
+                        new StageEnemyPair(Stage.St7, Chara.Suika),
                     }
                 },
                 {
@@ -425,7 +425,7 @@ namespace ThScoreFileConverter.Models
                         new StageEnemyPair(Stage.St4, Chara.Youmu),
                         new StageEnemyPair(Stage.St5, Chara.Yuyuko),
                         new StageEnemyPair(Stage.St6, Chara.Yukari),
-                        new StageEnemyPair(Stage.St7, Chara.Suika)
+                        new StageEnemyPair(Stage.St7, Chara.Suika),
                     }
                 },
                 {
@@ -438,7 +438,7 @@ namespace ThScoreFileConverter.Models
                         new StageEnemyPair(Stage.St4, Chara.Sakuya),
                         new StageEnemyPair(Stage.St5, Chara.Remilia),
                         new StageEnemyPair(Stage.St6, Chara.Yukari),
-                        new StageEnemyPair(Stage.St7, Chara.Suika)
+                        new StageEnemyPair(Stage.St7, Chara.Suika),
                     }
                 },
                 {
@@ -451,7 +451,7 @@ namespace ThScoreFileConverter.Models
                         new StageEnemyPair(Stage.St4, Chara.Marisa),
                         new StageEnemyPair(Stage.St5, Chara.Reimu),
                         new StageEnemyPair(Stage.St6, Chara.Yuyuko),
-                        new StageEnemyPair(Stage.St7, Chara.Suika)
+                        new StageEnemyPair(Stage.St7, Chara.Suika),
                     }
                 },
                 {
@@ -464,9 +464,9 @@ namespace ThScoreFileConverter.Models
                         new StageEnemyPair(Stage.St4, Chara.Patchouli),
                         new StageEnemyPair(Stage.St5, Chara.Marisa),
                         new StageEnemyPair(Stage.St6, Chara.Remilia),
-                        new StageEnemyPair(Stage.St7, Chara.Reimu)
+                        new StageEnemyPair(Stage.St7, Chara.Reimu),
                     }
-                }
+                },
             };
 
             var cardNumberTable = CardTable.ToLookup(pair => pair.Value.Enemy, pair => pair.Key);

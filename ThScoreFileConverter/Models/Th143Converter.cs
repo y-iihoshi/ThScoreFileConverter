@@ -106,7 +106,7 @@ namespace ThScoreFileConverter.Models
                 { new DayScenePair(Day.Last,  7), new EnemiesCardPair(Enemy.Miko,         "「十七条の憲法爆弾」") },
                 { new DayScenePair(Day.Last,  8), new EnemiesCardPair(Enemy.Tenshi,       "「鹿島鎮護」") },
                 { new DayScenePair(Day.Last,  9), new EnemiesCardPair(Enemy.Remilia,      "「きゅうけつ鬼ごっこ」") },
-                { new DayScenePair(Day.Last, 10), new EnemiesCardPair(Enemy.Yukari,       "「運鈍根の捕物帖」") }
+                { new DayScenePair(Day.Last, 10), new EnemiesCardPair(Enemy.Yukari,       "「運鈍根の捕物帖」") },
             };
 
         private static readonly List<string> Nicknames =
@@ -181,7 +181,7 @@ namespace ThScoreFileConverter.Models
                 "世界は地蔵で廻っている",
                 "呪われ人形メイク",
                 "脳みそ金時",
-                "究極反則生命体"
+                "究極反則生命体",
             };
 
         private static readonly EnumShortNameParser<Day> DayParser =
@@ -209,7 +209,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("7", LongName = "07")] Day7,
             [EnumAltName("8", LongName = "08")] Day8,
             [EnumAltName("9", LongName = "09")] Day9,
-            [EnumAltName("L", LongName = "10")] Last
+            [EnumAltName("L", LongName = "10")] Last,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -249,7 +249,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("神子",        LongName = "豊聡耳 神子")]            Miko,
             [EnumAltName("天子",        LongName = "比那名居 天子")]          Tenshi,
             [EnumAltName("レミリア",    LongName = "レミリア・スカーレット")] Remilia,
-            [EnumAltName("紫",          LongName = "八雲 紫")]                Yukari
+            [EnumAltName("紫",          LongName = "八雲 紫")]                Yukari,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -267,7 +267,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("8", LongName = "呪いのデコイ人形")]         Doll,
             [EnumAltName("9", LongName = "打ち出の小槌（レプリカ）")] Mallet,
             [EnumAltName("0", LongName = "ノーアイテム")]             NoItem,
-            [EnumAltName("T", LongName = "合計")]                     Total
+            [EnumAltName("T", LongName = "合計")]                     Total,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -319,7 +319,7 @@ namespace ThScoreFileConverter.Models
                 new NicknameReplacer(this),
                 new TimeReplacer(this),
                 new ShotReplacer(this, outputFilePath),
-                new ShotExReplacer(this, outputFilePath)
+                new ShotExReplacer(this, outputFilePath),
             };
         }
 
@@ -453,7 +453,7 @@ namespace ThScoreFileConverter.Models
             {
                 { Score.ValidSignature,      (data, ch) => data.Set(new Score(ch))      },
                 { ItemStatus.ValidSignature, (data, ch) => data.Set(new ItemStatus(ch)) },
-                { Status.ValidSignature,     (data, ch) => data.Set(new Status(ch))     }
+                { Status.ValidSignature,     (data, ch) => data.Set(new Status(ch))     },
             };
 
             var reader = new BinaryReader(input);

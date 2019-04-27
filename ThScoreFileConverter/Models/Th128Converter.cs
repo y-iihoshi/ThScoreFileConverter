@@ -279,7 +279,7 @@ namespace ThScoreFileConverter.Models
                 new CardInfo(247, "魔十字「グランドクロス」",                 Stage.Extra, Level.Extra),
                 new CardInfo(248, "流星「スーパーペルセイド」",               Stage.Extra, Level.Extra),
                 new CardInfo(249, "「ブレイジングスターのような鬼ごっこ」",   Stage.Extra, Level.Extra),
-                new CardInfo(250, "「妖精尽滅光」",                           Stage.Extra, Level.Extra)
+                new CardInfo(250, "「妖精尽滅光」",                           Stage.Extra, Level.Extra),
             }.ToDictionary(card => card.Id);
 
         private static readonly EnumShortNameParser<Route> RouteParser =
@@ -302,7 +302,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("B2")] B2,
             [EnumAltName("C1")] C1,
             [EnumAltName("C2")] C2,
-            [EnumAltName("EX")] Extra
+            [EnumAltName("EX")] Extra,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -316,7 +316,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("C1")] C1,
             [EnumAltName("C2")] C2,
             [EnumAltName("EX")] Extra,
-            [EnumAltName("TL")] Total
+            [EnumAltName("TL")] Total,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -338,7 +338,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("C13")] C1_3,
             [EnumAltName("C22")] C2_2,
             [EnumAltName("C23")] C2_3,
-            [EnumAltName("EXT")] Extra
+            [EnumAltName("EXT")] Extra,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -361,7 +361,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("C22")] C2_2,
             [EnumAltName("C23")] C2_3,
             [EnumAltName("EXT")] Extra,
-            [EnumAltName("TTL")] Total
+            [EnumAltName("TTL")] Total,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -392,7 +392,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("B2 Clear")]    B2Clear,
             [EnumAltName("C1 Clear")]    C1Clear,
             [EnumAltName("C2 Clear")]    C2Clear,
-            [EnumAltName("Extra Clear")] ExtraClear
+            [EnumAltName("Extra Clear")] ExtraClear,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -440,7 +440,7 @@ namespace ThScoreFileConverter.Models
                 new ClearReplacer(this),
                 new RouteReplacer(this),
                 new RouteExReplacer(this),
-                new TimeReplacer(this)
+                new TimeReplacer(this),
             };
         }
 
@@ -518,7 +518,7 @@ namespace ThScoreFileConverter.Models
             {
                 { ClearData.ValidSignature, (data, ch) => data.Set(new ClearData(ch)) },
                 { CardData.ValidSignature,  (data, ch) => data.Set(new CardData(ch))  },
-                { Status.ValidSignature,    (data, ch) => data.Set(new Status(ch))    }
+                { Status.ValidSignature,    (data, ch) => data.Set(new Status(ch))    },
             };
 
             var reader = new BinaryReader(input);

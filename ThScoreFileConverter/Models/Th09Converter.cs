@@ -45,7 +45,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("KM")] Komachi,
             [EnumAltName("SI")] Shikieiki,
             [EnumAltName("ML")] Merlin,
-            [EnumAltName("LN")] Lunasa
+            [EnumAltName("LN")] Lunasa,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -93,7 +93,7 @@ namespace ThScoreFileConverter.Models
             {
                 new ScoreReplacer(this),
                 new TimeReplacer(this),
-                new ClearReplacer(this)
+                new ClearReplacer(this),
             };
         }
 
@@ -193,7 +193,7 @@ namespace ThScoreFileConverter.Models
                 { HighScore.ValidSignature,     (data, ch) => data.Set(new HighScore(ch))     },
                 { PlayStatus.ValidSignature,    (data, ch) => data.Set(new PlayStatus(ch))    },
                 { LastName.ValidSignature,      (data, ch) => data.Set(new LastName(ch))      },
-                { VersionInfo.ValidSignature,   (data, ch) => data.Set(new VersionInfo(ch))   }
+                { VersionInfo.ValidSignature,   (data, ch) => data.Set(new VersionInfo(ch))   },
             };
 
             var reader = new BinaryReader(input);

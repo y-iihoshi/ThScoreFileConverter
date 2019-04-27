@@ -142,7 +142,7 @@ namespace ThScoreFileConverter.Models
                 new CardInfo(110, "鵺符「アンディファインドダークネス」", Stage.Extra, Level.Extra),
                 new CardInfo(111, "正体不明「恐怖の虹色ＵＦＯ襲来」",     Stage.Extra, Level.Extra),
                 new CardInfo(112, "「平安京の悪夢」",                     Stage.Extra, Level.Extra),
-                new CardInfo(113, "恨弓「源三位頼政の弓」",               Stage.Extra, Level.Extra)
+                new CardInfo(113, "恨弓「源三位頼政の弓」",               Stage.Extra, Level.Extra),
             }.ToDictionary(card => card.Id);
 
         private static readonly EnumShortNameParser<Chara> CharaParser =
@@ -161,7 +161,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("MA")] MarisaA,
             [EnumAltName("MB")] MarisaB,
             [EnumAltName("SA")] SanaeA,
-            [EnumAltName("SB")] SanaeB
+            [EnumAltName("SB")] SanaeB,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -174,7 +174,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("MB")] MarisaB,
             [EnumAltName("SA")] SanaeA,
             [EnumAltName("SB")] SanaeB,
-            [EnumAltName("TL")] Total
+            [EnumAltName("TL")] Total,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -190,7 +190,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("Stage 5")]     St5,
             [EnumAltName("Stage 6")]     St6,
             [EnumAltName("Extra Stage")] Extra,
-            [EnumAltName("All Clear")]   Clear
+            [EnumAltName("All Clear")]   Clear,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -238,7 +238,7 @@ namespace ThScoreFileConverter.Models
                 new ClearReplacer(this),
                 new CharaReplacer(this),
                 new CharaExReplacer(this),
-                new PracticeReplacer(this)
+                new PracticeReplacer(this),
             };
         }
 
@@ -313,7 +313,7 @@ namespace ThScoreFileConverter.Models
             var dictionary = new Dictionary<string, Action<AllScoreData, Chapter>>
             {
                 { ClearData.ValidSignature, (data, ch) => data.Set(new ClearData(ch)) },
-                { Status.ValidSignature,    (data, ch) => data.Set(new Status(ch))    }
+                { Status.ValidSignature,    (data, ch) => data.Set(new Status(ch))    },
             };
 
             var reader = new BinaryReader(input);

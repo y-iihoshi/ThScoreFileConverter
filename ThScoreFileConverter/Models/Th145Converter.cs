@@ -43,7 +43,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("E")] Easy,
             [EnumAltName("N")] Normal,
             [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic
+            [EnumAltName("L")] Lunatic,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -54,7 +54,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("N")] Normal,
             [EnumAltName("H")] Hard,
             [EnumAltName("L")] Lunatic,
-            [EnumAltName("T")] Total
+            [EnumAltName("T")] Total,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -65,7 +65,7 @@ namespace ThScoreFileConverter.Models
             Easy = 1,
             Normal = 2,
             Hard = 4,
-            Lunatic = 8
+            Lunatic = 8,
         }
 
         public enum Chara
@@ -85,7 +85,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("MO")] Mokou,
             [EnumAltName("SN")] Shinmyoumaru,
             [EnumAltName("SM")] Sumireko,
-            [EnumAltName("RB")] ReimuB
+            [EnumAltName("RB")] ReimuB,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -107,7 +107,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("SN")] Shinmyoumaru,
             [EnumAltName("SM")] Sumireko,
             [EnumAltName("RB")] ReimuB,
-            [EnumAltName("TL")] Total
+            [EnumAltName("TL")] Total,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -145,7 +145,7 @@ namespace ThScoreFileConverter.Models
             return new List<IStringReplaceable>
             {
                 new ClearRankReplacer(this),
-                new ClearTimeReplacer(this)
+                new ClearTimeReplacer(this),
             };
         }
 
@@ -350,7 +350,7 @@ namespace ThScoreFileConverter.Models
                     { 0x08000010, StringReader },
                     { 0x08000040, ArrayReader },
                     { 0x0A000020, DictionaryReader },
-                    { 0x0A008000, reader => new object() }  // unknown (appears in gauge_1p/2p...)
+                    { 0x0A008000, reader => new object() }, // unknown (appears in gauge_1p/2p...)
                 };
 
             private Dictionary<string, object> allData;

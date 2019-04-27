@@ -156,7 +156,7 @@ namespace ThScoreFileConverter.Models
                 new CardInfo(124, "怨霊「入鹿の雷」",                     StagePractice.OverDrive, LevelPractice.OverDrive),
                 new CardInfo(125, "聖童女「太陽神の贄」",                 StagePractice.OverDrive, LevelPractice.OverDrive),
                 new CardInfo(126, "「神霊大宇宙」",                       StagePractice.OverDrive, LevelPractice.OverDrive),
-                new CardInfo(127, "「ワイルドカーペット」",               StagePractice.OverDrive, LevelPractice.OverDrive)
+                new CardInfo(127, "「ワイルドカーペット」",               StagePractice.OverDrive, LevelPractice.OverDrive),
             }.ToDictionary(card => card.Id);
 
         private static readonly EnumShortNameParser<LevelPracticeWithTotal> LevelPracticeWithTotalParser =
@@ -178,7 +178,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("H")] Hard,
             [EnumAltName("L")] Lunatic,
             [EnumAltName("X")] Extra,
-            [EnumAltName("D", LongName = "Over Drive")] OverDrive
+            [EnumAltName("D", LongName = "Over Drive")] OverDrive,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -191,7 +191,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("L")] Lunatic,
             [EnumAltName("X")] Extra,
             [EnumAltName("D", LongName = "Over Drive")] OverDrive,
-            [EnumAltName("T")] Total
+            [EnumAltName("T")] Total,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -201,7 +201,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("RM")] Reimu,
             [EnumAltName("MR")] Marisa,
             [EnumAltName("SN")] Sanae,
-            [EnumAltName("YM")] Youmu
+            [EnumAltName("YM")] Youmu,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -212,7 +212,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("MR")] Marisa,
             [EnumAltName("SN")] Sanae,
             [EnumAltName("YM")] Youmu,
-            [EnumAltName("TL")] Total
+            [EnumAltName("TL")] Total,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -226,7 +226,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("5")] St5,
             [EnumAltName("6")] St6,
             [EnumAltName("X")] Extra,
-            [EnumAltName("D", LongName = "Over Drive")] OverDrive
+            [EnumAltName("D", LongName = "Over Drive")] OverDrive,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -243,7 +243,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("Stage 6")]     St6,
             [EnumAltName("Extra Stage")] Extra,
             [EnumAltName("All Clear")]   Clear,
-            [EnumAltName("Extra Clear")] ExtraClear
+            [EnumAltName("Extra Clear")] ExtraClear,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -291,7 +291,7 @@ namespace ThScoreFileConverter.Models
                 new ClearReplacer(this),
                 new CharaReplacer(this),
                 new CharaExReplacer(this),
-                new PracticeReplacer(this)
+                new PracticeReplacer(this),
             };
         }
 
@@ -366,7 +366,7 @@ namespace ThScoreFileConverter.Models
             var dictionary = new Dictionary<string, Action<AllScoreData, Chapter>>
             {
                 { ClearData.ValidSignature, (data, ch) => data.Set(new ClearData(ch)) },
-                { Status.ValidSignature,    (data, ch) => data.Set(new Status(ch))    }
+                { Status.ValidSignature,    (data, ch) => data.Set(new Status(ch))    },
             };
 
             var reader = new BinaryReader(input);

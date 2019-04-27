@@ -46,7 +46,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("N")] Normal,
             [EnumAltName("H")] Hard,
             [EnumAltName("L")] Lunatic,
-            [EnumAltName("D")] OverDrive
+            [EnumAltName("D")] OverDrive,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -58,7 +58,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("H")] Hard,
             [EnumAltName("L")] Lunatic,
             [EnumAltName("D")] OverDrive,
-            [EnumAltName("T")] Total
+            [EnumAltName("T")] Total,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -70,7 +70,7 @@ namespace ThScoreFileConverter.Models
             Normal = 2,
             Hard = 4,
             Lunatic = 8,
-            OverDrive = 16
+            OverDrive = 16,
         }
 
         public enum StoryChara
@@ -86,7 +86,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("SD")] SumirekoDoremy,
             [EnumAltName("TS")] TenshiShinmyoumaru,
             [EnumAltName("YR")] YukariReimu,
-            [EnumAltName("JS")] JoonShion
+            [EnumAltName("JS")] JoonShion,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -104,7 +104,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("TS")] TenshiShinmyoumaru,
             [EnumAltName("YR")] YukariReimu,
             [EnumAltName("JS")] JoonShion,
-            [EnumAltName("TL")] Total
+            [EnumAltName("TL")] Total,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -141,7 +141,7 @@ namespace ThScoreFileConverter.Models
         {
             return new List<IStringReplaceable>
             {
-                new ClearRankReplacer(this)
+                new ClearRankReplacer(this),
             };
         }
 
@@ -322,7 +322,7 @@ namespace ThScoreFileConverter.Models
                     { 0x08000040, ArrayReader },
                     { 0x08000100, reader => new OptionalMark() },
                     { 0x0A000020, DictionaryReader },
-                    { 0x0A008000, reader => new object() }  // unknown (appears in gauge_1p/2p...)
+                    { 0x0A008000, reader => new object() }, // unknown (appears in gauge_1p/2p...)
                 };
 
             private Dictionary<string, object> allData;

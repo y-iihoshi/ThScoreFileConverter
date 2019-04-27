@@ -251,7 +251,7 @@ namespace ThScoreFileConverter.Models
                 new CardInfo(219, "「グランギニョル座の怪人」",               StagePractice.LastWord, LevelPractice.LastWord),
                 new CardInfo(220, "「スカーレットディスティニー」",           StagePractice.LastWord, LevelPractice.LastWord),
                 new CardInfo(221, "「西行寺無余涅槃」",                       StagePractice.LastWord, LevelPractice.LastWord),
-                new CardInfo(222, "「深弾幕結界　-夢幻泡影-」",               StagePractice.LastWord, LevelPractice.LastWord)
+                new CardInfo(222, "「深弾幕結界　-夢幻泡影-」",               StagePractice.LastWord, LevelPractice.LastWord),
             }.ToDictionary(card => card.Id);
 
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1008:OpeningParenthesisMustBeSpacedCorrectly", Justification = "Reviewed.")]
@@ -267,7 +267,7 @@ namespace ThScoreFileConverter.Models
                 new HighScore( 40000),
                 new HighScore( 30000),
                 new HighScore( 20000),
-                new HighScore( 10000)
+                new HighScore( 10000),
             };
 
         private static readonly EnumShortNameParser<LevelPracticeWithTotal> LevelPracticeWithTotalParser =
@@ -295,7 +295,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("H")] Hard,
             [EnumAltName("L")] Lunatic,
             [EnumAltName("X")] Extra,
-            [EnumAltName("W", LongName = "Last Word")] LastWord
+            [EnumAltName("W", LongName = "Last Word")] LastWord,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -308,7 +308,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("L")] Lunatic,
             [EnumAltName("X")] Extra,
             [EnumAltName("W", LongName = "Last Word")] LastWord,
-            [EnumAltName("T")] Total
+            [EnumAltName("T")] Total,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -326,7 +326,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("SK")] Sakuya,
             [EnumAltName("RL")] Remilia,
             [EnumAltName("YM")] Youmu,
-            [EnumAltName("YU")] Yuyuko
+            [EnumAltName("YU")] Yuyuko,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -345,7 +345,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("RL")] Remilia,
             [EnumAltName("YM")] Youmu,
             [EnumAltName("YU")] Yuyuko,
-            [EnumAltName("TL")] Total
+            [EnumAltName("TL")] Total,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -360,7 +360,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("5A")] St5,
             [EnumAltName("6A")] St6A,
             [EnumAltName("6B")] St6B,
-            [EnumAltName("EX")] Extra
+            [EnumAltName("EX")] Extra,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -376,7 +376,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("6A")] St6A,
             [EnumAltName("6B")] St6B,
             [EnumAltName("EX")] Extra,
-            [EnumAltName("00")] Total
+            [EnumAltName("00")] Total,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -392,7 +392,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("6A")] St6A,
             [EnumAltName("6B")] St6B,
             [EnumAltName("EX")] Extra,
-            [EnumAltName("LW", LongName = "Last Word")] LastWord
+            [EnumAltName("LW", LongName = "Last Word")] LastWord,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -409,7 +409,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("Stage 6-Eirin")]    St6A,
             [EnumAltName("Stage 6-Kaguya")]   St6B,
             [EnumAltName("Extra Stage")]      Extra,
-            [EnumAltName("All Clear")]        Clear = 99
+            [EnumAltName("All Clear")]        Clear = 99,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -426,7 +426,7 @@ namespace ThScoreFileConverter.Models
             Stage6B  = 0x0080,
             Extra    = 0x0100,
             Unknown  = 0x4000,
-            AllClear = 0x8000
+            AllClear = 0x8000,
         }
 
         public override string SupportedVersions
@@ -473,7 +473,7 @@ namespace ThScoreFileConverter.Models
                 new ClearReplacer(this),
                 new PlayReplacer(this),
                 new TimeReplacer(this),
-                new PracticeReplacer(this)
+                new PracticeReplacer(this),
             };
         }
 
@@ -582,7 +582,7 @@ namespace ThScoreFileConverter.Models
                 { FLSP.ValidSignature,          (data, ch) => data.Set(new FLSP(ch))          },
                 { PlayStatus.ValidSignature,    (data, ch) => data.Set(new PlayStatus(ch))    },
                 { LastName.ValidSignature,      (data, ch) => data.Set(new LastName(ch))      },
-                { VersionInfo.ValidSignature,   (data, ch) => data.Set(new VersionInfo(ch))   }
+                { VersionInfo.ValidSignature,   (data, ch) => data.Set(new VersionInfo(ch))   },
             };
 
             var reader = new BinaryReader(input);

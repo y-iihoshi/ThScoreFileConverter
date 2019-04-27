@@ -170,7 +170,7 @@ namespace ThScoreFileConverter.Models
                 new CardInfo(138, "式神「八雲藍」",                             Stage.Phantasm, Level.Phantasm),
                 new CardInfo(139, "「人間と妖怪の境界」",                       Stage.Phantasm, Level.Phantasm),
                 new CardInfo(140, "結界「生と死の境界」",                       Stage.Phantasm, Level.Phantasm),
-                new CardInfo(141, "紫奥義「弾幕結界」",                         Stage.Phantasm, Level.Phantasm)
+                new CardInfo(141, "紫奥義「弾幕結界」",                         Stage.Phantasm, Level.Phantasm),
             }.ToDictionary(card => card.Id);
 
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1008:OpeningParenthesisMustBeSpacedCorrectly", Justification = "Reviewed.")]
@@ -186,7 +186,7 @@ namespace ThScoreFileConverter.Models
                 new HighScore( 40000),
                 new HighScore( 30000),
                 new HighScore( 20000),
-                new HighScore( 10000)
+                new HighScore( 10000),
             };
 
         private static readonly new EnumShortNameParser<Level> LevelParser =
@@ -217,7 +217,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("H")] Hard,
             [EnumAltName("L")] Lunatic,
             [EnumAltName("X")] Extra,
-            [EnumAltName("P")] Phantasm
+            [EnumAltName("P")] Phantasm,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -230,7 +230,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("L")] Lunatic,
             [EnumAltName("X")] Extra,
             [EnumAltName("P")] Phantasm,
-            [EnumAltName("T")] Total
+            [EnumAltName("T")] Total,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -242,7 +242,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("MA")] MarisaA,
             [EnumAltName("MB")] MarisaB,
             [EnumAltName("SA")] SakuyaA,
-            [EnumAltName("SB")] SakuyaB
+            [EnumAltName("SB")] SakuyaB,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -255,7 +255,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("MB")] MarisaB,
             [EnumAltName("SA")] SakuyaA,
             [EnumAltName("SB")] SakuyaB,
-            [EnumAltName("TL")] Total
+            [EnumAltName("TL")] Total,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -269,7 +269,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("5")] St5,
             [EnumAltName("6")] St6,
             [EnumAltName("X")] Extra,
-            [EnumAltName("P")] Phantasm
+            [EnumAltName("P")] Phantasm,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -284,7 +284,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("6")] St6,
             [EnumAltName("X")] Extra,
             [EnumAltName("P")] Phantasm,
-            [EnumAltName("0")] Total
+            [EnumAltName("0")] Total,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -301,7 +301,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("Stage 6")]        St6,
             [EnumAltName("Extra Stage")]    Extra,
             [EnumAltName("Phantasm Stage")] Phantasm,
-            [EnumAltName("All Clear")]      Clear = 99
+            [EnumAltName("All Clear")]      Clear = 99,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -349,7 +349,7 @@ namespace ThScoreFileConverter.Models
                 new ClearReplacer(this),
                 new PlayReplacer(this),
                 new TimeReplacer(this),
-                new PracticeReplacer(this)
+                new PracticeReplacer(this),
             };
         }
 
@@ -453,7 +453,7 @@ namespace ThScoreFileConverter.Models
                 { PracticeScore.ValidSignature, (data, ch) => data.Set(new PracticeScore(ch)) },
                 { PlayStatus.ValidSignature,    (data, ch) => data.Set(new PlayStatus(ch))    },
                 { LastName.ValidSignature,      (data, ch) => data.Set(new LastName(ch))      },
-                { VersionInfo.ValidSignature,   (data, ch) => data.Set(new VersionInfo(ch))   }
+                { VersionInfo.ValidSignature,   (data, ch) => data.Set(new VersionInfo(ch))   },
             };
 
             var reader = new BinaryReader(input);

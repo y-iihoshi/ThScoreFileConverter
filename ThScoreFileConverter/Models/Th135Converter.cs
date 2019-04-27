@@ -37,7 +37,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("E")] Easy,
             [EnumAltName("N")] Normal,
             [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic
+            [EnumAltName("L")] Lunatic,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -48,7 +48,7 @@ namespace ThScoreFileConverter.Models
             Easy = 1,
             Normal = 2,
             Hard = 4,
-            Lunatic = 8
+            Lunatic = 8,
         }
 
         public enum Chara
@@ -63,7 +63,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("NT")] Nitori,
             [EnumAltName("KO")] Koishi,
             [EnumAltName("MM")] Mamizou,
-            [EnumAltName("KK")] Kokoro
+            [EnumAltName("KK")] Kokoro,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -100,7 +100,7 @@ namespace ThScoreFileConverter.Models
         {
             return new List<IStringReplaceable>
             {
-                new ClearReplacer(this)
+                new ClearReplacer(this),
             };
         }
 
@@ -280,7 +280,7 @@ namespace ThScoreFileConverter.Models
                     { 0x08000010, StringReader },
                     { 0x08000040, ArrayReader },
                     { 0x0A000020, DictionaryReader },
-                    { 0x0A008000, reader => new object() }  // unknown (appears in gauge_1p/2p...)
+                    { 0x0A008000, reader => new object() }, // unknown (appears in gauge_1p/2p...)
                 };
 
             private Dictionary<string, object> allData;

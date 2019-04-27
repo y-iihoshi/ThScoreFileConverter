@@ -310,7 +310,7 @@ namespace ThScoreFileConverter.Actions
                     ShowEffects = this.ShowEffects,
                     ShowHelp = this.ShowHelp,
                     Site = this.Site,
-                    Tag = this.Tag
+                    Tag = this.Tag,
                 };
 
                 if (this.ShowApply && (this.ApplyCommand != null))

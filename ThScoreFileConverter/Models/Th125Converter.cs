@@ -140,7 +140,7 @@ namespace ThScoreFileConverter.Models
                 { new LevelScenePair(Level.Spoiler, 6), new EnemyCardPair(Enemy.Aya,       "取材「射命丸文の圧迫取材」") },
                 { new LevelScenePair(Level.Spoiler, 7), new EnemyCardPair(Enemy.Aya,       "望遠「キャンディッドショット」") },
                 { new LevelScenePair(Level.Spoiler, 8), new EnemyCardPair(Enemy.Aya,       "速写「ファストショット」") },
-                { new LevelScenePair(Level.Spoiler, 9), new EnemyCardPair(Enemy.Aya,       "「幻想風靡」") }
+                { new LevelScenePair(Level.Spoiler, 9), new EnemyCardPair(Enemy.Aya,       "「幻想風靡」") },
             };
 
         private static readonly new EnumShortNameParser<Level> LevelParser =
@@ -172,7 +172,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("B", LongName = "11")] Lv11,
             [EnumAltName("C", LongName = "12")] Lv12,
             [EnumAltName("X", LongName = "ex")] Extra,
-            [EnumAltName("S", LongName = "sp")] Spoiler
+            [EnumAltName("S", LongName = "sp")] Spoiler,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -180,7 +180,7 @@ namespace ThScoreFileConverter.Models
         {
 #pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("A")] Aya,
-            [EnumAltName("H")] Hatate
+            [EnumAltName("H")] Hatate,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -217,7 +217,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("魔理沙",      LongName = "霧雨 魔理沙")]      Marisa,
             [EnumAltName("早苗",        LongName = "東風谷 早苗")]      Sanae,
             [EnumAltName("はたて",      LongName = "姫海棠 はたて")]    Hatate,
-            [EnumAltName("文",          LongName = "射命丸 文")]        Aya
+            [EnumAltName("文",          LongName = "射命丸 文")]        Aya,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -268,7 +268,7 @@ namespace ThScoreFileConverter.Models
                 new CardReplacer(this, hideUntriedCards),
                 new TimeReplacer(this),
                 new ShotReplacer(this, outputFilePath),
-                new ShotExReplacer(this, outputFilePath)
+                new ShotExReplacer(this, outputFilePath),
             };
         }
 
@@ -406,7 +406,7 @@ namespace ThScoreFileConverter.Models
             var dictionary = new Dictionary<string, Action<AllScoreData, Chapter>>
             {
                 { Score.ValidSignature,  (data, ch) => data.Set(new Score(ch))  },
-                { Status.ValidSignature, (data, ch) => data.Set(new Status(ch)) }
+                { Status.ValidSignature, (data, ch) => data.Set(new Status(ch)) },
             };
 
             var reader = new BinaryReader(input);
@@ -713,7 +713,7 @@ namespace ThScoreFileConverter.Models
                     new Detail(header.Fields.NiceShot,     "Nice Shot!    {0,9}", Utils.Format("* {0:F2}", header.NiceShot)),
                     new Detail(true,                       "Angle Bonus   {0,9}", Utils.Format("* {0:F2}", header.AngleBonus)),
                     new Detail(true,                       string.Empty,          string.Empty),
-                    new Detail(true,                       "Result Score  {0,9}", Utils.ToNumberString(header.ResultScore))
+                    new Detail(true,                       "Result Score  {0,9}", Utils.ToNumberString(header.ResultScore)),
                 };
 
             private readonly MatchEvaluator evaluator;

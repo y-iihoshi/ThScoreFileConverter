@@ -204,7 +204,7 @@ namespace ThScoreFileConverter.Models
                 new CardInfo(172, "復燃「恋の埋火」",                     Stage.Extra, Level.Extra),
                 new CardInfo(173, "深層「無意識の遺伝子」",               Stage.Extra, Level.Extra),
                 new CardInfo(174, "「嫌われ者のフィロソフィ」",           Stage.Extra, Level.Extra),
-                new CardInfo(175, "「サブタレイニアンローズ」",           Stage.Extra, Level.Extra)
+                new CardInfo(175, "「サブタレイニアンローズ」",           Stage.Extra, Level.Extra),
             }.ToDictionary(card => card.Id);
 
         private static readonly EnumShortNameParser<Chara> CharaParser =
@@ -223,7 +223,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("RA")] ReimuAya,
             [EnumAltName("MA")] MarisaAlice,
             [EnumAltName("MP")] MarisaPatchouli,
-            [EnumAltName("MN")] MarisaNitori
+            [EnumAltName("MN")] MarisaNitori,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -236,7 +236,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("MA")] MarisaAlice,
             [EnumAltName("MP")] MarisaPatchouli,
             [EnumAltName("MN")] MarisaNitori,
-            [EnumAltName("TL")] Total
+            [EnumAltName("TL")] Total,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -252,7 +252,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("Stage 5")]     St5,
             [EnumAltName("Stage 6")]     St6,
             [EnumAltName("Extra Stage")] Extra,
-            [EnumAltName("All Clear")]   Clear
+            [EnumAltName("All Clear")]   Clear,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -300,7 +300,7 @@ namespace ThScoreFileConverter.Models
                 new ClearReplacer(this),
                 new CharaReplacer(this),
                 new CharaExReplacer(this),
-                new PracticeReplacer(this)
+                new PracticeReplacer(this),
             };
         }
 
@@ -375,7 +375,7 @@ namespace ThScoreFileConverter.Models
             var dictionary = new Dictionary<string, Action<AllScoreData, Chapter>>
             {
                 { ClearData.ValidSignature, (data, ch) => data.Set(new ClearData(ch)) },
-                { Status.ValidSignature,    (data, ch) => data.Set(new Status(ch))    }
+                { Status.ValidSignature,    (data, ch) => data.Set(new Status(ch))    },
             };
 
             var reader = new BinaryReader(input);

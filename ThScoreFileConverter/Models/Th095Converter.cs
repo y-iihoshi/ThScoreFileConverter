@@ -116,7 +116,7 @@ namespace ThScoreFileConverter.Models
                 { new LevelScenePair(Level.Extra, 5), new EnemyCardPair(Enemy.Mokou,     "貴人「サンジェルマンの忠告」") },
                 { new LevelScenePair(Level.Extra, 6), new EnemyCardPair(Enemy.Mokou,     "蓬莱「瑞江浦嶋子と五色の瑞亀」") },
                 { new LevelScenePair(Level.Extra, 7), new EnemyCardPair(Enemy.Suika,     "鬼気「濛々迷霧」") },
-                { new LevelScenePair(Level.Extra, 8), new EnemyCardPair(Enemy.Suika,     "「百万鬼夜行」") }
+                { new LevelScenePair(Level.Extra, 8), new EnemyCardPair(Enemy.Suika,     "「百万鬼夜行」") },
             };
 
         private static readonly new EnumShortNameParser<Level> LevelParser =
@@ -142,7 +142,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("8", LongName = "08")] Lv8,
             [EnumAltName("9", LongName = "09")] Lv9,
             [EnumAltName("0", LongName = "10")] Lv10,
-            [EnumAltName("X", LongName = "ex")] Extra
+            [EnumAltName("X", LongName = "ex")] Extra,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -174,7 +174,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("フラン",     LongName = "フランドール・スカーレット")] Flandre,
             [EnumAltName("紫",         LongName = "八雲 紫")]                    Yukari,
             [EnumAltName("妹紅",       LongName = "藤原 妹紅")]                  Mokou,
-            [EnumAltName("萃香",       LongName = "伊吹 萃香")]                  Suika
+            [EnumAltName("萃香",       LongName = "伊吹 萃香")]                  Suika,
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
@@ -224,7 +224,7 @@ namespace ThScoreFileConverter.Models
                 new ScoreTotalReplacer(this),
                 new CardReplacer(this, hideUntriedCards),
                 new ShotReplacer(this, outputFilePath),
-                new ShotExReplacer(this, outputFilePath)
+                new ShotExReplacer(this, outputFilePath),
             };
         }
 
@@ -361,7 +361,7 @@ namespace ThScoreFileConverter.Models
             var dictionary = new Dictionary<string, Action<AllScoreData, Chapter>>
             {
                 { Score.ValidSignature,  (data, ch) => data.Set(new Score(ch))  },
-                { Status.ValidSignature, (data, ch) => data.Set(new Status(ch)) }
+                { Status.ValidSignature, (data, ch) => data.Set(new Status(ch)) },
             };
 
             var reader = new BinaryReader(input);

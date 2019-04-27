@@ -97,7 +97,7 @@ namespace ThScoreFileConverter.Models
             /// Represents level Extra.
             /// </summary>
             [EnumAltName("X")]
-            Extra
+            Extra,
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace ThScoreFileConverter.Models
             /// Represents total across levels.
             /// </summary>
             [EnumAltName("T")]
-            Total
+            Total,
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace ThScoreFileConverter.Models
             /// Represents Extra stage.
             /// </summary>
             [EnumAltName("X")]
-            Extra
+            Extra,
         }
 
         /// <summary>
@@ -241,7 +241,7 @@ namespace ThScoreFileConverter.Models
             /// Represents total across stages.
             /// </summary>
             [EnumAltName("0")]
-            Total
+            Total,
         }
 
         /// <summary>

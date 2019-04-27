@@ -118,7 +118,7 @@ namespace ThScoreFileConverter.Actions
                     SelectedPath = this.SelectedPath,
                     ShowNewFolderButton = this.ShowNewFolderButton,
                     Site = this.Site,
-                    Tag = this.Tag
+                    Tag = this.Tag,
                 };
 
                 var dialogResult = dialog.ShowDialog(new Win32Window(this.Owner));
