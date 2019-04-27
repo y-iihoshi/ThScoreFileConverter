@@ -735,7 +735,7 @@ namespace ThScoreFileConverter.Models
 
             public short Size2 { get; private set; }        // always equal to size1?
 
-            public byte FirstByteOfData => this.Data?.Length > 0 ? this.Data[0] : default(byte);
+            public byte FirstByteOfData => this.Data?.Length > 0 ? this.Data[0] : default;
 
             protected byte[] Data { get; private set; }
 

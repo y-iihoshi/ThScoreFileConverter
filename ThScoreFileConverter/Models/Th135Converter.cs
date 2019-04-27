@@ -394,7 +394,7 @@ namespace ThScoreFileConverter.Models
                 if (this.allData.TryGetValue(key, out object value) && (value is T))
                     return (T)value;
                 else
-                    return default(T);
+                    return default;
             }
 
             private class EndMark

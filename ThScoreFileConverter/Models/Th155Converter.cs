@@ -509,7 +509,7 @@ namespace ThScoreFileConverter.Models
 
             private T GetValue<T>(string key)
                 where T : struct
-                => (this.allData.TryGetValue(key, out object value) && (value is T)) ? (T)value : default(T);
+                => (this.allData.TryGetValue(key, out object value) && (value is T)) ? (T)value : default;
 
             private class OptionalMark
             {
