@@ -385,21 +385,6 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            private void ParseStoryDictionary()
-            {
-                if (this.allData.TryGetValue("story", out object story))
-                {
-                    if (story is Dictionary<object, object> dict)
-                    {
-                        this.StoryDictionary = dict
-                            .Where(pair => ParseStoryChara(pair.Key) != null)
-                            .ToDictionary(
-                                pair => ParseStoryChara(pair.Key).Value,
-                                pair => ParseStory(pair.Value));
-                    }
-                }
-            }
-
             private static StoryChara? ParseStoryChara(object obj)
             {
                 if (obj is string str)
@@ -459,6 +444,21 @@ namespace ThScoreFileConverter.Models
                     }
                 }
                 return story;
+            }
+
+            private void ParseStoryDictionary()
+            {
+                if (this.allData.TryGetValue("story", out object story))
+                {
+                    if (story is Dictionary<object, object> dict)
+                    {
+                        this.StoryDictionary = dict
+                            .Where(pair => ParseStoryChara(pair.Key) != null)
+                            .ToDictionary(
+                                pair => ParseStoryChara(pair.Key).Value,
+                                pair => ParseStory(pair.Value));
+                    }
+                }
             }
 
             private void ParseCharacterDictionary()
