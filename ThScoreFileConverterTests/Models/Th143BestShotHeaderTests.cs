@@ -25,7 +25,7 @@ namespace ThScoreFileConverterTests.Models
         internal static Properties ValidProperties => new Properties()
         {
             signature = "BST3",
-            day = Th143Converter.Day.Day2,
+            day = Th143Converter.Day.Second,
             scene = 3,
             width = 4,
             height = 5,
