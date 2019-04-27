@@ -92,7 +92,8 @@ namespace ThScoreFileConverter.Models
         /// <typeparam name="T">The type of <paramref name="number"/>.</typeparam>
         /// <param name="number">A numeric value.</param>
         /// <returns>A string that represents <paramref name="number"/>.</returns>
-        public static string ToNumberString<T>(T number) where T : struct
+        public static string ToNumberString<T>(T number)
+            where T : struct
         {
             return ToNumberString(number, Settings.Instance.OutputNumberGroupSeparator.Value);
         }
@@ -106,7 +107,8 @@ namespace ThScoreFileConverter.Models
         /// <c>true</c> if use a thousand separator character; otherwise, <c>false</c>.
         /// </param>
         /// <returns>A string that represents <paramref name="number"/>.</returns>
-        public static string ToNumberString<T>(T number, bool outputSeparator) where T : struct
+        public static string ToNumberString<T>(T number, bool outputSeparator)
+            where T : struct
         {
             return outputSeparator ? Utils.Format("{0:N0}", number) : number.ToString();
         }
