@@ -455,9 +455,7 @@ namespace ThScoreFileConverter.Models
         /// <param name="e">The event data issued by the <see cref="ThConverter"/> class.</param>
         private void OnConvertFinished(ThConverterEventArgs e)
         {
-            var handler = this.ConvertFinished;
-            if (handler != null)
-                handler(this, e);
+            this.ConvertFinished?.Invoke(this, e);
         }
 
         /// <summary>
@@ -466,9 +464,7 @@ namespace ThScoreFileConverter.Models
         /// <param name="e">The event data issued by the <see cref="ThConverter"/> class.</param>
         private void OnConvertAllFinished(ThConverterEventArgs e)
         {
-            var handler = this.ConvertAllFinished;
-            if (handler != null)
-                handler(this, e);
+            this.ConvertAllFinished?.Invoke(this, e);
         }
 
         /// <summary>
@@ -477,9 +473,7 @@ namespace ThScoreFileConverter.Models
         /// <param name="e">The event data that indicates occurring of an exception.</param>
         private void OnExceptionOccurred(ExceptionOccurredEventArgs e)
         {
-            var handler = this.ExceptionOccurred;
-            if (handler != null)
-                handler(this, e);
+            this.ExceptionOccurred?.Invoke(this, e);
         }
     }
 }

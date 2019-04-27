@@ -46,8 +46,7 @@ namespace ThScoreFileConverter.Models
             this.preprocess = preprocess;
             this.postprocess = postprocess;
 
-            if (this.preprocess != null)
-                this.preprocess();
+            this.preprocess?.Invoke();
             this.watch.Start();
         }
 
@@ -93,8 +92,7 @@ namespace ThScoreFileConverter.Models
                 }
 
                 this.watch.Stop();
-                if (this.postprocess != null)
-                    this.postprocess(this.watch.Elapsed);
+                this.postprocess?.Invoke(this.watch.Elapsed);
                 this.disposed = true;
             }
         }
