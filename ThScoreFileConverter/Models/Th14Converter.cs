@@ -432,8 +432,10 @@ namespace ThScoreFileConverter.Models
                                 return StageProgress.None.ToShortName();
                         case 4:     // date & time
                             if (ranking.DateTime > 0)
+                            {
                                 return new DateTime(1970, 1, 1).AddSeconds(ranking.DateTime).ToLocalTime()
                                     .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
+                            }
                             else
                                 return "----/--/-- --:--:--";
                         case 5:     // slow
@@ -698,8 +700,10 @@ namespace ThScoreFileConverter.Models
 
                     Func<AllScoreData, long> getValueByChara;
                     if (chara == CharaWithTotal.Total)
+                    {
                         getValueByChara = (allData => allData.ClearData.Values
                             .Where(data => data.Chara != chara).Sum(getValueByType));
+                    }
                     else
                         getValueByChara = (allData => getValueByType(allData.ClearData[chara]));
 
@@ -753,8 +757,10 @@ namespace ThScoreFileConverter.Models
 
                     Func<AllScoreData, long> getValueByChara;
                     if (chara == CharaWithTotal.Total)
+                    {
                         getValueByChara = (allData => allData.ClearData.Values
                             .Where(data => data.Chara != chara).Sum(getValueByType));
+                    }
                     else
                         getValueByChara = (allData => getValueByType(allData.ClearData[chara]));
 
@@ -1052,6 +1058,7 @@ namespace ThScoreFileConverter.Models
                     }
 
                     foreach (var level in levels)
+                    {
                         foreach (var stage in stages)
                         {
                             var practice = new Practice();
@@ -1060,6 +1067,7 @@ namespace ThScoreFileConverter.Models
                             if (!this.Practices.ContainsKey(key))
                                 this.Practices.Add(key, practice);
                         }
+                    }
 
                     for (var number = 0; number < CardTable.Count; number++)
                     {

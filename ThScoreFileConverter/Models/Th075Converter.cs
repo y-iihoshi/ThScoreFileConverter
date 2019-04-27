@@ -583,8 +583,10 @@ namespace ThScoreFileConverter.Models
                     if (type == 4)
                     {
                         if ((number > 0) && (number <= CardIdTable[chara].Count()))
+                        {
                             return parent.allScoreData.ClearData[chara].Values
                                 .Any(data => data.CardTrulyGot[number - 1] != 0x00) ? "★" : string.Empty;
+                        }
                         else
                             return match.ToString();
                     }
@@ -599,12 +601,16 @@ namespace ThScoreFileConverter.Models
                         getValues = (data => data.CardTrialCount.Select(toInteger));
 
                     if (number == 0)
+                    {
                         return Utils.ToNumberString(
                             parent.allScoreData.ClearData[chara].Values.Sum(data => getValues(data).Sum()));
+                    }
                     else if (number <= CardIdTable[chara].Count())
+                    {
                         return Utils.ToNumberString(
                             parent.allScoreData.ClearData[chara].Values.Sum(data =>
                                 getValues(data).ElementAt(number - 1)));
+                    }
                     else
                         return match.ToString();
                 });
@@ -690,9 +696,11 @@ namespace ThScoreFileConverter.Models
                     Func<short, bool> isPositive = (value => value > 0);
 
                     if (level == LevelWithTotal.Total)
+                    {
                         return Utils.ToNumberString(
                             parent.allScoreData.ClearData[chara].Values.Sum(data =>
                                 getValues(data).Count(isPositive)));
+                    }
                     else
                     {
                         var cardIndexIdPairs = CardIdTable[chara]
@@ -811,6 +819,7 @@ namespace ThScoreFileConverter.Models
                 var levels = Utils.GetEnumerator<Level>();
 
                 foreach (var chara in Utils.GetEnumerator<Chara>())
+                {
                     foreach (var level in levels)
                     {
                         var clearData = new ClearData();
@@ -818,10 +827,13 @@ namespace ThScoreFileConverter.Models
                         if (!this.ClearData[chara].ContainsKey(level))
                             this.ClearData[chara].Add(level, clearData);
                     }
+                }
 
                 foreach (var unknownChara in Enumerable.Range(1, 4))
+                {
                     foreach (var level in levels)
                         new ClearData().ReadFrom(reader);
+                }
 
                 var status = new Status();
                 status.ReadFrom(reader);

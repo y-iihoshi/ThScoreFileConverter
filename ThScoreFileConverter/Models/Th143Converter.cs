@@ -520,8 +520,11 @@ namespace ThScoreFileConverter.Models
                             if (item == ItemWithTotal.NoItem)
                                 return "-";
                             else
+                            {
                                 return (score != null)
                                     ? Utils.ToNumberString(score.ChallengeCounts[item]) : "0";
+                            }
+
                         case 3:     // cleared count
                             return (score != null) ? Utils.ToNumberString(score.ClearCounts[item]) : "0";
                         default:    // unreachable
@@ -616,8 +619,10 @@ namespace ThScoreFileConverter.Models
                         if (enemies.Length == 1)
                             return SpellCards[key].Enemy.ToLongName();
                         else
+                        {
                             return string.Join(
                                 " &amp; ", enemies.Select(enemy => enemy.ToLongName()).ToArray());
+                        }
                     }
                     else
                         return SpellCards[key].Card;
@@ -644,8 +649,10 @@ namespace ThScoreFileConverter.Models
                     var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
 
                     if ((number > 0) && (number <= Nicknames.Count))
+                    {
                         return (parent.allScoreData.Status.NicknameFlags[number] > 0)
                             ? Nicknames[number - 1] : "??????????";
+                    }
                     else
                         return match.ToString();
                 });
@@ -744,6 +751,7 @@ namespace ThScoreFileConverter.Models
 
                     if (!string.IsNullOrEmpty(outputFilePath) &&
                         parent.bestshots.TryGetValue(key, out BestShotPair bestshot))
+                    {
                         switch (type)
                         {
                             case 1:     // relative path to the bestshot file
@@ -760,7 +768,9 @@ namespace ThScoreFileConverter.Models
                             default:    // unreachable
                                 return match.ToString();
                         }
+                    }
                     else
+                    {
                         switch (type)
                         {
                             case 1: return string.Empty;
@@ -769,6 +779,7 @@ namespace ThScoreFileConverter.Models
                             case 4: return "----/--/-- --:--:--";
                             default: return match.ToString();
                         }
+                    }
                 });
             }
 

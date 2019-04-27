@@ -294,11 +294,16 @@ namespace ThScoreFileConverter.Models
                 header.ReadFrom(reader);
 
                 if (this.bestshots == null)
+                {
                     this.bestshots = new Dictionary<Chara, Dictionary<LevelScenePair, BestShotPair>>(
                         Enum.GetValues(typeof(Chara)).Length);
+                }
+
                 if (!this.bestshots.ContainsKey(chara))
+                {
                     this.bestshots.Add(
                         chara, new Dictionary<LevelScenePair, BestShotPair>(SpellCards.Count));
+                }
 
                 var key = new LevelScenePair(header.Level, header.Scene);
                 if (!this.bestshots[chara].ContainsKey(key))
@@ -475,8 +480,10 @@ namespace ThScoreFileConverter.Models
                             return (score != null) ? Utils.ToNumberString(score.FirstSuccess) : "0";
                         case 5:     // date & time
                             if (score != null)
+                            {
                                 return new DateTime(1970, 1, 1).AddSeconds(score.DateTime).ToLocalTime()
                                     .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
+                            }
                             else
                                 return "----/--/-- --:--:--";
                         default:    // unreachable
@@ -756,9 +763,11 @@ namespace ThScoreFileConverter.Models
                                     (elem.Chara == chara) &&
                                     elem.LevelScene.Equals(key));
                                 if (score != null)
+                                {
                                     return new DateTime(1970, 1, 1)
                                         .AddSeconds(score.DateTime).ToLocalTime()
                                         .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
+                                }
                                 else
                                     return "----/--/-- --:--:--";
                             case 7:     // detail info

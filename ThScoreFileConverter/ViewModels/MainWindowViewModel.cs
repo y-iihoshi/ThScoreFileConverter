@@ -703,8 +703,10 @@ namespace ThScoreFileConverter.ViewModels
                 if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 {
                     if (e.Data.GetData(DataFormats.FileDrop) is string[] droppedPaths)
+                    {
                         this.TemplateFiles = this.TemplateFiles
                             .Union(droppedPaths.Where(path => File.Exists(path)));
+                    }
                 }
             }
             catch (Exception ex)

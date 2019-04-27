@@ -589,6 +589,7 @@ namespace ThScoreFileConverter.Models
 
                     if (!string.IsNullOrEmpty(outputFilePath) &&
                         parent.bestshots.TryGetValue(key, out BestShotPair bestshot))
+                    {
                         switch (type)
                         {
                             case 1:     // relative path to the bestshot file
@@ -607,16 +608,20 @@ namespace ThScoreFileConverter.Models
                                     var score = parent.allScoreData.Scores.Find(
                                         elem => (elem != null) && elem.LevelScene.Equals(key));
                                     if (score != null)
+                                    {
                                         return new DateTime(1970, 1, 1)
                                             .AddSeconds(score.DateTime).ToLocalTime()
                                             .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
+                                    }
                                     else
                                         return "----/--/-- --:--:--";
                                 }
                             default:    // unreachable
                                 return match.ToString();
                         }
+                    }
                     else
+                    {
                         switch (type)
                         {
                             case 1: return string.Empty;
@@ -627,6 +632,7 @@ namespace ThScoreFileConverter.Models
                             case 6: return "----/--/-- --:--:--";
                             default: return match.ToString();
                         }
+                    }
                 });
             }
 

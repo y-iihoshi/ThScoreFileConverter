@@ -817,11 +817,15 @@ namespace ThScoreFileConverter.Models
                     {
                         var scores = parent.allScoreData.PracticeScores[key];
                         if (type == 1)
+                        {
                             return scores.ContainsKey(stage)
                                 ? Utils.ToNumberString(scores[stage].HighScore * 10) : "0";
+                        }
                         else
+                        {
                             return scores.ContainsKey(stage)
                                 ? Utils.ToNumberString(scores[stage].TrialCount) : "0";
+                        }
                     }
                     else
                         return "0";

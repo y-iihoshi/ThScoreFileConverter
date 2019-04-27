@@ -589,8 +589,10 @@ namespace ThScoreFileConverter.Models
                                 return StageProgress.None.ToShortName();
                         case 4:     // date & time
                             if (ranking.DateTime > 0)
+                            {
                                 return new DateTime(1970, 1, 1).AddSeconds(ranking.DateTime).ToLocalTime()
                                     .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
+                            }
                             else
                                 return "----/--/-- --:--:--";
                         case 5:     // slow
@@ -634,8 +636,10 @@ namespace ThScoreFileConverter.Models
                         getCount = (card => card.TrialCount);
 
                     if (number == 0)
+                    {
                         return Utils.ToNumberString(
                             parent.allScoreData.CardData.Cards.Values.Sum(getCount));
+                    }
                     else if (CardTable.ContainsKey(number))
                     {
                         if (parent.allScoreData.CardData.Cards.TryGetValue(number, out SpellCard card))
@@ -826,8 +830,10 @@ namespace ThScoreFileConverter.Models
 
                     Func<AllScoreData, long> getValueByRoute;
                     if (route == RouteWithTotal.Total)
+                    {
                         getValueByRoute = (allData => allData.ClearData.Values
                             .Where(data => data.Route != route).Sum(getValueByType));
+                    }
                     else
                         getValueByRoute = (allData => getValueByType(allData.ClearData[route]));
 
@@ -890,8 +896,10 @@ namespace ThScoreFileConverter.Models
 
                     Func<AllScoreData, long> getValueByRoute;
                     if (route == RouteWithTotal.Total)
+                    {
                         getValueByRoute = (allData => allData.ClearData.Values
                             .Where(data => data.Route != route).Sum(getValueByType));
+                    }
                     else
                         getValueByRoute = (allData => getValueByType(allData.ClearData[route]));
 

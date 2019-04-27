@@ -742,13 +742,17 @@ namespace ThScoreFileConverter.Models
                         getValue = (attack => getCareer(attack).TrialCounts[chara]);
 
                     if (number == 0)
+                    {
                         return Utils.ToNumberString(
                             parent.allScoreData.CardAttacks.Values.Where(isValidLevel).Sum(getValue));
+                    }
                     else if (CardTable.ContainsKey(number))
                     {
                         if (parent.allScoreData.CardAttacks.TryGetValue(number, out CardAttack attack))
+                        {
                             return isValidLevel(attack)
                                 ? Utils.ToNumberString(getValue(attack)) : match.ToString();
+                        }
                         else
                             return "0";
                     }
@@ -826,8 +830,10 @@ namespace ThScoreFileConverter.Models
                         getCount = (career => career.TrialCounts[chara]);
 
                     if (kind == "S")
+                    {
                         return (CardTable[attack.CardId].Level != LevelPractice.LastWord)
                             && (getCount(attack.StoryCareer) > 0);
+                    }
                     else
                         return getCount(attack.PracticeCareer) > 0;
                 };
@@ -1035,11 +1041,15 @@ namespace ThScoreFileConverter.Models
                         var scores = parent.allScoreData.PracticeScores[chara];
                         var key = new StageLevelPair(stage, level);
                         if (type == 1)
+                        {
                             return scores.HighScores.ContainsKey(key)
                                 ? Utils.ToNumberString(scores.HighScores[key] * 10) : "0";
+                        }
                         else
+                        {
                             return scores.PlayCounts.ContainsKey(key)
                                 ? Utils.ToNumberString(scores.PlayCounts[key]) : "0";
+                        }
                     }
                     else
                         return "0";
@@ -1569,6 +1579,7 @@ namespace ThScoreFileConverter.Models
                     reader.ReadUInt32();    // always 0x00000002?
 
                     foreach (var stage in stages)
+                    {
                         foreach (var level in levels)
                         {
                             var key = new StageLevelPair(stage, level);
@@ -1576,8 +1587,10 @@ namespace ThScoreFileConverter.Models
                                 this.PlayCounts.Add(key, 0);
                             this.PlayCounts[key] = reader.ReadInt32();
                         }
+                    }
 
                     foreach (var stage in stages)
+                    {
                         foreach (var level in levels)
                         {
                             var key = new StageLevelPair(stage, level);
@@ -1585,6 +1598,7 @@ namespace ThScoreFileConverter.Models
                                 this.HighScores.Add(key, 0);
                             this.HighScores[key] = reader.ReadInt32();
                         }
+                    }
 
                     this.Chara = Utils.ToEnum<Chara>(reader.ReadByte());
                     reader.ReadExactBytes(3);   // always 0x000001?
