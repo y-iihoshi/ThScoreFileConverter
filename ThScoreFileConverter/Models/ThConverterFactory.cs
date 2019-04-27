@@ -52,8 +52,7 @@ namespace ThScoreFileConverter.Models
         /// <returns>An instance of the subclass specified by <paramref name="key"/>.</returns>
         public static ThConverter Create(string key)
         {
-            Type type = null;
-            return ConverterTypes.TryGetValue(key, out type)
+            return ConverterTypes.TryGetValue(key, out Type type)
                 ? Activator.CreateInstance(type) as ThConverter : null;
         }
     }

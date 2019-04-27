@@ -26,8 +26,7 @@ namespace ThScoreFileConverter.Models
         public static string ToShortName<T>(this T enumValue)
             where T : struct, IComparable, IFormattable, IConvertible
         {
-            EnumAltNameAttribute attr;
-            if (AttributeCache<T, EnumAltNameAttribute>.Cache.TryGetValue(enumValue, out attr))
+            if (AttributeCache<T, EnumAltNameAttribute>.Cache.TryGetValue(enumValue, out EnumAltNameAttribute attr))
                 return attr.ShortName;
             else
                 return string.Empty;
@@ -43,8 +42,7 @@ namespace ThScoreFileConverter.Models
         public static string ToLongName<T>(this T enumValue)
             where T : struct, IComparable, IFormattable, IConvertible
         {
-            EnumAltNameAttribute attr;
-            if (AttributeCache<T, EnumAltNameAttribute>.Cache.TryGetValue(enumValue, out attr))
+            if (AttributeCache<T, EnumAltNameAttribute>.Cache.TryGetValue(enumValue, out EnumAltNameAttribute attr))
                 return attr.LongName;
             else
                 return string.Empty;

@@ -411,11 +411,10 @@ namespace ThScoreFileConverter.Models
 
             try
             {
-                Action<AllScoreData, Chapter> setChapter;
                 while (true)
                 {
                     chapter.ReadFrom(reader);
-                    if (dictionary.TryGetValue(chapter.Signature, out setChapter))
+                    if (dictionary.TryGetValue(chapter.Signature, out Action<AllScoreData, Chapter> setChapter))
                         setChapter(allScoreData, chapter);
                 }
             }
@@ -645,11 +644,9 @@ namespace ThScoreFileConverter.Models
                     if (!SpellCards.ContainsKey(key))
                         return match.ToString();
 
-                    Dictionary<LevelScenePair, BestShotPair> bestshots;
-                    BestShotPair bestshot;
                     if (!string.IsNullOrEmpty(outputFilePath) &&
-                        parent.bestshots.TryGetValue(chara, out bestshots) &&
-                        bestshots.TryGetValue(key, out bestshot))
+                        parent.bestshots.TryGetValue(chara, out Dictionary<LevelScenePair, BestShotPair> bestshots) &&
+                        bestshots.TryGetValue(key, out BestShotPair bestshot))
                     {
                         var relativePath = new Uri(outputFilePath)
                             .MakeRelativeUri(new Uri(bestshot.Path)).OriginalString;
@@ -726,11 +723,9 @@ namespace ThScoreFileConverter.Models
                     if (!SpellCards.ContainsKey(key))
                         return match.ToString();
 
-                    Dictionary<LevelScenePair, BestShotPair> bestshots;
-                    BestShotPair bestshot;
                     if (!string.IsNullOrEmpty(outputFilePath) &&
-                        parent.bestshots.TryGetValue(chara, out bestshots) &&
-                        bestshots.TryGetValue(key, out bestshot))
+                        parent.bestshots.TryGetValue(chara, out Dictionary<LevelScenePair, BestShotPair> bestshots) &&
+                        bestshots.TryGetValue(key, out BestShotPair bestshot))
                     {
                         Score score;
                         IEnumerable<string> detailStrings;

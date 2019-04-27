@@ -368,11 +368,10 @@ namespace ThScoreFileConverter.Models
 
             try
             {
-                Action<AllScoreData, Chapter> setChapter;
                 while (true)
                 {
                     chapter.ReadFrom(reader);
-                    if (dictionary.TryGetValue(chapter.Signature, out setChapter))
+                    if (dictionary.TryGetValue(chapter.Signature, out Action<AllScoreData, Chapter> setChapter))
                         setChapter(allScoreData, chapter);
                 }
             }
@@ -534,9 +533,8 @@ namespace ThScoreFileConverter.Models
                     if (!SpellCards.ContainsKey(key))
                         return match.ToString();
 
-                    BestShotPair bestshot;
                     if (!string.IsNullOrEmpty(outputFilePath) &&
-                        parent.bestshots.TryGetValue(key, out bestshot))
+                        parent.bestshots.TryGetValue(key, out BestShotPair bestshot))
                     {
                         var relativePath = new Uri(outputFilePath)
                             .MakeRelativeUri(new Uri(bestshot.Path)).OriginalString;
@@ -583,9 +581,8 @@ namespace ThScoreFileConverter.Models
                     if (!SpellCards.ContainsKey(key))
                         return match.ToString();
 
-                    BestShotPair bestshot;
                     if (!string.IsNullOrEmpty(outputFilePath) &&
-                        parent.bestshots.TryGetValue(key, out bestshot))
+                        parent.bestshots.TryGetValue(key, out BestShotPair bestshot))
                         switch (type)
                         {
                             case 1:     // relative path to the bestshot file

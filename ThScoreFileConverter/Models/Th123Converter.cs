@@ -1133,11 +1133,9 @@ namespace ThScoreFileConverter.Models
 
             return CardNameTable.Keys.Where(matchesCharaAndType).ElementAtOrDefault(serialNumber);
 #else
-            Dictionary<CardType, int[]> cardTypeIdDict;
-            if (CardOrderTable.TryGetValue(chara, out cardTypeIdDict))
+            if (CardOrderTable.TryGetValue(chara, out Dictionary<CardType, int[]> cardTypeIdDict))
             {
-                int[] cardIds;
-                if (cardTypeIdDict.TryGetValue(type, out cardIds))
+                if (cardTypeIdDict.TryGetValue(type, out int[] cardIds))
                 {
                     if (serialNumber < cardIds.Length)
                         return new CharaCardIdPair(chara, cardIds[serialNumber]);

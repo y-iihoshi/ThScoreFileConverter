@@ -519,11 +519,10 @@ namespace ThScoreFileConverter.Models
 
             try
             {
-                Action<AllScoreData, Chapter> setChapter;
                 while (true)
                 {
                     chapter.ReadFrom(reader);
-                    if (dictionary.TryGetValue(chapter.Signature, out setChapter))
+                    if (dictionary.TryGetValue(chapter.Signature, out Action<AllScoreData, Chapter> setChapter))
                         setChapter(allScoreData, chapter);
                 }
             }
@@ -627,8 +626,7 @@ namespace ThScoreFileConverter.Models
                             parent.allScoreData.CardData.Cards.Values.Sum(getCount));
                     else if (CardTable.ContainsKey(number))
                     {
-                        SpellCard card;
-                        if (parent.allScoreData.CardData.Cards.TryGetValue(number, out card))
+                        if (parent.allScoreData.CardData.Cards.TryGetValue(number, out SpellCard card))
                             return Utils.ToNumberString(getCount(card));
                         else
                             return "0";
@@ -665,8 +663,7 @@ namespace ThScoreFileConverter.Models
                             if (hideUntriedCards)
                             {
                                 var cards = parent.allScoreData.CardData.Cards;
-                                SpellCard card;
-                                if (!cards.TryGetValue(number, out card) || !card.HasTried())
+                                if (!cards.TryGetValue(number, out SpellCard card) || !card.HasTried())
                                     return "??????????";
                             }
 

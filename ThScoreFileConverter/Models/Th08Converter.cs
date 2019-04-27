@@ -575,11 +575,10 @@ namespace ThScoreFileConverter.Models
 
             try
             {
-                Action<AllScoreData, Chapter> setChapter;
                 while (true)
                 {
                     chapter.ReadFrom(reader);
-                    if (dictionary.TryGetValue(chapter.Signature, out setChapter))
+                    if (dictionary.TryGetValue(chapter.Signature, out Action<AllScoreData, Chapter> setChapter))
                         setChapter(allScoreData, chapter);
                 }
             }
@@ -666,8 +665,7 @@ namespace ThScoreFileConverter.Models
                                 .Where(pair => pair.Value > 0)
                                 .Select(pair =>
                                 {
-                                    CardInfo card;
-                                    return CardTable.TryGetValue(pair.Key, out card)
+                                    return CardTable.TryGetValue(pair.Key, out CardInfo card)
                                         ? Utils.Format("No.{0:D3} {1}", card.Id, card.Name) : string.Empty;
                                 });
                             return string.Join(Environment.NewLine, cardStrings.ToArray());
@@ -730,8 +728,7 @@ namespace ThScoreFileConverter.Models
                             parent.allScoreData.CardAttacks.Values.Where(isValidLevel).Sum(getValue));
                     else if (CardTable.ContainsKey(number))
                     {
-                        CardAttack attack;
-                        if (parent.allScoreData.CardAttacks.TryGetValue(number, out attack))
+                        if (parent.allScoreData.CardAttacks.TryGetValue(number, out CardAttack attack))
                             return isValidLevel(attack)
                                 ? Utils.ToNumberString(getValue(attack)) : match.ToString();
                         else
@@ -766,8 +763,7 @@ namespace ThScoreFileConverter.Models
                     {
                         if (hideUntriedCards)
                         {
-                            CardAttack attack;
-                            if (!parent.allScoreData.CardAttacks.TryGetValue(number, out attack) ||
+                            if (!parent.allScoreData.CardAttacks.TryGetValue(number, out CardAttack attack) ||
                                 !attack.HasTried())
                                 return (type == "N") ? "??????????" : "?????";
                         }
