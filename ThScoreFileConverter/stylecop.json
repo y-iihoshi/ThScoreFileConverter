@@ -1,0 +1,18 @@
+﻿{
+  "$schema": "https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/StyleCop.Analyzers/StyleCop.Analyzers/Settings/stylecop.schema.json",
+  "settings": {
+    "indentation": {
+      "indentationSize": 2,
+      "tabSize": 4,
+      "useTabs": false
+    },
+    "documentationRules": {
+      "companyName": "None",
+      "copyrightText": "Copyright (c) {author}.\nLicensed under the {license} license. See {licenseFile} file in the project root for full license information.",
+      "variables": {
+        "author": "IIHOSHI Yoshinori",
+        "license": "BSD-2-Clause",
+        "licenseFile": "LICENSE.txt"
+    }
+  }
+}
