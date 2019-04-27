@@ -290,16 +290,19 @@ namespace ThScoreFileConverter.Models
 
         public enum LevelPractice
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("E")] Easy,
             [EnumAltName("N")] Normal,
             [EnumAltName("H")] Hard,
             [EnumAltName("L")] Lunatic,
             [EnumAltName("X")] Extra,
             [EnumAltName("W", LongName = "Last Word")] LastWord
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         public enum LevelPracticeWithTotal
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("E")] Easy,
             [EnumAltName("N")] Normal,
             [EnumAltName("H")] Hard,
@@ -307,10 +310,12 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("X")] Extra,
             [EnumAltName("W", LongName = "Last Word")] LastWord,
             [EnumAltName("T")] Total
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         public enum Chara
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("RY")] ReimuYukari,
             [EnumAltName("MA")] MarisaAlice,
             [EnumAltName("SR")] SakuyaRemilia,
@@ -323,10 +328,12 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("RL")] Remilia,
             [EnumAltName("YM")] Youmu,
             [EnumAltName("YU")] Yuyuko
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         public enum CharaWithTotal
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("RY")] ReimuYukari,
             [EnumAltName("MA")] MarisaAlice,
             [EnumAltName("SR")] SakuyaRemilia,
@@ -340,10 +347,12 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("YM")] Youmu,
             [EnumAltName("YU")] Yuyuko,
             [EnumAltName("TL")] Total
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         public new enum Stage
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("1A")] St1,
             [EnumAltName("2A")] St2,
             [EnumAltName("3A")] St3,
@@ -353,10 +362,12 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("6A")] St6A,
             [EnumAltName("6B")] St6B,
             [EnumAltName("EX")] Extra
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         public new enum StageWithTotal
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("1A")] St1,
             [EnumAltName("2A")] St2,
             [EnumAltName("3A")] St3,
@@ -367,10 +378,12 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("6B")] St6B,
             [EnumAltName("EX")] Extra,
             [EnumAltName("00")] Total
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         public enum StagePractice
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("1A")] St1,
             [EnumAltName("2A")] St2,
             [EnumAltName("3A")] St3,
@@ -381,11 +394,13 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("6B")] St6B,
             [EnumAltName("EX")] Extra,
             [EnumAltName("LW", LongName = "Last Word")] LastWord
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         public enum StageProgress
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("Stage 1")]          St1,
             [EnumAltName("Stage 2")]          St2,
             [EnumAltName("Stage 3")]          St3,
@@ -396,6 +411,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("Stage 6-Kaguya")]   St6B,
             [EnumAltName("Extra Stage")]      Extra,
             [EnumAltName("All Clear")]        Clear = 99
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         [Flags]

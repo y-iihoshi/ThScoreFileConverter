@@ -296,6 +296,7 @@ namespace ThScoreFileConverter.Models
 
         public enum Route
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("A1")] A1,
             [EnumAltName("A2")] A2,
             [EnumAltName("B1")] B1,
@@ -303,10 +304,12 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("C1")] C1,
             [EnumAltName("C2")] C2,
             [EnumAltName("EX")] Extra
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         public enum RouteWithTotal
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("A1")] A1,
             [EnumAltName("A2")] A2,
             [EnumAltName("B1")] B1,
@@ -315,10 +318,12 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("C2")] C2,
             [EnumAltName("EX")] Extra,
             [EnumAltName("TL")] Total
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         public new enum Stage
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("A11")] A_1,
             [EnumAltName("A12")] A1_2,
             [EnumAltName("A13")] A1_3,
@@ -335,10 +340,12 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("C22")] C2_2,
             [EnumAltName("C23")] C2_3,
             [EnumAltName("EXT")] Extra
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         public new enum StageWithTotal
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("A11")] A_1,
             [EnumAltName("A12")] A1_2,
             [EnumAltName("A13")] A1_3,
@@ -356,11 +363,13 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("C23")] C2_3,
             [EnumAltName("EXT")] Extra,
             [EnumAltName("TTL")] Total
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         public enum StageProgress
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("-------")]     None,
             [EnumAltName("Stage A-1")]   A_1,
             [EnumAltName("Stage A1-2")]  A1_2,
@@ -385,6 +394,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("C1 Clear")]    C1Clear,
             [EnumAltName("C2 Clear")]    C2Clear,
             [EnumAltName("Extra Clear")] ExtraClear
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         public override string SupportedVersions

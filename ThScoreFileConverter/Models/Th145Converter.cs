@@ -39,19 +39,23 @@ namespace ThScoreFileConverter.Models
 
         public new enum Level
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("E")] Easy,
             [EnumAltName("N")] Normal,
             [EnumAltName("H")] Hard,
             [EnumAltName("L")] Lunatic
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         public new enum LevelWithTotal
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("E")] Easy,
             [EnumAltName("N")] Normal,
             [EnumAltName("H")] Hard,
             [EnumAltName("L")] Lunatic,
             [EnumAltName("T")] Total
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         [Flags]
@@ -66,6 +70,7 @@ namespace ThScoreFileConverter.Models
 
         public enum Chara
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("RA")] ReimuA,
             [EnumAltName("MR")] Marisa,
             [EnumAltName("IU")] IchirinUnzan,
@@ -81,10 +86,12 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("SN")] Shinmyoumaru,
             [EnumAltName("SM")] Sumireko,
             [EnumAltName("RB")] ReimuB
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         public enum CharaWithTotal
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("RA")] ReimuA,
             [EnumAltName("MR")] Marisa,
             [EnumAltName("IU")] IchirinUnzan,
@@ -101,6 +108,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("SM")] Sumireko,
             [EnumAltName("RB")] ReimuB,
             [EnumAltName("TL")] Total
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         public override string SupportedVersions

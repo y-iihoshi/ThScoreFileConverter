@@ -201,6 +201,7 @@ namespace ThScoreFileConverter.Models
 
         public enum Day
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("1", LongName = "01")] Day1,
             [EnumAltName("2", LongName = "02")] Day2,
             [EnumAltName("3", LongName = "03")] Day3,
@@ -211,11 +212,13 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("8", LongName = "08")] Day8,
             [EnumAltName("9", LongName = "09")] Day9,
             [EnumAltName("L", LongName = "10")] Last
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         public enum Enemy
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("わかさぎ姫",  LongName = "わかさぎ姫")]             Wakasagihime,
             [EnumAltName("チルノ",      LongName = "チルノ")]                 Cirno,
             [EnumAltName("響子",        LongName = "幽谷 響子")]              Kyouko,
@@ -249,11 +252,13 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("天子",        LongName = "比那名居 天子")]          Tenshi,
             [EnumAltName("レミリア",    LongName = "レミリア・スカーレット")] Remilia,
             [EnumAltName("紫",          LongName = "八雲 紫")]                Yukari
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         public enum ItemWithTotal
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("1", LongName = "ひらり布")]                 Fablic,
             [EnumAltName("2", LongName = "天狗のトイカメラ")]         Camera,
             [EnumAltName("3", LongName = "隙間の折りたたみ傘")]       Umbrella,
@@ -265,6 +270,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("9", LongName = "打ち出の小槌（レプリカ）")] Mallet,
             [EnumAltName("0", LongName = "ノーアイテム")]             NoItem,
             [EnumAltName("T", LongName = "合計")]                     Total
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         public override string SupportedVersions

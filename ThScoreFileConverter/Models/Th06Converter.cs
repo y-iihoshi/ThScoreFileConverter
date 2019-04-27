@@ -118,24 +118,29 @@ namespace ThScoreFileConverter.Models
 
         public enum Chara
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("RA")] ReimuA,
             [EnumAltName("RB")] ReimuB,
             [EnumAltName("MA")] MarisaA,
             [EnumAltName("MB")] MarisaB
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         public enum CharaWithTotal
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("RA")] ReimuA,
             [EnumAltName("RB")] ReimuB,
             [EnumAltName("MA")] MarisaA,
             [EnumAltName("MB")] MarisaB,
             [EnumAltName("TL")] Total
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         public enum StageProgress
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("-------")]     None,
             [EnumAltName("Stage 1")]     St1,
             [EnumAltName("Stage 2")]     St2,
@@ -145,6 +150,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("Stage 6")]     St6,
             [EnumAltName("Extra Stage")] Extra,
             [EnumAltName("All Clear")]   Clear = 99
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         public override string SupportedVersions

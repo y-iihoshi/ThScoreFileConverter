@@ -229,23 +229,28 @@ namespace ThScoreFileConverter.Models
 
         public new enum Level
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("E")] Easy,
             [EnumAltName("N")] Normal,
             [EnumAltName("H")] Hard,
             [EnumAltName("L")] Lunatic
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         public new enum LevelWithTotal
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("E")] Easy,
             [EnumAltName("N")] Normal,
             [EnumAltName("H")] Hard,
             [EnumAltName("L")] Lunatic,
             [EnumAltName("T")] Total
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         public enum Chara
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("RM")] Reimu,
             [EnumAltName("MR")] Marisa,
             [EnumAltName("SK")] Sakuya,
@@ -257,10 +262,12 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("YK")] Yukari,
             [EnumAltName("SU")] Suika,
             [EnumAltName("ML")] Meiling
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         public enum CharaWithTotal
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("RM")] Reimu,
             [EnumAltName("MR")] Marisa,
             [EnumAltName("SK")] Sakuya,
@@ -273,10 +280,12 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("SU")] Suika,
             [EnumAltName("ML")] Meiling,
             [EnumAltName("TL")] Total
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         public new enum Stage
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("1")] St1,
             [EnumAltName("2")] St2,
             [EnumAltName("3")] St3,
@@ -284,6 +293,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("5")] St5,
             [EnumAltName("6")] St6,
             [EnumAltName("7")] St7
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         public override string SupportedVersions

@@ -41,21 +41,25 @@ namespace ThScoreFileConverter.Models
 
         public new enum Level
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("E")] Easy,
             [EnumAltName("N")] Normal,
             [EnumAltName("H")] Hard,
             [EnumAltName("L")] Lunatic,
             [EnumAltName("D")] OverDrive
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         public new enum LevelWithTotal
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("E")] Easy,
             [EnumAltName("N")] Normal,
             [EnumAltName("H")] Hard,
             [EnumAltName("L")] Lunatic,
             [EnumAltName("D")] OverDrive,
             [EnumAltName("T")] Total
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         [Flags]
@@ -71,6 +75,7 @@ namespace ThScoreFileConverter.Models
 
         public enum StoryChara
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("RK")] ReimuKasen,
             [EnumAltName("MK")] MarisaKoishi,
             [EnumAltName("NK")] NitoriKokoro,
@@ -82,10 +87,12 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("TS")] TenshiShinmyoumaru,
             [EnumAltName("YR")] YukariReimu,
             [EnumAltName("JS")] JoonShion
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         public enum StoryCharaWithTotal
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("RK")] ReimuKasen,
             [EnumAltName("MK")] MarisaKoishi,
             [EnumAltName("NK")] NitoriKokoro,
@@ -98,6 +105,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("YR")] YukariReimu,
             [EnumAltName("JS")] JoonShion,
             [EnumAltName("TL")] Total
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         public override string SupportedVersions

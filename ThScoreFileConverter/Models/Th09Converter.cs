@@ -30,6 +30,7 @@ namespace ThScoreFileConverter.Models
 
         public enum Chara
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("RM")] Reimu,
             [EnumAltName("MR")] Marisa,
             [EnumAltName("SK")] Sakuya,
@@ -46,6 +47,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("SI")] Shikieiki,
             [EnumAltName("ML")] Merlin,
             [EnumAltName("LN")] Lunasa
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         public override string SupportedVersions

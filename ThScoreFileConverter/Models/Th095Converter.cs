@@ -132,6 +132,7 @@ namespace ThScoreFileConverter.Models
 
         public new enum Level
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("1", LongName = "01")] Lv1,
             [EnumAltName("2", LongName = "02")] Lv2,
             [EnumAltName("3", LongName = "03")] Lv3,
@@ -143,11 +144,13 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("9", LongName = "09")] Lv9,
             [EnumAltName("0", LongName = "10")] Lv10,
             [EnumAltName("X", LongName = "ex")] Extra
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         public enum Enemy
         {
+#pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("リグル",     LongName = "リグル・ナイトバグ")]         Wriggle,
             [EnumAltName("ルーミア",   LongName = "ルーミア")]                   Rumia,
             [EnumAltName("チルノ",     LongName = "チルノ")]                     Cirno,
@@ -173,6 +176,7 @@ namespace ThScoreFileConverter.Models
             [EnumAltName("紫",         LongName = "八雲 紫")]                    Yukari,
             [EnumAltName("妹紅",       LongName = "藤原 妹紅")]                  Mokou,
             [EnumAltName("萃香",       LongName = "伊吹 萃香")]                  Suika
+#pragma warning restore SA1134 // Attributes should not share line
         }
 
         public override string SupportedVersions
