@@ -16,11 +16,6 @@ namespace ThScoreFileConverter.Models
     public class Profiler : IDisposable
     {
         /// <summary>
-        /// The flag that represents whether <see cref="Dispose(bool)"/> has been called.
-        /// </summary>
-        private bool disposed;
-
-        /// <summary>
         /// The instance of the <see cref="Stopwatch"/> class for measuring the processing time.
         /// </summary>
         private readonly Stopwatch watch;
@@ -36,16 +31,21 @@ namespace ThScoreFileConverter.Models
         private readonly Action<TimeSpan> postprocess;
 
         /// <summary>
+        /// The flag that represents whether <see cref="Dispose(bool)"/> has been called.
+        /// </summary>
+        private bool disposed;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Profiler"/> class.
         /// </summary>
         /// <param name="preprocess">The delegate of the process called before the measuring.</param>
         /// <param name="postprocess">The delegate of the process called after the measuring.</param>
         public Profiler(Action preprocess, Action<TimeSpan> postprocess)
         {
-            this.disposed = false;
             this.watch = new Stopwatch();
             this.preprocess = preprocess;
             this.postprocess = postprocess;
+            this.disposed = false;
 
             this.preprocess?.Invoke();
             this.watch.Start();
