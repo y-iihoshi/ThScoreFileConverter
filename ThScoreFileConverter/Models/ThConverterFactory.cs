@@ -1,6 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="ThConverterFactory.cs" company="None">
-//     (c) 2014-2018 IIHOSHI Yoshinori
+// Copyright (c) IIHOSHI Yoshinori.
+// Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
 //-----------------------------------------------------------------------
 
