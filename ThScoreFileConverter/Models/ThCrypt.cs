@@ -21,7 +21,7 @@ namespace ThScoreFileConverter.Models
         /// </summary>
         /// <param name="input">The stream to input data to encrypt.</param>
         /// <param name="output">The stream that is output the encrypted data.</param>
-        /// <param name="size">The size of input data. (Unit: [Byte])</param>
+        /// <param name="size">The size in bytes of input data.</param>
         /// <param name="key">The encryption key.</param>
         /// <param name="step">The step.</param>
         /// <param name="block">The size of block.</param>
@@ -39,7 +39,7 @@ namespace ThScoreFileConverter.Models
         /// </summary>
         /// <param name="input">The stream to input data to decrypt.</param>
         /// <param name="output">The stream that is output the decrypted data.</param>
-        /// <param name="size">The size of input data. (Unit: [Byte])</param>
+        /// <param name="size">The size in bytes of input data.</param>
         /// <param name="key">The decryption key.</param>
         /// <param name="step">The step.</param>
         /// <param name="block">The size of block.</param>

@@ -511,7 +511,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Selects a score file.
         /// </summary>
-        /// <param name="result">A result of <see cref="OpenFileDialogAction"/></param>
+        /// <param name="result">A result of <see cref="OpenFileDialogAction"/>.</param>
         private void SelectScoreFile(OpenFileDialogActionResult result)
         {
             this.ScoreFile = result.FileName;

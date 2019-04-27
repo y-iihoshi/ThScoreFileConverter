@@ -17,7 +17,7 @@ namespace ThScoreFileConverter.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="Time"/> class to a specified number of frames.
         /// </summary>
-        /// <param name="frames">Number of frames</param>
+        /// <param name="frames">Number of frames.</param>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="frames"/> is negative.</exception>
         public Time(long frames)
             : this(frames, true)

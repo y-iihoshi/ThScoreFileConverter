@@ -9,7 +9,7 @@ namespace ThScoreFileConverter.Views
     using System.Windows.Controls;
 
     /// <summary>
-    /// Interaction logic for AboutWindow.xaml
+    /// Interaction logic for AboutWindow.xaml.
     /// </summary>
     public partial class AboutWindow : UserControl
     {

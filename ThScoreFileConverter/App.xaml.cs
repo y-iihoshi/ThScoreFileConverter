@@ -16,7 +16,7 @@ namespace ThScoreFileConverter
     using Prop = ThScoreFileConverter.Properties;
 
     /// <summary>
-    /// Interaction logic for App.xaml
+    /// Interaction logic for App.xaml.
     /// </summary>
     public partial class App : Application
     {
