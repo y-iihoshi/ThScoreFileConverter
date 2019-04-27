@@ -25,7 +25,6 @@ namespace ThScoreFileConverter.Models
     using System.Runtime.InteropServices;
     using System.Security;
     using System.Security.Permissions;
-    using System.Text;
     using System.Text.RegularExpressions;
 
     internal class Th125Converter : ThConverter

@@ -19,7 +19,6 @@ namespace ThScoreFileConverter.Models
     using System.Globalization;
     using System.IO;
     using System.Linq;
-    using System.Text;
     using System.Text.RegularExpressions;
 
     internal class Th075Converter : ThConverter

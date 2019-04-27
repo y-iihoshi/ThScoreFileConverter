@@ -15,7 +15,6 @@ namespace ThScoreFileConverter.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.Specialized;
     using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
     using System.Drawing.Imaging;
@@ -25,7 +24,6 @@ namespace ThScoreFileConverter.Models
     using System.Runtime.InteropServices;
     using System.Security;
     using System.Security.Permissions;
-    using System.Text;
     using System.Text.RegularExpressions;
 
     internal class Th143Converter : ThConverter
