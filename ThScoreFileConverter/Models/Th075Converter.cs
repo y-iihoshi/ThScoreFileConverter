@@ -880,7 +880,7 @@ namespace ThScoreFileConverter.Models
             public void ReadFrom(BinaryReader reader)
             {
                 if (reader == null)
-                    throw new ArgumentNullException("reader");
+                    throw new ArgumentNullException(nameof(reader));
 
                 var numbers = Enumerable.Range(1, 100);
 
@@ -928,7 +928,7 @@ namespace ThScoreFileConverter.Models
             public void ReadFrom(BinaryReader reader)
             {
                 if (reader == null)
-                    throw new ArgumentNullException("reader");
+                    throw new ArgumentNullException(nameof(reader));
 
                 this.Name = new string(reader.ReadExactBytes(8).Select(ch => CharTable[ch]).ToArray());
 
@@ -968,7 +968,7 @@ namespace ThScoreFileConverter.Models
             public void ReadFrom(BinaryReader reader)
             {
                 if (reader == null)
-                    throw new ArgumentNullException("reader");
+                    throw new ArgumentNullException(nameof(reader));
 
                 var charas = Utils.GetEnumerator<Chara>();
                 var unknownCharas = Enumerable.Range(1, 4);

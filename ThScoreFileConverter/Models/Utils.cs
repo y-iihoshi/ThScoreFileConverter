@@ -146,7 +146,7 @@ namespace ThScoreFileConverter.Models
         public static int ToZeroBased(int input)
         {
             if ((input < 0) || (input > 9))
-                throw new ArgumentOutOfRangeException("input");
+                throw new ArgumentOutOfRangeException(nameof(input));
 
             return (input + 9) % 10;
         }
@@ -159,7 +159,7 @@ namespace ThScoreFileConverter.Models
         public static int ToOneBased(int input)
         {
             if ((input < 0) || (input > 9))
-                throw new ArgumentOutOfRangeException("input");
+                throw new ArgumentOutOfRangeException(nameof(input));
 
             return (input + 1) % 10;
         }

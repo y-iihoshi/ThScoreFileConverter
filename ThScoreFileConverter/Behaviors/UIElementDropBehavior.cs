@@ -207,10 +207,10 @@ namespace ThScoreFileConverter.Behaviors
             if (command != null)
             {
                 if (!(sender is UIElement))
-                    throw new ArgumentException("Wrong type.", "sender");
+                    throw new ArgumentException("Wrong type.", nameof(sender));
 
                 if (e == null)
-                    throw new ArgumentNullException("e");
+                    throw new ArgumentNullException(nameof(e));
 
                 command.Execute(e);
             }

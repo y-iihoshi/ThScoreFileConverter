@@ -1071,7 +1071,7 @@ namespace ThScoreFileConverter.Models
             public void ReadFrom(BinaryReader reader)
             {
                 if (reader == null)
-                    throw new ArgumentNullException("reader");
+                    throw new ArgumentNullException(nameof(reader));
 
                 var validNumCharas = Enum.GetValues(typeof(Chara)).Length;
 
@@ -1141,7 +1141,7 @@ namespace ThScoreFileConverter.Models
             public void ReadFrom(BinaryReader reader)
             {
                 if (reader == null)
-                    throw new ArgumentNullException("reader");
+                    throw new ArgumentNullException(nameof(reader));
 
                 var numCards = reader.ReadInt32();
                 this.CardsForDeck = new Dictionary<int, CardForDeck>(numCards);
@@ -1179,7 +1179,7 @@ namespace ThScoreFileConverter.Models
             public void ReadFrom(BinaryReader reader)
             {
                 if (reader == null)
-                    throw new ArgumentNullException("reader");
+                    throw new ArgumentNullException(nameof(reader));
 
                 this.Id = reader.ReadInt32();
                 this.MaxNumber = reader.ReadInt32();
@@ -1207,7 +1207,7 @@ namespace ThScoreFileConverter.Models
             public void ReadFrom(BinaryReader reader)
             {
                 if (reader == null)
-                    throw new ArgumentNullException("reader");
+                    throw new ArgumentNullException(nameof(reader));
 
                 this.Enemy = (Chara)reader.ReadInt32();
                 this.Level = (Level)reader.ReadInt32();

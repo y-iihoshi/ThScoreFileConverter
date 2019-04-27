@@ -1233,7 +1233,7 @@ namespace ThScoreFileConverter.Models
             public void ReadFrom(BinaryReader reader)
             {
                 if (reader == null)
-                    throw new ArgumentNullException("reader");
+                    throw new ArgumentNullException(nameof(reader));
 
                 this.Score = reader.ReadUInt32();
                 this.ClearFlag = reader.ReadByte();
