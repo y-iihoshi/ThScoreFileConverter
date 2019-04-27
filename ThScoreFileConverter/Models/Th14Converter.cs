@@ -5,6 +5,8 @@
 //-----------------------------------------------------------------------
 
 #pragma warning disable 1591
+#pragma warning disable SA1600 // ElementsMustBeDocumented
+#pragma warning disable SA1602 // EnumerationItemsMustBeDocumented
 
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "*", Justification = "Reviewed.")]
 
