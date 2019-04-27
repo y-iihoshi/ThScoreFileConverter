@@ -429,7 +429,9 @@ namespace ThScoreFileConverter.Models
                                     return ranking.StageProgress.ToShortName();
                             }
                             else
+                            {
                                 return StageProgress.None.ToShortName();
+                            }
                         case 4:     // date & time
                             if (ranking.DateTime > 0)
                             {
@@ -437,7 +439,9 @@ namespace ThScoreFileConverter.Models
                                     .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
                             }
                             else
+                            {
                                 return "----/--/-- --:--:--";
+                            }
                         case 5:     // slow
                             if (ranking.DateTime > 0)
                                 return Utils.Format("{0:F3}%", ranking.SlowRate);
@@ -491,7 +495,9 @@ namespace ThScoreFileConverter.Models
 
                     var cards = parent.allScoreData.ClearData[chara].Cards;
                     if (number == 0)
+                    {
                         return Utils.ToNumberString(cards.Values.Sum(getCount));
+                    }
                     else if (CardTable.ContainsKey(number))
                     {
                         if (cards.TryGetValue(number, out SpellCard card))
@@ -500,7 +506,9 @@ namespace ThScoreFileConverter.Models
                             return "0";
                     }
                     else
+                    {
                         return match.ToString();
+                    }
                 });
             }
 
@@ -538,10 +546,14 @@ namespace ThScoreFileConverter.Models
                             return CardTable[number].Name;
                         }
                         else
+                        {
                             return CardTable[number].Level.ToString();
+                        }
                     }
                     else
+                    {
                         return match.ToString();
+                    }
                 });
             }
 
@@ -705,7 +717,9 @@ namespace ThScoreFileConverter.Models
                             .Where(data => data.Chara != chara).Sum(getValueByType));
                     }
                     else
+                    {
                         getValueByChara = (allData => getValueByType(allData.ClearData[chara]));
+                    }
 
                     return toString(getValueByChara(parent.allScoreData));
                 });
@@ -762,7 +776,9 @@ namespace ThScoreFileConverter.Models
                             .Where(data => data.Chara != chara).Sum(getValueByType));
                     }
                     else
+                    {
                         getValueByChara = (allData => getValueByType(allData.ClearData[chara]));
+                    }
 
                     return toString(getValueByChara(parent.allScoreData));
                 });
@@ -803,7 +819,9 @@ namespace ThScoreFileConverter.Models
                             ? Utils.ToNumberString(practices[key].Score * 10) : "0";
                     }
                     else
+                    {
                         return "0";
+                    }
                 });
             }
 

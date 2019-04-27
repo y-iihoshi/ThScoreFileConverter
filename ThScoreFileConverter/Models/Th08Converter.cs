@@ -754,10 +754,14 @@ namespace ThScoreFileConverter.Models
                                 ? Utils.ToNumberString(getValue(attack)) : match.ToString();
                         }
                         else
+                        {
                             return "0";
+                        }
                     }
                     else
+                    {
                         return match.ToString();
+                    }
                 });
             }
 
@@ -791,7 +795,9 @@ namespace ThScoreFileConverter.Models
                         }
 
                         if (type == "N")
+                        {
                             return CardTable[number].Name;
+                        }
                         else
                         {
                             var level = CardTable[number].Level;
@@ -800,7 +806,9 @@ namespace ThScoreFileConverter.Models
                         }
                     }
                     else
+                    {
                         return match.ToString();
+                    }
                 });
             }
 
@@ -835,7 +843,9 @@ namespace ThScoreFileConverter.Models
                             && (getCount(attack.StoryCareer) > 0);
                     }
                     else
+                    {
                         return getCount(attack.PracticeCareer) > 0;
+                    }
                 };
 
             private readonly MatchEvaluator evaluator;
@@ -917,9 +927,13 @@ namespace ThScoreFileConverter.Models
                         var stageProgress =
                             parent.allScoreData.Rankings[key].Max(rank => rank.StageProgress);
                         if ((stageProgress == StageProgress.St4A) || (stageProgress == StageProgress.St4B))
+                        {
                             return "Stage 4";
+                        }
                         else if (stageProgress == StageProgress.Extra)
+                        {
                             return "Not Clear";
+                        }
                         else if (stageProgress == StageProgress.Clear)
                         {
                             if ((level != Level.Extra) &&
@@ -930,10 +944,14 @@ namespace ThScoreFileConverter.Models
                                 return stageProgress.ToShortName();
                         }
                         else
+                        {
                             return stageProgress.ToShortName();
+                        }
                     }
                     else
+                    {
                         return "-------";
+                    }
                 });
             }
 
@@ -1052,7 +1070,9 @@ namespace ThScoreFileConverter.Models
                         }
                     }
                     else
+                    {
                         return "0";
+                    }
                 });
             }
 

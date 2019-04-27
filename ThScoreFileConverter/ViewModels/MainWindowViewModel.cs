@@ -633,7 +633,9 @@ namespace ThScoreFileConverter.ViewModels
                     e.Handled = true;
                 }
                 else
+                {
                     e.Effects = DragDropEffects.None;
+                }
             }
             catch (Exception ex)
             {

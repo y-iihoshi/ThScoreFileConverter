@@ -310,11 +310,15 @@ namespace ThScoreFileConverter.Models
                     var count = parent.allScoreData.PlayStatus.ClearCounts[chara].Counts[level];
 
                     if (type == 1)
+                    {
                         return Utils.ToNumberString(count);
+                    }
                     else
                     {
                         if (count > 0)
+                        {
                             return "Cleared";
+                        }
                         else
                         {
                             var score = parent.allScoreData.Rankings[new CharaLevelPair(chara, level)][0];

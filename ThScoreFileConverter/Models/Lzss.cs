@@ -58,7 +58,9 @@ namespace ThScoreFileConverter.Models
                 {
                     var offset = reader.ReadBits(13);
                     if (offset == 0)
+                    {
                         break;
+                    }
                     else
                     {
                         var length = reader.ReadBits(4) + 3;

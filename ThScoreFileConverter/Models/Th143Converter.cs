@@ -518,7 +518,9 @@ namespace ThScoreFileConverter.Models
                             return (score != null) ? Utils.ToNumberString(score.HighScore * 10) : "0";
                         case 2:     // challenge count
                             if (item == ItemWithTotal.NoItem)
+                            {
                                 return "-";
+                            }
                             else
                             {
                                 return (score != null)
@@ -617,7 +619,9 @@ namespace ThScoreFileConverter.Models
                     {
                         var enemies = SpellCards[key].Enemies;
                         if (enemies.Length == 1)
+                        {
                             return SpellCards[key].Enemy.ToLongName();
+                        }
                         else
                         {
                             return string.Join(
@@ -625,7 +629,9 @@ namespace ThScoreFileConverter.Models
                         }
                     }
                     else
+                    {
                         return SpellCards[key].Card;
+                    }
                 });
             }
 
@@ -654,7 +660,9 @@ namespace ThScoreFileConverter.Models
                             ? Nicknames[number - 1] : "??????????";
                     }
                     else
+                    {
                         return match.ToString();
+                    }
                 });
             }
 
@@ -717,7 +725,9 @@ namespace ThScoreFileConverter.Models
                             alternativeString);
                     }
                     else
+                    {
                         return string.Empty;
+                    }
                 });
             }
 

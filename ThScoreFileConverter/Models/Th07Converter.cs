@@ -561,7 +561,9 @@ namespace ThScoreFileConverter.Models
                         getValue = (attack => attack.TrialCounts[chara]);
 
                     if (number == 0)
+                    {
                         return Utils.ToNumberString(parent.allScoreData.CardAttacks.Values.Sum(getValue));
+                    }
                     else if (CardTable.ContainsKey(number))
                     {
                         if (parent.allScoreData.CardAttacks.TryGetValue(number, out CardAttack attack))
@@ -570,7 +572,9 @@ namespace ThScoreFileConverter.Models
                             return "0";
                     }
                     else
+                    {
                         return match.ToString();
+                    }
                 });
             }
 
@@ -606,7 +610,9 @@ namespace ThScoreFileConverter.Models
                         return (type == "N") ? CardTable[number].Name : CardTable[number].Level.ToString();
                     }
                     else
+                    {
                         return match.ToString();
+                    }
                 });
             }
 
@@ -708,7 +714,9 @@ namespace ThScoreFileConverter.Models
                             return stageProgress.ToShortName();
                     }
                     else
+                    {
                         return StageProgress.None.ToShortName();
+                    }
                 });
             }
 
@@ -828,7 +836,9 @@ namespace ThScoreFileConverter.Models
                         }
                     }
                     else
+                    {
                         return "0";
+                    }
                 });
             }
 

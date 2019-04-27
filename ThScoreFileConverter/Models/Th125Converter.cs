@@ -485,7 +485,9 @@ namespace ThScoreFileConverter.Models
                                     .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
                             }
                             else
+                            {
                                 return "----/--/-- --:--:--";
+                            }
                         default:    // unreachable
                             return match.ToString();
                     }
@@ -522,13 +524,19 @@ namespace ThScoreFileConverter.Models
                                     return score.Chara == Chara.Hatate;
                             }
                             else
+                            {
                                 return false;
+                            }
                         }
                         else
+                        {
                             return score.Chara == chara;
+                        }
                     }
                     else
+                    {
                         return score.Chara == chara;
+                    }
                 };
 
             private readonly MatchEvaluator evaluator;
@@ -677,7 +685,9 @@ namespace ThScoreFileConverter.Models
                             alternativeString);
                     }
                     else
+                    {
                         return string.Empty;
+                    }
                 });
             }
 
@@ -769,7 +779,9 @@ namespace ThScoreFileConverter.Models
                                         .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
                                 }
                                 else
+                                {
                                     return "----/--/-- --:--:--";
+                                }
                             case 7:     // detail info
                                 detailStrings = DetailList(bestshot.Header)
                                     .Where(detail => detail.Outputs)

@@ -588,7 +588,9 @@ namespace ThScoreFileConverter.Models
                                 .Any(data => data.CardTrulyGot[number - 1] != 0x00) ? "★" : string.Empty;
                         }
                         else
+                        {
                             return match.ToString();
+                        }
                     }
 
                     Func<short, int> toInteger = (value => (int)value);
@@ -612,7 +614,9 @@ namespace ThScoreFileConverter.Models
                                 getValues(data).ElementAt(number - 1)));
                     }
                     else
+                    {
                         return match.ToString();
+                    }
                 });
             }
 
@@ -655,7 +659,9 @@ namespace ThScoreFileConverter.Models
                         return (type == "N") ? CardTable[cardId].Name : CardTable[cardId].Level.ToString();
                     }
                     else
+                    {
                         return match.ToString();
+                    }
                 });
             }
 

@@ -418,7 +418,9 @@ namespace ThScoreFileConverter.Models
                     }
                 }
                 else
+                {
                     return null;
+                }
             }
 
             private static Story ParseStory(object obj)

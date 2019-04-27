@@ -594,7 +594,9 @@ namespace ThScoreFileConverter.Models
                                     .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
                             }
                             else
+                            {
                                 return "----/--/-- --:--:--";
+                            }
                         case 5:     // slow
                             if (ranking.DateTime > 0)
                                 return Utils.Format("{0:F3}%", ranking.SlowRate);
@@ -648,7 +650,9 @@ namespace ThScoreFileConverter.Models
                             return "0";
                     }
                     else
+                    {
                         return match.ToString();
+                    }
                 });
             }
 
@@ -686,10 +690,14 @@ namespace ThScoreFileConverter.Models
                             return CardTable[number].Name;
                         }
                         else
+                        {
                             return CardTable[number].Level.ToString();
+                        }
                     }
                     else
+                    {
                         return match.ToString();
+                    }
                 });
             }
 
@@ -835,7 +843,9 @@ namespace ThScoreFileConverter.Models
                             .Where(data => data.Route != route).Sum(getValueByType));
                     }
                     else
+                    {
                         getValueByRoute = (allData => getValueByType(allData.ClearData[route]));
+                    }
 
                     return toString(getValueByRoute(parent.allScoreData));
                 });
@@ -901,7 +911,9 @@ namespace ThScoreFileConverter.Models
                             .Where(data => data.Route != route).Sum(getValueByType));
                     }
                     else
+                    {
                         getValueByRoute = (allData => getValueByType(allData.ClearData[route]));
+                    }
 
                     return toString(getValueByRoute(parent.allScoreData));
                 });

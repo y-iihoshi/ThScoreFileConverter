@@ -556,7 +556,9 @@ namespace ThScoreFileConverter.Models
                             alternativeString);
                     }
                     else
+                    {
                         return string.Empty;
+                    }
                 });
             }
 
@@ -614,7 +616,9 @@ namespace ThScoreFileConverter.Models
                                             .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
                                     }
                                     else
+                                    {
                                         return "----/--/-- --:--:--";
+                                    }
                                 }
                             default:    // unreachable
                                 return match.ToString();

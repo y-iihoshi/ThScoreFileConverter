@@ -1157,10 +1157,14 @@ namespace ThScoreFileConverter.Models
                         return null;
                 }
                 else
+                {
                     return null;
+                }
             }
             else
+            {
                 return null;
+            }
 #endif
         }
 
@@ -1212,7 +1216,9 @@ namespace ThScoreFileConverter.Models
 
                     var clearData = parent.allScoreData.ClearData[chara];
                     if (number == 0)
+                    {
                         return toString(clearData.SpellCardResults.Values.Sum(getValue));
+                    }
                     else
                     {
                         var numLevels = Enum.GetValues(typeof(Level)).Length;
@@ -1226,7 +1232,9 @@ namespace ThScoreFileConverter.Models
                             return toString(getValue(clearData.SpellCardResults[key]));
                         }
                         else
+                        {
                             return match.ToString();
+                        }
                     }
                 });
             }
@@ -1277,7 +1285,9 @@ namespace ThScoreFileConverter.Models
                         return (type == "N") ? CardNameTable[enemyCardIdPair] : level.ToString();
                     }
                     else
+                    {
                         return match.ToString();
+                    }
                 });
             }
 
@@ -1368,10 +1378,14 @@ namespace ThScoreFileConverter.Models
                                 return SystemCardNameTable[number - 1];
                             }
                             else
+                            {
                                 return Utils.ToNumberString(card.MaxNumber);
+                            }
                         }
                         else
+                        {
                             return match.ToString();
+                        }
                     }
                     else
                     {
@@ -1390,10 +1404,14 @@ namespace ThScoreFileConverter.Models
                                 return CardNameTable[key];
                             }
                             else
+                            {
                                 return Utils.ToNumberString(card.MaxNumber);
+                            }
                         }
                         else
+                        {
                             return match.ToString();
+                        }
                     }
                 });
             }
