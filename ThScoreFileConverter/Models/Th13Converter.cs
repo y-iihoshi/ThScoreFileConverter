@@ -425,34 +425,22 @@ namespace ThScoreFileConverter.Models
                         case 2:     // score
                             return Utils.ToNumberString((ranking.Score * 10) + ranking.ContinueCount);
                         case 3:     // stage
-                            if (ranking.DateTime > 0)
-                            {
-                                if (ranking.StageProgress == StageProgress.Extra)
-                                    return "Not Clear";
-                                else if (ranking.StageProgress == StageProgress.ExtraClear)
-                                    return StageProgress.Clear.ToShortName();
-                                else
-                                    return ranking.StageProgress.ToShortName();
-                            }
-                            else
-                            {
+                            if (ranking.DateTime == 0)
                                 return StageProgress.None.ToShortName();
-                            }
+                            if (ranking.StageProgress == StageProgress.Extra)
+                                return "Not Clear";
+                            if (ranking.StageProgress == StageProgress.ExtraClear)
+                                return StageProgress.Clear.ToShortName();
+                            return ranking.StageProgress.ToShortName();
                         case 4:     // date & time
-                            if (ranking.DateTime > 0)
-                            {
-                                return new DateTime(1970, 1, 1).AddSeconds(ranking.DateTime).ToLocalTime()
-                                    .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
-                            }
-                            else
-                            {
+                            if (ranking.DateTime == 0)
                                 return "----/--/-- --:--:--";
-                            }
+                            return new DateTime(1970, 1, 1).AddSeconds(ranking.DateTime).ToLocalTime()
+                                .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
                         case 5:     // slow
-                            if (ranking.DateTime > 0)
-                                return Utils.Format("{0:F3}%", ranking.SlowRate);
-                            else
+                            if (ranking.DateTime == 0)
                                 return "-----%";
+                            return Utils.Format("{0:F3}%", ranking.SlowRate);
                         default:    // unreachable
                             return match.ToString();
                     }

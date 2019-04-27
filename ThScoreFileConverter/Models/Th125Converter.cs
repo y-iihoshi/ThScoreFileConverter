@@ -479,15 +479,10 @@ namespace ThScoreFileConverter.Models
                         case 4:     // num of shots for the first success
                             return (score != null) ? Utils.ToNumberString(score.FirstSuccess) : "0";
                         case 5:     // date & time
-                            if (score != null)
-                            {
-                                return new DateTime(1970, 1, 1).AddSeconds(score.DateTime).ToLocalTime()
-                                    .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
-                            }
-                            else
-                            {
-                                return "----/--/-- --:--:--";
-                            }
+                            return (score != null)
+                                ? new DateTime(1970, 1, 1).AddSeconds(score.DateTime).ToLocalTime()
+                                    .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture)
+                                : "----/--/-- --:--:--";
                         default:    // unreachable
                             return match.ToString();
                     }
@@ -772,16 +767,11 @@ namespace ThScoreFileConverter.Models
                                     (elem != null) &&
                                     (elem.Chara == chara) &&
                                     elem.LevelScene.Equals(key));
-                                if (score != null)
-                                {
-                                    return new DateTime(1970, 1, 1)
-                                        .AddSeconds(score.DateTime).ToLocalTime()
-                                        .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
-                                }
-                                else
-                                {
+                                if (score == null)
                                     return "----/--/-- --:--:--";
-                                }
+                                return new DateTime(1970, 1, 1)
+                                    .AddSeconds(score.DateTime).ToLocalTime()
+                                    .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
                             case 7:     // detail info
                                 detailStrings = DetailList(bestshot.Header)
                                     .Where(detail => detail.Outputs)
