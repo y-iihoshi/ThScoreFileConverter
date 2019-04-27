@@ -238,8 +238,8 @@ namespace ThScoreFileConverter.Models
                     }
 
                     if (parent.allScoreData.StoryDictionary.TryGetValue(chara, out AllScoreData.Story story)
-                        && story.available
-                        && ((story.ed & ToLevelFlag(level)) != LevelFlag.None))
+                        && story.Available
+                        && ((story.Ed & ToLevelFlag(level)) != LevelFlag.None))
                         return "Clear";
                     else
                         return "Not Clear";
@@ -431,15 +431,15 @@ namespace ThScoreFileConverter.Models
                         if (pair.Key is string key)
                         {
                             if ((key == "stage") && (pair.Value is int stage))
-                                story.stage = stage;
+                                story.Stage = stage;
                             if ((key == "ed") && (pair.Value is int ed))
-                                story.ed = (LevelFlag)ed;
+                                story.Ed = (LevelFlag)ed;
                             if ((key == "available") && (pair.Value is bool available))
-                                story.available = available;
+                                story.Available = available;
                             if ((key == "overdrive") && (pair.Value is int overDrive))
-                                story.overDrive = overDrive;
+                                story.OverDrive = overDrive;
                             if ((key == "stage_overdrive") && (pair.Value is int stageOverDrive))
-                                story.stageOverDrive = stageOverDrive;
+                                story.StageOverDrive = stageOverDrive;
                         }
                     }
                 }
@@ -524,11 +524,11 @@ namespace ThScoreFileConverter.Models
 
             public struct Story
             {
-                public int stage;
-                public LevelFlag ed;
-                public bool available;
-                public int overDrive;
-                public int stageOverDrive;
+                public int Stage;
+                public LevelFlag Ed;
+                public bool Available;
+                public int OverDrive;
+                public int StageOverDrive;
             }
 
             private class OptionalMark
