@@ -169,8 +169,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <param name="result">A result of <see cref="FontDialogAction"/>.</param>
         private void ApplyFont(FontDialogActionResult result)
         {
-            var app = App.Current as App;
-            if (app != null)
+            if (App.Current is App app)
             {
                 app.UpdateResources(result.Font.FontFamily.Name, result.Font.Size);
                 this.OnPropertyChanged(() => this.Font);
@@ -182,8 +181,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         private void ResetFont()
         {
-            var app = App.Current as App;
-            if (app != null)
+            if (App.Current is App app)
             {
                 app.UpdateResources(SystemFonts.MessageFontFamily, SystemFonts.MessageFontSize);
                 this.OnPropertyChanged(() => this.Font);

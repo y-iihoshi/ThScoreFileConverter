@@ -122,8 +122,7 @@ namespace ThScoreFileConverter
                     var reader =
                         XmlDictionaryReader.CreateTextReader(stream, new XmlDictionaryReaderQuotas());
                     var serializer = new DataContractSerializer(typeof(Settings));
-                    var settings = serializer.ReadObject(reader) as Settings;
-                    if (settings != null)
+                    if (serializer.ReadObject(reader) is Settings settings)
                     {
                         this.LastTitle = settings.LastTitle;
                         this.Dictionary = settings.Dictionary;

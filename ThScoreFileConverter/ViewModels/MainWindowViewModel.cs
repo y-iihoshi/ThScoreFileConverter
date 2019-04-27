@@ -651,8 +651,7 @@ namespace ThScoreFileConverter.ViewModels
             {
                 if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 {
-                    var droppedPaths = e.Data.GetData(DataFormats.FileDrop) as string[];
-                    if (droppedPaths != null)
+                    if (e.Data.GetData(DataFormats.FileDrop) is string[] droppedPaths)
                     {
                         var filePath = droppedPaths.FirstOrDefault(path => File.Exists(path));
                         if (filePath != null)
@@ -677,8 +676,7 @@ namespace ThScoreFileConverter.ViewModels
             {
                 if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 {
-                    var droppedPaths = e.Data.GetData(DataFormats.FileDrop) as string[];
-                    if (droppedPaths != null)
+                    if (e.Data.GetData(DataFormats.FileDrop) is string[] droppedPaths)
                     {
                         var dirPath = droppedPaths.FirstOrDefault(path => Directory.Exists(path));
                         if (dirPath != null)
@@ -703,8 +701,7 @@ namespace ThScoreFileConverter.ViewModels
             {
                 if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 {
-                    var droppedPaths = e.Data.GetData(DataFormats.FileDrop) as string[];
-                    if (droppedPaths != null)
+                    if (e.Data.GetData(DataFormats.FileDrop) is string[] droppedPaths)
                         this.TemplateFiles = this.TemplateFiles
                             .Union(droppedPaths.Where(path => File.Exists(path)));
                 }
@@ -726,8 +723,7 @@ namespace ThScoreFileConverter.ViewModels
             {
                 if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 {
-                    var droppedPaths = e.Data.GetData(DataFormats.FileDrop) as string[];
-                    if (droppedPaths != null)
+                    if (e.Data.GetData(DataFormats.FileDrop) is string[] droppedPaths)
                     {
                         var dirPath = droppedPaths.FirstOrDefault(path => Directory.Exists(path));
                         if (dirPath != null)

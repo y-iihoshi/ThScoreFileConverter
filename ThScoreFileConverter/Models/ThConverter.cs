@@ -320,8 +320,7 @@ namespace ThScoreFileConverter.Models
                 input, Utils.GetEncoding(Settings.Instance.InputCodePageId.Value));
             var writer = new StreamWriter(
                 output, Utils.GetEncoding(Settings.Instance.OutputCodePageId.Value));
-            var outputFile = output as FileStream;
-            var outputFilePath = (outputFile != null) ? outputFile.Name : string.Empty;
+            var outputFilePath = (output is FileStream outputFile) ? outputFile.Name : string.Empty;
             var replacers = this.CreateReplacers(hideUntriedCards, outputFilePath);
 
             var allLines = reader.ReadToEnd();
