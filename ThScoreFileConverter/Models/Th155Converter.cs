@@ -218,7 +218,7 @@ namespace ThScoreFileConverter.Models
                     var level = LevelParser.Parse(match.Groups[1].Value);
                     var chara = StoryCharaParser.Parse(match.Groups[2].Value);
 
-                    LevelFlag toLevelFlag(Level lv)
+                    LevelFlag ToLevelFlag(Level lv)
                     {
                         switch (lv)
                         {
@@ -239,7 +239,7 @@ namespace ThScoreFileConverter.Models
 
                     if (parent.allScoreData.StoryDictionary.TryGetValue(chara, out AllScoreData.Story story)
                         && story.available
-                        && ((story.ed & toLevelFlag(level)) != LevelFlag.None))
+                        && ((story.ed & ToLevelFlag(level)) != LevelFlag.None))
                         return "Clear";
                     else
                         return "Not Clear";
