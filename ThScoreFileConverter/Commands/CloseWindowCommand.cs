@@ -17,11 +17,6 @@ namespace ThScoreFileConverter.Commands
     public class CloseWindowCommand : ICommand
     {
         /// <summary>
-        /// Only one instance of this class.
-        /// </summary>
-        private static readonly ICommand InstanceImpl = new CloseWindowCommand();
-
-        /// <summary>
         /// Prevents a default instance of the <see cref="CloseWindowCommand"/> class from being created.
         /// </summary>
         private CloseWindowCommand()
@@ -31,29 +26,21 @@ namespace ThScoreFileConverter.Commands
         /// <summary>
         /// Occurs when changes occur that affect whether or not the command should execute.
         /// </summary>
-        public event EventHandler CanExecuteChanged
-        {
-            add { }
-            remove { }
-        }
+        #pragma warning disable CS0067
+        public event EventHandler CanExecuteChanged;
+        #pragma warning restore CS0067
 
         /// <summary>
         /// Gets the instance.
         /// </summary>
-        public static ICommand Instance
-        {
-            get { return InstanceImpl; }
-        }
+        public static ICommand Instance { get; } = new CloseWindowCommand();
 
         /// <summary>
         /// Determines whether the command can execute in its current state.
         /// </summary>
         /// <param name="parameter">A <see cref="Window"/> instance which will be closed.</param>
         /// <returns><c>true</c> if this command can be executed; otherwise, <c>false</c>.</returns>
-        public bool CanExecute(object parameter)
-        {
-            return parameter is Window;
-        }
+        public bool CanExecute(object parameter) => parameter is Window;
 
         /// <summary>
         /// Called when the command is invoked.
