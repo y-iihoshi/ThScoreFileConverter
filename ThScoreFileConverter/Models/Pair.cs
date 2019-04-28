@@ -46,7 +46,7 @@ namespace ThScoreFileConverter.Models
         /// </returns>
         public override bool Equals(object obj)
         {
-            if (object.ReferenceEquals(obj, null))
+            if (obj is null)
                 return false;
 
             if (object.ReferenceEquals(this, obj))
@@ -76,7 +76,7 @@ namespace ThScoreFileConverter.Models
         /// </returns>
         public bool Equals(Pair<TFirst, TSecond> other)
         {
-            if (object.ReferenceEquals(other, null))
+            if (other is null)
                 return false;
 
             return this.First.Equals(other.First) && this.Second.Equals(other.Second);
