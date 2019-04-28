@@ -259,7 +259,7 @@ namespace ThScoreFileConverter.Actions
         public bool RestoreDirectory
         {
             get { return (bool)this.GetValue(RestoreDirectoryProperty); }
-            set { this.SetValue(ReadOnlyCheckedProperty, value); }
+            set { this.SetValue(RestoreDirectoryProperty, value); }
         }
 
         /// <summary>
