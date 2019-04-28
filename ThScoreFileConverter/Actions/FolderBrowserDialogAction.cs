@@ -18,9 +18,7 @@ namespace ThScoreFileConverter.Actions
     {
         #region Dependency properties
 
-        /// <summary>
-        /// Identifies the <see cref="Description"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="Description"/> dependency property.</summary>
         public static readonly DependencyProperty DescriptionProperty =
             DependencyProperty.Register(
                 "Description",
@@ -28,9 +26,7 @@ namespace ThScoreFileConverter.Actions
                 typeof(FolderBrowserDialogAction),
                 new UIPropertyMetadata(string.Empty));
 
-        /// <summary>
-        /// Identifies the <see cref="RootFolder"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="RootFolder"/> dependency property.</summary>
         public static readonly DependencyProperty RootFolderProperty =
             DependencyProperty.Register(
                 "RootFolder",
@@ -38,9 +34,7 @@ namespace ThScoreFileConverter.Actions
                 typeof(FolderBrowserDialogAction),
                 new UIPropertyMetadata(Environment.SpecialFolder.Desktop));
 
-        /// <summary>
-        /// Identifies the <see cref="SelectedPath"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="SelectedPath"/> dependency property.</summary>
         public static readonly DependencyProperty SelectedPathProperty =
             DependencyProperty.Register(
                 "SelectedPath",
@@ -48,9 +42,7 @@ namespace ThScoreFileConverter.Actions
                 typeof(FolderBrowserDialogAction),
                 new UIPropertyMetadata(string.Empty));
 
-        /// <summary>
-        /// Identifies the <see cref="ShowNewFolderButton"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="ShowNewFolderButton"/> dependency property.</summary>
         public static readonly DependencyProperty ShowNewFolderButtonProperty =
             DependencyProperty.Register(
                 "ShowNewFolderButton",

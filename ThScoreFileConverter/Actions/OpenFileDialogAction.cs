@@ -18,63 +18,43 @@ namespace ThScoreFileConverter.Actions
     {
         #region Dependency properties
 
-        /// <summary>
-        /// Identifies the <see cref="AddExtension"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="AddExtension"/> dependency property.</summary>
         public static readonly DependencyProperty AddExtensionProperty = DependencyProperty.Register(
             "AddExtension", typeof(bool), typeof(OpenFileDialogAction), new UIPropertyMetadata(true));
 
-        /// <summary>
-        /// Identifies the <see cref="AutoUpgradeEnabled"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="AutoUpgradeEnabled"/> dependency property.</summary>
         public static readonly DependencyProperty AutoUpgradeEnabledProperty = DependencyProperty.Register(
             "AutoUpgradeEnabled", typeof(bool), typeof(OpenFileDialogAction), new UIPropertyMetadata(true));
 
-        /// <summary>
-        /// Identifies the <see cref="CheckFileExists"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="CheckFileExists"/> dependency property.</summary>
         public static readonly DependencyProperty CheckFileExistsProperty = DependencyProperty.Register(
             "CheckFileExists", typeof(bool), typeof(OpenFileDialogAction), new UIPropertyMetadata(true));
 
-        /// <summary>
-        /// Identifies the <see cref="CheckPathExists"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="CheckPathExists"/> dependency property.</summary>
         public static readonly DependencyProperty CheckPathExistsProperty = DependencyProperty.Register(
             "CheckPathExists", typeof(bool), typeof(OpenFileDialogAction), new UIPropertyMetadata(true));
 
-        /// <summary>
-        /// Identifies the <see cref="DefaultExt"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="DefaultExt"/> dependency property.</summary>
         public static readonly DependencyProperty DefaultExtProperty = DependencyProperty.Register(
             "DefaultExt", typeof(string), typeof(OpenFileDialogAction), new UIPropertyMetadata(string.Empty));
 
-        /// <summary>
-        /// Identifies the <see cref="DereferenceLinks"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="DereferenceLinks"/> dependency property.</summary>
         public static readonly DependencyProperty DereferenceLinksProperty = DependencyProperty.Register(
             "DereferenceLinks", typeof(bool), typeof(OpenFileDialogAction), new UIPropertyMetadata(true));
 
-        /// <summary>
-        /// Identifies the <see cref="FileName"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="FileName"/> dependency property.</summary>
         public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register(
             "FileName", typeof(string), typeof(OpenFileDialogAction), new UIPropertyMetadata(string.Empty));
 
-        /// <summary>
-        /// Identifies the <see cref="Filter"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="Filter"/> dependency property.</summary>
         public static readonly DependencyProperty FilterProperty = DependencyProperty.Register(
             "Filter", typeof(string), typeof(OpenFileDialogAction), new UIPropertyMetadata(string.Empty));
 
-        /// <summary>
-        /// Identifies the <see cref="FilterIndex"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="FilterIndex"/> dependency property.</summary>
         public static readonly DependencyProperty FilterIndexProperty = DependencyProperty.Register(
             "FilterIndex", typeof(int), typeof(OpenFileDialogAction), new UIPropertyMetadata(1));
 
-        /// <summary>
-        /// Identifies the <see cref="InitialDirectory"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="InitialDirectory"/> dependency property.</summary>
         public static readonly DependencyProperty InitialDirectoryProperty =
             DependencyProperty.Register(
                 "InitialDirectory",
@@ -82,39 +62,27 @@ namespace ThScoreFileConverter.Actions
                 typeof(OpenFileDialogAction),
                 new UIPropertyMetadata(string.Empty));
 
-        /// <summary>
-        /// Identifies the <see cref="Multiselect"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="Multiselect"/> dependency property.</summary>
         public static readonly DependencyProperty MultiselectProperty = DependencyProperty.Register(
             "Multiselect", typeof(bool), typeof(OpenFileDialogAction), new UIPropertyMetadata(false));
 
-        /// <summary>
-        /// Identifies the <see cref="ReadOnlyChecked"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="ReadOnlyChecked"/> dependency property.</summary>
         public static readonly DependencyProperty ReadOnlyCheckedProperty = DependencyProperty.Register(
             "ReadOnlyChecked", typeof(bool), typeof(OpenFileDialogAction), new UIPropertyMetadata(false));
 
-        /// <summary>
-        /// Identifies the <see cref="RestoreDirectory"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="RestoreDirectory"/> dependency property.</summary>
         public static readonly DependencyProperty RestoreDirectoryProperty = DependencyProperty.Register(
             "RestoreDirectory", typeof(bool), typeof(OpenFileDialogAction), new UIPropertyMetadata(false));
 
-        /// <summary>
-        /// Identifies the <see cref="ShowHelp"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="ShowHelp"/> dependency property.</summary>
         public static readonly DependencyProperty ShowHelpProperty = DependencyProperty.Register(
             "ShowHelp", typeof(bool), typeof(OpenFileDialogAction), new UIPropertyMetadata(false));
 
-        /// <summary>
-        /// Identifies the <see cref="ShowReadOnly"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="ShowReadOnly"/> dependency property.</summary>
         public static readonly DependencyProperty ShowReadOnlyProperty = DependencyProperty.Register(
             "ShowReadOnly", typeof(bool), typeof(OpenFileDialogAction), new UIPropertyMetadata(false));
 
-        /// <summary>
-        /// Identifies the <see cref="SupportMultiDottedExtensions"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="SupportMultiDottedExtensions"/> dependency property.</summary>
         public static readonly DependencyProperty SupportMultiDottedExtensionsProperty =
             DependencyProperty.Register(
                 "SupportMultiDottedExtensions",
@@ -122,15 +90,11 @@ namespace ThScoreFileConverter.Actions
                 typeof(OpenFileDialogAction),
                 new UIPropertyMetadata(false));
 
-        /// <summary>
-        /// Identifies the <see cref="Title"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="Title"/> dependency property.</summary>
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(
             "Title", typeof(string), typeof(OpenFileDialogAction), new UIPropertyMetadata(string.Empty));
 
-        /// <summary>
-        /// Identifies the <see cref="ValidateNames"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="ValidateNames"/> dependency property.</summary>
         public static readonly DependencyProperty ValidateNamesProperty = DependencyProperty.Register(
             "ValidateNames", typeof(bool), typeof(OpenFileDialogAction), new UIPropertyMetadata(true));
 

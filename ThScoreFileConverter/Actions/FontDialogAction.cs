@@ -20,39 +20,27 @@ namespace ThScoreFileConverter.Actions
     {
         #region Dependency properties
 
-        /// <summary>
-        /// Identifies the <see cref="ApplyCommand"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="ApplyCommand"/> dependency property.</summary>
         public static readonly DependencyProperty ApplyCommandProperty = DependencyProperty.Register(
             "ApplyCommand", typeof(ICommand), typeof(FontDialogAction), new UIPropertyMetadata(null));
 
-        /// <summary>
-        /// Identifies the <see cref="AllowScriptChange"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="AllowScriptChange"/> dependency property.</summary>
         public static readonly DependencyProperty AllowScriptChangeProperty = DependencyProperty.Register(
             "AllowScriptChange", typeof(bool), typeof(FontDialogAction), new UIPropertyMetadata(true));
 
-        /// <summary>
-        /// Identifies the <see cref="AllowSimulations"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="AllowSimulations"/> dependency property.</summary>
         public static readonly DependencyProperty AllowSimulationsProperty = DependencyProperty.Register(
             "AllowSimulations", typeof(bool), typeof(FontDialogAction), new UIPropertyMetadata(true));
 
-        /// <summary>
-        /// Identifies the <see cref="AllowVectorFonts"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="AllowVectorFonts"/> dependency property.</summary>
         public static readonly DependencyProperty AllowVectorFontsProperty = DependencyProperty.Register(
             "AllowVectorFonts", typeof(bool), typeof(FontDialogAction), new UIPropertyMetadata(true));
 
-        /// <summary>
-        /// Identifies the <see cref="AllowVerticalFonts"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="AllowVerticalFonts"/> dependency property.</summary>
         public static readonly DependencyProperty AllowVerticalFontsProperty = DependencyProperty.Register(
             "AllowVerticalFonts", typeof(bool), typeof(FontDialogAction), new UIPropertyMetadata(true));
 
-        /// <summary>
-        /// Identifies the <see cref="Color"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="Color"/> dependency property.</summary>
         public static readonly DependencyProperty ColorProperty =
             DependencyProperty.Register(
                 "Color",
@@ -60,15 +48,11 @@ namespace ThScoreFileConverter.Actions
                 typeof(FontDialogAction),
                 new UIPropertyMetadata(SysDraw.Color.Black));
 
-        /// <summary>
-        /// Identifies the <see cref="FixedPitchOnly"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="FixedPitchOnly"/> dependency property.</summary>
         public static readonly DependencyProperty FixedPitchOnlyProperty = DependencyProperty.Register(
             "FixedPitchOnly", typeof(bool), typeof(FontDialogAction), new UIPropertyMetadata(false));
 
-        /// <summary>
-        /// Identifies the <see cref="Font"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="Font"/> dependency property.</summary>
         public static readonly DependencyProperty FontProperty =
             DependencyProperty.Register(
                 "Font",
@@ -76,51 +60,35 @@ namespace ThScoreFileConverter.Actions
                 typeof(FontDialogAction),
                 new UIPropertyMetadata(SysDraw.SystemFonts.DefaultFont));
 
-        /// <summary>
-        /// Identifies the <see cref="FontMustExist"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="FontMustExist"/> dependency property.</summary>
         public static readonly DependencyProperty FontMustExistProperty = DependencyProperty.Register(
             "FontMustExist", typeof(bool), typeof(FontDialogAction), new UIPropertyMetadata(false));
 
-        /// <summary>
-        /// Identifies the <see cref="MaxSize"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="MaxSize"/> dependency property.</summary>
         public static readonly DependencyProperty MaxSizeProperty = DependencyProperty.Register(
             "MaxSize", typeof(int), typeof(FontDialogAction), new UIPropertyMetadata(0));
 
-        /// <summary>
-        /// Identifies the <see cref="MinSize"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="MinSize"/> dependency property.</summary>
         public static readonly DependencyProperty MinSizeProperty = DependencyProperty.Register(
             "MinSize", typeof(int), typeof(FontDialogAction), new UIPropertyMetadata(0));
 
-        /// <summary>
-        /// Identifies the <see cref="ScriptsOnly"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="ScriptsOnly"/> dependency property.</summary>
         public static readonly DependencyProperty ScriptsOnlyProperty = DependencyProperty.Register(
             "ScriptsOnly", typeof(bool), typeof(FontDialogAction), new UIPropertyMetadata(false));
 
-        /// <summary>
-        /// Identifies the <see cref="ShowApply"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="ShowApply"/> dependency property.</summary>
         public static readonly DependencyProperty ShowApplyProperty = DependencyProperty.Register(
             "ShowApply", typeof(bool), typeof(FontDialogAction), new UIPropertyMetadata(false));
 
-        /// <summary>
-        /// Identifies the <see cref="ShowColor"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="ShowColor"/> dependency property.</summary>
         public static readonly DependencyProperty ShowColorProperty = DependencyProperty.Register(
             "ShowColor", typeof(bool), typeof(FontDialogAction), new UIPropertyMetadata(false));
 
-        /// <summary>
-        /// Identifies the <see cref="ShowEffects"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="ShowEffects"/> dependency property.</summary>
         public static readonly DependencyProperty ShowEffectsProperty = DependencyProperty.Register(
             "ShowEffects", typeof(bool), typeof(FontDialogAction), new UIPropertyMetadata(true));
 
-        /// <summary>
-        /// Identifies the <see cref="ShowHelp"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="ShowHelp"/> dependency property.</summary>
         public static readonly DependencyProperty ShowHelpProperty = DependencyProperty.Register(
             "ShowHelp", typeof(bool), typeof(FontDialogAction), new UIPropertyMetadata(false));
 

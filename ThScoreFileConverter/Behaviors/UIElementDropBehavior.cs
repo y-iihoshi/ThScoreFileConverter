@@ -20,58 +20,42 @@ namespace ThScoreFileConverter.Behaviors
     {
         #region Dependency properties
 
-        /// <summary>
-        /// Identifies the <see cref="DragEnterCommand"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="DragEnterCommand"/> dependency property.</summary>
         public static readonly DependencyProperty DragEnterCommandProperty =
             DependencyProperty.Register(
                 "DragEnterCommand", typeof(ICommand), typeof(UIElementDropBehavior));
 
-        /// <summary>
-        /// Identifies the <see cref="DragLeaveCommand"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="DragLeaveCommand"/> dependency property.</summary>
         public static readonly DependencyProperty DragLeaveCommandProperty =
             DependencyProperty.Register(
                 "DragLeaveCommand", typeof(ICommand), typeof(UIElementDropBehavior));
 
-        /// <summary>
-        /// Identifies the <see cref="DragOverCommand"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="DragOverCommand"/> dependency property.</summary>
         public static readonly DependencyProperty DragOverCommandProperty =
             DependencyProperty.Register(
                 "DragOverCommand", typeof(ICommand), typeof(UIElementDropBehavior));
 
-        /// <summary>
-        /// Identifies the <see cref="DropCommand"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="DropCommand"/> dependency property.</summary>
         public static readonly DependencyProperty DropCommandProperty =
             DependencyProperty.Register(
                 "DropCommand", typeof(ICommand), typeof(UIElementDropBehavior));
 
-        /// <summary>
-        /// Identifies the <see cref="PreviewDragEnterCommand"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="PreviewDragEnterCommand"/> dependency property.</summary>
         public static readonly DependencyProperty PreviewDragEnterCommandProperty =
             DependencyProperty.Register(
                 "PreviewDragEnterCommand", typeof(ICommand), typeof(UIElementDropBehavior));
 
-        /// <summary>
-        /// Identifies the <see cref="PreviewDragLeaveCommand"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="PreviewDragLeaveCommand"/> dependency property.</summary>
         public static readonly DependencyProperty PreviewDragLeaveCommandProperty =
             DependencyProperty.Register(
                 "PreviewDragLeaveCommand", typeof(ICommand), typeof(UIElementDropBehavior));
 
-        /// <summary>
-        /// Identifies the <see cref="PreviewDragOverCommand"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="PreviewDragOverCommand"/> dependency property.</summary>
         public static readonly DependencyProperty PreviewDragOverCommandProperty =
             DependencyProperty.Register(
                 "PreviewDragOverCommand", typeof(ICommand), typeof(UIElementDropBehavior));
 
-        /// <summary>
-        /// Identifies the <see cref="PreviewDropCommand"/> dependency property.
-        /// </summary>
+        /// <summary>Identifies the <see cref="PreviewDropCommand"/> dependency property.</summary>
         public static readonly DependencyProperty PreviewDropCommandProperty =
             DependencyProperty.Register(
                 "PreviewDropCommand", typeof(ICommand), typeof(UIElementDropBehavior));
