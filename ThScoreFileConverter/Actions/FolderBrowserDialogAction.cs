@@ -21,7 +21,7 @@ namespace ThScoreFileConverter.Actions
         /// <summary>Identifies the <see cref="Description"/> dependency property.</summary>
         public static readonly DependencyProperty DescriptionProperty =
             DependencyProperty.Register(
-                "Description",
+                nameof(Description),
                 typeof(string),
                 typeof(FolderBrowserDialogAction),
                 new UIPropertyMetadata(string.Empty));
@@ -29,7 +29,7 @@ namespace ThScoreFileConverter.Actions
         /// <summary>Identifies the <see cref="RootFolder"/> dependency property.</summary>
         public static readonly DependencyProperty RootFolderProperty =
             DependencyProperty.Register(
-                "RootFolder",
+                nameof(RootFolder),
                 typeof(Environment.SpecialFolder),
                 typeof(FolderBrowserDialogAction),
                 new UIPropertyMetadata(Environment.SpecialFolder.Desktop));
@@ -37,7 +37,7 @@ namespace ThScoreFileConverter.Actions
         /// <summary>Identifies the <see cref="SelectedPath"/> dependency property.</summary>
         public static readonly DependencyProperty SelectedPathProperty =
             DependencyProperty.Register(
-                "SelectedPath",
+                nameof(SelectedPath),
                 typeof(string),
                 typeof(FolderBrowserDialogAction),
                 new UIPropertyMetadata(string.Empty));
@@ -45,7 +45,7 @@ namespace ThScoreFileConverter.Actions
         /// <summary>Identifies the <see cref="ShowNewFolderButton"/> dependency property.</summary>
         public static readonly DependencyProperty ShowNewFolderButtonProperty =
             DependencyProperty.Register(
-                "ShowNewFolderButton",
+                nameof(ShowNewFolderButton),
                 typeof(bool),
                 typeof(FolderBrowserDialogAction),
                 new UIPropertyMetadata(true));

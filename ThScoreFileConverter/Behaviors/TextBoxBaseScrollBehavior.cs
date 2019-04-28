@@ -20,7 +20,7 @@ namespace ThScoreFileConverter.Behaviors
         /// <summary>Identifies the <see cref="AutoScrollToEnd"/> dependency property.</summary>
         public static readonly DependencyProperty AutoScrollToEndProperty =
             DependencyProperty.Register(
-                "AutoScrollToEnd", typeof(bool), typeof(TextBoxBaseScrollBehavior));
+                nameof(AutoScrollToEnd), typeof(bool), typeof(TextBoxBaseScrollBehavior));
 
         /// <summary>
         /// Gets or sets a value indicating whether it scrolls to end automatically.

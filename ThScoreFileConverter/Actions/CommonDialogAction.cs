@@ -21,23 +21,23 @@ namespace ThScoreFileConverter.Actions
 
         /// <summary>Identifies the <see cref="OkCommand"/> dependency property.</summary>
         public static readonly DependencyProperty OkCommandProperty = DependencyProperty.Register(
-            "OkCommand", typeof(ICommand), typeof(CommonDialogAction), new UIPropertyMetadata(null));
+            nameof(OkCommand), typeof(ICommand), typeof(CommonDialogAction), new UIPropertyMetadata(null));
 
         /// <summary>Identifies the <see cref="CancelCommand"/> dependency property.</summary>
         public static readonly DependencyProperty CancelCommandProperty = DependencyProperty.Register(
-            "CancelCommand", typeof(ICommand), typeof(CommonDialogAction), new UIPropertyMetadata(null));
+            nameof(CancelCommand), typeof(ICommand), typeof(CommonDialogAction), new UIPropertyMetadata(null));
 
         /// <summary>Identifies the <see cref="Owner"/> dependency property.</summary>
         public static readonly DependencyProperty OwnerProperty = DependencyProperty.Register(
-            "Owner", typeof(Window), typeof(CommonDialogAction), new UIPropertyMetadata(null));
+            nameof(Owner), typeof(Window), typeof(CommonDialogAction), new UIPropertyMetadata(null));
 
         /// <summary>Identifies the <see cref="Site"/> dependency property.</summary>
         public static readonly DependencyProperty SiteProperty = DependencyProperty.Register(
-            "Site", typeof(ISite), typeof(CommonDialogAction), new UIPropertyMetadata(null));
+            nameof(Site), typeof(ISite), typeof(CommonDialogAction), new UIPropertyMetadata(null));
 
         /// <summary>Identifies the <see cref="Tag"/> dependency property.</summary>
         public static readonly DependencyProperty TagProperty = DependencyProperty.Register(
-            "Tag", typeof(object), typeof(CommonDialogAction), new UIPropertyMetadata(null));
+            nameof(Tag), typeof(object), typeof(CommonDialogAction), new UIPropertyMetadata(null));
 
         #endregion
 
