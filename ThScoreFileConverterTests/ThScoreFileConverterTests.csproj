@@ -49,6 +49,7 @@
     </Reference>
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -59,6 +60,10 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Actions\FolderBrowserDialogActionResultTests.cs" />
+    <Compile Include="Actions\FontDialogActionResultTests.cs" />
+    <Compile Include="Actions\OpenFileDialogActionResultTests.cs" />
+    <Compile Include="Actions\Win32WindowTests.cs" />
     <Compile Include="Commands\CloseWindowCommandTests.cs" />
     <Compile Include="Models\BinaryReaderExtensionsTests.cs" />
     <Compile Include="Models\BitReaderTests.cs" />
