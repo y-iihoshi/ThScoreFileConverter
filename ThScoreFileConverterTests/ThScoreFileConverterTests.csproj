@@ -60,11 +60,11 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Actions\FolderBrowserDialogActionResultTests.cs" />
-    <Compile Include="Actions\FontDialogActionResultTests.cs" />
-    <Compile Include="Actions\OpenFileDialogActionResultTests.cs" />
-    <Compile Include="Actions\Win32WindowTests.cs" />
     <Compile Include="Commands\CloseWindowCommandTests.cs" />
+    <Compile Include="Interactivity\FolderBrowserDialogActionResultTests.cs" />
+    <Compile Include="Interactivity\FontDialogActionResultTests.cs" />
+    <Compile Include="Interactivity\OpenFileDialogActionResultTests.cs" />
+    <Compile Include="Interactivity\Win32WindowTests.cs" />
     <Compile Include="Models\BinaryReaderExtensionsTests.cs" />
     <Compile Include="Models\BitReaderTests.cs" />
     <Compile Include="Models\EncodingTests.cs" />
