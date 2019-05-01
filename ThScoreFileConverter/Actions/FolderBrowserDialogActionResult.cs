@@ -24,6 +24,6 @@ namespace ThScoreFileConverter.Actions
         /// <summary>
         /// Gets the path selected by <see cref="FolderBrowserDialogAction"/>.
         /// </summary>
-        public string SelectedPath { get; private set; }
+        public string SelectedPath { get; }
     }
 }

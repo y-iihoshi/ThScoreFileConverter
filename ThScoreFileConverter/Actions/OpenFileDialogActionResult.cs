@@ -29,11 +29,11 @@ namespace ThScoreFileConverter.Actions
         /// <summary>
         /// Gets a string containing the file name selected in the file dialog box.
         /// </summary>
-        public string FileName { get; private set; }
+        public string FileName { get; }
 
         /// <summary>
         /// Gets the file names of all selected files in the dialog box.
         /// </summary>
-        public IEnumerable<string> FileNames { get; private set; }
+        public IEnumerable<string> FileNames { get; }
     }
 }

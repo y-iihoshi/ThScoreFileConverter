@@ -7,7 +7,7 @@
 
 namespace ThScoreFileConverter.Actions
 {
-    using SysDraw = System.Drawing;
+    using System.Drawing;
 
     /// <summary>
     /// Represents a result of <see cref="FontDialogAction"/>.
@@ -19,7 +19,7 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         /// <param name="font">A font.</param>
         /// <param name="color">A color.</param>
-        public FontDialogActionResult(SysDraw.Font font, SysDraw.Color color)
+        public FontDialogActionResult(Font font, Color color)
         {
             this.Font = font;
             this.Color = color;
@@ -28,11 +28,11 @@ namespace ThScoreFileConverter.Actions
         /// <summary>
         /// Gets the font selected by <see cref="FontDialogAction"/>.
         /// </summary>
-        public SysDraw.Font Font { get; private set; }
+        public Font Font { get; }
 
         /// <summary>
         /// Gets the color selected by <see cref="FontDialogAction"/>.
         /// </summary>
-        public SysDraw.Color Color { get; private set; }
+        public Color Color { get; }
     }
 }

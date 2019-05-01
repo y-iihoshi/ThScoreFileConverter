@@ -13,14 +13,14 @@ namespace ThScoreFileConverter.Actions
     using WinForms = System.Windows.Forms;
 
     /// <summary>
-    /// Converter from <see cref="System.Windows.Window"/> to <see cref="System.Windows.Forms.IWin32Window"/>.
+    /// Converter from <see cref="Window"/> to <see cref="WinForms.IWin32Window"/>.
     /// </summary>
     public class Win32Window : WinForms.IWin32Window
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Win32Window"/> class.
         /// </summary>
-        /// <param name="window">The instance of <see cref="System.Windows.Window"/>.</param>
+        /// <param name="window">The instance of <see cref="Window"/>.</param>
         public Win32Window(Window window)
         {
             this.Handle = new WindowInteropHelper(window).Handle;
@@ -29,6 +29,6 @@ namespace ThScoreFileConverter.Actions
         /// <summary>
         /// Gets the window handle for the current instance.
         /// </summary>
-        public IntPtr Handle { get; private set; }
+        public IntPtr Handle { get; }
     }
 }
