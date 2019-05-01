@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Actions;
 using ThScoreFileConverterTests.Models;
 
-namespace ThScoreFileConverterTests.Actions
+namespace ThScoreFileConverterTests.Interactivity
 {
     [TestClass]
     public class Win32WindowTests

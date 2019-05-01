@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Actions;
 
-namespace ThScoreFileConverterTests.Actions
+namespace ThScoreFileConverterTests.Interactivity
 {
     [TestClass]
     public class FolderBrowserDialogActionResultTests
