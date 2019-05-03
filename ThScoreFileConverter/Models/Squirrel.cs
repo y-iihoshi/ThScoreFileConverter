@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverter.Models
 {
     // FIXME: Should be moved into ThScoreFileConverter.Models.
     public static class Squirrel

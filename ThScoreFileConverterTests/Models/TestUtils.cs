@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.ExceptionServices;
 using System.Text;
+using SQ = ThScoreFileConverter.Models.Squirrel;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -131,19 +132,19 @@ namespace ThScoreFileConverterTests.Models
                 switch (arg)
                 {
                     case int intValue:
-                        byteArray = byteArray.Concat(MakeByteArray((int)Squirrel.OTInteger, intValue));
+                        byteArray = byteArray.Concat(MakeByteArray((int)SQ.OTInteger, intValue));
                         break;
                     case float floatValue:
-                        byteArray = byteArray.Concat(MakeByteArray((int)Squirrel.OTFloat, floatValue));
+                        byteArray = byteArray.Concat(MakeByteArray((int)SQ.OTFloat, floatValue));
                         break;
                     case bool boolValue:
                         byteArray = byteArray.Concat(
-                            MakeByteArray((int)Squirrel.OTBool, (byte)(boolValue ? 0x01 : 0x00)));
+                            MakeByteArray((int)SQ.OTBool, (byte)(boolValue ? 0x01 : 0x00)));
                         break;
                     case string stringValue:
                         {
                             var bytes = CP932Encoding.GetBytes(stringValue);
-                            byteArray = byteArray.Concat(MakeByteArray((int)Squirrel.OTString, bytes.Length, bytes));
+                            byteArray = byteArray.Concat(MakeByteArray((int)SQ.OTString, bytes.Length, bytes));
                         }
                         break;
                     case Array array:
@@ -172,15 +173,15 @@ namespace ThScoreFileConverterTests.Models
         }
 
         private static IEnumerable<byte> MakeSQByteArrayFromArray<T>(in IEnumerable<T> array)
-            => MakeByteArray((int)Squirrel.OTArray, array.Count())
+            => MakeByteArray((int)SQ.OTArray, array.Count())
                 .Concat(array.SelectMany((element, index) => MakeSQByteArray(index).Concat(MakeSQByteArray(element))))
-                .Concat(MakeByteArray((int)Squirrel.OTNull));
+                .Concat(MakeByteArray((int)SQ.OTNull));
 
         private static IEnumerable<byte> MakeSQByteArrayFromDictionary<TKey, TValue>(
             in Dictionary<TKey, TValue> dictionary)
-            => MakeByteArray((int)Squirrel.OTTable)
+            => MakeByteArray((int)SQ.OTTable)
                 .Concat(dictionary.SelectMany(pair => MakeSQByteArray(pair.Key).Concat(MakeSQByteArray(pair.Value))))
-                .Concat(MakeByteArray((int)Squirrel.OTNull));
+                .Concat(MakeByteArray((int)SQ.OTNull));
 
         public static TResult[] MakeRandomArray<TResult>(int length)
             where TResult : struct
