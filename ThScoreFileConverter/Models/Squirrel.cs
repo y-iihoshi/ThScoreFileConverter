@@ -18,38 +18,55 @@ namespace ThScoreFileConverter.Models
 
         public const SQObjectType OTNull =
             SQObjectType.RTNull | SQObjectType.SQObjectCanBeFalse;
+
         public const SQObjectType OTInteger =
             SQObjectType.RTInteger | SQObjectType.SQObjectNumeric | SQObjectType.SQObjectCanBeFalse;
+
         public const SQObjectType OTFloat =
             SQObjectType.RTFloat | SQObjectType.SQObjectNumeric | SQObjectType.SQObjectCanBeFalse;
+
         public const SQObjectType OTBool =
             SQObjectType.RTBool | SQObjectType.SQObjectCanBeFalse;
+
         public const SQObjectType OTString =
             SQObjectType.RTString | SQObjectType.SQObjectRefCounted;
+
         public const SQObjectType OTTable =
             SQObjectType.RTTable | SQObjectType.SQObjectRefCounted | SQObjectType.SQObjectDelegable;
+
         public const SQObjectType OTArray =
             SQObjectType.RTArray | SQObjectType.SQObjectRefCounted;
+
         public const SQObjectType OTUserData =
             SQObjectType.RTUserData | SQObjectType.SQObjectRefCounted | SQObjectType.SQObjectDelegable;
+
         public const SQObjectType OTClosure =
             SQObjectType.RTClosure | SQObjectType.SQObjectRefCounted;
+
         public const SQObjectType OTNativeClosure =
             SQObjectType.RTNativeClosure | SQObjectType.SQObjectRefCounted;
+
         public const SQObjectType OTGenerator =
             SQObjectType.RTGenerator | SQObjectType.SQObjectRefCounted;
+
         public const SQObjectType OTUserPointer =
             SQObjectType.RTUserPointer;
+
         public const SQObjectType OTThread =
             SQObjectType.RTThread | SQObjectType.SQObjectRefCounted;
+
         public const SQObjectType OTFuncProto =
             SQObjectType.RTFuncProto | SQObjectType.SQObjectRefCounted;
+
         public const SQObjectType OTClass =
             SQObjectType.RTClass | SQObjectType.SQObjectRefCounted;
+
         public const SQObjectType OTInstance =
             SQObjectType.RTInstance | SQObjectType.SQObjectRefCounted | SQObjectType.SQObjectDelegable;
+
         public const SQObjectType OTWeakRef =
             SQObjectType.RTWeakRef | SQObjectType.SQObjectRefCounted;
+
         public const SQObjectType OTOuter =
             SQObjectType.RTOuter | SQObjectType.SQObjectRefCounted;
 
