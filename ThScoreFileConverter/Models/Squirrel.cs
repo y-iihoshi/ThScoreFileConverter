@@ -70,7 +70,7 @@ namespace ThScoreFileConverter.Models
         public const SQObjectType OTUserPointer =
             SQObjectType.RTUserPointer;
         public const SQObjectType OTThread =
-            (SQObjectType.RTThread | SQObjectType.SQObjectRefCounted) ;
+            (SQObjectType.RTThread | SQObjectType.SQObjectRefCounted);
         public const SQObjectType OTFuncProto =
             (SQObjectType.RTFuncProto | SQObjectType.SQObjectRefCounted);
         public const SQObjectType OTClass =
