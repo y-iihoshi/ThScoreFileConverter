@@ -1,5 +1,5 @@
-[string]$input = $args[0]
+[string]$inputFile = $args[0]
 
 $codecov = (Resolve-Path "$env:USERPROFILE\.nuget\packages\codecov\*\tools\codecov.exe").ToString()
 
-$codecov -f $input -t $env:CODECOV_TOKEN
+& $codecov -f $inputFile -t $env:CODECOV_TOKEN
