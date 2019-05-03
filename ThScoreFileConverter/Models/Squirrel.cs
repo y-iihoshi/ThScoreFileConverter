@@ -16,35 +16,6 @@ namespace ThScoreFileConverter.Models
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 #pragma warning disable SA1600 // Elements should be documented
 
-        [Flags]
-        public enum SQObjectType
-        {
-#pragma warning disable SA1602 // Enumeration items should be documented
-            RTNull             = 0x00000001,
-            RTInteger          = 0x00000002,
-            RTFloat            = 0x00000004,
-            RTBool             = 0x00000008,
-            RTString           = 0x00000010,
-            RTTable            = 0x00000020,
-            RTArray            = 0x00000040,
-            RTUserData         = 0x00000080,
-            RTClosure          = 0x00000100,
-            RTNativeClosure    = 0x00000200,
-            RTGenerator        = 0x00000400,
-            RTUserPointer      = 0x00000800,
-            RTThread           = 0x00001000,
-            RTFuncProto        = 0x00002000,
-            RTClass            = 0x00004000,
-            RTInstance         = 0x00008000,
-            RTWeakRef          = 0x00010000,
-            RTOuter            = 0x00020000,
-            SQObjectCanBeFalse = 0x01000000,
-            SQObjectDelegable  = 0x02000000,
-            SQObjectNumeric    = 0x04000000,
-            SQObjectRefCounted = 0x08000000
-#pragma warning restore SA1602 // Enumeration items should be documented
-        }
-
         public const SQObjectType OTNull =
             (SQObjectType.RTNull | SQObjectType.SQObjectCanBeFalse);
         public const SQObjectType OTInteger =
@@ -81,6 +52,35 @@ namespace ThScoreFileConverter.Models
             (SQObjectType.RTWeakRef | SQObjectType.SQObjectRefCounted);
         public const SQObjectType OTOuter =
             (SQObjectType.RTOuter | SQObjectType.SQObjectRefCounted);
+
+        [Flags]
+        public enum SQObjectType
+        {
+#pragma warning disable SA1602 // Enumeration items should be documented
+            RTNull             = 0x00000001,
+            RTInteger          = 0x00000002,
+            RTFloat            = 0x00000004,
+            RTBool             = 0x00000008,
+            RTString           = 0x00000010,
+            RTTable            = 0x00000020,
+            RTArray            = 0x00000040,
+            RTUserData         = 0x00000080,
+            RTClosure          = 0x00000100,
+            RTNativeClosure    = 0x00000200,
+            RTGenerator        = 0x00000400,
+            RTUserPointer      = 0x00000800,
+            RTThread           = 0x00001000,
+            RTFuncProto        = 0x00002000,
+            RTClass            = 0x00004000,
+            RTInstance         = 0x00008000,
+            RTWeakRef          = 0x00010000,
+            RTOuter            = 0x00020000,
+            SQObjectCanBeFalse = 0x01000000,
+            SQObjectDelegable  = 0x02000000,
+            SQObjectNumeric    = 0x04000000,
+            SQObjectRefCounted = 0x08000000
+#pragma warning restore SA1602 // Enumeration items should be documented
+        }
 
 #pragma warning restore SA1600 // Elements should be documented
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
