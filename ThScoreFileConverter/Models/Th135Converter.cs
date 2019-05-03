@@ -273,14 +273,14 @@ namespace ThScoreFileConverter.Models
             private static readonly Dictionary<uint, Func<BinaryReader, object>> ObjectReaders =
                 new Dictionary<uint, Func<BinaryReader, object>>
                 {
-                    { 0x01000001, reader => new EndMark() },
-                    { 0x01000008, reader => reader.ReadByte() != 0x00 },
-                    { 0x05000002, reader => reader.ReadInt32() },
-                    { 0x05000004, reader => reader.ReadSingle() },
-                    { 0x08000010, StringReader },
-                    { 0x08000040, ArrayReader },
-                    { 0x0A000020, DictionaryReader },
-                    { 0x0A008000, reader => new object() }, // unknown (appears in gauge_1p/2p...)
+                    { (uint)Squirrel.OTNull,     reader => new EndMark() },
+                    { (uint)Squirrel.OTBool,     reader => reader.ReadByte() != 0x00 },
+                    { (uint)Squirrel.OTInteger,  reader => reader.ReadInt32() },
+                    { (uint)Squirrel.OTFloat,    reader => reader.ReadSingle() },
+                    { (uint)Squirrel.OTString,   StringReader },
+                    { (uint)Squirrel.OTArray,    ArrayReader },
+                    { (uint)Squirrel.OTTable,    DictionaryReader },
+                    { (uint)Squirrel.OTInstance, reader => new object() }, // unknown (appears in gauge_1p/2p...)
                 };
 
             private Dictionary<string, object> allData;
