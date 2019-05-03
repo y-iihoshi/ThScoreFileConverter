@@ -5,6 +5,7 @@ VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8332C86B-BB85-41F4-A6C8-F72AF538ECB2}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		appveyor.yml = appveyor.yml
 		Codecov.ps1 = Codecov.ps1
 		CustomDictionary.xml = CustomDictionary.xml
