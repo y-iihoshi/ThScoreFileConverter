@@ -3,10 +3,10 @@
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
 
-using System;
-
 namespace ThScoreFileConverter.Models
 {
+    using System;
+
     /// <summary>
     /// Provides the constants defined by Squirrel 3.1.
     /// Refer to https://github.com/albertodemichelis/squirrel/blob/master/include/squirrel.h for details.
