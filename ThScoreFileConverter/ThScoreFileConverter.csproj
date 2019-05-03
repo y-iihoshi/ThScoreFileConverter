@@ -215,7 +215,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="GitVersionTask">
-      <Version>3.6.5</Version>
+      <Version>4.0.0</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -229,7 +229,7 @@
       <Version>1.1.1</Version>
     </PackageReference>
     <PackageReference Include="StyleCop.Analyzers.Unstable">
-      <Version>1.1.1.114</Version>
+      <Version>1.1.118.34620</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
