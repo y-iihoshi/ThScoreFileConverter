@@ -17,41 +17,41 @@ namespace ThScoreFileConverter.Models
 #pragma warning disable SA1600 // Elements should be documented
 
         public const SQObjectType OTNull =
-            (SQObjectType.RTNull | SQObjectType.SQObjectCanBeFalse);
+            SQObjectType.RTNull | SQObjectType.SQObjectCanBeFalse;
         public const SQObjectType OTInteger =
-            (SQObjectType.RTInteger | SQObjectType.SQObjectNumeric | SQObjectType.SQObjectCanBeFalse);
+            SQObjectType.RTInteger | SQObjectType.SQObjectNumeric | SQObjectType.SQObjectCanBeFalse;
         public const SQObjectType OTFloat =
-            (SQObjectType.RTFloat | SQObjectType.SQObjectNumeric | SQObjectType.SQObjectCanBeFalse);
+            SQObjectType.RTFloat | SQObjectType.SQObjectNumeric | SQObjectType.SQObjectCanBeFalse;
         public const SQObjectType OTBool =
-            (SQObjectType.RTBool | SQObjectType.SQObjectCanBeFalse);
+            SQObjectType.RTBool | SQObjectType.SQObjectCanBeFalse;
         public const SQObjectType OTString =
-            (SQObjectType.RTString | SQObjectType.SQObjectRefCounted);
+            SQObjectType.RTString | SQObjectType.SQObjectRefCounted;
         public const SQObjectType OTTable =
-            (SQObjectType.RTTable | SQObjectType.SQObjectRefCounted | SQObjectType.SQObjectDelegable);
+            SQObjectType.RTTable | SQObjectType.SQObjectRefCounted | SQObjectType.SQObjectDelegable;
         public const SQObjectType OTArray =
-            (SQObjectType.RTArray | SQObjectType.SQObjectRefCounted);
+            SQObjectType.RTArray | SQObjectType.SQObjectRefCounted;
         public const SQObjectType OTUserData =
-            (SQObjectType.RTUserData | SQObjectType.SQObjectRefCounted | SQObjectType.SQObjectDelegable);
+            SQObjectType.RTUserData | SQObjectType.SQObjectRefCounted | SQObjectType.SQObjectDelegable;
         public const SQObjectType OTClosure =
-            (SQObjectType.RTClosure | SQObjectType.SQObjectRefCounted);
+            SQObjectType.RTClosure | SQObjectType.SQObjectRefCounted;
         public const SQObjectType OTNativeClosure =
-            (SQObjectType.RTNativeClosure | SQObjectType.SQObjectRefCounted);
+            SQObjectType.RTNativeClosure | SQObjectType.SQObjectRefCounted;
         public const SQObjectType OTGenerator =
-            (SQObjectType.RTGenerator | SQObjectType.SQObjectRefCounted);
+            SQObjectType.RTGenerator | SQObjectType.SQObjectRefCounted;
         public const SQObjectType OTUserPointer =
             SQObjectType.RTUserPointer;
         public const SQObjectType OTThread =
-            (SQObjectType.RTThread | SQObjectType.SQObjectRefCounted);
+            SQObjectType.RTThread | SQObjectType.SQObjectRefCounted;
         public const SQObjectType OTFuncProto =
-            (SQObjectType.RTFuncProto | SQObjectType.SQObjectRefCounted);
+            SQObjectType.RTFuncProto | SQObjectType.SQObjectRefCounted;
         public const SQObjectType OTClass =
-            (SQObjectType.RTClass | SQObjectType.SQObjectRefCounted);
+            SQObjectType.RTClass | SQObjectType.SQObjectRefCounted;
         public const SQObjectType OTInstance =
-            (SQObjectType.RTInstance | SQObjectType.SQObjectRefCounted | SQObjectType.SQObjectDelegable);
+            SQObjectType.RTInstance | SQObjectType.SQObjectRefCounted | SQObjectType.SQObjectDelegable;
         public const SQObjectType OTWeakRef =
-            (SQObjectType.RTWeakRef | SQObjectType.SQObjectRefCounted);
+            SQObjectType.RTWeakRef | SQObjectType.SQObjectRefCounted;
         public const SQObjectType OTOuter =
-            (SQObjectType.RTOuter | SQObjectType.SQObjectRefCounted);
+            SQObjectType.RTOuter | SQObjectType.SQObjectRefCounted;
 
         [Flags]
         public enum SQObjectType
