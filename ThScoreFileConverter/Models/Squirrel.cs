@@ -1,15 +1,25 @@
-﻿using System;
+﻿// <copyright file="Squirrel.cs" company="None">
+// Copyright (c) IIHOSHI Yoshinori.
+// Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
+// </copyright>
+
+using System;
 
 namespace ThScoreFileConverter.Models
 {
-    // FIXME: Should be moved into ThScoreFileConverter.Models.
+    /// <summary>
+    /// Provides the constants defined by Squirrel 3.1.
+    /// Refer to https://github.com/albertodemichelis/squirrel/blob/master/include/squirrel.h for details.
+    /// </summary>
     public static class Squirrel
     {
-        // cf. include/squirrel.h of Squirrel 3.1
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+#pragma warning disable SA1600 // Elements should be documented
 
         [Flags]
         public enum SQObjectType
         {
+#pragma warning disable SA1602 // Enumeration items should be documented
             RTNull             = 0x00000001,
             RTInteger          = 0x00000002,
             RTFloat            = 0x00000004,
@@ -32,6 +42,7 @@ namespace ThScoreFileConverter.Models
             SQObjectDelegable  = 0x02000000,
             SQObjectNumeric    = 0x04000000,
             SQObjectRefCounted = 0x08000000
+#pragma warning restore SA1602 // Enumeration items should be documented
         }
 
         public const SQObjectType OTNull =
@@ -70,5 +81,8 @@ namespace ThScoreFileConverter.Models
             (SQObjectType.RTWeakRef | SQObjectType.SQObjectRefCounted);
         public const SQObjectType OTOuter =
             (SQObjectType.RTOuter | SQObjectType.SQObjectRefCounted);
+
+#pragma warning restore SA1600 // Elements should be documented
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }
