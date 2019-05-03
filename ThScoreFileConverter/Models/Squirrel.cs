@@ -78,7 +78,7 @@ namespace ThScoreFileConverter.Models
             SQObjectCanBeFalse = 0x01000000,
             SQObjectDelegable  = 0x02000000,
             SQObjectNumeric    = 0x04000000,
-            SQObjectRefCounted = 0x08000000
+            SQObjectRefCounted = 0x08000000,
 #pragma warning restore SA1602 // Enumeration items should be documented
         }
 
