@@ -13,17 +13,12 @@ namespace ThScoreFileConverter.Models
     /// <summary>
     /// Represents a reader that reads data by bitwise from a stream.
     /// </summary>
-    public class BitReader : IDisposable
+    public class BitReader
     {
         /// <summary>
         /// The stream to read.
         /// </summary>
         private readonly Stream stream;
-
-        /// <summary>
-        /// The flag that represents whether <see cref="Dispose(bool)"/> has been called.
-        /// </summary>
-        private bool disposed;
 
         /// <summary>
         /// The byte that is currently reading.
@@ -38,7 +33,10 @@ namespace ThScoreFileConverter.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="BitReader"/> class.
         /// </summary>
-        /// <param name="stream">The stream to read.</param>
+        /// <param name="stream">
+        /// The stream to read. Since a <see cref="BitReader"/> instance does not own <paramref name="stream"/>,
+        /// it is responsible for the caller to close <paramref name="stream"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentException"><paramref name="stream"/> is not readable.</exception>
         public BitReader(Stream stream)
@@ -49,26 +47,8 @@ namespace ThScoreFileConverter.Models
                 throw new ArgumentException("stream must be readable", nameof(stream));
 
             this.stream = stream;
-            this.disposed = false;
             this.current = 0;
             this.mask = 0x80;
-        }
-
-        /// <summary>
-        /// Finalizes an instance of the <see cref="BitReader"/> class.
-        /// </summary>
-        ~BitReader()
-        {
-            this.Dispose(false);
-        }
-
-        /// <summary>
-        /// Implements the <see cref="IDisposable.Dispose"/> method.
-        /// </summary>
-        public void Dispose()
-        {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
         /// <summary>
@@ -77,13 +57,10 @@ namespace ThScoreFileConverter.Models
         /// <param name="num">The number of reading bits.</param>
         /// <returns>The value that is read from the stream.</returns>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="num"/> is negative.</exception>
-        /// <exception cref="ObjectDisposedException">Called after the stream was closed.</exception>
         public int ReadBits(int num)
         {
             if (num < 0)
                 throw new ArgumentOutOfRangeException(nameof(num));
-            if (this.disposed)
-                throw new ObjectDisposedException(this.ToString());
 
             var value = 0;
             for (var i = 0; i < num; i++)
@@ -104,22 +81,6 @@ namespace ThScoreFileConverter.Models
             }
 
             return value;
-        }
-
-        /// <summary>
-        /// Disposes the resources of the current instance.
-        /// </summary>
-        /// <param name="disposing">
-        /// <c>true</c> if calls from the <see cref="Dispose()"/> method; <c>false</c> for the destructor.
-        /// </param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-                if (disposing)
-                    this.stream.Dispose();
-                this.disposed = true;
-            }
         }
     }
 }
