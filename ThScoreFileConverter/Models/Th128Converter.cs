@@ -1124,10 +1124,8 @@ namespace ThScoreFileConverter.Models
                 this.Rankings = new Dictionary<Level, ScoreData[]>(numLevels);
                 this.ClearCounts = new Dictionary<Level, int>(numLevels);
 
-                using (var stream = new MemoryStream(this.Data, false))
+                using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
-                    var reader = new BinaryReader(stream);
-
                     this.Route = (RouteWithTotal)reader.ReadInt32();
 
                     foreach (var level in levels)
@@ -1190,10 +1188,8 @@ namespace ThScoreFileConverter.Models
 
                 this.Cards = new Dictionary<int, SpellCard>(CardTable.Count);
 
-                using (var stream = new MemoryStream(this.Data, false))
+                using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
-                    var reader = new BinaryReader(stream);
-
                     for (var number = 0; number < CardTable.Count; number++)
                     {
                         var card = new SpellCard();
@@ -1230,10 +1226,8 @@ namespace ThScoreFileConverter.Models
                 if (this.Size != ValidSize)
                     throw new InvalidDataException("Size");
 
-                using (var stream = new MemoryStream(this.Data, false))
+                using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
-                    var reader = new BinaryReader(stream);
-
                     this.LastName = reader.ReadExactBytes(10);
                     reader.ReadExactBytes(0x10);
                     this.BgmFlags = reader.ReadExactBytes(10);

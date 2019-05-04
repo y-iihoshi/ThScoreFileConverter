@@ -782,10 +782,8 @@ namespace ThScoreFileConverter.Models
                 if (this.Size1 != ValidSize)
                     throw new InvalidDataException("Size1");
 
-                using (var stream = new MemoryStream(this.Data, false))
+                using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
-                    var reader = new BinaryReader(stream);
-
                     reader.ReadUInt32();    // always 0x00000010?
                 }
             }
@@ -804,10 +802,8 @@ namespace ThScoreFileConverter.Models
                 if (this.Size1 != ValidSize)
                     throw new InvalidDataException("Size1");
 
-                using (var stream = new MemoryStream(this.Data, false))
+                using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
-                    var reader = new BinaryReader(stream);
-
                     reader.ReadUInt32();    // always 0x00000001?
                     this.Score = reader.ReadUInt32();
                     this.Chara = Utils.ToEnum<Chara>(reader.ReadByte());
@@ -853,10 +849,8 @@ namespace ThScoreFileConverter.Models
                 this.StoryFlags = new Dictionary<Level, byte>(numLevels);
                 this.PracticeFlags = new Dictionary<Level, byte>(numLevels);
 
-                using (var stream = new MemoryStream(this.Data, false))
+                using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
-                    var reader = new BinaryReader(stream);
-
                     reader.ReadUInt32();    // always 0x00000010?
                     foreach (var level in levels)
                         this.StoryFlags.Add(level, reader.ReadByte());
@@ -888,10 +882,8 @@ namespace ThScoreFileConverter.Models
                 if (this.Size1 != ValidSize)
                     throw new InvalidDataException("Size1");
 
-                using (var stream = new MemoryStream(this.Data, false))
+                using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
-                    var reader = new BinaryReader(stream);
-
                     reader.ReadExactBytes(8);
                     this.CardId = (short)(reader.ReadInt16() + 1);
                     reader.ReadExactBytes(6);
@@ -929,10 +921,8 @@ namespace ThScoreFileConverter.Models
                 if (this.Size1 != ValidSize)
                     throw new InvalidDataException("Size1");
 
-                using (var stream = new MemoryStream(this.Data, false))
+                using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
-                    var reader = new BinaryReader(stream);
-
                     reader.ReadUInt32();    // always 0x00000010?
                     this.HighScore = reader.ReadInt32();
                     this.Chara = Utils.ToEnum<Chara>(reader.ReadByte());

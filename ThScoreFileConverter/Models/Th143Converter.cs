@@ -1047,10 +1047,8 @@ namespace ThScoreFileConverter.Models
                 if (this.Size != ValidSize)
                     throw new InvalidDataException("Size");
 
-                using (var stream = new MemoryStream(this.Data, false))
+                using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
-                    var reader = new BinaryReader(stream);
-
                     var items = Utils.GetEnumerator<ItemWithTotal>();
 
                     this.Number = reader.ReadInt32();
@@ -1100,10 +1098,8 @@ namespace ThScoreFileConverter.Models
                 if (this.Size != ValidSize)
                     throw new InvalidDataException("Size");
 
-                using (var stream = new MemoryStream(this.Data, false))
+                using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
-                    var reader = new BinaryReader(stream);
-
                     this.Item = Utils.ToEnum<ItemWithTotal>(reader.ReadInt32());
                     this.UseCount = reader.ReadInt32();
                     this.ClearedCount = reader.ReadInt32();
@@ -1158,10 +1154,8 @@ namespace ThScoreFileConverter.Models
                 if (this.Size != ValidSize)
                     throw new InvalidDataException("Size");
 
-                using (var stream = new MemoryStream(this.Data, false))
+                using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
-                    var reader = new BinaryReader(stream);
-
                     this.LastName = reader.ReadExactBytes(14);
                     reader.ReadExactBytes(0x12);
                     this.BgmFlags = reader.ReadExactBytes(9);
