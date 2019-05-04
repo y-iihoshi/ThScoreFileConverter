@@ -251,36 +251,38 @@ namespace ThScoreFileConverter.Actions
         #endregion
 
         /// <summary>
+        /// Creates a new <see cref="WinForms.FontDialog"/> instance.
+        /// </summary>
+        /// <returns>A created <see cref="WinForms.FontDialog"/> instance.</returns>
+        internal WinForms.FontDialog CreateDialog() => new WinForms.FontDialog
+        {
+            AllowScriptChange = this.AllowScriptChange,
+            AllowSimulations = this.AllowSimulations,
+            AllowVectorFonts = this.AllowVectorFonts,
+            AllowVerticalFonts = this.AllowVerticalFonts,
+            Color = this.Color,
+            FixedPitchOnly = this.FixedPitchOnly,
+            Font = this.Font,
+            FontMustExist = this.FontMustExist,
+            MaxSize = this.MaxSize,
+            MinSize = this.MinSize,
+            ScriptsOnly = this.ScriptsOnly,
+            ShowApply = this.ShowApply,
+            ShowColor = this.ShowColor,
+            ShowEffects = this.ShowEffects,
+            ShowHelp = this.ShowHelp,
+            Site = this.Site,
+            Tag = this.Tag,
+        };
+
+        /// <summary>
         /// Invokes the action.
         /// </summary>
         /// <param name="parameter">The parameter to the action; but not used.</param>
         protected override void Invoke(object parameter)
         {
-            WinForms.FontDialog dialog = null;
-
-            try
+            using (var dialog = this.CreateDialog())
             {
-                dialog = new WinForms.FontDialog
-                {
-                    AllowScriptChange = this.AllowScriptChange,
-                    AllowSimulations = this.AllowSimulations,
-                    AllowVectorFonts = this.AllowVectorFonts,
-                    AllowVerticalFonts = this.AllowVerticalFonts,
-                    Color = this.Color,
-                    FixedPitchOnly = this.FixedPitchOnly,
-                    Font = this.Font,
-                    FontMustExist = this.FontMustExist,
-                    MaxSize = this.MaxSize,
-                    MinSize = this.MinSize,
-                    ScriptsOnly = this.ScriptsOnly,
-                    ShowApply = this.ShowApply,
-                    ShowColor = this.ShowColor,
-                    ShowEffects = this.ShowEffects,
-                    ShowHelp = this.ShowHelp,
-                    Site = this.Site,
-                    Tag = this.Tag,
-                };
-
                 if (this.ShowApply && (this.ApplyCommand != null))
                 {
                     dialog.Apply += (sender, e) =>
@@ -320,10 +322,6 @@ namespace ThScoreFileConverter.Actions
                     default:
                         throw new NotImplementedException("Should not reach here.");
                 }
-            }
-            finally
-            {
-                dialog.Dispose();
             }
         }
     }

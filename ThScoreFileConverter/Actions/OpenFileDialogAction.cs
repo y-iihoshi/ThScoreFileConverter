@@ -276,39 +276,41 @@ namespace ThScoreFileConverter.Actions
         #endregion
 
         /// <summary>
+        /// Creates a new <see cref="WinForms.OpenFileDialog"/> instance.
+        /// </summary>
+        /// <returns>A created <see cref="WinForms.OpenFileDialog"/> instance.</returns>
+        internal WinForms.OpenFileDialog CreateDialog() => new WinForms.OpenFileDialog
+        {
+            AddExtension = this.AddExtension,
+            AutoUpgradeEnabled = this.AutoUpgradeEnabled,
+            CheckFileExists = this.CheckFileExists,
+            CheckPathExists = this.CheckPathExists,
+            DefaultExt = this.DefaultExt,
+            DereferenceLinks = this.DereferenceLinks,
+            FileName = this.FileName,
+            Filter = this.Filter,
+            FilterIndex = this.FilterIndex,
+            InitialDirectory = this.InitialDirectory,
+            Multiselect = this.Multiselect,
+            ReadOnlyChecked = this.ReadOnlyChecked,
+            RestoreDirectory = this.RestoreDirectory,
+            ShowHelp = this.ShowHelp,
+            ShowReadOnly = this.ShowReadOnly,
+            Site = this.Site,
+            SupportMultiDottedExtensions = this.SupportMultiDottedExtensions,
+            Tag = this.Tag,
+            Title = this.Title,
+            ValidateNames = this.ValidateNames,
+        };
+
+        /// <summary>
         /// Invokes the action.
         /// </summary>
         /// <param name="parameter">The parameter to the action; but not used.</param>
         protected override void Invoke(object parameter)
         {
-            WinForms.OpenFileDialog dialog = null;
-
-            try
+            using (var dialog = this.CreateDialog())
             {
-                dialog = new WinForms.OpenFileDialog
-                {
-                    AddExtension = this.AddExtension,
-                    AutoUpgradeEnabled = this.AutoUpgradeEnabled,
-                    CheckFileExists = this.CheckFileExists,
-                    CheckPathExists = this.CheckPathExists,
-                    DefaultExt = this.DefaultExt,
-                    DereferenceLinks = this.DereferenceLinks,
-                    FileName = this.FileName,
-                    Filter = this.Filter,
-                    FilterIndex = this.FilterIndex,
-                    InitialDirectory = this.InitialDirectory,
-                    Multiselect = this.Multiselect,
-                    ReadOnlyChecked = this.ReadOnlyChecked,
-                    RestoreDirectory = this.RestoreDirectory,
-                    ShowHelp = this.ShowHelp,
-                    ShowReadOnly = this.ShowReadOnly,
-                    Site = this.Site,
-                    SupportMultiDottedExtensions = this.SupportMultiDottedExtensions,
-                    Tag = this.Tag,
-                    Title = this.Title,
-                    ValidateNames = this.ValidateNames,
-                };
-
                 var dialogResult = dialog.ShowDialog(new Win32Window(this.Owner));
 
                 switch (dialogResult)
@@ -335,10 +337,6 @@ namespace ThScoreFileConverter.Actions
                     default:
                         throw new NotImplementedException("Should not reach here.");
                 }
-            }
-            finally
-            {
-                dialog.Dispose();
             }
         }
     }

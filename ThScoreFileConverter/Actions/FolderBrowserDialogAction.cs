@@ -94,25 +94,27 @@ namespace ThScoreFileConverter.Actions
         #endregion
 
         /// <summary>
+        /// Creates a new <see cref="WinForms.FolderBrowserDialog"/> instance.
+        /// </summary>
+        /// <returns>A created <see cref="WinForms.FolderBrowserDialog"/> instance.</returns>
+        internal WinForms.FolderBrowserDialog CreateDialog() => new WinForms.FolderBrowserDialog
+        {
+            Description = this.Description,
+            RootFolder = this.RootFolder,
+            SelectedPath = this.SelectedPath,
+            ShowNewFolderButton = this.ShowNewFolderButton,
+            Site = this.Site,
+            Tag = this.Tag,
+        };
+
+        /// <summary>
         /// Invokes the action.
         /// </summary>
         /// <param name="parameter">The parameter to the action; but not used.</param>
         protected override void Invoke(object parameter)
         {
-            WinForms.FolderBrowserDialog dialog = null;
-
-            try
+            using (var dialog = this.CreateDialog())
             {
-                dialog = new WinForms.FolderBrowserDialog
-                {
-                    Description = this.Description,
-                    RootFolder = this.RootFolder,
-                    SelectedPath = this.SelectedPath,
-                    ShowNewFolderButton = this.ShowNewFolderButton,
-                    Site = this.Site,
-                    Tag = this.Tag,
-                };
-
                 var dialogResult = dialog.ShowDialog(new Win32Window(this.Owner));
 
                 switch (dialogResult)
@@ -139,10 +141,6 @@ namespace ThScoreFileConverter.Actions
                     default:
                         throw new NotImplementedException("Should not reach here.");
                 }
-            }
-            finally
-            {
-                dialog.Dispose();
             }
         }
     }
