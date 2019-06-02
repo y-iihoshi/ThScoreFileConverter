@@ -50,7 +50,7 @@ namespace ThScoreFileConverter.ViewModels
             this.Name = asmName.Name;
             this.Version = Prop.Resources.strVersionPrefix + verField.GetValue(null);
             this.Copyright = (copyrightAttr != null) ? copyrightAttr.Copyright : string.Empty;
-            this.Uri = "http://www.colorless-sight.jp/";    // FIXME
+            this.Uri = "https://www.colorless-sight.jp/thsfc/"; // FIXME
         }
 
         /// <summary>
