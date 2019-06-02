@@ -41,8 +41,8 @@ namespace ThScoreFileConverter
             this.FontFamilyName = SystemFonts.MessageFontFamily.Source;
             this.FontSize = SystemFonts.MessageFontSize;
             this.OutputNumberGroupSeparator = true;
-            this.InputCodePageId = 932;
-            this.OutputCodePageId = 932;
+            this.InputCodePageId = 65001;
+            this.OutputCodePageId = 65001;
         }
 
         /// <summary>
