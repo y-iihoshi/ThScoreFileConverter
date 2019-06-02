@@ -14,9 +14,9 @@ v2.1.0 (2017/9/24)
 
 v2.0.0 (2017/6/18)
     * :abbr:`MVVM (Model-View-ViewModel)` に則ってソフトウェアの構成を変更
-    * マニュアルの作成に `Sphinx <http://www.sphinx-doc.org/ja/stable/>`_
+    * マニュアルの作成に `Sphinx <https://www.sphinx-doc.org/ja/stable/>`_
       を利用するように変更
-    * `Semantic Versioning 2.0.0 <http://semver.org/>`_
+    * `Semantic Versioning 2.0.0 <https://semver.org/>`_
       を基にバージョン付与規則を変更
     * 東方深秘録に対応
     * 東方紺珠伝に対応

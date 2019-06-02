@@ -23,8 +23,8 @@ ThSFC を利用するには .NET Framework 4.5 以降が必要です。
 .NET Framework のバージョン間の互換性やインストール方法などについては、
 下記リンク先の記事が参考になります:
 
-* `Tech TIPS：.NET Frameworkのバージョンを整理する (1/2) - ＠IT
-  <http://www.atmarkit.co.jp/ait/articles/1211/16/news093.html>`_
+* `.NET Frameworkのバージョンを整理する (1/2)：Tech TIPS - ＠IT
+  <https://www.atmarkit.co.jp/ait/articles/1211/16/news093.html>`_
 
 2018 年 5 月現在、 ThSFC は下記環境でのみ開発及び動作確認を実施しています。
 下記以外の環境で動作しないなどのご報告を受けても対応できない可能性があります。
@@ -49,16 +49,16 @@ ThSFC の免責事項などの詳細は以下の通りです。
 ------
 
 * 東方 Project の各作品の著作権は
-  `上海アリス幻樂団 <http://www16.big.or.jp/~zun/>`_ 様にあります。
+  `上海アリス幻樂団 <https://www16.big.or.jp/~zun/>`_ 様にあります。
   ThSFC 作者とは一切関係がありません。
 * 東方萃夢想、 東方緋想天、 東方非想天則、 東方心綺楼、 東方深秘録、
   東方憑依華の著作権は
-  `黄昏フロンティア <http://www.tasofro.net/>`_ 様及び
-  `上海アリス幻樂団 <http://www16.big.or.jp/~zun/>`_ 様にあります。
+  `黄昏フロンティア <https://www.tasofro.net/>`_ 様及び
+  `上海アリス幻樂団 <https://www16.big.or.jp/~zun/>`_ 様にあります。
   ThSFC 作者とは一切関係がありません。
 * 東方メモリマネージャーの著作権は
   `sue445 <http://www.sue445.net/>`_ 様にあります。
   ThSFC 作者とは一切関係がありません。
 * ThSFC の著作権は IIHOSHI Yoshinori
-  (`Web サイト <http://www.colorless-sight.jp/>`_,
-  `Twitter <http://twitter.com/iihoshi>`_) にあります。
+  (`Web サイト <https://www.colorless-sight.jp/>`_,
+  `Twitter <https://twitter.com/iihoshi>`_) にあります。
