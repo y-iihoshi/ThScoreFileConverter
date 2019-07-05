@@ -47,7 +47,7 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
-        ///   厳密に型指定されたこのリソース クラスを使用して、すべての検索リソースに対し、
+        ///   すべてについて、現在のスレッドの CurrentUICulture プロパティをオーバーライドします
         ///   現在のスレッドの CurrentUICulture プロパティをオーバーライドします。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -264,6 +264,24 @@ namespace ThScoreFileConverter.Properties {
         public static string keyTh16 {
             get {
                 return ResourceManager.GetString("keyTh16", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   TH165 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string keyTh165 {
+            get {
+                return ResourceManager.GetString("keyTh165", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   TH17 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string keyTh17 {
+            get {
+                return ResourceManager.GetString("keyTh17", resourceCulture);
             }
         }
         

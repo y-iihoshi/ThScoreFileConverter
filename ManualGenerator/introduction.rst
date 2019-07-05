@@ -9,8 +9,7 @@
 :term:`ThScoreFileConverter` (以下、 :term:`ThSFC`) は、 東方 Project
 の各作品のスコアファイルからランキングや御札戦歴などのデータを読み込み、
 任意のテキストファイルに書き出すことのできるツールです。
-文花帖やダブルスポイラーのベストショット、
-及び弾幕アマノジャクのスクリーンショットの現像 (PNG 画像出力) も可能です。
+文花帖形式のベストショットの現像 (PNG 画像出力) も可能です。
 
 :term:`東方メモリマネージャー` の代替ツールとなることを目指して開発中です。
 特に、 風神録までの :term:`テンプレート書式` については互換性を維持しています。
@@ -26,13 +25,13 @@ ThSFC を利用するには .NET Framework 4.5 以降が必要です。
 * `.NET Frameworkのバージョンを整理する (1/2)：Tech TIPS - ＠IT
   <https://www.atmarkit.co.jp/ait/articles/1211/16/news093.html>`_
 
-2018 年 5 月現在、 ThSFC は下記環境でのみ開発及び動作確認を実施しています。
+2019 年 7 月現在、 ThSFC は下記環境でのみ開発及び動作確認を実施しています。
 下記以外の環境で動作しないなどのご報告を受けても対応できない可能性があります。
 
-* Windows 10 Pro Version 1803 (64bit)
-* .NET Framework 4.7.2
-* Visual Studio Community 2017 Version 15.6.7
-* Python 3.6.5
+* Windows 10 Pro Version 1903 (64bit)
+* .NET Framework 4.8
+* Visual Studio Community 2017 Version 15.9.13
+* Python 3.7.3
 
 免責事項
 --------
