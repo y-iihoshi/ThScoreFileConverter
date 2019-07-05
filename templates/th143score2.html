@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
  <head>
-  <meta charset="UTF-8">
-  <title>弾幕アマノジャククリア状況一覧</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <meta charset="UTF-8" />
+  <title>弾幕アマノジャク クリア状況一覧</title>
+  <link rel="stylesheet" href="style.css" />
 <style>
-<!--
+/* <![CDATA[ */
     td.scene { min-width: 60px; }
     td.count { min-width: 50px; }
     canvas { background-color: #000; }
     table.score_per_level caption { text-align: left; font-size: large; }
-    table.score_per_level td.column_head { min-width: 70px; }
--->
+    table.score_per_level th { min-width: 70px; }
+/* ]]> */
 </style>
   <script src="jquery-1.11.1.min.js"></script>
   <script src="jcanvas.min.js"></script>
 <script>
-<!--
+// <![CDATA[
 	$(document).ready(function(){
 		var defaultSize = 220;
 		var originX = defaultSize / 2;
@@ -392,637 +392,639 @@
 			clearCounts: [ '%T143SCRL013', '%T143SCRL023', '%T143SCRL033', '%T143SCRL043', '%T143SCRL053', '%T143SCRL063', '%T143SCRL073', '%T143SCRL083', '%T143SCRL093', '%T143SCRL003' ]
 		});
 	});
-//-->
+// ]]>
 </script>
  </head>
 
  <body>
 
-  <h1>弾幕アマノジャククリア状況一覧</h1>
+  <header>
+   <h1>弾幕アマノジャク クリア状況一覧</h1>
+   <hr />
+   <nav>
+    <ul>
+     <li><a href="th143score1.html">スコアデータ全般</a></li>
+     <li>クリア状況一覧</li>
+     <li><a href="th143screenshot.html">スクリーンショット一覧</a></li>
+    </ul>
+    <ul>
+     <li><a href="#Day1">一日目</a></li>
+     <li><a href="#Day2">二日目</a></li>
+     <li><a href="#Day3">三日目</a></li>
+     <li><a href="#Day4">四日目</a></li>
+     <li><a href="#Day5">五日目</a></li>
+     <li><a href="#Day6">六日目</a></li>
+     <li><a href="#Day7">七日目</a></li>
+     <li><a href="#Day8">八日目</a></li>
+     <li><a href="#Day9">九日目</a></li>
+     <li><a href="#LastDay">最終日</a></li>
+    </ul>
+   </nav>
+  </header>
 
-  <hr />
+  <main>
 
-  <div class="section">
-   <p>
-    <a href="th143score1.html">スコアデータ全般</a> /
-    クリア状況一覧 /
-    <a href="th143screenshot.html">スクリーンショット一覧</a><br />
-    <a href="#Day1">一日目</a> /
-    <a href="#Day2">二日目</a> /
-    <a href="#Day3">三日目</a> /
-    <a href="#Day4">四日目</a> /
-    <a href="#Day5">五日目</a> /
-    <a href="#Day6">六日目</a> /
-    <a href="#Day7">七日目</a> /
-    <a href="#Day8">八日目</a> /
-    <a href="#Day9">九日目</a> /
-    <a href="#LastDay">最終日</a>
-   </p>
-  </div>
+   <section>
+    <h2>日付別スコア</h2>
 
-  <hr />
+    <table class="score_per_level">
+     <caption id="Day1">一日目</caption>
+     <tbody>
+      <tr>
+       <th scope="row">シーン</th>
+       <td class="scene">シーン 1</td>
+       <td class="scene">シーン 2</td>
+       <td class="scene">シーン 3</td>
+       <td class="scene">シーン 4</td>
+       <td class="scene">シーン 5</td>
+       <td class="scene">シーン 6</td>
+      </tr>
+      <tr>
+       <th scope="row">Clear</th>
+       <td class="count">%T143SCR11T3</td>
+       <td class="count">%T143SCR12T3</td>
+       <td class="count">%T143SCR13T3</td>
+       <td class="count">%T143SCR14T3</td>
+       <td class="count">%T143SCR15T3</td>
+       <td class="count">%T143SCR16T3</td>
+      </tr>
+      <tr>
+       <th scope="row">Challenge</th>
+       <td class="count">%T143SCR11T2</td>
+       <td class="count">%T143SCR12T2</td>
+       <td class="count">%T143SCR13T2</td>
+       <td class="count">%T143SCR14T2</td>
+       <td class="count">%T143SCR15T2</td>
+       <td class="count">%T143SCR16T2</td>
+      </tr>
+      <tr>
+       <th scope="row">Score</th>
+       <td class="count">%T143SCR11T1</td>
+       <td class="count">%T143SCR12T1</td>
+       <td class="count">%T143SCR13T1</td>
+       <td class="count">%T143SCR14T1</td>
+       <td class="count">%T143SCR15T1</td>
+       <td class="count">%T143SCR16T1</td>
+      </tr>
+      <tr>
+       <th scope="row">クリア状況</th>
+       <td><canvas id="T143GRAPH11" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH12" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH13" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH14" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH15" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH16" width="110" height="110"></canvas></td>
+      </tr>
+     </tbody>
+    </table>
 
-  <div class="section">
-   <h2>日付別スコア</h2>
+    <table class="score_per_level">
+     <caption id="Day2">二日目</caption>
+     <tbody>
+      <tr>
+       <th scope="row">シーン</th>
+       <td class="scene">シーン 1</td>
+       <td class="scene">シーン 2</td>
+       <td class="scene">シーン 3</td>
+       <td class="scene">シーン 4</td>
+       <td class="scene">シーン 5</td>
+       <td class="scene">シーン 6</td>
+      </tr>
+      <tr>
+       <th scope="row">Clear</th>
+       <td class="count">%T143SCR21T3</td>
+       <td class="count">%T143SCR22T3</td>
+       <td class="count">%T143SCR23T3</td>
+       <td class="count">%T143SCR24T3</td>
+       <td class="count">%T143SCR25T3</td>
+       <td class="count">%T143SCR26T3</td>
+      </tr>
+      <tr>
+       <th scope="row">Challenge</th>
+       <td class="count">%T143SCR21T2</td>
+       <td class="count">%T143SCR22T2</td>
+       <td class="count">%T143SCR23T2</td>
+       <td class="count">%T143SCR24T2</td>
+       <td class="count">%T143SCR25T2</td>
+       <td class="count">%T143SCR26T2</td>
+      </tr>
+      <tr>
+       <th scope="row">Score</th>
+       <td class="count">%T143SCR21T1</td>
+       <td class="count">%T143SCR22T1</td>
+       <td class="count">%T143SCR23T1</td>
+       <td class="count">%T143SCR24T1</td>
+       <td class="count">%T143SCR25T1</td>
+       <td class="count">%T143SCR26T1</td>
+      </tr>
+      <tr>
+       <th scope="row">クリア状況</th>
+       <td><canvas id="T143GRAPH21" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH22" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH23" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH24" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH25" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH26" width="110" height="110"></canvas></td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="score_per_level">
-    <caption id="Day1">一日目</caption>
-    <tbody>
-     <tr>
-      <td class="column_head">シーン</td>
-      <td class="scene">シーン 1</td>
-      <td class="scene">シーン 2</td>
-      <td class="scene">シーン 3</td>
-      <td class="scene">シーン 4</td>
-      <td class="scene">シーン 5</td>
-      <td class="scene">シーン 6</td>
-     </tr>
-     <tr>
-      <td class="column_head">Clear</td>
-      <td class="count">%T143SCR11T3</td>
-      <td class="count">%T143SCR12T3</td>
-      <td class="count">%T143SCR13T3</td>
-      <td class="count">%T143SCR14T3</td>
-      <td class="count">%T143SCR15T3</td>
-      <td class="count">%T143SCR16T3</td>
-     </tr>
-     <tr>
-      <td class="column_head">Challenge</td>
-      <td class="count">%T143SCR11T2</td>
-      <td class="count">%T143SCR12T2</td>
-      <td class="count">%T143SCR13T2</td>
-      <td class="count">%T143SCR14T2</td>
-      <td class="count">%T143SCR15T2</td>
-      <td class="count">%T143SCR16T2</td>
-     </tr>
-     <tr>
-      <td class="column_head">Score</td>
-      <td class="count">%T143SCR11T1</td>
-      <td class="count">%T143SCR12T1</td>
-      <td class="count">%T143SCR13T1</td>
-      <td class="count">%T143SCR14T1</td>
-      <td class="count">%T143SCR15T1</td>
-      <td class="count">%T143SCR16T1</td>
-     </tr>
-     <tr>
-      <td class="column_head">クリア状況</td>
-      <td><canvas id="T143GRAPH11" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH12" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH13" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH14" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH15" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH16" width="110" height="110"></canvas></td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="score_per_level">
+     <caption id="Day3">三日目</caption>
+     <tbody>
+      <tr>
+       <th scope="row">シーン</th>
+       <td class="scene">シーン 1</td>
+       <td class="scene">シーン 2</td>
+       <td class="scene">シーン 3</td>
+       <td class="scene">シーン 4</td>
+       <td class="scene">シーン 5</td>
+       <td class="scene">シーン 6</td>
+       <td class="scene">シーン 7</td>
+      </tr>
+      <tr>
+       <th scope="row">Clear</th>
+       <td class="count">%T143SCR31T3</td>
+       <td class="count">%T143SCR32T3</td>
+       <td class="count">%T143SCR33T3</td>
+       <td class="count">%T143SCR34T3</td>
+       <td class="count">%T143SCR35T3</td>
+       <td class="count">%T143SCR36T3</td>
+       <td class="count">%T143SCR37T3</td>
+      </tr>
+      <tr>
+       <th scope="row">Challenge</th>
+       <td class="count">%T143SCR31T2</td>
+       <td class="count">%T143SCR32T2</td>
+       <td class="count">%T143SCR33T2</td>
+       <td class="count">%T143SCR34T2</td>
+       <td class="count">%T143SCR35T2</td>
+       <td class="count">%T143SCR36T2</td>
+       <td class="count">%T143SCR37T2</td>
+      </tr>
+      <tr>
+       <th scope="row">Score</th>
+       <td class="count">%T143SCR31T1</td>
+       <td class="count">%T143SCR32T1</td>
+       <td class="count">%T143SCR33T1</td>
+       <td class="count">%T143SCR34T1</td>
+       <td class="count">%T143SCR35T1</td>
+       <td class="count">%T143SCR36T1</td>
+       <td class="count">%T143SCR37T1</td>
+      </tr>
+      <tr>
+       <th scope="row">クリア状況</th>
+       <td><canvas id="T143GRAPH31" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH32" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH33" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH34" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH35" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH36" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH37" width="110" height="110"></canvas></td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="score_per_level">
-    <caption id="Day2">二日目</caption>
-    <tbody>
-     <tr>
-      <td class="column_head">シーン</td>
-      <td class="scene">シーン 1</td>
-      <td class="scene">シーン 2</td>
-      <td class="scene">シーン 3</td>
-      <td class="scene">シーン 4</td>
-      <td class="scene">シーン 5</td>
-      <td class="scene">シーン 6</td>
-     </tr>
-     <tr>
-      <td class="column_head">Clear</td>
-      <td class="count">%T143SCR21T3</td>
-      <td class="count">%T143SCR22T3</td>
-      <td class="count">%T143SCR23T3</td>
-      <td class="count">%T143SCR24T3</td>
-      <td class="count">%T143SCR25T3</td>
-      <td class="count">%T143SCR26T3</td>
-     </tr>
-     <tr>
-      <td class="column_head">Challenge</td>
-      <td class="count">%T143SCR21T2</td>
-      <td class="count">%T143SCR22T2</td>
-      <td class="count">%T143SCR23T2</td>
-      <td class="count">%T143SCR24T2</td>
-      <td class="count">%T143SCR25T2</td>
-      <td class="count">%T143SCR26T2</td>
-     </tr>
-     <tr>
-      <td class="column_head">Score</td>
-      <td class="count">%T143SCR21T1</td>
-      <td class="count">%T143SCR22T1</td>
-      <td class="count">%T143SCR23T1</td>
-      <td class="count">%T143SCR24T1</td>
-      <td class="count">%T143SCR25T1</td>
-      <td class="count">%T143SCR26T1</td>
-     </tr>
-     <tr>
-      <td class="column_head">クリア状況</td>
-      <td><canvas id="T143GRAPH21" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH22" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH23" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH24" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH25" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH26" width="110" height="110"></canvas></td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="score_per_level">
+     <caption id="Day4">四日目</caption>
+     <tbody>
+      <tr>
+       <th scope="row">シーン</th>
+       <td class="scene">シーン 1</td>
+       <td class="scene">シーン 2</td>
+       <td class="scene">シーン 3</td>
+       <td class="scene">シーン 4</td>
+       <td class="scene">シーン 5</td>
+       <td class="scene">シーン 6</td>
+       <td class="scene">シーン 7</td>
+      </tr>
+      <tr>
+       <th scope="row">Clear</th>
+       <td class="count">%T143SCR41T3</td>
+       <td class="count">%T143SCR42T3</td>
+       <td class="count">%T143SCR43T3</td>
+       <td class="count">%T143SCR44T3</td>
+       <td class="count">%T143SCR45T3</td>
+       <td class="count">%T143SCR46T3</td>
+       <td class="count">%T143SCR47T3</td>
+      </tr>
+      <tr>
+       <th scope="row">Challenge</th>
+       <td class="count">%T143SCR41T2</td>
+       <td class="count">%T143SCR42T2</td>
+       <td class="count">%T143SCR43T2</td>
+       <td class="count">%T143SCR44T2</td>
+       <td class="count">%T143SCR45T2</td>
+       <td class="count">%T143SCR46T2</td>
+       <td class="count">%T143SCR47T2</td>
+      </tr>
+      <tr>
+       <th scope="row">Score</th>
+       <td class="count">%T143SCR41T1</td>
+       <td class="count">%T143SCR42T1</td>
+       <td class="count">%T143SCR43T1</td>
+       <td class="count">%T143SCR44T1</td>
+       <td class="count">%T143SCR45T1</td>
+       <td class="count">%T143SCR46T1</td>
+       <td class="count">%T143SCR47T1</td>
+      </tr>
+      <tr>
+       <th scope="row">クリア状況</th>
+       <td><canvas id="T143GRAPH41" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH42" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH43" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH44" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH45" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH46" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH47" width="110" height="110"></canvas></td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="score_per_level">
-    <caption id="Day3">三日目</caption>
-    <tbody>
-     <tr>
-      <td class="column_head">シーン</td>
-      <td class="scene">シーン 1</td>
-      <td class="scene">シーン 2</td>
-      <td class="scene">シーン 3</td>
-      <td class="scene">シーン 4</td>
-      <td class="scene">シーン 5</td>
-      <td class="scene">シーン 6</td>
-      <td class="scene">シーン 7</td>
-     </tr>
-     <tr>
-      <td class="column_head">Clear</td>
-      <td class="count">%T143SCR31T3</td>
-      <td class="count">%T143SCR32T3</td>
-      <td class="count">%T143SCR33T3</td>
-      <td class="count">%T143SCR34T3</td>
-      <td class="count">%T143SCR35T3</td>
-      <td class="count">%T143SCR36T3</td>
-      <td class="count">%T143SCR37T3</td>
-     </tr>
-     <tr>
-      <td class="column_head">Challenge</td>
-      <td class="count">%T143SCR31T2</td>
-      <td class="count">%T143SCR32T2</td>
-      <td class="count">%T143SCR33T2</td>
-      <td class="count">%T143SCR34T2</td>
-      <td class="count">%T143SCR35T2</td>
-      <td class="count">%T143SCR36T2</td>
-      <td class="count">%T143SCR37T2</td>
-     </tr>
-     <tr>
-      <td class="column_head">Score</td>
-      <td class="count">%T143SCR31T1</td>
-      <td class="count">%T143SCR32T1</td>
-      <td class="count">%T143SCR33T1</td>
-      <td class="count">%T143SCR34T1</td>
-      <td class="count">%T143SCR35T1</td>
-      <td class="count">%T143SCR36T1</td>
-      <td class="count">%T143SCR37T1</td>
-     </tr>
-     <tr>
-      <td class="column_head">クリア状況</td>
-      <td><canvas id="T143GRAPH31" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH32" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH33" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH34" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH35" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH36" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH37" width="110" height="110"></canvas></td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="score_per_level">
+     <caption id="Day5">五日目</caption>
+     <tbody>
+      <tr>
+       <th scope="row">シーン</th>
+       <td class="scene">シーン 1</td>
+       <td class="scene">シーン 2</td>
+       <td class="scene">シーン 3</td>
+       <td class="scene">シーン 4</td>
+       <td class="scene">シーン 5</td>
+       <td class="scene">シーン 6</td>
+       <td class="scene">シーン 7</td>
+       <td class="scene">シーン 8</td>
+      </tr>
+      <tr>
+       <th scope="row">Clear</th>
+       <td class="count">%T143SCR51T3</td>
+       <td class="count">%T143SCR52T3</td>
+       <td class="count">%T143SCR53T3</td>
+       <td class="count">%T143SCR54T3</td>
+       <td class="count">%T143SCR55T3</td>
+       <td class="count">%T143SCR56T3</td>
+       <td class="count">%T143SCR57T3</td>
+       <td class="count">%T143SCR58T3</td>
+      </tr>
+      <tr>
+       <th scope="row">Challenge</th>
+       <td class="count">%T143SCR51T2</td>
+       <td class="count">%T143SCR52T2</td>
+       <td class="count">%T143SCR53T2</td>
+       <td class="count">%T143SCR54T2</td>
+       <td class="count">%T143SCR55T2</td>
+       <td class="count">%T143SCR56T2</td>
+       <td class="count">%T143SCR57T2</td>
+       <td class="count">%T143SCR58T2</td>
+      </tr>
+      <tr>
+       <th scope="row">Score</th>
+       <td class="count">%T143SCR51T1</td>
+       <td class="count">%T143SCR52T1</td>
+       <td class="count">%T143SCR53T1</td>
+       <td class="count">%T143SCR54T1</td>
+       <td class="count">%T143SCR55T1</td>
+       <td class="count">%T143SCR56T1</td>
+       <td class="count">%T143SCR57T1</td>
+       <td class="count">%T143SCR58T1</td>
+      </tr>
+      <tr>
+       <th scope="row">クリア状況</th>
+       <td><canvas id="T143GRAPH51" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH52" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH53" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH54" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH55" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH56" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH57" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH58" width="110" height="110"></canvas></td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="score_per_level">
-    <caption id="Day4">四日目</caption>
-    <tbody>
-     <tr>
-      <td class="column_head">シーン</td>
-      <td class="scene">シーン 1</td>
-      <td class="scene">シーン 2</td>
-      <td class="scene">シーン 3</td>
-      <td class="scene">シーン 4</td>
-      <td class="scene">シーン 5</td>
-      <td class="scene">シーン 6</td>
-      <td class="scene">シーン 7</td>
-     </tr>
-     <tr>
-      <td class="column_head">Clear</td>
-      <td class="count">%T143SCR41T3</td>
-      <td class="count">%T143SCR42T3</td>
-      <td class="count">%T143SCR43T3</td>
-      <td class="count">%T143SCR44T3</td>
-      <td class="count">%T143SCR45T3</td>
-      <td class="count">%T143SCR46T3</td>
-      <td class="count">%T143SCR47T3</td>
-     </tr>
-     <tr>
-      <td class="column_head">Challenge</td>
-      <td class="count">%T143SCR41T2</td>
-      <td class="count">%T143SCR42T2</td>
-      <td class="count">%T143SCR43T2</td>
-      <td class="count">%T143SCR44T2</td>
-      <td class="count">%T143SCR45T2</td>
-      <td class="count">%T143SCR46T2</td>
-      <td class="count">%T143SCR47T2</td>
-     </tr>
-     <tr>
-      <td class="column_head">Score</td>
-      <td class="count">%T143SCR41T1</td>
-      <td class="count">%T143SCR42T1</td>
-      <td class="count">%T143SCR43T1</td>
-      <td class="count">%T143SCR44T1</td>
-      <td class="count">%T143SCR45T1</td>
-      <td class="count">%T143SCR46T1</td>
-      <td class="count">%T143SCR47T1</td>
-     </tr>
-     <tr>
-      <td class="column_head">クリア状況</td>
-      <td><canvas id="T143GRAPH41" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH42" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH43" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH44" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH45" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH46" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH47" width="110" height="110"></canvas></td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="score_per_level">
+     <caption id="Day6">六日目</caption>
+     <tbody>
+      <tr>
+       <th scope="row">シーン</th>
+       <td class="scene">シーン 1</td>
+       <td class="scene">シーン 2</td>
+       <td class="scene">シーン 3</td>
+       <td class="scene">シーン 4</td>
+       <td class="scene">シーン 5</td>
+       <td class="scene">シーン 6</td>
+       <td class="scene">シーン 7</td>
+       <td class="scene">シーン 8</td>
+      </tr>
+      <tr>
+       <th scope="row">Clear</th>
+       <td class="count">%T143SCR61T3</td>
+       <td class="count">%T143SCR62T3</td>
+       <td class="count">%T143SCR63T3</td>
+       <td class="count">%T143SCR64T3</td>
+       <td class="count">%T143SCR65T3</td>
+       <td class="count">%T143SCR66T3</td>
+       <td class="count">%T143SCR67T3</td>
+       <td class="count">%T143SCR68T3</td>
+      </tr>
+      <tr>
+       <th scope="row">Challenge</th>
+       <td class="count">%T143SCR61T2</td>
+       <td class="count">%T143SCR62T2</td>
+       <td class="count">%T143SCR63T2</td>
+       <td class="count">%T143SCR64T2</td>
+       <td class="count">%T143SCR65T2</td>
+       <td class="count">%T143SCR66T2</td>
+       <td class="count">%T143SCR67T2</td>
+       <td class="count">%T143SCR68T2</td>
+      </tr>
+      <tr>
+       <th scope="row">Score</th>
+       <td class="count">%T143SCR61T1</td>
+       <td class="count">%T143SCR62T1</td>
+       <td class="count">%T143SCR63T1</td>
+       <td class="count">%T143SCR64T1</td>
+       <td class="count">%T143SCR65T1</td>
+       <td class="count">%T143SCR66T1</td>
+       <td class="count">%T143SCR67T1</td>
+       <td class="count">%T143SCR68T1</td>
+      </tr>
+      <tr>
+       <th scope="row">クリア状況</th>
+       <td><canvas id="T143GRAPH61" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH62" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH63" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH64" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH65" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH66" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH67" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH68" width="110" height="110"></canvas></td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="score_per_level">
-    <caption id="Day5">五日目</caption>
-    <tbody>
-     <tr>
-      <td class="column_head">シーン</td>
-      <td class="scene">シーン 1</td>
-      <td class="scene">シーン 2</td>
-      <td class="scene">シーン 3</td>
-      <td class="scene">シーン 4</td>
-      <td class="scene">シーン 5</td>
-      <td class="scene">シーン 6</td>
-      <td class="scene">シーン 7</td>
-      <td class="scene">シーン 8</td>
-     </tr>
-     <tr>
-      <td class="column_head">Clear</td>
-      <td class="count">%T143SCR51T3</td>
-      <td class="count">%T143SCR52T3</td>
-      <td class="count">%T143SCR53T3</td>
-      <td class="count">%T143SCR54T3</td>
-      <td class="count">%T143SCR55T3</td>
-      <td class="count">%T143SCR56T3</td>
-      <td class="count">%T143SCR57T3</td>
-      <td class="count">%T143SCR58T3</td>
-     </tr>
-     <tr>
-      <td class="column_head">Challenge</td>
-      <td class="count">%T143SCR51T2</td>
-      <td class="count">%T143SCR52T2</td>
-      <td class="count">%T143SCR53T2</td>
-      <td class="count">%T143SCR54T2</td>
-      <td class="count">%T143SCR55T2</td>
-      <td class="count">%T143SCR56T2</td>
-      <td class="count">%T143SCR57T2</td>
-      <td class="count">%T143SCR58T2</td>
-     </tr>
-     <tr>
-      <td class="column_head">Score</td>
-      <td class="count">%T143SCR51T1</td>
-      <td class="count">%T143SCR52T1</td>
-      <td class="count">%T143SCR53T1</td>
-      <td class="count">%T143SCR54T1</td>
-      <td class="count">%T143SCR55T1</td>
-      <td class="count">%T143SCR56T1</td>
-      <td class="count">%T143SCR57T1</td>
-      <td class="count">%T143SCR58T1</td>
-     </tr>
-     <tr>
-      <td class="column_head">クリア状況</td>
-      <td><canvas id="T143GRAPH51" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH52" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH53" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH54" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH55" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH56" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH57" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH58" width="110" height="110"></canvas></td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="score_per_level">
+     <caption id="Day7">七日目</caption>
+     <tbody>
+      <tr>
+       <th scope="row">シーン</th>
+       <td class="scene">シーン 1</td>
+       <td class="scene">シーン 2</td>
+       <td class="scene">シーン 3</td>
+       <td class="scene">シーン 4</td>
+       <td class="scene">シーン 5</td>
+       <td class="scene">シーン 6</td>
+       <td class="scene">シーン 7</td>
+       <td class="scene">シーン 8</td>
+      </tr>
+      <tr>
+       <th scope="row">Clear</th>
+       <td class="count">%T143SCR71T3</td>
+       <td class="count">%T143SCR72T3</td>
+       <td class="count">%T143SCR73T3</td>
+       <td class="count">%T143SCR74T3</td>
+       <td class="count">%T143SCR75T3</td>
+       <td class="count">%T143SCR76T3</td>
+       <td class="count">%T143SCR77T3</td>
+       <td class="count">%T143SCR78T3</td>
+      </tr>
+      <tr>
+       <th scope="row">Challenge</th>
+       <td class="count">%T143SCR71T2</td>
+       <td class="count">%T143SCR72T2</td>
+       <td class="count">%T143SCR73T2</td>
+       <td class="count">%T143SCR74T2</td>
+       <td class="count">%T143SCR75T2</td>
+       <td class="count">%T143SCR76T2</td>
+       <td class="count">%T143SCR77T2</td>
+       <td class="count">%T143SCR78T2</td>
+      </tr>
+      <tr>
+       <th scope="row">Score</th>
+       <td class="count">%T143SCR71T1</td>
+       <td class="count">%T143SCR72T1</td>
+       <td class="count">%T143SCR73T1</td>
+       <td class="count">%T143SCR74T1</td>
+       <td class="count">%T143SCR75T1</td>
+       <td class="count">%T143SCR76T1</td>
+       <td class="count">%T143SCR77T1</td>
+       <td class="count">%T143SCR78T1</td>
+      </tr>
+      <tr>
+       <th scope="row">クリア状況</th>
+       <td><canvas id="T143GRAPH71" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH72" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH73" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH74" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH75" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH76" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH77" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH78" width="110" height="110"></canvas></td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="score_per_level">
-    <caption id="Day6">六日目</caption>
-    <tbody>
-     <tr>
-      <td class="column_head">シーン</td>
-      <td class="scene">シーン 1</td>
-      <td class="scene">シーン 2</td>
-      <td class="scene">シーン 3</td>
-      <td class="scene">シーン 4</td>
-      <td class="scene">シーン 5</td>
-      <td class="scene">シーン 6</td>
-      <td class="scene">シーン 7</td>
-      <td class="scene">シーン 8</td>
-     </tr>
-     <tr>
-      <td class="column_head">Clear</td>
-      <td class="count">%T143SCR61T3</td>
-      <td class="count">%T143SCR62T3</td>
-      <td class="count">%T143SCR63T3</td>
-      <td class="count">%T143SCR64T3</td>
-      <td class="count">%T143SCR65T3</td>
-      <td class="count">%T143SCR66T3</td>
-      <td class="count">%T143SCR67T3</td>
-      <td class="count">%T143SCR68T3</td>
-     </tr>
-     <tr>
-      <td class="column_head">Challenge</td>
-      <td class="count">%T143SCR61T2</td>
-      <td class="count">%T143SCR62T2</td>
-      <td class="count">%T143SCR63T2</td>
-      <td class="count">%T143SCR64T2</td>
-      <td class="count">%T143SCR65T2</td>
-      <td class="count">%T143SCR66T2</td>
-      <td class="count">%T143SCR67T2</td>
-      <td class="count">%T143SCR68T2</td>
-     </tr>
-     <tr>
-      <td class="column_head">Score</td>
-      <td class="count">%T143SCR61T1</td>
-      <td class="count">%T143SCR62T1</td>
-      <td class="count">%T143SCR63T1</td>
-      <td class="count">%T143SCR64T1</td>
-      <td class="count">%T143SCR65T1</td>
-      <td class="count">%T143SCR66T1</td>
-      <td class="count">%T143SCR67T1</td>
-      <td class="count">%T143SCR68T1</td>
-     </tr>
-     <tr>
-      <td class="column_head">クリア状況</td>
-      <td><canvas id="T143GRAPH61" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH62" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH63" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH64" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH65" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH66" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH67" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH68" width="110" height="110"></canvas></td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="score_per_level">
+     <caption id="Day8">八日目</caption>
+     <tbody>
+      <tr>
+       <th scope="row">シーン</th>
+       <td class="scene">シーン 1</td>
+       <td class="scene">シーン 2</td>
+       <td class="scene">シーン 3</td>
+       <td class="scene">シーン 4</td>
+       <td class="scene">シーン 5</td>
+       <td class="scene">シーン 6</td>
+       <td class="scene">シーン 7</td>
+      </tr>
+      <tr>
+       <th scope="row">Clear</th>
+       <td class="count">%T143SCR81T3</td>
+       <td class="count">%T143SCR82T3</td>
+       <td class="count">%T143SCR83T3</td>
+       <td class="count">%T143SCR84T3</td>
+       <td class="count">%T143SCR85T3</td>
+       <td class="count">%T143SCR86T3</td>
+       <td class="count">%T143SCR87T3</td>
+      </tr>
+      <tr>
+       <th scope="row">Challenge</th>
+       <td class="count">%T143SCR81T2</td>
+       <td class="count">%T143SCR82T2</td>
+       <td class="count">%T143SCR83T2</td>
+       <td class="count">%T143SCR84T2</td>
+       <td class="count">%T143SCR85T2</td>
+       <td class="count">%T143SCR86T2</td>
+       <td class="count">%T143SCR87T2</td>
+      </tr>
+      <tr>
+       <th scope="row">Score</th>
+       <td class="count">%T143SCR81T1</td>
+       <td class="count">%T143SCR82T1</td>
+       <td class="count">%T143SCR83T1</td>
+       <td class="count">%T143SCR84T1</td>
+       <td class="count">%T143SCR85T1</td>
+       <td class="count">%T143SCR86T1</td>
+       <td class="count">%T143SCR87T1</td>
+      </tr>
+      <tr>
+       <th scope="row">クリア状況</th>
+       <td><canvas id="T143GRAPH81" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH82" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH83" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH84" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH85" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH86" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH87" width="110" height="110"></canvas></td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="score_per_level">
-    <caption id="Day7">七日目</caption>
-    <tbody>
-     <tr>
-      <td class="column_head">シーン</td>
-      <td class="scene">シーン 1</td>
-      <td class="scene">シーン 2</td>
-      <td class="scene">シーン 3</td>
-      <td class="scene">シーン 4</td>
-      <td class="scene">シーン 5</td>
-      <td class="scene">シーン 6</td>
-      <td class="scene">シーン 7</td>
-      <td class="scene">シーン 8</td>
-     </tr>
-     <tr>
-      <td class="column_head">Clear</td>
-      <td class="count">%T143SCR71T3</td>
-      <td class="count">%T143SCR72T3</td>
-      <td class="count">%T143SCR73T3</td>
-      <td class="count">%T143SCR74T3</td>
-      <td class="count">%T143SCR75T3</td>
-      <td class="count">%T143SCR76T3</td>
-      <td class="count">%T143SCR77T3</td>
-      <td class="count">%T143SCR78T3</td>
-     </tr>
-     <tr>
-      <td class="column_head">Challenge</td>
-      <td class="count">%T143SCR71T2</td>
-      <td class="count">%T143SCR72T2</td>
-      <td class="count">%T143SCR73T2</td>
-      <td class="count">%T143SCR74T2</td>
-      <td class="count">%T143SCR75T2</td>
-      <td class="count">%T143SCR76T2</td>
-      <td class="count">%T143SCR77T2</td>
-      <td class="count">%T143SCR78T2</td>
-     </tr>
-     <tr>
-      <td class="column_head">Score</td>
-      <td class="count">%T143SCR71T1</td>
-      <td class="count">%T143SCR72T1</td>
-      <td class="count">%T143SCR73T1</td>
-      <td class="count">%T143SCR74T1</td>
-      <td class="count">%T143SCR75T1</td>
-      <td class="count">%T143SCR76T1</td>
-      <td class="count">%T143SCR77T1</td>
-      <td class="count">%T143SCR78T1</td>
-     </tr>
-     <tr>
-      <td class="column_head">クリア状況</td>
-      <td><canvas id="T143GRAPH71" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH72" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH73" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH74" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH75" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH76" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH77" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH78" width="110" height="110"></canvas></td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="score_per_level">
+     <caption id="Day9">九日目</caption>
+     <tbody>
+      <tr>
+       <th scope="row">シーン</th>
+       <td class="scene">シーン 1</td>
+       <td class="scene">シーン 2</td>
+       <td class="scene">シーン 3</td>
+       <td class="scene">シーン 4</td>
+       <td class="scene">シーン 5</td>
+       <td class="scene">シーン 6</td>
+       <td class="scene">シーン 7</td>
+       <td class="scene">シーン 8</td>
+      </tr>
+      <tr>
+       <th scope="row">Clear</th>
+       <td class="count">%T143SCR91T3</td>
+       <td class="count">%T143SCR92T3</td>
+       <td class="count">%T143SCR93T3</td>
+       <td class="count">%T143SCR94T3</td>
+       <td class="count">%T143SCR95T3</td>
+       <td class="count">%T143SCR96T3</td>
+       <td class="count">%T143SCR97T3</td>
+       <td class="count">%T143SCR98T3</td>
+      </tr>
+      <tr>
+       <th scope="row">Challenge</th>
+       <td class="count">%T143SCR91T2</td>
+       <td class="count">%T143SCR92T2</td>
+       <td class="count">%T143SCR93T2</td>
+       <td class="count">%T143SCR94T2</td>
+       <td class="count">%T143SCR95T2</td>
+       <td class="count">%T143SCR96T2</td>
+       <td class="count">%T143SCR97T2</td>
+       <td class="count">%T143SCR98T2</td>
+      </tr>
+      <tr>
+       <th scope="row">Score</th>
+       <td class="count">%T143SCR91T1</td>
+       <td class="count">%T143SCR92T1</td>
+       <td class="count">%T143SCR93T1</td>
+       <td class="count">%T143SCR94T1</td>
+       <td class="count">%T143SCR95T1</td>
+       <td class="count">%T143SCR96T1</td>
+       <td class="count">%T143SCR97T1</td>
+       <td class="count">%T143SCR98T1</td>
+      </tr>
+      <tr>
+       <th scope="row">クリア状況</th>
+       <td><canvas id="T143GRAPH91" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH92" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH93" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH94" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH95" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH96" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH97" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPH98" width="110" height="110"></canvas></td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="score_per_level">
-    <caption id="Day8">八日目</caption>
-    <tbody>
-     <tr>
-      <td class="column_head">シーン</td>
-      <td class="scene">シーン 1</td>
-      <td class="scene">シーン 2</td>
-      <td class="scene">シーン 3</td>
-      <td class="scene">シーン 4</td>
-      <td class="scene">シーン 5</td>
-      <td class="scene">シーン 6</td>
-      <td class="scene">シーン 7</td>
-     </tr>
-     <tr>
-      <td class="column_head">Clear</td>
-      <td class="count">%T143SCR81T3</td>
-      <td class="count">%T143SCR82T3</td>
-      <td class="count">%T143SCR83T3</td>
-      <td class="count">%T143SCR84T3</td>
-      <td class="count">%T143SCR85T3</td>
-      <td class="count">%T143SCR86T3</td>
-      <td class="count">%T143SCR87T3</td>
-     </tr>
-     <tr>
-      <td class="column_head">Challenge</td>
-      <td class="count">%T143SCR81T2</td>
-      <td class="count">%T143SCR82T2</td>
-      <td class="count">%T143SCR83T2</td>
-      <td class="count">%T143SCR84T2</td>
-      <td class="count">%T143SCR85T2</td>
-      <td class="count">%T143SCR86T2</td>
-      <td class="count">%T143SCR87T2</td>
-     </tr>
-     <tr>
-      <td class="column_head">Score</td>
-      <td class="count">%T143SCR81T1</td>
-      <td class="count">%T143SCR82T1</td>
-      <td class="count">%T143SCR83T1</td>
-      <td class="count">%T143SCR84T1</td>
-      <td class="count">%T143SCR85T1</td>
-      <td class="count">%T143SCR86T1</td>
-      <td class="count">%T143SCR87T1</td>
-     </tr>
-     <tr>
-      <td class="column_head">クリア状況</td>
-      <td><canvas id="T143GRAPH81" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH82" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH83" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH84" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH85" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH86" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH87" width="110" height="110"></canvas></td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="score_per_level">
+     <caption id="LastDay">最終日</caption>
+     <tbody>
+      <tr>
+       <th scope="row">シーン</th>
+       <td class="scene">シーン 1</td>
+       <td class="scene">シーン 2</td>
+       <td class="scene">シーン 3</td>
+       <td class="scene">シーン 4</td>
+       <td class="scene">シーン 5</td>
+       <td class="scene">シーン 6</td>
+       <td class="scene">シーン 7</td>
+       <td class="scene">シーン 8</td>
+       <td class="scene">シーン 9</td>
+       <td class="scene">シーン 10</td>
+      </tr>
+      <tr>
+       <th scope="row">Clear</th>
+       <td class="count">%T143SCRL1T3</td>
+       <td class="count">%T143SCRL2T3</td>
+       <td class="count">%T143SCRL3T3</td>
+       <td class="count">%T143SCRL4T3</td>
+       <td class="count">%T143SCRL5T3</td>
+       <td class="count">%T143SCRL6T3</td>
+       <td class="count">%T143SCRL7T3</td>
+       <td class="count">%T143SCRL8T3</td>
+       <td class="count">%T143SCRL9T3</td>
+       <td class="count">%T143SCRL0T3</td>
+      </tr>
+      <tr>
+       <th scope="row">Challenge</th>
+       <td class="count">%T143SCRL1T2</td>
+       <td class="count">%T143SCRL2T2</td>
+       <td class="count">%T143SCRL3T2</td>
+       <td class="count">%T143SCRL4T2</td>
+       <td class="count">%T143SCRL5T2</td>
+       <td class="count">%T143SCRL6T2</td>
+       <td class="count">%T143SCRL7T2</td>
+       <td class="count">%T143SCRL8T2</td>
+       <td class="count">%T143SCRL9T2</td>
+       <td class="count">%T143SCRL0T2</td>
+      </tr>
+      <tr>
+       <th scope="row">Score</th>
+       <td class="count">%T143SCRL1T1</td>
+       <td class="count">%T143SCRL2T1</td>
+       <td class="count">%T143SCRL3T1</td>
+       <td class="count">%T143SCRL4T1</td>
+       <td class="count">%T143SCRL5T1</td>
+       <td class="count">%T143SCRL6T1</td>
+       <td class="count">%T143SCRL7T1</td>
+       <td class="count">%T143SCRL8T1</td>
+       <td class="count">%T143SCRL9T1</td>
+       <td class="count">%T143SCRL0T1</td>
+      </tr>
+      <tr>
+       <th scope="row">クリア状況</th>
+       <td><canvas id="T143GRAPHL1" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPHL2" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPHL3" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPHL4" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPHL5" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPHL6" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPHL7" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPHL8" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPHL9" width="110" height="110"></canvas></td>
+       <td><canvas id="T143GRAPHL0" width="110" height="110"></canvas></td>
+      </tr>
+     </tbody>
+    </table>
+   </section>
 
-   <table class="score_per_level">
-    <caption id="Day9">九日目</caption>
-    <tbody>
-     <tr>
-      <td class="column_head">シーン</td>
-      <td class="scene">シーン 1</td>
-      <td class="scene">シーン 2</td>
-      <td class="scene">シーン 3</td>
-      <td class="scene">シーン 4</td>
-      <td class="scene">シーン 5</td>
-      <td class="scene">シーン 6</td>
-      <td class="scene">シーン 7</td>
-      <td class="scene">シーン 8</td>
-     </tr>
-     <tr>
-      <td class="column_head">Clear</td>
-      <td class="count">%T143SCR91T3</td>
-      <td class="count">%T143SCR92T3</td>
-      <td class="count">%T143SCR93T3</td>
-      <td class="count">%T143SCR94T3</td>
-      <td class="count">%T143SCR95T3</td>
-      <td class="count">%T143SCR96T3</td>
-      <td class="count">%T143SCR97T3</td>
-      <td class="count">%T143SCR98T3</td>
-     </tr>
-     <tr>
-      <td class="column_head">Challenge</td>
-      <td class="count">%T143SCR91T2</td>
-      <td class="count">%T143SCR92T2</td>
-      <td class="count">%T143SCR93T2</td>
-      <td class="count">%T143SCR94T2</td>
-      <td class="count">%T143SCR95T2</td>
-      <td class="count">%T143SCR96T2</td>
-      <td class="count">%T143SCR97T2</td>
-      <td class="count">%T143SCR98T2</td>
-     </tr>
-     <tr>
-      <td class="column_head">Score</td>
-      <td class="count">%T143SCR91T1</td>
-      <td class="count">%T143SCR92T1</td>
-      <td class="count">%T143SCR93T1</td>
-      <td class="count">%T143SCR94T1</td>
-      <td class="count">%T143SCR95T1</td>
-      <td class="count">%T143SCR96T1</td>
-      <td class="count">%T143SCR97T1</td>
-      <td class="count">%T143SCR98T1</td>
-     </tr>
-     <tr>
-      <td class="column_head">クリア状況</td>
-      <td><canvas id="T143GRAPH91" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH92" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH93" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH94" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH95" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH96" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH97" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPH98" width="110" height="110"></canvas></td>
-     </tr>
-    </tbody>
-   </table>
+  </main>
 
-   <table class="score_per_level">
-    <caption id="LastDay">最終日</caption>
-    <tbody>
-     <tr>
-      <td class="column_head">シーン</td>
-      <td class="scene">シーン 1</td>
-      <td class="scene">シーン 2</td>
-      <td class="scene">シーン 3</td>
-      <td class="scene">シーン 4</td>
-      <td class="scene">シーン 5</td>
-      <td class="scene">シーン 6</td>
-      <td class="scene">シーン 7</td>
-      <td class="scene">シーン 8</td>
-      <td class="scene">シーン 9</td>
-      <td class="scene">シーン 10</td>
-     </tr>
-     <tr>
-      <td class="column_head">Clear</td>
-      <td class="count">%T143SCRL1T3</td>
-      <td class="count">%T143SCRL2T3</td>
-      <td class="count">%T143SCRL3T3</td>
-      <td class="count">%T143SCRL4T3</td>
-      <td class="count">%T143SCRL5T3</td>
-      <td class="count">%T143SCRL6T3</td>
-      <td class="count">%T143SCRL7T3</td>
-      <td class="count">%T143SCRL8T3</td>
-      <td class="count">%T143SCRL9T3</td>
-      <td class="count">%T143SCRL0T3</td>
-     </tr>
-     <tr>
-      <td class="column_head">Challenge</td>
-      <td class="count">%T143SCRL1T2</td>
-      <td class="count">%T143SCRL2T2</td>
-      <td class="count">%T143SCRL3T2</td>
-      <td class="count">%T143SCRL4T2</td>
-      <td class="count">%T143SCRL5T2</td>
-      <td class="count">%T143SCRL6T2</td>
-      <td class="count">%T143SCRL7T2</td>
-      <td class="count">%T143SCRL8T2</td>
-      <td class="count">%T143SCRL9T2</td>
-      <td class="count">%T143SCRL0T2</td>
-     </tr>
-     <tr>
-      <td class="column_head">Score</td>
-      <td class="count">%T143SCRL1T1</td>
-      <td class="count">%T143SCRL2T1</td>
-      <td class="count">%T143SCRL3T1</td>
-      <td class="count">%T143SCRL4T1</td>
-      <td class="count">%T143SCRL5T1</td>
-      <td class="count">%T143SCRL6T1</td>
-      <td class="count">%T143SCRL7T1</td>
-      <td class="count">%T143SCRL8T1</td>
-      <td class="count">%T143SCRL9T1</td>
-      <td class="count">%T143SCRL0T1</td>
-     </tr>
-     <tr>
-      <td class="column_head">クリア状況</td>
-      <td><canvas id="T143GRAPHL1" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPHL2" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPHL3" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPHL4" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPHL5" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPHL6" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPHL7" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPHL8" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPHL9" width="110" height="110"></canvas></td>
-      <td><canvas id="T143GRAPHL0" width="110" height="110"></canvas></td>
-     </tr>
-    </tbody>
-   </table>
-  </div>
-
-  <hr />
-
-  <div class="section">
+  <footer>
    <p>
     Data output by <a href="https://www.colorless-sight.jp/thsfc/">ThScoreFileConverter</a>.
-<script type="text/javascript">
-<!--
+<script>
+// <![CDATA[
     document.write("Last updated: ", document.lastModified, ".");
-//-->
+// ]]>
 </script>
    </p>
-  </div>
+  </footer>
 
  </body>
 </html>

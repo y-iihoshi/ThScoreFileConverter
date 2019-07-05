@@ -21,10 +21,6 @@ a:visited {
 	color: #8fa8ef;
 }
 
-div.section {
-	padding: 5px 0;
-}
-
 hr {
 	clear: both;
 }
@@ -44,21 +40,49 @@ thead {
 	color: inherit;
 }
 
+th {
+	background-color: #8fa8ef;
+	color: inherit;
+	font-weight: normal;
+	padding: 0.1em 0.5em;
+}
+
+th.vertical {
+	width: 1em;
+}
+
 td {
 	text-align: center;
 	border: 1px solid #8fa8ef;
 	padding: 0.1em 0.5em;
 }
 
-td.column_head {
-	background-color: #8fa8ef;
-	color: inherit;
-}
-
-td.vertical {
-	width: 1em;
-}
-
 tbody td.score {
 	text-align: right;
+}
+
+header {
+	border-bottom: 2px solid #000;
+}
+
+footer {
+	border-top: 2px solid #000;
+	clear: both;
+}
+
+nav ul, nav ol {
+	list-style-type: none;
+	padding-left: 0;
+}
+
+nav li {
+	display: inline-block;
+}
+
+nav li::after {
+	content: " /";
+}
+
+nav li:last-child::after {
+	content: none;
 }

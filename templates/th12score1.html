@@ -1,15 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
  <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta http-equiv="Content-Stype-Type" content="text/css" />
-  <meta http-equiv="Content-Script-Type" content="text/javascript" />
-  <title>東方星蓮船スコアデータ</title>
-  <link rel="stylesheet" type="text/css" href="style.css" />
-<style type="text/css">
-<!--
+  <meta charset="UTF-8" />
+  <title>東方星蓮船 スコアデータ</title>
+  <link rel="stylesheet" href="style.css" />
+<style>
+/* <![CDATA[ */
     td.character { min-width: 100px; }
     td.name { min-width: 70px; }
     td.score { min-width: 70px; }
@@ -19,544 +16,547 @@
     td.slow { min-width: 50px; }
     table.count td.count { min-width: 80px; }
     table.count td.time { min-width: 80px; }
--->
+/* ]]> */
 </style>
  </head>
 
  <body>
-  <h1>東方星蓮船スコアデータ</h1>
 
-  <hr />
+  <header>
+   <h1>東方星蓮船 スコアデータ</h1>
+   <hr />
+   <nav>
+    <ul>
+     <li>スコアデータ全般</li>
+     <li><a href="th12score2.html">個別ランキング</a></li>
+     <li><a href="th12score3.html">プラクティス</a></li>
+     <li><a href="th12card.html">御札戦歴</a></li>
+    </ul>
+    <ul>
+     <li><a href="#Easy">Easy</a></li>
+     <li><a href="#Normal">Normal</a></li>
+     <li><a href="#Hard">Hard</a></li>
+     <li><a href="#Lunatic">Lunatic</a></li>
+     <li><a href="#Extra">Extra</a></li>
+     <li><a href="#Other">その他の状態一覧</a></li>
+     <li><a href="#Clear">クリア達成度</a></li>
+    </ul>
+   </nav>
+  </header>
 
-  <div class="section">
-   <p>
-    スコアデータ全般 /
-    <a href="th12score2.html">個別ランキング</a> /
-    <a href="th12score3.html">プラクティス</a> /
-    <a href="th12card.html">御札戦歴</a><br />
-    <a href="#Easy">Easy</a>
-    <a href="#Normal">Normal</a>
-    <a href="#Hard">Hard</a>
-    <a href="#Lunatic">Lunatic</a>
-    <a href="#Extra">Extra</a>
-    <a href="#Other">その他の状態一覧</a>
-    <a href="#Clear">クリア達成度</a>
-   </p>
-  </div>
+  <main>
 
-  <hr />
+   <section>
+    <h2>難易度別スコア</h2>
 
-  <div class="section">
-   <h2>難易度別スコア</h2>
+    <table class="score_per_level">
+     <caption id="Easy">Easy</caption>
+     <thead>
+      <tr>
+       <th class="character">Character</th>
+       <th class="name">Name</th>
+       <th class="score">Score</th>
+       <th class="date">Date</th>
+       <th class="stage">Stage</th>
+       <th class="slow">Slow</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="character">博麗 霊夢（夢）</td>
+       <td class="name">%T12SCRERA11</td>
+       <td class="score">%T12SCRERA12</td>
+       <td class="date">%T12SCRERA14</td>
+       <td class="stage">%T12SCRERA13</td>
+       <td class="slow">%T12SCRERA15</td>
+      </tr>
+      <tr>
+       <td class="character">博麗 霊夢（霊）</td>
+       <td class="name">%T12SCRERB11</td>
+       <td class="score">%T12SCRERB12</td>
+       <td class="date">%T12SCRERB14</td>
+       <td class="stage">%T12SCRERB13</td>
+       <td class="slow">%T12SCRERB15</td>
+      </tr>
+      <tr>
+       <td class="character">霧雨 魔理沙（恋）</td>
+       <td class="name">%T12SCREMA11</td>
+       <td class="score">%T12SCREMA12</td>
+       <td class="date">%T12SCREMA14</td>
+       <td class="stage">%T12SCREMA13</td>
+       <td class="slow">%T12SCREMA15</td>
+      </tr>
+      <tr>
+       <td class="character">霧雨 魔理沙（魔）</td>
+       <td class="name">%T12SCREMB11</td>
+       <td class="score">%T12SCREMB12</td>
+       <td class="date">%T12SCREMB14</td>
+       <td class="stage">%T12SCREMB13</td>
+       <td class="slow">%T12SCREMB15</td>
+      </tr>
+      <tr>
+       <td class="character">東風谷 早苗（蛇）</td>
+       <td class="name">%T12SCRESA11</td>
+       <td class="score">%T12SCRESA12</td>
+       <td class="date">%T12SCRESA14</td>
+       <td class="stage">%T12SCRESA13</td>
+       <td class="slow">%T12SCRESA15</td>
+      </tr>
+      <tr>
+       <td class="character">東風谷 早苗（蛙）</td>
+       <td class="name">%T12SCRESB11</td>
+       <td class="score">%T12SCRESB12</td>
+       <td class="date">%T12SCRESB14</td>
+       <td class="stage">%T12SCRESB13</td>
+       <td class="slow">%T12SCRESB15</td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="score_per_level">
-    <caption id="Easy">Easy</caption>
-    <thead>
-     <tr>
-      <td class="character">Character</td>
-      <td class="name">Name</td>
-      <td class="score">Score</td>
-      <td class="date">Date</td>
-      <td class="stage">Stage</td>
-      <td class="slow">Slow</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="character">博麗 霊夢（夢）</td>
-      <td class="name">%T12SCRERA11</td>
-      <td class="score">%T12SCRERA12</td>
-      <td class="date">%T12SCRERA14</td>
-      <td class="stage">%T12SCRERA13</td>
-      <td class="slow">%T12SCRERA15</td>
-     </tr>
-     <tr>
-      <td class="character">博麗 霊夢（霊）</td>
-      <td class="name">%T12SCRERB11</td>
-      <td class="score">%T12SCRERB12</td>
-      <td class="date">%T12SCRERB14</td>
-      <td class="stage">%T12SCRERB13</td>
-      <td class="slow">%T12SCRERB15</td>
-     </tr>
-     <tr>
-      <td class="character">霧雨 魔理沙（恋）</td>
-      <td class="name">%T12SCREMA11</td>
-      <td class="score">%T12SCREMA12</td>
-      <td class="date">%T12SCREMA14</td>
-      <td class="stage">%T12SCREMA13</td>
-      <td class="slow">%T12SCREMA15</td>
-     </tr>
-     <tr>
-      <td class="character">霧雨 魔理沙（魔）</td>
-      <td class="name">%T12SCREMB11</td>
-      <td class="score">%T12SCREMB12</td>
-      <td class="date">%T12SCREMB14</td>
-      <td class="stage">%T12SCREMB13</td>
-      <td class="slow">%T12SCREMB15</td>
-     </tr>
-     <tr>
-      <td class="character">東風谷 早苗（蛇）</td>
-      <td class="name">%T12SCRESA11</td>
-      <td class="score">%T12SCRESA12</td>
-      <td class="date">%T12SCRESA14</td>
-      <td class="stage">%T12SCRESA13</td>
-      <td class="slow">%T12SCRESA15</td>
-     </tr>
-     <tr>
-      <td class="character">東風谷 早苗（蛙）</td>
-      <td class="name">%T12SCRESB11</td>
-      <td class="score">%T12SCRESB12</td>
-      <td class="date">%T12SCRESB14</td>
-      <td class="stage">%T12SCRESB13</td>
-      <td class="slow">%T12SCRESB15</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="score_per_level">
+     <caption id="Normal">Normal</caption>
+     <thead>
+      <tr>
+       <th class="character">Character</th>
+       <th class="name">Name</th>
+       <th class="score">Score</th>
+       <th class="date">Date</th>
+       <th class="stage">Stage</th>
+       <th class="slow">Slow</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="character">博麗 霊夢（夢）</td>
+       <td class="name">%T12SCRNRA11</td>
+       <td class="score">%T12SCRNRA12</td>
+       <td class="date">%T12SCRNRA14</td>
+       <td class="stage">%T12SCRNRA13</td>
+       <td class="slow">%T12SCRNRA15</td>
+      </tr>
+      <tr>
+       <td class="character">博麗 霊夢（霊）</td>
+       <td class="name">%T12SCRNRB11</td>
+       <td class="score">%T12SCRNRB12</td>
+       <td class="date">%T12SCRNRB14</td>
+       <td class="stage">%T12SCRNRB13</td>
+       <td class="slow">%T12SCRNRB15</td>
+      </tr>
+      <tr>
+       <td class="character">霧雨 魔理沙（恋）</td>
+       <td class="name">%T12SCRNMA11</td>
+       <td class="score">%T12SCRNMA12</td>
+       <td class="date">%T12SCRNMA14</td>
+       <td class="stage">%T12SCRNMA13</td>
+       <td class="slow">%T12SCRNMA15</td>
+      </tr>
+      <tr>
+       <td class="character">霧雨 魔理沙（魔）</td>
+       <td class="name">%T12SCRNMB11</td>
+       <td class="score">%T12SCRNMB12</td>
+       <td class="date">%T12SCRNMB14</td>
+       <td class="stage">%T12SCRNMB13</td>
+       <td class="slow">%T12SCRNMB15</td>
+      </tr>
+      <tr>
+       <td class="character">東風谷 早苗（蛇）</td>
+       <td class="name">%T12SCRNSA11</td>
+       <td class="score">%T12SCRNSA12</td>
+       <td class="date">%T12SCRNSA14</td>
+       <td class="stage">%T12SCRNSA13</td>
+       <td class="slow">%T12SCRNSA15</td>
+      </tr>
+      <tr>
+       <td class="character">東風谷 早苗（蛙）</td>
+       <td class="name">%T12SCRNSB11</td>
+       <td class="score">%T12SCRNSB12</td>
+       <td class="date">%T12SCRNSB14</td>
+       <td class="stage">%T12SCRNSB13</td>
+       <td class="slow">%T12SCRNSB15</td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="score_per_level">
-    <caption id="Normal">Normal</caption>
-    <thead>
-     <tr>
-      <td class="character">Character</td>
-      <td class="name">Name</td>
-      <td class="score">Score</td>
-      <td class="date">Date</td>
-      <td class="stage">Stage</td>
-      <td class="slow">Slow</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="character">博麗 霊夢（夢）</td>
-      <td class="name">%T12SCRNRA11</td>
-      <td class="score">%T12SCRNRA12</td>
-      <td class="date">%T12SCRNRA14</td>
-      <td class="stage">%T12SCRNRA13</td>
-      <td class="slow">%T12SCRNRA15</td>
-     </tr>
-     <tr>
-      <td class="character">博麗 霊夢（霊）</td>
-      <td class="name">%T12SCRNRB11</td>
-      <td class="score">%T12SCRNRB12</td>
-      <td class="date">%T12SCRNRB14</td>
-      <td class="stage">%T12SCRNRB13</td>
-      <td class="slow">%T12SCRNRB15</td>
-     </tr>
-     <tr>
-      <td class="character">霧雨 魔理沙（恋）</td>
-      <td class="name">%T12SCRNMA11</td>
-      <td class="score">%T12SCRNMA12</td>
-      <td class="date">%T12SCRNMA14</td>
-      <td class="stage">%T12SCRNMA13</td>
-      <td class="slow">%T12SCRNMA15</td>
-     </tr>
-     <tr>
-      <td class="character">霧雨 魔理沙（魔）</td>
-      <td class="name">%T12SCRNMB11</td>
-      <td class="score">%T12SCRNMB12</td>
-      <td class="date">%T12SCRNMB14</td>
-      <td class="stage">%T12SCRNMB13</td>
-      <td class="slow">%T12SCRNMB15</td>
-     </tr>
-     <tr>
-      <td class="character">東風谷 早苗（蛇）</td>
-      <td class="name">%T12SCRNSA11</td>
-      <td class="score">%T12SCRNSA12</td>
-      <td class="date">%T12SCRNSA14</td>
-      <td class="stage">%T12SCRNSA13</td>
-      <td class="slow">%T12SCRNSA15</td>
-     </tr>
-     <tr>
-      <td class="character">東風谷 早苗（蛙）</td>
-      <td class="name">%T12SCRNSB11</td>
-      <td class="score">%T12SCRNSB12</td>
-      <td class="date">%T12SCRNSB14</td>
-      <td class="stage">%T12SCRNSB13</td>
-      <td class="slow">%T12SCRNSB15</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="score_per_level">
+     <caption id="Hard">Hard</caption>
+     <thead>
+      <tr>
+       <th class="character">Character</th>
+       <th class="name">Name</th>
+       <th class="score">Score</th>
+       <th class="date">Date</th>
+       <th class="stage">Stage</th>
+       <th class="slow">Slow</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="character">博麗 霊夢（夢）</td>
+       <td class="name">%T12SCRHRA11</td>
+       <td class="score">%T12SCRHRA12</td>
+       <td class="date">%T12SCRHRA14</td>
+       <td class="stage">%T12SCRHRA13</td>
+       <td class="slow">%T12SCRHRA15</td>
+      </tr>
+      <tr>
+       <td class="character">博麗 霊夢（霊）</td>
+       <td class="name">%T12SCRHRB11</td>
+       <td class="score">%T12SCRHRB12</td>
+       <td class="date">%T12SCRHRB14</td>
+       <td class="stage">%T12SCRHRB13</td>
+       <td class="slow">%T12SCRHRB15</td>
+      </tr>
+      <tr>
+       <td class="character">霧雨 魔理沙（恋）</td>
+       <td class="name">%T12SCRHMA11</td>
+       <td class="score">%T12SCRHMA12</td>
+       <td class="date">%T12SCRHMA14</td>
+       <td class="stage">%T12SCRHMA13</td>
+       <td class="slow">%T12SCRHMA15</td>
+      </tr>
+      <tr>
+       <td class="character">霧雨 魔理沙（魔）</td>
+       <td class="name">%T12SCRHMB11</td>
+       <td class="score">%T12SCRHMB12</td>
+       <td class="date">%T12SCRHMB14</td>
+       <td class="stage">%T12SCRHMB13</td>
+       <td class="slow">%T12SCRHMB15</td>
+      </tr>
+      <tr>
+       <td class="character">東風谷 早苗（蛇）</td>
+       <td class="name">%T12SCRHSA11</td>
+       <td class="score">%T12SCRHSA12</td>
+       <td class="date">%T12SCRHSA14</td>
+       <td class="stage">%T12SCRHSA13</td>
+       <td class="slow">%T12SCRHSA15</td>
+      </tr>
+      <tr>
+       <td class="character">東風谷 早苗（蛙）</td>
+       <td class="name">%T12SCRHSB11</td>
+       <td class="score">%T12SCRHSB12</td>
+       <td class="date">%T12SCRHSB14</td>
+       <td class="stage">%T12SCRHSB13</td>
+       <td class="slow">%T12SCRHSB15</td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="score_per_level">
-    <caption id="Hard">Hard</caption>
-    <thead>
-     <tr>
-      <td class="character">Character</td>
-      <td class="name">Name</td>
-      <td class="score">Score</td>
-      <td class="date">Date</td>
-      <td class="stage">Stage</td>
-      <td class="slow">Slow</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="character">博麗 霊夢（夢）</td>
-      <td class="name">%T12SCRHRA11</td>
-      <td class="score">%T12SCRHRA12</td>
-      <td class="date">%T12SCRHRA14</td>
-      <td class="stage">%T12SCRHRA13</td>
-      <td class="slow">%T12SCRHRA15</td>
-     </tr>
-     <tr>
-      <td class="character">博麗 霊夢（霊）</td>
-      <td class="name">%T12SCRHRB11</td>
-      <td class="score">%T12SCRHRB12</td>
-      <td class="date">%T12SCRHRB14</td>
-      <td class="stage">%T12SCRHRB13</td>
-      <td class="slow">%T12SCRHRB15</td>
-     </tr>
-     <tr>
-      <td class="character">霧雨 魔理沙（恋）</td>
-      <td class="name">%T12SCRHMA11</td>
-      <td class="score">%T12SCRHMA12</td>
-      <td class="date">%T12SCRHMA14</td>
-      <td class="stage">%T12SCRHMA13</td>
-      <td class="slow">%T12SCRHMA15</td>
-     </tr>
-     <tr>
-      <td class="character">霧雨 魔理沙（魔）</td>
-      <td class="name">%T12SCRHMB11</td>
-      <td class="score">%T12SCRHMB12</td>
-      <td class="date">%T12SCRHMB14</td>
-      <td class="stage">%T12SCRHMB13</td>
-      <td class="slow">%T12SCRHMB15</td>
-     </tr>
-     <tr>
-      <td class="character">東風谷 早苗（蛇）</td>
-      <td class="name">%T12SCRHSA11</td>
-      <td class="score">%T12SCRHSA12</td>
-      <td class="date">%T12SCRHSA14</td>
-      <td class="stage">%T12SCRHSA13</td>
-      <td class="slow">%T12SCRHSA15</td>
-     </tr>
-     <tr>
-      <td class="character">東風谷 早苗（蛙）</td>
-      <td class="name">%T12SCRHSB11</td>
-      <td class="score">%T12SCRHSB12</td>
-      <td class="date">%T12SCRHSB14</td>
-      <td class="stage">%T12SCRHSB13</td>
-      <td class="slow">%T12SCRHSB15</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="score_per_level">
+     <caption id="Lunatic">Lunatic</caption>
+     <thead>
+      <tr>
+       <th class="character">Character</th>
+       <th class="name">Name</th>
+       <th class="score">Score</th>
+       <th class="date">Date</th>
+       <th class="stage">Stage</th>
+       <th class="slow">Slow</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="character">博麗 霊夢（夢）</td>
+       <td class="name">%T12SCRLRA11</td>
+       <td class="score">%T12SCRLRA12</td>
+       <td class="date">%T12SCRLRA14</td>
+       <td class="stage">%T12SCRLRA13</td>
+       <td class="slow">%T12SCRLRA15</td>
+      </tr>
+      <tr>
+       <td class="character">博麗 霊夢（霊）</td>
+       <td class="name">%T12SCRLRB11</td>
+       <td class="score">%T12SCRLRB12</td>
+       <td class="date">%T12SCRLRB14</td>
+       <td class="stage">%T12SCRLRB13</td>
+       <td class="slow">%T12SCRLRB15</td>
+      </tr>
+      <tr>
+       <td class="character">霧雨 魔理沙（恋）</td>
+       <td class="name">%T12SCRLMA11</td>
+       <td class="score">%T12SCRLMA12</td>
+       <td class="date">%T12SCRLMA14</td>
+       <td class="stage">%T12SCRLMA13</td>
+       <td class="slow">%T12SCRLMA15</td>
+      </tr>
+      <tr>
+       <td class="character">霧雨 魔理沙（魔）</td>
+       <td class="name">%T12SCRLMB11</td>
+       <td class="score">%T12SCRLMB12</td>
+       <td class="date">%T12SCRLMB14</td>
+       <td class="stage">%T12SCRLMB13</td>
+       <td class="slow">%T12SCRLMB15</td>
+      </tr>
+      <tr>
+       <td class="character">東風谷 早苗（蛇）</td>
+       <td class="name">%T12SCRLSA11</td>
+       <td class="score">%T12SCRLSA12</td>
+       <td class="date">%T12SCRLSA14</td>
+       <td class="stage">%T12SCRLSA13</td>
+       <td class="slow">%T12SCRLSA15</td>
+      </tr>
+      <tr>
+       <td class="character">東風谷 早苗（蛙）</td>
+       <td class="name">%T12SCRLSB11</td>
+       <td class="score">%T12SCRLSB12</td>
+       <td class="date">%T12SCRLSB14</td>
+       <td class="stage">%T12SCRLSB13</td>
+       <td class="slow">%T12SCRLSB15</td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="score_per_level">
-    <caption id="Lunatic">Lunatic</caption>
-    <thead>
-     <tr>
-      <td class="character">Character</td>
-      <td class="name">Name</td>
-      <td class="score">Score</td>
-      <td class="date">Date</td>
-      <td class="stage">Stage</td>
-      <td class="slow">Slow</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="character">博麗 霊夢（夢）</td>
-      <td class="name">%T12SCRLRA11</td>
-      <td class="score">%T12SCRLRA12</td>
-      <td class="date">%T12SCRLRA14</td>
-      <td class="stage">%T12SCRLRA13</td>
-      <td class="slow">%T12SCRLRA15</td>
-     </tr>
-     <tr>
-      <td class="character">博麗 霊夢（霊）</td>
-      <td class="name">%T12SCRLRB11</td>
-      <td class="score">%T12SCRLRB12</td>
-      <td class="date">%T12SCRLRB14</td>
-      <td class="stage">%T12SCRLRB13</td>
-      <td class="slow">%T12SCRLRB15</td>
-     </tr>
-     <tr>
-      <td class="character">霧雨 魔理沙（恋）</td>
-      <td class="name">%T12SCRLMA11</td>
-      <td class="score">%T12SCRLMA12</td>
-      <td class="date">%T12SCRLMA14</td>
-      <td class="stage">%T12SCRLMA13</td>
-      <td class="slow">%T12SCRLMA15</td>
-     </tr>
-     <tr>
-      <td class="character">霧雨 魔理沙（魔）</td>
-      <td class="name">%T12SCRLMB11</td>
-      <td class="score">%T12SCRLMB12</td>
-      <td class="date">%T12SCRLMB14</td>
-      <td class="stage">%T12SCRLMB13</td>
-      <td class="slow">%T12SCRLMB15</td>
-     </tr>
-     <tr>
-      <td class="character">東風谷 早苗（蛇）</td>
-      <td class="name">%T12SCRLSA11</td>
-      <td class="score">%T12SCRLSA12</td>
-      <td class="date">%T12SCRLSA14</td>
-      <td class="stage">%T12SCRLSA13</td>
-      <td class="slow">%T12SCRLSA15</td>
-     </tr>
-     <tr>
-      <td class="character">東風谷 早苗（蛙）</td>
-      <td class="name">%T12SCRLSB11</td>
-      <td class="score">%T12SCRLSB12</td>
-      <td class="date">%T12SCRLSB14</td>
-      <td class="stage">%T12SCRLSB13</td>
-      <td class="slow">%T12SCRLSB15</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="score_per_level">
+     <caption id="Extra">Extra</caption>
+     <thead>
+      <tr>
+       <th class="character">Character</th>
+       <th class="name">Name</th>
+       <th class="score">Score</th>
+       <th class="date">Date</th>
+       <th class="stage">Stage</th>
+       <th class="slow">Slow</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="character">博麗 霊夢（夢）</td>
+       <td class="name">%T12SCRXRA11</td>
+       <td class="score">%T12SCRXRA12</td>
+       <td class="date">%T12SCRXRA14</td>
+       <td class="stage">%T12SCRXRA13</td>
+       <td class="slow">%T12SCRXRA15</td>
+      </tr>
+      <tr>
+       <td class="character">博麗 霊夢（霊）</td>
+       <td class="name">%T12SCRXRB11</td>
+       <td class="score">%T12SCRXRB12</td>
+       <td class="date">%T12SCRXRB14</td>
+       <td class="stage">%T12SCRXRB13</td>
+       <td class="slow">%T12SCRXRB15</td>
+      </tr>
+      <tr>
+       <td class="character">霧雨 魔理沙（恋）</td>
+       <td class="name">%T12SCRXMA11</td>
+       <td class="score">%T12SCRXMA12</td>
+       <td class="date">%T12SCRXMA14</td>
+       <td class="stage">%T12SCRXMA13</td>
+       <td class="slow">%T12SCRXMA15</td>
+      </tr>
+      <tr>
+       <td class="character">霧雨 魔理沙（魔）</td>
+       <td class="name">%T12SCRXMB11</td>
+       <td class="score">%T12SCRXMB12</td>
+       <td class="date">%T12SCRXMB14</td>
+       <td class="stage">%T12SCRXMB13</td>
+       <td class="slow">%T12SCRXMB15</td>
+      </tr>
+      <tr>
+       <td class="character">東風谷 早苗（蛇）</td>
+       <td class="name">%T12SCRXSA11</td>
+       <td class="score">%T12SCRXSA12</td>
+       <td class="date">%T12SCRXSA14</td>
+       <td class="stage">%T12SCRXSA13</td>
+       <td class="slow">%T12SCRXSA15</td>
+      </tr>
+      <tr>
+       <td class="character">東風谷 早苗（蛙）</td>
+       <td class="name">%T12SCRXSB11</td>
+       <td class="score">%T12SCRXSB12</td>
+       <td class="date">%T12SCRXSB14</td>
+       <td class="stage">%T12SCRXSB13</td>
+       <td class="slow">%T12SCRXSB15</td>
+      </tr>
+     </tbody>
+    </table>
+   </section>
 
-   <table class="score_per_level">
-    <caption id="Extra">Extra</caption>
-    <thead>
-     <tr>
-      <td class="character">Character</td>
-      <td class="name">Name</td>
-      <td class="score">Score</td>
-      <td class="date">Date</td>
-      <td class="stage">Stage</td>
-      <td class="slow">Slow</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="character">博麗 霊夢（夢）</td>
-      <td class="name">%T12SCRXRA11</td>
-      <td class="score">%T12SCRXRA12</td>
-      <td class="date">%T12SCRXRA14</td>
-      <td class="stage">%T12SCRXRA13</td>
-      <td class="slow">%T12SCRXRA15</td>
-     </tr>
-     <tr>
-      <td class="character">博麗 霊夢（霊）</td>
-      <td class="name">%T12SCRXRB11</td>
-      <td class="score">%T12SCRXRB12</td>
-      <td class="date">%T12SCRXRB14</td>
-      <td class="stage">%T12SCRXRB13</td>
-      <td class="slow">%T12SCRXRB15</td>
-     </tr>
-     <tr>
-      <td class="character">霧雨 魔理沙（恋）</td>
-      <td class="name">%T12SCRXMA11</td>
-      <td class="score">%T12SCRXMA12</td>
-      <td class="date">%T12SCRXMA14</td>
-      <td class="stage">%T12SCRXMA13</td>
-      <td class="slow">%T12SCRXMA15</td>
-     </tr>
-     <tr>
-      <td class="character">霧雨 魔理沙（魔）</td>
-      <td class="name">%T12SCRXMB11</td>
-      <td class="score">%T12SCRXMB12</td>
-      <td class="date">%T12SCRXMB14</td>
-      <td class="stage">%T12SCRXMB13</td>
-      <td class="slow">%T12SCRXMB15</td>
-     </tr>
-     <tr>
-      <td class="character">東風谷 早苗（蛇）</td>
-      <td class="name">%T12SCRXSA11</td>
-      <td class="score">%T12SCRXSA12</td>
-      <td class="date">%T12SCRXSA14</td>
-      <td class="stage">%T12SCRXSA13</td>
-      <td class="slow">%T12SCRXSA15</td>
-     </tr>
-     <tr>
-      <td class="character">東風谷 早苗（蛙）</td>
-      <td class="name">%T12SCRXSB11</td>
-      <td class="score">%T12SCRXSB12</td>
-      <td class="date">%T12SCRXSB14</td>
-      <td class="stage">%T12SCRXSB13</td>
-      <td class="slow">%T12SCRXSB15</td>
-     </tr>
-    </tbody>
-   </table>
-  </div>
+   <hr />
 
-  <hr />
+   <section>
+    <h2 id="Other">その他の状態一覧</h2>
 
-  <div class="section">
-   <h2 id="Other">その他の状態一覧</h2>
+    <table class="count">
+     <thead>
+      <tr>
+       <th rowspan="2" class="character">Character</th>
+       <th rowspan="2" class="count">総プレイ回数</th>
+       <th rowspan="2" class="time">プレイ時間</th>
+       <th colspan="6">クリア回数</th>
+      </tr>
+      <tr>
+       <th class="level">Easy</th>
+       <th class="level">Normal</th>
+       <th class="level">Hard</th>
+       <th class="level">Lunatic</th>
+       <th class="level">Extra</th>
+       <th class="level">Total</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="character">博麗 霊夢（夢）</td>
+       <td class="count">%T12CHARARA1</td>
+       <td class="time">%T12CHARARA2</td>
+       <td class="level">%T12CHARAEXERA3</td>
+       <td class="level">%T12CHARAEXNRA3</td>
+       <td class="level">%T12CHARAEXHRA3</td>
+       <td class="level">%T12CHARAEXLRA3</td>
+       <td class="level">%T12CHARAEXXRA3</td>
+       <td class="level">%T12CHARAEXTRA3</td>
+      </tr>
+      <tr>
+       <td class="character">博麗 霊夢（霊）</td>
+       <td class="count">%T12CHARARB1</td>
+       <td class="time">%T12CHARARB2</td>
+       <td class="level">%T12CHARAEXERB3</td>
+       <td class="level">%T12CHARAEXNRB3</td>
+       <td class="level">%T12CHARAEXHRB3</td>
+       <td class="level">%T12CHARAEXLRB3</td>
+       <td class="level">%T12CHARAEXXRB3</td>
+       <td class="level">%T12CHARAEXTRB3</td>
+      </tr>
+      <tr>
+       <td class="character">霧雨 魔理沙（恋）</td>
+       <td class="count">%T12CHARAMA1</td>
+       <td class="time">%T12CHARAMA2</td>
+       <td class="level">%T12CHARAEXEMA3</td>
+       <td class="level">%T12CHARAEXNMA3</td>
+       <td class="level">%T12CHARAEXHMA3</td>
+       <td class="level">%T12CHARAEXLMA3</td>
+       <td class="level">%T12CHARAEXXMA3</td>
+       <td class="level">%T12CHARAEXTMA3</td>
+      </tr>
+      <tr>
+       <td class="character">霧雨 魔理沙（魔）</td>
+       <td class="count">%T12CHARAMB1</td>
+       <td class="time">%T12CHARAMB2</td>
+       <td class="level">%T12CHARAEXEMB3</td>
+       <td class="level">%T12CHARAEXNMB3</td>
+       <td class="level">%T12CHARAEXHMB3</td>
+       <td class="level">%T12CHARAEXLMB3</td>
+       <td class="level">%T12CHARAEXXMB3</td>
+       <td class="level">%T12CHARAEXTMB3</td>
+      </tr>
+      <tr>
+       <td class="character">東風谷 早苗（蛇）</td>
+       <td class="count">%T12CHARASA1</td>
+       <td class="time">%T12CHARASA2</td>
+       <td class="level">%T12CHARAEXESA3</td>
+       <td class="level">%T12CHARAEXNSA3</td>
+       <td class="level">%T12CHARAEXHSA3</td>
+       <td class="level">%T12CHARAEXLSA3</td>
+       <td class="level">%T12CHARAEXXSA3</td>
+       <td class="level">%T12CHARAEXTSA3</td>
+      </tr>
+      <tr>
+       <td class="character">東風谷 早苗（蛙）</td>
+       <td class="count">%T12CHARASB1</td>
+       <td class="time">%T12CHARASB2</td>
+       <td class="level">%T12CHARAEXESB3</td>
+       <td class="level">%T12CHARAEXNSB3</td>
+       <td class="level">%T12CHARAEXHSB3</td>
+       <td class="level">%T12CHARAEXLSB3</td>
+       <td class="level">%T12CHARAEXXSB3</td>
+       <td class="level">%T12CHARAEXTSB3</td>
+      </tr>
+     </tbody>
+     <tfoot>
+      <tr>
+       <td class="character">全主人公合計</td>
+       <td class="count">%T12CHARATL1</td>
+       <td class="time">%T12CHARATL2</td>
+       <td class="level">%T12CHARAEXETL3</td>
+       <td class="level">%T12CHARAEXNTL3</td>
+       <td class="level">%T12CHARAEXHTL3</td>
+       <td class="level">%T12CHARAEXLTL3</td>
+       <td class="level">%T12CHARAEXXTL3</td>
+       <td class="level">%T12CHARAEXTTL3</td>
+      </tr>
+     </tfoot>
+    </table>
+   </section>
 
-   <table class="count">
-    <thead>
-     <tr>
-      <td rowspan="2" class="character">Character</td>
-      <td rowspan="2" class="count">総プレイ回数</td>
-      <td rowspan="2" class="time">プレイ時間</td>
-      <td colspan="6">クリア回数</td>
-     </tr>
-     <tr>
-      <td class="level">Easy</td>
-      <td class="level">Normal</td>
-      <td class="level">Hard</td>
-      <td class="level">Lunatic</td>
-      <td class="level">Extra</td>
-      <td class="level">Total</td>
-     </tr>
-    </thead>
-    <tfoot>
-     <tr>
-      <td class="character">全主人公合計</td>
-      <td class="count">%T12CHARATL1</td>
-      <td class="time">%T12CHARATL2</td>
-      <td class="level">%T12CHARAEXETL3</td>
-      <td class="level">%T12CHARAEXNTL3</td>
-      <td class="level">%T12CHARAEXHTL3</td>
-      <td class="level">%T12CHARAEXLTL3</td>
-      <td class="level">%T12CHARAEXXTL3</td>
-      <td class="level">%T12CHARAEXTTL3</td>
-     </tr>
-    </tfoot>
-    <tbody>
-     <tr>
-      <td class="character">博麗 霊夢（夢）</td>
-      <td class="count">%T12CHARARA1</td>
-      <td class="time">%T12CHARARA2</td>
-      <td class="level">%T12CHARAEXERA3</td>
-      <td class="level">%T12CHARAEXNRA3</td>
-      <td class="level">%T12CHARAEXHRA3</td>
-      <td class="level">%T12CHARAEXLRA3</td>
-      <td class="level">%T12CHARAEXXRA3</td>
-      <td class="level">%T12CHARAEXTRA3</td>
-     </tr>
-     <tr>
-      <td class="character">博麗 霊夢（霊）</td>
-      <td class="count">%T12CHARARB1</td>
-      <td class="time">%T12CHARARB2</td>
-      <td class="level">%T12CHARAEXERB3</td>
-      <td class="level">%T12CHARAEXNRB3</td>
-      <td class="level">%T12CHARAEXHRB3</td>
-      <td class="level">%T12CHARAEXLRB3</td>
-      <td class="level">%T12CHARAEXXRB3</td>
-      <td class="level">%T12CHARAEXTRB3</td>
-     </tr>
-     <tr>
-      <td class="character">霧雨 魔理沙（恋）</td>
-      <td class="count">%T12CHARAMA1</td>
-      <td class="time">%T12CHARAMA2</td>
-      <td class="level">%T12CHARAEXEMA3</td>
-      <td class="level">%T12CHARAEXNMA3</td>
-      <td class="level">%T12CHARAEXHMA3</td>
-      <td class="level">%T12CHARAEXLMA3</td>
-      <td class="level">%T12CHARAEXXMA3</td>
-      <td class="level">%T12CHARAEXTMA3</td>
-     </tr>
-     <tr>
-      <td class="character">霧雨 魔理沙（魔）</td>
-      <td class="count">%T12CHARAMB1</td>
-      <td class="time">%T12CHARAMB2</td>
-      <td class="level">%T12CHARAEXEMB3</td>
-      <td class="level">%T12CHARAEXNMB3</td>
-      <td class="level">%T12CHARAEXHMB3</td>
-      <td class="level">%T12CHARAEXLMB3</td>
-      <td class="level">%T12CHARAEXXMB3</td>
-      <td class="level">%T12CHARAEXTMB3</td>
-     </tr>
-     <tr>
-      <td class="character">東風谷 早苗（蛇）</td>
-      <td class="count">%T12CHARASA1</td>
-      <td class="time">%T12CHARASA2</td>
-      <td class="level">%T12CHARAEXESA3</td>
-      <td class="level">%T12CHARAEXNSA3</td>
-      <td class="level">%T12CHARAEXHSA3</td>
-      <td class="level">%T12CHARAEXLSA3</td>
-      <td class="level">%T12CHARAEXXSA3</td>
-      <td class="level">%T12CHARAEXTSA3</td>
-     </tr>
-     <tr>
-      <td class="character">東風谷 早苗（蛙）</td>
-      <td class="count">%T12CHARASB1</td>
-      <td class="time">%T12CHARASB2</td>
-      <td class="level">%T12CHARAEXESB3</td>
-      <td class="level">%T12CHARAEXNSB3</td>
-      <td class="level">%T12CHARAEXHSB3</td>
-      <td class="level">%T12CHARAEXLSB3</td>
-      <td class="level">%T12CHARAEXXSB3</td>
-      <td class="level">%T12CHARAEXTSB3</td>
-     </tr>
-    </tbody>
-   </table>
-  </div>
+   <hr />
 
-  <hr />
+   <section>
+    <h2 id="Clear">クリア達成度</h2>
 
-  <div class="section">
-   <h2 id="Clear">クリア達成度</h2>
+    <table class="clear">
+     <thead>
+      <tr>
+       <th class="character">Character</th>
+       <th class="level">Easy</th>
+       <th class="level">Normal</th>
+       <th class="level">Hard</th>
+       <th class="level">Lunatic</th>
+       <th class="level">Extra</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="character">博麗 霊夢（夢）</td>
+       <td class="stage">%T12CLEARERA</td>
+       <td class="stage">%T12CLEARNRA</td>
+       <td class="stage">%T12CLEARHRA</td>
+       <td class="stage">%T12CLEARLRA</td>
+       <td class="stage">%T12CLEARXRA</td>
+      </tr>
+      <tr>
+       <td class="character">博麗 霊夢（霊）</td>
+       <td class="stage">%T12CLEARERB</td>
+       <td class="stage">%T12CLEARNRB</td>
+       <td class="stage">%T12CLEARHRB</td>
+       <td class="stage">%T12CLEARLRB</td>
+       <td class="stage">%T12CLEARXRB</td>
+      </tr>
+      <tr>
+       <td class="character">霧雨 魔理沙（恋）</td>
+       <td class="stage">%T12CLEAREMA</td>
+       <td class="stage">%T12CLEARNMA</td>
+       <td class="stage">%T12CLEARHMA</td>
+       <td class="stage">%T12CLEARLMA</td>
+       <td class="stage">%T12CLEARXMA</td>
+      </tr>
+      <tr>
+       <td class="character">霧雨 魔理沙（魔）</td>
+       <td class="stage">%T12CLEAREMB</td>
+       <td class="stage">%T12CLEARNMB</td>
+       <td class="stage">%T12CLEARHMB</td>
+       <td class="stage">%T12CLEARLMB</td>
+       <td class="stage">%T12CLEARXMB</td>
+      </tr>
+      <tr>
+       <td class="character">東風谷 早苗（蛇）</td>
+       <td class="stage">%T12CLEARESA</td>
+       <td class="stage">%T12CLEARNSA</td>
+       <td class="stage">%T12CLEARHSA</td>
+       <td class="stage">%T12CLEARLSA</td>
+       <td class="stage">%T12CLEARXSA</td>
+      </tr>
+      <tr>
+       <td class="character">東風谷 早苗（蛙）</td>
+       <td class="stage">%T12CLEARESB</td>
+       <td class="stage">%T12CLEARNSB</td>
+       <td class="stage">%T12CLEARHSB</td>
+       <td class="stage">%T12CLEARLSB</td>
+       <td class="stage">%T12CLEARXSB</td>
+      </tr>
+     </tbody>
+    </table>
+   </section>
 
-   <table class="clear">
-    <thead>
-     <tr>
-      <td class="character">Character</td>
-      <td class="level">Easy</td>
-      <td class="level">Normal</td>
-      <td class="level">Hard</td>
-      <td class="level">Lunatic</td>
-      <td class="level">Extra</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="character">博麗 霊夢（夢）</td>
-      <td class="stage">%T12CLEARERA</td>
-      <td class="stage">%T12CLEARNRA</td>
-      <td class="stage">%T12CLEARHRA</td>
-      <td class="stage">%T12CLEARLRA</td>
-      <td class="stage">%T12CLEARXRA</td>
-     </tr>
-     <tr>
-      <td class="character">博麗 霊夢（霊）</td>
-      <td class="stage">%T12CLEARERB</td>
-      <td class="stage">%T12CLEARNRB</td>
-      <td class="stage">%T12CLEARHRB</td>
-      <td class="stage">%T12CLEARLRB</td>
-      <td class="stage">%T12CLEARXRB</td>
-     </tr>
-     <tr>
-      <td class="character">霧雨 魔理沙（恋）</td>
-      <td class="stage">%T12CLEAREMA</td>
-      <td class="stage">%T12CLEARNMA</td>
-      <td class="stage">%T12CLEARHMA</td>
-      <td class="stage">%T12CLEARLMA</td>
-      <td class="stage">%T12CLEARXMA</td>
-     </tr>
-     <tr>
-      <td class="character">霧雨 魔理沙（魔）</td>
-      <td class="stage">%T12CLEAREMB</td>
-      <td class="stage">%T12CLEARNMB</td>
-      <td class="stage">%T12CLEARHMB</td>
-      <td class="stage">%T12CLEARLMB</td>
-      <td class="stage">%T12CLEARXMB</td>
-     </tr>
-     <tr>
-      <td class="character">東風谷 早苗（蛇）</td>
-      <td class="stage">%T12CLEARESA</td>
-      <td class="stage">%T12CLEARNSA</td>
-      <td class="stage">%T12CLEARHSA</td>
-      <td class="stage">%T12CLEARLSA</td>
-      <td class="stage">%T12CLEARXSA</td>
-     </tr>
-     <tr>
-      <td class="character">東風谷 早苗（蛙）</td>
-      <td class="stage">%T12CLEARESB</td>
-      <td class="stage">%T12CLEARNSB</td>
-      <td class="stage">%T12CLEARHSB</td>
-      <td class="stage">%T12CLEARLSB</td>
-      <td class="stage">%T12CLEARXSB</td>
-     </tr>
-    </tbody>
-   </table>
-  </div>
+  </main>
 
-  <hr />
-
-  <div class="section">
+  <footer>
    <p>
     Data output by <a href="https://www.colorless-sight.jp/thsfc/">ThScoreFileConverter</a>.
-<script type="text/javascript">
-<!--
+<script>
+// <![CDATA[
     document.write("Last updated: ", document.lastModified, ".");
-//-->
+// ]]>
 </script>
    </p>
-  </div>
+  </footer>
 
  </body>
 </html>

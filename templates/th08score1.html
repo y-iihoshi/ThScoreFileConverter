@@ -1,15 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
  <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta http-equiv="Content-Script-Type" content="text/javascript" />
-  <title>東方永夜抄スコアデータ</title>
-  <link rel="stylesheet" type="text/css" href="style.css" />
-<style type="text/css">
-<!--
+  <meta charset="UTF-8" />
+  <title>東方永夜抄 スコアデータ</title>
+  <link rel="stylesheet" href="style.css" />
+<style>
+/* <![CDATA[ */
     td.character { min-width: 120px; }
     td.name { min-width: 70px; }
     td.score { min-width: 70px; }
@@ -25,1433 +22,1435 @@
     table.score_per_level td.last_spell { min-width: 40px; }
     table.score_per_level td.human { min-width: 40px; }
     table.score_per_level td.rate { min-width: 50px; }
-    table.playtime td.column_head { min-width: 100px; }
+    table.playtime th { min-width: 100px; }
     table.playtime td.playtime { min-width: 150px; }
     table.count td.count { min-width: 50px; }
--->
+/* ]]> */
 </style>
  </head>
 
  <body>
 
-  <h1>東方永夜抄スコアデータ</h1>
+  <header>
+   <h1>東方永夜抄 スコアデータ</h1>
+   <hr />
+   <nav>
+    <ul>
+     <li>スコアデータ全般</li>
+     <li><a href="th08score2.html">キャラ別スコア</a></li>
+     <li><a href="th08score3.html">プラクティス</a></li>
+     <li><a href="th08card1.html">御札戦歴（ゲーム本編）</a></li>
+     <li><a href="th08card2.html">御札戦歴（スペルプラクティス）</a></li>
+    </ul>
+    <ul>
+     <li><a href="#Easy">Easy</a></li>
+     <li><a href="#Normal">Normal</a></li>
+     <li><a href="#Hard">Hard</a></li>
+     <li><a href="#Lunatic">Lunatic</a></li>
+     <li><a href="#Extra">Extra</a></li>
+     <li><a href="#Other">その他の状態一覧</a></li>
+     <li><a href="#Clear">クリア達成度</a></li>
+    </ul>
+   </nav>
+  </header>
 
-  <hr />
+  <main>
 
-  <div class="section">
-   <p>
-    スコアデータ全般 /
-    <a href="th08score2.html">キャラ別スコア</a> /
-    <a href="th08score3.html">プラクティス</a> /
-    <a href="th08card1.html">御札戦歴（ゲーム本編）</a> /
-    <a href="th08card2.html">御札戦歴（スペルプラクティス）</a><br />
-    <a href="#Easy">Easy</a> /
-    <a href="#Normal">Normal</a> /
-    <a href="#Hard">Hard</a> /
-    <a href="#Lunatic">Lunatic</a> /
-    <a href="#Extra">Extra</a> /
-    <a href="#Other">その他の状態一覧</a> /
-    <a href="#Clear">クリア達成度</a>
-   </p>
-  </div>
+   <section>
+    <h2>難易度別スコア</h2>
 
-  <hr />
+    <table class="score_per_level">
+     <caption id="Easy">Easy</caption>
+     <thead>
+      <tr>
+       <th class="character">Character</th>
+       <th class="name">Name</th>
+       <th class="score">Score</th>
+       <th class="stage">Stage</th>
+       <th class="date">Date</th>
+       <th class="slow">Slow</th>
+       <th class="playtime">プレイ時間</th>
+       <th class="point">得点アイテム</th>
+       <th class="time">刻符</th>
+       <th class="miss">ミス回数</th>
+       <th class="bomb">ボム回数</th>
+       <th class="last_spell">ラストスペル回数</th>
+       <th class="human">人間率</th>
+       <th class="rate">スペルカード取得率</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="character">霊夢 &amp; 紫</td>
+       <td class="name">%T08SCRERY11</td>
+       <td class="score">%T08SCRERY12</td>
+       <td class="stage">%T08SCRERY13</td>
+       <td class="date">%T08SCRERY14</td>
+       <td class="slow">%T08SCRERY15</td>
+       <td class="playtime">%T08SCRERY16</td>
+       <td class="point">%T08SCRERY18</td>
+       <td class="time">%T08SCRERY19</td>
+       <td class="miss">%T08SCRERY10</td>
+       <td class="bomb">%T08SCRERY1A</td>
+       <td class="last_spell">%T08SCRERY1B</td>
+       <td class="human">%T08SCRERY1E</td>
+       <td class="rate">%T08SCRERY1G / 37</td>
+      </tr>
+      <tr>
+       <td class="character">魔理沙 &amp; アリス</td>
+       <td class="name">%T08SCREMA11</td>
+       <td class="score">%T08SCREMA12</td>
+       <td class="stage">%T08SCREMA13</td>
+       <td class="date">%T08SCREMA14</td>
+       <td class="slow">%T08SCREMA15</td>
+       <td class="playtime">%T08SCREMA16</td>
+       <td class="point">%T08SCREMA18</td>
+       <td class="time">%T08SCREMA19</td>
+       <td class="miss">%T08SCREMA10</td>
+       <td class="bomb">%T08SCREMA1A</td>
+       <td class="last_spell">%T08SCREMA1B</td>
+       <td class="human">%T08SCREMA1E</td>
+       <td class="rate">%T08SCREMA1G / 37</td>
+      </tr>
+      <tr>
+       <td class="character">咲夜 &amp; レミリア</td>
+       <td class="name">%T08SCRESR11</td>
+       <td class="score">%T08SCRESR12</td>
+       <td class="stage">%T08SCRESR13</td>
+       <td class="date">%T08SCRESR14</td>
+       <td class="slow">%T08SCRESR15</td>
+       <td class="playtime">%T08SCRESR16</td>
+       <td class="point">%T08SCRESR18</td>
+       <td class="time">%T08SCRESR19</td>
+       <td class="miss">%T08SCRESR10</td>
+       <td class="bomb">%T08SCRESR1A</td>
+       <td class="last_spell">%T08SCRESR1B</td>
+       <td class="human">%T08SCRESR1E</td>
+       <td class="rate">%T08SCRESR1G / 37</td>
+      </tr>
+      <tr>
+       <td class="character">妖夢 &amp; 幽々子</td>
+       <td class="name">%T08SCREYY11</td>
+       <td class="score">%T08SCREYY12</td>
+       <td class="stage">%T08SCREYY13</td>
+       <td class="date">%T08SCREYY14</td>
+       <td class="slow">%T08SCREYY15</td>
+       <td class="playtime">%T08SCREYY16</td>
+       <td class="point">%T08SCREYY18</td>
+       <td class="time">%T08SCREYY19</td>
+       <td class="miss">%T08SCREYY10</td>
+       <td class="bomb">%T08SCREYY1A</td>
+       <td class="last_spell">%T08SCREYY1B</td>
+       <td class="human">%T08SCREYY1E</td>
+       <td class="rate">%T08SCREYY1G / 37</td>
+      </tr>
+      <tr>
+       <td class="character">博麗 霊夢</td>
+       <td class="name">%T08SCRERM11</td>
+       <td class="score">%T08SCRERM12</td>
+       <td class="stage">%T08SCRERM13</td>
+       <td class="date">%T08SCRERM14</td>
+       <td class="slow">%T08SCRERM15</td>
+       <td class="playtime">%T08SCRERM16</td>
+       <td class="point">%T08SCRERM18</td>
+       <td class="time">%T08SCRERM19</td>
+       <td class="miss">%T08SCRERM10</td>
+       <td class="bomb">%T08SCRERM1A</td>
+       <td class="last_spell">%T08SCRERM1B</td>
+       <td class="human">%T08SCRERM1E</td>
+       <td class="rate">%T08SCRERM1G / 37</td>
+      </tr>
+      <tr>
+       <td class="character">八雲 紫</td>
+       <td class="name">%T08SCREYK11</td>
+       <td class="score">%T08SCREYK12</td>
+       <td class="stage">%T08SCREYK13</td>
+       <td class="date">%T08SCREYK14</td>
+       <td class="slow">%T08SCREYK15</td>
+       <td class="playtime">%T08SCREYK16</td>
+       <td class="point">%T08SCREYK18</td>
+       <td class="time">%T08SCREYK19</td>
+       <td class="miss">%T08SCREYK10</td>
+       <td class="bomb">%T08SCREYK1A</td>
+       <td class="last_spell">%T08SCREYK1B</td>
+       <td class="human">%T08SCREYK1E</td>
+       <td class="rate">%T08SCREYK1G / 37</td>
+      </tr>
+      <tr>
+       <td class="character">霧雨 魔理沙</td>
+       <td class="name">%T08SCREMR11</td>
+       <td class="score">%T08SCREMR12</td>
+       <td class="stage">%T08SCREMR13</td>
+       <td class="date">%T08SCREMR14</td>
+       <td class="slow">%T08SCREMR15</td>
+       <td class="playtime">%T08SCREMR16</td>
+       <td class="point">%T08SCREMR18</td>
+       <td class="time">%T08SCREMR19</td>
+       <td class="miss">%T08SCREMR10</td>
+       <td class="bomb">%T08SCREMR1A</td>
+       <td class="last_spell">%T08SCREMR1B</td>
+       <td class="human">%T08SCREMR1E</td>
+       <td class="rate">%T08SCREMR1G / 37</td>
+      </tr>
+      <tr>
+       <td class="character">アリス・マーガトロイド</td>
+       <td class="name">%T08SCREAL11</td>
+       <td class="score">%T08SCREAL12</td>
+       <td class="stage">%T08SCREAL13</td>
+       <td class="date">%T08SCREAL14</td>
+       <td class="slow">%T08SCREAL15</td>
+       <td class="playtime">%T08SCREAL16</td>
+       <td class="point">%T08SCREAL18</td>
+       <td class="time">%T08SCREAL19</td>
+       <td class="miss">%T08SCREAL10</td>
+       <td class="bomb">%T08SCREAL1A</td>
+       <td class="last_spell">%T08SCREAL1B</td>
+       <td class="human">%T08SCREAL1E</td>
+       <td class="rate">%T08SCREAL1G / 37</td>
+      </tr>
+      <tr>
+       <td class="character">十六夜 咲夜</td>
+       <td class="name">%T08SCRESK11</td>
+       <td class="score">%T08SCRESK12</td>
+       <td class="stage">%T08SCRESK13</td>
+       <td class="date">%T08SCRESK14</td>
+       <td class="slow">%T08SCRESK15</td>
+       <td class="playtime">%T08SCRESK16</td>
+       <td class="point">%T08SCRESK18</td>
+       <td class="time">%T08SCRESK19</td>
+       <td class="miss">%T08SCRESK10</td>
+       <td class="bomb">%T08SCRESK1A</td>
+       <td class="last_spell">%T08SCRESK1B</td>
+       <td class="human">%T08SCRESK1E</td>
+       <td class="rate">%T08SCRESK1G / 37</td>
+      </tr>
+      <tr>
+       <td class="character">レミリア・スカーレット</td>
+       <td class="name">%T08SCRERL11</td>
+       <td class="score">%T08SCRERL12</td>
+       <td class="stage">%T08SCRERL13</td>
+       <td class="date">%T08SCRERL14</td>
+       <td class="slow">%T08SCRERL15</td>
+       <td class="playtime">%T08SCRERL16</td>
+       <td class="point">%T08SCRERL18</td>
+       <td class="time">%T08SCRERL19</td>
+       <td class="miss">%T08SCRERL10</td>
+       <td class="bomb">%T08SCRERL1A</td>
+       <td class="last_spell">%T08SCRERL1B</td>
+       <td class="human">%T08SCRERL1E</td>
+       <td class="rate">%T08SCRERL1G / 37</td>
+      </tr>
+      <tr>
+       <td class="character">魂魄 妖夢</td>
+       <td class="name">%T08SCREYM11</td>
+       <td class="score">%T08SCREYM12</td>
+       <td class="stage">%T08SCREYM13</td>
+       <td class="date">%T08SCREYM14</td>
+       <td class="slow">%T08SCREYM15</td>
+       <td class="playtime">%T08SCREYM16</td>
+       <td class="point">%T08SCREYM18</td>
+       <td class="time">%T08SCREYM19</td>
+       <td class="miss">%T08SCREYM10</td>
+       <td class="bomb">%T08SCREYM1A</td>
+       <td class="last_spell">%T08SCREYM1B</td>
+       <td class="human">%T08SCREYM1E</td>
+       <td class="rate">%T08SCREYM1G / 37</td>
+      </tr>
+      <tr>
+       <td class="character">西行寺 幽々子</td>
+       <td class="name">%T08SCREYU11</td>
+       <td class="score">%T08SCREYU12</td>
+       <td class="stage">%T08SCREYU13</td>
+       <td class="date">%T08SCREYU14</td>
+       <td class="slow">%T08SCREYU15</td>
+       <td class="playtime">%T08SCREYU16</td>
+       <td class="point">%T08SCREYU18</td>
+       <td class="time">%T08SCREYU19</td>
+       <td class="miss">%T08SCREYU10</td>
+       <td class="bomb">%T08SCREYU1A</td>
+       <td class="last_spell">%T08SCREYU1B</td>
+       <td class="human">%T08SCREYU1E</td>
+       <td class="rate">%T08SCREYU1G / 37</td>
+      </tr>
+     </tbody>
+    </table>
 
-  <div class="section">
-   <h2>難易度別スコア</h2>
+    <table class="score_per_level">
+     <caption id="Normal">Normal</caption>
+     <thead>
+      <tr>
+       <th class="character">Character</th>
+       <th class="name">Name</th>
+       <th class="score">Score</th>
+       <th class="stage">Stage</th>
+       <th class="date">Date</th>
+       <th class="slow">Slow</th>
+       <th class="playtime">プレイ時間</th>
+       <th class="point">得点アイテム</th>
+       <th class="time">刻符</th>
+       <th class="miss">ミス回数</th>
+       <th class="bomb">ボム回数</th>
+       <th class="last_spell">ラストスペル回数</th>
+       <th class="human">人間率</th>
+       <th class="rate">スペルカード取得率</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="character">霊夢 &amp; 紫</td>
+       <td class="name">%T08SCRNRY11</td>
+       <td class="score">%T08SCRNRY12</td>
+       <td class="stage">%T08SCRNRY13</td>
+       <td class="date">%T08SCRNRY14</td>
+       <td class="slow">%T08SCRNRY15</td>
+       <td class="playtime">%T08SCRNRY16</td>
+       <td class="point">%T08SCRNRY18</td>
+       <td class="time">%T08SCRNRY19</td>
+       <td class="miss">%T08SCRNRY10</td>
+       <td class="bomb">%T08SCRNRY1A</td>
+       <td class="last_spell">%T08SCRNRY1B</td>
+       <td class="human">%T08SCRNRY1E</td>
+       <td class="rate">%T08SCRNRY1G / 43</td>
+      </tr>
+      <tr>
+       <td class="character">魔理沙 &amp; アリス</td>
+       <td class="name">%T08SCRNMA11</td>
+       <td class="score">%T08SCRNMA12</td>
+       <td class="stage">%T08SCRNMA13</td>
+       <td class="date">%T08SCRNMA14</td>
+       <td class="slow">%T08SCRNMA15</td>
+       <td class="playtime">%T08SCRNMA16</td>
+       <td class="point">%T08SCRNMA18</td>
+       <td class="time">%T08SCRNMA19</td>
+       <td class="miss">%T08SCRNMA10</td>
+       <td class="bomb">%T08SCRNMA1A</td>
+       <td class="last_spell">%T08SCRNMA1B</td>
+       <td class="human">%T08SCRNMA1E</td>
+       <td class="rate">%T08SCRNMA1G / 43</td>
+      </tr>
+      <tr>
+       <td class="character">咲夜 &amp; レミリア</td>
+       <td class="name">%T08SCRNSR11</td>
+       <td class="score">%T08SCRNSR12</td>
+       <td class="stage">%T08SCRNSR13</td>
+       <td class="date">%T08SCRNSR14</td>
+       <td class="slow">%T08SCRNSR15</td>
+       <td class="playtime">%T08SCRNSR16</td>
+       <td class="point">%T08SCRNSR18</td>
+       <td class="time">%T08SCRNSR19</td>
+       <td class="miss">%T08SCRNSR10</td>
+       <td class="bomb">%T08SCRNSR1A</td>
+       <td class="last_spell">%T08SCRNSR1B</td>
+       <td class="human">%T08SCRNSR1E</td>
+       <td class="rate">%T08SCRNSR1G / 43</td>
+      </tr>
+      <tr>
+       <td class="character">妖夢 &amp; 幽々子</td>
+       <td class="name">%T08SCRNYY11</td>
+       <td class="score">%T08SCRNYY12</td>
+       <td class="stage">%T08SCRNYY13</td>
+       <td class="date">%T08SCRNYY14</td>
+       <td class="slow">%T08SCRNYY15</td>
+       <td class="playtime">%T08SCRNYY16</td>
+       <td class="point">%T08SCRNYY18</td>
+       <td class="time">%T08SCRNYY19</td>
+       <td class="miss">%T08SCRNYY10</td>
+       <td class="bomb">%T08SCRNYY1A</td>
+       <td class="last_spell">%T08SCRNYY1B</td>
+       <td class="human">%T08SCRNYY1E</td>
+       <td class="rate">%T08SCRNYY1G / 43</td>
+      </tr>
+      <tr>
+       <td class="character">博麗 霊夢</td>
+       <td class="name">%T08SCRNRM11</td>
+       <td class="score">%T08SCRNRM12</td>
+       <td class="stage">%T08SCRNRM13</td>
+       <td class="date">%T08SCRNRM14</td>
+       <td class="slow">%T08SCRNRM15</td>
+       <td class="playtime">%T08SCRNRM16</td>
+       <td class="point">%T08SCRNRM18</td>
+       <td class="time">%T08SCRNRM19</td>
+       <td class="miss">%T08SCRNRM10</td>
+       <td class="bomb">%T08SCRNRM1A</td>
+       <td class="last_spell">%T08SCRNRM1B</td>
+       <td class="human">%T08SCRNRM1E</td>
+       <td class="rate">%T08SCRNRM1G / 43</td>
+      </tr>
+      <tr>
+       <td class="character">八雲 紫</td>
+       <td class="name">%T08SCRNYK11</td>
+       <td class="score">%T08SCRNYK12</td>
+       <td class="stage">%T08SCRNYK13</td>
+       <td class="date">%T08SCRNYK14</td>
+       <td class="slow">%T08SCRNYK15</td>
+       <td class="playtime">%T08SCRNYK16</td>
+       <td class="point">%T08SCRNYK18</td>
+       <td class="time">%T08SCRNYK19</td>
+       <td class="miss">%T08SCRNYK10</td>
+       <td class="bomb">%T08SCRNYK1A</td>
+       <td class="last_spell">%T08SCRNYK1B</td>
+       <td class="human">%T08SCRNYK1E</td>
+       <td class="rate">%T08SCRNYK1G / 43</td>
+      </tr>
+      <tr>
+       <td class="character">霧雨 魔理沙</td>
+       <td class="name">%T08SCRNMR11</td>
+       <td class="score">%T08SCRNMR12</td>
+       <td class="stage">%T08SCRNMR13</td>
+       <td class="date">%T08SCRNMR14</td>
+       <td class="slow">%T08SCRNMR15</td>
+       <td class="playtime">%T08SCRNMR16</td>
+       <td class="point">%T08SCRNMR18</td>
+       <td class="time">%T08SCRNMR19</td>
+       <td class="miss">%T08SCRNMR10</td>
+       <td class="bomb">%T08SCRNMR1A</td>
+       <td class="last_spell">%T08SCRNMR1B</td>
+       <td class="human">%T08SCRNMR1E</td>
+       <td class="rate">%T08SCRNMR1G / 43</td>
+      </tr>
+      <tr>
+       <td class="character">アリス・マーガトロイド</td>
+       <td class="name">%T08SCRNAL11</td>
+       <td class="score">%T08SCRNAL12</td>
+       <td class="stage">%T08SCRNAL13</td>
+       <td class="date">%T08SCRNAL14</td>
+       <td class="slow">%T08SCRNAL15</td>
+       <td class="playtime">%T08SCRNAL16</td>
+       <td class="point">%T08SCRNAL18</td>
+       <td class="time">%T08SCRNAL19</td>
+       <td class="miss">%T08SCRNAL10</td>
+       <td class="bomb">%T08SCRNAL1A</td>
+       <td class="last_spell">%T08SCRNAL1B</td>
+       <td class="human">%T08SCRNAL1E</td>
+       <td class="rate">%T08SCRNAL1G / 43</td>
+      </tr>
+      <tr>
+       <td class="character">十六夜 咲夜</td>
+       <td class="name">%T08SCRNSK11</td>
+       <td class="score">%T08SCRNSK12</td>
+       <td class="stage">%T08SCRNSK13</td>
+       <td class="date">%T08SCRNSK14</td>
+       <td class="slow">%T08SCRNSK15</td>
+       <td class="playtime">%T08SCRNSK16</td>
+       <td class="point">%T08SCRNSK18</td>
+       <td class="time">%T08SCRNSK19</td>
+       <td class="miss">%T08SCRNSK10</td>
+       <td class="bomb">%T08SCRNSK1A</td>
+       <td class="last_spell">%T08SCRNSK1B</td>
+       <td class="human">%T08SCRNSK1E</td>
+       <td class="rate">%T08SCRNSK1G / 43</td>
+      </tr>
+      <tr>
+       <td class="character">レミリア・スカーレット</td>
+       <td class="name">%T08SCRNRL11</td>
+       <td class="score">%T08SCRNRL12</td>
+       <td class="stage">%T08SCRNRL13</td>
+       <td class="date">%T08SCRNRL14</td>
+       <td class="slow">%T08SCRNRL15</td>
+       <td class="playtime">%T08SCRNRL16</td>
+       <td class="point">%T08SCRNRL18</td>
+       <td class="time">%T08SCRNRL19</td>
+       <td class="miss">%T08SCRNRL10</td>
+       <td class="bomb">%T08SCRNRL1A</td>
+       <td class="last_spell">%T08SCRNRL1B</td>
+       <td class="human">%T08SCRNRL1E</td>
+       <td class="rate">%T08SCRNRL1G / 43</td>
+      </tr>
+      <tr>
+       <td class="character">魂魄 妖夢</td>
+       <td class="name">%T08SCRNYM11</td>
+       <td class="score">%T08SCRNYM12</td>
+       <td class="stage">%T08SCRNYM13</td>
+       <td class="date">%T08SCRNYM14</td>
+       <td class="slow">%T08SCRNYM15</td>
+       <td class="playtime">%T08SCRNYM16</td>
+       <td class="point">%T08SCRNYM18</td>
+       <td class="time">%T08SCRNYM19</td>
+       <td class="miss">%T08SCRNYM10</td>
+       <td class="bomb">%T08SCRNYM1A</td>
+       <td class="last_spell">%T08SCRNYM1B</td>
+       <td class="human">%T08SCRNYM1E</td>
+       <td class="rate">%T08SCRNYM1G / 43</td>
+      </tr>
+      <tr>
+       <td class="character">西行寺 幽々子</td>
+       <td class="name">%T08SCRNYU11</td>
+       <td class="score">%T08SCRNYU12</td>
+       <td class="stage">%T08SCRNYU13</td>
+       <td class="date">%T08SCRNYU14</td>
+       <td class="slow">%T08SCRNYU15</td>
+       <td class="playtime">%T08SCRNYU16</td>
+       <td class="point">%T08SCRNYU18</td>
+       <td class="time">%T08SCRNYU19</td>
+       <td class="miss">%T08SCRNYU10</td>
+       <td class="bomb">%T08SCRNYU1A</td>
+       <td class="last_spell">%T08SCRNYU1B</td>
+       <td class="human">%T08SCRNYU1E</td>
+       <td class="rate">%T08SCRNYU1G / 43</td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="score_per_level">
-    <caption id="Easy">Easy</caption>
-    <thead>
-     <tr>
-      <td class="character">Character</td>
-      <td class="name">Name</td>
-      <td class="score">Score</td>
-      <td class="stage">Stage</td>
-      <td class="date">Date</td>
-      <td class="slow">Slow</td>
-      <td class="playtime">プレイ時間</td>
-      <td class="point">得点アイテム</td>
-      <td class="time">刻符</td>
-      <td class="miss">ミス回数</td>
-      <td class="bomb">ボム回数</td>
-      <td class="last_spell">ラストスペル回数</td>
-      <td class="human">人間率</td>
-      <td class="rate">スペルカード取得率</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="character">霊夢 &amp; 紫</td>
-      <td class="name">%T08SCRERY11</td>
-      <td class="score">%T08SCRERY12</td>
-      <td class="stage">%T08SCRERY13</td>
-      <td class="date">%T08SCRERY14</td>
-      <td class="slow">%T08SCRERY15</td>
-      <td class="playtime">%T08SCRERY16</td>
-      <td class="point">%T08SCRERY18</td>
-      <td class="time">%T08SCRERY19</td>
-      <td class="miss">%T08SCRERY10</td>
-      <td class="bomb">%T08SCRERY1A</td>
-      <td class="last_spell">%T08SCRERY1B</td>
-      <td class="human">%T08SCRERY1E</td>
-      <td class="rate">%T08SCRERY1G / 37</td>
-     </tr>
-     <tr>
-      <td class="character">魔理沙 &amp; アリス</td>
-      <td class="name">%T08SCREMA11</td>
-      <td class="score">%T08SCREMA12</td>
-      <td class="stage">%T08SCREMA13</td>
-      <td class="date">%T08SCREMA14</td>
-      <td class="slow">%T08SCREMA15</td>
-      <td class="playtime">%T08SCREMA16</td>
-      <td class="point">%T08SCREMA18</td>
-      <td class="time">%T08SCREMA19</td>
-      <td class="miss">%T08SCREMA10</td>
-      <td class="bomb">%T08SCREMA1A</td>
-      <td class="last_spell">%T08SCREMA1B</td>
-      <td class="human">%T08SCREMA1E</td>
-      <td class="rate">%T08SCREMA1G / 37</td>
-     </tr>
-     <tr>
-      <td class="character">咲夜 &amp; レミリア</td>
-      <td class="name">%T08SCRESR11</td>
-      <td class="score">%T08SCRESR12</td>
-      <td class="stage">%T08SCRESR13</td>
-      <td class="date">%T08SCRESR14</td>
-      <td class="slow">%T08SCRESR15</td>
-      <td class="playtime">%T08SCRESR16</td>
-      <td class="point">%T08SCRESR18</td>
-      <td class="time">%T08SCRESR19</td>
-      <td class="miss">%T08SCRESR10</td>
-      <td class="bomb">%T08SCRESR1A</td>
-      <td class="last_spell">%T08SCRESR1B</td>
-      <td class="human">%T08SCRESR1E</td>
-      <td class="rate">%T08SCRESR1G / 37</td>
-     </tr>
-     <tr>
-      <td class="character">妖夢 &amp; 幽々子</td>
-      <td class="name">%T08SCREYY11</td>
-      <td class="score">%T08SCREYY12</td>
-      <td class="stage">%T08SCREYY13</td>
-      <td class="date">%T08SCREYY14</td>
-      <td class="slow">%T08SCREYY15</td>
-      <td class="playtime">%T08SCREYY16</td>
-      <td class="point">%T08SCREYY18</td>
-      <td class="time">%T08SCREYY19</td>
-      <td class="miss">%T08SCREYY10</td>
-      <td class="bomb">%T08SCREYY1A</td>
-      <td class="last_spell">%T08SCREYY1B</td>
-      <td class="human">%T08SCREYY1E</td>
-      <td class="rate">%T08SCREYY1G / 37</td>
-     </tr>
-     <tr>
-      <td class="character">博麗 霊夢</td>
-      <td class="name">%T08SCRERM11</td>
-      <td class="score">%T08SCRERM12</td>
-      <td class="stage">%T08SCRERM13</td>
-      <td class="date">%T08SCRERM14</td>
-      <td class="slow">%T08SCRERM15</td>
-      <td class="playtime">%T08SCRERM16</td>
-      <td class="point">%T08SCRERM18</td>
-      <td class="time">%T08SCRERM19</td>
-      <td class="miss">%T08SCRERM10</td>
-      <td class="bomb">%T08SCRERM1A</td>
-      <td class="last_spell">%T08SCRERM1B</td>
-      <td class="human">%T08SCRERM1E</td>
-      <td class="rate">%T08SCRERM1G / 37</td>
-     </tr>
-     <tr>
-      <td class="character">八雲 紫</td>
-      <td class="name">%T08SCREYK11</td>
-      <td class="score">%T08SCREYK12</td>
-      <td class="stage">%T08SCREYK13</td>
-      <td class="date">%T08SCREYK14</td>
-      <td class="slow">%T08SCREYK15</td>
-      <td class="playtime">%T08SCREYK16</td>
-      <td class="point">%T08SCREYK18</td>
-      <td class="time">%T08SCREYK19</td>
-      <td class="miss">%T08SCREYK10</td>
-      <td class="bomb">%T08SCREYK1A</td>
-      <td class="last_spell">%T08SCREYK1B</td>
-      <td class="human">%T08SCREYK1E</td>
-      <td class="rate">%T08SCREYK1G / 37</td>
-     </tr>
-     <tr>
-      <td class="character">霧雨 魔理沙</td>
-      <td class="name">%T08SCREMR11</td>
-      <td class="score">%T08SCREMR12</td>
-      <td class="stage">%T08SCREMR13</td>
-      <td class="date">%T08SCREMR14</td>
-      <td class="slow">%T08SCREMR15</td>
-      <td class="playtime">%T08SCREMR16</td>
-      <td class="point">%T08SCREMR18</td>
-      <td class="time">%T08SCREMR19</td>
-      <td class="miss">%T08SCREMR10</td>
-      <td class="bomb">%T08SCREMR1A</td>
-      <td class="last_spell">%T08SCREMR1B</td>
-      <td class="human">%T08SCREMR1E</td>
-      <td class="rate">%T08SCREMR1G / 37</td>
-     </tr>
-     <tr>
-      <td class="character">アリス・マーガトロイド</td>
-      <td class="name">%T08SCREAL11</td>
-      <td class="score">%T08SCREAL12</td>
-      <td class="stage">%T08SCREAL13</td>
-      <td class="date">%T08SCREAL14</td>
-      <td class="slow">%T08SCREAL15</td>
-      <td class="playtime">%T08SCREAL16</td>
-      <td class="point">%T08SCREAL18</td>
-      <td class="time">%T08SCREAL19</td>
-      <td class="miss">%T08SCREAL10</td>
-      <td class="bomb">%T08SCREAL1A</td>
-      <td class="last_spell">%T08SCREAL1B</td>
-      <td class="human">%T08SCREAL1E</td>
-      <td class="rate">%T08SCREAL1G / 37</td>
-     </tr>
-     <tr>
-      <td class="character">十六夜 咲夜</td>
-      <td class="name">%T08SCRESK11</td>
-      <td class="score">%T08SCRESK12</td>
-      <td class="stage">%T08SCRESK13</td>
-      <td class="date">%T08SCRESK14</td>
-      <td class="slow">%T08SCRESK15</td>
-      <td class="playtime">%T08SCRESK16</td>
-      <td class="point">%T08SCRESK18</td>
-      <td class="time">%T08SCRESK19</td>
-      <td class="miss">%T08SCRESK10</td>
-      <td class="bomb">%T08SCRESK1A</td>
-      <td class="last_spell">%T08SCRESK1B</td>
-      <td class="human">%T08SCRESK1E</td>
-      <td class="rate">%T08SCRESK1G / 37</td>
-     </tr>
-     <tr>
-      <td class="character">レミリア・スカーレット</td>
-      <td class="name">%T08SCRERL11</td>
-      <td class="score">%T08SCRERL12</td>
-      <td class="stage">%T08SCRERL13</td>
-      <td class="date">%T08SCRERL14</td>
-      <td class="slow">%T08SCRERL15</td>
-      <td class="playtime">%T08SCRERL16</td>
-      <td class="point">%T08SCRERL18</td>
-      <td class="time">%T08SCRERL19</td>
-      <td class="miss">%T08SCRERL10</td>
-      <td class="bomb">%T08SCRERL1A</td>
-      <td class="last_spell">%T08SCRERL1B</td>
-      <td class="human">%T08SCRERL1E</td>
-      <td class="rate">%T08SCRERL1G / 37</td>
-     </tr>
-     <tr>
-      <td class="character">魂魄 妖夢</td>
-      <td class="name">%T08SCREYM11</td>
-      <td class="score">%T08SCREYM12</td>
-      <td class="stage">%T08SCREYM13</td>
-      <td class="date">%T08SCREYM14</td>
-      <td class="slow">%T08SCREYM15</td>
-      <td class="playtime">%T08SCREYM16</td>
-      <td class="point">%T08SCREYM18</td>
-      <td class="time">%T08SCREYM19</td>
-      <td class="miss">%T08SCREYM10</td>
-      <td class="bomb">%T08SCREYM1A</td>
-      <td class="last_spell">%T08SCREYM1B</td>
-      <td class="human">%T08SCREYM1E</td>
-      <td class="rate">%T08SCREYM1G / 37</td>
-     </tr>
-     <tr>
-      <td class="character">西行寺 幽々子</td>
-      <td class="name">%T08SCREYU11</td>
-      <td class="score">%T08SCREYU12</td>
-      <td class="stage">%T08SCREYU13</td>
-      <td class="date">%T08SCREYU14</td>
-      <td class="slow">%T08SCREYU15</td>
-      <td class="playtime">%T08SCREYU16</td>
-      <td class="point">%T08SCREYU18</td>
-      <td class="time">%T08SCREYU19</td>
-      <td class="miss">%T08SCREYU10</td>
-      <td class="bomb">%T08SCREYU1A</td>
-      <td class="last_spell">%T08SCREYU1B</td>
-      <td class="human">%T08SCREYU1E</td>
-      <td class="rate">%T08SCREYU1G / 37</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="score_per_level">
+     <caption id="Hard">Hard</caption>
+     <thead>
+      <tr>
+       <th class="character">Character</th>
+       <th class="name">Name</th>
+       <th class="score">Score</th>
+       <th class="stage">Stage</th>
+       <th class="date">Date</th>
+       <th class="slow">Slow</th>
+       <th class="playtime">プレイ時間</th>
+       <th class="point">得点アイテム</th>
+       <th class="time">刻符</th>
+       <th class="miss">ミス回数</th>
+       <th class="bomb">ボム回数</th>
+       <th class="last_spell">ラストスペル回数</th>
+       <th class="human">人間率</th>
+       <th class="rate">スペルカード取得率</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="character">霊夢 &amp; 紫</td>
+       <td class="name">%T08SCRHRY11</td>
+       <td class="score">%T08SCRHRY12</td>
+       <td class="stage">%T08SCRHRY13</td>
+       <td class="date">%T08SCRHRY14</td>
+       <td class="slow">%T08SCRHRY15</td>
+       <td class="playtime">%T08SCRHRY16</td>
+       <td class="point">%T08SCRHRY18</td>
+       <td class="time">%T08SCRHRY19</td>
+       <td class="miss">%T08SCRHRY10</td>
+       <td class="bomb">%T08SCRHRY1A</td>
+       <td class="last_spell">%T08SCRHRY1B</td>
+       <td class="human">%T08SCRHRY1E</td>
+       <td class="rate">%T08SCRHRY1G / 44</td>
+      </tr>
+      <tr>
+       <td class="character">魔理沙 &amp; アリス</td>
+       <td class="name">%T08SCRHMA11</td>
+       <td class="score">%T08SCRHMA12</td>
+       <td class="stage">%T08SCRHMA13</td>
+       <td class="date">%T08SCRHMA14</td>
+       <td class="slow">%T08SCRHMA15</td>
+       <td class="playtime">%T08SCRHMA16</td>
+       <td class="point">%T08SCRHMA18</td>
+       <td class="time">%T08SCRHMA19</td>
+       <td class="miss">%T08SCRHMA10</td>
+       <td class="bomb">%T08SCRHMA1A</td>
+       <td class="last_spell">%T08SCRHMA1B</td>
+       <td class="human">%T08SCRHMA1E</td>
+       <td class="rate">%T08SCRHMA1G / 44</td>
+      </tr>
+      <tr>
+       <td class="character">咲夜 &amp; レミリア</td>
+       <td class="name">%T08SCRHSR11</td>
+       <td class="score">%T08SCRHSR12</td>
+       <td class="stage">%T08SCRHSR13</td>
+       <td class="date">%T08SCRHSR14</td>
+       <td class="slow">%T08SCRHSR15</td>
+       <td class="playtime">%T08SCRHSR16</td>
+       <td class="point">%T08SCRHSR18</td>
+       <td class="time">%T08SCRHSR19</td>
+       <td class="miss">%T08SCRHSR10</td>
+       <td class="bomb">%T08SCRHSR1A</td>
+       <td class="last_spell">%T08SCRHSR1B</td>
+       <td class="human">%T08SCRHSR1E</td>
+       <td class="rate">%T08SCRHSR1G / 44</td>
+      </tr>
+      <tr>
+       <td class="character">妖夢 &amp; 幽々子</td>
+       <td class="name">%T08SCRHYY11</td>
+       <td class="score">%T08SCRHYY12</td>
+       <td class="stage">%T08SCRHYY13</td>
+       <td class="date">%T08SCRHYY14</td>
+       <td class="slow">%T08SCRHYY15</td>
+       <td class="playtime">%T08SCRHYY16</td>
+       <td class="point">%T08SCRHYY18</td>
+       <td class="time">%T08SCRHYY19</td>
+       <td class="miss">%T08SCRHYY10</td>
+       <td class="bomb">%T08SCRHYY1A</td>
+       <td class="last_spell">%T08SCRHYY1B</td>
+       <td class="human">%T08SCRHYY1E</td>
+       <td class="rate">%T08SCRHYY1G / 44</td>
+      </tr>
+      <tr>
+       <td class="character">博麗 霊夢</td>
+       <td class="name">%T08SCRHRM11</td>
+       <td class="score">%T08SCRHRM12</td>
+       <td class="stage">%T08SCRHRM13</td>
+       <td class="date">%T08SCRHRM14</td>
+       <td class="slow">%T08SCRHRM15</td>
+       <td class="playtime">%T08SCRHRM16</td>
+       <td class="point">%T08SCRHRM18</td>
+       <td class="time">%T08SCRHRM19</td>
+       <td class="miss">%T08SCRHRM10</td>
+       <td class="bomb">%T08SCRHRM1A</td>
+       <td class="last_spell">%T08SCRHRM1B</td>
+       <td class="human">%T08SCRHRM1E</td>
+       <td class="rate">%T08SCRHRM1G / 44</td>
+      </tr>
+      <tr>
+       <td class="character">八雲 紫</td>
+       <td class="name">%T08SCRHYK11</td>
+       <td class="score">%T08SCRHYK12</td>
+       <td class="stage">%T08SCRHYK13</td>
+       <td class="date">%T08SCRHYK14</td>
+       <td class="slow">%T08SCRHYK15</td>
+       <td class="playtime">%T08SCRHYK16</td>
+       <td class="point">%T08SCRHYK18</td>
+       <td class="time">%T08SCRHYK19</td>
+       <td class="miss">%T08SCRHYK10</td>
+       <td class="bomb">%T08SCRHYK1A</td>
+       <td class="last_spell">%T08SCRHYK1B</td>
+       <td class="human">%T08SCRHYK1E</td>
+       <td class="rate">%T08SCRHYK1G / 44</td>
+      </tr>
+      <tr>
+       <td class="character">霧雨 魔理沙</td>
+       <td class="name">%T08SCRHMR11</td>
+       <td class="score">%T08SCRHMR12</td>
+       <td class="stage">%T08SCRHMR13</td>
+       <td class="date">%T08SCRHMR14</td>
+       <td class="slow">%T08SCRHMR15</td>
+       <td class="playtime">%T08SCRHMR16</td>
+       <td class="point">%T08SCRHMR18</td>
+       <td class="time">%T08SCRHMR19</td>
+       <td class="miss">%T08SCRHMR10</td>
+       <td class="bomb">%T08SCRHMR1A</td>
+       <td class="last_spell">%T08SCRHMR1B</td>
+       <td class="human">%T08SCRHMR1E</td>
+       <td class="rate">%T08SCRHMR1G / 44</td>
+      </tr>
+      <tr>
+       <td class="character">アリス・マーガトロイド</td>
+       <td class="name">%T08SCRHAL11</td>
+       <td class="score">%T08SCRHAL12</td>
+       <td class="stage">%T08SCRHAL13</td>
+       <td class="date">%T08SCRHAL14</td>
+       <td class="slow">%T08SCRHAL15</td>
+       <td class="playtime">%T08SCRHAL16</td>
+       <td class="point">%T08SCRHAL18</td>
+       <td class="time">%T08SCRHAL19</td>
+       <td class="miss">%T08SCRHAL10</td>
+       <td class="bomb">%T08SCRHAL1A</td>
+       <td class="last_spell">%T08SCRHAL1B</td>
+       <td class="human">%T08SCRHAL1E</td>
+       <td class="rate">%T08SCRHAL1G / 44</td>
+      </tr>
+      <tr>
+       <td class="character">十六夜 咲夜</td>
+       <td class="name">%T08SCRHSK11</td>
+       <td class="score">%T08SCRHSK12</td>
+       <td class="stage">%T08SCRHSK13</td>
+       <td class="date">%T08SCRHSK14</td>
+       <td class="slow">%T08SCRHSK15</td>
+       <td class="playtime">%T08SCRHSK16</td>
+       <td class="point">%T08SCRHSK18</td>
+       <td class="time">%T08SCRHSK19</td>
+       <td class="miss">%T08SCRHSK10</td>
+       <td class="bomb">%T08SCRHSK1A</td>
+       <td class="last_spell">%T08SCRHSK1B</td>
+       <td class="human">%T08SCRHSK1E</td>
+       <td class="rate">%T08SCRHSK1G / 44</td>
+      </tr>
+      <tr>
+       <td class="character">レミリア・スカーレット</td>
+       <td class="name">%T08SCRHRL11</td>
+       <td class="score">%T08SCRHRL12</td>
+       <td class="stage">%T08SCRHRL13</td>
+       <td class="date">%T08SCRHRL14</td>
+       <td class="slow">%T08SCRHRL15</td>
+       <td class="playtime">%T08SCRHRL16</td>
+       <td class="point">%T08SCRHRL18</td>
+       <td class="time">%T08SCRHRL19</td>
+       <td class="miss">%T08SCRHRL10</td>
+       <td class="bomb">%T08SCRHRL1A</td>
+       <td class="last_spell">%T08SCRHRL1B</td>
+       <td class="human">%T08SCRHRL1E</td>
+       <td class="rate">%T08SCRHRL1G / 44</td>
+      </tr>
+      <tr>
+       <td class="character">魂魄 妖夢</td>
+       <td class="name">%T08SCRHYM11</td>
+       <td class="score">%T08SCRHYM12</td>
+       <td class="stage">%T08SCRHYM13</td>
+       <td class="date">%T08SCRHYM14</td>
+       <td class="slow">%T08SCRHYM15</td>
+       <td class="playtime">%T08SCRHYM16</td>
+       <td class="point">%T08SCRHYM18</td>
+       <td class="time">%T08SCRHYM19</td>
+       <td class="miss">%T08SCRHYM10</td>
+       <td class="bomb">%T08SCRHYM1A</td>
+       <td class="last_spell">%T08SCRHYM1B</td>
+       <td class="human">%T08SCRHYM1E</td>
+       <td class="rate">%T08SCRHYM1G / 44</td>
+      </tr>
+      <tr>
+       <td class="character">西行寺 幽々子</td>
+       <td class="name">%T08SCRHYU11</td>
+       <td class="score">%T08SCRHYU12</td>
+       <td class="stage">%T08SCRHYU13</td>
+       <td class="date">%T08SCRHYU14</td>
+       <td class="slow">%T08SCRHYU15</td>
+       <td class="playtime">%T08SCRHYU16</td>
+       <td class="point">%T08SCRHYU18</td>
+       <td class="time">%T08SCRHYU19</td>
+       <td class="miss">%T08SCRHYU10</td>
+       <td class="bomb">%T08SCRHYU1A</td>
+       <td class="last_spell">%T08SCRHYU1B</td>
+       <td class="human">%T08SCRHYU1E</td>
+       <td class="rate">%T08SCRHYU1G / 44</td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="score_per_level">
-    <caption id="Normal">Normal</caption>
-    <thead>
-     <tr>
-      <td class="character">Character</td>
-      <td class="name">Name</td>
-      <td class="score">Score</td>
-      <td class="stage">Stage</td>
-      <td class="date">Date</td>
-      <td class="slow">Slow</td>
-      <td class="playtime">プレイ時間</td>
-      <td class="point">得点アイテム</td>
-      <td class="time">刻符</td>
-      <td class="miss">ミス回数</td>
-      <td class="bomb">ボム回数</td>
-      <td class="last_spell">ラストスペル回数</td>
-      <td class="human">人間率</td>
-      <td class="rate">スペルカード取得率</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="character">霊夢 &amp; 紫</td>
-      <td class="name">%T08SCRNRY11</td>
-      <td class="score">%T08SCRNRY12</td>
-      <td class="stage">%T08SCRNRY13</td>
-      <td class="date">%T08SCRNRY14</td>
-      <td class="slow">%T08SCRNRY15</td>
-      <td class="playtime">%T08SCRNRY16</td>
-      <td class="point">%T08SCRNRY18</td>
-      <td class="time">%T08SCRNRY19</td>
-      <td class="miss">%T08SCRNRY10</td>
-      <td class="bomb">%T08SCRNRY1A</td>
-      <td class="last_spell">%T08SCRNRY1B</td>
-      <td class="human">%T08SCRNRY1E</td>
-      <td class="rate">%T08SCRNRY1G / 43</td>
-     </tr>
-     <tr>
-      <td class="character">魔理沙 &amp; アリス</td>
-      <td class="name">%T08SCRNMA11</td>
-      <td class="score">%T08SCRNMA12</td>
-      <td class="stage">%T08SCRNMA13</td>
-      <td class="date">%T08SCRNMA14</td>
-      <td class="slow">%T08SCRNMA15</td>
-      <td class="playtime">%T08SCRNMA16</td>
-      <td class="point">%T08SCRNMA18</td>
-      <td class="time">%T08SCRNMA19</td>
-      <td class="miss">%T08SCRNMA10</td>
-      <td class="bomb">%T08SCRNMA1A</td>
-      <td class="last_spell">%T08SCRNMA1B</td>
-      <td class="human">%T08SCRNMA1E</td>
-      <td class="rate">%T08SCRNMA1G / 43</td>
-     </tr>
-     <tr>
-      <td class="character">咲夜 &amp; レミリア</td>
-      <td class="name">%T08SCRNSR11</td>
-      <td class="score">%T08SCRNSR12</td>
-      <td class="stage">%T08SCRNSR13</td>
-      <td class="date">%T08SCRNSR14</td>
-      <td class="slow">%T08SCRNSR15</td>
-      <td class="playtime">%T08SCRNSR16</td>
-      <td class="point">%T08SCRNSR18</td>
-      <td class="time">%T08SCRNSR19</td>
-      <td class="miss">%T08SCRNSR10</td>
-      <td class="bomb">%T08SCRNSR1A</td>
-      <td class="last_spell">%T08SCRNSR1B</td>
-      <td class="human">%T08SCRNSR1E</td>
-      <td class="rate">%T08SCRNSR1G / 43</td>
-     </tr>
-     <tr>
-      <td class="character">妖夢 &amp; 幽々子</td>
-      <td class="name">%T08SCRNYY11</td>
-      <td class="score">%T08SCRNYY12</td>
-      <td class="stage">%T08SCRNYY13</td>
-      <td class="date">%T08SCRNYY14</td>
-      <td class="slow">%T08SCRNYY15</td>
-      <td class="playtime">%T08SCRNYY16</td>
-      <td class="point">%T08SCRNYY18</td>
-      <td class="time">%T08SCRNYY19</td>
-      <td class="miss">%T08SCRNYY10</td>
-      <td class="bomb">%T08SCRNYY1A</td>
-      <td class="last_spell">%T08SCRNYY1B</td>
-      <td class="human">%T08SCRNYY1E</td>
-      <td class="rate">%T08SCRNYY1G / 43</td>
-     </tr>
-     <tr>
-      <td class="character">博麗 霊夢</td>
-      <td class="name">%T08SCRNRM11</td>
-      <td class="score">%T08SCRNRM12</td>
-      <td class="stage">%T08SCRNRM13</td>
-      <td class="date">%T08SCRNRM14</td>
-      <td class="slow">%T08SCRNRM15</td>
-      <td class="playtime">%T08SCRNRM16</td>
-      <td class="point">%T08SCRNRM18</td>
-      <td class="time">%T08SCRNRM19</td>
-      <td class="miss">%T08SCRNRM10</td>
-      <td class="bomb">%T08SCRNRM1A</td>
-      <td class="last_spell">%T08SCRNRM1B</td>
-      <td class="human">%T08SCRNRM1E</td>
-      <td class="rate">%T08SCRNRM1G / 43</td>
-     </tr>
-     <tr>
-      <td class="character">八雲 紫</td>
-      <td class="name">%T08SCRNYK11</td>
-      <td class="score">%T08SCRNYK12</td>
-      <td class="stage">%T08SCRNYK13</td>
-      <td class="date">%T08SCRNYK14</td>
-      <td class="slow">%T08SCRNYK15</td>
-      <td class="playtime">%T08SCRNYK16</td>
-      <td class="point">%T08SCRNYK18</td>
-      <td class="time">%T08SCRNYK19</td>
-      <td class="miss">%T08SCRNYK10</td>
-      <td class="bomb">%T08SCRNYK1A</td>
-      <td class="last_spell">%T08SCRNYK1B</td>
-      <td class="human">%T08SCRNYK1E</td>
-      <td class="rate">%T08SCRNYK1G / 43</td>
-     </tr>
-     <tr>
-      <td class="character">霧雨 魔理沙</td>
-      <td class="name">%T08SCRNMR11</td>
-      <td class="score">%T08SCRNMR12</td>
-      <td class="stage">%T08SCRNMR13</td>
-      <td class="date">%T08SCRNMR14</td>
-      <td class="slow">%T08SCRNMR15</td>
-      <td class="playtime">%T08SCRNMR16</td>
-      <td class="point">%T08SCRNMR18</td>
-      <td class="time">%T08SCRNMR19</td>
-      <td class="miss">%T08SCRNMR10</td>
-      <td class="bomb">%T08SCRNMR1A</td>
-      <td class="last_spell">%T08SCRNMR1B</td>
-      <td class="human">%T08SCRNMR1E</td>
-      <td class="rate">%T08SCRNMR1G / 43</td>
-     </tr>
-     <tr>
-      <td class="character">アリス・マーガトロイド</td>
-      <td class="name">%T08SCRNAL11</td>
-      <td class="score">%T08SCRNAL12</td>
-      <td class="stage">%T08SCRNAL13</td>
-      <td class="date">%T08SCRNAL14</td>
-      <td class="slow">%T08SCRNAL15</td>
-      <td class="playtime">%T08SCRNAL16</td>
-      <td class="point">%T08SCRNAL18</td>
-      <td class="time">%T08SCRNAL19</td>
-      <td class="miss">%T08SCRNAL10</td>
-      <td class="bomb">%T08SCRNAL1A</td>
-      <td class="last_spell">%T08SCRNAL1B</td>
-      <td class="human">%T08SCRNAL1E</td>
-      <td class="rate">%T08SCRNAL1G / 43</td>
-     </tr>
-     <tr>
-      <td class="character">十六夜 咲夜</td>
-      <td class="name">%T08SCRNSK11</td>
-      <td class="score">%T08SCRNSK12</td>
-      <td class="stage">%T08SCRNSK13</td>
-      <td class="date">%T08SCRNSK14</td>
-      <td class="slow">%T08SCRNSK15</td>
-      <td class="playtime">%T08SCRNSK16</td>
-      <td class="point">%T08SCRNSK18</td>
-      <td class="time">%T08SCRNSK19</td>
-      <td class="miss">%T08SCRNSK10</td>
-      <td class="bomb">%T08SCRNSK1A</td>
-      <td class="last_spell">%T08SCRNSK1B</td>
-      <td class="human">%T08SCRNSK1E</td>
-      <td class="rate">%T08SCRNSK1G / 43</td>
-     </tr>
-     <tr>
-      <td class="character">レミリア・スカーレット</td>
-      <td class="name">%T08SCRNRL11</td>
-      <td class="score">%T08SCRNRL12</td>
-      <td class="stage">%T08SCRNRL13</td>
-      <td class="date">%T08SCRNRL14</td>
-      <td class="slow">%T08SCRNRL15</td>
-      <td class="playtime">%T08SCRNRL16</td>
-      <td class="point">%T08SCRNRL18</td>
-      <td class="time">%T08SCRNRL19</td>
-      <td class="miss">%T08SCRNRL10</td>
-      <td class="bomb">%T08SCRNRL1A</td>
-      <td class="last_spell">%T08SCRNRL1B</td>
-      <td class="human">%T08SCRNRL1E</td>
-      <td class="rate">%T08SCRNRL1G / 43</td>
-     </tr>
-     <tr>
-      <td class="character">魂魄 妖夢</td>
-      <td class="name">%T08SCRNYM11</td>
-      <td class="score">%T08SCRNYM12</td>
-      <td class="stage">%T08SCRNYM13</td>
-      <td class="date">%T08SCRNYM14</td>
-      <td class="slow">%T08SCRNYM15</td>
-      <td class="playtime">%T08SCRNYM16</td>
-      <td class="point">%T08SCRNYM18</td>
-      <td class="time">%T08SCRNYM19</td>
-      <td class="miss">%T08SCRNYM10</td>
-      <td class="bomb">%T08SCRNYM1A</td>
-      <td class="last_spell">%T08SCRNYM1B</td>
-      <td class="human">%T08SCRNYM1E</td>
-      <td class="rate">%T08SCRNYM1G / 43</td>
-     </tr>
-     <tr>
-      <td class="character">西行寺 幽々子</td>
-      <td class="name">%T08SCRNYU11</td>
-      <td class="score">%T08SCRNYU12</td>
-      <td class="stage">%T08SCRNYU13</td>
-      <td class="date">%T08SCRNYU14</td>
-      <td class="slow">%T08SCRNYU15</td>
-      <td class="playtime">%T08SCRNYU16</td>
-      <td class="point">%T08SCRNYU18</td>
-      <td class="time">%T08SCRNYU19</td>
-      <td class="miss">%T08SCRNYU10</td>
-      <td class="bomb">%T08SCRNYU1A</td>
-      <td class="last_spell">%T08SCRNYU1B</td>
-      <td class="human">%T08SCRNYU1E</td>
-      <td class="rate">%T08SCRNYU1G / 43</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="score_per_level">
+     <caption id="Lunatic">Lunatic</caption>
+     <thead>
+      <tr>
+       <th class="character">Character</th>
+       <th class="name">Name</th>
+       <th class="score">Score</th>
+       <th class="stage">Stage</th>
+       <th class="date">Date</th>
+       <th class="slow">Slow</th>
+       <th class="playtime">プレイ時間</th>
+       <th class="point">得点アイテム</th>
+       <th class="time">刻符</th>
+       <th class="miss">ミス回数</th>
+       <th class="bomb">ボム回数</th>
+       <th class="last_spell">ラストスペル回数</th>
+       <th class="human">人間率</th>
+       <th class="rate">スペルカード取得率</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="character">霊夢 &amp; 紫</td>
+       <td class="name">%T08SCRLRY11</td>
+       <td class="score">%T08SCRLRY12</td>
+       <td class="stage">%T08SCRLRY13</td>
+       <td class="date">%T08SCRLRY14</td>
+       <td class="slow">%T08SCRLRY15</td>
+       <td class="playtime">%T08SCRLRY16</td>
+       <td class="point">%T08SCRLRY18</td>
+       <td class="time">%T08SCRLRY19</td>
+       <td class="miss">%T08SCRLRY10</td>
+       <td class="bomb">%T08SCRLRY1A</td>
+       <td class="last_spell">%T08SCRLRY1B</td>
+       <td class="human">%T08SCRLRY1E</td>
+       <td class="rate">%T08SCRLRY1G / 44</td>
+      </tr>
+      <tr>
+       <td class="character">魔理沙 &amp; アリス</td>
+       <td class="name">%T08SCRLMA11</td>
+       <td class="score">%T08SCRLMA12</td>
+       <td class="stage">%T08SCRLMA13</td>
+       <td class="date">%T08SCRLMA14</td>
+       <td class="slow">%T08SCRLMA15</td>
+       <td class="playtime">%T08SCRLMA16</td>
+       <td class="point">%T08SCRLMA18</td>
+       <td class="time">%T08SCRLMA19</td>
+       <td class="miss">%T08SCRLMA10</td>
+       <td class="bomb">%T08SCRLMA1A</td>
+       <td class="last_spell">%T08SCRLMA1B</td>
+       <td class="human">%T08SCRLMA1E</td>
+       <td class="rate">%T08SCRLMA1G / 44</td>
+      </tr>
+      <tr>
+       <td class="character">咲夜 &amp; レミリア</td>
+       <td class="name">%T08SCRLSR11</td>
+       <td class="score">%T08SCRLSR12</td>
+       <td class="stage">%T08SCRLSR13</td>
+       <td class="date">%T08SCRLSR14</td>
+       <td class="slow">%T08SCRLSR15</td>
+       <td class="playtime">%T08SCRLSR16</td>
+       <td class="point">%T08SCRLSR18</td>
+       <td class="time">%T08SCRLSR19</td>
+       <td class="miss">%T08SCRLSR10</td>
+       <td class="bomb">%T08SCRLSR1A</td>
+       <td class="last_spell">%T08SCRLSR1B</td>
+       <td class="human">%T08SCRLSR1E</td>
+       <td class="rate">%T08SCRLSR1G / 44</td>
+      </tr>
+      <tr>
+       <td class="character">妖夢 &amp; 幽々子</td>
+       <td class="name">%T08SCRLYY11</td>
+       <td class="score">%T08SCRLYY12</td>
+       <td class="stage">%T08SCRLYY13</td>
+       <td class="date">%T08SCRLYY14</td>
+       <td class="slow">%T08SCRLYY15</td>
+       <td class="playtime">%T08SCRLYY16</td>
+       <td class="point">%T08SCRLYY18</td>
+       <td class="time">%T08SCRLYY19</td>
+       <td class="miss">%T08SCRLYY10</td>
+       <td class="bomb">%T08SCRLYY1A</td>
+       <td class="last_spell">%T08SCRLYY1B</td>
+       <td class="human">%T08SCRLYY1E</td>
+       <td class="rate">%T08SCRLYY1G / 44</td>
+      </tr>
+      <tr>
+       <td class="character">博麗 霊夢</td>
+       <td class="name">%T08SCRLRM11</td>
+       <td class="score">%T08SCRLRM12</td>
+       <td class="stage">%T08SCRLRM13</td>
+       <td class="date">%T08SCRLRM14</td>
+       <td class="slow">%T08SCRLRM15</td>
+       <td class="playtime">%T08SCRLRM16</td>
+       <td class="point">%T08SCRLRM18</td>
+       <td class="time">%T08SCRLRM19</td>
+       <td class="miss">%T08SCRLRM10</td>
+       <td class="bomb">%T08SCRLRM1A</td>
+       <td class="last_spell">%T08SCRLRM1B</td>
+       <td class="human">%T08SCRLRM1E</td>
+       <td class="rate">%T08SCRLRM1G / 44</td>
+      </tr>
+      <tr>
+       <td class="character">八雲 紫</td>
+       <td class="name">%T08SCRLYK11</td>
+       <td class="score">%T08SCRLYK12</td>
+       <td class="stage">%T08SCRLYK13</td>
+       <td class="date">%T08SCRLYK14</td>
+       <td class="slow">%T08SCRLYK15</td>
+       <td class="playtime">%T08SCRLYK16</td>
+       <td class="point">%T08SCRLYK18</td>
+       <td class="time">%T08SCRLYK19</td>
+       <td class="miss">%T08SCRLYK10</td>
+       <td class="bomb">%T08SCRLYK1A</td>
+       <td class="last_spell">%T08SCRLYK1B</td>
+       <td class="human">%T08SCRLYK1E</td>
+       <td class="rate">%T08SCRLYK1G / 44</td>
+      </tr>
+      <tr>
+       <td class="character">霧雨 魔理沙</td>
+       <td class="name">%T08SCRLMR11</td>
+       <td class="score">%T08SCRLMR12</td>
+       <td class="stage">%T08SCRLMR13</td>
+       <td class="date">%T08SCRLMR14</td>
+       <td class="slow">%T08SCRLMR15</td>
+       <td class="playtime">%T08SCRLMR16</td>
+       <td class="point">%T08SCRLMR18</td>
+       <td class="time">%T08SCRLMR19</td>
+       <td class="miss">%T08SCRLMR10</td>
+       <td class="bomb">%T08SCRLMR1A</td>
+       <td class="last_spell">%T08SCRLMR1B</td>
+       <td class="human">%T08SCRLMR1E</td>
+       <td class="rate">%T08SCRLMR1G / 44</td>
+      </tr>
+      <tr>
+       <td class="character">アリス・マーガトロイド</td>
+       <td class="name">%T08SCRLAL11</td>
+       <td class="score">%T08SCRLAL12</td>
+       <td class="stage">%T08SCRLAL13</td>
+       <td class="date">%T08SCRLAL14</td>
+       <td class="slow">%T08SCRLAL15</td>
+       <td class="playtime">%T08SCRLAL16</td>
+       <td class="point">%T08SCRLAL18</td>
+       <td class="time">%T08SCRLAL19</td>
+       <td class="miss">%T08SCRLAL10</td>
+       <td class="bomb">%T08SCRLAL1A</td>
+       <td class="last_spell">%T08SCRLAL1B</td>
+       <td class="human">%T08SCRLAL1E</td>
+       <td class="rate">%T08SCRLAL1G / 44</td>
+      </tr>
+      <tr>
+       <td class="character">十六夜 咲夜</td>
+       <td class="name">%T08SCRLSK11</td>
+       <td class="score">%T08SCRLSK12</td>
+       <td class="stage">%T08SCRLSK13</td>
+       <td class="date">%T08SCRLSK14</td>
+       <td class="slow">%T08SCRLSK15</td>
+       <td class="playtime">%T08SCRLSK16</td>
+       <td class="point">%T08SCRLSK18</td>
+       <td class="time">%T08SCRLSK19</td>
+       <td class="miss">%T08SCRLSK10</td>
+       <td class="bomb">%T08SCRLSK1A</td>
+       <td class="last_spell">%T08SCRLSK1B</td>
+       <td class="human">%T08SCRLSK1E</td>
+       <td class="rate">%T08SCRLSK1G / 44</td>
+      </tr>
+      <tr>
+       <td class="character">レミリア・スカーレット</td>
+       <td class="name">%T08SCRLRL11</td>
+       <td class="score">%T08SCRLRL12</td>
+       <td class="stage">%T08SCRLRL13</td>
+       <td class="date">%T08SCRLRL14</td>
+       <td class="slow">%T08SCRLRL15</td>
+       <td class="playtime">%T08SCRLRL16</td>
+       <td class="point">%T08SCRLRL18</td>
+       <td class="time">%T08SCRLRL19</td>
+       <td class="miss">%T08SCRLRL10</td>
+       <td class="bomb">%T08SCRLRL1A</td>
+       <td class="last_spell">%T08SCRLRL1B</td>
+       <td class="human">%T08SCRLRL1E</td>
+       <td class="rate">%T08SCRLRL1G / 44</td>
+      </tr>
+      <tr>
+       <td class="character">魂魄 妖夢</td>
+       <td class="name">%T08SCRLYM11</td>
+       <td class="score">%T08SCRLYM12</td>
+       <td class="stage">%T08SCRLYM13</td>
+       <td class="date">%T08SCRLYM14</td>
+       <td class="slow">%T08SCRLYM15</td>
+       <td class="playtime">%T08SCRLYM16</td>
+       <td class="point">%T08SCRLYM18</td>
+       <td class="time">%T08SCRLYM19</td>
+       <td class="miss">%T08SCRLYM10</td>
+       <td class="bomb">%T08SCRLYM1A</td>
+       <td class="last_spell">%T08SCRLYM1B</td>
+       <td class="human">%T08SCRLYM1E</td>
+       <td class="rate">%T08SCRLYM1G / 44</td>
+      </tr>
+      <tr>
+       <td class="character">西行寺 幽々子</td>
+       <td class="name">%T08SCRLYU11</td>
+       <td class="score">%T08SCRLYU12</td>
+       <td class="stage">%T08SCRLYU13</td>
+       <td class="date">%T08SCRLYU14</td>
+       <td class="slow">%T08SCRLYU15</td>
+       <td class="playtime">%T08SCRLYU16</td>
+       <td class="point">%T08SCRLYU18</td>
+       <td class="time">%T08SCRLYU19</td>
+       <td class="miss">%T08SCRLYU10</td>
+       <td class="bomb">%T08SCRLYU1A</td>
+       <td class="last_spell">%T08SCRLYU1B</td>
+       <td class="human">%T08SCRLYU1E</td>
+       <td class="rate">%T08SCRLYU1G / 44</td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="score_per_level">
-    <caption id="Hard">Hard</caption>
-    <thead>
-     <tr>
-      <td class="character">Character</td>
-      <td class="name">Name</td>
-      <td class="score">Score</td>
-      <td class="stage">Stage</td>
-      <td class="date">Date</td>
-      <td class="slow">Slow</td>
-      <td class="playtime">プレイ時間</td>
-      <td class="point">得点アイテム</td>
-      <td class="time">刻符</td>
-      <td class="miss">ミス回数</td>
-      <td class="bomb">ボム回数</td>
-      <td class="last_spell">ラストスペル回数</td>
-      <td class="human">人間率</td>
-      <td class="rate">スペルカード取得率</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="character">霊夢 &amp; 紫</td>
-      <td class="name">%T08SCRHRY11</td>
-      <td class="score">%T08SCRHRY12</td>
-      <td class="stage">%T08SCRHRY13</td>
-      <td class="date">%T08SCRHRY14</td>
-      <td class="slow">%T08SCRHRY15</td>
-      <td class="playtime">%T08SCRHRY16</td>
-      <td class="point">%T08SCRHRY18</td>
-      <td class="time">%T08SCRHRY19</td>
-      <td class="miss">%T08SCRHRY10</td>
-      <td class="bomb">%T08SCRHRY1A</td>
-      <td class="last_spell">%T08SCRHRY1B</td>
-      <td class="human">%T08SCRHRY1E</td>
-      <td class="rate">%T08SCRHRY1G / 44</td>
-     </tr>
-     <tr>
-      <td class="character">魔理沙 &amp; アリス</td>
-      <td class="name">%T08SCRHMA11</td>
-      <td class="score">%T08SCRHMA12</td>
-      <td class="stage">%T08SCRHMA13</td>
-      <td class="date">%T08SCRHMA14</td>
-      <td class="slow">%T08SCRHMA15</td>
-      <td class="playtime">%T08SCRHMA16</td>
-      <td class="point">%T08SCRHMA18</td>
-      <td class="time">%T08SCRHMA19</td>
-      <td class="miss">%T08SCRHMA10</td>
-      <td class="bomb">%T08SCRHMA1A</td>
-      <td class="last_spell">%T08SCRHMA1B</td>
-      <td class="human">%T08SCRHMA1E</td>
-      <td class="rate">%T08SCRHMA1G / 44</td>
-     </tr>
-     <tr>
-      <td class="character">咲夜 &amp; レミリア</td>
-      <td class="name">%T08SCRHSR11</td>
-      <td class="score">%T08SCRHSR12</td>
-      <td class="stage">%T08SCRHSR13</td>
-      <td class="date">%T08SCRHSR14</td>
-      <td class="slow">%T08SCRHSR15</td>
-      <td class="playtime">%T08SCRHSR16</td>
-      <td class="point">%T08SCRHSR18</td>
-      <td class="time">%T08SCRHSR19</td>
-      <td class="miss">%T08SCRHSR10</td>
-      <td class="bomb">%T08SCRHSR1A</td>
-      <td class="last_spell">%T08SCRHSR1B</td>
-      <td class="human">%T08SCRHSR1E</td>
-      <td class="rate">%T08SCRHSR1G / 44</td>
-     </tr>
-     <tr>
-      <td class="character">妖夢 &amp; 幽々子</td>
-      <td class="name">%T08SCRHYY11</td>
-      <td class="score">%T08SCRHYY12</td>
-      <td class="stage">%T08SCRHYY13</td>
-      <td class="date">%T08SCRHYY14</td>
-      <td class="slow">%T08SCRHYY15</td>
-      <td class="playtime">%T08SCRHYY16</td>
-      <td class="point">%T08SCRHYY18</td>
-      <td class="time">%T08SCRHYY19</td>
-      <td class="miss">%T08SCRHYY10</td>
-      <td class="bomb">%T08SCRHYY1A</td>
-      <td class="last_spell">%T08SCRHYY1B</td>
-      <td class="human">%T08SCRHYY1E</td>
-      <td class="rate">%T08SCRHYY1G / 44</td>
-     </tr>
-     <tr>
-      <td class="character">博麗 霊夢</td>
-      <td class="name">%T08SCRHRM11</td>
-      <td class="score">%T08SCRHRM12</td>
-      <td class="stage">%T08SCRHRM13</td>
-      <td class="date">%T08SCRHRM14</td>
-      <td class="slow">%T08SCRHRM15</td>
-      <td class="playtime">%T08SCRHRM16</td>
-      <td class="point">%T08SCRHRM18</td>
-      <td class="time">%T08SCRHRM19</td>
-      <td class="miss">%T08SCRHRM10</td>
-      <td class="bomb">%T08SCRHRM1A</td>
-      <td class="last_spell">%T08SCRHRM1B</td>
-      <td class="human">%T08SCRHRM1E</td>
-      <td class="rate">%T08SCRHRM1G / 44</td>
-     </tr>
-     <tr>
-      <td class="character">八雲 紫</td>
-      <td class="name">%T08SCRHYK11</td>
-      <td class="score">%T08SCRHYK12</td>
-      <td class="stage">%T08SCRHYK13</td>
-      <td class="date">%T08SCRHYK14</td>
-      <td class="slow">%T08SCRHYK15</td>
-      <td class="playtime">%T08SCRHYK16</td>
-      <td class="point">%T08SCRHYK18</td>
-      <td class="time">%T08SCRHYK19</td>
-      <td class="miss">%T08SCRHYK10</td>
-      <td class="bomb">%T08SCRHYK1A</td>
-      <td class="last_spell">%T08SCRHYK1B</td>
-      <td class="human">%T08SCRHYK1E</td>
-      <td class="rate">%T08SCRHYK1G / 44</td>
-     </tr>
-     <tr>
-      <td class="character">霧雨 魔理沙</td>
-      <td class="name">%T08SCRHMR11</td>
-      <td class="score">%T08SCRHMR12</td>
-      <td class="stage">%T08SCRHMR13</td>
-      <td class="date">%T08SCRHMR14</td>
-      <td class="slow">%T08SCRHMR15</td>
-      <td class="playtime">%T08SCRHMR16</td>
-      <td class="point">%T08SCRHMR18</td>
-      <td class="time">%T08SCRHMR19</td>
-      <td class="miss">%T08SCRHMR10</td>
-      <td class="bomb">%T08SCRHMR1A</td>
-      <td class="last_spell">%T08SCRHMR1B</td>
-      <td class="human">%T08SCRHMR1E</td>
-      <td class="rate">%T08SCRHMR1G / 44</td>
-     </tr>
-     <tr>
-      <td class="character">アリス・マーガトロイド</td>
-      <td class="name">%T08SCRHAL11</td>
-      <td class="score">%T08SCRHAL12</td>
-      <td class="stage">%T08SCRHAL13</td>
-      <td class="date">%T08SCRHAL14</td>
-      <td class="slow">%T08SCRHAL15</td>
-      <td class="playtime">%T08SCRHAL16</td>
-      <td class="point">%T08SCRHAL18</td>
-      <td class="time">%T08SCRHAL19</td>
-      <td class="miss">%T08SCRHAL10</td>
-      <td class="bomb">%T08SCRHAL1A</td>
-      <td class="last_spell">%T08SCRHAL1B</td>
-      <td class="human">%T08SCRHAL1E</td>
-      <td class="rate">%T08SCRHAL1G / 44</td>
-     </tr>
-     <tr>
-      <td class="character">十六夜 咲夜</td>
-      <td class="name">%T08SCRHSK11</td>
-      <td class="score">%T08SCRHSK12</td>
-      <td class="stage">%T08SCRHSK13</td>
-      <td class="date">%T08SCRHSK14</td>
-      <td class="slow">%T08SCRHSK15</td>
-      <td class="playtime">%T08SCRHSK16</td>
-      <td class="point">%T08SCRHSK18</td>
-      <td class="time">%T08SCRHSK19</td>
-      <td class="miss">%T08SCRHSK10</td>
-      <td class="bomb">%T08SCRHSK1A</td>
-      <td class="last_spell">%T08SCRHSK1B</td>
-      <td class="human">%T08SCRHSK1E</td>
-      <td class="rate">%T08SCRHSK1G / 44</td>
-     </tr>
-     <tr>
-      <td class="character">レミリア・スカーレット</td>
-      <td class="name">%T08SCRHRL11</td>
-      <td class="score">%T08SCRHRL12</td>
-      <td class="stage">%T08SCRHRL13</td>
-      <td class="date">%T08SCRHRL14</td>
-      <td class="slow">%T08SCRHRL15</td>
-      <td class="playtime">%T08SCRHRL16</td>
-      <td class="point">%T08SCRHRL18</td>
-      <td class="time">%T08SCRHRL19</td>
-      <td class="miss">%T08SCRHRL10</td>
-      <td class="bomb">%T08SCRHRL1A</td>
-      <td class="last_spell">%T08SCRHRL1B</td>
-      <td class="human">%T08SCRHRL1E</td>
-      <td class="rate">%T08SCRHRL1G / 44</td>
-     </tr>
-     <tr>
-      <td class="character">魂魄 妖夢</td>
-      <td class="name">%T08SCRHYM11</td>
-      <td class="score">%T08SCRHYM12</td>
-      <td class="stage">%T08SCRHYM13</td>
-      <td class="date">%T08SCRHYM14</td>
-      <td class="slow">%T08SCRHYM15</td>
-      <td class="playtime">%T08SCRHYM16</td>
-      <td class="point">%T08SCRHYM18</td>
-      <td class="time">%T08SCRHYM19</td>
-      <td class="miss">%T08SCRHYM10</td>
-      <td class="bomb">%T08SCRHYM1A</td>
-      <td class="last_spell">%T08SCRHYM1B</td>
-      <td class="human">%T08SCRHYM1E</td>
-      <td class="rate">%T08SCRHYM1G / 44</td>
-     </tr>
-     <tr>
-      <td class="character">西行寺 幽々子</td>
-      <td class="name">%T08SCRHYU11</td>
-      <td class="score">%T08SCRHYU12</td>
-      <td class="stage">%T08SCRHYU13</td>
-      <td class="date">%T08SCRHYU14</td>
-      <td class="slow">%T08SCRHYU15</td>
-      <td class="playtime">%T08SCRHYU16</td>
-      <td class="point">%T08SCRHYU18</td>
-      <td class="time">%T08SCRHYU19</td>
-      <td class="miss">%T08SCRHYU10</td>
-      <td class="bomb">%T08SCRHYU1A</td>
-      <td class="last_spell">%T08SCRHYU1B</td>
-      <td class="human">%T08SCRHYU1E</td>
-      <td class="rate">%T08SCRHYU1G / 44</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="score_per_level">
+     <caption id="Extra">Extra</caption>
+     <thead>
+      <tr>
+       <th class="character">Character</th>
+       <th class="name">Name</th>
+       <th class="score">Score</th>
+       <th class="stage">Stage</th>
+       <th class="date">Date</th>
+       <th class="slow">Slow</th>
+       <th class="playtime">プレイ時間</th>
+       <th class="point">得点アイテム</th>
+       <th class="time">刻符</th>
+       <th class="miss">ミス回数</th>
+       <th class="bomb">ボム回数</th>
+       <th class="last_spell">ラストスペル回数</th>
+       <th class="human">人間率</th>
+       <th class="rate">スペルカード取得率</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="character">霊夢 &amp; 紫</td>
+       <td class="name">%T08SCRXRY11</td>
+       <td class="score">%T08SCRXRY12</td>
+       <td class="stage">%T08SCRXRY13</td>
+       <td class="date">%T08SCRXRY14</td>
+       <td class="slow">%T08SCRXRY15</td>
+       <td class="playtime">%T08SCRXRY16</td>
+       <td class="point">%T08SCRXRY18</td>
+       <td class="time">%T08SCRXRY19</td>
+       <td class="miss">%T08SCRXRY10</td>
+       <td class="bomb">%T08SCRXRY1A</td>
+       <td class="last_spell">%T08SCRXRY1B</td>
+       <td class="human">%T08SCRXRY1E</td>
+       <td class="rate">%T08SCRXRY1G / 14</td>
+      </tr>
+      <tr>
+       <td class="character">魔理沙 &amp; アリス</td>
+       <td class="name">%T08SCRXMA11</td>
+       <td class="score">%T08SCRXMA12</td>
+       <td class="stage">%T08SCRXMA13</td>
+       <td class="date">%T08SCRXMA14</td>
+       <td class="slow">%T08SCRXMA15</td>
+       <td class="playtime">%T08SCRXMA16</td>
+       <td class="point">%T08SCRXMA18</td>
+       <td class="time">%T08SCRXMA19</td>
+       <td class="miss">%T08SCRXMA10</td>
+       <td class="bomb">%T08SCRXMA1A</td>
+       <td class="last_spell">%T08SCRXMA1B</td>
+       <td class="human">%T08SCRXMA1E</td>
+       <td class="rate">%T08SCRXMA1G / 14</td>
+      </tr>
+      <tr>
+       <td class="character">咲夜 &amp; レミリア</td>
+       <td class="name">%T08SCRXSR11</td>
+       <td class="score">%T08SCRXSR12</td>
+       <td class="stage">%T08SCRXSR13</td>
+       <td class="date">%T08SCRXSR14</td>
+       <td class="slow">%T08SCRXSR15</td>
+       <td class="playtime">%T08SCRXSR16</td>
+       <td class="point">%T08SCRXSR18</td>
+       <td class="time">%T08SCRXSR19</td>
+       <td class="miss">%T08SCRXSR10</td>
+       <td class="bomb">%T08SCRXSR1A</td>
+       <td class="last_spell">%T08SCRXSR1B</td>
+       <td class="human">%T08SCRXSR1E</td>
+       <td class="rate">%T08SCRXSR1G / 14</td>
+      </tr>
+      <tr>
+       <td class="character">妖夢 &amp; 幽々子</td>
+       <td class="name">%T08SCRXYY11</td>
+       <td class="score">%T08SCRXYY12</td>
+       <td class="stage">%T08SCRXYY13</td>
+       <td class="date">%T08SCRXYY14</td>
+       <td class="slow">%T08SCRXYY15</td>
+       <td class="playtime">%T08SCRXYY16</td>
+       <td class="point">%T08SCRXYY18</td>
+       <td class="time">%T08SCRXYY19</td>
+       <td class="miss">%T08SCRXYY10</td>
+       <td class="bomb">%T08SCRXYY1A</td>
+       <td class="last_spell">%T08SCRXYY1B</td>
+       <td class="human">%T08SCRXYY1E</td>
+       <td class="rate">%T08SCRXYY1G / 14</td>
+      </tr>
+      <tr>
+       <td class="character">博麗 霊夢</td>
+       <td class="name">%T08SCRXRM11</td>
+       <td class="score">%T08SCRXRM12</td>
+       <td class="stage">%T08SCRXRM13</td>
+       <td class="date">%T08SCRXRM14</td>
+       <td class="slow">%T08SCRXRM15</td>
+       <td class="playtime">%T08SCRXRM16</td>
+       <td class="point">%T08SCRXRM18</td>
+       <td class="time">%T08SCRXRM19</td>
+       <td class="miss">%T08SCRXRM10</td>
+       <td class="bomb">%T08SCRXRM1A</td>
+       <td class="last_spell">%T08SCRXRM1B</td>
+       <td class="human">%T08SCRXRM1E</td>
+       <td class="rate">%T08SCRXRM1G / 14</td>
+      </tr>
+      <tr>
+       <td class="character">八雲 紫</td>
+       <td class="name">%T08SCRXYK11</td>
+       <td class="score">%T08SCRXYK12</td>
+       <td class="stage">%T08SCRXYK13</td>
+       <td class="date">%T08SCRXYK14</td>
+       <td class="slow">%T08SCRXYK15</td>
+       <td class="playtime">%T08SCRXYK16</td>
+       <td class="point">%T08SCRXYK18</td>
+       <td class="time">%T08SCRXYK19</td>
+       <td class="miss">%T08SCRXYK10</td>
+       <td class="bomb">%T08SCRXYK1A</td>
+       <td class="last_spell">%T08SCRXYK1B</td>
+       <td class="human">%T08SCRXYK1E</td>
+       <td class="rate">%T08SCRXYK1G / 14</td>
+      </tr>
+      <tr>
+       <td class="character">霧雨 魔理沙</td>
+       <td class="name">%T08SCRXMR11</td>
+       <td class="score">%T08SCRXMR12</td>
+       <td class="stage">%T08SCRXMR13</td>
+       <td class="date">%T08SCRXMR14</td>
+       <td class="slow">%T08SCRXMR15</td>
+       <td class="playtime">%T08SCRXMR16</td>
+       <td class="point">%T08SCRXMR18</td>
+       <td class="time">%T08SCRXMR19</td>
+       <td class="miss">%T08SCRXMR10</td>
+       <td class="bomb">%T08SCRXMR1A</td>
+       <td class="last_spell">%T08SCRXMR1B</td>
+       <td class="human">%T08SCRXMR1E</td>
+       <td class="rate">%T08SCRXMR1G / 14</td>
+      </tr>
+      <tr>
+       <td class="character">アリス・マーガトロイド</td>
+       <td class="name">%T08SCRXAL11</td>
+       <td class="score">%T08SCRXAL12</td>
+       <td class="stage">%T08SCRXAL13</td>
+       <td class="date">%T08SCRXAL14</td>
+       <td class="slow">%T08SCRXAL15</td>
+       <td class="playtime">%T08SCRXAL16</td>
+       <td class="point">%T08SCRXAL18</td>
+       <td class="time">%T08SCRXAL19</td>
+       <td class="miss">%T08SCRXAL10</td>
+       <td class="bomb">%T08SCRXAL1A</td>
+       <td class="last_spell">%T08SCRXAL1B</td>
+       <td class="human">%T08SCRXAL1E</td>
+       <td class="rate">%T08SCRXAL1G / 14</td>
+      </tr>
+      <tr>
+       <td class="character">十六夜 咲夜</td>
+       <td class="name">%T08SCRXSK11</td>
+       <td class="score">%T08SCRXSK12</td>
+       <td class="stage">%T08SCRXSK13</td>
+       <td class="date">%T08SCRXSK14</td>
+       <td class="slow">%T08SCRXSK15</td>
+       <td class="playtime">%T08SCRXSK16</td>
+       <td class="point">%T08SCRXSK18</td>
+       <td class="time">%T08SCRXSK19</td>
+       <td class="miss">%T08SCRXSK10</td>
+       <td class="bomb">%T08SCRXSK1A</td>
+       <td class="last_spell">%T08SCRXSK1B</td>
+       <td class="human">%T08SCRXSK1E</td>
+       <td class="rate">%T08SCRXSK1G / 14</td>
+      </tr>
+      <tr>
+       <td class="character">レミリア・スカーレット</td>
+       <td class="name">%T08SCRXRL11</td>
+       <td class="score">%T08SCRXRL12</td>
+       <td class="stage">%T08SCRXRL13</td>
+       <td class="date">%T08SCRXRL14</td>
+       <td class="slow">%T08SCRXRL15</td>
+       <td class="playtime">%T08SCRXRL16</td>
+       <td class="point">%T08SCRXRL18</td>
+       <td class="time">%T08SCRXRL19</td>
+       <td class="miss">%T08SCRXRL10</td>
+       <td class="bomb">%T08SCRXRL1A</td>
+       <td class="last_spell">%T08SCRXRL1B</td>
+       <td class="human">%T08SCRXRL1E</td>
+       <td class="rate">%T08SCRXRL1G / 14</td>
+      </tr>
+      <tr>
+       <td class="character">魂魄 妖夢</td>
+       <td class="name">%T08SCRXYM11</td>
+       <td class="score">%T08SCRXYM12</td>
+       <td class="stage">%T08SCRXYM13</td>
+       <td class="date">%T08SCRXYM14</td>
+       <td class="slow">%T08SCRXYM15</td>
+       <td class="playtime">%T08SCRXYM16</td>
+       <td class="point">%T08SCRXYM18</td>
+       <td class="time">%T08SCRXYM19</td>
+       <td class="miss">%T08SCRXYM10</td>
+       <td class="bomb">%T08SCRXYM1A</td>
+       <td class="last_spell">%T08SCRXYM1B</td>
+       <td class="human">%T08SCRXYM1E</td>
+       <td class="rate">%T08SCRXYM1G / 14</td>
+      </tr>
+      <tr>
+       <td class="character">西行寺 幽々子</td>
+       <td class="name">%T08SCRXYU11</td>
+       <td class="score">%T08SCRXYU12</td>
+       <td class="stage">%T08SCRXYU13</td>
+       <td class="date">%T08SCRXYU14</td>
+       <td class="slow">%T08SCRXYU15</td>
+       <td class="playtime">%T08SCRXYU16</td>
+       <td class="point">%T08SCRXYU18</td>
+       <td class="time">%T08SCRXYU19</td>
+       <td class="miss">%T08SCRXYU10</td>
+       <td class="bomb">%T08SCRXYU1A</td>
+       <td class="last_spell">%T08SCRXYU1B</td>
+       <td class="human">%T08SCRXYU1E</td>
+       <td class="rate">%T08SCRXYU1G / 14</td>
+      </tr>
+     </tbody>
+    </table>
+   </section>
 
-   <table class="score_per_level">
-    <caption id="Lunatic">Lunatic</caption>
-    <thead>
-     <tr>
-      <td class="character">Character</td>
-      <td class="name">Name</td>
-      <td class="score">Score</td>
-      <td class="stage">Stage</td>
-      <td class="date">Date</td>
-      <td class="slow">Slow</td>
-      <td class="playtime">プレイ時間</td>
-      <td class="point">得点アイテム</td>
-      <td class="time">刻符</td>
-      <td class="miss">ミス回数</td>
-      <td class="bomb">ボム回数</td>
-      <td class="last_spell">ラストスペル回数</td>
-      <td class="human">人間率</td>
-      <td class="rate">スペルカード取得率</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="character">霊夢 &amp; 紫</td>
-      <td class="name">%T08SCRLRY11</td>
-      <td class="score">%T08SCRLRY12</td>
-      <td class="stage">%T08SCRLRY13</td>
-      <td class="date">%T08SCRLRY14</td>
-      <td class="slow">%T08SCRLRY15</td>
-      <td class="playtime">%T08SCRLRY16</td>
-      <td class="point">%T08SCRLRY18</td>
-      <td class="time">%T08SCRLRY19</td>
-      <td class="miss">%T08SCRLRY10</td>
-      <td class="bomb">%T08SCRLRY1A</td>
-      <td class="last_spell">%T08SCRLRY1B</td>
-      <td class="human">%T08SCRLRY1E</td>
-      <td class="rate">%T08SCRLRY1G / 44</td>
-     </tr>
-     <tr>
-      <td class="character">魔理沙 &amp; アリス</td>
-      <td class="name">%T08SCRLMA11</td>
-      <td class="score">%T08SCRLMA12</td>
-      <td class="stage">%T08SCRLMA13</td>
-      <td class="date">%T08SCRLMA14</td>
-      <td class="slow">%T08SCRLMA15</td>
-      <td class="playtime">%T08SCRLMA16</td>
-      <td class="point">%T08SCRLMA18</td>
-      <td class="time">%T08SCRLMA19</td>
-      <td class="miss">%T08SCRLMA10</td>
-      <td class="bomb">%T08SCRLMA1A</td>
-      <td class="last_spell">%T08SCRLMA1B</td>
-      <td class="human">%T08SCRLMA1E</td>
-      <td class="rate">%T08SCRLMA1G / 44</td>
-     </tr>
-     <tr>
-      <td class="character">咲夜 &amp; レミリア</td>
-      <td class="name">%T08SCRLSR11</td>
-      <td class="score">%T08SCRLSR12</td>
-      <td class="stage">%T08SCRLSR13</td>
-      <td class="date">%T08SCRLSR14</td>
-      <td class="slow">%T08SCRLSR15</td>
-      <td class="playtime">%T08SCRLSR16</td>
-      <td class="point">%T08SCRLSR18</td>
-      <td class="time">%T08SCRLSR19</td>
-      <td class="miss">%T08SCRLSR10</td>
-      <td class="bomb">%T08SCRLSR1A</td>
-      <td class="last_spell">%T08SCRLSR1B</td>
-      <td class="human">%T08SCRLSR1E</td>
-      <td class="rate">%T08SCRLSR1G / 44</td>
-     </tr>
-     <tr>
-      <td class="character">妖夢 &amp; 幽々子</td>
-      <td class="name">%T08SCRLYY11</td>
-      <td class="score">%T08SCRLYY12</td>
-      <td class="stage">%T08SCRLYY13</td>
-      <td class="date">%T08SCRLYY14</td>
-      <td class="slow">%T08SCRLYY15</td>
-      <td class="playtime">%T08SCRLYY16</td>
-      <td class="point">%T08SCRLYY18</td>
-      <td class="time">%T08SCRLYY19</td>
-      <td class="miss">%T08SCRLYY10</td>
-      <td class="bomb">%T08SCRLYY1A</td>
-      <td class="last_spell">%T08SCRLYY1B</td>
-      <td class="human">%T08SCRLYY1E</td>
-      <td class="rate">%T08SCRLYY1G / 44</td>
-     </tr>
-     <tr>
-      <td class="character">博麗 霊夢</td>
-      <td class="name">%T08SCRLRM11</td>
-      <td class="score">%T08SCRLRM12</td>
-      <td class="stage">%T08SCRLRM13</td>
-      <td class="date">%T08SCRLRM14</td>
-      <td class="slow">%T08SCRLRM15</td>
-      <td class="playtime">%T08SCRLRM16</td>
-      <td class="point">%T08SCRLRM18</td>
-      <td class="time">%T08SCRLRM19</td>
-      <td class="miss">%T08SCRLRM10</td>
-      <td class="bomb">%T08SCRLRM1A</td>
-      <td class="last_spell">%T08SCRLRM1B</td>
-      <td class="human">%T08SCRLRM1E</td>
-      <td class="rate">%T08SCRLRM1G / 44</td>
-     </tr>
-     <tr>
-      <td class="character">八雲 紫</td>
-      <td class="name">%T08SCRLYK11</td>
-      <td class="score">%T08SCRLYK12</td>
-      <td class="stage">%T08SCRLYK13</td>
-      <td class="date">%T08SCRLYK14</td>
-      <td class="slow">%T08SCRLYK15</td>
-      <td class="playtime">%T08SCRLYK16</td>
-      <td class="point">%T08SCRLYK18</td>
-      <td class="time">%T08SCRLYK19</td>
-      <td class="miss">%T08SCRLYK10</td>
-      <td class="bomb">%T08SCRLYK1A</td>
-      <td class="last_spell">%T08SCRLYK1B</td>
-      <td class="human">%T08SCRLYK1E</td>
-      <td class="rate">%T08SCRLYK1G / 44</td>
-     </tr>
-     <tr>
-      <td class="character">霧雨 魔理沙</td>
-      <td class="name">%T08SCRLMR11</td>
-      <td class="score">%T08SCRLMR12</td>
-      <td class="stage">%T08SCRLMR13</td>
-      <td class="date">%T08SCRLMR14</td>
-      <td class="slow">%T08SCRLMR15</td>
-      <td class="playtime">%T08SCRLMR16</td>
-      <td class="point">%T08SCRLMR18</td>
-      <td class="time">%T08SCRLMR19</td>
-      <td class="miss">%T08SCRLMR10</td>
-      <td class="bomb">%T08SCRLMR1A</td>
-      <td class="last_spell">%T08SCRLMR1B</td>
-      <td class="human">%T08SCRLMR1E</td>
-      <td class="rate">%T08SCRLMR1G / 44</td>
-     </tr>
-     <tr>
-      <td class="character">アリス・マーガトロイド</td>
-      <td class="name">%T08SCRLAL11</td>
-      <td class="score">%T08SCRLAL12</td>
-      <td class="stage">%T08SCRLAL13</td>
-      <td class="date">%T08SCRLAL14</td>
-      <td class="slow">%T08SCRLAL15</td>
-      <td class="playtime">%T08SCRLAL16</td>
-      <td class="point">%T08SCRLAL18</td>
-      <td class="time">%T08SCRLAL19</td>
-      <td class="miss">%T08SCRLAL10</td>
-      <td class="bomb">%T08SCRLAL1A</td>
-      <td class="last_spell">%T08SCRLAL1B</td>
-      <td class="human">%T08SCRLAL1E</td>
-      <td class="rate">%T08SCRLAL1G / 44</td>
-     </tr>
-     <tr>
-      <td class="character">十六夜 咲夜</td>
-      <td class="name">%T08SCRLSK11</td>
-      <td class="score">%T08SCRLSK12</td>
-      <td class="stage">%T08SCRLSK13</td>
-      <td class="date">%T08SCRLSK14</td>
-      <td class="slow">%T08SCRLSK15</td>
-      <td class="playtime">%T08SCRLSK16</td>
-      <td class="point">%T08SCRLSK18</td>
-      <td class="time">%T08SCRLSK19</td>
-      <td class="miss">%T08SCRLSK10</td>
-      <td class="bomb">%T08SCRLSK1A</td>
-      <td class="last_spell">%T08SCRLSK1B</td>
-      <td class="human">%T08SCRLSK1E</td>
-      <td class="rate">%T08SCRLSK1G / 44</td>
-     </tr>
-     <tr>
-      <td class="character">レミリア・スカーレット</td>
-      <td class="name">%T08SCRLRL11</td>
-      <td class="score">%T08SCRLRL12</td>
-      <td class="stage">%T08SCRLRL13</td>
-      <td class="date">%T08SCRLRL14</td>
-      <td class="slow">%T08SCRLRL15</td>
-      <td class="playtime">%T08SCRLRL16</td>
-      <td class="point">%T08SCRLRL18</td>
-      <td class="time">%T08SCRLRL19</td>
-      <td class="miss">%T08SCRLRL10</td>
-      <td class="bomb">%T08SCRLRL1A</td>
-      <td class="last_spell">%T08SCRLRL1B</td>
-      <td class="human">%T08SCRLRL1E</td>
-      <td class="rate">%T08SCRLRL1G / 44</td>
-     </tr>
-     <tr>
-      <td class="character">魂魄 妖夢</td>
-      <td class="name">%T08SCRLYM11</td>
-      <td class="score">%T08SCRLYM12</td>
-      <td class="stage">%T08SCRLYM13</td>
-      <td class="date">%T08SCRLYM14</td>
-      <td class="slow">%T08SCRLYM15</td>
-      <td class="playtime">%T08SCRLYM16</td>
-      <td class="point">%T08SCRLYM18</td>
-      <td class="time">%T08SCRLYM19</td>
-      <td class="miss">%T08SCRLYM10</td>
-      <td class="bomb">%T08SCRLYM1A</td>
-      <td class="last_spell">%T08SCRLYM1B</td>
-      <td class="human">%T08SCRLYM1E</td>
-      <td class="rate">%T08SCRLYM1G / 44</td>
-     </tr>
-     <tr>
-      <td class="character">西行寺 幽々子</td>
-      <td class="name">%T08SCRLYU11</td>
-      <td class="score">%T08SCRLYU12</td>
-      <td class="stage">%T08SCRLYU13</td>
-      <td class="date">%T08SCRLYU14</td>
-      <td class="slow">%T08SCRLYU15</td>
-      <td class="playtime">%T08SCRLYU16</td>
-      <td class="point">%T08SCRLYU18</td>
-      <td class="time">%T08SCRLYU19</td>
-      <td class="miss">%T08SCRLYU10</td>
-      <td class="bomb">%T08SCRLYU1A</td>
-      <td class="last_spell">%T08SCRLYU1B</td>
-      <td class="human">%T08SCRLYU1E</td>
-      <td class="rate">%T08SCRLYU1G / 44</td>
-     </tr>
-    </tbody>
-   </table>
+   <hr />
 
-   <table class="score_per_level">
-    <caption id="Extra">Extra</caption>
-    <thead>
-     <tr>
-      <td class="character">Character</td>
-      <td class="name">Name</td>
-      <td class="score">Score</td>
-      <td class="stage">Stage</td>
-      <td class="date">Date</td>
-      <td class="slow">Slow</td>
-      <td class="playtime">プレイ時間</td>
-      <td class="point">得点アイテム</td>
-      <td class="time">刻符</td>
-      <td class="miss">ミス回数</td>
-      <td class="bomb">ボム回数</td>
-      <td class="last_spell">ラストスペル回数</td>
-      <td class="human">人間率</td>
-      <td class="rate">スペルカード取得率</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="character">霊夢 &amp; 紫</td>
-      <td class="name">%T08SCRXRY11</td>
-      <td class="score">%T08SCRXRY12</td>
-      <td class="stage">%T08SCRXRY13</td>
-      <td class="date">%T08SCRXRY14</td>
-      <td class="slow">%T08SCRXRY15</td>
-      <td class="playtime">%T08SCRXRY16</td>
-      <td class="point">%T08SCRXRY18</td>
-      <td class="time">%T08SCRXRY19</td>
-      <td class="miss">%T08SCRXRY10</td>
-      <td class="bomb">%T08SCRXRY1A</td>
-      <td class="last_spell">%T08SCRXRY1B</td>
-      <td class="human">%T08SCRXRY1E</td>
-      <td class="rate">%T08SCRXRY1G / 14</td>
-     </tr>
-     <tr>
-      <td class="character">魔理沙 &amp; アリス</td>
-      <td class="name">%T08SCRXMA11</td>
-      <td class="score">%T08SCRXMA12</td>
-      <td class="stage">%T08SCRXMA13</td>
-      <td class="date">%T08SCRXMA14</td>
-      <td class="slow">%T08SCRXMA15</td>
-      <td class="playtime">%T08SCRXMA16</td>
-      <td class="point">%T08SCRXMA18</td>
-      <td class="time">%T08SCRXMA19</td>
-      <td class="miss">%T08SCRXMA10</td>
-      <td class="bomb">%T08SCRXMA1A</td>
-      <td class="last_spell">%T08SCRXMA1B</td>
-      <td class="human">%T08SCRXMA1E</td>
-      <td class="rate">%T08SCRXMA1G / 14</td>
-     </tr>
-     <tr>
-      <td class="character">咲夜 &amp; レミリア</td>
-      <td class="name">%T08SCRXSR11</td>
-      <td class="score">%T08SCRXSR12</td>
-      <td class="stage">%T08SCRXSR13</td>
-      <td class="date">%T08SCRXSR14</td>
-      <td class="slow">%T08SCRXSR15</td>
-      <td class="playtime">%T08SCRXSR16</td>
-      <td class="point">%T08SCRXSR18</td>
-      <td class="time">%T08SCRXSR19</td>
-      <td class="miss">%T08SCRXSR10</td>
-      <td class="bomb">%T08SCRXSR1A</td>
-      <td class="last_spell">%T08SCRXSR1B</td>
-      <td class="human">%T08SCRXSR1E</td>
-      <td class="rate">%T08SCRXSR1G / 14</td>
-     </tr>
-     <tr>
-      <td class="character">妖夢 &amp; 幽々子</td>
-      <td class="name">%T08SCRXYY11</td>
-      <td class="score">%T08SCRXYY12</td>
-      <td class="stage">%T08SCRXYY13</td>
-      <td class="date">%T08SCRXYY14</td>
-      <td class="slow">%T08SCRXYY15</td>
-      <td class="playtime">%T08SCRXYY16</td>
-      <td class="point">%T08SCRXYY18</td>
-      <td class="time">%T08SCRXYY19</td>
-      <td class="miss">%T08SCRXYY10</td>
-      <td class="bomb">%T08SCRXYY1A</td>
-      <td class="last_spell">%T08SCRXYY1B</td>
-      <td class="human">%T08SCRXYY1E</td>
-      <td class="rate">%T08SCRXYY1G / 14</td>
-     </tr>
-     <tr>
-      <td class="character">博麗 霊夢</td>
-      <td class="name">%T08SCRXRM11</td>
-      <td class="score">%T08SCRXRM12</td>
-      <td class="stage">%T08SCRXRM13</td>
-      <td class="date">%T08SCRXRM14</td>
-      <td class="slow">%T08SCRXRM15</td>
-      <td class="playtime">%T08SCRXRM16</td>
-      <td class="point">%T08SCRXRM18</td>
-      <td class="time">%T08SCRXRM19</td>
-      <td class="miss">%T08SCRXRM10</td>
-      <td class="bomb">%T08SCRXRM1A</td>
-      <td class="last_spell">%T08SCRXRM1B</td>
-      <td class="human">%T08SCRXRM1E</td>
-      <td class="rate">%T08SCRXRM1G / 14</td>
-     </tr>
-     <tr>
-      <td class="character">八雲 紫</td>
-      <td class="name">%T08SCRXYK11</td>
-      <td class="score">%T08SCRXYK12</td>
-      <td class="stage">%T08SCRXYK13</td>
-      <td class="date">%T08SCRXYK14</td>
-      <td class="slow">%T08SCRXYK15</td>
-      <td class="playtime">%T08SCRXYK16</td>
-      <td class="point">%T08SCRXYK18</td>
-      <td class="time">%T08SCRXYK19</td>
-      <td class="miss">%T08SCRXYK10</td>
-      <td class="bomb">%T08SCRXYK1A</td>
-      <td class="last_spell">%T08SCRXYK1B</td>
-      <td class="human">%T08SCRXYK1E</td>
-      <td class="rate">%T08SCRXYK1G / 14</td>
-     </tr>
-     <tr>
-      <td class="character">霧雨 魔理沙</td>
-      <td class="name">%T08SCRXMR11</td>
-      <td class="score">%T08SCRXMR12</td>
-      <td class="stage">%T08SCRXMR13</td>
-      <td class="date">%T08SCRXMR14</td>
-      <td class="slow">%T08SCRXMR15</td>
-      <td class="playtime">%T08SCRXMR16</td>
-      <td class="point">%T08SCRXMR18</td>
-      <td class="time">%T08SCRXMR19</td>
-      <td class="miss">%T08SCRXMR10</td>
-      <td class="bomb">%T08SCRXMR1A</td>
-      <td class="last_spell">%T08SCRXMR1B</td>
-      <td class="human">%T08SCRXMR1E</td>
-      <td class="rate">%T08SCRXMR1G / 14</td>
-     </tr>
-     <tr>
-      <td class="character">アリス・マーガトロイド</td>
-      <td class="name">%T08SCRXAL11</td>
-      <td class="score">%T08SCRXAL12</td>
-      <td class="stage">%T08SCRXAL13</td>
-      <td class="date">%T08SCRXAL14</td>
-      <td class="slow">%T08SCRXAL15</td>
-      <td class="playtime">%T08SCRXAL16</td>
-      <td class="point">%T08SCRXAL18</td>
-      <td class="time">%T08SCRXAL19</td>
-      <td class="miss">%T08SCRXAL10</td>
-      <td class="bomb">%T08SCRXAL1A</td>
-      <td class="last_spell">%T08SCRXAL1B</td>
-      <td class="human">%T08SCRXAL1E</td>
-      <td class="rate">%T08SCRXAL1G / 14</td>
-     </tr>
-     <tr>
-      <td class="character">十六夜 咲夜</td>
-      <td class="name">%T08SCRXSK11</td>
-      <td class="score">%T08SCRXSK12</td>
-      <td class="stage">%T08SCRXSK13</td>
-      <td class="date">%T08SCRXSK14</td>
-      <td class="slow">%T08SCRXSK15</td>
-      <td class="playtime">%T08SCRXSK16</td>
-      <td class="point">%T08SCRXSK18</td>
-      <td class="time">%T08SCRXSK19</td>
-      <td class="miss">%T08SCRXSK10</td>
-      <td class="bomb">%T08SCRXSK1A</td>
-      <td class="last_spell">%T08SCRXSK1B</td>
-      <td class="human">%T08SCRXSK1E</td>
-      <td class="rate">%T08SCRXSK1G / 14</td>
-     </tr>
-     <tr>
-      <td class="character">レミリア・スカーレット</td>
-      <td class="name">%T08SCRXRL11</td>
-      <td class="score">%T08SCRXRL12</td>
-      <td class="stage">%T08SCRXRL13</td>
-      <td class="date">%T08SCRXRL14</td>
-      <td class="slow">%T08SCRXRL15</td>
-      <td class="playtime">%T08SCRXRL16</td>
-      <td class="point">%T08SCRXRL18</td>
-      <td class="time">%T08SCRXRL19</td>
-      <td class="miss">%T08SCRXRL10</td>
-      <td class="bomb">%T08SCRXRL1A</td>
-      <td class="last_spell">%T08SCRXRL1B</td>
-      <td class="human">%T08SCRXRL1E</td>
-      <td class="rate">%T08SCRXRL1G / 14</td>
-     </tr>
-     <tr>
-      <td class="character">魂魄 妖夢</td>
-      <td class="name">%T08SCRXYM11</td>
-      <td class="score">%T08SCRXYM12</td>
-      <td class="stage">%T08SCRXYM13</td>
-      <td class="date">%T08SCRXYM14</td>
-      <td class="slow">%T08SCRXYM15</td>
-      <td class="playtime">%T08SCRXYM16</td>
-      <td class="point">%T08SCRXYM18</td>
-      <td class="time">%T08SCRXYM19</td>
-      <td class="miss">%T08SCRXYM10</td>
-      <td class="bomb">%T08SCRXYM1A</td>
-      <td class="last_spell">%T08SCRXYM1B</td>
-      <td class="human">%T08SCRXYM1E</td>
-      <td class="rate">%T08SCRXYM1G / 14</td>
-     </tr>
-     <tr>
-      <td class="character">西行寺 幽々子</td>
-      <td class="name">%T08SCRXYU11</td>
-      <td class="score">%T08SCRXYU12</td>
-      <td class="stage">%T08SCRXYU13</td>
-      <td class="date">%T08SCRXYU14</td>
-      <td class="slow">%T08SCRXYU15</td>
-      <td class="playtime">%T08SCRXYU16</td>
-      <td class="point">%T08SCRXYU18</td>
-      <td class="time">%T08SCRXYU19</td>
-      <td class="miss">%T08SCRXYU10</td>
-      <td class="bomb">%T08SCRXYU1A</td>
-      <td class="last_spell">%T08SCRXYU1B</td>
-      <td class="human">%T08SCRXYU1E</td>
-      <td class="rate">%T08SCRXYU1G / 14</td>
-     </tr>
-    </tbody>
-   </table>
-  </div>
+   <section>
+    <h2 id="Other">その他の状態一覧</h2>
 
-  <hr />
+    <table class="playtime">
+     <tbody>
+      <tr>
+       <th scope="row">総起動時間</th>
+       <td class="playtime">%T08TIMEALL</td>
+      </tr>
+      <tr>
+       <th scope="row">総プレイ時間</th>
+       <td class="playtime">%T08TIMEPLY</td>
+      </tr>
+     </tbody>
+    </table>
 
-  <div class="section">
-   <h2 id="Other">その他の状態一覧</h2>
+    <table class="count">
+     <thead>
+      <tr>
+       <th></th>
+       <th class="character">Character</th>
+       <th class="level">Easy</th>
+       <th class="level">Normal</th>
+       <th class="level">Hard</th>
+       <th class="level">Lunatic</th>
+       <th class="level">Extra</th>
+       <th class="level">Total</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <th scope="row" class="vertical" rowspan="13">プレイ回数</th>
+       <td class="character">霊夢 &amp; 紫</td>
+       <td class="count">%T08PLAYERY</td>
+       <td class="count">%T08PLAYNRY</td>
+       <td class="count">%T08PLAYHRY</td>
+       <td class="count">%T08PLAYLRY</td>
+       <td class="count">%T08PLAYXRY</td>
+       <td class="count">%T08PLAYTRY</td>
+      </tr>
+      <tr>
+       <td class="character">魔理沙 &amp; アリス</td>
+       <td class="count">%T08PLAYEMA</td>
+       <td class="count">%T08PLAYNMA</td>
+       <td class="count">%T08PLAYHMA</td>
+       <td class="count">%T08PLAYLMA</td>
+       <td class="count">%T08PLAYXMA</td>
+       <td class="count">%T08PLAYTMA</td>
+      </tr>
+      <tr>
+       <td class="character">咲夜 &amp; レミリア</td>
+       <td class="count">%T08PLAYESR</td>
+       <td class="count">%T08PLAYNSR</td>
+       <td class="count">%T08PLAYHSR</td>
+       <td class="count">%T08PLAYLSR</td>
+       <td class="count">%T08PLAYXSR</td>
+       <td class="count">%T08PLAYTSR</td>
+      </tr>
+      <tr>
+       <td class="character">妖夢 &amp; 幽々子</td>
+       <td class="count">%T08PLAYEYY</td>
+       <td class="count">%T08PLAYNYY</td>
+       <td class="count">%T08PLAYHYY</td>
+       <td class="count">%T08PLAYLYY</td>
+       <td class="count">%T08PLAYXYY</td>
+       <td class="count">%T08PLAYTYY</td>
+      </tr>
+      <tr>
+       <td class="character">博麗 霊夢</td>
+       <td class="count">%T08PLAYERM</td>
+       <td class="count">%T08PLAYNRM</td>
+       <td class="count">%T08PLAYHRM</td>
+       <td class="count">%T08PLAYLRM</td>
+       <td class="count">%T08PLAYXRM</td>
+       <td class="count">%T08PLAYTRM</td>
+      </tr>
+      <tr>
+       <td class="character">八雲 紫</td>
+       <td class="count">%T08PLAYEYK</td>
+       <td class="count">%T08PLAYNYK</td>
+       <td class="count">%T08PLAYHYK</td>
+       <td class="count">%T08PLAYLYK</td>
+       <td class="count">%T08PLAYXYK</td>
+       <td class="count">%T08PLAYTYK</td>
+      </tr>
+      <tr>
+       <td class="character">霧雨 魔理沙</td>
+       <td class="count">%T08PLAYEMR</td>
+       <td class="count">%T08PLAYNMR</td>
+       <td class="count">%T08PLAYHMR</td>
+       <td class="count">%T08PLAYLMR</td>
+       <td class="count">%T08PLAYXMR</td>
+       <td class="count">%T08PLAYTMR</td>
+      </tr>
+      <tr>
+       <td class="character">アリス・マーガトロイド</td>
+       <td class="count">%T08PLAYEAL</td>
+       <td class="count">%T08PLAYNAL</td>
+       <td class="count">%T08PLAYHAL</td>
+       <td class="count">%T08PLAYLAL</td>
+       <td class="count">%T08PLAYXAL</td>
+       <td class="count">%T08PLAYTAL</td>
+      </tr>
+      <tr>
+       <td class="character">十六夜 咲夜</td>
+       <td class="count">%T08PLAYESK</td>
+       <td class="count">%T08PLAYNSK</td>
+       <td class="count">%T08PLAYHSK</td>
+       <td class="count">%T08PLAYLSK</td>
+       <td class="count">%T08PLAYXSK</td>
+       <td class="count">%T08PLAYTSK</td>
+      </tr>
+      <tr>
+       <td class="character">レミリア・スカーレット</td>
+       <td class="count">%T08PLAYERL</td>
+       <td class="count">%T08PLAYNRL</td>
+       <td class="count">%T08PLAYHRL</td>
+       <td class="count">%T08PLAYLRL</td>
+       <td class="count">%T08PLAYXRL</td>
+       <td class="count">%T08PLAYTRL</td>
+      </tr>
+      <tr>
+       <td class="character">魂魄 妖夢</td>
+       <td class="count">%T08PLAYEYM</td>
+       <td class="count">%T08PLAYNYM</td>
+       <td class="count">%T08PLAYHYM</td>
+       <td class="count">%T08PLAYLYM</td>
+       <td class="count">%T08PLAYXYM</td>
+       <td class="count">%T08PLAYTYM</td>
+      </tr>
+      <tr>
+       <td class="character">西行寺 幽々子</td>
+       <td class="count">%T08PLAYEYU</td>
+       <td class="count">%T08PLAYNYU</td>
+       <td class="count">%T08PLAYHYU</td>
+       <td class="count">%T08PLAYLYU</td>
+       <td class="count">%T08PLAYXYU</td>
+       <td class="count">%T08PLAYTYU</td>
+      </tr>
+      <tr>
+       <td class="character">全主人公合計</td>
+       <td class="count">%T08PLAYETL</td>
+       <td class="count">%T08PLAYNTL</td>
+       <td class="count">%T08PLAYHTL</td>
+       <td class="count">%T08PLAYLTL</td>
+       <td class="count">%T08PLAYXTL</td>
+       <td class="count">%T08PLAYTTL</td>
+      </tr>
 
-   <table class="playtime">
-    <tbody>
-     <tr>
-      <td class="column_head">総起動時間</td>
-      <td class="playtime">%T08TIMEALL</td>
-     </tr>
-     <tr>
-      <td class="column_head">総プレイ時間</td>
-      <td class="playtime">%T08TIMEPLY</td>
-     </tr>
-    </tbody>
-   </table>
+      <tr>
+       <th scope="row" colspan="2">クリア回数</th>
+       <td class="count">%T08PLAYECL</td>
+       <td class="count">%T08PLAYNCL</td>
+       <td class="count">%T08PLAYHCL</td>
+       <td class="count">%T08PLAYLCL</td>
+       <td class="count">%T08PLAYXCL</td>
+       <td class="count">%T08PLAYTCL</td>
+      </tr>
+      <tr>
+       <th scope="row" colspan="2">コンティニュー回数</th>
+       <td class="count">%T08PLAYECN</td>
+       <td class="count">%T08PLAYNCN</td>
+       <td class="count">%T08PLAYHCN</td>
+       <td class="count">%T08PLAYLCN</td>
+       <td class="count">%T08PLAYXCN</td>
+       <td class="count">%T08PLAYTCN</td>
+      </tr>
+      <tr>
+       <th scope="row" colspan="2">プラクティス回数</th>
+       <td class="count">%T08PLAYEPR</td>
+       <td class="count">%T08PLAYNPR</td>
+       <td class="count">%T08PLAYHPR</td>
+       <td class="count">%T08PLAYLPR</td>
+       <td class="count">%T08PLAYXPR</td>
+       <td class="count">%T08PLAYTPR</td>
+      </tr>
+     </tbody>
+    </table>
+   </section>
 
-   <table class="count">
-    <thead>
-     <tr>
-      <td></td>
-      <td class="character">Character</td>
-      <td class="level">Easy</td>
-      <td class="level">Normal</td>
-      <td class="level">Hard</td>
-      <td class="level">Lunatic</td>
-      <td class="level">Extra</td>
-      <td class="level">Total</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="column_head vertical" rowspan="13">プレイ回数</td>
-      <td class="character">霊夢 &amp; 紫</td>
-      <td class="count">%T08PLAYERY</td>
-      <td class="count">%T08PLAYNRY</td>
-      <td class="count">%T08PLAYHRY</td>
-      <td class="count">%T08PLAYLRY</td>
-      <td class="count">%T08PLAYXRY</td>
-      <td class="count">%T08PLAYTRY</td>
-     </tr>
-     <tr>
-      <td class="character">魔理沙 &amp; アリス</td>
-      <td class="count">%T08PLAYEMA</td>
-      <td class="count">%T08PLAYNMA</td>
-      <td class="count">%T08PLAYHMA</td>
-      <td class="count">%T08PLAYLMA</td>
-      <td class="count">%T08PLAYXMA</td>
-      <td class="count">%T08PLAYTMA</td>
-     </tr>
-     <tr>
-      <td class="character">咲夜 &amp; レミリア</td>
-      <td class="count">%T08PLAYESR</td>
-      <td class="count">%T08PLAYNSR</td>
-      <td class="count">%T08PLAYHSR</td>
-      <td class="count">%T08PLAYLSR</td>
-      <td class="count">%T08PLAYXSR</td>
-      <td class="count">%T08PLAYTSR</td>
-     </tr>
-     <tr>
-      <td class="character">妖夢 &amp; 幽々子</td>
-      <td class="count">%T08PLAYEYY</td>
-      <td class="count">%T08PLAYNYY</td>
-      <td class="count">%T08PLAYHYY</td>
-      <td class="count">%T08PLAYLYY</td>
-      <td class="count">%T08PLAYXYY</td>
-      <td class="count">%T08PLAYTYY</td>
-     </tr>
-     <tr>
-      <td class="character">博麗 霊夢</td>
-      <td class="count">%T08PLAYERM</td>
-      <td class="count">%T08PLAYNRM</td>
-      <td class="count">%T08PLAYHRM</td>
-      <td class="count">%T08PLAYLRM</td>
-      <td class="count">%T08PLAYXRM</td>
-      <td class="count">%T08PLAYTRM</td>
-     </tr>
-     <tr>
-      <td class="character">八雲 紫</td>
-      <td class="count">%T08PLAYEYK</td>
-      <td class="count">%T08PLAYNYK</td>
-      <td class="count">%T08PLAYHYK</td>
-      <td class="count">%T08PLAYLYK</td>
-      <td class="count">%T08PLAYXYK</td>
-      <td class="count">%T08PLAYTYK</td>
-     </tr>
-     <tr>
-      <td class="character">霧雨 魔理沙</td>
-      <td class="count">%T08PLAYEMR</td>
-      <td class="count">%T08PLAYNMR</td>
-      <td class="count">%T08PLAYHMR</td>
-      <td class="count">%T08PLAYLMR</td>
-      <td class="count">%T08PLAYXMR</td>
-      <td class="count">%T08PLAYTMR</td>
-     </tr>
-     <tr>
-      <td class="character">アリス・マーガトロイド</td>
-      <td class="count">%T08PLAYEAL</td>
-      <td class="count">%T08PLAYNAL</td>
-      <td class="count">%T08PLAYHAL</td>
-      <td class="count">%T08PLAYLAL</td>
-      <td class="count">%T08PLAYXAL</td>
-      <td class="count">%T08PLAYTAL</td>
-     </tr>
-     <tr>
-      <td class="character">十六夜 咲夜</td>
-      <td class="count">%T08PLAYESK</td>
-      <td class="count">%T08PLAYNSK</td>
-      <td class="count">%T08PLAYHSK</td>
-      <td class="count">%T08PLAYLSK</td>
-      <td class="count">%T08PLAYXSK</td>
-      <td class="count">%T08PLAYTSK</td>
-     </tr>
-     <tr>
-      <td class="character">レミリア・スカーレット</td>
-      <td class="count">%T08PLAYERL</td>
-      <td class="count">%T08PLAYNRL</td>
-      <td class="count">%T08PLAYHRL</td>
-      <td class="count">%T08PLAYLRL</td>
-      <td class="count">%T08PLAYXRL</td>
-      <td class="count">%T08PLAYTRL</td>
-     </tr>
-     <tr>
-      <td class="character">魂魄 妖夢</td>
-      <td class="count">%T08PLAYEYM</td>
-      <td class="count">%T08PLAYNYM</td>
-      <td class="count">%T08PLAYHYM</td>
-      <td class="count">%T08PLAYLYM</td>
-      <td class="count">%T08PLAYXYM</td>
-      <td class="count">%T08PLAYTYM</td>
-     </tr>
-     <tr>
-      <td class="character">西行寺 幽々子</td>
-      <td class="count">%T08PLAYEYU</td>
-      <td class="count">%T08PLAYNYU</td>
-      <td class="count">%T08PLAYHYU</td>
-      <td class="count">%T08PLAYLYU</td>
-      <td class="count">%T08PLAYXYU</td>
-      <td class="count">%T08PLAYTYU</td>
-     </tr>
-     <tr>
-      <td class="character">全主人公合計</td>
-      <td class="count">%T08PLAYETL</td>
-      <td class="count">%T08PLAYNTL</td>
-      <td class="count">%T08PLAYHTL</td>
-      <td class="count">%T08PLAYLTL</td>
-      <td class="count">%T08PLAYXTL</td>
-      <td class="count">%T08PLAYTTL</td>
-     </tr>
+   <hr />
 
-     <tr>
-      <td class="column_head" colspan="2">クリア回数</td>
-      <td class="count">%T08PLAYECL</td>
-      <td class="count">%T08PLAYNCL</td>
-      <td class="count">%T08PLAYHCL</td>
-      <td class="count">%T08PLAYLCL</td>
-      <td class="count">%T08PLAYXCL</td>
-      <td class="count">%T08PLAYTCL</td>
-     </tr>
-     <tr>
-      <td class="column_head" colspan="2">コンティニュー回数</td>
-      <td class="count">%T08PLAYECN</td>
-      <td class="count">%T08PLAYNCN</td>
-      <td class="count">%T08PLAYHCN</td>
-      <td class="count">%T08PLAYLCN</td>
-      <td class="count">%T08PLAYXCN</td>
-      <td class="count">%T08PLAYTCN</td>
-     </tr>
-     <tr>
-      <td class="column_head" colspan="2">プラクティス回数</td>
-      <td class="count">%T08PLAYEPR</td>
-      <td class="count">%T08PLAYNPR</td>
-      <td class="count">%T08PLAYHPR</td>
-      <td class="count">%T08PLAYLPR</td>
-      <td class="count">%T08PLAYXPR</td>
-      <td class="count">%T08PLAYTPR</td>
-     </tr>
-    </tbody>
-   </table>
-  </div>
+   <section>
+    <h2 id="Clear">クリア達成度</h2>
 
-  <hr />
+    <table class="clear">
+     <thead>
+      <tr>
+       <th class="character">Character</th>
+       <th class="level">Easy</th>
+       <th class="level">Normal</th>
+       <th class="level">Hard</th>
+       <th class="level">Lunatic</th>
+       <th class="level">Extra</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="character">霊夢 &amp; 紫</td>
+       <td class="stage">%T08CLEARERY</td>
+       <td class="stage">%T08CLEARNRY</td>
+       <td class="stage">%T08CLEARHRY</td>
+       <td class="stage">%T08CLEARLRY</td>
+       <td class="stage">%T08CLEARXRY</td>
+      </tr>
+      <tr>
+       <td class="character">魔理沙 &amp; アリス</td>
+       <td class="stage">%T08CLEAREMA</td>
+       <td class="stage">%T08CLEARNMA</td>
+       <td class="stage">%T08CLEARHMA</td>
+       <td class="stage">%T08CLEARLMA</td>
+       <td class="stage">%T08CLEARXMA</td>
+      </tr>
+      <tr>
+       <td class="character">咲夜 &amp; レミリア</td>
+       <td class="stage">%T08CLEARESR</td>
+       <td class="stage">%T08CLEARNSR</td>
+       <td class="stage">%T08CLEARHSR</td>
+       <td class="stage">%T08CLEARLSR</td>
+       <td class="stage">%T08CLEARXSR</td>
+      </tr>
+      <tr>
+       <td class="character">妖夢 &amp; 幽々子</td>
+       <td class="stage">%T08CLEAREYY</td>
+       <td class="stage">%T08CLEARNYY</td>
+       <td class="stage">%T08CLEARHYY</td>
+       <td class="stage">%T08CLEARLYY</td>
+       <td class="stage">%T08CLEARXYY</td>
+      </tr>
+      <tr>
+       <td class="character">博麗 霊夢</td>
+       <td class="stage">%T08CLEARERM</td>
+       <td class="stage">%T08CLEARNRM</td>
+       <td class="stage">%T08CLEARHRM</td>
+       <td class="stage">%T08CLEARLRM</td>
+       <td class="stage">%T08CLEARXRM</td>
+      </tr>
+      <tr>
+       <td class="character">八雲 紫</td>
+       <td class="stage">%T08CLEAREYK</td>
+       <td class="stage">%T08CLEARNYK</td>
+       <td class="stage">%T08CLEARHYK</td>
+       <td class="stage">%T08CLEARLYK</td>
+       <td class="stage">%T08CLEARXYK</td>
+      </tr>
+      <tr>
+       <td class="character">霧雨 魔理沙</td>
+       <td class="stage">%T08CLEAREMR</td>
+       <td class="stage">%T08CLEARNMR</td>
+       <td class="stage">%T08CLEARHMR</td>
+       <td class="stage">%T08CLEARLMR</td>
+       <td class="stage">%T08CLEARXMR</td>
+      </tr>
+      <tr>
+       <td class="character">アリス・マーガトロイド</td>
+       <td class="stage">%T08CLEAREAL</td>
+       <td class="stage">%T08CLEARNAL</td>
+       <td class="stage">%T08CLEARHAL</td>
+       <td class="stage">%T08CLEARLAL</td>
+       <td class="stage">%T08CLEARXAL</td>
+      </tr>
+      <tr>
+       <td class="character">十六夜 咲夜</td>
+       <td class="stage">%T08CLEARESK</td>
+       <td class="stage">%T08CLEARNSK</td>
+       <td class="stage">%T08CLEARHSK</td>
+       <td class="stage">%T08CLEARLSK</td>
+       <td class="stage">%T08CLEARXSK</td>
+      </tr>
+      <tr>
+       <td class="character">レミリア・スカーレット</td>
+       <td class="stage">%T08CLEARERL</td>
+       <td class="stage">%T08CLEARNRL</td>
+       <td class="stage">%T08CLEARHRL</td>
+       <td class="stage">%T08CLEARLRL</td>
+       <td class="stage">%T08CLEARXRL</td>
+      </tr>
+      <tr>
+       <td class="character">魂魄 妖夢</td>
+       <td class="stage">%T08CLEAREYM</td>
+       <td class="stage">%T08CLEARNYM</td>
+       <td class="stage">%T08CLEARHYM</td>
+       <td class="stage">%T08CLEARLYM</td>
+       <td class="stage">%T08CLEARXYM</td>
+      </tr>
+      <tr>
+       <td class="character">西行寺 幽々子</td>
+       <td class="stage">%T08CLEAREYU</td>
+       <td class="stage">%T08CLEARNYU</td>
+       <td class="stage">%T08CLEARHYU</td>
+       <td class="stage">%T08CLEARLYU</td>
+       <td class="stage">%T08CLEARXYU</td>
+      </tr>
+     </tbody>
+    </table>
+   </section>
 
-  <div class="section">
-   <h2 id="Clear">クリア達成度</h2>
+  </main>
 
-   <table class="clear">
-    <thead>
-     <tr>
-      <td class="character">Character</td>
-      <td class="level">Easy</td>
-      <td class="level">Normal</td>
-      <td class="level">Hard</td>
-      <td class="level">Lunatic</td>
-      <td class="level">Extra</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="character">霊夢 &amp; 紫</td>
-      <td class="stage">%T08CLEARERY</td>
-      <td class="stage">%T08CLEARNRY</td>
-      <td class="stage">%T08CLEARHRY</td>
-      <td class="stage">%T08CLEARLRY</td>
-      <td class="stage">%T08CLEARXRY</td>
-     </tr>
-     <tr>
-      <td class="character">魔理沙 &amp; アリス</td>
-      <td class="stage">%T08CLEAREMA</td>
-      <td class="stage">%T08CLEARNMA</td>
-      <td class="stage">%T08CLEARHMA</td>
-      <td class="stage">%T08CLEARLMA</td>
-      <td class="stage">%T08CLEARXMA</td>
-     </tr>
-     <tr>
-      <td class="character">咲夜 &amp; レミリア</td>
-      <td class="stage">%T08CLEARESR</td>
-      <td class="stage">%T08CLEARNSR</td>
-      <td class="stage">%T08CLEARHSR</td>
-      <td class="stage">%T08CLEARLSR</td>
-      <td class="stage">%T08CLEARXSR</td>
-     </tr>
-     <tr>
-      <td class="character">妖夢 &amp; 幽々子</td>
-      <td class="stage">%T08CLEAREYY</td>
-      <td class="stage">%T08CLEARNYY</td>
-      <td class="stage">%T08CLEARHYY</td>
-      <td class="stage">%T08CLEARLYY</td>
-      <td class="stage">%T08CLEARXYY</td>
-     </tr>
-     <tr>
-      <td class="character">博麗 霊夢</td>
-      <td class="stage">%T08CLEARERM</td>
-      <td class="stage">%T08CLEARNRM</td>
-      <td class="stage">%T08CLEARHRM</td>
-      <td class="stage">%T08CLEARLRM</td>
-      <td class="stage">%T08CLEARXRM</td>
-     </tr>
-     <tr>
-      <td class="character">八雲 紫</td>
-      <td class="stage">%T08CLEAREYK</td>
-      <td class="stage">%T08CLEARNYK</td>
-      <td class="stage">%T08CLEARHYK</td>
-      <td class="stage">%T08CLEARLYK</td>
-      <td class="stage">%T08CLEARXYK</td>
-     </tr>
-     <tr>
-      <td class="character">霧雨 魔理沙</td>
-      <td class="stage">%T08CLEAREMR</td>
-      <td class="stage">%T08CLEARNMR</td>
-      <td class="stage">%T08CLEARHMR</td>
-      <td class="stage">%T08CLEARLMR</td>
-      <td class="stage">%T08CLEARXMR</td>
-     </tr>
-     <tr>
-      <td class="character">アリス・マーガトロイド</td>
-      <td class="stage">%T08CLEAREAL</td>
-      <td class="stage">%T08CLEARNAL</td>
-      <td class="stage">%T08CLEARHAL</td>
-      <td class="stage">%T08CLEARLAL</td>
-      <td class="stage">%T08CLEARXAL</td>
-     </tr>
-     <tr>
-      <td class="character">十六夜 咲夜</td>
-      <td class="stage">%T08CLEARESK</td>
-      <td class="stage">%T08CLEARNSK</td>
-      <td class="stage">%T08CLEARHSK</td>
-      <td class="stage">%T08CLEARLSK</td>
-      <td class="stage">%T08CLEARXSK</td>
-     </tr>
-     <tr>
-      <td class="character">レミリア・スカーレット</td>
-      <td class="stage">%T08CLEARERL</td>
-      <td class="stage">%T08CLEARNRL</td>
-      <td class="stage">%T08CLEARHRL</td>
-      <td class="stage">%T08CLEARLRL</td>
-      <td class="stage">%T08CLEARXRL</td>
-     </tr>
-     <tr>
-      <td class="character">魂魄 妖夢</td>
-      <td class="stage">%T08CLEAREYM</td>
-      <td class="stage">%T08CLEARNYM</td>
-      <td class="stage">%T08CLEARHYM</td>
-      <td class="stage">%T08CLEARLYM</td>
-      <td class="stage">%T08CLEARXYM</td>
-     </tr>
-     <tr>
-      <td class="character">西行寺 幽々子</td>
-      <td class="stage">%T08CLEAREYU</td>
-      <td class="stage">%T08CLEARNYU</td>
-      <td class="stage">%T08CLEARHYU</td>
-      <td class="stage">%T08CLEARLYU</td>
-      <td class="stage">%T08CLEARXYU</td>
-     </tr>
-    </tbody>
-   </table>
-  </div>
-
-  <hr />
-
-  <div class="section">
+  <footer>
    <p>
     Data output by <a href="https://www.colorless-sight.jp/thsfc/">ThScoreFileConverter</a>.
-<script type="text/javascript">
-<!--
+<script>
+// <![CDATA[
     document.write("Last updated: ", document.lastModified, ".");
-//-->
+// ]]>
 </script>
    </p>
-  </div>
+  </footer>
 
  </body>
 </html>

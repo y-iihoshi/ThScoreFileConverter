@@ -1,1109 +1,1109 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
  <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta http-equiv="Content-Script-Type" content="text/javascript" />
-  <title>東方妖々夢スコアデータ</title>
-  <link rel="stylesheet" type="text/css" href="style.css" />
-<style type="text/css">
-<!--
+  <meta charset="UTF-8" />
+  <title>東方妖々夢 スコアデータ</title>
+  <link rel="stylesheet" href="style.css" />
+<style>
+/* <![CDATA[ */
     td.score { min-width: 70px; }
     td.stage { min-width: 70px; }
     table.practice { float: left; }
     table.practice td.count { min-width: 70px; }
--->
+/* ]]> */
 </style>
  </head>
 
  <body>
-  <h1>東方妖々夢スコアデータ</h1>
 
-  <hr />
+  <header>
+   <h1>東方妖々夢 スコアデータ</h1>
+   <hr />
+   <nav>
+    <ul>
+     <li><a href="th07score1.html">スコアデータ全般</a></li>
+     <li><a href="th07score2.html">個別ランキング</a></li>
+     <li>プラクティス</li>
+     <li><a href="th07card.html">御札戦歴</a></li>
+    </ul>
+    <ul>
+     <li><a href="#Easy">Easy</a></li>
+     <li><a href="#Normal">Normal</a></li>
+     <li><a href="#Hard">Hard</a></li>
+     <li><a href="#Lunatic">Lunatic</a></li>
+    </ul>
+   </nav>
+  </header>
 
-  <div class="section">
-   <p>
-    <a href="th07score1.html">スコアデータ全般</a> /
-    <a href="th07score2.html">個別ランキング</a> /
-    プラクティス /
-    <a href="th07card.html">御札戦歴</a><br />
-    <a href="#Easy">Easy</a> /
-    <a href="#Normal">Normal</a> /
-    <a href="#Hard">Hard</a> /
-    <a href="#Lunatic">Lunatic</a>
-   </p>
-  </div>
+  <main>
 
-  <hr />
+   <section>
+    <h2 id="Easy">Easy</h2>
 
-  <div class="section">
-   <h2 id="Easy">Easy</h2>
+    <table class="practice">
+     <caption>博麗 霊夢（霊）</caption>
+     <thead>
+      <tr>
+       <th class="stage">Stage</th>
+       <th class="score">Score</th>
+       <th class="count">プレイ回数</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="stage">Stage 1</td>
+       <td class="score">%T07PRACERA11</td>
+       <td class="count">%T07PRACERA12</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 2</td>
+       <td class="score">%T07PRACERA21</td>
+       <td class="count">%T07PRACERA22</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 3</td>
+       <td class="score">%T07PRACERA31</td>
+       <td class="count">%T07PRACERA32</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 4</td>
+       <td class="score">%T07PRACERA41</td>
+       <td class="count">%T07PRACERA42</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 5</td>
+       <td class="score">%T07PRACERA51</td>
+       <td class="count">%T07PRACERA52</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 6</td>
+       <td class="score">%T07PRACERA61</td>
+       <td class="count">%T07PRACERA62</td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="practice">
-    <caption>博麗 霊夢（霊）</caption>
-    <thead>
-     <tr>
-      <td class="stage">Stage</td>
-      <td class="score">Score</td>
-      <td class="count">プレイ回数</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="stage">Stage 1</td>
-      <td class="score">%T07PRACERA11</td>
-      <td class="count">%T07PRACERA12</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 2</td>
-      <td class="score">%T07PRACERA21</td>
-      <td class="count">%T07PRACERA22</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 3</td>
-      <td class="score">%T07PRACERA31</td>
-      <td class="count">%T07PRACERA32</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 4</td>
-      <td class="score">%T07PRACERA41</td>
-      <td class="count">%T07PRACERA42</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 5</td>
-      <td class="score">%T07PRACERA51</td>
-      <td class="count">%T07PRACERA52</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 6</td>
-      <td class="score">%T07PRACERA61</td>
-      <td class="count">%T07PRACERA62</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="practice">
+     <caption>博麗 霊夢（夢）</caption>
+     <thead>
+      <tr>
+       <th class="stage">Stage</th>
+       <th class="score">Score</th>
+       <th class="count">プレイ回数</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="stage">Stage 1</td>
+       <td class="score">%T07PRACERB11</td>
+       <td class="count">%T07PRACERB12</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 2</td>
+       <td class="score">%T07PRACERB21</td>
+       <td class="count">%T07PRACERB22</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 3</td>
+       <td class="score">%T07PRACERB31</td>
+       <td class="count">%T07PRACERB32</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 4</td>
+       <td class="score">%T07PRACERB41</td>
+       <td class="count">%T07PRACERB42</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 5</td>
+       <td class="score">%T07PRACERB51</td>
+       <td class="count">%T07PRACERB52</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 6</td>
+       <td class="score">%T07PRACERB61</td>
+       <td class="count">%T07PRACERB62</td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="practice">
-    <caption>博麗 霊夢（夢）</caption>
-    <thead>
-     <tr>
-      <td class="stage">Stage</td>
-      <td class="score">Score</td>
-      <td class="count">プレイ回数</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="stage">Stage 1</td>
-      <td class="score">%T07PRACERB11</td>
-      <td class="count">%T07PRACERB12</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 2</td>
-      <td class="score">%T07PRACERB21</td>
-      <td class="count">%T07PRACERB22</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 3</td>
-      <td class="score">%T07PRACERB31</td>
-      <td class="count">%T07PRACERB32</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 4</td>
-      <td class="score">%T07PRACERB41</td>
-      <td class="count">%T07PRACERB42</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 5</td>
-      <td class="score">%T07PRACERB51</td>
-      <td class="count">%T07PRACERB52</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 6</td>
-      <td class="score">%T07PRACERB61</td>
-      <td class="count">%T07PRACERB62</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="practice">
+     <caption>霧雨 魔理沙（魔）</caption>
+     <thead>
+      <tr>
+       <th class="stage">Stage</th>
+       <th class="score">Score</th>
+       <th class="count">プレイ回数</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="stage">Stage 1</td>
+       <td class="score">%T07PRACEMA11</td>
+       <td class="count">%T07PRACEMA12</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 2</td>
+       <td class="score">%T07PRACEMA21</td>
+       <td class="count">%T07PRACEMA22</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 3</td>
+       <td class="score">%T07PRACEMA31</td>
+       <td class="count">%T07PRACEMA32</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 4</td>
+       <td class="score">%T07PRACEMA41</td>
+       <td class="count">%T07PRACEMA42</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 5</td>
+       <td class="score">%T07PRACEMA51</td>
+       <td class="count">%T07PRACEMA52</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 6</td>
+       <td class="score">%T07PRACEMA61</td>
+       <td class="count">%T07PRACEMA62</td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="practice">
-    <caption>霧雨 魔理沙（魔）</caption>
-    <thead>
-     <tr>
-      <td class="stage">Stage</td>
-      <td class="score">Score</td>
-      <td class="count">プレイ回数</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="stage">Stage 1</td>
-      <td class="score">%T07PRACEMA11</td>
-      <td class="count">%T07PRACEMA12</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 2</td>
-      <td class="score">%T07PRACEMA21</td>
-      <td class="count">%T07PRACEMA22</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 3</td>
-      <td class="score">%T07PRACEMA31</td>
-      <td class="count">%T07PRACEMA32</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 4</td>
-      <td class="score">%T07PRACEMA41</td>
-      <td class="count">%T07PRACEMA42</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 5</td>
-      <td class="score">%T07PRACEMA51</td>
-      <td class="count">%T07PRACEMA52</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 6</td>
-      <td class="score">%T07PRACEMA61</td>
-      <td class="count">%T07PRACEMA62</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="practice">
+     <caption>霧雨 魔理沙（恋）</caption>
+     <thead>
+      <tr>
+       <th class="stage">Stage</th>
+       <th class="score">Score</th>
+       <th class="count">プレイ回数</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="stage">Stage 1</td>
+       <td class="score">%T07PRACEMB11</td>
+       <td class="count">%T07PRACEMB12</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 2</td>
+       <td class="score">%T07PRACEMB21</td>
+       <td class="count">%T07PRACEMB22</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 3</td>
+       <td class="score">%T07PRACEMB31</td>
+       <td class="count">%T07PRACEMB32</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 4</td>
+       <td class="score">%T07PRACEMB41</td>
+       <td class="count">%T07PRACEMB42</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 5</td>
+       <td class="score">%T07PRACEMB51</td>
+       <td class="count">%T07PRACEMB52</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 6</td>
+       <td class="score">%T07PRACEMB61</td>
+       <td class="count">%T07PRACEMB62</td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="practice">
-    <caption>霧雨 魔理沙（恋）</caption>
-    <thead>
-     <tr>
-      <td class="stage">Stage</td>
-      <td class="score">Score</td>
-      <td class="count">プレイ回数</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="stage">Stage 1</td>
-      <td class="score">%T07PRACEMB11</td>
-      <td class="count">%T07PRACEMB12</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 2</td>
-      <td class="score">%T07PRACEMB21</td>
-      <td class="count">%T07PRACEMB22</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 3</td>
-      <td class="score">%T07PRACEMB31</td>
-      <td class="count">%T07PRACEMB32</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 4</td>
-      <td class="score">%T07PRACEMB41</td>
-      <td class="count">%T07PRACEMB42</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 5</td>
-      <td class="score">%T07PRACEMB51</td>
-      <td class="count">%T07PRACEMB52</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 6</td>
-      <td class="score">%T07PRACEMB61</td>
-      <td class="count">%T07PRACEMB62</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="practice">
+     <caption>十六夜 咲夜（幻）</caption>
+     <thead>
+      <tr>
+       <th class="stage">Stage</th>
+       <th class="score">Score</th>
+       <th class="count">プレイ回数</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="stage">Stage 1</td>
+       <td class="score">%T07PRACESA11</td>
+       <td class="count">%T07PRACESA12</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 2</td>
+       <td class="score">%T07PRACESA21</td>
+       <td class="count">%T07PRACESA22</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 3</td>
+       <td class="score">%T07PRACESA31</td>
+       <td class="count">%T07PRACESA32</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 4</td>
+       <td class="score">%T07PRACESA41</td>
+       <td class="count">%T07PRACESA42</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 5</td>
+       <td class="score">%T07PRACESA51</td>
+       <td class="count">%T07PRACESA52</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 6</td>
+       <td class="score">%T07PRACESA61</td>
+       <td class="count">%T07PRACESA62</td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="practice">
-    <caption>十六夜 咲夜（幻）</caption>
-    <thead>
-     <tr>
-      <td class="stage">Stage</td>
-      <td class="score">Score</td>
-      <td class="count">プレイ回数</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="stage">Stage 1</td>
-      <td class="score">%T07PRACESA11</td>
-      <td class="count">%T07PRACESA12</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 2</td>
-      <td class="score">%T07PRACESA21</td>
-      <td class="count">%T07PRACESA22</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 3</td>
-      <td class="score">%T07PRACESA31</td>
-      <td class="count">%T07PRACESA32</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 4</td>
-      <td class="score">%T07PRACESA41</td>
-      <td class="count">%T07PRACESA42</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 5</td>
-      <td class="score">%T07PRACESA51</td>
-      <td class="count">%T07PRACESA52</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 6</td>
-      <td class="score">%T07PRACESA61</td>
-      <td class="count">%T07PRACESA62</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="practice">
+     <caption>十六夜 咲夜（時）</caption>
+     <thead>
+      <tr>
+       <th class="stage">Stage</th>
+       <th class="score">Score</th>
+       <th class="count">プレイ回数</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="stage">Stage 1</td>
+       <td class="score">%T07PRACESB11</td>
+       <td class="count">%T07PRACESB12</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 2</td>
+       <td class="score">%T07PRACESB21</td>
+       <td class="count">%T07PRACESB22</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 3</td>
+       <td class="score">%T07PRACESB31</td>
+       <td class="count">%T07PRACESB32</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 4</td>
+       <td class="score">%T07PRACESB41</td>
+       <td class="count">%T07PRACESB42</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 5</td>
+       <td class="score">%T07PRACESB51</td>
+       <td class="count">%T07PRACESB52</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 6</td>
+       <td class="score">%T07PRACESB61</td>
+       <td class="count">%T07PRACESB62</td>
+      </tr>
+     </tbody>
+    </table>
+   </section>
 
-   <table class="practice">
-    <caption>十六夜 咲夜（時）</caption>
-    <thead>
-     <tr>
-      <td class="stage">Stage</td>
-      <td class="score">Score</td>
-      <td class="count">プレイ回数</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="stage">Stage 1</td>
-      <td class="score">%T07PRACESB11</td>
-      <td class="count">%T07PRACESB12</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 2</td>
-      <td class="score">%T07PRACESB21</td>
-      <td class="count">%T07PRACESB22</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 3</td>
-      <td class="score">%T07PRACESB31</td>
-      <td class="count">%T07PRACESB32</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 4</td>
-      <td class="score">%T07PRACESB41</td>
-      <td class="count">%T07PRACESB42</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 5</td>
-      <td class="score">%T07PRACESB51</td>
-      <td class="count">%T07PRACESB52</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 6</td>
-      <td class="score">%T07PRACESB61</td>
-      <td class="count">%T07PRACESB62</td>
-     </tr>
-    </tbody>
-   </table>
-  </div>
+   <hr />
 
-  <hr />
+   <section>
+    <h2 id="Normal">Normal</h2>
 
-  <div class="section">
-   <h2 id="Normal">Normal</h2>
+    <table class="practice">
+     <caption>博麗 霊夢（霊）</caption>
+     <thead>
+      <tr>
+       <th class="stage">Stage</th>
+       <th class="score">Score</th>
+       <th class="count">プレイ回数</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="stage">Stage 1</td>
+       <td class="score">%T07PRACNRA11</td>
+       <td class="count">%T07PRACNRA12</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 2</td>
+       <td class="score">%T07PRACNRA21</td>
+       <td class="count">%T07PRACNRA22</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 3</td>
+       <td class="score">%T07PRACNRA31</td>
+       <td class="count">%T07PRACNRA32</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 4</td>
+       <td class="score">%T07PRACNRA41</td>
+       <td class="count">%T07PRACNRA42</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 5</td>
+       <td class="score">%T07PRACNRA51</td>
+       <td class="count">%T07PRACNRA52</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 6</td>
+       <td class="score">%T07PRACNRA61</td>
+       <td class="count">%T07PRACNRA62</td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="practice">
-    <caption>博麗 霊夢（霊）</caption>
-    <thead>
-     <tr>
-      <td class="stage">Stage</td>
-      <td class="score">Score</td>
-      <td class="count">プレイ回数</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="stage">Stage 1</td>
-      <td class="score">%T07PRACNRA11</td>
-      <td class="count">%T07PRACNRA12</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 2</td>
-      <td class="score">%T07PRACNRA21</td>
-      <td class="count">%T07PRACNRA22</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 3</td>
-      <td class="score">%T07PRACNRA31</td>
-      <td class="count">%T07PRACNRA32</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 4</td>
-      <td class="score">%T07PRACNRA41</td>
-      <td class="count">%T07PRACNRA42</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 5</td>
-      <td class="score">%T07PRACNRA51</td>
-      <td class="count">%T07PRACNRA52</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 6</td>
-      <td class="score">%T07PRACNRA61</td>
-      <td class="count">%T07PRACNRA62</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="practice">
+     <caption>博麗 霊夢（夢）</caption>
+     <thead>
+      <tr>
+       <th class="stage">Stage</th>
+       <th class="score">Score</th>
+       <th class="count">プレイ回数</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="stage">Stage 1</td>
+       <td class="score">%T07PRACNRB11</td>
+       <td class="count">%T07PRACNRB12</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 2</td>
+       <td class="score">%T07PRACNRB21</td>
+       <td class="count">%T07PRACNRB22</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 3</td>
+       <td class="score">%T07PRACNRB31</td>
+       <td class="count">%T07PRACNRB32</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 4</td>
+       <td class="score">%T07PRACNRB41</td>
+       <td class="count">%T07PRACNRB42</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 5</td>
+       <td class="score">%T07PRACNRB51</td>
+       <td class="count">%T07PRACNRB52</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 6</td>
+       <td class="score">%T07PRACNRB61</td>
+       <td class="count">%T07PRACNRB62</td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="practice">
-    <caption>博麗 霊夢（夢）</caption>
-    <thead>
-     <tr>
-      <td class="stage">Stage</td>
-      <td class="score">Score</td>
-      <td class="count">プレイ回数</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="stage">Stage 1</td>
-      <td class="score">%T07PRACNRB11</td>
-      <td class="count">%T07PRACNRB12</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 2</td>
-      <td class="score">%T07PRACNRB21</td>
-      <td class="count">%T07PRACNRB22</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 3</td>
-      <td class="score">%T07PRACNRB31</td>
-      <td class="count">%T07PRACNRB32</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 4</td>
-      <td class="score">%T07PRACNRB41</td>
-      <td class="count">%T07PRACNRB42</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 5</td>
-      <td class="score">%T07PRACNRB51</td>
-      <td class="count">%T07PRACNRB52</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 6</td>
-      <td class="score">%T07PRACNRB61</td>
-      <td class="count">%T07PRACNRB62</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="practice">
+     <caption>霧雨 魔理沙（魔）</caption>
+     <thead>
+      <tr>
+       <th class="stage">Stage</th>
+       <th class="score">Score</th>
+       <th class="count">プレイ回数</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="stage">Stage 1</td>
+       <td class="score">%T07PRACNMA11</td>
+       <td class="count">%T07PRACNMA12</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 2</td>
+       <td class="score">%T07PRACNMA21</td>
+       <td class="count">%T07PRACNMA22</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 3</td>
+       <td class="score">%T07PRACNMA31</td>
+       <td class="count">%T07PRACNMA32</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 4</td>
+       <td class="score">%T07PRACNMA41</td>
+       <td class="count">%T07PRACNMA42</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 5</td>
+       <td class="score">%T07PRACNMA51</td>
+       <td class="count">%T07PRACNMA52</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 6</td>
+       <td class="score">%T07PRACNMA61</td>
+       <td class="count">%T07PRACNMA62</td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="practice">
-    <caption>霧雨 魔理沙（魔）</caption>
-    <thead>
-     <tr>
-      <td class="stage">Stage</td>
-      <td class="score">Score</td>
-      <td class="count">プレイ回数</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="stage">Stage 1</td>
-      <td class="score">%T07PRACNMA11</td>
-      <td class="count">%T07PRACNMA12</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 2</td>
-      <td class="score">%T07PRACNMA21</td>
-      <td class="count">%T07PRACNMA22</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 3</td>
-      <td class="score">%T07PRACNMA31</td>
-      <td class="count">%T07PRACNMA32</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 4</td>
-      <td class="score">%T07PRACNMA41</td>
-      <td class="count">%T07PRACNMA42</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 5</td>
-      <td class="score">%T07PRACNMA51</td>
-      <td class="count">%T07PRACNMA52</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 6</td>
-      <td class="score">%T07PRACNMA61</td>
-      <td class="count">%T07PRACNMA62</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="practice">
+     <caption>霧雨 魔理沙（恋）</caption>
+     <thead>
+      <tr>
+       <th class="stage">Stage</th>
+       <th class="score">Score</th>
+       <th class="count">プレイ回数</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="stage">Stage 1</td>
+       <td class="score">%T07PRACNMB11</td>
+       <td class="count">%T07PRACNMB12</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 2</td>
+       <td class="score">%T07PRACNMB21</td>
+       <td class="count">%T07PRACNMB22</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 3</td>
+       <td class="score">%T07PRACNMB31</td>
+       <td class="count">%T07PRACNMB32</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 4</td>
+       <td class="score">%T07PRACNMB41</td>
+       <td class="count">%T07PRACNMB42</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 5</td>
+       <td class="score">%T07PRACNMB51</td>
+       <td class="count">%T07PRACNMB52</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 6</td>
+       <td class="score">%T07PRACNMB61</td>
+       <td class="count">%T07PRACNMB62</td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="practice">
-    <caption>霧雨 魔理沙（恋）</caption>
-    <thead>
-     <tr>
-      <td class="stage">Stage</td>
-      <td class="score">Score</td>
-      <td class="count">プレイ回数</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="stage">Stage 1</td>
-      <td class="score">%T07PRACNMB11</td>
-      <td class="count">%T07PRACNMB12</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 2</td>
-      <td class="score">%T07PRACNMB21</td>
-      <td class="count">%T07PRACNMB22</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 3</td>
-      <td class="score">%T07PRACNMB31</td>
-      <td class="count">%T07PRACNMB32</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 4</td>
-      <td class="score">%T07PRACNMB41</td>
-      <td class="count">%T07PRACNMB42</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 5</td>
-      <td class="score">%T07PRACNMB51</td>
-      <td class="count">%T07PRACNMB52</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 6</td>
-      <td class="score">%T07PRACNMB61</td>
-      <td class="count">%T07PRACNMB62</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="practice">
+     <caption>十六夜 咲夜（幻）</caption>
+     <thead>
+      <tr>
+       <th class="stage">Stage</th>
+       <th class="score">Score</th>
+       <th class="count">プレイ回数</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="stage">Stage 1</td>
+       <td class="score">%T07PRACNSA11</td>
+       <td class="count">%T07PRACNSA12</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 2</td>
+       <td class="score">%T07PRACNSA21</td>
+       <td class="count">%T07PRACNSA22</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 3</td>
+       <td class="score">%T07PRACNSA31</td>
+       <td class="count">%T07PRACNSA32</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 4</td>
+       <td class="score">%T07PRACNSA41</td>
+       <td class="count">%T07PRACNSA42</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 5</td>
+       <td class="score">%T07PRACNSA51</td>
+       <td class="count">%T07PRACNSA52</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 6</td>
+       <td class="score">%T07PRACNSA61</td>
+       <td class="count">%T07PRACNSA62</td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="practice">
-    <caption>十六夜 咲夜（幻）</caption>
-    <thead>
-     <tr>
-      <td class="stage">Stage</td>
-      <td class="score">Score</td>
-      <td class="count">プレイ回数</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="stage">Stage 1</td>
-      <td class="score">%T07PRACNSA11</td>
-      <td class="count">%T07PRACNSA12</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 2</td>
-      <td class="score">%T07PRACNSA21</td>
-      <td class="count">%T07PRACNSA22</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 3</td>
-      <td class="score">%T07PRACNSA31</td>
-      <td class="count">%T07PRACNSA32</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 4</td>
-      <td class="score">%T07PRACNSA41</td>
-      <td class="count">%T07PRACNSA42</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 5</td>
-      <td class="score">%T07PRACNSA51</td>
-      <td class="count">%T07PRACNSA52</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 6</td>
-      <td class="score">%T07PRACNSA61</td>
-      <td class="count">%T07PRACNSA62</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="practice">
+     <caption>十六夜 咲夜（時）</caption>
+     <thead>
+      <tr>
+       <th class="stage">Stage</th>
+       <th class="score">Score</th>
+       <th class="count">プレイ回数</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="stage">Stage 1</td>
+       <td class="score">%T07PRACNSB11</td>
+       <td class="count">%T07PRACNSB12</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 2</td>
+       <td class="score">%T07PRACNSB21</td>
+       <td class="count">%T07PRACNSB22</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 3</td>
+       <td class="score">%T07PRACNSB31</td>
+       <td class="count">%T07PRACNSB32</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 4</td>
+       <td class="score">%T07PRACNSB41</td>
+       <td class="count">%T07PRACNSB42</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 5</td>
+       <td class="score">%T07PRACNSB51</td>
+       <td class="count">%T07PRACNSB52</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 6</td>
+       <td class="score">%T07PRACNSB61</td>
+       <td class="count">%T07PRACNSB62</td>
+      </tr>
+     </tbody>
+    </table>
+   </section>
 
-   <table class="practice">
-    <caption>十六夜 咲夜（時）</caption>
-    <thead>
-     <tr>
-      <td class="stage">Stage</td>
-      <td class="score">Score</td>
-      <td class="count">プレイ回数</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="stage">Stage 1</td>
-      <td class="score">%T07PRACNSB11</td>
-      <td class="count">%T07PRACNSB12</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 2</td>
-      <td class="score">%T07PRACNSB21</td>
-      <td class="count">%T07PRACNSB22</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 3</td>
-      <td class="score">%T07PRACNSB31</td>
-      <td class="count">%T07PRACNSB32</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 4</td>
-      <td class="score">%T07PRACNSB41</td>
-      <td class="count">%T07PRACNSB42</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 5</td>
-      <td class="score">%T07PRACNSB51</td>
-      <td class="count">%T07PRACNSB52</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 6</td>
-      <td class="score">%T07PRACNSB61</td>
-      <td class="count">%T07PRACNSB62</td>
-     </tr>
-    </tbody>
-   </table>
-  </div>
+   <hr />
 
-  <hr />
+   <section>
+    <h2 id="Hard">Hard</h2>
 
-  <div class="section">
-   <h2 id="Hard">Hard</h2>
+    <table class="practice">
+     <caption>博麗 霊夢（霊）</caption>
+     <thead>
+      <tr>
+       <th class="stage">Stage</th>
+       <th class="score">Score</th>
+       <th class="count">プレイ回数</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="stage">Stage 1</td>
+       <td class="score">%T07PRACHRA11</td>
+       <td class="count">%T07PRACHRA12</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 2</td>
+       <td class="score">%T07PRACHRA21</td>
+       <td class="count">%T07PRACHRA22</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 3</td>
+       <td class="score">%T07PRACHRA31</td>
+       <td class="count">%T07PRACHRA32</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 4</td>
+       <td class="score">%T07PRACHRA41</td>
+       <td class="count">%T07PRACHRA42</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 5</td>
+       <td class="score">%T07PRACHRA51</td>
+       <td class="count">%T07PRACHRA52</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 6</td>
+       <td class="score">%T07PRACHRA61</td>
+       <td class="count">%T07PRACHRA62</td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="practice">
-    <caption>博麗 霊夢（霊）</caption>
-    <thead>
-     <tr>
-      <td class="stage">Stage</td>
-      <td class="score">Score</td>
-      <td class="count">プレイ回数</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="stage">Stage 1</td>
-      <td class="score">%T07PRACHRA11</td>
-      <td class="count">%T07PRACHRA12</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 2</td>
-      <td class="score">%T07PRACHRA21</td>
-      <td class="count">%T07PRACHRA22</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 3</td>
-      <td class="score">%T07PRACHRA31</td>
-      <td class="count">%T07PRACHRA32</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 4</td>
-      <td class="score">%T07PRACHRA41</td>
-      <td class="count">%T07PRACHRA42</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 5</td>
-      <td class="score">%T07PRACHRA51</td>
-      <td class="count">%T07PRACHRA52</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 6</td>
-      <td class="score">%T07PRACHRA61</td>
-      <td class="count">%T07PRACHRA62</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="practice">
+     <caption>博麗 霊夢（夢）</caption>
+     <thead>
+      <tr>
+       <th class="stage">Stage</th>
+       <th class="score">Score</th>
+       <th class="count">プレイ回数</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="stage">Stage 1</td>
+       <td class="score">%T07PRACHRB11</td>
+       <td class="count">%T07PRACHRB12</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 2</td>
+       <td class="score">%T07PRACHRB21</td>
+       <td class="count">%T07PRACHRB22</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 3</td>
+       <td class="score">%T07PRACHRB31</td>
+       <td class="count">%T07PRACHRB32</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 4</td>
+       <td class="score">%T07PRACHRB41</td>
+       <td class="count">%T07PRACHRB42</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 5</td>
+       <td class="score">%T07PRACHRB51</td>
+       <td class="count">%T07PRACHRB52</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 6</td>
+       <td class="score">%T07PRACHRB61</td>
+       <td class="count">%T07PRACHRB62</td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="practice">
-    <caption>博麗 霊夢（夢）</caption>
-    <thead>
-     <tr>
-      <td class="stage">Stage</td>
-      <td class="score">Score</td>
-      <td class="count">プレイ回数</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="stage">Stage 1</td>
-      <td class="score">%T07PRACHRB11</td>
-      <td class="count">%T07PRACHRB12</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 2</td>
-      <td class="score">%T07PRACHRB21</td>
-      <td class="count">%T07PRACHRB22</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 3</td>
-      <td class="score">%T07PRACHRB31</td>
-      <td class="count">%T07PRACHRB32</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 4</td>
-      <td class="score">%T07PRACHRB41</td>
-      <td class="count">%T07PRACHRB42</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 5</td>
-      <td class="score">%T07PRACHRB51</td>
-      <td class="count">%T07PRACHRB52</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 6</td>
-      <td class="score">%T07PRACHRB61</td>
-      <td class="count">%T07PRACHRB62</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="practice">
+     <caption>霧雨 魔理沙（魔）</caption>
+     <thead>
+      <tr>
+       <th class="stage">Stage</th>
+       <th class="score">Score</th>
+       <th class="count">プレイ回数</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="stage">Stage 1</td>
+       <td class="score">%T07PRACHMA11</td>
+       <td class="count">%T07PRACHMA12</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 2</td>
+       <td class="score">%T07PRACHMA21</td>
+       <td class="count">%T07PRACHMA22</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 3</td>
+       <td class="score">%T07PRACHMA31</td>
+       <td class="count">%T07PRACHMA32</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 4</td>
+       <td class="score">%T07PRACHMA41</td>
+       <td class="count">%T07PRACHMA42</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 5</td>
+       <td class="score">%T07PRACHMA51</td>
+       <td class="count">%T07PRACHMA52</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 6</td>
+       <td class="score">%T07PRACHMA61</td>
+       <td class="count">%T07PRACHMA62</td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="practice">
-    <caption>霧雨 魔理沙（魔）</caption>
-    <thead>
-     <tr>
-      <td class="stage">Stage</td>
-      <td class="score">Score</td>
-      <td class="count">プレイ回数</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="stage">Stage 1</td>
-      <td class="score">%T07PRACHMA11</td>
-      <td class="count">%T07PRACHMA12</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 2</td>
-      <td class="score">%T07PRACHMA21</td>
-      <td class="count">%T07PRACHMA22</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 3</td>
-      <td class="score">%T07PRACHMA31</td>
-      <td class="count">%T07PRACHMA32</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 4</td>
-      <td class="score">%T07PRACHMA41</td>
-      <td class="count">%T07PRACHMA42</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 5</td>
-      <td class="score">%T07PRACHMA51</td>
-      <td class="count">%T07PRACHMA52</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 6</td>
-      <td class="score">%T07PRACHMA61</td>
-      <td class="count">%T07PRACHMA62</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="practice">
+     <caption>霧雨 魔理沙（恋）</caption>
+     <thead>
+      <tr>
+       <th class="stage">Stage</th>
+       <th class="score">Score</th>
+       <th class="count">プレイ回数</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="stage">Stage 1</td>
+       <td class="score">%T07PRACHMB11</td>
+       <td class="count">%T07PRACHMB12</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 2</td>
+       <td class="score">%T07PRACHMB21</td>
+       <td class="count">%T07PRACHMB22</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 3</td>
+       <td class="score">%T07PRACHMB31</td>
+       <td class="count">%T07PRACHMB32</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 4</td>
+       <td class="score">%T07PRACHMB41</td>
+       <td class="count">%T07PRACHMB42</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 5</td>
+       <td class="score">%T07PRACHMB51</td>
+       <td class="count">%T07PRACHMB52</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 6</td>
+       <td class="score">%T07PRACHMB61</td>
+       <td class="count">%T07PRACHMB62</td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="practice">
-    <caption>霧雨 魔理沙（恋）</caption>
-    <thead>
-     <tr>
-      <td class="stage">Stage</td>
-      <td class="score">Score</td>
-      <td class="count">プレイ回数</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="stage">Stage 1</td>
-      <td class="score">%T07PRACHMB11</td>
-      <td class="count">%T07PRACHMB12</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 2</td>
-      <td class="score">%T07PRACHMB21</td>
-      <td class="count">%T07PRACHMB22</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 3</td>
-      <td class="score">%T07PRACHMB31</td>
-      <td class="count">%T07PRACHMB32</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 4</td>
-      <td class="score">%T07PRACHMB41</td>
-      <td class="count">%T07PRACHMB42</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 5</td>
-      <td class="score">%T07PRACHMB51</td>
-      <td class="count">%T07PRACHMB52</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 6</td>
-      <td class="score">%T07PRACHMB61</td>
-      <td class="count">%T07PRACHMB62</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="practice">
+     <caption>十六夜 咲夜（幻）</caption>
+     <thead>
+      <tr>
+       <th class="stage">Stage</th>
+       <th class="score">Score</th>
+       <th class="count">プレイ回数</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="stage">Stage 1</td>
+       <td class="score">%T07PRACHSA11</td>
+       <td class="count">%T07PRACHSA12</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 2</td>
+       <td class="score">%T07PRACHSA21</td>
+       <td class="count">%T07PRACHSA22</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 3</td>
+       <td class="score">%T07PRACHSA31</td>
+       <td class="count">%T07PRACHSA32</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 4</td>
+       <td class="score">%T07PRACHSA41</td>
+       <td class="count">%T07PRACHSA42</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 5</td>
+       <td class="score">%T07PRACHSA51</td>
+       <td class="count">%T07PRACHSA52</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 6</td>
+       <td class="score">%T07PRACHSA61</td>
+       <td class="count">%T07PRACHSA62</td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="practice">
-    <caption>十六夜 咲夜（幻）</caption>
-    <thead>
-     <tr>
-      <td class="stage">Stage</td>
-      <td class="score">Score</td>
-      <td class="count">プレイ回数</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="stage">Stage 1</td>
-      <td class="score">%T07PRACHSA11</td>
-      <td class="count">%T07PRACHSA12</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 2</td>
-      <td class="score">%T07PRACHSA21</td>
-      <td class="count">%T07PRACHSA22</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 3</td>
-      <td class="score">%T07PRACHSA31</td>
-      <td class="count">%T07PRACHSA32</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 4</td>
-      <td class="score">%T07PRACHSA41</td>
-      <td class="count">%T07PRACHSA42</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 5</td>
-      <td class="score">%T07PRACHSA51</td>
-      <td class="count">%T07PRACHSA52</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 6</td>
-      <td class="score">%T07PRACHSA61</td>
-      <td class="count">%T07PRACHSA62</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="practice">
+     <caption>十六夜 咲夜（時）</caption>
+     <thead>
+      <tr>
+       <th class="stage">Stage</th>
+       <th class="score">Score</th>
+       <th class="count">プレイ回数</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="stage">Stage 1</td>
+       <td class="score">%T07PRACHSB11</td>
+       <td class="count">%T07PRACHSB12</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 2</td>
+       <td class="score">%T07PRACHSB21</td>
+       <td class="count">%T07PRACHSB22</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 3</td>
+       <td class="score">%T07PRACHSB31</td>
+       <td class="count">%T07PRACHSB32</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 4</td>
+       <td class="score">%T07PRACHSB41</td>
+       <td class="count">%T07PRACHSB42</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 5</td>
+       <td class="score">%T07PRACHSB51</td>
+       <td class="count">%T07PRACHSB52</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 6</td>
+       <td class="score">%T07PRACHSB61</td>
+       <td class="count">%T07PRACHSB62</td>
+      </tr>
+     </tbody>
+    </table>
+   </section>
 
-   <table class="practice">
-    <caption>十六夜 咲夜（時）</caption>
-    <thead>
-     <tr>
-      <td class="stage">Stage</td>
-      <td class="score">Score</td>
-      <td class="count">プレイ回数</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="stage">Stage 1</td>
-      <td class="score">%T07PRACHSB11</td>
-      <td class="count">%T07PRACHSB12</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 2</td>
-      <td class="score">%T07PRACHSB21</td>
-      <td class="count">%T07PRACHSB22</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 3</td>
-      <td class="score">%T07PRACHSB31</td>
-      <td class="count">%T07PRACHSB32</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 4</td>
-      <td class="score">%T07PRACHSB41</td>
-      <td class="count">%T07PRACHSB42</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 5</td>
-      <td class="score">%T07PRACHSB51</td>
-      <td class="count">%T07PRACHSB52</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 6</td>
-      <td class="score">%T07PRACHSB61</td>
-      <td class="count">%T07PRACHSB62</td>
-     </tr>
-    </tbody>
-   </table>
-  </div>
+   <hr />
 
-  <hr />
+   <section>
+    <h2 id="Lunatic">Lunatic</h2>
 
-  <div class="section">
-   <h2 id="Lunatic">Lunatic</h2>
+    <table class="practice">
+     <caption>博麗 霊夢（霊）</caption>
+     <thead>
+      <tr>
+       <th class="stage">Stage</th>
+       <th class="score">Score</th>
+       <th class="count">プレイ回数</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="stage">Stage 1</td>
+       <td class="score">%T07PRACLRA11</td>
+       <td class="count">%T07PRACLRA12</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 2</td>
+       <td class="score">%T07PRACLRA21</td>
+       <td class="count">%T07PRACLRA22</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 3</td>
+       <td class="score">%T07PRACLRA31</td>
+       <td class="count">%T07PRACLRA32</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 4</td>
+       <td class="score">%T07PRACLRA41</td>
+       <td class="count">%T07PRACLRA42</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 5</td>
+       <td class="score">%T07PRACLRA51</td>
+       <td class="count">%T07PRACLRA52</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 6</td>
+       <td class="score">%T07PRACLRA61</td>
+       <td class="count">%T07PRACLRA62</td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="practice">
-    <caption>博麗 霊夢（霊）</caption>
-    <thead>
-     <tr>
-      <td class="stage">Stage</td>
-      <td class="score">Score</td>
-      <td class="count">プレイ回数</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="stage">Stage 1</td>
-      <td class="score">%T07PRACLRA11</td>
-      <td class="count">%T07PRACLRA12</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 2</td>
-      <td class="score">%T07PRACLRA21</td>
-      <td class="count">%T07PRACLRA22</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 3</td>
-      <td class="score">%T07PRACLRA31</td>
-      <td class="count">%T07PRACLRA32</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 4</td>
-      <td class="score">%T07PRACLRA41</td>
-      <td class="count">%T07PRACLRA42</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 5</td>
-      <td class="score">%T07PRACLRA51</td>
-      <td class="count">%T07PRACLRA52</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 6</td>
-      <td class="score">%T07PRACLRA61</td>
-      <td class="count">%T07PRACLRA62</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="practice">
+     <caption>博麗 霊夢（夢）</caption>
+     <thead>
+      <tr>
+       <th class="stage">Stage</th>
+       <th class="score">Score</th>
+       <th class="count">プレイ回数</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="stage">Stage 1</td>
+       <td class="score">%T07PRACLRB11</td>
+       <td class="count">%T07PRACLRB12</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 2</td>
+       <td class="score">%T07PRACLRB21</td>
+       <td class="count">%T07PRACLRB22</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 3</td>
+       <td class="score">%T07PRACLRB31</td>
+       <td class="count">%T07PRACLRB32</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 4</td>
+       <td class="score">%T07PRACLRB41</td>
+       <td class="count">%T07PRACLRB42</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 5</td>
+       <td class="score">%T07PRACLRB51</td>
+       <td class="count">%T07PRACLRB52</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 6</td>
+       <td class="score">%T07PRACLRB61</td>
+       <td class="count">%T07PRACLRB62</td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="practice">
-    <caption>博麗 霊夢（夢）</caption>
-    <thead>
-     <tr>
-      <td class="stage">Stage</td>
-      <td class="score">Score</td>
-      <td class="count">プレイ回数</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="stage">Stage 1</td>
-      <td class="score">%T07PRACLRB11</td>
-      <td class="count">%T07PRACLRB12</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 2</td>
-      <td class="score">%T07PRACLRB21</td>
-      <td class="count">%T07PRACLRB22</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 3</td>
-      <td class="score">%T07PRACLRB31</td>
-      <td class="count">%T07PRACLRB32</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 4</td>
-      <td class="score">%T07PRACLRB41</td>
-      <td class="count">%T07PRACLRB42</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 5</td>
-      <td class="score">%T07PRACLRB51</td>
-      <td class="count">%T07PRACLRB52</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 6</td>
-      <td class="score">%T07PRACLRB61</td>
-      <td class="count">%T07PRACLRB62</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="practice">
+     <caption>霧雨 魔理沙（魔）</caption>
+     <thead>
+      <tr>
+       <th class="stage">Stage</th>
+       <th class="score">Score</th>
+       <th class="count">プレイ回数</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="stage">Stage 1</td>
+       <td class="score">%T07PRACLMA11</td>
+       <td class="count">%T07PRACLMA12</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 2</td>
+       <td class="score">%T07PRACLMA21</td>
+       <td class="count">%T07PRACLMA22</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 3</td>
+       <td class="score">%T07PRACLMA31</td>
+       <td class="count">%T07PRACLMA32</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 4</td>
+       <td class="score">%T07PRACLMA41</td>
+       <td class="count">%T07PRACLMA42</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 5</td>
+       <td class="score">%T07PRACLMA51</td>
+       <td class="count">%T07PRACLMA52</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 6</td>
+       <td class="score">%T07PRACLMA61</td>
+       <td class="count">%T07PRACLMA62</td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="practice">
-    <caption>霧雨 魔理沙（魔）</caption>
-    <thead>
-     <tr>
-      <td class="stage">Stage</td>
-      <td class="score">Score</td>
-      <td class="count">プレイ回数</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="stage">Stage 1</td>
-      <td class="score">%T07PRACLMA11</td>
-      <td class="count">%T07PRACLMA12</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 2</td>
-      <td class="score">%T07PRACLMA21</td>
-      <td class="count">%T07PRACLMA22</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 3</td>
-      <td class="score">%T07PRACLMA31</td>
-      <td class="count">%T07PRACLMA32</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 4</td>
-      <td class="score">%T07PRACLMA41</td>
-      <td class="count">%T07PRACLMA42</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 5</td>
-      <td class="score">%T07PRACLMA51</td>
-      <td class="count">%T07PRACLMA52</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 6</td>
-      <td class="score">%T07PRACLMA61</td>
-      <td class="count">%T07PRACLMA62</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="practice">
+     <caption>霧雨 魔理沙（恋）</caption>
+     <thead>
+      <tr>
+       <th class="stage">Stage</th>
+       <th class="score">Score</th>
+       <th class="count">プレイ回数</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="stage">Stage 1</td>
+       <td class="score">%T07PRACLMB11</td>
+       <td class="count">%T07PRACLMB12</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 2</td>
+       <td class="score">%T07PRACLMB21</td>
+       <td class="count">%T07PRACLMB22</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 3</td>
+       <td class="score">%T07PRACLMB31</td>
+       <td class="count">%T07PRACLMB32</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 4</td>
+       <td class="score">%T07PRACLMB41</td>
+       <td class="count">%T07PRACLMB42</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 5</td>
+       <td class="score">%T07PRACLMB51</td>
+       <td class="count">%T07PRACLMB52</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 6</td>
+       <td class="score">%T07PRACLMB61</td>
+       <td class="count">%T07PRACLMB62</td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="practice">
-    <caption>霧雨 魔理沙（恋）</caption>
-    <thead>
-     <tr>
-      <td class="stage">Stage</td>
-      <td class="score">Score</td>
-      <td class="count">プレイ回数</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="stage">Stage 1</td>
-      <td class="score">%T07PRACLMB11</td>
-      <td class="count">%T07PRACLMB12</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 2</td>
-      <td class="score">%T07PRACLMB21</td>
-      <td class="count">%T07PRACLMB22</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 3</td>
-      <td class="score">%T07PRACLMB31</td>
-      <td class="count">%T07PRACLMB32</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 4</td>
-      <td class="score">%T07PRACLMB41</td>
-      <td class="count">%T07PRACLMB42</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 5</td>
-      <td class="score">%T07PRACLMB51</td>
-      <td class="count">%T07PRACLMB52</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 6</td>
-      <td class="score">%T07PRACLMB61</td>
-      <td class="count">%T07PRACLMB62</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="practice">
+     <caption>十六夜 咲夜（幻）</caption>
+     <thead>
+      <tr>
+       <th class="stage">Stage</th>
+       <th class="score">Score</th>
+       <th class="count">プレイ回数</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="stage">Stage 1</td>
+       <td class="score">%T07PRACLSA11</td>
+       <td class="count">%T07PRACLSA12</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 2</td>
+       <td class="score">%T07PRACLSA21</td>
+       <td class="count">%T07PRACLSA22</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 3</td>
+       <td class="score">%T07PRACLSA31</td>
+       <td class="count">%T07PRACLSA32</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 4</td>
+       <td class="score">%T07PRACLSA41</td>
+       <td class="count">%T07PRACLSA42</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 5</td>
+       <td class="score">%T07PRACLSA51</td>
+       <td class="count">%T07PRACLSA52</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 6</td>
+       <td class="score">%T07PRACLSA61</td>
+       <td class="count">%T07PRACLSA62</td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="practice">
-    <caption>十六夜 咲夜（幻）</caption>
-    <thead>
-     <tr>
-      <td class="stage">Stage</td>
-      <td class="score">Score</td>
-      <td class="count">プレイ回数</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="stage">Stage 1</td>
-      <td class="score">%T07PRACLSA11</td>
-      <td class="count">%T07PRACLSA12</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 2</td>
-      <td class="score">%T07PRACLSA21</td>
-      <td class="count">%T07PRACLSA22</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 3</td>
-      <td class="score">%T07PRACLSA31</td>
-      <td class="count">%T07PRACLSA32</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 4</td>
-      <td class="score">%T07PRACLSA41</td>
-      <td class="count">%T07PRACLSA42</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 5</td>
-      <td class="score">%T07PRACLSA51</td>
-      <td class="count">%T07PRACLSA52</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 6</td>
-      <td class="score">%T07PRACLSA61</td>
-      <td class="count">%T07PRACLSA62</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="practice">
+     <caption>十六夜 咲夜（時）</caption>
+     <thead>
+      <tr>
+       <th class="stage">Stage</th>
+       <th class="score">Score</th>
+       <th class="count">プレイ回数</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="stage">Stage 1</td>
+       <td class="score">%T07PRACLSB11</td>
+       <td class="count">%T07PRACLSB12</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 2</td>
+       <td class="score">%T07PRACLSB21</td>
+       <td class="count">%T07PRACLSB22</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 3</td>
+       <td class="score">%T07PRACLSB31</td>
+       <td class="count">%T07PRACLSB32</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 4</td>
+       <td class="score">%T07PRACLSB41</td>
+       <td class="count">%T07PRACLSB42</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 5</td>
+       <td class="score">%T07PRACLSB51</td>
+       <td class="count">%T07PRACLSB52</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage 6</td>
+       <td class="score">%T07PRACLSB61</td>
+       <td class="count">%T07PRACLSB62</td>
+      </tr>
+     </tbody>
+    </table>
+   </section>
 
-   <table class="practice">
-    <caption>十六夜 咲夜（時）</caption>
-    <thead>
-     <tr>
-      <td class="stage">Stage</td>
-      <td class="score">Score</td>
-      <td class="count">プレイ回数</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="stage">Stage 1</td>
-      <td class="score">%T07PRACLSB11</td>
-      <td class="count">%T07PRACLSB12</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 2</td>
-      <td class="score">%T07PRACLSB21</td>
-      <td class="count">%T07PRACLSB22</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 3</td>
-      <td class="score">%T07PRACLSB31</td>
-      <td class="count">%T07PRACLSB32</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 4</td>
-      <td class="score">%T07PRACLSB41</td>
-      <td class="count">%T07PRACLSB42</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 5</td>
-      <td class="score">%T07PRACLSB51</td>
-      <td class="count">%T07PRACLSB52</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage 6</td>
-      <td class="score">%T07PRACLSB61</td>
-      <td class="count">%T07PRACLSB62</td>
-     </tr>
-    </tbody>
-   </table>
-  </div>
+  </main>
 
-  <hr />
-
-  <div class="section">
+  <footer>
    <p>
     Data output by <a href="https://www.colorless-sight.jp/thsfc/">ThScoreFileConverter</a>.
-<script type="text/javascript">
-<!--
+<script>
+// <![CDATA[
     document.write("Last updated: ", document.lastModified, ".");
-//-->
+// ]]>
 </script>
    </p>
-  </div>
+  </footer>
 
  </body>
 </html>

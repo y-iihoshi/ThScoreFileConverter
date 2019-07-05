@@ -1,15 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
  <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta http-equiv="Content-Stype-Type" content="text/css" />
-  <meta http-equiv="Content-Script-Type" content="text/javascript" />
-  <title>東方風神録スペルカードデータ</title>
-  <link rel="stylesheet" type="text/css" href="style.css" />
-<style type="text/css">
-<!--
+  <meta charset="UTF-8" />
+  <title>東方風神録 スペルカードデータ</title>
+  <link rel="stylesheet" href="style.css" />
+<style>
+/* <![CDATA[ */
     td.character { min-width: 100px; }
     td.level { min-width: 70px; }
     td.stage { min-width: 70px; }
@@ -18,1478 +15,1480 @@
     table.rate_per_card td.rate { min-width: 80px; }
     table.rate_per_level td.rate { min-width: 100px; }
     table.rate_per_stage td.rate { min-width: 100px; }
--->
+/* ]]> */
 </style>
  </head>
 
  <body>
-  <h1>東方風神録スペルカードデータ</h1>
 
-  <hr />
+  <header>
+   <h1>東方風神録 スペルカードデータ</h1>
+   <hr />
+   <nav>
+    <ul>
+     <li><a href="th10score1.html">スコアデータ全般</a></li>
+     <li><a href="th10score2.html">個別ランキング</a></li>
+     <li><a href="th10score3.html">プラクティス</a></li>
+     <li>御札戦歴</li>
+    </ul>
+    <ul>
+     <li><a href="#rate_per_card">スペルカード別</a></li>
+     <li><a href="#rate_per_level">難易度別</a></li>
+     <li><a href="#rate_per_stage">ステージ別</a></li>
+    </ul>
+   </nav>
+  </header>
 
-  <div class="section">
-   <p>
-    <a href="th10score1.html">スコアデータ全般</a> /
-    <a href="th10score2.html">個別ランキング</a> /
-    <a href="th10score3.html">プラクティス</a> /
-    御札戦歴<br />
-    <a href="#rate_per_card">スペルカード別</a> /
-    <a href="#rate_per_level">難易度別</a> /
-    <a href="#rate_per_stage">ステージ別</a>
-   </p>
-  </div>
+  <main>
 
-  <hr />
+   <section>
+    <h2 id="Card">御札戦歴</h2>
 
-  <div class="section">
-   <h2 id="Card">御札戦歴</h2>
+    <table class="rate_per_card">
+     <caption id="rate_per_card">スペルカード別取得率（取得回数 / 遭遇回数）</caption>
+     <thead>
+      <tr>
+       <th class="number">No.</th>
+       <th class="card">スペルカード名<br />（難易度）</th>
+       <th class="character">全主人公合計</th>
+       <th class="character">博麗霊夢<br />（誘導装備）</th>
+       <th class="character">博麗霊夢<br />（前方集中装備）</th>
+       <th class="character">博麗霊夢<br />（封印装備）</th>
+       <th class="character">霧雨魔理沙<br />（高威力装備）</th>
+       <th class="character">霧雨魔理沙<br />（貫通装備）</th>
+       <th class="character">霧雨魔理沙<br />（魔法使い装備）</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="number">No.01</td>
+       <td class="card">%T10CARD001N<br />(%T10CARD001R)</td>
+       <td class="rate">%T10C001TL1 / %T10C001TL2</td>
+       <td class="rate">%T10C001RA1 / %T10C001RA2</td>
+       <td class="rate">%T10C001RB1 / %T10C001RB2</td>
+       <td class="rate">%T10C001RC1 / %T10C001RC2</td>
+       <td class="rate">%T10C001MA1 / %T10C001MA2</td>
+       <td class="rate">%T10C001MB1 / %T10C001MB2</td>
+       <td class="rate">%T10C001MC1 / %T10C001MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.02</td>
+       <td class="card">%T10CARD002N<br />(%T10CARD002R)</td>
+       <td class="rate">%T10C002TL1 / %T10C002TL2</td>
+       <td class="rate">%T10C002RA1 / %T10C002RA2</td>
+       <td class="rate">%T10C002RB1 / %T10C002RB2</td>
+       <td class="rate">%T10C002RC1 / %T10C002RC2</td>
+       <td class="rate">%T10C002MA1 / %T10C002MA2</td>
+       <td class="rate">%T10C002MB1 / %T10C002MB2</td>
+       <td class="rate">%T10C002MC1 / %T10C002MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.03</td>
+       <td class="card">%T10CARD003N<br />(%T10CARD003R)</td>
+       <td class="rate">%T10C003TL1 / %T10C003TL2</td>
+       <td class="rate">%T10C003RA1 / %T10C003RA2</td>
+       <td class="rate">%T10C003RB1 / %T10C003RB2</td>
+       <td class="rate">%T10C003RC1 / %T10C003RC2</td>
+       <td class="rate">%T10C003MA1 / %T10C003MA2</td>
+       <td class="rate">%T10C003MB1 / %T10C003MB2</td>
+       <td class="rate">%T10C003MC1 / %T10C003MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.04</td>
+       <td class="card">%T10CARD004N<br />(%T10CARD004R)</td>
+       <td class="rate">%T10C004TL1 / %T10C004TL2</td>
+       <td class="rate">%T10C004RA1 / %T10C004RA2</td>
+       <td class="rate">%T10C004RB1 / %T10C004RB2</td>
+       <td class="rate">%T10C004RC1 / %T10C004RC2</td>
+       <td class="rate">%T10C004MA1 / %T10C004MA2</td>
+       <td class="rate">%T10C004MB1 / %T10C004MB2</td>
+       <td class="rate">%T10C004MC1 / %T10C004MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.05</td>
+       <td class="card">%T10CARD005N<br />(%T10CARD005R)</td>
+       <td class="rate">%T10C005TL1 / %T10C005TL2</td>
+       <td class="rate">%T10C005RA1 / %T10C005RA2</td>
+       <td class="rate">%T10C005RB1 / %T10C005RB2</td>
+       <td class="rate">%T10C005RC1 / %T10C005RC2</td>
+       <td class="rate">%T10C005MA1 / %T10C005MA2</td>
+       <td class="rate">%T10C005MB1 / %T10C005MB2</td>
+       <td class="rate">%T10C005MC1 / %T10C005MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.06</td>
+       <td class="card">%T10CARD006N<br />(%T10CARD006R)</td>
+       <td class="rate">%T10C006TL1 / %T10C006TL2</td>
+       <td class="rate">%T10C006RA1 / %T10C006RA2</td>
+       <td class="rate">%T10C006RB1 / %T10C006RB2</td>
+       <td class="rate">%T10C006RC1 / %T10C006RC2</td>
+       <td class="rate">%T10C006MA1 / %T10C006MA2</td>
+       <td class="rate">%T10C006MB1 / %T10C006MB2</td>
+       <td class="rate">%T10C006MC1 / %T10C006MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.07</td>
+       <td class="card">%T10CARD007N<br />(%T10CARD007R)</td>
+       <td class="rate">%T10C007TL1 / %T10C007TL2</td>
+       <td class="rate">%T10C007RA1 / %T10C007RA2</td>
+       <td class="rate">%T10C007RB1 / %T10C007RB2</td>
+       <td class="rate">%T10C007RC1 / %T10C007RC2</td>
+       <td class="rate">%T10C007MA1 / %T10C007MA2</td>
+       <td class="rate">%T10C007MB1 / %T10C007MB2</td>
+       <td class="rate">%T10C007MC1 / %T10C007MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.08</td>
+       <td class="card">%T10CARD008N<br />(%T10CARD008R)</td>
+       <td class="rate">%T10C008TL1 / %T10C008TL2</td>
+       <td class="rate">%T10C008RA1 / %T10C008RA2</td>
+       <td class="rate">%T10C008RB1 / %T10C008RB2</td>
+       <td class="rate">%T10C008RC1 / %T10C008RC2</td>
+       <td class="rate">%T10C008MA1 / %T10C008MA2</td>
+       <td class="rate">%T10C008MB1 / %T10C008MB2</td>
+       <td class="rate">%T10C008MC1 / %T10C008MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.09</td>
+       <td class="card">%T10CARD009N<br />(%T10CARD009R)</td>
+       <td class="rate">%T10C009TL1 / %T10C009TL2</td>
+       <td class="rate">%T10C009RA1 / %T10C009RA2</td>
+       <td class="rate">%T10C009RB1 / %T10C009RB2</td>
+       <td class="rate">%T10C009RC1 / %T10C009RC2</td>
+       <td class="rate">%T10C009MA1 / %T10C009MA2</td>
+       <td class="rate">%T10C009MB1 / %T10C009MB2</td>
+       <td class="rate">%T10C009MC1 / %T10C009MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.10</td>
+       <td class="card">%T10CARD010N<br />(%T10CARD010R)</td>
+       <td class="rate">%T10C010TL1 / %T10C010TL2</td>
+       <td class="rate">%T10C010RA1 / %T10C010RA2</td>
+       <td class="rate">%T10C010RB1 / %T10C010RB2</td>
+       <td class="rate">%T10C010RC1 / %T10C010RC2</td>
+       <td class="rate">%T10C010MA1 / %T10C010MA2</td>
+       <td class="rate">%T10C010MB1 / %T10C010MB2</td>
+       <td class="rate">%T10C010MC1 / %T10C010MC2</td>
+      </tr>
 
-   <table class="rate_per_card">
-    <caption id="rate_per_card">スペルカード別取得率（取得回数 / 遭遇回数）</caption>
-    <thead>
-     <tr>
-      <td class="number">No.</td>
-      <td class="card">スペルカード名<br />（難易度）</td>
-      <td class="character">全主人公合計</td>
-      <td class="character">博麗霊夢<br />（誘導装備）</td>
-      <td class="character">博麗霊夢<br />（前方集中装備）</td>
-      <td class="character">博麗霊夢<br />（封印装備）</td>
-      <td class="character">霧雨魔理沙<br />（高威力装備）</td>
-      <td class="character">霧雨魔理沙<br />（貫通装備）</td>
-      <td class="character">霧雨魔理沙<br />（魔法使い装備）</td>
-     </tr>
-    </thead>
-    <tfoot>
-     <tr>
-      <td colspan="2">Total</td>
-      <td class="rate">%T10C000TL1 / %T10C000TL2</td>
-      <td class="rate">%T10C000RA1 / %T10C000RA2</td>
-      <td class="rate">%T10C000RB1 / %T10C000RB2</td>
-      <td class="rate">%T10C000RC1 / %T10C000RC2</td>
-      <td class="rate">%T10C000MA1 / %T10C000MA2</td>
-      <td class="rate">%T10C000MB1 / %T10C000MB2</td>
-      <td class="rate">%T10C000MC1 / %T10C000MC2</td>
-     </tr>
-    </tfoot>
+      <tr>
+       <td class="number">No.11</td>
+       <td class="card">%T10CARD011N<br />(%T10CARD011R)</td>
+       <td class="rate">%T10C011TL1 / %T10C011TL2</td>
+       <td class="rate">%T10C011RA1 / %T10C011RA2</td>
+       <td class="rate">%T10C011RB1 / %T10C011RB2</td>
+       <td class="rate">%T10C011RC1 / %T10C011RC2</td>
+       <td class="rate">%T10C011MA1 / %T10C011MA2</td>
+       <td class="rate">%T10C011MB1 / %T10C011MB2</td>
+       <td class="rate">%T10C011MC1 / %T10C011MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.12</td>
+       <td class="card">%T10CARD012N<br />(%T10CARD012R)</td>
+       <td class="rate">%T10C012TL1 / %T10C012TL2</td>
+       <td class="rate">%T10C012RA1 / %T10C012RA2</td>
+       <td class="rate">%T10C012RB1 / %T10C012RB2</td>
+       <td class="rate">%T10C012RC1 / %T10C012RC2</td>
+       <td class="rate">%T10C012MA1 / %T10C012MA2</td>
+       <td class="rate">%T10C012MB1 / %T10C012MB2</td>
+       <td class="rate">%T10C012MC1 / %T10C012MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.13</td>
+       <td class="card">%T10CARD013N<br />(%T10CARD013R)</td>
+       <td class="rate">%T10C013TL1 / %T10C013TL2</td>
+       <td class="rate">%T10C013RA1 / %T10C013RA2</td>
+       <td class="rate">%T10C013RB1 / %T10C013RB2</td>
+       <td class="rate">%T10C013RC1 / %T10C013RC2</td>
+       <td class="rate">%T10C013MA1 / %T10C013MA2</td>
+       <td class="rate">%T10C013MB1 / %T10C013MB2</td>
+       <td class="rate">%T10C013MC1 / %T10C013MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.14</td>
+       <td class="card">%T10CARD014N<br />(%T10CARD014R)</td>
+       <td class="rate">%T10C014TL1 / %T10C014TL2</td>
+       <td class="rate">%T10C014RA1 / %T10C014RA2</td>
+       <td class="rate">%T10C014RB1 / %T10C014RB2</td>
+       <td class="rate">%T10C014RC1 / %T10C014RC2</td>
+       <td class="rate">%T10C014MA1 / %T10C014MA2</td>
+       <td class="rate">%T10C014MB1 / %T10C014MB2</td>
+       <td class="rate">%T10C014MC1 / %T10C014MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.15</td>
+       <td class="card">%T10CARD015N<br />(%T10CARD015R)</td>
+       <td class="rate">%T10C015TL1 / %T10C015TL2</td>
+       <td class="rate">%T10C015RA1 / %T10C015RA2</td>
+       <td class="rate">%T10C015RB1 / %T10C015RB2</td>
+       <td class="rate">%T10C015RC1 / %T10C015RC2</td>
+       <td class="rate">%T10C015MA1 / %T10C015MA2</td>
+       <td class="rate">%T10C015MB1 / %T10C015MB2</td>
+       <td class="rate">%T10C015MC1 / %T10C015MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.16</td>
+       <td class="card">%T10CARD016N<br />(%T10CARD016R)</td>
+       <td class="rate">%T10C016TL1 / %T10C016TL2</td>
+       <td class="rate">%T10C016RA1 / %T10C016RA2</td>
+       <td class="rate">%T10C016RB1 / %T10C016RB2</td>
+       <td class="rate">%T10C016RC1 / %T10C016RC2</td>
+       <td class="rate">%T10C016MA1 / %T10C016MA2</td>
+       <td class="rate">%T10C016MB1 / %T10C016MB2</td>
+       <td class="rate">%T10C016MC1 / %T10C016MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.17</td>
+       <td class="card">%T10CARD017N<br />(%T10CARD017R)</td>
+       <td class="rate">%T10C017TL1 / %T10C017TL2</td>
+       <td class="rate">%T10C017RA1 / %T10C017RA2</td>
+       <td class="rate">%T10C017RB1 / %T10C017RB2</td>
+       <td class="rate">%T10C017RC1 / %T10C017RC2</td>
+       <td class="rate">%T10C017MA1 / %T10C017MA2</td>
+       <td class="rate">%T10C017MB1 / %T10C017MB2</td>
+       <td class="rate">%T10C017MC1 / %T10C017MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.18</td>
+       <td class="card">%T10CARD018N<br />(%T10CARD018R)</td>
+       <td class="rate">%T10C018TL1 / %T10C018TL2</td>
+       <td class="rate">%T10C018RA1 / %T10C018RA2</td>
+       <td class="rate">%T10C018RB1 / %T10C018RB2</td>
+       <td class="rate">%T10C018RC1 / %T10C018RC2</td>
+       <td class="rate">%T10C018MA1 / %T10C018MA2</td>
+       <td class="rate">%T10C018MB1 / %T10C018MB2</td>
+       <td class="rate">%T10C018MC1 / %T10C018MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.19</td>
+       <td class="card">%T10CARD019N<br />(%T10CARD019R)</td>
+       <td class="rate">%T10C019TL1 / %T10C019TL2</td>
+       <td class="rate">%T10C019RA1 / %T10C019RA2</td>
+       <td class="rate">%T10C019RB1 / %T10C019RB2</td>
+       <td class="rate">%T10C019RC1 / %T10C019RC2</td>
+       <td class="rate">%T10C019MA1 / %T10C019MA2</td>
+       <td class="rate">%T10C019MB1 / %T10C019MB2</td>
+       <td class="rate">%T10C019MC1 / %T10C019MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.20</td>
+       <td class="card">%T10CARD020N<br />(%T10CARD020R)</td>
+       <td class="rate">%T10C020TL1 / %T10C020TL2</td>
+       <td class="rate">%T10C020RA1 / %T10C020RA2</td>
+       <td class="rate">%T10C020RB1 / %T10C020RB2</td>
+       <td class="rate">%T10C020RC1 / %T10C020RC2</td>
+       <td class="rate">%T10C020MA1 / %T10C020MA2</td>
+       <td class="rate">%T10C020MB1 / %T10C020MB2</td>
+       <td class="rate">%T10C020MC1 / %T10C020MC2</td>
+      </tr>
 
-    <tbody>
-     <tr>
-      <td class="number">No.01</td>
-      <td class="card">%T10CARD001N<br />(%T10CARD001R)</td>
-      <td class="rate">%T10C001TL1 / %T10C001TL2</td>
-      <td class="rate">%T10C001RA1 / %T10C001RA2</td>
-      <td class="rate">%T10C001RB1 / %T10C001RB2</td>
-      <td class="rate">%T10C001RC1 / %T10C001RC2</td>
-      <td class="rate">%T10C001MA1 / %T10C001MA2</td>
-      <td class="rate">%T10C001MB1 / %T10C001MB2</td>
-      <td class="rate">%T10C001MC1 / %T10C001MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.02</td>
-      <td class="card">%T10CARD002N<br />(%T10CARD002R)</td>
-      <td class="rate">%T10C002TL1 / %T10C002TL2</td>
-      <td class="rate">%T10C002RA1 / %T10C002RA2</td>
-      <td class="rate">%T10C002RB1 / %T10C002RB2</td>
-      <td class="rate">%T10C002RC1 / %T10C002RC2</td>
-      <td class="rate">%T10C002MA1 / %T10C002MA2</td>
-      <td class="rate">%T10C002MB1 / %T10C002MB2</td>
-      <td class="rate">%T10C002MC1 / %T10C002MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.03</td>
-      <td class="card">%T10CARD003N<br />(%T10CARD003R)</td>
-      <td class="rate">%T10C003TL1 / %T10C003TL2</td>
-      <td class="rate">%T10C003RA1 / %T10C003RA2</td>
-      <td class="rate">%T10C003RB1 / %T10C003RB2</td>
-      <td class="rate">%T10C003RC1 / %T10C003RC2</td>
-      <td class="rate">%T10C003MA1 / %T10C003MA2</td>
-      <td class="rate">%T10C003MB1 / %T10C003MB2</td>
-      <td class="rate">%T10C003MC1 / %T10C003MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.04</td>
-      <td class="card">%T10CARD004N<br />(%T10CARD004R)</td>
-      <td class="rate">%T10C004TL1 / %T10C004TL2</td>
-      <td class="rate">%T10C004RA1 / %T10C004RA2</td>
-      <td class="rate">%T10C004RB1 / %T10C004RB2</td>
-      <td class="rate">%T10C004RC1 / %T10C004RC2</td>
-      <td class="rate">%T10C004MA1 / %T10C004MA2</td>
-      <td class="rate">%T10C004MB1 / %T10C004MB2</td>
-      <td class="rate">%T10C004MC1 / %T10C004MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.05</td>
-      <td class="card">%T10CARD005N<br />(%T10CARD005R)</td>
-      <td class="rate">%T10C005TL1 / %T10C005TL2</td>
-      <td class="rate">%T10C005RA1 / %T10C005RA2</td>
-      <td class="rate">%T10C005RB1 / %T10C005RB2</td>
-      <td class="rate">%T10C005RC1 / %T10C005RC2</td>
-      <td class="rate">%T10C005MA1 / %T10C005MA2</td>
-      <td class="rate">%T10C005MB1 / %T10C005MB2</td>
-      <td class="rate">%T10C005MC1 / %T10C005MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.06</td>
-      <td class="card">%T10CARD006N<br />(%T10CARD006R)</td>
-      <td class="rate">%T10C006TL1 / %T10C006TL2</td>
-      <td class="rate">%T10C006RA1 / %T10C006RA2</td>
-      <td class="rate">%T10C006RB1 / %T10C006RB2</td>
-      <td class="rate">%T10C006RC1 / %T10C006RC2</td>
-      <td class="rate">%T10C006MA1 / %T10C006MA2</td>
-      <td class="rate">%T10C006MB1 / %T10C006MB2</td>
-      <td class="rate">%T10C006MC1 / %T10C006MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.07</td>
-      <td class="card">%T10CARD007N<br />(%T10CARD007R)</td>
-      <td class="rate">%T10C007TL1 / %T10C007TL2</td>
-      <td class="rate">%T10C007RA1 / %T10C007RA2</td>
-      <td class="rate">%T10C007RB1 / %T10C007RB2</td>
-      <td class="rate">%T10C007RC1 / %T10C007RC2</td>
-      <td class="rate">%T10C007MA1 / %T10C007MA2</td>
-      <td class="rate">%T10C007MB1 / %T10C007MB2</td>
-      <td class="rate">%T10C007MC1 / %T10C007MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.08</td>
-      <td class="card">%T10CARD008N<br />(%T10CARD008R)</td>
-      <td class="rate">%T10C008TL1 / %T10C008TL2</td>
-      <td class="rate">%T10C008RA1 / %T10C008RA2</td>
-      <td class="rate">%T10C008RB1 / %T10C008RB2</td>
-      <td class="rate">%T10C008RC1 / %T10C008RC2</td>
-      <td class="rate">%T10C008MA1 / %T10C008MA2</td>
-      <td class="rate">%T10C008MB1 / %T10C008MB2</td>
-      <td class="rate">%T10C008MC1 / %T10C008MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.09</td>
-      <td class="card">%T10CARD009N<br />(%T10CARD009R)</td>
-      <td class="rate">%T10C009TL1 / %T10C009TL2</td>
-      <td class="rate">%T10C009RA1 / %T10C009RA2</td>
-      <td class="rate">%T10C009RB1 / %T10C009RB2</td>
-      <td class="rate">%T10C009RC1 / %T10C009RC2</td>
-      <td class="rate">%T10C009MA1 / %T10C009MA2</td>
-      <td class="rate">%T10C009MB1 / %T10C009MB2</td>
-      <td class="rate">%T10C009MC1 / %T10C009MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.10</td>
-      <td class="card">%T10CARD010N<br />(%T10CARD010R)</td>
-      <td class="rate">%T10C010TL1 / %T10C010TL2</td>
-      <td class="rate">%T10C010RA1 / %T10C010RA2</td>
-      <td class="rate">%T10C010RB1 / %T10C010RB2</td>
-      <td class="rate">%T10C010RC1 / %T10C010RC2</td>
-      <td class="rate">%T10C010MA1 / %T10C010MA2</td>
-      <td class="rate">%T10C010MB1 / %T10C010MB2</td>
-      <td class="rate">%T10C010MC1 / %T10C010MC2</td>
-     </tr>
+      <tr>
+       <td class="number">No.21</td>
+       <td class="card">%T10CARD021N<br />(%T10CARD021R)</td>
+       <td class="rate">%T10C021TL1 / %T10C021TL2</td>
+       <td class="rate">%T10C021RA1 / %T10C021RA2</td>
+       <td class="rate">%T10C021RB1 / %T10C021RB2</td>
+       <td class="rate">%T10C021RC1 / %T10C021RC2</td>
+       <td class="rate">%T10C021MA1 / %T10C021MA2</td>
+       <td class="rate">%T10C021MB1 / %T10C021MB2</td>
+       <td class="rate">%T10C021MC1 / %T10C021MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.22</td>
+       <td class="card">%T10CARD022N<br />(%T10CARD022R)</td>
+       <td class="rate">%T10C022TL1 / %T10C022TL2</td>
+       <td class="rate">%T10C022RA1 / %T10C022RA2</td>
+       <td class="rate">%T10C022RB1 / %T10C022RB2</td>
+       <td class="rate">%T10C022RC1 / %T10C022RC2</td>
+       <td class="rate">%T10C022MA1 / %T10C022MA2</td>
+       <td class="rate">%T10C022MB1 / %T10C022MB2</td>
+       <td class="rate">%T10C022MC1 / %T10C022MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.23</td>
+       <td class="card">%T10CARD023N<br />(%T10CARD023R)</td>
+       <td class="rate">%T10C023TL1 / %T10C023TL2</td>
+       <td class="rate">%T10C023RA1 / %T10C023RA2</td>
+       <td class="rate">%T10C023RB1 / %T10C023RB2</td>
+       <td class="rate">%T10C023RC1 / %T10C023RC2</td>
+       <td class="rate">%T10C023MA1 / %T10C023MA2</td>
+       <td class="rate">%T10C023MB1 / %T10C023MB2</td>
+       <td class="rate">%T10C023MC1 / %T10C023MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.24</td>
+       <td class="card">%T10CARD024N<br />(%T10CARD024R)</td>
+       <td class="rate">%T10C024TL1 / %T10C024TL2</td>
+       <td class="rate">%T10C024RA1 / %T10C024RA2</td>
+       <td class="rate">%T10C024RB1 / %T10C024RB2</td>
+       <td class="rate">%T10C024RC1 / %T10C024RC2</td>
+       <td class="rate">%T10C024MA1 / %T10C024MA2</td>
+       <td class="rate">%T10C024MB1 / %T10C024MB2</td>
+       <td class="rate">%T10C024MC1 / %T10C024MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.25</td>
+       <td class="card">%T10CARD025N<br />(%T10CARD025R)</td>
+       <td class="rate">%T10C025TL1 / %T10C025TL2</td>
+       <td class="rate">%T10C025RA1 / %T10C025RA2</td>
+       <td class="rate">%T10C025RB1 / %T10C025RB2</td>
+       <td class="rate">%T10C025RC1 / %T10C025RC2</td>
+       <td class="rate">%T10C025MA1 / %T10C025MA2</td>
+       <td class="rate">%T10C025MB1 / %T10C025MB2</td>
+       <td class="rate">%T10C025MC1 / %T10C025MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.26</td>
+       <td class="card">%T10CARD026N<br />(%T10CARD026R)</td>
+       <td class="rate">%T10C026TL1 / %T10C026TL2</td>
+       <td class="rate">%T10C026RA1 / %T10C026RA2</td>
+       <td class="rate">%T10C026RB1 / %T10C026RB2</td>
+       <td class="rate">%T10C026RC1 / %T10C026RC2</td>
+       <td class="rate">%T10C026MA1 / %T10C026MA2</td>
+       <td class="rate">%T10C026MB1 / %T10C026MB2</td>
+       <td class="rate">%T10C026MC1 / %T10C026MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.27</td>
+       <td class="card">%T10CARD027N<br />(%T10CARD027R)</td>
+       <td class="rate">%T10C027TL1 / %T10C027TL2</td>
+       <td class="rate">%T10C027RA1 / %T10C027RA2</td>
+       <td class="rate">%T10C027RB1 / %T10C027RB2</td>
+       <td class="rate">%T10C027RC1 / %T10C027RC2</td>
+       <td class="rate">%T10C027MA1 / %T10C027MA2</td>
+       <td class="rate">%T10C027MB1 / %T10C027MB2</td>
+       <td class="rate">%T10C027MC1 / %T10C027MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.28</td>
+       <td class="card">%T10CARD028N<br />(%T10CARD028R)</td>
+       <td class="rate">%T10C028TL1 / %T10C028TL2</td>
+       <td class="rate">%T10C028RA1 / %T10C028RA2</td>
+       <td class="rate">%T10C028RB1 / %T10C028RB2</td>
+       <td class="rate">%T10C028RC1 / %T10C028RC2</td>
+       <td class="rate">%T10C028MA1 / %T10C028MA2</td>
+       <td class="rate">%T10C028MB1 / %T10C028MB2</td>
+       <td class="rate">%T10C028MC1 / %T10C028MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.29</td>
+       <td class="card">%T10CARD029N<br />(%T10CARD029R)</td>
+       <td class="rate">%T10C029TL1 / %T10C029TL2</td>
+       <td class="rate">%T10C029RA1 / %T10C029RA2</td>
+       <td class="rate">%T10C029RB1 / %T10C029RB2</td>
+       <td class="rate">%T10C029RC1 / %T10C029RC2</td>
+       <td class="rate">%T10C029MA1 / %T10C029MA2</td>
+       <td class="rate">%T10C029MB1 / %T10C029MB2</td>
+       <td class="rate">%T10C029MC1 / %T10C029MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.30</td>
+       <td class="card">%T10CARD030N<br />(%T10CARD030R)</td>
+       <td class="rate">%T10C030TL1 / %T10C030TL2</td>
+       <td class="rate">%T10C030RA1 / %T10C030RA2</td>
+       <td class="rate">%T10C030RB1 / %T10C030RB2</td>
+       <td class="rate">%T10C030RC1 / %T10C030RC2</td>
+       <td class="rate">%T10C030MA1 / %T10C030MA2</td>
+       <td class="rate">%T10C030MB1 / %T10C030MB2</td>
+       <td class="rate">%T10C030MC1 / %T10C030MC2</td>
+      </tr>
 
-     <tr>
-      <td class="number">No.11</td>
-      <td class="card">%T10CARD011N<br />(%T10CARD011R)</td>
-      <td class="rate">%T10C011TL1 / %T10C011TL2</td>
-      <td class="rate">%T10C011RA1 / %T10C011RA2</td>
-      <td class="rate">%T10C011RB1 / %T10C011RB2</td>
-      <td class="rate">%T10C011RC1 / %T10C011RC2</td>
-      <td class="rate">%T10C011MA1 / %T10C011MA2</td>
-      <td class="rate">%T10C011MB1 / %T10C011MB2</td>
-      <td class="rate">%T10C011MC1 / %T10C011MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.12</td>
-      <td class="card">%T10CARD012N<br />(%T10CARD012R)</td>
-      <td class="rate">%T10C012TL1 / %T10C012TL2</td>
-      <td class="rate">%T10C012RA1 / %T10C012RA2</td>
-      <td class="rate">%T10C012RB1 / %T10C012RB2</td>
-      <td class="rate">%T10C012RC1 / %T10C012RC2</td>
-      <td class="rate">%T10C012MA1 / %T10C012MA2</td>
-      <td class="rate">%T10C012MB1 / %T10C012MB2</td>
-      <td class="rate">%T10C012MC1 / %T10C012MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.13</td>
-      <td class="card">%T10CARD013N<br />(%T10CARD013R)</td>
-      <td class="rate">%T10C013TL1 / %T10C013TL2</td>
-      <td class="rate">%T10C013RA1 / %T10C013RA2</td>
-      <td class="rate">%T10C013RB1 / %T10C013RB2</td>
-      <td class="rate">%T10C013RC1 / %T10C013RC2</td>
-      <td class="rate">%T10C013MA1 / %T10C013MA2</td>
-      <td class="rate">%T10C013MB1 / %T10C013MB2</td>
-      <td class="rate">%T10C013MC1 / %T10C013MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.14</td>
-      <td class="card">%T10CARD014N<br />(%T10CARD014R)</td>
-      <td class="rate">%T10C014TL1 / %T10C014TL2</td>
-      <td class="rate">%T10C014RA1 / %T10C014RA2</td>
-      <td class="rate">%T10C014RB1 / %T10C014RB2</td>
-      <td class="rate">%T10C014RC1 / %T10C014RC2</td>
-      <td class="rate">%T10C014MA1 / %T10C014MA2</td>
-      <td class="rate">%T10C014MB1 / %T10C014MB2</td>
-      <td class="rate">%T10C014MC1 / %T10C014MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.15</td>
-      <td class="card">%T10CARD015N<br />(%T10CARD015R)</td>
-      <td class="rate">%T10C015TL1 / %T10C015TL2</td>
-      <td class="rate">%T10C015RA1 / %T10C015RA2</td>
-      <td class="rate">%T10C015RB1 / %T10C015RB2</td>
-      <td class="rate">%T10C015RC1 / %T10C015RC2</td>
-      <td class="rate">%T10C015MA1 / %T10C015MA2</td>
-      <td class="rate">%T10C015MB1 / %T10C015MB2</td>
-      <td class="rate">%T10C015MC1 / %T10C015MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.16</td>
-      <td class="card">%T10CARD016N<br />(%T10CARD016R)</td>
-      <td class="rate">%T10C016TL1 / %T10C016TL2</td>
-      <td class="rate">%T10C016RA1 / %T10C016RA2</td>
-      <td class="rate">%T10C016RB1 / %T10C016RB2</td>
-      <td class="rate">%T10C016RC1 / %T10C016RC2</td>
-      <td class="rate">%T10C016MA1 / %T10C016MA2</td>
-      <td class="rate">%T10C016MB1 / %T10C016MB2</td>
-      <td class="rate">%T10C016MC1 / %T10C016MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.17</td>
-      <td class="card">%T10CARD017N<br />(%T10CARD017R)</td>
-      <td class="rate">%T10C017TL1 / %T10C017TL2</td>
-      <td class="rate">%T10C017RA1 / %T10C017RA2</td>
-      <td class="rate">%T10C017RB1 / %T10C017RB2</td>
-      <td class="rate">%T10C017RC1 / %T10C017RC2</td>
-      <td class="rate">%T10C017MA1 / %T10C017MA2</td>
-      <td class="rate">%T10C017MB1 / %T10C017MB2</td>
-      <td class="rate">%T10C017MC1 / %T10C017MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.18</td>
-      <td class="card">%T10CARD018N<br />(%T10CARD018R)</td>
-      <td class="rate">%T10C018TL1 / %T10C018TL2</td>
-      <td class="rate">%T10C018RA1 / %T10C018RA2</td>
-      <td class="rate">%T10C018RB1 / %T10C018RB2</td>
-      <td class="rate">%T10C018RC1 / %T10C018RC2</td>
-      <td class="rate">%T10C018MA1 / %T10C018MA2</td>
-      <td class="rate">%T10C018MB1 / %T10C018MB2</td>
-      <td class="rate">%T10C018MC1 / %T10C018MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.19</td>
-      <td class="card">%T10CARD019N<br />(%T10CARD019R)</td>
-      <td class="rate">%T10C019TL1 / %T10C019TL2</td>
-      <td class="rate">%T10C019RA1 / %T10C019RA2</td>
-      <td class="rate">%T10C019RB1 / %T10C019RB2</td>
-      <td class="rate">%T10C019RC1 / %T10C019RC2</td>
-      <td class="rate">%T10C019MA1 / %T10C019MA2</td>
-      <td class="rate">%T10C019MB1 / %T10C019MB2</td>
-      <td class="rate">%T10C019MC1 / %T10C019MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.20</td>
-      <td class="card">%T10CARD020N<br />(%T10CARD020R)</td>
-      <td class="rate">%T10C020TL1 / %T10C020TL2</td>
-      <td class="rate">%T10C020RA1 / %T10C020RA2</td>
-      <td class="rate">%T10C020RB1 / %T10C020RB2</td>
-      <td class="rate">%T10C020RC1 / %T10C020RC2</td>
-      <td class="rate">%T10C020MA1 / %T10C020MA2</td>
-      <td class="rate">%T10C020MB1 / %T10C020MB2</td>
-      <td class="rate">%T10C020MC1 / %T10C020MC2</td>
-     </tr>
+      <tr>
+       <td class="number">No.31</td>
+       <td class="card">%T10CARD031N<br />(%T10CARD031R)</td>
+       <td class="rate">%T10C031TL1 / %T10C031TL2</td>
+       <td class="rate">%T10C031RA1 / %T10C031RA2</td>
+       <td class="rate">%T10C031RB1 / %T10C031RB2</td>
+       <td class="rate">%T10C031RC1 / %T10C031RC2</td>
+       <td class="rate">%T10C031MA1 / %T10C031MA2</td>
+       <td class="rate">%T10C031MB1 / %T10C031MB2</td>
+       <td class="rate">%T10C031MC1 / %T10C031MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.32</td>
+       <td class="card">%T10CARD032N<br />(%T10CARD032R)</td>
+       <td class="rate">%T10C032TL1 / %T10C032TL2</td>
+       <td class="rate">%T10C032RA1 / %T10C032RA2</td>
+       <td class="rate">%T10C032RB1 / %T10C032RB2</td>
+       <td class="rate">%T10C032RC1 / %T10C032RC2</td>
+       <td class="rate">%T10C032MA1 / %T10C032MA2</td>
+       <td class="rate">%T10C032MB1 / %T10C032MB2</td>
+       <td class="rate">%T10C032MC1 / %T10C032MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.33</td>
+       <td class="card">%T10CARD033N<br />(%T10CARD033R)</td>
+       <td class="rate">%T10C033TL1 / %T10C033TL2</td>
+       <td class="rate">%T10C033RA1 / %T10C033RA2</td>
+       <td class="rate">%T10C033RB1 / %T10C033RB2</td>
+       <td class="rate">%T10C033RC1 / %T10C033RC2</td>
+       <td class="rate">%T10C033MA1 / %T10C033MA2</td>
+       <td class="rate">%T10C033MB1 / %T10C033MB2</td>
+       <td class="rate">%T10C033MC1 / %T10C033MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.34</td>
+       <td class="card">%T10CARD034N<br />(%T10CARD034R)</td>
+       <td class="rate">%T10C034TL1 / %T10C034TL2</td>
+       <td class="rate">%T10C034RA1 / %T10C034RA2</td>
+       <td class="rate">%T10C034RB1 / %T10C034RB2</td>
+       <td class="rate">%T10C034RC1 / %T10C034RC2</td>
+       <td class="rate">%T10C034MA1 / %T10C034MA2</td>
+       <td class="rate">%T10C034MB1 / %T10C034MB2</td>
+       <td class="rate">%T10C034MC1 / %T10C034MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.35</td>
+       <td class="card">%T10CARD035N<br />(%T10CARD035R)</td>
+       <td class="rate">%T10C035TL1 / %T10C035TL2</td>
+       <td class="rate">%T10C035RA1 / %T10C035RA2</td>
+       <td class="rate">%T10C035RB1 / %T10C035RB2</td>
+       <td class="rate">%T10C035RC1 / %T10C035RC2</td>
+       <td class="rate">%T10C035MA1 / %T10C035MA2</td>
+       <td class="rate">%T10C035MB1 / %T10C035MB2</td>
+       <td class="rate">%T10C035MC1 / %T10C035MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.36</td>
+       <td class="card">%T10CARD036N<br />(%T10CARD036R)</td>
+       <td class="rate">%T10C036TL1 / %T10C036TL2</td>
+       <td class="rate">%T10C036RA1 / %T10C036RA2</td>
+       <td class="rate">%T10C036RB1 / %T10C036RB2</td>
+       <td class="rate">%T10C036RC1 / %T10C036RC2</td>
+       <td class="rate">%T10C036MA1 / %T10C036MA2</td>
+       <td class="rate">%T10C036MB1 / %T10C036MB2</td>
+       <td class="rate">%T10C036MC1 / %T10C036MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.37</td>
+       <td class="card">%T10CARD037N<br />(%T10CARD037R)</td>
+       <td class="rate">%T10C037TL1 / %T10C037TL2</td>
+       <td class="rate">%T10C037RA1 / %T10C037RA2</td>
+       <td class="rate">%T10C037RB1 / %T10C037RB2</td>
+       <td class="rate">%T10C037RC1 / %T10C037RC2</td>
+       <td class="rate">%T10C037MA1 / %T10C037MA2</td>
+       <td class="rate">%T10C037MB1 / %T10C037MB2</td>
+       <td class="rate">%T10C037MC1 / %T10C037MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.38</td>
+       <td class="card">%T10CARD038N<br />(%T10CARD038R)</td>
+       <td class="rate">%T10C038TL1 / %T10C038TL2</td>
+       <td class="rate">%T10C038RA1 / %T10C038RA2</td>
+       <td class="rate">%T10C038RB1 / %T10C038RB2</td>
+       <td class="rate">%T10C038RC1 / %T10C038RC2</td>
+       <td class="rate">%T10C038MA1 / %T10C038MA2</td>
+       <td class="rate">%T10C038MB1 / %T10C038MB2</td>
+       <td class="rate">%T10C038MC1 / %T10C038MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.39</td>
+       <td class="card">%T10CARD039N<br />(%T10CARD039R)</td>
+       <td class="rate">%T10C039TL1 / %T10C039TL2</td>
+       <td class="rate">%T10C039RA1 / %T10C039RA2</td>
+       <td class="rate">%T10C039RB1 / %T10C039RB2</td>
+       <td class="rate">%T10C039RC1 / %T10C039RC2</td>
+       <td class="rate">%T10C039MA1 / %T10C039MA2</td>
+       <td class="rate">%T10C039MB1 / %T10C039MB2</td>
+       <td class="rate">%T10C039MC1 / %T10C039MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.40</td>
+       <td class="card">%T10CARD040N<br />(%T10CARD040R)</td>
+       <td class="rate">%T10C040TL1 / %T10C040TL2</td>
+       <td class="rate">%T10C040RA1 / %T10C040RA2</td>
+       <td class="rate">%T10C040RB1 / %T10C040RB2</td>
+       <td class="rate">%T10C040RC1 / %T10C040RC2</td>
+       <td class="rate">%T10C040MA1 / %T10C040MA2</td>
+       <td class="rate">%T10C040MB1 / %T10C040MB2</td>
+       <td class="rate">%T10C040MC1 / %T10C040MC2</td>
+      </tr>
 
-     <tr>
-      <td class="number">No.21</td>
-      <td class="card">%T10CARD021N<br />(%T10CARD021R)</td>
-      <td class="rate">%T10C021TL1 / %T10C021TL2</td>
-      <td class="rate">%T10C021RA1 / %T10C021RA2</td>
-      <td class="rate">%T10C021RB1 / %T10C021RB2</td>
-      <td class="rate">%T10C021RC1 / %T10C021RC2</td>
-      <td class="rate">%T10C021MA1 / %T10C021MA2</td>
-      <td class="rate">%T10C021MB1 / %T10C021MB2</td>
-      <td class="rate">%T10C021MC1 / %T10C021MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.22</td>
-      <td class="card">%T10CARD022N<br />(%T10CARD022R)</td>
-      <td class="rate">%T10C022TL1 / %T10C022TL2</td>
-      <td class="rate">%T10C022RA1 / %T10C022RA2</td>
-      <td class="rate">%T10C022RB1 / %T10C022RB2</td>
-      <td class="rate">%T10C022RC1 / %T10C022RC2</td>
-      <td class="rate">%T10C022MA1 / %T10C022MA2</td>
-      <td class="rate">%T10C022MB1 / %T10C022MB2</td>
-      <td class="rate">%T10C022MC1 / %T10C022MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.23</td>
-      <td class="card">%T10CARD023N<br />(%T10CARD023R)</td>
-      <td class="rate">%T10C023TL1 / %T10C023TL2</td>
-      <td class="rate">%T10C023RA1 / %T10C023RA2</td>
-      <td class="rate">%T10C023RB1 / %T10C023RB2</td>
-      <td class="rate">%T10C023RC1 / %T10C023RC2</td>
-      <td class="rate">%T10C023MA1 / %T10C023MA2</td>
-      <td class="rate">%T10C023MB1 / %T10C023MB2</td>
-      <td class="rate">%T10C023MC1 / %T10C023MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.24</td>
-      <td class="card">%T10CARD024N<br />(%T10CARD024R)</td>
-      <td class="rate">%T10C024TL1 / %T10C024TL2</td>
-      <td class="rate">%T10C024RA1 / %T10C024RA2</td>
-      <td class="rate">%T10C024RB1 / %T10C024RB2</td>
-      <td class="rate">%T10C024RC1 / %T10C024RC2</td>
-      <td class="rate">%T10C024MA1 / %T10C024MA2</td>
-      <td class="rate">%T10C024MB1 / %T10C024MB2</td>
-      <td class="rate">%T10C024MC1 / %T10C024MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.25</td>
-      <td class="card">%T10CARD025N<br />(%T10CARD025R)</td>
-      <td class="rate">%T10C025TL1 / %T10C025TL2</td>
-      <td class="rate">%T10C025RA1 / %T10C025RA2</td>
-      <td class="rate">%T10C025RB1 / %T10C025RB2</td>
-      <td class="rate">%T10C025RC1 / %T10C025RC2</td>
-      <td class="rate">%T10C025MA1 / %T10C025MA2</td>
-      <td class="rate">%T10C025MB1 / %T10C025MB2</td>
-      <td class="rate">%T10C025MC1 / %T10C025MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.26</td>
-      <td class="card">%T10CARD026N<br />(%T10CARD026R)</td>
-      <td class="rate">%T10C026TL1 / %T10C026TL2</td>
-      <td class="rate">%T10C026RA1 / %T10C026RA2</td>
-      <td class="rate">%T10C026RB1 / %T10C026RB2</td>
-      <td class="rate">%T10C026RC1 / %T10C026RC2</td>
-      <td class="rate">%T10C026MA1 / %T10C026MA2</td>
-      <td class="rate">%T10C026MB1 / %T10C026MB2</td>
-      <td class="rate">%T10C026MC1 / %T10C026MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.27</td>
-      <td class="card">%T10CARD027N<br />(%T10CARD027R)</td>
-      <td class="rate">%T10C027TL1 / %T10C027TL2</td>
-      <td class="rate">%T10C027RA1 / %T10C027RA2</td>
-      <td class="rate">%T10C027RB1 / %T10C027RB2</td>
-      <td class="rate">%T10C027RC1 / %T10C027RC2</td>
-      <td class="rate">%T10C027MA1 / %T10C027MA2</td>
-      <td class="rate">%T10C027MB1 / %T10C027MB2</td>
-      <td class="rate">%T10C027MC1 / %T10C027MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.28</td>
-      <td class="card">%T10CARD028N<br />(%T10CARD028R)</td>
-      <td class="rate">%T10C028TL1 / %T10C028TL2</td>
-      <td class="rate">%T10C028RA1 / %T10C028RA2</td>
-      <td class="rate">%T10C028RB1 / %T10C028RB2</td>
-      <td class="rate">%T10C028RC1 / %T10C028RC2</td>
-      <td class="rate">%T10C028MA1 / %T10C028MA2</td>
-      <td class="rate">%T10C028MB1 / %T10C028MB2</td>
-      <td class="rate">%T10C028MC1 / %T10C028MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.29</td>
-      <td class="card">%T10CARD029N<br />(%T10CARD029R)</td>
-      <td class="rate">%T10C029TL1 / %T10C029TL2</td>
-      <td class="rate">%T10C029RA1 / %T10C029RA2</td>
-      <td class="rate">%T10C029RB1 / %T10C029RB2</td>
-      <td class="rate">%T10C029RC1 / %T10C029RC2</td>
-      <td class="rate">%T10C029MA1 / %T10C029MA2</td>
-      <td class="rate">%T10C029MB1 / %T10C029MB2</td>
-      <td class="rate">%T10C029MC1 / %T10C029MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.30</td>
-      <td class="card">%T10CARD030N<br />(%T10CARD030R)</td>
-      <td class="rate">%T10C030TL1 / %T10C030TL2</td>
-      <td class="rate">%T10C030RA1 / %T10C030RA2</td>
-      <td class="rate">%T10C030RB1 / %T10C030RB2</td>
-      <td class="rate">%T10C030RC1 / %T10C030RC2</td>
-      <td class="rate">%T10C030MA1 / %T10C030MA2</td>
-      <td class="rate">%T10C030MB1 / %T10C030MB2</td>
-      <td class="rate">%T10C030MC1 / %T10C030MC2</td>
-     </tr>
+      <tr>
+       <td class="number">No.41</td>
+       <td class="card">%T10CARD041N<br />(%T10CARD041R)</td>
+       <td class="rate">%T10C041TL1 / %T10C041TL2</td>
+       <td class="rate">%T10C041RA1 / %T10C041RA2</td>
+       <td class="rate">%T10C041RB1 / %T10C041RB2</td>
+       <td class="rate">%T10C041RC1 / %T10C041RC2</td>
+       <td class="rate">%T10C041MA1 / %T10C041MA2</td>
+       <td class="rate">%T10C041MB1 / %T10C041MB2</td>
+       <td class="rate">%T10C041MC1 / %T10C041MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.42</td>
+       <td class="card">%T10CARD042N<br />(%T10CARD042R)</td>
+       <td class="rate">%T10C042TL1 / %T10C042TL2</td>
+       <td class="rate">%T10C042RA1 / %T10C042RA2</td>
+       <td class="rate">%T10C042RB1 / %T10C042RB2</td>
+       <td class="rate">%T10C042RC1 / %T10C042RC2</td>
+       <td class="rate">%T10C042MA1 / %T10C042MA2</td>
+       <td class="rate">%T10C042MB1 / %T10C042MB2</td>
+       <td class="rate">%T10C042MC1 / %T10C042MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.43</td>
+       <td class="card">%T10CARD043N<br />(%T10CARD043R)</td>
+       <td class="rate">%T10C043TL1 / %T10C043TL2</td>
+       <td class="rate">%T10C043RA1 / %T10C043RA2</td>
+       <td class="rate">%T10C043RB1 / %T10C043RB2</td>
+       <td class="rate">%T10C043RC1 / %T10C043RC2</td>
+       <td class="rate">%T10C043MA1 / %T10C043MA2</td>
+       <td class="rate">%T10C043MB1 / %T10C043MB2</td>
+       <td class="rate">%T10C043MC1 / %T10C043MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.44</td>
+       <td class="card">%T10CARD044N<br />(%T10CARD044R)</td>
+       <td class="rate">%T10C044TL1 / %T10C044TL2</td>
+       <td class="rate">%T10C044RA1 / %T10C044RA2</td>
+       <td class="rate">%T10C044RB1 / %T10C044RB2</td>
+       <td class="rate">%T10C044RC1 / %T10C044RC2</td>
+       <td class="rate">%T10C044MA1 / %T10C044MA2</td>
+       <td class="rate">%T10C044MB1 / %T10C044MB2</td>
+       <td class="rate">%T10C044MC1 / %T10C044MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.45</td>
+       <td class="card">%T10CARD045N<br />(%T10CARD045R)</td>
+       <td class="rate">%T10C045TL1 / %T10C045TL2</td>
+       <td class="rate">%T10C045RA1 / %T10C045RA2</td>
+       <td class="rate">%T10C045RB1 / %T10C045RB2</td>
+       <td class="rate">%T10C045RC1 / %T10C045RC2</td>
+       <td class="rate">%T10C045MA1 / %T10C045MA2</td>
+       <td class="rate">%T10C045MB1 / %T10C045MB2</td>
+       <td class="rate">%T10C045MC1 / %T10C045MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.46</td>
+       <td class="card">%T10CARD046N<br />(%T10CARD046R)</td>
+       <td class="rate">%T10C046TL1 / %T10C046TL2</td>
+       <td class="rate">%T10C046RA1 / %T10C046RA2</td>
+       <td class="rate">%T10C046RB1 / %T10C046RB2</td>
+       <td class="rate">%T10C046RC1 / %T10C046RC2</td>
+       <td class="rate">%T10C046MA1 / %T10C046MA2</td>
+       <td class="rate">%T10C046MB1 / %T10C046MB2</td>
+       <td class="rate">%T10C046MC1 / %T10C046MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.47</td>
+       <td class="card">%T10CARD047N<br />(%T10CARD047R)</td>
+       <td class="rate">%T10C047TL1 / %T10C047TL2</td>
+       <td class="rate">%T10C047RA1 / %T10C047RA2</td>
+       <td class="rate">%T10C047RB1 / %T10C047RB2</td>
+       <td class="rate">%T10C047RC1 / %T10C047RC2</td>
+       <td class="rate">%T10C047MA1 / %T10C047MA2</td>
+       <td class="rate">%T10C047MB1 / %T10C047MB2</td>
+       <td class="rate">%T10C047MC1 / %T10C047MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.48</td>
+       <td class="card">%T10CARD048N<br />(%T10CARD048R)</td>
+       <td class="rate">%T10C048TL1 / %T10C048TL2</td>
+       <td class="rate">%T10C048RA1 / %T10C048RA2</td>
+       <td class="rate">%T10C048RB1 / %T10C048RB2</td>
+       <td class="rate">%T10C048RC1 / %T10C048RC2</td>
+       <td class="rate">%T10C048MA1 / %T10C048MA2</td>
+       <td class="rate">%T10C048MB1 / %T10C048MB2</td>
+       <td class="rate">%T10C048MC1 / %T10C048MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.49</td>
+       <td class="card">%T10CARD049N<br />(%T10CARD049R)</td>
+       <td class="rate">%T10C049TL1 / %T10C049TL2</td>
+       <td class="rate">%T10C049RA1 / %T10C049RA2</td>
+       <td class="rate">%T10C049RB1 / %T10C049RB2</td>
+       <td class="rate">%T10C049RC1 / %T10C049RC2</td>
+       <td class="rate">%T10C049MA1 / %T10C049MA2</td>
+       <td class="rate">%T10C049MB1 / %T10C049MB2</td>
+       <td class="rate">%T10C049MC1 / %T10C049MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.50</td>
+       <td class="card">%T10CARD050N<br />(%T10CARD050R)</td>
+       <td class="rate">%T10C050TL1 / %T10C050TL2</td>
+       <td class="rate">%T10C050RA1 / %T10C050RA2</td>
+       <td class="rate">%T10C050RB1 / %T10C050RB2</td>
+       <td class="rate">%T10C050RC1 / %T10C050RC2</td>
+       <td class="rate">%T10C050MA1 / %T10C050MA2</td>
+       <td class="rate">%T10C050MB1 / %T10C050MB2</td>
+       <td class="rate">%T10C050MC1 / %T10C050MC2</td>
+      </tr>
 
-     <tr>
-      <td class="number">No.31</td>
-      <td class="card">%T10CARD031N<br />(%T10CARD031R)</td>
-      <td class="rate">%T10C031TL1 / %T10C031TL2</td>
-      <td class="rate">%T10C031RA1 / %T10C031RA2</td>
-      <td class="rate">%T10C031RB1 / %T10C031RB2</td>
-      <td class="rate">%T10C031RC1 / %T10C031RC2</td>
-      <td class="rate">%T10C031MA1 / %T10C031MA2</td>
-      <td class="rate">%T10C031MB1 / %T10C031MB2</td>
-      <td class="rate">%T10C031MC1 / %T10C031MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.32</td>
-      <td class="card">%T10CARD032N<br />(%T10CARD032R)</td>
-      <td class="rate">%T10C032TL1 / %T10C032TL2</td>
-      <td class="rate">%T10C032RA1 / %T10C032RA2</td>
-      <td class="rate">%T10C032RB1 / %T10C032RB2</td>
-      <td class="rate">%T10C032RC1 / %T10C032RC2</td>
-      <td class="rate">%T10C032MA1 / %T10C032MA2</td>
-      <td class="rate">%T10C032MB1 / %T10C032MB2</td>
-      <td class="rate">%T10C032MC1 / %T10C032MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.33</td>
-      <td class="card">%T10CARD033N<br />(%T10CARD033R)</td>
-      <td class="rate">%T10C033TL1 / %T10C033TL2</td>
-      <td class="rate">%T10C033RA1 / %T10C033RA2</td>
-      <td class="rate">%T10C033RB1 / %T10C033RB2</td>
-      <td class="rate">%T10C033RC1 / %T10C033RC2</td>
-      <td class="rate">%T10C033MA1 / %T10C033MA2</td>
-      <td class="rate">%T10C033MB1 / %T10C033MB2</td>
-      <td class="rate">%T10C033MC1 / %T10C033MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.34</td>
-      <td class="card">%T10CARD034N<br />(%T10CARD034R)</td>
-      <td class="rate">%T10C034TL1 / %T10C034TL2</td>
-      <td class="rate">%T10C034RA1 / %T10C034RA2</td>
-      <td class="rate">%T10C034RB1 / %T10C034RB2</td>
-      <td class="rate">%T10C034RC1 / %T10C034RC2</td>
-      <td class="rate">%T10C034MA1 / %T10C034MA2</td>
-      <td class="rate">%T10C034MB1 / %T10C034MB2</td>
-      <td class="rate">%T10C034MC1 / %T10C034MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.35</td>
-      <td class="card">%T10CARD035N<br />(%T10CARD035R)</td>
-      <td class="rate">%T10C035TL1 / %T10C035TL2</td>
-      <td class="rate">%T10C035RA1 / %T10C035RA2</td>
-      <td class="rate">%T10C035RB1 / %T10C035RB2</td>
-      <td class="rate">%T10C035RC1 / %T10C035RC2</td>
-      <td class="rate">%T10C035MA1 / %T10C035MA2</td>
-      <td class="rate">%T10C035MB1 / %T10C035MB2</td>
-      <td class="rate">%T10C035MC1 / %T10C035MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.36</td>
-      <td class="card">%T10CARD036N<br />(%T10CARD036R)</td>
-      <td class="rate">%T10C036TL1 / %T10C036TL2</td>
-      <td class="rate">%T10C036RA1 / %T10C036RA2</td>
-      <td class="rate">%T10C036RB1 / %T10C036RB2</td>
-      <td class="rate">%T10C036RC1 / %T10C036RC2</td>
-      <td class="rate">%T10C036MA1 / %T10C036MA2</td>
-      <td class="rate">%T10C036MB1 / %T10C036MB2</td>
-      <td class="rate">%T10C036MC1 / %T10C036MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.37</td>
-      <td class="card">%T10CARD037N<br />(%T10CARD037R)</td>
-      <td class="rate">%T10C037TL1 / %T10C037TL2</td>
-      <td class="rate">%T10C037RA1 / %T10C037RA2</td>
-      <td class="rate">%T10C037RB1 / %T10C037RB2</td>
-      <td class="rate">%T10C037RC1 / %T10C037RC2</td>
-      <td class="rate">%T10C037MA1 / %T10C037MA2</td>
-      <td class="rate">%T10C037MB1 / %T10C037MB2</td>
-      <td class="rate">%T10C037MC1 / %T10C037MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.38</td>
-      <td class="card">%T10CARD038N<br />(%T10CARD038R)</td>
-      <td class="rate">%T10C038TL1 / %T10C038TL2</td>
-      <td class="rate">%T10C038RA1 / %T10C038RA2</td>
-      <td class="rate">%T10C038RB1 / %T10C038RB2</td>
-      <td class="rate">%T10C038RC1 / %T10C038RC2</td>
-      <td class="rate">%T10C038MA1 / %T10C038MA2</td>
-      <td class="rate">%T10C038MB1 / %T10C038MB2</td>
-      <td class="rate">%T10C038MC1 / %T10C038MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.39</td>
-      <td class="card">%T10CARD039N<br />(%T10CARD039R)</td>
-      <td class="rate">%T10C039TL1 / %T10C039TL2</td>
-      <td class="rate">%T10C039RA1 / %T10C039RA2</td>
-      <td class="rate">%T10C039RB1 / %T10C039RB2</td>
-      <td class="rate">%T10C039RC1 / %T10C039RC2</td>
-      <td class="rate">%T10C039MA1 / %T10C039MA2</td>
-      <td class="rate">%T10C039MB1 / %T10C039MB2</td>
-      <td class="rate">%T10C039MC1 / %T10C039MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.40</td>
-      <td class="card">%T10CARD040N<br />(%T10CARD040R)</td>
-      <td class="rate">%T10C040TL1 / %T10C040TL2</td>
-      <td class="rate">%T10C040RA1 / %T10C040RA2</td>
-      <td class="rate">%T10C040RB1 / %T10C040RB2</td>
-      <td class="rate">%T10C040RC1 / %T10C040RC2</td>
-      <td class="rate">%T10C040MA1 / %T10C040MA2</td>
-      <td class="rate">%T10C040MB1 / %T10C040MB2</td>
-      <td class="rate">%T10C040MC1 / %T10C040MC2</td>
-     </tr>
+      <tr>
+       <td class="number">No.51</td>
+       <td class="card">%T10CARD051N<br />(%T10CARD051R)</td>
+       <td class="rate">%T10C051TL1 / %T10C051TL2</td>
+       <td class="rate">%T10C051RA1 / %T10C051RA2</td>
+       <td class="rate">%T10C051RB1 / %T10C051RB2</td>
+       <td class="rate">%T10C051RC1 / %T10C051RC2</td>
+       <td class="rate">%T10C051MA1 / %T10C051MA2</td>
+       <td class="rate">%T10C051MB1 / %T10C051MB2</td>
+       <td class="rate">%T10C051MC1 / %T10C051MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.52</td>
+       <td class="card">%T10CARD052N<br />(%T10CARD052R)</td>
+       <td class="rate">%T10C052TL1 / %T10C052TL2</td>
+       <td class="rate">%T10C052RA1 / %T10C052RA2</td>
+       <td class="rate">%T10C052RB1 / %T10C052RB2</td>
+       <td class="rate">%T10C052RC1 / %T10C052RC2</td>
+       <td class="rate">%T10C052MA1 / %T10C052MA2</td>
+       <td class="rate">%T10C052MB1 / %T10C052MB2</td>
+       <td class="rate">%T10C052MC1 / %T10C052MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.53</td>
+       <td class="card">%T10CARD053N<br />(%T10CARD053R)</td>
+       <td class="rate">%T10C053TL1 / %T10C053TL2</td>
+       <td class="rate">%T10C053RA1 / %T10C053RA2</td>
+       <td class="rate">%T10C053RB1 / %T10C053RB2</td>
+       <td class="rate">%T10C053RC1 / %T10C053RC2</td>
+       <td class="rate">%T10C053MA1 / %T10C053MA2</td>
+       <td class="rate">%T10C053MB1 / %T10C053MB2</td>
+       <td class="rate">%T10C053MC1 / %T10C053MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.54</td>
+       <td class="card">%T10CARD054N<br />(%T10CARD054R)</td>
+       <td class="rate">%T10C054TL1 / %T10C054TL2</td>
+       <td class="rate">%T10C054RA1 / %T10C054RA2</td>
+       <td class="rate">%T10C054RB1 / %T10C054RB2</td>
+       <td class="rate">%T10C054RC1 / %T10C054RC2</td>
+       <td class="rate">%T10C054MA1 / %T10C054MA2</td>
+       <td class="rate">%T10C054MB1 / %T10C054MB2</td>
+       <td class="rate">%T10C054MC1 / %T10C054MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.55</td>
+       <td class="card">%T10CARD055N<br />(%T10CARD055R)</td>
+       <td class="rate">%T10C055TL1 / %T10C055TL2</td>
+       <td class="rate">%T10C055RA1 / %T10C055RA2</td>
+       <td class="rate">%T10C055RB1 / %T10C055RB2</td>
+       <td class="rate">%T10C055RC1 / %T10C055RC2</td>
+       <td class="rate">%T10C055MA1 / %T10C055MA2</td>
+       <td class="rate">%T10C055MB1 / %T10C055MB2</td>
+       <td class="rate">%T10C055MC1 / %T10C055MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.56</td>
+       <td class="card">%T10CARD056N<br />(%T10CARD056R)</td>
+       <td class="rate">%T10C056TL1 / %T10C056TL2</td>
+       <td class="rate">%T10C056RA1 / %T10C056RA2</td>
+       <td class="rate">%T10C056RB1 / %T10C056RB2</td>
+       <td class="rate">%T10C056RC1 / %T10C056RC2</td>
+       <td class="rate">%T10C056MA1 / %T10C056MA2</td>
+       <td class="rate">%T10C056MB1 / %T10C056MB2</td>
+       <td class="rate">%T10C056MC1 / %T10C056MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.57</td>
+       <td class="card">%T10CARD057N<br />(%T10CARD057R)</td>
+       <td class="rate">%T10C057TL1 / %T10C057TL2</td>
+       <td class="rate">%T10C057RA1 / %T10C057RA2</td>
+       <td class="rate">%T10C057RB1 / %T10C057RB2</td>
+       <td class="rate">%T10C057RC1 / %T10C057RC2</td>
+       <td class="rate">%T10C057MA1 / %T10C057MA2</td>
+       <td class="rate">%T10C057MB1 / %T10C057MB2</td>
+       <td class="rate">%T10C057MC1 / %T10C057MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.58</td>
+       <td class="card">%T10CARD058N<br />(%T10CARD058R)</td>
+       <td class="rate">%T10C058TL1 / %T10C058TL2</td>
+       <td class="rate">%T10C058RA1 / %T10C058RA2</td>
+       <td class="rate">%T10C058RB1 / %T10C058RB2</td>
+       <td class="rate">%T10C058RC1 / %T10C058RC2</td>
+       <td class="rate">%T10C058MA1 / %T10C058MA2</td>
+       <td class="rate">%T10C058MB1 / %T10C058MB2</td>
+       <td class="rate">%T10C058MC1 / %T10C058MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.59</td>
+       <td class="card">%T10CARD059N<br />(%T10CARD059R)</td>
+       <td class="rate">%T10C059TL1 / %T10C059TL2</td>
+       <td class="rate">%T10C059RA1 / %T10C059RA2</td>
+       <td class="rate">%T10C059RB1 / %T10C059RB2</td>
+       <td class="rate">%T10C059RC1 / %T10C059RC2</td>
+       <td class="rate">%T10C059MA1 / %T10C059MA2</td>
+       <td class="rate">%T10C059MB1 / %T10C059MB2</td>
+       <td class="rate">%T10C059MC1 / %T10C059MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.60</td>
+       <td class="card">%T10CARD060N<br />(%T10CARD060R)</td>
+       <td class="rate">%T10C060TL1 / %T10C060TL2</td>
+       <td class="rate">%T10C060RA1 / %T10C060RA2</td>
+       <td class="rate">%T10C060RB1 / %T10C060RB2</td>
+       <td class="rate">%T10C060RC1 / %T10C060RC2</td>
+       <td class="rate">%T10C060MA1 / %T10C060MA2</td>
+       <td class="rate">%T10C060MB1 / %T10C060MB2</td>
+       <td class="rate">%T10C060MC1 / %T10C060MC2</td>
+      </tr>
 
-     <tr>
-      <td class="number">No.41</td>
-      <td class="card">%T10CARD041N<br />(%T10CARD041R)</td>
-      <td class="rate">%T10C041TL1 / %T10C041TL2</td>
-      <td class="rate">%T10C041RA1 / %T10C041RA2</td>
-      <td class="rate">%T10C041RB1 / %T10C041RB2</td>
-      <td class="rate">%T10C041RC1 / %T10C041RC2</td>
-      <td class="rate">%T10C041MA1 / %T10C041MA2</td>
-      <td class="rate">%T10C041MB1 / %T10C041MB2</td>
-      <td class="rate">%T10C041MC1 / %T10C041MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.42</td>
-      <td class="card">%T10CARD042N<br />(%T10CARD042R)</td>
-      <td class="rate">%T10C042TL1 / %T10C042TL2</td>
-      <td class="rate">%T10C042RA1 / %T10C042RA2</td>
-      <td class="rate">%T10C042RB1 / %T10C042RB2</td>
-      <td class="rate">%T10C042RC1 / %T10C042RC2</td>
-      <td class="rate">%T10C042MA1 / %T10C042MA2</td>
-      <td class="rate">%T10C042MB1 / %T10C042MB2</td>
-      <td class="rate">%T10C042MC1 / %T10C042MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.43</td>
-      <td class="card">%T10CARD043N<br />(%T10CARD043R)</td>
-      <td class="rate">%T10C043TL1 / %T10C043TL2</td>
-      <td class="rate">%T10C043RA1 / %T10C043RA2</td>
-      <td class="rate">%T10C043RB1 / %T10C043RB2</td>
-      <td class="rate">%T10C043RC1 / %T10C043RC2</td>
-      <td class="rate">%T10C043MA1 / %T10C043MA2</td>
-      <td class="rate">%T10C043MB1 / %T10C043MB2</td>
-      <td class="rate">%T10C043MC1 / %T10C043MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.44</td>
-      <td class="card">%T10CARD044N<br />(%T10CARD044R)</td>
-      <td class="rate">%T10C044TL1 / %T10C044TL2</td>
-      <td class="rate">%T10C044RA1 / %T10C044RA2</td>
-      <td class="rate">%T10C044RB1 / %T10C044RB2</td>
-      <td class="rate">%T10C044RC1 / %T10C044RC2</td>
-      <td class="rate">%T10C044MA1 / %T10C044MA2</td>
-      <td class="rate">%T10C044MB1 / %T10C044MB2</td>
-      <td class="rate">%T10C044MC1 / %T10C044MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.45</td>
-      <td class="card">%T10CARD045N<br />(%T10CARD045R)</td>
-      <td class="rate">%T10C045TL1 / %T10C045TL2</td>
-      <td class="rate">%T10C045RA1 / %T10C045RA2</td>
-      <td class="rate">%T10C045RB1 / %T10C045RB2</td>
-      <td class="rate">%T10C045RC1 / %T10C045RC2</td>
-      <td class="rate">%T10C045MA1 / %T10C045MA2</td>
-      <td class="rate">%T10C045MB1 / %T10C045MB2</td>
-      <td class="rate">%T10C045MC1 / %T10C045MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.46</td>
-      <td class="card">%T10CARD046N<br />(%T10CARD046R)</td>
-      <td class="rate">%T10C046TL1 / %T10C046TL2</td>
-      <td class="rate">%T10C046RA1 / %T10C046RA2</td>
-      <td class="rate">%T10C046RB1 / %T10C046RB2</td>
-      <td class="rate">%T10C046RC1 / %T10C046RC2</td>
-      <td class="rate">%T10C046MA1 / %T10C046MA2</td>
-      <td class="rate">%T10C046MB1 / %T10C046MB2</td>
-      <td class="rate">%T10C046MC1 / %T10C046MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.47</td>
-      <td class="card">%T10CARD047N<br />(%T10CARD047R)</td>
-      <td class="rate">%T10C047TL1 / %T10C047TL2</td>
-      <td class="rate">%T10C047RA1 / %T10C047RA2</td>
-      <td class="rate">%T10C047RB1 / %T10C047RB2</td>
-      <td class="rate">%T10C047RC1 / %T10C047RC2</td>
-      <td class="rate">%T10C047MA1 / %T10C047MA2</td>
-      <td class="rate">%T10C047MB1 / %T10C047MB2</td>
-      <td class="rate">%T10C047MC1 / %T10C047MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.48</td>
-      <td class="card">%T10CARD048N<br />(%T10CARD048R)</td>
-      <td class="rate">%T10C048TL1 / %T10C048TL2</td>
-      <td class="rate">%T10C048RA1 / %T10C048RA2</td>
-      <td class="rate">%T10C048RB1 / %T10C048RB2</td>
-      <td class="rate">%T10C048RC1 / %T10C048RC2</td>
-      <td class="rate">%T10C048MA1 / %T10C048MA2</td>
-      <td class="rate">%T10C048MB1 / %T10C048MB2</td>
-      <td class="rate">%T10C048MC1 / %T10C048MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.49</td>
-      <td class="card">%T10CARD049N<br />(%T10CARD049R)</td>
-      <td class="rate">%T10C049TL1 / %T10C049TL2</td>
-      <td class="rate">%T10C049RA1 / %T10C049RA2</td>
-      <td class="rate">%T10C049RB1 / %T10C049RB2</td>
-      <td class="rate">%T10C049RC1 / %T10C049RC2</td>
-      <td class="rate">%T10C049MA1 / %T10C049MA2</td>
-      <td class="rate">%T10C049MB1 / %T10C049MB2</td>
-      <td class="rate">%T10C049MC1 / %T10C049MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.50</td>
-      <td class="card">%T10CARD050N<br />(%T10CARD050R)</td>
-      <td class="rate">%T10C050TL1 / %T10C050TL2</td>
-      <td class="rate">%T10C050RA1 / %T10C050RA2</td>
-      <td class="rate">%T10C050RB1 / %T10C050RB2</td>
-      <td class="rate">%T10C050RC1 / %T10C050RC2</td>
-      <td class="rate">%T10C050MA1 / %T10C050MA2</td>
-      <td class="rate">%T10C050MB1 / %T10C050MB2</td>
-      <td class="rate">%T10C050MC1 / %T10C050MC2</td>
-     </tr>
+      <tr>
+       <td class="number">No.61</td>
+       <td class="card">%T10CARD061N<br />(%T10CARD061R)</td>
+       <td class="rate">%T10C061TL1 / %T10C061TL2</td>
+       <td class="rate">%T10C061RA1 / %T10C061RA2</td>
+       <td class="rate">%T10C061RB1 / %T10C061RB2</td>
+       <td class="rate">%T10C061RC1 / %T10C061RC2</td>
+       <td class="rate">%T10C061MA1 / %T10C061MA2</td>
+       <td class="rate">%T10C061MB1 / %T10C061MB2</td>
+       <td class="rate">%T10C061MC1 / %T10C061MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.62</td>
+       <td class="card">%T10CARD062N<br />(%T10CARD062R)</td>
+       <td class="rate">%T10C062TL1 / %T10C062TL2</td>
+       <td class="rate">%T10C062RA1 / %T10C062RA2</td>
+       <td class="rate">%T10C062RB1 / %T10C062RB2</td>
+       <td class="rate">%T10C062RC1 / %T10C062RC2</td>
+       <td class="rate">%T10C062MA1 / %T10C062MA2</td>
+       <td class="rate">%T10C062MB1 / %T10C062MB2</td>
+       <td class="rate">%T10C062MC1 / %T10C062MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.63</td>
+       <td class="card">%T10CARD063N<br />(%T10CARD063R)</td>
+       <td class="rate">%T10C063TL1 / %T10C063TL2</td>
+       <td class="rate">%T10C063RA1 / %T10C063RA2</td>
+       <td class="rate">%T10C063RB1 / %T10C063RB2</td>
+       <td class="rate">%T10C063RC1 / %T10C063RC2</td>
+       <td class="rate">%T10C063MA1 / %T10C063MA2</td>
+       <td class="rate">%T10C063MB1 / %T10C063MB2</td>
+       <td class="rate">%T10C063MC1 / %T10C063MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.64</td>
+       <td class="card">%T10CARD064N<br />(%T10CARD064R)</td>
+       <td class="rate">%T10C064TL1 / %T10C064TL2</td>
+       <td class="rate">%T10C064RA1 / %T10C064RA2</td>
+       <td class="rate">%T10C064RB1 / %T10C064RB2</td>
+       <td class="rate">%T10C064RC1 / %T10C064RC2</td>
+       <td class="rate">%T10C064MA1 / %T10C064MA2</td>
+       <td class="rate">%T10C064MB1 / %T10C064MB2</td>
+       <td class="rate">%T10C064MC1 / %T10C064MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.65</td>
+       <td class="card">%T10CARD065N<br />(%T10CARD065R)</td>
+       <td class="rate">%T10C065TL1 / %T10C065TL2</td>
+       <td class="rate">%T10C065RA1 / %T10C065RA2</td>
+       <td class="rate">%T10C065RB1 / %T10C065RB2</td>
+       <td class="rate">%T10C065RC1 / %T10C065RC2</td>
+       <td class="rate">%T10C065MA1 / %T10C065MA2</td>
+       <td class="rate">%T10C065MB1 / %T10C065MB2</td>
+       <td class="rate">%T10C065MC1 / %T10C065MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.66</td>
+       <td class="card">%T10CARD066N<br />(%T10CARD066R)</td>
+       <td class="rate">%T10C066TL1 / %T10C066TL2</td>
+       <td class="rate">%T10C066RA1 / %T10C066RA2</td>
+       <td class="rate">%T10C066RB1 / %T10C066RB2</td>
+       <td class="rate">%T10C066RC1 / %T10C066RC2</td>
+       <td class="rate">%T10C066MA1 / %T10C066MA2</td>
+       <td class="rate">%T10C066MB1 / %T10C066MB2</td>
+       <td class="rate">%T10C066MC1 / %T10C066MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.67</td>
+       <td class="card">%T10CARD067N<br />(%T10CARD067R)</td>
+       <td class="rate">%T10C067TL1 / %T10C067TL2</td>
+       <td class="rate">%T10C067RA1 / %T10C067RA2</td>
+       <td class="rate">%T10C067RB1 / %T10C067RB2</td>
+       <td class="rate">%T10C067RC1 / %T10C067RC2</td>
+       <td class="rate">%T10C067MA1 / %T10C067MA2</td>
+       <td class="rate">%T10C067MB1 / %T10C067MB2</td>
+       <td class="rate">%T10C067MC1 / %T10C067MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.68</td>
+       <td class="card">%T10CARD068N<br />(%T10CARD068R)</td>
+       <td class="rate">%T10C068TL1 / %T10C068TL2</td>
+       <td class="rate">%T10C068RA1 / %T10C068RA2</td>
+       <td class="rate">%T10C068RB1 / %T10C068RB2</td>
+       <td class="rate">%T10C068RC1 / %T10C068RC2</td>
+       <td class="rate">%T10C068MA1 / %T10C068MA2</td>
+       <td class="rate">%T10C068MB1 / %T10C068MB2</td>
+       <td class="rate">%T10C068MC1 / %T10C068MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.69</td>
+       <td class="card">%T10CARD069N<br />(%T10CARD069R)</td>
+       <td class="rate">%T10C069TL1 / %T10C069TL2</td>
+       <td class="rate">%T10C069RA1 / %T10C069RA2</td>
+       <td class="rate">%T10C069RB1 / %T10C069RB2</td>
+       <td class="rate">%T10C069RC1 / %T10C069RC2</td>
+       <td class="rate">%T10C069MA1 / %T10C069MA2</td>
+       <td class="rate">%T10C069MB1 / %T10C069MB2</td>
+       <td class="rate">%T10C069MC1 / %T10C069MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.70</td>
+       <td class="card">%T10CARD070N<br />(%T10CARD070R)</td>
+       <td class="rate">%T10C070TL1 / %T10C070TL2</td>
+       <td class="rate">%T10C070RA1 / %T10C070RA2</td>
+       <td class="rate">%T10C070RB1 / %T10C070RB2</td>
+       <td class="rate">%T10C070RC1 / %T10C070RC2</td>
+       <td class="rate">%T10C070MA1 / %T10C070MA2</td>
+       <td class="rate">%T10C070MB1 / %T10C070MB2</td>
+       <td class="rate">%T10C070MC1 / %T10C070MC2</td>
+      </tr>
 
-     <tr>
-      <td class="number">No.51</td>
-      <td class="card">%T10CARD051N<br />(%T10CARD051R)</td>
-      <td class="rate">%T10C051TL1 / %T10C051TL2</td>
-      <td class="rate">%T10C051RA1 / %T10C051RA2</td>
-      <td class="rate">%T10C051RB1 / %T10C051RB2</td>
-      <td class="rate">%T10C051RC1 / %T10C051RC2</td>
-      <td class="rate">%T10C051MA1 / %T10C051MA2</td>
-      <td class="rate">%T10C051MB1 / %T10C051MB2</td>
-      <td class="rate">%T10C051MC1 / %T10C051MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.52</td>
-      <td class="card">%T10CARD052N<br />(%T10CARD052R)</td>
-      <td class="rate">%T10C052TL1 / %T10C052TL2</td>
-      <td class="rate">%T10C052RA1 / %T10C052RA2</td>
-      <td class="rate">%T10C052RB1 / %T10C052RB2</td>
-      <td class="rate">%T10C052RC1 / %T10C052RC2</td>
-      <td class="rate">%T10C052MA1 / %T10C052MA2</td>
-      <td class="rate">%T10C052MB1 / %T10C052MB2</td>
-      <td class="rate">%T10C052MC1 / %T10C052MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.53</td>
-      <td class="card">%T10CARD053N<br />(%T10CARD053R)</td>
-      <td class="rate">%T10C053TL1 / %T10C053TL2</td>
-      <td class="rate">%T10C053RA1 / %T10C053RA2</td>
-      <td class="rate">%T10C053RB1 / %T10C053RB2</td>
-      <td class="rate">%T10C053RC1 / %T10C053RC2</td>
-      <td class="rate">%T10C053MA1 / %T10C053MA2</td>
-      <td class="rate">%T10C053MB1 / %T10C053MB2</td>
-      <td class="rate">%T10C053MC1 / %T10C053MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.54</td>
-      <td class="card">%T10CARD054N<br />(%T10CARD054R)</td>
-      <td class="rate">%T10C054TL1 / %T10C054TL2</td>
-      <td class="rate">%T10C054RA1 / %T10C054RA2</td>
-      <td class="rate">%T10C054RB1 / %T10C054RB2</td>
-      <td class="rate">%T10C054RC1 / %T10C054RC2</td>
-      <td class="rate">%T10C054MA1 / %T10C054MA2</td>
-      <td class="rate">%T10C054MB1 / %T10C054MB2</td>
-      <td class="rate">%T10C054MC1 / %T10C054MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.55</td>
-      <td class="card">%T10CARD055N<br />(%T10CARD055R)</td>
-      <td class="rate">%T10C055TL1 / %T10C055TL2</td>
-      <td class="rate">%T10C055RA1 / %T10C055RA2</td>
-      <td class="rate">%T10C055RB1 / %T10C055RB2</td>
-      <td class="rate">%T10C055RC1 / %T10C055RC2</td>
-      <td class="rate">%T10C055MA1 / %T10C055MA2</td>
-      <td class="rate">%T10C055MB1 / %T10C055MB2</td>
-      <td class="rate">%T10C055MC1 / %T10C055MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.56</td>
-      <td class="card">%T10CARD056N<br />(%T10CARD056R)</td>
-      <td class="rate">%T10C056TL1 / %T10C056TL2</td>
-      <td class="rate">%T10C056RA1 / %T10C056RA2</td>
-      <td class="rate">%T10C056RB1 / %T10C056RB2</td>
-      <td class="rate">%T10C056RC1 / %T10C056RC2</td>
-      <td class="rate">%T10C056MA1 / %T10C056MA2</td>
-      <td class="rate">%T10C056MB1 / %T10C056MB2</td>
-      <td class="rate">%T10C056MC1 / %T10C056MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.57</td>
-      <td class="card">%T10CARD057N<br />(%T10CARD057R)</td>
-      <td class="rate">%T10C057TL1 / %T10C057TL2</td>
-      <td class="rate">%T10C057RA1 / %T10C057RA2</td>
-      <td class="rate">%T10C057RB1 / %T10C057RB2</td>
-      <td class="rate">%T10C057RC1 / %T10C057RC2</td>
-      <td class="rate">%T10C057MA1 / %T10C057MA2</td>
-      <td class="rate">%T10C057MB1 / %T10C057MB2</td>
-      <td class="rate">%T10C057MC1 / %T10C057MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.58</td>
-      <td class="card">%T10CARD058N<br />(%T10CARD058R)</td>
-      <td class="rate">%T10C058TL1 / %T10C058TL2</td>
-      <td class="rate">%T10C058RA1 / %T10C058RA2</td>
-      <td class="rate">%T10C058RB1 / %T10C058RB2</td>
-      <td class="rate">%T10C058RC1 / %T10C058RC2</td>
-      <td class="rate">%T10C058MA1 / %T10C058MA2</td>
-      <td class="rate">%T10C058MB1 / %T10C058MB2</td>
-      <td class="rate">%T10C058MC1 / %T10C058MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.59</td>
-      <td class="card">%T10CARD059N<br />(%T10CARD059R)</td>
-      <td class="rate">%T10C059TL1 / %T10C059TL2</td>
-      <td class="rate">%T10C059RA1 / %T10C059RA2</td>
-      <td class="rate">%T10C059RB1 / %T10C059RB2</td>
-      <td class="rate">%T10C059RC1 / %T10C059RC2</td>
-      <td class="rate">%T10C059MA1 / %T10C059MA2</td>
-      <td class="rate">%T10C059MB1 / %T10C059MB2</td>
-      <td class="rate">%T10C059MC1 / %T10C059MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.60</td>
-      <td class="card">%T10CARD060N<br />(%T10CARD060R)</td>
-      <td class="rate">%T10C060TL1 / %T10C060TL2</td>
-      <td class="rate">%T10C060RA1 / %T10C060RA2</td>
-      <td class="rate">%T10C060RB1 / %T10C060RB2</td>
-      <td class="rate">%T10C060RC1 / %T10C060RC2</td>
-      <td class="rate">%T10C060MA1 / %T10C060MA2</td>
-      <td class="rate">%T10C060MB1 / %T10C060MB2</td>
-      <td class="rate">%T10C060MC1 / %T10C060MC2</td>
-     </tr>
+      <tr>
+       <td class="number">No.71</td>
+       <td class="card">%T10CARD071N<br />(%T10CARD071R)</td>
+       <td class="rate">%T10C071TL1 / %T10C071TL2</td>
+       <td class="rate">%T10C071RA1 / %T10C071RA2</td>
+       <td class="rate">%T10C071RB1 / %T10C071RB2</td>
+       <td class="rate">%T10C071RC1 / %T10C071RC2</td>
+       <td class="rate">%T10C071MA1 / %T10C071MA2</td>
+       <td class="rate">%T10C071MB1 / %T10C071MB2</td>
+       <td class="rate">%T10C071MC1 / %T10C071MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.72</td>
+       <td class="card">%T10CARD072N<br />(%T10CARD072R)</td>
+       <td class="rate">%T10C072TL1 / %T10C072TL2</td>
+       <td class="rate">%T10C072RA1 / %T10C072RA2</td>
+       <td class="rate">%T10C072RB1 / %T10C072RB2</td>
+       <td class="rate">%T10C072RC1 / %T10C072RC2</td>
+       <td class="rate">%T10C072MA1 / %T10C072MA2</td>
+       <td class="rate">%T10C072MB1 / %T10C072MB2</td>
+       <td class="rate">%T10C072MC1 / %T10C072MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.73</td>
+       <td class="card">%T10CARD073N<br />(%T10CARD073R)</td>
+       <td class="rate">%T10C073TL1 / %T10C073TL2</td>
+       <td class="rate">%T10C073RA1 / %T10C073RA2</td>
+       <td class="rate">%T10C073RB1 / %T10C073RB2</td>
+       <td class="rate">%T10C073RC1 / %T10C073RC2</td>
+       <td class="rate">%T10C073MA1 / %T10C073MA2</td>
+       <td class="rate">%T10C073MB1 / %T10C073MB2</td>
+       <td class="rate">%T10C073MC1 / %T10C073MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.74</td>
+       <td class="card">%T10CARD074N<br />(%T10CARD074R)</td>
+       <td class="rate">%T10C074TL1 / %T10C074TL2</td>
+       <td class="rate">%T10C074RA1 / %T10C074RA2</td>
+       <td class="rate">%T10C074RB1 / %T10C074RB2</td>
+       <td class="rate">%T10C074RC1 / %T10C074RC2</td>
+       <td class="rate">%T10C074MA1 / %T10C074MA2</td>
+       <td class="rate">%T10C074MB1 / %T10C074MB2</td>
+       <td class="rate">%T10C074MC1 / %T10C074MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.75</td>
+       <td class="card">%T10CARD075N<br />(%T10CARD075R)</td>
+       <td class="rate">%T10C075TL1 / %T10C075TL2</td>
+       <td class="rate">%T10C075RA1 / %T10C075RA2</td>
+       <td class="rate">%T10C075RB1 / %T10C075RB2</td>
+       <td class="rate">%T10C075RC1 / %T10C075RC2</td>
+       <td class="rate">%T10C075MA1 / %T10C075MA2</td>
+       <td class="rate">%T10C075MB1 / %T10C075MB2</td>
+       <td class="rate">%T10C075MC1 / %T10C075MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.76</td>
+       <td class="card">%T10CARD076N<br />(%T10CARD076R)</td>
+       <td class="rate">%T10C076TL1 / %T10C076TL2</td>
+       <td class="rate">%T10C076RA1 / %T10C076RA2</td>
+       <td class="rate">%T10C076RB1 / %T10C076RB2</td>
+       <td class="rate">%T10C076RC1 / %T10C076RC2</td>
+       <td class="rate">%T10C076MA1 / %T10C076MA2</td>
+       <td class="rate">%T10C076MB1 / %T10C076MB2</td>
+       <td class="rate">%T10C076MC1 / %T10C076MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.77</td>
+       <td class="card">%T10CARD077N<br />(%T10CARD077R)</td>
+       <td class="rate">%T10C077TL1 / %T10C077TL2</td>
+       <td class="rate">%T10C077RA1 / %T10C077RA2</td>
+       <td class="rate">%T10C077RB1 / %T10C077RB2</td>
+       <td class="rate">%T10C077RC1 / %T10C077RC2</td>
+       <td class="rate">%T10C077MA1 / %T10C077MA2</td>
+       <td class="rate">%T10C077MB1 / %T10C077MB2</td>
+       <td class="rate">%T10C077MC1 / %T10C077MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.78</td>
+       <td class="card">%T10CARD078N<br />(%T10CARD078R)</td>
+       <td class="rate">%T10C078TL1 / %T10C078TL2</td>
+       <td class="rate">%T10C078RA1 / %T10C078RA2</td>
+       <td class="rate">%T10C078RB1 / %T10C078RB2</td>
+       <td class="rate">%T10C078RC1 / %T10C078RC2</td>
+       <td class="rate">%T10C078MA1 / %T10C078MA2</td>
+       <td class="rate">%T10C078MB1 / %T10C078MB2</td>
+       <td class="rate">%T10C078MC1 / %T10C078MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.79</td>
+       <td class="card">%T10CARD079N<br />(%T10CARD079R)</td>
+       <td class="rate">%T10C079TL1 / %T10C079TL2</td>
+       <td class="rate">%T10C079RA1 / %T10C079RA2</td>
+       <td class="rate">%T10C079RB1 / %T10C079RB2</td>
+       <td class="rate">%T10C079RC1 / %T10C079RC2</td>
+       <td class="rate">%T10C079MA1 / %T10C079MA2</td>
+       <td class="rate">%T10C079MB1 / %T10C079MB2</td>
+       <td class="rate">%T10C079MC1 / %T10C079MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.80</td>
+       <td class="card">%T10CARD080N<br />(%T10CARD080R)</td>
+       <td class="rate">%T10C080TL1 / %T10C080TL2</td>
+       <td class="rate">%T10C080RA1 / %T10C080RA2</td>
+       <td class="rate">%T10C080RB1 / %T10C080RB2</td>
+       <td class="rate">%T10C080RC1 / %T10C080RC2</td>
+       <td class="rate">%T10C080MA1 / %T10C080MA2</td>
+       <td class="rate">%T10C080MB1 / %T10C080MB2</td>
+       <td class="rate">%T10C080MC1 / %T10C080MC2</td>
+      </tr>
 
-     <tr>
-      <td class="number">No.61</td>
-      <td class="card">%T10CARD061N<br />(%T10CARD061R)</td>
-      <td class="rate">%T10C061TL1 / %T10C061TL2</td>
-      <td class="rate">%T10C061RA1 / %T10C061RA2</td>
-      <td class="rate">%T10C061RB1 / %T10C061RB2</td>
-      <td class="rate">%T10C061RC1 / %T10C061RC2</td>
-      <td class="rate">%T10C061MA1 / %T10C061MA2</td>
-      <td class="rate">%T10C061MB1 / %T10C061MB2</td>
-      <td class="rate">%T10C061MC1 / %T10C061MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.62</td>
-      <td class="card">%T10CARD062N<br />(%T10CARD062R)</td>
-      <td class="rate">%T10C062TL1 / %T10C062TL2</td>
-      <td class="rate">%T10C062RA1 / %T10C062RA2</td>
-      <td class="rate">%T10C062RB1 / %T10C062RB2</td>
-      <td class="rate">%T10C062RC1 / %T10C062RC2</td>
-      <td class="rate">%T10C062MA1 / %T10C062MA2</td>
-      <td class="rate">%T10C062MB1 / %T10C062MB2</td>
-      <td class="rate">%T10C062MC1 / %T10C062MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.63</td>
-      <td class="card">%T10CARD063N<br />(%T10CARD063R)</td>
-      <td class="rate">%T10C063TL1 / %T10C063TL2</td>
-      <td class="rate">%T10C063RA1 / %T10C063RA2</td>
-      <td class="rate">%T10C063RB1 / %T10C063RB2</td>
-      <td class="rate">%T10C063RC1 / %T10C063RC2</td>
-      <td class="rate">%T10C063MA1 / %T10C063MA2</td>
-      <td class="rate">%T10C063MB1 / %T10C063MB2</td>
-      <td class="rate">%T10C063MC1 / %T10C063MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.64</td>
-      <td class="card">%T10CARD064N<br />(%T10CARD064R)</td>
-      <td class="rate">%T10C064TL1 / %T10C064TL2</td>
-      <td class="rate">%T10C064RA1 / %T10C064RA2</td>
-      <td class="rate">%T10C064RB1 / %T10C064RB2</td>
-      <td class="rate">%T10C064RC1 / %T10C064RC2</td>
-      <td class="rate">%T10C064MA1 / %T10C064MA2</td>
-      <td class="rate">%T10C064MB1 / %T10C064MB2</td>
-      <td class="rate">%T10C064MC1 / %T10C064MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.65</td>
-      <td class="card">%T10CARD065N<br />(%T10CARD065R)</td>
-      <td class="rate">%T10C065TL1 / %T10C065TL2</td>
-      <td class="rate">%T10C065RA1 / %T10C065RA2</td>
-      <td class="rate">%T10C065RB1 / %T10C065RB2</td>
-      <td class="rate">%T10C065RC1 / %T10C065RC2</td>
-      <td class="rate">%T10C065MA1 / %T10C065MA2</td>
-      <td class="rate">%T10C065MB1 / %T10C065MB2</td>
-      <td class="rate">%T10C065MC1 / %T10C065MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.66</td>
-      <td class="card">%T10CARD066N<br />(%T10CARD066R)</td>
-      <td class="rate">%T10C066TL1 / %T10C066TL2</td>
-      <td class="rate">%T10C066RA1 / %T10C066RA2</td>
-      <td class="rate">%T10C066RB1 / %T10C066RB2</td>
-      <td class="rate">%T10C066RC1 / %T10C066RC2</td>
-      <td class="rate">%T10C066MA1 / %T10C066MA2</td>
-      <td class="rate">%T10C066MB1 / %T10C066MB2</td>
-      <td class="rate">%T10C066MC1 / %T10C066MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.67</td>
-      <td class="card">%T10CARD067N<br />(%T10CARD067R)</td>
-      <td class="rate">%T10C067TL1 / %T10C067TL2</td>
-      <td class="rate">%T10C067RA1 / %T10C067RA2</td>
-      <td class="rate">%T10C067RB1 / %T10C067RB2</td>
-      <td class="rate">%T10C067RC1 / %T10C067RC2</td>
-      <td class="rate">%T10C067MA1 / %T10C067MA2</td>
-      <td class="rate">%T10C067MB1 / %T10C067MB2</td>
-      <td class="rate">%T10C067MC1 / %T10C067MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.68</td>
-      <td class="card">%T10CARD068N<br />(%T10CARD068R)</td>
-      <td class="rate">%T10C068TL1 / %T10C068TL2</td>
-      <td class="rate">%T10C068RA1 / %T10C068RA2</td>
-      <td class="rate">%T10C068RB1 / %T10C068RB2</td>
-      <td class="rate">%T10C068RC1 / %T10C068RC2</td>
-      <td class="rate">%T10C068MA1 / %T10C068MA2</td>
-      <td class="rate">%T10C068MB1 / %T10C068MB2</td>
-      <td class="rate">%T10C068MC1 / %T10C068MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.69</td>
-      <td class="card">%T10CARD069N<br />(%T10CARD069R)</td>
-      <td class="rate">%T10C069TL1 / %T10C069TL2</td>
-      <td class="rate">%T10C069RA1 / %T10C069RA2</td>
-      <td class="rate">%T10C069RB1 / %T10C069RB2</td>
-      <td class="rate">%T10C069RC1 / %T10C069RC2</td>
-      <td class="rate">%T10C069MA1 / %T10C069MA2</td>
-      <td class="rate">%T10C069MB1 / %T10C069MB2</td>
-      <td class="rate">%T10C069MC1 / %T10C069MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.70</td>
-      <td class="card">%T10CARD070N<br />(%T10CARD070R)</td>
-      <td class="rate">%T10C070TL1 / %T10C070TL2</td>
-      <td class="rate">%T10C070RA1 / %T10C070RA2</td>
-      <td class="rate">%T10C070RB1 / %T10C070RB2</td>
-      <td class="rate">%T10C070RC1 / %T10C070RC2</td>
-      <td class="rate">%T10C070MA1 / %T10C070MA2</td>
-      <td class="rate">%T10C070MB1 / %T10C070MB2</td>
-      <td class="rate">%T10C070MC1 / %T10C070MC2</td>
-     </tr>
+      <tr>
+       <td class="number">No.81</td>
+       <td class="card">%T10CARD081N<br />(%T10CARD081R)</td>
+       <td class="rate">%T10C081TL1 / %T10C081TL2</td>
+       <td class="rate">%T10C081RA1 / %T10C081RA2</td>
+       <td class="rate">%T10C081RB1 / %T10C081RB2</td>
+       <td class="rate">%T10C081RC1 / %T10C081RC2</td>
+       <td class="rate">%T10C081MA1 / %T10C081MA2</td>
+       <td class="rate">%T10C081MB1 / %T10C081MB2</td>
+       <td class="rate">%T10C081MC1 / %T10C081MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.82</td>
+       <td class="card">%T10CARD082N<br />(%T10CARD082R)</td>
+       <td class="rate">%T10C082TL1 / %T10C082TL2</td>
+       <td class="rate">%T10C082RA1 / %T10C082RA2</td>
+       <td class="rate">%T10C082RB1 / %T10C082RB2</td>
+       <td class="rate">%T10C082RC1 / %T10C082RC2</td>
+       <td class="rate">%T10C082MA1 / %T10C082MA2</td>
+       <td class="rate">%T10C082MB1 / %T10C082MB2</td>
+       <td class="rate">%T10C082MC1 / %T10C082MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.83</td>
+       <td class="card">%T10CARD083N<br />(%T10CARD083R)</td>
+       <td class="rate">%T10C083TL1 / %T10C083TL2</td>
+       <td class="rate">%T10C083RA1 / %T10C083RA2</td>
+       <td class="rate">%T10C083RB1 / %T10C083RB2</td>
+       <td class="rate">%T10C083RC1 / %T10C083RC2</td>
+       <td class="rate">%T10C083MA1 / %T10C083MA2</td>
+       <td class="rate">%T10C083MB1 / %T10C083MB2</td>
+       <td class="rate">%T10C083MC1 / %T10C083MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.84</td>
+       <td class="card">%T10CARD084N<br />(%T10CARD084R)</td>
+       <td class="rate">%T10C084TL1 / %T10C084TL2</td>
+       <td class="rate">%T10C084RA1 / %T10C084RA2</td>
+       <td class="rate">%T10C084RB1 / %T10C084RB2</td>
+       <td class="rate">%T10C084RC1 / %T10C084RC2</td>
+       <td class="rate">%T10C084MA1 / %T10C084MA2</td>
+       <td class="rate">%T10C084MB1 / %T10C084MB2</td>
+       <td class="rate">%T10C084MC1 / %T10C084MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.85</td>
+       <td class="card">%T10CARD085N<br />(%T10CARD085R)</td>
+       <td class="rate">%T10C085TL1 / %T10C085TL2</td>
+       <td class="rate">%T10C085RA1 / %T10C085RA2</td>
+       <td class="rate">%T10C085RB1 / %T10C085RB2</td>
+       <td class="rate">%T10C085RC1 / %T10C085RC2</td>
+       <td class="rate">%T10C085MA1 / %T10C085MA2</td>
+       <td class="rate">%T10C085MB1 / %T10C085MB2</td>
+       <td class="rate">%T10C085MC1 / %T10C085MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.86</td>
+       <td class="card">%T10CARD086N<br />(%T10CARD086R)</td>
+       <td class="rate">%T10C086TL1 / %T10C086TL2</td>
+       <td class="rate">%T10C086RA1 / %T10C086RA2</td>
+       <td class="rate">%T10C086RB1 / %T10C086RB2</td>
+       <td class="rate">%T10C086RC1 / %T10C086RC2</td>
+       <td class="rate">%T10C086MA1 / %T10C086MA2</td>
+       <td class="rate">%T10C086MB1 / %T10C086MB2</td>
+       <td class="rate">%T10C086MC1 / %T10C086MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.87</td>
+       <td class="card">%T10CARD087N<br />(%T10CARD087R)</td>
+       <td class="rate">%T10C087TL1 / %T10C087TL2</td>
+       <td class="rate">%T10C087RA1 / %T10C087RA2</td>
+       <td class="rate">%T10C087RB1 / %T10C087RB2</td>
+       <td class="rate">%T10C087RC1 / %T10C087RC2</td>
+       <td class="rate">%T10C087MA1 / %T10C087MA2</td>
+       <td class="rate">%T10C087MB1 / %T10C087MB2</td>
+       <td class="rate">%T10C087MC1 / %T10C087MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.88</td>
+       <td class="card">%T10CARD088N<br />(%T10CARD088R)</td>
+       <td class="rate">%T10C088TL1 / %T10C088TL2</td>
+       <td class="rate">%T10C088RA1 / %T10C088RA2</td>
+       <td class="rate">%T10C088RB1 / %T10C088RB2</td>
+       <td class="rate">%T10C088RC1 / %T10C088RC2</td>
+       <td class="rate">%T10C088MA1 / %T10C088MA2</td>
+       <td class="rate">%T10C088MB1 / %T10C088MB2</td>
+       <td class="rate">%T10C088MC1 / %T10C088MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.89</td>
+       <td class="card">%T10CARD089N<br />(%T10CARD089R)</td>
+       <td class="rate">%T10C089TL1 / %T10C089TL2</td>
+       <td class="rate">%T10C089RA1 / %T10C089RA2</td>
+       <td class="rate">%T10C089RB1 / %T10C089RB2</td>
+       <td class="rate">%T10C089RC1 / %T10C089RC2</td>
+       <td class="rate">%T10C089MA1 / %T10C089MA2</td>
+       <td class="rate">%T10C089MB1 / %T10C089MB2</td>
+       <td class="rate">%T10C089MC1 / %T10C089MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.90</td>
+       <td class="card">%T10CARD090N<br />(%T10CARD090R)</td>
+       <td class="rate">%T10C090TL1 / %T10C090TL2</td>
+       <td class="rate">%T10C090RA1 / %T10C090RA2</td>
+       <td class="rate">%T10C090RB1 / %T10C090RB2</td>
+       <td class="rate">%T10C090RC1 / %T10C090RC2</td>
+       <td class="rate">%T10C090MA1 / %T10C090MA2</td>
+       <td class="rate">%T10C090MB1 / %T10C090MB2</td>
+       <td class="rate">%T10C090MC1 / %T10C090MC2</td>
+      </tr>
 
-     <tr>
-      <td class="number">No.71</td>
-      <td class="card">%T10CARD071N<br />(%T10CARD071R)</td>
-      <td class="rate">%T10C071TL1 / %T10C071TL2</td>
-      <td class="rate">%T10C071RA1 / %T10C071RA2</td>
-      <td class="rate">%T10C071RB1 / %T10C071RB2</td>
-      <td class="rate">%T10C071RC1 / %T10C071RC2</td>
-      <td class="rate">%T10C071MA1 / %T10C071MA2</td>
-      <td class="rate">%T10C071MB1 / %T10C071MB2</td>
-      <td class="rate">%T10C071MC1 / %T10C071MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.72</td>
-      <td class="card">%T10CARD072N<br />(%T10CARD072R)</td>
-      <td class="rate">%T10C072TL1 / %T10C072TL2</td>
-      <td class="rate">%T10C072RA1 / %T10C072RA2</td>
-      <td class="rate">%T10C072RB1 / %T10C072RB2</td>
-      <td class="rate">%T10C072RC1 / %T10C072RC2</td>
-      <td class="rate">%T10C072MA1 / %T10C072MA2</td>
-      <td class="rate">%T10C072MB1 / %T10C072MB2</td>
-      <td class="rate">%T10C072MC1 / %T10C072MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.73</td>
-      <td class="card">%T10CARD073N<br />(%T10CARD073R)</td>
-      <td class="rate">%T10C073TL1 / %T10C073TL2</td>
-      <td class="rate">%T10C073RA1 / %T10C073RA2</td>
-      <td class="rate">%T10C073RB1 / %T10C073RB2</td>
-      <td class="rate">%T10C073RC1 / %T10C073RC2</td>
-      <td class="rate">%T10C073MA1 / %T10C073MA2</td>
-      <td class="rate">%T10C073MB1 / %T10C073MB2</td>
-      <td class="rate">%T10C073MC1 / %T10C073MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.74</td>
-      <td class="card">%T10CARD074N<br />(%T10CARD074R)</td>
-      <td class="rate">%T10C074TL1 / %T10C074TL2</td>
-      <td class="rate">%T10C074RA1 / %T10C074RA2</td>
-      <td class="rate">%T10C074RB1 / %T10C074RB2</td>
-      <td class="rate">%T10C074RC1 / %T10C074RC2</td>
-      <td class="rate">%T10C074MA1 / %T10C074MA2</td>
-      <td class="rate">%T10C074MB1 / %T10C074MB2</td>
-      <td class="rate">%T10C074MC1 / %T10C074MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.75</td>
-      <td class="card">%T10CARD075N<br />(%T10CARD075R)</td>
-      <td class="rate">%T10C075TL1 / %T10C075TL2</td>
-      <td class="rate">%T10C075RA1 / %T10C075RA2</td>
-      <td class="rate">%T10C075RB1 / %T10C075RB2</td>
-      <td class="rate">%T10C075RC1 / %T10C075RC2</td>
-      <td class="rate">%T10C075MA1 / %T10C075MA2</td>
-      <td class="rate">%T10C075MB1 / %T10C075MB2</td>
-      <td class="rate">%T10C075MC1 / %T10C075MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.76</td>
-      <td class="card">%T10CARD076N<br />(%T10CARD076R)</td>
-      <td class="rate">%T10C076TL1 / %T10C076TL2</td>
-      <td class="rate">%T10C076RA1 / %T10C076RA2</td>
-      <td class="rate">%T10C076RB1 / %T10C076RB2</td>
-      <td class="rate">%T10C076RC1 / %T10C076RC2</td>
-      <td class="rate">%T10C076MA1 / %T10C076MA2</td>
-      <td class="rate">%T10C076MB1 / %T10C076MB2</td>
-      <td class="rate">%T10C076MC1 / %T10C076MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.77</td>
-      <td class="card">%T10CARD077N<br />(%T10CARD077R)</td>
-      <td class="rate">%T10C077TL1 / %T10C077TL2</td>
-      <td class="rate">%T10C077RA1 / %T10C077RA2</td>
-      <td class="rate">%T10C077RB1 / %T10C077RB2</td>
-      <td class="rate">%T10C077RC1 / %T10C077RC2</td>
-      <td class="rate">%T10C077MA1 / %T10C077MA2</td>
-      <td class="rate">%T10C077MB1 / %T10C077MB2</td>
-      <td class="rate">%T10C077MC1 / %T10C077MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.78</td>
-      <td class="card">%T10CARD078N<br />(%T10CARD078R)</td>
-      <td class="rate">%T10C078TL1 / %T10C078TL2</td>
-      <td class="rate">%T10C078RA1 / %T10C078RA2</td>
-      <td class="rate">%T10C078RB1 / %T10C078RB2</td>
-      <td class="rate">%T10C078RC1 / %T10C078RC2</td>
-      <td class="rate">%T10C078MA1 / %T10C078MA2</td>
-      <td class="rate">%T10C078MB1 / %T10C078MB2</td>
-      <td class="rate">%T10C078MC1 / %T10C078MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.79</td>
-      <td class="card">%T10CARD079N<br />(%T10CARD079R)</td>
-      <td class="rate">%T10C079TL1 / %T10C079TL2</td>
-      <td class="rate">%T10C079RA1 / %T10C079RA2</td>
-      <td class="rate">%T10C079RB1 / %T10C079RB2</td>
-      <td class="rate">%T10C079RC1 / %T10C079RC2</td>
-      <td class="rate">%T10C079MA1 / %T10C079MA2</td>
-      <td class="rate">%T10C079MB1 / %T10C079MB2</td>
-      <td class="rate">%T10C079MC1 / %T10C079MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.80</td>
-      <td class="card">%T10CARD080N<br />(%T10CARD080R)</td>
-      <td class="rate">%T10C080TL1 / %T10C080TL2</td>
-      <td class="rate">%T10C080RA1 / %T10C080RA2</td>
-      <td class="rate">%T10C080RB1 / %T10C080RB2</td>
-      <td class="rate">%T10C080RC1 / %T10C080RC2</td>
-      <td class="rate">%T10C080MA1 / %T10C080MA2</td>
-      <td class="rate">%T10C080MB1 / %T10C080MB2</td>
-      <td class="rate">%T10C080MC1 / %T10C080MC2</td>
-     </tr>
+      <tr>
+       <td class="number">No.91</td>
+       <td class="card">%T10CARD091N<br />(%T10CARD091R)</td>
+       <td class="rate">%T10C091TL1 / %T10C091TL2</td>
+       <td class="rate">%T10C091RA1 / %T10C091RA2</td>
+       <td class="rate">%T10C091RB1 / %T10C091RB2</td>
+       <td class="rate">%T10C091RC1 / %T10C091RC2</td>
+       <td class="rate">%T10C091MA1 / %T10C091MA2</td>
+       <td class="rate">%T10C091MB1 / %T10C091MB2</td>
+       <td class="rate">%T10C091MC1 / %T10C091MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.92</td>
+       <td class="card">%T10CARD092N<br />(%T10CARD092R)</td>
+       <td class="rate">%T10C092TL1 / %T10C092TL2</td>
+       <td class="rate">%T10C092RA1 / %T10C092RA2</td>
+       <td class="rate">%T10C092RB1 / %T10C092RB2</td>
+       <td class="rate">%T10C092RC1 / %T10C092RC2</td>
+       <td class="rate">%T10C092MA1 / %T10C092MA2</td>
+       <td class="rate">%T10C092MB1 / %T10C092MB2</td>
+       <td class="rate">%T10C092MC1 / %T10C092MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.93</td>
+       <td class="card">%T10CARD093N<br />(%T10CARD093R)</td>
+       <td class="rate">%T10C093TL1 / %T10C093TL2</td>
+       <td class="rate">%T10C093RA1 / %T10C093RA2</td>
+       <td class="rate">%T10C093RB1 / %T10C093RB2</td>
+       <td class="rate">%T10C093RC1 / %T10C093RC2</td>
+       <td class="rate">%T10C093MA1 / %T10C093MA2</td>
+       <td class="rate">%T10C093MB1 / %T10C093MB2</td>
+       <td class="rate">%T10C093MC1 / %T10C093MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.94</td>
+       <td class="card">%T10CARD094N<br />(%T10CARD094R)</td>
+       <td class="rate">%T10C094TL1 / %T10C094TL2</td>
+       <td class="rate">%T10C094RA1 / %T10C094RA2</td>
+       <td class="rate">%T10C094RB1 / %T10C094RB2</td>
+       <td class="rate">%T10C094RC1 / %T10C094RC2</td>
+       <td class="rate">%T10C094MA1 / %T10C094MA2</td>
+       <td class="rate">%T10C094MB1 / %T10C094MB2</td>
+       <td class="rate">%T10C094MC1 / %T10C094MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.95</td>
+       <td class="card">%T10CARD095N<br />(%T10CARD095R)</td>
+       <td class="rate">%T10C095TL1 / %T10C095TL2</td>
+       <td class="rate">%T10C095RA1 / %T10C095RA2</td>
+       <td class="rate">%T10C095RB1 / %T10C095RB2</td>
+       <td class="rate">%T10C095RC1 / %T10C095RC2</td>
+       <td class="rate">%T10C095MA1 / %T10C095MA2</td>
+       <td class="rate">%T10C095MB1 / %T10C095MB2</td>
+       <td class="rate">%T10C095MC1 / %T10C095MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.96</td>
+       <td class="card">%T10CARD096N<br />(%T10CARD096R)</td>
+       <td class="rate">%T10C096TL1 / %T10C096TL2</td>
+       <td class="rate">%T10C096RA1 / %T10C096RA2</td>
+       <td class="rate">%T10C096RB1 / %T10C096RB2</td>
+       <td class="rate">%T10C096RC1 / %T10C096RC2</td>
+       <td class="rate">%T10C096MA1 / %T10C096MA2</td>
+       <td class="rate">%T10C096MB1 / %T10C096MB2</td>
+       <td class="rate">%T10C096MC1 / %T10C096MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.97</td>
+       <td class="card">%T10CARD097N<br />(%T10CARD097R)</td>
+       <td class="rate">%T10C097TL1 / %T10C097TL2</td>
+       <td class="rate">%T10C097RA1 / %T10C097RA2</td>
+       <td class="rate">%T10C097RB1 / %T10C097RB2</td>
+       <td class="rate">%T10C097RC1 / %T10C097RC2</td>
+       <td class="rate">%T10C097MA1 / %T10C097MA2</td>
+       <td class="rate">%T10C097MB1 / %T10C097MB2</td>
+       <td class="rate">%T10C097MC1 / %T10C097MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.98</td>
+       <td class="card">%T10CARD098N<br />(%T10CARD098R)</td>
+       <td class="rate">%T10C098TL1 / %T10C098TL2</td>
+       <td class="rate">%T10C098RA1 / %T10C098RA2</td>
+       <td class="rate">%T10C098RB1 / %T10C098RB2</td>
+       <td class="rate">%T10C098RC1 / %T10C098RC2</td>
+       <td class="rate">%T10C098MA1 / %T10C098MA2</td>
+       <td class="rate">%T10C098MB1 / %T10C098MB2</td>
+       <td class="rate">%T10C098MC1 / %T10C098MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.99</td>
+       <td class="card">%T10CARD099N<br />(%T10CARD099R)</td>
+       <td class="rate">%T10C099TL1 / %T10C099TL2</td>
+       <td class="rate">%T10C099RA1 / %T10C099RA2</td>
+       <td class="rate">%T10C099RB1 / %T10C099RB2</td>
+       <td class="rate">%T10C099RC1 / %T10C099RC2</td>
+       <td class="rate">%T10C099MA1 / %T10C099MA2</td>
+       <td class="rate">%T10C099MB1 / %T10C099MB2</td>
+       <td class="rate">%T10C099MC1 / %T10C099MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.100</td>
+       <td class="card">%T10CARD100N<br />(%T10CARD100R)</td>
+       <td class="rate">%T10C100TL1 / %T10C100TL2</td>
+       <td class="rate">%T10C100RA1 / %T10C100RA2</td>
+       <td class="rate">%T10C100RB1 / %T10C100RB2</td>
+       <td class="rate">%T10C100RC1 / %T10C100RC2</td>
+       <td class="rate">%T10C100MA1 / %T10C100MA2</td>
+       <td class="rate">%T10C100MB1 / %T10C100MB2</td>
+       <td class="rate">%T10C100MC1 / %T10C100MC2</td>
+      </tr>
 
-     <tr>
-      <td class="number">No.81</td>
-      <td class="card">%T10CARD081N<br />(%T10CARD081R)</td>
-      <td class="rate">%T10C081TL1 / %T10C081TL2</td>
-      <td class="rate">%T10C081RA1 / %T10C081RA2</td>
-      <td class="rate">%T10C081RB1 / %T10C081RB2</td>
-      <td class="rate">%T10C081RC1 / %T10C081RC2</td>
-      <td class="rate">%T10C081MA1 / %T10C081MA2</td>
-      <td class="rate">%T10C081MB1 / %T10C081MB2</td>
-      <td class="rate">%T10C081MC1 / %T10C081MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.82</td>
-      <td class="card">%T10CARD082N<br />(%T10CARD082R)</td>
-      <td class="rate">%T10C082TL1 / %T10C082TL2</td>
-      <td class="rate">%T10C082RA1 / %T10C082RA2</td>
-      <td class="rate">%T10C082RB1 / %T10C082RB2</td>
-      <td class="rate">%T10C082RC1 / %T10C082RC2</td>
-      <td class="rate">%T10C082MA1 / %T10C082MA2</td>
-      <td class="rate">%T10C082MB1 / %T10C082MB2</td>
-      <td class="rate">%T10C082MC1 / %T10C082MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.83</td>
-      <td class="card">%T10CARD083N<br />(%T10CARD083R)</td>
-      <td class="rate">%T10C083TL1 / %T10C083TL2</td>
-      <td class="rate">%T10C083RA1 / %T10C083RA2</td>
-      <td class="rate">%T10C083RB1 / %T10C083RB2</td>
-      <td class="rate">%T10C083RC1 / %T10C083RC2</td>
-      <td class="rate">%T10C083MA1 / %T10C083MA2</td>
-      <td class="rate">%T10C083MB1 / %T10C083MB2</td>
-      <td class="rate">%T10C083MC1 / %T10C083MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.84</td>
-      <td class="card">%T10CARD084N<br />(%T10CARD084R)</td>
-      <td class="rate">%T10C084TL1 / %T10C084TL2</td>
-      <td class="rate">%T10C084RA1 / %T10C084RA2</td>
-      <td class="rate">%T10C084RB1 / %T10C084RB2</td>
-      <td class="rate">%T10C084RC1 / %T10C084RC2</td>
-      <td class="rate">%T10C084MA1 / %T10C084MA2</td>
-      <td class="rate">%T10C084MB1 / %T10C084MB2</td>
-      <td class="rate">%T10C084MC1 / %T10C084MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.85</td>
-      <td class="card">%T10CARD085N<br />(%T10CARD085R)</td>
-      <td class="rate">%T10C085TL1 / %T10C085TL2</td>
-      <td class="rate">%T10C085RA1 / %T10C085RA2</td>
-      <td class="rate">%T10C085RB1 / %T10C085RB2</td>
-      <td class="rate">%T10C085RC1 / %T10C085RC2</td>
-      <td class="rate">%T10C085MA1 / %T10C085MA2</td>
-      <td class="rate">%T10C085MB1 / %T10C085MB2</td>
-      <td class="rate">%T10C085MC1 / %T10C085MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.86</td>
-      <td class="card">%T10CARD086N<br />(%T10CARD086R)</td>
-      <td class="rate">%T10C086TL1 / %T10C086TL2</td>
-      <td class="rate">%T10C086RA1 / %T10C086RA2</td>
-      <td class="rate">%T10C086RB1 / %T10C086RB2</td>
-      <td class="rate">%T10C086RC1 / %T10C086RC2</td>
-      <td class="rate">%T10C086MA1 / %T10C086MA2</td>
-      <td class="rate">%T10C086MB1 / %T10C086MB2</td>
-      <td class="rate">%T10C086MC1 / %T10C086MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.87</td>
-      <td class="card">%T10CARD087N<br />(%T10CARD087R)</td>
-      <td class="rate">%T10C087TL1 / %T10C087TL2</td>
-      <td class="rate">%T10C087RA1 / %T10C087RA2</td>
-      <td class="rate">%T10C087RB1 / %T10C087RB2</td>
-      <td class="rate">%T10C087RC1 / %T10C087RC2</td>
-      <td class="rate">%T10C087MA1 / %T10C087MA2</td>
-      <td class="rate">%T10C087MB1 / %T10C087MB2</td>
-      <td class="rate">%T10C087MC1 / %T10C087MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.88</td>
-      <td class="card">%T10CARD088N<br />(%T10CARD088R)</td>
-      <td class="rate">%T10C088TL1 / %T10C088TL2</td>
-      <td class="rate">%T10C088RA1 / %T10C088RA2</td>
-      <td class="rate">%T10C088RB1 / %T10C088RB2</td>
-      <td class="rate">%T10C088RC1 / %T10C088RC2</td>
-      <td class="rate">%T10C088MA1 / %T10C088MA2</td>
-      <td class="rate">%T10C088MB1 / %T10C088MB2</td>
-      <td class="rate">%T10C088MC1 / %T10C088MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.89</td>
-      <td class="card">%T10CARD089N<br />(%T10CARD089R)</td>
-      <td class="rate">%T10C089TL1 / %T10C089TL2</td>
-      <td class="rate">%T10C089RA1 / %T10C089RA2</td>
-      <td class="rate">%T10C089RB1 / %T10C089RB2</td>
-      <td class="rate">%T10C089RC1 / %T10C089RC2</td>
-      <td class="rate">%T10C089MA1 / %T10C089MA2</td>
-      <td class="rate">%T10C089MB1 / %T10C089MB2</td>
-      <td class="rate">%T10C089MC1 / %T10C089MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.90</td>
-      <td class="card">%T10CARD090N<br />(%T10CARD090R)</td>
-      <td class="rate">%T10C090TL1 / %T10C090TL2</td>
-      <td class="rate">%T10C090RA1 / %T10C090RA2</td>
-      <td class="rate">%T10C090RB1 / %T10C090RB2</td>
-      <td class="rate">%T10C090RC1 / %T10C090RC2</td>
-      <td class="rate">%T10C090MA1 / %T10C090MA2</td>
-      <td class="rate">%T10C090MB1 / %T10C090MB2</td>
-      <td class="rate">%T10C090MC1 / %T10C090MC2</td>
-     </tr>
+      <tr>
+       <td class="number">No.101</td>
+       <td class="card">%T10CARD101N<br />(%T10CARD101R)</td>
+       <td class="rate">%T10C101TL1 / %T10C101TL2</td>
+       <td class="rate">%T10C101RA1 / %T10C101RA2</td>
+       <td class="rate">%T10C101RB1 / %T10C101RB2</td>
+       <td class="rate">%T10C101RC1 / %T10C101RC2</td>
+       <td class="rate">%T10C101MA1 / %T10C101MA2</td>
+       <td class="rate">%T10C101MB1 / %T10C101MB2</td>
+       <td class="rate">%T10C101MC1 / %T10C101MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.102</td>
+       <td class="card">%T10CARD102N<br />(%T10CARD102R)</td>
+       <td class="rate">%T10C102TL1 / %T10C102TL2</td>
+       <td class="rate">%T10C102RA1 / %T10C102RA2</td>
+       <td class="rate">%T10C102RB1 / %T10C102RB2</td>
+       <td class="rate">%T10C102RC1 / %T10C102RC2</td>
+       <td class="rate">%T10C102MA1 / %T10C102MA2</td>
+       <td class="rate">%T10C102MB1 / %T10C102MB2</td>
+       <td class="rate">%T10C102MC1 / %T10C102MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.103</td>
+       <td class="card">%T10CARD103N<br />(%T10CARD103R)</td>
+       <td class="rate">%T10C103TL1 / %T10C103TL2</td>
+       <td class="rate">%T10C103RA1 / %T10C103RA2</td>
+       <td class="rate">%T10C103RB1 / %T10C103RB2</td>
+       <td class="rate">%T10C103RC1 / %T10C103RC2</td>
+       <td class="rate">%T10C103MA1 / %T10C103MA2</td>
+       <td class="rate">%T10C103MB1 / %T10C103MB2</td>
+       <td class="rate">%T10C103MC1 / %T10C103MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.104</td>
+       <td class="card">%T10CARD104N<br />(%T10CARD104R)</td>
+       <td class="rate">%T10C104TL1 / %T10C104TL2</td>
+       <td class="rate">%T10C104RA1 / %T10C104RA2</td>
+       <td class="rate">%T10C104RB1 / %T10C104RB2</td>
+       <td class="rate">%T10C104RC1 / %T10C104RC2</td>
+       <td class="rate">%T10C104MA1 / %T10C104MA2</td>
+       <td class="rate">%T10C104MB1 / %T10C104MB2</td>
+       <td class="rate">%T10C104MC1 / %T10C104MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.105</td>
+       <td class="card">%T10CARD105N<br />(%T10CARD105R)</td>
+       <td class="rate">%T10C105TL1 / %T10C105TL2</td>
+       <td class="rate">%T10C105RA1 / %T10C105RA2</td>
+       <td class="rate">%T10C105RB1 / %T10C105RB2</td>
+       <td class="rate">%T10C105RC1 / %T10C105RC2</td>
+       <td class="rate">%T10C105MA1 / %T10C105MA2</td>
+       <td class="rate">%T10C105MB1 / %T10C105MB2</td>
+       <td class="rate">%T10C105MC1 / %T10C105MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.106</td>
+       <td class="card">%T10CARD106N<br />(%T10CARD106R)</td>
+       <td class="rate">%T10C106TL1 / %T10C106TL2</td>
+       <td class="rate">%T10C106RA1 / %T10C106RA2</td>
+       <td class="rate">%T10C106RB1 / %T10C106RB2</td>
+       <td class="rate">%T10C106RC1 / %T10C106RC2</td>
+       <td class="rate">%T10C106MA1 / %T10C106MA2</td>
+       <td class="rate">%T10C106MB1 / %T10C106MB2</td>
+       <td class="rate">%T10C106MC1 / %T10C106MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.107</td>
+       <td class="card">%T10CARD107N<br />(%T10CARD107R)</td>
+       <td class="rate">%T10C107TL1 / %T10C107TL2</td>
+       <td class="rate">%T10C107RA1 / %T10C107RA2</td>
+       <td class="rate">%T10C107RB1 / %T10C107RB2</td>
+       <td class="rate">%T10C107RC1 / %T10C107RC2</td>
+       <td class="rate">%T10C107MA1 / %T10C107MA2</td>
+       <td class="rate">%T10C107MB1 / %T10C107MB2</td>
+       <td class="rate">%T10C107MC1 / %T10C107MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.108</td>
+       <td class="card">%T10CARD108N<br />(%T10CARD108R)</td>
+       <td class="rate">%T10C108TL1 / %T10C108TL2</td>
+       <td class="rate">%T10C108RA1 / %T10C108RA2</td>
+       <td class="rate">%T10C108RB1 / %T10C108RB2</td>
+       <td class="rate">%T10C108RC1 / %T10C108RC2</td>
+       <td class="rate">%T10C108MA1 / %T10C108MA2</td>
+       <td class="rate">%T10C108MB1 / %T10C108MB2</td>
+       <td class="rate">%T10C108MC1 / %T10C108MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.109</td>
+       <td class="card">%T10CARD109N<br />(%T10CARD109R)</td>
+       <td class="rate">%T10C109TL1 / %T10C109TL2</td>
+       <td class="rate">%T10C109RA1 / %T10C109RA2</td>
+       <td class="rate">%T10C109RB1 / %T10C109RB2</td>
+       <td class="rate">%T10C109RC1 / %T10C109RC2</td>
+       <td class="rate">%T10C109MA1 / %T10C109MA2</td>
+       <td class="rate">%T10C109MB1 / %T10C109MB2</td>
+       <td class="rate">%T10C109MC1 / %T10C109MC2</td>
+      </tr>
+      <tr>
+       <td class="number">No.110</td>
+       <td class="card">%T10CARD110N<br />(%T10CARD110R)</td>
+       <td class="rate">%T10C110TL1 / %T10C110TL2</td>
+       <td class="rate">%T10C110RA1 / %T10C110RA2</td>
+       <td class="rate">%T10C110RB1 / %T10C110RB2</td>
+       <td class="rate">%T10C110RC1 / %T10C110RC2</td>
+       <td class="rate">%T10C110MA1 / %T10C110MA2</td>
+       <td class="rate">%T10C110MB1 / %T10C110MB2</td>
+       <td class="rate">%T10C110MC1 / %T10C110MC2</td>
+      </tr>
+     </tbody>
+     <tfoot>
+      <tr>
+       <td colspan="2">Total</td>
+       <td class="rate">%T10C000TL1 / %T10C000TL2</td>
+       <td class="rate">%T10C000RA1 / %T10C000RA2</td>
+       <td class="rate">%T10C000RB1 / %T10C000RB2</td>
+       <td class="rate">%T10C000RC1 / %T10C000RC2</td>
+       <td class="rate">%T10C000MA1 / %T10C000MA2</td>
+       <td class="rate">%T10C000MB1 / %T10C000MB2</td>
+       <td class="rate">%T10C000MC1 / %T10C000MC2</td>
+      </tr>
+     </tfoot>
+    </table>
 
-     <tr>
-      <td class="number">No.91</td>
-      <td class="card">%T10CARD091N<br />(%T10CARD091R)</td>
-      <td class="rate">%T10C091TL1 / %T10C091TL2</td>
-      <td class="rate">%T10C091RA1 / %T10C091RA2</td>
-      <td class="rate">%T10C091RB1 / %T10C091RB2</td>
-      <td class="rate">%T10C091RC1 / %T10C091RC2</td>
-      <td class="rate">%T10C091MA1 / %T10C091MA2</td>
-      <td class="rate">%T10C091MB1 / %T10C091MB2</td>
-      <td class="rate">%T10C091MC1 / %T10C091MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.92</td>
-      <td class="card">%T10CARD092N<br />(%T10CARD092R)</td>
-      <td class="rate">%T10C092TL1 / %T10C092TL2</td>
-      <td class="rate">%T10C092RA1 / %T10C092RA2</td>
-      <td class="rate">%T10C092RB1 / %T10C092RB2</td>
-      <td class="rate">%T10C092RC1 / %T10C092RC2</td>
-      <td class="rate">%T10C092MA1 / %T10C092MA2</td>
-      <td class="rate">%T10C092MB1 / %T10C092MB2</td>
-      <td class="rate">%T10C092MC1 / %T10C092MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.93</td>
-      <td class="card">%T10CARD093N<br />(%T10CARD093R)</td>
-      <td class="rate">%T10C093TL1 / %T10C093TL2</td>
-      <td class="rate">%T10C093RA1 / %T10C093RA2</td>
-      <td class="rate">%T10C093RB1 / %T10C093RB2</td>
-      <td class="rate">%T10C093RC1 / %T10C093RC2</td>
-      <td class="rate">%T10C093MA1 / %T10C093MA2</td>
-      <td class="rate">%T10C093MB1 / %T10C093MB2</td>
-      <td class="rate">%T10C093MC1 / %T10C093MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.94</td>
-      <td class="card">%T10CARD094N<br />(%T10CARD094R)</td>
-      <td class="rate">%T10C094TL1 / %T10C094TL2</td>
-      <td class="rate">%T10C094RA1 / %T10C094RA2</td>
-      <td class="rate">%T10C094RB1 / %T10C094RB2</td>
-      <td class="rate">%T10C094RC1 / %T10C094RC2</td>
-      <td class="rate">%T10C094MA1 / %T10C094MA2</td>
-      <td class="rate">%T10C094MB1 / %T10C094MB2</td>
-      <td class="rate">%T10C094MC1 / %T10C094MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.95</td>
-      <td class="card">%T10CARD095N<br />(%T10CARD095R)</td>
-      <td class="rate">%T10C095TL1 / %T10C095TL2</td>
-      <td class="rate">%T10C095RA1 / %T10C095RA2</td>
-      <td class="rate">%T10C095RB1 / %T10C095RB2</td>
-      <td class="rate">%T10C095RC1 / %T10C095RC2</td>
-      <td class="rate">%T10C095MA1 / %T10C095MA2</td>
-      <td class="rate">%T10C095MB1 / %T10C095MB2</td>
-      <td class="rate">%T10C095MC1 / %T10C095MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.96</td>
-      <td class="card">%T10CARD096N<br />(%T10CARD096R)</td>
-      <td class="rate">%T10C096TL1 / %T10C096TL2</td>
-      <td class="rate">%T10C096RA1 / %T10C096RA2</td>
-      <td class="rate">%T10C096RB1 / %T10C096RB2</td>
-      <td class="rate">%T10C096RC1 / %T10C096RC2</td>
-      <td class="rate">%T10C096MA1 / %T10C096MA2</td>
-      <td class="rate">%T10C096MB1 / %T10C096MB2</td>
-      <td class="rate">%T10C096MC1 / %T10C096MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.97</td>
-      <td class="card">%T10CARD097N<br />(%T10CARD097R)</td>
-      <td class="rate">%T10C097TL1 / %T10C097TL2</td>
-      <td class="rate">%T10C097RA1 / %T10C097RA2</td>
-      <td class="rate">%T10C097RB1 / %T10C097RB2</td>
-      <td class="rate">%T10C097RC1 / %T10C097RC2</td>
-      <td class="rate">%T10C097MA1 / %T10C097MA2</td>
-      <td class="rate">%T10C097MB1 / %T10C097MB2</td>
-      <td class="rate">%T10C097MC1 / %T10C097MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.98</td>
-      <td class="card">%T10CARD098N<br />(%T10CARD098R)</td>
-      <td class="rate">%T10C098TL1 / %T10C098TL2</td>
-      <td class="rate">%T10C098RA1 / %T10C098RA2</td>
-      <td class="rate">%T10C098RB1 / %T10C098RB2</td>
-      <td class="rate">%T10C098RC1 / %T10C098RC2</td>
-      <td class="rate">%T10C098MA1 / %T10C098MA2</td>
-      <td class="rate">%T10C098MB1 / %T10C098MB2</td>
-      <td class="rate">%T10C098MC1 / %T10C098MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.99</td>
-      <td class="card">%T10CARD099N<br />(%T10CARD099R)</td>
-      <td class="rate">%T10C099TL1 / %T10C099TL2</td>
-      <td class="rate">%T10C099RA1 / %T10C099RA2</td>
-      <td class="rate">%T10C099RB1 / %T10C099RB2</td>
-      <td class="rate">%T10C099RC1 / %T10C099RC2</td>
-      <td class="rate">%T10C099MA1 / %T10C099MA2</td>
-      <td class="rate">%T10C099MB1 / %T10C099MB2</td>
-      <td class="rate">%T10C099MC1 / %T10C099MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.100</td>
-      <td class="card">%T10CARD100N<br />(%T10CARD100R)</td>
-      <td class="rate">%T10C100TL1 / %T10C100TL2</td>
-      <td class="rate">%T10C100RA1 / %T10C100RA2</td>
-      <td class="rate">%T10C100RB1 / %T10C100RB2</td>
-      <td class="rate">%T10C100RC1 / %T10C100RC2</td>
-      <td class="rate">%T10C100MA1 / %T10C100MA2</td>
-      <td class="rate">%T10C100MB1 / %T10C100MB2</td>
-      <td class="rate">%T10C100MC1 / %T10C100MC2</td>
-     </tr>
+    <table class="rate_per_level">
+     <caption id="rate_per_level">難易度別スペルカード蒐集率（取得回数 / 挑戦回数 / 総数）</caption>
+     <thead>
+      <tr>
+       <th class="level">難易度</th>
+       <th class="character">全主人公合計</th>
+       <th class="character">博麗霊夢<br />（誘導装備）</th>
+       <th class="character">博麗霊夢<br />（前方集中装備）</th>
+       <th class="character">博麗霊夢<br />（封印装備）</th>
+       <th class="character">霧雨魔理沙<br />（高威力装備）</th>
+       <th class="character">霧雨魔理沙<br />（貫通装備）</th>
+       <th class="character">霧雨魔理沙<br />（魔法使い装備）</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="level">Easy</td>
+       <td class="rate">%T10CRGETL01 / %T10CRGETL02 / 23</td>
+       <td class="rate">%T10CRGERA01 / %T10CRGERA02 / 23</td>
+       <td class="rate">%T10CRGERB01 / %T10CRGERB02 / 23</td>
+       <td class="rate">%T10CRGERC01 / %T10CRGERC02 / 23</td>
+       <td class="rate">%T10CRGEMA01 / %T10CRGEMA02 / 23</td>
+       <td class="rate">%T10CRGEMB01 / %T10CRGEMB02 / 23</td>
+       <td class="rate">%T10CRGEMC01 / %T10CRGEMC02 / 23</td>
+      </tr>
+      <tr>
+       <td class="level">Normal</td>
+       <td class="rate">%T10CRGNTL01 / %T10CRGNTL02 / 24</td>
+       <td class="rate">%T10CRGNRA01 / %T10CRGNRA02 / 24</td>
+       <td class="rate">%T10CRGNRB01 / %T10CRGNRB02 / 24</td>
+       <td class="rate">%T10CRGNRC01 / %T10CRGNRC02 / 24</td>
+       <td class="rate">%T10CRGNMA01 / %T10CRGNMA02 / 24</td>
+       <td class="rate">%T10CRGNMB01 / %T10CRGNMB02 / 24</td>
+       <td class="rate">%T10CRGNMC01 / %T10CRGNMC02 / 24</td>
+      </tr>
+      <tr>
+       <td class="level">Hard</td>
+       <td class="rate">%T10CRGHTL01 / %T10CRGHTL02 / 25</td>
+       <td class="rate">%T10CRGHRA01 / %T10CRGHRA02 / 25</td>
+       <td class="rate">%T10CRGHRB01 / %T10CRGHRB02 / 25</td>
+       <td class="rate">%T10CRGHRC01 / %T10CRGHRC02 / 25</td>
+       <td class="rate">%T10CRGHMA01 / %T10CRGHMA02 / 25</td>
+       <td class="rate">%T10CRGHMB01 / %T10CRGHMB02 / 25</td>
+       <td class="rate">%T10CRGHMC01 / %T10CRGHMC02 / 25</td>
+      </tr>
+      <tr>
+       <td class="level">Lunatic</td>
+       <td class="rate">%T10CRGLTL01 / %T10CRGLTL02 / 25</td>
+       <td class="rate">%T10CRGLRA01 / %T10CRGLRA02 / 25</td>
+       <td class="rate">%T10CRGLRB01 / %T10CRGLRB02 / 25</td>
+       <td class="rate">%T10CRGLRC01 / %T10CRGLRC02 / 25</td>
+       <td class="rate">%T10CRGLMA01 / %T10CRGLMA02 / 25</td>
+       <td class="rate">%T10CRGLMB01 / %T10CRGLMB02 / 25</td>
+       <td class="rate">%T10CRGLMC01 / %T10CRGLMC02 / 25</td>
+      </tr>
+      <tr>
+       <td class="level">Extra</td>
+       <td class="rate">%T10CRGXTL01 / %T10CRGXTL02 / 13</td>
+       <td class="rate">%T10CRGXRA01 / %T10CRGXRA02 / 13</td>
+       <td class="rate">%T10CRGXRB01 / %T10CRGXRB02 / 13</td>
+       <td class="rate">%T10CRGXRC01 / %T10CRGXRC02 / 13</td>
+       <td class="rate">%T10CRGXMA01 / %T10CRGXMA02 / 13</td>
+       <td class="rate">%T10CRGXMB01 / %T10CRGXMB02 / 13</td>
+       <td class="rate">%T10CRGXMC01 / %T10CRGXMC02 / 13</td>
+      </tr>
+     </tbody>
+     <tfoot>
+      <tr>
+       <td>Total</td>
+       <td class="rate">%T10CRGTTL01 / %T10CRGTTL02 / 110</td>
+       <td class="rate">%T10CRGTRA01 / %T10CRGTRA02 / 110</td>
+       <td class="rate">%T10CRGTRB01 / %T10CRGTRB02 / 110</td>
+       <td class="rate">%T10CRGTRC01 / %T10CRGTRC02 / 110</td>
+       <td class="rate">%T10CRGTMA01 / %T10CRGTMA02 / 110</td>
+       <td class="rate">%T10CRGTMB01 / %T10CRGTMB02 / 110</td>
+       <td class="rate">%T10CRGTMC01 / %T10CRGTMC02 / 110</td>
+      </tr>
+     </tfoot>
+    </table>
 
-     <tr>
-      <td class="number">No.101</td>
-      <td class="card">%T10CARD101N<br />(%T10CARD101R)</td>
-      <td class="rate">%T10C101TL1 / %T10C101TL2</td>
-      <td class="rate">%T10C101RA1 / %T10C101RA2</td>
-      <td class="rate">%T10C101RB1 / %T10C101RB2</td>
-      <td class="rate">%T10C101RC1 / %T10C101RC2</td>
-      <td class="rate">%T10C101MA1 / %T10C101MA2</td>
-      <td class="rate">%T10C101MB1 / %T10C101MB2</td>
-      <td class="rate">%T10C101MC1 / %T10C101MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.102</td>
-      <td class="card">%T10CARD102N<br />(%T10CARD102R)</td>
-      <td class="rate">%T10C102TL1 / %T10C102TL2</td>
-      <td class="rate">%T10C102RA1 / %T10C102RA2</td>
-      <td class="rate">%T10C102RB1 / %T10C102RB2</td>
-      <td class="rate">%T10C102RC1 / %T10C102RC2</td>
-      <td class="rate">%T10C102MA1 / %T10C102MA2</td>
-      <td class="rate">%T10C102MB1 / %T10C102MB2</td>
-      <td class="rate">%T10C102MC1 / %T10C102MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.103</td>
-      <td class="card">%T10CARD103N<br />(%T10CARD103R)</td>
-      <td class="rate">%T10C103TL1 / %T10C103TL2</td>
-      <td class="rate">%T10C103RA1 / %T10C103RA2</td>
-      <td class="rate">%T10C103RB1 / %T10C103RB2</td>
-      <td class="rate">%T10C103RC1 / %T10C103RC2</td>
-      <td class="rate">%T10C103MA1 / %T10C103MA2</td>
-      <td class="rate">%T10C103MB1 / %T10C103MB2</td>
-      <td class="rate">%T10C103MC1 / %T10C103MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.104</td>
-      <td class="card">%T10CARD104N<br />(%T10CARD104R)</td>
-      <td class="rate">%T10C104TL1 / %T10C104TL2</td>
-      <td class="rate">%T10C104RA1 / %T10C104RA2</td>
-      <td class="rate">%T10C104RB1 / %T10C104RB2</td>
-      <td class="rate">%T10C104RC1 / %T10C104RC2</td>
-      <td class="rate">%T10C104MA1 / %T10C104MA2</td>
-      <td class="rate">%T10C104MB1 / %T10C104MB2</td>
-      <td class="rate">%T10C104MC1 / %T10C104MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.105</td>
-      <td class="card">%T10CARD105N<br />(%T10CARD105R)</td>
-      <td class="rate">%T10C105TL1 / %T10C105TL2</td>
-      <td class="rate">%T10C105RA1 / %T10C105RA2</td>
-      <td class="rate">%T10C105RB1 / %T10C105RB2</td>
-      <td class="rate">%T10C105RC1 / %T10C105RC2</td>
-      <td class="rate">%T10C105MA1 / %T10C105MA2</td>
-      <td class="rate">%T10C105MB1 / %T10C105MB2</td>
-      <td class="rate">%T10C105MC1 / %T10C105MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.106</td>
-      <td class="card">%T10CARD106N<br />(%T10CARD106R)</td>
-      <td class="rate">%T10C106TL1 / %T10C106TL2</td>
-      <td class="rate">%T10C106RA1 / %T10C106RA2</td>
-      <td class="rate">%T10C106RB1 / %T10C106RB2</td>
-      <td class="rate">%T10C106RC1 / %T10C106RC2</td>
-      <td class="rate">%T10C106MA1 / %T10C106MA2</td>
-      <td class="rate">%T10C106MB1 / %T10C106MB2</td>
-      <td class="rate">%T10C106MC1 / %T10C106MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.107</td>
-      <td class="card">%T10CARD107N<br />(%T10CARD107R)</td>
-      <td class="rate">%T10C107TL1 / %T10C107TL2</td>
-      <td class="rate">%T10C107RA1 / %T10C107RA2</td>
-      <td class="rate">%T10C107RB1 / %T10C107RB2</td>
-      <td class="rate">%T10C107RC1 / %T10C107RC2</td>
-      <td class="rate">%T10C107MA1 / %T10C107MA2</td>
-      <td class="rate">%T10C107MB1 / %T10C107MB2</td>
-      <td class="rate">%T10C107MC1 / %T10C107MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.108</td>
-      <td class="card">%T10CARD108N<br />(%T10CARD108R)</td>
-      <td class="rate">%T10C108TL1 / %T10C108TL2</td>
-      <td class="rate">%T10C108RA1 / %T10C108RA2</td>
-      <td class="rate">%T10C108RB1 / %T10C108RB2</td>
-      <td class="rate">%T10C108RC1 / %T10C108RC2</td>
-      <td class="rate">%T10C108MA1 / %T10C108MA2</td>
-      <td class="rate">%T10C108MB1 / %T10C108MB2</td>
-      <td class="rate">%T10C108MC1 / %T10C108MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.109</td>
-      <td class="card">%T10CARD109N<br />(%T10CARD109R)</td>
-      <td class="rate">%T10C109TL1 / %T10C109TL2</td>
-      <td class="rate">%T10C109RA1 / %T10C109RA2</td>
-      <td class="rate">%T10C109RB1 / %T10C109RB2</td>
-      <td class="rate">%T10C109RC1 / %T10C109RC2</td>
-      <td class="rate">%T10C109MA1 / %T10C109MA2</td>
-      <td class="rate">%T10C109MB1 / %T10C109MB2</td>
-      <td class="rate">%T10C109MC1 / %T10C109MC2</td>
-     </tr>
-     <tr>
-      <td class="number">No.110</td>
-      <td class="card">%T10CARD110N<br />(%T10CARD110R)</td>
-      <td class="rate">%T10C110TL1 / %T10C110TL2</td>
-      <td class="rate">%T10C110RA1 / %T10C110RA2</td>
-      <td class="rate">%T10C110RB1 / %T10C110RB2</td>
-      <td class="rate">%T10C110RC1 / %T10C110RC2</td>
-      <td class="rate">%T10C110MA1 / %T10C110MA2</td>
-      <td class="rate">%T10C110MB1 / %T10C110MB2</td>
-      <td class="rate">%T10C110MC1 / %T10C110MC2</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="rate_per_stage">
+     <caption id="rate_per_stage">ステージ別スペルカード蒐集率（取得回数 / 挑戦回数 / 総数）</caption>
+     <thead>
+      <tr>
+       <th class="stage">ステージ</th>
+       <th class="character">全主人公合計</th>
+       <th class="character">博麗霊夢<br />（誘導装備）</th>
+       <th class="character">博麗霊夢<br />（前方集中装備）</th>
+       <th class="character">博麗霊夢<br />（封印装備）</th>
+       <th class="character">霧雨魔理沙<br />（高威力装備）</th>
+       <th class="character">霧雨魔理沙<br />（貫通装備）</th>
+       <th class="character">霧雨魔理沙<br />（魔法使い装備）</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="stage">Stage1</td>
+       <td class="rate">%T10CRGTTL11 / %T10CRGTTL12 / 10</td>
+       <td class="rate">%T10CRGTRA11 / %T10CRGTRA12 / 10</td>
+       <td class="rate">%T10CRGTRB11 / %T10CRGTRB12 / 10</td>
+       <td class="rate">%T10CRGTRC11 / %T10CRGTRC12 / 10</td>
+       <td class="rate">%T10CRGTMA11 / %T10CRGTMA12 / 10</td>
+       <td class="rate">%T10CRGTMB11 / %T10CRGTMB12 / 10</td>
+       <td class="rate">%T10CRGTMC11 / %T10CRGTMC12 / 10</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage2</td>
+       <td class="rate">%T10CRGTTL21 / %T10CRGTTL22 / 16</td>
+       <td class="rate">%T10CRGTRA21 / %T10CRGTRA22 / 16</td>
+       <td class="rate">%T10CRGTRB21 / %T10CRGTRB22 / 16</td>
+       <td class="rate">%T10CRGTRC21 / %T10CRGTRC22 / 16</td>
+       <td class="rate">%T10CRGTMA21 / %T10CRGTMA22 / 16</td>
+       <td class="rate">%T10CRGTMB21 / %T10CRGTMB22 / 16</td>
+       <td class="rate">%T10CRGTMC21 / %T10CRGTMC22 / 16</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage3</td>
+       <td class="rate">%T10CRGTTL31 / %T10CRGTTL32 / 16</td>
+       <td class="rate">%T10CRGTRA31 / %T10CRGTRA32 / 16</td>
+       <td class="rate">%T10CRGTRB31 / %T10CRGTRB32 / 16</td>
+       <td class="rate">%T10CRGTRC31 / %T10CRGTRC32 / 16</td>
+       <td class="rate">%T10CRGTMA31 / %T10CRGTMA32 / 16</td>
+       <td class="rate">%T10CRGTMB31 / %T10CRGTMB32 / 16</td>
+       <td class="rate">%T10CRGTMC31 / %T10CRGTMC32 / 16</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage4</td>
+       <td class="rate">%T10CRGTTL41 / %T10CRGTTL42 / 15</td>
+       <td class="rate">%T10CRGTRA41 / %T10CRGTRA42 / 15</td>
+       <td class="rate">%T10CRGTRB41 / %T10CRGTRB42 / 15</td>
+       <td class="rate">%T10CRGTRC41 / %T10CRGTRC42 / 15</td>
+       <td class="rate">%T10CRGTMA41 / %T10CRGTMA42 / 15</td>
+       <td class="rate">%T10CRGTMB41 / %T10CRGTMB42 / 15</td>
+       <td class="rate">%T10CRGTMC41 / %T10CRGTMC42 / 15</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage5</td>
+       <td class="rate">%T10CRGTTL51 / %T10CRGTTL52 / 20</td>
+       <td class="rate">%T10CRGTRA51 / %T10CRGTRA52 / 20</td>
+       <td class="rate">%T10CRGTRB51 / %T10CRGTRB52 / 20</td>
+       <td class="rate">%T10CRGTRC51 / %T10CRGTRC52 / 20</td>
+       <td class="rate">%T10CRGTMA51 / %T10CRGTMA52 / 20</td>
+       <td class="rate">%T10CRGTMB51 / %T10CRGTMB52 / 20</td>
+       <td class="rate">%T10CRGTMC51 / %T10CRGTMC52 / 20</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage6</td>
+       <td class="rate">%T10CRGTTL61 / %T10CRGTTL62 / 20</td>
+       <td class="rate">%T10CRGTRA61 / %T10CRGTRA62 / 20</td>
+       <td class="rate">%T10CRGTRB61 / %T10CRGTRB62 / 20</td>
+       <td class="rate">%T10CRGTRC61 / %T10CRGTRC62 / 20</td>
+       <td class="rate">%T10CRGTMA61 / %T10CRGTMA62 / 20</td>
+       <td class="rate">%T10CRGTMB61 / %T10CRGTMB62 / 20</td>
+       <td class="rate">%T10CRGTMC61 / %T10CRGTMC62 / 20</td>
+      </tr>
+      <tr>
+       <td class="stage">Extra</td>
+       <td class="rate">%T10CRGXTL01 / %T10CRGXTL02 / 13</td>
+       <td class="rate">%T10CRGXRA01 / %T10CRGXRA02 / 13</td>
+       <td class="rate">%T10CRGXRB01 / %T10CRGXRB02 / 13</td>
+       <td class="rate">%T10CRGXRC01 / %T10CRGXRC02 / 13</td>
+       <td class="rate">%T10CRGXMA01 / %T10CRGXMA02 / 13</td>
+       <td class="rate">%T10CRGXMB01 / %T10CRGXMB02 / 13</td>
+       <td class="rate">%T10CRGXMC01 / %T10CRGXMC02 / 13</td>
+      </tr>
+     </tbody>
+     <tfoot>
+      <tr>
+       <td>Total</td>
+       <td class="rate">%T10CRGTTL01 / %T10CRGTTL02 / 110</td>
+       <td class="rate">%T10CRGTRA01 / %T10CRGTRA02 / 110</td>
+       <td class="rate">%T10CRGTRB01 / %T10CRGTRB02 / 110</td>
+       <td class="rate">%T10CRGTRC01 / %T10CRGTRC02 / 110</td>
+       <td class="rate">%T10CRGTMA01 / %T10CRGTMA02 / 110</td>
+       <td class="rate">%T10CRGTMB01 / %T10CRGTMB02 / 110</td>
+       <td class="rate">%T10CRGTMC01 / %T10CRGTMC02 / 110</td>
+      </tr>
+     </tfoot>
+    </table>
 
-   <table class="rate_per_level">
-    <caption id="rate_per_level">難易度別スペルカード蒐集率（取得回数 / 挑戦回数 / 総数）</caption>
-    <thead>
-     <tr>
-      <td class="level">難易度</td>
-      <td class="character">全主人公合計</td>
-      <td class="character">博麗霊夢<br />（誘導装備）</td>
-      <td class="character">博麗霊夢<br />（前方集中装備）</td>
-      <td class="character">博麗霊夢<br />（封印装備）</td>
-      <td class="character">霧雨魔理沙<br />（高威力装備）</td>
-      <td class="character">霧雨魔理沙<br />（貫通装備）</td>
-      <td class="character">霧雨魔理沙<br />（魔法使い装備）</td>
-     </tr>
-    </thead>
-    <tfoot>
-     <tr>
-      <td>Total</td>
-      <td class="rate">%T10CRGTTL01 / %T10CRGTTL02 / 110</td>
-      <td class="rate">%T10CRGTRA01 / %T10CRGTRA02 / 110</td>
-      <td class="rate">%T10CRGTRB01 / %T10CRGTRB02 / 110</td>
-      <td class="rate">%T10CRGTRC01 / %T10CRGTRC02 / 110</td>
-      <td class="rate">%T10CRGTMA01 / %T10CRGTMA02 / 110</td>
-      <td class="rate">%T10CRGTMB01 / %T10CRGTMB02 / 110</td>
-      <td class="rate">%T10CRGTMC01 / %T10CRGTMC02 / 110</td>
-     </tr>
-    </tfoot>
-    <tbody>
-     <tr>
-      <td class="level">Easy</td>
-      <td class="rate">%T10CRGETL01 / %T10CRGETL02 / 23</td>
-      <td class="rate">%T10CRGERA01 / %T10CRGERA02 / 23</td>
-      <td class="rate">%T10CRGERB01 / %T10CRGERB02 / 23</td>
-      <td class="rate">%T10CRGERC01 / %T10CRGERC02 / 23</td>
-      <td class="rate">%T10CRGEMA01 / %T10CRGEMA02 / 23</td>
-      <td class="rate">%T10CRGEMB01 / %T10CRGEMB02 / 23</td>
-      <td class="rate">%T10CRGEMC01 / %T10CRGEMC02 / 23</td>
-     </tr>
-     <tr>
-      <td class="level">Normal</td>
-      <td class="rate">%T10CRGNTL01 / %T10CRGNTL02 / 24</td>
-      <td class="rate">%T10CRGNRA01 / %T10CRGNRA02 / 24</td>
-      <td class="rate">%T10CRGNRB01 / %T10CRGNRB02 / 24</td>
-      <td class="rate">%T10CRGNRC01 / %T10CRGNRC02 / 24</td>
-      <td class="rate">%T10CRGNMA01 / %T10CRGNMA02 / 24</td>
-      <td class="rate">%T10CRGNMB01 / %T10CRGNMB02 / 24</td>
-      <td class="rate">%T10CRGNMC01 / %T10CRGNMC02 / 24</td>
-     </tr>
-     <tr>
-      <td class="level">Hard</td>
-      <td class="rate">%T10CRGHTL01 / %T10CRGHTL02 / 25</td>
-      <td class="rate">%T10CRGHRA01 / %T10CRGHRA02 / 25</td>
-      <td class="rate">%T10CRGHRB01 / %T10CRGHRB02 / 25</td>
-      <td class="rate">%T10CRGHRC01 / %T10CRGHRC02 / 25</td>
-      <td class="rate">%T10CRGHMA01 / %T10CRGHMA02 / 25</td>
-      <td class="rate">%T10CRGHMB01 / %T10CRGHMB02 / 25</td>
-      <td class="rate">%T10CRGHMC01 / %T10CRGHMC02 / 25</td>
-     </tr>
-     <tr>
-      <td class="level">Lunatic</td>
-      <td class="rate">%T10CRGLTL01 / %T10CRGLTL02 / 25</td>
-      <td class="rate">%T10CRGLRA01 / %T10CRGLRA02 / 25</td>
-      <td class="rate">%T10CRGLRB01 / %T10CRGLRB02 / 25</td>
-      <td class="rate">%T10CRGLRC01 / %T10CRGLRC02 / 25</td>
-      <td class="rate">%T10CRGLMA01 / %T10CRGLMA02 / 25</td>
-      <td class="rate">%T10CRGLMB01 / %T10CRGLMB02 / 25</td>
-      <td class="rate">%T10CRGLMC01 / %T10CRGLMC02 / 25</td>
-     </tr>
-     <tr>
-      <td class="level">Extra</td>
-      <td class="rate">%T10CRGXTL01 / %T10CRGXTL02 / 13</td>
-      <td class="rate">%T10CRGXRA01 / %T10CRGXRA02 / 13</td>
-      <td class="rate">%T10CRGXRB01 / %T10CRGXRB02 / 13</td>
-      <td class="rate">%T10CRGXRC01 / %T10CRGXRC02 / 13</td>
-      <td class="rate">%T10CRGXMA01 / %T10CRGXMA02 / 13</td>
-      <td class="rate">%T10CRGXMB01 / %T10CRGXMB02 / 13</td>
-      <td class="rate">%T10CRGXMC01 / %T10CRGXMC02 / 13</td>
-     </tr>
-    </tbody>
-   </table>
+   </section>
 
-   <table class="rate_per_stage">
-    <caption id="rate_per_stage">ステージ別スペルカード蒐集率（取得回数 / 挑戦回数 / 総数）</caption>
-    <thead>
-     <tr>
-      <td class="stage">ステージ</td>
-      <td class="character">全主人公合計</td>
-      <td class="character">博麗霊夢<br />（誘導装備）</td>
-      <td class="character">博麗霊夢<br />（前方集中装備）</td>
-      <td class="character">博麗霊夢<br />（封印装備）</td>
-      <td class="character">霧雨魔理沙<br />（高威力装備）</td>
-      <td class="character">霧雨魔理沙<br />（貫通装備）</td>
-      <td class="character">霧雨魔理沙<br />（魔法使い装備）</td>
-     </tr>
-    </thead>
-    <tfoot>
-     <tr>
-      <td>Total</td>
-      <td class="rate">%T10CRGTTL01 / %T10CRGTTL02 / 110</td>
-      <td class="rate">%T10CRGTRA01 / %T10CRGTRA02 / 110</td>
-      <td class="rate">%T10CRGTRB01 / %T10CRGTRB02 / 110</td>
-      <td class="rate">%T10CRGTRC01 / %T10CRGTRC02 / 110</td>
-      <td class="rate">%T10CRGTMA01 / %T10CRGTMA02 / 110</td>
-      <td class="rate">%T10CRGTMB01 / %T10CRGTMB02 / 110</td>
-      <td class="rate">%T10CRGTMC01 / %T10CRGTMC02 / 110</td>
-     </tr>
-    </tfoot>
-    <tbody>
-     <tr>
-      <td class="stage">Stage1</td>
-      <td class="rate">%T10CRGTTL11 / %T10CRGTTL12 / 10</td>
-      <td class="rate">%T10CRGTRA11 / %T10CRGTRA12 / 10</td>
-      <td class="rate">%T10CRGTRB11 / %T10CRGTRB12 / 10</td>
-      <td class="rate">%T10CRGTRC11 / %T10CRGTRC12 / 10</td>
-      <td class="rate">%T10CRGTMA11 / %T10CRGTMA12 / 10</td>
-      <td class="rate">%T10CRGTMB11 / %T10CRGTMB12 / 10</td>
-      <td class="rate">%T10CRGTMC11 / %T10CRGTMC12 / 10</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage2</td>
-      <td class="rate">%T10CRGTTL21 / %T10CRGTTL22 / 16</td>
-      <td class="rate">%T10CRGTRA21 / %T10CRGTRA22 / 16</td>
-      <td class="rate">%T10CRGTRB21 / %T10CRGTRB22 / 16</td>
-      <td class="rate">%T10CRGTRC21 / %T10CRGTRC22 / 16</td>
-      <td class="rate">%T10CRGTMA21 / %T10CRGTMA22 / 16</td>
-      <td class="rate">%T10CRGTMB21 / %T10CRGTMB22 / 16</td>
-      <td class="rate">%T10CRGTMC21 / %T10CRGTMC22 / 16</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage3</td>
-      <td class="rate">%T10CRGTTL31 / %T10CRGTTL32 / 16</td>
-      <td class="rate">%T10CRGTRA31 / %T10CRGTRA32 / 16</td>
-      <td class="rate">%T10CRGTRB31 / %T10CRGTRB32 / 16</td>
-      <td class="rate">%T10CRGTRC31 / %T10CRGTRC32 / 16</td>
-      <td class="rate">%T10CRGTMA31 / %T10CRGTMA32 / 16</td>
-      <td class="rate">%T10CRGTMB31 / %T10CRGTMB32 / 16</td>
-      <td class="rate">%T10CRGTMC31 / %T10CRGTMC32 / 16</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage4</td>
-      <td class="rate">%T10CRGTTL41 / %T10CRGTTL42 / 15</td>
-      <td class="rate">%T10CRGTRA41 / %T10CRGTRA42 / 15</td>
-      <td class="rate">%T10CRGTRB41 / %T10CRGTRB42 / 15</td>
-      <td class="rate">%T10CRGTRC41 / %T10CRGTRC42 / 15</td>
-      <td class="rate">%T10CRGTMA41 / %T10CRGTMA42 / 15</td>
-      <td class="rate">%T10CRGTMB41 / %T10CRGTMB42 / 15</td>
-      <td class="rate">%T10CRGTMC41 / %T10CRGTMC42 / 15</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage5</td>
-      <td class="rate">%T10CRGTTL51 / %T10CRGTTL52 / 20</td>
-      <td class="rate">%T10CRGTRA51 / %T10CRGTRA52 / 20</td>
-      <td class="rate">%T10CRGTRB51 / %T10CRGTRB52 / 20</td>
-      <td class="rate">%T10CRGTRC51 / %T10CRGTRC52 / 20</td>
-      <td class="rate">%T10CRGTMA51 / %T10CRGTMA52 / 20</td>
-      <td class="rate">%T10CRGTMB51 / %T10CRGTMB52 / 20</td>
-      <td class="rate">%T10CRGTMC51 / %T10CRGTMC52 / 20</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage6</td>
-      <td class="rate">%T10CRGTTL61 / %T10CRGTTL62 / 20</td>
-      <td class="rate">%T10CRGTRA61 / %T10CRGTRA62 / 20</td>
-      <td class="rate">%T10CRGTRB61 / %T10CRGTRB62 / 20</td>
-      <td class="rate">%T10CRGTRC61 / %T10CRGTRC62 / 20</td>
-      <td class="rate">%T10CRGTMA61 / %T10CRGTMA62 / 20</td>
-      <td class="rate">%T10CRGTMB61 / %T10CRGTMB62 / 20</td>
-      <td class="rate">%T10CRGTMC61 / %T10CRGTMC62 / 20</td>
-     </tr>
-     <tr>
-      <td class="stage">Extra</td>
-      <td class="rate">%T10CRGXTL01 / %T10CRGXTL02 / 13</td>
-      <td class="rate">%T10CRGXRA01 / %T10CRGXRA02 / 13</td>
-      <td class="rate">%T10CRGXRB01 / %T10CRGXRB02 / 13</td>
-      <td class="rate">%T10CRGXRC01 / %T10CRGXRC02 / 13</td>
-      <td class="rate">%T10CRGXMA01 / %T10CRGXMA02 / 13</td>
-      <td class="rate">%T10CRGXMB01 / %T10CRGXMB02 / 13</td>
-      <td class="rate">%T10CRGXMC01 / %T10CRGXMC02 / 13</td>
-     </tr>
-    </tbody>
-   </table>
+  </main>
 
-  </div>
-
-  <hr />
-
-  <div class="section">
+  <footer>
    <p>
     Data output by <a href="https://www.colorless-sight.jp/thsfc/">ThScoreFileConverter</a>.
-<script type="text/javascript">
-<!--
+<script>
+// <![CDATA[
     document.write("Last updated: ", document.lastModified, ".");
-//-->
+// ]]>
 </script>
    </p>
-  </div>
+  </footer>
 
  </body>
 </html>

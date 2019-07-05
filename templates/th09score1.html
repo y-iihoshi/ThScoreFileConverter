@@ -1,15 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
  <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta http-equiv="Content-Script-Type" content="text/javascript" />
-  <title>東方花映塚スコアデータ</title>
-  <link rel="stylesheet" type="text/css" href="style.css" />
-<style type="text/css">
-<!--
+  <meta charset="UTF-8" />
+  <title>東方花映塚 スコアデータ</title>
+  <link rel="stylesheet" href="style.css" />
+<style>
+/* <![CDATA[ */
     td.character { min-width: 140px; }
     td.name { min-width: 70px; }
     td.score { min-width: 70px; }
@@ -17,818 +14,820 @@
     td.stage { min-width: 70px; }
     td.date { min-width: 70px; }
     table.score_per_level { float: left; }
-    table.playtime td.column_head { min-width: 100px; }
+    table.playtime th { min-width: 100px; }
     table.playtime td.playtime { min-width: 150px; }
     table.count td.count { min-width: 50px; }
--->
+/* ]]> */
 </style>
  </head>
 
  <body>
 
-  <h1>東方花映塚スコアデータ</h1>
+  <header>
+   <h1>東方花映塚 スコアデータ</h1>
+   <hr />
+   <nav>
+    <ul>
+     <li>スコアデータ全般</li>
+     <li><a href="th09score2.html">個別ランキング</a></li>
+    </ul>
+    <ul>
+     <li><a href="#Easy">Easy</a></li>
+     <li><a href="#Normal">Normal</a></li>
+     <li><a href="#Hard">Hard</a></li>
+     <li><a href="#Lunatic">Lunatic</a></li>
+     <li><a href="#Extra">Extra</a></li>
+     <li><a href="#Clear">クリア回数・クリア達成度</a></li>
+     <li><a href="#Other">その他の状態一覧</a></li>
+    </ul>
+   </nav>
+  </header>
 
-  <hr />
+  <main>
 
-  <div class="section">
-   <p>
-    スコアデータ全般 /
-    <a href="th09score2.html">個別ランキング</a><br />
-    <a href="#Easy">Easy</a> /
-    <a href="#Normal">Normal</a> /
-    <a href="#Hard">Hard</a> /
-    <a href="#Lunatic">Lunatic</a> /
-    <a href="#Extra">Extra</a> /
-    <a href="#Clear">クリア回数・クリア達成度</a> /
-    <a href="#Other">その他の状態一覧</a>
-   </p>
-  </div>
+   <section>
+    <h2>難易度別スコア</h2>
 
-  <hr />
+    <table class="score_per_level">
+     <caption id="Easy">Easy</caption>
+     <thead>
+      <tr>
+       <th class="character">Character</th>
+       <th class="name">Name</th>
+       <th class="score">Score</th>
+       <th class="date">Date</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="character">博麗 霊夢</td>
+       <td class="name">%T09SCRERM11</td>
+       <td class="score">%T09SCRERM12</td>
+       <td class="date">%T09SCRERM13</td>
+      </tr>
+      <tr>
+       <td class="character">霧雨魔理沙</td>
+       <td class="name">%T09SCREMR11</td>
+       <td class="score">%T09SCREMR12</td>
+       <td class="date">%T09SCREMR13</td>
+      </tr>
+      <tr>
+       <td class="character">十六夜 咲夜</td>
+       <td class="name">%T09SCRESK11</td>
+       <td class="score">%T09SCRESK12</td>
+       <td class="date">%T09SCRESK13</td>
+      </tr>
+      <tr>
+       <td class="character">魂魄 妖夢</td>
+       <td class="name">%T09SCREYM11</td>
+       <td class="score">%T09SCREYM12</td>
+       <td class="date">%T09SCREYM13</td>
+      </tr>
+      <tr>
+       <td class="character">鈴仙・優曇華院・イナバ</td>
+       <td class="name">%T09SCRERS11</td>
+       <td class="score">%T09SCRERS12</td>
+       <td class="date">%T09SCRERS13</td>
+      </tr>
+      <tr>
+       <td class="character">チルノ</td>
+       <td class="name">%T09SCRECI11</td>
+       <td class="score">%T09SCRECI12</td>
+       <td class="date">%T09SCRECI13</td>
+      </tr>
+      <tr>
+       <td class="character">リリカ・プリズムリバー</td>
+       <td class="name">%T09SCRELY11</td>
+       <td class="score">%T09SCRELY12</td>
+       <td class="date">%T09SCRELY13</td>
+      </tr>
+      <tr>
+       <td class="character">ミスティア・ローレライ</td>
+       <td class="name">%T09SCREMY11</td>
+       <td class="score">%T09SCREMY12</td>
+       <td class="date">%T09SCREMY13</td>
+      </tr>
+      <tr>
+       <td class="character">因幡 てゐ</td>
+       <td class="name">%T09SCRETW11</td>
+       <td class="score">%T09SCRETW12</td>
+       <td class="date">%T09SCRETW13</td>
+      </tr>
+      <tr>
+       <td class="character">射命丸 文</td>
+       <td class="name">%T09SCREAY11</td>
+       <td class="score">%T09SCREAY12</td>
+       <td class="date">%T09SCREAY13</td>
+      </tr>
+      <tr>
+       <td class="character">メディスン・メランコリー</td>
+       <td class="name">%T09SCREMD11</td>
+       <td class="score">%T09SCREMD12</td>
+       <td class="date">%T09SCREMD13</td>
+      </tr>
+      <tr>
+       <td class="character">風見 幽香</td>
+       <td class="name">%T09SCREYU11</td>
+       <td class="score">%T09SCREYU12</td>
+       <td class="date">%T09SCREYU13</td>
+      </tr>
+      <tr>
+       <td class="character">小野塚 小町</td>
+       <td class="name">%T09SCREKM11</td>
+       <td class="score">%T09SCREKM12</td>
+       <td class="date">%T09SCREKM13</td>
+      </tr>
+      <tr>
+       <td class="character">四季映姫・ヤマザナドゥ</td>
+       <td class="name">%T09SCRESI11</td>
+       <td class="score">%T09SCRESI12</td>
+       <td class="date">%T09SCRESI13</td>
+      </tr>
+     </tbody>
+    </table>
 
-  <div class="section">
-   <h2>難易度別スコア</h2>
+    <table class="score_per_level">
+     <caption id="Normal">Normal</caption>
+     <thead>
+      <tr>
+       <th class="character">Character</th>
+       <th class="name">Name</th>
+       <th class="score">Score</th>
+       <th class="date">Date</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="character">博麗 霊夢</td>
+       <td class="name">%T09SCRNRM11</td>
+       <td class="score">%T09SCRNRM12</td>
+       <td class="date">%T09SCRNRM13</td>
+      </tr>
+      <tr>
+       <td class="character">霧雨魔理沙</td>
+       <td class="name">%T09SCRNMR11</td>
+       <td class="score">%T09SCRNMR12</td>
+       <td class="date">%T09SCRNMR13</td>
+      </tr>
+      <tr>
+       <td class="character">十六夜 咲夜</td>
+       <td class="name">%T09SCRNSK11</td>
+       <td class="score">%T09SCRNSK12</td>
+       <td class="date">%T09SCRNSK13</td>
+      </tr>
+      <tr>
+       <td class="character">魂魄 妖夢</td>
+       <td class="name">%T09SCRNYM11</td>
+       <td class="score">%T09SCRNYM12</td>
+       <td class="date">%T09SCRNYM13</td>
+      </tr>
+      <tr>
+       <td class="character">鈴仙・優曇華院・イナバ</td>
+       <td class="name">%T09SCRNRS11</td>
+       <td class="score">%T09SCRNRS12</td>
+       <td class="date">%T09SCRNRS13</td>
+      </tr>
+      <tr>
+       <td class="character">チルノ</td>
+       <td class="name">%T09SCRNCI11</td>
+       <td class="score">%T09SCRNCI12</td>
+       <td class="date">%T09SCRNCI13</td>
+      </tr>
+      <tr>
+       <td class="character">リリカ・プリズムリバー</td>
+       <td class="name">%T09SCRNLY11</td>
+       <td class="score">%T09SCRNLY12</td>
+       <td class="date">%T09SCRNLY13</td>
+      </tr>
+      <tr>
+       <td class="character">ミスティア・ローレライ</td>
+       <td class="name">%T09SCRNMY11</td>
+       <td class="score">%T09SCRNMY12</td>
+       <td class="date">%T09SCRNMY13</td>
+      </tr>
+      <tr>
+       <td class="character">因幡 てゐ</td>
+       <td class="name">%T09SCRNTW11</td>
+       <td class="score">%T09SCRNTW12</td>
+       <td class="date">%T09SCRNTW13</td>
+      </tr>
+      <tr>
+       <td class="character">射命丸 文</td>
+       <td class="name">%T09SCRNAY11</td>
+       <td class="score">%T09SCRNAY12</td>
+       <td class="date">%T09SCRNAY13</td>
+      </tr>
+      <tr>
+       <td class="character">メディスン・メランコリー</td>
+       <td class="name">%T09SCRNMD11</td>
+       <td class="score">%T09SCRNMD12</td>
+       <td class="date">%T09SCRNMD13</td>
+      </tr>
+      <tr>
+       <td class="character">風見 幽香</td>
+       <td class="name">%T09SCRNYU11</td>
+       <td class="score">%T09SCRNYU12</td>
+       <td class="date">%T09SCRNYU13</td>
+      </tr>
+      <tr>
+       <td class="character">小野塚 小町</td>
+       <td class="name">%T09SCRNKM11</td>
+       <td class="score">%T09SCRNKM12</td>
+       <td class="date">%T09SCRNKM13</td>
+      </tr>
+      <tr>
+       <td class="character">四季映姫・ヤマザナドゥ</td>
+       <td class="name">%T09SCRNSI11</td>
+       <td class="score">%T09SCRNSI12</td>
+       <td class="date">%T09SCRNSI13</td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="score_per_level">
-    <caption id="Easy">Easy</caption>
-    <thead>
-     <tr>
-      <td class="character">Character</td>
-      <td class="name">Name</td>
-      <td class="score">Score</td>
-      <td class="date">Date</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="character">博麗 霊夢</td>
-      <td class="name">%T09SCRERM11</td>
-      <td class="score">%T09SCRERM12</td>
-      <td class="date">%T09SCRERM13</td>
-     </tr>
-     <tr>
-      <td class="character">霧雨魔理沙</td>
-      <td class="name">%T09SCREMR11</td>
-      <td class="score">%T09SCREMR12</td>
-      <td class="date">%T09SCREMR13</td>
-     </tr>
-     <tr>
-      <td class="character">十六夜 咲夜</td>
-      <td class="name">%T09SCRESK11</td>
-      <td class="score">%T09SCRESK12</td>
-      <td class="date">%T09SCRESK13</td>
-     </tr>
-     <tr>
-      <td class="character">魂魄 妖夢</td>
-      <td class="name">%T09SCREYM11</td>
-      <td class="score">%T09SCREYM12</td>
-      <td class="date">%T09SCREYM13</td>
-     </tr>
-     <tr>
-      <td class="character">鈴仙・優曇華院・イナバ</td>
-      <td class="name">%T09SCRERS11</td>
-      <td class="score">%T09SCRERS12</td>
-      <td class="date">%T09SCRERS13</td>
-     </tr>
-     <tr>
-      <td class="character">チルノ</td>
-      <td class="name">%T09SCRECI11</td>
-      <td class="score">%T09SCRECI12</td>
-      <td class="date">%T09SCRECI13</td>
-     </tr>
-     <tr>
-      <td class="character">リリカ・プリズムリバー</td>
-      <td class="name">%T09SCRELY11</td>
-      <td class="score">%T09SCRELY12</td>
-      <td class="date">%T09SCRELY13</td>
-     </tr>
-     <tr>
-      <td class="character">ミスティア・ローレライ</td>
-      <td class="name">%T09SCREMY11</td>
-      <td class="score">%T09SCREMY12</td>
-      <td class="date">%T09SCREMY13</td>
-     </tr>
-     <tr>
-      <td class="character">因幡 てゐ</td>
-      <td class="name">%T09SCRETW11</td>
-      <td class="score">%T09SCRETW12</td>
-      <td class="date">%T09SCRETW13</td>
-     </tr>
-     <tr>
-      <td class="character">射命丸 文</td>
-      <td class="name">%T09SCREAY11</td>
-      <td class="score">%T09SCREAY12</td>
-      <td class="date">%T09SCREAY13</td>
-     </tr>
-     <tr>
-      <td class="character">メディスン・メランコリー</td>
-      <td class="name">%T09SCREMD11</td>
-      <td class="score">%T09SCREMD12</td>
-      <td class="date">%T09SCREMD13</td>
-     </tr>
-     <tr>
-      <td class="character">風見 幽香</td>
-      <td class="name">%T09SCREYU11</td>
-      <td class="score">%T09SCREYU12</td>
-      <td class="date">%T09SCREYU13</td>
-     </tr>
-     <tr>
-      <td class="character">小野塚 小町</td>
-      <td class="name">%T09SCREKM11</td>
-      <td class="score">%T09SCREKM12</td>
-      <td class="date">%T09SCREKM13</td>
-     </tr>
-     <tr>
-      <td class="character">四季映姫・ヤマザナドゥ</td>
-      <td class="name">%T09SCRESI11</td>
-      <td class="score">%T09SCRESI12</td>
-      <td class="date">%T09SCRESI13</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="score_per_level">
+     <caption id="Hard">Hard</caption>
+     <thead>
+      <tr>
+       <th class="character">Character</th>
+       <th class="name">Name</th>
+       <th class="score">Score</th>
+       <th class="date">Date</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="character">博麗 霊夢</td>
+       <td class="name">%T09SCRHRM11</td>
+       <td class="score">%T09SCRHRM12</td>
+       <td class="date">%T09SCRHRM13</td>
+      </tr>
+      <tr>
+       <td class="character">霧雨魔理沙</td>
+       <td class="name">%T09SCRHMR11</td>
+       <td class="score">%T09SCRHMR12</td>
+       <td class="date">%T09SCRHMR13</td>
+      </tr>
+      <tr>
+       <td class="character">十六夜 咲夜</td>
+       <td class="name">%T09SCRHSK11</td>
+       <td class="score">%T09SCRHSK12</td>
+       <td class="date">%T09SCRHSK13</td>
+      </tr>
+      <tr>
+       <td class="character">魂魄 妖夢</td>
+       <td class="name">%T09SCRHYM11</td>
+       <td class="score">%T09SCRHYM12</td>
+       <td class="date">%T09SCRHYM13</td>
+      </tr>
+      <tr>
+       <td class="character">鈴仙・優曇華院・イナバ</td>
+       <td class="name">%T09SCRHRS11</td>
+       <td class="score">%T09SCRHRS12</td>
+       <td class="date">%T09SCRHRS13</td>
+      </tr>
+      <tr>
+       <td class="character">チルノ</td>
+       <td class="name">%T09SCRHCI11</td>
+       <td class="score">%T09SCRHCI12</td>
+       <td class="date">%T09SCRHCI13</td>
+      </tr>
+      <tr>
+       <td class="character">リリカ・プリズムリバー</td>
+       <td class="name">%T09SCRHLY11</td>
+       <td class="score">%T09SCRHLY12</td>
+       <td class="date">%T09SCRHLY13</td>
+      </tr>
+      <tr>
+       <td class="character">ミスティア・ローレライ</td>
+       <td class="name">%T09SCRHMY11</td>
+       <td class="score">%T09SCRHMY12</td>
+       <td class="date">%T09SCRHMY13</td>
+      </tr>
+      <tr>
+       <td class="character">因幡 てゐ</td>
+       <td class="name">%T09SCRHTW11</td>
+       <td class="score">%T09SCRHTW12</td>
+       <td class="date">%T09SCRHTW13</td>
+      </tr>
+      <tr>
+       <td class="character">射命丸 文</td>
+       <td class="name">%T09SCRHAY11</td>
+       <td class="score">%T09SCRHAY12</td>
+       <td class="date">%T09SCRHAY13</td>
+      </tr>
+      <tr>
+       <td class="character">メディスン・メランコリー</td>
+       <td class="name">%T09SCRHMD11</td>
+       <td class="score">%T09SCRHMD12</td>
+       <td class="date">%T09SCRHMD13</td>
+      </tr>
+      <tr>
+       <td class="character">風見 幽香</td>
+       <td class="name">%T09SCRHYU11</td>
+       <td class="score">%T09SCRHYU12</td>
+       <td class="date">%T09SCRHYU13</td>
+      </tr>
+      <tr>
+       <td class="character">小野塚 小町</td>
+       <td class="name">%T09SCRHKM11</td>
+       <td class="score">%T09SCRHKM12</td>
+       <td class="date">%T09SCRHKM13</td>
+      </tr>
+      <tr>
+       <td class="character">四季映姫・ヤマザナドゥ</td>
+       <td class="name">%T09SCRHSI11</td>
+       <td class="score">%T09SCRHSI12</td>
+       <td class="date">%T09SCRHSI13</td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="score_per_level">
-    <caption id="Normal">Normal</caption>
-    <thead>
-     <tr>
-      <td class="character">Character</td>
-      <td class="name">Name</td>
-      <td class="score">Score</td>
-      <td class="date">Date</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="character">博麗 霊夢</td>
-      <td class="name">%T09SCRNRM11</td>
-      <td class="score">%T09SCRNRM12</td>
-      <td class="date">%T09SCRNRM13</td>
-     </tr>
-     <tr>
-      <td class="character">霧雨魔理沙</td>
-      <td class="name">%T09SCRNMR11</td>
-      <td class="score">%T09SCRNMR12</td>
-      <td class="date">%T09SCRNMR13</td>
-     </tr>
-     <tr>
-      <td class="character">十六夜 咲夜</td>
-      <td class="name">%T09SCRNSK11</td>
-      <td class="score">%T09SCRNSK12</td>
-      <td class="date">%T09SCRNSK13</td>
-     </tr>
-     <tr>
-      <td class="character">魂魄 妖夢</td>
-      <td class="name">%T09SCRNYM11</td>
-      <td class="score">%T09SCRNYM12</td>
-      <td class="date">%T09SCRNYM13</td>
-     </tr>
-     <tr>
-      <td class="character">鈴仙・優曇華院・イナバ</td>
-      <td class="name">%T09SCRNRS11</td>
-      <td class="score">%T09SCRNRS12</td>
-      <td class="date">%T09SCRNRS13</td>
-     </tr>
-     <tr>
-      <td class="character">チルノ</td>
-      <td class="name">%T09SCRNCI11</td>
-      <td class="score">%T09SCRNCI12</td>
-      <td class="date">%T09SCRNCI13</td>
-     </tr>
-     <tr>
-      <td class="character">リリカ・プリズムリバー</td>
-      <td class="name">%T09SCRNLY11</td>
-      <td class="score">%T09SCRNLY12</td>
-      <td class="date">%T09SCRNLY13</td>
-     </tr>
-     <tr>
-      <td class="character">ミスティア・ローレライ</td>
-      <td class="name">%T09SCRNMY11</td>
-      <td class="score">%T09SCRNMY12</td>
-      <td class="date">%T09SCRNMY13</td>
-     </tr>
-     <tr>
-      <td class="character">因幡 てゐ</td>
-      <td class="name">%T09SCRNTW11</td>
-      <td class="score">%T09SCRNTW12</td>
-      <td class="date">%T09SCRNTW13</td>
-     </tr>
-     <tr>
-      <td class="character">射命丸 文</td>
-      <td class="name">%T09SCRNAY11</td>
-      <td class="score">%T09SCRNAY12</td>
-      <td class="date">%T09SCRNAY13</td>
-     </tr>
-     <tr>
-      <td class="character">メディスン・メランコリー</td>
-      <td class="name">%T09SCRNMD11</td>
-      <td class="score">%T09SCRNMD12</td>
-      <td class="date">%T09SCRNMD13</td>
-     </tr>
-     <tr>
-      <td class="character">風見 幽香</td>
-      <td class="name">%T09SCRNYU11</td>
-      <td class="score">%T09SCRNYU12</td>
-      <td class="date">%T09SCRNYU13</td>
-     </tr>
-     <tr>
-      <td class="character">小野塚 小町</td>
-      <td class="name">%T09SCRNKM11</td>
-      <td class="score">%T09SCRNKM12</td>
-      <td class="date">%T09SCRNKM13</td>
-     </tr>
-     <tr>
-      <td class="character">四季映姫・ヤマザナドゥ</td>
-      <td class="name">%T09SCRNSI11</td>
-      <td class="score">%T09SCRNSI12</td>
-      <td class="date">%T09SCRNSI13</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="score_per_level">
+     <caption id="Lunatic">Lunatic</caption>
+     <thead>
+      <tr>
+       <th class="character">Character</th>
+       <th class="name">Name</th>
+       <th class="score">Score</th>
+       <th class="date">Date</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="character">博麗 霊夢</td>
+       <td class="name">%T09SCRLRM11</td>
+       <td class="score">%T09SCRLRM12</td>
+       <td class="date">%T09SCRLRM13</td>
+      </tr>
+      <tr>
+       <td class="character">霧雨魔理沙</td>
+       <td class="name">%T09SCRLMR11</td>
+       <td class="score">%T09SCRLMR12</td>
+       <td class="date">%T09SCRLMR13</td>
+      </tr>
+      <tr>
+       <td class="character">十六夜 咲夜</td>
+       <td class="name">%T09SCRLSK11</td>
+       <td class="score">%T09SCRLSK12</td>
+       <td class="date">%T09SCRLSK13</td>
+      </tr>
+      <tr>
+       <td class="character">魂魄 妖夢</td>
+       <td class="name">%T09SCRLYM11</td>
+       <td class="score">%T09SCRLYM12</td>
+       <td class="date">%T09SCRLYM13</td>
+      </tr>
+      <tr>
+       <td class="character">鈴仙・優曇華院・イナバ</td>
+       <td class="name">%T09SCRLRS11</td>
+       <td class="score">%T09SCRLRS12</td>
+       <td class="date">%T09SCRLRS13</td>
+      </tr>
+      <tr>
+       <td class="character">チルノ</td>
+       <td class="name">%T09SCRLCI11</td>
+       <td class="score">%T09SCRLCI12</td>
+       <td class="date">%T09SCRLCI13</td>
+      </tr>
+      <tr>
+       <td class="character">リリカ・プリズムリバー</td>
+       <td class="name">%T09SCRLLY11</td>
+       <td class="score">%T09SCRLLY12</td>
+       <td class="date">%T09SCRLLY13</td>
+      </tr>
+      <tr>
+       <td class="character">ミスティア・ローレライ</td>
+       <td class="name">%T09SCRLMY11</td>
+       <td class="score">%T09SCRLMY12</td>
+       <td class="date">%T09SCRLMY13</td>
+      </tr>
+      <tr>
+       <td class="character">因幡 てゐ</td>
+       <td class="name">%T09SCRLTW11</td>
+       <td class="score">%T09SCRLTW12</td>
+       <td class="date">%T09SCRLTW13</td>
+      </tr>
+      <tr>
+       <td class="character">射命丸 文</td>
+       <td class="name">%T09SCRLAY11</td>
+       <td class="score">%T09SCRLAY12</td>
+       <td class="date">%T09SCRLAY13</td>
+      </tr>
+      <tr>
+       <td class="character">メディスン・メランコリー</td>
+       <td class="name">%T09SCRLMD11</td>
+       <td class="score">%T09SCRLMD12</td>
+       <td class="date">%T09SCRLMD13</td>
+      </tr>
+      <tr>
+       <td class="character">風見 幽香</td>
+       <td class="name">%T09SCRLYU11</td>
+       <td class="score">%T09SCRLYU12</td>
+       <td class="date">%T09SCRLYU13</td>
+      </tr>
+      <tr>
+       <td class="character">小野塚 小町</td>
+       <td class="name">%T09SCRLKM11</td>
+       <td class="score">%T09SCRLKM12</td>
+       <td class="date">%T09SCRLKM13</td>
+      </tr>
+      <tr>
+       <td class="character">四季映姫・ヤマザナドゥ</td>
+       <td class="name">%T09SCRLSI11</td>
+       <td class="score">%T09SCRLSI12</td>
+       <td class="date">%T09SCRLSI13</td>
+      </tr>
+     </tbody>
+    </table>
 
-   <table class="score_per_level">
-    <caption id="Hard">Hard</caption>
-    <thead>
-     <tr>
-      <td class="character">Character</td>
-      <td class="name">Name</td>
-      <td class="score">Score</td>
-      <td class="date">Date</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="character">博麗 霊夢</td>
-      <td class="name">%T09SCRHRM11</td>
-      <td class="score">%T09SCRHRM12</td>
-      <td class="date">%T09SCRHRM13</td>
-     </tr>
-     <tr>
-      <td class="character">霧雨魔理沙</td>
-      <td class="name">%T09SCRHMR11</td>
-      <td class="score">%T09SCRHMR12</td>
-      <td class="date">%T09SCRHMR13</td>
-     </tr>
-     <tr>
-      <td class="character">十六夜 咲夜</td>
-      <td class="name">%T09SCRHSK11</td>
-      <td class="score">%T09SCRHSK12</td>
-      <td class="date">%T09SCRHSK13</td>
-     </tr>
-     <tr>
-      <td class="character">魂魄 妖夢</td>
-      <td class="name">%T09SCRHYM11</td>
-      <td class="score">%T09SCRHYM12</td>
-      <td class="date">%T09SCRHYM13</td>
-     </tr>
-     <tr>
-      <td class="character">鈴仙・優曇華院・イナバ</td>
-      <td class="name">%T09SCRHRS11</td>
-      <td class="score">%T09SCRHRS12</td>
-      <td class="date">%T09SCRHRS13</td>
-     </tr>
-     <tr>
-      <td class="character">チルノ</td>
-      <td class="name">%T09SCRHCI11</td>
-      <td class="score">%T09SCRHCI12</td>
-      <td class="date">%T09SCRHCI13</td>
-     </tr>
-     <tr>
-      <td class="character">リリカ・プリズムリバー</td>
-      <td class="name">%T09SCRHLY11</td>
-      <td class="score">%T09SCRHLY12</td>
-      <td class="date">%T09SCRHLY13</td>
-     </tr>
-     <tr>
-      <td class="character">ミスティア・ローレライ</td>
-      <td class="name">%T09SCRHMY11</td>
-      <td class="score">%T09SCRHMY12</td>
-      <td class="date">%T09SCRHMY13</td>
-     </tr>
-     <tr>
-      <td class="character">因幡 てゐ</td>
-      <td class="name">%T09SCRHTW11</td>
-      <td class="score">%T09SCRHTW12</td>
-      <td class="date">%T09SCRHTW13</td>
-     </tr>
-     <tr>
-      <td class="character">射命丸 文</td>
-      <td class="name">%T09SCRHAY11</td>
-      <td class="score">%T09SCRHAY12</td>
-      <td class="date">%T09SCRHAY13</td>
-     </tr>
-     <tr>
-      <td class="character">メディスン・メランコリー</td>
-      <td class="name">%T09SCRHMD11</td>
-      <td class="score">%T09SCRHMD12</td>
-      <td class="date">%T09SCRHMD13</td>
-     </tr>
-     <tr>
-      <td class="character">風見 幽香</td>
-      <td class="name">%T09SCRHYU11</td>
-      <td class="score">%T09SCRHYU12</td>
-      <td class="date">%T09SCRHYU13</td>
-     </tr>
-     <tr>
-      <td class="character">小野塚 小町</td>
-      <td class="name">%T09SCRHKM11</td>
-      <td class="score">%T09SCRHKM12</td>
-      <td class="date">%T09SCRHKM13</td>
-     </tr>
-     <tr>
-      <td class="character">四季映姫・ヤマザナドゥ</td>
-      <td class="name">%T09SCRHSI11</td>
-      <td class="score">%T09SCRHSI12</td>
-      <td class="date">%T09SCRHSI13</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="score_per_level">
+     <caption id="Extra">Extra</caption>
+     <thead>
+      <tr>
+       <th class="character">Character</th>
+       <th class="name">Name</th>
+       <th class="score">Score</th>
+       <th class="date">Date</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="character">博麗 霊夢</td>
+       <td class="name">%T09SCRXRM11</td>
+       <td class="score">%T09SCRXRM12</td>
+       <td class="date">%T09SCRXRM13</td>
+      </tr>
+      <tr>
+       <td class="character">霧雨魔理沙</td>
+       <td class="name">%T09SCRXMR11</td>
+       <td class="score">%T09SCRXMR12</td>
+       <td class="date">%T09SCRXMR13</td>
+      </tr>
+      <tr>
+       <td class="character">十六夜 咲夜</td>
+       <td class="name">%T09SCRXSK11</td>
+       <td class="score">%T09SCRXSK12</td>
+       <td class="date">%T09SCRXSK13</td>
+      </tr>
+      <tr>
+       <td class="character">魂魄 妖夢</td>
+       <td class="name">%T09SCRXYM11</td>
+       <td class="score">%T09SCRXYM12</td>
+       <td class="date">%T09SCRXYM13</td>
+      </tr>
+      <tr>
+       <td class="character">鈴仙・優曇華院・イナバ</td>
+       <td class="name">%T09SCRXRS11</td>
+       <td class="score">%T09SCRXRS12</td>
+       <td class="date">%T09SCRXRS13</td>
+      </tr>
+      <tr>
+       <td class="character">チルノ</td>
+       <td class="name">%T09SCRXCI11</td>
+       <td class="score">%T09SCRXCI12</td>
+       <td class="date">%T09SCRXCI13</td>
+      </tr>
+      <tr>
+       <td class="character">リリカ・プリズムリバー</td>
+       <td class="name">%T09SCRXLY11</td>
+       <td class="score">%T09SCRXLY12</td>
+       <td class="date">%T09SCRXLY13</td>
+      </tr>
+      <tr>
+       <td class="character">ミスティア・ローレライ</td>
+       <td class="name">%T09SCRXMY11</td>
+       <td class="score">%T09SCRXMY12</td>
+       <td class="date">%T09SCRXMY13</td>
+      </tr>
+      <tr>
+       <td class="character">因幡 てゐ</td>
+       <td class="name">%T09SCRXTW11</td>
+       <td class="score">%T09SCRXTW12</td>
+       <td class="date">%T09SCRXTW13</td>
+      </tr>
+      <tr>
+       <td class="character">射命丸 文</td>
+       <td class="name">%T09SCRXAY11</td>
+       <td class="score">%T09SCRXAY12</td>
+       <td class="date">%T09SCRXAY13</td>
+      </tr>
+      <tr>
+       <td class="character">メディスン・メランコリー</td>
+       <td class="name">%T09SCRXMD11</td>
+       <td class="score">%T09SCRXMD12</td>
+       <td class="date">%T09SCRXMD13</td>
+      </tr>
+      <tr>
+       <td class="character">風見 幽香</td>
+       <td class="name">%T09SCRXYU11</td>
+       <td class="score">%T09SCRXYU12</td>
+       <td class="date">%T09SCRXYU13</td>
+      </tr>
+      <tr>
+       <td class="character">小野塚 小町</td>
+       <td class="name">%T09SCRXKM11</td>
+       <td class="score">%T09SCRXKM12</td>
+       <td class="date">%T09SCRXKM13</td>
+      </tr>
+      <tr>
+       <td class="character">四季映姫・ヤマザナドゥ</td>
+       <td class="name">%T09SCRXSI11</td>
+       <td class="score">%T09SCRXSI12</td>
+       <td class="date">%T09SCRXSI13</td>
+      </tr>
+     </tbody>
+    </table>
+   </section>
 
-   <table class="score_per_level">
-    <caption id="Lunatic">Lunatic</caption>
-    <thead>
-     <tr>
-      <td class="character">Character</td>
-      <td class="name">Name</td>
-      <td class="score">Score</td>
-      <td class="date">Date</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="character">博麗 霊夢</td>
-      <td class="name">%T09SCRLRM11</td>
-      <td class="score">%T09SCRLRM12</td>
-      <td class="date">%T09SCRLRM13</td>
-     </tr>
-     <tr>
-      <td class="character">霧雨魔理沙</td>
-      <td class="name">%T09SCRLMR11</td>
-      <td class="score">%T09SCRLMR12</td>
-      <td class="date">%T09SCRLMR13</td>
-     </tr>
-     <tr>
-      <td class="character">十六夜 咲夜</td>
-      <td class="name">%T09SCRLSK11</td>
-      <td class="score">%T09SCRLSK12</td>
-      <td class="date">%T09SCRLSK13</td>
-     </tr>
-     <tr>
-      <td class="character">魂魄 妖夢</td>
-      <td class="name">%T09SCRLYM11</td>
-      <td class="score">%T09SCRLYM12</td>
-      <td class="date">%T09SCRLYM13</td>
-     </tr>
-     <tr>
-      <td class="character">鈴仙・優曇華院・イナバ</td>
-      <td class="name">%T09SCRLRS11</td>
-      <td class="score">%T09SCRLRS12</td>
-      <td class="date">%T09SCRLRS13</td>
-     </tr>
-     <tr>
-      <td class="character">チルノ</td>
-      <td class="name">%T09SCRLCI11</td>
-      <td class="score">%T09SCRLCI12</td>
-      <td class="date">%T09SCRLCI13</td>
-     </tr>
-     <tr>
-      <td class="character">リリカ・プリズムリバー</td>
-      <td class="name">%T09SCRLLY11</td>
-      <td class="score">%T09SCRLLY12</td>
-      <td class="date">%T09SCRLLY13</td>
-     </tr>
-     <tr>
-      <td class="character">ミスティア・ローレライ</td>
-      <td class="name">%T09SCRLMY11</td>
-      <td class="score">%T09SCRLMY12</td>
-      <td class="date">%T09SCRLMY13</td>
-     </tr>
-     <tr>
-      <td class="character">因幡 てゐ</td>
-      <td class="name">%T09SCRLTW11</td>
-      <td class="score">%T09SCRLTW12</td>
-      <td class="date">%T09SCRLTW13</td>
-     </tr>
-     <tr>
-      <td class="character">射命丸 文</td>
-      <td class="name">%T09SCRLAY11</td>
-      <td class="score">%T09SCRLAY12</td>
-      <td class="date">%T09SCRLAY13</td>
-     </tr>
-     <tr>
-      <td class="character">メディスン・メランコリー</td>
-      <td class="name">%T09SCRLMD11</td>
-      <td class="score">%T09SCRLMD12</td>
-      <td class="date">%T09SCRLMD13</td>
-     </tr>
-     <tr>
-      <td class="character">風見 幽香</td>
-      <td class="name">%T09SCRLYU11</td>
-      <td class="score">%T09SCRLYU12</td>
-      <td class="date">%T09SCRLYU13</td>
-     </tr>
-     <tr>
-      <td class="character">小野塚 小町</td>
-      <td class="name">%T09SCRLKM11</td>
-      <td class="score">%T09SCRLKM12</td>
-      <td class="date">%T09SCRLKM13</td>
-     </tr>
-     <tr>
-      <td class="character">四季映姫・ヤマザナドゥ</td>
-      <td class="name">%T09SCRLSI11</td>
-      <td class="score">%T09SCRLSI12</td>
-      <td class="date">%T09SCRLSI13</td>
-     </tr>
-    </tbody>
-   </table>
+   <hr />
 
-   <table class="score_per_level">
-    <caption id="Extra">Extra</caption>
-    <thead>
-     <tr>
-      <td class="character">Character</td>
-      <td class="name">Name</td>
-      <td class="score">Score</td>
-      <td class="date">Date</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="character">博麗 霊夢</td>
-      <td class="name">%T09SCRXRM11</td>
-      <td class="score">%T09SCRXRM12</td>
-      <td class="date">%T09SCRXRM13</td>
-     </tr>
-     <tr>
-      <td class="character">霧雨魔理沙</td>
-      <td class="name">%T09SCRXMR11</td>
-      <td class="score">%T09SCRXMR12</td>
-      <td class="date">%T09SCRXMR13</td>
-     </tr>
-     <tr>
-      <td class="character">十六夜 咲夜</td>
-      <td class="name">%T09SCRXSK11</td>
-      <td class="score">%T09SCRXSK12</td>
-      <td class="date">%T09SCRXSK13</td>
-     </tr>
-     <tr>
-      <td class="character">魂魄 妖夢</td>
-      <td class="name">%T09SCRXYM11</td>
-      <td class="score">%T09SCRXYM12</td>
-      <td class="date">%T09SCRXYM13</td>
-     </tr>
-     <tr>
-      <td class="character">鈴仙・優曇華院・イナバ</td>
-      <td class="name">%T09SCRXRS11</td>
-      <td class="score">%T09SCRXRS12</td>
-      <td class="date">%T09SCRXRS13</td>
-     </tr>
-     <tr>
-      <td class="character">チルノ</td>
-      <td class="name">%T09SCRXCI11</td>
-      <td class="score">%T09SCRXCI12</td>
-      <td class="date">%T09SCRXCI13</td>
-     </tr>
-     <tr>
-      <td class="character">リリカ・プリズムリバー</td>
-      <td class="name">%T09SCRXLY11</td>
-      <td class="score">%T09SCRXLY12</td>
-      <td class="date">%T09SCRXLY13</td>
-     </tr>
-     <tr>
-      <td class="character">ミスティア・ローレライ</td>
-      <td class="name">%T09SCRXMY11</td>
-      <td class="score">%T09SCRXMY12</td>
-      <td class="date">%T09SCRXMY13</td>
-     </tr>
-     <tr>
-      <td class="character">因幡 てゐ</td>
-      <td class="name">%T09SCRXTW11</td>
-      <td class="score">%T09SCRXTW12</td>
-      <td class="date">%T09SCRXTW13</td>
-     </tr>
-     <tr>
-      <td class="character">射命丸 文</td>
-      <td class="name">%T09SCRXAY11</td>
-      <td class="score">%T09SCRXAY12</td>
-      <td class="date">%T09SCRXAY13</td>
-     </tr>
-     <tr>
-      <td class="character">メディスン・メランコリー</td>
-      <td class="name">%T09SCRXMD11</td>
-      <td class="score">%T09SCRXMD12</td>
-      <td class="date">%T09SCRXMD13</td>
-     </tr>
-     <tr>
-      <td class="character">風見 幽香</td>
-      <td class="name">%T09SCRXYU11</td>
-      <td class="score">%T09SCRXYU12</td>
-      <td class="date">%T09SCRXYU13</td>
-     </tr>
-     <tr>
-      <td class="character">小野塚 小町</td>
-      <td class="name">%T09SCRXKM11</td>
-      <td class="score">%T09SCRXKM12</td>
-      <td class="date">%T09SCRXKM13</td>
-     </tr>
-     <tr>
-      <td class="character">四季映姫・ヤマザナドゥ</td>
-      <td class="name">%T09SCRXSI11</td>
-      <td class="score">%T09SCRXSI12</td>
-      <td class="date">%T09SCRXSI13</td>
-     </tr>
-    </tbody>
-   </table>
-  </div>
+   <section>
+    <h2 id="Clear">クリア回数・クリア達成度</h2>
 
-  <hr />
+    <table class="count">
+     <caption>クリア回数</caption>
+     <thead>
+      <tr>
+       <th class="character">Character</th>
+       <th class="level">Easy</th>
+       <th class="level">Normal</th>
+       <th class="level">Hard</th>
+       <th class="level">Lunatic</th>
+       <th class="level">Extra</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="character">博麗 霊夢</td>
+       <td class="count">%T09CLEARERM1</td>
+       <td class="count">%T09CLEARNRM1</td>
+       <td class="count">%T09CLEARHRM1</td>
+       <td class="count">%T09CLEARLRM1</td>
+       <td class="count">%T09CLEARXRM1</td>
+      </tr>
+      <tr>
+       <td class="character">霧雨魔理沙</td>
+       <td class="count">%T09CLEAREMR1</td>
+       <td class="count">%T09CLEARNMR1</td>
+       <td class="count">%T09CLEARHMR1</td>
+       <td class="count">%T09CLEARLMR1</td>
+       <td class="count">%T09CLEARXMR1</td>
+      </tr>
+      <tr>
+       <td class="character">十六夜 咲夜</td>
+       <td class="count">%T09CLEARESK1</td>
+       <td class="count">%T09CLEARNSK1</td>
+       <td class="count">%T09CLEARHSK1</td>
+       <td class="count">%T09CLEARLSK1</td>
+       <td class="count">%T09CLEARXSK1</td>
+      </tr>
+      <tr>
+       <td class="character">魂魄 妖夢</td>
+       <td class="count">%T09CLEAREYM1</td>
+       <td class="count">%T09CLEARNYM1</td>
+       <td class="count">%T09CLEARHYM1</td>
+       <td class="count">%T09CLEARLYM1</td>
+       <td class="count">%T09CLEARXYM1</td>
+      </tr>
+      <tr>
+       <td class="character">鈴仙・優曇華院・イナバ</td>
+       <td class="count">%T09CLEARERS1</td>
+       <td class="count">%T09CLEARNRS1</td>
+       <td class="count">%T09CLEARHRS1</td>
+       <td class="count">%T09CLEARLRS1</td>
+       <td class="count">%T09CLEARXRS1</td>
+      </tr>
+      <tr>
+       <td class="character">チルノ</td>
+       <td class="count">%T09CLEARECI1</td>
+       <td class="count">%T09CLEARNCI1</td>
+       <td class="count">%T09CLEARHCI1</td>
+       <td class="count">%T09CLEARLCI1</td>
+       <td class="count">%T09CLEARXCI1</td>
+      </tr>
+      <tr>
+       <td class="character">リリカ・プリズムリバー</td>
+       <td class="count">%T09CLEARELY1</td>
+       <td class="count">%T09CLEARNLY1</td>
+       <td class="count">%T09CLEARHLY1</td>
+       <td class="count">%T09CLEARLLY1</td>
+       <td class="count">%T09CLEARXLY1</td>
+      </tr>
+      <tr>
+       <td class="character">ミスティア・ローレライ</td>
+       <td class="count">%T09CLEAREMY1</td>
+       <td class="count">%T09CLEARNMY1</td>
+       <td class="count">%T09CLEARHMY1</td>
+       <td class="count">%T09CLEARLMY1</td>
+       <td class="count">%T09CLEARXMY1</td>
+      </tr>
+      <tr>
+       <td class="character">因幡 てゐ</td>
+       <td class="count">%T09CLEARETW1</td>
+       <td class="count">%T09CLEARNTW1</td>
+       <td class="count">%T09CLEARHTW1</td>
+       <td class="count">%T09CLEARLTW1</td>
+       <td class="count">%T09CLEARXTW1</td>
+      </tr>
+      <tr>
+       <td class="character">射命丸 文</td>
+       <td class="count">%T09CLEAREAY1</td>
+       <td class="count">%T09CLEARNAY1</td>
+       <td class="count">%T09CLEARHAY1</td>
+       <td class="count">%T09CLEARLAY1</td>
+       <td class="count">%T09CLEARXAY1</td>
+      </tr>
+      <tr>
+       <td class="character">メディスン・メランコリー</td>
+       <td class="count">%T09CLEAREMD1</td>
+       <td class="count">%T09CLEARNMD1</td>
+       <td class="count">%T09CLEARHMD1</td>
+       <td class="count">%T09CLEARLMD1</td>
+       <td class="count">%T09CLEARXMD1</td>
+      </tr>
+      <tr>
+       <td class="character">風見 幽香</td>
+       <td class="count">%T09CLEAREYU1</td>
+       <td class="count">%T09CLEARNYU1</td>
+       <td class="count">%T09CLEARHYU1</td>
+       <td class="count">%T09CLEARLYU1</td>
+       <td class="count">%T09CLEARXYU1</td>
+      </tr>
+      <tr>
+       <td class="character">小野塚 小町</td>
+       <td class="count">%T09CLEAREKM1</td>
+       <td class="count">%T09CLEARNKM1</td>
+       <td class="count">%T09CLEARHKM1</td>
+       <td class="count">%T09CLEARLKM1</td>
+       <td class="count">%T09CLEARXKM1</td>
+      </tr>
+      <tr>
+       <td class="character">四季映姫・ヤマザナドゥ</td>
+       <td class="count">%T09CLEARESI1</td>
+       <td class="count">%T09CLEARNSI1</td>
+       <td class="count">%T09CLEARHSI1</td>
+       <td class="count">%T09CLEARLSI1</td>
+       <td class="count">%T09CLEARXSI1</td>
+      </tr>
+     </tbody>
+    </table>
 
-  <div class="section">
-   <h2 id="Clear">クリア回数・クリア達成度</h2>
+    <table class="clear">
+     <caption>クリア達成度</caption>
+     <thead>
+      <tr>
+       <th class="character">Character</th>
+       <th class="level">Easy</th>
+       <th class="level">Normal</th>
+       <th class="level">Hard</th>
+       <th class="level">Lunatic</th>
+       <th class="level">Extra</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="character">博麗 霊夢</td>
+       <td class="stage">%T09CLEARERM2</td>
+       <td class="stage">%T09CLEARNRM2</td>
+       <td class="stage">%T09CLEARHRM2</td>
+       <td class="stage">%T09CLEARLRM2</td>
+       <td class="stage">%T09CLEARXRM2</td>
+      </tr>
+      <tr>
+       <td class="character">霧雨魔理沙</td>
+       <td class="stage">%T09CLEAREMR2</td>
+       <td class="stage">%T09CLEARNMR2</td>
+       <td class="stage">%T09CLEARHMR2</td>
+       <td class="stage">%T09CLEARLMR2</td>
+       <td class="stage">%T09CLEARXMR2</td>
+      </tr>
+      <tr>
+       <td class="character">十六夜 咲夜</td>
+       <td class="stage">%T09CLEARESK2</td>
+       <td class="stage">%T09CLEARNSK2</td>
+       <td class="stage">%T09CLEARHSK2</td>
+       <td class="stage">%T09CLEARLSK2</td>
+       <td class="stage">%T09CLEARXSK2</td>
+      </tr>
+      <tr>
+       <td class="character">魂魄 妖夢</td>
+       <td class="stage">%T09CLEAREYM2</td>
+       <td class="stage">%T09CLEARNYM2</td>
+       <td class="stage">%T09CLEARHYM2</td>
+       <td class="stage">%T09CLEARLYM2</td>
+       <td class="stage">%T09CLEARXYM2</td>
+      </tr>
+      <tr>
+       <td class="character">鈴仙・優曇華院・イナバ</td>
+       <td class="stage">%T09CLEARERS2</td>
+       <td class="stage">%T09CLEARNRS2</td>
+       <td class="stage">%T09CLEARHRS2</td>
+       <td class="stage">%T09CLEARLRS2</td>
+       <td class="stage">%T09CLEARXRS2</td>
+      </tr>
+      <tr>
+       <td class="character">チルノ</td>
+       <td class="stage">%T09CLEARECI2</td>
+       <td class="stage">%T09CLEARNCI2</td>
+       <td class="stage">%T09CLEARHCI2</td>
+       <td class="stage">%T09CLEARLCI2</td>
+       <td class="stage">%T09CLEARXCI2</td>
+      </tr>
+      <tr>
+       <td class="character">リリカ・プリズムリバー</td>
+       <td class="stage">%T09CLEARELY2</td>
+       <td class="stage">%T09CLEARNLY2</td>
+       <td class="stage">%T09CLEARHLY2</td>
+       <td class="stage">%T09CLEARLLY2</td>
+       <td class="stage">%T09CLEARXLY2</td>
+      </tr>
+      <tr>
+       <td class="character">ミスティア・ローレライ</td>
+       <td class="stage">%T09CLEAREMY2</td>
+       <td class="stage">%T09CLEARNMY2</td>
+       <td class="stage">%T09CLEARHMY2</td>
+       <td class="stage">%T09CLEARLMY2</td>
+       <td class="stage">%T09CLEARXMY2</td>
+      </tr>
+      <tr>
+       <td class="character">因幡 てゐ</td>
+       <td class="stage">%T09CLEARETW2</td>
+       <td class="stage">%T09CLEARNTW2</td>
+       <td class="stage">%T09CLEARHTW2</td>
+       <td class="stage">%T09CLEARLTW2</td>
+       <td class="stage">%T09CLEARXTW2</td>
+      </tr>
+      <tr>
+       <td class="character">射命丸 文</td>
+       <td class="stage">%T09CLEAREAY2</td>
+       <td class="stage">%T09CLEARNAY2</td>
+       <td class="stage">%T09CLEARHAY2</td>
+       <td class="stage">%T09CLEARLAY2</td>
+       <td class="stage">%T09CLEARXAY2</td>
+      </tr>
+      <tr>
+       <td class="character">メディスン・メランコリー</td>
+       <td class="stage">%T09CLEAREMD2</td>
+       <td class="stage">%T09CLEARNMD2</td>
+       <td class="stage">%T09CLEARHMD2</td>
+       <td class="stage">%T09CLEARLMD2</td>
+       <td class="stage">%T09CLEARXMD2</td>
+      </tr>
+      <tr>
+       <td class="character">風見 幽香</td>
+       <td class="stage">%T09CLEAREYU2</td>
+       <td class="stage">%T09CLEARNYU2</td>
+       <td class="stage">%T09CLEARHYU2</td>
+       <td class="stage">%T09CLEARLYU2</td>
+       <td class="stage">%T09CLEARXYU2</td>
+      </tr>
+      <tr>
+       <td class="character">小野塚 小町</td>
+       <td class="stage">%T09CLEAREKM2</td>
+       <td class="stage">%T09CLEARNKM2</td>
+       <td class="stage">%T09CLEARHKM2</td>
+       <td class="stage">%T09CLEARLKM2</td>
+       <td class="stage">%T09CLEARXKM2</td>
+      </tr>
+      <tr>
+       <td class="character">四季映姫・ヤマザナドゥ</td>
+       <td class="stage">%T09CLEARESI2</td>
+       <td class="stage">%T09CLEARNSI2</td>
+       <td class="stage">%T09CLEARHSI2</td>
+       <td class="stage">%T09CLEARLSI2</td>
+       <td class="stage">%T09CLEARXSI2</td>
+      </tr>
+     </tbody>
+    </table>
+   </section>
 
-   <table class="count">
-    <caption>クリア回数</caption>
-    <thead>
-     <tr>
-      <td class="character">Character</td>
-      <td class="level">Easy</td>
-      <td class="level">Normal</td>
-      <td class="level">Hard</td>
-      <td class="level">Lunatic</td>
-      <td class="level">Extra</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="character">博麗 霊夢</td>
-      <td class="count">%T09CLEARERM1</td>
-      <td class="count">%T09CLEARNRM1</td>
-      <td class="count">%T09CLEARHRM1</td>
-      <td class="count">%T09CLEARLRM1</td>
-      <td class="count">%T09CLEARXRM1</td>
-     </tr>
-     <tr>
-      <td class="character">霧雨魔理沙</td>
-      <td class="count">%T09CLEAREMR1</td>
-      <td class="count">%T09CLEARNMR1</td>
-      <td class="count">%T09CLEARHMR1</td>
-      <td class="count">%T09CLEARLMR1</td>
-      <td class="count">%T09CLEARXMR1</td>
-     </tr>
-     <tr>
-      <td class="character">十六夜 咲夜</td>
-      <td class="count">%T09CLEARESK1</td>
-      <td class="count">%T09CLEARNSK1</td>
-      <td class="count">%T09CLEARHSK1</td>
-      <td class="count">%T09CLEARLSK1</td>
-      <td class="count">%T09CLEARXSK1</td>
-     </tr>
-     <tr>
-      <td class="character">魂魄 妖夢</td>
-      <td class="count">%T09CLEAREYM1</td>
-      <td class="count">%T09CLEARNYM1</td>
-      <td class="count">%T09CLEARHYM1</td>
-      <td class="count">%T09CLEARLYM1</td>
-      <td class="count">%T09CLEARXYM1</td>
-     </tr>
-     <tr>
-      <td class="character">鈴仙・優曇華院・イナバ</td>
-      <td class="count">%T09CLEARERS1</td>
-      <td class="count">%T09CLEARNRS1</td>
-      <td class="count">%T09CLEARHRS1</td>
-      <td class="count">%T09CLEARLRS1</td>
-      <td class="count">%T09CLEARXRS1</td>
-     </tr>
-     <tr>
-      <td class="character">チルノ</td>
-      <td class="count">%T09CLEARECI1</td>
-      <td class="count">%T09CLEARNCI1</td>
-      <td class="count">%T09CLEARHCI1</td>
-      <td class="count">%T09CLEARLCI1</td>
-      <td class="count">%T09CLEARXCI1</td>
-     </tr>
-     <tr>
-      <td class="character">リリカ・プリズムリバー</td>
-      <td class="count">%T09CLEARELY1</td>
-      <td class="count">%T09CLEARNLY1</td>
-      <td class="count">%T09CLEARHLY1</td>
-      <td class="count">%T09CLEARLLY1</td>
-      <td class="count">%T09CLEARXLY1</td>
-     </tr>
-     <tr>
-      <td class="character">ミスティア・ローレライ</td>
-      <td class="count">%T09CLEAREMY1</td>
-      <td class="count">%T09CLEARNMY1</td>
-      <td class="count">%T09CLEARHMY1</td>
-      <td class="count">%T09CLEARLMY1</td>
-      <td class="count">%T09CLEARXMY1</td>
-     </tr>
-     <tr>
-      <td class="character">因幡 てゐ</td>
-      <td class="count">%T09CLEARETW1</td>
-      <td class="count">%T09CLEARNTW1</td>
-      <td class="count">%T09CLEARHTW1</td>
-      <td class="count">%T09CLEARLTW1</td>
-      <td class="count">%T09CLEARXTW1</td>
-     </tr>
-     <tr>
-      <td class="character">射命丸 文</td>
-      <td class="count">%T09CLEAREAY1</td>
-      <td class="count">%T09CLEARNAY1</td>
-      <td class="count">%T09CLEARHAY1</td>
-      <td class="count">%T09CLEARLAY1</td>
-      <td class="count">%T09CLEARXAY1</td>
-     </tr>
-     <tr>
-      <td class="character">メディスン・メランコリー</td>
-      <td class="count">%T09CLEAREMD1</td>
-      <td class="count">%T09CLEARNMD1</td>
-      <td class="count">%T09CLEARHMD1</td>
-      <td class="count">%T09CLEARLMD1</td>
-      <td class="count">%T09CLEARXMD1</td>
-     </tr>
-     <tr>
-      <td class="character">風見 幽香</td>
-      <td class="count">%T09CLEAREYU1</td>
-      <td class="count">%T09CLEARNYU1</td>
-      <td class="count">%T09CLEARHYU1</td>
-      <td class="count">%T09CLEARLYU1</td>
-      <td class="count">%T09CLEARXYU1</td>
-     </tr>
-     <tr>
-      <td class="character">小野塚 小町</td>
-      <td class="count">%T09CLEAREKM1</td>
-      <td class="count">%T09CLEARNKM1</td>
-      <td class="count">%T09CLEARHKM1</td>
-      <td class="count">%T09CLEARLKM1</td>
-      <td class="count">%T09CLEARXKM1</td>
-     </tr>
-     <tr>
-      <td class="character">四季映姫・ヤマザナドゥ</td>
-      <td class="count">%T09CLEARESI1</td>
-      <td class="count">%T09CLEARNSI1</td>
-      <td class="count">%T09CLEARHSI1</td>
-      <td class="count">%T09CLEARLSI1</td>
-      <td class="count">%T09CLEARXSI1</td>
-     </tr>
-    </tbody>
-   </table>
+   <hr />
 
-   <table class="clear">
-    <caption>クリア達成度</caption>
-    <thead>
-     <tr>
-      <td class="character">Character</td>
-      <td class="level">Easy</td>
-      <td class="level">Normal</td>
-      <td class="level">Hard</td>
-      <td class="level">Lunatic</td>
-      <td class="level">Extra</td>
-     </tr>
-    </thead>
-    <tbody>
-     <tr>
-      <td class="character">博麗 霊夢</td>
-      <td class="stage">%T09CLEARERM2</td>
-      <td class="stage">%T09CLEARNRM2</td>
-      <td class="stage">%T09CLEARHRM2</td>
-      <td class="stage">%T09CLEARLRM2</td>
-      <td class="stage">%T09CLEARXRM2</td>
-     </tr>
-     <tr>
-      <td class="character">霧雨魔理沙</td>
-      <td class="stage">%T09CLEAREMR2</td>
-      <td class="stage">%T09CLEARNMR2</td>
-      <td class="stage">%T09CLEARHMR2</td>
-      <td class="stage">%T09CLEARLMR2</td>
-      <td class="stage">%T09CLEARXMR2</td>
-     </tr>
-     <tr>
-      <td class="character">十六夜 咲夜</td>
-      <td class="stage">%T09CLEARESK2</td>
-      <td class="stage">%T09CLEARNSK2</td>
-      <td class="stage">%T09CLEARHSK2</td>
-      <td class="stage">%T09CLEARLSK2</td>
-      <td class="stage">%T09CLEARXSK2</td>
-     </tr>
-     <tr>
-      <td class="character">魂魄 妖夢</td>
-      <td class="stage">%T09CLEAREYM2</td>
-      <td class="stage">%T09CLEARNYM2</td>
-      <td class="stage">%T09CLEARHYM2</td>
-      <td class="stage">%T09CLEARLYM2</td>
-      <td class="stage">%T09CLEARXYM2</td>
-     </tr>
-     <tr>
-      <td class="character">鈴仙・優曇華院・イナバ</td>
-      <td class="stage">%T09CLEARERS2</td>
-      <td class="stage">%T09CLEARNRS2</td>
-      <td class="stage">%T09CLEARHRS2</td>
-      <td class="stage">%T09CLEARLRS2</td>
-      <td class="stage">%T09CLEARXRS2</td>
-     </tr>
-     <tr>
-      <td class="character">チルノ</td>
-      <td class="stage">%T09CLEARECI2</td>
-      <td class="stage">%T09CLEARNCI2</td>
-      <td class="stage">%T09CLEARHCI2</td>
-      <td class="stage">%T09CLEARLCI2</td>
-      <td class="stage">%T09CLEARXCI2</td>
-     </tr>
-     <tr>
-      <td class="character">リリカ・プリズムリバー</td>
-      <td class="stage">%T09CLEARELY2</td>
-      <td class="stage">%T09CLEARNLY2</td>
-      <td class="stage">%T09CLEARHLY2</td>
-      <td class="stage">%T09CLEARLLY2</td>
-      <td class="stage">%T09CLEARXLY2</td>
-     </tr>
-     <tr>
-      <td class="character">ミスティア・ローレライ</td>
-      <td class="stage">%T09CLEAREMY2</td>
-      <td class="stage">%T09CLEARNMY2</td>
-      <td class="stage">%T09CLEARHMY2</td>
-      <td class="stage">%T09CLEARLMY2</td>
-      <td class="stage">%T09CLEARXMY2</td>
-     </tr>
-     <tr>
-      <td class="character">因幡 てゐ</td>
-      <td class="stage">%T09CLEARETW2</td>
-      <td class="stage">%T09CLEARNTW2</td>
-      <td class="stage">%T09CLEARHTW2</td>
-      <td class="stage">%T09CLEARLTW2</td>
-      <td class="stage">%T09CLEARXTW2</td>
-     </tr>
-     <tr>
-      <td class="character">射命丸 文</td>
-      <td class="stage">%T09CLEAREAY2</td>
-      <td class="stage">%T09CLEARNAY2</td>
-      <td class="stage">%T09CLEARHAY2</td>
-      <td class="stage">%T09CLEARLAY2</td>
-      <td class="stage">%T09CLEARXAY2</td>
-     </tr>
-     <tr>
-      <td class="character">メディスン・メランコリー</td>
-      <td class="stage">%T09CLEAREMD2</td>
-      <td class="stage">%T09CLEARNMD2</td>
-      <td class="stage">%T09CLEARHMD2</td>
-      <td class="stage">%T09CLEARLMD2</td>
-      <td class="stage">%T09CLEARXMD2</td>
-     </tr>
-     <tr>
-      <td class="character">風見 幽香</td>
-      <td class="stage">%T09CLEAREYU2</td>
-      <td class="stage">%T09CLEARNYU2</td>
-      <td class="stage">%T09CLEARHYU2</td>
-      <td class="stage">%T09CLEARLYU2</td>
-      <td class="stage">%T09CLEARXYU2</td>
-     </tr>
-     <tr>
-      <td class="character">小野塚 小町</td>
-      <td class="stage">%T09CLEAREKM2</td>
-      <td class="stage">%T09CLEARNKM2</td>
-      <td class="stage">%T09CLEARHKM2</td>
-      <td class="stage">%T09CLEARLKM2</td>
-      <td class="stage">%T09CLEARXKM2</td>
-     </tr>
-     <tr>
-      <td class="character">四季映姫・ヤマザナドゥ</td>
-      <td class="stage">%T09CLEARESI2</td>
-      <td class="stage">%T09CLEARNSI2</td>
-      <td class="stage">%T09CLEARHSI2</td>
-      <td class="stage">%T09CLEARLSI2</td>
-      <td class="stage">%T09CLEARXSI2</td>
-     </tr>
-    </tbody>
-   </table>
-  </div>
+   <section>
+    <h2 id="Other">その他の状態一覧</h2>
 
-  <hr />
+    <table class="playtime">
+     <tbody>
+      <tr>
+       <th scope="row">総起動時間</th>
+       <td class="playtime">%T09TIMEALL</td>
+      </tr>
+     </tbody>
+    </table>
+   </section>
 
-  <div class="section">
-   <h2 id="Other">その他の状態一覧</h2>
+  </main>
 
-   <table class="playtime">
-    <tbody>
-     <tr>
-      <td class="column_head">総起動時間</td>
-      <td class="playtime">%T09TIMEALL</td>
-     </tr>
-    </tbody>
-   </table>
-  </div>
-
-  <hr />
-
-  <div class="section">
+  <footer>
    <p>
     Data output by <a href="https://www.colorless-sight.jp/thsfc/">ThScoreFileConverter</a>.
-<script type="text/javascript">
-<!--
+<script>
+// <![CDATA[
     document.write("Last updated: ", document.lastModified, ".");
-//-->
+// ]]>
 </script>
    </p>
-  </div>
+  </footer>
 
  </body>
 </html>

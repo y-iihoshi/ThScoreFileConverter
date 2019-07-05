@@ -1,15 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
  <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta http-equiv="Content-Stype-Type" content="text/css" />
-  <meta http-equiv="Content-Script-Type" content="text/javascript" />
-  <title>東方輝針城スペルカードデータ</title>
-  <link rel="stylesheet" type="text/css" href="style.css" />
-<style type="text/css">
-<!--
+  <meta charset="UTF-8" />
+  <title>東方輝針城 スペルカードデータ</title>
+  <link rel="stylesheet" href="style.css" />
+<style>
+/* <![CDATA[ */
     td.character { min-width: 100px; }
     td.level { min-width: 70px; }
     td.stage { min-width: 70px; }
@@ -18,1590 +15,1592 @@
     table.rate_per_card td.rate { min-width: 80px; }
     table.rate_per_level td.rate { min-width: 100px; }
     table.rate_per_stage td.rate { min-width: 100px; }
--->
+/* ]]> */
 </style>
  </head>
 
  <body>
-  <h1>東方輝針城スペルカードデータ</h1>
 
-  <hr />
+  <header>
+   <h1>東方輝針城 スペルカードデータ</h1>
+   <hr />
+   <nav>
+    <ul>
+     <li><a href="th14score1.html">スコアデータ全般</a></li>
+     <li><a href="th14score2.html">個別ランキング</a></li>
+     <li><a href="th14score3.html">プラクティス</a></li>
+     <li><a href="th14card1.html">御札戦歴（ゲーム本編）</a></li>
+     <li>御札戦歴（スペルプラクティス）</li>
+    </ul>
+    <ul>
+     <li><a href="#rate_per_card">スペルカード別</a></li>
+     <li><a href="#rate_per_level">難易度別</a></li>
+     <li><a href="#rate_per_stage">ステージ別</a></li>
+    </ul>
+   </nav>
+  </header>
 
-  <div class="section">
-   <p>
-    <a href="th14score1.html">スコアデータ全般</a> /
-    <a href="th14score2.html">個別ランキング</a> /
-    <a href="th14score3.html">プラクティス</a> /
-    <a href="th14card1.html">御札戦歴（ゲーム本編）</a> /
-    御札戦歴（スペルプラクティス）<br />
-    <a href="#rate_per_card">スペルカード別</a> /
-    <a href="#rate_per_level">難易度別</a> /
-    <a href="#rate_per_stage">ステージ別</a>
-   </p>
-  </div>
+  <main>
 
-  <hr />
+   <section>
+    <h2 id="Card">御札戦歴（スペルプラクティス）</h2>
 
-  <div class="section">
-   <h2 id="Card">御札戦歴（スペルプラクティス）</h2>
+    <table class="rate_per_card">
+     <caption id="rate_per_card">スペルカード別取得率（取得回数 / 遭遇回数）</caption>
+     <thead>
+      <tr>
+       <th class="number">No.</th>
+       <th class="card">スペルカード名<br />（難易度）</th>
+       <th class="character">全主人公合計</th>
+       <th class="character">博麗 霊夢 (A)</th>
+       <th class="character">博麗 霊夢 (B)</th>
+       <th class="character">霧雨 魔理沙 (A)</th>
+       <th class="character">霧雨 魔理沙 (B)</th>
+       <th class="character">十六夜 咲夜 (A)</th>
+       <th class="character">十六夜 咲夜 (B)</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="number">No.01</td>
+       <td class="card">%T14CARD001N<br />(%T14CARD001R)</td>
+       <td class="rate">%T14CP001TL1 / %T14CP001TL2</td>
+       <td class="rate">%T14CP001RA1 / %T14CP001RA2</td>
+       <td class="rate">%T14CP001RB1 / %T14CP001RB2</td>
+       <td class="rate">%T14CP001MA1 / %T14CP001MA2</td>
+       <td class="rate">%T14CP001MB1 / %T14CP001MB2</td>
+       <td class="rate">%T14CP001SA1 / %T14CP001SA2</td>
+       <td class="rate">%T14CP001SB1 / %T14CP001SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.02</td>
+       <td class="card">%T14CARD002N<br />(%T14CARD002R)</td>
+       <td class="rate">%T14CP002TL1 / %T14CP002TL2</td>
+       <td class="rate">%T14CP002RA1 / %T14CP002RA2</td>
+       <td class="rate">%T14CP002RB1 / %T14CP002RB2</td>
+       <td class="rate">%T14CP002MA1 / %T14CP002MA2</td>
+       <td class="rate">%T14CP002MB1 / %T14CP002MB2</td>
+       <td class="rate">%T14CP002SA1 / %T14CP002SA2</td>
+       <td class="rate">%T14CP002SB1 / %T14CP002SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.03</td>
+       <td class="card">%T14CARD003N<br />(%T14CARD003R)</td>
+       <td class="rate">%T14CP003TL1 / %T14CP003TL2</td>
+       <td class="rate">%T14CP003RA1 / %T14CP003RA2</td>
+       <td class="rate">%T14CP003RB1 / %T14CP003RB2</td>
+       <td class="rate">%T14CP003MA1 / %T14CP003MA2</td>
+       <td class="rate">%T14CP003MB1 / %T14CP003MB2</td>
+       <td class="rate">%T14CP003SA1 / %T14CP003SA2</td>
+       <td class="rate">%T14CP003SB1 / %T14CP003SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.04</td>
+       <td class="card">%T14CARD004N<br />(%T14CARD004R)</td>
+       <td class="rate">%T14CP004TL1 / %T14CP004TL2</td>
+       <td class="rate">%T14CP004RA1 / %T14CP004RA2</td>
+       <td class="rate">%T14CP004RB1 / %T14CP004RB2</td>
+       <td class="rate">%T14CP004MA1 / %T14CP004MA2</td>
+       <td class="rate">%T14CP004MB1 / %T14CP004MB2</td>
+       <td class="rate">%T14CP004SA1 / %T14CP004SA2</td>
+       <td class="rate">%T14CP004SB1 / %T14CP004SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.05</td>
+       <td class="card">%T14CARD005N<br />(%T14CARD005R)</td>
+       <td class="rate">%T14CP005TL1 / %T14CP005TL2</td>
+       <td class="rate">%T14CP005RA1 / %T14CP005RA2</td>
+       <td class="rate">%T14CP005RB1 / %T14CP005RB2</td>
+       <td class="rate">%T14CP005MA1 / %T14CP005MA2</td>
+       <td class="rate">%T14CP005MB1 / %T14CP005MB2</td>
+       <td class="rate">%T14CP005SA1 / %T14CP005SA2</td>
+       <td class="rate">%T14CP005SB1 / %T14CP005SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.06</td>
+       <td class="card">%T14CARD006N<br />(%T14CARD006R)</td>
+       <td class="rate">%T14CP006TL1 / %T14CP006TL2</td>
+       <td class="rate">%T14CP006RA1 / %T14CP006RA2</td>
+       <td class="rate">%T14CP006RB1 / %T14CP006RB2</td>
+       <td class="rate">%T14CP006MA1 / %T14CP006MA2</td>
+       <td class="rate">%T14CP006MB1 / %T14CP006MB2</td>
+       <td class="rate">%T14CP006SA1 / %T14CP006SA2</td>
+       <td class="rate">%T14CP006SB1 / %T14CP006SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.07</td>
+       <td class="card">%T14CARD007N<br />(%T14CARD007R)</td>
+       <td class="rate">%T14CP007TL1 / %T14CP007TL2</td>
+       <td class="rate">%T14CP007RA1 / %T14CP007RA2</td>
+       <td class="rate">%T14CP007RB1 / %T14CP007RB2</td>
+       <td class="rate">%T14CP007MA1 / %T14CP007MA2</td>
+       <td class="rate">%T14CP007MB1 / %T14CP007MB2</td>
+       <td class="rate">%T14CP007SA1 / %T14CP007SA2</td>
+       <td class="rate">%T14CP007SB1 / %T14CP007SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.08</td>
+       <td class="card">%T14CARD008N<br />(%T14CARD008R)</td>
+       <td class="rate">%T14CP008TL1 / %T14CP008TL2</td>
+       <td class="rate">%T14CP008RA1 / %T14CP008RA2</td>
+       <td class="rate">%T14CP008RB1 / %T14CP008RB2</td>
+       <td class="rate">%T14CP008MA1 / %T14CP008MA2</td>
+       <td class="rate">%T14CP008MB1 / %T14CP008MB2</td>
+       <td class="rate">%T14CP008SA1 / %T14CP008SA2</td>
+       <td class="rate">%T14CP008SB1 / %T14CP008SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.09</td>
+       <td class="card">%T14CARD009N<br />(%T14CARD009R)</td>
+       <td class="rate">%T14CP009TL1 / %T14CP009TL2</td>
+       <td class="rate">%T14CP009RA1 / %T14CP009RA2</td>
+       <td class="rate">%T14CP009RB1 / %T14CP009RB2</td>
+       <td class="rate">%T14CP009MA1 / %T14CP009MA2</td>
+       <td class="rate">%T14CP009MB1 / %T14CP009MB2</td>
+       <td class="rate">%T14CP009SA1 / %T14CP009SA2</td>
+       <td class="rate">%T14CP009SB1 / %T14CP009SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.10</td>
+       <td class="card">%T14CARD010N<br />(%T14CARD010R)</td>
+       <td class="rate">%T14CP010TL1 / %T14CP010TL2</td>
+       <td class="rate">%T14CP010RA1 / %T14CP010RA2</td>
+       <td class="rate">%T14CP010RB1 / %T14CP010RB2</td>
+       <td class="rate">%T14CP010MA1 / %T14CP010MA2</td>
+       <td class="rate">%T14CP010MB1 / %T14CP010MB2</td>
+       <td class="rate">%T14CP010SA1 / %T14CP010SA2</td>
+       <td class="rate">%T14CP010SB1 / %T14CP010SB2</td>
+      </tr>
 
-   <table class="rate_per_card">
-    <caption id="rate_per_card">スペルカード別取得率（取得回数 / 遭遇回数）</caption>
-    <thead>
-     <tr>
-      <td class="number">No.</td>
-      <td class="card">スペルカード名<br />（難易度）</td>
-      <td class="character">全主人公合計</td>
-      <td class="character">博麗 霊夢 (A)</td>
-      <td class="character">博麗 霊夢 (B)</td>
-      <td class="character">霧雨 魔理沙 (A)</td>
-      <td class="character">霧雨 魔理沙 (B)</td>
-      <td class="character">十六夜 咲夜 (A)</td>
-      <td class="character">十六夜 咲夜 (B)</td>
-     </tr>
-    </thead>
-    <tfoot>
-     <tr>
-      <td colspan="2">Total</td>
-      <td class="rate">%T14CP000TL1 / %T14CP000TL2</td>
-      <td class="rate">%T14CP000RA1 / %T14CP000RA2</td>
-      <td class="rate">%T14CP000RB1 / %T14CP000RB2</td>
-      <td class="rate">%T14CP000MA1 / %T14CP000MA2</td>
-      <td class="rate">%T14CP000MB1 / %T14CP000MB2</td>
-      <td class="rate">%T14CP000SA1 / %T14CP000SA2</td>
-      <td class="rate">%T14CP000SB1 / %T14CP000SB2</td>
-     </tr>
-    </tfoot>
+      <tr>
+       <td class="number">No.11</td>
+       <td class="card">%T14CARD011N<br />(%T14CARD011R)</td>
+       <td class="rate">%T14CP011TL1 / %T14CP011TL2</td>
+       <td class="rate">%T14CP011RA1 / %T14CP011RA2</td>
+       <td class="rate">%T14CP011RB1 / %T14CP011RB2</td>
+       <td class="rate">%T14CP011MA1 / %T14CP011MA2</td>
+       <td class="rate">%T14CP011MB1 / %T14CP011MB2</td>
+       <td class="rate">%T14CP011SA1 / %T14CP011SA2</td>
+       <td class="rate">%T14CP011SB1 / %T14CP011SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.12</td>
+       <td class="card">%T14CARD012N<br />(%T14CARD012R)</td>
+       <td class="rate">%T14CP012TL1 / %T14CP012TL2</td>
+       <td class="rate">%T14CP012RA1 / %T14CP012RA2</td>
+       <td class="rate">%T14CP012RB1 / %T14CP012RB2</td>
+       <td class="rate">%T14CP012MA1 / %T14CP012MA2</td>
+       <td class="rate">%T14CP012MB1 / %T14CP012MB2</td>
+       <td class="rate">%T14CP012SA1 / %T14CP012SA2</td>
+       <td class="rate">%T14CP012SB1 / %T14CP012SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.13</td>
+       <td class="card">%T14CARD013N<br />(%T14CARD013R)</td>
+       <td class="rate">%T14CP013TL1 / %T14CP013TL2</td>
+       <td class="rate">%T14CP013RA1 / %T14CP013RA2</td>
+       <td class="rate">%T14CP013RB1 / %T14CP013RB2</td>
+       <td class="rate">%T14CP013MA1 / %T14CP013MA2</td>
+       <td class="rate">%T14CP013MB1 / %T14CP013MB2</td>
+       <td class="rate">%T14CP013SA1 / %T14CP013SA2</td>
+       <td class="rate">%T14CP013SB1 / %T14CP013SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.14</td>
+       <td class="card">%T14CARD014N<br />(%T14CARD014R)</td>
+       <td class="rate">%T14CP014TL1 / %T14CP014TL2</td>
+       <td class="rate">%T14CP014RA1 / %T14CP014RA2</td>
+       <td class="rate">%T14CP014RB1 / %T14CP014RB2</td>
+       <td class="rate">%T14CP014MA1 / %T14CP014MA2</td>
+       <td class="rate">%T14CP014MB1 / %T14CP014MB2</td>
+       <td class="rate">%T14CP014SA1 / %T14CP014SA2</td>
+       <td class="rate">%T14CP014SB1 / %T14CP014SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.15</td>
+       <td class="card">%T14CARD015N<br />(%T14CARD015R)</td>
+       <td class="rate">%T14CP015TL1 / %T14CP015TL2</td>
+       <td class="rate">%T14CP015RA1 / %T14CP015RA2</td>
+       <td class="rate">%T14CP015RB1 / %T14CP015RB2</td>
+       <td class="rate">%T14CP015MA1 / %T14CP015MA2</td>
+       <td class="rate">%T14CP015MB1 / %T14CP015MB2</td>
+       <td class="rate">%T14CP015SA1 / %T14CP015SA2</td>
+       <td class="rate">%T14CP015SB1 / %T14CP015SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.16</td>
+       <td class="card">%T14CARD016N<br />(%T14CARD016R)</td>
+       <td class="rate">%T14CP016TL1 / %T14CP016TL2</td>
+       <td class="rate">%T14CP016RA1 / %T14CP016RA2</td>
+       <td class="rate">%T14CP016RB1 / %T14CP016RB2</td>
+       <td class="rate">%T14CP016MA1 / %T14CP016MA2</td>
+       <td class="rate">%T14CP016MB1 / %T14CP016MB2</td>
+       <td class="rate">%T14CP016SA1 / %T14CP016SA2</td>
+       <td class="rate">%T14CP016SB1 / %T14CP016SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.17</td>
+       <td class="card">%T14CARD017N<br />(%T14CARD017R)</td>
+       <td class="rate">%T14CP017TL1 / %T14CP017TL2</td>
+       <td class="rate">%T14CP017RA1 / %T14CP017RA2</td>
+       <td class="rate">%T14CP017RB1 / %T14CP017RB2</td>
+       <td class="rate">%T14CP017MA1 / %T14CP017MA2</td>
+       <td class="rate">%T14CP017MB1 / %T14CP017MB2</td>
+       <td class="rate">%T14CP017SA1 / %T14CP017SA2</td>
+       <td class="rate">%T14CP017SB1 / %T14CP017SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.18</td>
+       <td class="card">%T14CARD018N<br />(%T14CARD018R)</td>
+       <td class="rate">%T14CP018TL1 / %T14CP018TL2</td>
+       <td class="rate">%T14CP018RA1 / %T14CP018RA2</td>
+       <td class="rate">%T14CP018RB1 / %T14CP018RB2</td>
+       <td class="rate">%T14CP018MA1 / %T14CP018MA2</td>
+       <td class="rate">%T14CP018MB1 / %T14CP018MB2</td>
+       <td class="rate">%T14CP018SA1 / %T14CP018SA2</td>
+       <td class="rate">%T14CP018SB1 / %T14CP018SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.19</td>
+       <td class="card">%T14CARD019N<br />(%T14CARD019R)</td>
+       <td class="rate">%T14CP019TL1 / %T14CP019TL2</td>
+       <td class="rate">%T14CP019RA1 / %T14CP019RA2</td>
+       <td class="rate">%T14CP019RB1 / %T14CP019RB2</td>
+       <td class="rate">%T14CP019MA1 / %T14CP019MA2</td>
+       <td class="rate">%T14CP019MB1 / %T14CP019MB2</td>
+       <td class="rate">%T14CP019SA1 / %T14CP019SA2</td>
+       <td class="rate">%T14CP019SB1 / %T14CP019SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.20</td>
+       <td class="card">%T14CARD020N<br />(%T14CARD020R)</td>
+       <td class="rate">%T14CP020TL1 / %T14CP020TL2</td>
+       <td class="rate">%T14CP020RA1 / %T14CP020RA2</td>
+       <td class="rate">%T14CP020RB1 / %T14CP020RB2</td>
+       <td class="rate">%T14CP020MA1 / %T14CP020MA2</td>
+       <td class="rate">%T14CP020MB1 / %T14CP020MB2</td>
+       <td class="rate">%T14CP020SA1 / %T14CP020SA2</td>
+       <td class="rate">%T14CP020SB1 / %T14CP020SB2</td>
+      </tr>
 
-    <tbody>
-     <tr>
-      <td class="number">No.01</td>
-      <td class="card">%T14CARD001N<br />(%T14CARD001R)</td>
-      <td class="rate">%T14CP001TL1 / %T14CP001TL2</td>
-      <td class="rate">%T14CP001RA1 / %T14CP001RA2</td>
-      <td class="rate">%T14CP001RB1 / %T14CP001RB2</td>
-      <td class="rate">%T14CP001MA1 / %T14CP001MA2</td>
-      <td class="rate">%T14CP001MB1 / %T14CP001MB2</td>
-      <td class="rate">%T14CP001SA1 / %T14CP001SA2</td>
-      <td class="rate">%T14CP001SB1 / %T14CP001SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.02</td>
-      <td class="card">%T14CARD002N<br />(%T14CARD002R)</td>
-      <td class="rate">%T14CP002TL1 / %T14CP002TL2</td>
-      <td class="rate">%T14CP002RA1 / %T14CP002RA2</td>
-      <td class="rate">%T14CP002RB1 / %T14CP002RB2</td>
-      <td class="rate">%T14CP002MA1 / %T14CP002MA2</td>
-      <td class="rate">%T14CP002MB1 / %T14CP002MB2</td>
-      <td class="rate">%T14CP002SA1 / %T14CP002SA2</td>
-      <td class="rate">%T14CP002SB1 / %T14CP002SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.03</td>
-      <td class="card">%T14CARD003N<br />(%T14CARD003R)</td>
-      <td class="rate">%T14CP003TL1 / %T14CP003TL2</td>
-      <td class="rate">%T14CP003RA1 / %T14CP003RA2</td>
-      <td class="rate">%T14CP003RB1 / %T14CP003RB2</td>
-      <td class="rate">%T14CP003MA1 / %T14CP003MA2</td>
-      <td class="rate">%T14CP003MB1 / %T14CP003MB2</td>
-      <td class="rate">%T14CP003SA1 / %T14CP003SA2</td>
-      <td class="rate">%T14CP003SB1 / %T14CP003SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.04</td>
-      <td class="card">%T14CARD004N<br />(%T14CARD004R)</td>
-      <td class="rate">%T14CP004TL1 / %T14CP004TL2</td>
-      <td class="rate">%T14CP004RA1 / %T14CP004RA2</td>
-      <td class="rate">%T14CP004RB1 / %T14CP004RB2</td>
-      <td class="rate">%T14CP004MA1 / %T14CP004MA2</td>
-      <td class="rate">%T14CP004MB1 / %T14CP004MB2</td>
-      <td class="rate">%T14CP004SA1 / %T14CP004SA2</td>
-      <td class="rate">%T14CP004SB1 / %T14CP004SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.05</td>
-      <td class="card">%T14CARD005N<br />(%T14CARD005R)</td>
-      <td class="rate">%T14CP005TL1 / %T14CP005TL2</td>
-      <td class="rate">%T14CP005RA1 / %T14CP005RA2</td>
-      <td class="rate">%T14CP005RB1 / %T14CP005RB2</td>
-      <td class="rate">%T14CP005MA1 / %T14CP005MA2</td>
-      <td class="rate">%T14CP005MB1 / %T14CP005MB2</td>
-      <td class="rate">%T14CP005SA1 / %T14CP005SA2</td>
-      <td class="rate">%T14CP005SB1 / %T14CP005SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.06</td>
-      <td class="card">%T14CARD006N<br />(%T14CARD006R)</td>
-      <td class="rate">%T14CP006TL1 / %T14CP006TL2</td>
-      <td class="rate">%T14CP006RA1 / %T14CP006RA2</td>
-      <td class="rate">%T14CP006RB1 / %T14CP006RB2</td>
-      <td class="rate">%T14CP006MA1 / %T14CP006MA2</td>
-      <td class="rate">%T14CP006MB1 / %T14CP006MB2</td>
-      <td class="rate">%T14CP006SA1 / %T14CP006SA2</td>
-      <td class="rate">%T14CP006SB1 / %T14CP006SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.07</td>
-      <td class="card">%T14CARD007N<br />(%T14CARD007R)</td>
-      <td class="rate">%T14CP007TL1 / %T14CP007TL2</td>
-      <td class="rate">%T14CP007RA1 / %T14CP007RA2</td>
-      <td class="rate">%T14CP007RB1 / %T14CP007RB2</td>
-      <td class="rate">%T14CP007MA1 / %T14CP007MA2</td>
-      <td class="rate">%T14CP007MB1 / %T14CP007MB2</td>
-      <td class="rate">%T14CP007SA1 / %T14CP007SA2</td>
-      <td class="rate">%T14CP007SB1 / %T14CP007SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.08</td>
-      <td class="card">%T14CARD008N<br />(%T14CARD008R)</td>
-      <td class="rate">%T14CP008TL1 / %T14CP008TL2</td>
-      <td class="rate">%T14CP008RA1 / %T14CP008RA2</td>
-      <td class="rate">%T14CP008RB1 / %T14CP008RB2</td>
-      <td class="rate">%T14CP008MA1 / %T14CP008MA2</td>
-      <td class="rate">%T14CP008MB1 / %T14CP008MB2</td>
-      <td class="rate">%T14CP008SA1 / %T14CP008SA2</td>
-      <td class="rate">%T14CP008SB1 / %T14CP008SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.09</td>
-      <td class="card">%T14CARD009N<br />(%T14CARD009R)</td>
-      <td class="rate">%T14CP009TL1 / %T14CP009TL2</td>
-      <td class="rate">%T14CP009RA1 / %T14CP009RA2</td>
-      <td class="rate">%T14CP009RB1 / %T14CP009RB2</td>
-      <td class="rate">%T14CP009MA1 / %T14CP009MA2</td>
-      <td class="rate">%T14CP009MB1 / %T14CP009MB2</td>
-      <td class="rate">%T14CP009SA1 / %T14CP009SA2</td>
-      <td class="rate">%T14CP009SB1 / %T14CP009SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.10</td>
-      <td class="card">%T14CARD010N<br />(%T14CARD010R)</td>
-      <td class="rate">%T14CP010TL1 / %T14CP010TL2</td>
-      <td class="rate">%T14CP010RA1 / %T14CP010RA2</td>
-      <td class="rate">%T14CP010RB1 / %T14CP010RB2</td>
-      <td class="rate">%T14CP010MA1 / %T14CP010MA2</td>
-      <td class="rate">%T14CP010MB1 / %T14CP010MB2</td>
-      <td class="rate">%T14CP010SA1 / %T14CP010SA2</td>
-      <td class="rate">%T14CP010SB1 / %T14CP010SB2</td>
-     </tr>
+      <tr>
+       <td class="number">No.21</td>
+       <td class="card">%T14CARD021N<br />(%T14CARD021R)</td>
+       <td class="rate">%T14CP021TL1 / %T14CP021TL2</td>
+       <td class="rate">%T14CP021RA1 / %T14CP021RA2</td>
+       <td class="rate">%T14CP021RB1 / %T14CP021RB2</td>
+       <td class="rate">%T14CP021MA1 / %T14CP021MA2</td>
+       <td class="rate">%T14CP021MB1 / %T14CP021MB2</td>
+       <td class="rate">%T14CP021SA1 / %T14CP021SA2</td>
+       <td class="rate">%T14CP021SB1 / %T14CP021SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.22</td>
+       <td class="card">%T14CARD022N<br />(%T14CARD022R)</td>
+       <td class="rate">%T14CP022TL1 / %T14CP022TL2</td>
+       <td class="rate">%T14CP022RA1 / %T14CP022RA2</td>
+       <td class="rate">%T14CP022RB1 / %T14CP022RB2</td>
+       <td class="rate">%T14CP022MA1 / %T14CP022MA2</td>
+       <td class="rate">%T14CP022MB1 / %T14CP022MB2</td>
+       <td class="rate">%T14CP022SA1 / %T14CP022SA2</td>
+       <td class="rate">%T14CP022SB1 / %T14CP022SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.23</td>
+       <td class="card">%T14CARD023N<br />(%T14CARD023R)</td>
+       <td class="rate">%T14CP023TL1 / %T14CP023TL2</td>
+       <td class="rate">%T14CP023RA1 / %T14CP023RA2</td>
+       <td class="rate">%T14CP023RB1 / %T14CP023RB2</td>
+       <td class="rate">%T14CP023MA1 / %T14CP023MA2</td>
+       <td class="rate">%T14CP023MB1 / %T14CP023MB2</td>
+       <td class="rate">%T14CP023SA1 / %T14CP023SA2</td>
+       <td class="rate">%T14CP023SB1 / %T14CP023SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.24</td>
+       <td class="card">%T14CARD024N<br />(%T14CARD024R)</td>
+       <td class="rate">%T14CP024TL1 / %T14CP024TL2</td>
+       <td class="rate">%T14CP024RA1 / %T14CP024RA2</td>
+       <td class="rate">%T14CP024RB1 / %T14CP024RB2</td>
+       <td class="rate">%T14CP024MA1 / %T14CP024MA2</td>
+       <td class="rate">%T14CP024MB1 / %T14CP024MB2</td>
+       <td class="rate">%T14CP024SA1 / %T14CP024SA2</td>
+       <td class="rate">%T14CP024SB1 / %T14CP024SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.25</td>
+       <td class="card">%T14CARD025N<br />(%T14CARD025R)</td>
+       <td class="rate">%T14CP025TL1 / %T14CP025TL2</td>
+       <td class="rate">%T14CP025RA1 / %T14CP025RA2</td>
+       <td class="rate">%T14CP025RB1 / %T14CP025RB2</td>
+       <td class="rate">%T14CP025MA1 / %T14CP025MA2</td>
+       <td class="rate">%T14CP025MB1 / %T14CP025MB2</td>
+       <td class="rate">%T14CP025SA1 / %T14CP025SA2</td>
+       <td class="rate">%T14CP025SB1 / %T14CP025SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.26</td>
+       <td class="card">%T14CARD026N<br />(%T14CARD026R)</td>
+       <td class="rate">%T14CP026TL1 / %T14CP026TL2</td>
+       <td class="rate">%T14CP026RA1 / %T14CP026RA2</td>
+       <td class="rate">%T14CP026RB1 / %T14CP026RB2</td>
+       <td class="rate">%T14CP026MA1 / %T14CP026MA2</td>
+       <td class="rate">%T14CP026MB1 / %T14CP026MB2</td>
+       <td class="rate">%T14CP026SA1 / %T14CP026SA2</td>
+       <td class="rate">%T14CP026SB1 / %T14CP026SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.27</td>
+       <td class="card">%T14CARD027N<br />(%T14CARD027R)</td>
+       <td class="rate">%T14CP027TL1 / %T14CP027TL2</td>
+       <td class="rate">%T14CP027RA1 / %T14CP027RA2</td>
+       <td class="rate">%T14CP027RB1 / %T14CP027RB2</td>
+       <td class="rate">%T14CP027MA1 / %T14CP027MA2</td>
+       <td class="rate">%T14CP027MB1 / %T14CP027MB2</td>
+       <td class="rate">%T14CP027SA1 / %T14CP027SA2</td>
+       <td class="rate">%T14CP027SB1 / %T14CP027SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.28</td>
+       <td class="card">%T14CARD028N<br />(%T14CARD028R)</td>
+       <td class="rate">%T14CP028TL1 / %T14CP028TL2</td>
+       <td class="rate">%T14CP028RA1 / %T14CP028RA2</td>
+       <td class="rate">%T14CP028RB1 / %T14CP028RB2</td>
+       <td class="rate">%T14CP028MA1 / %T14CP028MA2</td>
+       <td class="rate">%T14CP028MB1 / %T14CP028MB2</td>
+       <td class="rate">%T14CP028SA1 / %T14CP028SA2</td>
+       <td class="rate">%T14CP028SB1 / %T14CP028SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.29</td>
+       <td class="card">%T14CARD029N<br />(%T14CARD029R)</td>
+       <td class="rate">%T14CP029TL1 / %T14CP029TL2</td>
+       <td class="rate">%T14CP029RA1 / %T14CP029RA2</td>
+       <td class="rate">%T14CP029RB1 / %T14CP029RB2</td>
+       <td class="rate">%T14CP029MA1 / %T14CP029MA2</td>
+       <td class="rate">%T14CP029MB1 / %T14CP029MB2</td>
+       <td class="rate">%T14CP029SA1 / %T14CP029SA2</td>
+       <td class="rate">%T14CP029SB1 / %T14CP029SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.30</td>
+       <td class="card">%T14CARD030N<br />(%T14CARD030R)</td>
+       <td class="rate">%T14CP030TL1 / %T14CP030TL2</td>
+       <td class="rate">%T14CP030RA1 / %T14CP030RA2</td>
+       <td class="rate">%T14CP030RB1 / %T14CP030RB2</td>
+       <td class="rate">%T14CP030MA1 / %T14CP030MA2</td>
+       <td class="rate">%T14CP030MB1 / %T14CP030MB2</td>
+       <td class="rate">%T14CP030SA1 / %T14CP030SA2</td>
+       <td class="rate">%T14CP030SB1 / %T14CP030SB2</td>
+      </tr>
 
-     <tr>
-      <td class="number">No.11</td>
-      <td class="card">%T14CARD011N<br />(%T14CARD011R)</td>
-      <td class="rate">%T14CP011TL1 / %T14CP011TL2</td>
-      <td class="rate">%T14CP011RA1 / %T14CP011RA2</td>
-      <td class="rate">%T14CP011RB1 / %T14CP011RB2</td>
-      <td class="rate">%T14CP011MA1 / %T14CP011MA2</td>
-      <td class="rate">%T14CP011MB1 / %T14CP011MB2</td>
-      <td class="rate">%T14CP011SA1 / %T14CP011SA2</td>
-      <td class="rate">%T14CP011SB1 / %T14CP011SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.12</td>
-      <td class="card">%T14CARD012N<br />(%T14CARD012R)</td>
-      <td class="rate">%T14CP012TL1 / %T14CP012TL2</td>
-      <td class="rate">%T14CP012RA1 / %T14CP012RA2</td>
-      <td class="rate">%T14CP012RB1 / %T14CP012RB2</td>
-      <td class="rate">%T14CP012MA1 / %T14CP012MA2</td>
-      <td class="rate">%T14CP012MB1 / %T14CP012MB2</td>
-      <td class="rate">%T14CP012SA1 / %T14CP012SA2</td>
-      <td class="rate">%T14CP012SB1 / %T14CP012SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.13</td>
-      <td class="card">%T14CARD013N<br />(%T14CARD013R)</td>
-      <td class="rate">%T14CP013TL1 / %T14CP013TL2</td>
-      <td class="rate">%T14CP013RA1 / %T14CP013RA2</td>
-      <td class="rate">%T14CP013RB1 / %T14CP013RB2</td>
-      <td class="rate">%T14CP013MA1 / %T14CP013MA2</td>
-      <td class="rate">%T14CP013MB1 / %T14CP013MB2</td>
-      <td class="rate">%T14CP013SA1 / %T14CP013SA2</td>
-      <td class="rate">%T14CP013SB1 / %T14CP013SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.14</td>
-      <td class="card">%T14CARD014N<br />(%T14CARD014R)</td>
-      <td class="rate">%T14CP014TL1 / %T14CP014TL2</td>
-      <td class="rate">%T14CP014RA1 / %T14CP014RA2</td>
-      <td class="rate">%T14CP014RB1 / %T14CP014RB2</td>
-      <td class="rate">%T14CP014MA1 / %T14CP014MA2</td>
-      <td class="rate">%T14CP014MB1 / %T14CP014MB2</td>
-      <td class="rate">%T14CP014SA1 / %T14CP014SA2</td>
-      <td class="rate">%T14CP014SB1 / %T14CP014SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.15</td>
-      <td class="card">%T14CARD015N<br />(%T14CARD015R)</td>
-      <td class="rate">%T14CP015TL1 / %T14CP015TL2</td>
-      <td class="rate">%T14CP015RA1 / %T14CP015RA2</td>
-      <td class="rate">%T14CP015RB1 / %T14CP015RB2</td>
-      <td class="rate">%T14CP015MA1 / %T14CP015MA2</td>
-      <td class="rate">%T14CP015MB1 / %T14CP015MB2</td>
-      <td class="rate">%T14CP015SA1 / %T14CP015SA2</td>
-      <td class="rate">%T14CP015SB1 / %T14CP015SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.16</td>
-      <td class="card">%T14CARD016N<br />(%T14CARD016R)</td>
-      <td class="rate">%T14CP016TL1 / %T14CP016TL2</td>
-      <td class="rate">%T14CP016RA1 / %T14CP016RA2</td>
-      <td class="rate">%T14CP016RB1 / %T14CP016RB2</td>
-      <td class="rate">%T14CP016MA1 / %T14CP016MA2</td>
-      <td class="rate">%T14CP016MB1 / %T14CP016MB2</td>
-      <td class="rate">%T14CP016SA1 / %T14CP016SA2</td>
-      <td class="rate">%T14CP016SB1 / %T14CP016SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.17</td>
-      <td class="card">%T14CARD017N<br />(%T14CARD017R)</td>
-      <td class="rate">%T14CP017TL1 / %T14CP017TL2</td>
-      <td class="rate">%T14CP017RA1 / %T14CP017RA2</td>
-      <td class="rate">%T14CP017RB1 / %T14CP017RB2</td>
-      <td class="rate">%T14CP017MA1 / %T14CP017MA2</td>
-      <td class="rate">%T14CP017MB1 / %T14CP017MB2</td>
-      <td class="rate">%T14CP017SA1 / %T14CP017SA2</td>
-      <td class="rate">%T14CP017SB1 / %T14CP017SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.18</td>
-      <td class="card">%T14CARD018N<br />(%T14CARD018R)</td>
-      <td class="rate">%T14CP018TL1 / %T14CP018TL2</td>
-      <td class="rate">%T14CP018RA1 / %T14CP018RA2</td>
-      <td class="rate">%T14CP018RB1 / %T14CP018RB2</td>
-      <td class="rate">%T14CP018MA1 / %T14CP018MA2</td>
-      <td class="rate">%T14CP018MB1 / %T14CP018MB2</td>
-      <td class="rate">%T14CP018SA1 / %T14CP018SA2</td>
-      <td class="rate">%T14CP018SB1 / %T14CP018SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.19</td>
-      <td class="card">%T14CARD019N<br />(%T14CARD019R)</td>
-      <td class="rate">%T14CP019TL1 / %T14CP019TL2</td>
-      <td class="rate">%T14CP019RA1 / %T14CP019RA2</td>
-      <td class="rate">%T14CP019RB1 / %T14CP019RB2</td>
-      <td class="rate">%T14CP019MA1 / %T14CP019MA2</td>
-      <td class="rate">%T14CP019MB1 / %T14CP019MB2</td>
-      <td class="rate">%T14CP019SA1 / %T14CP019SA2</td>
-      <td class="rate">%T14CP019SB1 / %T14CP019SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.20</td>
-      <td class="card">%T14CARD020N<br />(%T14CARD020R)</td>
-      <td class="rate">%T14CP020TL1 / %T14CP020TL2</td>
-      <td class="rate">%T14CP020RA1 / %T14CP020RA2</td>
-      <td class="rate">%T14CP020RB1 / %T14CP020RB2</td>
-      <td class="rate">%T14CP020MA1 / %T14CP020MA2</td>
-      <td class="rate">%T14CP020MB1 / %T14CP020MB2</td>
-      <td class="rate">%T14CP020SA1 / %T14CP020SA2</td>
-      <td class="rate">%T14CP020SB1 / %T14CP020SB2</td>
-     </tr>
+      <tr>
+       <td class="number">No.31</td>
+       <td class="card">%T14CARD031N<br />(%T14CARD031R)</td>
+       <td class="rate">%T14CP031TL1 / %T14CP031TL2</td>
+       <td class="rate">%T14CP031RA1 / %T14CP031RA2</td>
+       <td class="rate">%T14CP031RB1 / %T14CP031RB2</td>
+       <td class="rate">%T14CP031MA1 / %T14CP031MA2</td>
+       <td class="rate">%T14CP031MB1 / %T14CP031MB2</td>
+       <td class="rate">%T14CP031SA1 / %T14CP031SA2</td>
+       <td class="rate">%T14CP031SB1 / %T14CP031SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.32</td>
+       <td class="card">%T14CARD032N<br />(%T14CARD032R)</td>
+       <td class="rate">%T14CP032TL1 / %T14CP032TL2</td>
+       <td class="rate">%T14CP032RA1 / %T14CP032RA2</td>
+       <td class="rate">%T14CP032RB1 / %T14CP032RB2</td>
+       <td class="rate">%T14CP032MA1 / %T14CP032MA2</td>
+       <td class="rate">%T14CP032MB1 / %T14CP032MB2</td>
+       <td class="rate">%T14CP032SA1 / %T14CP032SA2</td>
+       <td class="rate">%T14CP032SB1 / %T14CP032SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.33</td>
+       <td class="card">%T14CARD033N<br />(%T14CARD033R)</td>
+       <td class="rate">%T14CP033TL1 / %T14CP033TL2</td>
+       <td class="rate">%T14CP033RA1 / %T14CP033RA2</td>
+       <td class="rate">%T14CP033RB1 / %T14CP033RB2</td>
+       <td class="rate">%T14CP033MA1 / %T14CP033MA2</td>
+       <td class="rate">%T14CP033MB1 / %T14CP033MB2</td>
+       <td class="rate">%T14CP033SA1 / %T14CP033SA2</td>
+       <td class="rate">%T14CP033SB1 / %T14CP033SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.34</td>
+       <td class="card">%T14CARD034N<br />(%T14CARD034R)</td>
+       <td class="rate">%T14CP034TL1 / %T14CP034TL2</td>
+       <td class="rate">%T14CP034RA1 / %T14CP034RA2</td>
+       <td class="rate">%T14CP034RB1 / %T14CP034RB2</td>
+       <td class="rate">%T14CP034MA1 / %T14CP034MA2</td>
+       <td class="rate">%T14CP034MB1 / %T14CP034MB2</td>
+       <td class="rate">%T14CP034SA1 / %T14CP034SA2</td>
+       <td class="rate">%T14CP034SB1 / %T14CP034SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.35</td>
+       <td class="card">%T14CARD035N<br />(%T14CARD035R)</td>
+       <td class="rate">%T14CP035TL1 / %T14CP035TL2</td>
+       <td class="rate">%T14CP035RA1 / %T14CP035RA2</td>
+       <td class="rate">%T14CP035RB1 / %T14CP035RB2</td>
+       <td class="rate">%T14CP035MA1 / %T14CP035MA2</td>
+       <td class="rate">%T14CP035MB1 / %T14CP035MB2</td>
+       <td class="rate">%T14CP035SA1 / %T14CP035SA2</td>
+       <td class="rate">%T14CP035SB1 / %T14CP035SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.36</td>
+       <td class="card">%T14CARD036N<br />(%T14CARD036R)</td>
+       <td class="rate">%T14CP036TL1 / %T14CP036TL2</td>
+       <td class="rate">%T14CP036RA1 / %T14CP036RA2</td>
+       <td class="rate">%T14CP036RB1 / %T14CP036RB2</td>
+       <td class="rate">%T14CP036MA1 / %T14CP036MA2</td>
+       <td class="rate">%T14CP036MB1 / %T14CP036MB2</td>
+       <td class="rate">%T14CP036SA1 / %T14CP036SA2</td>
+       <td class="rate">%T14CP036SB1 / %T14CP036SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.37</td>
+       <td class="card">%T14CARD037N<br />(%T14CARD037R)</td>
+       <td class="rate">%T14CP037TL1 / %T14CP037TL2</td>
+       <td class="rate">%T14CP037RA1 / %T14CP037RA2</td>
+       <td class="rate">%T14CP037RB1 / %T14CP037RB2</td>
+       <td class="rate">%T14CP037MA1 / %T14CP037MA2</td>
+       <td class="rate">%T14CP037MB1 / %T14CP037MB2</td>
+       <td class="rate">%T14CP037SA1 / %T14CP037SA2</td>
+       <td class="rate">%T14CP037SB1 / %T14CP037SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.38</td>
+       <td class="card">%T14CARD038N<br />(%T14CARD038R)</td>
+       <td class="rate">%T14CP038TL1 / %T14CP038TL2</td>
+       <td class="rate">%T14CP038RA1 / %T14CP038RA2</td>
+       <td class="rate">%T14CP038RB1 / %T14CP038RB2</td>
+       <td class="rate">%T14CP038MA1 / %T14CP038MA2</td>
+       <td class="rate">%T14CP038MB1 / %T14CP038MB2</td>
+       <td class="rate">%T14CP038SA1 / %T14CP038SA2</td>
+       <td class="rate">%T14CP038SB1 / %T14CP038SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.39</td>
+       <td class="card">%T14CARD039N<br />(%T14CARD039R)</td>
+       <td class="rate">%T14CP039TL1 / %T14CP039TL2</td>
+       <td class="rate">%T14CP039RA1 / %T14CP039RA2</td>
+       <td class="rate">%T14CP039RB1 / %T14CP039RB2</td>
+       <td class="rate">%T14CP039MA1 / %T14CP039MA2</td>
+       <td class="rate">%T14CP039MB1 / %T14CP039MB2</td>
+       <td class="rate">%T14CP039SA1 / %T14CP039SA2</td>
+       <td class="rate">%T14CP039SB1 / %T14CP039SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.40</td>
+       <td class="card">%T14CARD040N<br />(%T14CARD040R)</td>
+       <td class="rate">%T14CP040TL1 / %T14CP040TL2</td>
+       <td class="rate">%T14CP040RA1 / %T14CP040RA2</td>
+       <td class="rate">%T14CP040RB1 / %T14CP040RB2</td>
+       <td class="rate">%T14CP040MA1 / %T14CP040MA2</td>
+       <td class="rate">%T14CP040MB1 / %T14CP040MB2</td>
+       <td class="rate">%T14CP040SA1 / %T14CP040SA2</td>
+       <td class="rate">%T14CP040SB1 / %T14CP040SB2</td>
+      </tr>
 
-     <tr>
-      <td class="number">No.21</td>
-      <td class="card">%T14CARD021N<br />(%T14CARD021R)</td>
-      <td class="rate">%T14CP021TL1 / %T14CP021TL2</td>
-      <td class="rate">%T14CP021RA1 / %T14CP021RA2</td>
-      <td class="rate">%T14CP021RB1 / %T14CP021RB2</td>
-      <td class="rate">%T14CP021MA1 / %T14CP021MA2</td>
-      <td class="rate">%T14CP021MB1 / %T14CP021MB2</td>
-      <td class="rate">%T14CP021SA1 / %T14CP021SA2</td>
-      <td class="rate">%T14CP021SB1 / %T14CP021SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.22</td>
-      <td class="card">%T14CARD022N<br />(%T14CARD022R)</td>
-      <td class="rate">%T14CP022TL1 / %T14CP022TL2</td>
-      <td class="rate">%T14CP022RA1 / %T14CP022RA2</td>
-      <td class="rate">%T14CP022RB1 / %T14CP022RB2</td>
-      <td class="rate">%T14CP022MA1 / %T14CP022MA2</td>
-      <td class="rate">%T14CP022MB1 / %T14CP022MB2</td>
-      <td class="rate">%T14CP022SA1 / %T14CP022SA2</td>
-      <td class="rate">%T14CP022SB1 / %T14CP022SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.23</td>
-      <td class="card">%T14CARD023N<br />(%T14CARD023R)</td>
-      <td class="rate">%T14CP023TL1 / %T14CP023TL2</td>
-      <td class="rate">%T14CP023RA1 / %T14CP023RA2</td>
-      <td class="rate">%T14CP023RB1 / %T14CP023RB2</td>
-      <td class="rate">%T14CP023MA1 / %T14CP023MA2</td>
-      <td class="rate">%T14CP023MB1 / %T14CP023MB2</td>
-      <td class="rate">%T14CP023SA1 / %T14CP023SA2</td>
-      <td class="rate">%T14CP023SB1 / %T14CP023SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.24</td>
-      <td class="card">%T14CARD024N<br />(%T14CARD024R)</td>
-      <td class="rate">%T14CP024TL1 / %T14CP024TL2</td>
-      <td class="rate">%T14CP024RA1 / %T14CP024RA2</td>
-      <td class="rate">%T14CP024RB1 / %T14CP024RB2</td>
-      <td class="rate">%T14CP024MA1 / %T14CP024MA2</td>
-      <td class="rate">%T14CP024MB1 / %T14CP024MB2</td>
-      <td class="rate">%T14CP024SA1 / %T14CP024SA2</td>
-      <td class="rate">%T14CP024SB1 / %T14CP024SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.25</td>
-      <td class="card">%T14CARD025N<br />(%T14CARD025R)</td>
-      <td class="rate">%T14CP025TL1 / %T14CP025TL2</td>
-      <td class="rate">%T14CP025RA1 / %T14CP025RA2</td>
-      <td class="rate">%T14CP025RB1 / %T14CP025RB2</td>
-      <td class="rate">%T14CP025MA1 / %T14CP025MA2</td>
-      <td class="rate">%T14CP025MB1 / %T14CP025MB2</td>
-      <td class="rate">%T14CP025SA1 / %T14CP025SA2</td>
-      <td class="rate">%T14CP025SB1 / %T14CP025SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.26</td>
-      <td class="card">%T14CARD026N<br />(%T14CARD026R)</td>
-      <td class="rate">%T14CP026TL1 / %T14CP026TL2</td>
-      <td class="rate">%T14CP026RA1 / %T14CP026RA2</td>
-      <td class="rate">%T14CP026RB1 / %T14CP026RB2</td>
-      <td class="rate">%T14CP026MA1 / %T14CP026MA2</td>
-      <td class="rate">%T14CP026MB1 / %T14CP026MB2</td>
-      <td class="rate">%T14CP026SA1 / %T14CP026SA2</td>
-      <td class="rate">%T14CP026SB1 / %T14CP026SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.27</td>
-      <td class="card">%T14CARD027N<br />(%T14CARD027R)</td>
-      <td class="rate">%T14CP027TL1 / %T14CP027TL2</td>
-      <td class="rate">%T14CP027RA1 / %T14CP027RA2</td>
-      <td class="rate">%T14CP027RB1 / %T14CP027RB2</td>
-      <td class="rate">%T14CP027MA1 / %T14CP027MA2</td>
-      <td class="rate">%T14CP027MB1 / %T14CP027MB2</td>
-      <td class="rate">%T14CP027SA1 / %T14CP027SA2</td>
-      <td class="rate">%T14CP027SB1 / %T14CP027SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.28</td>
-      <td class="card">%T14CARD028N<br />(%T14CARD028R)</td>
-      <td class="rate">%T14CP028TL1 / %T14CP028TL2</td>
-      <td class="rate">%T14CP028RA1 / %T14CP028RA2</td>
-      <td class="rate">%T14CP028RB1 / %T14CP028RB2</td>
-      <td class="rate">%T14CP028MA1 / %T14CP028MA2</td>
-      <td class="rate">%T14CP028MB1 / %T14CP028MB2</td>
-      <td class="rate">%T14CP028SA1 / %T14CP028SA2</td>
-      <td class="rate">%T14CP028SB1 / %T14CP028SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.29</td>
-      <td class="card">%T14CARD029N<br />(%T14CARD029R)</td>
-      <td class="rate">%T14CP029TL1 / %T14CP029TL2</td>
-      <td class="rate">%T14CP029RA1 / %T14CP029RA2</td>
-      <td class="rate">%T14CP029RB1 / %T14CP029RB2</td>
-      <td class="rate">%T14CP029MA1 / %T14CP029MA2</td>
-      <td class="rate">%T14CP029MB1 / %T14CP029MB2</td>
-      <td class="rate">%T14CP029SA1 / %T14CP029SA2</td>
-      <td class="rate">%T14CP029SB1 / %T14CP029SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.30</td>
-      <td class="card">%T14CARD030N<br />(%T14CARD030R)</td>
-      <td class="rate">%T14CP030TL1 / %T14CP030TL2</td>
-      <td class="rate">%T14CP030RA1 / %T14CP030RA2</td>
-      <td class="rate">%T14CP030RB1 / %T14CP030RB2</td>
-      <td class="rate">%T14CP030MA1 / %T14CP030MA2</td>
-      <td class="rate">%T14CP030MB1 / %T14CP030MB2</td>
-      <td class="rate">%T14CP030SA1 / %T14CP030SA2</td>
-      <td class="rate">%T14CP030SB1 / %T14CP030SB2</td>
-     </tr>
+      <tr>
+       <td class="number">No.41</td>
+       <td class="card">%T14CARD041N<br />(%T14CARD041R)</td>
+       <td class="rate">%T14CP041TL1 / %T14CP041TL2</td>
+       <td class="rate">%T14CP041RA1 / %T14CP041RA2</td>
+       <td class="rate">%T14CP041RB1 / %T14CP041RB2</td>
+       <td class="rate">%T14CP041MA1 / %T14CP041MA2</td>
+       <td class="rate">%T14CP041MB1 / %T14CP041MB2</td>
+       <td class="rate">%T14CP041SA1 / %T14CP041SA2</td>
+       <td class="rate">%T14CP041SB1 / %T14CP041SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.42</td>
+       <td class="card">%T14CARD042N<br />(%T14CARD042R)</td>
+       <td class="rate">%T14CP042TL1 / %T14CP042TL2</td>
+       <td class="rate">%T14CP042RA1 / %T14CP042RA2</td>
+       <td class="rate">%T14CP042RB1 / %T14CP042RB2</td>
+       <td class="rate">%T14CP042MA1 / %T14CP042MA2</td>
+       <td class="rate">%T14CP042MB1 / %T14CP042MB2</td>
+       <td class="rate">%T14CP042SA1 / %T14CP042SA2</td>
+       <td class="rate">%T14CP042SB1 / %T14CP042SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.43</td>
+       <td class="card">%T14CARD043N<br />(%T14CARD043R)</td>
+       <td class="rate">%T14CP043TL1 / %T14CP043TL2</td>
+       <td class="rate">%T14CP043RA1 / %T14CP043RA2</td>
+       <td class="rate">%T14CP043RB1 / %T14CP043RB2</td>
+       <td class="rate">%T14CP043MA1 / %T14CP043MA2</td>
+       <td class="rate">%T14CP043MB1 / %T14CP043MB2</td>
+       <td class="rate">%T14CP043SA1 / %T14CP043SA2</td>
+       <td class="rate">%T14CP043SB1 / %T14CP043SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.44</td>
+       <td class="card">%T14CARD044N<br />(%T14CARD044R)</td>
+       <td class="rate">%T14CP044TL1 / %T14CP044TL2</td>
+       <td class="rate">%T14CP044RA1 / %T14CP044RA2</td>
+       <td class="rate">%T14CP044RB1 / %T14CP044RB2</td>
+       <td class="rate">%T14CP044MA1 / %T14CP044MA2</td>
+       <td class="rate">%T14CP044MB1 / %T14CP044MB2</td>
+       <td class="rate">%T14CP044SA1 / %T14CP044SA2</td>
+       <td class="rate">%T14CP044SB1 / %T14CP044SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.45</td>
+       <td class="card">%T14CARD045N<br />(%T14CARD045R)</td>
+       <td class="rate">%T14CP045TL1 / %T14CP045TL2</td>
+       <td class="rate">%T14CP045RA1 / %T14CP045RA2</td>
+       <td class="rate">%T14CP045RB1 / %T14CP045RB2</td>
+       <td class="rate">%T14CP045MA1 / %T14CP045MA2</td>
+       <td class="rate">%T14CP045MB1 / %T14CP045MB2</td>
+       <td class="rate">%T14CP045SA1 / %T14CP045SA2</td>
+       <td class="rate">%T14CP045SB1 / %T14CP045SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.46</td>
+       <td class="card">%T14CARD046N<br />(%T14CARD046R)</td>
+       <td class="rate">%T14CP046TL1 / %T14CP046TL2</td>
+       <td class="rate">%T14CP046RA1 / %T14CP046RA2</td>
+       <td class="rate">%T14CP046RB1 / %T14CP046RB2</td>
+       <td class="rate">%T14CP046MA1 / %T14CP046MA2</td>
+       <td class="rate">%T14CP046MB1 / %T14CP046MB2</td>
+       <td class="rate">%T14CP046SA1 / %T14CP046SA2</td>
+       <td class="rate">%T14CP046SB1 / %T14CP046SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.47</td>
+       <td class="card">%T14CARD047N<br />(%T14CARD047R)</td>
+       <td class="rate">%T14CP047TL1 / %T14CP047TL2</td>
+       <td class="rate">%T14CP047RA1 / %T14CP047RA2</td>
+       <td class="rate">%T14CP047RB1 / %T14CP047RB2</td>
+       <td class="rate">%T14CP047MA1 / %T14CP047MA2</td>
+       <td class="rate">%T14CP047MB1 / %T14CP047MB2</td>
+       <td class="rate">%T14CP047SA1 / %T14CP047SA2</td>
+       <td class="rate">%T14CP047SB1 / %T14CP047SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.48</td>
+       <td class="card">%T14CARD048N<br />(%T14CARD048R)</td>
+       <td class="rate">%T14CP048TL1 / %T14CP048TL2</td>
+       <td class="rate">%T14CP048RA1 / %T14CP048RA2</td>
+       <td class="rate">%T14CP048RB1 / %T14CP048RB2</td>
+       <td class="rate">%T14CP048MA1 / %T14CP048MA2</td>
+       <td class="rate">%T14CP048MB1 / %T14CP048MB2</td>
+       <td class="rate">%T14CP048SA1 / %T14CP048SA2</td>
+       <td class="rate">%T14CP048SB1 / %T14CP048SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.49</td>
+       <td class="card">%T14CARD049N<br />(%T14CARD049R)</td>
+       <td class="rate">%T14CP049TL1 / %T14CP049TL2</td>
+       <td class="rate">%T14CP049RA1 / %T14CP049RA2</td>
+       <td class="rate">%T14CP049RB1 / %T14CP049RB2</td>
+       <td class="rate">%T14CP049MA1 / %T14CP049MA2</td>
+       <td class="rate">%T14CP049MB1 / %T14CP049MB2</td>
+       <td class="rate">%T14CP049SA1 / %T14CP049SA2</td>
+       <td class="rate">%T14CP049SB1 / %T14CP049SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.50</td>
+       <td class="card">%T14CARD050N<br />(%T14CARD050R)</td>
+       <td class="rate">%T14CP050TL1 / %T14CP050TL2</td>
+       <td class="rate">%T14CP050RA1 / %T14CP050RA2</td>
+       <td class="rate">%T14CP050RB1 / %T14CP050RB2</td>
+       <td class="rate">%T14CP050MA1 / %T14CP050MA2</td>
+       <td class="rate">%T14CP050MB1 / %T14CP050MB2</td>
+       <td class="rate">%T14CP050SA1 / %T14CP050SA2</td>
+       <td class="rate">%T14CP050SB1 / %T14CP050SB2</td>
+      </tr>
 
-     <tr>
-      <td class="number">No.31</td>
-      <td class="card">%T14CARD031N<br />(%T14CARD031R)</td>
-      <td class="rate">%T14CP031TL1 / %T14CP031TL2</td>
-      <td class="rate">%T14CP031RA1 / %T14CP031RA2</td>
-      <td class="rate">%T14CP031RB1 / %T14CP031RB2</td>
-      <td class="rate">%T14CP031MA1 / %T14CP031MA2</td>
-      <td class="rate">%T14CP031MB1 / %T14CP031MB2</td>
-      <td class="rate">%T14CP031SA1 / %T14CP031SA2</td>
-      <td class="rate">%T14CP031SB1 / %T14CP031SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.32</td>
-      <td class="card">%T14CARD032N<br />(%T14CARD032R)</td>
-      <td class="rate">%T14CP032TL1 / %T14CP032TL2</td>
-      <td class="rate">%T14CP032RA1 / %T14CP032RA2</td>
-      <td class="rate">%T14CP032RB1 / %T14CP032RB2</td>
-      <td class="rate">%T14CP032MA1 / %T14CP032MA2</td>
-      <td class="rate">%T14CP032MB1 / %T14CP032MB2</td>
-      <td class="rate">%T14CP032SA1 / %T14CP032SA2</td>
-      <td class="rate">%T14CP032SB1 / %T14CP032SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.33</td>
-      <td class="card">%T14CARD033N<br />(%T14CARD033R)</td>
-      <td class="rate">%T14CP033TL1 / %T14CP033TL2</td>
-      <td class="rate">%T14CP033RA1 / %T14CP033RA2</td>
-      <td class="rate">%T14CP033RB1 / %T14CP033RB2</td>
-      <td class="rate">%T14CP033MA1 / %T14CP033MA2</td>
-      <td class="rate">%T14CP033MB1 / %T14CP033MB2</td>
-      <td class="rate">%T14CP033SA1 / %T14CP033SA2</td>
-      <td class="rate">%T14CP033SB1 / %T14CP033SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.34</td>
-      <td class="card">%T14CARD034N<br />(%T14CARD034R)</td>
-      <td class="rate">%T14CP034TL1 / %T14CP034TL2</td>
-      <td class="rate">%T14CP034RA1 / %T14CP034RA2</td>
-      <td class="rate">%T14CP034RB1 / %T14CP034RB2</td>
-      <td class="rate">%T14CP034MA1 / %T14CP034MA2</td>
-      <td class="rate">%T14CP034MB1 / %T14CP034MB2</td>
-      <td class="rate">%T14CP034SA1 / %T14CP034SA2</td>
-      <td class="rate">%T14CP034SB1 / %T14CP034SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.35</td>
-      <td class="card">%T14CARD035N<br />(%T14CARD035R)</td>
-      <td class="rate">%T14CP035TL1 / %T14CP035TL2</td>
-      <td class="rate">%T14CP035RA1 / %T14CP035RA2</td>
-      <td class="rate">%T14CP035RB1 / %T14CP035RB2</td>
-      <td class="rate">%T14CP035MA1 / %T14CP035MA2</td>
-      <td class="rate">%T14CP035MB1 / %T14CP035MB2</td>
-      <td class="rate">%T14CP035SA1 / %T14CP035SA2</td>
-      <td class="rate">%T14CP035SB1 / %T14CP035SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.36</td>
-      <td class="card">%T14CARD036N<br />(%T14CARD036R)</td>
-      <td class="rate">%T14CP036TL1 / %T14CP036TL2</td>
-      <td class="rate">%T14CP036RA1 / %T14CP036RA2</td>
-      <td class="rate">%T14CP036RB1 / %T14CP036RB2</td>
-      <td class="rate">%T14CP036MA1 / %T14CP036MA2</td>
-      <td class="rate">%T14CP036MB1 / %T14CP036MB2</td>
-      <td class="rate">%T14CP036SA1 / %T14CP036SA2</td>
-      <td class="rate">%T14CP036SB1 / %T14CP036SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.37</td>
-      <td class="card">%T14CARD037N<br />(%T14CARD037R)</td>
-      <td class="rate">%T14CP037TL1 / %T14CP037TL2</td>
-      <td class="rate">%T14CP037RA1 / %T14CP037RA2</td>
-      <td class="rate">%T14CP037RB1 / %T14CP037RB2</td>
-      <td class="rate">%T14CP037MA1 / %T14CP037MA2</td>
-      <td class="rate">%T14CP037MB1 / %T14CP037MB2</td>
-      <td class="rate">%T14CP037SA1 / %T14CP037SA2</td>
-      <td class="rate">%T14CP037SB1 / %T14CP037SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.38</td>
-      <td class="card">%T14CARD038N<br />(%T14CARD038R)</td>
-      <td class="rate">%T14CP038TL1 / %T14CP038TL2</td>
-      <td class="rate">%T14CP038RA1 / %T14CP038RA2</td>
-      <td class="rate">%T14CP038RB1 / %T14CP038RB2</td>
-      <td class="rate">%T14CP038MA1 / %T14CP038MA2</td>
-      <td class="rate">%T14CP038MB1 / %T14CP038MB2</td>
-      <td class="rate">%T14CP038SA1 / %T14CP038SA2</td>
-      <td class="rate">%T14CP038SB1 / %T14CP038SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.39</td>
-      <td class="card">%T14CARD039N<br />(%T14CARD039R)</td>
-      <td class="rate">%T14CP039TL1 / %T14CP039TL2</td>
-      <td class="rate">%T14CP039RA1 / %T14CP039RA2</td>
-      <td class="rate">%T14CP039RB1 / %T14CP039RB2</td>
-      <td class="rate">%T14CP039MA1 / %T14CP039MA2</td>
-      <td class="rate">%T14CP039MB1 / %T14CP039MB2</td>
-      <td class="rate">%T14CP039SA1 / %T14CP039SA2</td>
-      <td class="rate">%T14CP039SB1 / %T14CP039SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.40</td>
-      <td class="card">%T14CARD040N<br />(%T14CARD040R)</td>
-      <td class="rate">%T14CP040TL1 / %T14CP040TL2</td>
-      <td class="rate">%T14CP040RA1 / %T14CP040RA2</td>
-      <td class="rate">%T14CP040RB1 / %T14CP040RB2</td>
-      <td class="rate">%T14CP040MA1 / %T14CP040MA2</td>
-      <td class="rate">%T14CP040MB1 / %T14CP040MB2</td>
-      <td class="rate">%T14CP040SA1 / %T14CP040SA2</td>
-      <td class="rate">%T14CP040SB1 / %T14CP040SB2</td>
-     </tr>
+      <tr>
+       <td class="number">No.51</td>
+       <td class="card">%T14CARD051N<br />(%T14CARD051R)</td>
+       <td class="rate">%T14CP051TL1 / %T14CP051TL2</td>
+       <td class="rate">%T14CP051RA1 / %T14CP051RA2</td>
+       <td class="rate">%T14CP051RB1 / %T14CP051RB2</td>
+       <td class="rate">%T14CP051MA1 / %T14CP051MA2</td>
+       <td class="rate">%T14CP051MB1 / %T14CP051MB2</td>
+       <td class="rate">%T14CP051SA1 / %T14CP051SA2</td>
+       <td class="rate">%T14CP051SB1 / %T14CP051SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.52</td>
+       <td class="card">%T14CARD052N<br />(%T14CARD052R)</td>
+       <td class="rate">%T14CP052TL1 / %T14CP052TL2</td>
+       <td class="rate">%T14CP052RA1 / %T14CP052RA2</td>
+       <td class="rate">%T14CP052RB1 / %T14CP052RB2</td>
+       <td class="rate">%T14CP052MA1 / %T14CP052MA2</td>
+       <td class="rate">%T14CP052MB1 / %T14CP052MB2</td>
+       <td class="rate">%T14CP052SA1 / %T14CP052SA2</td>
+       <td class="rate">%T14CP052SB1 / %T14CP052SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.53</td>
+       <td class="card">%T14CARD053N<br />(%T14CARD053R)</td>
+       <td class="rate">%T14CP053TL1 / %T14CP053TL2</td>
+       <td class="rate">%T14CP053RA1 / %T14CP053RA2</td>
+       <td class="rate">%T14CP053RB1 / %T14CP053RB2</td>
+       <td class="rate">%T14CP053MA1 / %T14CP053MA2</td>
+       <td class="rate">%T14CP053MB1 / %T14CP053MB2</td>
+       <td class="rate">%T14CP053SA1 / %T14CP053SA2</td>
+       <td class="rate">%T14CP053SB1 / %T14CP053SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.54</td>
+       <td class="card">%T14CARD054N<br />(%T14CARD054R)</td>
+       <td class="rate">%T14CP054TL1 / %T14CP054TL2</td>
+       <td class="rate">%T14CP054RA1 / %T14CP054RA2</td>
+       <td class="rate">%T14CP054RB1 / %T14CP054RB2</td>
+       <td class="rate">%T14CP054MA1 / %T14CP054MA2</td>
+       <td class="rate">%T14CP054MB1 / %T14CP054MB2</td>
+       <td class="rate">%T14CP054SA1 / %T14CP054SA2</td>
+       <td class="rate">%T14CP054SB1 / %T14CP054SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.55</td>
+       <td class="card">%T14CARD055N<br />(%T14CARD055R)</td>
+       <td class="rate">%T14CP055TL1 / %T14CP055TL2</td>
+       <td class="rate">%T14CP055RA1 / %T14CP055RA2</td>
+       <td class="rate">%T14CP055RB1 / %T14CP055RB2</td>
+       <td class="rate">%T14CP055MA1 / %T14CP055MA2</td>
+       <td class="rate">%T14CP055MB1 / %T14CP055MB2</td>
+       <td class="rate">%T14CP055SA1 / %T14CP055SA2</td>
+       <td class="rate">%T14CP055SB1 / %T14CP055SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.56</td>
+       <td class="card">%T14CARD056N<br />(%T14CARD056R)</td>
+       <td class="rate">%T14CP056TL1 / %T14CP056TL2</td>
+       <td class="rate">%T14CP056RA1 / %T14CP056RA2</td>
+       <td class="rate">%T14CP056RB1 / %T14CP056RB2</td>
+       <td class="rate">%T14CP056MA1 / %T14CP056MA2</td>
+       <td class="rate">%T14CP056MB1 / %T14CP056MB2</td>
+       <td class="rate">%T14CP056SA1 / %T14CP056SA2</td>
+       <td class="rate">%T14CP056SB1 / %T14CP056SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.57</td>
+       <td class="card">%T14CARD057N<br />(%T14CARD057R)</td>
+       <td class="rate">%T14CP057TL1 / %T14CP057TL2</td>
+       <td class="rate">%T14CP057RA1 / %T14CP057RA2</td>
+       <td class="rate">%T14CP057RB1 / %T14CP057RB2</td>
+       <td class="rate">%T14CP057MA1 / %T14CP057MA2</td>
+       <td class="rate">%T14CP057MB1 / %T14CP057MB2</td>
+       <td class="rate">%T14CP057SA1 / %T14CP057SA2</td>
+       <td class="rate">%T14CP057SB1 / %T14CP057SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.58</td>
+       <td class="card">%T14CARD058N<br />(%T14CARD058R)</td>
+       <td class="rate">%T14CP058TL1 / %T14CP058TL2</td>
+       <td class="rate">%T14CP058RA1 / %T14CP058RA2</td>
+       <td class="rate">%T14CP058RB1 / %T14CP058RB2</td>
+       <td class="rate">%T14CP058MA1 / %T14CP058MA2</td>
+       <td class="rate">%T14CP058MB1 / %T14CP058MB2</td>
+       <td class="rate">%T14CP058SA1 / %T14CP058SA2</td>
+       <td class="rate">%T14CP058SB1 / %T14CP058SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.59</td>
+       <td class="card">%T14CARD059N<br />(%T14CARD059R)</td>
+       <td class="rate">%T14CP059TL1 / %T14CP059TL2</td>
+       <td class="rate">%T14CP059RA1 / %T14CP059RA2</td>
+       <td class="rate">%T14CP059RB1 / %T14CP059RB2</td>
+       <td class="rate">%T14CP059MA1 / %T14CP059MA2</td>
+       <td class="rate">%T14CP059MB1 / %T14CP059MB2</td>
+       <td class="rate">%T14CP059SA1 / %T14CP059SA2</td>
+       <td class="rate">%T14CP059SB1 / %T14CP059SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.60</td>
+       <td class="card">%T14CARD060N<br />(%T14CARD060R)</td>
+       <td class="rate">%T14CP060TL1 / %T14CP060TL2</td>
+       <td class="rate">%T14CP060RA1 / %T14CP060RA2</td>
+       <td class="rate">%T14CP060RB1 / %T14CP060RB2</td>
+       <td class="rate">%T14CP060MA1 / %T14CP060MA2</td>
+       <td class="rate">%T14CP060MB1 / %T14CP060MB2</td>
+       <td class="rate">%T14CP060SA1 / %T14CP060SA2</td>
+       <td class="rate">%T14CP060SB1 / %T14CP060SB2</td>
+      </tr>
 
-     <tr>
-      <td class="number">No.41</td>
-      <td class="card">%T14CARD041N<br />(%T14CARD041R)</td>
-      <td class="rate">%T14CP041TL1 / %T14CP041TL2</td>
-      <td class="rate">%T14CP041RA1 / %T14CP041RA2</td>
-      <td class="rate">%T14CP041RB1 / %T14CP041RB2</td>
-      <td class="rate">%T14CP041MA1 / %T14CP041MA2</td>
-      <td class="rate">%T14CP041MB1 / %T14CP041MB2</td>
-      <td class="rate">%T14CP041SA1 / %T14CP041SA2</td>
-      <td class="rate">%T14CP041SB1 / %T14CP041SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.42</td>
-      <td class="card">%T14CARD042N<br />(%T14CARD042R)</td>
-      <td class="rate">%T14CP042TL1 / %T14CP042TL2</td>
-      <td class="rate">%T14CP042RA1 / %T14CP042RA2</td>
-      <td class="rate">%T14CP042RB1 / %T14CP042RB2</td>
-      <td class="rate">%T14CP042MA1 / %T14CP042MA2</td>
-      <td class="rate">%T14CP042MB1 / %T14CP042MB2</td>
-      <td class="rate">%T14CP042SA1 / %T14CP042SA2</td>
-      <td class="rate">%T14CP042SB1 / %T14CP042SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.43</td>
-      <td class="card">%T14CARD043N<br />(%T14CARD043R)</td>
-      <td class="rate">%T14CP043TL1 / %T14CP043TL2</td>
-      <td class="rate">%T14CP043RA1 / %T14CP043RA2</td>
-      <td class="rate">%T14CP043RB1 / %T14CP043RB2</td>
-      <td class="rate">%T14CP043MA1 / %T14CP043MA2</td>
-      <td class="rate">%T14CP043MB1 / %T14CP043MB2</td>
-      <td class="rate">%T14CP043SA1 / %T14CP043SA2</td>
-      <td class="rate">%T14CP043SB1 / %T14CP043SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.44</td>
-      <td class="card">%T14CARD044N<br />(%T14CARD044R)</td>
-      <td class="rate">%T14CP044TL1 / %T14CP044TL2</td>
-      <td class="rate">%T14CP044RA1 / %T14CP044RA2</td>
-      <td class="rate">%T14CP044RB1 / %T14CP044RB2</td>
-      <td class="rate">%T14CP044MA1 / %T14CP044MA2</td>
-      <td class="rate">%T14CP044MB1 / %T14CP044MB2</td>
-      <td class="rate">%T14CP044SA1 / %T14CP044SA2</td>
-      <td class="rate">%T14CP044SB1 / %T14CP044SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.45</td>
-      <td class="card">%T14CARD045N<br />(%T14CARD045R)</td>
-      <td class="rate">%T14CP045TL1 / %T14CP045TL2</td>
-      <td class="rate">%T14CP045RA1 / %T14CP045RA2</td>
-      <td class="rate">%T14CP045RB1 / %T14CP045RB2</td>
-      <td class="rate">%T14CP045MA1 / %T14CP045MA2</td>
-      <td class="rate">%T14CP045MB1 / %T14CP045MB2</td>
-      <td class="rate">%T14CP045SA1 / %T14CP045SA2</td>
-      <td class="rate">%T14CP045SB1 / %T14CP045SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.46</td>
-      <td class="card">%T14CARD046N<br />(%T14CARD046R)</td>
-      <td class="rate">%T14CP046TL1 / %T14CP046TL2</td>
-      <td class="rate">%T14CP046RA1 / %T14CP046RA2</td>
-      <td class="rate">%T14CP046RB1 / %T14CP046RB2</td>
-      <td class="rate">%T14CP046MA1 / %T14CP046MA2</td>
-      <td class="rate">%T14CP046MB1 / %T14CP046MB2</td>
-      <td class="rate">%T14CP046SA1 / %T14CP046SA2</td>
-      <td class="rate">%T14CP046SB1 / %T14CP046SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.47</td>
-      <td class="card">%T14CARD047N<br />(%T14CARD047R)</td>
-      <td class="rate">%T14CP047TL1 / %T14CP047TL2</td>
-      <td class="rate">%T14CP047RA1 / %T14CP047RA2</td>
-      <td class="rate">%T14CP047RB1 / %T14CP047RB2</td>
-      <td class="rate">%T14CP047MA1 / %T14CP047MA2</td>
-      <td class="rate">%T14CP047MB1 / %T14CP047MB2</td>
-      <td class="rate">%T14CP047SA1 / %T14CP047SA2</td>
-      <td class="rate">%T14CP047SB1 / %T14CP047SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.48</td>
-      <td class="card">%T14CARD048N<br />(%T14CARD048R)</td>
-      <td class="rate">%T14CP048TL1 / %T14CP048TL2</td>
-      <td class="rate">%T14CP048RA1 / %T14CP048RA2</td>
-      <td class="rate">%T14CP048RB1 / %T14CP048RB2</td>
-      <td class="rate">%T14CP048MA1 / %T14CP048MA2</td>
-      <td class="rate">%T14CP048MB1 / %T14CP048MB2</td>
-      <td class="rate">%T14CP048SA1 / %T14CP048SA2</td>
-      <td class="rate">%T14CP048SB1 / %T14CP048SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.49</td>
-      <td class="card">%T14CARD049N<br />(%T14CARD049R)</td>
-      <td class="rate">%T14CP049TL1 / %T14CP049TL2</td>
-      <td class="rate">%T14CP049RA1 / %T14CP049RA2</td>
-      <td class="rate">%T14CP049RB1 / %T14CP049RB2</td>
-      <td class="rate">%T14CP049MA1 / %T14CP049MA2</td>
-      <td class="rate">%T14CP049MB1 / %T14CP049MB2</td>
-      <td class="rate">%T14CP049SA1 / %T14CP049SA2</td>
-      <td class="rate">%T14CP049SB1 / %T14CP049SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.50</td>
-      <td class="card">%T14CARD050N<br />(%T14CARD050R)</td>
-      <td class="rate">%T14CP050TL1 / %T14CP050TL2</td>
-      <td class="rate">%T14CP050RA1 / %T14CP050RA2</td>
-      <td class="rate">%T14CP050RB1 / %T14CP050RB2</td>
-      <td class="rate">%T14CP050MA1 / %T14CP050MA2</td>
-      <td class="rate">%T14CP050MB1 / %T14CP050MB2</td>
-      <td class="rate">%T14CP050SA1 / %T14CP050SA2</td>
-      <td class="rate">%T14CP050SB1 / %T14CP050SB2</td>
-     </tr>
+      <tr>
+       <td class="number">No.61</td>
+       <td class="card">%T14CARD061N<br />(%T14CARD061R)</td>
+       <td class="rate">%T14CP061TL1 / %T14CP061TL2</td>
+       <td class="rate">%T14CP061RA1 / %T14CP061RA2</td>
+       <td class="rate">%T14CP061RB1 / %T14CP061RB2</td>
+       <td class="rate">%T14CP061MA1 / %T14CP061MA2</td>
+       <td class="rate">%T14CP061MB1 / %T14CP061MB2</td>
+       <td class="rate">%T14CP061SA1 / %T14CP061SA2</td>
+       <td class="rate">%T14CP061SB1 / %T14CP061SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.62</td>
+       <td class="card">%T14CARD062N<br />(%T14CARD062R)</td>
+       <td class="rate">%T14CP062TL1 / %T14CP062TL2</td>
+       <td class="rate">%T14CP062RA1 / %T14CP062RA2</td>
+       <td class="rate">%T14CP062RB1 / %T14CP062RB2</td>
+       <td class="rate">%T14CP062MA1 / %T14CP062MA2</td>
+       <td class="rate">%T14CP062MB1 / %T14CP062MB2</td>
+       <td class="rate">%T14CP062SA1 / %T14CP062SA2</td>
+       <td class="rate">%T14CP062SB1 / %T14CP062SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.63</td>
+       <td class="card">%T14CARD063N<br />(%T14CARD063R)</td>
+       <td class="rate">%T14CP063TL1 / %T14CP063TL2</td>
+       <td class="rate">%T14CP063RA1 / %T14CP063RA2</td>
+       <td class="rate">%T14CP063RB1 / %T14CP063RB2</td>
+       <td class="rate">%T14CP063MA1 / %T14CP063MA2</td>
+       <td class="rate">%T14CP063MB1 / %T14CP063MB2</td>
+       <td class="rate">%T14CP063SA1 / %T14CP063SA2</td>
+       <td class="rate">%T14CP063SB1 / %T14CP063SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.64</td>
+       <td class="card">%T14CARD064N<br />(%T14CARD064R)</td>
+       <td class="rate">%T14CP064TL1 / %T14CP064TL2</td>
+       <td class="rate">%T14CP064RA1 / %T14CP064RA2</td>
+       <td class="rate">%T14CP064RB1 / %T14CP064RB2</td>
+       <td class="rate">%T14CP064MA1 / %T14CP064MA2</td>
+       <td class="rate">%T14CP064MB1 / %T14CP064MB2</td>
+       <td class="rate">%T14CP064SA1 / %T14CP064SA2</td>
+       <td class="rate">%T14CP064SB1 / %T14CP064SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.65</td>
+       <td class="card">%T14CARD065N<br />(%T14CARD065R)</td>
+       <td class="rate">%T14CP065TL1 / %T14CP065TL2</td>
+       <td class="rate">%T14CP065RA1 / %T14CP065RA2</td>
+       <td class="rate">%T14CP065RB1 / %T14CP065RB2</td>
+       <td class="rate">%T14CP065MA1 / %T14CP065MA2</td>
+       <td class="rate">%T14CP065MB1 / %T14CP065MB2</td>
+       <td class="rate">%T14CP065SA1 / %T14CP065SA2</td>
+       <td class="rate">%T14CP065SB1 / %T14CP065SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.66</td>
+       <td class="card">%T14CARD066N<br />(%T14CARD066R)</td>
+       <td class="rate">%T14CP066TL1 / %T14CP066TL2</td>
+       <td class="rate">%T14CP066RA1 / %T14CP066RA2</td>
+       <td class="rate">%T14CP066RB1 / %T14CP066RB2</td>
+       <td class="rate">%T14CP066MA1 / %T14CP066MA2</td>
+       <td class="rate">%T14CP066MB1 / %T14CP066MB2</td>
+       <td class="rate">%T14CP066SA1 / %T14CP066SA2</td>
+       <td class="rate">%T14CP066SB1 / %T14CP066SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.67</td>
+       <td class="card">%T14CARD067N<br />(%T14CARD067R)</td>
+       <td class="rate">%T14CP067TL1 / %T14CP067TL2</td>
+       <td class="rate">%T14CP067RA1 / %T14CP067RA2</td>
+       <td class="rate">%T14CP067RB1 / %T14CP067RB2</td>
+       <td class="rate">%T14CP067MA1 / %T14CP067MA2</td>
+       <td class="rate">%T14CP067MB1 / %T14CP067MB2</td>
+       <td class="rate">%T14CP067SA1 / %T14CP067SA2</td>
+       <td class="rate">%T14CP067SB1 / %T14CP067SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.68</td>
+       <td class="card">%T14CARD068N<br />(%T14CARD068R)</td>
+       <td class="rate">%T14CP068TL1 / %T14CP068TL2</td>
+       <td class="rate">%T14CP068RA1 / %T14CP068RA2</td>
+       <td class="rate">%T14CP068RB1 / %T14CP068RB2</td>
+       <td class="rate">%T14CP068MA1 / %T14CP068MA2</td>
+       <td class="rate">%T14CP068MB1 / %T14CP068MB2</td>
+       <td class="rate">%T14CP068SA1 / %T14CP068SA2</td>
+       <td class="rate">%T14CP068SB1 / %T14CP068SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.69</td>
+       <td class="card">%T14CARD069N<br />(%T14CARD069R)</td>
+       <td class="rate">%T14CP069TL1 / %T14CP069TL2</td>
+       <td class="rate">%T14CP069RA1 / %T14CP069RA2</td>
+       <td class="rate">%T14CP069RB1 / %T14CP069RB2</td>
+       <td class="rate">%T14CP069MA1 / %T14CP069MA2</td>
+       <td class="rate">%T14CP069MB1 / %T14CP069MB2</td>
+       <td class="rate">%T14CP069SA1 / %T14CP069SA2</td>
+       <td class="rate">%T14CP069SB1 / %T14CP069SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.70</td>
+       <td class="card">%T14CARD070N<br />(%T14CARD070R)</td>
+       <td class="rate">%T14CP070TL1 / %T14CP070TL2</td>
+       <td class="rate">%T14CP070RA1 / %T14CP070RA2</td>
+       <td class="rate">%T14CP070RB1 / %T14CP070RB2</td>
+       <td class="rate">%T14CP070MA1 / %T14CP070MA2</td>
+       <td class="rate">%T14CP070MB1 / %T14CP070MB2</td>
+       <td class="rate">%T14CP070SA1 / %T14CP070SA2</td>
+       <td class="rate">%T14CP070SB1 / %T14CP070SB2</td>
+      </tr>
 
-     <tr>
-      <td class="number">No.51</td>
-      <td class="card">%T14CARD051N<br />(%T14CARD051R)</td>
-      <td class="rate">%T14CP051TL1 / %T14CP051TL2</td>
-      <td class="rate">%T14CP051RA1 / %T14CP051RA2</td>
-      <td class="rate">%T14CP051RB1 / %T14CP051RB2</td>
-      <td class="rate">%T14CP051MA1 / %T14CP051MA2</td>
-      <td class="rate">%T14CP051MB1 / %T14CP051MB2</td>
-      <td class="rate">%T14CP051SA1 / %T14CP051SA2</td>
-      <td class="rate">%T14CP051SB1 / %T14CP051SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.52</td>
-      <td class="card">%T14CARD052N<br />(%T14CARD052R)</td>
-      <td class="rate">%T14CP052TL1 / %T14CP052TL2</td>
-      <td class="rate">%T14CP052RA1 / %T14CP052RA2</td>
-      <td class="rate">%T14CP052RB1 / %T14CP052RB2</td>
-      <td class="rate">%T14CP052MA1 / %T14CP052MA2</td>
-      <td class="rate">%T14CP052MB1 / %T14CP052MB2</td>
-      <td class="rate">%T14CP052SA1 / %T14CP052SA2</td>
-      <td class="rate">%T14CP052SB1 / %T14CP052SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.53</td>
-      <td class="card">%T14CARD053N<br />(%T14CARD053R)</td>
-      <td class="rate">%T14CP053TL1 / %T14CP053TL2</td>
-      <td class="rate">%T14CP053RA1 / %T14CP053RA2</td>
-      <td class="rate">%T14CP053RB1 / %T14CP053RB2</td>
-      <td class="rate">%T14CP053MA1 / %T14CP053MA2</td>
-      <td class="rate">%T14CP053MB1 / %T14CP053MB2</td>
-      <td class="rate">%T14CP053SA1 / %T14CP053SA2</td>
-      <td class="rate">%T14CP053SB1 / %T14CP053SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.54</td>
-      <td class="card">%T14CARD054N<br />(%T14CARD054R)</td>
-      <td class="rate">%T14CP054TL1 / %T14CP054TL2</td>
-      <td class="rate">%T14CP054RA1 / %T14CP054RA2</td>
-      <td class="rate">%T14CP054RB1 / %T14CP054RB2</td>
-      <td class="rate">%T14CP054MA1 / %T14CP054MA2</td>
-      <td class="rate">%T14CP054MB1 / %T14CP054MB2</td>
-      <td class="rate">%T14CP054SA1 / %T14CP054SA2</td>
-      <td class="rate">%T14CP054SB1 / %T14CP054SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.55</td>
-      <td class="card">%T14CARD055N<br />(%T14CARD055R)</td>
-      <td class="rate">%T14CP055TL1 / %T14CP055TL2</td>
-      <td class="rate">%T14CP055RA1 / %T14CP055RA2</td>
-      <td class="rate">%T14CP055RB1 / %T14CP055RB2</td>
-      <td class="rate">%T14CP055MA1 / %T14CP055MA2</td>
-      <td class="rate">%T14CP055MB1 / %T14CP055MB2</td>
-      <td class="rate">%T14CP055SA1 / %T14CP055SA2</td>
-      <td class="rate">%T14CP055SB1 / %T14CP055SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.56</td>
-      <td class="card">%T14CARD056N<br />(%T14CARD056R)</td>
-      <td class="rate">%T14CP056TL1 / %T14CP056TL2</td>
-      <td class="rate">%T14CP056RA1 / %T14CP056RA2</td>
-      <td class="rate">%T14CP056RB1 / %T14CP056RB2</td>
-      <td class="rate">%T14CP056MA1 / %T14CP056MA2</td>
-      <td class="rate">%T14CP056MB1 / %T14CP056MB2</td>
-      <td class="rate">%T14CP056SA1 / %T14CP056SA2</td>
-      <td class="rate">%T14CP056SB1 / %T14CP056SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.57</td>
-      <td class="card">%T14CARD057N<br />(%T14CARD057R)</td>
-      <td class="rate">%T14CP057TL1 / %T14CP057TL2</td>
-      <td class="rate">%T14CP057RA1 / %T14CP057RA2</td>
-      <td class="rate">%T14CP057RB1 / %T14CP057RB2</td>
-      <td class="rate">%T14CP057MA1 / %T14CP057MA2</td>
-      <td class="rate">%T14CP057MB1 / %T14CP057MB2</td>
-      <td class="rate">%T14CP057SA1 / %T14CP057SA2</td>
-      <td class="rate">%T14CP057SB1 / %T14CP057SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.58</td>
-      <td class="card">%T14CARD058N<br />(%T14CARD058R)</td>
-      <td class="rate">%T14CP058TL1 / %T14CP058TL2</td>
-      <td class="rate">%T14CP058RA1 / %T14CP058RA2</td>
-      <td class="rate">%T14CP058RB1 / %T14CP058RB2</td>
-      <td class="rate">%T14CP058MA1 / %T14CP058MA2</td>
-      <td class="rate">%T14CP058MB1 / %T14CP058MB2</td>
-      <td class="rate">%T14CP058SA1 / %T14CP058SA2</td>
-      <td class="rate">%T14CP058SB1 / %T14CP058SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.59</td>
-      <td class="card">%T14CARD059N<br />(%T14CARD059R)</td>
-      <td class="rate">%T14CP059TL1 / %T14CP059TL2</td>
-      <td class="rate">%T14CP059RA1 / %T14CP059RA2</td>
-      <td class="rate">%T14CP059RB1 / %T14CP059RB2</td>
-      <td class="rate">%T14CP059MA1 / %T14CP059MA2</td>
-      <td class="rate">%T14CP059MB1 / %T14CP059MB2</td>
-      <td class="rate">%T14CP059SA1 / %T14CP059SA2</td>
-      <td class="rate">%T14CP059SB1 / %T14CP059SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.60</td>
-      <td class="card">%T14CARD060N<br />(%T14CARD060R)</td>
-      <td class="rate">%T14CP060TL1 / %T14CP060TL2</td>
-      <td class="rate">%T14CP060RA1 / %T14CP060RA2</td>
-      <td class="rate">%T14CP060RB1 / %T14CP060RB2</td>
-      <td class="rate">%T14CP060MA1 / %T14CP060MA2</td>
-      <td class="rate">%T14CP060MB1 / %T14CP060MB2</td>
-      <td class="rate">%T14CP060SA1 / %T14CP060SA2</td>
-      <td class="rate">%T14CP060SB1 / %T14CP060SB2</td>
-     </tr>
+      <tr>
+       <td class="number">No.71</td>
+       <td class="card">%T14CARD071N<br />(%T14CARD071R)</td>
+       <td class="rate">%T14CP071TL1 / %T14CP071TL2</td>
+       <td class="rate">%T14CP071RA1 / %T14CP071RA2</td>
+       <td class="rate">%T14CP071RB1 / %T14CP071RB2</td>
+       <td class="rate">%T14CP071MA1 / %T14CP071MA2</td>
+       <td class="rate">%T14CP071MB1 / %T14CP071MB2</td>
+       <td class="rate">%T14CP071SA1 / %T14CP071SA2</td>
+       <td class="rate">%T14CP071SB1 / %T14CP071SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.72</td>
+       <td class="card">%T14CARD072N<br />(%T14CARD072R)</td>
+       <td class="rate">%T14CP072TL1 / %T14CP072TL2</td>
+       <td class="rate">%T14CP072RA1 / %T14CP072RA2</td>
+       <td class="rate">%T14CP072RB1 / %T14CP072RB2</td>
+       <td class="rate">%T14CP072MA1 / %T14CP072MA2</td>
+       <td class="rate">%T14CP072MB1 / %T14CP072MB2</td>
+       <td class="rate">%T14CP072SA1 / %T14CP072SA2</td>
+       <td class="rate">%T14CP072SB1 / %T14CP072SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.73</td>
+       <td class="card">%T14CARD073N<br />(%T14CARD073R)</td>
+       <td class="rate">%T14CP073TL1 / %T14CP073TL2</td>
+       <td class="rate">%T14CP073RA1 / %T14CP073RA2</td>
+       <td class="rate">%T14CP073RB1 / %T14CP073RB2</td>
+       <td class="rate">%T14CP073MA1 / %T14CP073MA2</td>
+       <td class="rate">%T14CP073MB1 / %T14CP073MB2</td>
+       <td class="rate">%T14CP073SA1 / %T14CP073SA2</td>
+       <td class="rate">%T14CP073SB1 / %T14CP073SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.74</td>
+       <td class="card">%T14CARD074N<br />(%T14CARD074R)</td>
+       <td class="rate">%T14CP074TL1 / %T14CP074TL2</td>
+       <td class="rate">%T14CP074RA1 / %T14CP074RA2</td>
+       <td class="rate">%T14CP074RB1 / %T14CP074RB2</td>
+       <td class="rate">%T14CP074MA1 / %T14CP074MA2</td>
+       <td class="rate">%T14CP074MB1 / %T14CP074MB2</td>
+       <td class="rate">%T14CP074SA1 / %T14CP074SA2</td>
+       <td class="rate">%T14CP074SB1 / %T14CP074SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.75</td>
+       <td class="card">%T14CARD075N<br />(%T14CARD075R)</td>
+       <td class="rate">%T14CP075TL1 / %T14CP075TL2</td>
+       <td class="rate">%T14CP075RA1 / %T14CP075RA2</td>
+       <td class="rate">%T14CP075RB1 / %T14CP075RB2</td>
+       <td class="rate">%T14CP075MA1 / %T14CP075MA2</td>
+       <td class="rate">%T14CP075MB1 / %T14CP075MB2</td>
+       <td class="rate">%T14CP075SA1 / %T14CP075SA2</td>
+       <td class="rate">%T14CP075SB1 / %T14CP075SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.76</td>
+       <td class="card">%T14CARD076N<br />(%T14CARD076R)</td>
+       <td class="rate">%T14CP076TL1 / %T14CP076TL2</td>
+       <td class="rate">%T14CP076RA1 / %T14CP076RA2</td>
+       <td class="rate">%T14CP076RB1 / %T14CP076RB2</td>
+       <td class="rate">%T14CP076MA1 / %T14CP076MA2</td>
+       <td class="rate">%T14CP076MB1 / %T14CP076MB2</td>
+       <td class="rate">%T14CP076SA1 / %T14CP076SA2</td>
+       <td class="rate">%T14CP076SB1 / %T14CP076SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.77</td>
+       <td class="card">%T14CARD077N<br />(%T14CARD077R)</td>
+       <td class="rate">%T14CP077TL1 / %T14CP077TL2</td>
+       <td class="rate">%T14CP077RA1 / %T14CP077RA2</td>
+       <td class="rate">%T14CP077RB1 / %T14CP077RB2</td>
+       <td class="rate">%T14CP077MA1 / %T14CP077MA2</td>
+       <td class="rate">%T14CP077MB1 / %T14CP077MB2</td>
+       <td class="rate">%T14CP077SA1 / %T14CP077SA2</td>
+       <td class="rate">%T14CP077SB1 / %T14CP077SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.78</td>
+       <td class="card">%T14CARD078N<br />(%T14CARD078R)</td>
+       <td class="rate">%T14CP078TL1 / %T14CP078TL2</td>
+       <td class="rate">%T14CP078RA1 / %T14CP078RA2</td>
+       <td class="rate">%T14CP078RB1 / %T14CP078RB2</td>
+       <td class="rate">%T14CP078MA1 / %T14CP078MA2</td>
+       <td class="rate">%T14CP078MB1 / %T14CP078MB2</td>
+       <td class="rate">%T14CP078SA1 / %T14CP078SA2</td>
+       <td class="rate">%T14CP078SB1 / %T14CP078SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.79</td>
+       <td class="card">%T14CARD079N<br />(%T14CARD079R)</td>
+       <td class="rate">%T14CP079TL1 / %T14CP079TL2</td>
+       <td class="rate">%T14CP079RA1 / %T14CP079RA2</td>
+       <td class="rate">%T14CP079RB1 / %T14CP079RB2</td>
+       <td class="rate">%T14CP079MA1 / %T14CP079MA2</td>
+       <td class="rate">%T14CP079MB1 / %T14CP079MB2</td>
+       <td class="rate">%T14CP079SA1 / %T14CP079SA2</td>
+       <td class="rate">%T14CP079SB1 / %T14CP079SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.80</td>
+       <td class="card">%T14CARD080N<br />(%T14CARD080R)</td>
+       <td class="rate">%T14CP080TL1 / %T14CP080TL2</td>
+       <td class="rate">%T14CP080RA1 / %T14CP080RA2</td>
+       <td class="rate">%T14CP080RB1 / %T14CP080RB2</td>
+       <td class="rate">%T14CP080MA1 / %T14CP080MA2</td>
+       <td class="rate">%T14CP080MB1 / %T14CP080MB2</td>
+       <td class="rate">%T14CP080SA1 / %T14CP080SA2</td>
+       <td class="rate">%T14CP080SB1 / %T14CP080SB2</td>
+      </tr>
 
-     <tr>
-      <td class="number">No.61</td>
-      <td class="card">%T14CARD061N<br />(%T14CARD061R)</td>
-      <td class="rate">%T14CP061TL1 / %T14CP061TL2</td>
-      <td class="rate">%T14CP061RA1 / %T14CP061RA2</td>
-      <td class="rate">%T14CP061RB1 / %T14CP061RB2</td>
-      <td class="rate">%T14CP061MA1 / %T14CP061MA2</td>
-      <td class="rate">%T14CP061MB1 / %T14CP061MB2</td>
-      <td class="rate">%T14CP061SA1 / %T14CP061SA2</td>
-      <td class="rate">%T14CP061SB1 / %T14CP061SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.62</td>
-      <td class="card">%T14CARD062N<br />(%T14CARD062R)</td>
-      <td class="rate">%T14CP062TL1 / %T14CP062TL2</td>
-      <td class="rate">%T14CP062RA1 / %T14CP062RA2</td>
-      <td class="rate">%T14CP062RB1 / %T14CP062RB2</td>
-      <td class="rate">%T14CP062MA1 / %T14CP062MA2</td>
-      <td class="rate">%T14CP062MB1 / %T14CP062MB2</td>
-      <td class="rate">%T14CP062SA1 / %T14CP062SA2</td>
-      <td class="rate">%T14CP062SB1 / %T14CP062SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.63</td>
-      <td class="card">%T14CARD063N<br />(%T14CARD063R)</td>
-      <td class="rate">%T14CP063TL1 / %T14CP063TL2</td>
-      <td class="rate">%T14CP063RA1 / %T14CP063RA2</td>
-      <td class="rate">%T14CP063RB1 / %T14CP063RB2</td>
-      <td class="rate">%T14CP063MA1 / %T14CP063MA2</td>
-      <td class="rate">%T14CP063MB1 / %T14CP063MB2</td>
-      <td class="rate">%T14CP063SA1 / %T14CP063SA2</td>
-      <td class="rate">%T14CP063SB1 / %T14CP063SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.64</td>
-      <td class="card">%T14CARD064N<br />(%T14CARD064R)</td>
-      <td class="rate">%T14CP064TL1 / %T14CP064TL2</td>
-      <td class="rate">%T14CP064RA1 / %T14CP064RA2</td>
-      <td class="rate">%T14CP064RB1 / %T14CP064RB2</td>
-      <td class="rate">%T14CP064MA1 / %T14CP064MA2</td>
-      <td class="rate">%T14CP064MB1 / %T14CP064MB2</td>
-      <td class="rate">%T14CP064SA1 / %T14CP064SA2</td>
-      <td class="rate">%T14CP064SB1 / %T14CP064SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.65</td>
-      <td class="card">%T14CARD065N<br />(%T14CARD065R)</td>
-      <td class="rate">%T14CP065TL1 / %T14CP065TL2</td>
-      <td class="rate">%T14CP065RA1 / %T14CP065RA2</td>
-      <td class="rate">%T14CP065RB1 / %T14CP065RB2</td>
-      <td class="rate">%T14CP065MA1 / %T14CP065MA2</td>
-      <td class="rate">%T14CP065MB1 / %T14CP065MB2</td>
-      <td class="rate">%T14CP065SA1 / %T14CP065SA2</td>
-      <td class="rate">%T14CP065SB1 / %T14CP065SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.66</td>
-      <td class="card">%T14CARD066N<br />(%T14CARD066R)</td>
-      <td class="rate">%T14CP066TL1 / %T14CP066TL2</td>
-      <td class="rate">%T14CP066RA1 / %T14CP066RA2</td>
-      <td class="rate">%T14CP066RB1 / %T14CP066RB2</td>
-      <td class="rate">%T14CP066MA1 / %T14CP066MA2</td>
-      <td class="rate">%T14CP066MB1 / %T14CP066MB2</td>
-      <td class="rate">%T14CP066SA1 / %T14CP066SA2</td>
-      <td class="rate">%T14CP066SB1 / %T14CP066SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.67</td>
-      <td class="card">%T14CARD067N<br />(%T14CARD067R)</td>
-      <td class="rate">%T14CP067TL1 / %T14CP067TL2</td>
-      <td class="rate">%T14CP067RA1 / %T14CP067RA2</td>
-      <td class="rate">%T14CP067RB1 / %T14CP067RB2</td>
-      <td class="rate">%T14CP067MA1 / %T14CP067MA2</td>
-      <td class="rate">%T14CP067MB1 / %T14CP067MB2</td>
-      <td class="rate">%T14CP067SA1 / %T14CP067SA2</td>
-      <td class="rate">%T14CP067SB1 / %T14CP067SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.68</td>
-      <td class="card">%T14CARD068N<br />(%T14CARD068R)</td>
-      <td class="rate">%T14CP068TL1 / %T14CP068TL2</td>
-      <td class="rate">%T14CP068RA1 / %T14CP068RA2</td>
-      <td class="rate">%T14CP068RB1 / %T14CP068RB2</td>
-      <td class="rate">%T14CP068MA1 / %T14CP068MA2</td>
-      <td class="rate">%T14CP068MB1 / %T14CP068MB2</td>
-      <td class="rate">%T14CP068SA1 / %T14CP068SA2</td>
-      <td class="rate">%T14CP068SB1 / %T14CP068SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.69</td>
-      <td class="card">%T14CARD069N<br />(%T14CARD069R)</td>
-      <td class="rate">%T14CP069TL1 / %T14CP069TL2</td>
-      <td class="rate">%T14CP069RA1 / %T14CP069RA2</td>
-      <td class="rate">%T14CP069RB1 / %T14CP069RB2</td>
-      <td class="rate">%T14CP069MA1 / %T14CP069MA2</td>
-      <td class="rate">%T14CP069MB1 / %T14CP069MB2</td>
-      <td class="rate">%T14CP069SA1 / %T14CP069SA2</td>
-      <td class="rate">%T14CP069SB1 / %T14CP069SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.70</td>
-      <td class="card">%T14CARD070N<br />(%T14CARD070R)</td>
-      <td class="rate">%T14CP070TL1 / %T14CP070TL2</td>
-      <td class="rate">%T14CP070RA1 / %T14CP070RA2</td>
-      <td class="rate">%T14CP070RB1 / %T14CP070RB2</td>
-      <td class="rate">%T14CP070MA1 / %T14CP070MA2</td>
-      <td class="rate">%T14CP070MB1 / %T14CP070MB2</td>
-      <td class="rate">%T14CP070SA1 / %T14CP070SA2</td>
-      <td class="rate">%T14CP070SB1 / %T14CP070SB2</td>
-     </tr>
+      <tr>
+       <td class="number">No.81</td>
+       <td class="card">%T14CARD081N<br />(%T14CARD081R)</td>
+       <td class="rate">%T14CP081TL1 / %T14CP081TL2</td>
+       <td class="rate">%T14CP081RA1 / %T14CP081RA2</td>
+       <td class="rate">%T14CP081RB1 / %T14CP081RB2</td>
+       <td class="rate">%T14CP081MA1 / %T14CP081MA2</td>
+       <td class="rate">%T14CP081MB1 / %T14CP081MB2</td>
+       <td class="rate">%T14CP081SA1 / %T14CP081SA2</td>
+       <td class="rate">%T14CP081SB1 / %T14CP081SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.82</td>
+       <td class="card">%T14CARD082N<br />(%T14CARD082R)</td>
+       <td class="rate">%T14CP082TL1 / %T14CP082TL2</td>
+       <td class="rate">%T14CP082RA1 / %T14CP082RA2</td>
+       <td class="rate">%T14CP082RB1 / %T14CP082RB2</td>
+       <td class="rate">%T14CP082MA1 / %T14CP082MA2</td>
+       <td class="rate">%T14CP082MB1 / %T14CP082MB2</td>
+       <td class="rate">%T14CP082SA1 / %T14CP082SA2</td>
+       <td class="rate">%T14CP082SB1 / %T14CP082SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.83</td>
+       <td class="card">%T14CARD083N<br />(%T14CARD083R)</td>
+       <td class="rate">%T14CP083TL1 / %T14CP083TL2</td>
+       <td class="rate">%T14CP083RA1 / %T14CP083RA2</td>
+       <td class="rate">%T14CP083RB1 / %T14CP083RB2</td>
+       <td class="rate">%T14CP083MA1 / %T14CP083MA2</td>
+       <td class="rate">%T14CP083MB1 / %T14CP083MB2</td>
+       <td class="rate">%T14CP083SA1 / %T14CP083SA2</td>
+       <td class="rate">%T14CP083SB1 / %T14CP083SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.84</td>
+       <td class="card">%T14CARD084N<br />(%T14CARD084R)</td>
+       <td class="rate">%T14CP084TL1 / %T14CP084TL2</td>
+       <td class="rate">%T14CP084RA1 / %T14CP084RA2</td>
+       <td class="rate">%T14CP084RB1 / %T14CP084RB2</td>
+       <td class="rate">%T14CP084MA1 / %T14CP084MA2</td>
+       <td class="rate">%T14CP084MB1 / %T14CP084MB2</td>
+       <td class="rate">%T14CP084SA1 / %T14CP084SA2</td>
+       <td class="rate">%T14CP084SB1 / %T14CP084SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.85</td>
+       <td class="card">%T14CARD085N<br />(%T14CARD085R)</td>
+       <td class="rate">%T14CP085TL1 / %T14CP085TL2</td>
+       <td class="rate">%T14CP085RA1 / %T14CP085RA2</td>
+       <td class="rate">%T14CP085RB1 / %T14CP085RB2</td>
+       <td class="rate">%T14CP085MA1 / %T14CP085MA2</td>
+       <td class="rate">%T14CP085MB1 / %T14CP085MB2</td>
+       <td class="rate">%T14CP085SA1 / %T14CP085SA2</td>
+       <td class="rate">%T14CP085SB1 / %T14CP085SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.86</td>
+       <td class="card">%T14CARD086N<br />(%T14CARD086R)</td>
+       <td class="rate">%T14CP086TL1 / %T14CP086TL2</td>
+       <td class="rate">%T14CP086RA1 / %T14CP086RA2</td>
+       <td class="rate">%T14CP086RB1 / %T14CP086RB2</td>
+       <td class="rate">%T14CP086MA1 / %T14CP086MA2</td>
+       <td class="rate">%T14CP086MB1 / %T14CP086MB2</td>
+       <td class="rate">%T14CP086SA1 / %T14CP086SA2</td>
+       <td class="rate">%T14CP086SB1 / %T14CP086SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.87</td>
+       <td class="card">%T14CARD087N<br />(%T14CARD087R)</td>
+       <td class="rate">%T14CP087TL1 / %T14CP087TL2</td>
+       <td class="rate">%T14CP087RA1 / %T14CP087RA2</td>
+       <td class="rate">%T14CP087RB1 / %T14CP087RB2</td>
+       <td class="rate">%T14CP087MA1 / %T14CP087MA2</td>
+       <td class="rate">%T14CP087MB1 / %T14CP087MB2</td>
+       <td class="rate">%T14CP087SA1 / %T14CP087SA2</td>
+       <td class="rate">%T14CP087SB1 / %T14CP087SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.88</td>
+       <td class="card">%T14CARD088N<br />(%T14CARD088R)</td>
+       <td class="rate">%T14CP088TL1 / %T14CP088TL2</td>
+       <td class="rate">%T14CP088RA1 / %T14CP088RA2</td>
+       <td class="rate">%T14CP088RB1 / %T14CP088RB2</td>
+       <td class="rate">%T14CP088MA1 / %T14CP088MA2</td>
+       <td class="rate">%T14CP088MB1 / %T14CP088MB2</td>
+       <td class="rate">%T14CP088SA1 / %T14CP088SA2</td>
+       <td class="rate">%T14CP088SB1 / %T14CP088SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.89</td>
+       <td class="card">%T14CARD089N<br />(%T14CARD089R)</td>
+       <td class="rate">%T14CP089TL1 / %T14CP089TL2</td>
+       <td class="rate">%T14CP089RA1 / %T14CP089RA2</td>
+       <td class="rate">%T14CP089RB1 / %T14CP089RB2</td>
+       <td class="rate">%T14CP089MA1 / %T14CP089MA2</td>
+       <td class="rate">%T14CP089MB1 / %T14CP089MB2</td>
+       <td class="rate">%T14CP089SA1 / %T14CP089SA2</td>
+       <td class="rate">%T14CP089SB1 / %T14CP089SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.90</td>
+       <td class="card">%T14CARD090N<br />(%T14CARD090R)</td>
+       <td class="rate">%T14CP090TL1 / %T14CP090TL2</td>
+       <td class="rate">%T14CP090RA1 / %T14CP090RA2</td>
+       <td class="rate">%T14CP090RB1 / %T14CP090RB2</td>
+       <td class="rate">%T14CP090MA1 / %T14CP090MA2</td>
+       <td class="rate">%T14CP090MB1 / %T14CP090MB2</td>
+       <td class="rate">%T14CP090SA1 / %T14CP090SA2</td>
+       <td class="rate">%T14CP090SB1 / %T14CP090SB2</td>
+      </tr>
 
-     <tr>
-      <td class="number">No.71</td>
-      <td class="card">%T14CARD071N<br />(%T14CARD071R)</td>
-      <td class="rate">%T14CP071TL1 / %T14CP071TL2</td>
-      <td class="rate">%T14CP071RA1 / %T14CP071RA2</td>
-      <td class="rate">%T14CP071RB1 / %T14CP071RB2</td>
-      <td class="rate">%T14CP071MA1 / %T14CP071MA2</td>
-      <td class="rate">%T14CP071MB1 / %T14CP071MB2</td>
-      <td class="rate">%T14CP071SA1 / %T14CP071SA2</td>
-      <td class="rate">%T14CP071SB1 / %T14CP071SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.72</td>
-      <td class="card">%T14CARD072N<br />(%T14CARD072R)</td>
-      <td class="rate">%T14CP072TL1 / %T14CP072TL2</td>
-      <td class="rate">%T14CP072RA1 / %T14CP072RA2</td>
-      <td class="rate">%T14CP072RB1 / %T14CP072RB2</td>
-      <td class="rate">%T14CP072MA1 / %T14CP072MA2</td>
-      <td class="rate">%T14CP072MB1 / %T14CP072MB2</td>
-      <td class="rate">%T14CP072SA1 / %T14CP072SA2</td>
-      <td class="rate">%T14CP072SB1 / %T14CP072SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.73</td>
-      <td class="card">%T14CARD073N<br />(%T14CARD073R)</td>
-      <td class="rate">%T14CP073TL1 / %T14CP073TL2</td>
-      <td class="rate">%T14CP073RA1 / %T14CP073RA2</td>
-      <td class="rate">%T14CP073RB1 / %T14CP073RB2</td>
-      <td class="rate">%T14CP073MA1 / %T14CP073MA2</td>
-      <td class="rate">%T14CP073MB1 / %T14CP073MB2</td>
-      <td class="rate">%T14CP073SA1 / %T14CP073SA2</td>
-      <td class="rate">%T14CP073SB1 / %T14CP073SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.74</td>
-      <td class="card">%T14CARD074N<br />(%T14CARD074R)</td>
-      <td class="rate">%T14CP074TL1 / %T14CP074TL2</td>
-      <td class="rate">%T14CP074RA1 / %T14CP074RA2</td>
-      <td class="rate">%T14CP074RB1 / %T14CP074RB2</td>
-      <td class="rate">%T14CP074MA1 / %T14CP074MA2</td>
-      <td class="rate">%T14CP074MB1 / %T14CP074MB2</td>
-      <td class="rate">%T14CP074SA1 / %T14CP074SA2</td>
-      <td class="rate">%T14CP074SB1 / %T14CP074SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.75</td>
-      <td class="card">%T14CARD075N<br />(%T14CARD075R)</td>
-      <td class="rate">%T14CP075TL1 / %T14CP075TL2</td>
-      <td class="rate">%T14CP075RA1 / %T14CP075RA2</td>
-      <td class="rate">%T14CP075RB1 / %T14CP075RB2</td>
-      <td class="rate">%T14CP075MA1 / %T14CP075MA2</td>
-      <td class="rate">%T14CP075MB1 / %T14CP075MB2</td>
-      <td class="rate">%T14CP075SA1 / %T14CP075SA2</td>
-      <td class="rate">%T14CP075SB1 / %T14CP075SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.76</td>
-      <td class="card">%T14CARD076N<br />(%T14CARD076R)</td>
-      <td class="rate">%T14CP076TL1 / %T14CP076TL2</td>
-      <td class="rate">%T14CP076RA1 / %T14CP076RA2</td>
-      <td class="rate">%T14CP076RB1 / %T14CP076RB2</td>
-      <td class="rate">%T14CP076MA1 / %T14CP076MA2</td>
-      <td class="rate">%T14CP076MB1 / %T14CP076MB2</td>
-      <td class="rate">%T14CP076SA1 / %T14CP076SA2</td>
-      <td class="rate">%T14CP076SB1 / %T14CP076SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.77</td>
-      <td class="card">%T14CARD077N<br />(%T14CARD077R)</td>
-      <td class="rate">%T14CP077TL1 / %T14CP077TL2</td>
-      <td class="rate">%T14CP077RA1 / %T14CP077RA2</td>
-      <td class="rate">%T14CP077RB1 / %T14CP077RB2</td>
-      <td class="rate">%T14CP077MA1 / %T14CP077MA2</td>
-      <td class="rate">%T14CP077MB1 / %T14CP077MB2</td>
-      <td class="rate">%T14CP077SA1 / %T14CP077SA2</td>
-      <td class="rate">%T14CP077SB1 / %T14CP077SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.78</td>
-      <td class="card">%T14CARD078N<br />(%T14CARD078R)</td>
-      <td class="rate">%T14CP078TL1 / %T14CP078TL2</td>
-      <td class="rate">%T14CP078RA1 / %T14CP078RA2</td>
-      <td class="rate">%T14CP078RB1 / %T14CP078RB2</td>
-      <td class="rate">%T14CP078MA1 / %T14CP078MA2</td>
-      <td class="rate">%T14CP078MB1 / %T14CP078MB2</td>
-      <td class="rate">%T14CP078SA1 / %T14CP078SA2</td>
-      <td class="rate">%T14CP078SB1 / %T14CP078SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.79</td>
-      <td class="card">%T14CARD079N<br />(%T14CARD079R)</td>
-      <td class="rate">%T14CP079TL1 / %T14CP079TL2</td>
-      <td class="rate">%T14CP079RA1 / %T14CP079RA2</td>
-      <td class="rate">%T14CP079RB1 / %T14CP079RB2</td>
-      <td class="rate">%T14CP079MA1 / %T14CP079MA2</td>
-      <td class="rate">%T14CP079MB1 / %T14CP079MB2</td>
-      <td class="rate">%T14CP079SA1 / %T14CP079SA2</td>
-      <td class="rate">%T14CP079SB1 / %T14CP079SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.80</td>
-      <td class="card">%T14CARD080N<br />(%T14CARD080R)</td>
-      <td class="rate">%T14CP080TL1 / %T14CP080TL2</td>
-      <td class="rate">%T14CP080RA1 / %T14CP080RA2</td>
-      <td class="rate">%T14CP080RB1 / %T14CP080RB2</td>
-      <td class="rate">%T14CP080MA1 / %T14CP080MA2</td>
-      <td class="rate">%T14CP080MB1 / %T14CP080MB2</td>
-      <td class="rate">%T14CP080SA1 / %T14CP080SA2</td>
-      <td class="rate">%T14CP080SB1 / %T14CP080SB2</td>
-     </tr>
+      <tr>
+       <td class="number">No.91</td>
+       <td class="card">%T14CARD091N<br />(%T14CARD091R)</td>
+       <td class="rate">%T14CP091TL1 / %T14CP091TL2</td>
+       <td class="rate">%T14CP091RA1 / %T14CP091RA2</td>
+       <td class="rate">%T14CP091RB1 / %T14CP091RB2</td>
+       <td class="rate">%T14CP091MA1 / %T14CP091MA2</td>
+       <td class="rate">%T14CP091MB1 / %T14CP091MB2</td>
+       <td class="rate">%T14CP091SA1 / %T14CP091SA2</td>
+       <td class="rate">%T14CP091SB1 / %T14CP091SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.92</td>
+       <td class="card">%T14CARD092N<br />(%T14CARD092R)</td>
+       <td class="rate">%T14CP092TL1 / %T14CP092TL2</td>
+       <td class="rate">%T14CP092RA1 / %T14CP092RA2</td>
+       <td class="rate">%T14CP092RB1 / %T14CP092RB2</td>
+       <td class="rate">%T14CP092MA1 / %T14CP092MA2</td>
+       <td class="rate">%T14CP092MB1 / %T14CP092MB2</td>
+       <td class="rate">%T14CP092SA1 / %T14CP092SA2</td>
+       <td class="rate">%T14CP092SB1 / %T14CP092SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.93</td>
+       <td class="card">%T14CARD093N<br />(%T14CARD093R)</td>
+       <td class="rate">%T14CP093TL1 / %T14CP093TL2</td>
+       <td class="rate">%T14CP093RA1 / %T14CP093RA2</td>
+       <td class="rate">%T14CP093RB1 / %T14CP093RB2</td>
+       <td class="rate">%T14CP093MA1 / %T14CP093MA2</td>
+       <td class="rate">%T14CP093MB1 / %T14CP093MB2</td>
+       <td class="rate">%T14CP093SA1 / %T14CP093SA2</td>
+       <td class="rate">%T14CP093SB1 / %T14CP093SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.94</td>
+       <td class="card">%T14CARD094N<br />(%T14CARD094R)</td>
+       <td class="rate">%T14CP094TL1 / %T14CP094TL2</td>
+       <td class="rate">%T14CP094RA1 / %T14CP094RA2</td>
+       <td class="rate">%T14CP094RB1 / %T14CP094RB2</td>
+       <td class="rate">%T14CP094MA1 / %T14CP094MA2</td>
+       <td class="rate">%T14CP094MB1 / %T14CP094MB2</td>
+       <td class="rate">%T14CP094SA1 / %T14CP094SA2</td>
+       <td class="rate">%T14CP094SB1 / %T14CP094SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.95</td>
+       <td class="card">%T14CARD095N<br />(%T14CARD095R)</td>
+       <td class="rate">%T14CP095TL1 / %T14CP095TL2</td>
+       <td class="rate">%T14CP095RA1 / %T14CP095RA2</td>
+       <td class="rate">%T14CP095RB1 / %T14CP095RB2</td>
+       <td class="rate">%T14CP095MA1 / %T14CP095MA2</td>
+       <td class="rate">%T14CP095MB1 / %T14CP095MB2</td>
+       <td class="rate">%T14CP095SA1 / %T14CP095SA2</td>
+       <td class="rate">%T14CP095SB1 / %T14CP095SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.96</td>
+       <td class="card">%T14CARD096N<br />(%T14CARD096R)</td>
+       <td class="rate">%T14CP096TL1 / %T14CP096TL2</td>
+       <td class="rate">%T14CP096RA1 / %T14CP096RA2</td>
+       <td class="rate">%T14CP096RB1 / %T14CP096RB2</td>
+       <td class="rate">%T14CP096MA1 / %T14CP096MA2</td>
+       <td class="rate">%T14CP096MB1 / %T14CP096MB2</td>
+       <td class="rate">%T14CP096SA1 / %T14CP096SA2</td>
+       <td class="rate">%T14CP096SB1 / %T14CP096SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.97</td>
+       <td class="card">%T14CARD097N<br />(%T14CARD097R)</td>
+       <td class="rate">%T14CP097TL1 / %T14CP097TL2</td>
+       <td class="rate">%T14CP097RA1 / %T14CP097RA2</td>
+       <td class="rate">%T14CP097RB1 / %T14CP097RB2</td>
+       <td class="rate">%T14CP097MA1 / %T14CP097MA2</td>
+       <td class="rate">%T14CP097MB1 / %T14CP097MB2</td>
+       <td class="rate">%T14CP097SA1 / %T14CP097SA2</td>
+       <td class="rate">%T14CP097SB1 / %T14CP097SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.98</td>
+       <td class="card">%T14CARD098N<br />(%T14CARD098R)</td>
+       <td class="rate">%T14CP098TL1 / %T14CP098TL2</td>
+       <td class="rate">%T14CP098RA1 / %T14CP098RA2</td>
+       <td class="rate">%T14CP098RB1 / %T14CP098RB2</td>
+       <td class="rate">%T14CP098MA1 / %T14CP098MA2</td>
+       <td class="rate">%T14CP098MB1 / %T14CP098MB2</td>
+       <td class="rate">%T14CP098SA1 / %T14CP098SA2</td>
+       <td class="rate">%T14CP098SB1 / %T14CP098SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.99</td>
+       <td class="card">%T14CARD099N<br />(%T14CARD099R)</td>
+       <td class="rate">%T14CP099TL1 / %T14CP099TL2</td>
+       <td class="rate">%T14CP099RA1 / %T14CP099RA2</td>
+       <td class="rate">%T14CP099RB1 / %T14CP099RB2</td>
+       <td class="rate">%T14CP099MA1 / %T14CP099MA2</td>
+       <td class="rate">%T14CP099MB1 / %T14CP099MB2</td>
+       <td class="rate">%T14CP099SA1 / %T14CP099SA2</td>
+       <td class="rate">%T14CP099SB1 / %T14CP099SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.100</td>
+       <td class="card">%T14CARD100N<br />(%T14CARD100R)</td>
+       <td class="rate">%T14CP100TL1 / %T14CP100TL2</td>
+       <td class="rate">%T14CP100RA1 / %T14CP100RA2</td>
+       <td class="rate">%T14CP100RB1 / %T14CP100RB2</td>
+       <td class="rate">%T14CP100MA1 / %T14CP100MA2</td>
+       <td class="rate">%T14CP100MB1 / %T14CP100MB2</td>
+       <td class="rate">%T14CP100SA1 / %T14CP100SA2</td>
+       <td class="rate">%T14CP100SB1 / %T14CP100SB2</td>
+      </tr>
 
-     <tr>
-      <td class="number">No.81</td>
-      <td class="card">%T14CARD081N<br />(%T14CARD081R)</td>
-      <td class="rate">%T14CP081TL1 / %T14CP081TL2</td>
-      <td class="rate">%T14CP081RA1 / %T14CP081RA2</td>
-      <td class="rate">%T14CP081RB1 / %T14CP081RB2</td>
-      <td class="rate">%T14CP081MA1 / %T14CP081MA2</td>
-      <td class="rate">%T14CP081MB1 / %T14CP081MB2</td>
-      <td class="rate">%T14CP081SA1 / %T14CP081SA2</td>
-      <td class="rate">%T14CP081SB1 / %T14CP081SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.82</td>
-      <td class="card">%T14CARD082N<br />(%T14CARD082R)</td>
-      <td class="rate">%T14CP082TL1 / %T14CP082TL2</td>
-      <td class="rate">%T14CP082RA1 / %T14CP082RA2</td>
-      <td class="rate">%T14CP082RB1 / %T14CP082RB2</td>
-      <td class="rate">%T14CP082MA1 / %T14CP082MA2</td>
-      <td class="rate">%T14CP082MB1 / %T14CP082MB2</td>
-      <td class="rate">%T14CP082SA1 / %T14CP082SA2</td>
-      <td class="rate">%T14CP082SB1 / %T14CP082SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.83</td>
-      <td class="card">%T14CARD083N<br />(%T14CARD083R)</td>
-      <td class="rate">%T14CP083TL1 / %T14CP083TL2</td>
-      <td class="rate">%T14CP083RA1 / %T14CP083RA2</td>
-      <td class="rate">%T14CP083RB1 / %T14CP083RB2</td>
-      <td class="rate">%T14CP083MA1 / %T14CP083MA2</td>
-      <td class="rate">%T14CP083MB1 / %T14CP083MB2</td>
-      <td class="rate">%T14CP083SA1 / %T14CP083SA2</td>
-      <td class="rate">%T14CP083SB1 / %T14CP083SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.84</td>
-      <td class="card">%T14CARD084N<br />(%T14CARD084R)</td>
-      <td class="rate">%T14CP084TL1 / %T14CP084TL2</td>
-      <td class="rate">%T14CP084RA1 / %T14CP084RA2</td>
-      <td class="rate">%T14CP084RB1 / %T14CP084RB2</td>
-      <td class="rate">%T14CP084MA1 / %T14CP084MA2</td>
-      <td class="rate">%T14CP084MB1 / %T14CP084MB2</td>
-      <td class="rate">%T14CP084SA1 / %T14CP084SA2</td>
-      <td class="rate">%T14CP084SB1 / %T14CP084SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.85</td>
-      <td class="card">%T14CARD085N<br />(%T14CARD085R)</td>
-      <td class="rate">%T14CP085TL1 / %T14CP085TL2</td>
-      <td class="rate">%T14CP085RA1 / %T14CP085RA2</td>
-      <td class="rate">%T14CP085RB1 / %T14CP085RB2</td>
-      <td class="rate">%T14CP085MA1 / %T14CP085MA2</td>
-      <td class="rate">%T14CP085MB1 / %T14CP085MB2</td>
-      <td class="rate">%T14CP085SA1 / %T14CP085SA2</td>
-      <td class="rate">%T14CP085SB1 / %T14CP085SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.86</td>
-      <td class="card">%T14CARD086N<br />(%T14CARD086R)</td>
-      <td class="rate">%T14CP086TL1 / %T14CP086TL2</td>
-      <td class="rate">%T14CP086RA1 / %T14CP086RA2</td>
-      <td class="rate">%T14CP086RB1 / %T14CP086RB2</td>
-      <td class="rate">%T14CP086MA1 / %T14CP086MA2</td>
-      <td class="rate">%T14CP086MB1 / %T14CP086MB2</td>
-      <td class="rate">%T14CP086SA1 / %T14CP086SA2</td>
-      <td class="rate">%T14CP086SB1 / %T14CP086SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.87</td>
-      <td class="card">%T14CARD087N<br />(%T14CARD087R)</td>
-      <td class="rate">%T14CP087TL1 / %T14CP087TL2</td>
-      <td class="rate">%T14CP087RA1 / %T14CP087RA2</td>
-      <td class="rate">%T14CP087RB1 / %T14CP087RB2</td>
-      <td class="rate">%T14CP087MA1 / %T14CP087MA2</td>
-      <td class="rate">%T14CP087MB1 / %T14CP087MB2</td>
-      <td class="rate">%T14CP087SA1 / %T14CP087SA2</td>
-      <td class="rate">%T14CP087SB1 / %T14CP087SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.88</td>
-      <td class="card">%T14CARD088N<br />(%T14CARD088R)</td>
-      <td class="rate">%T14CP088TL1 / %T14CP088TL2</td>
-      <td class="rate">%T14CP088RA1 / %T14CP088RA2</td>
-      <td class="rate">%T14CP088RB1 / %T14CP088RB2</td>
-      <td class="rate">%T14CP088MA1 / %T14CP088MA2</td>
-      <td class="rate">%T14CP088MB1 / %T14CP088MB2</td>
-      <td class="rate">%T14CP088SA1 / %T14CP088SA2</td>
-      <td class="rate">%T14CP088SB1 / %T14CP088SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.89</td>
-      <td class="card">%T14CARD089N<br />(%T14CARD089R)</td>
-      <td class="rate">%T14CP089TL1 / %T14CP089TL2</td>
-      <td class="rate">%T14CP089RA1 / %T14CP089RA2</td>
-      <td class="rate">%T14CP089RB1 / %T14CP089RB2</td>
-      <td class="rate">%T14CP089MA1 / %T14CP089MA2</td>
-      <td class="rate">%T14CP089MB1 / %T14CP089MB2</td>
-      <td class="rate">%T14CP089SA1 / %T14CP089SA2</td>
-      <td class="rate">%T14CP089SB1 / %T14CP089SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.90</td>
-      <td class="card">%T14CARD090N<br />(%T14CARD090R)</td>
-      <td class="rate">%T14CP090TL1 / %T14CP090TL2</td>
-      <td class="rate">%T14CP090RA1 / %T14CP090RA2</td>
-      <td class="rate">%T14CP090RB1 / %T14CP090RB2</td>
-      <td class="rate">%T14CP090MA1 / %T14CP090MA2</td>
-      <td class="rate">%T14CP090MB1 / %T14CP090MB2</td>
-      <td class="rate">%T14CP090SA1 / %T14CP090SA2</td>
-      <td class="rate">%T14CP090SB1 / %T14CP090SB2</td>
-     </tr>
+      <tr>
+       <td class="number">No.101</td>
+       <td class="card">%T14CARD101N<br />(%T14CARD101R)</td>
+       <td class="rate">%T14CP101TL1 / %T14CP101TL2</td>
+       <td class="rate">%T14CP101RA1 / %T14CP101RA2</td>
+       <td class="rate">%T14CP101RB1 / %T14CP101RB2</td>
+       <td class="rate">%T14CP101MA1 / %T14CP101MA2</td>
+       <td class="rate">%T14CP101MB1 / %T14CP101MB2</td>
+       <td class="rate">%T14CP101SA1 / %T14CP101SA2</td>
+       <td class="rate">%T14CP101SB1 / %T14CP101SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.102</td>
+       <td class="card">%T14CARD102N<br />(%T14CARD102R)</td>
+       <td class="rate">%T14CP102TL1 / %T14CP102TL2</td>
+       <td class="rate">%T14CP102RA1 / %T14CP102RA2</td>
+       <td class="rate">%T14CP102RB1 / %T14CP102RB2</td>
+       <td class="rate">%T14CP102MA1 / %T14CP102MA2</td>
+       <td class="rate">%T14CP102MB1 / %T14CP102MB2</td>
+       <td class="rate">%T14CP102SA1 / %T14CP102SA2</td>
+       <td class="rate">%T14CP102SB1 / %T14CP102SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.103</td>
+       <td class="card">%T14CARD103N<br />(%T14CARD103R)</td>
+       <td class="rate">%T14CP103TL1 / %T14CP103TL2</td>
+       <td class="rate">%T14CP103RA1 / %T14CP103RA2</td>
+       <td class="rate">%T14CP103RB1 / %T14CP103RB2</td>
+       <td class="rate">%T14CP103MA1 / %T14CP103MA2</td>
+       <td class="rate">%T14CP103MB1 / %T14CP103MB2</td>
+       <td class="rate">%T14CP103SA1 / %T14CP103SA2</td>
+       <td class="rate">%T14CP103SB1 / %T14CP103SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.104</td>
+       <td class="card">%T14CARD104N<br />(%T14CARD104R)</td>
+       <td class="rate">%T14CP104TL1 / %T14CP104TL2</td>
+       <td class="rate">%T14CP104RA1 / %T14CP104RA2</td>
+       <td class="rate">%T14CP104RB1 / %T14CP104RB2</td>
+       <td class="rate">%T14CP104MA1 / %T14CP104MA2</td>
+       <td class="rate">%T14CP104MB1 / %T14CP104MB2</td>
+       <td class="rate">%T14CP104SA1 / %T14CP104SA2</td>
+       <td class="rate">%T14CP104SB1 / %T14CP104SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.105</td>
+       <td class="card">%T14CARD105N<br />(%T14CARD105R)</td>
+       <td class="rate">%T14CP105TL1 / %T14CP105TL2</td>
+       <td class="rate">%T14CP105RA1 / %T14CP105RA2</td>
+       <td class="rate">%T14CP105RB1 / %T14CP105RB2</td>
+       <td class="rate">%T14CP105MA1 / %T14CP105MA2</td>
+       <td class="rate">%T14CP105MB1 / %T14CP105MB2</td>
+       <td class="rate">%T14CP105SA1 / %T14CP105SA2</td>
+       <td class="rate">%T14CP105SB1 / %T14CP105SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.106</td>
+       <td class="card">%T14CARD106N<br />(%T14CARD106R)</td>
+       <td class="rate">%T14CP106TL1 / %T14CP106TL2</td>
+       <td class="rate">%T14CP106RA1 / %T14CP106RA2</td>
+       <td class="rate">%T14CP106RB1 / %T14CP106RB2</td>
+       <td class="rate">%T14CP106MA1 / %T14CP106MA2</td>
+       <td class="rate">%T14CP106MB1 / %T14CP106MB2</td>
+       <td class="rate">%T14CP106SA1 / %T14CP106SA2</td>
+       <td class="rate">%T14CP106SB1 / %T14CP106SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.107</td>
+       <td class="card">%T14CARD107N<br />(%T14CARD107R)</td>
+       <td class="rate">%T14CP107TL1 / %T14CP107TL2</td>
+       <td class="rate">%T14CP107RA1 / %T14CP107RA2</td>
+       <td class="rate">%T14CP107RB1 / %T14CP107RB2</td>
+       <td class="rate">%T14CP107MA1 / %T14CP107MA2</td>
+       <td class="rate">%T14CP107MB1 / %T14CP107MB2</td>
+       <td class="rate">%T14CP107SA1 / %T14CP107SA2</td>
+       <td class="rate">%T14CP107SB1 / %T14CP107SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.108</td>
+       <td class="card">%T14CARD108N<br />(%T14CARD108R)</td>
+       <td class="rate">%T14CP108TL1 / %T14CP108TL2</td>
+       <td class="rate">%T14CP108RA1 / %T14CP108RA2</td>
+       <td class="rate">%T14CP108RB1 / %T14CP108RB2</td>
+       <td class="rate">%T14CP108MA1 / %T14CP108MA2</td>
+       <td class="rate">%T14CP108MB1 / %T14CP108MB2</td>
+       <td class="rate">%T14CP108SA1 / %T14CP108SA2</td>
+       <td class="rate">%T14CP108SB1 / %T14CP108SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.109</td>
+       <td class="card">%T14CARD109N<br />(%T14CARD109R)</td>
+       <td class="rate">%T14CP109TL1 / %T14CP109TL2</td>
+       <td class="rate">%T14CP109RA1 / %T14CP109RA2</td>
+       <td class="rate">%T14CP109RB1 / %T14CP109RB2</td>
+       <td class="rate">%T14CP109MA1 / %T14CP109MA2</td>
+       <td class="rate">%T14CP109MB1 / %T14CP109MB2</td>
+       <td class="rate">%T14CP109SA1 / %T14CP109SA2</td>
+       <td class="rate">%T14CP109SB1 / %T14CP109SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.110</td>
+       <td class="card">%T14CARD110N<br />(%T14CARD110R)</td>
+       <td class="rate">%T14CP110TL1 / %T14CP110TL2</td>
+       <td class="rate">%T14CP110RA1 / %T14CP110RA2</td>
+       <td class="rate">%T14CP110RB1 / %T14CP110RB2</td>
+       <td class="rate">%T14CP110MA1 / %T14CP110MA2</td>
+       <td class="rate">%T14CP110MB1 / %T14CP110MB2</td>
+       <td class="rate">%T14CP110SA1 / %T14CP110SA2</td>
+       <td class="rate">%T14CP110SB1 / %T14CP110SB2</td>
+      </tr>
 
-     <tr>
-      <td class="number">No.91</td>
-      <td class="card">%T14CARD091N<br />(%T14CARD091R)</td>
-      <td class="rate">%T14CP091TL1 / %T14CP091TL2</td>
-      <td class="rate">%T14CP091RA1 / %T14CP091RA2</td>
-      <td class="rate">%T14CP091RB1 / %T14CP091RB2</td>
-      <td class="rate">%T14CP091MA1 / %T14CP091MA2</td>
-      <td class="rate">%T14CP091MB1 / %T14CP091MB2</td>
-      <td class="rate">%T14CP091SA1 / %T14CP091SA2</td>
-      <td class="rate">%T14CP091SB1 / %T14CP091SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.92</td>
-      <td class="card">%T14CARD092N<br />(%T14CARD092R)</td>
-      <td class="rate">%T14CP092TL1 / %T14CP092TL2</td>
-      <td class="rate">%T14CP092RA1 / %T14CP092RA2</td>
-      <td class="rate">%T14CP092RB1 / %T14CP092RB2</td>
-      <td class="rate">%T14CP092MA1 / %T14CP092MA2</td>
-      <td class="rate">%T14CP092MB1 / %T14CP092MB2</td>
-      <td class="rate">%T14CP092SA1 / %T14CP092SA2</td>
-      <td class="rate">%T14CP092SB1 / %T14CP092SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.93</td>
-      <td class="card">%T14CARD093N<br />(%T14CARD093R)</td>
-      <td class="rate">%T14CP093TL1 / %T14CP093TL2</td>
-      <td class="rate">%T14CP093RA1 / %T14CP093RA2</td>
-      <td class="rate">%T14CP093RB1 / %T14CP093RB2</td>
-      <td class="rate">%T14CP093MA1 / %T14CP093MA2</td>
-      <td class="rate">%T14CP093MB1 / %T14CP093MB2</td>
-      <td class="rate">%T14CP093SA1 / %T14CP093SA2</td>
-      <td class="rate">%T14CP093SB1 / %T14CP093SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.94</td>
-      <td class="card">%T14CARD094N<br />(%T14CARD094R)</td>
-      <td class="rate">%T14CP094TL1 / %T14CP094TL2</td>
-      <td class="rate">%T14CP094RA1 / %T14CP094RA2</td>
-      <td class="rate">%T14CP094RB1 / %T14CP094RB2</td>
-      <td class="rate">%T14CP094MA1 / %T14CP094MA2</td>
-      <td class="rate">%T14CP094MB1 / %T14CP094MB2</td>
-      <td class="rate">%T14CP094SA1 / %T14CP094SA2</td>
-      <td class="rate">%T14CP094SB1 / %T14CP094SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.95</td>
-      <td class="card">%T14CARD095N<br />(%T14CARD095R)</td>
-      <td class="rate">%T14CP095TL1 / %T14CP095TL2</td>
-      <td class="rate">%T14CP095RA1 / %T14CP095RA2</td>
-      <td class="rate">%T14CP095RB1 / %T14CP095RB2</td>
-      <td class="rate">%T14CP095MA1 / %T14CP095MA2</td>
-      <td class="rate">%T14CP095MB1 / %T14CP095MB2</td>
-      <td class="rate">%T14CP095SA1 / %T14CP095SA2</td>
-      <td class="rate">%T14CP095SB1 / %T14CP095SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.96</td>
-      <td class="card">%T14CARD096N<br />(%T14CARD096R)</td>
-      <td class="rate">%T14CP096TL1 / %T14CP096TL2</td>
-      <td class="rate">%T14CP096RA1 / %T14CP096RA2</td>
-      <td class="rate">%T14CP096RB1 / %T14CP096RB2</td>
-      <td class="rate">%T14CP096MA1 / %T14CP096MA2</td>
-      <td class="rate">%T14CP096MB1 / %T14CP096MB2</td>
-      <td class="rate">%T14CP096SA1 / %T14CP096SA2</td>
-      <td class="rate">%T14CP096SB1 / %T14CP096SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.97</td>
-      <td class="card">%T14CARD097N<br />(%T14CARD097R)</td>
-      <td class="rate">%T14CP097TL1 / %T14CP097TL2</td>
-      <td class="rate">%T14CP097RA1 / %T14CP097RA2</td>
-      <td class="rate">%T14CP097RB1 / %T14CP097RB2</td>
-      <td class="rate">%T14CP097MA1 / %T14CP097MA2</td>
-      <td class="rate">%T14CP097MB1 / %T14CP097MB2</td>
-      <td class="rate">%T14CP097SA1 / %T14CP097SA2</td>
-      <td class="rate">%T14CP097SB1 / %T14CP097SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.98</td>
-      <td class="card">%T14CARD098N<br />(%T14CARD098R)</td>
-      <td class="rate">%T14CP098TL1 / %T14CP098TL2</td>
-      <td class="rate">%T14CP098RA1 / %T14CP098RA2</td>
-      <td class="rate">%T14CP098RB1 / %T14CP098RB2</td>
-      <td class="rate">%T14CP098MA1 / %T14CP098MA2</td>
-      <td class="rate">%T14CP098MB1 / %T14CP098MB2</td>
-      <td class="rate">%T14CP098SA1 / %T14CP098SA2</td>
-      <td class="rate">%T14CP098SB1 / %T14CP098SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.99</td>
-      <td class="card">%T14CARD099N<br />(%T14CARD099R)</td>
-      <td class="rate">%T14CP099TL1 / %T14CP099TL2</td>
-      <td class="rate">%T14CP099RA1 / %T14CP099RA2</td>
-      <td class="rate">%T14CP099RB1 / %T14CP099RB2</td>
-      <td class="rate">%T14CP099MA1 / %T14CP099MA2</td>
-      <td class="rate">%T14CP099MB1 / %T14CP099MB2</td>
-      <td class="rate">%T14CP099SA1 / %T14CP099SA2</td>
-      <td class="rate">%T14CP099SB1 / %T14CP099SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.100</td>
-      <td class="card">%T14CARD100N<br />(%T14CARD100R)</td>
-      <td class="rate">%T14CP100TL1 / %T14CP100TL2</td>
-      <td class="rate">%T14CP100RA1 / %T14CP100RA2</td>
-      <td class="rate">%T14CP100RB1 / %T14CP100RB2</td>
-      <td class="rate">%T14CP100MA1 / %T14CP100MA2</td>
-      <td class="rate">%T14CP100MB1 / %T14CP100MB2</td>
-      <td class="rate">%T14CP100SA1 / %T14CP100SA2</td>
-      <td class="rate">%T14CP100SB1 / %T14CP100SB2</td>
-     </tr>
+      <tr>
+       <td class="number">No.111</td>
+       <td class="card">%T14CARD111N<br />(%T14CARD111R)</td>
+       <td class="rate">%T14CP111TL1 / %T14CP111TL2</td>
+       <td class="rate">%T14CP111RA1 / %T14CP111RA2</td>
+       <td class="rate">%T14CP111RB1 / %T14CP111RB2</td>
+       <td class="rate">%T14CP111MA1 / %T14CP111MA2</td>
+       <td class="rate">%T14CP111MB1 / %T14CP111MB2</td>
+       <td class="rate">%T14CP111SA1 / %T14CP111SA2</td>
+       <td class="rate">%T14CP111SB1 / %T14CP111SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.112</td>
+       <td class="card">%T14CARD112N<br />(%T14CARD112R)</td>
+       <td class="rate">%T14CP112TL1 / %T14CP112TL2</td>
+       <td class="rate">%T14CP112RA1 / %T14CP112RA2</td>
+       <td class="rate">%T14CP112RB1 / %T14CP112RB2</td>
+       <td class="rate">%T14CP112MA1 / %T14CP112MA2</td>
+       <td class="rate">%T14CP112MB1 / %T14CP112MB2</td>
+       <td class="rate">%T14CP112SA1 / %T14CP112SA2</td>
+       <td class="rate">%T14CP112SB1 / %T14CP112SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.113</td>
+       <td class="card">%T14CARD113N<br />(%T14CARD113R)</td>
+       <td class="rate">%T14CP113TL1 / %T14CP113TL2</td>
+       <td class="rate">%T14CP113RA1 / %T14CP113RA2</td>
+       <td class="rate">%T14CP113RB1 / %T14CP113RB2</td>
+       <td class="rate">%T14CP113MA1 / %T14CP113MA2</td>
+       <td class="rate">%T14CP113MB1 / %T14CP113MB2</td>
+       <td class="rate">%T14CP113SA1 / %T14CP113SA2</td>
+       <td class="rate">%T14CP113SB1 / %T14CP113SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.114</td>
+       <td class="card">%T14CARD114N<br />(%T14CARD114R)</td>
+       <td class="rate">%T14CP114TL1 / %T14CP114TL2</td>
+       <td class="rate">%T14CP114RA1 / %T14CP114RA2</td>
+       <td class="rate">%T14CP114RB1 / %T14CP114RB2</td>
+       <td class="rate">%T14CP114MA1 / %T14CP114MA2</td>
+       <td class="rate">%T14CP114MB1 / %T14CP114MB2</td>
+       <td class="rate">%T14CP114SA1 / %T14CP114SA2</td>
+       <td class="rate">%T14CP114SB1 / %T14CP114SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.115</td>
+       <td class="card">%T14CARD115N<br />(%T14CARD115R)</td>
+       <td class="rate">%T14CP115TL1 / %T14CP115TL2</td>
+       <td class="rate">%T14CP115RA1 / %T14CP115RA2</td>
+       <td class="rate">%T14CP115RB1 / %T14CP115RB2</td>
+       <td class="rate">%T14CP115MA1 / %T14CP115MA2</td>
+       <td class="rate">%T14CP115MB1 / %T14CP115MB2</td>
+       <td class="rate">%T14CP115SA1 / %T14CP115SA2</td>
+       <td class="rate">%T14CP115SB1 / %T14CP115SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.116</td>
+       <td class="card">%T14CARD116N<br />(%T14CARD116R)</td>
+       <td class="rate">%T14CP116TL1 / %T14CP116TL2</td>
+       <td class="rate">%T14CP116RA1 / %T14CP116RA2</td>
+       <td class="rate">%T14CP116RB1 / %T14CP116RB2</td>
+       <td class="rate">%T14CP116MA1 / %T14CP116MA2</td>
+       <td class="rate">%T14CP116MB1 / %T14CP116MB2</td>
+       <td class="rate">%T14CP116SA1 / %T14CP116SA2</td>
+       <td class="rate">%T14CP116SB1 / %T14CP116SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.117</td>
+       <td class="card">%T14CARD117N<br />(%T14CARD117R)</td>
+       <td class="rate">%T14CP117TL1 / %T14CP117TL2</td>
+       <td class="rate">%T14CP117RA1 / %T14CP117RA2</td>
+       <td class="rate">%T14CP117RB1 / %T14CP117RB2</td>
+       <td class="rate">%T14CP117MA1 / %T14CP117MA2</td>
+       <td class="rate">%T14CP117MB1 / %T14CP117MB2</td>
+       <td class="rate">%T14CP117SA1 / %T14CP117SA2</td>
+       <td class="rate">%T14CP117SB1 / %T14CP117SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.118</td>
+       <td class="card">%T14CARD118N<br />(%T14CARD118R)</td>
+       <td class="rate">%T14CP118TL1 / %T14CP118TL2</td>
+       <td class="rate">%T14CP118RA1 / %T14CP118RA2</td>
+       <td class="rate">%T14CP118RB1 / %T14CP118RB2</td>
+       <td class="rate">%T14CP118MA1 / %T14CP118MA2</td>
+       <td class="rate">%T14CP118MB1 / %T14CP118MB2</td>
+       <td class="rate">%T14CP118SA1 / %T14CP118SA2</td>
+       <td class="rate">%T14CP118SB1 / %T14CP118SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.119</td>
+       <td class="card">%T14CARD119N<br />(%T14CARD119R)</td>
+       <td class="rate">%T14CP119TL1 / %T14CP119TL2</td>
+       <td class="rate">%T14CP119RA1 / %T14CP119RA2</td>
+       <td class="rate">%T14CP119RB1 / %T14CP119RB2</td>
+       <td class="rate">%T14CP119MA1 / %T14CP119MA2</td>
+       <td class="rate">%T14CP119MB1 / %T14CP119MB2</td>
+       <td class="rate">%T14CP119SA1 / %T14CP119SA2</td>
+       <td class="rate">%T14CP119SB1 / %T14CP119SB2</td>
+      </tr>
+      <tr>
+       <td class="number">No.120</td>
+       <td class="card">%T14CARD120N<br />(%T14CARD120R)</td>
+       <td class="rate">%T14CP120TL1 / %T14CP120TL2</td>
+       <td class="rate">%T14CP120RA1 / %T14CP120RA2</td>
+       <td class="rate">%T14CP120RB1 / %T14CP120RB2</td>
+       <td class="rate">%T14CP120MA1 / %T14CP120MA2</td>
+       <td class="rate">%T14CP120MB1 / %T14CP120MB2</td>
+       <td class="rate">%T14CP120SA1 / %T14CP120SA2</td>
+       <td class="rate">%T14CP120SB1 / %T14CP120SB2</td>
+      </tr>
+     </tbody>
+     <tfoot>
+      <tr>
+       <td colspan="2">Total</td>
+       <td class="rate">%T14CP000TL1 / %T14CP000TL2</td>
+       <td class="rate">%T14CP000RA1 / %T14CP000RA2</td>
+       <td class="rate">%T14CP000RB1 / %T14CP000RB2</td>
+       <td class="rate">%T14CP000MA1 / %T14CP000MA2</td>
+       <td class="rate">%T14CP000MB1 / %T14CP000MB2</td>
+       <td class="rate">%T14CP000SA1 / %T14CP000SA2</td>
+       <td class="rate">%T14CP000SB1 / %T14CP000SB2</td>
+      </tr>
+     </tfoot>
+    </table>
 
-     <tr>
-      <td class="number">No.101</td>
-      <td class="card">%T14CARD101N<br />(%T14CARD101R)</td>
-      <td class="rate">%T14CP101TL1 / %T14CP101TL2</td>
-      <td class="rate">%T14CP101RA1 / %T14CP101RA2</td>
-      <td class="rate">%T14CP101RB1 / %T14CP101RB2</td>
-      <td class="rate">%T14CP101MA1 / %T14CP101MA2</td>
-      <td class="rate">%T14CP101MB1 / %T14CP101MB2</td>
-      <td class="rate">%T14CP101SA1 / %T14CP101SA2</td>
-      <td class="rate">%T14CP101SB1 / %T14CP101SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.102</td>
-      <td class="card">%T14CARD102N<br />(%T14CARD102R)</td>
-      <td class="rate">%T14CP102TL1 / %T14CP102TL2</td>
-      <td class="rate">%T14CP102RA1 / %T14CP102RA2</td>
-      <td class="rate">%T14CP102RB1 / %T14CP102RB2</td>
-      <td class="rate">%T14CP102MA1 / %T14CP102MA2</td>
-      <td class="rate">%T14CP102MB1 / %T14CP102MB2</td>
-      <td class="rate">%T14CP102SA1 / %T14CP102SA2</td>
-      <td class="rate">%T14CP102SB1 / %T14CP102SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.103</td>
-      <td class="card">%T14CARD103N<br />(%T14CARD103R)</td>
-      <td class="rate">%T14CP103TL1 / %T14CP103TL2</td>
-      <td class="rate">%T14CP103RA1 / %T14CP103RA2</td>
-      <td class="rate">%T14CP103RB1 / %T14CP103RB2</td>
-      <td class="rate">%T14CP103MA1 / %T14CP103MA2</td>
-      <td class="rate">%T14CP103MB1 / %T14CP103MB2</td>
-      <td class="rate">%T14CP103SA1 / %T14CP103SA2</td>
-      <td class="rate">%T14CP103SB1 / %T14CP103SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.104</td>
-      <td class="card">%T14CARD104N<br />(%T14CARD104R)</td>
-      <td class="rate">%T14CP104TL1 / %T14CP104TL2</td>
-      <td class="rate">%T14CP104RA1 / %T14CP104RA2</td>
-      <td class="rate">%T14CP104RB1 / %T14CP104RB2</td>
-      <td class="rate">%T14CP104MA1 / %T14CP104MA2</td>
-      <td class="rate">%T14CP104MB1 / %T14CP104MB2</td>
-      <td class="rate">%T14CP104SA1 / %T14CP104SA2</td>
-      <td class="rate">%T14CP104SB1 / %T14CP104SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.105</td>
-      <td class="card">%T14CARD105N<br />(%T14CARD105R)</td>
-      <td class="rate">%T14CP105TL1 / %T14CP105TL2</td>
-      <td class="rate">%T14CP105RA1 / %T14CP105RA2</td>
-      <td class="rate">%T14CP105RB1 / %T14CP105RB2</td>
-      <td class="rate">%T14CP105MA1 / %T14CP105MA2</td>
-      <td class="rate">%T14CP105MB1 / %T14CP105MB2</td>
-      <td class="rate">%T14CP105SA1 / %T14CP105SA2</td>
-      <td class="rate">%T14CP105SB1 / %T14CP105SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.106</td>
-      <td class="card">%T14CARD106N<br />(%T14CARD106R)</td>
-      <td class="rate">%T14CP106TL1 / %T14CP106TL2</td>
-      <td class="rate">%T14CP106RA1 / %T14CP106RA2</td>
-      <td class="rate">%T14CP106RB1 / %T14CP106RB2</td>
-      <td class="rate">%T14CP106MA1 / %T14CP106MA2</td>
-      <td class="rate">%T14CP106MB1 / %T14CP106MB2</td>
-      <td class="rate">%T14CP106SA1 / %T14CP106SA2</td>
-      <td class="rate">%T14CP106SB1 / %T14CP106SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.107</td>
-      <td class="card">%T14CARD107N<br />(%T14CARD107R)</td>
-      <td class="rate">%T14CP107TL1 / %T14CP107TL2</td>
-      <td class="rate">%T14CP107RA1 / %T14CP107RA2</td>
-      <td class="rate">%T14CP107RB1 / %T14CP107RB2</td>
-      <td class="rate">%T14CP107MA1 / %T14CP107MA2</td>
-      <td class="rate">%T14CP107MB1 / %T14CP107MB2</td>
-      <td class="rate">%T14CP107SA1 / %T14CP107SA2</td>
-      <td class="rate">%T14CP107SB1 / %T14CP107SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.108</td>
-      <td class="card">%T14CARD108N<br />(%T14CARD108R)</td>
-      <td class="rate">%T14CP108TL1 / %T14CP108TL2</td>
-      <td class="rate">%T14CP108RA1 / %T14CP108RA2</td>
-      <td class="rate">%T14CP108RB1 / %T14CP108RB2</td>
-      <td class="rate">%T14CP108MA1 / %T14CP108MA2</td>
-      <td class="rate">%T14CP108MB1 / %T14CP108MB2</td>
-      <td class="rate">%T14CP108SA1 / %T14CP108SA2</td>
-      <td class="rate">%T14CP108SB1 / %T14CP108SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.109</td>
-      <td class="card">%T14CARD109N<br />(%T14CARD109R)</td>
-      <td class="rate">%T14CP109TL1 / %T14CP109TL2</td>
-      <td class="rate">%T14CP109RA1 / %T14CP109RA2</td>
-      <td class="rate">%T14CP109RB1 / %T14CP109RB2</td>
-      <td class="rate">%T14CP109MA1 / %T14CP109MA2</td>
-      <td class="rate">%T14CP109MB1 / %T14CP109MB2</td>
-      <td class="rate">%T14CP109SA1 / %T14CP109SA2</td>
-      <td class="rate">%T14CP109SB1 / %T14CP109SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.110</td>
-      <td class="card">%T14CARD110N<br />(%T14CARD110R)</td>
-      <td class="rate">%T14CP110TL1 / %T14CP110TL2</td>
-      <td class="rate">%T14CP110RA1 / %T14CP110RA2</td>
-      <td class="rate">%T14CP110RB1 / %T14CP110RB2</td>
-      <td class="rate">%T14CP110MA1 / %T14CP110MA2</td>
-      <td class="rate">%T14CP110MB1 / %T14CP110MB2</td>
-      <td class="rate">%T14CP110SA1 / %T14CP110SA2</td>
-      <td class="rate">%T14CP110SB1 / %T14CP110SB2</td>
-     </tr>
+    <table class="rate_per_level">
+     <caption id="rate_per_level">難易度別スペルカード蒐集率（取得回数 / 挑戦回数 / 総数）</caption>
+     <thead>
+      <tr>
+       <th class="level">難易度</th>
+       <th class="character">全主人公合計</th>
+       <th class="character">博麗 霊夢 (A)</th>
+       <th class="character">博麗 霊夢 (B)</th>
+       <th class="character">霧雨 魔理沙 (A)</th>
+       <th class="character">霧雨 魔理沙 (B)</th>
+       <th class="character">十六夜 咲夜 (A)</th>
+       <th class="character">十六夜 咲夜 (B)</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="level">Easy</td>
+       <td class="rate">%T14CRGPETL01 / %T14CRGPETL02 / 26</td>
+       <td class="rate">%T14CRGPERA01 / %T14CRGPERA02 / 26</td>
+       <td class="rate">%T14CRGPERB01 / %T14CRGPERB02 / 26</td>
+       <td class="rate">%T14CRGPEMA01 / %T14CRGPEMA02 / 26</td>
+       <td class="rate">%T14CRGPEMB01 / %T14CRGPEMB02 / 26</td>
+       <td class="rate">%T14CRGPESA01 / %T14CRGPESA02 / 26</td>
+       <td class="rate">%T14CRGPESB01 / %T14CRGPESB02 / 26</td>
+      </tr>
+      <tr>
+       <td class="level">Normal</td>
+       <td class="rate">%T14CRGPNTL01 / %T14CRGPNTL02 / 26</td>
+       <td class="rate">%T14CRGPNRA01 / %T14CRGPNRA02 / 26</td>
+       <td class="rate">%T14CRGPNRB01 / %T14CRGPNRB02 / 26</td>
+       <td class="rate">%T14CRGPNMA01 / %T14CRGPNMA02 / 26</td>
+       <td class="rate">%T14CRGPNMB01 / %T14CRGPNMB02 / 26</td>
+       <td class="rate">%T14CRGPNSA01 / %T14CRGPNSA02 / 26</td>
+       <td class="rate">%T14CRGPNSB01 / %T14CRGPNSB02 / 26</td>
+      </tr>
+      <tr>
+       <td class="level">Hard</td>
+       <td class="rate">%T14CRGPHTL01 / %T14CRGPHTL02 / 28</td>
+       <td class="rate">%T14CRGPHRA01 / %T14CRGPHRA02 / 28</td>
+       <td class="rate">%T14CRGPHRB01 / %T14CRGPHRB02 / 28</td>
+       <td class="rate">%T14CRGPHMA01 / %T14CRGPHMA02 / 28</td>
+       <td class="rate">%T14CRGPHMB01 / %T14CRGPHMB02 / 28</td>
+       <td class="rate">%T14CRGPHSA01 / %T14CRGPHSA02 / 28</td>
+       <td class="rate">%T14CRGPHSB01 / %T14CRGPHSB02 / 28</td>
+      </tr>
+      <tr>
+       <td class="level">Lunatic</td>
+       <td class="rate">%T14CRGPLTL01 / %T14CRGPLTL02 / 28</td>
+       <td class="rate">%T14CRGPLRA01 / %T14CRGPLRA02 / 28</td>
+       <td class="rate">%T14CRGPLRB01 / %T14CRGPLRB02 / 28</td>
+       <td class="rate">%T14CRGPLMA01 / %T14CRGPLMA02 / 28</td>
+       <td class="rate">%T14CRGPLMB01 / %T14CRGPLMB02 / 28</td>
+       <td class="rate">%T14CRGPLSA01 / %T14CRGPLSA02 / 28</td>
+       <td class="rate">%T14CRGPLSB01 / %T14CRGPLSB02 / 28</td>
+      </tr>
+      <tr>
+       <td class="level">Extra</td>
+       <td class="rate">%T14CRGPXTL01 / %T14CRGPXTL02 / 12</td>
+       <td class="rate">%T14CRGPXRA01 / %T14CRGPXRA02 / 12</td>
+       <td class="rate">%T14CRGPXRB01 / %T14CRGPXRB02 / 12</td>
+       <td class="rate">%T14CRGPXMA01 / %T14CRGPXMA02 / 12</td>
+       <td class="rate">%T14CRGPXMB01 / %T14CRGPXMB02 / 12</td>
+       <td class="rate">%T14CRGPXSA01 / %T14CRGPXSA02 / 12</td>
+       <td class="rate">%T14CRGPXSB01 / %T14CRGPXSB02 / 12</td>
+      </tr>
+     </tbody>
+     <tfoot>
+      <tr>
+       <td>Total</td>
+       <td class="rate">%T14CRGPTTL01 / %T14CRGPTTL02 / 120</td>
+       <td class="rate">%T14CRGPTRA01 / %T14CRGPTRA02 / 120</td>
+       <td class="rate">%T14CRGPTRB01 / %T14CRGPTRB02 / 120</td>
+       <td class="rate">%T14CRGPTMA01 / %T14CRGPTMA02 / 120</td>
+       <td class="rate">%T14CRGPTMB01 / %T14CRGPTMB02 / 120</td>
+       <td class="rate">%T14CRGPTSA01 / %T14CRGPTSA02 / 120</td>
+       <td class="rate">%T14CRGPTSB01 / %T14CRGPTSB02 / 120</td>
+      </tr>
+     </tfoot>
+    </table>
 
-     <tr>
-      <td class="number">No.111</td>
-      <td class="card">%T14CARD111N<br />(%T14CARD111R)</td>
-      <td class="rate">%T14CP111TL1 / %T14CP111TL2</td>
-      <td class="rate">%T14CP111RA1 / %T14CP111RA2</td>
-      <td class="rate">%T14CP111RB1 / %T14CP111RB2</td>
-      <td class="rate">%T14CP111MA1 / %T14CP111MA2</td>
-      <td class="rate">%T14CP111MB1 / %T14CP111MB2</td>
-      <td class="rate">%T14CP111SA1 / %T14CP111SA2</td>
-      <td class="rate">%T14CP111SB1 / %T14CP111SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.112</td>
-      <td class="card">%T14CARD112N<br />(%T14CARD112R)</td>
-      <td class="rate">%T14CP112TL1 / %T14CP112TL2</td>
-      <td class="rate">%T14CP112RA1 / %T14CP112RA2</td>
-      <td class="rate">%T14CP112RB1 / %T14CP112RB2</td>
-      <td class="rate">%T14CP112MA1 / %T14CP112MA2</td>
-      <td class="rate">%T14CP112MB1 / %T14CP112MB2</td>
-      <td class="rate">%T14CP112SA1 / %T14CP112SA2</td>
-      <td class="rate">%T14CP112SB1 / %T14CP112SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.113</td>
-      <td class="card">%T14CARD113N<br />(%T14CARD113R)</td>
-      <td class="rate">%T14CP113TL1 / %T14CP113TL2</td>
-      <td class="rate">%T14CP113RA1 / %T14CP113RA2</td>
-      <td class="rate">%T14CP113RB1 / %T14CP113RB2</td>
-      <td class="rate">%T14CP113MA1 / %T14CP113MA2</td>
-      <td class="rate">%T14CP113MB1 / %T14CP113MB2</td>
-      <td class="rate">%T14CP113SA1 / %T14CP113SA2</td>
-      <td class="rate">%T14CP113SB1 / %T14CP113SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.114</td>
-      <td class="card">%T14CARD114N<br />(%T14CARD114R)</td>
-      <td class="rate">%T14CP114TL1 / %T14CP114TL2</td>
-      <td class="rate">%T14CP114RA1 / %T14CP114RA2</td>
-      <td class="rate">%T14CP114RB1 / %T14CP114RB2</td>
-      <td class="rate">%T14CP114MA1 / %T14CP114MA2</td>
-      <td class="rate">%T14CP114MB1 / %T14CP114MB2</td>
-      <td class="rate">%T14CP114SA1 / %T14CP114SA2</td>
-      <td class="rate">%T14CP114SB1 / %T14CP114SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.115</td>
-      <td class="card">%T14CARD115N<br />(%T14CARD115R)</td>
-      <td class="rate">%T14CP115TL1 / %T14CP115TL2</td>
-      <td class="rate">%T14CP115RA1 / %T14CP115RA2</td>
-      <td class="rate">%T14CP115RB1 / %T14CP115RB2</td>
-      <td class="rate">%T14CP115MA1 / %T14CP115MA2</td>
-      <td class="rate">%T14CP115MB1 / %T14CP115MB2</td>
-      <td class="rate">%T14CP115SA1 / %T14CP115SA2</td>
-      <td class="rate">%T14CP115SB1 / %T14CP115SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.116</td>
-      <td class="card">%T14CARD116N<br />(%T14CARD116R)</td>
-      <td class="rate">%T14CP116TL1 / %T14CP116TL2</td>
-      <td class="rate">%T14CP116RA1 / %T14CP116RA2</td>
-      <td class="rate">%T14CP116RB1 / %T14CP116RB2</td>
-      <td class="rate">%T14CP116MA1 / %T14CP116MA2</td>
-      <td class="rate">%T14CP116MB1 / %T14CP116MB2</td>
-      <td class="rate">%T14CP116SA1 / %T14CP116SA2</td>
-      <td class="rate">%T14CP116SB1 / %T14CP116SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.117</td>
-      <td class="card">%T14CARD117N<br />(%T14CARD117R)</td>
-      <td class="rate">%T14CP117TL1 / %T14CP117TL2</td>
-      <td class="rate">%T14CP117RA1 / %T14CP117RA2</td>
-      <td class="rate">%T14CP117RB1 / %T14CP117RB2</td>
-      <td class="rate">%T14CP117MA1 / %T14CP117MA2</td>
-      <td class="rate">%T14CP117MB1 / %T14CP117MB2</td>
-      <td class="rate">%T14CP117SA1 / %T14CP117SA2</td>
-      <td class="rate">%T14CP117SB1 / %T14CP117SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.118</td>
-      <td class="card">%T14CARD118N<br />(%T14CARD118R)</td>
-      <td class="rate">%T14CP118TL1 / %T14CP118TL2</td>
-      <td class="rate">%T14CP118RA1 / %T14CP118RA2</td>
-      <td class="rate">%T14CP118RB1 / %T14CP118RB2</td>
-      <td class="rate">%T14CP118MA1 / %T14CP118MA2</td>
-      <td class="rate">%T14CP118MB1 / %T14CP118MB2</td>
-      <td class="rate">%T14CP118SA1 / %T14CP118SA2</td>
-      <td class="rate">%T14CP118SB1 / %T14CP118SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.119</td>
-      <td class="card">%T14CARD119N<br />(%T14CARD119R)</td>
-      <td class="rate">%T14CP119TL1 / %T14CP119TL2</td>
-      <td class="rate">%T14CP119RA1 / %T14CP119RA2</td>
-      <td class="rate">%T14CP119RB1 / %T14CP119RB2</td>
-      <td class="rate">%T14CP119MA1 / %T14CP119MA2</td>
-      <td class="rate">%T14CP119MB1 / %T14CP119MB2</td>
-      <td class="rate">%T14CP119SA1 / %T14CP119SA2</td>
-      <td class="rate">%T14CP119SB1 / %T14CP119SB2</td>
-     </tr>
-     <tr>
-      <td class="number">No.120</td>
-      <td class="card">%T14CARD120N<br />(%T14CARD120R)</td>
-      <td class="rate">%T14CP120TL1 / %T14CP120TL2</td>
-      <td class="rate">%T14CP120RA1 / %T14CP120RA2</td>
-      <td class="rate">%T14CP120RB1 / %T14CP120RB2</td>
-      <td class="rate">%T14CP120MA1 / %T14CP120MA2</td>
-      <td class="rate">%T14CP120MB1 / %T14CP120MB2</td>
-      <td class="rate">%T14CP120SA1 / %T14CP120SA2</td>
-      <td class="rate">%T14CP120SB1 / %T14CP120SB2</td>
-     </tr>
-    </tbody>
-   </table>
+    <table class="rate_per_stage">
+     <caption id="rate_per_stage">ステージ別スペルカード蒐集率（取得回数 / 挑戦回数 / 総数）</caption>
+     <thead>
+      <tr>
+       <th class="stage">ステージ</th>
+       <th class="character">全主人公合計</th>
+       <th class="character">博麗 霊夢 (A)</th>
+       <th class="character">博麗 霊夢 (B)</th>
+       <th class="character">霧雨 魔理沙 (A)</th>
+       <th class="character">霧雨 魔理沙 (B)</th>
+       <th class="character">十六夜 咲夜 (A)</th>
+       <th class="character">十六夜 咲夜 (B)</th>
+      </tr>
+     </thead>
+     <tbody>
+      <tr>
+       <td class="stage">Stage1</td>
+       <td class="rate">%T14CRGPTTL11 / %T14CRGPTTL12 / 10</td>
+       <td class="rate">%T14CRGPTRA11 / %T14CRGPTRA12 / 10</td>
+       <td class="rate">%T14CRGPTRB11 / %T14CRGPTRB12 / 10</td>
+       <td class="rate">%T14CRGPTMA11 / %T14CRGPTMA12 / 10</td>
+       <td class="rate">%T14CRGPTMB11 / %T14CRGPTMB12 / 10</td>
+       <td class="rate">%T14CRGPTSA11 / %T14CRGPTSA12 / 10</td>
+       <td class="rate">%T14CRGPTSB11 / %T14CRGPTSB12 / 10</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage2</td>
+       <td class="rate">%T14CRGPTTL21 / %T14CRGPTTL22 / 16</td>
+       <td class="rate">%T14CRGPTRA21 / %T14CRGPTRA22 / 16</td>
+       <td class="rate">%T14CRGPTRB21 / %T14CRGPTRB22 / 16</td>
+       <td class="rate">%T14CRGPTMA21 / %T14CRGPTMA22 / 16</td>
+       <td class="rate">%T14CRGPTMB21 / %T14CRGPTMB22 / 16</td>
+       <td class="rate">%T14CRGPTSA21 / %T14CRGPTSA22 / 16</td>
+       <td class="rate">%T14CRGPTSB21 / %T14CRGPTSB22 / 16</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage3</td>
+       <td class="rate">%T14CRGPTTL31 / %T14CRGPTTL32 / 14</td>
+       <td class="rate">%T14CRGPTRA31 / %T14CRGPTRA32 / 14</td>
+       <td class="rate">%T14CRGPTRB31 / %T14CRGPTRB32 / 14</td>
+       <td class="rate">%T14CRGPTMA31 / %T14CRGPTMA32 / 14</td>
+       <td class="rate">%T14CRGPTMB31 / %T14CRGPTMB32 / 14</td>
+       <td class="rate">%T14CRGPTSA31 / %T14CRGPTSA32 / 14</td>
+       <td class="rate">%T14CRGPTSB31 / %T14CRGPTSB32 / 14</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage4</td>
+       <td class="rate">%T14CRGPTTL41 / %T14CRGPTTL42 / 24</td>
+       <td class="rate">%T14CRGPTRA41 / %T14CRGPTRA42 / 24</td>
+       <td class="rate">%T14CRGPTRB41 / %T14CRGPTRB42 / 24</td>
+       <td class="rate">%T14CRGPTMA41 / %T14CRGPTMA42 / 24</td>
+       <td class="rate">%T14CRGPTMB41 / %T14CRGPTMB42 / 24</td>
+       <td class="rate">%T14CRGPTSA41 / %T14CRGPTSA42 / 24</td>
+       <td class="rate">%T14CRGPTSB41 / %T14CRGPTSB42 / 24</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage5</td>
+       <td class="rate">%T14CRGPTTL51 / %T14CRGPTTL52 / 20</td>
+       <td class="rate">%T14CRGPTRA51 / %T14CRGPTRA52 / 20</td>
+       <td class="rate">%T14CRGPTRB51 / %T14CRGPTRB52 / 20</td>
+       <td class="rate">%T14CRGPTMA51 / %T14CRGPTMA52 / 20</td>
+       <td class="rate">%T14CRGPTMB51 / %T14CRGPTMB52 / 20</td>
+       <td class="rate">%T14CRGPTSA51 / %T14CRGPTSA52 / 20</td>
+       <td class="rate">%T14CRGPTSB51 / %T14CRGPTSB52 / 20</td>
+      </tr>
+      <tr>
+       <td class="stage">Stage6</td>
+       <td class="rate">%T14CRGPTTL61 / %T14CRGPTTL62 / 24</td>
+       <td class="rate">%T14CRGPTRA61 / %T14CRGPTRA62 / 24</td>
+       <td class="rate">%T14CRGPTRB61 / %T14CRGPTRB62 / 24</td>
+       <td class="rate">%T14CRGPTMA61 / %T14CRGPTMA62 / 24</td>
+       <td class="rate">%T14CRGPTMB61 / %T14CRGPTMB62 / 24</td>
+       <td class="rate">%T14CRGPTSA61 / %T14CRGPTSA62 / 24</td>
+       <td class="rate">%T14CRGPTSB61 / %T14CRGPTSB62 / 24</td>
+      </tr>
+      <tr>
+       <td class="stage">Extra</td>
+       <td class="rate">%T14CRGPXTL01 / %T14CRGPXTL02 / 12</td>
+       <td class="rate">%T14CRGPXRA01 / %T14CRGPXRA02 / 12</td>
+       <td class="rate">%T14CRGPXRB01 / %T14CRGPXRB02 / 12</td>
+       <td class="rate">%T14CRGPXMA01 / %T14CRGPXMA02 / 12</td>
+       <td class="rate">%T14CRGPXMB01 / %T14CRGPXMB02 / 12</td>
+       <td class="rate">%T14CRGPXSA01 / %T14CRGPXSA02 / 12</td>
+       <td class="rate">%T14CRGPXSB01 / %T14CRGPXSB02 / 12</td>
+      </tr>
+     </tbody>
+     <tfoot>
+      <tr>
+       <td>Total</td>
+       <td class="rate">%T14CRGPTTL01 / %T14CRGPTTL02 / 120</td>
+       <td class="rate">%T14CRGPTRA01 / %T14CRGPTRA02 / 120</td>
+       <td class="rate">%T14CRGPTRB01 / %T14CRGPTRB02 / 120</td>
+       <td class="rate">%T14CRGPTMA01 / %T14CRGPTMA02 / 120</td>
+       <td class="rate">%T14CRGPTMB01 / %T14CRGPTMB02 / 120</td>
+       <td class="rate">%T14CRGPTSA01 / %T14CRGPTSA02 / 120</td>
+       <td class="rate">%T14CRGPTSB01 / %T14CRGPTSB02 / 120</td>
+      </tr>
+     </tfoot>
+    </table>
 
-   <table class="rate_per_level">
-    <caption id="rate_per_level">難易度別スペルカード蒐集率（取得回数 / 挑戦回数 / 総数）</caption>
-    <thead>
-     <tr>
-      <td class="level">難易度</td>
-      <td class="character">全主人公合計</td>
-      <td class="character">博麗 霊夢 (A)</td>
-      <td class="character">博麗 霊夢 (B)</td>
-      <td class="character">霧雨 魔理沙 (A)</td>
-      <td class="character">霧雨 魔理沙 (B)</td>
-      <td class="character">十六夜 咲夜 (A)</td>
-      <td class="character">十六夜 咲夜 (B)</td>
-     </tr>
-    </thead>
-    <tfoot>
-     <tr>
-      <td>Total</td>
-      <td class="rate">%T14CRGPTTL01 / %T14CRGPTTL02 / 120</td>
-      <td class="rate">%T14CRGPTRA01 / %T14CRGPTRA02 / 120</td>
-      <td class="rate">%T14CRGPTRB01 / %T14CRGPTRB02 / 120</td>
-      <td class="rate">%T14CRGPTMA01 / %T14CRGPTMA02 / 120</td>
-      <td class="rate">%T14CRGPTMB01 / %T14CRGPTMB02 / 120</td>
-      <td class="rate">%T14CRGPTSA01 / %T14CRGPTSA02 / 120</td>
-      <td class="rate">%T14CRGPTSB01 / %T14CRGPTSB02 / 120</td>
-     </tr>
-    </tfoot>
-    <tbody>
-     <tr>
-      <td class="level">Easy</td>
-      <td class="rate">%T14CRGPETL01 / %T14CRGPETL02 / 26</td>
-      <td class="rate">%T14CRGPERA01 / %T14CRGPERA02 / 26</td>
-      <td class="rate">%T14CRGPERB01 / %T14CRGPERB02 / 26</td>
-      <td class="rate">%T14CRGPEMA01 / %T14CRGPEMA02 / 26</td>
-      <td class="rate">%T14CRGPEMB01 / %T14CRGPEMB02 / 26</td>
-      <td class="rate">%T14CRGPESA01 / %T14CRGPESA02 / 26</td>
-      <td class="rate">%T14CRGPESB01 / %T14CRGPESB02 / 26</td>
-     </tr>
-     <tr>
-      <td class="level">Normal</td>
-      <td class="rate">%T14CRGPNTL01 / %T14CRGPNTL02 / 26</td>
-      <td class="rate">%T14CRGPNRA01 / %T14CRGPNRA02 / 26</td>
-      <td class="rate">%T14CRGPNRB01 / %T14CRGPNRB02 / 26</td>
-      <td class="rate">%T14CRGPNMA01 / %T14CRGPNMA02 / 26</td>
-      <td class="rate">%T14CRGPNMB01 / %T14CRGPNMB02 / 26</td>
-      <td class="rate">%T14CRGPNSA01 / %T14CRGPNSA02 / 26</td>
-      <td class="rate">%T14CRGPNSB01 / %T14CRGPNSB02 / 26</td>
-     </tr>
-     <tr>
-      <td class="level">Hard</td>
-      <td class="rate">%T14CRGPHTL01 / %T14CRGPHTL02 / 28</td>
-      <td class="rate">%T14CRGPHRA01 / %T14CRGPHRA02 / 28</td>
-      <td class="rate">%T14CRGPHRB01 / %T14CRGPHRB02 / 28</td>
-      <td class="rate">%T14CRGPHMA01 / %T14CRGPHMA02 / 28</td>
-      <td class="rate">%T14CRGPHMB01 / %T14CRGPHMB02 / 28</td>
-      <td class="rate">%T14CRGPHSA01 / %T14CRGPHSA02 / 28</td>
-      <td class="rate">%T14CRGPHSB01 / %T14CRGPHSB02 / 28</td>
-     </tr>
-     <tr>
-      <td class="level">Lunatic</td>
-      <td class="rate">%T14CRGPLTL01 / %T14CRGPLTL02 / 28</td>
-      <td class="rate">%T14CRGPLRA01 / %T14CRGPLRA02 / 28</td>
-      <td class="rate">%T14CRGPLRB01 / %T14CRGPLRB02 / 28</td>
-      <td class="rate">%T14CRGPLMA01 / %T14CRGPLMA02 / 28</td>
-      <td class="rate">%T14CRGPLMB01 / %T14CRGPLMB02 / 28</td>
-      <td class="rate">%T14CRGPLSA01 / %T14CRGPLSA02 / 28</td>
-      <td class="rate">%T14CRGPLSB01 / %T14CRGPLSB02 / 28</td>
-     </tr>
-     <tr>
-      <td class="level">Extra</td>
-      <td class="rate">%T14CRGPXTL01 / %T14CRGPXTL02 / 12</td>
-      <td class="rate">%T14CRGPXRA01 / %T14CRGPXRA02 / 12</td>
-      <td class="rate">%T14CRGPXRB01 / %T14CRGPXRB02 / 12</td>
-      <td class="rate">%T14CRGPXMA01 / %T14CRGPXMA02 / 12</td>
-      <td class="rate">%T14CRGPXMB01 / %T14CRGPXMB02 / 12</td>
-      <td class="rate">%T14CRGPXSA01 / %T14CRGPXSA02 / 12</td>
-      <td class="rate">%T14CRGPXSB01 / %T14CRGPXSB02 / 12</td>
-     </tr>
-    </tbody>
-   </table>
+   </section>
 
-   <table class="rate_per_stage">
-    <caption id="rate_per_stage">ステージ別スペルカード蒐集率（取得回数 / 挑戦回数 / 総数）</caption>
-    <thead>
-     <tr>
-      <td class="stage">ステージ</td>
-      <td class="character">全主人公合計</td>
-      <td class="character">博麗 霊夢 (A)</td>
-      <td class="character">博麗 霊夢 (B)</td>
-      <td class="character">霧雨 魔理沙 (A)</td>
-      <td class="character">霧雨 魔理沙 (B)</td>
-      <td class="character">十六夜 咲夜 (A)</td>
-      <td class="character">十六夜 咲夜 (B)</td>
-     </tr>
-    </thead>
-    <tfoot>
-     <tr>
-      <td>Total</td>
-      <td class="rate">%T14CRGPTTL01 / %T14CRGPTTL02 / 120</td>
-      <td class="rate">%T14CRGPTRA01 / %T14CRGPTRA02 / 120</td>
-      <td class="rate">%T14CRGPTRB01 / %T14CRGPTRB02 / 120</td>
-      <td class="rate">%T14CRGPTMA01 / %T14CRGPTMA02 / 120</td>
-      <td class="rate">%T14CRGPTMB01 / %T14CRGPTMB02 / 120</td>
-      <td class="rate">%T14CRGPTSA01 / %T14CRGPTSA02 / 120</td>
-      <td class="rate">%T14CRGPTSB01 / %T14CRGPTSB02 / 120</td>
-     </tr>
-    </tfoot>
-    <tbody>
-     <tr>
-      <td class="stage">Stage1</td>
-      <td class="rate">%T14CRGPTTL11 / %T14CRGPTTL12 / 10</td>
-      <td class="rate">%T14CRGPTRA11 / %T14CRGPTRA12 / 10</td>
-      <td class="rate">%T14CRGPTRB11 / %T14CRGPTRB12 / 10</td>
-      <td class="rate">%T14CRGPTMA11 / %T14CRGPTMA12 / 10</td>
-      <td class="rate">%T14CRGPTMB11 / %T14CRGPTMB12 / 10</td>
-      <td class="rate">%T14CRGPTSA11 / %T14CRGPTSA12 / 10</td>
-      <td class="rate">%T14CRGPTSB11 / %T14CRGPTSB12 / 10</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage2</td>
-      <td class="rate">%T14CRGPTTL21 / %T14CRGPTTL22 / 16</td>
-      <td class="rate">%T14CRGPTRA21 / %T14CRGPTRA22 / 16</td>
-      <td class="rate">%T14CRGPTRB21 / %T14CRGPTRB22 / 16</td>
-      <td class="rate">%T14CRGPTMA21 / %T14CRGPTMA22 / 16</td>
-      <td class="rate">%T14CRGPTMB21 / %T14CRGPTMB22 / 16</td>
-      <td class="rate">%T14CRGPTSA21 / %T14CRGPTSA22 / 16</td>
-      <td class="rate">%T14CRGPTSB21 / %T14CRGPTSB22 / 16</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage3</td>
-      <td class="rate">%T14CRGPTTL31 / %T14CRGPTTL32 / 14</td>
-      <td class="rate">%T14CRGPTRA31 / %T14CRGPTRA32 / 14</td>
-      <td class="rate">%T14CRGPTRB31 / %T14CRGPTRB32 / 14</td>
-      <td class="rate">%T14CRGPTMA31 / %T14CRGPTMA32 / 14</td>
-      <td class="rate">%T14CRGPTMB31 / %T14CRGPTMB32 / 14</td>
-      <td class="rate">%T14CRGPTSA31 / %T14CRGPTSA32 / 14</td>
-      <td class="rate">%T14CRGPTSB31 / %T14CRGPTSB32 / 14</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage4</td>
-      <td class="rate">%T14CRGPTTL41 / %T14CRGPTTL42 / 24</td>
-      <td class="rate">%T14CRGPTRA41 / %T14CRGPTRA42 / 24</td>
-      <td class="rate">%T14CRGPTRB41 / %T14CRGPTRB42 / 24</td>
-      <td class="rate">%T14CRGPTMA41 / %T14CRGPTMA42 / 24</td>
-      <td class="rate">%T14CRGPTMB41 / %T14CRGPTMB42 / 24</td>
-      <td class="rate">%T14CRGPTSA41 / %T14CRGPTSA42 / 24</td>
-      <td class="rate">%T14CRGPTSB41 / %T14CRGPTSB42 / 24</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage5</td>
-      <td class="rate">%T14CRGPTTL51 / %T14CRGPTTL52 / 20</td>
-      <td class="rate">%T14CRGPTRA51 / %T14CRGPTRA52 / 20</td>
-      <td class="rate">%T14CRGPTRB51 / %T14CRGPTRB52 / 20</td>
-      <td class="rate">%T14CRGPTMA51 / %T14CRGPTMA52 / 20</td>
-      <td class="rate">%T14CRGPTMB51 / %T14CRGPTMB52 / 20</td>
-      <td class="rate">%T14CRGPTSA51 / %T14CRGPTSA52 / 20</td>
-      <td class="rate">%T14CRGPTSB51 / %T14CRGPTSB52 / 20</td>
-     </tr>
-     <tr>
-      <td class="stage">Stage6</td>
-      <td class="rate">%T14CRGPTTL61 / %T14CRGPTTL62 / 24</td>
-      <td class="rate">%T14CRGPTRA61 / %T14CRGPTRA62 / 24</td>
-      <td class="rate">%T14CRGPTRB61 / %T14CRGPTRB62 / 24</td>
-      <td class="rate">%T14CRGPTMA61 / %T14CRGPTMA62 / 24</td>
-      <td class="rate">%T14CRGPTMB61 / %T14CRGPTMB62 / 24</td>
-      <td class="rate">%T14CRGPTSA61 / %T14CRGPTSA62 / 24</td>
-      <td class="rate">%T14CRGPTSB61 / %T14CRGPTSB62 / 24</td>
-     </tr>
-     <tr>
-      <td class="stage">Extra</td>
-      <td class="rate">%T14CRGPXTL01 / %T14CRGPXTL02 / 12</td>
-      <td class="rate">%T14CRGPXRA01 / %T14CRGPXRA02 / 12</td>
-      <td class="rate">%T14CRGPXRB01 / %T14CRGPXRB02 / 12</td>
-      <td class="rate">%T14CRGPXMA01 / %T14CRGPXMA02 / 12</td>
-      <td class="rate">%T14CRGPXMB01 / %T14CRGPXMB02 / 12</td>
-      <td class="rate">%T14CRGPXSA01 / %T14CRGPXSA02 / 12</td>
-      <td class="rate">%T14CRGPXSB01 / %T14CRGPXSB02 / 12</td>
-     </tr>
-    </tbody>
-   </table>
+  </main>
 
-  </div>
-
-  <hr />
-
-  <div class="section">
+  <footer>
    <p>
     Data output by <a href="https://www.colorless-sight.jp/thsfc/">ThScoreFileConverter</a>.
-<script type="text/javascript">
-<!--
+<script>
+// <![CDATA[
     document.write("Last updated: ", document.lastModified, ".");
-//-->
+// ]]>
 </script>
    </p>
-  </div>
+  </footer>
 
  </body>
 </html>
