@@ -14,7 +14,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         private readonly PrivateObject pobj = null;
 
-        public Th07PlayStatusWrapper(Th06ChapterWrapper<Th07Converter> chapter)
+        public Th07PlayStatusWrapper(Th06ChapterWrapper chapter)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { chapter?.Target });
         public Th07PlayStatusWrapper(object obj)
             => this.pobj = new PrivateObject(obj);

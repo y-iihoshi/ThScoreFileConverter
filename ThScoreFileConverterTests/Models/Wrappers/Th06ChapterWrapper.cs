@@ -4,24 +4,22 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
-using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
     // NOTE: Setting the accessibility as public causes CS0703.
-    internal sealed class Th06ChapterWrapper<TParent>
-        where TParent : ThConverter
+    internal sealed class Th06ChapterWrapper
     {
-        private static Type ParentType = typeof(TParent);
-        private static string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
-        private static string TypeNameToTest = ParentType.FullName + "+Chapter";
+        private static Type ChapterType = typeof(ThScoreFileConverter.Models.Th06.Chapter);
+        private static string AssemblyNameToTest = ChapterType.Assembly.GetName().Name;
+        private static string TypeNameToTest = ChapterType.FullName;
 
         private readonly PrivateObject pobj = null;
 
         [SuppressMessage("Microsoft.Design", "CA1000:DoNotDeclareStaticMembersOnGenericTypes")]
-        public static Th06ChapterWrapper<TParent> Create(byte[] array)
+        public static Th06ChapterWrapper Create(byte[] array)
         {
-            var chapter = new Th06ChapterWrapper<TParent>();
+            var chapter = new Th06ChapterWrapper();
 
             MemoryStream stream = null;
             try
@@ -43,7 +41,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         public Th06ChapterWrapper()
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
-        public Th06ChapterWrapper(Th06ChapterWrapper<TParent> chapter)
+        public Th06ChapterWrapper(Th06ChapterWrapper chapter)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { chapter?.Target });
 
         public object Target

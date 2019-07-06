@@ -71,7 +71,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var properties = ValidProperties;
 
-            var chapter = Th06ChapterWrapper<Th07Converter>.Create(MakeByteArray(properties));
+            var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
             var score = new Th07PracticeScoreWrapper(chapter);
 
             Validate(score, properties);
@@ -96,7 +96,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             properties.signature = properties.signature.ToLowerInvariant();
 
-            var chapter = Th06ChapterWrapper<Th07Converter>.Create(MakeByteArray(properties));
+            var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
             var score = new Th07PracticeScoreWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -110,7 +110,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             --properties.size1;
 
-            var chapter = Th06ChapterWrapper<Th07Converter>.Create(MakeByteArray(properties));
+            var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
             var score = new Th07PracticeScoreWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -129,7 +129,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             properties.chara = TestUtils.Cast<Th07Converter.Chara>(chara);
 
-            var chapter = Th06ChapterWrapper<Th07Converter>.Create(MakeByteArray(properties));
+            var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
             var score = new Th07PracticeScoreWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -148,7 +148,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             properties.level = TestUtils.Cast<Th07Converter.Level>(level);
 
-            var chapter = Th06ChapterWrapper<Th07Converter>.Create(MakeByteArray(properties));
+            var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
             var score = new Th07PracticeScoreWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -167,7 +167,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             properties.stage = TestUtils.Cast<Th07Converter.Stage>(stage);
 
-            var chapter = Th06ChapterWrapper<Th07Converter>.Create(MakeByteArray(properties));
+            var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
             var score = new Th07PracticeScoreWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);

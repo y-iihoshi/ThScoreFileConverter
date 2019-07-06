@@ -54,7 +54,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 var properties = ValidProperties;
 
-                var chapter = Th06ChapterWrapper<TParent>.Create(MakeByteArray(properties));
+                var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
                 var versionInfo = new Th07VersionInfoWrapper<TParent>(chapter);
 
                 Validate(versionInfo, properties);
@@ -81,7 +81,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = ValidProperties;
                 properties.signature = properties.signature.ToLowerInvariant();
 
-                var chapter = Th06ChapterWrapper<TParent>.Create(MakeByteArray(properties));
+                var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
                 var versionInfo = new Th07VersionInfoWrapper<TParent>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
@@ -96,7 +96,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = ValidProperties;
                 --properties.size1;
 
-                var chapter = Th06ChapterWrapper<TParent>.Create(MakeByteArray(properties));
+                var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
                 var versionInfo = new Th07VersionInfoWrapper<TParent>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);

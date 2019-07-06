@@ -254,7 +254,7 @@ namespace ThScoreFileConverter.Models
             using (var reader = new BinaryReader(input, Encoding.UTF8, true))
             {
                 var header = new FileHeader();
-                var chapter = new Chapter();
+                var chapter = new Th06.Chapter();
 
                 header.ReadFrom(reader);
                 var remainSize = header.DecodedAllSize - header.Size;
@@ -294,7 +294,7 @@ namespace ThScoreFileConverter.Models
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         private static AllScoreData Read(Stream input)
         {
-            var dictionary = new Dictionary<string, Action<AllScoreData, Chapter>>
+            var dictionary = new Dictionary<string, Action<AllScoreData, Th06.Chapter>>
             {
                 { Header.ValidSignature,        (data, ch) => data.Set(new Header(ch))        },
                 { HighScore.ValidSignature,     (data, ch) => data.Set(new HighScore(ch))     },
@@ -306,7 +306,7 @@ namespace ThScoreFileConverter.Models
             using (var reader = new BinaryReader(input, Encoding.UTF8, true))
             {
                 var allScoreData = new AllScoreData();
-                var chapter = new Chapter();
+                var chapter = new Th06.Chapter();
 
                 reader.ReadExactBytes(FileHeader.ValidSize);
 
@@ -315,7 +315,7 @@ namespace ThScoreFileConverter.Models
                     while (true)
                     {
                         chapter.ReadFrom(reader);
-                        if (dictionary.TryGetValue(chapter.Signature, out Action<AllScoreData, Chapter> setChapter))
+                        if (dictionary.TryGetValue(chapter.Signature, out Action<AllScoreData, Th06.Chapter> setChapter))
                             setChapter(allScoreData, chapter);
                     }
                 }
@@ -731,56 +731,12 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class Chapter : IBinaryReadable
-        {
-            public Chapter()
-            {
-                this.Signature = string.Empty;
-                this.Size1 = 0;
-                this.Size2 = 0;
-                this.Data = new byte[] { };
-            }
-
-            protected Chapter(Chapter chapter)
-            {
-                if (chapter is null)
-                    throw new ArgumentNullException(nameof(chapter));
-
-                this.Signature = chapter.Signature;
-                this.Size1 = chapter.Size1;
-                this.Size2 = chapter.Size2;
-                this.Data = new byte[chapter.Data.Length];
-                chapter.Data.CopyTo(this.Data, 0);
-            }
-
-            public string Signature { get; private set; }   // .Length = 4
-
-            public short Size1 { get; private set; }
-
-            public short Size2 { get; private set; }        // always equal to size1?
-
-            public byte FirstByteOfData => this.Data?.Length > 0 ? this.Data[0] : default;
-
-            protected byte[] Data { get; private set; }
-
-            public void ReadFrom(BinaryReader reader)
-            {
-                if (reader == null)
-                    throw new ArgumentNullException(nameof(reader));
-
-                this.Signature = Encoding.Default.GetString(reader.ReadExactBytes(4));
-                this.Size1 = reader.ReadInt16();
-                this.Size2 = reader.ReadInt16();
-                this.Data = reader.ReadExactBytes(this.Size1 - this.Signature.Length - (sizeof(short) * 2));
-            }
-        }
-
-        private class Header : Chapter
+        private class Header : Th06.Chapter
         {
             public const string ValidSignature = "TH6K";
             public const short ValidSize = 0x000C;
 
-            public Header(Chapter chapter)
+            public Header(Th06.Chapter chapter)
                 : base(chapter)
             {
                 if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
@@ -795,12 +751,12 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class HighScore : Chapter   // per character, level, rank
+        private class HighScore : Th06.Chapter   // per character, level, rank
         {
             public const string ValidSignature = "HSCR";
             public const short ValidSize = 0x001C;
 
-            public HighScore(Chapter chapter)
+            public HighScore(Th06.Chapter chapter)
                 : base(chapter)
             {
                 if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
@@ -837,12 +793,12 @@ namespace ThScoreFileConverter.Models
             public byte[] Name { get; private set; }                    // .Length = 9, null-terminated
         }
 
-        private class ClearData : Chapter   // per character
+        private class ClearData : Th06.Chapter   // per character
         {
             public const string ValidSignature = "CLRD";
             public const short ValidSize = 0x0018;
 
-            public ClearData(Chapter chapter)
+            public ClearData(Th06.Chapter chapter)
                 : base(chapter)
             {
                 if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
@@ -875,12 +831,12 @@ namespace ThScoreFileConverter.Models
             public Chara Chara { get; private set; }            // size: 2Bytes
         }
 
-        private class CardAttack : Chapter      // per card
+        private class CardAttack : Th06.Chapter      // per card
         {
             public const string ValidSignature = "CATK";
             public const short ValidSize = 0x0040;
 
-            public CardAttack(Chapter chapter)
+            public CardAttack(Th06.Chapter chapter)
                 : base(chapter)
             {
                 if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
@@ -914,12 +870,12 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class PracticeScore : Chapter   // per character, level, stage
+        private class PracticeScore : Th06.Chapter   // per character, level, stage
         {
             public const string ValidSignature = "PSCR";
             public const short ValidSize = 0x0014;
 
-            public PracticeScore(Chapter chapter)
+            public PracticeScore(Th06.Chapter chapter)
                 : base(chapter)
             {
                 if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))

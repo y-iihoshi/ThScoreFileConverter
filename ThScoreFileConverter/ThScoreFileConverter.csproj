@@ -110,6 +110,7 @@
     <Compile Include="Models\SpellCardInfo.cs" />
     <Compile Include="Models\Squirrel.cs" />
     <Compile Include="Models\Th06Converter.cs" />
+    <Compile Include="Models\Th06\Chapter.cs" />
     <Compile Include="Models\Th07Converter.cs" />
     <Compile Include="Models\Th075Converter.cs" />
     <Compile Include="Models\Th08Converter.cs" />

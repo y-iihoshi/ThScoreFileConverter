@@ -80,7 +80,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var properties = ValidProperties;
 
-            var chapter = Th06ChapterWrapper<Th09Converter>.Create(MakeByteArray(properties));
+            var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
             var highScore = new Th09HighScoreWrapper(chapter);
 
             Validate(highScore, properties);
@@ -105,7 +105,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             properties.signature = properties.signature.ToLowerInvariant();
 
-            var chapter = Th06ChapterWrapper<Th09Converter>.Create(MakeByteArray(properties));
+            var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
             var highScore = new Th09HighScoreWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -119,7 +119,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             --properties.size1;
 
-            var chapter = Th06ChapterWrapper<Th09Converter>.Create(MakeByteArray(properties));
+            var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
             var highScore = new Th09HighScoreWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -138,7 +138,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             properties.chara = TestUtils.Cast<Th09Converter.Chara>(chara);
 
-            var chapter = Th06ChapterWrapper<Th09Converter>.Create(MakeByteArray(properties));
+            var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
             var highScore = new Th09HighScoreWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -157,7 +157,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             properties.level = TestUtils.Cast<ThConverter.Level>(level);
 
-            var chapter = Th06ChapterWrapper<Th09Converter>.Create(MakeByteArray(properties));
+            var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
             var highScore = new Th09HighScoreWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
