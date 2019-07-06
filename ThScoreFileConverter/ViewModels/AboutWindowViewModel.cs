@@ -108,7 +108,9 @@ namespace ThScoreFileConverter.ViewModels
         /// <param name="uri">A URI to open.</param>
         private void OpenUri(object uri)
         {
-            Process.Start(uri as string);
+            using (var process = Process.Start(uri as string))
+            {
+            }
         }
     }
 }
