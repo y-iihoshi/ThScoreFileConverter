@@ -241,67 +241,70 @@ namespace ThScoreFileConverter.Models
 
         private static bool Decrypt(Stream input, Stream output)
         {
-            var reader = new BinaryReader(input);
-            var writer = new BinaryWriter(output);
+            using (var reader = new BinaryReader(input, Encoding.UTF8, true))
+            using (var writer = new BinaryWriter(output, Encoding.UTF8, true))
+            {
+                var header = new Header();
+                header.ReadFrom(reader);
+                if (!header.IsValid)
+                    return false;
+                if (header.EncodedAllSize != reader.BaseStream.Length)
+                    return false;
 
-            var header = new Header();
-            header.ReadFrom(reader);
-            if (!header.IsValid)
-                return false;
-            if (header.EncodedAllSize != reader.BaseStream.Length)
-                return false;
+                header.WriteTo(writer);
+                ThCrypt.Decrypt(input, output, header.EncodedBodySize, 0xAC, 0x35, 0x10, header.EncodedBodySize);
 
-            header.WriteTo(writer);
-            ThCrypt.Decrypt(input, output, header.EncodedBodySize, 0xAC, 0x35, 0x10, header.EncodedBodySize);
-
-            return true;
+                return true;
+            }
         }
 
         private static bool Extract(Stream input, Stream output)
         {
-            var reader = new BinaryReader(input);
-            var writer = new BinaryWriter(output);
+            using (var reader = new BinaryReader(input, Encoding.UTF8, true))
+            using (var writer = new BinaryWriter(output, Encoding.UTF8, true))
+            {
+                var header = new Header();
+                header.ReadFrom(reader);
+                header.WriteTo(writer);
 
-            var header = new Header();
-            header.ReadFrom(reader);
-            header.WriteTo(writer);
+                var bodyBeginPos = output.Position;
+                Lzss.Extract(input, output);
+                output.Flush();
+                output.SetLength(output.Position);
 
-            var bodyBeginPos = output.Position;
-            Lzss.Extract(input, output);
-            output.Flush();
-            output.SetLength(output.Position);
-
-            return header.DecodedBodySize == (output.Position - bodyBeginPos);
+                return header.DecodedBodySize == (output.Position - bodyBeginPos);
+            }
         }
 
         private static bool Validate(Stream input)
         {
-            var reader = new BinaryReader(input);
-
-            var header = new Header();
-            header.ReadFrom(reader);
-            var remainSize = header.DecodedBodySize;
-            var chapter = new Chapter();
-
-            try
+            using (var reader = new BinaryReader(input, Encoding.UTF8, true))
             {
-                while (remainSize > 0)
+                var header = new Header();
+                header.ReadFrom(reader);
+                var remainSize = header.DecodedBodySize;
+                var chapter = new Chapter();
+
+                try
                 {
-                    chapter.ReadFrom(reader);
-                    if (!chapter.IsValid)
-                        return false;
-                    if (!ClearData.CanInitialize(chapter) && !Status.CanInitialize(chapter))
-                        return false;
+                    while (remainSize > 0)
+                    {
+                        chapter.ReadFrom(reader);
+                        if (!chapter.IsValid)
+                            return false;
+                        if (!ClearData.CanInitialize(chapter) && !Status.CanInitialize(chapter))
+                            return false;
 
-                    remainSize -= chapter.Size;
+                        remainSize -= chapter.Size;
+                    }
                 }
-            }
-            catch (EndOfStreamException)
-            {
-                // It's OK, do nothing.
-            }
+                catch (EndOfStreamException)
+                {
+                    // It's OK, do nothing.
+                }
 
-            return remainSize == 0;
+                return remainSize == 0;
+            }
         }
 
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
@@ -313,34 +316,36 @@ namespace ThScoreFileConverter.Models
                 { Status.ValidSignature,    (data, ch) => data.Set(new Status(ch))    },
             };
 
-            var reader = new BinaryReader(input);
-            var allScoreData = new AllScoreData();
-            var chapter = new Chapter();
-
-            var header = new Header();
-            header.ReadFrom(reader);
-            allScoreData.Set(header);
-
-            try
+            using (var reader = new BinaryReader(input, Encoding.UTF8, true))
             {
-                while (true)
+                var allScoreData = new AllScoreData();
+                var chapter = new Chapter();
+
+                var header = new Header();
+                header.ReadFrom(reader);
+                allScoreData.Set(header);
+
+                try
                 {
-                    chapter.ReadFrom(reader);
-                    if (dictionary.TryGetValue(chapter.Signature, out Action<AllScoreData, Chapter> setChapter))
-                        setChapter(allScoreData, chapter);
+                    while (true)
+                    {
+                        chapter.ReadFrom(reader);
+                        if (dictionary.TryGetValue(chapter.Signature, out Action<AllScoreData, Chapter> setChapter))
+                            setChapter(allScoreData, chapter);
+                    }
                 }
-            }
-            catch (EndOfStreamException)
-            {
-                // It's OK, do nothing.
-            }
+                catch (EndOfStreamException)
+                {
+                    // It's OK, do nothing.
+                }
 
-            if ((allScoreData.Header != null) &&
-                (allScoreData.ClearData.Count == Enum.GetValues(typeof(CharaWithTotal)).Length) &&
-                (allScoreData.Status != null))
-                return allScoreData;
-            else
-                return null;
+                if ((allScoreData.Header != null) &&
+                    (allScoreData.ClearData.Count == Enum.GetValues(typeof(CharaWithTotal)).Length) &&
+                    (allScoreData.Status != null))
+                    return allScoreData;
+                else
+                    return null;
+            }
         }
 
         // %T10SCR[w][xx][y][z]

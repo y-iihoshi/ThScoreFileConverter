@@ -498,23 +498,25 @@ namespace ThScoreFileConverter.Models
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         private static AllScoreData Read(Stream input)
         {
-            var reader = new BinaryReader(input);
-            var allScoreData = new AllScoreData();
-
-            try
+            using (var reader = new BinaryReader(input, Encoding.UTF8, true))
             {
-                allScoreData.ReadFrom(reader);
-            }
-            catch (EndOfStreamException)
-            {
-            }
+                var allScoreData = new AllScoreData();
 
-            var numPairs = Enum.GetValues(typeof(Chara)).Length * Enum.GetValues(typeof(Level)).Length;
-            if ((allScoreData.ClearData.Sum(data => data.Value.Count) == numPairs) &&
-                (allScoreData.Status != null))
-                return allScoreData;
-            else
-                return null;
+                try
+                {
+                    allScoreData.ReadFrom(reader);
+                }
+                catch (EndOfStreamException)
+                {
+                }
+
+                var numPairs = Enum.GetValues(typeof(Chara)).Length * Enum.GetValues(typeof(Level)).Length;
+                if ((allScoreData.ClearData.Sum(data => data.Value.Count) == numPairs) &&
+                    (allScoreData.Status != null))
+                    return allScoreData;
+                else
+                    return null;
+            }
         }
 
         // %T75SCR[w][xx][y][z]

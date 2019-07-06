@@ -315,21 +315,25 @@ namespace ThScoreFileConverter.Models
         /// <param name="hideUntriedCards"><c>true</c> if it hides untried spell cards.</param>
         protected virtual void Convert(Stream input, Stream output, bool hideUntriedCards)
         {
-            var reader = new StreamReader(
-                input, Utils.GetEncoding(Settings.Instance.InputCodePageId.Value));
-            var writer = new StreamWriter(
-                output, Utils.GetEncoding(Settings.Instance.OutputCodePageId.Value));
-            var outputFilePath = (output is FileStream outputFile) ? outputFile.Name : string.Empty;
-            var replacers = this.CreateReplacers(hideUntriedCards, outputFilePath);
+            const int DefaultBufferSize = 1024;
 
-            var allLines = reader.ReadToEnd();
+            using (var reader = new StreamReader(
+                input, Utils.GetEncoding(Settings.Instance.InputCodePageId.Value), true, DefaultBufferSize, true))
+            using (var writer = new StreamWriter(
+                output, Utils.GetEncoding(Settings.Instance.OutputCodePageId.Value), DefaultBufferSize, true))
+            {
+                var outputFilePath = (output is FileStream outputFile) ? outputFile.Name : string.Empty;
+                var replacers = this.CreateReplacers(hideUntriedCards, outputFilePath);
 
-            foreach (var replacer in replacers)
-                allLines = replacer.Replace(allLines);
+                var allLines = reader.ReadToEnd();
 
-            writer.Write(allLines);
-            writer.Flush();
-            writer.BaseStream.SetLength(writer.BaseStream.Position);
+                foreach (var replacer in replacers)
+                    allLines = replacer.Replace(allLines);
+
+                writer.Write(allLines);
+                writer.Flush();
+                writer.BaseStream.SetLength(writer.BaseStream.Position);
+            }
         }
 
         /// <summary>

@@ -1113,22 +1113,24 @@ namespace ThScoreFileConverter.Models
 
         private static AllScoreData Read(Stream input)
         {
-            var reader = new BinaryReader(input);
-            var allScoreData = new AllScoreData();
-
-            try
+            using (var reader = new BinaryReader(input, Encoding.UTF8, true))
             {
-                allScoreData.ReadFrom(reader);
-            }
-            catch (EndOfStreamException)
-            {
-            }
+                var allScoreData = new AllScoreData();
 
-            var numCharas = Enum.GetValues(typeof(Chara)).Length - 1;   // Except Oonamazu
-            if (allScoreData.ClearData.Count == numCharas)
-                return allScoreData;
-            else
-                return null;
+                try
+                {
+                    allScoreData.ReadFrom(reader);
+                }
+                catch (EndOfStreamException)
+                {
+                }
+
+                var numCharas = Enum.GetValues(typeof(Chara)).Length - 1;   // Except Oonamazu
+                if (allScoreData.ClearData.Count == numCharas)
+                    return allScoreData;
+                else
+                    return null;
+            }
         }
 
         // serialNumber: 0-based

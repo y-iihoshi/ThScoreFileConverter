@@ -189,18 +189,20 @@ namespace ThScoreFileConverter.Models
 
         private static AllScoreData Read(Stream input)
         {
-            var reader = new BinaryReader(input);
-            var allScoreData = new AllScoreData();
-
-            try
+            using (var reader = new BinaryReader(input, Encoding.UTF8, true))
             {
-                allScoreData.ReadFrom(reader);
-            }
-            catch (EndOfStreamException)
-            {
-            }
+                var allScoreData = new AllScoreData();
 
-            return allScoreData;
+                try
+                {
+                    allScoreData.ReadFrom(reader);
+                }
+                catch (EndOfStreamException)
+                {
+                }
+
+                return allScoreData;
+            }
         }
 
         // %T155CLEAR[x][yy]

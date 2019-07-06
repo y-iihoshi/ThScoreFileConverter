@@ -120,26 +120,27 @@ namespace ThScoreFileConverter
             {
                 using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
                 {
-                    var reader =
-                        XmlDictionaryReader.CreateTextReader(stream, new XmlDictionaryReaderQuotas());
-                    var serializer = new DataContractSerializer(typeof(Settings));
-                    if (serializer.ReadObject(reader) is Settings settings)
+                    using (var reader = XmlDictionaryReader.CreateTextReader(stream, new XmlDictionaryReaderQuotas()))
                     {
-                        this.LastTitle = settings.LastTitle;
-                        this.Dictionary = settings.Dictionary;
+                        var serializer = new DataContractSerializer(typeof(Settings));
+                        if (serializer.ReadObject(reader) is Settings settings)
+                        {
+                            this.LastTitle = settings.LastTitle;
+                            this.Dictionary = settings.Dictionary;
 
-                        if (!string.IsNullOrEmpty(settings.FontFamilyName))
-                            this.FontFamilyName = settings.FontFamilyName;
-                        if (settings.FontSize.HasValue)
-                            this.FontSize = settings.FontSize.Value;
-                        if (settings.OutputNumberGroupSeparator.HasValue)
-                            this.OutputNumberGroupSeparator = settings.OutputNumberGroupSeparator.Value;
-                        if (settings.InputCodePageId.HasValue &&
-                            ValidCodePageIds.Any(id => id == settings.InputCodePageId.Value))
-                            this.InputCodePageId = settings.InputCodePageId.Value;
-                        if (settings.OutputCodePageId.HasValue &&
-                            ValidCodePageIds.Any(id => id == settings.OutputCodePageId.Value))
-                            this.OutputCodePageId = settings.OutputCodePageId.Value;
+                            if (!string.IsNullOrEmpty(settings.FontFamilyName))
+                                this.FontFamilyName = settings.FontFamilyName;
+                            if (settings.FontSize.HasValue)
+                                this.FontSize = settings.FontSize.Value;
+                            if (settings.OutputNumberGroupSeparator.HasValue)
+                                this.OutputNumberGroupSeparator = settings.OutputNumberGroupSeparator.Value;
+                            if (settings.InputCodePageId.HasValue &&
+                                ValidCodePageIds.Any(id => id == settings.InputCodePageId.Value))
+                                this.InputCodePageId = settings.InputCodePageId.Value;
+                            if (settings.OutputCodePageId.HasValue &&
+                                ValidCodePageIds.Any(id => id == settings.OutputCodePageId.Value))
+                                this.OutputCodePageId = settings.OutputCodePageId.Value;
+                        }
                     }
                 }
             }
@@ -165,11 +166,13 @@ namespace ThScoreFileConverter
         {
             using (var stream = new FileStream(path, FileMode.Create, FileAccess.Write))
             {
-                var writer = XmlWriter.Create(stream, new XmlWriterSettings() { Indent = true });
-                var serializer = new DataContractSerializer(typeof(Settings));
-                serializer.WriteObject(writer, this);
-                writer.WriteWhitespace(writer.Settings.NewLineChars);
-                writer.Flush();
+                using (var writer = XmlWriter.Create(stream, new XmlWriterSettings() { Indent = true }))
+                {
+                    var serializer = new DataContractSerializer(typeof(Settings));
+                    serializer.WriteObject(writer, this);
+                    writer.WriteWhitespace(writer.Settings.NewLineChars);
+                    writer.Flush();
+                }
             }
         }
     }

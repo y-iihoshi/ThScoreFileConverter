@@ -125,63 +125,67 @@ namespace ThScoreFileConverter.Models
 
         private static bool Extract(Stream input, Stream output)
         {
-            var reader = new BinaryReader(input);
-            var writer = new BinaryWriter(output);
-            var header = new FileHeader();
+            using (var reader = new BinaryReader(input, Encoding.UTF8, true))
+            using (var writer = new BinaryWriter(output, Encoding.UTF8, true))
+            {
+                var header = new FileHeader();
 
-            header.ReadFrom(reader);
-            if (!header.IsValid)
-                return false;
-            if (header.Size + header.EncodedBodySize != input.Length)
-                return false;
+                header.ReadFrom(reader);
+                if (!header.IsValid)
+                    return false;
+                if (header.Size + header.EncodedBodySize != input.Length)
+                    return false;
 
-            header.WriteTo(writer);
+                header.WriteTo(writer);
 
-            Lzss.Extract(input, output);
-            output.Flush();
-            output.SetLength(output.Position);
+                Lzss.Extract(input, output);
+                output.Flush();
+                output.SetLength(output.Position);
 
-            return output.Position == header.DecodedAllSize;
+                return output.Position == header.DecodedAllSize;
+            }
         }
 
         private static bool Validate(Stream input)
         {
-            var reader = new BinaryReader(input);
-            var header = new FileHeader();
-            var chapter = new Chapter();
-
-            header.ReadFrom(reader);
-            var remainSize = header.DecodedAllSize - header.Size;
-            if (remainSize <= 0)
-                return false;
-
-            try
+            using (var reader = new BinaryReader(input, Encoding.UTF8, true))
             {
-                while (remainSize > 0)
+                var header = new FileHeader();
+                var chapter = new Chapter();
+
+                header.ReadFrom(reader);
+                var remainSize = header.DecodedAllSize - header.Size;
+                if (remainSize <= 0)
+                    return false;
+
+                try
                 {
-                    chapter.ReadFrom(reader);
-                    if (chapter.Size1 == 0)
-                        return false;
-
-                    switch (chapter.Signature)
+                    while (remainSize > 0)
                     {
-                        case Header.ValidSignature:
-                            if (chapter.FirstByteOfData != 0x01)
-                                return false;
-                            break;
-                        default:
-                            break;
+                        chapter.ReadFrom(reader);
+                        if (chapter.Size1 == 0)
+                            return false;
+
+                        switch (chapter.Signature)
+                        {
+                            case Header.ValidSignature:
+                                if (chapter.FirstByteOfData != 0x01)
+                                    return false;
+                                break;
+                            default:
+                                break;
+                        }
+
+                        remainSize -= chapter.Size1;
                     }
-
-                    remainSize -= chapter.Size1;
                 }
-            }
-            catch (EndOfStreamException)
-            {
-                // It's OK, do nothing.
-            }
+                catch (EndOfStreamException)
+                {
+                    // It's OK, do nothing.
+                }
 
-            return remainSize == 0;
+                return remainSize == 0;
+            }
         }
 
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
@@ -196,36 +200,38 @@ namespace ThScoreFileConverter.Models
                 { VersionInfo.ValidSignature,   (data, ch) => data.Set(new VersionInfo(ch))   },
             };
 
-            var reader = new BinaryReader(input);
-            var allScoreData = new AllScoreData();
-            var chapter = new Chapter();
-
-            reader.ReadExactBytes(FileHeader.ValidSize);
-
-            try
+            using (var reader = new BinaryReader(input, Encoding.UTF8, true))
             {
-                while (true)
+                var allScoreData = new AllScoreData();
+                var chapter = new Chapter();
+
+                reader.ReadExactBytes(FileHeader.ValidSize);
+
+                try
                 {
-                    chapter.ReadFrom(reader);
-                    if (dictionary.TryGetValue(chapter.Signature, out Action<AllScoreData, Chapter> setChapter))
-                        setChapter(allScoreData, chapter);
+                    while (true)
+                    {
+                        chapter.ReadFrom(reader);
+                        if (dictionary.TryGetValue(chapter.Signature, out Action<AllScoreData, Chapter> setChapter))
+                            setChapter(allScoreData, chapter);
+                    }
                 }
-            }
-            catch (EndOfStreamException)
-            {
-                // It's OK, do nothing.
-            }
+                catch (EndOfStreamException)
+                {
+                    // It's OK, do nothing.
+                }
 
-            var numCharas = Enum.GetValues(typeof(Chara)).Length;
-            var numLevels = Enum.GetValues(typeof(Level)).Length;
-            if ((allScoreData.Header != null) &&
-                (allScoreData.Rankings.Count == numCharas * numLevels) &&
-                (allScoreData.PlayStatus != null) &&
-                (allScoreData.LastName != null) &&
-                (allScoreData.VersionInfo != null))
-                return allScoreData;
-            else
-                return null;
+                var numCharas = Enum.GetValues(typeof(Chara)).Length;
+                var numLevels = Enum.GetValues(typeof(Level)).Length;
+                if ((allScoreData.Header != null) &&
+                    (allScoreData.Rankings.Count == numCharas * numLevels) &&
+                    (allScoreData.PlayStatus != null) &&
+                    (allScoreData.LastName != null) &&
+                    (allScoreData.VersionInfo != null))
+                    return allScoreData;
+                else
+                    return null;
+            }
         }
 
         // %T09SCR[w][xx][y][z]
