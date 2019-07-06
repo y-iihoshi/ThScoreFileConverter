@@ -57,7 +57,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var properties = ValidProperties;
 
-            var chapter = Th095ChapterWrapper<Th095Converter>.Create(MakeByteArray(properties));
+            var chapter = Th095ChapterWrapper.Create(MakeByteArray(properties));
             var status = new Th095StatusWrapper(chapter);
 
             Validate(status, properties);
@@ -83,7 +83,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             properties.signature = properties.signature.ToLowerInvariant();
 
-            var chapter = Th095ChapterWrapper<Th095Converter>.Create(MakeByteArray(properties));
+            var chapter = Th095ChapterWrapper.Create(MakeByteArray(properties));
             var status = new Th095StatusWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -97,7 +97,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             ++properties.version;
 
-            var chapter = Th095ChapterWrapper<Th095Converter>.Create(MakeByteArray(properties));
+            var chapter = Th095ChapterWrapper.Create(MakeByteArray(properties));
             var status = new Th095StatusWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -111,7 +111,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             --properties.size;
 
-            var chapter = Th095ChapterWrapper<Th095Converter>.Create(MakeByteArray(properties));
+            var chapter = Th095ChapterWrapper.Create(MakeByteArray(properties));
             var status = new Th095StatusWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -129,7 +129,7 @@ namespace ThScoreFileConverterTests.Models
                 var checksum = 0u;
                 var data = new byte[size];
 
-                var chapter = Th095ChapterWrapper<Th095Converter>.Create(
+                var chapter = Th095ChapterWrapper.Create(
                     TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
 
                 Assert.AreEqual(expected, Th095StatusWrapper.CanInitialize(chapter));

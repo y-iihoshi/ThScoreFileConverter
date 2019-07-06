@@ -48,7 +48,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th095AllScoreDataSetClearDataTest() => TestUtils.Wrap(() =>
         {
             var properties = Th095ScoreTests.ValidProperties;
-            var chapter = Th095ChapterWrapper<Th095Converter>.Create(Th095ScoreTests.MakeByteArray(properties));
+            var chapter = Th095ChapterWrapper.Create(Th095ScoreTests.MakeByteArray(properties));
             var clearData = new Th095ScoreWrapper(chapter);
 
             var allScoreData = new Th095AllScoreDataWrapper();
@@ -61,7 +61,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th095AllScoreDataSetClearDataTestTwice() => TestUtils.Wrap(() =>
         {
             var properties = Th095ScoreTests.ValidProperties;
-            var chapter = Th095ChapterWrapper<Th095Converter>.Create(Th095ScoreTests.MakeByteArray(properties));
+            var chapter = Th095ChapterWrapper.Create(Th095ScoreTests.MakeByteArray(properties));
             var clearData1 = new Th095ScoreWrapper(chapter);
             var clearData2 = new Th095ScoreWrapper(chapter);
 
@@ -76,7 +76,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th095AllScoreDataSetStatusTest() => TestUtils.Wrap(() =>
         {
-            var chapter = Th095ChapterWrapper<Th095Converter>.Create(
+            var chapter = Th095ChapterWrapper.Create(
                 Th095StatusTests.MakeByteArray(Th095StatusTests.ValidProperties));
             var status = new Th095StatusWrapper(chapter);
 
@@ -89,7 +89,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th095AllScoreDataSetStatusTestTwice() => TestUtils.Wrap(() =>
         {
-            var chapter = Th095ChapterWrapper<Th095Converter>.Create(
+            var chapter = Th095ChapterWrapper.Create(
                 Th095StatusTests.MakeByteArray(Th095StatusTests.ValidProperties));
             var status1 = new Th095StatusWrapper(chapter);
             var status2 = new Th095StatusWrapper(chapter);

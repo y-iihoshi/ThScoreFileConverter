@@ -16,7 +16,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         private readonly PrivateObject pobj = null;
 
-        public Th125ScoreWrapper(Th095ChapterWrapper<Th125Converter> chapter)
+        public Th125ScoreWrapper(Th095ChapterWrapper chapter)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { chapter?.Target });
         public Th125ScoreWrapper(object obj)
             => this.pobj = new PrivateObject(obj);
@@ -51,7 +51,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public int? BestshotScore
             => this.pobj.GetProperty(nameof(this.BestshotScore)) as int?;
 
-        public static bool CanInitialize(Th095ChapterWrapper<Th125Converter> chapter)
+        public static bool CanInitialize(Th095ChapterWrapper chapter)
             => (bool)PrivateType.InvokeStatic(
                 nameof(CanInitialize), new object[] { chapter.Target }, CultureInfo.InvariantCulture);
     }

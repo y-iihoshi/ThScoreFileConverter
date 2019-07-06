@@ -386,7 +386,7 @@ namespace ThScoreFileConverter.Models
                 var header = new Header();
                 header.ReadFrom(reader);
                 var remainSize = header.DecodedBodySize;
-                var chapter = new Chapter();
+                var chapter = new Th095.Chapter();
 
                 try
                 {
@@ -413,7 +413,7 @@ namespace ThScoreFileConverter.Models
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         private static AllScoreData Read(Stream input)
         {
-            var dictionary = new Dictionary<string, Action<AllScoreData, Chapter>>
+            var dictionary = new Dictionary<string, Action<AllScoreData, Th095.Chapter>>
             {
                 { Score.ValidSignature,  (data, ch) => data.Set(new Score(ch))  },
                 { Status.ValidSignature, (data, ch) => data.Set(new Status(ch)) },
@@ -422,7 +422,7 @@ namespace ThScoreFileConverter.Models
             using (var reader = new BinaryReader(input, Encoding.UTF8, true))
             {
                 var allScoreData = new AllScoreData();
-                var chapter = new Chapter();
+                var chapter = new Th095.Chapter();
 
                 var header = new Header();
                 header.ReadFrom(reader);
@@ -433,7 +433,7 @@ namespace ThScoreFileConverter.Models
                     while (true)
                     {
                         chapter.ReadFrom(reader);
-                        if (dictionary.TryGetValue(chapter.Signature, out Action<AllScoreData, Chapter> setChapter))
+                        if (dictionary.TryGetValue(chapter.Signature, out Action<AllScoreData, Th095.Chapter> setChapter))
                             setChapter(allScoreData, chapter);
                     }
                 }
@@ -961,81 +961,13 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class Chapter : IBinaryReadable
-        {
-            public const int SignatureSize = 2;
-
-            public Chapter()
-            {
-                this.Signature = string.Empty;
-                this.Version = 0;
-                this.Size = 0;
-                this.Checksum = 0;
-                this.Data = new byte[] { };
-            }
-
-            protected Chapter(Chapter chapter)
-            {
-                if (chapter is null)
-                    throw new ArgumentNullException(nameof(chapter));
-
-                this.Signature = chapter.Signature;
-                this.Version = chapter.Version;
-                this.Size = chapter.Size;
-                this.Checksum = chapter.Checksum;
-                this.Data = new byte[chapter.Data.Length];
-                chapter.Data.CopyTo(this.Data, 0);
-            }
-
-            public string Signature { get; private set; }
-
-            public ushort Version { get; private set; }
-
-            public int Size { get; private set; }
-
-            public uint Checksum { get; private set; }
-
-            public bool IsValid
-            {
-                get
-                {
-                    var sigVer = Encoding.Default.GetBytes(this.Signature)
-                        .Concat(BitConverter.GetBytes(this.Version))
-                        .ToArray();
-                    if (sigVer.Length != sizeof(uint))
-                        return false;
-                    long sum = BitConverter.ToUInt32(sigVer, 0) + this.Size;
-                    if (this.Data.Length % sizeof(uint) != 0)
-                        return false;
-                    for (var index = 0; index < this.Data.Length; index += sizeof(uint))
-                        sum += BitConverter.ToUInt32(this.Data, index);
-                    return (uint)sum == this.Checksum;
-                }
-            }
-
-            protected byte[] Data { get; private set; }
-
-            public void ReadFrom(BinaryReader reader)
-            {
-                if (reader is null)
-                    throw new ArgumentNullException(nameof(reader));
-
-                this.Signature = Encoding.Default.GetString(reader.ReadExactBytes(SignatureSize));
-                this.Version = reader.ReadUInt16();
-                this.Size = reader.ReadInt32();
-                this.Checksum = reader.ReadUInt32();
-                this.Data = reader.ReadExactBytes(
-                    this.Size - SignatureSize - sizeof(ushort) - sizeof(int) - sizeof(uint));
-            }
-        }
-
-        private class Score : Chapter   // per scene
+        private class Score : Th095.Chapter   // per scene
         {
             public const string ValidSignature = "SC";
             public const ushort ValidVersion = 0x0000;
             public const int ValidSize = 0x00000048;
 
-            public Score(Chapter chapter)
+            public Score(Th095.Chapter chapter)
                 : base(chapter)
             {
                 if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
@@ -1079,7 +1011,7 @@ namespace ThScoreFileConverter.Models
 
             public int BestshotScore { get; private set; }
 
-            public static bool CanInitialize(Chapter chapter)
+            public static bool CanInitialize(Th095.Chapter chapter)
             {
                 return chapter.Signature.Equals(ValidSignature, StringComparison.Ordinal)
                     && (chapter.Version == ValidVersion)
@@ -1087,13 +1019,13 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class Status : Chapter
+        private class Status : Th095.Chapter
         {
             public const string ValidSignature = "ST";
             public const ushort ValidVersion = 0x0001;
             public const int ValidSize = 0x00000474;
 
-            public Status(Chapter chapter)
+            public Status(Th095.Chapter chapter)
                 : base(chapter)
             {
                 if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
@@ -1122,7 +1054,7 @@ namespace ThScoreFileConverter.Models
 
             public int TotalPlayTime { get; private set; }  // unit: [0.01s]
 
-            public static bool CanInitialize(Chapter chapter)
+            public static bool CanInitialize(Th095.Chapter chapter)
             {
                 return chapter.Signature.Equals(ValidSignature, StringComparison.Ordinal)
                     && (chapter.Version == ValidVersion)

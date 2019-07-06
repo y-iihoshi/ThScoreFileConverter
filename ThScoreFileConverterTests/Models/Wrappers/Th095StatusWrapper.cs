@@ -16,7 +16,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         private readonly PrivateObject pobj = null;
 
-        public Th095StatusWrapper(Th095ChapterWrapper<Th095Converter> chapter)
+        public Th095StatusWrapper(Th095ChapterWrapper chapter)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { chapter?.Target });
         public Th095StatusWrapper(object obj)
             => this.pobj = new PrivateObject(obj);
@@ -38,7 +38,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public IReadOnlyCollection<byte> LastName
             => this.pobj.GetProperty(nameof(this.LastName)) as byte[];
 
-        public static bool CanInitialize(Th095ChapterWrapper<Th095Converter> chapter)
+        public static bool CanInitialize(Th095ChapterWrapper chapter)
             => (bool)PrivateType.InvokeStatic(
                 nameof(CanInitialize), new object[] { chapter.Target }, CultureInfo.InvariantCulture);
     }

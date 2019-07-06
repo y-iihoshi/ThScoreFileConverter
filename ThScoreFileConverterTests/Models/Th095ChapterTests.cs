@@ -46,8 +46,7 @@ namespace ThScoreFileConverterTests.Models
                 properties.checksum,
                 properties.data);
 
-        internal static void Validate<TParent>(in Th095ChapterWrapper<TParent> chapter, in Properties properties)
-            where TParent : ThConverter
+        internal static void Validate(in Th095ChapterWrapper chapter, in Properties properties)
         {
             Assert.AreEqual(properties.signature, chapter.Signature);
             Assert.AreEqual(properties.version, chapter.Version);
@@ -56,65 +55,62 @@ namespace ThScoreFileConverterTests.Models
             CollectionAssert.AreEqual(properties.data, chapter.Data.ToArray());
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        internal static void ChapterTestHelper<TParent>()
-            where TParent : ThConverter
+        [TestMethod]
+        public void Th095ChapterTest()
             => TestUtils.Wrap(() =>
             {
-                var chapter = new Th095ChapterWrapper<TParent>();
+                var chapter = new Th095ChapterWrapper();
 
                 Validate(chapter, DefaultProperties);
                 Assert.IsFalse(chapter.IsValid.Value);
             });
 
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        internal static void ChapterTestCopyHelper<TParent>()
-            where TParent : ThConverter
+        [TestMethod]
+        public void Th095ChapterTestCopy()
             => TestUtils.Wrap(() =>
             {
-                var chapter1 = new Th095ChapterWrapper<TParent>();
-                var chapter2 = new Th095ChapterWrapper<TParent>(chapter1);
+                var chapter1 = new Th095ChapterWrapper();
+                var chapter2 = new Th095ChapterWrapper(chapter1);
 
                 Validate(chapter2, DefaultProperties);
                 Assert.IsFalse(chapter2.IsValid.Value);
             });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "chapter")]
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        internal static void ChapterTestNullHelper<TParent>()
-            where TParent : ThConverter
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Th095ChapterTestNull()
             => TestUtils.Wrap(() =>
             {
-                var chapter = new Th095ChapterWrapper<TParent>(null);
+                var chapter = new Th095ChapterWrapper(null);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        internal static void ReadFromTestHelper<TParent>()
-            where TParent : ThConverter
+        [TestMethod]
+        public void Th095ChapterReadFromTest()
             => TestUtils.Wrap(() =>
             {
-                var chapter = Th095ChapterWrapper<TParent>.Create(MakeByteArray(ValidProperties));
+                var chapter = Th095ChapterWrapper.Create(MakeByteArray(ValidProperties));
 
                 Validate(chapter, ValidProperties);
                 Assert.IsTrue(chapter.IsValid.Value);
             });
 
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        internal static void ReadFromTestNullHelper<TParent>()
-            where TParent : ThConverter
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Th095ChapterReadFromTestNull()
             => TestUtils.Wrap(() =>
             {
-                var chapter = new Th095ChapterWrapper<TParent>();
+                var chapter = new Th095ChapterWrapper();
                 chapter.ReadFrom(null);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        internal static void ReadFromTestEmptySignatureHelper<TParent>()
-            where TParent : ThConverter
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Th095ChapterReadFromTestEmptySignature()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -126,14 +122,14 @@ namespace ThScoreFileConverterTests.Models
 
                 // The actual value of the Size property becomes negative,
                 // so ArgumentOutOfRangeException will be thrown.
-                Th095ChapterWrapper<TParent>.Create(MakeByteArray(properties));
+                Th095ChapterWrapper.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        internal static void ReadFromTestShortenedSignatureHelper<TParent>()
-            where TParent : ThConverter
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Th095ChapterReadFromTestShortenedSignature()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -145,14 +141,14 @@ namespace ThScoreFileConverterTests.Models
 
                 // The actual value of the Size property becomes negative,
                 // so ArgumentOutOfRangeException will be thrown.
-                Th095ChapterWrapper<TParent>.Create(MakeByteArray(properties));
+                Th095ChapterWrapper.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        internal static void ReadFromTestExceededSignatureHelper<TParent>()
-            where TParent : ThConverter
+        [TestMethod]
+        [ExpectedException(typeof(EndOfStreamException))]
+        public void Th095ChapterReadFromTestExceededSignature()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -164,46 +160,45 @@ namespace ThScoreFileConverterTests.Models
 
                 // The actual value of the Size property becomes too large,
                 // so EndOfStreamException will be thrown.
-                Th095ChapterWrapper<TParent>.Create(MakeByteArray(properties));
+                Th095ChapterWrapper.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        internal static void ReadFromTestNegativeSizeHelper<TParent>()
-            where TParent : ThConverter
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Th095ChapterReadFromTestNegativeSize()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
                 properties.size = -1;
 
-                Th095ChapterWrapper<TParent>.Create(MakeByteArray(properties));
+                Th095ChapterWrapper.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        internal static void ReadFromTestZeroSizeHelper<TParent>()
-            where TParent : ThConverter
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Th095ChapterReadFromTestZeroSize()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
                 properties.size = 0;
 
-                Th095ChapterWrapper<TParent>.Create(MakeByteArray(properties));
+                Th095ChapterWrapper.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        internal static void ReadFromTestShortenedSizeHelper<TParent>()
-            where TParent : ThConverter
+        [TestMethod]
+        public void Th095ChapterReadFromTestShortenedSize()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
                 --properties.size;
 
-                var chapter = Th095ChapterWrapper<TParent>.Create(MakeByteArray(properties));
+                var chapter = Th095ChapterWrapper.Create(MakeByteArray(properties));
 
                 Assert.AreEqual(properties.signature, chapter.Signature);
                 Assert.AreEqual(properties.version, chapter.Version);
@@ -213,205 +208,57 @@ namespace ThScoreFileConverterTests.Models
                 Assert.IsFalse(chapter.IsValid.Value);
             });
 
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        internal static void ReadFromTestExceededSizeHelper<TParent>()
-            where TParent : ThConverter
+        [TestMethod]
+        [ExpectedException(typeof(EndOfStreamException))]
+        public void Th095ChapterReadFromTestExceededSize()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
                 ++properties.size;
 
-                Th095ChapterWrapper<TParent>.Create(MakeByteArray(properties));
+                Th095ChapterWrapper.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        internal static void ReadFromTestInvalidChecksumHelper<TParent>()
-            where TParent : ThConverter
+        [TestMethod]
+        public void Th095ChapterReadFromTestInvalidChecksum()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
                 --properties.checksum;
 
-                var chapter = Th095ChapterWrapper<TParent>.Create(MakeByteArray(properties));
+                var chapter = Th095ChapterWrapper.Create(MakeByteArray(properties));
 
                 Validate(chapter, properties);
                 Assert.IsFalse(chapter.IsValid.Value);
             });
 
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        internal static void ReadFromTestEmptyDataHelper<TParent>()
-            where TParent : ThConverter
+        [TestMethod]
+        [ExpectedException(typeof(EndOfStreamException))]
+        public void Th095ChapterReadFromTestEmptyData()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
                 properties.data = new byte[] { };
 
-                Th095ChapterWrapper<TParent>.Create(MakeByteArray(properties));
+                Th095ChapterWrapper.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        internal static void ReadFromTestMisalignedDataHelper<TParent>()
-            where TParent : ThConverter
+        [TestMethod]
+        public void Th095ChapterReadFromTestMisalignedData()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
                 --properties.size;
                 properties.data = properties.data.Take(properties.data.Length - 1).ToArray();
 
-                var chapter = Th095ChapterWrapper<TParent>.Create(MakeByteArray(properties));
+                var chapter = Th095ChapterWrapper.Create(MakeByteArray(properties));
 
                 Validate(chapter, properties);
                 Assert.IsFalse(chapter.IsValid.Value);
             });
-
-        #region Th095
-
-        [TestMethod]
-        public void Th095ChapterTest()
-            => ChapterTestHelper<Th095Converter>();
-
-        [TestMethod]
-        public void Th095ChapterTestCopy()
-            => ChapterTestCopyHelper<Th095Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Th095ChapterTestNull()
-            => ChapterTestNullHelper<Th095Converter>();
-
-        [TestMethod]
-        public void Th095ChapterReadFromTest()
-            => ReadFromTestHelper<Th095Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Th095ChapterReadFromTestNull()
-            => ReadFromTestNullHelper<Th095Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void Th095ChapterReadFromTestEmptySignature()
-            => ReadFromTestEmptySignatureHelper<Th095Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void Th095ChapterReadFromTestShortenedSignature()
-            => ReadFromTestShortenedSignatureHelper<Th095Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
-        public void Th095ChapterReadFromTestExceededSignature()
-            => ReadFromTestExceededSignatureHelper<Th095Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void Th095ChapterReadFromTestNegativeSize()
-            => ReadFromTestNegativeSizeHelper<Th095Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void Th095ChapterReadFromTestZeroSize()
-            => ReadFromTestZeroSizeHelper<Th095Converter>();
-
-        [TestMethod]
-        public void Th095ChapterReadFromTestShortenedSize()
-            => ReadFromTestShortenedSizeHelper<Th095Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
-        public void Th095ChapterReadFromTestExceededSize()
-            => ReadFromTestExceededSizeHelper<Th095Converter>();
-
-        [TestMethod]
-        public void Th095ChapterReadFromTestInvalidChecksum()
-            => ReadFromTestInvalidChecksumHelper<Th095Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
-        public void Th095ChapterReadFromTestEmptyData()
-            => ReadFromTestEmptyDataHelper<Th095Converter>();
-
-        [TestMethod]
-        public void Th095ChapterReadFromTestMisalignedData()
-            => ReadFromTestMisalignedDataHelper<Th095Converter>();
-
-        #endregion
-
-        #region Th125
-
-        [TestMethod]
-        public void Th125ChapterTest()
-            => ChapterTestHelper<Th125Converter>();
-
-        [TestMethod]
-        public void Th125ChapterTestCopy()
-            => ChapterTestCopyHelper<Th125Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Th125ChapterTestNull()
-            => ChapterTestNullHelper<Th125Converter>();
-
-        [TestMethod]
-        public void Th125ChapterReadFromTest()
-            => ReadFromTestHelper<Th125Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Th125ChapterReadFromTestNull()
-            => ReadFromTestNullHelper<Th125Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void Th125ChapterReadFromTestEmptySignature()
-            => ReadFromTestEmptySignatureHelper<Th125Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void Th125ChapterReadFromTestShortenedSignature()
-            => ReadFromTestShortenedSignatureHelper<Th125Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
-        public void Th125ChapterReadFromTestExceededSignature()
-            => ReadFromTestExceededSignatureHelper<Th125Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void Th125ChapterReadFromTestNegativeSize()
-            => ReadFromTestNegativeSizeHelper<Th125Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void Th125ChapterReadFromTestZeroSize()
-            => ReadFromTestZeroSizeHelper<Th125Converter>();
-
-        [TestMethod]
-        public void Th125ChapterReadFromTestShortenedSize()
-            => ReadFromTestShortenedSizeHelper<Th125Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
-        public void Th125ChapterReadFromTestExceededSize()
-            => ReadFromTestExceededSizeHelper<Th125Converter>();
-
-        [TestMethod]
-        public void Th125ChapterReadFromTestInvalidChecksum()
-            => ReadFromTestInvalidChecksumHelper<Th125Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
-        public void Th125ChapterReadFromTestEmptyData()
-            => ReadFromTestEmptyDataHelper<Th125Converter>();
-
-        [TestMethod]
-        public void Th125ChapterReadFromTestMisalignedData()
-            => ReadFromTestMisalignedDataHelper<Th125Converter>();
-
-        #endregion
     }
 }
