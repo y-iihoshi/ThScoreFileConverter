@@ -109,12 +109,12 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             }
         }
 
-        public Th07VersionInfoWrapper<Th07Converter> VersionInfo
+        public Th07VersionInfoWrapper VersionInfo
         {
             get
             {
                 var info = this.pobj.GetProperty(nameof(VersionInfo));
-                return (info != null) ? new Th07VersionInfoWrapper<Th07Converter>(info) : null;
+                return (info != null) ? new Th07VersionInfoWrapper(info) : null;
             }
         }
 
@@ -132,7 +132,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.Invoke(nameof(Set), new object[] { status.Target }, CultureInfo.InvariantCulture);
         public void Set(Th07LastNameWrapper name)
             => this.pobj.Invoke(nameof(Set), new object[] { name.Target }, CultureInfo.InvariantCulture);
-        public void Set(Th07VersionInfoWrapper<Th07Converter> info)
+        public void Set(Th07VersionInfoWrapper info)
             => this.pobj.Invoke(nameof(Set), new object[] { info.Target }, CultureInfo.InvariantCulture);
     }
 }

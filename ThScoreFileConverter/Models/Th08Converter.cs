@@ -552,7 +552,7 @@ namespace ThScoreFileConverter.Models
                                 if (chapter.FirstByteOfData != 0x01)
                                     return false;
                                 break;
-                            case VersionInfo.ValidSignature:
+                            case Th07.VersionInfo.ValidSignature:
                                 if (chapter.FirstByteOfData != 0x01)
                                     return false;
                                 //// th08.exe does something more things here...
@@ -578,15 +578,15 @@ namespace ThScoreFileConverter.Models
         {
             var dictionary = new Dictionary<string, Action<AllScoreData, Th06.Chapter>>
             {
-                { Header.ValidSignature,        (data, ch) => data.Set(new Header(ch))        },
-                { HighScore.ValidSignature,     (data, ch) => data.Set(new HighScore(ch))     },
-                { ClearData.ValidSignature,     (data, ch) => data.Set(new ClearData(ch))     },
-                { CardAttack.ValidSignature,    (data, ch) => data.Set(new CardAttack(ch))    },
-                { PracticeScore.ValidSignature, (data, ch) => data.Set(new PracticeScore(ch)) },
-                { FLSP.ValidSignature,          (data, ch) => data.Set(new FLSP(ch))          },
-                { PlayStatus.ValidSignature,    (data, ch) => data.Set(new PlayStatus(ch))    },
-                { Th07.LastName.ValidSignature, (data, ch) => data.Set(new Th07.LastName(ch)) },
-                { VersionInfo.ValidSignature,   (data, ch) => data.Set(new VersionInfo(ch))   },
+                { Header.ValidSignature,           (data, ch) => data.Set(new Header(ch))           },
+                { HighScore.ValidSignature,        (data, ch) => data.Set(new HighScore(ch))        },
+                { ClearData.ValidSignature,        (data, ch) => data.Set(new ClearData(ch))        },
+                { CardAttack.ValidSignature,       (data, ch) => data.Set(new CardAttack(ch))       },
+                { PracticeScore.ValidSignature,    (data, ch) => data.Set(new PracticeScore(ch))    },
+                { FLSP.ValidSignature,             (data, ch) => data.Set(new FLSP(ch))             },
+                { PlayStatus.ValidSignature,       (data, ch) => data.Set(new PlayStatus(ch))       },
+                { Th07.LastName.ValidSignature,    (data, ch) => data.Set(new Th07.LastName(ch))    },
+                { Th07.VersionInfo.ValidSignature, (data, ch) => data.Set(new Th07.VersionInfo(ch)) },
             };
 
             using (var reader = new BinaryReader(input, Encoding.UTF8, true))
@@ -1225,7 +1225,7 @@ namespace ThScoreFileConverter.Models
 
             public Th07.LastName LastName { get; private set; }
 
-            public VersionInfo VersionInfo { get; private set; }
+            public Th07.VersionInfo VersionInfo { get; private set; }
 
             public void Set(Header header)
             {
@@ -1276,7 +1276,7 @@ namespace ThScoreFileConverter.Models
                 this.LastName = name;
             }
 
-            public void Set(VersionInfo info)
+            public void Set(Th07.VersionInfo info)
             {
                 this.VersionInfo = info;
             }
@@ -1693,33 +1693,6 @@ namespace ThScoreFileConverter.Models
                 this.TotalContinue = reader.ReadInt32();
                 this.TotalPractice = reader.ReadInt32();
             }
-        }
-
-        private class VersionInfo : Th06.Chapter
-        {
-            public const string ValidSignature = "VRSM";
-            public const short ValidSize = 0x001C;
-
-            public VersionInfo(Th06.Chapter chapter)
-                : base(chapter)
-            {
-                if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
-                    throw new InvalidDataException("Signature");
-                if (this.Size1 != ValidSize)
-                    throw new InvalidDataException("Size1");
-
-                using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-                {
-                    reader.ReadUInt32();    // always 0x00000001?
-                    this.Version = reader.ReadExactBytes(6);
-                    reader.ReadExactBytes(3);
-                    reader.ReadExactBytes(3);
-                    reader.ReadUInt32();
-                }
-            }
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] Version { get; private set; }     // .Length = 6, null-terminated
         }
     }
 }

@@ -3,7 +3,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using ThScoreFileConverter.Models;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -34,8 +33,7 @@ namespace ThScoreFileConverterTests.Models
             => TestUtils.MakeByteArray(
                 properties.signature.ToCharArray(), properties.size1, properties.size2, MakeData(properties));
 
-        internal static void Validate<TParent>(in Th07VersionInfoWrapper<TParent> versionInfo, in Properties properties)
-            where TParent : ThConverter
+        internal static void Validate(in Th07VersionInfoWrapper versionInfo, in Properties properties)
         {
             var data = MakeData(properties);
 
@@ -47,128 +45,58 @@ namespace ThScoreFileConverterTests.Models
             CollectionAssert.AreEqual(properties.version, versionInfo.Version.ToArray());
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        internal static void VersionInfoTestChapterHelper<TParent>()
-            where TParent : ThConverter
+        [TestMethod]
+        public void Th07VersionInfoTestChapter()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
 
                 var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
-                var versionInfo = new Th07VersionInfoWrapper<TParent>(chapter);
+                var versionInfo = new Th07VersionInfoWrapper(chapter);
 
                 Validate(versionInfo, properties);
             });
 
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "versionInfo")]
-        internal static void VersionInfoTestNullChapterHelper<TParent>()
-            where TParent : ThConverter
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Th07VersionInfoTestNullChapter()
             => TestUtils.Wrap(() =>
             {
-                var versionInfo = new Th07VersionInfoWrapper<TParent>(null);
+                var versionInfo = new Th07VersionInfoWrapper(null);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "versionInfo")]
-        internal static void VersionInfoTestInvalidSignatureHelper<TParent>()
-            where TParent : ThConverter
+        [TestMethod]
+        [ExpectedException(typeof(InvalidDataException))]
+        public void Th07VersionInfoTestInvalidSignature()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
                 properties.signature = properties.signature.ToLowerInvariant();
 
                 var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
-                var versionInfo = new Th07VersionInfoWrapper<TParent>(chapter);
+                var versionInfo = new Th07VersionInfoWrapper(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "versionInfo")]
-        internal static void VersionInfoTestInvalidSize1Helper<TParent>()
-            where TParent : ThConverter
+        [TestMethod]
+        [ExpectedException(typeof(InvalidDataException))]
+        public void Th07VersionInfoTestInvalidSize1()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
                 --properties.size1;
 
                 var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
-                var versionInfo = new Th07VersionInfoWrapper<TParent>(chapter);
+                var versionInfo = new Th07VersionInfoWrapper(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
-
-        #region Th07
-
-        [TestMethod]
-        public void Th07VersionInfoTestChapter()
-            => VersionInfoTestChapterHelper<Th07Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Th07VersionInfoTestNullChapter()
-            => VersionInfoTestNullChapterHelper<Th07Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
-        public void Th07VersionInfoTestInvalidSignature()
-            => VersionInfoTestInvalidSignatureHelper<Th07Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
-        public void Th07VersionInfoTestInvalidSize1()
-            => VersionInfoTestInvalidSize1Helper<Th07Converter>();
-
-        #endregion
-
-        #region Th08
-
-        [TestMethod]
-        public void Th08VersionInfoTestChapter()
-            => VersionInfoTestChapterHelper<Th08Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Th08VersionInfoTestNullChapter()
-            => VersionInfoTestNullChapterHelper<Th08Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
-        public void Th08VersionInfoTestInvalidSignature()
-            => VersionInfoTestInvalidSignatureHelper<Th08Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
-        public void Th08VersionInfoTestInvalidSize1()
-            => VersionInfoTestInvalidSize1Helper<Th08Converter>();
-
-        #endregion
-
-        #region Th09
-
-        [TestMethod]
-        public void Th09VersionInfoTestChapter()
-            => VersionInfoTestChapterHelper<Th09Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Th09VersionInfoTestNullChapter()
-            => VersionInfoTestNullChapterHelper<Th09Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
-        public void Th09VersionInfoTestInvalidSignature()
-            => VersionInfoTestInvalidSignatureHelper<Th09Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
-        public void Th09VersionInfoTestInvalidSize1()
-            => VersionInfoTestInvalidSize1Helper<Th09Converter>();
-
-        #endregion
     }
 }
