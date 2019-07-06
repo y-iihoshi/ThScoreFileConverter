@@ -1,17 +1,14 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
-    // NOTE: Setting the accessibility as public causes CS0703.
-    internal sealed class Th07LastNameWrapper<TParent>
-        where TParent : ThConverter
+    public sealed class Th07LastNameWrapper
     {
-        private static Type ParentType = typeof(TParent);
-        private static string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
-        private static string TypeNameToTest = ParentType.FullName + "+LastName";
+        private static Type LastNameType = typeof(ThScoreFileConverter.Models.Th07.LastName);
+        private static string AssemblyNameToTest = LastNameType.Assembly.GetName().Name;
+        private static string TypeNameToTest = LastNameType.FullName;
 
         private readonly PrivateObject pobj = null;
 

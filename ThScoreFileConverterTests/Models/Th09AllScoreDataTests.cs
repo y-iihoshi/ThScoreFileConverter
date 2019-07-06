@@ -143,7 +143,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var chapter = Th06ChapterWrapper.Create(
                 Th07LastNameTests.MakeByteArray(Th07LastNameTests.ValidProperties));
-            var header = new Th07LastNameWrapper<Th09Converter>(chapter);
+            var header = new Th07LastNameWrapper(chapter);
 
             var allScoreData = new Th09AllScoreDataWrapper();
             allScoreData.Set(header);
@@ -156,8 +156,8 @@ namespace ThScoreFileConverterTests.Models
         {
             var chapter = Th06ChapterWrapper.Create(
                 Th07LastNameTests.MakeByteArray(Th07LastNameTests.ValidProperties));
-            var header1 = new Th07LastNameWrapper<Th09Converter>(chapter);
-            var header2 = new Th07LastNameWrapper<Th09Converter>(chapter);
+            var header1 = new Th07LastNameWrapper(chapter);
+            var header2 = new Th07LastNameWrapper(chapter);
 
             var allScoreData = new Th09AllScoreDataWrapper();
             allScoreData.Set(header1);

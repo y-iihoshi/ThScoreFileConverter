@@ -7,8 +7,7 @@ using System.IO;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
-    // NOTE: Setting the accessibility as public causes CS0703.
-    internal sealed class Th06ChapterWrapper
+    public sealed class Th06ChapterWrapper
     {
         private static Type ChapterType = typeof(ThScoreFileConverter.Models.Th06.Chapter);
         private static string AssemblyNameToTest = ChapterType.Assembly.GetName().Name;

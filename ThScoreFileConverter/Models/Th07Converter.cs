@@ -456,7 +456,7 @@ namespace ThScoreFileConverter.Models
                 { CardAttack.ValidSignature,    (data, ch) => data.Set(new CardAttack(ch))    },
                 { PracticeScore.ValidSignature, (data, ch) => data.Set(new PracticeScore(ch)) },
                 { PlayStatus.ValidSignature,    (data, ch) => data.Set(new PlayStatus(ch))    },
-                { LastName.ValidSignature,      (data, ch) => data.Set(new LastName(ch))      },
+                { Th07.LastName.ValidSignature, (data, ch) => data.Set(new Th07.LastName(ch)) },
                 { VersionInfo.ValidSignature,   (data, ch) => data.Set(new VersionInfo(ch))   },
             };
 
@@ -970,7 +970,7 @@ namespace ThScoreFileConverter.Models
 
             public PlayStatus PlayStatus { get; private set; }
 
-            public LastName LastName { get; private set; }
+            public Th07.LastName LastName { get; private set; }
 
             public VersionInfo VersionInfo { get; private set; }
 
@@ -1026,7 +1026,7 @@ namespace ThScoreFileConverter.Models
                 this.PlayStatus = status;
             }
 
-            public void Set(LastName name)
+            public void Set(Th07.LastName name)
             {
                 this.LastName = name;
             }
@@ -1314,30 +1314,6 @@ namespace ThScoreFileConverter.Models
                 this.TotalContinue = reader.ReadInt32();
                 this.TotalPractice = reader.ReadInt32();
             }
-        }
-
-        private class LastName : Th06.Chapter
-        {
-            public const string ValidSignature = "LSNM";
-            public const short ValidSize = 0x0018;
-
-            public LastName(Th06.Chapter chapter)
-                : base(chapter)
-            {
-                if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
-                    throw new InvalidDataException("Signature");
-                if (this.Size1 != ValidSize)
-                    throw new InvalidDataException("Size1");
-
-                using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-                {
-                    reader.ReadUInt32();    // always 0x00000001?
-                    this.Name = reader.ReadExactBytes(12);
-                }
-            }
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] Name { get; private set; }    // .Length = 12, null-terminated
         }
 
         private class VersionInfo : Th06.Chapter
