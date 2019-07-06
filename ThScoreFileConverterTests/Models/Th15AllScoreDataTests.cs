@@ -48,7 +48,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th15AllScoreDataSetClearDataTest() => TestUtils.Wrap(() =>
         {
             var properties = Th15ClearDataTests.GetValidProperties();
-            var chapter = Th10ChapterWrapper<Th15Converter>.Create(Th15ClearDataTests.MakeByteArray(properties));
+            var chapter = Th10ChapterWrapper.Create(Th15ClearDataTests.MakeByteArray(properties));
             var clearData = new Th15ClearDataWrapper(chapter);
 
             var allScoreData = new Th15AllScoreDataWrapper();
@@ -61,7 +61,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th15AllScoreDataSetClearDataTestTwice() => TestUtils.Wrap(() =>
         {
             var properties = Th15ClearDataTests.GetValidProperties();
-            var chapter = Th10ChapterWrapper<Th15Converter>.Create(Th15ClearDataTests.MakeByteArray(properties));
+            var chapter = Th10ChapterWrapper.Create(Th15ClearDataTests.MakeByteArray(properties));
             var clearData1 = new Th15ClearDataWrapper(chapter);
             var clearData2 = new Th15ClearDataWrapper(chapter);
 
@@ -76,7 +76,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th15AllScoreDataSetStatusTest() => TestUtils.Wrap(() =>
         {
-            var chapter = Th10ChapterWrapper<Th15Converter>.Create(Th128StatusTests.MakeByteArray(
+            var chapter = Th10ChapterWrapper.Create(Th128StatusTests.MakeByteArray(
                 Th128StatusTests.GetValidProperties(1, 0x42C, 17), 0x10, 0x11));
             var status = new Th128StatusWrapper<Th15Converter>(chapter);
 
@@ -89,7 +89,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th15AllScoreDataSetStatusTestTwice() => TestUtils.Wrap(() =>
         {
-            var chapter = Th10ChapterWrapper<Th15Converter>.Create(Th128StatusTests.MakeByteArray(
+            var chapter = Th10ChapterWrapper.Create(Th128StatusTests.MakeByteArray(
                 Th128StatusTests.GetValidProperties(1, 0x42C, 17), 0x10, 0x11));
             var status1 = new Th128StatusWrapper<Th15Converter>(chapter);
             var status2 = new Th128StatusWrapper<Th15Converter>(chapter);

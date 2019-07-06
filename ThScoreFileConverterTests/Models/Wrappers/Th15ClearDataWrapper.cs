@@ -16,7 +16,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         private readonly PrivateObject pobj = null;
 
-        public Th15ClearDataWrapper(Th10ChapterWrapper<Th15Converter> chapter)
+        public Th15ClearDataWrapper(Th10ChapterWrapper chapter)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { chapter?.Target });
         public Th15ClearDataWrapper(object obj)
             => this.pobj = new PrivateObject(obj);
@@ -56,7 +56,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
                 this.Practices.GetType().GetProperty("Item").GetValue(
                     this.Practices, new object[] { levelStagePair.Target }));
 
-        public static bool CanInitialize(Th10ChapterWrapper<Th15Converter> chapter)
+        public static bool CanInitialize(Th10ChapterWrapper chapter)
             => (bool)PrivateType.InvokeStatic(
                 nameof(CanInitialize), new object[] { chapter.Target }, CultureInfo.InvariantCulture);
     }

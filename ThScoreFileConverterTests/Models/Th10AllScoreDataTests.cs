@@ -65,7 +65,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 var properties =
                     Th10ClearDataTests.GetValidProperties<TCharaWithTotal, TStageProgress>(version, size, numCards);
-                var chapter = Th10ChapterWrapper<TParent>.Create(
+                var chapter = Th10ChapterWrapper.Create(
                     Th10ClearDataTests.MakeByteArray<TParent, TCharaWithTotal, TStageProgress>(properties));
                 var clearData = new Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress>(chapter);
 
@@ -84,7 +84,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 var properties =
                     Th10ClearDataTests.GetValidProperties<TCharaWithTotal, TStageProgress>(version, size, numCards);
-                var chapter = Th10ChapterWrapper<TParent>.Create(
+                var chapter = Th10ChapterWrapper.Create(
                     Th10ClearDataTests.MakeByteArray<TParent, TCharaWithTotal, TStageProgress>(properties));
                 var clearData1 = new Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress>(chapter);
                 var clearData2 = new Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress>(chapter);
@@ -104,7 +104,7 @@ namespace ThScoreFileConverterTests.Models
             where TStageProgress : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var chapter = Th10ChapterWrapper<TParent>.Create(
+                var chapter = Th10ChapterWrapper.Create(
                     Th10StatusTests.MakeByteArray(Th10StatusTests.GetValidProperties(version, size, numBgms)));
                 var status = new Th10StatusWrapper<TParent>(chapter);
 
@@ -121,7 +121,7 @@ namespace ThScoreFileConverterTests.Models
             where TStageProgress : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var chapter = Th10ChapterWrapper<TParent>.Create(
+                var chapter = Th10ChapterWrapper.Create(
                     Th10StatusTests.MakeByteArray(Th10StatusTests.GetValidProperties(version, size, numBgms)));
                 var status1 = new Th10StatusWrapper<TParent>(chapter);
                 var status2 = new Th10StatusWrapper<TParent>(chapter);

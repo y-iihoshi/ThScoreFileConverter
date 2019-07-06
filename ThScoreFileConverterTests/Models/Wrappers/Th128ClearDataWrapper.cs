@@ -16,7 +16,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         private readonly PrivateObject pobj = null;
 
-        public Th128ClearDataWrapper(Th10ChapterWrapper<Th128Converter> chapter)
+        public Th128ClearDataWrapper(Th10ChapterWrapper chapter)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { chapter?.Target });
         public Th128ClearDataWrapper(object obj)
             => this.pobj = new PrivateObject(obj);
@@ -54,7 +54,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public IReadOnlyDictionary<ThConverter.Level, int> ClearCounts
             => this.pobj.GetProperty(nameof(ClearCounts)) as Dictionary<ThConverter.Level, int>;
 
-        public static bool CanInitialize(Th10ChapterWrapper<Th128Converter> chapter)
+        public static bool CanInitialize(Th10ChapterWrapper chapter)
             => (bool)PrivateType.InvokeStatic(
                 nameof(CanInitialize), new object[] { chapter.Target }, CultureInfo.InvariantCulture);
     }

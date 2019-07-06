@@ -85,7 +85,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var properties = ValidProperties;
 
-            var chapter = Th10ChapterWrapper<Th143Converter>.Create(MakeByteArray(properties));
+            var chapter = Th10ChapterWrapper.Create(MakeByteArray(properties));
             var itemStatus = new Th143ItemStatusWrapper(chapter);
 
             Validate(itemStatus, properties);
@@ -111,7 +111,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             properties.signature = properties.signature.ToLowerInvariant();
 
-            var chapter = Th10ChapterWrapper<Th143Converter>.Create(MakeByteArray(properties));
+            var chapter = Th10ChapterWrapper.Create(MakeByteArray(properties));
             var itemStatus = new Th143ItemStatusWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -125,7 +125,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             ++properties.version;
 
-            var chapter = Th10ChapterWrapper<Th143Converter>.Create(MakeByteArray(properties));
+            var chapter = Th10ChapterWrapper.Create(MakeByteArray(properties));
             var itemStatus = new Th143ItemStatusWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -139,7 +139,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             --properties.size;
 
-            var chapter = Th10ChapterWrapper<Th143Converter>.Create(MakeByteArray(properties));
+            var chapter = Th10ChapterWrapper.Create(MakeByteArray(properties));
             var itemStatus = new Th143ItemStatusWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -158,7 +158,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             properties.item = TestUtils.Cast<Th143Converter.ItemWithTotal>(item);
 
-            var chapter = Th10ChapterWrapper<Th143Converter>.Create(MakeByteArray(properties));
+            var chapter = Th10ChapterWrapper.Create(MakeByteArray(properties));
             var itemStatus = new Th143ItemStatusWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -176,7 +176,7 @@ namespace ThScoreFileConverterTests.Models
                 var checksum = 0u;
                 var data = new byte[size];
 
-                var chapter = Th10ChapterWrapper<Th143Converter>.Create(
+                var chapter = Th10ChapterWrapper.Create(
                     TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
 
                 Assert.AreEqual(expected, Th143ItemStatusWrapper.CanInitialize(chapter));

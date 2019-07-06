@@ -85,7 +85,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 var properties = Th13ClearDataTests.GetValidProperties<
                     TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(version, size, numCards);
-                var chapter = Th10ChapterWrapper<TParent>.Create(Th13ClearDataTests.MakeByteArray<
+                var chapter = Th10ChapterWrapper.Create(Th13ClearDataTests.MakeByteArray<
                     TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(properties));
                 var clearData =
                     new Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(chapter);
@@ -110,7 +110,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 var properties = Th13ClearDataTests.GetValidProperties<
                     TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(version, size, numCards);
-                var chapter = Th10ChapterWrapper<TParent>.Create(Th13ClearDataTests.MakeByteArray<
+                var chapter = Th10ChapterWrapper.Create(Th13ClearDataTests.MakeByteArray<
                     TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(properties));
                 var clearData1 =
                     new Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(chapter);
@@ -138,7 +138,7 @@ namespace ThScoreFileConverterTests.Models
             where TStProg : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var chapter = Th10ChapterWrapper<TParent>.Create(Th128StatusTests.MakeByteArray(
+                var chapter = Th10ChapterWrapper.Create(Th128StatusTests.MakeByteArray(
                     Th128StatusTests.GetValidProperties(version, size, numBgms), gap1Size, gap2Size));
                 var status = new Th128StatusWrapper<TParent>(chapter);
 
@@ -161,7 +161,7 @@ namespace ThScoreFileConverterTests.Models
             where TStProg : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var chapter = Th10ChapterWrapper<TParent>.Create(Th128StatusTests.MakeByteArray(
+                var chapter = Th10ChapterWrapper.Create(Th128StatusTests.MakeByteArray(
                     Th128StatusTests.GetValidProperties(version, size, numBgms), gap1Size, gap2Size));
                 var status1 = new Th128StatusWrapper<TParent>(chapter);
                 var status2 = new Th128StatusWrapper<TParent>(chapter);

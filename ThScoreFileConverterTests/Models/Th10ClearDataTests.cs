@@ -170,7 +170,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 var properties = GetValidProperties<TCharaWithTotal, TStageProgress>(version, size, numCards);
 
-                var chapter = Th10ChapterWrapper<TParent>.Create(
+                var chapter = Th10ChapterWrapper.Create(
                     MakeByteArray<TParent, TCharaWithTotal, TStageProgress>(properties));
                 var clearData = new Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress>(chapter);
 
@@ -203,7 +203,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = GetValidProperties<TCharaWithTotal, TStageProgress>(version, size, numCards);
                 properties.signature = properties.signature.ToLowerInvariant(); 
 
-                var chapter = Th10ChapterWrapper<TParent>.Create(
+                var chapter = Th10ChapterWrapper.Create(
                     MakeByteArray<TParent, TCharaWithTotal, TStageProgress>(properties));
                 var clearData = new Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress>(chapter);
 
@@ -221,7 +221,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = GetValidProperties<TCharaWithTotal, TStageProgress>(version, size, numCards);
                 ++properties.version;
 
-                var chapter = Th10ChapterWrapper<TParent>.Create(
+                var chapter = Th10ChapterWrapper.Create(
                     MakeByteArray<TParent, TCharaWithTotal, TStageProgress>(properties));
                 var clearData = new Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress>(chapter);
 
@@ -239,7 +239,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = GetValidProperties<TCharaWithTotal, TStageProgress>(version, size, numCards);
                 --properties.size;
 
-                var chapter = Th10ChapterWrapper<TParent>.Create(
+                var chapter = Th10ChapterWrapper.Create(
                     MakeByteArray<TParent, TCharaWithTotal, TStageProgress>(properties));
                 var clearData = new Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress>(chapter);
 
@@ -256,7 +256,7 @@ namespace ThScoreFileConverterTests.Models
                 var checksum = 0u;
                 var data = new byte[size];
 
-                var chapter = Th10ChapterWrapper<TParent>.Create(
+                var chapter = Th10ChapterWrapper.Create(
                     TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
 
                 Assert.AreEqual(

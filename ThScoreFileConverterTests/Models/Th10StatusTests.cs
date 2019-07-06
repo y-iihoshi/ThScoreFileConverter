@@ -73,7 +73,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 var properties = GetValidProperties(version, size, numBgms);
 
-                var chapter = Th10ChapterWrapper<TParent>.Create(MakeByteArray(properties));
+                var chapter = Th10ChapterWrapper.Create(MakeByteArray(properties));
                 var status = new Th10StatusWrapper<TParent>(chapter);
 
                 Validate(status, properties);
@@ -99,7 +99,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = GetValidProperties(version, size, numBgms);
                 properties.signature = properties.signature.ToLowerInvariant(); 
 
-                var chapter = Th10ChapterWrapper<TParent>.Create(MakeByteArray(properties));
+                var chapter = Th10ChapterWrapper.Create(MakeByteArray(properties));
                 var status = new Th10StatusWrapper<TParent>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
@@ -113,7 +113,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = GetValidProperties(version, size, numBgms);
                 ++properties.version;
 
-                var chapter = Th10ChapterWrapper<TParent>.Create(MakeByteArray(properties));
+                var chapter = Th10ChapterWrapper.Create(MakeByteArray(properties));
                 var status = new Th10StatusWrapper<TParent>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
@@ -127,7 +127,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = GetValidProperties(version, size, numBgms);
                 ++properties.size;
 
-                var chapter = Th10ChapterWrapper<TParent>.Create(MakeByteArray(properties));
+                var chapter = Th10ChapterWrapper.Create(MakeByteArray(properties));
                 var status = new Th10StatusWrapper<TParent>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
@@ -140,7 +140,7 @@ namespace ThScoreFileConverterTests.Models
                 var checksum = 0u;
                 var data = new byte[size];
 
-                var chapter = Th10ChapterWrapper<TParent>.Create(
+                var chapter = Th10ChapterWrapper.Create(
                     TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
 
                 Assert.AreEqual(expected, Th10StatusWrapper<TParent>.CanInitialize(chapter));

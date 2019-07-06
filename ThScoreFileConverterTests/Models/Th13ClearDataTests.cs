@@ -203,7 +203,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties =
                     GetValidProperties<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(version, size, numCards);
 
-                var chapter = Th10ChapterWrapper<TParent>.Create(
+                var chapter = Th10ChapterWrapper.Create(
                     MakeByteArray<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(properties));
                 var clearData =
                     new Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(chapter);
@@ -249,7 +249,7 @@ namespace ThScoreFileConverterTests.Models
                     GetValidProperties<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(version, size, numCards);
                 properties.signature = properties.signature.ToLowerInvariant(); 
 
-                var chapter = Th10ChapterWrapper<TParent>.Create(
+                var chapter = Th10ChapterWrapper.Create(
                     MakeByteArray<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(properties));
                 var clearData =
                     new Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(chapter);
@@ -274,7 +274,7 @@ namespace ThScoreFileConverterTests.Models
                     GetValidProperties<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(version, size, numCards);
                 ++properties.version;
 
-                var chapter = Th10ChapterWrapper<TParent>.Create(
+                var chapter = Th10ChapterWrapper.Create(
                     MakeByteArray<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(properties));
                 var clearData =
                     new Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(chapter);
@@ -299,7 +299,7 @@ namespace ThScoreFileConverterTests.Models
                     GetValidProperties<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(version, size, numCards);
                 --properties.size;
 
-                var chapter = Th10ChapterWrapper<TParent>.Create(
+                var chapter = Th10ChapterWrapper.Create(
                     MakeByteArray<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(properties));
                 var clearData =
                     new Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(chapter);
@@ -322,7 +322,7 @@ namespace ThScoreFileConverterTests.Models
                 var checksum = 0u;
                 var data = new byte[size];
 
-                var chapter = Th10ChapterWrapper<TParent>.Create(
+                var chapter = Th10ChapterWrapper.Create(
                     TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
 
                 Assert.AreEqual(

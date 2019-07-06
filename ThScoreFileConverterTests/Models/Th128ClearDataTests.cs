@@ -103,7 +103,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var properties = GetValidProperties();
 
-            var chapter = Th10ChapterWrapper<Th128Converter>.Create(MakeByteArray(properties));
+            var chapter = Th10ChapterWrapper.Create(MakeByteArray(properties));
             var clearData = new Th128ClearDataWrapper(chapter);
 
             Validate(clearData, properties);
@@ -129,7 +129,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = GetValidProperties();
             properties.signature = properties.signature.ToLowerInvariant(); 
 
-            var chapter = Th10ChapterWrapper<Th128Converter>.Create(MakeByteArray(properties));
+            var chapter = Th10ChapterWrapper.Create(MakeByteArray(properties));
             var clearData = new Th128ClearDataWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -143,7 +143,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = GetValidProperties();
             ++properties.version;
 
-            var chapter = Th10ChapterWrapper<Th128Converter>.Create(MakeByteArray(properties));
+            var chapter = Th10ChapterWrapper.Create(MakeByteArray(properties));
             var clearData = new Th128ClearDataWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -157,7 +157,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = GetValidProperties();
             --properties.size;
 
-            var chapter = Th10ChapterWrapper<Th128Converter>.Create(MakeByteArray(properties));
+            var chapter = Th10ChapterWrapper.Create(MakeByteArray(properties));
             var clearData = new Th128ClearDataWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -175,7 +175,7 @@ namespace ThScoreFileConverterTests.Models
                 var checksum = 0u;
                 var data = new byte[size];
 
-                var chapter = Th10ChapterWrapper<Th128Converter>.Create(
+                var chapter = Th10ChapterWrapper.Create(
                     TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
 
                 Assert.AreEqual(expected, Th128ClearDataWrapper.CanInitialize(chapter));

@@ -49,7 +49,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th128AllScoreDataSetClearDataTest() => TestUtils.Wrap(() =>
         {
             var properties = Th128ClearDataTests.GetValidProperties();
-            var chapter = Th10ChapterWrapper<Th128Converter>.Create(Th128ClearDataTests.MakeByteArray(properties));
+            var chapter = Th10ChapterWrapper.Create(Th128ClearDataTests.MakeByteArray(properties));
             var clearData = new Th128ClearDataWrapper(chapter);
 
             var allScoreData = new Th128AllScoreDataWrapper();
@@ -62,7 +62,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th128AllScoreDataSetClearDataTestTwice() => TestUtils.Wrap(() =>
         {
             var properties = Th128ClearDataTests.GetValidProperties();
-            var chapter = Th10ChapterWrapper<Th128Converter>.Create(Th128ClearDataTests.MakeByteArray(properties));
+            var chapter = Th10ChapterWrapper.Create(Th128ClearDataTests.MakeByteArray(properties));
             var clearData1 = new Th128ClearDataWrapper(chapter);
             var clearData2 = new Th128ClearDataWrapper(chapter);
 
@@ -78,7 +78,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th128AllScoreDataSetCardDataTest() => TestUtils.Wrap(() =>
         {
             var properties = Th128CardDataTests.ValidProperties;
-            var chapter = Th10ChapterWrapper<Th128Converter>.Create(Th128CardDataTests.MakeByteArray(properties));
+            var chapter = Th10ChapterWrapper.Create(Th128CardDataTests.MakeByteArray(properties));
             var clearData = new Th128CardDataWrapper(chapter);
 
             var allScoreData = new Th128AllScoreDataWrapper();
@@ -91,7 +91,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th128AllScoreDataSetCardDataTestTwice() => TestUtils.Wrap(() =>
         {
             var properties = Th128CardDataTests.ValidProperties;
-            var chapter = Th10ChapterWrapper<Th128Converter>.Create(Th128CardDataTests.MakeByteArray(properties));
+            var chapter = Th10ChapterWrapper.Create(Th128CardDataTests.MakeByteArray(properties));
             var clearData1 = new Th128CardDataWrapper(chapter);
             var clearData2 = new Th128CardDataWrapper(chapter);
 
@@ -106,7 +106,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th128AllScoreDataSetStatusTest() => TestUtils.Wrap(() =>
         {
-            var chapter = Th10ChapterWrapper<Th128Converter>.Create(
+            var chapter = Th10ChapterWrapper.Create(
                 Th128StatusTests.MakeByteArray(Th128StatusTests.GetValidProperties(2, 0x42C, 10), 0x10, 0x18));
             var status = new Th128StatusWrapper<Th128Converter>(chapter);
 
@@ -119,7 +119,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th128AllScoreDataSetStatusTestTwice() => TestUtils.Wrap(() =>
         {
-            var chapter = Th10ChapterWrapper<Th128Converter>.Create(
+            var chapter = Th10ChapterWrapper.Create(
                 Th128StatusTests.MakeByteArray(Th128StatusTests.GetValidProperties(2, 0x42C, 10), 0x10, 0x18));
             var status1 = new Th128StatusWrapper<Th128Converter>(chapter);
             var status2 = new Th128StatusWrapper<Th128Converter>(chapter);

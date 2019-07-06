@@ -49,7 +49,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th143AllScoreDataSetScoreTest() => TestUtils.Wrap(() =>
         {
             var properties = Th143ScoreTests.ValidProperties;
-            var chapter = Th10ChapterWrapper<Th143Converter>.Create(Th143ScoreTests.MakeByteArray(properties));
+            var chapter = Th10ChapterWrapper.Create(Th143ScoreTests.MakeByteArray(properties));
             var score = new Th143ScoreWrapper(chapter);
 
             var allScoreData = new Th143AllScoreDataWrapper();
@@ -62,7 +62,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th143AllScoreDataSetScoreTestTwice() => TestUtils.Wrap(() =>
         {
             var properties = Th143ScoreTests.ValidProperties;
-            var chapter = Th10ChapterWrapper<Th143Converter>.Create(Th143ScoreTests.MakeByteArray(properties));
+            var chapter = Th10ChapterWrapper.Create(Th143ScoreTests.MakeByteArray(properties));
             var score1 = new Th143ScoreWrapper(chapter);
             var score2 = new Th143ScoreWrapper(chapter);
 
@@ -78,7 +78,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th143AllScoreDataSetItemStatusTest() => TestUtils.Wrap(() =>
         {
             var properties = Th143ItemStatusTests.ValidProperties;
-            var chapter = Th10ChapterWrapper<Th143Converter>.Create(Th143ItemStatusTests.MakeByteArray(properties));
+            var chapter = Th10ChapterWrapper.Create(Th143ItemStatusTests.MakeByteArray(properties));
             var status = new Th143ItemStatusWrapper(chapter);
 
             var allScoreData = new Th143AllScoreDataWrapper();
@@ -91,7 +91,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th143AllScoreDataSetItemStatusTestTwice() => TestUtils.Wrap(() =>
         {
             var properties = Th143ItemStatusTests.ValidProperties;
-            var chapter = Th10ChapterWrapper<Th143Converter>.Create(Th143ItemStatusTests.MakeByteArray(properties));
+            var chapter = Th10ChapterWrapper.Create(Th143ItemStatusTests.MakeByteArray(properties));
             var status1 = new Th143ItemStatusWrapper(chapter);
             var status2 = new Th143ItemStatusWrapper(chapter);
 
@@ -106,7 +106,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th143AllScoreDataSetStatusTest() => TestUtils.Wrap(() =>
         {
-            var chapter = Th10ChapterWrapper<Th143Converter>.Create(
+            var chapter = Th10ChapterWrapper.Create(
                 Th143StatusTests.MakeByteArray(Th143StatusTests.ValidProperties));
             var status = new Th143StatusWrapper(chapter);
 
@@ -119,7 +119,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th143AllScoreDataSetStatusTestTwice() => TestUtils.Wrap(() =>
         {
-            var chapter = Th10ChapterWrapper<Th143Converter>.Create(
+            var chapter = Th10ChapterWrapper.Create(
                 Th143StatusTests.MakeByteArray(Th143StatusTests.ValidProperties));
             var status1 = new Th143StatusWrapper(chapter);
             var status2 = new Th143StatusWrapper(chapter);
