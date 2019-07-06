@@ -48,8 +48,10 @@ namespace ThScoreFileConverter.Commands
         /// <param name="parameter">A <see cref="Window"/> instance which is closed.</param>
         public void Execute(object parameter)
         {
+#pragma warning disable CA1062 // Validate arguments of public methods
             if (this.CanExecute(parameter))
                 (parameter as Window).Close();
+#pragma warning restore CA1062 // Validate arguments of public methods
         }
     }
 }
