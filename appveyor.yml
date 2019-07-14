@@ -1,17 +1,17 @@
 version: '{build}'
 
-image: Visual Studio 2017
+image: Visual Studio 2019
 configuration:
   - Debug
   - Release
 environment:
-  PYTHON: C:\Python36-x64
-  VSINSTALLDIR: C:\Program Files (x86)\Microsoft Visual Studio\2017\Community
+  PYTHON: C:\Python37-x64
+  VSINSTALLDIR: C:\Program Files (x86)\Microsoft Visual Studio\2019\Community
   CODECOV_TOKEN:
     secure: yXCs8FBlLFVrjJ3nOjqOVGDV892aCCsBvlT7yF6xEFKC1Opq2mJuOt0gR4A7xBkS
 install:
   - cmd: |
-      curl -LO https://aka.ms/vs/15/release/vs_community.exe
+      curl -LO https://aka.ms/vs/16/release/vs_community.exe
       vs_community.exe modify --installPath "%VSINSTALLDIR%" --add Microsoft.VisualStudio.Workload.Python --quiet --wait
       set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
       python --version
