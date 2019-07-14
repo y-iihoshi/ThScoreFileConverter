@@ -64,9 +64,6 @@
     <Folder Include="_templates\" />
     <None Include="_templates\.keep" />
   </ItemGroup>
-  <ItemGroup>
-    <InterpreterReference Include="Global|PythonCore|3.6" />
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- This task seems not necessary for *.pyproj. -->
   <Target Name="_GenerateCompileDependencyCache" />
