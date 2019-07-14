@@ -10,7 +10,7 @@ namespace ThScoreFileConverter.Behaviors
     using System.Windows;
     using System.Windows.Controls.Primitives;
     using System.Windows.Data;
-    using System.Windows.Interactivity;
+    using Microsoft.Xaml.Behaviors;
 
     /// <summary>
     /// Encapsulates state information into a <see cref="TextBoxBase"/> object.

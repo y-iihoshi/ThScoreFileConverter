@@ -10,7 +10,7 @@ namespace ThScoreFileConverter.Behaviors
     using System;
     using System.Windows;
     using System.Windows.Input;
-    using System.Windows.Interactivity;
+    using Microsoft.Xaml.Behaviors;
 
     /// <summary>
     /// Encapsulates state information and drag-and-drop related <see cref="ICommand"/>s into a

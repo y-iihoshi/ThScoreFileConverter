@@ -10,7 +10,7 @@ namespace ThScoreFileConverter.Actions
     using System.ComponentModel;
     using System.Windows;
     using System.Windows.Input;
-    using System.Windows.Interactivity;
+    using Microsoft.Xaml.Behaviors;
 
     /// <summary>
     /// Encapsulates the handling of <see cref="System.Windows.Forms.CommonDialog"/>.
