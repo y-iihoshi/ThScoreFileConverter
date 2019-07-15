@@ -12,6 +12,7 @@ namespace ThScoreFileConverter.Models.Th06
     using System;
     using System.IO;
     using System.Text;
+    using ThScoreFileConverter.Properties;
 
     internal class Chapter : IBinaryReadable
     {
@@ -33,6 +34,22 @@ namespace ThScoreFileConverter.Models.Th06
             this.Size2 = chapter.Size2;
             this.Data = new byte[chapter.Data.Length];
             chapter.Data.CopyTo(this.Data, 0);
+        }
+
+        protected Chapter(Chapter chapter, string expectedSignature, short expectedSize)
+            : this(chapter)
+        {
+            if (!this.Signature.Equals(expectedSignature, StringComparison.Ordinal))
+            {
+                throw new InvalidDataException(
+                    Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.Signature)));
+            }
+
+            if (this.Size1 != expectedSize)
+            {
+                throw new InvalidDataException(
+                    Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.Size1)));
+            }
         }
 
         public string Signature { get; private set; }   // .Length = 4

@@ -20,7 +20,6 @@ namespace ThScoreFileConverter.Models
     using System.IO;
     using System.Linq;
     using System.Text.RegularExpressions;
-    using ThScoreFileConverter.Properties;
     using CardInfo = SpellCardInfo<ThConverter.Stage, ThConverter.Level>;
 
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
@@ -739,20 +738,8 @@ namespace ThScoreFileConverter.Models
             public const short ValidSize = 0x000C;
 
             public Header(Th06.Chapter chapter)
-                : base(chapter)
+                : base(chapter, ValidSignature, ValidSize)
             {
-                if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
-                {
-                    throw new InvalidDataException(
-                        Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.Signature)));
-                }
-
-                if (this.Size1 != ValidSize)
-                {
-                    throw new InvalidDataException(
-                        Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.Size1)));
-                }
-
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
                     reader.ReadUInt32();    // always 0x00000010?
@@ -766,20 +753,8 @@ namespace ThScoreFileConverter.Models
             public const short ValidSize = 0x001C;
 
             public HighScore(Th06.Chapter chapter)
-                : base(chapter)
+                : base(chapter, ValidSignature, ValidSize)
             {
-                if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
-                {
-                    throw new InvalidDataException(
-                        Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.Signature)));
-                }
-
-                if (this.Size1 != ValidSize)
-                {
-                    throw new InvalidDataException(
-                        Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.Size1)));
-                }
-
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
                     reader.ReadUInt32();    // always 0x00000001?
@@ -815,20 +790,8 @@ namespace ThScoreFileConverter.Models
             public const short ValidSize = 0x0018;
 
             public ClearData(Th06.Chapter chapter)
-                : base(chapter)
+                : base(chapter, ValidSignature, ValidSize)
             {
-                if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
-                {
-                    throw new InvalidDataException(
-                        Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.Signature)));
-                }
-
-                if (this.Size1 != ValidSize)
-                {
-                    throw new InvalidDataException(
-                        Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.Size1)));
-                }
-
                 var levels = Utils.GetEnumerator<Level>();
                 var numLevels = levels.Count();
                 this.StoryFlags = new Dictionary<Level, byte>(numLevels);
@@ -860,20 +823,8 @@ namespace ThScoreFileConverter.Models
             public const short ValidSize = 0x0040;
 
             public CardAttack(Th06.Chapter chapter)
-                : base(chapter)
+                : base(chapter, ValidSignature, ValidSize)
             {
-                if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
-                {
-                    throw new InvalidDataException(
-                        Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.Signature)));
-                }
-
-                if (this.Size1 != ValidSize)
-                {
-                    throw new InvalidDataException(
-                        Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.Size1)));
-                }
-
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
                     reader.ReadExactBytes(8);
@@ -906,20 +857,8 @@ namespace ThScoreFileConverter.Models
             public const short ValidSize = 0x0014;
 
             public PracticeScore(Th06.Chapter chapter)
-                : base(chapter)
+                : base(chapter, ValidSignature, ValidSize)
             {
-                if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
-                {
-                    throw new InvalidDataException(
-                        Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.Signature)));
-                }
-
-                if (this.Size1 != ValidSize)
-                {
-                    throw new InvalidDataException(
-                        Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.Size1)));
-                }
-
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
                     reader.ReadUInt32();    // always 0x00000010?
