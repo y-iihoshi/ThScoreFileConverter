@@ -1030,27 +1030,34 @@ namespace ThScoreFileConverter.Models
 
             public short Height { get; private set; }
 
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public short Width2 { get; private set; }
 
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public short Height2 { get; private set; }
 
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public short HalfWidth { get; private set; }
 
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public short HalfHeight { get; private set; }
 
-            // [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public float SlowRate { get; private set; }
 
             public uint DateTime { get; private set; }
 
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public float Angle { get; private set; } // -PI .. +PI [rad]
 
             public int Score { get; private set; }
 
             public HashtagFields Fields { get; private set; }
 
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public int Score2 { get; private set; }
 
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public int BasePoint { get; private set; } // FIXME
 
             public int NumViewed { get; private set; }
@@ -1059,38 +1066,55 @@ namespace ThScoreFileConverter.Models
 
             public int NumFavs { get; private set; }
 
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public int NumBullets { get; private set; }
 
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public int NumBulletsNearby { get; private set; }
 
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public int RiskBonus { get; private set; } // max(NumBulletsNearby, 2) * 40 .. min(NumBulletsNearby, 25) * 40
 
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public float BossShot { get; private set; } // 1.20? .. 2.00
 
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public float AngleBonus { get; private set; } // 1.00? .. 1.30
 
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public int MacroBonus { get; private set; } // 0 .. 60?
 
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public float LikesPerView { get; private set; }
 
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public float FavsPerView { get; private set; }
 
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public int NumHashtags { get; private set; }
 
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public int NumRedBullets { get; private set; }
 
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public int NumPurpleBullets { get; private set; }
 
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public int NumBlueBullets { get; private set; }
 
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public int NumCyanBullets { get; private set; }
 
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public int NumGreenBullets { get; private set; }
 
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public int NumYellowBullets { get; private set; }
 
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public int NumOrangeBullets { get; private set; }
 
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public int NumLightBullets { get; private set; }
 
             public void ReadFrom(BinaryReader reader)
@@ -1177,6 +1201,7 @@ namespace ThScoreFileConverter.Models
                     this.data[2] = new BitVector32(data3);
                 }
 
+                [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
                 public bool EnemyIsInFrame => this.data[0][Masks[0]]; // Not used
 
                 public bool EnemyIsPartlyInFrame => this.data[0][Masks[1]];
@@ -1213,6 +1238,7 @@ namespace ThScoreFileConverter.Models
 
                 public bool SevenColors => this.data[0][Masks[18]];
 
+                [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
                 public bool NoBullet => this.data[0][Masks[19]]; // Not used
 
                 public bool IsLandscapePhoto => this.data[0][Masks[21]];
@@ -1277,6 +1303,7 @@ namespace ThScoreFileConverter.Models
 
                 public bool FinishedTogether => this.data[1][Masks[29]];
 
+                [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
                 public bool WasDream => this.data[1][Masks[30]]; // FIXME; Not used
 
                 public bool IsRockyBarrage => this.data[1][Masks[31]];
