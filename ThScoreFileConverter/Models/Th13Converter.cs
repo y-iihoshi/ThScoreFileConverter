@@ -20,7 +20,6 @@ namespace ThScoreFileConverter.Models
     using System.IO;
     using System.Linq;
     using System.Text.RegularExpressions;
-    using ThScoreFileConverter.Properties;
     using CardInfo = SpellCardInfo<Th13Converter.StagePractice, Th13Converter.LevelPractice>;
 
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
@@ -913,26 +912,8 @@ namespace ThScoreFileConverter.Models
             public const int ValidSize = 0x000056DC;
 
             public ClearData(Th10.Chapter chapter)
-                : base(chapter)
+                : base(chapter, ValidSignature, ValidVersion, ValidSize)
             {
-                if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
-                {
-                    throw new InvalidDataException(
-                        Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.Signature)));
-                }
-
-                if (this.Version != ValidVersion)
-                {
-                    throw new InvalidDataException(
-                        Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.Version)));
-                }
-
-                if (this.Size != ValidSize)
-                {
-                    throw new InvalidDataException(
-                        Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.Size)));
-                }
-
                 var levelsWithTotal = Utils.GetEnumerator<LevelPracticeWithTotal>();
                 var levels = Utils.GetEnumerator<LevelPractice>();
                 var stages = Utils.GetEnumerator<StagePractice>();
@@ -1030,26 +1011,8 @@ namespace ThScoreFileConverter.Models
             public const int ValidSize = 0x0000042C;
 
             public Status(Th10.Chapter chapter)
-                : base(chapter)
+                : base(chapter, ValidSignature, ValidVersion, ValidSize)
             {
-                if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
-                {
-                    throw new InvalidDataException(
-                        Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.Signature)));
-                }
-
-                if (this.Version != ValidVersion)
-                {
-                    throw new InvalidDataException(
-                        Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.Version)));
-                }
-
-                if (this.Size != ValidSize)
-                {
-                    throw new InvalidDataException(
-                        Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.Size)));
-                }
-
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
                     this.LastName = reader.ReadExactBytes(10);
