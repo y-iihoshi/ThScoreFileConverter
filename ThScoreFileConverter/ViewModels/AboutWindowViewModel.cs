@@ -45,11 +45,10 @@ namespace ThScoreFileConverter.ViewModels
             var gitVerInfoType = thisAsm.GetType(asmName.Name + ".GitVersionInformation");
             var verField = gitVerInfoType.GetField("MajorMinorPatch");
             var attrs = thisAsm.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), true);
-            var copyrightAttr = attrs[0] as AssemblyCopyrightAttribute;
 
             this.Name = asmName.Name;
             this.Version = Prop.Resources.strVersionPrefix + verField.GetValue(null);
-            this.Copyright = (copyrightAttr != null) ? copyrightAttr.Copyright : string.Empty;
+            this.Copyright = (attrs[0] is AssemblyCopyrightAttribute attr) ? attr.Copyright : string.Empty;
             this.Uri = "https://www.colorless-sight.jp/thsfc/"; // FIXME
         }
 
