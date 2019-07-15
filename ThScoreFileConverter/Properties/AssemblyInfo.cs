@@ -15,7 +15,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("ThScoreFileConverter")]
-[assembly: AssemblyCopyright("© 2013-2018 IIHOSHI Yoshinori")]
+[assembly: AssemblyCopyright("© 2013-2019 IIHOSHI Yoshinori")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

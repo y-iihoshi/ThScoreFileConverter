@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("ThScoreFileConverterTests")]
-[assembly: AssemblyCopyright("Copyright ©  2017 IIHOSHI Yoshinori")]
+[assembly: AssemblyCopyright("Copyright © 2017-2019 IIHOSHI Yoshinori")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
