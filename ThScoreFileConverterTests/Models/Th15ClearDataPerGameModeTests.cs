@@ -51,8 +51,8 @@ namespace ThScoreFileConverterTests.Models
                     {
                         name = TestUtils.MakeRandomArray<byte>(0x80),
                         clearCount = 12 + index,
-                        practiceClearCount  = 34 + index,
-                        trialCount = 56 + index, 
+                        practiceClearCount = 34 + index,
+                        trialCount = 56 + index,
                         practiceTrialCount = 78 + index,
                         id = index,
                         level = ThConverter.Level.Hard,

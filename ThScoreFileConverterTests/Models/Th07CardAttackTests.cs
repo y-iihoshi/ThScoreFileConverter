@@ -102,7 +102,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th07CardAttackTestInvalidSignature() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
-            properties.signature = properties.signature.ToLowerInvariant(); 
+            properties.signature = properties.signature.ToLowerInvariant();
 
             var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
             var cardAttack = new Th07CardAttackWrapper(chapter);

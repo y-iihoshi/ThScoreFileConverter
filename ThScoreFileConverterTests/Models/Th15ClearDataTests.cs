@@ -128,7 +128,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th15ClearDataTestInvalidSignature() => TestUtils.Wrap(() =>
         {
             var properties = GetValidProperties();
-            properties.signature = properties.signature.ToLowerInvariant(); 
+            properties.signature = properties.signature.ToLowerInvariant();
 
             var chapter = Th10ChapterWrapper.Create(MakeByteArray(properties));
             var clearData = new Th15ClearDataWrapper(chapter);

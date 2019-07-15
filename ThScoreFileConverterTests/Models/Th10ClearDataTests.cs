@@ -201,7 +201,7 @@ namespace ThScoreFileConverterTests.Models
             => TestUtils.Wrap(() =>
             {
                 var properties = GetValidProperties<TCharaWithTotal, TStageProgress>(version, size, numCards);
-                properties.signature = properties.signature.ToLowerInvariant(); 
+                properties.signature = properties.signature.ToLowerInvariant();
 
                 var chapter = Th10ChapterWrapper.Create(
                     MakeByteArray<TParent, TCharaWithTotal, TStageProgress>(properties));

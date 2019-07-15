@@ -16,7 +16,7 @@ namespace ThScoreFileConverterTests.Models
 
         internal static Properties ValidProperties => new Properties()
         {
-            enemies = new Th143Converter.Enemy[]{ Th143Converter.Enemy.Seiga, Th143Converter.Enemy.Yoshika },
+            enemies = new Th143Converter.Enemy[] { Th143Converter.Enemy.Seiga, Th143Converter.Enemy.Yoshika },
             card = "入魔「過剰ゾウフォルゥモォ」"
         };
 

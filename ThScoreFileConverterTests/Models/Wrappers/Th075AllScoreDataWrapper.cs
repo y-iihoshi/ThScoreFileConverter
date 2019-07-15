@@ -72,7 +72,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             get
             {
                 var status = this.pobj.GetProperty(nameof(Status));
-                return (status != null) ?  new Th075StatusWrapper(status) : null;
+                return (status != null) ? new Th075StatusWrapper(status) : null;
             }
         }
 

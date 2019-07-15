@@ -22,7 +22,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual("月符「ムーンライトレイ」", info.Name);
             Assert.AreEqual(Stage.St1, info.Stage);
             Assert.AreEqual(Level.Hard, info.Level);
-            CollectionAssert.AreEqual(new Level[]{ Level.Hard, Level.Lunatic }, info.Levels);
+            CollectionAssert.AreEqual(new Level[] { Level.Hard, Level.Lunatic }, info.Levels);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "info")]
@@ -100,7 +100,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual("霜符「フロストコラムス」", info.Name);
             Assert.AreEqual(Stage.St1, info.Stage);
             Assert.AreEqual(Level.Hard, info.Level);
-            CollectionAssert.AreEqual(new Level[]{ Level.Hard }, info.Levels);
+            CollectionAssert.AreEqual(new Level[] { Level.Hard }, info.Levels);
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "info")]

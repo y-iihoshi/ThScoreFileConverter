@@ -97,7 +97,7 @@ namespace ThScoreFileConverterTests.Models
             => TestUtils.Wrap(() =>
             {
                 var properties = GetValidProperties(version, size, numBgms);
-                properties.signature = properties.signature.ToLowerInvariant(); 
+                properties.signature = properties.signature.ToLowerInvariant();
 
                 var chapter = Th10ChapterWrapper.Create(MakeByteArray(properties));
                 var status = new Th10StatusWrapper<TParent>(chapter);

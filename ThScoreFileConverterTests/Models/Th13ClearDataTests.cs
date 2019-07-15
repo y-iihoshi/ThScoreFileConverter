@@ -92,8 +92,8 @@ namespace ThScoreFileConverterTests.Models
                     {
                         name = TestUtils.MakeRandomArray<byte>(0x80),
                         clearCount = 12 + index,
-                        practiceClearCount  = 34 + index,
-                        trialCount = 56 + index, 
+                        practiceClearCount = 34 + index,
+                        trialCount = 56 + index,
                         practiceTrialCount = 78 + index,
                         id = index,
                         level = TestUtils.Cast<TLv>(2),
@@ -247,7 +247,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 var properties =
                     GetValidProperties<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(version, size, numCards);
-                properties.signature = properties.signature.ToLowerInvariant(); 
+                properties.signature = properties.signature.ToLowerInvariant();
 
                 var chapter = Th10ChapterWrapper.Create(
                     MakeByteArray<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(properties));

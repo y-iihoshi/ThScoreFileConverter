@@ -80,8 +80,8 @@ namespace ThScoreFileConverterTests.Models
                     {
                         name = TestUtils.MakeRandomArray<byte>(0x80),
                         clearCount = 12 + index,
-                        practiceClearCount  = 34 + index,
-                        trialCount = 56 + index, 
+                        practiceClearCount = 34 + index,
+                        trialCount = 56 + index,
                         practiceTrialCount = 78 + index,
                         id = index,
                         level = ThConverter.Level.Hard,
@@ -185,7 +185,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th16ClearDataTestInvalidSignature() => TestUtils.Wrap(() =>
         {
             var properties = GetValidProperties();
-            properties.signature = properties.signature.ToLowerInvariant(); 
+            properties.signature = properties.signature.ToLowerInvariant();
 
             var chapter = Th10ChapterWrapper.Create(MakeByteArray(properties));
             var clearData = new Th16ClearDataWrapper(chapter);

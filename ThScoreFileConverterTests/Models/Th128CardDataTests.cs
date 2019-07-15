@@ -98,7 +98,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th128CardDataTestInvalidSignature() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
-            properties.signature = properties.signature.ToLowerInvariant(); 
+            properties.signature = properties.signature.ToLowerInvariant();
 
             var chapter = Th10ChapterWrapper.Create(MakeByteArray(properties));
             var clearData = new Th128CardDataWrapper(chapter);
