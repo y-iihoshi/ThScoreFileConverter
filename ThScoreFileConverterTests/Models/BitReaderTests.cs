@@ -9,31 +9,31 @@ namespace ThScoreFileConverterTests.Models
     [TestClass]
     public class BitReaderTests
     {
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "reader")]
+        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.BitReader")]
         [TestMethod]
         public void BitReaderTest()
         {
             using (var stream = new MemoryStream())
             {
                 {
-                    var reader = new BitReader(stream);
+                    _ = new BitReader(stream);
                 }
 
                 Assert.IsTrue(stream.CanRead);
             }
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "reader")]
+        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.BitReader")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void BitReaderTestNoStream()
         {
-            var reader = new BitReader(null);
+            _ = new BitReader(null);
 
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "reader")]
+        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.BitReader")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void BitReaderTestUnreadable()
@@ -41,7 +41,7 @@ namespace ThScoreFileConverterTests.Models
             var stream = new MemoryStream();
             stream.Close();
 
-            var reader = new BitReader(stream);
+            _ = new BitReader(stream);
 
             Assert.Fail(TestUtils.Unreachable);
         }

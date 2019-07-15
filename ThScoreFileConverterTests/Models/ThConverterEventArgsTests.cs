@@ -34,66 +34,66 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(default, args.Total);
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "args")]
+        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.ThConverterEventArgs")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void ThConverterEventArgsTestNullPath()
         {
-            var args = new ThConverterEventArgs(null, 2, 5);
+            _ = new ThConverterEventArgs(null, 2, 5);
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "args")]
+        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.ThConverterEventArgs")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ThConverterEventArgsTestEmptyPath()
         {
-            var args = new ThConverterEventArgs(string.Empty, 2, 5);
+            _ = new ThConverterEventArgs(string.Empty, 2, 5);
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "args")]
+        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.ThConverterEventArgs")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ThConverterEventArgsTestNegativeCurrent()
         {
-            var args = new ThConverterEventArgs(@"path\to\file", -1, 5);
+            _ = new ThConverterEventArgs(@"path\to\file", -1, 5);
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "args")]
+        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.ThConverterEventArgs")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ThConverterEventArgsTestZeroCurrent()
         {
-            var args = new ThConverterEventArgs(@"path\to\file", 0, 5);
+            _ = new ThConverterEventArgs(@"path\to\file", 0, 5);
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "args")]
+        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.ThConverterEventArgs")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ThConverterEventArgsTestExtendedCurrent()
         {
-            var args = new ThConverterEventArgs(@"path\to\file", 6, 5);
+            _ = new ThConverterEventArgs(@"path\to\file", 6, 5);
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "args")]
+        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.ThConverterEventArgs")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ThConverterEventArgsTestNegativeTotal()
         {
-            var args = new ThConverterEventArgs(@"path\to\file", 2, -1);
+            _ = new ThConverterEventArgs(@"path\to\file", 2, -1);
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "args")]
+        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.ThConverterEventArgs")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ThConverterEventArgsTestZeroTotal()
         {
-            var args = new ThConverterEventArgs(@"path\to\file", 2, 0);
+            _ = new ThConverterEventArgs(@"path\to\file", 2, 0);
             Assert.Fail(TestUtils.Unreachable);
         }
     }

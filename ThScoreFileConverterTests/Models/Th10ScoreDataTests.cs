@@ -44,7 +44,7 @@ namespace ThScoreFileConverterTests.Models
             var type = typeof(TParent);
             if (type == typeof(Th10Converter))
             {
-                unknownSize = 0;
+                // Do nothing
             }
             else if (type == typeof(Th128Converter))
             {

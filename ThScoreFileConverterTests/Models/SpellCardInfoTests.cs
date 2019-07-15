@@ -25,46 +25,46 @@ namespace ThScoreFileConverterTests.Models
             CollectionAssert.AreEqual(new Level[] { Level.Hard, Level.Lunatic }, info.Levels);
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "info")]
+        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.SpellCardInfo`2<ThScoreFileConverter.Models.ThConverter+Stage,ThScoreFileConverter.Models.ThConverter+Level>")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void SpellCardInfoTestNegativeId()
         {
-            var info = new CardInfo(-1, "月符「ムーンライトレイ」", Stage.St1, Level.Hard, Level.Lunatic);
+            _ = new CardInfo(-1, "月符「ムーンライトレイ」", Stage.St1, Level.Hard, Level.Lunatic);
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "info")]
+        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.SpellCardInfo`2<ThScoreFileConverter.Models.ThConverter+Stage,ThScoreFileConverter.Models.ThConverter+Level>")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void SpellCardInfoTestZeroId()
         {
-            var info = new CardInfo(0, "月符「ムーンライトレイ」", Stage.St1, Level.Hard, Level.Lunatic);
+            _ = new CardInfo(0, "月符「ムーンライトレイ」", Stage.St1, Level.Hard, Level.Lunatic);
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "info")]
+        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.SpellCardInfo`2<ThScoreFileConverter.Models.ThConverter+Stage,ThScoreFileConverter.Models.ThConverter+Level>")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void SpellCardInfoTestNullName()
         {
-            var info = new CardInfo(1, null, Stage.St1, Level.Hard, Level.Lunatic);
+            _ = new CardInfo(1, null, Stage.St1, Level.Hard, Level.Lunatic);
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "info")]
+        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.SpellCardInfo`2<ThScoreFileConverter.Models.ThConverter+Stage,ThScoreFileConverter.Models.ThConverter+Level>")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void SpellCardInfoTestEmptyName()
         {
-            var info = new CardInfo(1, string.Empty, Stage.St1, Level.Hard, Level.Lunatic);
+            _ = new CardInfo(1, string.Empty, Stage.St1, Level.Hard, Level.Lunatic);
             Assert.Fail(TestUtils.Unreachable);
         }
 
         public static IEnumerable<object[]> InvalidStages
             => TestUtils.GetInvalidEnumerators(typeof(Stage));
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "info")]
+        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.SpellCardInfo`2<ThScoreFileConverter.Models.ThConverter+Stage,ThScoreFileConverter.Models.ThConverter+Level>")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidStages))]
@@ -72,14 +72,14 @@ namespace ThScoreFileConverterTests.Models
         public void SpellCardInfoTestInvalidStage(int stage)
         {
             var invalid = TestUtils.Cast<Stage>(stage);
-            var info = new CardInfo(1, "月符「ムーンライトレイ」", invalid, Level.Hard, Level.Lunatic);
+            _ = new CardInfo(1, "月符「ムーンライトレイ」", invalid, Level.Hard, Level.Lunatic);
             Assert.Fail(TestUtils.Unreachable);
         }
 
         public static IEnumerable<object[]> InvalidLevels
             => TestUtils.GetInvalidEnumerators(typeof(Level));
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "info")]
+        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.SpellCardInfo`2<ThScoreFileConverter.Models.ThConverter+Stage,ThScoreFileConverter.Models.ThConverter+Level>")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
@@ -87,7 +87,7 @@ namespace ThScoreFileConverterTests.Models
         public void SpellCardInfoTestInvalidLevel(int level)
         {
             var invalid = TestUtils.Cast<Level>(level);
-            var info = new CardInfo(1, "月符「ムーンライトレイ」", Stage.St1, Level.Hard, invalid);
+            _ = new CardInfo(1, "月符「ムーンライトレイ」", Stage.St1, Level.Hard, invalid);
             Assert.Fail(TestUtils.Unreachable);
         }
 
@@ -103,21 +103,21 @@ namespace ThScoreFileConverterTests.Models
             CollectionAssert.AreEqual(new Level[] { Level.Hard }, info.Levels);
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "info")]
+        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.SpellCardInfo`2<ThScoreFileConverter.Models.ThConverter+Stage,ThScoreFileConverter.Models.ThConverter+Level>")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void SpellCardInfoTestZeroLevels()
         {
-            var info = new CardInfo(1, "霜符「フロストコラムス」", Stage.St1);
+            _ = new CardInfo(1, "霜符「フロストコラムス」", Stage.St1);
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "info")]
+        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.SpellCardInfo`2<ThScoreFileConverter.Models.ThConverter+Stage,ThScoreFileConverter.Models.ThConverter+Level>")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void SpellCardInfoTestNullLevels()
         {
-            var info = new CardInfo(1, "霜符「フロストコラムス」", Stage.St1, null);
+            _ = new CardInfo(1, "霜符「フロストコラムス」", Stage.St1, null);
             Assert.Fail(TestUtils.Unreachable);
         }
     }

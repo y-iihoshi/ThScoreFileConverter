@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Properties;
 
@@ -17,12 +16,11 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(typeof(Th06Converter), converter.GetType());
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "converter")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void CreateTestNull()
         {
-            var converter = ThConverterFactory.Create(null);
+            _ = ThConverterFactory.Create(null);
 
             Assert.Fail(TestUtils.Unreachable);
         }

@@ -33,12 +33,12 @@ namespace ThScoreFileConverterTests.Interactivity
             Assert.AreEqual(IntPtr.Zero, win32window.Handle);
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "win32window")]
+        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Actions.Win32Window")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Win32WindowTestNull()
         {
-            var win32window = new Win32Window(null);
+            _ = new Win32Window(null);
 
             Assert.Fail(TestUtils.Unreachable);
         }
