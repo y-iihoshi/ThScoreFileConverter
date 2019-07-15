@@ -27,15 +27,19 @@ namespace ThScoreFileConverter.Models
             new EnumShortNameParser<Level>();
 
         [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Justification = "For future use.")]
+#pragma warning disable IDE0052 // Remove unread private members
         private static new readonly EnumShortNameParser<LevelWithTotal> LevelWithTotalParser =
             new EnumShortNameParser<LevelWithTotal>();
+#pragma warning restore IDE0052 // Remove unread private members
 
         private static readonly EnumShortNameParser<StoryChara> StoryCharaParser =
             new EnumShortNameParser<StoryChara>();
 
         [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Justification = "For future use.")]
+#pragma warning disable IDE0052 // Remove unread private members
         private static readonly EnumShortNameParser<StoryCharaWithTotal> StoryCharaWithTotalParser =
             new EnumShortNameParser<StoryCharaWithTotal>();
+#pragma warning restore IDE0052 // Remove unread private members
 
         private AllScoreData allScoreData = null;
 
