@@ -119,7 +119,7 @@ namespace ThScoreFileConverter.Models
                 { new LevelScenePair(Level.Extra, 8), new EnemyCardPair(Enemy.Suika,     "「百万鬼夜行」") },
             };
 
-        private static readonly new EnumShortNameParser<Level> LevelParser =
+        private static new readonly EnumShortNameParser<Level> LevelParser =
             new EnumShortNameParser<Level>();
 
         private static readonly string LevelLongPattern =

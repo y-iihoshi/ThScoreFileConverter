@@ -23,7 +23,7 @@ namespace ThScoreFileConverter.Models
 
     internal class Th135Converter : ThConverter
     {
-        private static readonly new EnumShortNameParser<Level> LevelParser =
+        private static new readonly EnumShortNameParser<Level> LevelParser =
             new EnumShortNameParser<Level>();
 
         private static readonly EnumShortNameParser<Chara> CharaParser =

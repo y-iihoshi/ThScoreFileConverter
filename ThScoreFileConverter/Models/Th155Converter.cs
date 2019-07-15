@@ -23,11 +23,11 @@ namespace ThScoreFileConverter.Models
 
     internal class Th155Converter : ThConverter
     {
-        private static readonly new EnumShortNameParser<Level> LevelParser =
+        private static new readonly EnumShortNameParser<Level> LevelParser =
             new EnumShortNameParser<Level>();
 
         [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Justification = "For future use.")]
-        private static readonly new EnumShortNameParser<LevelWithTotal> LevelWithTotalParser =
+        private static new readonly EnumShortNameParser<LevelWithTotal> LevelWithTotalParser =
             new EnumShortNameParser<LevelWithTotal>();
 
         private static readonly EnumShortNameParser<StoryChara> StoryCharaParser =

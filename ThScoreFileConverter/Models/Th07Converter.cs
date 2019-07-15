@@ -189,10 +189,10 @@ namespace ThScoreFileConverter.Models
                 new HighScore( 10000),
             };
 
-        private static readonly new EnumShortNameParser<Level> LevelParser =
+        private static new readonly EnumShortNameParser<Level> LevelParser =
             new EnumShortNameParser<Level>();
 
-        private static readonly new EnumShortNameParser<LevelWithTotal> LevelWithTotalParser =
+        private static new readonly EnumShortNameParser<LevelWithTotal> LevelWithTotalParser =
             new EnumShortNameParser<LevelWithTotal>();
 
         private static readonly EnumShortNameParser<Chara> CharaParser =
@@ -201,10 +201,10 @@ namespace ThScoreFileConverter.Models
         private static readonly EnumShortNameParser<CharaWithTotal> CharaWithTotalParser =
             new EnumShortNameParser<CharaWithTotal>();
 
-        private static readonly new EnumShortNameParser<Stage> StageParser =
+        private static new readonly EnumShortNameParser<Stage> StageParser =
             new EnumShortNameParser<Stage>();
 
-        private static readonly new EnumShortNameParser<StageWithTotal> StageWithTotalParser =
+        private static new readonly EnumShortNameParser<StageWithTotal> StageWithTotalParser =
             new EnumShortNameParser<StageWithTotal>();
 
         private AllScoreData allScoreData = null;

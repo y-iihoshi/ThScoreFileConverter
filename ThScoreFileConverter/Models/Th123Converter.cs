@@ -928,7 +928,7 @@ namespace ThScoreFileConverter.Models
                 stageInfoPair => stageInfoPair.Value.SelectMany(
                     stageInfo => stageInfo.CardIds.Select(id => new CharaCardIdPair(stageInfo.Enemy, id))));
 
-        private static readonly new EnumShortNameParser<LevelWithTotal> LevelWithTotalParser =
+        private static new readonly EnumShortNameParser<LevelWithTotal> LevelWithTotalParser =
             new EnumShortNameParser<LevelWithTotal>();
 
         private static readonly EnumShortNameParser<Chara> CharaParser =

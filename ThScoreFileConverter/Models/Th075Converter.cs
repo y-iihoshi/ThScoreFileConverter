@@ -215,10 +215,10 @@ namespace ThScoreFileConverter.Models
 
         private static readonly Dictionary<Chara, IEnumerable<int>> CardIdTable = InitializeCardIdTable();
 
-        private static readonly new EnumShortNameParser<Level> LevelParser =
+        private static new readonly EnumShortNameParser<Level> LevelParser =
             new EnumShortNameParser<Level>();
 
-        private static readonly new EnumShortNameParser<LevelWithTotal> LevelWithTotalParser =
+        private static new readonly EnumShortNameParser<LevelWithTotal> LevelWithTotalParser =
             new EnumShortNameParser<LevelWithTotal>();
 
         private static readonly EnumShortNameParser<Chara> CharaParser =

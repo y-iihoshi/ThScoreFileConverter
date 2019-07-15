@@ -288,7 +288,7 @@ namespace ThScoreFileConverter.Models
         private static readonly EnumShortNameParser<RouteWithTotal> RouteWithTotalParser =
             new EnumShortNameParser<RouteWithTotal>();
 
-        private static readonly new EnumShortNameParser<StageWithTotal> StageWithTotalParser =
+        private static new readonly EnumShortNameParser<StageWithTotal> StageWithTotalParser =
             new EnumShortNameParser<StageWithTotal>();
 
         private AllScoreData allScoreData = null;
