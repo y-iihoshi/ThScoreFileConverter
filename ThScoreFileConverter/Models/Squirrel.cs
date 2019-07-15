@@ -70,8 +70,10 @@ namespace ThScoreFileConverter.Models
         public const SQObjectType OTOuter =
             SQObjectType.RTOuter | SQObjectType.SQObjectRefCounted;
 
+#pragma warning disable CA1714 // Flags enums should have plural names
         [Flags]
         public enum SQObjectType
+#pragma warning restore CA1714 // Flags enums should have plural names
         {
 #pragma warning disable SA1602 // Enumeration items should be documented
             RTNull             = 0x00000001,
