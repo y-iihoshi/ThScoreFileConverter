@@ -20,6 +20,7 @@ namespace ThScoreFileConverter.Models
     using System.IO.Compression;
     using System.Linq;
     using System.Text.RegularExpressions;
+    using ThScoreFileConverter.Properties;
 
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th145Converter : ThConverter
@@ -444,7 +445,7 @@ namespace ThScoreFileConverter.Models
                 if (ObjectReaders.TryGetValue(type, out Func<BinaryReader, object> objectReader))
                     obj = objectReader(reader);
                 else
-                    throw new InvalidDataException("wrong type");
+                    throw new InvalidDataException(Resources.InvalidDataExceptionWrongType);
 
                 return obj != null;
             }

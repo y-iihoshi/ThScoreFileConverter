@@ -19,7 +19,7 @@ namespace ThScoreFileConverter.Properties {
     // または Visual Studio のようなツールを使用して自動生成されました。
     // メンバーを追加または削除するには、.ResX ファイルを編集して、/str オプションと共に
     // ResGen を実行し直すか、または VS プロジェクトをビルドし直します。
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -61,6 +61,33 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
+        ///   Must not be empty. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ArgumentExceptionMustNotBeEmpty {
+            get {
+                return ResourceManager.GetString("ArgumentExceptionMustNotBeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Stream must be readable. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ArgumentExceptionStreamMustBeReadable {
+            get {
+                return ResourceManager.GetString("ArgumentExceptionStreamMustBeReadable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Wrong type. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ArgumentExceptionWrongType {
+            get {
+                return ResourceManager.GetString("ArgumentExceptionWrongType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   東方スコアファイル (*.dat)|*.dat|すべてのファイル (*.*)|*.* に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string fltScoreFile {
@@ -75,6 +102,33 @@ namespace ThScoreFileConverter.Properties {
         public static string fltTemplateFile {
             get {
                 return ResourceManager.GetString("fltTemplateFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Property {0} is invalid. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string InvalidDataExceptionPropertyIsInvalid {
+            get {
+                return ResourceManager.GetString("InvalidDataExceptionPropertyIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Property {0} is out of range. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string InvalidDataExceptionPropertyIsOutOfRange {
+            get {
+                return ResourceManager.GetString("InvalidDataExceptionPropertyIsOutOfRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Wrong type. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string InvalidDataExceptionWrongType {
+            get {
+                return ResourceManager.GetString("InvalidDataExceptionWrongType", resourceCulture);
             }
         }
         
@@ -364,6 +418,33 @@ namespace ThScoreFileConverter.Properties {
         public static string msgTitleWarning {
             get {
                 return ResourceManager.GetString("msgTitleWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Encryption is not supported. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string NotImplementedExceptionEncryptionIsNotSupported {
+            get {
+                return ResourceManager.GetString("NotImplementedExceptionEncryptionIsNotSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   LZSS compression is not supported. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string NotImplementedExceptionLzssCompressionIsNotSupported {
+            get {
+                return ResourceManager.GetString("NotImplementedExceptionLzssCompressionIsNotSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Should not reach here. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string NotImplementedExceptionShouldNotReachHere {
+            get {
+                return ResourceManager.GetString("NotImplementedExceptionShouldNotReachHere", resourceCulture);
             }
         }
         

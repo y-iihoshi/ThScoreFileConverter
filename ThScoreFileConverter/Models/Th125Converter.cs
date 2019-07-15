@@ -26,6 +26,7 @@ namespace ThScoreFileConverter.Models
     using System.Security;
     using System.Security.Permissions;
     using System.Text.RegularExpressions;
+    using ThScoreFileConverter.Properties;
 
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th125Converter : ThConverter
@@ -913,11 +914,22 @@ namespace ThScoreFileConverter.Models
                 : base(chapter)
             {
                 if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
-                    throw new InvalidDataException("Signature");
+                {
+                    throw new InvalidDataException(
+                        Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.Signature)));
+                }
+
                 if (this.Version != ValidVersion)
-                    throw new InvalidDataException("Version");
+                {
+                    throw new InvalidDataException(
+                        Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.Version)));
+                }
+
                 if (this.Size != ValidSize)
-                    throw new InvalidDataException("Size");
+                {
+                    throw new InvalidDataException(
+                        Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.Size)));
+                }
 
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
@@ -971,11 +983,22 @@ namespace ThScoreFileConverter.Models
                 : base(chapter)
             {
                 if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
-                    throw new InvalidDataException("Signature");
+                {
+                    throw new InvalidDataException(
+                        Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.Signature)));
+                }
+
                 if (this.Version != ValidVersion)
-                    throw new InvalidDataException("Version");
+                {
+                    throw new InvalidDataException(
+                        Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.Version)));
+                }
+
                 if (this.Size != ValidSize)
-                    throw new InvalidDataException("Size");
+                {
+                    throw new InvalidDataException(
+                        Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.Size)));
+                }
 
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {

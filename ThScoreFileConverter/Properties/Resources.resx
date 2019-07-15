@@ -117,11 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ArgumentExceptionMustNotBeEmpty" xml:space="preserve">
+    <value>Must not be empty.</value>
+  </data>
+  <data name="ArgumentExceptionStreamMustBeReadable" xml:space="preserve">
+    <value>Stream must be readable.</value>
+  </data>
+  <data name="ArgumentExceptionWrongType" xml:space="preserve">
+    <value>Wrong type.</value>
+  </data>
   <data name="fltScoreFile" xml:space="preserve">
     <value>東方スコアファイル (*.dat)|*.dat|すべてのファイル (*.*)|*.*</value>
   </data>
   <data name="fltTemplateFile" xml:space="preserve">
     <value>すべてのファイル (*.*)|*.*</value>
+  </data>
+  <data name="InvalidDataExceptionPropertyIsInvalid" xml:space="preserve">
+    <value>Property {0} is invalid.</value>
+  </data>
+  <data name="InvalidDataExceptionPropertyIsOutOfRange" xml:space="preserve">
+    <value>Property {0} is out of range.</value>
+  </data>
+  <data name="InvalidDataExceptionWrongType" xml:space="preserve">
+    <value>Wrong type.</value>
   </data>
   <data name="keyTh06" xml:space="preserve">
     <value>TH06</value>
@@ -219,6 +237,15 @@
   </data>
   <data name="msgTitleWarning" xml:space="preserve">
     <value>警告</value>
+  </data>
+  <data name="NotImplementedExceptionEncryptionIsNotSupported" xml:space="preserve">
+    <value>Encryption is not supported.</value>
+  </data>
+  <data name="NotImplementedExceptionLzssCompressionIsNotSupported" xml:space="preserve">
+    <value>LZSS compression is not supported.</value>
+  </data>
+  <data name="NotImplementedExceptionShouldNotReachHere" xml:space="preserve">
+    <value>Should not reach here.</value>
   </data>
   <data name="ptnBestShot" xml:space="preserve">
     <value>*.dat</value>

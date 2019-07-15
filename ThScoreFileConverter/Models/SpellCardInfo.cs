@@ -9,6 +9,7 @@ namespace ThScoreFileConverter.Models
 {
     using System;
     using System.Linq;
+    using ThScoreFileConverter.Properties;
 
     /// <summary>
     /// Indicates information of a spell card.
@@ -46,13 +47,13 @@ namespace ThScoreFileConverter.Models
             if (name is null)
                 throw new ArgumentNullException(nameof(name));
             if (string.IsNullOrEmpty(name))
-                throw new ArgumentException("Name must not be empty", nameof(name));
+                throw new ArgumentException(Resources.ArgumentExceptionMustNotBeEmpty, nameof(name));
             if (!Enum.IsDefined(typeof(TStage), stage))
                 throw new ArgumentOutOfRangeException(nameof(stage));
             if (levels is null)
                 throw new ArgumentNullException(nameof(levels));
             if (levels.Length <= 0)
-                throw new ArgumentException("At least one level must be passed", nameof(levels));
+                throw new ArgumentException(Resources.ArgumentExceptionMustNotBeEmpty, nameof(levels));
             if (levels.Any(level => !Enum.IsDefined(typeof(TLevel), level)))
                 throw new ArgumentOutOfRangeException(nameof(levels));
 

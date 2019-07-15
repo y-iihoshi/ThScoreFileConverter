@@ -10,6 +10,7 @@ namespace ThScoreFileConverter.Models
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.IO;
+    using ThScoreFileConverter.Properties;
 
     /// <summary>
     /// The static class that treats the encryption format used for Touhou Project works.
@@ -34,7 +35,7 @@ namespace ThScoreFileConverter.Models
             Stream input, Stream output, int size, byte key, byte step, int block, int limit)
 #pragma warning restore IDE0060 // Remove unused parameter
         {
-            throw new NotImplementedException("Encryption is not supported.");
+            throw new NotImplementedException(Resources.NotImplementedExceptionEncryptionIsNotSupported);
         }
 
         /// <summary>

@@ -9,6 +9,7 @@ namespace ThScoreFileConverter.Actions
 {
     using System;
     using System.Windows;
+    using ThScoreFileConverter.Properties;
     using WinForms = System.Windows.Forms;
 
     /// <summary>
@@ -335,7 +336,7 @@ namespace ThScoreFileConverter.Actions
                         break;
 
                     default:
-                        throw new NotImplementedException("Should not reach here.");
+                        throw new NotImplementedException(Resources.NotImplementedExceptionShouldNotReachHere);
                 }
             }
         }

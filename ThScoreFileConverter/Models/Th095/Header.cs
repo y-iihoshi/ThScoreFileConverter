@@ -12,6 +12,7 @@ namespace ThScoreFileConverter.Models.Th095
     using System;
     using System.IO;
     using System.Text;
+    using ThScoreFileConverter.Properties;
 
     internal class Header : IBinaryReadable, IBinaryWritable
     {
@@ -45,17 +46,30 @@ namespace ThScoreFileConverter.Models.Th095
                 throw new ArgumentNullException(nameof(reader));
 
             this.Signature = Encoding.Default.GetString(reader.ReadExactBytes(SignatureSize));
+
             this.EncodedAllSize = reader.ReadInt32();
             if (this.EncodedAllSize < 0)
-                throw new InvalidDataException(nameof(this.EncodedAllSize));
+            {
+                throw new InvalidDataException(
+                    Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.EncodedAllSize)));
+            }
+
             this.unknown1 = reader.ReadUInt32();
             this.unknown2 = reader.ReadUInt32();
+
             this.EncodedBodySize = reader.ReadInt32();
             if (this.EncodedBodySize < 0)
-                throw new InvalidDataException(nameof(this.EncodedBodySize));
+            {
+                throw new InvalidDataException(
+                    Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.EncodedBodySize)));
+            }
+
             this.DecodedBodySize = reader.ReadInt32();
             if (this.DecodedBodySize < 0)
-                throw new InvalidDataException(nameof(this.DecodedBodySize));
+            {
+                throw new InvalidDataException(
+                    Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.DecodedBodySize)));
+            }
         }
 
         public void WriteTo(BinaryWriter writer)

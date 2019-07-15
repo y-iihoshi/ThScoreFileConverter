@@ -9,6 +9,7 @@ namespace ThScoreFileConverter.Models
 {
     using System;
     using System.IO;
+    using ThScoreFileConverter.Properties;
 
     /// <summary>
     /// Represents a reader that reads data by bitwise from a stream.
@@ -44,7 +45,7 @@ namespace ThScoreFileConverter.Models
             if (stream == null)
                 throw new ArgumentNullException(nameof(stream));
             if (!stream.CanRead)
-                throw new ArgumentException("stream must be readable", nameof(stream));
+                throw new ArgumentException(Resources.ArgumentExceptionStreamMustBeReadable, nameof(stream));
 
             this.stream = stream;
             this.current = 0;

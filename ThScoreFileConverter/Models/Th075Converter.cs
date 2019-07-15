@@ -20,6 +20,7 @@ namespace ThScoreFileConverter.Models
     using System.IO;
     using System.Linq;
     using System.Text.RegularExpressions;
+    using ThScoreFileConverter.Properties;
 
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th075Converter : ThConverter
@@ -945,10 +946,16 @@ namespace ThScoreFileConverter.Models
                 else
                 {
                     if ((this.Month <= 0) || (this.Month > 12))
-                        throw new InvalidDataException("Month is out of range");
+                    {
+                        throw new InvalidDataException(
+                            Utils.Format(Resources.InvalidDataExceptionPropertyIsOutOfRange, nameof(this.Month)));
+                    }
 
                     if ((this.Day <= 0) || (this.Day > DateTime.DaysInMonth(2000, this.Month)))
-                        throw new InvalidDataException("Day is out of range");
+                    {
+                        throw new InvalidDataException(
+                            Utils.Format(Resources.InvalidDataExceptionPropertyIsOutOfRange, nameof(this.Day)));
+                    }
                 }
 
                 reader.ReadUInt16();    // always 0x0000?

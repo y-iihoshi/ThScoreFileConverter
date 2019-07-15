@@ -12,6 +12,7 @@ namespace ThScoreFileConverter.Models.Th07
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.IO;
+    using ThScoreFileConverter.Properties;
 
     internal class VersionInfo : Th06.Chapter
     {
@@ -22,9 +23,16 @@ namespace ThScoreFileConverter.Models.Th07
             : base(chapter)
         {
             if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
-                throw new InvalidDataException("Signature");
+            {
+                throw new InvalidDataException(
+                    Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.Signature)));
+            }
+
             if (this.Size1 != ValidSize)
-                throw new InvalidDataException("Size1");
+            {
+                throw new InvalidDataException(
+                    Utils.Format(Resources.InvalidDataExceptionPropertyIsInvalid, nameof(this.Size1)));
+            }
 
             using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
             {

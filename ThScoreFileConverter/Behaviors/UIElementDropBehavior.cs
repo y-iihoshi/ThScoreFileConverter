@@ -11,6 +11,7 @@ namespace ThScoreFileConverter.Behaviors
     using System.Windows;
     using System.Windows.Input;
     using Microsoft.Xaml.Behaviors;
+    using ThScoreFileConverter.Properties;
 
     /// <summary>
     /// Encapsulates state information and drag-and-drop related <see cref="ICommand"/>s into a
@@ -191,7 +192,7 @@ namespace ThScoreFileConverter.Behaviors
             if (command != null)
             {
                 if (!(sender is UIElement))
-                    throw new ArgumentException("Wrong type.", nameof(sender));
+                    throw new ArgumentException(Resources.ArgumentExceptionWrongType, nameof(sender));
 
                 if (e == null)
                     throw new ArgumentNullException(nameof(e));
