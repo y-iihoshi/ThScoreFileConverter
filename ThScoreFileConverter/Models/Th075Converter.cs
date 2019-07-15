@@ -822,6 +822,7 @@ namespace ThScoreFileConverter.Models
             public Status Status { get; private set; }
 
             [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "unknownChara", Justification = "Reviewed.")]
+            [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "knownLevel", Justification = "Reviewed.")]
             public void ReadFrom(BinaryReader reader)
             {
                 var levels = Utils.GetEnumerator<Level>();
@@ -839,7 +840,7 @@ namespace ThScoreFileConverter.Models
 
                 foreach (var unknownChara in Enumerable.Range(1, 4))
                 {
-                    foreach (var level in levels)
+                    foreach (var knownLevel in levels)
                         new ClearData().ReadFrom(reader);
                 }
 
@@ -966,6 +967,7 @@ namespace ThScoreFileConverter.Models
             public Dictionary<Chara, Dictionary<Chara, int>> ArcadeScores { get; private set; }
 
             [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "unknownChara", Justification = "Reviewed.")]
+            [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "knownEnemy", Justification = "Reviewed.")]
             [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "unknownEnemy", Justification = "Reviewed.")]
             public void ReadFrom(BinaryReader reader)
             {
@@ -990,7 +992,7 @@ namespace ThScoreFileConverter.Models
 
                 foreach (var unknownChara in unknownCharas)
                 {
-                    foreach (var enemy in charas)
+                    foreach (var knownEnemy in charas)
                         reader.ReadInt32();
                     foreach (var unknownEnemy in unknownCharas)
                         reader.ReadInt32();
