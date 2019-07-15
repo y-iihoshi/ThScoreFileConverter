@@ -22,6 +22,7 @@ namespace ThScoreFileConverter.Models
     using System.Text.RegularExpressions;
     using CardInfo = SpellCardInfo<Th07Converter.Stage, Th07Converter.Level>;
 
+    [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th07Converter : ThConverter
     {
         // Thanks to thwiki.info and www57.atwiki.jp/2touhoukouryaku

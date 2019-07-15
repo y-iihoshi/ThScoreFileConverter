@@ -11,6 +11,7 @@ namespace ThScoreFileConverter.ViewModels
     using System.Collections;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Linq;
     using System.Reflection;
@@ -26,6 +27,7 @@ namespace ThScoreFileConverter.ViewModels
     /// <summary>
     /// The view model class for <see cref="ThScoreFileConverter.Views.MainWindow"/>.
     /// </summary>
+    [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "For binding.")]
     internal class MainWindowViewModel : BindableBase
     {
         /// <summary>

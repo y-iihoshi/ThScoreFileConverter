@@ -27,6 +27,7 @@ namespace ThScoreFileConverter.Models
     using System.Security.Permissions;
     using System.Text.RegularExpressions;
 
+    [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th125Converter : ThConverter
     {
         // Thanks to thwiki.info
