@@ -12,7 +12,7 @@ environment:
 install:
   - cmd: |
       curl -LO https://aka.ms/vs/16/release/vs_community.exe
-      vs_community.exe modify --installPath "%VSINSTALLDIR%" --add Microsoft.VisualStudio.Workload.Python --quiet --wait
+      vs_community.exe modify --installPath "%VSINSTALLDIR%" --add Microsoft.VisualStudio.Workload.Python --quiet --norestart --wait
       set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
       python --version
       python -m pip install -U pip
