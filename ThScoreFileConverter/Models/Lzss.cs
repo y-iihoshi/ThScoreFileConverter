@@ -28,7 +28,9 @@ namespace ThScoreFileConverter.Models
         /// <param name="output">The stream that is output the compressed data.</param>
         [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", Justification = "Reviewed.")]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
+#pragma warning disable IDE0060 // Remove unused parameter
         public static void Compress(Stream input, Stream output)
+#pragma warning restore IDE0060 // Remove unused parameter
         {
             throw new NotImplementedException("LZSS complession is not supported.");
         }

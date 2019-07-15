@@ -3,7 +3,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using ThScoreFileConverter.Models;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -26,7 +25,9 @@ namespace ThScoreFileConverterTests.Models
         };
 
         [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "properties")]
+#pragma warning disable IDE0060 // Remove unused parameter
         internal static byte[] MakeData(in Properties properties)
+#pragma warning restore IDE0060 // Remove unused parameter
             => TestUtils.MakeByteArray(new byte[0x18]);
 
         internal static byte[] MakeByteArray(in Properties properties)

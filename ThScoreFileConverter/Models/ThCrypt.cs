@@ -29,8 +29,10 @@ namespace ThScoreFileConverter.Models
         /// <param name="limit">The limit value.</param>
         [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", Justification = "Reviewed.")]
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
+#pragma warning disable IDE0060 // Remove unused parameter
         public static void Encrypt(
             Stream input, Stream output, int size, byte key, byte step, int block, int limit)
+#pragma warning restore IDE0060 // Remove unused parameter
         {
             throw new NotImplementedException("Encryption is not supported.");
         }
