@@ -8,6 +8,7 @@
 namespace ThScoreFileConverter
 {
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Linq;
     using System.Runtime.Serialization;
@@ -103,33 +104,32 @@ namespace ThScoreFileConverter
         /// Loads the settings from the specified XML file.
         /// </summary>
         /// <param name="path">The path of the XML file to load.</param>
+        [SuppressMessage("Microsoft.Usage", "CA2202:DoNotDisposeObjectsMultipleTimes", Justification = "Reviewed.")]
         public void Load(string path)
         {
             try
             {
                 using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+                using (var reader = XmlReader.Create(stream, new XmlReaderSettings { CloseInput = false }))
                 {
-                    using (var reader = XmlDictionaryReader.CreateTextReader(stream, new XmlDictionaryReaderQuotas()))
+                    var serializer = new DataContractSerializer(typeof(Settings));
+                    if (serializer.ReadObject(reader) is Settings settings)
                     {
-                        var serializer = new DataContractSerializer(typeof(Settings));
-                        if (serializer.ReadObject(reader) is Settings settings)
-                        {
-                            this.LastTitle = settings.LastTitle;
-                            this.Dictionary = settings.Dictionary;
+                        this.LastTitle = settings.LastTitle;
+                        this.Dictionary = settings.Dictionary;
 
-                            if (!string.IsNullOrEmpty(settings.FontFamilyName))
-                                this.FontFamilyName = settings.FontFamilyName;
-                            if (settings.FontSize.HasValue)
-                                this.FontSize = settings.FontSize.Value;
-                            if (settings.OutputNumberGroupSeparator.HasValue)
-                                this.OutputNumberGroupSeparator = settings.OutputNumberGroupSeparator.Value;
-                            if (settings.InputCodePageId.HasValue &&
-                                ValidCodePageIds.Any(id => id == settings.InputCodePageId.Value))
-                                this.InputCodePageId = settings.InputCodePageId.Value;
-                            if (settings.OutputCodePageId.HasValue &&
-                                ValidCodePageIds.Any(id => id == settings.OutputCodePageId.Value))
-                                this.OutputCodePageId = settings.OutputCodePageId.Value;
-                        }
+                        if (!string.IsNullOrEmpty(settings.FontFamilyName))
+                            this.FontFamilyName = settings.FontFamilyName;
+                        if (settings.FontSize.HasValue)
+                            this.FontSize = settings.FontSize.Value;
+                        if (settings.OutputNumberGroupSeparator.HasValue)
+                            this.OutputNumberGroupSeparator = settings.OutputNumberGroupSeparator.Value;
+                        if (settings.InputCodePageId.HasValue &&
+                            ValidCodePageIds.Any(id => id == settings.InputCodePageId.Value))
+                            this.InputCodePageId = settings.InputCodePageId.Value;
+                        if (settings.OutputCodePageId.HasValue &&
+                            ValidCodePageIds.Any(id => id == settings.OutputCodePageId.Value))
+                            this.OutputCodePageId = settings.OutputCodePageId.Value;
                     }
                 }
             }
@@ -151,17 +151,16 @@ namespace ThScoreFileConverter
         /// Saves the settings to the specified XML file.
         /// </summary>
         /// <param name="path">The path of the XML file to save.</param>
+        [SuppressMessage("Microsoft.Usage", "CA2202:DoNotDisposeObjectsMultipleTimes", Justification = "Reviewed.")]
         public void Save(string path)
         {
             using (var stream = new FileStream(path, FileMode.Create, FileAccess.Write))
+            using (var writer = XmlWriter.Create(stream, new XmlWriterSettings { CloseOutput = false, Indent = true }))
             {
-                using (var writer = XmlWriter.Create(stream, new XmlWriterSettings() { Indent = true }))
-                {
-                    var serializer = new DataContractSerializer(typeof(Settings));
-                    serializer.WriteObject(writer, this);
-                    writer.WriteWhitespace(writer.Settings.NewLineChars);
-                    writer.Flush();
-                }
+                var serializer = new DataContractSerializer(typeof(Settings));
+                serializer.WriteObject(writer, this);
+                writer.WriteWhitespace(writer.Settings.NewLineChars);
+                writer.Flush();
             }
         }
     }
