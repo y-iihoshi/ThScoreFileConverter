@@ -11,9 +11,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
     internal sealed class Th095HeaderWrapper<TParent>
         where TParent : ThConverter
     {
-        private static Type ParentType = typeof(TParent);
-        private static string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
-        private static string TypeNameToTest = ParentType.FullName + "+Header";
+        private static readonly Type ParentType = typeof(TParent);
+        private static readonly string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
+        private static readonly string TypeNameToTest = ParentType.FullName + "+Header";
 
         private readonly PrivateObject pobj = null;
 

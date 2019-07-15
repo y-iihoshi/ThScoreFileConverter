@@ -11,9 +11,9 @@ namespace ThScoreFileConverterTests.Models
     // NOTE: Setting the accessibility as public causes CS0053.
     internal sealed class Th09ClearCountWrapper
     {
-        private static Type ParentType = typeof(Th09Converter);
-        private static string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
-        private static string TypeNameToTest = ParentType.FullName + "+ClearCount";
+        private static readonly Type ParentType = typeof(Th09Converter);
+        private static readonly string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
+        private static readonly string TypeNameToTest = ParentType.FullName + "+ClearCount";
 
         private readonly PrivateObject pobj = null;
 

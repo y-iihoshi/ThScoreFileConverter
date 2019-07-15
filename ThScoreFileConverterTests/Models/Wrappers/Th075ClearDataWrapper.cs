@@ -10,9 +10,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 {
     public sealed class Th075ClearDataWrapper
     {
-        private static Type ParentType = typeof(Th075Converter);
-        private static string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
-        private static string TypeNameToTest = ParentType.FullName + "+ClearData";
+        private static readonly Type ParentType = typeof(Th075Converter);
+        private static readonly string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
+        private static readonly string TypeNameToTest = ParentType.FullName + "+ClearData";
 
         private readonly PrivateObject pobj = null;
 

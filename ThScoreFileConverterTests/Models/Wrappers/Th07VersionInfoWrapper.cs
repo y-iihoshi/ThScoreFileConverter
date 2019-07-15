@@ -6,9 +6,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 {
     public sealed class Th07VersionInfoWrapper
     {
-        private static Type VersionInfoType = typeof(ThScoreFileConverter.Models.Th07.VersionInfo);
-        private static string AssemblyNameToTest = VersionInfoType.Assembly.GetName().Name;
-        private static string TypeNameToTest = VersionInfoType.FullName;
+        private static readonly Type VersionInfoType = typeof(ThScoreFileConverter.Models.Th07.VersionInfo);
+        private static readonly string AssemblyNameToTest = VersionInfoType.Assembly.GetName().Name;
+        private static readonly string TypeNameToTest = VersionInfoType.FullName;
 
         private readonly PrivateObject pobj = null;
 

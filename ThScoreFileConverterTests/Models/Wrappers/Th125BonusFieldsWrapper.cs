@@ -7,9 +7,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 {
     public sealed class Th125BonusFieldsWrapper
     {
-        private static Type ConverterType = typeof(Th125Converter);
-        private static string AssemblyNameToTest = ConverterType.Assembly.GetName().Name;
-        private static string TypeNameToTest = ConverterType.FullName + "+BestShotHeader+BonusFields";
+        private static readonly Type ConverterType = typeof(Th125Converter);
+        private static readonly string AssemblyNameToTest = ConverterType.Assembly.GetName().Name;
+        private static readonly string TypeNameToTest = ConverterType.FullName + "+BestShotHeader+BonusFields";
 
         private readonly PrivateObject pobj = null;
 

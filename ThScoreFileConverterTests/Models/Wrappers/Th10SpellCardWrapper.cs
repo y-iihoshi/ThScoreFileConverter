@@ -12,9 +12,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
     internal sealed class Th10SpellCardWrapper<TParent>
         where TParent : ThConverter
     {
-        private static Type ParentType = typeof(TParent);
-        private static string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
-        private static string TypeNameToTest = ParentType.FullName + "+SpellCard";
+        private static readonly Type ParentType = typeof(TParent);
+        private static readonly string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
+        private static readonly string TypeNameToTest = ParentType.FullName + "+SpellCard";
 
         private readonly PrivateObject pobj = null;
 

@@ -6,9 +6,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 {
     public sealed class Th125DetailWrapper
     {
-        private static Type ParentType = typeof(Th125Converter);
-        private static string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
-        private static string TypeNameToTest = ParentType.FullName + "+Detail";
+        private static readonly Type ParentType = typeof(Th125Converter);
+        private static readonly string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
+        private static readonly string TypeNameToTest = ParentType.FullName + "+Detail";
 
         private readonly PrivateObject pobj = null;
 

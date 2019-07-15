@@ -8,9 +8,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 {
     public sealed class Th09FileHeaderWrapper
     {
-        private static Type ParentType = typeof(Th09Converter);
-        private static string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
-        private static string TypeNameToTest = ParentType.FullName + "+FileHeader";
+        private static readonly Type ParentType = typeof(Th09Converter);
+        private static readonly string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
+        private static readonly string TypeNameToTest = ParentType.FullName + "+FileHeader";
 
         private readonly PrivateObject pobj = null;
 

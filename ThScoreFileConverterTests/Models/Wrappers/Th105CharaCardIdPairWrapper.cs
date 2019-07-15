@@ -9,9 +9,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         where TParent : ThConverter
         where TChara : struct, Enum
     {
-        private static Type ParentType = typeof(TParent);
-        private static string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
-        private static string TypeNameToTest = ParentType.FullName + "+CharaCardIdPair";
+        private static readonly Type ParentType = typeof(TParent);
+        private static readonly string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
+        private static readonly string TypeNameToTest = ParentType.FullName + "+CharaCardIdPair";
 
         private readonly PrivateObject pobj = null;
 

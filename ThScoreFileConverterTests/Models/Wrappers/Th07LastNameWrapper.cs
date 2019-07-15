@@ -6,9 +6,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 {
     public sealed class Th07LastNameWrapper
     {
-        private static Type LastNameType = typeof(ThScoreFileConverter.Models.Th07.LastName);
-        private static string AssemblyNameToTest = LastNameType.Assembly.GetName().Name;
-        private static string TypeNameToTest = LastNameType.FullName;
+        private static readonly Type LastNameType = typeof(ThScoreFileConverter.Models.Th07.LastName);
+        private static readonly string AssemblyNameToTest = LastNameType.Assembly.GetName().Name;
+        private static readonly string TypeNameToTest = LastNameType.FullName;
 
         private readonly PrivateObject pobj = null;
 

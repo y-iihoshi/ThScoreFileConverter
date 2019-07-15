@@ -9,9 +9,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 {
     public sealed class Th06ChapterWrapper
     {
-        private static Type ChapterType = typeof(ThScoreFileConverter.Models.Th06.Chapter);
-        private static string AssemblyNameToTest = ChapterType.Assembly.GetName().Name;
-        private static string TypeNameToTest = ChapterType.FullName;
+        private static readonly Type ChapterType = typeof(ThScoreFileConverter.Models.Th06.Chapter);
+        private static readonly string AssemblyNameToTest = ChapterType.Assembly.GetName().Name;
+        private static readonly string TypeNameToTest = ChapterType.FullName;
 
         private readonly PrivateObject pobj = null;
 

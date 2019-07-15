@@ -9,9 +9,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
     // NOTE: Setting the accessibility as public causes CS0051.
     internal sealed class Th06CardAttackWrapper
     {
-        private static Type ParentType = typeof(Th06Converter);
-        private static string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
-        private static string TypeNameToTest = ParentType.FullName + "+CardAttack";
+        private static readonly Type ParentType = typeof(Th06Converter);
+        private static readonly string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
+        private static readonly string TypeNameToTest = ParentType.FullName + "+CardAttack";
 
         private readonly PrivateObject pobj = null;
 

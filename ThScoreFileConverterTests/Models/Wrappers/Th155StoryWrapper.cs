@@ -8,9 +8,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
     // NOTE: Setting the accessibility as public causes CS0053.
     internal sealed class Th155StoryWrapper
     {
-        private static Type ConverterType = typeof(Th155Converter);
-        private static string AssemblyNameToTest = ConverterType.Assembly.GetName().Name;
-        private static string TypeNameToTest = ConverterType.FullName + "+AllScoreData+Story";
+        private static readonly Type ConverterType = typeof(Th155Converter);
+        private static readonly string AssemblyNameToTest = ConverterType.Assembly.GetName().Name;
+        private static readonly string TypeNameToTest = ConverterType.FullName + "+AllScoreData+Story";
 
         private readonly PrivateObject pobj = null;
 

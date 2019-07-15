@@ -11,9 +11,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
     // NOTE: Setting the accessibility as public causes CS0050 and CS0051.
     internal sealed class Th155AllScoreDataWrapper
     {
-        private static Type ParentType = typeof(Th155Converter);
-        private static string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
-        private static string TypeNameToTest = ParentType.FullName + "+AllScoreData";
+        private static readonly Type ParentType = typeof(Th155Converter);
+        private static readonly string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
+        private static readonly string TypeNameToTest = ParentType.FullName + "+AllScoreData";
         private static readonly PrivateType PrivateType = new PrivateType(AssemblyNameToTest, TypeNameToTest);
 
         private readonly PrivateObject pobj = null;

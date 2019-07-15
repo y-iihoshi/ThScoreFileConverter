@@ -10,9 +10,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
     // NOTE: Setting the accessibility as public causes CS0053.
     internal sealed class Th143BestShotHeaderWrapper
     {
-        private static Type ParentType = typeof(Th143Converter);
-        private static string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
-        private static string TypeNameToTest = ParentType.FullName + "+BestShotHeader";
+        private static readonly Type ParentType = typeof(Th143Converter);
+        private static readonly string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
+        private static readonly string TypeNameToTest = ParentType.FullName + "+BestShotHeader";
 
         private readonly PrivateObject pobj = null;
 

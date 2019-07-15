@@ -10,9 +10,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
     // NOTE: Setting the accessibility as public causes CS0703.
     internal sealed class Th095ChapterWrapper
     {
-        private static Type ChapterType = typeof(ThScoreFileConverter.Models.Th095.Chapter);
-        private static string AssemblyNameToTest = ChapterType.Assembly.GetName().Name;
-        private static string TypeNameToTest = ChapterType.FullName;
+        private static readonly Type ChapterType = typeof(ThScoreFileConverter.Models.Th095.Chapter);
+        private static readonly string AssemblyNameToTest = ChapterType.Assembly.GetName().Name;
+        private static readonly string TypeNameToTest = ChapterType.FullName;
 
         private readonly PrivateObject pobj = null;
 
