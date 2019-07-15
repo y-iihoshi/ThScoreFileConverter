@@ -20,11 +20,6 @@ namespace ThScoreFileConverter.Models
         where TLevel : struct, IComparable, IFormattable, IConvertible
     {
         /// <summary>
-        /// Indicates the level(s) which the current spell card is used.
-        /// </summary>
-        private readonly TLevel[] levels;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="SpellCardInfo{TStage,TLevel}"/> class.
         /// </summary>
         /// <param name="id">A 1-based sequential number of the spell card.</param>
@@ -64,7 +59,7 @@ namespace ThScoreFileConverter.Models
             this.Id = id;
             this.Name = name;
             this.Stage = stage;
-            this.levels = levels;
+            this.Levels = levels;
         }
 
         /// <summary>
@@ -87,16 +82,13 @@ namespace ThScoreFileConverter.Models
         /// </summary>
         public TLevel Level
         {
-            get { return this.levels[0]; }
+            get { return this.Levels[0]; }
         }
 
         /// <summary>
         /// Gets the levels which the current spell card is used.
         /// </summary>
         /// <remarks>This is for TH06 only.</remarks>
-        public TLevel[] Levels
-        {
-            get { return this.levels; }
-        }
+        public TLevel[] Levels { get; }
     }
 }

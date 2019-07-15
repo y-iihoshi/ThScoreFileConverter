@@ -22,11 +22,6 @@ namespace ThScoreFileConverter
     public sealed class Settings
     {
         /// <summary>
-        /// Only one instance of this class.
-        /// </summary>
-        private static readonly Settings InstanceImpl = new Settings();
-
-        /// <summary>
         /// Valid code page identifiers for this application.
         /// </summary>
         private static readonly int[] ValidCodePageIdsImpl = new int[] { 65001, 932, 51932 };
@@ -48,13 +43,7 @@ namespace ThScoreFileConverter
         /// <summary>
         /// Gets the instance.
         /// </summary>
-        public static Settings Instance
-        {
-            get
-            {
-                return InstanceImpl;
-            }
-        }
+        public static Settings Instance { get; } = new Settings();
 
         /// <summary>
         /// Gets the valid code page identifiers for this application.
