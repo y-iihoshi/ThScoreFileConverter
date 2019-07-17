@@ -906,7 +906,7 @@ namespace ThScoreFileConverter.Models
                 this.Rankings = new Dictionary<LevelPracticeWithTotal, ScoreData[]>(numLevelsWithTotal);
                 this.ClearCounts = new Dictionary<LevelPracticeWithTotal, int>(numLevelsWithTotal);
                 this.ClearFlags = new Dictionary<LevelPracticeWithTotal, int>(numLevelsWithTotal);
-                this.Practices = new Dictionary<LevelStagePair, Practice>(levels.Count() * stages.Count());
+                this.Practices = new Dictionary<LevelStagePair, Th13.Practice>(levels.Count() * stages.Count());
                 this.Cards = new Dictionary<int, SpellCard>(CardTable.Count);
 
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
@@ -946,7 +946,7 @@ namespace ThScoreFileConverter.Models
                     {
                         foreach (var stage in stages)
                         {
-                            var practice = new Practice();
+                            var practice = new Th13.Practice();
                             practice.ReadFrom(reader);
                             var key = new LevelStagePair(level, stage);
                             if (!this.Practices.ContainsKey(key))
@@ -976,7 +976,7 @@ namespace ThScoreFileConverter.Models
 
             public Dictionary<LevelPracticeWithTotal, int> ClearFlags { get; private set; }     // Really...?
 
-            public Dictionary<LevelStagePair, Practice> Practices { get; private set; }
+            public Dictionary<LevelStagePair, Th13.Practice> Practices { get; private set; }
 
             public Dictionary<int, SpellCard> Cards { get; private set; }
 
@@ -1039,28 +1039,6 @@ namespace ThScoreFileConverter.Models
 
         private class SpellCard : Th13.SpellCard<Level>
         {
-        }
-
-        private class Practice : IBinaryReadable
-        {
-            public uint Score { get; private set; }         // * 10
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte ClearFlag { get; private set; }     // 0x00: Not clear, 0x01: Cleared
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte EnableFlag { get; private set; }    // 0x00: Disable, 0x01: Enable
-
-            public void ReadFrom(BinaryReader reader)
-            {
-                if (reader == null)
-                    throw new ArgumentNullException(nameof(reader));
-
-                this.Score = reader.ReadUInt32();
-                this.ClearFlag = reader.ReadByte();
-                this.EnableFlag = reader.ReadByte();
-                reader.ReadUInt16();    // always 0x0000?
-            }
         }
     }
 }

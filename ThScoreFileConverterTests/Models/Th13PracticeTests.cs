@@ -1,8 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Diagnostics.CodeAnalysis;
-using ThScoreFileConverter.Models;
 using ThScoreFileConverterTests.Models.Wrappers;
+using Practice = ThScoreFileConverter.Models.Th13.Practice;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -26,113 +25,45 @@ namespace ThScoreFileConverterTests.Models
         internal static byte[] MakeByteArray(in Properties properties)
             => TestUtils.MakeByteArray(properties.score, properties.clearFlag, properties.enableFlag, (ushort)0);
 
-        internal static void Validate<TParent>(in Th13PracticeWrapper<TParent> practice, in Properties properties)
-            where TParent : ThConverter
+        internal static void Validate(in Th13PracticeWrapper practice, in Properties properties)
+            => Validate(practice.Target as Practice, properties);
+
+        internal static void Validate(in Practice practice, in Properties properties)
         {
             Assert.AreEqual(properties.score, practice.Score);
             Assert.AreEqual(properties.clearFlag, practice.ClearFlag);
             Assert.AreEqual(properties.enableFlag, practice.EnableFlag);
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        internal static void Th13PracticeTestHelper<TParent>()
-            where TParent : ThConverter
+        [TestMethod]
+        public void Th13PracticeTest()
             => TestUtils.Wrap(() =>
             {
                 var properties = new Properties();
-                var practice = new Th13PracticeWrapper<TParent>();
+                var practice = new Th13PracticeWrapper();
 
                 Validate(practice, properties);
             });
 
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        internal static void Th13PracticeReadFromTestHelper<TParent>()
-            where TParent : ThConverter
+        [TestMethod]
+        public void Th13PracticeReadFromTest()
             => TestUtils.Wrap(() =>
             {
-                var practice = Th13PracticeWrapper<TParent>.Create(MakeByteArray(ValidProperties));
+                var practice = Th13PracticeWrapper.Create(MakeByteArray(ValidProperties));
 
                 Validate(practice, ValidProperties);
             });
 
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        internal static void Th13PracticeReadFromTestNullHelper<TParent>()
-            where TParent : ThConverter
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Th13PracticeReadFromTestNull()
             => TestUtils.Wrap(() =>
             {
-                var practice = new Th13PracticeWrapper<TParent>();
+                var practice = new Th13PracticeWrapper();
 
                 practice.ReadFrom(null);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
-
-        #region Th13
-
-        [TestMethod]
-        public void Th13PracticeTest()
-            => Th13PracticeTestHelper<Th13Converter>();
-
-        [TestMethod]
-        public void Th13PracticeReadFromTest()
-            => Th13PracticeReadFromTestHelper<Th13Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Th13PracticeReadFromTestNull()
-            => Th13PracticeReadFromTestNullHelper<Th13Converter>();
-
-        #endregion
-
-        #region Th14
-
-        [TestMethod]
-        public void Th14PracticeTest()
-            => Th13PracticeTestHelper<Th14Converter>();
-
-        [TestMethod]
-        public void Th14PracticeReadFromTest()
-            => Th13PracticeReadFromTestHelper<Th14Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Th14PracticeReadFromTestNull()
-            => Th13PracticeReadFromTestNullHelper<Th14Converter>();
-
-        #endregion
-
-        #region Th15
-
-        [TestMethod]
-        public void Th15PracticeTest()
-            => Th13PracticeTestHelper<Th15Converter>();
-
-        [TestMethod]
-        public void Th15PracticeReadFromTest()
-            => Th13PracticeReadFromTestHelper<Th15Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Th15PracticeReadFromTestNull()
-            => Th13PracticeReadFromTestNullHelper<Th15Converter>();
-
-        #endregion
-
-        #region Th16
-
-        [TestMethod]
-        public void Th16PracticeTest()
-            => Th13PracticeTestHelper<Th16Converter>();
-
-        [TestMethod]
-        public void Th16PracticeReadFromTest()
-            => Th13PracticeReadFromTestHelper<Th16Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Th16PracticeReadFromTestNull()
-            => Th13PracticeReadFromTestNullHelper<Th16Converter>();
-
-        #endregion
     }
 }

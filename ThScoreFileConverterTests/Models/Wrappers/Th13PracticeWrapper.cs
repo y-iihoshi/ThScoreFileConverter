@@ -1,26 +1,17 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using ThScoreFileConverter.Models;
+using Practice = ThScoreFileConverter.Models.Th13.Practice;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
     // NOTE: Setting the accessibility as public causes CS0703.
-    internal sealed class Th13PracticeWrapper<TParent>
-        where TParent : ThConverter
+    internal sealed class Th13PracticeWrapper
     {
-        private static readonly Type ParentType = typeof(TParent);
-        private static readonly string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
-        private static readonly string TypeNameToTest = ParentType.FullName + "+Practice";
+        private readonly Practice original = null;
 
-        private readonly PrivateObject pobj = null;
-
-        [SuppressMessage("Microsoft.Design", "CA1000:DoNotDeclareStaticMembersOnGenericTypes")]
-        public static Th13PracticeWrapper<TParent> Create(byte[] array)
+        public static Th13PracticeWrapper Create(byte[] array)
         {
-            var practice = new Th13PracticeWrapper<TParent>();
+            var practice = new Th13PracticeWrapper();
 
             MemoryStream stream = null;
             try
@@ -41,22 +32,18 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         }
 
         public Th13PracticeWrapper()
-            => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
-        public Th13PracticeWrapper(object obj)
-            => this.pobj = new PrivateObject(obj);
+            => this.original = new Practice();
 
-        public object Target
-            => this.pobj.Target;
-        public uint? Score
-            => this.pobj.GetProperty(nameof(Score)) as uint?;
+        public object Target => this.original;
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public uint? Score => this.original.Score;
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag")]
-        public byte? ClearFlag
-            => this.pobj.GetProperty(nameof(ClearFlag)) as byte?;
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public byte? ClearFlag => this.original.ClearFlag;
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag")]
-        public byte? EnableFlag
-            => this.pobj.GetProperty(nameof(EnableFlag)) as byte?;
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public byte? EnableFlag => this.original.EnableFlag;
 
-        public void ReadFrom(BinaryReader reader)
-            => this.pobj.Invoke(nameof(ReadFrom), new object[] { reader }, CultureInfo.InvariantCulture);
+        public void ReadFrom(BinaryReader reader) => this.original.ReadFrom(reader);
     }
 }

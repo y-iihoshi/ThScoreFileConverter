@@ -133,6 +133,7 @@
     <Compile Include="Models\Th128Converter.cs" />
     <Compile Include="Models\Th13Converter.cs" />
     <Compile Include="Models\Th135Converter.cs" />
+    <Compile Include="Models\Th13\Practice.cs" />
     <Compile Include="Models\Th13\SpellCard.cs" />
     <Compile Include="Models\Th14Converter.cs" />
     <Compile Include="Models\Th143Converter.cs" />

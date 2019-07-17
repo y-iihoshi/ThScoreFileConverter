@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using ThScoreFileConverter.Models;
+using Practice = ThScoreFileConverter.Models.Th13.Practice;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -49,12 +50,11 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         // public IReadOnlyDictionary<LevelStagePair, Practice> Practices
         //     => this.pobj.GetProperty(nameof(Practices)) as Dictionary<LevelStagePair, Practice>;
         public object Practices
-            => this.pobj.GetProperty(nameof(Practices));
-        public Th13PracticeWrapper<Th15Converter> PracticesItem(
+            => this.pobj.GetProperty(nameof(this.Practices));
+        public Practice PracticesItem(
             Th10LevelStagePairWrapper<Th15Converter, ThConverter.Level, Th15Converter.StagePractice> levelStagePair)
-            => new Th13PracticeWrapper<Th15Converter>(
-                this.Practices.GetType().GetProperty("Item").GetValue(
-                    this.Practices, new object[] { levelStagePair.Target }));
+            => this.Practices.GetType().GetProperty("Item").GetValue(
+                this.Practices, new object[] { levelStagePair.Target }) as Practice;
 
         public static bool CanInitialize(Th10ChapterWrapper chapter)
             => (bool)PrivateType.InvokeStatic(
