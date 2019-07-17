@@ -1041,32 +1041,19 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class ScoreData : IBinaryReadable
+        private class ScoreData : Th10.ScoreData
         {
-            public uint Score { get; private set; }     // * 10
+            public StageProgress StageProgress { get; private set; }
 
-            public StageProgress StageProgress { get; private set; }    // size: 1Byte
-
-            public byte ContinueCount { get; private set; }
-
-            public byte[] Name { get; private set; }    // .Length = 10 (The last 2 bytes are always 0x00 ?)
-
-            public uint DateTime { get; private set; }  // UNIX time (unit: [s])
-
-            public float SlowRate { get; private set; } // really...?
-
-            public void ReadFrom(BinaryReader reader)
+            public new void ReadFrom(BinaryReader reader)
             {
                 if (reader is null)
                     throw new ArgumentNullException(nameof(reader));
 
-                this.Score = reader.ReadUInt32();
-                this.StageProgress = Utils.ToEnum<StageProgress>(reader.ReadByte());
-                this.ContinueCount = reader.ReadByte();
-                this.Name = reader.ReadExactBytes(10);
-                this.DateTime = reader.ReadUInt32();
-                this.SlowRate = reader.ReadSingle();
+                base.ReadFrom(reader);
                 reader.ReadUInt32();
+
+                this.StageProgress = Utils.ToEnum<StageProgress>(this.StageProgressImpl);
             }
         }
 
