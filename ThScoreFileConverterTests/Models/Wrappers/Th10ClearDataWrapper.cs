@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using ThScoreFileConverter.Models;
+using SpellCard = ThScoreFileConverter.Models.Th10.SpellCard;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -65,14 +66,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => new Th10PracticeWrapper<TParent>(
                 this.Practices.GetType().GetProperty("Item").GetValue(
                     this.Practices, new object[] { levelStagePair.Target }));
-        // NOTE: Th10Converter.SpellCard is a private class.
-        // public IReadOnlyDictionary<int, SpellCard> Cards
-        //     => this.pobj.GetProperty(nameof(Cards)) as Dictionary<int, SpellCard>;
-        public object Cards
-            => this.pobj.GetProperty(nameof(Cards));
-        public Th10SpellCardWrapper<TParent> CardsItem(int id)
-            => new Th10SpellCardWrapper<TParent>(
-                this.Cards.GetType().GetProperty("Item").GetValue(this.Cards, new object[] { id }));
+        public IReadOnlyDictionary<int, SpellCard> Cards
+            => this.pobj.GetProperty(nameof(this.Cards)) as Dictionary<int, SpellCard>;
 
         public static bool CanInitialize(Th10ChapterWrapper chapter)
             => (bool)PrivateType.InvokeStatic(

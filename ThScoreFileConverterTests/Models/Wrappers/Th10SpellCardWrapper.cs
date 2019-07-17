@@ -1,27 +1,19 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.IO;
 using ThScoreFileConverter.Models;
+using SpellCard = ThScoreFileConverter.Models.Th10.SpellCard;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
     // NOTE: Setting the accessibility as public causes CS0053 and CS0703.
-    internal sealed class Th10SpellCardWrapper<TParent>
-        where TParent : ThConverter
+    internal sealed class Th10SpellCardWrapper
     {
-        private static readonly Type ParentType = typeof(TParent);
-        private static readonly string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
-        private static readonly string TypeNameToTest = ParentType.FullName + "+SpellCard";
+        private readonly SpellCard original = null;
 
-        private readonly PrivateObject pobj = null;
-
-        [SuppressMessage("Microsoft.Design", "CA1000:DoNotDeclareStaticMembersOnGenericTypes")]
-        public static Th10SpellCardWrapper<TParent> Create(byte[] array)
+        public static Th10SpellCardWrapper Create(byte[] array)
         {
-            var spellCard = new Th10SpellCardWrapper<TParent>();
+            var spellCard = new Th10SpellCardWrapper();
 
             MemoryStream stream = null;
             try
@@ -41,27 +33,21 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             return spellCard;
         }
 
-        public Th10SpellCardWrapper()
-            => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
-        public Th10SpellCardWrapper(object obj)
-            => this.pobj = new PrivateObject(obj);
+        public Th10SpellCardWrapper() => this.original = new SpellCard();
 
-        public object Target
-            => this.pobj.Target;
-        public IReadOnlyCollection<byte> Name
-            => this.pobj.GetProperty(nameof(Name)) as byte[];
-        public int? ClearCount
-            => this.pobj.GetProperty(nameof(ClearCount)) as int?;
-        public int? TrialCount
-            => this.pobj.GetProperty(nameof(TrialCount)) as int?;
-        public int? Id
-            => this.pobj.GetProperty(nameof(Id)) as int?;
-        public ThConverter.Level? Level
-            => this.pobj.GetProperty(nameof(Level)) as ThConverter.Level?;
+        public object Target => this.original;
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public IReadOnlyCollection<byte> Name => this.original.Name;
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public int? ClearCount => this.original.ClearCount;
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public int? TrialCount => this.original.TrialCount;
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public int? Id => this.original.Id;
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public ThConverter.Level? Level => this.original.Level;
+        public bool? HasTried => this.original.HasTried;
 
-        public void ReadFrom(BinaryReader reader)
-            => this.pobj.Invoke(nameof(ReadFrom), new object[] { reader }, CultureInfo.InvariantCulture);
-        public bool? HasTried()
-            => this.pobj.Invoke(nameof(HasTried), new object[] { }, CultureInfo.InvariantCulture) as bool?;
+        public void ReadFrom(BinaryReader reader) => this.original.ReadFrom(reader);
     }
 }

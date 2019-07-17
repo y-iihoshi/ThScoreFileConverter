@@ -483,7 +483,7 @@ namespace ThScoreFileConverter.Models
                     var chara = CharaWithTotalParser.Parse(match.Groups[2].Value);
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                    Func<SpellCard, int> getCount;
+                    Func<Th10.SpellCard, int> getCount;
                     if (type == 1)
                         getCount = (card => card.ClearCount);
                     else
@@ -496,7 +496,7 @@ namespace ThScoreFileConverter.Models
                     }
                     else if (CardTable.ContainsKey(number))
                     {
-                        if (cards.TryGetValue(number, out SpellCard card))
+                        if (cards.TryGetValue(number, out var card))
                             return Utils.ToNumberString(getCount(card));
                         else
                             return "0";
@@ -535,7 +535,7 @@ namespace ThScoreFileConverter.Models
                             if (hideUntriedCards)
                             {
                                 var cards = parent.allScoreData.ClearData[CharaWithTotal.Total].Cards;
-                                if (!cards.TryGetValue(number, out SpellCard card) || !card.HasTried())
+                                if (!cards.TryGetValue(number, out var card) || !card.HasTried)
                                     return "??????????";
                             }
 
@@ -583,13 +583,13 @@ namespace ThScoreFileConverter.Models
                     if (stage == StageWithTotal.Extra)
                         return match.ToString();
 
-                    Func<SpellCard, bool> findByStage;
+                    Func<Th10.SpellCard, bool> findByStage;
                     if (stage == StageWithTotal.Total)
                         findByStage = (card => true);
                     else
                         findByStage = (card => CardTable[card.Id].Stage == (Stage)stage);
 
-                    Func<SpellCard, bool> findByLevel = (card => true);
+                    Func<Th10.SpellCard, bool> findByLevel = (card => true);
                     switch (level)
                     {
                         case LevelWithTotal.Total:
@@ -603,7 +603,7 @@ namespace ThScoreFileConverter.Models
                             break;
                     }
 
-                    Func<SpellCard, bool> findByType;
+                    Func<Th10.SpellCard, bool> findByType;
                     if (type == 1)
                         findByType = (card => card.ClearCount > 0);
                     else
@@ -885,7 +885,7 @@ namespace ThScoreFileConverter.Models
                 this.Rankings = new Dictionary<Level, ScoreData[]>(numLevels);
                 this.ClearCounts = new Dictionary<Level, int>(numLevels);
                 this.Practices = new Dictionary<LevelStagePair, Practice>(numPairs);
-                this.Cards = new Dictionary<int, SpellCard>(CardTable.Count);
+                this.Cards = new Dictionary<int, Th10.SpellCard>(CardTable.Count);
 
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
@@ -927,7 +927,7 @@ namespace ThScoreFileConverter.Models
 
                     for (var number = 0; number < CardTable.Count; number++)
                     {
-                        var card = new SpellCard();
+                        var card = new Th10.SpellCard();
                         card.ReadFrom(reader);
                         if (!this.Cards.ContainsKey(card.Id))
                             this.Cards.Add(card.Id, card);
@@ -947,7 +947,7 @@ namespace ThScoreFileConverter.Models
 
             public Dictionary<LevelStagePair, Practice> Practices { get; private set; }
 
-            public Dictionary<int, SpellCard> Cards { get; private set; }
+            public Dictionary<int, Th10.SpellCard> Cards { get; private set; }
 
             public static bool CanInitialize(Th10.Chapter chapter)
             {
@@ -1002,37 +1002,6 @@ namespace ThScoreFileConverter.Models
                 reader.ReadUInt32();
 
                 this.StageProgress = Utils.ToEnum<StageProgress>(this.StageProgressImpl);
-            }
-        }
-
-        private class SpellCard : IBinaryReadable
-        {
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] Name { get; private set; }    // .Length = 0x80
-
-            public int ClearCount { get; private set; }
-
-            public int TrialCount { get; private set; }
-
-            public int Id { get; private set; }         // 1-based
-
-            public Level Level { get; private set; }
-
-            public void ReadFrom(BinaryReader reader)
-            {
-                if (reader is null)
-                    throw new ArgumentNullException(nameof(reader));
-
-                this.Name = reader.ReadExactBytes(0x80);
-                this.ClearCount = reader.ReadInt32();
-                this.TrialCount = reader.ReadInt32();
-                this.Id = reader.ReadInt32() + 1;
-                this.Level = Utils.ToEnum<Level>(reader.ReadInt32());
-            }
-
-            public bool HasTried()
-            {
-                return this.TrialCount > 0;
             }
         }
 

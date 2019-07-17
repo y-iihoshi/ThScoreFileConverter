@@ -124,6 +124,7 @@
     <Compile Include="Models\Th105Converter.cs" />
     <Compile Include="Models\Th10\Chapter.cs" />
     <Compile Include="Models\Th10\ScoreData.cs" />
+    <Compile Include="Models\Th10\SpellCard.cs" />
     <Compile Include="Models\Th11Converter.cs" />
     <Compile Include="Models\Th12Converter.cs" />
     <Compile Include="Models\Th123Converter.cs" />

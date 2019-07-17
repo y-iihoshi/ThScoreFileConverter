@@ -156,7 +156,7 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var pair in properties.cards)
             {
-                Th10SpellCardTests.Validate(clearData.CardsItem(pair.Key), pair.Value);
+                Th10SpellCardTests.Validate(clearData.Cards[pair.Key], pair.Value);
             }
         }
 
