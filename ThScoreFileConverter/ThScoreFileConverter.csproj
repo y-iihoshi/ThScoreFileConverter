@@ -112,6 +112,7 @@
     <Compile Include="Models\Th06\Chapter.cs" />
     <Compile Include="Models\Th07Converter.cs" />
     <Compile Include="Models\Th075Converter.cs" />
+    <Compile Include="Models\Th07\FileHeader.cs" />
     <Compile Include="Models\Th07\LastName.cs" />
     <Compile Include="Models\Th07\VersionInfo.cs" />
     <Compile Include="Models\Th08Converter.cs" />
