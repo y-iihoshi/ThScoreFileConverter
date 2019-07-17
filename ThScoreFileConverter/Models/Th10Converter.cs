@@ -821,7 +821,7 @@ namespace ThScoreFileConverter.Models
 
                 this.Rankings = new Dictionary<Level, ScoreData[]>(numLevels);
                 this.ClearCounts = new Dictionary<Level, int>(numLevels);
-                this.Practices = new Dictionary<LevelStagePair, Practice>(numPairs);
+                this.Practices = new Dictionary<LevelStagePair, Th10.Practice>(numPairs);
                 this.Cards = new Dictionary<int, Th10.SpellCard>(CardTable.Count);
 
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
@@ -854,7 +854,7 @@ namespace ThScoreFileConverter.Models
                     {
                         foreach (var stage in stagesExceptExtra)
                         {
-                            var practice = new Practice();
+                            var practice = new Th10.Practice();
                             practice.ReadFrom(reader);
                             var key = new LevelStagePair(level, stage);
                             if (!this.Practices.ContainsKey(key))
@@ -882,7 +882,7 @@ namespace ThScoreFileConverter.Models
 
             public Dictionary<Level, int> ClearCounts { get; private set; }
 
-            public Dictionary<LevelStagePair, Practice> Practices { get; private set; }
+            public Dictionary<LevelStagePair, Th10.Practice> Practices { get; private set; }
 
             public Dictionary<int, Th10.SpellCard> Cards { get; private set; }
 
@@ -935,23 +935,6 @@ namespace ThScoreFileConverter.Models
                 base.ReadFrom(reader);
 
                 this.StageProgress = Utils.ToEnum<StageProgress>(this.StageProgressImpl);
-            }
-        }
-
-        private class Practice : IBinaryReadable
-        {
-            public uint Score { get; private set; }     // * 10
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public uint StageFlag { get; private set; } // 0x00000000: disable, 0x00000101: enable ?
-
-            public void ReadFrom(BinaryReader reader)
-            {
-                if (reader == null)
-                    throw new ArgumentNullException(nameof(reader));
-
-                this.Score = reader.ReadUInt32();
-                this.StageFlag = reader.ReadUInt32();
             }
         }
     }

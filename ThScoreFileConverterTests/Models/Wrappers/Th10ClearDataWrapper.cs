@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using ThScoreFileConverter.Models;
+using Practice = ThScoreFileConverter.Models.Th10.Practice;
 using SpellCard = ThScoreFileConverter.Models.Th10.SpellCard;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
@@ -60,12 +61,11 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         // public IReadOnlyDictionary<LevelStagePair, Practice> Practices
         //     => this.pobj.GetProperty(nameof(Practices)) as Dictionary<LevelStagePair, Practice>;
         public object Practices
-            => this.pobj.GetProperty(nameof(Practices));
-        public Th10PracticeWrapper<TParent> PracticesItem(
+            => this.pobj.GetProperty(nameof(this.Practices));
+        public Practice PracticesItem(
             Th10LevelStagePairWrapper<TParent, ThConverter.Level, ThConverter.Stage> levelStagePair)
-            => new Th10PracticeWrapper<TParent>(
-                this.Practices.GetType().GetProperty("Item").GetValue(
-                    this.Practices, new object[] { levelStagePair.Target }));
+            => this.Practices.GetType().GetProperty("Item").GetValue(
+                this.Practices, new object[] { levelStagePair.Target }) as Practice;
         public IReadOnlyDictionary<int, SpellCard> Cards
             => this.pobj.GetProperty(nameof(this.Cards)) as Dictionary<int, SpellCard>;
 

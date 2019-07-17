@@ -14,7 +14,6 @@ namespace ThScoreFileConverter.Models.Th10
 
     internal class SpellCard : IBinaryReadable
     {
-        // [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
         public byte[] Name { get; private set; }
 
         public int ClearCount { get; private set; }
