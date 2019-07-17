@@ -50,25 +50,25 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public object Target
             => this.pobj.Target;
         public IReadOnlyCollection<byte> Name
-            => this.pobj.GetProperty(nameof(Name)) as byte[];
+            => this.pobj.GetProperty(nameof(this.Name)) as byte[];
         public int? ClearCount
-            => this.pobj.GetProperty(nameof(ClearCount)) as int?;
+            => this.pobj.GetProperty(nameof(this.ClearCount)) as int?;
         public int? PracticeClearCount
-            => this.pobj.GetProperty(nameof(PracticeClearCount)) as int?;
+            => this.pobj.GetProperty(nameof(this.PracticeClearCount)) as int?;
         public int? TrialCount
-            => this.pobj.GetProperty(nameof(TrialCount)) as int?;
+            => this.pobj.GetProperty(nameof(this.TrialCount)) as int?;
         public int? PracticeTrialCount
-            => this.pobj.GetProperty(nameof(PracticeTrialCount)) as int?;
+            => this.pobj.GetProperty(nameof(this.PracticeTrialCount)) as int?;
         public int? Id
-            => this.pobj.GetProperty(nameof(Id)) as int?;
+            => this.pobj.GetProperty(nameof(this.Id)) as int?;
         public TLevel? Level
-            => this.pobj.GetProperty(nameof(Level)) as TLevel?;
+            => this.pobj.GetProperty(nameof(this.Level)) as TLevel?;
         public int? PracticeScore
-            => this.pobj.GetProperty(nameof(PracticeScore)) as int?;
+            => this.pobj.GetProperty(nameof(this.PracticeScore)) as int?;
+        public bool? HasTried
+            => this.pobj.GetProperty(nameof(this.HasTried)) as bool?;
 
         public void ReadFrom(BinaryReader reader)
             => this.pobj.Invoke(nameof(ReadFrom), new object[] { reader }, CultureInfo.InvariantCulture);
-        public bool? HasTried()
-            => this.pobj.Invoke(nameof(HasTried), new object[] { }, CultureInfo.InvariantCulture) as bool?;
     }
 }

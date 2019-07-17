@@ -76,7 +76,7 @@ namespace ThScoreFileConverterTests.Models
                 var spellCard = new Th13SpellCardWrapper<TParent, TLevel>();
 
                 Validate(spellCard, properties);
-                Assert.IsFalse(spellCard.HasTried().Value);
+                Assert.IsFalse(spellCard.HasTried.Value);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -90,7 +90,7 @@ namespace ThScoreFileConverterTests.Models
                 var spellCard = Th13SpellCardWrapper<TParent, TLevel>.Create(MakeByteArray(properties));
 
                 Validate(spellCard, properties);
-                Assert.IsTrue(spellCard.HasTried().Value);
+                Assert.IsTrue(spellCard.HasTried.Value);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]

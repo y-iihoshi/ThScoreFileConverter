@@ -478,7 +478,7 @@ namespace ThScoreFileConverter.Models
                     }
                     else if (CardTable.ContainsKey(number))
                     {
-                        if (cards.TryGetValue(number, out SpellCard card))
+                        if (cards.TryGetValue(number, out var card))
                             return Utils.ToNumberString(getCount(card));
                         else
                             return "0";
@@ -517,11 +517,7 @@ namespace ThScoreFileConverter.Models
                             if (hideUntriedCards)
                             {
                                 var tried = parent.allScoreData.ClearData[CharaWithTotal.Total].Data1.Any(
-                                    data =>
-                                    {
-                                        return data.Value.Cards.TryGetValue(number, out SpellCard card)
-                                            && card.HasTried();
-                                    });
+                                    data => data.Value.Cards.TryGetValue(number, out var card) && card.HasTried);
                                 if (!tried)
                                     return "??????????";
                             }
@@ -1077,47 +1073,9 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class SpellCard : IBinaryReadable
+        private class SpellCard : Th13.SpellCard<Level>
         {
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] Name { get; private set; }            // .Length = 0x80
-
-            public int ClearCount { get; private set; }
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public int PracticeClearCount { get; private set; }
-
-            public int TrialCount { get; private set; }
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public int PracticeTrialCount { get; private set; }
-
-            public int Id { get; private set; }                 // 1-based
-
-            public Level Level { get; private set; }
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public int PracticeScore { get; private set; }
-
-            public void ReadFrom(BinaryReader reader)
-            {
-                if (reader is null)
-                    throw new ArgumentNullException(nameof(reader));
-
-                this.Name = reader.ReadExactBytes(0x80);
-                this.ClearCount = reader.ReadInt32();
-                this.PracticeClearCount = reader.ReadInt32();
-                this.TrialCount = reader.ReadInt32();
-                this.PracticeTrialCount = reader.ReadInt32();
-                this.Id = reader.ReadInt32() + 1;
-                this.Level = Utils.ToEnum<Level>(reader.ReadInt32());
-                this.PracticeScore = reader.ReadInt32();
-            }
-
-            public bool HasTried()
-            {
-                return this.TrialCount > 0;
-            }
+            public new bool HasTried => this.TrialCount > 0;
         }
 
         private class Practice : IBinaryReadable
