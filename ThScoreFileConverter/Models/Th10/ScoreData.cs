@@ -12,9 +12,12 @@ namespace ThScoreFileConverter.Models.Th10
     using System;
     using System.IO;
 
-    internal class ScoreData : IBinaryReadable
+    internal class ScoreData<TStageProgress> : IBinaryReadable
+        where TStageProgress : struct, Enum
     {
         public uint Score { get; private set; }     // Divided by 10
+
+        public TStageProgress StageProgress { get; private set; }
 
         public byte ContinueCount { get; private set; }
 
@@ -24,15 +27,13 @@ namespace ThScoreFileConverter.Models.Th10
 
         public float SlowRate { get; private set; } // Really...?
 
-        protected byte StageProgressImpl { get; private set; }
-
         public void ReadFrom(BinaryReader reader)
         {
             if (reader is null)
                 throw new ArgumentNullException(nameof(reader));
 
             this.Score = reader.ReadUInt32();
-            this.StageProgressImpl = reader.ReadByte();
+            this.StageProgress = Utils.ToEnum<TStageProgress>(reader.ReadByte());
             this.ContinueCount = reader.ReadByte();
             this.Name = reader.ReadExactBytes(10);
             this.DateTime = reader.ReadUInt32();

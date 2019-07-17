@@ -926,16 +926,8 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class ScoreData : Th10.ScoreData
+        private class ScoreData : Th10.ScoreData<StageProgress>
         {
-            public StageProgress StageProgress { get; private set; }
-
-            public new void ReadFrom(BinaryReader reader)
-            {
-                base.ReadFrom(reader);
-
-                this.StageProgress = Utils.ToEnum<StageProgress>(this.StageProgressImpl);
-            }
         }
     }
 }
