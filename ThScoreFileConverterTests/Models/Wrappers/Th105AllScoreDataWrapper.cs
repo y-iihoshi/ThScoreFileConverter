@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using ThScoreFileConverter.Models;
+using CardForDeck = ThScoreFileConverter.Models.Th105.CardForDeck;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -50,24 +51,14 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.Target;
 
         public IReadOnlyDictionary<TChara, byte> StoryClearCounts
-            => this.pobj.GetProperty(nameof(StoryClearCounts)) as Dictionary<TChara, byte>;
-
-        // NOTE: Th105Converter.CardForDeck is a private class.
-        // public IReadOnlyDictionary<int, CardForDeck> SystemCards
-        //     => this.pobj.GetProperty(nameof(System)) as Dictionary<int, CardForDeck>;
-        public object SystemCards
-            => this.pobj.GetProperty(nameof(SystemCards));
-        public int? SystemCardsCount
-            => this.SystemCards.GetType().GetProperty("Count").GetValue(this.SystemCards) as int?;
-        public Th105CardForDeckWrapper<TParent> SystemCardsItem(int id)
-            => new Th105CardForDeckWrapper<TParent>(
-                this.SystemCards.GetType().GetProperty("Item").GetValue(this.SystemCards, new object[] { id }));
-
+            => this.pobj.GetProperty(nameof(this.StoryClearCounts)) as Dictionary<TChara, byte>;
+        public IReadOnlyDictionary<int, CardForDeck> SystemCards
+            => this.pobj.GetProperty(nameof(this.SystemCards)) as Dictionary<int, CardForDeck>;
         // NOTE: Th105Converter.ClearData is a private class.
         // public IReadOnlyDictionary<Chara, ClearData> ClearData
         //     => this.pobj.GetProperty(nameof(ClearData)) as Dictionary<Chara, ClearData>;
         public object ClearData
-            => this.pobj.GetProperty(nameof(ClearData));
+            => this.pobj.GetProperty(nameof(this.ClearData));
         public int? ClearDataCount
             => this.ClearData.GetType().GetProperty("Count").GetValue(this.ClearData) as int?;
         public Th105ClearDataWrapper<TParent, TChara, TLevel> ClearDataItem(TChara chara)

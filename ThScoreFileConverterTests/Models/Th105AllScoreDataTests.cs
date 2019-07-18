@@ -72,7 +72,7 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var pair in properties.systemCards)
             {
-                Th105CardForDeckTests.Validate(allScoreData.SystemCardsItem(pair.Key), pair.Value);
+                Th105CardForDeckTests.Validate(allScoreData.SystemCards[pair.Key], pair.Value);
             }
 
             foreach (var pair in properties.clearData)

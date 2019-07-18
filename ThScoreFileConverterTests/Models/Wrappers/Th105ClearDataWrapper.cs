@@ -1,9 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using ThScoreFileConverter.Models;
+using CardForDeck = ThScoreFileConverter.Models.Th105.CardForDeck;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -54,15 +56,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.Id)) as int?;
         public int? MaxNumber
             => this.pobj.GetProperty(nameof(this.MaxNumber)) as int?;
-        // NOTE: Th{095,123}Converter.CardForDeck are private classes.
-        // public IReadOnlyDictionary<int, CardForDeck> CardsForDeck
-        //     => this.pobj.GetProperty(nameof(this.CardsForDeck)) as Dictionary<int, CardForDeck>;
-        public object CardsForDeck
-            => this.pobj.GetProperty(nameof(this.CardsForDeck));
-        public Th105CardForDeckWrapper<TParent> CardsForDeckItem(int index)
-            => new Th105CardForDeckWrapper<TParent>(
-                this.CardsForDeck.GetType().GetProperty("Item").GetValue(this.CardsForDeck, new object[] { index }));
-        // NOTE: Th{095,123}Converter.{CharaCardIdPair, SpellCardResult} are private classes.
+        public IReadOnlyDictionary<int, CardForDeck> CardsForDeck
+            => this.pobj.GetProperty(nameof(this.CardsForDeck)) as Dictionary<int, CardForDeck>;
+        // NOTE: Th{105,123}Converter.{CharaCardIdPair, SpellCardResult} are private classes.
         // public IReadOnlyDictionary<CharaCardIdPair, SpellCardResult> SpellCardResults
         //     => this.pobj.GetProperty(nameof(this.SpellCardResults)) as Dictionary<int, SpellCardResult>;
         public object SpellCardResults

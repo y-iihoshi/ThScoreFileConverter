@@ -120,6 +120,7 @@
     <Compile Include="Models\Th095\Header.cs" />
     <Compile Include="Models\Th09Converter.cs" />
     <Compile Include="Models\Th095Converter.cs" />
+    <Compile Include="Models\Th105\CardForDeck.cs" />
     <Compile Include="Models\Th10Converter.cs" />
     <Compile Include="Models\Th105Converter.cs" />
     <Compile Include="Models\Th10\Chapter.cs" />

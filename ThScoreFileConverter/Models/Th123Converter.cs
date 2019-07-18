@@ -1472,7 +1472,7 @@ namespace ThScoreFileConverter.Models
 
             public Dictionary<Chara, byte> StoryClearCounts { get; private set; }
 
-            public Dictionary<int, CardForDeck> SystemCards { get; private set; }
+            public Dictionary<int, Th105.CardForDeck> SystemCards { get; private set; }
 
             public Dictionary<Chara, ClearData> ClearData { get; private set; }
 
@@ -1509,10 +1509,10 @@ namespace ThScoreFileConverter.Models
                     reader.ReadUInt32();
 
                 var numSystemCards = reader.ReadInt32();
-                this.SystemCards = new Dictionary<int, CardForDeck>(numSystemCards);
+                this.SystemCards = new Dictionary<int, Th105.CardForDeck>(numSystemCards);
                 for (var index = 0; index < numSystemCards; index++)
                 {
-                    var card = new CardForDeck();
+                    var card = new Th105.CardForDeck();
                     card.ReadFrom(reader);
                     if (!this.SystemCards.ContainsKey(card.Id))
                         this.SystemCards.Add(card.Id, card);
@@ -1542,7 +1542,7 @@ namespace ThScoreFileConverter.Models
                 this.SpellCardResults = null;
             }
 
-            public Dictionary<int, CardForDeck> CardsForDeck { get; private set; }
+            public Dictionary<int, Th105.CardForDeck> CardsForDeck { get; private set; }
 
             public Dictionary<CharaCardIdPair, SpellCardResult> SpellCardResults { get; private set; }
 
@@ -1552,10 +1552,10 @@ namespace ThScoreFileConverter.Models
                     throw new ArgumentNullException(nameof(reader));
 
                 var numCards = reader.ReadInt32();
-                this.CardsForDeck = new Dictionary<int, CardForDeck>(numCards);
+                this.CardsForDeck = new Dictionary<int, Th105.CardForDeck>(numCards);
                 for (var index = 0; index < numCards; index++)
                 {
-                    var card = new CardForDeck();
+                    var card = new Th105.CardForDeck();
                     card.ReadFrom(reader);
                     if (!this.CardsForDeck.ContainsKey(card.Id))
                         this.CardsForDeck.Add(card.Id, card);
@@ -1571,26 +1571,6 @@ namespace ThScoreFileConverter.Models
                     if (!this.SpellCardResults.ContainsKey(key))
                         this.SpellCardResults.Add(key, result);
                 }
-            }
-        }
-
-        private class CardForDeck : IBinaryReadable
-        {
-            public CardForDeck()
-            {
-            }
-
-            public int Id { get; private set; }     // 0-based
-
-            public int MaxNumber { get; private set; }
-
-            public void ReadFrom(BinaryReader reader)
-            {
-                if (reader == null)
-                    throw new ArgumentNullException(nameof(reader));
-
-                this.Id = reader.ReadInt32();
-                this.MaxNumber = reader.ReadInt32();
             }
         }
 

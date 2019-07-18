@@ -2,8 +2,8 @@
 using System;
 using System.IO;
 using System.Linq;
-using ThScoreFileConverter.Models;
 using ThScoreFileConverterTests.Models.Wrappers;
+using CardForDeck = ThScoreFileConverter.Models.Th105.CardForDeck;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -25,121 +25,72 @@ namespace ThScoreFileConverterTests.Models
         internal static byte[] MakeByteArray(in Properties properties)
             => TestUtils.MakeByteArray(properties.id, properties.maxNumber);
 
-        internal static void Validate<TParent>(
-            in Th105CardForDeckWrapper<TParent> cardForDeck, in Properties properties)
-            where TParent : ThConverter
+        internal static void Validate(in Th105CardForDeckWrapper cardForDeck, in Properties properties)
+            => Validate(cardForDeck.Target as CardForDeck, properties);
+
+        internal static void Validate(in CardForDeck cardForDeck, in Properties properties)
         {
             Assert.AreEqual(properties.id, cardForDeck.Id);
             Assert.AreEqual(properties.maxNumber, cardForDeck.MaxNumber);
         }
 
-        internal static void CardForDeckTestHelper<TParent>()
-            where TParent : ThConverter
+        [TestMethod]
+        public void Th105CardForDeckTest()
             => TestUtils.Wrap(() =>
             {
                 var properties = new Properties();
 
-                var cardForDeck = new Th105CardForDeckWrapper<TParent>();
+                var cardForDeck = new Th105CardForDeckWrapper();
 
                 Validate(cardForDeck, properties);
             });
 
-        internal static void ReadFromTestHelper<TParent>()
-            where TParent : ThConverter
+        [TestMethod]
+        public void Th105CardForDeckReadFromTest()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
 
-                var cardForDeck = Th105CardForDeckWrapper<TParent>.Create(MakeByteArray(properties));
+                var cardForDeck = Th105CardForDeckWrapper.Create(MakeByteArray(properties));
 
                 Validate(cardForDeck, properties);
             });
 
-        internal static void ReadFromTestNullHelper<TParent>()
-            where TParent : ThConverter
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Th105CardForDeckReadFromTestNull()
             => TestUtils.Wrap(() =>
             {
-                var cardForDeck = new Th105CardForDeckWrapper<TParent>();
+                var cardForDeck = new Th105CardForDeckWrapper();
                 cardForDeck.ReadFrom(null);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
-        internal static void ReadFromTestShortenedHelper<TParent>()
-            where TParent : ThConverter
+        [TestMethod]
+        [ExpectedException(typeof(EndOfStreamException))]
+        public void Th105CardForDeckReadFromTestShortened()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
                 var array = MakeByteArray(properties);
                 array = array.Take(array.Length - 1).ToArray();
 
-                Th105CardForDeckWrapper<TParent>.Create(array);
+                Th105CardForDeckWrapper.Create(array);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
-        internal static void ReadFromTestExceededHelper<TParent>()
-            where TParent : ThConverter
+        [TestMethod]
+        public void Th105CardForDeckReadFromTestExceeded()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
                 var array = MakeByteArray(properties).Concat(new byte[1] { 1 }).ToArray();
 
-                var cardForDeck = Th105CardForDeckWrapper<TParent>.Create(array);
+                var cardForDeck = Th105CardForDeckWrapper.Create(array);
 
                 Validate(cardForDeck, properties);
             });
-
-        #region Th105
-
-        [TestMethod]
-        public void Th105CardForDeckTest()
-            => CardForDeckTestHelper<Th105Converter>();
-
-        [TestMethod]
-        public void Th105CardForDeckReadFromTest()
-            => ReadFromTestHelper<Th105Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Th105CardForDeckReadFromTestNull()
-            => ReadFromTestNullHelper<Th105Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
-        public void Th105CardForDeckReadFromTestShortened()
-            => ReadFromTestShortenedHelper<Th105Converter>();
-
-        [TestMethod]
-        public void Th105CardForDeckReadFromTestExceeded()
-            => ReadFromTestExceededHelper<Th105Converter>();
-
-        #endregion
-
-        #region Th123
-
-        [TestMethod]
-        public void Th123CardForDeckTest()
-            => CardForDeckTestHelper<Th123Converter>();
-
-        [TestMethod]
-        public void Th123CardForDeckReadFromTest()
-            => ReadFromTestHelper<Th123Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Th123CardForDeckReadFromTestNull()
-            => ReadFromTestNullHelper<Th123Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
-        public void Th123CardForDeckReadFromTestShortened()
-            => ReadFromTestShortenedHelper<Th123Converter>();
-
-        [TestMethod]
-        public void Th123CardForDeckReadFromTestExceeded()
-            => ReadFromTestExceededHelper<Th123Converter>();
-
-        #endregion
     }
 }
