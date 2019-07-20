@@ -148,7 +148,6 @@
     <Compile Include="Models\Th143StatusTests.cs" />
     <Compile Include="Models\Th145AllScoreDataTests.cs" />
     <Compile Include="Models\Th143BestShotPairTests.cs" />
-    <Compile Include="Models\Th143DayScenePairTests.cs" />
     <Compile Include="Models\Th143EnemiesCardPairTests.cs" />
     <Compile Include="Models\Th15AllScoreDataTests.cs" />
     <Compile Include="Models\Th15ClearDataPerGameModeTests.cs" />
@@ -241,7 +240,6 @@
     <Compile Include="Models\Wrappers\Th143AllScoreDataWrapper.cs" />
     <Compile Include="Models\Wrappers\Th143BestShotHeaderWrapper.cs" />
     <Compile Include="Models\Wrappers\Th143BestShotPairWrapper.cs" />
-    <Compile Include="Models\Wrappers\Th143DayScenePairWrapper.cs" />
     <Compile Include="Models\Wrappers\Th143EnemiesCardPairWrapper.cs" />
     <Compile Include="Models\Wrappers\Th143ItemStatusWrapper.cs" />
     <Compile Include="Models\Wrappers\Th143ScoreWrapper.cs" />
