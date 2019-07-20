@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverterTests.Models.Wrappers;
-using SpellCard = ThScoreFileConverter.Models.Th10.SpellCard;
+using ThScoreFileConverter.Models.Th10;
 
 namespace ThScoreFileConverterTests.Models
 {

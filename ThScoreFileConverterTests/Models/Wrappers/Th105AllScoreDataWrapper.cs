@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using ThScoreFileConverter.Models;
-using CardForDeck = ThScoreFileConverter.Models.Th105.CardForDeck;
+using ThScoreFileConverter.Models.Th105;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {

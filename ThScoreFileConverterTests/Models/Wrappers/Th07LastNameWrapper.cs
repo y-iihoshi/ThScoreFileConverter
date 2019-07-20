@@ -1,14 +1,15 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using ThScoreFileConverter.Models.Th07;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
     public sealed class Th07LastNameWrapper
     {
-        private static readonly Type LastNameType = typeof(ThScoreFileConverter.Models.Th07.LastName);
-        private static readonly string AssemblyNameToTest = LastNameType.Assembly.GetName().Name;
-        private static readonly string TypeNameToTest = LastNameType.FullName;
+        private static readonly Type TypeToTest = typeof(LastName);
+        private static readonly string AssemblyNameToTest = TypeToTest.Assembly.GetName().Name;
+        private static readonly string TypeNameToTest = TypeToTest.FullName;
 
         private readonly PrivateObject pobj = null;
 

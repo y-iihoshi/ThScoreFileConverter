@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using ThScoreFileConverter.Models;
-using Practice = ThScoreFileConverter.Models.Th13.Practice;
+using ThScoreFileConverter.Models.Th13;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {

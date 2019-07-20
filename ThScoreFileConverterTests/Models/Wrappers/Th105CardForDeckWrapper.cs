@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using CardForDeck = ThScoreFileConverter.Models.Th105.CardForDeck;
+using ThScoreFileConverter.Models.Th105;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {

@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverterTests.Models.Wrappers;
-using CardForDeck = ThScoreFileConverter.Models.Th105.CardForDeck;
+using ThScoreFileConverter.Models.Th105;
 
 namespace ThScoreFileConverterTests.Models
 {

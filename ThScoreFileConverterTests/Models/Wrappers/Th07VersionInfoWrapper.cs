@@ -1,14 +1,15 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using ThScoreFileConverter.Models.Th07;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
     public sealed class Th07VersionInfoWrapper
     {
-        private static readonly Type VersionInfoType = typeof(ThScoreFileConverter.Models.Th07.VersionInfo);
-        private static readonly string AssemblyNameToTest = VersionInfoType.Assembly.GetName().Name;
-        private static readonly string TypeNameToTest = VersionInfoType.FullName;
+        private static readonly Type TypeToTest = typeof(VersionInfo);
+        private static readonly string AssemblyNameToTest = TypeToTest.Assembly.GetName().Name;
+        private static readonly string TypeNameToTest = TypeToTest.FullName;
 
         private readonly PrivateObject pobj = null;
 

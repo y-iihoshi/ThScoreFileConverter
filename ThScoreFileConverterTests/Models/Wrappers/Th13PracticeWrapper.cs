@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using Practice = ThScoreFileConverter.Models.Th13.Practice;
+using ThScoreFileConverter.Models.Th13;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {

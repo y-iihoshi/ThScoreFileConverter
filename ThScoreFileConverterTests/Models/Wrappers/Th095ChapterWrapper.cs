@@ -4,15 +4,16 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
+using ThScoreFileConverter.Models.Th095;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
     // NOTE: Setting the accessibility as public causes CS0703.
     internal sealed class Th095ChapterWrapper
     {
-        private static readonly Type ChapterType = typeof(ThScoreFileConverter.Models.Th095.Chapter);
-        private static readonly string AssemblyNameToTest = ChapterType.Assembly.GetName().Name;
-        private static readonly string TypeNameToTest = ChapterType.FullName;
+        private static readonly Type TypeToTest = typeof(Chapter);
+        private static readonly string AssemblyNameToTest = TypeToTest.Assembly.GetName().Name;
+        private static readonly string TypeNameToTest = TypeToTest.FullName;
 
         private readonly PrivateObject pobj = null;
 

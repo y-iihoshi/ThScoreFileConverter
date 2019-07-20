@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using ThScoreFileConverter.Models;
-using SpellCard = ThScoreFileConverter.Models.Th10.SpellCard;
+using ThScoreFileConverter.Models.Th10;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {

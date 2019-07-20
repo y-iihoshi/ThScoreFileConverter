@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
+using ThScoreFileConverter.Models.Th06;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
     public sealed class Th06ChapterWrapper
     {
-        private static readonly Type ChapterType = typeof(ThScoreFileConverter.Models.Th06.Chapter);
-        private static readonly string AssemblyNameToTest = ChapterType.Assembly.GetName().Name;
-        private static readonly string TypeNameToTest = ChapterType.FullName;
+        private static readonly Type TypeToTest = typeof(Chapter);
+        private static readonly string AssemblyNameToTest = TypeToTest.Assembly.GetName().Name;
+        private static readonly string TypeNameToTest = TypeToTest.FullName;
 
         private readonly PrivateObject pobj = null;
 

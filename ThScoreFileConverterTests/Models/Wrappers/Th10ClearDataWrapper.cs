@@ -3,8 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using ThScoreFileConverter.Models;
-using Practice = ThScoreFileConverter.Models.Th10.Practice;
-using SpellCard = ThScoreFileConverter.Models.Th10.SpellCard;
+using ThScoreFileConverter.Models.Th10;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {

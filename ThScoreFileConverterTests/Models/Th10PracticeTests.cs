@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using ThScoreFileConverterTests.Models.Wrappers;
-using Practice = ThScoreFileConverter.Models.Th10.Practice;
+using ThScoreFileConverter.Models.Th10;
 
 namespace ThScoreFileConverterTests.Models
 {
