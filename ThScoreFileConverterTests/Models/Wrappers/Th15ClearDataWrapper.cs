@@ -46,15 +46,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public Th15ClearDataPerGameModeWrapper Data1Item(Th15Converter.GameMode mode)
             => new Th15ClearDataPerGameModeWrapper(
                 this.Data1.GetType().GetProperty("Item").GetValue(this.Data1, new object[] { mode }));
-        // NOTE: Th15Converter.{LevelStagePair,Practice} are private classes.
-        // public IReadOnlyDictionary<LevelStagePair, Practice> Practices
-        //     => this.pobj.GetProperty(nameof(Practices)) as Dictionary<LevelStagePair, Practice>;
-        public object Practices
-            => this.pobj.GetProperty(nameof(this.Practices));
-        public Practice PracticesItem(
-            Th10LevelStagePairWrapper<Th15Converter, ThConverter.Level, Th15Converter.StagePractice> levelStagePair)
-            => this.Practices.GetType().GetProperty("Item").GetValue(
-                this.Practices, new object[] { levelStagePair.Target }) as Practice;
+        public IReadOnlyDictionary<(ThConverter.Level, Th15Converter.StagePractice), Practice> Practices
+            => this.pobj.GetProperty(nameof(this.Practices))
+                as Dictionary<(ThConverter.Level, Th15Converter.StagePractice), Practice>;
 
         public static bool CanInitialize(Th10ChapterWrapper chapter)
             => (bool)PrivateType.InvokeStatic(

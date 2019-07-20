@@ -727,7 +727,7 @@ namespace ThScoreFileConverter.Models
 
                     if (parent.allScoreData.ClearData.ContainsKey(chara))
                     {
-                        var key = new LevelStagePair(level, stage);
+                        var key = (level, stage);
                         var practices = parent.allScoreData.ClearData[chara].Practices;
                         return practices.ContainsKey(key)
                             ? Utils.ToNumberString(practices[key].Score * 10) : "0";
@@ -742,26 +742,6 @@ namespace ThScoreFileConverter.Models
             public string Replace(string input)
             {
                 return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-            }
-        }
-
-        private class LevelStagePair : Pair<Level, Stage>
-        {
-            public LevelStagePair(Level level, Stage stage)
-                : base(level, stage)
-            {
-            }
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public Level Level
-            {
-                get { return this.First; }
-            }
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public Stage Stage
-            {
-                get { return this.Second; }
             }
         }
 
@@ -822,7 +802,7 @@ namespace ThScoreFileConverter.Models
 
                 this.Rankings = new Dictionary<Level, ScoreData[]>(numLevels);
                 this.ClearCounts = new Dictionary<Level, int>(numLevels);
-                this.Practices = new Dictionary<LevelStagePair, Th10.Practice>(numPairs);
+                this.Practices = new Dictionary<(Level, Stage), Th10.Practice>(numPairs);
                 this.Cards = new Dictionary<int, Th10.SpellCard>(CardTable.Count);
 
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
@@ -857,7 +837,7 @@ namespace ThScoreFileConverter.Models
                         {
                             var practice = new Th10.Practice();
                             practice.ReadFrom(reader);
-                            var key = new LevelStagePair(level, stage);
+                            var key = (level, stage);
                             if (!this.Practices.ContainsKey(key))
                                 this.Practices.Add(key, practice);
                         }
@@ -883,7 +863,7 @@ namespace ThScoreFileConverter.Models
 
             public Dictionary<Level, int> ClearCounts { get; private set; }
 
-            public Dictionary<LevelStagePair, Th10.Practice> Practices { get; private set; }
+            public Dictionary<(Level, Stage), Th10.Practice> Practices { get; private set; }
 
             public Dictionary<int, Th10.SpellCard> Cards { get; private set; }
 

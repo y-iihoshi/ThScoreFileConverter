@@ -55,15 +55,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(ClearCounts)) as Dictionary<ThConverter.LevelWithTotal, int>;
         public IReadOnlyDictionary<ThConverter.LevelWithTotal, int> ClearFlags
             => this.pobj.GetProperty(nameof(ClearFlags)) as Dictionary<ThConverter.LevelWithTotal, int>;
-        // NOTE: Th16Converter.{LevelStagePair,Practice} are private classes.
-        // public IReadOnlyDictionary<LevelStagePair, Practice> Practices
-        //     => this.pobj.GetProperty(nameof(Practices)) as Dictionary<LevelStagePair, Practice>;
-        public object Practices
-            => this.pobj.GetProperty(nameof(this.Practices));
-        public Practice PracticesItem(
-            Th10LevelStagePairWrapper<Th16Converter, ThConverter.Level, Th16Converter.StagePractice> levelStagePair)
-            => this.Practices.GetType().GetProperty("Item").GetValue(
-                this.Practices, new object[] { levelStagePair.Target }) as Practice;
+        public IReadOnlyDictionary<(ThConverter.Level, Th16Converter.StagePractice), Practice> Practices
+            => this.pobj.GetProperty(nameof(this.Practices))
+                as Dictionary<(ThConverter.Level, Th16Converter.StagePractice), Practice>;
         // NOTE: Th16Converter.SpellCard is a private class.
         // public IReadOnlyDictionary<int, SpellCard> Cards
         //     => this.pobj.GetProperty(nameof(Cards)) as Dictionary<int, SpellCard>;

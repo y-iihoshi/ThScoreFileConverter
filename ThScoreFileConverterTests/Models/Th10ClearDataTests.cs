@@ -25,9 +25,7 @@ namespace ThScoreFileConverterTests.Models
             public int totalPlayCount;
             public int playTime;
             public Dictionary<ThConverter.Level, int> clearCounts;
-            public Dictionary<
-                Th10LevelStagePairTests.Properties<ThConverter.Level, ThConverter.Stage>,
-                Th10PracticeTests.Properties> practices;
+            public Dictionary<(ThConverter.Level, ThConverter.Stage), Th10PracticeTests.Properties> practices;
             public Dictionary<int, Th10SpellCardTests.Properties> cards;
         };
 
@@ -64,13 +62,9 @@ namespace ThScoreFileConverterTests.Models
                 playTime = 4567890,
                 clearCounts = levels.ToDictionary(level => level, level => 100 - (int)level),
                 practices = levelsExceptExtra
-                    .SelectMany(level => stagesExceptExtra.Select(stage => new { level, stage }))
+                    .SelectMany(level => stagesExceptExtra.Select(stage => (level, stage)))
                     .ToDictionary(
-                        pair => new Th10LevelStagePairTests.Properties<ThConverter.Level, ThConverter.Stage>()
-                        {
-                            level = pair.level,
-                            stage = pair.stage
-                        },
+                        pair => pair,
                         pair => new Th10PracticeTests.Properties()
                         {
                             score = 123456u - (uint)pair.level * 10u,
@@ -149,9 +143,7 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var pair in properties.practices)
             {
-                var levelStagePair = new Th10LevelStagePairWrapper<TParent, ThConverter.Level, ThConverter.Stage>(
-                    pair.Key.level, pair.Key.stage);
-                Th10PracticeTests.Validate(clearData.PracticesItem(levelStagePair), pair.Value);
+                Th10PracticeTests.Validate(clearData.Practices[pair.Key], pair.Value);
             }
 
             foreach (var pair in properties.cards)

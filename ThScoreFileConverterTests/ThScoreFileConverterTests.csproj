@@ -115,7 +115,6 @@
     <Compile Include="Models\Th10AllScoreDataTests.cs" />
     <Compile Include="Models\Th10ChapterTests.cs" />
     <Compile Include="Models\Th10ClearDataTests.cs" />
-    <Compile Include="Models\Th10LevelStagePairTests.cs" />
     <Compile Include="Models\Th10PracticeTests.cs" />
     <Compile Include="Models\Th10ScoreDataTests.cs" />
     <Compile Include="Models\Th10SpellCardTests.cs" />
@@ -214,7 +213,6 @@
     <Compile Include="Models\Wrappers\Th10AllScoreDataWrapper.cs" />
     <Compile Include="Models\Wrappers\Th10ChapterWrapper.cs" />
     <Compile Include="Models\Wrappers\Th10ClearDataWrapper.cs" />
-    <Compile Include="Models\Wrappers\Th10LevelStagePairWrapper.cs" />
     <Compile Include="Models\Wrappers\Th10PracticeWrapper.cs" />
     <Compile Include="Models\Wrappers\Th10ScoreDataWrapper.cs" />
     <Compile Include="Models\Wrappers\Th10SpellCardWrapper.cs" />

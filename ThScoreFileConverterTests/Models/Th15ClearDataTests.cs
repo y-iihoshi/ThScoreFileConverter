@@ -20,9 +20,7 @@ namespace ThScoreFileConverterTests.Models
             public int size;
             public Th15Converter.CharaWithTotal chara;
             public Dictionary<Th15Converter.GameMode, Th15ClearDataPerGameModeTests.Properties> data1;
-            public Dictionary<
-                Th10LevelStagePairTests.Properties<ThConverter.Level, Th15Converter.StagePractice>,
-                Th13PracticeTests.Properties> practices;
+            public Dictionary<(ThConverter.Level, Th15Converter.StagePractice), Th13PracticeTests.Properties> practices;
         };
 
         internal static Properties GetValidProperties()
@@ -40,13 +38,9 @@ namespace ThScoreFileConverterTests.Models
                 chara = Th15Converter.CharaWithTotal.Reimu,
                 data1 = modes.ToDictionary(mode => mode, mode => Th15ClearDataPerGameModeTests.GetValidProperties()),
                 practices = levels
-                    .SelectMany(level => stages.Select(stage => new { level, stage }))
+                    .SelectMany(level => stages.Select(stage => (level, stage)))
                     .ToDictionary(
-                        pair => new Th10LevelStagePairTests.Properties<ThConverter.Level, Th15Converter.StagePractice>()
-                        {
-                            level = pair.level,
-                            stage = pair.stage
-                        },
+                        pair => pair,
                         pair => new Th13PracticeTests.Properties()
                         {
                             score = 123456u - TestUtils.Cast<uint>(pair.level) * 10u,
@@ -91,10 +85,7 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var pair in properties.practices)
             {
-                var levelStagePair =
-                    new Th10LevelStagePairWrapper<Th15Converter, ThConverter.Level, Th15Converter.StagePractice>(
-                        pair.Key.level, pair.Key.stage);
-                Th13PracticeTests.Validate(clearData.PracticesItem(levelStagePair), pair.Value);
+                Th13PracticeTests.Validate(clearData.Practices[pair.Key], pair.Value);
             }
         }
 

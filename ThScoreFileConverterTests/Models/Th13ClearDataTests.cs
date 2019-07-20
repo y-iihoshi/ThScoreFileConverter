@@ -30,8 +30,7 @@ namespace ThScoreFileConverterTests.Models
             public int playTime;
             public Dictionary<TLvPracWithT, int> clearCounts;
             public Dictionary<TLvPracWithT, int> clearFlags;
-            public Dictionary<
-                Th10LevelStagePairTests.Properties<TLvPrac, TStPrac>, Th13PracticeTests.Properties> practices;
+            public Dictionary<(TLvPrac, TStPrac), Th13PracticeTests.Properties> practices;
             public Dictionary<int, Th13SpellCardTests.Properties<TLv>> cards;
         };
 
@@ -73,13 +72,9 @@ namespace ThScoreFileConverterTests.Models
                 clearCounts = levelsWithTotal.ToDictionary(level => level, level => 100 - TestUtils.Cast<int>(level)),
                 clearFlags = levelsWithTotal.ToDictionary(level => level, level => TestUtils.Cast<int>(level) % 2),
                 practices = levels
-                    .SelectMany(level => stages.Select(stage => new { level, stage }))
+                    .SelectMany(level => stages.Select(stage => (level, stage)))
                     .ToDictionary(
-                        pair => new Th10LevelStagePairTests.Properties<TLvPrac, TStPrac>()
-                        {
-                            level = pair.level,
-                            stage = pair.stage
-                        },
+                        pair => pair,
                         pair => new Th13PracticeTests.Properties()
                         {
                             score = 123456u - TestUtils.Cast<uint>(pair.level) * 10u,
@@ -176,9 +171,7 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var pair in properties.practices)
             {
-                var levelStagePair = new Th10LevelStagePairWrapper<TParent, TLvPrac, TStPrac>(
-                    pair.Key.level, pair.Key.stage);
-                Th13PracticeTests.Validate(clearData.PracticesItem(levelStagePair), pair.Value);
+                Th13PracticeTests.Validate(clearData.Practices[pair.Key], pair.Value);
             }
 
             foreach (var pair in properties.cards)
