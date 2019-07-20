@@ -29,9 +29,8 @@ namespace ThScoreFileConverterTests.Models
                 cardIds = new List<int>() { 3, 4, 5 }
             };
 
-        internal static void Validate<TParent, TStage, TChara>(
-            in Th105StageInfoWrapper<TParent, TStage, TChara> spellCardInfo, in Properties<TStage, TChara> properties)
-            where TParent : ThConverter
+        internal static void Validate<TStage, TChara>(
+            in Th105StageInfoWrapper<TStage, TChara> spellCardInfo, in Properties<TStage, TChara> properties)
             where TStage : struct, Enum
             where TChara : struct, Enum
         {
@@ -40,15 +39,14 @@ namespace ThScoreFileConverterTests.Models
             CollectionAssert.AreEqual(properties.cardIds, spellCardInfo.CardIds.ToArray());
         }
 
-        internal static void StageInfoTestHelper<TParent, TStage, TChara>()
-            where TParent : ThConverter
+        internal static void StageInfoTestHelper<TStage, TChara>()
             where TStage : struct, Enum
             where TChara : struct, Enum
             => TestUtils.Wrap(() =>
             {
                 var properties = GetValidProperties<TStage, TChara>();
 
-                var spellCardInfo = new Th105StageInfoWrapper<TParent, TStage, TChara>(
+                var spellCardInfo = new Th105StageInfoWrapper<TStage, TChara>(
                     properties.stage, properties.enemy, properties.cardIds);
 
                 Validate(spellCardInfo, properties);
@@ -56,10 +54,10 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         public void Th105StageInfoTest()
-            => StageInfoTestHelper<Th105Converter, Th105Converter.Stage, Th105Converter.Chara>();
+            => StageInfoTestHelper<Th105Converter.Stage, Th105Converter.Chara>();
 
         [TestMethod]
         public void Th123StageInfoTest()
-            => StageInfoTestHelper<Th123Converter, Th123Converter.Stage, Th123Converter.Chara>();
+            => StageInfoTestHelper<Th123Converter.Stage, Th123Converter.Chara>();
     }
 }

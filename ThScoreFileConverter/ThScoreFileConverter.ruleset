@@ -8,6 +8,7 @@
   <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
     <Rule Id="SA1025" Action="None" />
     <Rule Id="SA1124" Action="None" />
+    <Rule Id="SA1135" Action="None" />
     <Rule Id="SA1503" Action="None" />
   </Rules>
 </RuleSet>

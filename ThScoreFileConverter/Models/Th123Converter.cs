@@ -21,6 +21,7 @@ namespace ThScoreFileConverter.Models
     using System.IO.Compression;
     using System.Linq;
     using System.Text.RegularExpressions;
+    using StageInfo = Th105.StageInfo<Th123Converter.Stage, Th123Converter.Chara>;
 
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th123Converter : ThConverter
@@ -1421,23 +1422,6 @@ namespace ThScoreFileConverter.Models
             {
                 return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
             }
-        }
-
-        private class StageInfo
-        {
-            public StageInfo(Stage stage, Chara enemy, IEnumerable<int> cardIds)
-            {
-                this.Stage = stage;
-                this.Enemy = enemy;
-                this.CardIds = cardIds.ToList();
-            }
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public Stage Stage { get; private set; }
-
-            public Chara Enemy { get; private set; }
-
-            public List<int> CardIds { get; private set; }  // 0-based
         }
 
         private class AllScoreData : IBinaryReadable
