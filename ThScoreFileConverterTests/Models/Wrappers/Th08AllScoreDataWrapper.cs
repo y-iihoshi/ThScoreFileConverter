@@ -26,33 +26,32 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         {
             get
             {
-                var header = this.pobj.GetProperty(nameof(Header));
+                var header = this.pobj.GetProperty(nameof(this.Header));
                 return (header != null) ? new Th06HeaderWrapper<Th08Converter>(header) : null;
             }
         }
 
-        // NOTE: Th08Converter.{CharaLevelPair,HighScore} are private classes.
-        // public IReadOnlyDictionary<CharaLevelPair, List<HighScore>> Rankings
-        //     => this.pobj.GetProperty(nameof(Rankings)) as Dictionary<CharaLevelPair, List<HighScore>>;
+        // NOTE: Th08Converter.HighScore are private classes.
+        // public IReadOnlyDictionary<(Chara, Level), List<HighScore>> Rankings
+        //     => this.pobj.GetProperty(nameof(this.Rankings)) as Dictionary<(Chara, Level), List<HighScore>>;
         public object Rankings
-            => this.pobj.GetProperty(nameof(Rankings));
+            => this.pobj.GetProperty(nameof(this.Rankings));
         public int? RankingsCount
             => this.Rankings.GetType().GetProperty("Count").GetValue(this.Rankings) as int?;
-        public object Ranking(Th06CharaLevelPairWrapper<Th08Converter, Th08Converter.Chara, ThConverter.Level> pair)
-            => this.Rankings.GetType().GetProperty("Item").GetValue(this.Rankings, new object[] { pair.Target });
-        public Th08HighScoreWrapper RankingItem(
-            Th06CharaLevelPairWrapper<Th08Converter, Th08Converter.Chara, ThConverter.Level> pair, int index)
+        public object Ranking(Th08Converter.Chara chara, ThConverter.Level level)
+            => this.Rankings.GetType().GetProperty("Item").GetValue(this.Rankings, new object[] { (chara, level) });
+        public Th08HighScoreWrapper RankingItem(Th08Converter.Chara chara, ThConverter.Level level, int index)
         {
-            var ranking = this.Ranking(pair);
+            var ranking = this.Ranking(chara, level);
             return new Th08HighScoreWrapper(
                 ranking.GetType().GetProperty("Item").GetValue(ranking, new object[] { index }));
         }
 
         // NOTE: Th08Converter.ClearData is a private class.
         // public IReadOnlyDictionary<Chara, ClearData> ClearData
-        //     => this.pobj.GetProperty(nameof(ClearData)) as Dictionary<Chara, ClearData>;
+        //     => this.pobj.GetProperty(nameof(this.ClearData)) as Dictionary<Chara, ClearData>;
         public object ClearData
-            => this.pobj.GetProperty(nameof(ClearData));
+            => this.pobj.GetProperty(nameof(this.ClearData));
         public int? ClearDataCount
             => this.ClearData.GetType().GetProperty("Count").GetValue(this.ClearData) as int?;
         public Th08ClearDataWrapper ClearDataItem(Th08Converter.CharaWithTotal chara)
@@ -61,9 +60,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         // NOTE: Th08Converter.CardAttack is a private class.
         // public IReadOnlyDictionary<int, CardAttack> CardAttacks
-        //     => this.pobj.GetProperty(nameof(CardAttacks)) as Dictionary<int, CardAttack>;
+        //     => this.pobj.GetProperty(nameof(this.CardAttacks)) as Dictionary<int, CardAttack>;
         public object CardAttacks
-            => this.pobj.GetProperty(nameof(CardAttacks));
+            => this.pobj.GetProperty(nameof(this.CardAttacks));
         public int? CardAttacksCount
             => this.CardAttacks.GetType().GetProperty("Count").GetValue(this.CardAttacks) as int?;
         public Th08CardAttackWrapper CardAttacksItem(int id)
@@ -72,9 +71,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         // NOTE: Th08Converter.PracticeScore is a private class.
         // public IReadOnlyDictionary<Chara, PracticeScore> PracticeScores
-        //     => this.pobj.GetProperty(nameof(PracticeScores)) as Dictionary<Chara, PracticeScore>;
+        //     => this.pobj.GetProperty(nameof(this.PracticeScores)) as Dictionary<Chara, PracticeScore>;
         public object PracticeScores
-            => this.pobj.GetProperty(nameof(PracticeScores));
+            => this.pobj.GetProperty(nameof(this.PracticeScores));
         public int? PracticeScoresCount
             => this.PracticeScores.GetType().GetProperty("Count").GetValue(this.PracticeScores) as int?;
         public Th08PracticeScoreWrapper PracticeScoresItem(Th08Converter.Chara chara)
@@ -86,7 +85,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         {
             get
             {
-                var flsp = this.pobj.GetProperty(nameof(Flsp));
+                var flsp = this.pobj.GetProperty(nameof(this.Flsp));
                 return (flsp != null) ? new Th08FlspWrapper(flsp) : null;
             }
         }
@@ -95,7 +94,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         {
             get
             {
-                var status = this.pobj.GetProperty(nameof(PlayStatus));
+                var status = this.pobj.GetProperty(nameof(this.PlayStatus));
                 return (status != null) ? new Th08PlayStatusWrapper(status) : null;
             }
         }
@@ -104,7 +103,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         {
             get
             {
-                var name = this.pobj.GetProperty(nameof(LastName));
+                var name = this.pobj.GetProperty(nameof(this.LastName));
                 return (name != null) ? new Th07LastNameWrapper(name) : null;
             }
         }
@@ -113,7 +112,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         {
             get
             {
-                var info = this.pobj.GetProperty(nameof(VersionInfo));
+                var info = this.pobj.GetProperty(nameof(this.VersionInfo));
                 return (info != null) ? new Th07VersionInfoWrapper(info) : null;
             }
         }

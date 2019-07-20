@@ -253,7 +253,7 @@ namespace ThScoreFileConverter.Models
                         int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
                     var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
-                    var score = parent.allScoreData.Rankings[new CharaLevelPair(chara, level)][rank];
+                    var score = parent.allScoreData.Rankings[(chara, level)][rank];
                     var date = string.Empty;
 
                     switch (type)
@@ -328,7 +328,7 @@ namespace ThScoreFileConverter.Models
                         }
                         else
                         {
-                            var score = parent.allScoreData.Rankings[new CharaLevelPair(chara, level)][0];
+                            var score = parent.allScoreData.Rankings[(chara, level)][0];
                             var date = Encoding.Default.GetString(score.Date).TrimEnd('\0');
                             return (date != "--/--") ? "Not Cleared" : "-------";
                         }
@@ -339,26 +339,6 @@ namespace ThScoreFileConverter.Models
             public string Replace(string input)
             {
                 return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-            }
-        }
-
-        private class CharaLevelPair : Pair<Chara, Level>
-        {
-            public CharaLevelPair(Chara chara, Level level)
-                : base(chara, level)
-            {
-            }
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public Chara Chara
-            {
-                get { return this.First; }
-            }
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public Level Level
-            {
-                get { return this.Second; }
             }
         }
 
@@ -432,12 +412,12 @@ namespace ThScoreFileConverter.Models
             public AllScoreData()
             {
                 var numPairs = Enum.GetValues(typeof(Chara)).Length * Enum.GetValues(typeof(Level)).Length;
-                this.Rankings = new Dictionary<CharaLevelPair, HighScore[]>(numPairs);
+                this.Rankings = new Dictionary<(Chara, Level), HighScore[]>(numPairs);
             }
 
             public Header Header { get; private set; }
 
-            public Dictionary<CharaLevelPair, HighScore[]> Rankings { get; private set; }
+            public Dictionary<(Chara, Level), HighScore[]> Rankings { get; private set; }
 
             public PlayStatus PlayStatus { get; private set; }
 
@@ -452,7 +432,7 @@ namespace ThScoreFileConverter.Models
 
             public void Set(HighScore score)
             {
-                var key = new CharaLevelPair(score.Chara, score.Level);
+                var key = (score.Chara, score.Level);
                 if (!this.Rankings.ContainsKey(key))
                     this.Rankings.Add(key, new HighScore[5]);
                 if ((score.Rank >= 0) && (score.Rank < 5))

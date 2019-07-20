@@ -71,7 +71,6 @@
     <Compile Include="Models\Th06AllScoreDataTests.cs" />
     <Compile Include="Models\Th06CardAttackTests.cs" />
     <Compile Include="Models\Th06ChapterTests.cs" />
-    <Compile Include="Models\Th06CharaLevelPairTests.cs" />
     <Compile Include="Models\Th06ClearDataTests.cs" />
     <Compile Include="Models\Th06FileHeaderTests.cs" />
     <Compile Include="Models\Th06HeaderTests.cs" />
@@ -175,7 +174,6 @@
     <Compile Include="Models\Wrappers\Th06AllScoreDataWrapper.cs" />
     <Compile Include="Models\Wrappers\Th06CardAttackWrapper.cs" />
     <Compile Include="Models\Wrappers\Th06ChapterWrapper.cs" />
-    <Compile Include="Models\Wrappers\Th06CharaLevelPairWrapper.cs" />
     <Compile Include="Models\Wrappers\Th06ClearDataWrapper.cs" />
     <Compile Include="Models\Wrappers\Th06FileHeaderWrapper.cs" />
     <Compile Include="Models\Wrappers\Th06HeaderWrapper.cs" />

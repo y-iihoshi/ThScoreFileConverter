@@ -63,9 +63,7 @@ namespace ThScoreFileConverterTests.Models
             var allScoreData = new Th07AllScoreDataWrapper();
             allScoreData.Set(score);
 
-            var pair = new Th06CharaLevelPairWrapper<Th07Converter, Th07Converter.Chara, Th07Converter.Level>(
-                properties.chara, properties.level);
-            Assert.AreSame(score.Target, allScoreData.RankingItem(pair, 2).Target);
+            Assert.AreSame(score.Target, allScoreData.RankingItem(properties.chara, properties.level, 2).Target);
         });
 
         [TestMethod]
@@ -81,10 +79,8 @@ namespace ThScoreFileConverterTests.Models
             allScoreData.Set(score1);
             allScoreData.Set(score2);
 
-            var pair = new Th06CharaLevelPairWrapper<Th07Converter, Th07Converter.Chara, Th07Converter.Level>(
-                properties.chara, properties.level);
-            Assert.AreSame(score1.Target, allScoreData.RankingItem(pair, 2).Target);
-            Assert.AreSame(score2.Target, allScoreData.RankingItem(pair, 3).Target);
+            Assert.AreSame(score1.Target, allScoreData.RankingItem(properties.chara, properties.level, 2).Target);
+            Assert.AreSame(score2.Target, allScoreData.RankingItem(properties.chara, properties.level, 3).Target);
         });
 
         [TestMethod]
@@ -157,9 +153,9 @@ namespace ThScoreFileConverterTests.Models
             var allScoreData = new Th07AllScoreDataWrapper();
             allScoreData.Set(score);
 
-            var pair = new Th06CharaLevelPairWrapper<Th07Converter, Th07Converter.Chara, Th07Converter.Level>(
-                properties.chara, properties.level);
-            Assert.AreSame(score.Target, allScoreData.PracticeScore(pair, properties.stage).Target);
+            Assert.AreSame(
+                score.Target,
+                allScoreData.PracticeScore(properties.chara, properties.level, properties.stage).Target);
         });
 
         [TestMethod]
@@ -176,10 +172,12 @@ namespace ThScoreFileConverterTests.Models
             allScoreData.Set(score1);
             allScoreData.Set(score2);
 
-            var pair = new Th06CharaLevelPairWrapper<Th07Converter, Th07Converter.Chara, Th07Converter.Level>(
-                properties.chara, properties.level);
-            Assert.AreSame(score1.Target, allScoreData.PracticeScore(pair, properties.stage).Target);
-            Assert.AreNotSame(score2.Target, allScoreData.PracticeScore(pair, properties.stage).Target);
+            Assert.AreSame(
+                score1.Target,
+                allScoreData.PracticeScore(properties.chara, properties.level, properties.stage).Target);
+            Assert.AreNotSame(
+                score2.Target,
+                allScoreData.PracticeScore(properties.chara, properties.level, properties.stage).Target);
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]

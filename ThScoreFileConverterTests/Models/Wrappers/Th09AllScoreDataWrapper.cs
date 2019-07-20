@@ -26,25 +26,24 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         {
             get
             {
-                var header = this.pobj.GetProperty(nameof(Header));
+                var header = this.pobj.GetProperty(nameof(this.Header));
                 return (header != null) ? new Th06HeaderWrapper<Th09Converter>(header) : null;
             }
         }
 
-        // NOTE: Th09Converter.{CharaLevelPair,HighScore} are private classes.
-        // public IReadOnlyDictionary<CharaLevelPair, HighScore[]> Rankings
-        //     => this.pobj.GetProperty(nameof(Rankings)) as Dictionary<CharaLevelPair, HighScore[]>;
+        // NOTE: Th09Converter.HighScore are private classes.
+        // public IReadOnlyDictionary<(Chara, Level), HighScore[]> Rankings
+        //     => this.pobj.GetProperty(nameof(this.Rankings)) as Dictionary<(Chara, Level), HighScore[]>;
         public object Rankings
-            => this.pobj.GetProperty(nameof(Rankings));
+            => this.pobj.GetProperty(nameof(this.Rankings));
         public int? RankingsCount
             => this.Rankings.GetType().GetProperty("Count").GetValue(this.Rankings) as int?;
-        public object[] Ranking(Th06CharaLevelPairWrapper<Th09Converter, Th09Converter.Chara, ThConverter.Level> pair)
-            => this.Rankings.GetType().GetProperty("Item").GetValue(this.Rankings, new object[] { pair.Target })
+        public object[] Ranking(Th09Converter.Chara chara, ThConverter.Level level)
+            => this.Rankings.GetType().GetProperty("Item").GetValue(this.Rankings, new object[] { (chara, level) })
                 as object[];
-        public Th09HighScoreWrapper RankingItem(
-            Th06CharaLevelPairWrapper<Th09Converter, Th09Converter.Chara, ThConverter.Level> pair, int index)
+        public Th09HighScoreWrapper RankingItem(Th09Converter.Chara chara, ThConverter.Level level, int index)
         {
-            var item = this.Ranking(pair)[index];
+            var item = this.Ranking(chara, level)[index];
             return (item != null) ? new Th09HighScoreWrapper(item) : null;
         }
 
@@ -52,7 +51,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         {
             get
             {
-                var status = this.pobj.GetProperty(nameof(PlayStatus));
+                var status = this.pobj.GetProperty(nameof(this.PlayStatus));
                 return (status != null) ? new Th09PlayStatusWrapper(status) : null;
             }
         }
@@ -61,7 +60,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         {
             get
             {
-                var name = this.pobj.GetProperty(nameof(LastName));
+                var name = this.pobj.GetProperty(nameof(this.LastName));
                 return (name != null) ? new Th07LastNameWrapper(name) : null;
             }
         }
@@ -70,7 +69,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         {
             get
             {
-                var info = this.pobj.GetProperty(nameof(VersionInfo));
+                var info = this.pobj.GetProperty(nameof(this.VersionInfo));
                 return (info != null) ? new Th07VersionInfoWrapper(info) : null;
             }
         }

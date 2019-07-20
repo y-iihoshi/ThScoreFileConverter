@@ -61,9 +61,9 @@ namespace ThScoreFileConverterTests.Models
             var allScoreData = new Th09AllScoreDataWrapper();
             allScoreData.Set(score);
 
-            var pair = new Th06CharaLevelPairWrapper<Th09Converter, Th09Converter.Chara, ThConverter.Level>(
-                properties.chara, properties.level);
-            Assert.AreSame(score.Target, allScoreData.RankingItem(pair, properties.rank).Target);
+            Assert.AreSame(
+                score.Target,
+                allScoreData.RankingItem(properties.chara, properties.level, properties.rank).Target);
         });
 
         [TestMethod]
@@ -80,10 +80,12 @@ namespace ThScoreFileConverterTests.Models
             allScoreData.Set(score1);
             allScoreData.Set(score2);
 
-            var pair = new Th06CharaLevelPairWrapper<Th09Converter, Th09Converter.Chara, ThConverter.Level>(
-                properties.chara, properties.level);
-            Assert.AreNotSame(score1.Target, allScoreData.RankingItem(pair, properties.rank).Target);
-            Assert.AreSame(score2.Target, allScoreData.RankingItem(pair, properties.rank).Target);
+            Assert.AreNotSame(
+                score1.Target,
+                allScoreData.RankingItem(properties.chara, properties.level, properties.rank).Target);
+            Assert.AreSame(
+                score2.Target,
+                allScoreData.RankingItem(properties.chara, properties.level, properties.rank).Target);
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
@@ -101,11 +103,9 @@ namespace ThScoreFileConverterTests.Models
             var allScoreData = new Th09AllScoreDataWrapper();
             allScoreData.Set(score);
 
-            var pair = new Th06CharaLevelPairWrapper<Th09Converter, Th09Converter.Chara, ThConverter.Level>(
-                properties.chara, properties.level);
-            for (var index = 0; index < allScoreData.Ranking(pair).Length; ++index)
+            for (var index = 0; index < allScoreData.Ranking(properties.chara, properties.level).Length; ++index)
             {
-                Assert.IsNull(allScoreData.RankingItem(pair, index));
+                Assert.IsNull(allScoreData.RankingItem(properties.chara, properties.level, index));
             }
         });
 

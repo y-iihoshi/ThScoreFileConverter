@@ -514,7 +514,7 @@ namespace ThScoreFileConverter.Models
                         int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
                     var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
-                    var key = new CharaLevelPair(chara, level);
+                    var key = (chara, level);
                     var score = parent.allScoreData.Rankings.ContainsKey(key)
                         ? parent.allScoreData.Rankings[key][rank] : InitialRanking[rank];
 
@@ -709,7 +709,7 @@ namespace ThScoreFileConverter.Models
                     var level = LevelParser.Parse(match.Groups[1].Value);
                     var chara = CharaParser.Parse(match.Groups[2].Value);
 
-                    var key = new CharaLevelPair(chara, level);
+                    var key = (chara, level);
                     if (parent.allScoreData.Rankings.ContainsKey(key))
                     {
                         var stageProgress = parent.allScoreData
@@ -827,7 +827,7 @@ namespace ThScoreFileConverter.Models
                     if ((stage == Stage.Extra) || (stage == Stage.Phantasm))
                         return match.ToString();
 
-                    var key = new CharaLevelPair(chara, level);
+                    var key = (chara, level);
                     if (parent.allScoreData.PracticeScores.ContainsKey(key))
                     {
                         var scores = parent.allScoreData.PracticeScores[key];
@@ -855,26 +855,6 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class CharaLevelPair : Pair<Chara, Level>
-        {
-            public CharaLevelPair(Chara chara, Level level)
-                : base(chara, level)
-            {
-            }
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public Chara Chara
-            {
-                get { return this.First; }
-            }
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public Level Level
-            {
-                get { return this.Second; }
-            }
-        }
-
         private class FileHeader : Th07.FileHeader
         {
             public const short ValidVersion = 0x000B;
@@ -889,22 +869,22 @@ namespace ThScoreFileConverter.Models
             {
                 var numCharas = Enum.GetValues(typeof(Chara)).Length;
                 var numPairs = numCharas * Enum.GetValues(typeof(Level)).Length;
-                this.Rankings = new Dictionary<CharaLevelPair, List<HighScore>>(numPairs);
+                this.Rankings = new Dictionary<(Chara, Level), List<HighScore>>(numPairs);
                 this.ClearData = new Dictionary<Chara, ClearData>(numCharas);
                 this.CardAttacks = new Dictionary<int, CardAttack>(CardTable.Count);
                 this.PracticeScores =
-                    new Dictionary<CharaLevelPair, Dictionary<Stage, PracticeScore>>(numPairs);
+                    new Dictionary<(Chara, Level), Dictionary<Stage, PracticeScore>>(numPairs);
             }
 
             public Header Header { get; private set; }
 
-            public Dictionary<CharaLevelPair, List<HighScore>> Rankings { get; private set; }
+            public Dictionary<(Chara, Level), List<HighScore>> Rankings { get; private set; }
 
             public Dictionary<Chara, ClearData> ClearData { get; private set; }
 
             public Dictionary<int, CardAttack> CardAttacks { get; private set; }
 
-            public Dictionary<CharaLevelPair, Dictionary<Stage, PracticeScore>> PracticeScores
+            public Dictionary<(Chara, Level), Dictionary<Stage, PracticeScore>> PracticeScores
             {
                 get; private set;
             }
@@ -922,7 +902,7 @@ namespace ThScoreFileConverter.Models
 
             public void Set(HighScore score)
             {
-                var key = new CharaLevelPair(score.Chara, score.Level);
+                var key = (score.Chara, score.Level);
                 if (!this.Rankings.ContainsKey(key))
                     this.Rankings.Add(key, new List<HighScore>(InitialRanking));
                 var ranking = this.Rankings[key];
@@ -948,7 +928,7 @@ namespace ThScoreFileConverter.Models
                 if ((score.Level != Level.Extra) && (score.Level != Level.Phantasm) &&
                     (score.Stage != Stage.Extra) && (score.Stage != Stage.Phantasm))
                 {
-                    var key = new CharaLevelPair(score.Chara, score.Level);
+                    var key = (score.Chara, score.Level);
                     if (!this.PracticeScores.ContainsKey(key))
                     {
                         var numStages = Utils.GetEnumerator<Stage>()
