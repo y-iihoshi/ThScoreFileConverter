@@ -17,7 +17,7 @@ namespace ThScoreFileConverterTests.Models
         {
             public Dictionary<int, Th105CardForDeckTests.Properties> cardsForDeck;
             public Dictionary<
-                Th105CharaCardIdPairTests.Properties<TChara>,
+                (TChara Chara, int CardId),
                 Th105SpellCardResultTests.Properties<TChara, TLevel>> spellCardResults;
         };
 
@@ -39,13 +39,7 @@ namespace ThScoreFileConverterTests.Models
                         gotCount = index * 50,
                         frames = 8901u - (uint)index
                     })
-                    .ToDictionary(
-                        result => new Th105CharaCardIdPairTests.Properties<TChara>()
-                        {
-                            chara = result.enemy,
-                            cardId = result.id
-                        },
-                        result => result)
+                    .ToDictionary(result => (result.enemy, result.id), result => result)
             };
 
         internal static byte[] MakeByteArray<TChara, TLevel>(in Properties<TChara, TLevel> properties)
@@ -73,8 +67,8 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var pair in properties.spellCardResults)
             {
-                var charaCardIdPair = new Th105CharaCardIdPairWrapper<TParent, TChara>(pair.Key.chara, pair.Key.cardId);
-                Th105SpellCardResultTests.Validate(clearData.SpellCardResultsItem(charaCardIdPair), pair.Value);
+                Th105SpellCardResultTests.Validate(
+                    clearData.SpellCardResultsItem(pair.Key.Chara, pair.Key.CardId), pair.Value);
             }
         }
 
