@@ -105,7 +105,6 @@
     <Compile Include="Models\IBinaryWritable.cs" />
     <Compile Include="Models\IStringReplaceable.cs" />
     <Compile Include="Models\Lzss.cs" />
-    <Compile Include="Models\Pair.cs" />
     <Compile Include="Models\SpellCardInfo.cs" />
     <Compile Include="Models\Squirrel.cs" />
     <Compile Include="Models\Th06Converter.cs" />

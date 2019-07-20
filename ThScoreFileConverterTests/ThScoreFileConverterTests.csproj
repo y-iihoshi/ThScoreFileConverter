@@ -65,7 +65,6 @@
     <Compile Include="Models\EnumShortNameParserTests.cs" />
     <Compile Include="Models\ExceptionOccurredEventArgsTests.cs" />
     <Compile Include="Models\LzssTests.cs" />
-    <Compile Include="Models\PairTests.cs" />
     <Compile Include="Models\SpellCardInfoTests.cs" />
     <Compile Include="Models\TestUtils.cs" />
     <Compile Include="Models\Th06AllScoreDataTests.cs" />
