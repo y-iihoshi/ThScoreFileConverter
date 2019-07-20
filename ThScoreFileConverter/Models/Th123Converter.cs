@@ -1423,24 +1423,6 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class CharaCardIdPair : Pair<Chara, int>
-        {
-            public CharaCardIdPair(Chara chara, int cardId)
-                : base(chara, cardId)
-            {
-            }
-
-            public Chara Chara
-            {
-                get { return this.First; }
-            }
-
-            public int CardId
-            {
-                get { return this.Second; }     // 0-based
-            }
-        }
-
         private class StageInfo
         {
             public StageInfo(Stage stage, Chara enemy, IEnumerable<int> cardIds)
