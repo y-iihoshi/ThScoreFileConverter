@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
@@ -24,5 +25,13 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.Path)) as string;
         public Th125BestShotHeaderWrapper Header
             => new Th125BestShotHeaderWrapper(this.pobj.GetProperty(nameof(this.Header)));
+
+        public void Deconstruct(out string path, out Th125BestShotHeaderWrapper header)
+        {
+            var args = new object[] { null, null };
+            this.pobj.Invoke(nameof(Deconstruct), args, CultureInfo.InvariantCulture);
+            path = args[0] as string;
+            header = new Th125BestShotHeaderWrapper(args[1]);
+        }
     }
 }

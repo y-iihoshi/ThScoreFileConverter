@@ -547,8 +547,7 @@ namespace ThScoreFileConverter.Models
                     if (!SpellCards.ContainsKey(key))
                         return match.ToString();
 
-                    if (!string.IsNullOrEmpty(outputFilePath) &&
-                        parent.bestshots.TryGetValue(key, out BestShotPair bestshot))
+                    if (!string.IsNullOrEmpty(outputFilePath) && parent.bestshots.TryGetValue(key, out var bestshot))
                     {
                         var relativePath = new Uri(outputFilePath)
                             .MakeRelativeUri(new Uri(bestshot.Path)).OriginalString;
@@ -597,8 +596,7 @@ namespace ThScoreFileConverter.Models
                     if (!SpellCards.ContainsKey(key))
                         return match.ToString();
 
-                    if (!string.IsNullOrEmpty(outputFilePath) &&
-                        parent.bestshots.TryGetValue(key, out BestShotPair bestshot))
+                    if (!string.IsNullOrEmpty(outputFilePath) && parent.bestshots.TryGetValue(key, out var bestshot))
                     {
                         switch (type)
                         {
@@ -654,21 +652,22 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class BestShotPair : Pair<string, BestShotHeader>
+        private class BestShotPair : Tuple<string, BestShotHeader>
         {
-            public BestShotPair(string name, BestShotHeader header)
-                : base(name, header)
+            public BestShotPair(string path, BestShotHeader header)
+                : base(path, header)
             {
             }
 
-            public string Path
-            {
-                get { return this.First; }
-            }
+            public string Path => this.Item1;
 
-            public BestShotHeader Header
+            public BestShotHeader Header => this.Item2;
+
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
+            public void Deconstruct(out string path, out BestShotHeader header)
             {
-                get { return this.Second; }
+                path = this.Path;
+                header = this.Header;
             }
         }
 

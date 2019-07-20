@@ -34,5 +34,18 @@ namespace ThScoreFileConverterTests.Models
 
             Validate(pair, properties);
         });
+
+        [TestMethod]
+        public void DeconstructTest() => TestUtils.Wrap(() =>
+        {
+            var properties = GetValidProperties();
+
+            var header = Th095BestShotHeaderWrapper.Create(Th095BestShotHeaderTests.MakeByteArray(properties.header));
+            var pair = new Th095BestShotPairWrapper(properties.path, header);
+            var (actualPath, actualHeader) = pair;
+
+            Assert.AreEqual(properties.path, actualPath);
+            Th095BestShotHeaderTests.Validate(actualHeader, properties.header);
+        });
     }
 }
