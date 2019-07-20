@@ -31,112 +31,112 @@ namespace ThScoreFileConverter.Models
     internal class Th165Converter : ThConverter
     {
         // Thanks to thwiki.info
-        private static readonly Dictionary<DayScenePair, EnemiesCardPair> SpellCards =
-            new Dictionary<DayScenePair, EnemiesCardPair>()
+        private static readonly Dictionary<(Day Day, int Scene), (Enemy[] Enemies, string Card)> SpellCards =
+            new Dictionary<(Day, int), (Enemy[], string)>()
             {
-                { new DayScenePair(Day.Sunday,             1), new EnemiesCardPair(Enemy.Reimu,      string.Empty) },
-                { new DayScenePair(Day.Sunday,             2), new EnemiesCardPair(Enemy.Reimu,      string.Empty) },
-                { new DayScenePair(Day.Monday,             1), new EnemiesCardPair(Enemy.Seiran,     "弾符「イーグルシューティング」") },
-                { new DayScenePair(Day.Monday,             2), new EnemiesCardPair(Enemy.Ringo,      "兎符「ストロベリー大ダンゴ」") },
-                { new DayScenePair(Day.Monday,             3), new EnemiesCardPair(Enemy.Seiran,     "弾符「ラビットファルコナー」") },
-                { new DayScenePair(Day.Monday,             4), new EnemiesCardPair(Enemy.Ringo,      "兎符「ダンゴ三姉妹」") },
-                { new DayScenePair(Day.Tuesday,            1), new EnemiesCardPair(Enemy.Larva,      string.Empty) },
-                { new DayScenePair(Day.Tuesday,            2), new EnemiesCardPair(Enemy.Larva,      "蝶符「バタフライドリーム」") },
-                { new DayScenePair(Day.Tuesday,            3), new EnemiesCardPair(Enemy.Larva,      "蝶符「纏わり付く鱗粉」") },
-                { new DayScenePair(Day.Wednesday,          1), new EnemiesCardPair(Enemy.Marisa,     string.Empty) },
-                { new DayScenePair(Day.Wednesday,          2), new EnemiesCardPair(Enemy.Narumi,     "魔符「慈愛の地蔵」") },
-                { new DayScenePair(Day.Wednesday,          3), new EnemiesCardPair(Enemy.Narumi,     "地蔵「菩薩ストンプ」") },
-                { new DayScenePair(Day.Wednesday,          4), new EnemiesCardPair(Enemy.Narumi,     "地蔵「活きの良いバレットゴーレム」") },
-                { new DayScenePair(Day.Thursday,           1), new EnemiesCardPair(Enemy.Nemuno,     string.Empty) },
-                { new DayScenePair(Day.Thursday,           2), new EnemiesCardPair(Enemy.Nemuno,     "研符「狂い輝く鬼包丁」") },
-                { new DayScenePair(Day.Thursday,           3), new EnemiesCardPair(Enemy.Nemuno,     "殺符「窮僻の山姥」") },
-                { new DayScenePair(Day.Friday,             1), new EnemiesCardPair(Enemy.Aunn,       string.Empty) },
-                { new DayScenePair(Day.Friday,             2), new EnemiesCardPair(Enemy.Aunn,       "独楽「コマ犬大回転」") },
-                { new DayScenePair(Day.Friday,             3), new EnemiesCardPair(Enemy.Aunn,       "独楽「阿吽の閃光」") },
-                { new DayScenePair(Day.Saturday,           1), new EnemiesCardPair(Enemy.Doremy,     string.Empty) },
-                { new DayScenePair(Day.WrongSunday,        1), new EnemiesCardPair(Enemy.Reimu,      string.Empty) },
-                { new DayScenePair(Day.WrongSunday,        2), new EnemiesCardPair(Enemy.Seiran,     "夢弾「ルナティックドリームショット」") },
-                { new DayScenePair(Day.WrongSunday,        3), new EnemiesCardPair(Enemy.Ringo,      "団子「ダンゴフラワー」") },
-                { new DayScenePair(Day.WrongSunday,        4), new EnemiesCardPair(Enemy.Larva,      "夢蝶「クレージーバタフライ」") },
-                { new DayScenePair(Day.WrongSunday,        5), new EnemiesCardPair(Enemy.Narumi,     "夢地蔵「劫火の希望」") },
-                { new DayScenePair(Day.WrongSunday,        6), new EnemiesCardPair(Enemy.Nemuno,     "夢尽「殺人鬼の懐」") },
-                { new DayScenePair(Day.WrongSunday,        7), new EnemiesCardPair(Enemy.Aunn,       "夢犬「１０１匹の野良犬」") },
-                { new DayScenePair(Day.WrongMonday,        1), new EnemiesCardPair(Enemy.Clownpiece, string.Empty) },
-                { new DayScenePair(Day.WrongMonday,        2), new EnemiesCardPair(Enemy.Clownpiece, "獄符「バースティンググラッジ」") },
-                { new DayScenePair(Day.WrongMonday,        3), new EnemiesCardPair(Enemy.Clownpiece, "獄符「ダブルストライプ」") },
-                { new DayScenePair(Day.WrongMonday,        4), new EnemiesCardPair(Enemy.Clownpiece, "月夢「エクリプスナイトメア」") },
-                { new DayScenePair(Day.WrongTuesday,       1), new EnemiesCardPair(Enemy.Sagume,     string.Empty) },
-                { new DayScenePair(Day.WrongTuesday,       2), new EnemiesCardPair(Enemy.Sagume,     "玉符「金城鉄壁の陰陽玉」") },
-                { new DayScenePair(Day.WrongTuesday,       3), new EnemiesCardPair(Enemy.Sagume,     "玉符「神々の写し難い弾冠」") },
-                { new DayScenePair(Day.WrongTuesday,       4), new EnemiesCardPair(Enemy.Sagume,     "夢鷺「片翼の夢鷺」") },
-                { new DayScenePair(Day.WrongWednesday,     1), new EnemiesCardPair(Enemy.Doremy,     string.Empty) },
-                { new DayScenePair(Day.WrongWednesday,     2), new EnemiesCardPair(Enemy.Mai,        "竹符「バンブーラビリンス」") },
-                { new DayScenePair(Day.WrongWednesday,     3), new EnemiesCardPair(Enemy.Satono,     "茗荷「メスメリズムダンス」") },
-                { new DayScenePair(Day.WrongWednesday,     4), new EnemiesCardPair(Enemy.Mai,        "笹符「タナバタスタードリーム」") },
-                { new DayScenePair(Day.WrongWednesday,     5), new EnemiesCardPair(Enemy.Satono,     "冥加「ビハインドナイトメア」") },
-                { new DayScenePair(Day.WrongWednesday,     6), new EnemiesCardPair(Enemy.Mai, Enemy.Satono, string.Empty) },
-                { new DayScenePair(Day.WrongThursday,      1), new EnemiesCardPair(Enemy.Hecatia,    "異界「ディストーテッドファイア」") },
-                { new DayScenePair(Day.WrongThursday,      2), new EnemiesCardPair(Enemy.Hecatia,    "異界「恨みがましい地獄の雨」") },
-                { new DayScenePair(Day.WrongThursday,      3), new EnemiesCardPair(Enemy.Hecatia,    "月「コズミックレディエーション」") },
-                { new DayScenePair(Day.WrongThursday,      4), new EnemiesCardPair(Enemy.Hecatia,    "異界「逢魔ガ刻　夢」") },
-                { new DayScenePair(Day.WrongThursday,      5), new EnemiesCardPair(Enemy.Hecatia,    "「月が堕ちてくる！」") },
-                { new DayScenePair(Day.WrongFriday,        1), new EnemiesCardPair(Enemy.Junko,      string.Empty) },
-                { new DayScenePair(Day.WrongFriday,        2), new EnemiesCardPair(Enemy.Junko,      "「震え凍える悪夢」") },
-                { new DayScenePair(Day.WrongFriday,        3), new EnemiesCardPair(Enemy.Junko,      "「サイケデリックマンダラ」") },
-                { new DayScenePair(Day.WrongFriday,        4), new EnemiesCardPair(Enemy.Junko,      "「極めて威厳のある純光」") },
-                { new DayScenePair(Day.WrongFriday,        5), new EnemiesCardPair(Enemy.Junko,      "「確実に悪夢で殺す為の弾幕」") },
-                { new DayScenePair(Day.WrongSaturday,      1), new EnemiesCardPair(Enemy.Okina,      "秘儀「マターラスッカ」") },
-                { new DayScenePair(Day.WrongSaturday,      2), new EnemiesCardPair(Enemy.Okina,      "秘儀「背面の邪炎」") },
-                { new DayScenePair(Day.WrongSaturday,      3), new EnemiesCardPair(Enemy.Okina,      "後符「絶対秘神の後光」") },
-                { new DayScenePair(Day.WrongSaturday,      4), new EnemiesCardPair(Enemy.Okina,      "秘儀「秘神の暗曜弾幕」") },
-                { new DayScenePair(Day.WrongSaturday,      5), new EnemiesCardPair(Enemy.Okina,      "秘儀「神秘の玉繭」") },
-                { new DayScenePair(Day.WrongSaturday,      6), new EnemiesCardPair(Enemy.Okina,      string.Empty) },
-                { new DayScenePair(Day.NightmareSunday,    1), new EnemiesCardPair(Enemy.Remilia,  Enemy.Flandre,      "紅魔符「ブラッディカタストロフ」") },
-                { new DayScenePair(Day.NightmareSunday,    2), new EnemiesCardPair(Enemy.Byakuren, Enemy.Miko,         "星神符「十七条の超人」") },
-                { new DayScenePair(Day.NightmareSunday,    3), new EnemiesCardPair(Enemy.Remilia,  Enemy.Byakuren,     "紅星符「超人ブラッディナイフ」") },
-                { new DayScenePair(Day.NightmareSunday,    4), new EnemiesCardPair(Enemy.Flandre,  Enemy.Miko,         "紅神符「十七条のカタストロフ」") },
-                { new DayScenePair(Day.NightmareSunday,    5), new EnemiesCardPair(Enemy.Remilia,  Enemy.Miko,         "神紅符「ブラッディ十七条のレーザー」") },
-                { new DayScenePair(Day.NightmareSunday,    6), new EnemiesCardPair(Enemy.Flandre,  Enemy.Byakuren,     "紅星符「超人カタストロフ行脚」") },
-                { new DayScenePair(Day.NightmareMonday,    1), new EnemiesCardPair(Enemy.Yuyuko,   Enemy.Eiki,         "妖花符「バタフライストーム閻魔笏」") },
-                { new DayScenePair(Day.NightmareMonday,    2), new EnemiesCardPair(Enemy.Kanako,   Enemy.Suwako,       "風神符「ミシャバシラ」") },
-                { new DayScenePair(Day.NightmareMonday,    3), new EnemiesCardPair(Enemy.Yuyuko,   Enemy.Kanako,       "風妖符「死蝶オンバシラ」") },
-                { new DayScenePair(Day.NightmareMonday,    4), new EnemiesCardPair(Enemy.Eiki,     Enemy.Suwako,       "風花符「ミシャグジ様の是非」") },
-                { new DayScenePair(Day.NightmareMonday,    5), new EnemiesCardPair(Enemy.Yuyuko,   Enemy.Suwako,       "妖風符「土着蝶ストーム」") },
-                { new DayScenePair(Day.NightmareMonday,    6), new EnemiesCardPair(Enemy.Eiki,     Enemy.Kanako,       "風花符「オンバシラ裁判」") },
-                { new DayScenePair(Day.NightmareTuesday,   1), new EnemiesCardPair(Enemy.Eirin,    Enemy.Kaguya,       "永夜符「蓬莱壺中の弾の枝」") },
-                { new DayScenePair(Day.NightmareTuesday,   2), new EnemiesCardPair(Enemy.Tenshi,   Enemy.Shinmyoumaru, "緋針符「要石も大きくなあれ」") },
-                { new DayScenePair(Day.NightmareTuesday,   3), new EnemiesCardPair(Enemy.Eirin,    Enemy.Tenshi,       "永緋符「墜落する壺中の有頂天」") },
-                { new DayScenePair(Day.NightmareTuesday,   4), new EnemiesCardPair(Enemy.Kaguya,   Enemy.Shinmyoumaru, "輝夜符「蓬莱の大きな弾の枝」") },
-                { new DayScenePair(Day.NightmareTuesday,   5), new EnemiesCardPair(Enemy.Eirin,    Enemy.Shinmyoumaru, "永輝符「大きくなる壺」") },
-                { new DayScenePair(Day.NightmareTuesday,   6), new EnemiesCardPair(Enemy.Kaguya,   Enemy.Tenshi,       "緋夜符「蓬莱の弾の要石」") },
-                { new DayScenePair(Day.NightmareWednesday, 1), new EnemiesCardPair(Enemy.Satori,   Enemy.Utsuho,       "地霊符「マインドステラスチール」") },
-                { new DayScenePair(Day.NightmareWednesday, 2), new EnemiesCardPair(Enemy.Ran,      Enemy.Koishi,       "地妖符「イドの式神」") },
-                { new DayScenePair(Day.NightmareWednesday, 3), new EnemiesCardPair(Enemy.Satori,   Enemy.Koishi,       "「パーフェクトマインドコントロール」") },
-                { new DayScenePair(Day.NightmareWednesday, 4), new EnemiesCardPair(Enemy.Ran,      Enemy.Utsuho,       "地妖符「式神大星」") },
-                { new DayScenePair(Day.NightmareWednesday, 5), new EnemiesCardPair(Enemy.Ran,      Enemy.Satori,       "地妖符「エゴの式神」") },
-                { new DayScenePair(Day.NightmareWednesday, 6), new EnemiesCardPair(Enemy.Utsuho,   Enemy.Koishi,       "地霊符「マインドステラリリーフ」") },
-                { new DayScenePair(Day.NightmareThursday,  1), new EnemiesCardPair(Enemy.Nue,      Enemy.Mamizou,      "神星符「正体不明の怪光人だかり」") },
-                { new DayScenePair(Day.NightmareThursday,  2), new EnemiesCardPair(Enemy.Iku,      Enemy.Raiko,        "輝天符「迅雷のドンドコ太鼓」") },
-                { new DayScenePair(Day.NightmareThursday,  3), new EnemiesCardPair(Enemy.Mamizou,  Enemy.Raiko,        "輝神符「謎のドンドコ人だかり」") },
-                { new DayScenePair(Day.NightmareThursday,  4), new EnemiesCardPair(Enemy.Iku,      Enemy.Nue,          "緋星符「正体不明の落雷」") },
-                { new DayScenePair(Day.NightmareThursday,  5), new EnemiesCardPair(Enemy.Iku,      Enemy.Mamizou,      "神緋符「雷雨の中のストーカー」") },
-                { new DayScenePair(Day.NightmareThursday,  6), new EnemiesCardPair(Enemy.Nue,      Enemy.Raiko,        "輝星符「正体不明のドンドコ太鼓」") },
-                { new DayScenePair(Day.NightmareFriday,    1), new EnemiesCardPair(Enemy.Suika,    Enemy.Mokou,        "萃夜符「身命霧散」") },
-                { new DayScenePair(Day.NightmareFriday,    2), new EnemiesCardPair(Enemy.Junko,    Enemy.Hecatia,      "紺珠符「純粋と不純の弾幕」") },
-                { new DayScenePair(Day.NightmareFriday,    3), new EnemiesCardPair(Enemy.Suika,    Enemy.Junko,        "萃珠符「純粋な五里霧中」") },
-                { new DayScenePair(Day.NightmareFriday,    4), new EnemiesCardPair(Enemy.Mokou,    Enemy.Hecatia,      "永珠符「捨て身のリフレクション」") },
-                { new DayScenePair(Day.NightmareFriday,    5), new EnemiesCardPair(Enemy.Suika,    Enemy.Hecatia,      "萃珠符「ミストレイ」") },
-                { new DayScenePair(Day.NightmareFriday,    6), new EnemiesCardPair(Enemy.Mokou,    Enemy.Junko,        "永珠符「穢れ無き珠と穢れ多き霊」") },
-                { new DayScenePair(Day.NightmareSaturday,  1), new EnemiesCardPair(Enemy.Yukari,   Enemy.Okina,        "「秘神結界」") },
-                { new DayScenePair(Day.NightmareSaturday,  2), new EnemiesCardPair(Enemy.Reimu,    Enemy.Marisa,       "「盗撮者調伏マスタースパーク」") },
-                { new DayScenePair(Day.NightmareSaturday,  3), new EnemiesCardPair(Enemy.Reimu,    Enemy.Okina,        "「背後からの盗撮者調伏」") },
-                { new DayScenePair(Day.NightmareSaturday,  4), new EnemiesCardPair(Enemy.Marisa,   Enemy.Yukari,       "「弾幕結界を撃ち抜け！」") },
-                { new DayScenePair(Day.NightmareSaturday,  5), new EnemiesCardPair(Enemy.Marisa,   Enemy.Okina,        "「卑怯者マスタースパーク」") },
-                { new DayScenePair(Day.NightmareSaturday,  6), new EnemiesCardPair(Enemy.Reimu,    Enemy.Yukari,       "「許可無く弾幕は撮影禁止です」") },
-                { new DayScenePair(Day.NightmareDiary,     1), new EnemiesCardPair(Enemy.Doremy,                       "「最後の日曜日に見る悪夢」") },
-                { new DayScenePair(Day.NightmareDiary,     2), new EnemiesCardPair(Enemy.Sumireko,                     "紙符「ＥＳＰカード手裏剣」") },
-                { new DayScenePair(Day.NightmareDiary,     3), new EnemiesCardPair(Enemy.Sumireko, Enemy.Yukari,       "紙符「結界中のＥＳＰカード手裏剣」") },
-                { new DayScenePair(Day.NightmareDiary,     4), new EnemiesCardPair(Enemy.DreamSumireko,                string.Empty) },
+                { (Day.Sunday,             1), (new[] { Enemy.Reimu },      string.Empty) },
+                { (Day.Sunday,             2), (new[] { Enemy.Reimu },      string.Empty) },
+                { (Day.Monday,             1), (new[] { Enemy.Seiran },     "弾符「イーグルシューティング」") },
+                { (Day.Monday,             2), (new[] { Enemy.Ringo },      "兎符「ストロベリー大ダンゴ」") },
+                { (Day.Monday,             3), (new[] { Enemy.Seiran },     "弾符「ラビットファルコナー」") },
+                { (Day.Monday,             4), (new[] { Enemy.Ringo },      "兎符「ダンゴ三姉妹」") },
+                { (Day.Tuesday,            1), (new[] { Enemy.Larva },      string.Empty) },
+                { (Day.Tuesday,            2), (new[] { Enemy.Larva },      "蝶符「バタフライドリーム」") },
+                { (Day.Tuesday,            3), (new[] { Enemy.Larva },      "蝶符「纏わり付く鱗粉」") },
+                { (Day.Wednesday,          1), (new[] { Enemy.Marisa },     string.Empty) },
+                { (Day.Wednesday,          2), (new[] { Enemy.Narumi },     "魔符「慈愛の地蔵」") },
+                { (Day.Wednesday,          3), (new[] { Enemy.Narumi },     "地蔵「菩薩ストンプ」") },
+                { (Day.Wednesday,          4), (new[] { Enemy.Narumi },     "地蔵「活きの良いバレットゴーレム」") },
+                { (Day.Thursday,           1), (new[] { Enemy.Nemuno },     string.Empty) },
+                { (Day.Thursday,           2), (new[] { Enemy.Nemuno },     "研符「狂い輝く鬼包丁」") },
+                { (Day.Thursday,           3), (new[] { Enemy.Nemuno },     "殺符「窮僻の山姥」") },
+                { (Day.Friday,             1), (new[] { Enemy.Aunn },       string.Empty) },
+                { (Day.Friday,             2), (new[] { Enemy.Aunn },       "独楽「コマ犬大回転」") },
+                { (Day.Friday,             3), (new[] { Enemy.Aunn },       "独楽「阿吽の閃光」") },
+                { (Day.Saturday,           1), (new[] { Enemy.Doremy },     string.Empty) },
+                { (Day.WrongSunday,        1), (new[] { Enemy.Reimu },      string.Empty) },
+                { (Day.WrongSunday,        2), (new[] { Enemy.Seiran },     "夢弾「ルナティックドリームショット」") },
+                { (Day.WrongSunday,        3), (new[] { Enemy.Ringo },      "団子「ダンゴフラワー」") },
+                { (Day.WrongSunday,        4), (new[] { Enemy.Larva },      "夢蝶「クレージーバタフライ」") },
+                { (Day.WrongSunday,        5), (new[] { Enemy.Narumi },     "夢地蔵「劫火の希望」") },
+                { (Day.WrongSunday,        6), (new[] { Enemy.Nemuno },     "夢尽「殺人鬼の懐」") },
+                { (Day.WrongSunday,        7), (new[] { Enemy.Aunn },       "夢犬「１０１匹の野良犬」") },
+                { (Day.WrongMonday,        1), (new[] { Enemy.Clownpiece }, string.Empty) },
+                { (Day.WrongMonday,        2), (new[] { Enemy.Clownpiece }, "獄符「バースティンググラッジ」") },
+                { (Day.WrongMonday,        3), (new[] { Enemy.Clownpiece }, "獄符「ダブルストライプ」") },
+                { (Day.WrongMonday,        4), (new[] { Enemy.Clownpiece }, "月夢「エクリプスナイトメア」") },
+                { (Day.WrongTuesday,       1), (new[] { Enemy.Sagume },     string.Empty) },
+                { (Day.WrongTuesday,       2), (new[] { Enemy.Sagume },     "玉符「金城鉄壁の陰陽玉」") },
+                { (Day.WrongTuesday,       3), (new[] { Enemy.Sagume },     "玉符「神々の写し難い弾冠」") },
+                { (Day.WrongTuesday,       4), (new[] { Enemy.Sagume },     "夢鷺「片翼の夢鷺」") },
+                { (Day.WrongWednesday,     1), (new[] { Enemy.Doremy },     string.Empty) },
+                { (Day.WrongWednesday,     2), (new[] { Enemy.Mai },        "竹符「バンブーラビリンス」") },
+                { (Day.WrongWednesday,     3), (new[] { Enemy.Satono },     "茗荷「メスメリズムダンス」") },
+                { (Day.WrongWednesday,     4), (new[] { Enemy.Mai },        "笹符「タナバタスタードリーム」") },
+                { (Day.WrongWednesday,     5), (new[] { Enemy.Satono },     "冥加「ビハインドナイトメア」") },
+                { (Day.WrongWednesday,     6), (new[] { Enemy.Mai, Enemy.Satono }, string.Empty) },
+                { (Day.WrongThursday,      1), (new[] { Enemy.Hecatia },    "異界「ディストーテッドファイア」") },
+                { (Day.WrongThursday,      2), (new[] { Enemy.Hecatia },    "異界「恨みがましい地獄の雨」") },
+                { (Day.WrongThursday,      3), (new[] { Enemy.Hecatia },    "月「コズミックレディエーション」") },
+                { (Day.WrongThursday,      4), (new[] { Enemy.Hecatia },    "異界「逢魔ガ刻　夢」") },
+                { (Day.WrongThursday,      5), (new[] { Enemy.Hecatia },    "「月が堕ちてくる！」") },
+                { (Day.WrongFriday,        1), (new[] { Enemy.Junko },      string.Empty) },
+                { (Day.WrongFriday,        2), (new[] { Enemy.Junko },      "「震え凍える悪夢」") },
+                { (Day.WrongFriday,        3), (new[] { Enemy.Junko },      "「サイケデリックマンダラ」") },
+                { (Day.WrongFriday,        4), (new[] { Enemy.Junko },      "「極めて威厳のある純光」") },
+                { (Day.WrongFriday,        5), (new[] { Enemy.Junko },      "「確実に悪夢で殺す為の弾幕」") },
+                { (Day.WrongSaturday,      1), (new[] { Enemy.Okina },      "秘儀「マターラスッカ」") },
+                { (Day.WrongSaturday,      2), (new[] { Enemy.Okina },      "秘儀「背面の邪炎」") },
+                { (Day.WrongSaturday,      3), (new[] { Enemy.Okina },      "後符「絶対秘神の後光」") },
+                { (Day.WrongSaturday,      4), (new[] { Enemy.Okina },      "秘儀「秘神の暗曜弾幕」") },
+                { (Day.WrongSaturday,      5), (new[] { Enemy.Okina },      "秘儀「神秘の玉繭」") },
+                { (Day.WrongSaturday,      6), (new[] { Enemy.Okina },      string.Empty) },
+                { (Day.NightmareSunday,    1), (new[] { Enemy.Remilia,  Enemy.Flandre },      "紅魔符「ブラッディカタストロフ」") },
+                { (Day.NightmareSunday,    2), (new[] { Enemy.Byakuren, Enemy.Miko },         "星神符「十七条の超人」") },
+                { (Day.NightmareSunday,    3), (new[] { Enemy.Remilia,  Enemy.Byakuren },     "紅星符「超人ブラッディナイフ」") },
+                { (Day.NightmareSunday,    4), (new[] { Enemy.Flandre,  Enemy.Miko },         "紅神符「十七条のカタストロフ」") },
+                { (Day.NightmareSunday,    5), (new[] { Enemy.Remilia,  Enemy.Miko },         "神紅符「ブラッディ十七条のレーザー」") },
+                { (Day.NightmareSunday,    6), (new[] { Enemy.Flandre,  Enemy.Byakuren },     "紅星符「超人カタストロフ行脚」") },
+                { (Day.NightmareMonday,    1), (new[] { Enemy.Yuyuko,   Enemy.Eiki },         "妖花符「バタフライストーム閻魔笏」") },
+                { (Day.NightmareMonday,    2), (new[] { Enemy.Kanako,   Enemy.Suwako },       "風神符「ミシャバシラ」") },
+                { (Day.NightmareMonday,    3), (new[] { Enemy.Yuyuko,   Enemy.Kanako },       "風妖符「死蝶オンバシラ」") },
+                { (Day.NightmareMonday,    4), (new[] { Enemy.Eiki,     Enemy.Suwako },       "風花符「ミシャグジ様の是非」") },
+                { (Day.NightmareMonday,    5), (new[] { Enemy.Yuyuko,   Enemy.Suwako },       "妖風符「土着蝶ストーム」") },
+                { (Day.NightmareMonday,    6), (new[] { Enemy.Eiki,     Enemy.Kanako },       "風花符「オンバシラ裁判」") },
+                { (Day.NightmareTuesday,   1), (new[] { Enemy.Eirin,    Enemy.Kaguya },       "永夜符「蓬莱壺中の弾の枝」") },
+                { (Day.NightmareTuesday,   2), (new[] { Enemy.Tenshi,   Enemy.Shinmyoumaru }, "緋針符「要石も大きくなあれ」") },
+                { (Day.NightmareTuesday,   3), (new[] { Enemy.Eirin,    Enemy.Tenshi },       "永緋符「墜落する壺中の有頂天」") },
+                { (Day.NightmareTuesday,   4), (new[] { Enemy.Kaguya,   Enemy.Shinmyoumaru }, "輝夜符「蓬莱の大きな弾の枝」") },
+                { (Day.NightmareTuesday,   5), (new[] { Enemy.Eirin,    Enemy.Shinmyoumaru }, "永輝符「大きくなる壺」") },
+                { (Day.NightmareTuesday,   6), (new[] { Enemy.Kaguya,   Enemy.Tenshi },       "緋夜符「蓬莱の弾の要石」") },
+                { (Day.NightmareWednesday, 1), (new[] { Enemy.Satori,   Enemy.Utsuho },       "地霊符「マインドステラスチール」") },
+                { (Day.NightmareWednesday, 2), (new[] { Enemy.Ran,      Enemy.Koishi },       "地妖符「イドの式神」") },
+                { (Day.NightmareWednesday, 3), (new[] { Enemy.Satori,   Enemy.Koishi },       "「パーフェクトマインドコントロール」") },
+                { (Day.NightmareWednesday, 4), (new[] { Enemy.Ran,      Enemy.Utsuho },       "地妖符「式神大星」") },
+                { (Day.NightmareWednesday, 5), (new[] { Enemy.Ran,      Enemy.Satori },       "地妖符「エゴの式神」") },
+                { (Day.NightmareWednesday, 6), (new[] { Enemy.Utsuho,   Enemy.Koishi },       "地霊符「マインドステラリリーフ」") },
+                { (Day.NightmareThursday,  1), (new[] { Enemy.Nue,      Enemy.Mamizou },      "神星符「正体不明の怪光人だかり」") },
+                { (Day.NightmareThursday,  2), (new[] { Enemy.Iku,      Enemy.Raiko },        "輝天符「迅雷のドンドコ太鼓」") },
+                { (Day.NightmareThursday,  3), (new[] { Enemy.Mamizou,  Enemy.Raiko },        "輝神符「謎のドンドコ人だかり」") },
+                { (Day.NightmareThursday,  4), (new[] { Enemy.Iku,      Enemy.Nue },          "緋星符「正体不明の落雷」") },
+                { (Day.NightmareThursday,  5), (new[] { Enemy.Iku,      Enemy.Mamizou },      "神緋符「雷雨の中のストーカー」") },
+                { (Day.NightmareThursday,  6), (new[] { Enemy.Nue,      Enemy.Raiko },        "輝星符「正体不明のドンドコ太鼓」") },
+                { (Day.NightmareFriday,    1), (new[] { Enemy.Suika,    Enemy.Mokou },        "萃夜符「身命霧散」") },
+                { (Day.NightmareFriday,    2), (new[] { Enemy.Junko,    Enemy.Hecatia },      "紺珠符「純粋と不純の弾幕」") },
+                { (Day.NightmareFriday,    3), (new[] { Enemy.Suika,    Enemy.Junko },        "萃珠符「純粋な五里霧中」") },
+                { (Day.NightmareFriday,    4), (new[] { Enemy.Mokou,    Enemy.Hecatia },      "永珠符「捨て身のリフレクション」") },
+                { (Day.NightmareFriday,    5), (new[] { Enemy.Suika,    Enemy.Hecatia },      "萃珠符「ミストレイ」") },
+                { (Day.NightmareFriday,    6), (new[] { Enemy.Mokou,    Enemy.Junko },        "永珠符「穢れ無き珠と穢れ多き霊」") },
+                { (Day.NightmareSaturday,  1), (new[] { Enemy.Yukari,   Enemy.Okina },        "「秘神結界」") },
+                { (Day.NightmareSaturday,  2), (new[] { Enemy.Reimu,    Enemy.Marisa },       "「盗撮者調伏マスタースパーク」") },
+                { (Day.NightmareSaturday,  3), (new[] { Enemy.Reimu,    Enemy.Okina },        "「背後からの盗撮者調伏」") },
+                { (Day.NightmareSaturday,  4), (new[] { Enemy.Marisa,   Enemy.Yukari },       "「弾幕結界を撃ち抜け！」") },
+                { (Day.NightmareSaturday,  5), (new[] { Enemy.Marisa,   Enemy.Okina },        "「卑怯者マスタースパーク」") },
+                { (Day.NightmareSaturday,  6), (new[] { Enemy.Reimu,    Enemy.Yukari },       "「許可無く弾幕は撮影禁止です」") },
+                { (Day.NightmareDiary,     1), (new[] { Enemy.Doremy },                       "「最後の日曜日に見る悪夢」") },
+                { (Day.NightmareDiary,     2), (new[] { Enemy.Sumireko },                     "紙符「ＥＳＰカード手裏剣」") },
+                { (Day.NightmareDiary,     3), (new[] { Enemy.Sumireko, Enemy.Yukari },       "紙符「結界中のＥＳＰカード手裏剣」") },
+                { (Day.NightmareDiary,     4), (new[] { Enemy.DreamSumireko },                string.Empty) },
             };
 
         private static readonly List<string> Nicknames =
@@ -202,7 +202,7 @@ namespace ThScoreFileConverter.Models
 
         private AllScoreData allScoreData = null;
 
-        private Dictionary<DayScenePair, BestShotPair> bestshots = null;
+        private Dictionary<(Day Day, int Scene), BestShotPair> bestshots = null;
 
         public enum Day
         {
@@ -346,9 +346,9 @@ namespace ThScoreFileConverter.Models
                     header.ReadFrom(reader);
 
                     if (this.bestshots == null)
-                        this.bestshots = new Dictionary<DayScenePair, BestShotPair>(SpellCards.Count);
+                        this.bestshots = new Dictionary<(Day, int), BestShotPair>(SpellCards.Count);
 
-                    var key = new DayScenePair(header.Weekday, header.Dream);
+                    var key = (header.Weekday, header.Dream);
                     if (!this.bestshots.ContainsKey(key))
                         this.bestshots.Add(key, new BestShotPair(outputFile.Name, header));
 
@@ -509,7 +509,7 @@ namespace ThScoreFileConverter.Models
                     var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                    var key = new DayScenePair(day, scene);
+                    var key = (day, scene);
                     if (!SpellCards.ContainsKey(key))
                         return match.ToString();
 
@@ -590,7 +590,7 @@ namespace ThScoreFileConverter.Models
                     var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                    var key = new DayScenePair(day, scene);
+                    var key = (day, scene);
                     if (!SpellCards.ContainsKey(key))
                         return match.ToString();
 
@@ -605,15 +605,8 @@ namespace ThScoreFileConverter.Models
 
                     if (type == 1)
                     {
-                        var enemies = SpellCards[key].Enemies;
-                        if (enemies.Length == 1)
-                        {
-                            return SpellCards[key].Enemy.ToLongName();
-                        }
-                        else
-                        {
-                            return string.Join(" &amp; ", enemies.Select(enemy => enemy.ToLongName()).ToArray());
-                        }
+                        return string.Join(
+                            " &amp; ", SpellCards[key].Enemies.Select(enemy => enemy.ToLongName()).ToArray());
                     }
                     else
                     {
@@ -685,7 +678,7 @@ namespace ThScoreFileConverter.Models
                     var day = DayParser.Parse(match.Groups[1].Value);
                     var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
-                    var key = new DayScenePair(day, scene);
+                    var key = (day, scene);
                     if (!SpellCards.ContainsKey(key))
                         return match.ToString();
 
@@ -792,7 +785,7 @@ namespace ThScoreFileConverter.Models
                     var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                    var key = new DayScenePair(day, scene);
+                    var key = (day, scene);
                     if (!SpellCards.ContainsKey(key))
                         return match.ToString();
 
@@ -848,39 +841,6 @@ namespace ThScoreFileConverter.Models
             }
 
             public string Replace(string input) => Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-        }
-
-        private class DayScenePair : Pair<Day, int>
-        {
-            public DayScenePair(Day day, int scene)
-                : base(day, scene)
-            {
-            }
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public Day Day => this.First;
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public int Scene => this.Second;    // 1-based
-        }
-
-        private class EnemiesCardPair : Pair<Enemy[], string>
-        {
-            public EnemiesCardPair(Enemy enemy, string card)
-                : base(new Enemy[] { enemy }, card)
-            {
-            }
-
-            public EnemiesCardPair(Enemy enemy1, Enemy enemy2, string card)
-                : base(new Enemy[] { enemy1, enemy2 }, card)
-            {
-            }
-
-            public Enemy Enemy => this.First[0];
-
-            public Enemy[] Enemies => this.First;
-
-            public string Card => this.Second;
         }
 
         private class BestShotPair : Pair<string, BestShotHeader>
