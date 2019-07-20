@@ -100,7 +100,6 @@
     <Compile Include="Models\Th08PlayCountTests.cs" />
     <Compile Include="Models\Th08PlayStatusTests.cs" />
     <Compile Include="Models\Th08PracticeScoreTests.cs" />
-    <Compile Include="Models\Th08StageLevelPairTests.cs" />
     <Compile Include="Models\Th09AllScoreDataTests.cs" />
     <Compile Include="Models\Th09ClearCountTests.cs" />
     <Compile Include="Models\Th09FileHeaderTests.cs" />
@@ -202,7 +201,6 @@
     <Compile Include="Models\Wrappers\Th08PlayCountWrapper.cs" />
     <Compile Include="Models\Wrappers\Th08PlayStatusWrapper.cs" />
     <Compile Include="Models\Wrappers\Th08PracticeScoreWrapper.cs" />
-    <Compile Include="Models\Wrappers\Th08StageLevelPairWrapper.cs" />
     <Compile Include="Models\Wrappers\Th09AllScoreDataWrapper.cs" />
     <Compile Include="Models\Wrappers\Th09ClearCountWrapper.cs" />
     <Compile Include="Models\Wrappers\Th09FileHeaderWrapper.cs" />

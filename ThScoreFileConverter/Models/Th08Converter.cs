@@ -1064,7 +1064,7 @@ namespace ThScoreFileConverter.Models
                     if (parent.allScoreData.PracticeScores.ContainsKey(chara))
                     {
                         var scores = parent.allScoreData.PracticeScores[chara];
-                        var key = new StageLevelPair(stage, level);
+                        var key = (stage, level);
                         if (type == 1)
                         {
                             return scores.HighScores.ContainsKey(key)
@@ -1086,26 +1086,6 @@ namespace ThScoreFileConverter.Models
             public string Replace(string input)
             {
                 return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-            }
-        }
-
-        private class StageLevelPair : Pair<Stage, Level>
-        {
-            public StageLevelPair(Stage stage, Level level)
-                : base(stage, level)
-            {
-            }
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public Stage Stage
-            {
-                get { return this.First; }
-            }
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public Level Level
-            {
-                get { return this.Second; }
             }
         }
 
@@ -1437,8 +1417,8 @@ namespace ThScoreFileConverter.Models
                 var stages = Utils.GetEnumerator<Stage>();
                 var levels = Utils.GetEnumerator<Level>();
                 var numPairs = stages.Count() * levels.Count();
-                this.PlayCounts = new Dictionary<StageLevelPair, int>(numPairs);
-                this.HighScores = new Dictionary<StageLevelPair, int>(numPairs);
+                this.PlayCounts = new Dictionary<(Stage, Level), int>(numPairs);
+                this.HighScores = new Dictionary<(Stage, Level), int>(numPairs);
 
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
@@ -1450,7 +1430,7 @@ namespace ThScoreFileConverter.Models
                     {
                         foreach (var level in levels)
                         {
-                            var key = new StageLevelPair(stage, level);
+                            var key = (stage, level);
                             if (!this.PlayCounts.ContainsKey(key))
                                 this.PlayCounts.Add(key, 0);
                             this.PlayCounts[key] = reader.ReadInt32();
@@ -1461,7 +1441,7 @@ namespace ThScoreFileConverter.Models
                     {
                         foreach (var level in levels)
                         {
-                            var key = new StageLevelPair(stage, level);
+                            var key = (stage, level);
                             if (!this.HighScores.ContainsKey(key))
                                 this.HighScores.Add(key, 0);
                             this.HighScores[key] = reader.ReadInt32();
@@ -1473,9 +1453,9 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            public Dictionary<StageLevelPair, int> PlayCounts { get; private set; }
+            public Dictionary<(Stage, Level), int> PlayCounts { get; private set; }
 
-            public Dictionary<StageLevelPair, int> HighScores { get; private set; }     // * 10
+            public Dictionary<(Stage, Level), int> HighScores { get; private set; }     // * 10
 
             public Chara Chara { get; private set; }        // size: 1Byte
         }
