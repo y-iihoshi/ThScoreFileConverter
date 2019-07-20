@@ -788,26 +788,6 @@ namespace ThScoreFileConverter.Models
             public Level Level { get; private set; }
         }
 
-        private class StageEnemyPair : Pair<Stage, Chara>
-        {
-            public StageEnemyPair(Stage stage, Chara chara)
-                : base(stage, chara)
-            {
-            }
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public Stage Stage
-            {
-                get { return this.First; }
-            }
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public Chara Enemy
-            {
-                get { return this.Second; }
-            }
-        }
-
         private class AllScoreData : IBinaryReadable
         {
             public AllScoreData()
