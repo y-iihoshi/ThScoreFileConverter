@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using ThScoreFileConverter.Models;
-using CardForDeck = ThScoreFileConverter.Models.Th105.CardForDeck;
+using ThScoreFileConverter.Models.Th105;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -58,15 +58,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.MaxNumber)) as int?;
         public IReadOnlyDictionary<int, CardForDeck> CardsForDeck
             => this.pobj.GetProperty(nameof(this.CardsForDeck)) as Dictionary<int, CardForDeck>;
-        // NOTE: Th{105,123}Converter.SpellCardResult are private classes.
-        // public IReadOnlyDictionary<(TChara Chara, int CardId), SpellCardResult> SpellCardResults
-        //     => this.pobj.GetProperty(nameof(this.SpellCardResults)) as Dictionary<(TChara, int), SpellCardResult>;
-        public object SpellCardResults
-            => this.pobj.GetProperty(nameof(this.SpellCardResults));
-        public Th105SpellCardResultWrapper<TParent, TChara, TLevel> SpellCardResultsItem(TChara chara, int cardId)
-            => new Th105SpellCardResultWrapper<TParent, TChara, TLevel>(
-                this.SpellCardResults.GetType().GetProperty("Item").GetValue(
-                    this.SpellCardResults, new object[] { (chara, cardId) }));
+        public IReadOnlyDictionary<(TChara Chara, int CardId), SpellCardResult<TChara, TLevel>> SpellCardResults
+            => this.pobj.GetProperty(nameof(this.SpellCardResults))
+                as Dictionary<(TChara, int), SpellCardResult<TChara, TLevel>>;
 
         public void ReadFrom(BinaryReader reader)
             => this.pobj.Invoke(nameof(this.ReadFrom), new object[] { reader }, CultureInfo.InvariantCulture);

@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th105;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -46,10 +47,16 @@ namespace ThScoreFileConverterTests.Models
                 properties.gotCount,
                 properties.frames);
 
-        internal static void Validate<TParent, TChara, TLevel>(
-            in Th105SpellCardResultWrapper<TParent, TChara, TLevel> spellCardResult,
+        internal static void Validate<TChara, TLevel>(
+            in Th105SpellCardResultWrapper<TChara, TLevel> spellCardResult,
             in Properties<TChara, TLevel> properties)
-            where TParent : ThConverter
+            where TChara : struct, Enum
+            where TLevel : struct, Enum
+            => Validate(spellCardResult.Target as SpellCardResult<TChara, TLevel>, properties);
+
+        internal static void Validate<TChara, TLevel>(
+            in SpellCardResult<TChara, TLevel> spellCardResult,
+            in Properties<TChara, TLevel> properties)
             where TChara : struct, Enum
             where TLevel : struct, Enum
         {
@@ -61,21 +68,19 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.frames, spellCardResult.Frames);
         }
 
-        internal static void SpellCardResultTestHelper<TParent, TChara, TLevel>()
-            where TParent : ThConverter
+        internal static void SpellCardResultTestHelper<TChara, TLevel>()
             where TChara : struct, Enum
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
                 var properties = new Properties<TChara, TLevel>();
 
-                var spellCardResult = new Th105SpellCardResultWrapper<TParent, TChara, TLevel>();
+                var spellCardResult = new Th105SpellCardResultWrapper<TChara, TLevel>();
 
                 Validate(spellCardResult, properties);
             });
 
-        internal static void ReadFromTestHelper<TParent, TChara, TLevel>()
-            where TParent : ThConverter
+        internal static void ReadFromTestHelper<TChara, TLevel>()
             where TChara : struct, Enum
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
@@ -83,25 +88,23 @@ namespace ThScoreFileConverterTests.Models
                 var properties = GetValidProperties<TChara, TLevel>();
 
                 var spellCardResult =
-                    Th105SpellCardResultWrapper<TParent, TChara, TLevel>.Create(MakeByteArray(properties));
+                    Th105SpellCardResultWrapper<TChara, TLevel>.Create(MakeByteArray(properties));
 
                 Validate(spellCardResult, properties);
             });
 
-        internal static void ReadFromTestNullHelper<TParent, TChara, TLevel>()
-            where TParent : ThConverter
+        internal static void ReadFromTestNullHelper<TChara, TLevel>()
             where TChara : struct, Enum
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var spellCardResult = new Th105SpellCardResultWrapper<TParent, TChara, TLevel>();
+                var spellCardResult = new Th105SpellCardResultWrapper<TChara, TLevel>();
                 spellCardResult.ReadFrom(null);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
-        internal static void ReadFromTestShortenedHelper<TParent, TChara, TLevel>()
-            where TParent : ThConverter
+        internal static void ReadFromTestShortenedHelper<TChara, TLevel>()
             where TChara : struct, Enum
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
@@ -110,13 +113,12 @@ namespace ThScoreFileConverterTests.Models
                 var array = MakeByteArray(properties);
                 array = array.Take(array.Length - 1).ToArray();
 
-                Th105SpellCardResultWrapper<TParent, TChara, TLevel>.Create(array);
+                Th105SpellCardResultWrapper<TChara, TLevel>.Create(array);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
-        internal static void ReadFromTestExceededHelper<TParent, TChara, TLevel>()
-            where TParent : ThConverter
+        internal static void ReadFromTestExceededHelper<TChara, TLevel>()
             where TChara : struct, Enum
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
@@ -124,7 +126,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = GetValidProperties<TChara, TLevel>();
                 var array = MakeByteArray(properties).Concat(new byte[1] { 1 }).ToArray();
 
-                var spellCardResult = Th105SpellCardResultWrapper<TParent, TChara, TLevel>.Create(array);
+                var spellCardResult = Th105SpellCardResultWrapper<TChara, TLevel>.Create(array);
 
                 Validate(spellCardResult, properties);
             });
@@ -133,25 +135,25 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         public void Th105SpellCardResultTest()
-            => SpellCardResultTestHelper<Th105Converter, Th105Converter.Chara, Th105Converter.Level>();
+            => SpellCardResultTestHelper<Th105Converter.Chara, Th105Converter.Level>();
 
         [TestMethod]
         public void Th105SpellCardResultReadFromTest()
-            => ReadFromTestHelper<Th105Converter, Th105Converter.Chara, Th105Converter.Level>();
+            => ReadFromTestHelper<Th105Converter.Chara, Th105Converter.Level>();
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th105SpellCardResultReadFromTestNull()
-            => ReadFromTestNullHelper<Th105Converter, Th105Converter.Chara, Th105Converter.Level>();
+            => ReadFromTestNullHelper<Th105Converter.Chara, Th105Converter.Level>();
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th105SpellCardResultReadFromTestShortened()
-            => ReadFromTestShortenedHelper<Th105Converter, Th105Converter.Chara, Th105Converter.Level>();
+            => ReadFromTestShortenedHelper<Th105Converter.Chara, Th105Converter.Level>();
 
         [TestMethod]
         public void Th105SpellCardResultReadFromTestExceeded()
-            => ReadFromTestExceededHelper<Th105Converter, Th105Converter.Chara, Th105Converter.Level>();
+            => ReadFromTestExceededHelper<Th105Converter.Chara, Th105Converter.Level>();
 
         #endregion
 
@@ -159,25 +161,25 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         public void Th123SpellCardResultTest()
-            => SpellCardResultTestHelper<Th123Converter, Th123Converter.Chara, Th123Converter.Level>();
+            => SpellCardResultTestHelper<Th123Converter.Chara, Th123Converter.Level>();
 
         [TestMethod]
         public void Th123SpellCardResultReadFromTest()
-            => ReadFromTestHelper<Th123Converter, Th123Converter.Chara, Th123Converter.Level>();
+            => ReadFromTestHelper<Th123Converter.Chara, Th123Converter.Level>();
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th123SpellCardResultReadFromTestNull()
-            => ReadFromTestNullHelper<Th123Converter, Th123Converter.Chara, Th123Converter.Level>();
+            => ReadFromTestNullHelper<Th123Converter.Chara, Th123Converter.Level>();
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th123SpellCardResultReadFromTestShortened()
-            => ReadFromTestShortenedHelper<Th123Converter, Th123Converter.Chara, Th123Converter.Level>();
+            => ReadFromTestShortenedHelper<Th123Converter.Chara, Th123Converter.Level>();
 
         [TestMethod]
         public void Th123SpellCardResultReadFromTestExceeded()
-            => ReadFromTestExceededHelper<Th123Converter, Th123Converter.Chara, Th123Converter.Level>();
+            => ReadFromTestExceededHelper<Th123Converter.Chara, Th123Converter.Level>();
 
         #endregion
     }

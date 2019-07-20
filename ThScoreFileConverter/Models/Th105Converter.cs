@@ -21,6 +21,7 @@ namespace ThScoreFileConverter.Models
     using System.IO.Compression;
     using System.Linq;
     using System.Text.RegularExpressions;
+    using SpellCardResult = Th105.SpellCardResult<Th105Converter.Chara, Th105Converter.Level>;
     using StageInfo = Th105.StageInfo<Th105Converter.Stage, Th105Converter.Chara>;
 
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
@@ -1131,10 +1132,6 @@ namespace ThScoreFileConverter.Models
                         this.SpellCardResults.Add(key, result);
                 }
             }
-        }
-
-        private class SpellCardResult : Th105.SpellCardResult<Chara, Level>
-        {
         }
     }
 }

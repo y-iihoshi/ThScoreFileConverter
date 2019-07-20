@@ -68,7 +68,7 @@ namespace ThScoreFileConverterTests.Models
             foreach (var pair in properties.spellCardResults)
             {
                 Th105SpellCardResultTests.Validate(
-                    clearData.SpellCardResultsItem(pair.Key.Chara, pair.Key.CardId), pair.Value);
+                    clearData.SpellCardResults[(pair.Key.Chara, pair.Key.CardId)], pair.Value);
             }
         }
 
