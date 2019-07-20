@@ -30,84 +30,84 @@ namespace ThScoreFileConverter.Models
     internal class Th143Converter : ThConverter
     {
         // Thanks to thwiki.info
-        private static readonly Dictionary<(Day Day, int Scene), EnemiesCardPair> SpellCards =
-            new Dictionary<(Day, int), EnemiesCardPair>()
+        private static readonly Dictionary<(Day Day, int Scene), (Enemy[] Enemies, string Card)> SpellCards =
+            new Dictionary<(Day, int), (Enemy[], string)>()
             {
-                { (Day.First,   1), new EnemiesCardPair(Enemy.Yatsuhashi,   string.Empty) },
-                { (Day.First,   2), new EnemiesCardPair(Enemy.Wakasagihime, "水符「ルナティックレッドスラップ」") },
-                { (Day.First,   3), new EnemiesCardPair(Enemy.Cirno,        "氷符「パーフェクトグレーシェリスト」") },
-                { (Day.First,   4), new EnemiesCardPair(Enemy.Wakasagihime, "潮符「湖のタイダルウェイブ」") },
-                { (Day.First,   5), new EnemiesCardPair(Enemy.Cirno,        "氷王「フロストキング」") },
-                { (Day.First,   6), new EnemiesCardPair(Enemy.Wakasagihime, "魚符「スクールオブフィッシュ」") },
-                { (Day.Second,  1), new EnemiesCardPair(Enemy.Kyouko,       "叫喚「プライマルスクリーム」") },
-                { (Day.Second,  2), new EnemiesCardPair(Enemy.Sekibanki,    "飛首「エクストリームロングネック」") },
-                { (Day.Second,  3), new EnemiesCardPair(Enemy.Kyouko,       "劈音「ピアッシングサークル」") },
-                { (Day.Second,  4), new EnemiesCardPair(Enemy.Sekibanki,    "眼光「ヘルズレイ」") },
-                { (Day.Second,  5), new EnemiesCardPair(Enemy.Kyouko,       "御経「無限念仏」") },
-                { (Day.Second,  6), new EnemiesCardPair(Enemy.Sekibanki,    "飛首「ツインロクロヘッド」") },
-                { (Day.Third,   1), new EnemiesCardPair(Enemy.Kagerou,      string.Empty) },
-                { (Day.Third,   2), new EnemiesCardPair(Enemy.Kagerou,      "満月「フルムーンロア」") },
-                { (Day.Third,   3), new EnemiesCardPair(Enemy.Keine,        "「２０ＸＸ年　死後の旅」") },
-                { (Day.Third,   4), new EnemiesCardPair(Enemy.Mokou,        "惜命「不死身の捨て身」") },
-                { (Day.Third,   5), new EnemiesCardPair(Enemy.Kagerou,      "狼牙「血に餓えたウルフファング」") },
-                { (Day.Third,   6), new EnemiesCardPair(Enemy.Keine,        "大火「江戸のフラワー」") },
-                { (Day.Third,   7), new EnemiesCardPair(Enemy.Mokou,        "「火の鳥 ―不死伝説―」") },
-                { (Day.Fourth,  1), new EnemiesCardPair(Enemy.Yuyuko,       string.Empty) },
-                { (Day.Fourth,  2), new EnemiesCardPair(Enemy.Seiga, Enemy.Yoshika, "入魔「過剰ゾウフォルゥモォ」") },
-                { (Day.Fourth,  3), new EnemiesCardPair(Enemy.Yuyuko,       "蝶符「花蝶風月」") },
-                { (Day.Fourth,  4), new EnemiesCardPair(Enemy.Yoshika,      "毒爪「ゾンビクロー」") },
-                { (Day.Fourth,  5), new EnemiesCardPair(Enemy.Seiga,        "仙術「ウォールランナー」") },
-                { (Day.Fourth,  6), new EnemiesCardPair(Enemy.Yuyuko,       "桜花「桜吹雪花小町」") },
-                { (Day.Fourth,  7), new EnemiesCardPair(Enemy.Seiga,        "仙術「壁抜けワームホール」") },
-                { (Day.Fifth,   1), new EnemiesCardPair(Enemy.Raiko,        string.Empty) },
-                { (Day.Fifth,   2), new EnemiesCardPair(Enemy.Yatsuhashi,   "琴符「天の詔琴」") },
-                { (Day.Fifth,   3), new EnemiesCardPair(Enemy.Benben,       "音符「大熱唱琵琶」") },
-                { (Day.Fifth,   4), new EnemiesCardPair(Enemy.Raiko,        "雷符「怒りのデンデン太鼓」") },
-                { (Day.Fifth,   5), new EnemiesCardPair(Enemy.Yatsuhashi,   "哀歌「人琴ともに亡ぶ」") },
-                { (Day.Fifth,   6), new EnemiesCardPair(Enemy.Benben,       "楽譜「スコアウェブ」") },
-                { (Day.Fifth,   7), new EnemiesCardPair(Enemy.Raiko,        "太鼓「ファンタジックウーファー」") },
-                { (Day.Fifth,   8), new EnemiesCardPair(Enemy.Benben, Enemy.Yatsuhashi, "両吟「星降る唄」") },
-                { (Day.Sixth,   1), new EnemiesCardPair(Enemy.Mamizou,      string.Empty) },
-                { (Day.Sixth,   2), new EnemiesCardPair(Enemy.Aya,          "写真「激撮テングスクープ」") },
-                { (Day.Sixth,   3), new EnemiesCardPair(Enemy.Hatate,       "写真「フルパノラマショット」") },
-                { (Day.Sixth,   4), new EnemiesCardPair(Enemy.Nitori,       "瀑符「シライトフォール」") },
-                { (Day.Sixth,   5), new EnemiesCardPair(Enemy.Momiji,       "牙符「咀嚼玩味」") },
-                { (Day.Sixth,   6), new EnemiesCardPair(Enemy.Nitori,       "瀑符「ケゴンガン」") },
-                { (Day.Sixth,   7), new EnemiesCardPair(Enemy.Hatate,       "写真「籠もりパパラッチ」") },
-                { (Day.Sixth,   8), new EnemiesCardPair(Enemy.Aya,          "「瞬撮ジャーナリスト」") },
-                { (Day.Seventh, 1), new EnemiesCardPair(Enemy.Marisa,       "恋符「ワイドマスター」") },
-                { (Day.Seventh, 2), new EnemiesCardPair(Enemy.Sakuya,       "時符「タイムストッパー咲夜」") },
-                { (Day.Seventh, 3), new EnemiesCardPair(Enemy.Youmu,        "光符「冥府光芒一閃」") },
-                { (Day.Seventh, 4), new EnemiesCardPair(Enemy.Sanae,        "蛇符「バインドスネークカモン」") },
-                { (Day.Seventh, 5), new EnemiesCardPair(Enemy.Marisa,       "恋符「マシンガンスパーク」") },
-                { (Day.Seventh, 6), new EnemiesCardPair(Enemy.Sakuya,       "時符「チェンジリングマジック」") },
-                { (Day.Seventh, 7), new EnemiesCardPair(Enemy.Youmu,        "彼岸剣「地獄極楽滅多斬り」") },
-                { (Day.Seventh, 8), new EnemiesCardPair(Enemy.Sanae,        "蛇符「グリーンスネークカモン」") },
-                { (Day.Eighth,  1), new EnemiesCardPair(Enemy.Shinmyoumaru, string.Empty) },
-                { (Day.Eighth,  2), new EnemiesCardPair(Enemy.Reimu,        "神籤「反則結界」") },
-                { (Day.Eighth,  3), new EnemiesCardPair(Enemy.Mamizou,      "「鳴かぬなら泣くまで待とう時鳥」") },
-                { (Day.Eighth,  4), new EnemiesCardPair(Enemy.Shinmyoumaru, "「小人の地獄」") },
-                { (Day.Eighth,  5), new EnemiesCardPair(Enemy.Reimu,        "「パスウェイジョンニードル」") },
-                { (Day.Eighth,  6), new EnemiesCardPair(Enemy.Mamizou,      "「にんげんって良いな」") },
-                { (Day.Eighth,  7), new EnemiesCardPair(Enemy.Shinmyoumaru, "輝針「鬼ごろし両目突きの針」") },
-                { (Day.Ninth,   1), new EnemiesCardPair(Enemy.Kanako,       "御柱「ライジングオンバシラ」") },
-                { (Day.Ninth,   2), new EnemiesCardPair(Enemy.Suwako,       "緑石「ジェイドブレイク」") },
-                { (Day.Ninth,   3), new EnemiesCardPair(Enemy.Futo,         "古舟「エンシェントシップ」") },
-                { (Day.Ninth,   4), new EnemiesCardPair(Enemy.Suika,        "鬼群「インプスウォーム」") },
-                { (Day.Ninth,   5), new EnemiesCardPair(Enemy.Kanako,       "「神の御威光」") },
-                { (Day.Ninth,   6), new EnemiesCardPair(Enemy.Suwako,       "蛙符「血塗られた赤蛙塚」") },
-                { (Day.Ninth,   7), new EnemiesCardPair(Enemy.Futo,         "熱龍「火焔龍脈」") },
-                { (Day.Ninth,   8), new EnemiesCardPair(Enemy.Suika,        "鬼群「百鬼禿童」") },
-                { (Day.Last,    1), new EnemiesCardPair(Enemy.Byakuren,     "「ハリの制縛」") },
-                { (Day.Last,    2), new EnemiesCardPair(Enemy.Miko,         "「我こそが天道なり」") },
-                { (Day.Last,    3), new EnemiesCardPair(Enemy.Tenshi,       "「全妖怪の緋想天」") },
-                { (Day.Last,    4), new EnemiesCardPair(Enemy.Remilia,      "「フィットフルナイトメア」") },
-                { (Day.Last,    5), new EnemiesCardPair(Enemy.Yukari,       "「不可能弾幕結界」") },
-                { (Day.Last,    6), new EnemiesCardPair(Enemy.Byakuren,     "「ブラフマーの瞳」") },
-                { (Day.Last,    7), new EnemiesCardPair(Enemy.Miko,         "「十七条の憲法爆弾」") },
-                { (Day.Last,    8), new EnemiesCardPair(Enemy.Tenshi,       "「鹿島鎮護」") },
-                { (Day.Last,    9), new EnemiesCardPair(Enemy.Remilia,      "「きゅうけつ鬼ごっこ」") },
-                { (Day.Last,   10), new EnemiesCardPair(Enemy.Yukari,       "「運鈍根の捕物帖」") },
+                { (Day.First,   1), (new[] { Enemy.Yatsuhashi },   string.Empty) },
+                { (Day.First,   2), (new[] { Enemy.Wakasagihime }, "水符「ルナティックレッドスラップ」") },
+                { (Day.First,   3), (new[] { Enemy.Cirno },        "氷符「パーフェクトグレーシェリスト」") },
+                { (Day.First,   4), (new[] { Enemy.Wakasagihime }, "潮符「湖のタイダルウェイブ」") },
+                { (Day.First,   5), (new[] { Enemy.Cirno },        "氷王「フロストキング」") },
+                { (Day.First,   6), (new[] { Enemy.Wakasagihime }, "魚符「スクールオブフィッシュ」") },
+                { (Day.Second,  1), (new[] { Enemy.Kyouko },       "叫喚「プライマルスクリーム」") },
+                { (Day.Second,  2), (new[] { Enemy.Sekibanki },    "飛首「エクストリームロングネック」") },
+                { (Day.Second,  3), (new[] { Enemy.Kyouko },       "劈音「ピアッシングサークル」") },
+                { (Day.Second,  4), (new[] { Enemy.Sekibanki },    "眼光「ヘルズレイ」") },
+                { (Day.Second,  5), (new[] { Enemy.Kyouko },       "御経「無限念仏」") },
+                { (Day.Second,  6), (new[] { Enemy.Sekibanki },    "飛首「ツインロクロヘッド」") },
+                { (Day.Third,   1), (new[] { Enemy.Kagerou },      string.Empty) },
+                { (Day.Third,   2), (new[] { Enemy.Kagerou },      "満月「フルムーンロア」") },
+                { (Day.Third,   3), (new[] { Enemy.Keine },        "「２０ＸＸ年　死後の旅」") },
+                { (Day.Third,   4), (new[] { Enemy.Mokou },        "惜命「不死身の捨て身」") },
+                { (Day.Third,   5), (new[] { Enemy.Kagerou },      "狼牙「血に餓えたウルフファング」") },
+                { (Day.Third,   6), (new[] { Enemy.Keine },        "大火「江戸のフラワー」") },
+                { (Day.Third,   7), (new[] { Enemy.Mokou },        "「火の鳥 ―不死伝説―」") },
+                { (Day.Fourth,  1), (new[] { Enemy.Yuyuko },       string.Empty) },
+                { (Day.Fourth,  2), (new[] { Enemy.Seiga, Enemy.Yoshika }, "入魔「過剰ゾウフォルゥモォ」") },
+                { (Day.Fourth,  3), (new[] { Enemy.Yuyuko },       "蝶符「花蝶風月」") },
+                { (Day.Fourth,  4), (new[] { Enemy.Yoshika },      "毒爪「ゾンビクロー」") },
+                { (Day.Fourth,  5), (new[] { Enemy.Seiga },        "仙術「ウォールランナー」") },
+                { (Day.Fourth,  6), (new[] { Enemy.Yuyuko },       "桜花「桜吹雪花小町」") },
+                { (Day.Fourth,  7), (new[] { Enemy.Seiga },        "仙術「壁抜けワームホール」") },
+                { (Day.Fifth,   1), (new[] { Enemy.Raiko },        string.Empty) },
+                { (Day.Fifth,   2), (new[] { Enemy.Yatsuhashi },   "琴符「天の詔琴」") },
+                { (Day.Fifth,   3), (new[] { Enemy.Benben },       "音符「大熱唱琵琶」") },
+                { (Day.Fifth,   4), (new[] { Enemy.Raiko },        "雷符「怒りのデンデン太鼓」") },
+                { (Day.Fifth,   5), (new[] { Enemy.Yatsuhashi },   "哀歌「人琴ともに亡ぶ」") },
+                { (Day.Fifth,   6), (new[] { Enemy.Benben },       "楽譜「スコアウェブ」") },
+                { (Day.Fifth,   7), (new[] { Enemy.Raiko },        "太鼓「ファンタジックウーファー」") },
+                { (Day.Fifth,   8), (new[] { Enemy.Benben, Enemy.Yatsuhashi }, "両吟「星降る唄」") },
+                { (Day.Sixth,   1), (new[] { Enemy.Mamizou },      string.Empty) },
+                { (Day.Sixth,   2), (new[] { Enemy.Aya },          "写真「激撮テングスクープ」") },
+                { (Day.Sixth,   3), (new[] { Enemy.Hatate },       "写真「フルパノラマショット」") },
+                { (Day.Sixth,   4), (new[] { Enemy.Nitori },       "瀑符「シライトフォール」") },
+                { (Day.Sixth,   5), (new[] { Enemy.Momiji },       "牙符「咀嚼玩味」") },
+                { (Day.Sixth,   6), (new[] { Enemy.Nitori },       "瀑符「ケゴンガン」") },
+                { (Day.Sixth,   7), (new[] { Enemy.Hatate },       "写真「籠もりパパラッチ」") },
+                { (Day.Sixth,   8), (new[] { Enemy.Aya },          "「瞬撮ジャーナリスト」") },
+                { (Day.Seventh, 1), (new[] { Enemy.Marisa },       "恋符「ワイドマスター」") },
+                { (Day.Seventh, 2), (new[] { Enemy.Sakuya },       "時符「タイムストッパー咲夜」") },
+                { (Day.Seventh, 3), (new[] { Enemy.Youmu },        "光符「冥府光芒一閃」") },
+                { (Day.Seventh, 4), (new[] { Enemy.Sanae },        "蛇符「バインドスネークカモン」") },
+                { (Day.Seventh, 5), (new[] { Enemy.Marisa },       "恋符「マシンガンスパーク」") },
+                { (Day.Seventh, 6), (new[] { Enemy.Sakuya },       "時符「チェンジリングマジック」") },
+                { (Day.Seventh, 7), (new[] { Enemy.Youmu },        "彼岸剣「地獄極楽滅多斬り」") },
+                { (Day.Seventh, 8), (new[] { Enemy.Sanae },        "蛇符「グリーンスネークカモン」") },
+                { (Day.Eighth,  1), (new[] { Enemy.Shinmyoumaru }, string.Empty) },
+                { (Day.Eighth,  2), (new[] { Enemy.Reimu },        "神籤「反則結界」") },
+                { (Day.Eighth,  3), (new[] { Enemy.Mamizou },      "「鳴かぬなら泣くまで待とう時鳥」") },
+                { (Day.Eighth,  4), (new[] { Enemy.Shinmyoumaru }, "「小人の地獄」") },
+                { (Day.Eighth,  5), (new[] { Enemy.Reimu },        "「パスウェイジョンニードル」") },
+                { (Day.Eighth,  6), (new[] { Enemy.Mamizou },      "「にんげんって良いな」") },
+                { (Day.Eighth,  7), (new[] { Enemy.Shinmyoumaru }, "輝針「鬼ごろし両目突きの針」") },
+                { (Day.Ninth,   1), (new[] { Enemy.Kanako },       "御柱「ライジングオンバシラ」") },
+                { (Day.Ninth,   2), (new[] { Enemy.Suwako },       "緑石「ジェイドブレイク」") },
+                { (Day.Ninth,   3), (new[] { Enemy.Futo },         "古舟「エンシェントシップ」") },
+                { (Day.Ninth,   4), (new[] { Enemy.Suika },        "鬼群「インプスウォーム」") },
+                { (Day.Ninth,   5), (new[] { Enemy.Kanako },       "「神の御威光」") },
+                { (Day.Ninth,   6), (new[] { Enemy.Suwako },       "蛙符「血塗られた赤蛙塚」") },
+                { (Day.Ninth,   7), (new[] { Enemy.Futo },         "熱龍「火焔龍脈」") },
+                { (Day.Ninth,   8), (new[] { Enemy.Suika },        "鬼群「百鬼禿童」") },
+                { (Day.Last,    1), (new[] { Enemy.Byakuren },     "「ハリの制縛」") },
+                { (Day.Last,    2), (new[] { Enemy.Miko },         "「我こそが天道なり」") },
+                { (Day.Last,    3), (new[] { Enemy.Tenshi },       "「全妖怪の緋想天」") },
+                { (Day.Last,    4), (new[] { Enemy.Remilia },      "「フィットフルナイトメア」") },
+                { (Day.Last,    5), (new[] { Enemy.Yukari },       "「不可能弾幕結界」") },
+                { (Day.Last,    6), (new[] { Enemy.Byakuren },     "「ブラフマーの瞳」") },
+                { (Day.Last,    7), (new[] { Enemy.Miko },         "「十七条の憲法爆弾」") },
+                { (Day.Last,    8), (new[] { Enemy.Tenshi },       "「鹿島鎮護」") },
+                { (Day.Last,    9), (new[] { Enemy.Remilia },      "「きゅうけつ鬼ごっこ」") },
+                { (Day.Last,   10), (new[] { Enemy.Yukari },       "「運鈍根の捕物帖」") },
             };
 
         private static readonly List<string> Nicknames =
@@ -625,16 +625,8 @@ namespace ThScoreFileConverter.Models
 
                     if (type == 1)
                     {
-                        var enemies = SpellCards[key].Enemies;
-                        if (enemies.Length == 1)
-                        {
-                            return SpellCards[key].Enemy.ToLongName();
-                        }
-                        else
-                        {
-                            return string.Join(
-                                " &amp; ", enemies.Select(enemy => enemy.ToLongName()).ToArray());
-                        }
+                        return string.Join(
+                            " &amp; ", SpellCards[key].Enemies.Select(enemy => enemy.ToLongName()).ToArray());
                     }
                     else
                     {
@@ -804,34 +796,6 @@ namespace ThScoreFileConverter.Models
             public string Replace(string input)
             {
                 return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-            }
-        }
-
-        private class EnemiesCardPair : Pair<Enemy[], string>
-        {
-            public EnemiesCardPair(Enemy enemy, string card)
-                : base(new Enemy[] { enemy }, card)
-            {
-            }
-
-            public EnemiesCardPair(Enemy enemy1, Enemy enemy2, string card)
-                : base(new Enemy[] { enemy1, enemy2 }, card)
-            {
-            }
-
-            public Enemy Enemy
-            {
-                get { return this.First[0]; }
-            }
-
-            public Enemy[] Enemies
-            {
-                get { return this.First; }
-            }
-
-            public string Card
-            {
-                get { return this.Second; }
             }
         }
 
