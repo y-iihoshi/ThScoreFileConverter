@@ -337,136 +337,136 @@ namespace ThScoreFileConverter.Models
 
         private static Dictionary<Chara, IEnumerable<int>> InitializeCardIdTable()
         {
-            var charaStageEnemyTable = new Dictionary<Chara, List<StageEnemyPair>>
+            var charaStageEnemyTable = new Dictionary<Chara, List<(Stage Stage, Chara Enemy)>>
             {
                 {
                     Chara.Reimu,
-                    new List<StageEnemyPair>
+                    new List<(Stage, Chara)>
                     {
-                        new StageEnemyPair(Stage.St1, Chara.Marisa),
-                        new StageEnemyPair(Stage.St2, Chara.Alice),
-                        new StageEnemyPair(Stage.St3, Chara.Youmu),
-                        new StageEnemyPair(Stage.St4, Chara.Sakuya),
-                        new StageEnemyPair(Stage.St5, Chara.Remilia),
-                        new StageEnemyPair(Stage.St6, Chara.Yukari),
-                        new StageEnemyPair(Stage.St7, Chara.Suika),
+                        (Stage.St1, Chara.Marisa),
+                        (Stage.St2, Chara.Alice),
+                        (Stage.St3, Chara.Youmu),
+                        (Stage.St4, Chara.Sakuya),
+                        (Stage.St5, Chara.Remilia),
+                        (Stage.St6, Chara.Yukari),
+                        (Stage.St7, Chara.Suika),
                     }
                 },
                 {
                     Chara.Marisa,
-                    new List<StageEnemyPair>
+                    new List<(Stage, Chara)>
                     {
-                        new StageEnemyPair(Stage.St1, Chara.Alice),
-                        new StageEnemyPair(Stage.St2, Chara.Sakuya),
-                        new StageEnemyPair(Stage.St3, Chara.Patchouli),
-                        new StageEnemyPair(Stage.St4, Chara.Remilia),
-                        new StageEnemyPair(Stage.St5, Chara.Reimu),
-                        new StageEnemyPair(Stage.St6, Chara.Yukari),
-                        new StageEnemyPair(Stage.St7, Chara.Suika),
+                        (Stage.St1, Chara.Alice),
+                        (Stage.St2, Chara.Sakuya),
+                        (Stage.St3, Chara.Patchouli),
+                        (Stage.St4, Chara.Remilia),
+                        (Stage.St5, Chara.Reimu),
+                        (Stage.St6, Chara.Yukari),
+                        (Stage.St7, Chara.Suika),
                     }
                 },
                 {
                     Chara.Sakuya,
-                    new List<StageEnemyPair>
+                    new List<(Stage, Chara)>
                     {
-                        new StageEnemyPair(Stage.St1, Chara.Reimu),
-                        new StageEnemyPair(Stage.St2, Chara.Alice),
-                        new StageEnemyPair(Stage.St3, Chara.Marisa),
-                        new StageEnemyPair(Stage.St4, Chara.Youmu),
-                        new StageEnemyPair(Stage.St5, Chara.Yuyuko),
-                        new StageEnemyPair(Stage.St6, Chara.Yukari),
-                        new StageEnemyPair(Stage.St7, Chara.Suika),
+                        (Stage.St1, Chara.Reimu),
+                        (Stage.St2, Chara.Alice),
+                        (Stage.St3, Chara.Marisa),
+                        (Stage.St4, Chara.Youmu),
+                        (Stage.St5, Chara.Yuyuko),
+                        (Stage.St6, Chara.Yukari),
+                        (Stage.St7, Chara.Suika),
                     }
                 },
                 {
                     Chara.Alice,
-                    new List<StageEnemyPair>
+                    new List<(Stage, Chara)>
                     {
-                        new StageEnemyPair(Stage.St1, Chara.Marisa),
-                        new StageEnemyPair(Stage.St2, Chara.Reimu),
-                        new StageEnemyPair(Stage.St3, Chara.Sakuya),
-                        new StageEnemyPair(Stage.St4, Chara.Patchouli),
-                        new StageEnemyPair(Stage.St5, Chara.Youmu),
-                        new StageEnemyPair(Stage.St6, Chara.Yukari),
-                        new StageEnemyPair(Stage.St7, Chara.Suika),
+                        (Stage.St1, Chara.Marisa),
+                        (Stage.St2, Chara.Reimu),
+                        (Stage.St3, Chara.Sakuya),
+                        (Stage.St4, Chara.Patchouli),
+                        (Stage.St5, Chara.Youmu),
+                        (Stage.St6, Chara.Yukari),
+                        (Stage.St7, Chara.Suika),
                     }
                 },
                 {
                     Chara.Patchouli,
-                    new List<StageEnemyPair>
+                    new List<(Stage, Chara)>
                     {
-                        new StageEnemyPair(Stage.St1, Chara.Marisa),
-                        new StageEnemyPair(Stage.St2, Chara.Sakuya),
-                        new StageEnemyPair(Stage.St3, Chara.Alice),
-                        new StageEnemyPair(Stage.St4, Chara.Youmu),
-                        new StageEnemyPair(Stage.St5, Chara.Yuyuko),
-                        new StageEnemyPair(Stage.St6, Chara.Yukari),
-                        new StageEnemyPair(Stage.St7, Chara.Suika),
+                        (Stage.St1, Chara.Marisa),
+                        (Stage.St2, Chara.Sakuya),
+                        (Stage.St3, Chara.Alice),
+                        (Stage.St4, Chara.Youmu),
+                        (Stage.St5, Chara.Yuyuko),
+                        (Stage.St6, Chara.Yukari),
+                        (Stage.St7, Chara.Suika),
                     }
                 },
                 {
                     Chara.Youmu,
-                    new List<StageEnemyPair>
+                    new List<(Stage, Chara)>
                     {
-                        new StageEnemyPair(Stage.St1, Chara.Reimu),
-                        new StageEnemyPair(Stage.St2, Chara.Marisa),
-                        new StageEnemyPair(Stage.St3, Chara.Patchouli),
-                        new StageEnemyPair(Stage.St4, Chara.Sakuya),
-                        new StageEnemyPair(Stage.St5, Chara.Remilia),
-                        new StageEnemyPair(Stage.St6, Chara.Yukari),
-                        new StageEnemyPair(Stage.St7, Chara.Suika),
+                        (Stage.St1, Chara.Reimu),
+                        (Stage.St2, Chara.Marisa),
+                        (Stage.St3, Chara.Patchouli),
+                        (Stage.St4, Chara.Sakuya),
+                        (Stage.St5, Chara.Remilia),
+                        (Stage.St6, Chara.Yukari),
+                        (Stage.St7, Chara.Suika),
                     }
                 },
                 {
                     Chara.Remilia,
-                    new List<StageEnemyPair>
+                    new List<(Stage, Chara)>
                     {
-                        new StageEnemyPair(Stage.St1, Chara.Sakuya),
-                        new StageEnemyPair(Stage.St2, Chara.Marisa),
-                        new StageEnemyPair(Stage.St3, Chara.Reimu),
-                        new StageEnemyPair(Stage.St4, Chara.Youmu),
-                        new StageEnemyPair(Stage.St5, Chara.Yuyuko),
-                        new StageEnemyPair(Stage.St6, Chara.Yukari),
-                        new StageEnemyPair(Stage.St7, Chara.Suika),
+                        (Stage.St1, Chara.Sakuya),
+                        (Stage.St2, Chara.Marisa),
+                        (Stage.St3, Chara.Reimu),
+                        (Stage.St4, Chara.Youmu),
+                        (Stage.St5, Chara.Yuyuko),
+                        (Stage.St6, Chara.Yukari),
+                        (Stage.St7, Chara.Suika),
                     }
                 },
                 {
                     Chara.Yuyuko,
-                    new List<StageEnemyPair>
+                    new List<(Stage, Chara)>
                     {
-                        new StageEnemyPair(Stage.St1, Chara.Youmu),
-                        new StageEnemyPair(Stage.St2, Chara.Marisa),
-                        new StageEnemyPair(Stage.St3, Chara.Reimu),
-                        new StageEnemyPair(Stage.St4, Chara.Sakuya),
-                        new StageEnemyPair(Stage.St5, Chara.Remilia),
-                        new StageEnemyPair(Stage.St6, Chara.Yukari),
-                        new StageEnemyPair(Stage.St7, Chara.Suika),
+                        (Stage.St1, Chara.Youmu),
+                        (Stage.St2, Chara.Marisa),
+                        (Stage.St3, Chara.Reimu),
+                        (Stage.St4, Chara.Sakuya),
+                        (Stage.St5, Chara.Remilia),
+                        (Stage.St6, Chara.Yukari),
+                        (Stage.St7, Chara.Suika),
                     }
                 },
                 {
                     Chara.Yukari,
-                    new List<StageEnemyPair>
+                    new List<(Stage, Chara)>
                     {
-                        new StageEnemyPair(Stage.St1, Chara.Remilia),
-                        new StageEnemyPair(Stage.St2, Chara.Alice),
-                        new StageEnemyPair(Stage.St3, Chara.Youmu),
-                        new StageEnemyPair(Stage.St4, Chara.Marisa),
-                        new StageEnemyPair(Stage.St5, Chara.Reimu),
-                        new StageEnemyPair(Stage.St6, Chara.Yuyuko),
-                        new StageEnemyPair(Stage.St7, Chara.Suika),
+                        (Stage.St1, Chara.Remilia),
+                        (Stage.St2, Chara.Alice),
+                        (Stage.St3, Chara.Youmu),
+                        (Stage.St4, Chara.Marisa),
+                        (Stage.St5, Chara.Reimu),
+                        (Stage.St6, Chara.Yuyuko),
+                        (Stage.St7, Chara.Suika),
                     }
                 },
                 {
                     Chara.Suika,
-                    new List<StageEnemyPair>
+                    new List<(Stage, Chara)>
                     {
-                        new StageEnemyPair(Stage.St1, Chara.Sakuya),
-                        new StageEnemyPair(Stage.St2, Chara.Alice),
-                        new StageEnemyPair(Stage.St3, Chara.Youmu),
-                        new StageEnemyPair(Stage.St4, Chara.Patchouli),
-                        new StageEnemyPair(Stage.St5, Chara.Marisa),
-                        new StageEnemyPair(Stage.St6, Chara.Remilia),
-                        new StageEnemyPair(Stage.St7, Chara.Reimu),
+                        (Stage.St1, Chara.Sakuya),
+                        (Stage.St2, Chara.Alice),
+                        (Stage.St3, Chara.Youmu),
+                        (Stage.St4, Chara.Patchouli),
+                        (Stage.St5, Chara.Marisa),
+                        (Stage.St6, Chara.Remilia),
+                        (Stage.St7, Chara.Reimu),
                     }
                 },
             };

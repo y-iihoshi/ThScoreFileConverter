@@ -90,7 +90,6 @@
     <Compile Include="Models\Th075ClearDataTests.cs" />
     <Compile Include="Models\Th075HighScoreTests.cs" />
     <Compile Include="Models\Th075SpellCardInfoTests.cs" />
-    <Compile Include="Models\Th075StageEnemyPairTests.cs" />
     <Compile Include="Models\Th075StatusTests.cs" />
     <Compile Include="Models\Th08AllScoreDataTests.cs" />
     <Compile Include="Models\Th08CardAttackCareerTests.cs" />
@@ -193,7 +192,6 @@
     <Compile Include="Models\Wrappers\Th075ClearDataWrapper.cs" />
     <Compile Include="Models\Wrappers\Th075HighScoreWrapper.cs" />
     <Compile Include="Models\Wrappers\Th075SpellCardInfoWrapper.cs" />
-    <Compile Include="Models\Wrappers\Th075StageEnemyPairWrapper.cs" />
     <Compile Include="Models\Wrappers\Th075StatusWrapper.cs" />
     <Compile Include="Models\Wrappers\Th08AllScoreDataWrapper.cs" />
     <Compile Include="Models\Wrappers\Th08CardAttackCareerWrapper.cs" />
