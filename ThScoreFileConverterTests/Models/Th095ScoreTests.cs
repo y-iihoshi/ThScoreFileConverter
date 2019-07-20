@@ -18,7 +18,7 @@ namespace ThScoreFileConverterTests.Models
             public ushort version;
             public int size;
             public uint checksum;
-            public Th095LevelScenePairTests.Properties<Th095Converter.Level> levelScene;
+            public (Th095Converter.Level level, int scene) levelScene;
             public int highScore;
             public int bestshotScore;
             public uint dateTime;
@@ -33,7 +33,7 @@ namespace ThScoreFileConverterTests.Models
             version = 1,
             size = 0x60,
             checksum = 0u,
-            levelScene = Th095LevelScenePairTests.GetValidProperties<Th095Converter.Level>(),
+            levelScene = (Th095Converter.Level.Lv9, 6),
             highScore = 1234567,
             bestshotScore = 23456,
             dateTime = 34567890,
@@ -73,8 +73,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.size, score.Size);
             Assert.AreEqual(properties.checksum, score.Checksum);
             CollectionAssert.AreEqual(data, score.Data.ToArray());
-            Assert.AreEqual(properties.levelScene.level, score.LevelScene.Level);
-            Assert.AreEqual(properties.levelScene.scene, score.LevelScene.Scene);
+            Assert.AreEqual(properties.levelScene, score.LevelScene);
             Assert.AreEqual(properties.highScore, score.HighScore);
             Assert.AreEqual(properties.bestshotScore, score.BestshotScore);
             Assert.AreEqual(properties.dateTime, score.DateTime);

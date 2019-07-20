@@ -18,7 +18,7 @@ namespace ThScoreFileConverterTests.Models
             public ushort version;
             public int size;
             public uint checksum;
-            public Th095LevelScenePairTests.Properties<Th125Converter.Level> levelScene;
+            public (Th125Converter.Level level, int scene) levelScene;
             public int highScore;
             public Th125Converter.Chara chara;
             public int trialCount;
@@ -33,7 +33,7 @@ namespace ThScoreFileConverterTests.Models
             version = 0,
             size = 0x48,
             checksum = 0u,
-            levelScene = Th095LevelScenePairTests.GetValidProperties<Th125Converter.Level>(),
+            levelScene = (Th125Converter.Level.Lv9, 7),
             highScore = 1234567,
             chara = Th125Converter.Chara.Hatate,
             trialCount = 9876,
@@ -74,8 +74,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.size, score.Size);
             Assert.AreEqual(properties.checksum, score.Checksum);
             CollectionAssert.AreEqual(data, score.Data.ToArray());
-            Assert.AreEqual(properties.levelScene.level, score.LevelScene.Level);
-            Assert.AreEqual(properties.levelScene.scene, score.LevelScene.Scene);
+            Assert.AreEqual(properties.levelScene, score.LevelScene);
             Assert.AreEqual(properties.highScore, score.HighScore);
             Assert.AreEqual(properties.chara, score.Chara);
             Assert.AreEqual(properties.trialCount, score.TrialCount);

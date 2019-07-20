@@ -30,94 +30,94 @@ namespace ThScoreFileConverter.Models
     internal class Th095Converter : ThConverter
     {
         // Thanks to thwiki.info
-        private static readonly Dictionary<LevelScenePair, EnemyCardPair> SpellCards =
-            new Dictionary<LevelScenePair, EnemyCardPair>()
+        private static readonly Dictionary<(Level Level, int Scene), EnemyCardPair> SpellCards =
+            new Dictionary<(Level, int), EnemyCardPair>()
             {
-                { new LevelScenePair(Level.Lv1,   1), new EnemyCardPair(Enemy.Wriggle,   string.Empty) },
-                { new LevelScenePair(Level.Lv1,   2), new EnemyCardPair(Enemy.Rumia,     string.Empty) },
-                { new LevelScenePair(Level.Lv1,   3), new EnemyCardPair(Enemy.Wriggle,   "蛍符「地上の恒星」") },
-                { new LevelScenePair(Level.Lv1,   4), new EnemyCardPair(Enemy.Rumia,     "闇符「ダークサイドオブザムーン」") },
-                { new LevelScenePair(Level.Lv1,   5), new EnemyCardPair(Enemy.Wriggle,   "蝶符「バタフライストーム」") },
-                { new LevelScenePair(Level.Lv1,   6), new EnemyCardPair(Enemy.Rumia,     "夜符「ミッドナイトバード」") },
-                { new LevelScenePair(Level.Lv2,   1), new EnemyCardPair(Enemy.Cirno,     string.Empty) },
-                { new LevelScenePair(Level.Lv2,   2), new EnemyCardPair(Enemy.Letty,     string.Empty) },
-                { new LevelScenePair(Level.Lv2,   3), new EnemyCardPair(Enemy.Cirno,     "雪符「ダイアモンドブリザード」") },
-                { new LevelScenePair(Level.Lv2,   4), new EnemyCardPair(Enemy.Letty,     "寒符「コールドスナップ」") },
-                { new LevelScenePair(Level.Lv2,   5), new EnemyCardPair(Enemy.Cirno,     "凍符「マイナスＫ」") },
-                { new LevelScenePair(Level.Lv2,   6), new EnemyCardPair(Enemy.Letty,     "冬符「ノーザンウイナー」") },
-                { new LevelScenePair(Level.Lv3,   1), new EnemyCardPair(Enemy.Alice,     string.Empty) },
-                { new LevelScenePair(Level.Lv3,   2), new EnemyCardPair(Enemy.Keine,     "光符「アマテラス」") },
-                { new LevelScenePair(Level.Lv3,   3), new EnemyCardPair(Enemy.Alice,     "操符「ドールズインシー」") },
-                { new LevelScenePair(Level.Lv3,   4), new EnemyCardPair(Enemy.Keine,     "包符「昭和の雨」") },
-                { new LevelScenePair(Level.Lv3,   5), new EnemyCardPair(Enemy.Alice,     "呪符「ストロードールカミカゼ」") },
-                { new LevelScenePair(Level.Lv3,   6), new EnemyCardPair(Enemy.Keine,     "葵符「水戸の光圀」") },
-                { new LevelScenePair(Level.Lv3,   7), new EnemyCardPair(Enemy.Alice,     "赤符「ドールミラセティ」") },
-                { new LevelScenePair(Level.Lv3,   8), new EnemyCardPair(Enemy.Keine,     "倭符「邪馬台の国」") },
-                { new LevelScenePair(Level.Lv4,   1), new EnemyCardPair(Enemy.Reisen,    string.Empty) },
-                { new LevelScenePair(Level.Lv4,   2), new EnemyCardPair(Enemy.Medicine,  "霧符「ガシングガーデン」") },
-                { new LevelScenePair(Level.Lv4,   3), new EnemyCardPair(Enemy.Tewi,      "脱兎「フラスターエスケープ」") },
-                { new LevelScenePair(Level.Lv4,   4), new EnemyCardPair(Enemy.Reisen,    "散符「朧月花栞（ロケット・イン・ミスト）」") },
-                { new LevelScenePair(Level.Lv4,   5), new EnemyCardPair(Enemy.Medicine,  "毒符「ポイズンブレス」") },
-                { new LevelScenePair(Level.Lv4,   6), new EnemyCardPair(Enemy.Reisen,    "波符「幻の月（インビジブルハーフムーン）」") },
-                { new LevelScenePair(Level.Lv4,   7), new EnemyCardPair(Enemy.Medicine,  "譫妄「イントゥデリリウム」") },
-                { new LevelScenePair(Level.Lv4,   8), new EnemyCardPair(Enemy.Tewi,      "借符「大穴牟遅様の薬」") },
-                { new LevelScenePair(Level.Lv4,   9), new EnemyCardPair(Enemy.Reisen,    "狂夢「風狂の夢（ドリームワールド）」") },
-                { new LevelScenePair(Level.Lv5,   1), new EnemyCardPair(Enemy.Meirin,    string.Empty) },
-                { new LevelScenePair(Level.Lv5,   2), new EnemyCardPair(Enemy.Patchouli, "日＆水符「ハイドロジェナスプロミネンス」") },
-                { new LevelScenePair(Level.Lv5,   3), new EnemyCardPair(Enemy.Meirin,    "華符「彩光蓮華掌」") },
-                { new LevelScenePair(Level.Lv5,   4), new EnemyCardPair(Enemy.Patchouli, "水＆火符「フロギスティックレイン」") },
-                { new LevelScenePair(Level.Lv5,   5), new EnemyCardPair(Enemy.Meirin,    "彩翔「飛花落葉」") },
-                { new LevelScenePair(Level.Lv5,   6), new EnemyCardPair(Enemy.Patchouli, "月＆木符「サテライトヒマワリ」") },
-                { new LevelScenePair(Level.Lv5,   7), new EnemyCardPair(Enemy.Meirin,    "彩華「虹色太極拳」") },
-                { new LevelScenePair(Level.Lv5,   8), new EnemyCardPair(Enemy.Patchouli, "日＆月符「ロイヤルダイアモンドリング」") },
-                { new LevelScenePair(Level.Lv6,   1), new EnemyCardPair(Enemy.Chen,      string.Empty) },
-                { new LevelScenePair(Level.Lv6,   2), new EnemyCardPair(Enemy.Youmu,     "人智剣「天女返し」") },
-                { new LevelScenePair(Level.Lv6,   3), new EnemyCardPair(Enemy.Chen,      "星符「飛び重ね鱗」") },
-                { new LevelScenePair(Level.Lv6,   4), new EnemyCardPair(Enemy.Youmu,     "妄執剣「修羅の血」") },
-                { new LevelScenePair(Level.Lv6,   5), new EnemyCardPair(Enemy.Chen,      "鬼神「鳴動持国天」") },
-                { new LevelScenePair(Level.Lv6,   6), new EnemyCardPair(Enemy.Youmu,     "天星剣「涅槃寂静の如し」") },
-                { new LevelScenePair(Level.Lv6,   7), new EnemyCardPair(Enemy.Chen,      "化猫「橙」") },
-                { new LevelScenePair(Level.Lv6,   8), new EnemyCardPair(Enemy.Youmu,     "四生剣「衆生無情の響き」") },
-                { new LevelScenePair(Level.Lv7,   1), new EnemyCardPair(Enemy.Sakuya,    string.Empty) },
-                { new LevelScenePair(Level.Lv7,   2), new EnemyCardPair(Enemy.Remilia,   "魔符「全世界ナイトメア」") },
-                { new LevelScenePair(Level.Lv7,   3), new EnemyCardPair(Enemy.Sakuya,    "時符「トンネルエフェクト」") },
-                { new LevelScenePair(Level.Lv7,   4), new EnemyCardPair(Enemy.Remilia,   "紅符「ブラッディマジックスクウェア」") },
-                { new LevelScenePair(Level.Lv7,   5), new EnemyCardPair(Enemy.Sakuya,    "空虚「インフレーションスクウェア」") },
-                { new LevelScenePair(Level.Lv7,   6), new EnemyCardPair(Enemy.Remilia,   "紅蝙蝠「ヴァンピリッシュナイト」") },
-                { new LevelScenePair(Level.Lv7,   7), new EnemyCardPair(Enemy.Sakuya,    "銀符「パーフェクトメイド」") },
-                { new LevelScenePair(Level.Lv7,   8), new EnemyCardPair(Enemy.Remilia,   "神鬼「レミリアストーカー」") },
-                { new LevelScenePair(Level.Lv8,   1), new EnemyCardPair(Enemy.Ran,       string.Empty) },
-                { new LevelScenePair(Level.Lv8,   2), new EnemyCardPair(Enemy.Yuyuko,    "幽雅「死出の誘蛾灯」") },
-                { new LevelScenePair(Level.Lv8,   3), new EnemyCardPair(Enemy.Ran,       "密符「御大師様の秘鍵」") },
-                { new LevelScenePair(Level.Lv8,   4), new EnemyCardPair(Enemy.Yuyuko,    "蝶符「鳳蝶紋の死槍」") },
-                { new LevelScenePair(Level.Lv8,   5), new EnemyCardPair(Enemy.Ran,       "行符「八千万枚護摩」") },
-                { new LevelScenePair(Level.Lv8,   6), new EnemyCardPair(Enemy.Yuyuko,    "死符「酔人の生、死の夢幻」") },
-                { new LevelScenePair(Level.Lv8,   7), new EnemyCardPair(Enemy.Ran,       "超人「飛翔役小角」") },
-                { new LevelScenePair(Level.Lv8,   8), new EnemyCardPair(Enemy.Yuyuko,    "「死蝶浮月」") },
-                { new LevelScenePair(Level.Lv9,   1), new EnemyCardPair(Enemy.Eirin,     string.Empty) },
-                { new LevelScenePair(Level.Lv9,   2), new EnemyCardPair(Enemy.Kaguya,    "新難題「月のイルメナイト」") },
-                { new LevelScenePair(Level.Lv9,   3), new EnemyCardPair(Enemy.Eirin,     "薬符「胡蝶夢丸ナイトメア」") },
-                { new LevelScenePair(Level.Lv9,   4), new EnemyCardPair(Enemy.Kaguya,    "新難題「エイジャの赤石」") },
-                { new LevelScenePair(Level.Lv9,   5), new EnemyCardPair(Enemy.Eirin,     "錬丹「水銀の海」") },
-                { new LevelScenePair(Level.Lv9,   6), new EnemyCardPair(Enemy.Kaguya,    "新難題「金閣寺の一枚天井」") },
-                { new LevelScenePair(Level.Lv9,   7), new EnemyCardPair(Enemy.Eirin,     "秘薬「仙香玉兎」") },
-                { new LevelScenePair(Level.Lv9,   8), new EnemyCardPair(Enemy.Kaguya,    "新難題「ミステリウム」") },
-                { new LevelScenePair(Level.Lv10,  1), new EnemyCardPair(Enemy.Komachi,   string.Empty) },
-                { new LevelScenePair(Level.Lv10,  2), new EnemyCardPair(Enemy.Shikieiki, "嘘言「タン・オブ・ウルフ」") },
-                { new LevelScenePair(Level.Lv10,  3), new EnemyCardPair(Enemy.Komachi,   "死歌「八重霧の渡し」") },
-                { new LevelScenePair(Level.Lv10,  4), new EnemyCardPair(Enemy.Shikieiki, "審判「十王裁判」") },
-                { new LevelScenePair(Level.Lv10,  5), new EnemyCardPair(Enemy.Komachi,   "古雨「黄泉中有の旅の雨」") },
-                { new LevelScenePair(Level.Lv10,  6), new EnemyCardPair(Enemy.Shikieiki, "審判「ギルティ・オワ・ノットギルティ」") },
-                { new LevelScenePair(Level.Lv10,  7), new EnemyCardPair(Enemy.Komachi,   "死価「プライス・オブ・ライフ」") },
-                { new LevelScenePair(Level.Lv10,  8), new EnemyCardPair(Enemy.Shikieiki, "審判「浄頗梨審判 -射命丸文-」") },
-                { new LevelScenePair(Level.Extra, 1), new EnemyCardPair(Enemy.Flandre,   "禁忌「フォービドゥンフルーツ」") },
-                { new LevelScenePair(Level.Extra, 2), new EnemyCardPair(Enemy.Flandre,   "禁忌「禁じられた遊び」") },
-                { new LevelScenePair(Level.Extra, 3), new EnemyCardPair(Enemy.Yukari,    "境符「色と空の境界」") },
-                { new LevelScenePair(Level.Extra, 4), new EnemyCardPair(Enemy.Yukari,    "境符「波と粒の境界」") },
-                { new LevelScenePair(Level.Extra, 5), new EnemyCardPair(Enemy.Mokou,     "貴人「サンジェルマンの忠告」") },
-                { new LevelScenePair(Level.Extra, 6), new EnemyCardPair(Enemy.Mokou,     "蓬莱「瑞江浦嶋子と五色の瑞亀」") },
-                { new LevelScenePair(Level.Extra, 7), new EnemyCardPair(Enemy.Suika,     "鬼気「濛々迷霧」") },
-                { new LevelScenePair(Level.Extra, 8), new EnemyCardPair(Enemy.Suika,     "「百万鬼夜行」") },
+                { (Level.Lv1,   1), new EnemyCardPair(Enemy.Wriggle,   string.Empty) },
+                { (Level.Lv1,   2), new EnemyCardPair(Enemy.Rumia,     string.Empty) },
+                { (Level.Lv1,   3), new EnemyCardPair(Enemy.Wriggle,   "蛍符「地上の恒星」") },
+                { (Level.Lv1,   4), new EnemyCardPair(Enemy.Rumia,     "闇符「ダークサイドオブザムーン」") },
+                { (Level.Lv1,   5), new EnemyCardPair(Enemy.Wriggle,   "蝶符「バタフライストーム」") },
+                { (Level.Lv1,   6), new EnemyCardPair(Enemy.Rumia,     "夜符「ミッドナイトバード」") },
+                { (Level.Lv2,   1), new EnemyCardPair(Enemy.Cirno,     string.Empty) },
+                { (Level.Lv2,   2), new EnemyCardPair(Enemy.Letty,     string.Empty) },
+                { (Level.Lv2,   3), new EnemyCardPair(Enemy.Cirno,     "雪符「ダイアモンドブリザード」") },
+                { (Level.Lv2,   4), new EnemyCardPair(Enemy.Letty,     "寒符「コールドスナップ」") },
+                { (Level.Lv2,   5), new EnemyCardPair(Enemy.Cirno,     "凍符「マイナスＫ」") },
+                { (Level.Lv2,   6), new EnemyCardPair(Enemy.Letty,     "冬符「ノーザンウイナー」") },
+                { (Level.Lv3,   1), new EnemyCardPair(Enemy.Alice,     string.Empty) },
+                { (Level.Lv3,   2), new EnemyCardPair(Enemy.Keine,     "光符「アマテラス」") },
+                { (Level.Lv3,   3), new EnemyCardPair(Enemy.Alice,     "操符「ドールズインシー」") },
+                { (Level.Lv3,   4), new EnemyCardPair(Enemy.Keine,     "包符「昭和の雨」") },
+                { (Level.Lv3,   5), new EnemyCardPair(Enemy.Alice,     "呪符「ストロードールカミカゼ」") },
+                { (Level.Lv3,   6), new EnemyCardPair(Enemy.Keine,     "葵符「水戸の光圀」") },
+                { (Level.Lv3,   7), new EnemyCardPair(Enemy.Alice,     "赤符「ドールミラセティ」") },
+                { (Level.Lv3,   8), new EnemyCardPair(Enemy.Keine,     "倭符「邪馬台の国」") },
+                { (Level.Lv4,   1), new EnemyCardPair(Enemy.Reisen,    string.Empty) },
+                { (Level.Lv4,   2), new EnemyCardPair(Enemy.Medicine,  "霧符「ガシングガーデン」") },
+                { (Level.Lv4,   3), new EnemyCardPair(Enemy.Tewi,      "脱兎「フラスターエスケープ」") },
+                { (Level.Lv4,   4), new EnemyCardPair(Enemy.Reisen,    "散符「朧月花栞（ロケット・イン・ミスト）」") },
+                { (Level.Lv4,   5), new EnemyCardPair(Enemy.Medicine,  "毒符「ポイズンブレス」") },
+                { (Level.Lv4,   6), new EnemyCardPair(Enemy.Reisen,    "波符「幻の月（インビジブルハーフムーン）」") },
+                { (Level.Lv4,   7), new EnemyCardPair(Enemy.Medicine,  "譫妄「イントゥデリリウム」") },
+                { (Level.Lv4,   8), new EnemyCardPair(Enemy.Tewi,      "借符「大穴牟遅様の薬」") },
+                { (Level.Lv4,   9), new EnemyCardPair(Enemy.Reisen,    "狂夢「風狂の夢（ドリームワールド）」") },
+                { (Level.Lv5,   1), new EnemyCardPair(Enemy.Meirin,    string.Empty) },
+                { (Level.Lv5,   2), new EnemyCardPair(Enemy.Patchouli, "日＆水符「ハイドロジェナスプロミネンス」") },
+                { (Level.Lv5,   3), new EnemyCardPair(Enemy.Meirin,    "華符「彩光蓮華掌」") },
+                { (Level.Lv5,   4), new EnemyCardPair(Enemy.Patchouli, "水＆火符「フロギスティックレイン」") },
+                { (Level.Lv5,   5), new EnemyCardPair(Enemy.Meirin,    "彩翔「飛花落葉」") },
+                { (Level.Lv5,   6), new EnemyCardPair(Enemy.Patchouli, "月＆木符「サテライトヒマワリ」") },
+                { (Level.Lv5,   7), new EnemyCardPair(Enemy.Meirin,    "彩華「虹色太極拳」") },
+                { (Level.Lv5,   8), new EnemyCardPair(Enemy.Patchouli, "日＆月符「ロイヤルダイアモンドリング」") },
+                { (Level.Lv6,   1), new EnemyCardPair(Enemy.Chen,      string.Empty) },
+                { (Level.Lv6,   2), new EnemyCardPair(Enemy.Youmu,     "人智剣「天女返し」") },
+                { (Level.Lv6,   3), new EnemyCardPair(Enemy.Chen,      "星符「飛び重ね鱗」") },
+                { (Level.Lv6,   4), new EnemyCardPair(Enemy.Youmu,     "妄執剣「修羅の血」") },
+                { (Level.Lv6,   5), new EnemyCardPair(Enemy.Chen,      "鬼神「鳴動持国天」") },
+                { (Level.Lv6,   6), new EnemyCardPair(Enemy.Youmu,     "天星剣「涅槃寂静の如し」") },
+                { (Level.Lv6,   7), new EnemyCardPair(Enemy.Chen,      "化猫「橙」") },
+                { (Level.Lv6,   8), new EnemyCardPair(Enemy.Youmu,     "四生剣「衆生無情の響き」") },
+                { (Level.Lv7,   1), new EnemyCardPair(Enemy.Sakuya,    string.Empty) },
+                { (Level.Lv7,   2), new EnemyCardPair(Enemy.Remilia,   "魔符「全世界ナイトメア」") },
+                { (Level.Lv7,   3), new EnemyCardPair(Enemy.Sakuya,    "時符「トンネルエフェクト」") },
+                { (Level.Lv7,   4), new EnemyCardPair(Enemy.Remilia,   "紅符「ブラッディマジックスクウェア」") },
+                { (Level.Lv7,   5), new EnemyCardPair(Enemy.Sakuya,    "空虚「インフレーションスクウェア」") },
+                { (Level.Lv7,   6), new EnemyCardPair(Enemy.Remilia,   "紅蝙蝠「ヴァンピリッシュナイト」") },
+                { (Level.Lv7,   7), new EnemyCardPair(Enemy.Sakuya,    "銀符「パーフェクトメイド」") },
+                { (Level.Lv7,   8), new EnemyCardPair(Enemy.Remilia,   "神鬼「レミリアストーカー」") },
+                { (Level.Lv8,   1), new EnemyCardPair(Enemy.Ran,       string.Empty) },
+                { (Level.Lv8,   2), new EnemyCardPair(Enemy.Yuyuko,    "幽雅「死出の誘蛾灯」") },
+                { (Level.Lv8,   3), new EnemyCardPair(Enemy.Ran,       "密符「御大師様の秘鍵」") },
+                { (Level.Lv8,   4), new EnemyCardPair(Enemy.Yuyuko,    "蝶符「鳳蝶紋の死槍」") },
+                { (Level.Lv8,   5), new EnemyCardPair(Enemy.Ran,       "行符「八千万枚護摩」") },
+                { (Level.Lv8,   6), new EnemyCardPair(Enemy.Yuyuko,    "死符「酔人の生、死の夢幻」") },
+                { (Level.Lv8,   7), new EnemyCardPair(Enemy.Ran,       "超人「飛翔役小角」") },
+                { (Level.Lv8,   8), new EnemyCardPair(Enemy.Yuyuko,    "「死蝶浮月」") },
+                { (Level.Lv9,   1), new EnemyCardPair(Enemy.Eirin,     string.Empty) },
+                { (Level.Lv9,   2), new EnemyCardPair(Enemy.Kaguya,    "新難題「月のイルメナイト」") },
+                { (Level.Lv9,   3), new EnemyCardPair(Enemy.Eirin,     "薬符「胡蝶夢丸ナイトメア」") },
+                { (Level.Lv9,   4), new EnemyCardPair(Enemy.Kaguya,    "新難題「エイジャの赤石」") },
+                { (Level.Lv9,   5), new EnemyCardPair(Enemy.Eirin,     "錬丹「水銀の海」") },
+                { (Level.Lv9,   6), new EnemyCardPair(Enemy.Kaguya,    "新難題「金閣寺の一枚天井」") },
+                { (Level.Lv9,   7), new EnemyCardPair(Enemy.Eirin,     "秘薬「仙香玉兎」") },
+                { (Level.Lv9,   8), new EnemyCardPair(Enemy.Kaguya,    "新難題「ミステリウム」") },
+                { (Level.Lv10,  1), new EnemyCardPair(Enemy.Komachi,   string.Empty) },
+                { (Level.Lv10,  2), new EnemyCardPair(Enemy.Shikieiki, "嘘言「タン・オブ・ウルフ」") },
+                { (Level.Lv10,  3), new EnemyCardPair(Enemy.Komachi,   "死歌「八重霧の渡し」") },
+                { (Level.Lv10,  4), new EnemyCardPair(Enemy.Shikieiki, "審判「十王裁判」") },
+                { (Level.Lv10,  5), new EnemyCardPair(Enemy.Komachi,   "古雨「黄泉中有の旅の雨」") },
+                { (Level.Lv10,  6), new EnemyCardPair(Enemy.Shikieiki, "審判「ギルティ・オワ・ノットギルティ」") },
+                { (Level.Lv10,  7), new EnemyCardPair(Enemy.Komachi,   "死価「プライス・オブ・ライフ」") },
+                { (Level.Lv10,  8), new EnemyCardPair(Enemy.Shikieiki, "審判「浄頗梨審判 -射命丸文-」") },
+                { (Level.Extra, 1), new EnemyCardPair(Enemy.Flandre,   "禁忌「フォービドゥンフルーツ」") },
+                { (Level.Extra, 2), new EnemyCardPair(Enemy.Flandre,   "禁忌「禁じられた遊び」") },
+                { (Level.Extra, 3), new EnemyCardPair(Enemy.Yukari,    "境符「色と空の境界」") },
+                { (Level.Extra, 4), new EnemyCardPair(Enemy.Yukari,    "境符「波と粒の境界」") },
+                { (Level.Extra, 5), new EnemyCardPair(Enemy.Mokou,     "貴人「サンジェルマンの忠告」") },
+                { (Level.Extra, 6), new EnemyCardPair(Enemy.Mokou,     "蓬莱「瑞江浦嶋子と五色の瑞亀」") },
+                { (Level.Extra, 7), new EnemyCardPair(Enemy.Suika,     "鬼気「濛々迷霧」") },
+                { (Level.Extra, 8), new EnemyCardPair(Enemy.Suika,     "「百万鬼夜行」") },
             };
 
         private static new readonly EnumShortNameParser<Level> LevelParser =
@@ -128,7 +128,7 @@ namespace ThScoreFileConverter.Models
 
         private AllScoreData allScoreData = null;
 
-        private Dictionary<LevelScenePair, BestShotPair> bestshots = null;
+        private Dictionary<(Level Level, int Scene), BestShotPair> bestshots = null;
 
         public new enum Level
         {
@@ -248,9 +248,9 @@ namespace ThScoreFileConverter.Models
                     var header = new BestShotHeader();
                     header.ReadFrom(reader);
 
-                    var key = new LevelScenePair(header.Level, header.Scene);
+                    var key = (header.Level, header.Scene);
                     if (this.bestshots == null)
-                        this.bestshots = new Dictionary<LevelScenePair, BestShotPair>(SpellCards.Count);
+                        this.bestshots = new Dictionary<(Level, int), BestShotPair>(SpellCards.Count);
                     if (!this.bestshots.ContainsKey(key))
                         this.bestshots.Add(key, new BestShotPair(outputFile.Name, header));
 
@@ -418,7 +418,7 @@ namespace ThScoreFileConverter.Models
                     var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                    var key = new LevelScenePair(level, scene);
+                    var key = (level, scene);
                     if (!SpellCards.ContainsKey(key))
                         return match.ToString();
 
@@ -506,7 +506,7 @@ namespace ThScoreFileConverter.Models
                     var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                    var key = new LevelScenePair(level, scene);
+                    var key = (level, scene);
                     if (!SpellCards.ContainsKey(key))
                         return match.ToString();
 
@@ -543,7 +543,7 @@ namespace ThScoreFileConverter.Models
                     var level = LevelParser.Parse(match.Groups[1].Value);
                     var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
-                    var key = new LevelScenePair(level, scene);
+                    var key = (level, scene);
                     if (!SpellCards.ContainsKey(key))
                         return match.ToString();
 
@@ -593,7 +593,7 @@ namespace ThScoreFileConverter.Models
                     var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                    var key = new LevelScenePair(level, scene);
+                    var key = (level, scene);
                     if (!SpellCards.ContainsKey(key))
                         return match.ToString();
 
@@ -651,26 +651,6 @@ namespace ThScoreFileConverter.Models
             public string Replace(string input)
             {
                 return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-            }
-        }
-
-        private class LevelScenePair : Pair<Level, int>
-        {
-            public LevelScenePair(Level level, int scene)
-                : base(level, scene)
-            {
-            }
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public Level Level
-            {
-                get { return this.First; }
-            }
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public int Scene
-            {
-                get { return this.Second; }     // 1-based
             }
         }
 
@@ -759,7 +739,7 @@ namespace ThScoreFileConverter.Models
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
                     var number = reader.ReadUInt32();
-                    this.LevelScene = new LevelScenePair(Utils.ToEnum<Level>(number / 10), (int)((number % 10) + 1));
+                    this.LevelScene = (Utils.ToEnum<Level>(number / 10), (int)((number % 10) + 1));
                     this.HighScore = reader.ReadInt32();
                     reader.ReadUInt32();    // always 0x00000000?
                     this.BestshotScore = reader.ReadInt32();
@@ -773,7 +753,7 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            public LevelScenePair LevelScene { get; private set; }
+            public (Level Level, int Scene) LevelScene { get; private set; }
 
             public int HighScore { get; private set; }
 

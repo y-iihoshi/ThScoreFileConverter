@@ -35,9 +35,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.IsValid)) as bool?;
         public IReadOnlyCollection<byte> Data
             => this.pobj.GetProperty(nameof(this.Data)) as byte[];
-        public Th095LevelScenePairWrapper<Th125Converter, Th125Converter.Level> LevelScene
-            => new Th095LevelScenePairWrapper<Th125Converter, Th125Converter.Level>(
-                this.pobj.GetProperty(nameof(this.LevelScene)));
+        public (Th125Converter.Level Level, int Scene)? LevelScene
+            => this.pobj.GetProperty(nameof(this.LevelScene)) as (Th125Converter.Level, int)?;
         public int? HighScore
             => this.pobj.GetProperty(nameof(this.HighScore)) as int?;
         public Th125Converter.Chara? Chara

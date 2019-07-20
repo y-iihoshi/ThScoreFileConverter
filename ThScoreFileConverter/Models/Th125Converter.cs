@@ -31,117 +31,117 @@ namespace ThScoreFileConverter.Models
     internal class Th125Converter : ThConverter
     {
         // Thanks to thwiki.info
-        private static readonly Dictionary<LevelScenePair, EnemyCardPair> SpellCards =
-            new Dictionary<LevelScenePair, EnemyCardPair>()
+        private static readonly Dictionary<(Level Level, int Scene), EnemyCardPair> SpellCards =
+            new Dictionary<(Level, int), EnemyCardPair>()
             {
-                { new LevelScenePair(Level.Lv1,     1), new EnemyCardPair(Enemy.Minoriko,  string.Empty) },
-                { new LevelScenePair(Level.Lv1,     2), new EnemyCardPair(Enemy.Minoriko,  string.Empty) },
-                { new LevelScenePair(Level.Lv1,     3), new EnemyCardPair(Enemy.Shizuha,   "秋符「フォーリンブラスト」") },
-                { new LevelScenePair(Level.Lv1,     4), new EnemyCardPair(Enemy.Minoriko,  "実符「ウォームカラーハーヴェスト」") },
-                { new LevelScenePair(Level.Lv1,     5), new EnemyCardPair(Enemy.Shizuha,   "枯道「ロストウィンドロウ」") },
-                { new LevelScenePair(Level.Lv1,     6), new EnemyCardPair(Enemy.Minoriko,  "焼芋「スイートポテトルーム」") },
-                { new LevelScenePair(Level.Lv2,     1), new EnemyCardPair(Enemy.Parsee,    string.Empty) },
-                { new LevelScenePair(Level.Lv2,     2), new EnemyCardPair(Enemy.Hina,      string.Empty) },
-                { new LevelScenePair(Level.Lv2,     3), new EnemyCardPair(Enemy.Parsee,    "嫉妬「ジェラシーボンバー」") },
-                { new LevelScenePair(Level.Lv2,     4), new EnemyCardPair(Enemy.Hina,      "厄野「禊川の堆積」") },
-                { new LevelScenePair(Level.Lv2,     5), new EnemyCardPair(Enemy.Parsee,    "怨み念法「積怨返し」") },
-                { new LevelScenePair(Level.Lv2,     6), new EnemyCardPair(Enemy.Hina,      "災禍「呪いの雛人形」") },
-                { new LevelScenePair(Level.Lv3,     1), new EnemyCardPair(Enemy.Yamame,    string.Empty) },
-                { new LevelScenePair(Level.Lv3,     2), new EnemyCardPair(Enemy.Kogasa,    "傘符「一本足ピッチャー返し」") },
-                { new LevelScenePair(Level.Lv3,     3), new EnemyCardPair(Enemy.Kisume,    "釣瓶「飛んで井の中」") },
-                { new LevelScenePair(Level.Lv3,     4), new EnemyCardPair(Enemy.Yamame,    "細綱「カンダタロープ」") },
-                { new LevelScenePair(Level.Lv3,     5), new EnemyCardPair(Enemy.Kogasa,    "虹符「オーバー・ザ・レインボー」") },
-                { new LevelScenePair(Level.Lv3,     6), new EnemyCardPair(Enemy.Kisume,    "釣瓶「ウェルディストラクター」") },
-                { new LevelScenePair(Level.Lv3,     7), new EnemyCardPair(Enemy.Yamame,    "毒符「樺黄小町」") },
-                { new LevelScenePair(Level.Lv3,     8), new EnemyCardPair(Enemy.Kogasa,    "傘符「細雪の過客」") },
-                { new LevelScenePair(Level.Lv4,     1), new EnemyCardPair(Enemy.Nitori,    string.Empty) },
-                { new LevelScenePair(Level.Lv4,     2), new EnemyCardPair(Enemy.Momiji,    string.Empty) },
-                { new LevelScenePair(Level.Lv4,     3), new EnemyCardPair(Enemy.Nitori,    "水符「ウォーターカーペット」") },
-                { new LevelScenePair(Level.Lv4,     4), new EnemyCardPair(Enemy.Momiji,    "狗符「レイビーズバイト」") },
-                { new LevelScenePair(Level.Lv4,     5), new EnemyCardPair(Enemy.Nitori,    "河符「ディバイディングエッジ」") },
-                { new LevelScenePair(Level.Lv4,     6), new EnemyCardPair(Enemy.Momiji,    "山窩「エクスペリーズカナン」") },
-                { new LevelScenePair(Level.Lv4,     7), new EnemyCardPair(Enemy.Nitori,    "河童「乾燥尻子玉」") },
-                { new LevelScenePair(Level.Lv5,     1), new EnemyCardPair(Enemy.Ichirin,   string.Empty) },
-                { new LevelScenePair(Level.Lv5,     2), new EnemyCardPair(Enemy.Minamitsu, string.Empty) },
-                { new LevelScenePair(Level.Lv5,     3), new EnemyCardPair(Enemy.Ichirin,   "拳骨「天空鉄槌落とし」") },
-                { new LevelScenePair(Level.Lv5,     4), new EnemyCardPair(Enemy.Minamitsu, "錨符「幽霊船長期停泊」") },
-                { new LevelScenePair(Level.Lv5,     5), new EnemyCardPair(Enemy.Ichirin,   "稲妻「帯電入道」") },
-                { new LevelScenePair(Level.Lv5,     6), new EnemyCardPair(Enemy.Minamitsu, "浸水「船底のヴィーナス」") },
-                { new LevelScenePair(Level.Lv5,     7), new EnemyCardPair(Enemy.Ichirin,   "鉄拳「入道にょき」") },
-                { new LevelScenePair(Level.Lv5,     8), new EnemyCardPair(Enemy.Minamitsu, "「ディープシンカー」") },
-                { new LevelScenePair(Level.Lv6,     1), new EnemyCardPair(Enemy.Yuugi,     string.Empty) },
-                { new LevelScenePair(Level.Lv6,     2), new EnemyCardPair(Enemy.Suika,     string.Empty) },
-                { new LevelScenePair(Level.Lv6,     3), new EnemyCardPair(Enemy.Yuugi,     "光鬼「金剛螺旋」") },
-                { new LevelScenePair(Level.Lv6,     4), new EnemyCardPair(Enemy.Suika,     "鬼符「豆粒大の針地獄」") },
-                { new LevelScenePair(Level.Lv6,     5), new EnemyCardPair(Enemy.Yuugi,     "鬼符「鬼気狂瀾」") },
-                { new LevelScenePair(Level.Lv6,     6), new EnemyCardPair(Enemy.Suika,     "地獄「煉獄吐息」") },
-                { new LevelScenePair(Level.Lv6,     7), new EnemyCardPair(Enemy.Yuugi,     "鬼声「壊滅の咆哮」") },
-                { new LevelScenePair(Level.Lv6,     8), new EnemyCardPair(Enemy.Suika,     "鬼符「ミッシングパワー」") },
-                { new LevelScenePair(Level.Lv7,     1), new EnemyCardPair(Enemy.Shou,      string.Empty) },
-                { new LevelScenePair(Level.Lv7,     2), new EnemyCardPair(Enemy.Nazrin,    string.Empty) },
-                { new LevelScenePair(Level.Lv7,     3), new EnemyCardPair(Enemy.Shou,      "寅符「ハングリータイガー」") },
-                { new LevelScenePair(Level.Lv7,     4), new EnemyCardPair(Enemy.Nazrin,    "棒符「ナズーリンロッド」") },
-                { new LevelScenePair(Level.Lv7,     5), new EnemyCardPair(Enemy.Shou,      "天符「焦土曼荼羅」") },
-                { new LevelScenePair(Level.Lv7,     6), new EnemyCardPair(Enemy.Nazrin,    "財宝「ゴールドラッシュ」") },
-                { new LevelScenePair(Level.Lv7,     7), new EnemyCardPair(Enemy.Shou,      "宝符「黄金の震眩」") },
-                { new LevelScenePair(Level.Lv8,     1), new EnemyCardPair(Enemy.Rin,       string.Empty) },
-                { new LevelScenePair(Level.Lv8,     2), new EnemyCardPair(Enemy.Utsuho,    "熔解「メルティングホワイト」") },
-                { new LevelScenePair(Level.Lv8,     3), new EnemyCardPair(Enemy.Rin,       "死符「ゴーストタウン」") },
-                { new LevelScenePair(Level.Lv8,     4), new EnemyCardPair(Enemy.Utsuho,    "巨星「レッドジャイアント」") },
-                { new LevelScenePair(Level.Lv8,     5), new EnemyCardPair(Enemy.Rin,       "「死体繁華街」") },
-                { new LevelScenePair(Level.Lv8,     6), new EnemyCardPair(Enemy.Utsuho,    "星符「巨星墜つ」") },
-                { new LevelScenePair(Level.Lv8,     7), new EnemyCardPair(Enemy.Rin,       "酔歩「キャットランダムウォーク」") },
-                { new LevelScenePair(Level.Lv8,     8), new EnemyCardPair(Enemy.Utsuho,    "七星「セプテントリオン」") },
-                { new LevelScenePair(Level.Lv9,     1), new EnemyCardPair(Enemy.Satori,    string.Empty) },
-                { new LevelScenePair(Level.Lv9,     2), new EnemyCardPair(Enemy.Koishi,    "心符「没我の愛」") },
-                { new LevelScenePair(Level.Lv9,     3), new EnemyCardPair(Enemy.Satori,    "脳符「ブレインフィンガープリント」") },
-                { new LevelScenePair(Level.Lv9,     4), new EnemyCardPair(Enemy.Koishi,    "記憶「ＤＮＡの瑕」") },
-                { new LevelScenePair(Level.Lv9,     5), new EnemyCardPair(Enemy.Satori,    "心花「カメラシャイローズ」") },
-                { new LevelScenePair(Level.Lv9,     6), new EnemyCardPair(Enemy.Koishi,    "「胎児の夢」") },
-                { new LevelScenePair(Level.Lv9,     7), new EnemyCardPair(Enemy.Satori,    "想起「うろおぼえの金閣寺」") },
-                { new LevelScenePair(Level.Lv9,     8), new EnemyCardPair(Enemy.Koishi,    "「ローズ地獄」") },
-                { new LevelScenePair(Level.Lv10,    1), new EnemyCardPair(Enemy.Tenshi,    "気性「勇気凛々の剣」") },
-                { new LevelScenePair(Level.Lv10,    2), new EnemyCardPair(Enemy.Iku,       "雷符「ライトニングフィッシュ」") },
-                { new LevelScenePair(Level.Lv10,    3), new EnemyCardPair(Enemy.Tenshi,    "地震「避難険路」") },
-                { new LevelScenePair(Level.Lv10,    4), new EnemyCardPair(Enemy.Iku,       "珠符「五爪龍の珠」") },
-                { new LevelScenePair(Level.Lv10,    5), new EnemyCardPair(Enemy.Tenshi,    "要石「カナメファンネル」") },
-                { new LevelScenePair(Level.Lv10,    6), new EnemyCardPair(Enemy.Iku,       "龍宮「タイヤヒラメダンス」") },
-                { new LevelScenePair(Level.Lv10,    7), new EnemyCardPair(Enemy.Tenshi,    "「全人類の緋想天」") },
-                { new LevelScenePair(Level.Lv10,    8), new EnemyCardPair(Enemy.Iku,       "龍魚「龍宮の使い遊泳弾」") },
-                { new LevelScenePair(Level.Lv11,    1), new EnemyCardPair(Enemy.Kanako,    string.Empty) },
-                { new LevelScenePair(Level.Lv11,    2), new EnemyCardPair(Enemy.Suwako,    "神桜「湛えの桜吹雪」") },
-                { new LevelScenePair(Level.Lv11,    3), new EnemyCardPair(Enemy.Kanako,    "蛇符「グラウンドサーペント」") },
-                { new LevelScenePair(Level.Lv11,    4), new EnemyCardPair(Enemy.Suwako,    "姫川「プリンセスジェイドグリーン」") },
-                { new LevelScenePair(Level.Lv11,    5), new EnemyCardPair(Enemy.Kanako,    "御柱「メテオリックオンバシラ」") },
-                { new LevelScenePair(Level.Lv11,    6), new EnemyCardPair(Enemy.Suwako,    "鉄輪「ミシカルリング」") },
-                { new LevelScenePair(Level.Lv11,    7), new EnemyCardPair(Enemy.Kanako,    "儚道「御神渡りクロス」") },
-                { new LevelScenePair(Level.Lv11,    8), new EnemyCardPair(Enemy.Suwako,    "土着神「御射軍神さま」") },
-                { new LevelScenePair(Level.Lv12,    1), new EnemyCardPair(Enemy.Byakuren,  string.Empty) },
-                { new LevelScenePair(Level.Lv12,    2), new EnemyCardPair(Enemy.Nue,       "正体不明「紫鏡」") },
-                { new LevelScenePair(Level.Lv12,    3), new EnemyCardPair(Enemy.Byakuren,  "「遊行聖」") },
-                { new LevelScenePair(Level.Lv12,    4), new EnemyCardPair(Enemy.Nue,       "正体不明「赤マント青マント」") },
-                { new LevelScenePair(Level.Lv12,    5), new EnemyCardPair(Enemy.Byakuren,  "習合「垂迹大日如来」") },
-                { new LevelScenePair(Level.Lv12,    6), new EnemyCardPair(Enemy.Nue,       "正体不明「厠の花子さん」") },
-                { new LevelScenePair(Level.Lv12,    7), new EnemyCardPair(Enemy.Byakuren,  "「スターソードの護法」") },
-                { new LevelScenePair(Level.Lv12,    8), new EnemyCardPair(Enemy.Nue,       "「遊星よりの弾幕Ｘ」") },
-                { new LevelScenePair(Level.Extra,   1), new EnemyCardPair(Enemy.Reimu,     "お札「新聞拡張団調伏」") },
-                { new LevelScenePair(Level.Extra,   2), new EnemyCardPair(Enemy.Marisa,    "星符「オールトクラウド」") },
-                { new LevelScenePair(Level.Extra,   3), new EnemyCardPair(Enemy.Sanae,     "奇跡「弘安の神風」") },
-                { new LevelScenePair(Level.Extra,   4), new EnemyCardPair(Enemy.Reimu,     "結界「パパラッチ撃退結界」") },
-                { new LevelScenePair(Level.Extra,   5), new EnemyCardPair(Enemy.Marisa,    "天儀「オーレリーズソーラーシステム」") },
-                { new LevelScenePair(Level.Extra,   6), new EnemyCardPair(Enemy.Sanae,     "蛙符「手管の蝦蟇」") },
-                { new LevelScenePair(Level.Extra,   7), new EnemyCardPair(Enemy.Reimu,     "夢符「夢想亜空穴」") },
-                { new LevelScenePair(Level.Extra,   8), new EnemyCardPair(Enemy.Marisa,    "彗星「ブレイジングスター」") },
-                { new LevelScenePair(Level.Extra,   9), new EnemyCardPair(Enemy.Sanae,     "妖怪退治「妖力スポイラー」") },
-                { new LevelScenePair(Level.Spoiler, 1), new EnemyCardPair(Enemy.Hatate,    string.Empty) },
-                { new LevelScenePair(Level.Spoiler, 2), new EnemyCardPair(Enemy.Hatate,    "取材「姫海棠はたての練習取材」") },
-                { new LevelScenePair(Level.Spoiler, 3), new EnemyCardPair(Enemy.Hatate,    "連写「ラピッドショット」") },
-                { new LevelScenePair(Level.Spoiler, 4), new EnemyCardPair(Enemy.Hatate,    "遠眼「天狗サイコグラフィ」") },
-                { new LevelScenePair(Level.Spoiler, 5), new EnemyCardPair(Enemy.Aya,       string.Empty) },
-                { new LevelScenePair(Level.Spoiler, 6), new EnemyCardPair(Enemy.Aya,       "取材「射命丸文の圧迫取材」") },
-                { new LevelScenePair(Level.Spoiler, 7), new EnemyCardPair(Enemy.Aya,       "望遠「キャンディッドショット」") },
-                { new LevelScenePair(Level.Spoiler, 8), new EnemyCardPair(Enemy.Aya,       "速写「ファストショット」") },
-                { new LevelScenePair(Level.Spoiler, 9), new EnemyCardPair(Enemy.Aya,       "「幻想風靡」") },
+                { (Level.Lv1,     1), new EnemyCardPair(Enemy.Minoriko,  string.Empty) },
+                { (Level.Lv1,     2), new EnemyCardPair(Enemy.Minoriko,  string.Empty) },
+                { (Level.Lv1,     3), new EnemyCardPair(Enemy.Shizuha,   "秋符「フォーリンブラスト」") },
+                { (Level.Lv1,     4), new EnemyCardPair(Enemy.Minoriko,  "実符「ウォームカラーハーヴェスト」") },
+                { (Level.Lv1,     5), new EnemyCardPair(Enemy.Shizuha,   "枯道「ロストウィンドロウ」") },
+                { (Level.Lv1,     6), new EnemyCardPair(Enemy.Minoriko,  "焼芋「スイートポテトルーム」") },
+                { (Level.Lv2,     1), new EnemyCardPair(Enemy.Parsee,    string.Empty) },
+                { (Level.Lv2,     2), new EnemyCardPair(Enemy.Hina,      string.Empty) },
+                { (Level.Lv2,     3), new EnemyCardPair(Enemy.Parsee,    "嫉妬「ジェラシーボンバー」") },
+                { (Level.Lv2,     4), new EnemyCardPair(Enemy.Hina,      "厄野「禊川の堆積」") },
+                { (Level.Lv2,     5), new EnemyCardPair(Enemy.Parsee,    "怨み念法「積怨返し」") },
+                { (Level.Lv2,     6), new EnemyCardPair(Enemy.Hina,      "災禍「呪いの雛人形」") },
+                { (Level.Lv3,     1), new EnemyCardPair(Enemy.Yamame,    string.Empty) },
+                { (Level.Lv3,     2), new EnemyCardPair(Enemy.Kogasa,    "傘符「一本足ピッチャー返し」") },
+                { (Level.Lv3,     3), new EnemyCardPair(Enemy.Kisume,    "釣瓶「飛んで井の中」") },
+                { (Level.Lv3,     4), new EnemyCardPair(Enemy.Yamame,    "細綱「カンダタロープ」") },
+                { (Level.Lv3,     5), new EnemyCardPair(Enemy.Kogasa,    "虹符「オーバー・ザ・レインボー」") },
+                { (Level.Lv3,     6), new EnemyCardPair(Enemy.Kisume,    "釣瓶「ウェルディストラクター」") },
+                { (Level.Lv3,     7), new EnemyCardPair(Enemy.Yamame,    "毒符「樺黄小町」") },
+                { (Level.Lv3,     8), new EnemyCardPair(Enemy.Kogasa,    "傘符「細雪の過客」") },
+                { (Level.Lv4,     1), new EnemyCardPair(Enemy.Nitori,    string.Empty) },
+                { (Level.Lv4,     2), new EnemyCardPair(Enemy.Momiji,    string.Empty) },
+                { (Level.Lv4,     3), new EnemyCardPair(Enemy.Nitori,    "水符「ウォーターカーペット」") },
+                { (Level.Lv4,     4), new EnemyCardPair(Enemy.Momiji,    "狗符「レイビーズバイト」") },
+                { (Level.Lv4,     5), new EnemyCardPair(Enemy.Nitori,    "河符「ディバイディングエッジ」") },
+                { (Level.Lv4,     6), new EnemyCardPair(Enemy.Momiji,    "山窩「エクスペリーズカナン」") },
+                { (Level.Lv4,     7), new EnemyCardPair(Enemy.Nitori,    "河童「乾燥尻子玉」") },
+                { (Level.Lv5,     1), new EnemyCardPair(Enemy.Ichirin,   string.Empty) },
+                { (Level.Lv5,     2), new EnemyCardPair(Enemy.Minamitsu, string.Empty) },
+                { (Level.Lv5,     3), new EnemyCardPair(Enemy.Ichirin,   "拳骨「天空鉄槌落とし」") },
+                { (Level.Lv5,     4), new EnemyCardPair(Enemy.Minamitsu, "錨符「幽霊船長期停泊」") },
+                { (Level.Lv5,     5), new EnemyCardPair(Enemy.Ichirin,   "稲妻「帯電入道」") },
+                { (Level.Lv5,     6), new EnemyCardPair(Enemy.Minamitsu, "浸水「船底のヴィーナス」") },
+                { (Level.Lv5,     7), new EnemyCardPair(Enemy.Ichirin,   "鉄拳「入道にょき」") },
+                { (Level.Lv5,     8), new EnemyCardPair(Enemy.Minamitsu, "「ディープシンカー」") },
+                { (Level.Lv6,     1), new EnemyCardPair(Enemy.Yuugi,     string.Empty) },
+                { (Level.Lv6,     2), new EnemyCardPair(Enemy.Suika,     string.Empty) },
+                { (Level.Lv6,     3), new EnemyCardPair(Enemy.Yuugi,     "光鬼「金剛螺旋」") },
+                { (Level.Lv6,     4), new EnemyCardPair(Enemy.Suika,     "鬼符「豆粒大の針地獄」") },
+                { (Level.Lv6,     5), new EnemyCardPair(Enemy.Yuugi,     "鬼符「鬼気狂瀾」") },
+                { (Level.Lv6,     6), new EnemyCardPair(Enemy.Suika,     "地獄「煉獄吐息」") },
+                { (Level.Lv6,     7), new EnemyCardPair(Enemy.Yuugi,     "鬼声「壊滅の咆哮」") },
+                { (Level.Lv6,     8), new EnemyCardPair(Enemy.Suika,     "鬼符「ミッシングパワー」") },
+                { (Level.Lv7,     1), new EnemyCardPair(Enemy.Shou,      string.Empty) },
+                { (Level.Lv7,     2), new EnemyCardPair(Enemy.Nazrin,    string.Empty) },
+                { (Level.Lv7,     3), new EnemyCardPair(Enemy.Shou,      "寅符「ハングリータイガー」") },
+                { (Level.Lv7,     4), new EnemyCardPair(Enemy.Nazrin,    "棒符「ナズーリンロッド」") },
+                { (Level.Lv7,     5), new EnemyCardPair(Enemy.Shou,      "天符「焦土曼荼羅」") },
+                { (Level.Lv7,     6), new EnemyCardPair(Enemy.Nazrin,    "財宝「ゴールドラッシュ」") },
+                { (Level.Lv7,     7), new EnemyCardPair(Enemy.Shou,      "宝符「黄金の震眩」") },
+                { (Level.Lv8,     1), new EnemyCardPair(Enemy.Rin,       string.Empty) },
+                { (Level.Lv8,     2), new EnemyCardPair(Enemy.Utsuho,    "熔解「メルティングホワイト」") },
+                { (Level.Lv8,     3), new EnemyCardPair(Enemy.Rin,       "死符「ゴーストタウン」") },
+                { (Level.Lv8,     4), new EnemyCardPair(Enemy.Utsuho,    "巨星「レッドジャイアント」") },
+                { (Level.Lv8,     5), new EnemyCardPair(Enemy.Rin,       "「死体繁華街」") },
+                { (Level.Lv8,     6), new EnemyCardPair(Enemy.Utsuho,    "星符「巨星墜つ」") },
+                { (Level.Lv8,     7), new EnemyCardPair(Enemy.Rin,       "酔歩「キャットランダムウォーク」") },
+                { (Level.Lv8,     8), new EnemyCardPair(Enemy.Utsuho,    "七星「セプテントリオン」") },
+                { (Level.Lv9,     1), new EnemyCardPair(Enemy.Satori,    string.Empty) },
+                { (Level.Lv9,     2), new EnemyCardPair(Enemy.Koishi,    "心符「没我の愛」") },
+                { (Level.Lv9,     3), new EnemyCardPair(Enemy.Satori,    "脳符「ブレインフィンガープリント」") },
+                { (Level.Lv9,     4), new EnemyCardPair(Enemy.Koishi,    "記憶「ＤＮＡの瑕」") },
+                { (Level.Lv9,     5), new EnemyCardPair(Enemy.Satori,    "心花「カメラシャイローズ」") },
+                { (Level.Lv9,     6), new EnemyCardPair(Enemy.Koishi,    "「胎児の夢」") },
+                { (Level.Lv9,     7), new EnemyCardPair(Enemy.Satori,    "想起「うろおぼえの金閣寺」") },
+                { (Level.Lv9,     8), new EnemyCardPair(Enemy.Koishi,    "「ローズ地獄」") },
+                { (Level.Lv10,    1), new EnemyCardPair(Enemy.Tenshi,    "気性「勇気凛々の剣」") },
+                { (Level.Lv10,    2), new EnemyCardPair(Enemy.Iku,       "雷符「ライトニングフィッシュ」") },
+                { (Level.Lv10,    3), new EnemyCardPair(Enemy.Tenshi,    "地震「避難険路」") },
+                { (Level.Lv10,    4), new EnemyCardPair(Enemy.Iku,       "珠符「五爪龍の珠」") },
+                { (Level.Lv10,    5), new EnemyCardPair(Enemy.Tenshi,    "要石「カナメファンネル」") },
+                { (Level.Lv10,    6), new EnemyCardPair(Enemy.Iku,       "龍宮「タイヤヒラメダンス」") },
+                { (Level.Lv10,    7), new EnemyCardPair(Enemy.Tenshi,    "「全人類の緋想天」") },
+                { (Level.Lv10,    8), new EnemyCardPair(Enemy.Iku,       "龍魚「龍宮の使い遊泳弾」") },
+                { (Level.Lv11,    1), new EnemyCardPair(Enemy.Kanako,    string.Empty) },
+                { (Level.Lv11,    2), new EnemyCardPair(Enemy.Suwako,    "神桜「湛えの桜吹雪」") },
+                { (Level.Lv11,    3), new EnemyCardPair(Enemy.Kanako,    "蛇符「グラウンドサーペント」") },
+                { (Level.Lv11,    4), new EnemyCardPair(Enemy.Suwako,    "姫川「プリンセスジェイドグリーン」") },
+                { (Level.Lv11,    5), new EnemyCardPair(Enemy.Kanako,    "御柱「メテオリックオンバシラ」") },
+                { (Level.Lv11,    6), new EnemyCardPair(Enemy.Suwako,    "鉄輪「ミシカルリング」") },
+                { (Level.Lv11,    7), new EnemyCardPair(Enemy.Kanako,    "儚道「御神渡りクロス」") },
+                { (Level.Lv11,    8), new EnemyCardPair(Enemy.Suwako,    "土着神「御射軍神さま」") },
+                { (Level.Lv12,    1), new EnemyCardPair(Enemy.Byakuren,  string.Empty) },
+                { (Level.Lv12,    2), new EnemyCardPair(Enemy.Nue,       "正体不明「紫鏡」") },
+                { (Level.Lv12,    3), new EnemyCardPair(Enemy.Byakuren,  "「遊行聖」") },
+                { (Level.Lv12,    4), new EnemyCardPair(Enemy.Nue,       "正体不明「赤マント青マント」") },
+                { (Level.Lv12,    5), new EnemyCardPair(Enemy.Byakuren,  "習合「垂迹大日如来」") },
+                { (Level.Lv12,    6), new EnemyCardPair(Enemy.Nue,       "正体不明「厠の花子さん」") },
+                { (Level.Lv12,    7), new EnemyCardPair(Enemy.Byakuren,  "「スターソードの護法」") },
+                { (Level.Lv12,    8), new EnemyCardPair(Enemy.Nue,       "「遊星よりの弾幕Ｘ」") },
+                { (Level.Extra,   1), new EnemyCardPair(Enemy.Reimu,     "お札「新聞拡張団調伏」") },
+                { (Level.Extra,   2), new EnemyCardPair(Enemy.Marisa,    "星符「オールトクラウド」") },
+                { (Level.Extra,   3), new EnemyCardPair(Enemy.Sanae,     "奇跡「弘安の神風」") },
+                { (Level.Extra,   4), new EnemyCardPair(Enemy.Reimu,     "結界「パパラッチ撃退結界」") },
+                { (Level.Extra,   5), new EnemyCardPair(Enemy.Marisa,    "天儀「オーレリーズソーラーシステム」") },
+                { (Level.Extra,   6), new EnemyCardPair(Enemy.Sanae,     "蛙符「手管の蝦蟇」") },
+                { (Level.Extra,   7), new EnemyCardPair(Enemy.Reimu,     "夢符「夢想亜空穴」") },
+                { (Level.Extra,   8), new EnemyCardPair(Enemy.Marisa,    "彗星「ブレイジングスター」") },
+                { (Level.Extra,   9), new EnemyCardPair(Enemy.Sanae,     "妖怪退治「妖力スポイラー」") },
+                { (Level.Spoiler, 1), new EnemyCardPair(Enemy.Hatate,    string.Empty) },
+                { (Level.Spoiler, 2), new EnemyCardPair(Enemy.Hatate,    "取材「姫海棠はたての練習取材」") },
+                { (Level.Spoiler, 3), new EnemyCardPair(Enemy.Hatate,    "連写「ラピッドショット」") },
+                { (Level.Spoiler, 4), new EnemyCardPair(Enemy.Hatate,    "遠眼「天狗サイコグラフィ」") },
+                { (Level.Spoiler, 5), new EnemyCardPair(Enemy.Aya,       string.Empty) },
+                { (Level.Spoiler, 6), new EnemyCardPair(Enemy.Aya,       "取材「射命丸文の圧迫取材」") },
+                { (Level.Spoiler, 7), new EnemyCardPair(Enemy.Aya,       "望遠「キャンディッドショット」") },
+                { (Level.Spoiler, 8), new EnemyCardPair(Enemy.Aya,       "速写「ファストショット」") },
+                { (Level.Spoiler, 9), new EnemyCardPair(Enemy.Aya,       "「幻想風靡」") },
             };
 
         private static new readonly EnumShortNameParser<Level> LevelParser =
@@ -155,7 +155,7 @@ namespace ThScoreFileConverter.Models
 
         private AllScoreData allScoreData = null;
 
-        private Dictionary<Chara, Dictionary<LevelScenePair, BestShotPair>> bestshots = null;
+        private Dictionary<Chara, Dictionary<(Level Level, int Scene), BestShotPair>> bestshots = null;
 
         public new enum Level
         {
@@ -297,17 +297,17 @@ namespace ThScoreFileConverter.Models
 
                     if (this.bestshots == null)
                     {
-                        this.bestshots = new Dictionary<Chara, Dictionary<LevelScenePair, BestShotPair>>(
+                        this.bestshots = new Dictionary<Chara, Dictionary<(Level, int), BestShotPair>>(
                             Enum.GetValues(typeof(Chara)).Length);
                     }
 
                     if (!this.bestshots.ContainsKey(chara))
                     {
                         this.bestshots.Add(
-                            chara, new Dictionary<LevelScenePair, BestShotPair>(SpellCards.Count));
+                            chara, new Dictionary<(Level, int), BestShotPair>(SpellCards.Count));
                     }
 
-                    var key = new LevelScenePair(header.Level, header.Scene);
+                    var key = (header.Level, header.Scene);
                     if (!this.bestshots[chara].ContainsKey(key))
                         this.bestshots[chara].Add(key, new BestShotPair(outputFile.Name, header));
 
@@ -469,7 +469,7 @@ namespace ThScoreFileConverter.Models
                     var scene = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
                     var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
-                    var key = new LevelScenePair(level, scene);
+                    var key = (level, scene);
                     if (!SpellCards.ContainsKey(key))
                         return match.ToString();
 
@@ -607,7 +607,7 @@ namespace ThScoreFileConverter.Models
                     var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                    var key = new LevelScenePair(level, scene);
+                    var key = (level, scene);
                     if (!SpellCards.ContainsKey(key))
                         return match.ToString();
 
@@ -666,12 +666,12 @@ namespace ThScoreFileConverter.Models
                     var level = LevelParser.Parse(match.Groups[2].Value);
                     var scene = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                    var key = new LevelScenePair(level, scene);
+                    var key = (level, scene);
                     if (!SpellCards.ContainsKey(key))
                         return match.ToString();
 
                     if (!string.IsNullOrEmpty(outputFilePath) &&
-                        parent.bestshots.TryGetValue(chara, out Dictionary<LevelScenePair, BestShotPair> bestshots) &&
+                        parent.bestshots.TryGetValue(chara, out var bestshots) &&
                         bestshots.TryGetValue(key, out BestShotPair bestshot))
                     {
                         var relativePath = new Uri(outputFilePath)
@@ -747,12 +747,12 @@ namespace ThScoreFileConverter.Models
                     var scene = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
                     var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
-                    var key = new LevelScenePair(level, scene);
+                    var key = (level, scene);
                     if (!SpellCards.ContainsKey(key))
                         return match.ToString();
 
                     if (!string.IsNullOrEmpty(outputFilePath) &&
-                        parent.bestshots.TryGetValue(chara, out Dictionary<LevelScenePair, BestShotPair> bestshots) &&
+                        parent.bestshots.TryGetValue(chara, out var bestshots) &&
                         bestshots.TryGetValue(key, out BestShotPair bestshot))
                     {
                         Score score;
@@ -809,24 +809,6 @@ namespace ThScoreFileConverter.Models
             public string Replace(string input)
             {
                 return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-            }
-        }
-
-        private class LevelScenePair : Pair<Level, int>
-        {
-            public LevelScenePair(Level level, int scene)
-                : base(level, scene)
-            {
-            }
-
-            public Level Level
-            {
-                get { return this.First; }
-            }
-
-            public int Scene
-            {
-                get { return this.Second; }     // 1-based
             }
         }
 
@@ -915,7 +897,7 @@ namespace ThScoreFileConverter.Models
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
                     var number = reader.ReadUInt32();
-                    this.LevelScene = new LevelScenePair(Utils.ToEnum<Level>(number / 10), (int)((number % 10) + 1));
+                    this.LevelScene = (Utils.ToEnum<Level>(number / 10), (int)((number % 10) + 1));
                     this.HighScore = reader.ReadInt32();
                     reader.ReadExactBytes(0x04);
                     this.Chara = Utils.ToEnum<Chara>(reader.ReadInt32());
@@ -932,7 +914,7 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            public LevelScenePair LevelScene { get; private set; }
+            public (Level Level, int Scene) LevelScene { get; private set; }
 
             public int HighScore { get; private set; }
 

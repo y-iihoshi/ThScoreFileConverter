@@ -111,7 +111,6 @@
     <Compile Include="Models\Th095ChapterTests.cs" />
     <Compile Include="Models\Th095EnemyCardPairTests.cs" />
     <Compile Include="Models\Th095HeaderTests.cs" />
-    <Compile Include="Models\Th095LevelScenePairTests.cs" />
     <Compile Include="Models\Th095ScoreTests.cs" />
     <Compile Include="Models\Th095StatusTests.cs" />
     <Compile Include="Models\Th10AllScoreDataTests.cs" />
@@ -212,7 +211,6 @@
     <Compile Include="Models\Wrappers\Th095ChapterWrapper.cs" />
     <Compile Include="Models\Wrappers\Th095EnemyCardPairWrapper.cs" />
     <Compile Include="Models\Wrappers\Th095HeaderWrapper.cs" />
-    <Compile Include="Models\Wrappers\Th095LevelScenePairWrapper.cs" />
     <Compile Include="Models\Wrappers\Th095ScoreWrapper.cs" />
     <Compile Include="Models\Wrappers\Th095StatusWrapper.cs" />
     <Compile Include="Models\Wrappers\Th10AllScoreDataWrapper.cs" />
