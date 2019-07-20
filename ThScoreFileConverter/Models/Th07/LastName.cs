@@ -9,7 +9,6 @@
 
 namespace ThScoreFileConverter.Models.Th07
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.IO;
 
     internal class LastName : Th06.Chapter
@@ -27,7 +26,6 @@ namespace ThScoreFileConverter.Models.Th07
             }
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-        public byte[] Name { get; private set; }    // .Length = 12, null-terminated
+        public byte[] Name { get; } // Null-terminated
     }
 }

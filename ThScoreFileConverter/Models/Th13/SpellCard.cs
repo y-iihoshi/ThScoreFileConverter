@@ -10,13 +10,11 @@
 namespace ThScoreFileConverter.Models.Th13
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.IO;
 
     internal class SpellCard<TLevel> : IBinaryReadable
         where TLevel : struct, Enum
     {
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
         public byte[] Name { get; private set; }
 
         public int ClearCount { get; private set; }
@@ -31,7 +29,6 @@ namespace ThScoreFileConverter.Models.Th13
 
         public TLevel Level { get; private set; }
 
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
         public int PracticeScore { get; private set; }
 
         public bool HasTried => (this.TrialCount > 0) || (this.PracticeTrialCount > 0);

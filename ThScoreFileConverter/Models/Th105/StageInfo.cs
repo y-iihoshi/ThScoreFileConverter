@@ -24,7 +24,6 @@ namespace ThScoreFileConverter.Models.Th105
             this.CardIds = cardIds.ToList();
         }
 
-        // [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
         public TStage Stage { get; }
 
         public TChara Enemy { get; }
