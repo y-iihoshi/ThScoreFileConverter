@@ -1169,36 +1169,8 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class SpellCardResult : IBinaryReadable
+        private class SpellCardResult : Th105.SpellCardResult<Chara, Level>
         {
-            public SpellCardResult()
-            {
-            }
-
-            public Chara Enemy { get; private set; }
-
-            public Level Level { get; private set; }
-
-            public int Id { get; private set; }     // 0-based
-
-            public int TrialCount { get; private set; }
-
-            public int GotCount { get; private set; }
-
-            public uint Frames { get; private set; }
-
-            public void ReadFrom(BinaryReader reader)
-            {
-                if (reader == null)
-                    throw new ArgumentNullException(nameof(reader));
-
-                this.Enemy = (Chara)reader.ReadInt32();
-                this.Level = (Level)reader.ReadInt32();
-                this.Id = reader.ReadInt32();
-                this.TrialCount = reader.ReadInt32();
-                this.GotCount = reader.ReadInt32();
-                this.Frames = reader.ReadUInt32();
-            }
         }
     }
 }
