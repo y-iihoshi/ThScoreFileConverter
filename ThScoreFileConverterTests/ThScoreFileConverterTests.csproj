@@ -285,7 +285,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Codecov">
-      <Version>1.5.0</Version>
+      <Version>1.6.1</Version>
     </PackageReference>
     <PackageReference Include="MSTest.TestAdapter">
       <Version>1.4.0</Version>
@@ -295,6 +295,9 @@
     </PackageReference>
     <PackageReference Include="OpenCover">
       <Version>4.7.922</Version>
+    </PackageReference>
+    <PackageReference Include="System.ValueTuple">
+      <Version>4.5.0</Version>
     </PackageReference>
   </ItemGroup>
   <Choose>
