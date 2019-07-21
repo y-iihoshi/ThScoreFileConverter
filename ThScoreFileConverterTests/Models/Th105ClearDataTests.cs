@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th105;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -53,10 +54,16 @@ namespace ThScoreFileConverterTests.Models
                 properties.spellCardResults
                     .SelectMany(pair => Th105SpellCardResultTests.MakeByteArray(pair.Value)).ToArray());
 
-        internal static void Validate<TParent, TChara, TLevel>(
-            in Th105ClearDataWrapper<TParent, TChara, TLevel> clearData,
+        internal static void Validate<TChara, TLevel>(
+            in Th105ClearDataWrapper<TChara, TLevel> clearData,
             in Properties<TChara, TLevel> properties)
-            where TParent : ThConverter
+            where TChara : struct, Enum
+            where TLevel : struct, Enum
+            => Validate(clearData.Target as ClearData<TChara, TLevel>, properties);
+
+        internal static void Validate<TChara, TLevel>(
+            in ClearData<TChara, TLevel> clearData,
+            in Properties<TChara, TLevel> properties)
             where TChara : struct, Enum
             where TLevel : struct, Enum
         {
@@ -72,45 +79,41 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        internal static void ClearDataTestHelper<TParent, TChara, TLevel>()
-            where TParent : ThConverter
+        internal static void ClearDataTestHelper<TChara, TLevel>()
             where TChara : struct, Enum
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var clearData = new Th105ClearDataWrapper<TParent, TChara, TLevel>();
+                var clearData = new Th105ClearDataWrapper<TChara, TLevel>();
 
                 Assert.IsNull(clearData.CardsForDeck);
                 Assert.IsNull(clearData.SpellCardResults);
             });
 
-        internal static void ReadFromTestHelper<TParent, TChara, TLevel>()
-            where TParent : ThConverter
+        internal static void ReadFromTestHelper<TChara, TLevel>()
             where TChara : struct, Enum
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
                 var properties = GetValidProperties<TChara, TLevel>();
 
-                var clearData = Th105ClearDataWrapper<TParent, TChara, TLevel>.Create(MakeByteArray(properties));
+                var clearData = Th105ClearDataWrapper<TChara, TLevel>.Create(MakeByteArray(properties));
 
                 Validate(clearData, properties);
             });
 
-        internal static void ReadFromTestNullHelper<TParent, TChara, TLevel>()
-            where TParent : ThConverter
+        internal static void ReadFromTestNullHelper<TChara, TLevel>()
             where TChara : struct, Enum
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var clearData = new Th105ClearDataWrapper<TParent, TChara, TLevel>();
+                var clearData = new Th105ClearDataWrapper<TChara, TLevel>();
                 clearData.ReadFrom(null);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
-        internal static void ReadFromTestShortenedHelper<TParent, TChara, TLevel>()
-            where TParent : ThConverter
+        internal static void ReadFromTestShortenedHelper<TChara, TLevel>()
             where TChara : struct, Enum
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
@@ -119,13 +122,12 @@ namespace ThScoreFileConverterTests.Models
                 var array = MakeByteArray(properties);
                 array = array.Take(array.Length - 1).ToArray();
 
-                Th105ClearDataWrapper<TParent, TChara, TLevel>.Create(array);
+                Th105ClearDataWrapper<TChara, TLevel>.Create(array);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
-        internal static void ReadFromTestExceededHelper<TParent, TChara, TLevel>()
-            where TParent : ThConverter
+        internal static void ReadFromTestExceededHelper<TChara, TLevel>()
             where TChara : struct, Enum
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
@@ -133,13 +135,12 @@ namespace ThScoreFileConverterTests.Models
                 var properties = GetValidProperties<TChara, TLevel>();
                 var array = MakeByteArray(properties).Concat(new byte[1] { 1 }).ToArray();
 
-                var clearData = Th105ClearDataWrapper<TParent, TChara, TLevel>.Create(array);
+                var clearData = Th105ClearDataWrapper<TChara, TLevel>.Create(array);
 
                 Validate(clearData, properties);
             });
 
-        internal static void ReadFromTestDuplicatedHelper<TParent, TChara, TLevel>()
-            where TParent : ThConverter
+        internal static void ReadFromTestDuplicatedHelper<TChara, TLevel>()
             where TChara : struct, Enum
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
@@ -155,7 +156,7 @@ namespace ThScoreFileConverterTests.Models
                         .SelectMany(pair => Th105SpellCardResultTests.MakeByteArray(pair.Value)).ToArray(),
                     Th105SpellCardResultTests.MakeByteArray(properties.spellCardResults.First().Value));
 
-                var clearData = Th105ClearDataWrapper<TParent, TChara, TLevel>.Create(array);
+                var clearData = Th105ClearDataWrapper<TChara, TLevel>.Create(array);
 
                 Validate(clearData, properties);
             });
@@ -164,29 +165,29 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         public void Th105ClearDataTest()
-            => ClearDataTestHelper<Th105Converter, Th105Converter.Chara, Th105Converter.Level>();
+            => ClearDataTestHelper<Th105Converter.Chara, Th105Converter.Level>();
 
         [TestMethod]
         public void Th105ClearDataReadFromTest()
-            => ReadFromTestHelper<Th105Converter, Th105Converter.Chara, Th105Converter.Level>();
+            => ReadFromTestHelper<Th105Converter.Chara, Th105Converter.Level>();
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th105ClearDataReadFromTestNull()
-            => ReadFromTestNullHelper<Th105Converter, Th105Converter.Chara, Th105Converter.Level>();
+            => ReadFromTestNullHelper<Th105Converter.Chara, Th105Converter.Level>();
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th105ClearDataReadFromTestShortened()
-            => ReadFromTestShortenedHelper<Th105Converter, Th105Converter.Chara, Th105Converter.Level>();
+            => ReadFromTestShortenedHelper<Th105Converter.Chara, Th105Converter.Level>();
 
         [TestMethod]
         public void Th105ClearDataReadFromTestExceeded()
-            => ReadFromTestExceededHelper<Th105Converter, Th105Converter.Chara, Th105Converter.Level>();
+            => ReadFromTestExceededHelper<Th105Converter.Chara, Th105Converter.Level>();
 
         [TestMethod]
         public void Th105ClearDataReadFromTestDuplicated()
-            => ReadFromTestDuplicatedHelper<Th105Converter, Th105Converter.Chara, Th105Converter.Level>();
+            => ReadFromTestDuplicatedHelper<Th105Converter.Chara, Th105Converter.Level>();
 
         #endregion
 
@@ -194,29 +195,29 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         public void Th123ClearDataTest()
-            => ClearDataTestHelper<Th123Converter, Th123Converter.Chara, Th123Converter.Level>();
+            => ClearDataTestHelper<Th123Converter.Chara, Th123Converter.Level>();
 
         [TestMethod]
         public void Th123ClearDataReadFromTest()
-            => ReadFromTestHelper<Th123Converter, Th123Converter.Chara, Th123Converter.Level>();
+            => ReadFromTestHelper<Th123Converter.Chara, Th123Converter.Level>();
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th123ClearDataReadFromTestNull()
-            => ReadFromTestNullHelper<Th123Converter, Th123Converter.Chara, Th123Converter.Level>();
+            => ReadFromTestNullHelper<Th123Converter.Chara, Th123Converter.Level>();
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th123ClearDataReadFromTestShortened()
-            => ReadFromTestShortenedHelper<Th123Converter, Th123Converter.Chara, Th123Converter.Level>();
+            => ReadFromTestShortenedHelper<Th123Converter.Chara, Th123Converter.Level>();
 
         [TestMethod]
         public void Th123ClearDataReadFromTestExceeded()
-            => ReadFromTestExceededHelper<Th123Converter, Th123Converter.Chara, Th123Converter.Level>();
+            => ReadFromTestExceededHelper<Th123Converter.Chara, Th123Converter.Level>();
 
         [TestMethod]
         public void Th123ClearDataReadFromTestDuplicated()
-            => ReadFromTestDuplicatedHelper<Th123Converter, Th123Converter.Chara, Th123Converter.Level>();
+            => ReadFromTestDuplicatedHelper<Th123Converter.Chara, Th123Converter.Level>();
 
         #endregion
     }

@@ -54,16 +54,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.StoryClearCounts)) as Dictionary<TChara, byte>;
         public IReadOnlyDictionary<int, CardForDeck> SystemCards
             => this.pobj.GetProperty(nameof(this.SystemCards)) as Dictionary<int, CardForDeck>;
-        // NOTE: Th105Converter.ClearData is a private class.
-        // public IReadOnlyDictionary<Chara, ClearData> ClearData
-        //     => this.pobj.GetProperty(nameof(ClearData)) as Dictionary<Chara, ClearData>;
-        public object ClearData
-            => this.pobj.GetProperty(nameof(this.ClearData));
-        public int? ClearDataCount
-            => this.ClearData.GetType().GetProperty("Count").GetValue(this.ClearData) as int?;
-        public Th105ClearDataWrapper<TParent, TChara, TLevel> ClearDataItem(TChara chara)
-            => new Th105ClearDataWrapper<TParent, TChara, TLevel>(
-                this.ClearData.GetType().GetProperty("Item").GetValue(this.ClearData, new object[] { chara }));
+        public IReadOnlyDictionary<TChara, ClearData<TChara, TLevel>> ClearData
+            => this.pobj.GetProperty(nameof(this.ClearData)) as Dictionary<TChara, ClearData<TChara, TLevel>>;
 
         public void ReadFrom(BinaryReader reader)
             => this.pobj.Invoke(nameof(ReadFrom), new object[] { reader }, CultureInfo.InvariantCulture);

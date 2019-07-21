@@ -77,7 +77,7 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var pair in properties.clearData)
             {
-                Th105ClearDataTests.Validate(allScoreData.ClearDataItem(pair.Key), pair.Value);
+                Th105ClearDataTests.Validate(allScoreData.ClearData[pair.Key], pair.Value);
             }
         }
 

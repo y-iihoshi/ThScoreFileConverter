@@ -21,6 +21,7 @@ namespace ThScoreFileConverter.Models
     using System.IO.Compression;
     using System.Linq;
     using System.Text.RegularExpressions;
+    using ClearData = Th105.ClearData<Th123Converter.Chara, Th123Converter.Level>;
     using SpellCardResult = Th105.SpellCardResult<Th123Converter.Chara, Th123Converter.Level>;
     using StageInfo = Th105.StageInfo<Th123Converter.Stage, Th123Converter.Chara>;
 
@@ -1495,46 +1496,6 @@ namespace ThScoreFileConverter.Models
                         if (!this.ClearData.ContainsKey(chara))
                             this.ClearData.Add(chara, data);
                     }
-                }
-            }
-        }
-
-        private class ClearData : IBinaryReadable   // per character
-        {
-            public ClearData()
-            {
-                this.CardsForDeck = null;
-                this.SpellCardResults = null;
-            }
-
-            public Dictionary<int, Th105.CardForDeck> CardsForDeck { get; private set; }
-
-            public Dictionary<(Chara Chara, int CardId), SpellCardResult> SpellCardResults { get; private set; }
-
-            public void ReadFrom(BinaryReader reader)
-            {
-                if (reader == null)
-                    throw new ArgumentNullException(nameof(reader));
-
-                var numCards = reader.ReadInt32();
-                this.CardsForDeck = new Dictionary<int, Th105.CardForDeck>(numCards);
-                for (var index = 0; index < numCards; index++)
-                {
-                    var card = new Th105.CardForDeck();
-                    card.ReadFrom(reader);
-                    if (!this.CardsForDeck.ContainsKey(card.Id))
-                        this.CardsForDeck.Add(card.Id, card);
-                }
-
-                var numResults = reader.ReadInt32();
-                this.SpellCardResults = new Dictionary<(Chara, int), SpellCardResult>(numResults);
-                for (var index = 0; index < numResults; index++)
-                {
-                    var result = new SpellCardResult();
-                    result.ReadFrom(reader);
-                    var key = (result.Enemy, result.Id);
-                    if (!this.SpellCardResults.ContainsKey(key))
-                        this.SpellCardResults.Add(key, result);
                 }
             }
         }
