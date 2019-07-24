@@ -106,7 +106,6 @@
     <Compile Include="Models\IStringReplaceable.cs" />
     <Compile Include="Models\Lzss.cs" />
     <Compile Include="Models\SpellCardInfo.cs" />
-    <Compile Include="Models\Squirrel.cs" />
     <Compile Include="Models\Th06Converter.cs" />
     <Compile Include="Models\Th06\Chapter.cs" />
     <Compile Include="Models\Th07Converter.cs" />
@@ -154,6 +153,7 @@
     <Compile Include="Models\Work.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SettingsPerTitle.cs" />
+    <Compile Include="Squirrel\SQObjectType.cs" />
     <Compile Include="ViewModels\AboutWindowViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\SettingWindowViewModel.cs" />
