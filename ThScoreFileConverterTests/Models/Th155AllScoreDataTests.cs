@@ -10,7 +10,7 @@ using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
 {
-    using SQ = Squirrel;
+    using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
 
     [TestClass]
     public class Th155AllScoreDataTests
@@ -83,19 +83,19 @@ namespace ThScoreFileConverterTests.Models
         }
 
         internal static IEnumerable<byte> MakeSQByteArray(in Th155StoryWrapper story)
-            => TestUtils.MakeByteArray((int)SQ.OTTable)
+            => TestUtils.MakeByteArray((int)SQOT.Table)
                 .Concat(TestUtils.MakeSQByteArray(
                     "stage", story.Stage.Value,
                     "ed", (int)story.Ed.Value,
                     "available", story.Available.Value,
                     "overdrive", story.OverDrive.Value,
                     "stage_overdrive", story.StageOverDrive.Value))
-                .Concat(TestUtils.MakeByteArray((int)SQ.OTNull));
+                .Concat(TestUtils.MakeByteArray((int)SQOT.Null));
 
         internal static byte[] MakeByteArray(in Properties properties)
         {
-            var sqTable = TestUtils.MakeByteArray((int)SQ.OTTable);
-            var sqNull = TestUtils.MakeByteArray((int)SQ.OTNull);
+            var sqTable = TestUtils.MakeByteArray((int)SQOT.Table);
+            var sqNull = TestUtils.MakeByteArray((int)SQOT.Null);
 
             return new byte[0]
                 // .Concat(sqTable)
@@ -182,7 +182,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th155AllScoreDataReadObjectTestNull() => TestUtils.Wrap(() =>
         {
-            Th155AllScoreDataWrapper.ReadObject(null, out object obj);
+            Th155AllScoreDataWrapper.ReadObject(null, out var obj);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -191,7 +191,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th155AllScoreDataReadObjectTestEmpty() => TestUtils.Wrap(() =>
         {
-            Th155AllScoreDataReadObjectHelper(new byte[0], out object obj);
+            Th155AllScoreDataReadObjectHelper(new byte[0], out var obj);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -199,7 +199,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th155AllScoreDataReadObjectTestOTNull() => TestUtils.Wrap(() =>
         {
-            var result = Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray((int)SQ.OTNull), out object obj);
+            var result = Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray((int)SQOT.Null), out var obj);
 
             Assert.IsTrue(result);
             Assert.IsNotNull(obj);  // Hmm...
@@ -212,7 +212,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(-1)]
         public void Th155AllScoreDataReadObjectTestOTInteger(int value) => TestUtils.Wrap(() =>
         {
-            var result = Th155AllScoreDataReadObjectHelper(TestUtils.MakeSQByteArray(value).ToArray(), out object obj);
+            var result = Th155AllScoreDataReadObjectHelper(TestUtils.MakeSQByteArray(value).ToArray(), out var obj);
 
             Assert.IsTrue(result);
             Assert.IsTrue(obj is int);
@@ -223,7 +223,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th155AllScoreDataReadObjectTestOTIntegerInvalid() => TestUtils.Wrap(() =>
         {
-            Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray((int)SQ.OTInteger, new byte[3]), out object obj);
+            Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray((int)SQOT.Integer, new byte[3]), out var obj);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -237,7 +237,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(0.1f)]
         public void Th155AllScoreDataReadObjectTestOTFloat(float value) => TestUtils.Wrap(() =>
         {
-            var result = Th155AllScoreDataReadObjectHelper(TestUtils.MakeSQByteArray(value).ToArray(), out object obj);
+            var result = Th155AllScoreDataReadObjectHelper(TestUtils.MakeSQByteArray(value).ToArray(), out var obj);
 
             Assert.IsTrue(result);
             Assert.IsTrue(obj is float);
@@ -248,7 +248,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th155AllScoreDataReadObjectTestOTFloatInvalid() => TestUtils.Wrap(() =>
         {
-            Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray((int)SQ.OTFloat, new byte[3]), out object obj);
+            Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray((int)SQOT.Float, new byte[3]), out var obj);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -261,7 +261,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th155AllScoreDataReadObjectTestOTBool(byte value, bool expected) => TestUtils.Wrap(() =>
         {
             var result = Th155AllScoreDataReadObjectHelper(
-                TestUtils.MakeByteArray((int)SQ.OTBool, value), out object obj);
+                TestUtils.MakeByteArray((int)SQOT.Bool, value), out var obj);
 
             Assert.IsTrue(result);
             Assert.IsTrue(obj is bool);
@@ -272,7 +272,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th155AllScoreDataReadObjectTestOTBoolInvalid() => TestUtils.Wrap(() =>
         {
-            Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray((int)SQ.OTBool), out object obj);
+            Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray((int)SQOT.Bool), out var obj);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -290,7 +290,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 var bytes = (value != null) ? TestUtils.CP932Encoding.GetBytes(value) : new byte[0];
                 var result = Th155AllScoreDataReadObjectHelper(
-                    TestUtils.MakeByteArray((int)SQ.OTString, size, bytes), out object obj);
+                    TestUtils.MakeByteArray((int)SQOT.String, size, bytes), out var obj);
                 var str = obj as string;
 
                 Assert.IsTrue(result);
@@ -306,7 +306,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow("\0")]
         public void Th155AllScoreDataReadObjectTestOTString(string value) => TestUtils.Wrap(() =>
         {
-            var result = Th155AllScoreDataReadObjectHelper(TestUtils.MakeSQByteArray(value).ToArray(), out object obj);
+            var result = Th155AllScoreDataReadObjectHelper(TestUtils.MakeSQByteArray(value).ToArray(), out var obj);
             var str = obj as string;
 
             Assert.IsTrue(result);
@@ -323,7 +323,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var bytes = TestUtils.CP932Encoding.GetBytes(value);
             Th155AllScoreDataReadObjectHelper(
-                TestUtils.MakeByteArray((int)SQ.OTString, bytes.Length + 1, bytes), out object obj);
+                TestUtils.MakeByteArray((int)SQOT.String, bytes.Length + 1, bytes), out var obj);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -336,7 +336,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var bytes = TestUtils.CP932Encoding.GetBytes(value).Concat(new byte[1] { 1 }).ToArray();
             var result = Th155AllScoreDataReadObjectHelper(
-                TestUtils.MakeByteArray((int)SQ.OTString, bytes.Length - 1, bytes), out object obj);
+                TestUtils.MakeByteArray((int)SQOT.String, bytes.Length - 1, bytes), out var obj);
             var str = obj as string;
 
             Assert.IsTrue(result);
@@ -347,23 +347,23 @@ namespace ThScoreFileConverterTests.Models
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DataRow(
-            new int[6] { (int)SQ.OTTable, (int)SQ.OTInteger, 123, (int)SQ.OTInteger, 456, (int)SQ.OTNull },
+            new int[6] { (int)SQOT.Table, (int)SQOT.Integer, 123, (int)SQOT.Integer, 456, (int)SQOT.Null },
             new int[1] { 123 },
             new int[1] { 456 },
             DisplayName = "one pair")]
         [DataRow(
             new int[10] {
-                (int)SQ.OTTable,
-                (int)SQ.OTInteger, 123, (int)SQ.OTInteger, 456,
-                (int)SQ.OTInteger, 78, (int)SQ.OTInteger, 90,
-                (int)SQ.OTNull },
+                (int)SQOT.Table,
+                (int)SQOT.Integer, 123, (int)SQOT.Integer, 456,
+                (int)SQOT.Integer, 78, (int)SQOT.Integer, 90,
+                (int)SQOT.Null },
             new int[2] { 123, 78 },
             new int[2] { 456, 90 },
             DisplayName = "two pairs")]
         public void Th155AllScoreDataReadObjectTestOTTable(int[] array, int[] expectedKeys, int[] expectedValues)
             => TestUtils.Wrap(() =>
             {
-                var result = Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out object obj);
+                var result = Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out var obj);
                 var dict = obj as Dictionary<object, object>;
 
                 Assert.IsTrue(result);
@@ -375,11 +375,11 @@ namespace ThScoreFileConverterTests.Models
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
-        [DataRow(new int[2] { (int)SQ.OTTable, (int)SQ.OTNull },
+        [DataRow(new int[2] { (int)SQOT.Table, (int)SQOT.Null },
             DisplayName = "empty")]
         public void Th155AllScoreDataReadObjectTestOTTableEmpty(int[] array) => TestUtils.Wrap(() =>
         {
-            var result = Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out object obj);
+            var result = Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out var obj);
             var dict = obj as Dictionary<object, object>;
 
             Assert.IsTrue(result);
@@ -389,50 +389,50 @@ namespace ThScoreFileConverterTests.Models
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
-        [DataRow(new int[5] { (int)SQ.OTTable, (int)SQ.OTInteger, 123, (int)SQ.OTInteger, (int)SQ.OTNull },
+        [DataRow(new int[5] { (int)SQOT.Table, (int)SQOT.Integer, 123, (int)SQOT.Integer, (int)SQOT.Null },
             DisplayName = "missing value data")]
-        [DataRow(new int[5] { (int)SQ.OTTable, (int)SQ.OTInteger, 123, (int)SQ.OTInteger, 456 },
+        [DataRow(new int[5] { (int)SQOT.Table, (int)SQOT.Integer, 123, (int)SQOT.Integer, 456 },
             DisplayName = "missing sentinel")]
-        [DataRow(new int[4] { (int)SQ.OTTable, (int)SQ.OTInteger, 123, (int)SQ.OTInteger },
+        [DataRow(new int[4] { (int)SQOT.Table, (int)SQOT.Integer, 123, (int)SQOT.Integer },
             DisplayName = "missing value data and sentinel")]
-        [DataRow(new int[4] { (int)SQ.OTTable, (int)SQ.OTInteger, 123, (int)SQ.OTNull },
+        [DataRow(new int[4] { (int)SQOT.Table, (int)SQOT.Integer, 123, (int)SQOT.Null },
             DisplayName = "missing key or value")]
-        [DataRow(new int[1] { (int)SQ.OTTable },
+        [DataRow(new int[1] { (int)SQOT.Table },
             DisplayName = "empty and missing sentinel")]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th155AllScoreDataReadObjectTestOTTableShortened(int[] array) => TestUtils.Wrap(() =>
         {
-            Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out object obj);
+            Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out var obj);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
-        [DataRow(new int[6] { (int)SQ.OTTable, 999, 123, (int)SQ.OTInteger, 456, (int)SQ.OTNull },
+        [DataRow(new int[6] { (int)SQOT.Table, 999, 123, (int)SQOT.Integer, 456, (int)SQOT.Null },
             DisplayName = "invalid key type")]
-        [DataRow(new int[6] { (int)SQ.OTTable, (int)SQ.OTInteger, 123, 999, 456, (int)SQ.OTNull },
+        [DataRow(new int[6] { (int)SQOT.Table, (int)SQOT.Integer, 123, 999, 456, (int)SQOT.Null },
             DisplayName = "invalid value type")]
-        [DataRow(new int[6] { (int)SQ.OTTable, (int)SQ.OTInteger, 123, (int)SQ.OTInteger, 456, 999 },
+        [DataRow(new int[6] { (int)SQOT.Table, (int)SQOT.Integer, 123, (int)SQOT.Integer, 456, 999 },
             DisplayName = "invalid sentinel")]
-        [DataRow(new int[5] { (int)SQ.OTTable, 123, (int)SQ.OTInteger, 456, (int)SQ.OTNull },
+        [DataRow(new int[5] { (int)SQOT.Table, 123, (int)SQOT.Integer, 456, (int)SQOT.Null },
             DisplayName = "missing key type")]
-        [DataRow(new int[5] { (int)SQ.OTTable, (int)SQ.OTInteger, (int)SQ.OTInteger, 456, (int)SQ.OTNull },
+        [DataRow(new int[5] { (int)SQOT.Table, (int)SQOT.Integer, (int)SQOT.Integer, 456, (int)SQOT.Null },
             DisplayName = "missing key data")]
-        [DataRow(new int[5] { (int)SQ.OTTable, (int)SQ.OTInteger, 123, 456, (int)SQ.OTNull },
+        [DataRow(new int[5] { (int)SQOT.Table, (int)SQOT.Integer, 123, 456, (int)SQOT.Null },
             DisplayName = "missing value type")]
-        [DataRow(new int[4] { (int)SQ.OTTable, 123, (int)SQ.OTInteger, 456 },
+        [DataRow(new int[4] { (int)SQOT.Table, 123, (int)SQOT.Integer, 456 },
             DisplayName = "missing key type and sentinel")]
-        [DataRow(new int[4] { (int)SQ.OTTable, 123, (int)SQ.OTInteger, (int)SQ.OTNull },
+        [DataRow(new int[4] { (int)SQOT.Table, 123, (int)SQOT.Integer, (int)SQOT.Null },
             DisplayName = "missing key type and value data")]
-        [DataRow(new int[4] { (int)SQ.OTTable, (int)SQ.OTInteger, (int)SQ.OTInteger, 456 },
+        [DataRow(new int[4] { (int)SQOT.Table, (int)SQOT.Integer, (int)SQOT.Integer, 456 },
             DisplayName = "missing key data and sentinel")]
-        [DataRow(new int[4] { (int)SQ.OTTable, (int)SQ.OTInteger, 123, 456 },
+        [DataRow(new int[4] { (int)SQOT.Table, (int)SQOT.Integer, 123, 456 },
             DisplayName = "missing value type and sentinel")]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th155AllScoreDataReadObjectTestOTTableInvalid(int[] array) => TestUtils.Wrap(() =>
         {
-            Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out object obj);
+            Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out var obj);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -440,20 +440,20 @@ namespace ThScoreFileConverterTests.Models
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DataRow(
-            new int[7] { (int)SQ.OTArray, 1, (int)SQ.OTInteger, 0, (int)SQ.OTInteger, 123, (int)SQ.OTNull },
+            new int[7] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
             new int[1] { 123 },
             DisplayName = "one element")]
         [DataRow(
             new int[11] {
-                (int)SQ.OTArray, 2,
-                (int)SQ.OTInteger, 0, (int)SQ.OTInteger, 123,
-                (int)SQ.OTInteger, 1, (int)SQ.OTInteger, 456,
-                (int)SQ.OTNull },
+                (int)SQOT.Array, 2,
+                (int)SQOT.Integer, 0, (int)SQOT.Integer, 123,
+                (int)SQOT.Integer, 1, (int)SQOT.Integer, 456,
+                (int)SQOT.Null },
             new int[2] { 123, 456 },
             DisplayName = "two elements")]
         public void Th155AllScoreDataReadObjectTestOTArray(int[] array, int[] expected) => TestUtils.Wrap(() =>
         {
-            var result = Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out object obj);
+            var result = Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out var obj);
             var resultArray = obj as object[];
 
             Assert.IsTrue(result);
@@ -464,11 +464,11 @@ namespace ThScoreFileConverterTests.Models
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
-        [DataRow(new int[3] { (int)SQ.OTArray, 0, (int)SQ.OTNull },
+        [DataRow(new int[3] { (int)SQOT.Array, 0, (int)SQOT.Null },
             DisplayName = "empty")]
         public void Th155AllScoreDataReadObjectTestOTArrayEmpty(int[] array) => TestUtils.Wrap(() =>
         {
-            var result = Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out object obj);
+            var result = Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out var obj);
             var resultArray = obj as object[];
 
             Assert.IsTrue(result);
@@ -478,74 +478,74 @@ namespace ThScoreFileConverterTests.Models
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
-        [DataRow(new int[7] { (int)SQ.OTArray, 999, (int)SQ.OTInteger, 0, (int)SQ.OTInteger, 123, (int)SQ.OTNull },
+        [DataRow(new int[7] { (int)SQOT.Array, 999, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
             DisplayName = "invalid size")]
-        [DataRow(new int[6] { (int)SQ.OTArray, 1, (int)SQ.OTInteger, 0, (int)SQ.OTInteger, (int)SQ.OTNull },
+        [DataRow(new int[6] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, (int)SQOT.Integer, (int)SQOT.Null },
             DisplayName = "missing value data")]
-        [DataRow(new int[6] { (int)SQ.OTArray, 1, (int)SQ.OTInteger, 0, (int)SQ.OTInteger, 123 },
+        [DataRow(new int[6] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123 },
             DisplayName = "missing sentinel")]
-        [DataRow(new int[5] { (int)SQ.OTArray, 1, (int)SQ.OTInteger, 0, (int)SQ.OTInteger },
+        [DataRow(new int[5] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, (int)SQOT.Integer },
             DisplayName = "missing value data and sentinel")]
-        [DataRow(new int[5] { (int)SQ.OTArray, 1, (int)SQ.OTInteger, 0, (int)SQ.OTNull },
+        [DataRow(new int[5] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, (int)SQOT.Null },
             DisplayName = "missing value")]
-        [DataRow(new int[3] { (int)SQ.OTArray, 999, (int)SQ.OTNull },
+        [DataRow(new int[3] { (int)SQOT.Array, 999, (int)SQOT.Null },
             DisplayName = "empty and invalid number of elements")]
-        [DataRow(new int[2] { (int)SQ.OTArray, (int)SQ.OTNull },
+        [DataRow(new int[2] { (int)SQOT.Array, (int)SQOT.Null },
             DisplayName = "empty and missing number of elements")]
-        [DataRow(new int[2] { (int)SQ.OTArray, 0 },
+        [DataRow(new int[2] { (int)SQOT.Array, 0 },
             DisplayName = "empty and missing sentinel")]
-        [DataRow(new int[1] { (int)SQ.OTArray },
+        [DataRow(new int[1] { (int)SQOT.Array },
             DisplayName = "empty and only array type")]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th155AllScoreDataReadObjectTestOTArrayShortened(int[] array) => TestUtils.Wrap(() =>
         {
-            Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out object obj);
+            Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out var obj);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
-        [DataRow(new int[7] { (int)SQ.OTArray, 0, (int)SQ.OTInteger, 0, (int)SQ.OTInteger, 123, (int)SQ.OTNull },
+        [DataRow(new int[7] { (int)SQOT.Array, 0, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
             DisplayName = "zero size and one element")]
-        [DataRow(new int[7] { (int)SQ.OTArray, -1, (int)SQ.OTInteger, 0, (int)SQ.OTInteger, 123, (int)SQ.OTNull },
+        [DataRow(new int[7] { (int)SQOT.Array, -1, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
             DisplayName = "negative size")]
-        [DataRow(new int[7] { (int)SQ.OTArray, 1, 999, 0, (int)SQ.OTInteger, 123, (int)SQ.OTNull },
+        [DataRow(new int[7] { (int)SQOT.Array, 1, 999, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
             DisplayName = "invalid index type")]
-        [DataRow(new int[7] { (int)SQ.OTArray, 1, (int)SQ.OTInteger, 999, (int)SQ.OTInteger, 123, (int)SQ.OTNull },
+        [DataRow(new int[7] { (int)SQOT.Array, 1, (int)SQOT.Integer, 999, (int)SQOT.Integer, 123, (int)SQOT.Null },
             DisplayName = "invalid index data")]
-        [DataRow(new int[7] { (int)SQ.OTArray, 1, (int)SQ.OTInteger, 0, 999, 123, (int)SQ.OTNull },
+        [DataRow(new int[7] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, 999, 123, (int)SQOT.Null },
             DisplayName = "invalid value type")]
-        [DataRow(new int[7] { (int)SQ.OTArray, 1, (int)SQ.OTInteger, 0, (int)SQ.OTInteger, 123, 999 },
+        [DataRow(new int[7] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123, 999 },
             DisplayName = "invalid sentinel")]
-        [DataRow(new int[6] { (int)SQ.OTArray, (int)SQ.OTInteger, 0, (int)SQ.OTInteger, 123, (int)SQ.OTNull },
+        [DataRow(new int[6] { (int)SQOT.Array, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
             DisplayName = "missing number of elements")]
-        [DataRow(new int[6] { (int)SQ.OTArray, 1, 0, (int)SQ.OTInteger, 123, (int)SQ.OTNull },
+        [DataRow(new int[6] { (int)SQOT.Array, 1, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
             DisplayName = "missing index type")]
-        [DataRow(new int[6] { (int)SQ.OTArray, 1, (int)SQ.OTInteger, (int)SQ.OTInteger, 123, (int)SQ.OTNull },
+        [DataRow(new int[6] { (int)SQOT.Array, 1, (int)SQOT.Integer, (int)SQOT.Integer, 123, (int)SQOT.Null },
             DisplayName = "missing index data")]
-        [DataRow(new int[6] { (int)SQ.OTArray, 1, (int)SQ.OTInteger, 0, 123, (int)SQ.OTNull },
+        [DataRow(new int[6] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, 123, (int)SQOT.Null },
             DisplayName = "missing value type")]
-        [DataRow(new int[5] { (int)SQ.OTArray, 0, (int)SQ.OTInteger, 123, (int)SQ.OTNull },
+        [DataRow(new int[5] { (int)SQOT.Array, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
             DisplayName = "missing number of elements and index type")]
-        [DataRow(new int[5] { (int)SQ.OTArray, (int)SQ.OTInteger, 0, (int)SQ.OTInteger, 123 },
+        [DataRow(new int[5] { (int)SQOT.Array, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123 },
             DisplayName = "missing number of elements and sentinel")]
-        [DataRow(new int[5] { (int)SQ.OTArray, 1, 0, (int)SQ.OTInteger, (int)SQ.OTNull },
+        [DataRow(new int[5] { (int)SQOT.Array, 1, 0, (int)SQOT.Integer, (int)SQOT.Null },
             DisplayName = "missing index type and value data")]
-        [DataRow(new int[5] { (int)SQ.OTArray, 1, 0, (int)SQ.OTInteger, 123 },
+        [DataRow(new int[5] { (int)SQOT.Array, 1, 0, (int)SQOT.Integer, 123 },
             DisplayName = "missing index type and sentinel")]
-        [DataRow(new int[5] { (int)SQ.OTArray, 1, (int)SQ.OTInteger, (int)SQ.OTInteger, 123 },
+        [DataRow(new int[5] { (int)SQOT.Array, 1, (int)SQOT.Integer, (int)SQOT.Integer, 123 },
             DisplayName = "missing index data and sentinel")]
-        [DataRow(new int[5] { (int)SQ.OTArray, 1, (int)SQ.OTInteger, 0, 123 },
+        [DataRow(new int[5] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, 123 },
             DisplayName = "missing value type and sentinel")]
-        [DataRow(new int[5] { (int)SQ.OTArray, 1, (int)SQ.OTInteger, 123, (int)SQ.OTNull },
+        [DataRow(new int[5] { (int)SQOT.Array, 1, (int)SQOT.Integer, 123, (int)SQOT.Null },
             DisplayName = "missing index")]
-        [DataRow(new int[3] { (int)SQ.OTArray, 0, 999 },
+        [DataRow(new int[3] { (int)SQOT.Array, 0, 999 },
             DisplayName = "empty and invalid sentinel")]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th155AllScoreDataReadObjectTestOTArrayInvalid(int[] array) => TestUtils.Wrap(() =>
         {
-            Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out object obj);
+            Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray(array), out var obj);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -553,7 +553,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th155AllScoreDataReadObjectTestOTInstance() => TestUtils.Wrap(() =>
         {
-            var result = Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray((int)SQ.OTInstance), out object obj);
+            var result = Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray((int)SQOT.Instance), out var obj);
 
             Assert.IsTrue(result);
             Assert.IsNotNull(obj);
@@ -562,7 +562,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th155AllScoreDataReadObjectTestOTClosure() => TestUtils.Wrap(() =>
         {
-            var result = Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray((int)SQ.OTClosure), out object obj);
+            var result = Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray((int)SQOT.Closure), out var obj);
 
             Assert.IsTrue(result);
             Assert.IsNotNull(obj);
@@ -570,20 +570,20 @@ namespace ThScoreFileConverterTests.Models
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
-        [DataRow(SQ.OTUserData)]
-        [DataRow(SQ.OTNativeClosure)]
-        [DataRow(SQ.OTGenerator)]
-        [DataRow(SQ.OTUserPointer)]
-        [DataRow(SQ.OTThread)]
-        [DataRow(SQ.OTFuncProto)]
-        [DataRow(SQ.OTClass)]
-        [DataRow(SQ.OTWeakRef)]
-        [DataRow(SQ.OTOuter)]
-        [DataRow((SQ.SQObjectType)999)]
+        [DataRow(SQOT.UserData)]
+        [DataRow(SQOT.NativeClosure)]
+        [DataRow(SQOT.Generator)]
+        [DataRow(SQOT.UserPointer)]
+        [DataRow(SQOT.Thread)]
+        [DataRow(SQOT.FuncProto)]
+        [DataRow(SQOT.Class)]
+        [DataRow(SQOT.WeakRef)]
+        [DataRow(SQOT.Outer)]
+        [DataRow((SQOT)999)]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th155AllScoreDataReadObjectTestUnsupported(SQ.SQObjectType type) => TestUtils.Wrap(() =>
+        public void Th155AllScoreDataReadObjectTestUnsupported(SQOT type) => TestUtils.Wrap(() =>
         {
-            Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray((int)type), out object obj);
+            Th155AllScoreDataReadObjectHelper(TestUtils.MakeByteArray((int)type), out var obj);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -620,7 +620,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th155AllScoreDataReadFromTestNoKey() => TestUtils.Wrap(() =>
         {
-            var allScoreData = Th155AllScoreDataWrapper.Create(TestUtils.MakeByteArray((int)SQ.OTNull));
+            var allScoreData = Th155AllScoreDataWrapper.Create(TestUtils.MakeByteArray((int)SQOT.Null));
 
             Assert.IsNull(allScoreData.StoryDictionary);
             Assert.IsNull(allScoreData.CharacterDictionary);
@@ -636,9 +636,9 @@ namespace ThScoreFileConverterTests.Models
             var version = 1;
 
             var allScoreData = Th155AllScoreDataWrapper.Create(TestUtils.MakeByteArray(
-                // (int)SQ.OTTable,
+                // (int)SQOT.Table,
                 TestUtils.MakeSQByteArray("version", version).ToArray(),
-                (int)SQ.OTNull));
+                (int)SQOT.Null));
 
             Assert.IsNull(allScoreData.StoryDictionary);
             Assert.IsNull(allScoreData.CharacterDictionary);
@@ -652,9 +652,9 @@ namespace ThScoreFileConverterTests.Models
         public void Th155AllScoreDataReadFromTestInvalidStoryDictionary() => TestUtils.Wrap(() =>
         {
             var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
-                // .Concat(TestUtils.MakeByteArray((int)SQ.OTTable))
+                // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("story", 123))
-                .Concat(TestUtils.MakeByteArray((int)SQ.OTNull))
+                .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
             Assert.IsNull(allScoreData.StoryDictionary);
@@ -664,9 +664,9 @@ namespace ThScoreFileConverterTests.Models
         public void Th155AllScoreDataReadFromTestInvalidStoryKey() => TestUtils.Wrap(() =>
         {
             var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
-                // .Concat(TestUtils.MakeByteArray((int)SQ.OTTable))
+                // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("story", new Dictionary<int, int>() { { 123, 456 } }))
-                .Concat(TestUtils.MakeByteArray((int)SQ.OTNull))
+                .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
             Assert.IsNotNull(allScoreData.StoryDictionary);
@@ -677,9 +677,9 @@ namespace ThScoreFileConverterTests.Models
         public void Th155AllScoreDataReadFromTestInvalidStoryChara() => TestUtils.Wrap(() =>
         {
             var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
-                // .Concat(TestUtils.MakeByteArray((int)SQ.OTTable))
+                // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("story", new Dictionary<string, int>() { { "abc", 123 } }))
-                .Concat(TestUtils.MakeByteArray((int)SQ.OTNull))
+                .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
             Assert.IsNotNull(allScoreData.StoryDictionary);
@@ -690,14 +690,14 @@ namespace ThScoreFileConverterTests.Models
         public void Th155AllScoreDataReadFromTestInvalidStory() => TestUtils.Wrap(() =>
         {
             var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
-                // .Concat(TestUtils.MakeByteArray((int)SQ.OTTable))
+                // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray(
                     "story",
                     new Dictionary<string, int>()
                     {
                         { ToString(Th155Converter.StoryChara.ReimuKasen), 123 }
                     }))
-                .Concat(TestUtils.MakeByteArray((int)SQ.OTNull))
+                .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
             Assert.IsNotNull(allScoreData.StoryDictionary);
@@ -714,7 +714,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th155AllScoreDataReadFromTestInvalidStoryFieldName() => TestUtils.Wrap(() =>
         {
             var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
-                // .Concat(TestUtils.MakeByteArray((int)SQ.OTTable))
+                // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray(
                     "story",
                     new Dictionary<string, Dictionary<int, int>>()
@@ -724,7 +724,7 @@ namespace ThScoreFileConverterTests.Models
                             new Dictionary<int, int>() { { 123, 456 } }
                         }
                     }))
-                .Concat(TestUtils.MakeByteArray((int)SQ.OTNull))
+                .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
             Assert.IsNotNull(allScoreData.StoryDictionary);
@@ -741,7 +741,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th155AllScoreDataReadFromTestInvalidStoryFieldValue() => TestUtils.Wrap(() =>
         {
             var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
-                // .Concat(TestUtils.MakeByteArray((int)SQ.OTTable))
+                // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray(
                     "story",
                     new Dictionary<string, Dictionary<string, float>>()
@@ -758,7 +758,7 @@ namespace ThScoreFileConverterTests.Models
                             }
                         }
                     }))
-                .Concat(TestUtils.MakeByteArray((int)SQ.OTNull))
+                .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
             Assert.IsNotNull(allScoreData.StoryDictionary);
@@ -775,9 +775,9 @@ namespace ThScoreFileConverterTests.Models
         public void Th155AllScoreDataReadFromTestInvalidCharacterDictionary() => TestUtils.Wrap(() =>
         {
             var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
-                // .Concat(TestUtils.MakeByteArray((int)SQ.OTTable))
+                // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("character", 123))
-                .Concat(TestUtils.MakeByteArray((int)SQ.OTNull))
+                .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
             Assert.IsNull(allScoreData.CharacterDictionary);
@@ -787,9 +787,9 @@ namespace ThScoreFileConverterTests.Models
         public void Th155AllScoreDataReadFromTestInvalidCharacterKey() => TestUtils.Wrap(() =>
         {
             var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
-                // .Concat(TestUtils.MakeByteArray((int)SQ.OTTable))
+                // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("character", new Dictionary<int, int>() { { 123, 456 } }))
-                .Concat(TestUtils.MakeByteArray((int)SQ.OTNull))
+                .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
             Assert.IsNotNull(allScoreData.CharacterDictionary);
@@ -800,9 +800,9 @@ namespace ThScoreFileConverterTests.Models
         public void Th155AllScoreDataReadFromTestInvalidCharacterValue() => TestUtils.Wrap(() =>
         {
             var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
-                // .Concat(TestUtils.MakeByteArray((int)SQ.OTTable))
+                // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("character", new Dictionary<string, string>() { { "abc", "def" } }))
-                .Concat(TestUtils.MakeByteArray((int)SQ.OTNull))
+                .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
             Assert.IsNotNull(allScoreData.CharacterDictionary);
@@ -813,9 +813,9 @@ namespace ThScoreFileConverterTests.Models
         public void Th155AllScoreDataReadFromTestInvalidBgmDictionary() => TestUtils.Wrap(() =>
         {
             var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
-                // .Concat(TestUtils.MakeByteArray((int)SQ.OTTable))
+                // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("bgm", 123))
-                .Concat(TestUtils.MakeByteArray((int)SQ.OTNull))
+                .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
             Assert.IsNull(allScoreData.BgmDictionary);
@@ -825,9 +825,9 @@ namespace ThScoreFileConverterTests.Models
         public void Th155AllScoreDataReadFromTestInvalidBgmKey() => TestUtils.Wrap(() =>
         {
             var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
-                // .Concat(TestUtils.MakeByteArray((int)SQ.OTTable))
+                // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("bgm", new Dictionary<int, int>() { { 123, 456 } }))
-                .Concat(TestUtils.MakeByteArray((int)SQ.OTNull))
+                .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
             Assert.IsNotNull(allScoreData.BgmDictionary);
@@ -838,9 +838,9 @@ namespace ThScoreFileConverterTests.Models
         public void Th155AllScoreDataReadFromTestInvalidBgmValue() => TestUtils.Wrap(() =>
         {
             var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
-                // .Concat(TestUtils.MakeByteArray((int)SQ.OTTable))
+                // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("bgm", new Dictionary<bool, bool>() { { true, false } }))
-                .Concat(TestUtils.MakeByteArray((int)SQ.OTNull))
+                .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
             Assert.IsNotNull(allScoreData.BgmDictionary);
@@ -851,9 +851,9 @@ namespace ThScoreFileConverterTests.Models
         public void Th155AllScoreDataReadFromTestInvalidEndingDictionary() => TestUtils.Wrap(() =>
         {
             var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
-                // .Concat(TestUtils.MakeByteArray((int)SQ.OTTable))
+                // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("ed", 123))
-                .Concat(TestUtils.MakeByteArray((int)SQ.OTNull))
+                .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
             Assert.IsNull(allScoreData.EndingDictionary);
@@ -863,9 +863,9 @@ namespace ThScoreFileConverterTests.Models
         public void Th155AllScoreDataReadFromTestInvalidEndingKey() => TestUtils.Wrap(() =>
         {
             var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
-                // .Concat(TestUtils.MakeByteArray((int)SQ.OTTable))
+                // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("ed", new Dictionary<int, int>() { { 123, 456 } }))
-                .Concat(TestUtils.MakeByteArray((int)SQ.OTNull))
+                .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
             Assert.IsNotNull(allScoreData.EndingDictionary);
@@ -876,9 +876,9 @@ namespace ThScoreFileConverterTests.Models
         public void Th155AllScoreDataReadFromTestInvalidEndingValue() => TestUtils.Wrap(() =>
         {
             var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
-                // .Concat(TestUtils.MakeByteArray((int)SQ.OTTable))
+                // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("ed", new Dictionary<string, string>() { { "abc", "def" } }))
-                .Concat(TestUtils.MakeByteArray((int)SQ.OTNull))
+                .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
             Assert.IsNotNull(allScoreData.EndingDictionary);
@@ -889,9 +889,9 @@ namespace ThScoreFileConverterTests.Models
         public void Th155AllScoreDataReadFromTestInvalidStageDictionary() => TestUtils.Wrap(() =>
         {
             var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
-                // .Concat(TestUtils.MakeByteArray((int)SQ.OTTable))
+                // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("stage", 123))
-                .Concat(TestUtils.MakeByteArray((int)SQ.OTNull))
+                .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
             Assert.IsNull(allScoreData.StageDictionary);
@@ -901,9 +901,9 @@ namespace ThScoreFileConverterTests.Models
         public void Th155AllScoreDataReadFromTestInvalidStageKey() => TestUtils.Wrap(() =>
         {
             var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
-                // .Concat(TestUtils.MakeByteArray((int)SQ.OTTable))
+                // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("stage", new Dictionary<string, int>() { { "abc", 123 } }))
-                .Concat(TestUtils.MakeByteArray((int)SQ.OTNull))
+                .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
             Assert.IsNotNull(allScoreData.StageDictionary);
@@ -914,9 +914,9 @@ namespace ThScoreFileConverterTests.Models
         public void Th155AllScoreDataReadFromTestInvalidStageValue() => TestUtils.Wrap(() =>
         {
             var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
-                // .Concat(TestUtils.MakeByteArray((int)SQ.OTTable))
+                // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("stage", new Dictionary<int, string>() { { 123, "abc" } }))
-                .Concat(TestUtils.MakeByteArray((int)SQ.OTNull))
+                .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
             Assert.IsNotNull(allScoreData.StageDictionary);
@@ -927,9 +927,9 @@ namespace ThScoreFileConverterTests.Models
         public void Th155AllScoreDataReadFromTestInvalidVersion() => TestUtils.Wrap(() =>
         {
             var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
-                // .Concat(TestUtils.MakeByteArray((int)SQ.OTTable))
+                // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("version", 123f))
-                .Concat(TestUtils.MakeByteArray((int)SQ.OTNull))
+                .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
             Assert.AreEqual(default, allScoreData.Version.Value);

@@ -153,6 +153,8 @@
     <Compile Include="Models\Work.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SettingsPerTitle.cs" />
+    <Compile Include="Squirrel\RawType.cs" />
+    <Compile Include="Squirrel\SQObjectAttributes.cs" />
     <Compile Include="Squirrel\SQObjectType.cs" />
     <Compile Include="ViewModels\AboutWindowViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />

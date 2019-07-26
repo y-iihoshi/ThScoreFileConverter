@@ -21,6 +21,7 @@ namespace ThScoreFileConverter.Models
     using System.Linq;
     using System.Text.RegularExpressions;
     using ThScoreFileConverter.Properties;
+    using ThScoreFileConverter.Squirrel;
 
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th135Converter : ThConverter
@@ -277,14 +278,14 @@ namespace ThScoreFileConverter.Models
             private static readonly Dictionary<uint, Func<BinaryReader, object>> ObjectReaders =
                 new Dictionary<uint, Func<BinaryReader, object>>
                 {
-                    { (uint)Squirrel.OTNull,     reader => new EndMark() },
-                    { (uint)Squirrel.OTBool,     reader => reader.ReadByte() != 0x00 },
-                    { (uint)Squirrel.OTInteger,  reader => reader.ReadInt32() },
-                    { (uint)Squirrel.OTFloat,    reader => reader.ReadSingle() },
-                    { (uint)Squirrel.OTString,   StringReader },
-                    { (uint)Squirrel.OTArray,    ArrayReader },
-                    { (uint)Squirrel.OTTable,    DictionaryReader },
-                    { (uint)Squirrel.OTInstance, reader => new object() }, // unknown (appears in gauge_1p/2p...)
+                    { (uint)SQObjectType.Null,     reader => new EndMark() },
+                    { (uint)SQObjectType.Bool,     reader => reader.ReadByte() != 0x00 },
+                    { (uint)SQObjectType.Integer,  reader => reader.ReadInt32() },
+                    { (uint)SQObjectType.Float,    reader => reader.ReadSingle() },
+                    { (uint)SQObjectType.String,   StringReader },
+                    { (uint)SQObjectType.Array,    ArrayReader },
+                    { (uint)SQObjectType.Table,    DictionaryReader },
+                    { (uint)SQObjectType.Instance, reader => new object() }, // unknown (appears in gauge_1p/2p...)
                 };
 
             private Dictionary<string, object> allData;

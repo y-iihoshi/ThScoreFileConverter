@@ -1,107 +1,126 @@
-﻿// <copyright file="Squirrel.cs" company="None">
+﻿// <copyright file="SQObjectType.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
 
-namespace ThScoreFileConverter.Models
+namespace ThScoreFileConverter.Squirrel
 {
     using System;
 
     /// <summary>
-    /// Provides the constants defined by Squirrel 3.1.
+    /// Represents an object type defined by Squirrel 3.1.
     /// Refer to https://github.com/albertodemichelis/squirrel/blob/master/include/squirrel.h for details.
     /// </summary>
-    public static class Squirrel
+    public enum SQObjectType
     {
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-#pragma warning disable SA1600 // Elements should be documented
+        /// <summary>
+        /// The type Null has exactly one value, called null.
+        /// Refer to http://www.squirrel-lang.org/squirreldoc/reference/language/datatypes.html#null for details.
+        /// </summary>
+        Null = RawType.Null | SQObjectAttributes.CanBeFalse,
 
-        public const SQObjectType OTNull =
-            SQObjectType.RTNull | SQObjectType.SQObjectCanBeFalse;
+#pragma warning disable CA1720 // Identifier contains type name
+        /// <summary>
+        /// An integer represents a 32 bits (or better) signed number.
+        /// Refer to http://www.squirrel-lang.org/squirreldoc/reference/language/datatypes.html#integer for details.
+        /// </summary>
+        Integer = RawType.Integer | SQObjectAttributes.Numeric | SQObjectAttributes.CanBeFalse,
 
-        public const SQObjectType OTInteger =
-            SQObjectType.RTInteger | SQObjectType.SQObjectNumeric | SQObjectType.SQObjectCanBeFalse;
+        /// <summary>
+        /// A float represents a 32 bits (or better) floating point number.
+        /// Refer to http://www.squirrel-lang.org/squirreldoc/reference/language/datatypes.html#float for details.
+        /// </summary>
+        Float = RawType.Float | SQObjectAttributes.Numeric | SQObjectAttributes.CanBeFalse,
+#pragma warning restore CA1720 // Identifier contains type name
 
-        public const SQObjectType OTFloat =
-            SQObjectType.RTFloat | SQObjectType.SQObjectNumeric | SQObjectType.SQObjectCanBeFalse;
+        /// <summary>
+        /// The Bool data type can have only two, the literals <c>true</c> and <c>false</c>.
+        /// Refer to http://www.squirrel-lang.org/squirreldoc/reference/language/datatypes.html#bool for details.
+        /// </summary>
+        Bool = RawType.Bool | SQObjectAttributes.CanBeFalse,
 
-        public const SQObjectType OTBool =
-            SQObjectType.RTBool | SQObjectType.SQObjectCanBeFalse;
+#pragma warning disable CA1720 // Identifier contains type name
+        /// <summary>
+        /// A String is an immutable sequence of characters; to modify a string is necessary create a new one.
+        /// Refer to http://www.squirrel-lang.org/squirreldoc/reference/language/datatypes.html#string for details.
+        /// </summary>
+        String = RawType.String | SQObjectAttributes.RefCounted,
+#pragma warning restore CA1720 // Identifier contains type name
 
-        public const SQObjectType OTString =
-            SQObjectType.RTString | SQObjectType.SQObjectRefCounted;
+        /// <summary>
+        /// Tables are associative containers implemented as pairs of key/value (called a slot).
+        /// Refer to http://www.squirrel-lang.org/squirreldoc/reference/language/datatypes.html#table for details.
+        /// </summary>
+        Table = RawType.Table | SQObjectAttributes.RefCounted | SQObjectAttributes.Delegable,
 
-        public const SQObjectType OTTable =
-            SQObjectType.RTTable | SQObjectType.SQObjectRefCounted | SQObjectType.SQObjectDelegable;
+        /// <summary>
+        /// Arrays are simple sequence of objects, their size is dynamic and their index starts always from 0.
+        /// Refer to http://www.squirrel-lang.org/squirreldoc/reference/language/datatypes.html#array for details.
+        /// </summary>
+        Array = RawType.Array | SQObjectAttributes.RefCounted,
 
-        public const SQObjectType OTArray =
-            SQObjectType.RTArray | SQObjectType.SQObjectRefCounted;
+        /// <summary>
+        /// Userdata objects are blobs of memory (or pointers) defined by the host application but stored into Squirrel variables.
+        /// Refer to http://www.squirrel-lang.org/squirreldoc/reference/language/datatypes.html#userdata for details.
+        /// </summary>
+        UserData = RawType.UserData | SQObjectAttributes.RefCounted | SQObjectAttributes.Delegable,
 
-        public const SQObjectType OTUserData =
-            SQObjectType.RTUserData | SQObjectType.SQObjectRefCounted | SQObjectType.SQObjectDelegable;
+        /// <summary>
+        /// Closure.
+        /// </summary>
+        Closure = RawType.Closure | SQObjectAttributes.RefCounted,
 
-        public const SQObjectType OTClosure =
-            SQObjectType.RTClosure | SQObjectType.SQObjectRefCounted;
+        /// <summary>
+        /// Native closure.
+        /// </summary>
+        NativeClosure = RawType.NativeClosure | SQObjectAttributes.RefCounted,
 
-        public const SQObjectType OTNativeClosure =
-            SQObjectType.RTNativeClosure | SQObjectType.SQObjectRefCounted;
+        /// <summary>
+        /// Generators are functions that can be suspended with the statement <c>yield</c> and resumed later.
+        /// Refer to http://www.squirrel-lang.org/squirreldoc/reference/language/datatypes.html#generator for details.
+        /// </summary>
+        Generator = RawType.Generator | SQObjectAttributes.RefCounted,
 
-        public const SQObjectType OTGenerator =
-            SQObjectType.RTGenerator | SQObjectType.SQObjectRefCounted;
+        /// <summary>
+        /// This type is not a memory chunk like the normal userdata, but just a <c>void*</c> pointer.
+        /// Refer to http://www.squirrel-lang.org/squirreldoc/reference/embedding/userdata_and_userpointers.html for details.
+        /// </summary>
+        UserPointer = RawType.UserPointer,
 
-        public const SQObjectType OTUserPointer =
-            SQObjectType.RTUserPointer;
+        /// <summary>
+        /// Threads are objects that represents a cooperative thread of execution, also known as coroutines.
+        /// Refer to http://www.squirrel-lang.org/squirreldoc/reference/language/datatypes.html#thread for details.
+        /// </summary>
+        Thread = RawType.Thread | SQObjectAttributes.RefCounted,
 
-        public const SQObjectType OTThread =
-            SQObjectType.RTThread | SQObjectType.SQObjectRefCounted;
+        /// <summary>
+        /// Functions are similar to those in other C-like languages and to most programming languages in general,
+        /// however there are a few key differences.
+        /// Refer to http://www.squirrel-lang.org/squirreldoc/reference/language/datatypes.html#function for details.
+        /// </summary>
+        FuncProto = RawType.FuncProto | SQObjectAttributes.RefCounted,
 
-        public const SQObjectType OTFuncProto =
-            SQObjectType.RTFuncProto | SQObjectType.SQObjectRefCounted;
+        /// <summary>
+        /// Classes are associative containers implemented as pairs of key/value.
+        /// Refer to http://www.squirrel-lang.org/squirreldoc/reference/language/datatypes.html#class for details.
+        /// </summary>
+        Class = RawType.Class | SQObjectAttributes.RefCounted,
 
-        public const SQObjectType OTClass =
-            SQObjectType.RTClass | SQObjectType.SQObjectRefCounted;
+        /// <summary>
+        /// Class instances are created by calling a class object.
+        /// Refer to http://www.squirrel-lang.org/squirreldoc/reference/language/datatypes.html#class-instance for details.
+        /// </summary>
+        Instance = RawType.Instance | SQObjectAttributes.RefCounted | SQObjectAttributes.Delegable,
 
-        public const SQObjectType OTInstance =
-            SQObjectType.RTInstance | SQObjectType.SQObjectRefCounted | SQObjectType.SQObjectDelegable;
+        /// <summary>
+        /// Weak References are objects that point to another(non scalar) object but do not own a strong reference to it.
+        /// Refer to http://www.squirrel-lang.org/squirreldoc/reference/language/datatypes.html#weak-reference for details.
+        /// </summary>
+        WeakRef = RawType.WeakRef | SQObjectAttributes.RefCounted,
 
-        public const SQObjectType OTWeakRef =
-            SQObjectType.RTWeakRef | SQObjectType.SQObjectRefCounted;
-
-        public const SQObjectType OTOuter =
-            SQObjectType.RTOuter | SQObjectType.SQObjectRefCounted;
-
-#pragma warning disable CA1714 // Flags enums should have plural names
-        [Flags]
-        public enum SQObjectType
-#pragma warning restore CA1714 // Flags enums should have plural names
-        {
-#pragma warning disable SA1602 // Enumeration items should be documented
-            RTNull             = 0x00000001,
-            RTInteger          = 0x00000002,
-            RTFloat            = 0x00000004,
-            RTBool             = 0x00000008,
-            RTString           = 0x00000010,
-            RTTable            = 0x00000020,
-            RTArray            = 0x00000040,
-            RTUserData         = 0x00000080,
-            RTClosure          = 0x00000100,
-            RTNativeClosure    = 0x00000200,
-            RTGenerator        = 0x00000400,
-            RTUserPointer      = 0x00000800,
-            RTThread           = 0x00001000,
-            RTFuncProto        = 0x00002000,
-            RTClass            = 0x00004000,
-            RTInstance         = 0x00008000,
-            RTWeakRef          = 0x00010000,
-            RTOuter            = 0x00020000,
-            SQObjectCanBeFalse = 0x01000000,
-            SQObjectDelegable  = 0x02000000,
-            SQObjectNumeric    = 0x04000000,
-            SQObjectRefCounted = 0x08000000,
-#pragma warning restore SA1602 // Enumeration items should be documented
-        }
-
-#pragma warning restore SA1600 // Elements should be documented
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+        /// <summary>
+        /// Internal usage only.
+        /// </summary>
+        Outer = RawType.Outer | SQObjectAttributes.RefCounted,
     }
 }
