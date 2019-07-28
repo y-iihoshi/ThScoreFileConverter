@@ -132,11 +132,35 @@
   <data name="fltTemplateFile" xml:space="preserve">
     <value>すべてのファイル (*.*)|*.*</value>
   </data>
+  <data name="InvalidDataExceptionFailedToReadIndex" xml:space="preserve">
+    <value>Failed to read index.</value>
+  </data>
+  <data name="InvalidDataExceptionFailedToReadKey" xml:space="preserve">
+    <value>Failed to read key.</value>
+  </data>
+  <data name="InvalidDataExceptionFailedToReadSentinel" xml:space="preserve">
+    <value>Failed to read sentinel.</value>
+  </data>
+  <data name="InvalidDataExceptionFailedToReadValue" xml:space="preserve">
+    <value>Failed to read value.</value>
+  </data>
+  <data name="InvalidDataExceptionIndexIsOutOfRange" xml:space="preserve">
+    <value>Index is out of range.</value>
+  </data>
+  <data name="InvalidDataExceptionIndexMustBeAnInteger" xml:space="preserve">
+    <value>Index must be an integer.</value>
+  </data>
+  <data name="InvalidDataExceptionNumElementsMustNotBeNegative" xml:space="preserve">
+    <value>The number of elements must not be negative.</value>
+  </data>
   <data name="InvalidDataExceptionPropertyIsInvalid" xml:space="preserve">
     <value>Property {0} is invalid.</value>
   </data>
   <data name="InvalidDataExceptionPropertyIsOutOfRange" xml:space="preserve">
     <value>Property {0} is out of range.</value>
+  </data>
+  <data name="InvalidDataExceptionWrongSentinel" xml:space="preserve">
+    <value>Sentinel is wrong.</value>
   </data>
   <data name="InvalidDataExceptionWrongType" xml:space="preserve">
     <value>Wrong type.</value>

@@ -106,6 +106,69 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
+        ///   Failed to read index. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string InvalidDataExceptionFailedToReadIndex {
+            get {
+                return ResourceManager.GetString("InvalidDataExceptionFailedToReadIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Failed to read key. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string InvalidDataExceptionFailedToReadKey {
+            get {
+                return ResourceManager.GetString("InvalidDataExceptionFailedToReadKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Failed to read sentinel. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string InvalidDataExceptionFailedToReadSentinel {
+            get {
+                return ResourceManager.GetString("InvalidDataExceptionFailedToReadSentinel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Failed to read value. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string InvalidDataExceptionFailedToReadValue {
+            get {
+                return ResourceManager.GetString("InvalidDataExceptionFailedToReadValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Index is out of range. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string InvalidDataExceptionIndexIsOutOfRange {
+            get {
+                return ResourceManager.GetString("InvalidDataExceptionIndexIsOutOfRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Index must be an integer. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string InvalidDataExceptionIndexMustBeAnInteger {
+            get {
+                return ResourceManager.GetString("InvalidDataExceptionIndexMustBeAnInteger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The number of elements must not be negative. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string InvalidDataExceptionNumElementsMustNotBeNegative {
+            get {
+                return ResourceManager.GetString("InvalidDataExceptionNumElementsMustNotBeNegative", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Property {0} is invalid. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string InvalidDataExceptionPropertyIsInvalid {
@@ -120,6 +183,15 @@ namespace ThScoreFileConverter.Properties {
         public static string InvalidDataExceptionPropertyIsOutOfRange {
             get {
                 return ResourceManager.GetString("InvalidDataExceptionPropertyIsOutOfRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sentinel is wrong. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string InvalidDataExceptionWrongSentinel {
+            get {
+                return ResourceManager.GetString("InvalidDataExceptionWrongSentinel", resourceCulture);
             }
         }
         
