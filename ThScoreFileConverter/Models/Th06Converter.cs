@@ -137,7 +137,6 @@ namespace ThScoreFileConverter.Models
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
-        [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         public enum StageProgress
         {
 #pragma warning disable SA1134 // Attributes should not share line
@@ -292,7 +291,6 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         private static AllScoreData Read(Stream input)
         {
             var dictionary = new Dictionary<string, Action<AllScoreData, Th06.Chapter>>

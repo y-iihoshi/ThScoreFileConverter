@@ -189,7 +189,6 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         private static AllScoreData Read(Stream input)
         {
             var dictionary = new Dictionary<string, Action<AllScoreData, Th06.Chapter>>

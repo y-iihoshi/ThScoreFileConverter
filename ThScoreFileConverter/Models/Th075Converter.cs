@@ -32,7 +32,6 @@ namespace ThScoreFileConverter.Models
             @"(){}[]<>&\|~^             ";
 
         // Thanks to thwiki.info
-        [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1008:OpeningParenthesisMustBeSpacedCorrectly", Justification = "Reviewed.")]
         private static readonly Dictionary<int, SpellCardInfo> CardTable =
             new Dictionary<int, SpellCardInfo>()
@@ -497,7 +496,6 @@ namespace ThScoreFileConverter.Models
                 }));
         }
 
-        [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         private static AllScoreData Read(Stream input)
         {
             using (var reader = new BinaryReader(input, Encoding.UTF8, true))

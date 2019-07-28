@@ -41,7 +41,6 @@ namespace ThScoreFileConverter.Models
             };
 
         // Thanks to th3_5154.txt, www.toho-motoneta.net and en.touhouwiki.net
-        [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         private static readonly Dictionary<(Chara Chara, int CardId), string> CardNameTable =
             new Dictionary<(Chara, int), string>
             {

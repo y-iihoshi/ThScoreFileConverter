@@ -29,7 +29,6 @@ namespace ThScoreFileConverter.Models
     internal class Th123Converter : ThConverter
     {
         // Thanks to en.touhouwiki.net
-        [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         private static readonly Dictionary<int, string> SystemCardNameTable =
             new Dictionary<int, string>
             {
@@ -57,7 +56,6 @@ namespace ThScoreFileConverter.Models
             };
 
         // Thanks to th3_5154.txt, th123_ai, www.toho-motoneta.net and en.touhouwiki.net
-        [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         private static readonly Dictionary<(Chara Chara, int CardId), string> CardNameTable =
             new Dictionary<(Chara, int), string>
             {

@@ -26,7 +26,6 @@ namespace ThScoreFileConverter.Models
     internal class Th14Converter : ThConverter
     {
         // Thanks to thwiki.info
-        [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1008:OpeningParenthesisMustBeSpacedCorrectly", Justification = "Reviewed.")]
         private static readonly Dictionary<int, CardInfo> CardTable =
             new List<CardInfo>()
@@ -225,7 +224,6 @@ namespace ThScoreFileConverter.Models
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
-        [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         public enum StageProgress
         {
 #pragma warning disable SA1134 // Attributes should not share line
@@ -358,7 +356,6 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         private static AllScoreData Read(Stream input)
         {
             var dictionary = new Dictionary<string, Action<AllScoreData, Th10.Chapter>>

@@ -20,7 +20,6 @@ namespace ThScoreFileConverter.Models
         /// <summary>
         /// The dictionary of the types of the subclasses of the <see cref="ThConverter"/> class.
         /// </summary>
-        [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1025:CodeMustNotContainMultipleWhitespaceInARow", Justification = "Reviewed.")]
         private static readonly Dictionary<string, Type> ConverterTypes = new Dictionary<string, Type>
         {
             { Resources.keyTh06,  typeof(Th06Converter)  },
