@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Squirrel;
 using ThScoreFileConverterTests.Models;
@@ -92,14 +93,41 @@ namespace ThScoreFileConverterTests.Squirrel
         }
 
         [TestMethod]
-        public void EqualsTest()
-        {
-            var sqtrue = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Bool, (byte)0x01));
-            var sqfalse = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Bool, (byte)0x00));
+        public void EqualsTestNull() => Assert.IsFalse(SQBool.True.Equals(null));
 
-            Assert.AreEqual(SQBool.True, sqtrue);
-            Assert.AreEqual(SQBool.False, sqfalse);
-            Assert.AreNotEqual(SQBool.True, SQBool.False);
+        [TestMethod]
+        public void EqualsTestNullObject() => Assert.IsFalse(SQBool.True.Equals(null as object));
+
+        [TestMethod]
+        public void EqualsTestInvalidType() => Assert.IsFalse(SQBool.True.Equals(SQNull.Instance));
+
+        [TestMethod]
+        public void EqualsTestSelf() => Assert.IsTrue(SQBool.True.Equals(SQBool.True));
+
+        [TestMethod]
+        public void EqualsTestSelfObject() => Assert.IsTrue(SQBool.True.Equals(SQBool.True as object));
+
+        [TestMethod]
+        public void EqualsTestEqual()
+        {
+            var sqtrue = CreateTestHelper(TestUtils.MakeSQByteArray(true).ToArray());
+
+            Assert.IsTrue(SQBool.True.Equals(sqtrue));
         }
+
+        [TestMethod]
+        public void EqualsTestNotEqual() => Assert.IsFalse(SQBool.True.Equals(SQBool.False));
+
+        [TestMethod]
+        public void GetHashCodeTestEqual()
+        {
+            var sqtrue = CreateTestHelper(TestUtils.MakeSQByteArray(true).ToArray());
+
+            Assert.AreEqual(SQBool.True.GetHashCode(), sqtrue.GetHashCode());
+        }
+
+        [TestMethod]
+        public void GetHashCodeTestNotEqual()
+            => Assert.AreNotEqual(SQBool.True.GetHashCode(), SQBool.False.GetHashCode());
     }
 }

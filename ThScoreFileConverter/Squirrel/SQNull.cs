@@ -39,7 +39,7 @@ namespace ThScoreFileConverter.Squirrel
 
         public override bool Equals(object obj) => this.Equals(obj as SQNull);
 
-        public override int GetHashCode() => this.Type.GetHashCode() ^ this.Value.GetHashCode();
+        public override int GetHashCode() => this.Type.GetHashCode();
 
         public bool Equals(SQNull other)
         {

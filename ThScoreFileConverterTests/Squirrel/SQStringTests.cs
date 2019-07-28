@@ -17,8 +17,8 @@ namespace ThScoreFileConverterTests.Squirrel
             var sqstring = new SQString();
 
             Assert.AreEqual(SQObjectType.String, sqstring.Type);
-            Assert.AreEqual(string.Empty, sqstring.Value);
-            Assert.AreEqual(string.Empty, sqstring);
+            Assert.AreEqual(string.Empty, sqstring.Value, false, CultureInfo.InvariantCulture);
+            Assert.AreEqual(string.Empty, sqstring, false, CultureInfo.InvariantCulture);
         }
 
         internal static SQString CreateTestHelper(byte[] bytes)
@@ -106,14 +106,42 @@ namespace ThScoreFileConverterTests.Squirrel
         }
 
         [TestMethod]
-        public void EqualsTest()
-        {
-            var value1 = new SQString();
-            var value2 = new SQString(string.Empty);
-            var value3 = new SQString("博麗 霊夢");
+        public void EqualsTestNull() => Assert.IsFalse(new SQString().Equals(null));
 
-            Assert.AreEqual(value1, value2);
-            Assert.AreNotEqual(value1, value3);
+        [TestMethod]
+        public void EqualsTestNullObject() => Assert.IsFalse(new SQString().Equals(null as object));
+
+        [TestMethod]
+        public void EqualsTestInvalidType() => Assert.IsFalse(new SQString().Equals(SQNull.Instance));
+
+        [TestMethod]
+        public void EqualsTestSelf()
+        {
+            var value = new SQString();
+
+            Assert.IsTrue(value.Equals(value));
         }
+
+        [TestMethod]
+        public void EqualsTestSelfObject()
+        {
+            var value = new SQString();
+
+            Assert.IsTrue(value.Equals(value as object));
+        }
+
+        [TestMethod]
+        public void EqualsTestEqual() => Assert.IsTrue(new SQString().Equals(new SQString(string.Empty)));
+
+        [TestMethod]
+        public void EqualsTestNotEqual() => Assert.IsFalse(new SQString().Equals(new SQString("博麗 霊夢")));
+
+        [TestMethod]
+        public void GetHashCodeTestEqual()
+            => Assert.AreEqual(new SQString().GetHashCode(), new SQString(string.Empty).GetHashCode());
+
+        [TestMethod]
+        public void GetHashCodeTestNotEqual()
+            => Assert.AreNotEqual(new SQString().GetHashCode(), new SQString("博麗 霊夢").GetHashCode());
     }
 }

@@ -86,14 +86,41 @@ namespace ThScoreFileConverterTests.Squirrel
         }
 
         [TestMethod]
-        public void EqualsTest()
-        {
-            var value1 = new SQFloat();
-            var value2 = new SQFloat(0f);
-            var value3 = new SQFloat(1f);
+        public void EqualsTestNull() => Assert.IsFalse(new SQFloat().Equals(null));
 
-            Assert.AreEqual(value1, value2);
-            Assert.AreNotEqual(value1, value3);
+        [TestMethod]
+        public void EqualsTestNullObject() => Assert.IsFalse(new SQFloat().Equals(null as object));
+
+        [TestMethod]
+        public void EqualsTestInvalidType() => Assert.IsFalse(new SQFloat().Equals(SQNull.Instance));
+
+        [TestMethod]
+        public void EqualsTestSelf()
+        {
+            var value = new SQFloat();
+
+            Assert.IsTrue(value.Equals(value));
         }
+
+        [TestMethod]
+        public void EqualsTestSelfObject()
+        {
+            var value = new SQFloat();
+
+            Assert.IsTrue(value.Equals(value as object));
+        }
+
+        [TestMethod]
+        public void EqualsTestEqual() => Assert.IsTrue(new SQFloat().Equals(new SQFloat(0f)));
+
+        [TestMethod]
+        public void EqualsTestNotEqual() => Assert.IsFalse(new SQFloat().Equals(new SQFloat(1f)));
+
+        [TestMethod]
+        public void GetHashCodeEqual() => Assert.AreEqual(new SQFloat().GetHashCode(), new SQFloat(0f).GetHashCode());
+
+        [TestMethod]
+        public void GetHashCodeNotEqual()
+            => Assert.AreNotEqual(new SQFloat().GetHashCode(), new SQFloat(1f).GetHashCode());
     }
 }

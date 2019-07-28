@@ -65,12 +65,34 @@ namespace ThScoreFileConverterTests.Squirrel
         }
 
         [TestMethod]
+        public void EqualsTestNull() => Assert.IsFalse(SQNull.Instance.Equals(null));
+
+        [TestMethod]
+        public void EqualsTestNullObject() => Assert.IsFalse(SQNull.Instance.Equals(null as object));
+
+        [TestMethod]
+        public void EqualsTestInvalidType() => Assert.IsFalse(SQNull.Instance.Equals(SQBool.True));
+
+        [TestMethod]
+        public void EqualsTestSelf() => Assert.IsTrue(SQNull.Instance.Equals(SQNull.Instance));
+
+        [TestMethod]
+        public void EqualsTestSelfObject() => Assert.IsTrue(SQNull.Instance.Equals(SQNull.Instance as object));
+
+        [TestMethod]
         public void EqualsTest()
         {
-            var lhs = SQNull.Instance;
-            var rhs = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Null));
+            var created = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Null));
 
-            Assert.AreEqual(lhs, rhs);
+            Assert.IsTrue(SQNull.Instance.Equals(created));
+        }
+
+        [TestMethod]
+        public void GetHashCodeTest()
+        {
+            var created = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Null));
+
+            Assert.AreEqual(SQNull.Instance.GetHashCode(), created.GetHashCode());
         }
     }
 }

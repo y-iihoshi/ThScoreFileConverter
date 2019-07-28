@@ -49,14 +49,10 @@ namespace ThScoreFileConverter.Squirrel
             while (true)
             {
                 var key = SQObject.Create(reader);
-                if (key is null)
-                    throw new InvalidDataException(Resources.InvalidDataExceptionFailedToReadKey);
                 if (key is SQNull)
                     break;
 
                 var value = SQObject.Create(reader);
-                if (value is null)
-                    throw new InvalidDataException(Resources.InvalidDataExceptionFailedToReadValue);
 
                 ((table as SQObject).Value as Dictionary<SQObject, SQObject>).Add(key, value);
             }

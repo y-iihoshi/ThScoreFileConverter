@@ -83,14 +83,42 @@ namespace ThScoreFileConverterTests.Squirrel
         }
 
         [TestMethod]
-        public void EqualsTest()
-        {
-            var value1 = new SQInteger();
-            var value2 = new SQInteger(0);
-            var value3 = new SQInteger(1);
+        public void EqualsTestNull() => Assert.IsFalse(new SQInteger().Equals(null));
 
-            Assert.AreEqual(value1, value2);
-            Assert.AreNotEqual(value1, value3);
+        [TestMethod]
+        public void EqualsTestNullObject() => Assert.IsFalse(new SQInteger().Equals(null as object));
+
+        [TestMethod]
+        public void EqualsTestInvalidType() => Assert.IsFalse(new SQInteger().Equals(SQNull.Instance));
+
+        [TestMethod]
+        public void EqualsTestSelf()
+        {
+            var value = new SQInteger();
+
+            Assert.IsTrue(value.Equals(value));
         }
+
+        [TestMethod]
+        public void EqualsTestSelfObject()
+        {
+            var value = new SQInteger();
+
+            Assert.IsTrue(value.Equals(value as object));
+        }
+
+        [TestMethod]
+        public void EqualsTestEqual() => Assert.IsTrue(new SQInteger().Equals(new SQInteger(0)));
+
+        [TestMethod]
+        public void EqualsTestNotEqual() => Assert.IsFalse(new SQInteger().Equals(new SQInteger(1)));
+
+        [TestMethod]
+        public void GetHashCodeTestEqual()
+            => Assert.AreEqual(new SQInteger().GetHashCode(), new SQInteger(0).GetHashCode());
+
+        [TestMethod]
+        public void GetHashCodeTestNotEqual()
+            => Assert.AreNotEqual(new SQInteger().GetHashCode(), new SQInteger(1).GetHashCode());
     }
 }

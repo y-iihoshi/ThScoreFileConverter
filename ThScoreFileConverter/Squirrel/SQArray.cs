@@ -53,12 +53,7 @@ namespace ThScoreFileConverter.Squirrel
             for (var count = 0; count < num; count++)
             {
                 var index = SQObject.Create(reader);
-                if (index is null)
-                    throw new InvalidDataException(Resources.InvalidDataExceptionFailedToReadIndex);
-
                 var value = SQObject.Create(reader);
-                if (value is null)
-                    throw new InvalidDataException(Resources.InvalidDataExceptionFailedToReadValue);
 
                 if (!(index is SQInteger i))
                     throw new InvalidDataException(Resources.InvalidDataExceptionIndexMustBeAnInteger);
@@ -69,9 +64,6 @@ namespace ThScoreFileConverter.Squirrel
             }
 
             var sentinel = SQObject.Create(reader);
-            if (sentinel is null)
-                throw new InvalidDataException(Resources.InvalidDataExceptionFailedToReadSentinel);
-
             return (sentinel is SQNull)
                 ? array : throw new InvalidDataException(Resources.InvalidDataExceptionWrongSentinel);
         }

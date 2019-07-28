@@ -106,42 +106,6 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
-        ///   Failed to read index. に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string InvalidDataExceptionFailedToReadIndex {
-            get {
-                return ResourceManager.GetString("InvalidDataExceptionFailedToReadIndex", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Failed to read key. に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string InvalidDataExceptionFailedToReadKey {
-            get {
-                return ResourceManager.GetString("InvalidDataExceptionFailedToReadKey", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Failed to read sentinel. に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string InvalidDataExceptionFailedToReadSentinel {
-            get {
-                return ResourceManager.GetString("InvalidDataExceptionFailedToReadSentinel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Failed to read value. に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string InvalidDataExceptionFailedToReadValue {
-            get {
-                return ResourceManager.GetString("InvalidDataExceptionFailedToReadValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Index is out of range. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string InvalidDataExceptionIndexIsOutOfRange {

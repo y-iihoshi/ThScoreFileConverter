@@ -132,18 +132,6 @@
   <data name="fltTemplateFile" xml:space="preserve">
     <value>すべてのファイル (*.*)|*.*</value>
   </data>
-  <data name="InvalidDataExceptionFailedToReadIndex" xml:space="preserve">
-    <value>Failed to read index.</value>
-  </data>
-  <data name="InvalidDataExceptionFailedToReadKey" xml:space="preserve">
-    <value>Failed to read key.</value>
-  </data>
-  <data name="InvalidDataExceptionFailedToReadSentinel" xml:space="preserve">
-    <value>Failed to read sentinel.</value>
-  </data>
-  <data name="InvalidDataExceptionFailedToReadValue" xml:space="preserve">
-    <value>Failed to read value.</value>
-  </data>
   <data name="InvalidDataExceptionIndexIsOutOfRange" xml:space="preserve">
     <value>Index is out of range.</value>
   </data>
