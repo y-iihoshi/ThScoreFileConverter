@@ -5,13 +5,13 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System.ComponentModel;
+using System.Windows;
+using System.Windows.Input;
+using Microsoft.Xaml.Behaviors;
+
 namespace ThScoreFileConverter.Actions
 {
-    using System.ComponentModel;
-    using System.Windows;
-    using System.Windows.Input;
-    using Microsoft.Xaml.Behaviors;
-
     /// <summary>
     /// Encapsulates the handling of <see cref="System.Windows.Forms.CommonDialog"/>.
     /// </summary>

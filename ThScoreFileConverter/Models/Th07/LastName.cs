@@ -7,10 +7,10 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System.IO;
+
 namespace ThScoreFileConverter.Models.Th07
 {
-    using System.IO;
-
     internal class LastName : Th06.Chapter
     {
         public const string ValidSignature = "LSNM";

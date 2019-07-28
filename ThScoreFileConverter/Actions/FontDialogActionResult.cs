@@ -5,10 +5,10 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System.Drawing;
+
 namespace ThScoreFileConverter.Actions
 {
-    using System.Drawing;
-
     /// <summary>
     /// Represents a result of <see cref="FontDialogAction"/>.
     /// </summary>

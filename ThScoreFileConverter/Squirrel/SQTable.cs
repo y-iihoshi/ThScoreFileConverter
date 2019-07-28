@@ -7,14 +7,14 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using ThScoreFileConverter.Properties;
+
 namespace ThScoreFileConverter.Squirrel
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using ThScoreFileConverter.Properties;
-
     internal sealed class SQTable : SQObject
     {
         public SQTable()

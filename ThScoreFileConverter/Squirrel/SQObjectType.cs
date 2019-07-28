@@ -5,8 +5,6 @@
 
 namespace ThScoreFileConverter.Squirrel
 {
-    using System;
-
     /// <summary>
     /// Represents an object type defined by Squirrel 3.1.
     /// Refer to https://github.com/albertodemichelis/squirrel/blob/master/include/squirrel.h for details.

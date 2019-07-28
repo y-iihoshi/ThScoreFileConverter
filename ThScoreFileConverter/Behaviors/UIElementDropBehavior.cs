@@ -5,14 +5,14 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
+using System.Windows;
+using System.Windows.Input;
+using Microsoft.Xaml.Behaviors;
+using ThScoreFileConverter.Properties;
+
 namespace ThScoreFileConverter.Behaviors
 {
-    using System;
-    using System.Windows;
-    using System.Windows.Input;
-    using Microsoft.Xaml.Behaviors;
-    using ThScoreFileConverter.Properties;
-
     /// <summary>
     /// Encapsulates state information and drag-and-drop related <see cref="ICommand"/>s into a
     /// <see cref="UIElement"/> object.

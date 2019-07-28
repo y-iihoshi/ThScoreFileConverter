@@ -7,13 +7,13 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
+using System.Collections.Generic;
+using System.IO;
+using ThScoreFileConverter.Properties;
+
 namespace ThScoreFileConverter.Squirrel
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using ThScoreFileConverter.Properties;
-
     internal class SQObject
     {
         private static readonly Dictionary<SQObjectType, Func<BinaryReader, SQObject>> SQObjectReaders =

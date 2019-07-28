@@ -5,12 +5,12 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
+using System.Windows;
+using System.Windows.Input;
+
 namespace ThScoreFileConverter.Commands
 {
-    using System;
-    using System.Windows;
-    using System.Windows.Input;
-
     /// <summary>
     /// Represents the command to close the specified window.
     /// </summary>
@@ -26,9 +26,9 @@ namespace ThScoreFileConverter.Commands
         /// <summary>
         /// Occurs when changes occur that affect whether or not the command should execute.
         /// </summary>
-        #pragma warning disable CS0067
+#pragma warning disable CS0067
         public event EventHandler CanExecuteChanged;
-        #pragma warning restore CS0067
+#pragma warning restore CS0067
 
         /// <summary>
         /// Gets the instance.

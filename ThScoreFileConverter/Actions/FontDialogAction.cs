@@ -5,15 +5,15 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
+using System.Windows;
+using System.Windows.Input;
+using ThScoreFileConverter.Properties;
+using SysDraw = System.Drawing;
+using WinForms = System.Windows.Forms;
+
 namespace ThScoreFileConverter.Actions
 {
-    using System;
-    using System.Windows;
-    using System.Windows.Input;
-    using ThScoreFileConverter.Properties;
-    using SysDraw = System.Drawing;
-    using WinForms = System.Windows.Forms;
-
     /// <summary>
     /// Encapsulates the handling of <see cref="System.Windows.Forms.FontDialog"/>.
     /// </summary>

@@ -5,25 +5,25 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Threading;
+using System.Windows;
+using System.Windows.Input;
+using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Mvvm;
+using ThScoreFileConverter.Actions;
+using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Properties;
+
 namespace ThScoreFileConverter.ViewModels
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Diagnostics.CodeAnalysis;
-    using System.IO;
-    using System.Linq;
-    using System.Reflection;
-    using System.Threading;
-    using System.Windows;
-    using System.Windows.Input;
-    using Microsoft.Practices.Prism.Commands;
-    using Microsoft.Practices.Prism.Mvvm;
-    using ThScoreFileConverter.Actions;
-    using ThScoreFileConverter.Models;
-    using ThScoreFileConverter.Properties;
-
     /// <summary>
     /// The view model class for <see cref="ThScoreFileConverter.Views.MainWindow"/>.
     /// </summary>

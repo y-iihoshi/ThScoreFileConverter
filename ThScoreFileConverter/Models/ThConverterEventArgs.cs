@@ -5,11 +5,11 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
+using ThScoreFileConverter.Properties;
+
 namespace ThScoreFileConverter.Models
 {
-    using System;
-    using ThScoreFileConverter.Properties;
-
     /// <summary>
     /// Represents the event data issued by the <see cref="ThConverter"/> class.
     /// </summary>

@@ -5,17 +5,17 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
+using System.Globalization;
+using System.IO;
+using System.Windows;
+using System.Windows.Media;
+using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Views;
+using Prop = ThScoreFileConverter.Properties;
+
 namespace ThScoreFileConverter
 {
-    using System;
-    using System.Globalization;
-    using System.IO;
-    using System.Windows;
-    using System.Windows.Media;
-    using ThScoreFileConverter.Models;
-    using ThScoreFileConverter.Views;
-    using Prop = ThScoreFileConverter.Properties;
-
     /// <summary>
     /// Interaction logic for App.xaml.
     /// </summary>

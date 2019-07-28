@@ -5,10 +5,10 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
+
 namespace ThScoreFileConverter.Models
 {
-    using System;
-
     /// <summary>
     /// Represents a time.
     /// A value of less than a second is treated as milliseconds or frames-per-second (fps).

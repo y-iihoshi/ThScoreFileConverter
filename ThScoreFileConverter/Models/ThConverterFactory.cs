@@ -5,13 +5,12 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using ThScoreFileConverter.Properties;
+
 namespace ThScoreFileConverter.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-    using ThScoreFileConverter.Properties;
-
     /// <summary>
     /// Generates an instance that executes the conversion of a score file.
     /// </summary>

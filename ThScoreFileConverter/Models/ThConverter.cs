@@ -5,14 +5,14 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using ThScoreFileConverter.Properties;
+
 namespace ThScoreFileConverter.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using ThScoreFileConverter.Properties;
-
     /// <summary>
     /// Represents the base class for classes that executes conversion of a score file.
     /// </summary>

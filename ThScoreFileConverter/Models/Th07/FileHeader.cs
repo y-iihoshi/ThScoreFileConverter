@@ -7,11 +7,11 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
+using System.IO;
+
 namespace ThScoreFileConverter.Models.Th07
 {
-    using System;
-    using System.IO;
-
     internal class FileHeader : IBinaryReadable, IBinaryWritable
     {
         private ushort unknown1;

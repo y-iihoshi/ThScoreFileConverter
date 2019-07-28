@@ -7,12 +7,12 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
+using System.Collections.Generic;
+using System.IO;
+
 namespace ThScoreFileConverter.Models.Th105
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-
     internal class ClearData<TChara, TLevel> : IBinaryReadable   // per character
         where TChara : struct, Enum
         where TLevel : struct, Enum

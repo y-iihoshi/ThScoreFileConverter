@@ -7,11 +7,11 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
+using System.IO;
+
 namespace ThScoreFileConverter.Models.Th105
 {
-    using System;
-    using System.IO;
-
     internal class SpellCardResult<TChara, TLevel> : IBinaryReadable
         where TChara : struct, Enum
         where TLevel : struct, Enum

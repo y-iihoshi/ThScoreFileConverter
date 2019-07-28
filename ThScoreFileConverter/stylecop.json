@@ -6,6 +6,9 @@
       "tabSize": 4,
       "useTabs": false
     },
+    "orderingRules": {
+      "usingDirectivesPlacement": "outsideNamespace"
+    },
     "documentationRules": {
       "companyName": "None",
       "copyrightText": "Copyright (c) {author}.\nLicensed under the {license} license. See {licenseFile} file in the project root for full license information.",

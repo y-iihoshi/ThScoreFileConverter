@@ -5,13 +5,13 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+
 namespace ThScoreFileConverter.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Linq;
-
     /// <summary>
     /// Provides static methods for convenience.
     /// </summary>

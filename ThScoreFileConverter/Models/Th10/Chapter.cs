@@ -7,13 +7,13 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
+using System.IO;
+using System.Linq;
+using ThScoreFileConverter.Properties;
+
 namespace ThScoreFileConverter.Models.Th10
 {
-    using System;
-    using System.IO;
-    using System.Linq;
-    using ThScoreFileConverter.Properties;
-
     internal class Chapter : IBinaryReadable
     {
         public const int SignatureSize = 2;

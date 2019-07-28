@@ -5,11 +5,11 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System.Collections.Generic;
+using System.Linq;
+
 namespace ThScoreFileConverter.Actions
 {
-    using System.Collections.Generic;
-    using System.Linq;
-
     /// <summary>
     /// Represents a result of <see cref="OpenFileDialogAction"/>.
     /// </summary>

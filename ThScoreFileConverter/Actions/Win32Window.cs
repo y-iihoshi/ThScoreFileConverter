@@ -5,13 +5,13 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
+using System.Windows;
+using System.Windows.Interop;
+using WinForms = System.Windows.Forms;
+
 namespace ThScoreFileConverter.Actions
 {
-    using System;
-    using System.Windows;
-    using System.Windows.Interop;
-    using WinForms = System.Windows.Forms;
-
     /// <summary>
     /// Converter from <see cref="Window"/> to <see cref="WinForms.IWin32Window"/>.
     /// </summary>

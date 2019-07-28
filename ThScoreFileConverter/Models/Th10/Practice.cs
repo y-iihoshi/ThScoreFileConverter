@@ -7,11 +7,11 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
+using System.IO;
+
 namespace ThScoreFileConverter.Models.Th10
 {
-    using System;
-    using System.IO;
-
     internal class Practice : IBinaryReadable
     {
         public uint Score { get; private set; }     // Divided by 10

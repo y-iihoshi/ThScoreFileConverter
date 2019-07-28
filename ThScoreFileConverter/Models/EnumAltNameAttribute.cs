@@ -5,10 +5,10 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
+
 namespace ThScoreFileConverter.Models
 {
-    using System;
-
     /// <summary>
     /// Provides alternative names of enumeration fields.
     /// </summary>

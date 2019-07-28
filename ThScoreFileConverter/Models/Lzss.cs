@@ -5,13 +5,13 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using ThScoreFileConverter.Properties;
+
 namespace ThScoreFileConverter.Models
 {
-    using System;
-    using System.Diagnostics.CodeAnalysis;
-    using System.IO;
-    using ThScoreFileConverter.Properties;
-
     /// <summary>
     /// Provides static methods for compressing and decompressing LZSS formatted data.
     /// </summary>

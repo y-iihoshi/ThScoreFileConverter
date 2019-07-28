@@ -9,18 +9,17 @@
 #pragma warning disable SA1600 // ElementsMustBeDocumented
 #pragma warning disable SA1602 // EnumerationItemsMustBeDocumented
 
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
+using System.Text.RegularExpressions;
+using ThScoreFileConverter.Squirrel;
+
 namespace ThScoreFileConverter.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-    using System.IO;
-    using System.IO.Compression;
-    using System.Linq;
-    using System.Text.RegularExpressions;
-    using ThScoreFileConverter.Properties;
-    using ThScoreFileConverter.Squirrel;
-
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th155Converter : ThConverter
     {

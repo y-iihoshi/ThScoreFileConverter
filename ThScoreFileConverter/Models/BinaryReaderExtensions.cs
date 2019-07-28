@@ -5,11 +5,11 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
+using System.IO;
+
 namespace ThScoreFileConverter.Models
 {
-    using System;
-    using System.IO;
-
     /// <summary>
     /// Provides some extension methods for <see cref="BinaryReader"/>.
     /// </summary>

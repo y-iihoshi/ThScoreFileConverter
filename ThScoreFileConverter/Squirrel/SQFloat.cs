@@ -7,12 +7,12 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
+using System.IO;
+using ThScoreFileConverter.Properties;
+
 namespace ThScoreFileConverter.Squirrel
 {
-    using System;
-    using System.IO;
-    using ThScoreFileConverter.Properties;
-
     internal sealed class SQFloat : SQObject, IEquatable<SQFloat>
     {
         public SQFloat(float value = default)

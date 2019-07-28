@@ -5,13 +5,13 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using ThScoreFileConverter.Properties;
+
 namespace ThScoreFileConverter.Models
 {
-    using System;
-    using System.Diagnostics.CodeAnalysis;
-    using System.IO;
-    using ThScoreFileConverter.Properties;
-
     /// <summary>
     /// The static class that treats the encryption format used for Touhou Project works.
     /// Thanks to Touhou Toolkit 5.

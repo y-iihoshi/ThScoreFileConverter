@@ -5,10 +5,10 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System.IO;
+
 namespace ThScoreFileConverter.Models
 {
-    using System.IO;
-
     /// <summary>
     /// Defines a method to write to a binary stream.
     /// </summary>

@@ -7,12 +7,12 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace ThScoreFileConverter.Models.Th105
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
     internal class StageInfo<TStage, TChara>
         where TStage : struct, Enum
         where TChara : struct, Enum

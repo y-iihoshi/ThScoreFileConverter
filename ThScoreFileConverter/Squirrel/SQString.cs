@@ -7,13 +7,13 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
+using System.IO;
+using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Properties;
+
 namespace ThScoreFileConverter.Squirrel
 {
-    using System;
-    using System.IO;
-    using ThScoreFileConverter.Models;
-    using ThScoreFileConverter.Properties;
-
     internal sealed class SQString : SQObject, IEquatable<SQString>
     {
         public SQString(string value = "")

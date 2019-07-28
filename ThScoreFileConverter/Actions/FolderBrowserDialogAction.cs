@@ -5,13 +5,13 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
+using System.Windows;
+using ThScoreFileConverter.Properties;
+using WinForms = System.Windows.Forms;
+
 namespace ThScoreFileConverter.Actions
 {
-    using System;
-    using System.Windows;
-    using ThScoreFileConverter.Properties;
-    using WinForms = System.Windows.Forms;
-
     /// <summary>
     /// Encapsulates the handling of <see cref="System.Windows.Forms.FolderBrowserDialog"/>.
     /// </summary>

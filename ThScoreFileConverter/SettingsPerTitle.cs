@@ -5,10 +5,10 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System.Collections.Generic;
+
 namespace ThScoreFileConverter
 {
-    using System.Collections.Generic;
-
     /// <summary>
     /// Represents settings per work.
     /// </summary>

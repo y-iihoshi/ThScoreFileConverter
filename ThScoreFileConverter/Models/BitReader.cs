@@ -5,12 +5,12 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
+using System.IO;
+using ThScoreFileConverter.Properties;
+
 namespace ThScoreFileConverter.Models
 {
-    using System;
-    using System.IO;
-    using ThScoreFileConverter.Properties;
-
     /// <summary>
     /// Represents a reader that reads data by bitwise from a stream.
     /// </summary>

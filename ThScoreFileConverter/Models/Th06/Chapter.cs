@@ -7,13 +7,12 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
+using System.IO;
+using ThScoreFileConverter.Properties;
+
 namespace ThScoreFileConverter.Models.Th06
 {
-    using System;
-    using System.IO;
-    using System.Text;
-    using ThScoreFileConverter.Properties;
-
     internal class Chapter : IBinaryReadable
     {
         public Chapter()

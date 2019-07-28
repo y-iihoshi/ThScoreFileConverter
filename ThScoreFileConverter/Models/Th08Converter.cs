@@ -9,17 +9,18 @@
 #pragma warning disable SA1600 // ElementsMustBeDocumented
 #pragma warning disable SA1602 // EnumerationItemsMustBeDocumented
 
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
+using CardInfo = ThScoreFileConverter.Models.SpellCardInfo<
+    ThScoreFileConverter.Models.Th08Converter.StagePractice, ThScoreFileConverter.Models.Th08Converter.LevelPractice>;
+
 namespace ThScoreFileConverter.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Globalization;
-    using System.IO;
-    using System.Linq;
-    using System.Text.RegularExpressions;
-    using CardInfo = SpellCardInfo<Th08Converter.StagePractice, Th08Converter.LevelPractice>;
-
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th08Converter : ThConverter
     {

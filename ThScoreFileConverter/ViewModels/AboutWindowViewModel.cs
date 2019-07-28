@@ -5,20 +5,20 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Drawing;
+using System.Reflection;
+using System.Windows;
+using System.Windows.Interop;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Mvvm;
+using Prop = ThScoreFileConverter.Properties;
+
 namespace ThScoreFileConverter.ViewModels
 {
-    using System.Diagnostics;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Drawing;
-    using System.Reflection;
-    using System.Windows;
-    using System.Windows.Interop;
-    using System.Windows.Media;
-    using System.Windows.Media.Imaging;
-    using Microsoft.Practices.Prism.Commands;
-    using Microsoft.Practices.Prism.Mvvm;
-    using Prop = ThScoreFileConverter.Properties;
-
     /// <summary>
     /// The view model class for <see cref="ThScoreFileConverter.Views.AboutWindow"/>.
     /// </summary>

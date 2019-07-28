@@ -9,20 +9,23 @@
 #pragma warning disable SA1600 // ElementsMustBeDocumented
 #pragma warning disable SA1602 // EnumerationItemsMustBeDocumented
 
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
+using System.Text.RegularExpressions;
+using ClearData = ThScoreFileConverter.Models.Th105.ClearData<
+    ThScoreFileConverter.Models.Th105Converter.Chara, ThScoreFileConverter.Models.Th105Converter.Level>;
+using SpellCardResult = ThScoreFileConverter.Models.Th105.SpellCardResult<
+    ThScoreFileConverter.Models.Th105Converter.Chara, ThScoreFileConverter.Models.Th105Converter.Level>;
+using StageInfo = ThScoreFileConverter.Models.Th105.StageInfo<
+    ThScoreFileConverter.Models.Th105Converter.Stage, ThScoreFileConverter.Models.Th105Converter.Chara>;
+
 namespace ThScoreFileConverter.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Globalization;
-    using System.IO;
-    using System.IO.Compression;
-    using System.Linq;
-    using System.Text.RegularExpressions;
-    using ClearData = Th105.ClearData<Th105Converter.Chara, Th105Converter.Level>;
-    using SpellCardResult = Th105.SpellCardResult<Th105Converter.Chara, Th105Converter.Level>;
-    using StageInfo = Th105.StageInfo<Th105Converter.Stage, Th105Converter.Chara>;
-
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th105Converter : ThConverter
     {

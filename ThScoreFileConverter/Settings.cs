@@ -5,17 +5,17 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.Windows;
+using System.Xml;
+using ThScoreFileConverter.Models;
+
 namespace ThScoreFileConverter
 {
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-    using System.IO;
-    using System.Linq;
-    using System.Runtime.Serialization;
-    using System.Windows;
-    using System.Xml;
-    using ThScoreFileConverter.Models;
-
     /// <summary>
     /// Represents the settings of this application.
     /// </summary>

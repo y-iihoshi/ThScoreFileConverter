@@ -5,10 +5,10 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System.Windows.Controls;
+
 namespace ThScoreFileConverter.Views
 {
-    using System.Windows.Controls;
-
     /// <summary>
     /// Interaction logic for SettingWindow.xaml.
     /// </summary>

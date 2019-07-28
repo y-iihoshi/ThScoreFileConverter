@@ -5,12 +5,12 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
+using System.Linq;
+using ThScoreFileConverter.Properties;
+
 namespace ThScoreFileConverter.Models
 {
-    using System;
-    using System.Linq;
-    using ThScoreFileConverter.Properties;
-
     /// <summary>
     /// Indicates information of a spell card.
     /// </summary>

@@ -5,11 +5,11 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
+using System.Diagnostics.CodeAnalysis;
+
 namespace ThScoreFileConverter.Models
 {
-    using System;
-    using System.Diagnostics.CodeAnalysis;
-
     /// <summary>
     /// Represents the event data that indicates occurring of an exception.
     /// </summary>
