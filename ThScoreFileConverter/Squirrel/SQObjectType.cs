@@ -3,12 +3,15 @@
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace ThScoreFileConverter.Squirrel
 {
     /// <summary>
     /// Represents an object type defined by Squirrel 3.1.
     /// Refer to https://github.com/albertodemichelis/squirrel/blob/master/include/squirrel.h for details.
     /// </summary>
+    [SuppressMessage("Naming", "CA1720:Identifier contains type name", Justification = "Reviewed.")]
     public enum SQObjectType
     {
         /// <summary>
@@ -17,7 +20,6 @@ namespace ThScoreFileConverter.Squirrel
         /// </summary>
         Null = RawType.Null | SQObjectAttributes.CanBeFalse,
 
-#pragma warning disable CA1720 // Identifier contains type name
         /// <summary>
         /// An integer represents a 32 bits (or better) signed number.
         /// Refer to http://www.squirrel-lang.org/squirreldoc/reference/language/datatypes.html#integer for details.
@@ -29,7 +31,6 @@ namespace ThScoreFileConverter.Squirrel
         /// Refer to http://www.squirrel-lang.org/squirreldoc/reference/language/datatypes.html#float for details.
         /// </summary>
         Float = RawType.Float | SQObjectAttributes.Numeric | SQObjectAttributes.CanBeFalse,
-#pragma warning restore CA1720 // Identifier contains type name
 
         /// <summary>
         /// The Bool data type can have only two, the literals <c>true</c> and <c>false</c>.
@@ -37,13 +38,11 @@ namespace ThScoreFileConverter.Squirrel
         /// </summary>
         Bool = RawType.Bool | SQObjectAttributes.CanBeFalse,
 
-#pragma warning disable CA1720 // Identifier contains type name
         /// <summary>
         /// A String is an immutable sequence of characters; to modify a string is necessary create a new one.
         /// Refer to http://www.squirrel-lang.org/squirreldoc/reference/language/datatypes.html#string for details.
         /// </summary>
         String = RawType.String | SQObjectAttributes.RefCounted,
-#pragma warning restore CA1720 // Identifier contains type name
 
         /// <summary>
         /// Tables are associative containers implemented as pairs of key/value (called a slot).
