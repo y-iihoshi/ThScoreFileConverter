@@ -17,7 +17,6 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         private readonly PrivateObject pobj = null;
 
-        [SuppressMessage("Microsoft.Design", "CA1000:DoNotDeclareStaticMembersOnGenericTypes")]
         public static Th15ClearDataPerGameModeWrapper Create(byte[] array)
         {
             var clearData = new Th15ClearDataPerGameModeWrapper();

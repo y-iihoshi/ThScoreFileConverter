@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using ThScoreFileConverter.Models.Th10;
@@ -16,7 +15,6 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         private readonly PrivateObject pobj = null;
 
-        [SuppressMessage("Microsoft.Design", "CA1000:DoNotDeclareStaticMembersOnGenericTypes")]
         public static Th10ChapterWrapper Create(byte[] array)
         {
             var chapter = new Th10ChapterWrapper();

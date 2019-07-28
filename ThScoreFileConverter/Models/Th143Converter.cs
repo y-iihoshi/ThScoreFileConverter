@@ -9,8 +9,6 @@
 #pragma warning disable SA1600 // ElementsMustBeDocumented
 #pragma warning disable SA1602 // EnumerationItemsMustBeDocumented
 
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "*", Justification = "Reviewed.")]
-
 namespace ThScoreFileConverter.Models
 {
     using System;
