@@ -10,9 +10,9 @@ namespace ThScoreFileConverterTests.Squirrel
     public class SQNullTests
     {
         [TestMethod]
-        public void SQNullTest()
+        public void InstanceTest()
         {
-            var sqnull = new SQNull();
+            var sqnull = SQNull.Instance;
 
             Assert.AreEqual(SQObjectType.Null, sqnull.Type);
             Assert.IsNull(sqnull.Value);
@@ -62,6 +62,15 @@ namespace ThScoreFileConverterTests.Squirrel
             _ = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Bool));
 
             Assert.Fail(TestUtils.Unreachable);
+        }
+
+        [TestMethod]
+        public void EqualsTest()
+        {
+            var lhs = SQNull.Instance;
+            var rhs = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Null));
+
+            Assert.AreEqual(lhs, rhs);
         }
     }
 }

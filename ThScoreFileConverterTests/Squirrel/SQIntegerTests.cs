@@ -81,5 +81,16 @@ namespace ThScoreFileConverterTests.Squirrel
 
             Assert.Fail(TestUtils.Unreachable);
         }
+
+        [TestMethod]
+        public void EqualsTest()
+        {
+            var value1 = new SQInteger();
+            var value2 = new SQInteger(0);
+            var value3 = new SQInteger(1);
+
+            Assert.AreEqual(value1, value2);
+            Assert.AreNotEqual(value1, value3);
+        }
     }
 }

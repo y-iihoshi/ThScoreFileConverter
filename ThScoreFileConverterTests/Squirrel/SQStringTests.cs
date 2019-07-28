@@ -104,5 +104,16 @@ namespace ThScoreFileConverterTests.Squirrel
 
             Assert.Fail(TestUtils.Unreachable);
         }
+
+        [TestMethod]
+        public void EqualsTest()
+        {
+            var value1 = new SQString();
+            var value2 = new SQString(string.Empty);
+            var value3 = new SQString("博麗 霊夢");
+
+            Assert.AreEqual(value1, value2);
+            Assert.AreNotEqual(value1, value3);
+        }
     }
 }

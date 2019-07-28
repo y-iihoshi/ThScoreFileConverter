@@ -11,9 +11,19 @@ namespace ThScoreFileConverterTests.Squirrel
     public class SQBoolTests
     {
         [TestMethod]
-        public void SQBoolTest()
+        public void SQBoolTestTrue()
         {
-            var sqbool = new SQBool();
+            var sqbool = SQBool.True;
+
+            Assert.AreEqual(SQObjectType.Bool, sqbool.Type);
+            Assert.IsTrue(sqbool.Value);
+            Assert.IsTrue(sqbool);
+        }
+
+        [TestMethod]
+        public void SQBoolTestFalse()
+        {
+            var sqbool = SQBool.False;
 
             Assert.AreEqual(SQObjectType.Bool, sqbool.Type);
             Assert.IsFalse(sqbool.Value);
@@ -79,6 +89,17 @@ namespace ThScoreFileConverterTests.Squirrel
             _ = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Null, (byte)0x00));
 
             Assert.Fail(TestUtils.Unreachable);
+        }
+
+        [TestMethod]
+        public void EqualsTest()
+        {
+            var sqtrue = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Bool, (byte)0x01));
+            var sqfalse = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Bool, (byte)0x00));
+
+            Assert.AreEqual(SQBool.True, sqtrue);
+            Assert.AreEqual(SQBool.False, sqfalse);
+            Assert.AreNotEqual(SQBool.True, SQBool.False);
         }
     }
 }

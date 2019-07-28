@@ -13,7 +13,7 @@ namespace ThScoreFileConverter.Squirrel
     using System.IO;
     using ThScoreFileConverter.Properties;
 
-    internal sealed class SQFloat : SQObject
+    internal sealed class SQFloat : SQObject, IEquatable<SQFloat>
     {
         public SQFloat(float value = default)
             : base(SQObjectType.Float)
@@ -40,6 +40,18 @@ namespace ThScoreFileConverter.Squirrel
             }
 
             return new SQFloat(reader.ReadSingle());
+        }
+
+        public override bool Equals(object obj) => this.Equals(obj as SQFloat);
+
+        public override int GetHashCode() => this.Type.GetHashCode() ^ this.Value.GetHashCode();
+
+        public bool Equals(SQFloat other)
+        {
+            if (other is null)
+                return false;
+
+            return (this.Type == other.Type) && (this.Value == other.Value);
         }
     }
 }

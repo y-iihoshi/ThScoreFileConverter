@@ -129,9 +129,8 @@ namespace ThScoreFileConverterTests.Squirrel
             Assert.AreEqual(SQOT.Table, sqtable.Type);
             Assert.AreEqual(1, sqtable.Value.Count());
 
-            var key = sqtable.Value.Keys.First() as SQInteger;
-            Assert.AreEqual(expectedKey, key);
-            Assert.AreEqual(expectedValue, sqtable.Value[key] as SQInteger);
+            Assert.AreEqual(expectedKey, sqtable.Value.Keys.First() as SQInteger);
+            Assert.AreEqual(expectedValue, sqtable.Value[new SQInteger(expectedKey)] as SQInteger);
         }
 
         [TestMethod]

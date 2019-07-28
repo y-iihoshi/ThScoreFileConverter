@@ -14,7 +14,7 @@ namespace ThScoreFileConverter.Squirrel
     using ThScoreFileConverter.Models;
     using ThScoreFileConverter.Properties;
 
-    internal sealed class SQString : SQObject
+    internal sealed class SQString : SQObject, IEquatable<SQString>
     {
         public SQString(string value = "")
             : base(SQObjectType.String)
@@ -43,6 +43,18 @@ namespace ThScoreFileConverter.Squirrel
             var size = reader.ReadInt32();
             return new SQString(
                 (size > 0) ? Encoding.CP932.GetString(reader.ReadExactBytes(size)) : string.Empty);
+        }
+
+        public override bool Equals(object obj) => this.Equals(obj as SQString);
+
+        public override int GetHashCode() => this.Type.GetHashCode() ^ this.Value.GetHashCode();
+
+        public bool Equals(SQString other)
+        {
+            if (other is null)
+                return false;
+
+            return (this.Type == other.Type) && (this.Value == other.Value);
         }
     }
 }

@@ -13,12 +13,14 @@ namespace ThScoreFileConverter.Squirrel
     using System.IO;
     using ThScoreFileConverter.Properties;
 
-    internal sealed class SQNull : SQObject
+    internal sealed class SQNull : SQObject, IEquatable<SQNull>
     {
-        public SQNull()
+        private SQNull()
             : base(SQObjectType.Null)
         {
         }
+
+        public static SQNull Instance { get; } = new SQNull();
 
         public static SQNull Create(BinaryReader reader, bool skipType = false)
         {
@@ -32,7 +34,19 @@ namespace ThScoreFileConverter.Squirrel
                     throw new InvalidDataException(Resources.InvalidDataExceptionWrongType);
             }
 
-            return new SQNull();
+            return Instance;
+        }
+
+        public override bool Equals(object obj) => this.Equals(obj as SQNull);
+
+        public override int GetHashCode() => this.Type.GetHashCode() ^ this.Value.GetHashCode();
+
+        public bool Equals(SQNull other)
+        {
+            if (other is null)
+                return false;
+
+            return (this.Type == other.Type) && (this.Value == other.Value);
         }
     }
 }

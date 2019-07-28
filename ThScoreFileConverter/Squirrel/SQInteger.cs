@@ -13,7 +13,7 @@ namespace ThScoreFileConverter.Squirrel
     using System.IO;
     using ThScoreFileConverter.Properties;
 
-    internal sealed class SQInteger : SQObject
+    internal sealed class SQInteger : SQObject, IEquatable<SQInteger>
     {
         public SQInteger(int value = default)
             : base(SQObjectType.Integer)
@@ -40,6 +40,18 @@ namespace ThScoreFileConverter.Squirrel
             }
 
             return new SQInteger(reader.ReadInt32());
+        }
+
+        public override bool Equals(object obj) => this.Equals(obj as SQInteger);
+
+        public override int GetHashCode() => this.Type.GetHashCode() ^ this.Value.GetHashCode();
+
+        public bool Equals(SQInteger other)
+        {
+            if (other is null)
+                return false;
+
+            return (this.Type == other.Type) && (this.Value == other.Value);
         }
     }
 }
