@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -169,6 +170,7 @@ namespace ThScoreFileConverterTests.Squirrel
             Assert.Fail(TestUtils.Unreachable);
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DataRow(SQOT.Class)]
         [DataRow(SQOT.FuncProto)]
