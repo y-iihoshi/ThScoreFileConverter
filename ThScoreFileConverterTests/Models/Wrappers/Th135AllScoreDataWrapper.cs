@@ -14,7 +14,6 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         private static readonly Type ParentType = typeof(Th135Converter);
         private static readonly string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
         private static readonly string TypeNameToTest = ParentType.FullName + "+AllScoreData";
-        private static readonly PrivateType PrivateType = new PrivateType(AssemblyNameToTest, TypeNameToTest);
 
         private readonly PrivateObject pobj = null;
 
@@ -48,34 +47,26 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.Target;
 
         public int? StoryProgress
-            => this.pobj.GetProperty(nameof(StoryProgress)) as int?;
+            => this.pobj.GetProperty(nameof(this.StoryProgress)) as int?;
         public IReadOnlyDictionary<Th135Converter.Chara, Th135Converter.LevelFlag> StoryClearFlags
-            => this.pobj.GetProperty(nameof(StoryClearFlags))
+            => this.pobj.GetProperty(nameof(this.StoryClearFlags))
                 as Dictionary<Th135Converter.Chara, Th135Converter.LevelFlag>;
         public int? EndingCount
-            => this.pobj.GetProperty(nameof(EndingCount)) as int?;
+            => this.pobj.GetProperty(nameof(this.EndingCount)) as int?;
         public int? Ending2Count
-            => this.pobj.GetProperty(nameof(Ending2Count)) as int?;
+            => this.pobj.GetProperty(nameof(this.Ending2Count)) as int?;
         public bool? IsEnabledStageTanuki1
-            => this.pobj.GetProperty(nameof(IsEnabledStageTanuki1)) as bool?;
+            => this.pobj.GetProperty(nameof(this.IsEnabledStageTanuki1)) as bool?;
         public bool? IsEnabledStageTanuki2
-            => this.pobj.GetProperty(nameof(IsEnabledStageTanuki2)) as bool?;
+            => this.pobj.GetProperty(nameof(this.IsEnabledStageTanuki2)) as bool?;
         public bool? IsEnabledStageKokoro
-            => this.pobj.GetProperty(nameof(IsEnabledStageKokoro)) as bool?;
+            => this.pobj.GetProperty(nameof(this.IsEnabledStageKokoro)) as bool?;
         public bool? IsPlayableMamizou
-            => this.pobj.GetProperty(nameof(IsPlayableMamizou)) as bool?;
+            => this.pobj.GetProperty(nameof(this.IsPlayableMamizou)) as bool?;
         public bool? IsPlayableKokoro
-            => this.pobj.GetProperty(nameof(IsPlayableKokoro)) as bool?;
+            => this.pobj.GetProperty(nameof(this.IsPlayableKokoro)) as bool?;
         public IReadOnlyDictionary<int, bool> BgmFlags
-            => this.pobj.GetProperty(nameof(BgmFlags)) as Dictionary<int, bool>;
-
-        public static bool ReadObject(BinaryReader reader, out object obj)
-        {
-            var args = new object[] { reader, null };
-            var result = (bool)PrivateType.InvokeStatic(nameof(ReadObject), args, CultureInfo.InvariantCulture);
-            obj = args[1];
-            return result;
-        }
+            => this.pobj.GetProperty(nameof(this.BgmFlags)) as Dictionary<int, bool>;
 
         public void ReadFrom(BinaryReader reader)
             => this.pobj.Invoke(nameof(ReadFrom), new object[] { reader }, CultureInfo.InvariantCulture);

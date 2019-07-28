@@ -14,7 +14,6 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         private static readonly Type ParentType = typeof(Th155Converter);
         private static readonly string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
         private static readonly string TypeNameToTest = ParentType.FullName + "+AllScoreData";
-        private static readonly PrivateType PrivateType = new PrivateType(AssemblyNameToTest, TypeNameToTest);
 
         private readonly PrivateObject pobj = null;
 
@@ -51,7 +50,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         // public IReadOnlyDictionary<StoryChara, Story> StoryDictionary
         //     => this.pobj.GetProperty(nameof(StoryDictionary)) as Dictionary<StoryChara, Story>;
         public object StoryDictionary
-            => this.pobj.GetProperty(nameof(StoryDictionary));
+            => this.pobj.GetProperty(nameof(this.StoryDictionary));
         public int? StoryDictionaryCount
             => this.StoryDictionary.GetType().GetProperty("Count").GetValue(this.StoryDictionary) as int?;
         public Th155StoryWrapper StoryDictionaryItem(Th155Converter.StoryChara chara)
@@ -59,23 +58,15 @@ namespace ThScoreFileConverterTests.Models.Wrappers
                 this.StoryDictionary, new object[] { chara }));
 
         public IReadOnlyDictionary<string, int> CharacterDictionary
-            => this.pobj.GetProperty(nameof(CharacterDictionary)) as Dictionary<string, int>;
+            => this.pobj.GetProperty(nameof(this.CharacterDictionary)) as Dictionary<string, int>;
         public IReadOnlyDictionary<int, bool> BgmDictionary
-            => this.pobj.GetProperty(nameof(BgmDictionary)) as Dictionary<int, bool>;
+            => this.pobj.GetProperty(nameof(this.BgmDictionary)) as Dictionary<int, bool>;
         public IReadOnlyDictionary<string, int> EndingDictionary
-            => this.pobj.GetProperty(nameof(EndingDictionary)) as Dictionary<string, int>;
+            => this.pobj.GetProperty(nameof(this.EndingDictionary)) as Dictionary<string, int>;
         public IReadOnlyDictionary<int, int> StageDictionary
-            => this.pobj.GetProperty(nameof(StageDictionary)) as Dictionary<int, int>;
+            => this.pobj.GetProperty(nameof(this.StageDictionary)) as Dictionary<int, int>;
         public int? Version
-            => this.pobj.GetProperty(nameof(Version)) as int?;
-
-        public static bool ReadObject(BinaryReader reader, out object obj)
-        {
-            var args = new object[] { reader, null };
-            var result = (bool)PrivateType.InvokeStatic(nameof(ReadObject), args, CultureInfo.InvariantCulture);
-            obj = args[1];
-            return result;
-        }
+            => this.pobj.GetProperty(nameof(this.Version)) as int?;
 
         public void ReadFrom(BinaryReader reader)
             => this.pobj.Invoke(nameof(ReadFrom), new object[] { reader }, CultureInfo.InvariantCulture);

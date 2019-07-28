@@ -218,183 +218,75 @@ namespace ThScoreFileConverter.Models
 
         private class AllScoreData : IBinaryReadable
         {
-            private static readonly Func<BinaryReader, object> StringReader =
-                reader =>
-                {
-                    var size = reader.ReadInt32();
-                    return (size > 0) ? Encoding.CP932.GetString(reader.ReadExactBytes(size)) : string.Empty;
-                };
-
-            private static readonly Func<BinaryReader, object> ArrayReader =
-                reader =>
-                {
-                    var num = reader.ReadInt32();
-                    if (num < 0)
-                        throw new InvalidDataException("number of elements must not be negative");
-
-                    var array = new object[num];
-                    for (var count = 0; count < num; count++)
-                    {
-                        if (!ReadObject(reader, out object index))
-                            throw new InvalidDataException("failed to read index");
-                        if (!ReadObject(reader, out object value))
-                            throw new InvalidDataException("failed to read value");
-
-                        if (!(index is int i))
-                            throw new InvalidDataException("index is not an integer");
-                        if (i >= num)
-                            throw new InvalidDataException("index is out of range");
-
-                        array[i] = value;
-                    }
-
-                    if (!ReadObject(reader, out object endmark))
-                        throw new InvalidDataException("failed to read sentinel");
-
-                    if (endmark is EndMark)
-                        return array;
-                    else
-                        throw new InvalidDataException("sentinel is wrong");
-                };
-
-            private static readonly Func<BinaryReader, object> DictionaryReader =
-                reader =>
-                {
-                    var dictionary = new Dictionary<object, object>();
-                    while (true)
-                    {
-                        if (!ReadObject(reader, out object key))
-                            throw new InvalidDataException("failed to read key");
-                        if (key is EndMark)
-                            break;
-                        if (!ReadObject(reader, out object value))
-                            throw new InvalidDataException("failed to read value");
-                        dictionary.Add(key, value);
-                    }
-
-                    return dictionary;
-                };
-
-            private static readonly Dictionary<uint, Func<BinaryReader, object>> ObjectReaders =
-                new Dictionary<uint, Func<BinaryReader, object>>
-                {
-                    { (uint)SQObjectType.Null,     reader => new EndMark() },
-                    { (uint)SQObjectType.Bool,     reader => reader.ReadByte() != 0x00 },
-                    { (uint)SQObjectType.Integer,  reader => reader.ReadInt32() },
-                    { (uint)SQObjectType.Float,    reader => reader.ReadSingle() },
-                    { (uint)SQObjectType.String,   StringReader },
-                    { (uint)SQObjectType.Array,    ArrayReader },
-                    { (uint)SQObjectType.Table,    DictionaryReader },
-                    { (uint)SQObjectType.Instance, reader => new object() }, // unknown (appears in gauge_1p/2p...)
-                };
-
-            private Dictionary<string, object> allData;
+            private SQTable allData;
 
             public AllScoreData()
             {
-                this.allData = new Dictionary<string, object>();
+                this.allData = new SQTable();
                 this.StoryClearFlags = null;
                 this.BgmFlags = null;
             }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public int StoryProgress
-            {
-                get { return this.GetValue<int>("story_progress"); }
-            }
+            public int StoryProgress => this.GetValue<int>("story_progress");
 
             public Dictionary<Chara, LevelFlag> StoryClearFlags { get; private set; }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public int EndingCount
-            {
-                get { return this.GetValue<int>("ed_count"); }
-            }
+            public int EndingCount => this.GetValue<int>("ed_count");
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public int Ending2Count
-            {
-                get { return this.GetValue<int>("ed2_count"); }
-            }
+            public int Ending2Count => this.GetValue<int>("ed2_count");
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public bool IsEnabledStageTanuki1
-            {
-                get { return this.GetValue<bool>("enable_stage_tanuki1"); }
-            }
+            public bool IsEnabledStageTanuki1 => this.GetValue<bool>("enable_stage_tanuki1");
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public bool IsEnabledStageTanuki2
-            {
-                get { return this.GetValue<bool>("enable_stage_tanuki2"); }
-            }
+            public bool IsEnabledStageTanuki2 => this.GetValue<bool>("enable_stage_tanuki2");
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public bool IsEnabledStageKokoro
-            {
-                get { return this.GetValue<bool>("enable_stage_kokoro"); }
-            }
+            public bool IsEnabledStageKokoro => this.GetValue<bool>("enable_stage_kokoro");
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public bool IsPlayableMamizou
-            {
-                get { return this.GetValue<bool>("enable_mamizou"); }
-            }
+            public bool IsPlayableMamizou => this.GetValue<bool>("enable_mamizou");
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public bool IsPlayableKokoro
-            {
-                get { return this.GetValue<bool>("enable_kokoro"); }
-            }
+            public bool IsPlayableKokoro => this.GetValue<bool>("enable_kokoro");
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public Dictionary<int, bool> BgmFlags { get; private set; }
 
-            public static bool ReadObject(BinaryReader reader, out object obj)
-            {
-                if (reader is null)
-                    throw new ArgumentNullException(nameof(reader));
-
-                var type = reader.ReadUInt32();
-
-                if (ObjectReaders.TryGetValue(type, out Func<BinaryReader, object> objectReader))
-                    obj = objectReader(reader);
-                else
-                    throw new InvalidDataException(Resources.InvalidDataExceptionWrongType);
-
-                return obj != null;
-            }
-
             public void ReadFrom(BinaryReader reader)
             {
-                if (DictionaryReader(reader) is Dictionary<object, object> dictionary)
+                this.allData = SQTable.Create(reader, true);
+
+                this.ParseStoryClear();
+                this.ParseEnableBgm();
+            }
+
+            private void ParseStoryClear()
+            {
+                if (this.allData.Value.TryGetValue(new SQString("story_clear"), out var counts))
                 {
-                    this.allData = dictionary
-                        .Where(pair => pair.Key is string)
-                        .ToDictionary(pair => pair.Key as string, pair => pair.Value);
-
-                    if (this.allData.TryGetValue("story_clear", out object counts))
+                    if (counts is SQArray storyClearFlags)
                     {
-                        if (counts is object[] storyClearFlags)
-                        {
-                            this.StoryClearFlags =
-                                new Dictionary<Chara, LevelFlag>(Enum.GetValues(typeof(Chara)).Length);
-                            for (var index = 0; index < storyClearFlags.Length; index++)
-                            {
-                                if (storyClearFlags[index] is int)
-                                    this.StoryClearFlags[(Chara)index] = (LevelFlag)storyClearFlags[index];
-                            }
-                        }
+                        this.StoryClearFlags = storyClearFlags.Value
+                            .Select((flag, index) => (flag, index))
+                            .Where(pair => pair.flag is SQInteger)
+                            .ToDictionary(pair => (Chara)pair.index, pair => (LevelFlag)(int)(pair.flag as SQInteger));
                     }
+                }
+            }
 
-                    if (this.allData.TryGetValue("enable_bgm", out object flags))
+            private void ParseEnableBgm()
+            {
+                if (this.allData.Value.TryGetValue(new SQString("enable_bgm"), out var flags))
+                {
+                    if (flags is SQTable bgmFlags)
                     {
-                        if (flags is Dictionary<object, object> bgmFlags)
-                        {
-                            this.BgmFlags = bgmFlags
-                                .Where(pair => (pair.Key is int) && (pair.Value is bool))
-                                .ToDictionary(pair => (int)pair.Key, pair => (bool)pair.Value);
-                        }
+                        this.BgmFlags = bgmFlags.Value
+                            .Where(pair => (pair.Key is SQInteger) && (pair.Value is SQBool))
+                            .ToDictionary(pair => (int)(pair.Key as SQInteger), pair => (bool)(pair.Value as SQBool));
                     }
                 }
             }
@@ -403,14 +295,24 @@ namespace ThScoreFileConverter.Models
             private T GetValue<T>(string key)
                 where T : struct
             {
-                if (this.allData.TryGetValue(key, out object value) && (value is T))
-                    return (T)value;
-                else
-                    return default;
-            }
+                T result = default;
 
-            private class EndMark
-            {
+                if (this.allData.Value.TryGetValue(new SQString(key), out var value))
+                {
+                    switch (value)
+                    {
+                        case SQBool sqbool:
+                            if (result is bool)
+                                result = (T)(object)(bool)sqbool;
+                            break;
+                        case SQInteger sqinteger:
+                            if (result is int)
+                                result = (T)(object)(int)sqinteger;
+                            break;
+                    }
+                }
+
+                return result;
             }
         }
     }

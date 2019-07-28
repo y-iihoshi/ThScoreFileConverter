@@ -263,78 +263,7 @@ namespace ThScoreFileConverter.Models
 
         private class AllScoreData : IBinaryReadable
         {
-            private static readonly Func<BinaryReader, object> StringReader =
-                reader =>
-                {
-                    var size = reader.ReadInt32();
-                    return (size > 0) ? Encoding.CP932.GetString(reader.ReadExactBytes(size)) : string.Empty;
-                };
-
-            private static readonly Func<BinaryReader, object> ArrayReader =
-                reader =>
-                {
-                    var num = reader.ReadInt32();
-                    if (num < 0)
-                        throw new InvalidDataException("number of elements must not be negative");
-
-                    var array = new object[num];
-                    for (var count = 0; count < num; count++)
-                    {
-                        if (!ReadObject(reader, out object index))
-                            throw new InvalidDataException("failed to read index");
-                        if (!ReadObject(reader, out object value))
-                            throw new InvalidDataException("failed to read value");
-
-                        if (!(index is int i))
-                            throw new InvalidDataException("index is not an integer");
-                        if (i >= num)
-                            throw new InvalidDataException("index is out of range");
-
-                        array[i] = value;
-                    }
-
-                    if (!ReadObject(reader, out object endmark))
-                        throw new InvalidDataException("failed to read sentinel");
-
-                    if (endmark is EndMark)
-                        return array;
-                    else
-                        throw new InvalidDataException("sentinel is wrong");
-                };
-
-            private static readonly Func<BinaryReader, object> DictionaryReader =
-                reader =>
-                {
-                    var dictionary = new Dictionary<object, object>();
-                    while (true)
-                    {
-                        if (!ReadObject(reader, out object key))
-                            throw new InvalidDataException("failed to read key");
-                        if (key is EndMark)
-                            break;
-                        if (!ReadObject(reader, out object value))
-                            throw new InvalidDataException("failed to read value");
-                        dictionary.Add(key, value);
-                    }
-
-                    return dictionary;
-                };
-
-            private static readonly Dictionary<uint, Func<BinaryReader, object>> ObjectReaders =
-                new Dictionary<uint, Func<BinaryReader, object>>
-                {
-                    { (uint)SQObjectType.Null,     reader => new EndMark() },
-                    { (uint)SQObjectType.Bool,     reader => reader.ReadByte() != 0x00 },
-                    { (uint)SQObjectType.Integer,  reader => reader.ReadInt32() },
-                    { (uint)SQObjectType.Float,    reader => reader.ReadSingle() },
-                    { (uint)SQObjectType.String,   StringReader },
-                    { (uint)SQObjectType.Array,    ArrayReader },
-                    { (uint)SQObjectType.Closure,  reader => new OptionalMark() },
-                    { (uint)SQObjectType.Table,    DictionaryReader },
-                    { (uint)SQObjectType.Instance, reader => new object() }, // unknown (appears in gauge_1p/2p...)
-                };
-
-            private Dictionary<string, object> allData;
+            private SQTable allData;
 
             public AllScoreData()
             {
@@ -362,41 +291,21 @@ namespace ThScoreFileConverter.Models
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public int Version { get; private set; }
 
-            public static bool ReadObject(BinaryReader reader, out object obj)
-            {
-                if (reader is null)
-                    throw new ArgumentNullException(nameof(reader));
-
-                var type = reader.ReadUInt32();
-
-                if (ObjectReaders.TryGetValue(type, out Func<BinaryReader, object> objectReader))
-                    obj = objectReader(reader);
-                else
-                    throw new InvalidDataException(Resources.InvalidDataExceptionWrongType);
-
-                return obj != null;
-            }
-
             public void ReadFrom(BinaryReader reader)
             {
-                if (DictionaryReader(reader) is Dictionary<object, object> dictionary)
-                {
-                    this.allData = dictionary
-                        .Where(pair => pair.Key is string)
-                        .ToDictionary(pair => pair.Key as string, pair => pair.Value);
+                this.allData = SQTable.Create(reader, true);
 
-                    this.ParseStoryDictionary();
-                    this.ParseCharacterDictionary();
-                    this.ParseBgmDictionary();
-                    this.ParseEndingDictionary();
-                    this.ParseStageDictionary();
-                    this.ParseVersion();
-                }
+                this.ParseStoryDictionary();
+                this.ParseCharacterDictionary();
+                this.ParseBgmDictionary();
+                this.ParseEndingDictionary();
+                this.ParseStageDictionary();
+                this.ParseVersion();
             }
 
-            private static StoryChara? ParseStoryChara(object obj)
+            private static StoryChara? ParseStoryChara(SQObject obj)
             {
-                if (obj is string str)
+                if (obj is SQString str)
                 {
                     switch (str)
                     {
@@ -432,25 +341,25 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            private static Story ParseStory(object obj)
+            private static Story ParseStory(SQObject obj)
             {
                 var story = default(Story);
 
-                if (obj is Dictionary<object, object> dict)
+                if (obj is SQTable dict)
                 {
-                    foreach (var pair in dict)
+                    foreach (var pair in dict.Value)
                     {
-                        if (pair.Key is string key)
+                        if (pair.Key is SQString key)
                         {
-                            if ((key == "stage") && (pair.Value is int stage))
+                            if ((key == "stage") && (pair.Value is SQInteger stage))
                                 story.Stage = stage;
-                            if ((key == "ed") && (pair.Value is int ed))
-                                story.Ed = (LevelFlag)ed;
-                            if ((key == "available") && (pair.Value is bool available))
+                            if ((key == "ed") && (pair.Value is SQInteger ed))
+                                story.Ed = (LevelFlag)(int)ed;
+                            if ((key == "available") && (pair.Value is SQBool available))
                                 story.Available = available;
-                            if ((key == "overdrive") && (pair.Value is int overDrive))
+                            if ((key == "overdrive") && (pair.Value is SQInteger overDrive))
                                 story.OverDrive = overDrive;
-                            if ((key == "stage_overdrive") && (pair.Value is int stageOverDrive))
+                            if ((key == "stage_overdrive") && (pair.Value is SQInteger stageOverDrive))
                                 story.StageOverDrive = stageOverDrive;
                         }
                     }
@@ -461,79 +370,97 @@ namespace ThScoreFileConverter.Models
 
             private void ParseStoryDictionary()
             {
-                if (this.allData.TryGetValue("story", out object story))
+                if (this.allData.Value.TryGetValue(new SQString("story"), out var story))
                 {
-                    if (story is Dictionary<object, object> dict)
+                    if (story is SQTable table)
                     {
-                        this.StoryDictionary = dict
+                        this.StoryDictionary = table.Value
                             .Where(pair => ParseStoryChara(pair.Key) != null)
-                            .ToDictionary(
-                                pair => ParseStoryChara(pair.Key).Value,
-                                pair => ParseStory(pair.Value));
+                            .ToDictionary(pair => ParseStoryChara(pair.Key).Value, pair => ParseStory(pair.Value));
                     }
                 }
             }
 
             private void ParseCharacterDictionary()
             {
-                if (this.allData.TryGetValue("character", out object character))
+                if (this.allData.Value.TryGetValue(new SQString("character"), out var character))
                 {
-                    if (character is Dictionary<object, object> dict)
+                    if (character is SQTable table)
                     {
-                        this.CharacterDictionary = dict
-                            .Where(pair => (pair.Key is string) && (pair.Value is int))
-                            .ToDictionary(pair => (string)pair.Key, pair => (int)pair.Value);
+                        this.CharacterDictionary = table.Value
+                            .Where(pair => (pair.Key is SQString) && (pair.Value is SQInteger))
+                            .ToDictionary(
+                                pair => (string)(pair.Key as SQString),
+                                pair => (int)(pair.Value as SQInteger));
                     }
                 }
             }
 
             private void ParseBgmDictionary()
             {
-                if (this.allData.TryGetValue("bgm", out object bgm))
+                if (this.allData.Value.TryGetValue(new SQString("bgm"), out var bgm))
                 {
-                    if (bgm is Dictionary<object, object> dict)
+                    if (bgm is SQTable table)
                     {
-                        this.BgmDictionary = dict
-                            .Where(pair => (pair.Key is int) && (pair.Value is bool))
-                            .ToDictionary(pair => (int)pair.Key, pair => (bool)pair.Value);
+                        this.BgmDictionary = table.Value
+                            .Where(pair => (pair.Key is SQInteger) && (pair.Value is SQBool))
+                            .ToDictionary(pair => (int)(pair.Key as SQInteger), pair => (bool)(pair.Value as SQBool));
                     }
                 }
             }
 
             private void ParseEndingDictionary()
             {
-                if (this.allData.TryGetValue("ed", out object ed))
+                if (this.allData.Value.TryGetValue(new SQString("ed"), out var ed))
                 {
-                    if (ed is Dictionary<object, object> dict)
+                    if (ed is SQTable table)
                     {
-                        this.EndingDictionary = dict
-                            .Where(pair => (pair.Key is string) && (pair.Value is int))
-                            .ToDictionary(pair => (string)pair.Key, pair => (int)pair.Value);
+                        this.EndingDictionary = table.Value
+                            .Where(pair => (pair.Key is SQString) && (pair.Value is SQInteger))
+                            .ToDictionary(
+                                pair => (string)(pair.Key as SQString),
+                                pair => (int)(pair.Value as SQInteger));
                     }
                 }
             }
 
             private void ParseStageDictionary()
             {
-                if (this.allData.TryGetValue("stage", out object stage))
+                if (this.allData.Value.TryGetValue(new SQString("stage"), out var stage))
                 {
-                    if (stage is Dictionary<object, object> dict)
+                    if (stage is SQTable table)
                     {
-                        this.StageDictionary = dict
-                            .Where(pair => (pair.Key is int) && (pair.Value is int))
-                            .ToDictionary(pair => (int)pair.Key, pair => (int)pair.Value);
+                        this.StageDictionary = table.Value
+                            .Where(pair => (pair.Key is SQInteger) && (pair.Value is SQInteger))
+                            .ToDictionary(pair => (int)(pair.Key as SQInteger), pair => (int)(pair.Value as SQInteger));
                     }
                 }
             }
 
-            private void ParseVersion()
-            {
-                this.Version = this.GetValue<int>("version");
-            }
+            private void ParseVersion() => this.Version = this.GetValue<int>("version");
 
             private T GetValue<T>(string key)
                 where T : struct
-                => (this.allData.TryGetValue(key, out object value) && (value is T)) ? (T)value : default;
+            {
+                T result = default;
+
+                if (this.allData.Value.TryGetValue(new SQString(key), out var value))
+                {
+                    switch (value)
+                    {
+                        case SQBool sqbool:
+                            if (result is bool)
+                                result = (T)(object)(bool)sqbool;
+                            break;
+                        case SQInteger sqinteger:
+                            if (result is int)
+                                result = (T)(object)(int)sqinteger;
+                            break;
+                    }
+                }
+
+                return result;
+            }
 
             public struct Story
             {
@@ -542,14 +469,6 @@ namespace ThScoreFileConverter.Models
                 public bool Available;
                 public int OverDrive;
                 public int StageOverDrive;
-            }
-
-            private class OptionalMark
-            {
-            }
-
-            private class EndMark
-            {
             }
         }
     }
