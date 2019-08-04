@@ -2,16 +2,16 @@
 using System.IO;
 using ThScoreFileConverter.Models.Th13;
 
-namespace ThScoreFileConverterTests.Models.Wrappers
+namespace ThScoreFileConverterTests.Models.Th13.Wrappers
 {
     // NOTE: Setting the accessibility as public causes CS0703.
-    internal sealed class Th13PracticeWrapper
+    internal sealed class PracticeWrapper
     {
         private readonly Practice original = null;
 
-        public static Th13PracticeWrapper Create(byte[] array)
+        public static PracticeWrapper Create(byte[] array)
         {
-            var practice = new Th13PracticeWrapper();
+            var practice = new PracticeWrapper();
 
             MemoryStream stream = null;
             try
@@ -31,7 +31,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             return practice;
         }
 
-        public Th13PracticeWrapper()
+        public PracticeWrapper()
             => this.original = new Practice();
 
         public object Target => this.original;

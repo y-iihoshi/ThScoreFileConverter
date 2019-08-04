@@ -8,6 +8,7 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverterTests.Models.Th10;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
 using ThScoreFileConverterTests.Models.Wrappers;
+using PracticeTests = ThScoreFileConverterTests.Models.Th13.PracticeTests;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -32,7 +33,7 @@ namespace ThScoreFileConverterTests.Models
             public int playTime;
             public Dictionary<TLvPracWithT, int> clearCounts;
             public Dictionary<TLvPracWithT, int> clearFlags;
-            public Dictionary<(TLvPrac, TStPrac), Th13PracticeTests.Properties> practices;
+            public Dictionary<(TLvPrac, TStPrac), PracticeTests.Properties> practices;
             public Dictionary<int, Th13SpellCardTests.Properties<TLv>> cards;
         };
 
@@ -77,7 +78,7 @@ namespace ThScoreFileConverterTests.Models
                     .SelectMany(level => stages.Select(stage => (level, stage)))
                     .ToDictionary(
                         pair => pair,
-                        pair => new Th13PracticeTests.Properties()
+                        pair => new PracticeTests.Properties()
                         {
                             score = 123456u - TestUtils.Cast<uint>(pair.level) * 10u,
                             clearFlag = (byte)(TestUtils.Cast<int>(pair.stage) % 2),
@@ -118,7 +119,7 @@ namespace ThScoreFileConverterTests.Models
                 properties.clearCounts.Values.ToArray(),
                 properties.clearFlags.Values.ToArray(),
                 properties.practices.Values.SelectMany(
-                    practice => Th13PracticeTests.MakeByteArray(practice)).ToArray(),
+                    practice => PracticeTests.MakeByteArray(practice)).ToArray(),
                 properties.cards.Values.SelectMany(
                     card => Th13SpellCardTests.MakeByteArray(card)).ToArray());
 
@@ -173,7 +174,7 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var pair in properties.practices)
             {
-                Th13PracticeTests.Validate(clearData.Practices[pair.Key], pair.Value);
+                PracticeTests.Validate(clearData.Practices[pair.Key], pair.Value);
             }
 
             foreach (var pair in properties.cards)

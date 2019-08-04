@@ -1,12 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using ThScoreFileConverterTests.Models.Wrappers;
 using ThScoreFileConverter.Models.Th13;
+using ThScoreFileConverterTests.Models.Th13.Wrappers;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th13
 {
     [TestClass]
-    public class Th13PracticeTests
+    public class PracticeTests
     {
         internal struct Properties
         {
@@ -25,7 +25,7 @@ namespace ThScoreFileConverterTests.Models
         internal static byte[] MakeByteArray(in Properties properties)
             => TestUtils.MakeByteArray(properties.score, properties.clearFlag, properties.enableFlag, (ushort)0);
 
-        internal static void Validate(in Th13PracticeWrapper practice, in Properties properties)
+        internal static void Validate(in PracticeWrapper practice, in Properties properties)
             => Validate(practice.Target as Practice, properties);
 
         internal static void Validate(in Practice practice, in Properties properties)
@@ -40,7 +40,7 @@ namespace ThScoreFileConverterTests.Models
             => TestUtils.Wrap(() =>
             {
                 var properties = new Properties();
-                var practice = new Th13PracticeWrapper();
+                var practice = new PracticeWrapper();
 
                 Validate(practice, properties);
             });
@@ -49,7 +49,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th13PracticeReadFromTest()
             => TestUtils.Wrap(() =>
             {
-                var practice = Th13PracticeWrapper.Create(MakeByteArray(ValidProperties));
+                var practice = PracticeWrapper.Create(MakeByteArray(ValidProperties));
 
                 Validate(practice, ValidProperties);
             });
@@ -59,7 +59,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th13PracticeReadFromTestNull()
             => TestUtils.Wrap(() =>
             {
-                var practice = new Th13PracticeWrapper();
+                var practice = new PracticeWrapper();
 
                 practice.ReadFrom(null);
 
