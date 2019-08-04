@@ -4,16 +4,16 @@ using System.IO;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th10;
 
-namespace ThScoreFileConverterTests.Models.Wrappers
+namespace ThScoreFileConverterTests.Models.Th10.Wrappers
 {
     // NOTE: Setting the accessibility as public causes CS0053 and CS0703.
-    internal sealed class Th10SpellCardWrapper
+    internal sealed class SpellCardWrapper
     {
         private readonly SpellCard original = null;
 
-        public static Th10SpellCardWrapper Create(byte[] array)
+        public static SpellCardWrapper Create(byte[] array)
         {
-            var spellCard = new Th10SpellCardWrapper();
+            var spellCard = new SpellCardWrapper();
 
             MemoryStream stream = null;
             try
@@ -33,7 +33,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             return spellCard;
         }
 
-        public Th10SpellCardWrapper() => this.original = new SpellCard();
+        public SpellCardWrapper() => this.original = new SpellCard();
 
         public object Target => this.original;
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]

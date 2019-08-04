@@ -28,7 +28,7 @@ namespace ThScoreFileConverterTests.Models
             public int playTime;
             public Dictionary<ThConverter.Level, int> clearCounts;
             public Dictionary<(ThConverter.Level, ThConverter.Stage), PracticeTests.Properties> practices;
-            public Dictionary<int, Th10SpellCardTests.Properties> cards;
+            public Dictionary<int, SpellCardTests.Properties> cards;
         };
 
         internal static Properties<TCharaWithTotal, TStageProgress>
@@ -74,7 +74,7 @@ namespace ThScoreFileConverterTests.Models
                         }),
                 cards = Enumerable.Range(1, numCards).ToDictionary(
                     index => index,
-                    index => new Th10SpellCardTests.Properties()
+                    index => new SpellCardTests.Properties()
                     {
                         name = TestUtils.MakeRandomArray<byte>(0x80),
                         clearCount = 123 + index,
@@ -101,7 +101,7 @@ namespace ThScoreFileConverterTests.Models
                 properties.practices.Values.SelectMany(
                     practice => PracticeTests.MakeByteArray(practice)).ToArray(),
                 properties.cards.Values.SelectMany(
-                    card => Th10SpellCardTests.MakeByteArray(card)).ToArray());
+                    card => SpellCardTests.MakeByteArray(card)).ToArray());
 
         internal static byte[] MakeByteArray<TParent, TCharaWithTotal, TStageProgress>(
             in Properties<TCharaWithTotal, TStageProgress> properties)
@@ -150,7 +150,7 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var pair in properties.cards)
             {
-                Th10SpellCardTests.Validate(clearData.Cards[pair.Key], pair.Value);
+                SpellCardTests.Validate(clearData.Cards[pair.Key], pair.Value);
             }
         }
 
