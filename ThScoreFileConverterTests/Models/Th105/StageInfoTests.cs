@@ -3,12 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverterTests.Models.Wrappers;
+using ThScoreFileConverterTests.Models.Th105.Wrappers;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th105
 {
     [TestClass]
-    public class Th105StageInfoTests
+    public class StageInfoTests
     {
         internal struct Properties<TStage, TChara>
             where TStage : struct, Enum
@@ -30,7 +30,7 @@ namespace ThScoreFileConverterTests.Models
             };
 
         internal static void Validate<TStage, TChara>(
-            in Th105StageInfoWrapper<TStage, TChara> spellCardInfo, in Properties<TStage, TChara> properties)
+            in StageInfoWrapper<TStage, TChara> spellCardInfo, in Properties<TStage, TChara> properties)
             where TStage : struct, Enum
             where TChara : struct, Enum
         {
@@ -46,7 +46,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 var properties = GetValidProperties<TStage, TChara>();
 
-                var spellCardInfo = new Th105StageInfoWrapper<TStage, TChara>(
+                var spellCardInfo = new StageInfoWrapper<TStage, TChara>(
                     properties.stage, properties.enemy, properties.cardIds);
 
                 Validate(spellCardInfo, properties);
