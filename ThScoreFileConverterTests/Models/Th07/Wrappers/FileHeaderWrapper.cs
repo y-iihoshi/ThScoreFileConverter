@@ -5,10 +5,10 @@ using System.Globalization;
 using System.IO;
 using ThScoreFileConverter.Models;
 
-namespace ThScoreFileConverterTests.Models.Wrappers
+namespace ThScoreFileConverterTests.Models.Th07.Wrappers
 {
     // NOTE: Setting the accessibility as public causes CS0703.
-    internal sealed class Th07FileHeaderWrapper<TParent>
+    internal sealed class FileHeaderWrapper<TParent>
         where TParent : ThConverter
     {
         private static readonly Type ParentType = typeof(TParent);
@@ -18,9 +18,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         private readonly PrivateObject pobj = null;
 
         [SuppressMessage("Microsoft.Design", "CA1000:DoNotDeclareStaticMembersOnGenericTypes")]
-        public static Th07FileHeaderWrapper<TParent> Create(byte[] array)
+        public static FileHeaderWrapper<TParent> Create(byte[] array)
         {
-            var chapter = new Th07FileHeaderWrapper<TParent>();
+            var chapter = new FileHeaderWrapper<TParent>();
 
             MemoryStream stream = null;
             try
@@ -40,7 +40,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             return chapter;
         }
 
-        public Th07FileHeaderWrapper()
+        public FileHeaderWrapper()
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
 
         public object Target
