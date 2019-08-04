@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 
-namespace ThScoreFileConverterTests.Models.Wrappers
+namespace ThScoreFileConverterTests.Models.Th07.Wrappers
 {
-    public sealed class Th07LastNameWrapper
+    public sealed class LastNameWrapper
     {
         private static readonly Type TypeToTest = typeof(LastName);
         private static readonly string AssemblyNameToTest = TypeToTest.Assembly.GetName().Name;
@@ -14,9 +14,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         private readonly PrivateObject pobj = null;
 
-        public Th07LastNameWrapper(ChapterWrapper chapter)
+        public LastNameWrapper(ChapterWrapper chapter)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { chapter?.Target });
-        public Th07LastNameWrapper(object original)
+        public LastNameWrapper(object original)
             => this.pobj = new PrivateObject(original);
 
         public object Target

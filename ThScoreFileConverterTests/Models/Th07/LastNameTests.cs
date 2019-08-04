@@ -4,12 +4,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
-using ThScoreFileConverterTests.Models.Wrappers;
+using ThScoreFileConverterTests.Models.Th07.Wrappers;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th07
 {
     [TestClass]
-    public class Th07LastNameTests
+    public class LastNameTests
     {
         internal struct Properties
         {
@@ -34,7 +34,7 @@ namespace ThScoreFileConverterTests.Models
             => TestUtils.MakeByteArray(
                 properties.signature.ToCharArray(), properties.size1, properties.size2, MakeData(properties));
 
-        internal static void Validate(in Th07LastNameWrapper lastName, in Properties properties)
+        internal static void Validate(in LastNameWrapper lastName, in Properties properties)
         {
             var data = MakeData(properties);
 
@@ -53,7 +53,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = ValidProperties;
 
                 var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-                var lastName = new Th07LastNameWrapper(chapter);
+                var lastName = new LastNameWrapper(chapter);
 
                 Validate(lastName, properties);
             });
@@ -64,7 +64,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th07LastNameTestNullChapter()
             => TestUtils.Wrap(() =>
             {
-                var lastName = new Th07LastNameWrapper(null);
+                var lastName = new LastNameWrapper(null);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -80,7 +80,7 @@ namespace ThScoreFileConverterTests.Models
                 properties.signature = properties.signature.ToLowerInvariant();
 
                 var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-                var lastName = new Th07LastNameWrapper(chapter);
+                var lastName = new LastNameWrapper(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -95,7 +95,7 @@ namespace ThScoreFileConverterTests.Models
                 --properties.size1;
 
                 var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-                var lastName = new Th07LastNameWrapper(chapter);
+                var lastName = new LastNameWrapper(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
             });

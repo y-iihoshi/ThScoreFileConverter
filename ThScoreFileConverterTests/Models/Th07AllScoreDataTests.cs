@@ -2,6 +2,8 @@
 using System.Diagnostics.CodeAnalysis;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
+using ThScoreFileConverterTests.Models.Th07;
+using ThScoreFileConverterTests.Models.Th07.Wrappers;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -238,8 +240,8 @@ namespace ThScoreFileConverterTests.Models
         public void Th07AllScoreDataSetLastNameTest() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(
-                Th07LastNameTests.MakeByteArray(Th07LastNameTests.ValidProperties));
-            var header = new Th07LastNameWrapper(chapter);
+                LastNameTests.MakeByteArray(LastNameTests.ValidProperties));
+            var header = new LastNameWrapper(chapter);
 
             var allScoreData = new Th07AllScoreDataWrapper();
             allScoreData.Set(header);
@@ -251,9 +253,9 @@ namespace ThScoreFileConverterTests.Models
         public void Th07AllScoreDataSetLastNameTestTwice() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(
-                Th07LastNameTests.MakeByteArray(Th07LastNameTests.ValidProperties));
-            var header1 = new Th07LastNameWrapper(chapter);
-            var header2 = new Th07LastNameWrapper(chapter);
+                LastNameTests.MakeByteArray(LastNameTests.ValidProperties));
+            var header1 = new LastNameWrapper(chapter);
+            var header2 = new LastNameWrapper(chapter);
 
             var allScoreData = new Th07AllScoreDataWrapper();
             allScoreData.Set(header1);
