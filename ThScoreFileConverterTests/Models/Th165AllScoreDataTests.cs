@@ -2,8 +2,8 @@
 using ThScoreFileConverter.Models;
 using ThScoreFileConverterTests.Models.Th095;
 using ThScoreFileConverterTests.Models.Th095.Wrappers;
-using ChapterWrapper = ThScoreFileConverterTests.Models.Th10.Wrappers.ChapterWrapper;
 using ThScoreFileConverterTests.Models.Wrappers;
+using ChapterWrapper = ThScoreFileConverterTests.Models.Th10.Wrappers.ChapterWrapper;
 
 namespace ThScoreFileConverterTests.Models
 {
