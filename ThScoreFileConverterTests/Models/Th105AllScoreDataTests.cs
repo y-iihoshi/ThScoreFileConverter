@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Models.Th105;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -15,7 +16,7 @@ namespace ThScoreFileConverterTests.Models
             where TLevel : struct, Enum
         {
             public Dictionary<TChara, byte> storyClearCounts;
-            public Dictionary<int, Th105CardForDeckTests.Properties> systemCards;
+            public Dictionary<int, CardForDeckTests.Properties> systemCards;
             public Dictionary<TChara, Th105ClearDataTests.Properties<TChara, TLevel>> clearData;
         };
 
@@ -32,7 +33,7 @@ namespace ThScoreFileConverterTests.Models
                     chara => TestUtils.Cast<byte>(chara)),
                 systemCards = Enumerable.Range(1, 5).ToDictionary(
                     id => id,
-                    id => new Th105CardForDeckTests.Properties()
+                    id => new CardForDeckTests.Properties()
                     {
                         id = id,
                         maxNumber = id % 4 + 1
@@ -56,7 +57,7 @@ namespace ThScoreFileConverterTests.Models
                 2,
                 new uint[2],
                 properties.systemCards.Count,
-                properties.systemCards.SelectMany(pair => Th105CardForDeckTests.MakeByteArray(pair.Value)).ToArray(),
+                properties.systemCards.SelectMany(pair => CardForDeckTests.MakeByteArray(pair.Value)).ToArray(),
                 properties.clearData.Count,
                 properties.clearData.SelectMany(pair => Th105ClearDataTests.MakeByteArray(pair.Value)).ToArray());
 
@@ -72,7 +73,7 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var pair in properties.systemCards)
             {
-                Th105CardForDeckTests.Validate(allScoreData.SystemCards[pair.Key], pair.Value);
+                CardForDeckTests.Validate(allScoreData.SystemCards[pair.Key], pair.Value);
             }
 
             foreach (var pair in properties.clearData)

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th105;
+using ThScoreFileConverterTests.Models.Th105;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -16,7 +17,7 @@ namespace ThScoreFileConverterTests.Models
             where TChara : struct, Enum
             where TLevel : struct, Enum
         {
-            public Dictionary<int, Th105CardForDeckTests.Properties> cardsForDeck;
+            public Dictionary<int, CardForDeckTests.Properties> cardsForDeck;
             public Dictionary<
                 (TChara Chara, int CardId),
                 Th105SpellCardResultTests.Properties<TChara, TLevel>> spellCardResults;
@@ -28,7 +29,7 @@ namespace ThScoreFileConverterTests.Models
             => new Properties<TChara, TLevel>()
             {
                 cardsForDeck = Enumerable.Range(1, 10)
-                    .Select(value => new Th105CardForDeckTests.Properties() { id = value, maxNumber = (value % 4) + 1 })
+                    .Select(value => new CardForDeckTests.Properties() { id = value, maxNumber = (value % 4) + 1 })
                     .ToDictionary(card => card.id, card => card),
                 spellCardResults = Utils.GetEnumerator<TChara>()
                     .Select((chara, index) => new Th105SpellCardResultTests.Properties<TChara, TLevel>()
@@ -49,7 +50,7 @@ namespace ThScoreFileConverterTests.Models
             => TestUtils.MakeByteArray(
                 properties.cardsForDeck.Count,
                 properties.cardsForDeck
-                    .SelectMany(pair => Th105CardForDeckTests.MakeByteArray(pair.Value)).ToArray(),
+                    .SelectMany(pair => CardForDeckTests.MakeByteArray(pair.Value)).ToArray(),
                 properties.spellCardResults.Count,
                 properties.spellCardResults
                     .SelectMany(pair => Th105SpellCardResultTests.MakeByteArray(pair.Value)).ToArray());
@@ -69,7 +70,7 @@ namespace ThScoreFileConverterTests.Models
         {
             foreach (var pair in properties.cardsForDeck)
             {
-                Th105CardForDeckTests.Validate(clearData.CardsForDeck[pair.Key], pair.Value);
+                CardForDeckTests.Validate(clearData.CardsForDeck[pair.Key], pair.Value);
             }
 
             foreach (var pair in properties.spellCardResults)
@@ -149,8 +150,8 @@ namespace ThScoreFileConverterTests.Models
                 var array = TestUtils.MakeByteArray(
                     properties.cardsForDeck.Count + 1,
                     properties.cardsForDeck
-                        .SelectMany(pair => Th105CardForDeckTests.MakeByteArray(pair.Value)).ToArray(),
-                    Th105CardForDeckTests.MakeByteArray(properties.cardsForDeck.First().Value),
+                        .SelectMany(pair => CardForDeckTests.MakeByteArray(pair.Value)).ToArray(),
+                    CardForDeckTests.MakeByteArray(properties.cardsForDeck.First().Value),
                     properties.spellCardResults.Count + 1,
                     properties.spellCardResults
                         .SelectMany(pair => Th105SpellCardResultTests.MakeByteArray(pair.Value)).ToArray(),

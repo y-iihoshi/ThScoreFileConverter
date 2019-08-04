@@ -2,15 +2,15 @@
 using System.IO;
 using ThScoreFileConverter.Models.Th105;
 
-namespace ThScoreFileConverterTests.Models.Wrappers
+namespace ThScoreFileConverterTests.Models.Th105.Wrappers
 {
-    public sealed class Th105CardForDeckWrapper
+    public sealed class CardForDeckWrapper
     {
         private readonly CardForDeck original = null;
 
-        public static Th105CardForDeckWrapper Create(byte[] array)
+        public static CardForDeckWrapper Create(byte[] array)
         {
-            var cardForDeck = new Th105CardForDeckWrapper();
+            var cardForDeck = new CardForDeckWrapper();
 
             MemoryStream stream = null;
             try
@@ -30,7 +30,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             return cardForDeck;
         }
 
-        public Th105CardForDeckWrapper() => this.original = new CardForDeck();
+        public CardForDeckWrapper() => this.original = new CardForDeck();
 
         public object Target => this.original;
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]

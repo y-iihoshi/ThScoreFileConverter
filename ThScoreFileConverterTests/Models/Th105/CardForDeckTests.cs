@@ -2,13 +2,13 @@
 using System;
 using System.IO;
 using System.Linq;
-using ThScoreFileConverterTests.Models.Wrappers;
 using ThScoreFileConverter.Models.Th105;
+using ThScoreFileConverterTests.Models.Th105.Wrappers;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th105
 {
     [TestClass]
-    public class Th105CardForDeckTests
+    public class CardForDeckTests
     {
         internal struct Properties
         {
@@ -25,7 +25,7 @@ namespace ThScoreFileConverterTests.Models
         internal static byte[] MakeByteArray(in Properties properties)
             => TestUtils.MakeByteArray(properties.id, properties.maxNumber);
 
-        internal static void Validate(in Th105CardForDeckWrapper cardForDeck, in Properties properties)
+        internal static void Validate(in CardForDeckWrapper cardForDeck, in Properties properties)
             => Validate(cardForDeck.Target as CardForDeck, properties);
 
         internal static void Validate(in CardForDeck cardForDeck, in Properties properties)
@@ -40,7 +40,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 var properties = new Properties();
 
-                var cardForDeck = new Th105CardForDeckWrapper();
+                var cardForDeck = new CardForDeckWrapper();
 
                 Validate(cardForDeck, properties);
             });
@@ -51,7 +51,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 var properties = ValidProperties;
 
-                var cardForDeck = Th105CardForDeckWrapper.Create(MakeByteArray(properties));
+                var cardForDeck = CardForDeckWrapper.Create(MakeByteArray(properties));
 
                 Validate(cardForDeck, properties);
             });
@@ -61,7 +61,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th105CardForDeckReadFromTestNull()
             => TestUtils.Wrap(() =>
             {
-                var cardForDeck = new Th105CardForDeckWrapper();
+                var cardForDeck = new CardForDeckWrapper();
                 cardForDeck.ReadFrom(null);
 
                 Assert.Fail(TestUtils.Unreachable);
@@ -76,7 +76,7 @@ namespace ThScoreFileConverterTests.Models
                 var array = MakeByteArray(properties);
                 array = array.Take(array.Length - 1).ToArray();
 
-                Th105CardForDeckWrapper.Create(array);
+                CardForDeckWrapper.Create(array);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -88,7 +88,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = ValidProperties;
                 var array = MakeByteArray(properties).Concat(new byte[1] { 1 }).ToArray();
 
-                var cardForDeck = Th105CardForDeckWrapper.Create(array);
+                var cardForDeck = CardForDeckWrapper.Create(array);
 
                 Validate(cardForDeck, properties);
             });
