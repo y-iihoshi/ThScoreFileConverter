@@ -27,7 +27,7 @@ namespace ThScoreFileConverterTests.Models
             public Dictionary<ThConverter.LevelWithTotal, int> clearCounts;
             public Dictionary<ThConverter.LevelWithTotal, int> clearFlags;
             public Dictionary<(ThConverter.Level, Th16Converter.StagePractice), PracticeTests.Properties> practices;
-            public Dictionary<int, Th13SpellCardTests.Properties<ThConverter.Level>> cards;
+            public Dictionary<int, SpellCardTests.Properties<ThConverter.Level>> cards;
         };
 
         internal static Properties GetValidProperties()
@@ -72,7 +72,7 @@ namespace ThScoreFileConverterTests.Models
                         }),
                 cards = Enumerable.Range(1, 119).ToDictionary(
                     index => index,
-                    index => new Th13SpellCardTests.Properties<ThConverter.Level>()
+                    index => new SpellCardTests.Properties<ThConverter.Level>()
                     {
                         name = TestUtils.MakeRandomArray<byte>(0x80),
                         clearCount = 12 + index,
@@ -94,7 +94,7 @@ namespace ThScoreFileConverterTests.Models
                         scoreData => Th16ScoreDataTests.MakeByteArray(scoreData))).ToArray(),
                 new byte[0x140],
                 properties.cards.Values.SelectMany(
-                    card => Th13SpellCardTests.MakeByteArray(card)).ToArray(),
+                    card => SpellCardTests.MakeByteArray(card)).ToArray(),
                 properties.totalPlayCount,
                 properties.playTime,
                 0u,
@@ -145,7 +145,7 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var pair in properties.cards)
             {
-                Th13SpellCardTests.Validate(clearData.CardsItem(pair.Key), pair.Value);
+                SpellCardTests.Validate(clearData.CardsItem(pair.Key), pair.Value);
             }
         }
 

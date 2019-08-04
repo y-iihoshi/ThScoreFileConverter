@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Models.Th13;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -19,7 +20,7 @@ namespace ThScoreFileConverterTests.Models
             public int playTime;
             public Dictionary<ThConverter.LevelWithTotal, int> clearCounts;
             public Dictionary<ThConverter.LevelWithTotal, int> clearFlags;
-            public Dictionary<int, Th13SpellCardTests.Properties<ThConverter.Level>> cards;
+            public Dictionary<int, SpellCardTests.Properties<ThConverter.Level>> cards;
         };
 
         internal static Properties GetValidProperties()
@@ -47,7 +48,7 @@ namespace ThScoreFileConverterTests.Models
                 clearFlags = levelsWithTotal.ToDictionary(level => level, level => TestUtils.Cast<int>(level) % 2),
                 cards = Enumerable.Range(1, 119).ToDictionary(
                     index => index,
-                    index => new Th13SpellCardTests.Properties<ThConverter.Level>()
+                    index => new SpellCardTests.Properties<ThConverter.Level>()
                     {
                         name = TestUtils.MakeRandomArray<byte>(0x80),
                         clearCount = 12 + index,
@@ -68,7 +69,7 @@ namespace ThScoreFileConverterTests.Models
                         scoreData => Th15ScoreDataTests.MakeByteArray(scoreData))).ToArray(),
                 new byte[0x140],
                 properties.cards.Values.SelectMany(
-                    card => Th13SpellCardTests.MakeByteArray(card)).ToArray(),
+                    card => SpellCardTests.MakeByteArray(card)).ToArray(),
                 properties.totalPlayCount,
                 properties.playTime,
                 0u,
@@ -94,7 +95,7 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var pair in properties.cards)
             {
-                Th13SpellCardTests.Validate(clearData.CardsItem(pair.Key), pair.Value);
+                SpellCardTests.Validate(clearData.CardsItem(pair.Key), pair.Value);
             }
         }
 

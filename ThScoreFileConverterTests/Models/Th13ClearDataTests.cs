@@ -5,10 +5,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverterTests.Models.Th10;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
+using ThScoreFileConverterTests.Models.Th13;
 using ThScoreFileConverterTests.Models.Wrappers;
-using PracticeTests = ThScoreFileConverterTests.Models.Th13.PracticeTests;
+using ScoreDataTests = ThScoreFileConverterTests.Models.Th10.ScoreDataTests;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -34,7 +34,7 @@ namespace ThScoreFileConverterTests.Models
             public Dictionary<TLvPracWithT, int> clearCounts;
             public Dictionary<TLvPracWithT, int> clearFlags;
             public Dictionary<(TLvPrac, TStPrac), PracticeTests.Properties> practices;
-            public Dictionary<int, Th13SpellCardTests.Properties<TLv>> cards;
+            public Dictionary<int, SpellCardTests.Properties<TLv>> cards;
         };
 
         internal static Properties<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>
@@ -86,7 +86,7 @@ namespace ThScoreFileConverterTests.Models
                         }),
                 cards = Enumerable.Range(1, numCards).ToDictionary(
                     index => index,
-                    index => new Th13SpellCardTests.Properties<TLv>()
+                    index => new SpellCardTests.Properties<TLv>()
                     {
                         name = TestUtils.MakeRandomArray<byte>(0x80),
                         clearCount = 12 + index,
@@ -121,7 +121,7 @@ namespace ThScoreFileConverterTests.Models
                 properties.practices.Values.SelectMany(
                     practice => PracticeTests.MakeByteArray(practice)).ToArray(),
                 properties.cards.Values.SelectMany(
-                    card => Th13SpellCardTests.MakeByteArray(card)).ToArray());
+                    card => SpellCardTests.MakeByteArray(card)).ToArray());
 
         internal static byte[] MakeByteArray<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(
             in Properties<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg> properties)
@@ -179,7 +179,7 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var pair in properties.cards)
             {
-                Th13SpellCardTests.Validate(clearData.CardsItem(pair.Key), pair.Value);
+                SpellCardTests.Validate(clearData.CardsItem(pair.Key), pair.Value);
             }
         }
 

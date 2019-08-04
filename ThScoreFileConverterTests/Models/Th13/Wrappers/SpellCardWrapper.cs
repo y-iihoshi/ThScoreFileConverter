@@ -6,10 +6,10 @@ using System.Globalization;
 using System.IO;
 using ThScoreFileConverter.Models;
 
-namespace ThScoreFileConverterTests.Models.Wrappers
+namespace ThScoreFileConverterTests.Models.Th13.Wrappers
 {
     // NOTE: Setting the accessibility as public causes CS0703.
-    internal sealed class Th13SpellCardWrapper<TParent, TLevel>
+    internal sealed class SpellCardWrapper<TParent, TLevel>
         where TParent : ThConverter
         where TLevel : struct, Enum
     {
@@ -20,9 +20,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         private readonly PrivateObject pobj = null;
 
         [SuppressMessage("Microsoft.Design", "CA1000:DoNotDeclareStaticMembersOnGenericTypes")]
-        public static Th13SpellCardWrapper<TParent, TLevel> Create(byte[] array)
+        public static SpellCardWrapper<TParent, TLevel> Create(byte[] array)
         {
-            var spellCard = new Th13SpellCardWrapper<TParent, TLevel>();
+            var spellCard = new SpellCardWrapper<TParent, TLevel>();
 
             MemoryStream stream = null;
             try
@@ -42,9 +42,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             return spellCard;
         }
 
-        public Th13SpellCardWrapper()
+        public SpellCardWrapper()
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
-        public Th13SpellCardWrapper(object obj)
+        public SpellCardWrapper(object obj)
             => this.pobj = new PrivateObject(obj);
 
         public object Target

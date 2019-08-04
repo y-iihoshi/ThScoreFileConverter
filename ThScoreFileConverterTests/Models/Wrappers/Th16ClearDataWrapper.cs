@@ -5,6 +5,7 @@ using System.Globalization;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th13;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
+using ThScoreFileConverterTests.Models.Th13.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -64,8 +65,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         //     => this.pobj.GetProperty(nameof(Cards)) as Dictionary<int, SpellCard>;
         public object Cards
             => this.pobj.GetProperty(nameof(Cards));
-        public Th13SpellCardWrapper<Th16Converter, ThConverter.Level> CardsItem(int id)
-            => new Th13SpellCardWrapper<Th16Converter, ThConverter.Level>(
+        public SpellCardWrapper<Th16Converter, ThConverter.Level> CardsItem(int id)
+            => new SpellCardWrapper<Th16Converter, ThConverter.Level>(
                 this.Cards.GetType().GetProperty("Item").GetValue(this.Cards, new object[] { id }));
 
         public static bool CanInitialize(ChapterWrapper chapter)

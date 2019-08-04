@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Models.Th13.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -69,8 +70,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         //     => this.pobj.GetProperty(nameof(Cards)) as Dictionary<int, SpellCard>;
         public object Cards
             => this.pobj.GetProperty(nameof(Cards));
-        public Th13SpellCardWrapper<Th15Converter, ThConverter.Level> CardsItem(int id)
-            => new Th13SpellCardWrapper<Th15Converter, ThConverter.Level>(
+        public SpellCardWrapper<Th15Converter, ThConverter.Level> CardsItem(int id)
+            => new SpellCardWrapper<Th15Converter, ThConverter.Level>(
                 this.Cards.GetType().GetProperty("Item").GetValue(this.Cards, new object[] { id }));
 
         public void ReadFrom(BinaryReader reader)
