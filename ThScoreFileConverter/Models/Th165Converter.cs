@@ -939,7 +939,7 @@ namespace ThScoreFileConverter.Models
                     reader.ReadExactBytes(0x18);
                     this.TotalPlayTime = reader.ReadInt32();
                     reader.ReadInt32(); // always 0?
-                    reader.ReadInt32(); // 15?
+                    reader.ReadInt32(); // 0x15?
                     reader.ReadInt32(); // always 0?
                     reader.ReadExactBytes(0x40);    // story flags?
                     this.NicknameFlags = reader.ReadExactBytes(51);
@@ -1150,6 +1150,9 @@ namespace ThScoreFileConverter.Models
                     this.data[1] = new BitVector32(data2);
                     this.data[2] = new BitVector32(data3);
                 }
+
+                [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
+                public IEnumerable<int> Data => this.data?.Select(vector => vector.Data);
 
                 [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
                 public bool EnemyIsInFrame => this.data[0][Masks[0]]; // Not used

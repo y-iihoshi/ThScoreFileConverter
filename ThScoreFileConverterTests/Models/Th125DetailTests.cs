@@ -20,11 +20,11 @@ namespace ThScoreFileConverterTests.Models
             value = "+ 666"
         };
 
-        internal static void Validate(in Th125DetailWrapper spellCardInfo, in Properties properties)
+        internal static void Validate(in Th125DetailWrapper detail, in Properties properties)
         {
-            Assert.AreEqual(properties.outputs, spellCardInfo.Outputs);
-            Assert.AreEqual(properties.format, spellCardInfo.Format);
-            Assert.AreEqual(properties.value, spellCardInfo.Value);
+            Assert.AreEqual(properties.outputs, detail.Outputs);
+            Assert.AreEqual(properties.format, detail.Format);
+            Assert.AreEqual(properties.value, detail.Value);
         }
 
         [TestMethod]

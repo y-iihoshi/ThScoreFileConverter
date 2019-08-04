@@ -1262,5 +1262,90 @@ namespace ThScoreFileConverterTests.Models
             => WriteToTestNullHelper<Th16Converter>(th16ValidSignature);
 
         #endregion
+
+        #region Th165
+
+        private const string th165ValidSignature = "T561";
+
+        [TestMethod]
+        public void Th165HeaderTest()
+            => HeaderTestHelper<Th165Converter>();
+
+        [TestMethod]
+        public void Th165ReadFromTest()
+            => ReadFromTestHelper<Th165Converter>(th165ValidSignature);
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Th165ReadFromTestNull()
+            => ReadFromTestNullHelper<Th165Converter>();
+
+        [TestMethod]
+        [ExpectedException(typeof(EndOfStreamException))]
+        public void Th165ReadFromTestEmptySignature()
+            => ReadFromTestEmptySignatureHelper<Th165Converter>();
+
+        [TestMethod]
+        [ExpectedException(typeof(EndOfStreamException))]
+        public void Th165ReadFromTestShortenedSignature()
+            => ReadFromTestShortenedSignatureHelper<Th165Converter>(th165ValidSignature);
+
+        [TestMethod]
+        public void Th165ReadFromTestExceededSignature()
+            => ReadFromTestExceededSignatureHelper<Th165Converter>(th165ValidSignature);
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidDataException))]
+        public void Th165ReadFromTestNegativeEncodedAllSize()
+            => ReadFromTestNegativeEncodedAllSizeHelper<Th165Converter>(th165ValidSignature);
+
+        [TestMethod]
+        public void Th165ReadFromTestZeroEncodedAllSize()
+            => ReadFromTestZeroEncodedAllSizeHelper<Th165Converter>(th165ValidSignature);
+
+        [TestMethod]
+        public void Th165ReadFromTestShortenedEncodedAllSize()
+            => ReadFromTestShortenedEncodedAllSizeHelper<Th165Converter>(th165ValidSignature);
+
+        [TestMethod]
+        public void Th165ReadFromTestExceededEncodedAllSize()
+            => ReadFromTestExceededEncodedAllSizeHelper<Th165Converter>(th165ValidSignature);
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidDataException))]
+        public void Th165ReadFromTestNegativeEncodedBodySize()
+            => ReadFromTestNegativeEncodedBodySizeHelper<Th165Converter>(th165ValidSignature);
+
+        [TestMethod]
+        public void Th165ReadFromTestZeroEncodedBodySize()
+            => ReadFromTestZeroEncodedBodySizeHelper<Th165Converter>(th165ValidSignature);
+
+        [TestMethod]
+        public void Th165ReadFromTestShortenedEncodedBodySize()
+            => ReadFromTestShortenedEncodedBodySizeHelper<Th165Converter>(th165ValidSignature);
+
+        [TestMethod]
+        public void Th165ReadFromTestExceededEncodedBodySize()
+            => ReadFromTestExceededEncodedBodySizeHelper<Th165Converter>(th165ValidSignature);
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidDataException))]
+        public void Th165ReadFromTestNegativeDecodedBodySize()
+            => ReadFromTestNegativeDecodedBodySizeHelper<Th165Converter>(th165ValidSignature);
+
+        [TestMethod]
+        public void Th165ReadFromTestZeroDecodedBodySize()
+            => ReadFromTestZeroDecodedBodySizeHelper<Th165Converter>(th165ValidSignature);
+
+        [TestMethod]
+        public void Th165WriteToTest()
+            => WriteToTestHelper<Th165Converter>(th165ValidSignature);
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Th165WriteToTestNull()
+            => WriteToTestNullHelper<Th165Converter>(th165ValidSignature);
+
+        #endregion
     }
 }
