@@ -264,8 +264,8 @@ namespace ThScoreFileConverterTests.Models
         public void Th08AllScoreDataSetVersionInfoTest() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(
-                Th07VersionInfoTests.MakeByteArray(Th07VersionInfoTests.ValidProperties));
-            var header = new Th07VersionInfoWrapper(chapter);
+                VersionInfoTests.MakeByteArray(VersionInfoTests.ValidProperties));
+            var header = new VersionInfoWrapper(chapter);
 
             var allScoreData = new Th08AllScoreDataWrapper();
             allScoreData.Set(header);
@@ -277,9 +277,9 @@ namespace ThScoreFileConverterTests.Models
         public void Th08AllScoreDataSetVersionInfoTestTwice() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(
-                Th07VersionInfoTests.MakeByteArray(Th07VersionInfoTests.ValidProperties));
-            var header1 = new Th07VersionInfoWrapper(chapter);
-            var header2 = new Th07VersionInfoWrapper(chapter);
+                VersionInfoTests.MakeByteArray(VersionInfoTests.ValidProperties));
+            var header1 = new VersionInfoWrapper(chapter);
+            var header2 = new VersionInfoWrapper(chapter);
 
             var allScoreData = new Th08AllScoreDataWrapper();
             allScoreData.Set(header1);

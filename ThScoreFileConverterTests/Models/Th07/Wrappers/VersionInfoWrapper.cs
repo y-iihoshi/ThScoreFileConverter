@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 
-namespace ThScoreFileConverterTests.Models.Wrappers
+namespace ThScoreFileConverterTests.Models.Th07.Wrappers
 {
-    public sealed class Th07VersionInfoWrapper
+    public sealed class VersionInfoWrapper
     {
         private static readonly Type TypeToTest = typeof(VersionInfo);
         private static readonly string AssemblyNameToTest = TypeToTest.Assembly.GetName().Name;
@@ -14,9 +14,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         private readonly PrivateObject pobj = null;
 
-        public Th07VersionInfoWrapper(ChapterWrapper chapter)
+        public VersionInfoWrapper(ChapterWrapper chapter)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { chapter?.Target });
-        public Th07VersionInfoWrapper(object original)
+        public VersionInfoWrapper(object original)
             => this.pobj = new PrivateObject(original);
 
         public object Target
