@@ -54,8 +54,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(Rankings));
         public object[] Ranking(TLevelPracticeWithTotal level)
             => this.Rankings.GetType().GetProperty("Item").GetValue(this.Rankings, new object[] { level }) as object[];
-        public Th10ScoreDataWrapper<TParent, TStageProgress> RankingItem(TLevelPracticeWithTotal level, int index)
-            => new Th10ScoreDataWrapper<TParent, TStageProgress>(this.Ranking(level)[index]);
+        public ScoreDataWrapper<TParent, TStageProgress> RankingItem(TLevelPracticeWithTotal level, int index)
+            => new ScoreDataWrapper<TParent, TStageProgress>(this.Ranking(level)[index]);
         public int? TotalPlayCount
             => this.pobj.GetProperty(nameof(TotalPlayCount)) as int?;
         public int? PlayTime

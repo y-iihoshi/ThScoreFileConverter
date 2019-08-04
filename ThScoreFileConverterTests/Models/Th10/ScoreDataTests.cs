@@ -5,12 +5,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverterTests.Models.Wrappers;
+using ThScoreFileConverterTests.Models.Th10.Wrappers;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th10
 {
     [TestClass]
-    public class Th10ScoreDataTests
+    public class ScoreDataTests
     {
         internal struct Properties<TStageProgress>
             where TStageProgress : struct, Enum
@@ -66,7 +66,7 @@ namespace ThScoreFileConverterTests.Models
         }
 
         internal static void Validate<TParent, TStageProgress>(
-            in Th10ScoreDataWrapper<TParent, TStageProgress> scoreData, in Properties<TStageProgress> properties)
+            in ScoreDataWrapper<TParent, TStageProgress> scoreData, in Properties<TStageProgress> properties)
             where TParent : ThConverter
             where TStageProgress : struct, Enum
         {
@@ -85,7 +85,7 @@ namespace ThScoreFileConverterTests.Models
             => TestUtils.Wrap(() =>
             {
                 var properties = new Properties<TStageProgress>();
-                var scoreData = new Th10ScoreDataWrapper<TParent, TStageProgress>();
+                var scoreData = new ScoreDataWrapper<TParent, TStageProgress>();
 
                 Validate(scoreData, properties);
             });
@@ -98,7 +98,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 var properties = GetValidProperties<TStageProgress>();
 
-                var scoreData = Th10ScoreDataWrapper<TParent, TStageProgress>.Create(
+                var scoreData = ScoreDataWrapper<TParent, TStageProgress>.Create(
                     MakeByteArray<TParent, TStageProgress>(properties));
 
                 Validate(scoreData, properties);
@@ -110,7 +110,7 @@ namespace ThScoreFileConverterTests.Models
             where TStageProgress : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var scoreData = new Th10ScoreDataWrapper<TParent, TStageProgress>();
+                var scoreData = new ScoreDataWrapper<TParent, TStageProgress>();
                 scoreData.ReadFrom(null);
 
                 Assert.Fail(TestUtils.Unreachable);
@@ -126,7 +126,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = GetValidProperties<TStageProgress>();
                 properties.name = properties.name.Take(properties.name.Length - 1).ToArray();
 
-                var scoreData = Th10ScoreDataWrapper<TParent, TStageProgress>.Create(
+                var scoreData = ScoreDataWrapper<TParent, TStageProgress>.Create(
                     MakeByteArray<TParent, TStageProgress>(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
@@ -142,7 +142,7 @@ namespace ThScoreFileConverterTests.Models
                 var validNameLength = properties.name.Length;
                 properties.name = properties.name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
 
-                var scoreData = Th10ScoreDataWrapper<TParent, TStageProgress>.Create(
+                var scoreData = ScoreDataWrapper<TParent, TStageProgress>.Create(
                     MakeByteArray<TParent, TStageProgress>(properties));
 
                 Assert.AreEqual(properties.score, scoreData.Score);
@@ -165,7 +165,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = GetValidProperties<TStageProgress>();
                 properties.stageProgress = TestUtils.Cast<TStageProgress>(stageProgress);
 
-                var scoreData = Th10ScoreDataWrapper<TParent, TStageProgress>.Create(
+                var scoreData = ScoreDataWrapper<TParent, TStageProgress>.Create(
                     MakeByteArray<TParent, TStageProgress>(properties));
 
                 Assert.Fail(TestUtils.Unreachable);

@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Models.Th10;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
 using ThScoreFileConverterTests.Models.Wrappers;
 
@@ -21,7 +22,7 @@ namespace ThScoreFileConverterTests.Models
             public int size;
             public Th128Converter.RouteWithTotal route;
             public Dictionary<
-                ThConverter.Level, Th10ScoreDataTests.Properties<Th128Converter.StageProgress>[]> rankings;
+                ThConverter.Level, ScoreDataTests.Properties<Th128Converter.StageProgress>[]> rankings;
             public int totalPlayCount;
             public int playTime;
             public Dictionary<ThConverter.Level, int> clearCounts;
@@ -41,7 +42,7 @@ namespace ThScoreFileConverterTests.Models
                 rankings = levels.ToDictionary(
                     level => level,
                     level => Enumerable.Range(0, 10).Select(
-                        index => new Th10ScoreDataTests.Properties<Th128Converter.StageProgress>()
+                        index => new ScoreDataTests.Properties<Th128Converter.StageProgress>()
                         {
                             score = 12345670u - (uint)index * 1000u,
                             stageProgress = Th128Converter.StageProgress.A2Clear,
@@ -61,7 +62,7 @@ namespace ThScoreFileConverterTests.Models
                 (int)properties.route,
                 properties.rankings.Values.SelectMany(
                     ranking => ranking.SelectMany(
-                        scoreData => Th10ScoreDataTests.MakeByteArray<Th128Converter, Th128Converter.StageProgress>(
+                        scoreData => ScoreDataTests.MakeByteArray<Th128Converter, Th128Converter.StageProgress>(
                             scoreData))).ToArray(),
                 properties.totalPlayCount,
                 properties.playTime,
@@ -90,7 +91,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 for (var index = 0; index < pair.Value.Length; ++index)
                 {
-                    Th10ScoreDataTests.Validate(clearData.RankingItem(pair.Key, index), pair.Value[index]);
+                    ScoreDataTests.Validate(clearData.RankingItem(pair.Key, index), pair.Value[index]);
                 }
             }
 

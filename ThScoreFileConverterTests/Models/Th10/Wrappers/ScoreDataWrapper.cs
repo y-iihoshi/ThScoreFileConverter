@@ -6,10 +6,10 @@ using System.Globalization;
 using System.IO;
 using ThScoreFileConverter.Models;
 
-namespace ThScoreFileConverterTests.Models.Wrappers
+namespace ThScoreFileConverterTests.Models.Th10.Wrappers
 {
     // NOTE: Setting the accessibility as public causes CS0703.
-    internal sealed class Th10ScoreDataWrapper<TParent, TStageProgress>
+    internal sealed class ScoreDataWrapper<TParent, TStageProgress>
         where TParent : ThConverter
         where TStageProgress : struct, Enum
     {
@@ -20,9 +20,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         private readonly PrivateObject pobj = null;
 
         [SuppressMessage("Microsoft.Design", "CA1000:DoNotDeclareStaticMembersOnGenericTypes")]
-        public static Th10ScoreDataWrapper<TParent, TStageProgress> Create(byte[] array)
+        public static ScoreDataWrapper<TParent, TStageProgress> Create(byte[] array)
         {
-            var scoreData = new Th10ScoreDataWrapper<TParent, TStageProgress>();
+            var scoreData = new ScoreDataWrapper<TParent, TStageProgress>();
 
             MemoryStream stream = null;
             try
@@ -42,9 +42,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             return scoreData;
         }
 
-        public Th10ScoreDataWrapper()
+        public ScoreDataWrapper()
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
-        public Th10ScoreDataWrapper(object obj)
+        public ScoreDataWrapper(object obj)
             => this.pobj = new PrivateObject(obj);
 
         public object Target

@@ -23,7 +23,7 @@ namespace ThScoreFileConverterTests.Models
             public uint checksum;
             public int size;
             public TCharaWithTotal chara;
-            public Dictionary<ThConverter.Level, Th10ScoreDataTests.Properties<TStageProgress>[]> rankings;
+            public Dictionary<ThConverter.Level, ScoreDataTests.Properties<TStageProgress>[]> rankings;
             public int totalPlayCount;
             public int playTime;
             public Dictionary<ThConverter.Level, int> clearCounts;
@@ -51,7 +51,7 @@ namespace ThScoreFileConverterTests.Models
                 rankings = levels.ToDictionary(
                     level => level,
                     level => Enumerable.Range(0, 10).Select(
-                        index => new Th10ScoreDataTests.Properties<TStageProgress>()
+                        index => new ScoreDataTests.Properties<TStageProgress>()
                         {
                             score = 12345670u - (uint)index * 1000u,
                             stageProgress = TestUtils.Cast<TStageProgress>(5),
@@ -94,7 +94,7 @@ namespace ThScoreFileConverterTests.Models
                 TestUtils.Cast<int>(properties.chara),
                 properties.rankings.Values.SelectMany(
                     ranking => ranking.SelectMany(
-                        scoreData => Th10ScoreDataTests.MakeByteArray<TParent, TStageProgress>(scoreData))).ToArray(),
+                        scoreData => ScoreDataTests.MakeByteArray<TParent, TStageProgress>(scoreData))).ToArray(),
                 properties.totalPlayCount,
                 properties.playTime,
                 properties.clearCounts.Values.ToArray(),
@@ -135,7 +135,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 for (var index = 0; index < pair.Value.Length; ++index)
                 {
-                    Th10ScoreDataTests.Validate(clearData.RankingItem(pair.Key, index), pair.Value[index]);
+                    ScoreDataTests.Validate(clearData.RankingItem(pair.Key, index), pair.Value[index]);
                 }
             }
 

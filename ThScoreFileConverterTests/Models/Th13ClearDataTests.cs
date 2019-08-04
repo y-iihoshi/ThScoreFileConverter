@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Models.Th10;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
 using ThScoreFileConverterTests.Models.Wrappers;
 
@@ -26,7 +27,7 @@ namespace ThScoreFileConverterTests.Models
             public uint checksum;
             public int size;
             public TChWithT chara;
-            public Dictionary<TLvPracWithT, Th10ScoreDataTests.Properties<TStProg>[]> rankings;
+            public Dictionary<TLvPracWithT, ScoreDataTests.Properties<TStProg>[]> rankings;
             public int totalPlayCount;
             public int playTime;
             public Dictionary<TLvPracWithT, int> clearCounts;
@@ -59,7 +60,7 @@ namespace ThScoreFileConverterTests.Models
                 rankings = levelsWithTotal.ToDictionary(
                     level => level,
                     level => Enumerable.Range(0, 10).Select(
-                        index => new Th10ScoreDataTests.Properties<TStProg>()
+                        index => new ScoreDataTests.Properties<TStProg>()
                         {
                             score = 12345670u - (uint)index * 1000u,
                             stageProgress = TestUtils.Cast<TStProg>(5),
@@ -111,7 +112,7 @@ namespace ThScoreFileConverterTests.Models
                 TestUtils.Cast<int>(properties.chara),
                 properties.rankings.Values.SelectMany(
                     ranking => ranking.SelectMany(
-                        scoreData => Th10ScoreDataTests.MakeByteArray<TParent, TStProg>(scoreData))).ToArray(),
+                        scoreData => ScoreDataTests.MakeByteArray<TParent, TStProg>(scoreData))).ToArray(),
                 properties.totalPlayCount,
                 properties.playTime,
                 properties.clearCounts.Values.ToArray(),
@@ -161,7 +162,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 for (var index = 0; index < pair.Value.Length; ++index)
                 {
-                    Th10ScoreDataTests.Validate(clearData.RankingItem(pair.Key, index), pair.Value[index]);
+                    ScoreDataTests.Validate(clearData.RankingItem(pair.Key, index), pair.Value[index]);
                 }
             }
 
