@@ -1,12 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using ThScoreFileConverterTests.Models.Wrappers;
 using ThScoreFileConverter.Models.Th10;
+using ThScoreFileConverterTests.Models.Th10.Wrappers;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th10
 {
     [TestClass]
-    public class Th10PracticeTests
+    public class PracticeTests
     {
         internal struct Properties
         {
@@ -23,7 +23,7 @@ namespace ThScoreFileConverterTests.Models
         internal static byte[] MakeByteArray(in Properties properties)
             => TestUtils.MakeByteArray(properties.score, properties.stageFlag);
 
-        internal static void Validate(in Th10PracticeWrapper practice, in Properties properties)
+        internal static void Validate(in PracticeWrapper practice, in Properties properties)
             => Validate(practice.Target as Practice, properties);
 
         internal static void Validate(in Practice practice, in Properties properties)
@@ -37,7 +37,7 @@ namespace ThScoreFileConverterTests.Models
             => TestUtils.Wrap(() =>
             {
                 var properties = new Properties();
-                var practice = new Th10PracticeWrapper();
+                var practice = new PracticeWrapper();
 
                 Validate(practice, properties);
             });
@@ -48,7 +48,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 var properties = ValidProperties;
 
-                var practice = Th10PracticeWrapper.Create(MakeByteArray(properties));
+                var practice = PracticeWrapper.Create(MakeByteArray(properties));
 
                 Validate(practice, properties);
             });
@@ -58,7 +58,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th10PracticeReadFromTestNull()
             => TestUtils.Wrap(() =>
             {
-                var practice = new Th10PracticeWrapper();
+                var practice = new PracticeWrapper();
                 practice.ReadFrom(null);
 
                 Assert.Fail(TestUtils.Unreachable);
