@@ -19,7 +19,7 @@ namespace ThScoreFileConverterTests.Models.Th105
             public Dictionary<int, CardForDeckTests.Properties> cardsForDeck;
             public Dictionary<
                 (TChara Chara, int CardId),
-                Th105SpellCardResultTests.Properties<TChara, TLevel>> spellCardResults;
+                SpellCardResultTests.Properties<TChara, TLevel>> spellCardResults;
         };
 
         internal static Properties<TChara, TLevel> GetValidProperties<TChara, TLevel>()
@@ -31,7 +31,7 @@ namespace ThScoreFileConverterTests.Models.Th105
                     .Select(value => new CardForDeckTests.Properties() { id = value, maxNumber = (value % 4) + 1 })
                     .ToDictionary(card => card.id, card => card),
                 spellCardResults = Utils.GetEnumerator<TChara>()
-                    .Select((chara, index) => new Th105SpellCardResultTests.Properties<TChara, TLevel>()
+                    .Select((chara, index) => new SpellCardResultTests.Properties<TChara, TLevel>()
                     {
                         enemy = chara,
                         level = TestUtils.Cast<TLevel>(1),
@@ -52,7 +52,7 @@ namespace ThScoreFileConverterTests.Models.Th105
                     .SelectMany(pair => CardForDeckTests.MakeByteArray(pair.Value)).ToArray(),
                 properties.spellCardResults.Count,
                 properties.spellCardResults
-                    .SelectMany(pair => Th105SpellCardResultTests.MakeByteArray(pair.Value)).ToArray());
+                    .SelectMany(pair => SpellCardResultTests.MakeByteArray(pair.Value)).ToArray());
 
         internal static void Validate<TChara, TLevel>(
             in ClearDataWrapper<TChara, TLevel> clearData,
@@ -74,7 +74,7 @@ namespace ThScoreFileConverterTests.Models.Th105
 
             foreach (var pair in properties.spellCardResults)
             {
-                Th105SpellCardResultTests.Validate(
+                SpellCardResultTests.Validate(
                     clearData.SpellCardResults[(pair.Key.Chara, pair.Key.CardId)], pair.Value);
             }
         }
@@ -153,8 +153,8 @@ namespace ThScoreFileConverterTests.Models.Th105
                     CardForDeckTests.MakeByteArray(properties.cardsForDeck.First().Value),
                     properties.spellCardResults.Count + 1,
                     properties.spellCardResults
-                        .SelectMany(pair => Th105SpellCardResultTests.MakeByteArray(pair.Value)).ToArray(),
-                    Th105SpellCardResultTests.MakeByteArray(properties.spellCardResults.First().Value));
+                        .SelectMany(pair => SpellCardResultTests.MakeByteArray(pair.Value)).ToArray(),
+                    SpellCardResultTests.MakeByteArray(properties.spellCardResults.First().Value));
 
                 var clearData = ClearDataWrapper<TChara, TLevel>.Create(array);
 

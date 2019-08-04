@@ -3,19 +3,19 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using ThScoreFileConverter.Models.Th105;
 
-namespace ThScoreFileConverterTests.Models.Wrappers
+namespace ThScoreFileConverterTests.Models.Th105.Wrappers
 {
     // NOTE: Setting the accessibility as public causes CS0703.
-    internal sealed class Th105SpellCardResultWrapper<TChara, TLevel>
+    internal sealed class SpellCardResultWrapper<TChara, TLevel>
         where TChara : struct, Enum
         where TLevel : struct, Enum
     {
         private readonly SpellCardResult<TChara, TLevel> original = null;
 
         [SuppressMessage("Microsoft.Design", "CA1000:DoNotDeclareStaticMembersOnGenericTypes")]
-        public static Th105SpellCardResultWrapper<TChara, TLevel> Create(byte[] array)
+        public static SpellCardResultWrapper<TChara, TLevel> Create(byte[] array)
         {
-            var spellCardResult = new Th105SpellCardResultWrapper<TChara, TLevel>();
+            var spellCardResult = new SpellCardResultWrapper<TChara, TLevel>();
 
             MemoryStream stream = null;
             try
@@ -35,9 +35,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             return spellCardResult;
         }
 
-        public Th105SpellCardResultWrapper()
+        public SpellCardResultWrapper()
             => this.original = new SpellCardResult<TChara, TLevel>();
-        public Th105SpellCardResultWrapper(object original)
+        public SpellCardResultWrapper(object original)
             => this.original = original as SpellCardResult<TChara, TLevel>;
 
         public object Target => this.original;

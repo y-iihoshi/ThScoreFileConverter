@@ -4,12 +4,12 @@ using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th105;
-using ThScoreFileConverterTests.Models.Wrappers;
+using ThScoreFileConverterTests.Models.Th105.Wrappers;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th105
 {
     [TestClass]
-    public class Th105SpellCardResultTests
+    public class SpellCardResultTests
     {
         internal struct Properties<TChara, TLevel>
             where TChara : struct, Enum
@@ -48,7 +48,7 @@ namespace ThScoreFileConverterTests.Models
                 properties.frames);
 
         internal static void Validate<TChara, TLevel>(
-            in Th105SpellCardResultWrapper<TChara, TLevel> spellCardResult,
+            in SpellCardResultWrapper<TChara, TLevel> spellCardResult,
             in Properties<TChara, TLevel> properties)
             where TChara : struct, Enum
             where TLevel : struct, Enum
@@ -75,7 +75,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 var properties = new Properties<TChara, TLevel>();
 
-                var spellCardResult = new Th105SpellCardResultWrapper<TChara, TLevel>();
+                var spellCardResult = new SpellCardResultWrapper<TChara, TLevel>();
 
                 Validate(spellCardResult, properties);
             });
@@ -88,7 +88,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = GetValidProperties<TChara, TLevel>();
 
                 var spellCardResult =
-                    Th105SpellCardResultWrapper<TChara, TLevel>.Create(MakeByteArray(properties));
+                    SpellCardResultWrapper<TChara, TLevel>.Create(MakeByteArray(properties));
 
                 Validate(spellCardResult, properties);
             });
@@ -98,7 +98,7 @@ namespace ThScoreFileConverterTests.Models
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var spellCardResult = new Th105SpellCardResultWrapper<TChara, TLevel>();
+                var spellCardResult = new SpellCardResultWrapper<TChara, TLevel>();
                 spellCardResult.ReadFrom(null);
 
                 Assert.Fail(TestUtils.Unreachable);
@@ -113,7 +113,7 @@ namespace ThScoreFileConverterTests.Models
                 var array = MakeByteArray(properties);
                 array = array.Take(array.Length - 1).ToArray();
 
-                Th105SpellCardResultWrapper<TChara, TLevel>.Create(array);
+                SpellCardResultWrapper<TChara, TLevel>.Create(array);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -126,7 +126,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = GetValidProperties<TChara, TLevel>();
                 var array = MakeByteArray(properties).Concat(new byte[1] { 1 }).ToArray();
 
-                var spellCardResult = Th105SpellCardResultWrapper<TChara, TLevel>.Create(array);
+                var spellCardResult = SpellCardResultWrapper<TChara, TLevel>.Create(array);
 
                 Validate(spellCardResult, properties);
             });
