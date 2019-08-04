@@ -1047,105 +1047,45 @@ namespace ThScoreFileConverter.Models
                 public BonusFields(int data) => this.data = new BitVector32(data);
 
                 [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-                public int Data
-                {
-                    get { return this.data.Data; }
-                }
+                public int Data => this.data.Data;
 
-                public bool TwoShot
-                {
-                    get { return this.data[0x00000004]; }
-                }
+                public bool TwoShot => this.data[0x00000004];
 
-                public bool NiceShot
-                {
-                    get { return this.data[0x00000008]; }
-                }
+                public bool NiceShot => this.data[0x00000008];
 
-                public bool RiskBonus
-                {
-                    get { return this.data[0x00000010]; }
-                }
+                public bool RiskBonus => this.data[0x00000010];
 
-                public bool RedShot
-                {
-                    get { return this.data[0x00000040]; }
-                }
+                public bool RedShot => this.data[0x00000040];
 
-                public bool PurpleShot
-                {
-                    get { return this.data[0x00000080]; }
-                }
+                public bool PurpleShot => this.data[0x00000080];
 
-                public bool BlueShot
-                {
-                    get { return this.data[0x00000100]; }
-                }
+                public bool BlueShot => this.data[0x00000100];
 
-                public bool CyanShot
-                {
-                    get { return this.data[0x00000200]; }
-                }
+                public bool CyanShot => this.data[0x00000200];
 
-                public bool GreenShot
-                {
-                    get { return this.data[0x00000400]; }
-                }
+                public bool GreenShot => this.data[0x00000400];
 
-                public bool YellowShot
-                {
-                    get { return this.data[0x00000800]; }
-                }
+                public bool YellowShot => this.data[0x00000800];
 
-                public bool OrangeShot
-                {
-                    get { return this.data[0x00001000]; }
-                }
+                public bool OrangeShot => this.data[0x00001000];
 
-                public bool ColorfulShot
-                {
-                    get { return this.data[0x00002000]; }
-                }
+                public bool ColorfulShot => this.data[0x00002000];
 
-                public bool RainbowShot
-                {
-                    get { return this.data[0x00004000]; }
-                }
+                public bool RainbowShot => this.data[0x00004000];
 
-                public bool SoloShot
-                {
-                    get { return this.data[0x00010000]; }
-                }
+                public bool SoloShot => this.data[0x00010000];
 
-                public bool MacroBonus
-                {
-                    get { return this.data[0x00400000]; }
-                }
+                public bool MacroBonus => this.data[0x00400000];
 
-                public bool FrontShot
-                {
-                    get { return this.data[0x01000000]; }
-                }
+                public bool FrontShot => this.data[0x01000000];
 
-                public bool BackShot
-                {
-                    get { return this.data[0x02000000]; }
-                }
+                public bool BackShot => this.data[0x02000000];
 
-                public bool SideShot
-                {
-                    get { return this.data[0x04000000]; }
-                }
+                public bool SideShot => this.data[0x04000000];
 
-                public bool ClearShot
-                {
-                    get { return this.data[0x08000000]; }
-                }
+                public bool ClearShot => this.data[0x08000000];
 
-                public bool CatBonus
-                {
-                    get { return this.data[0x10000000]; }
-                }
+                public bool CatBonus => this.data[0x10000000];
             }
         }
 

@@ -33,10 +33,7 @@ namespace ThScoreFileConverter.Models
         /// <summary>
         /// Gets a regular expression of the short names of <typeparamref name="TEnum"/>.
         /// </summary>
-        public string Pattern
-        {
-            get { return PatternImpl; }
-        }
+        public string Pattern => PatternImpl;
 
         /// <summary>
         /// Converts from the string matched with the pattern to a value of <typeparamref name="TEnum"/>.

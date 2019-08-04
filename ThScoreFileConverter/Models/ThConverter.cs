@@ -248,10 +248,7 @@ namespace ThScoreFileConverter.Models
         /// Gets the string indicating the supported versions of the score file to convert.
         /// </summary>
         /// <remarks>It is required to override this property by a subclass.</remarks>
-        public virtual string SupportedVersions
-        {
-            get { return null; }
-        }
+        public virtual string SupportedVersions => null;
 
         /// <summary>
         /// Gets a value indicating whether the current instance has the conversion method for best-shot
@@ -261,10 +258,7 @@ namespace ThScoreFileConverter.Models
         /// It is required to override this property by the subclass that implements the conversion process
         /// of best-shot files.
         /// </remarks>
-        public virtual bool HasBestShotConverter
-        {
-            get { return false; }
-        }
+        public virtual bool HasBestShotConverter => false;
 
         /// <summary>
         /// Gets a value indicating whether the current instance has the replace method for spell card
@@ -273,10 +267,7 @@ namespace ThScoreFileConverter.Models
         /// <remarks>
         /// It is required to override this property by the subclass that does not have such replace method.
         /// </remarks>
-        public virtual bool HasCardReplacer
-        {
-            get { return true; }
-        }
+        public virtual bool HasCardReplacer => true;
 
         /// <summary>
         /// Converts a score file.

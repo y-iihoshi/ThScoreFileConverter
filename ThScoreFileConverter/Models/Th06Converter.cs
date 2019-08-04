@@ -601,10 +601,7 @@ namespace ThScoreFileConverter.Models
 
             public int DecodedAllSize { get; private set; }
 
-            public bool IsValid
-            {
-                get { return (this.Version == ValidVersion) && (this.Size == ValidSize); }
-            }
+            public bool IsValid => (this.Version == ValidVersion) && (this.Size == ValidSize);
 
             public void ReadFrom(BinaryReader reader)
             {

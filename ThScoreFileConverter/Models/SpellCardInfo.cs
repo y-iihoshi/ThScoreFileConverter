@@ -81,10 +81,7 @@ namespace ThScoreFileConverter.Models
         /// <summary>
         /// Gets the level which the current spell card is used.
         /// </summary>
-        public TLevel Level
-        {
-            get { return this.Levels[0]; }
-        }
+        public TLevel Level => this.Levels[0];
 
         /// <summary>
         /// Gets the levels which the current spell card is used.
