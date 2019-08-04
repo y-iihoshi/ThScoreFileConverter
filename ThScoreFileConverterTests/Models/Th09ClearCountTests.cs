@@ -16,9 +16,7 @@ namespace ThScoreFileConverterTests.Models
             public Dictionary<ThConverter.Level, int> counts;
 
             public Properties(in Properties properties)
-            {
-                this.counts = new Dictionary<ThConverter.Level, int>(properties.counts);
-            }
+                => this.counts = new Dictionary<ThConverter.Level, int>(properties.counts);
         };
 
         internal static Properties ValidProperties => new Properties()
