@@ -30,9 +30,7 @@ namespace ThScoreFileConverterTests.Models
             => TestUtils.MakeByteArray(properties.counts.Values.ToArray(), 0u);
 
         internal static void Validate(in Th09ClearCountWrapper clearCount, in Properties properties)
-        {
-            CollectionAssert.AreEqual(properties.counts.Values, clearCount.Counts.Values.ToArray());
-        }
+            => CollectionAssert.AreEqual(properties.counts.Values, clearCount.Counts.Values.ToArray());
 
         [TestMethod]
         public void Th09ClearCountTest() => TestUtils.Wrap(() =>

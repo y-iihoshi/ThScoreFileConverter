@@ -7,16 +7,10 @@ namespace ThScoreFileConverterTests.Models
     public class EncodingTests
     {
         [TestMethod]
-        public void CP932Test()
-        {
-            Assert.AreEqual(TestUtils.CP932Encoding, Encoding.CP932);
-        }
+        public void CP932Test() => Assert.AreEqual(TestUtils.CP932Encoding, Encoding.CP932);
 
         [TestMethod]
-        public void DefaultTest()
-        {
-            Assert.AreEqual(System.Text.Encoding.Default, Encoding.Default);
-        }
+        public void DefaultTest() => Assert.AreEqual(System.Text.Encoding.Default, Encoding.Default);
 
         [TestMethod]
         public void UTF8Test()

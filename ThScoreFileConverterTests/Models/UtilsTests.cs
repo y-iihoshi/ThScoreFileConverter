@@ -22,9 +22,7 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         public void ParseEnumTestValidName()
-        {
-            Assert.AreEqual(DayOfWeek.Sunday, Utils.ParseEnum<DayOfWeek>("Sunday"));
-        }
+            => Assert.AreEqual(DayOfWeek.Sunday, Utils.ParseEnum<DayOfWeek>("Sunday"));
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
@@ -52,9 +50,7 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         public void ParseEnumTestCaseSensitiveValidName()
-        {
-            Assert.AreEqual(DayOfWeek.Sunday, Utils.ParseEnum<DayOfWeek>("Sunday", false));
-        }
+            => Assert.AreEqual(DayOfWeek.Sunday, Utils.ParseEnum<DayOfWeek>("Sunday", false));
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
@@ -103,15 +99,11 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         public void ToNumberStringTestWithSeparator()
-        {
-            Assert.AreEqual("12,345,678", Utils.ToNumberString(12345678, true));
-        }
+            => Assert.AreEqual("12,345,678", Utils.ToNumberString(12345678, true));
 
         [TestMethod]
         public void ToNumberStringTestWithoutSeparator()
-        {
-            Assert.AreEqual("12345678", Utils.ToNumberString(12345678, false));
-        }
+            => Assert.AreEqual("12345678", Utils.ToNumberString(12345678, false));
 
         [TestMethod]
         public void FormatTest()
