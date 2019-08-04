@@ -27,16 +27,16 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         {
             get
             {
-                var header = this.pobj.GetProperty(nameof(Header));
+                var header = this.pobj.GetProperty(nameof(this.Header));
                 return (header != null) ? new HeaderWrapper<Th095Converter>(header) : null;
             }
         }
 
         // NOTE: Th095Converter.Score is a private class.
         // public IReadOnlyList<Score> Scores
-        //     => this.pobj.GetProperty(nameof(Scores)) as List<Score>;
+        //     => this.pobj.GetProperty(nameof(this.Scores)) as List<Score>;
         public object Scores
-            => this.pobj.GetProperty(nameof(Scores));
+            => this.pobj.GetProperty(nameof(this.Scores));
         public int? ScoresCount
             => this.Scores.GetType().GetProperty("Count").GetValue(this.Scores) as int?;
         public Th095ScoreWrapper ScoresItem(int index)
@@ -47,7 +47,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         {
             get
             {
-                var status = this.pobj.GetProperty(nameof(Status));
+                var status = this.pobj.GetProperty(nameof(this.Status));
                 return (status != null) ? new Th095StatusWrapper(status) : null;
             }
         }

@@ -29,50 +29,50 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public object Target
             => this.pobj.Target;
         public string Signature
-            => this.pobj.GetProperty(nameof(Signature)) as string;
+            => this.pobj.GetProperty(nameof(this.Signature)) as string;
         public short? Size1
-            => this.pobj.GetProperty(nameof(Size1)) as short?;
+            => this.pobj.GetProperty(nameof(this.Size1)) as short?;
         public short? Size2
-            => this.pobj.GetProperty(nameof(Size2)) as short?;
+            => this.pobj.GetProperty(nameof(this.Size2)) as short?;
         public byte? FirstByteOfData
-            => this.pobj.GetProperty(nameof(FirstByteOfData)) as byte?;
+            => this.pobj.GetProperty(nameof(this.FirstByteOfData)) as byte?;
         public IReadOnlyCollection<byte> Data
-            => this.pobj.GetProperty(nameof(Data)) as byte[];
+            => this.pobj.GetProperty(nameof(this.Data)) as byte[];
         public uint? Score
-            => this.pobj.GetProperty(nameof(Score)) as uint?;
+            => this.pobj.GetProperty(nameof(this.Score)) as uint?;
         public float? SlowRate
-            => this.pobj.GetProperty(nameof(SlowRate)) as float?;
+            => this.pobj.GetProperty(nameof(this.SlowRate)) as float?;
         public Th08Converter.Chara? Chara
-            => this.pobj.GetProperty(nameof(Chara)) as Th08Converter.Chara?;
+            => this.pobj.GetProperty(nameof(this.Chara)) as Th08Converter.Chara?;
         public ThConverter.Level? Level
-            => this.pobj.GetProperty(nameof(Level)) as ThConverter.Level?;
+            => this.pobj.GetProperty(nameof(this.Level)) as ThConverter.Level?;
         public Th08Converter.StageProgress? StageProgress
-            => this.pobj.GetProperty(nameof(StageProgress)) as Th08Converter.StageProgress?;
+            => this.pobj.GetProperty(nameof(this.StageProgress)) as Th08Converter.StageProgress?;
         public IReadOnlyCollection<byte> Name
-            => this.pobj.GetProperty(nameof(Name)) as byte[];
+            => this.pobj.GetProperty(nameof(this.Name)) as byte[];
         public IReadOnlyCollection<byte> Date
-            => this.pobj.GetProperty(nameof(Date)) as byte[];
+            => this.pobj.GetProperty(nameof(this.Date)) as byte[];
         public ushort? ContinueCount
-            => this.pobj.GetProperty(nameof(ContinueCount)) as ushort?;
+            => this.pobj.GetProperty(nameof(this.ContinueCount)) as ushort?;
         public byte? PlayerNum
-            => this.pobj.GetProperty(nameof(PlayerNum)) as byte?;
+            => this.pobj.GetProperty(nameof(this.PlayerNum)) as byte?;
         public uint? PlayTime
-            => this.pobj.GetProperty(nameof(PlayTime)) as uint?;
+            => this.pobj.GetProperty(nameof(this.PlayTime)) as uint?;
         public int? PointItem
-            => this.pobj.GetProperty(nameof(PointItem)) as int?;
+            => this.pobj.GetProperty(nameof(this.PointItem)) as int?;
         public int? MissCount
-            => this.pobj.GetProperty(nameof(MissCount)) as int?;
+            => this.pobj.GetProperty(nameof(this.MissCount)) as int?;
         public int? BombCount
-            => this.pobj.GetProperty(nameof(BombCount)) as int?;
+            => this.pobj.GetProperty(nameof(this.BombCount)) as int?;
         public int? LastSpellCount
-            => this.pobj.GetProperty(nameof(LastSpellCount)) as int?;
+            => this.pobj.GetProperty(nameof(this.LastSpellCount)) as int?;
         public int? PauseCount
-            => this.pobj.GetProperty(nameof(PauseCount)) as int?;
+            => this.pobj.GetProperty(nameof(this.PauseCount)) as int?;
         public int? TimePoint
-            => this.pobj.GetProperty(nameof(TimePoint)) as int?;
+            => this.pobj.GetProperty(nameof(this.TimePoint)) as int?;
         public int? HumanRate
-            => this.pobj.GetProperty(nameof(HumanRate)) as int?;
+            => this.pobj.GetProperty(nameof(this.HumanRate)) as int?;
         public IReadOnlyDictionary<int, byte> CardFlags
-            => this.pobj.GetProperty(nameof(CardFlags)) as Dictionary<int, byte>;
+            => this.pobj.GetProperty(nameof(this.CardFlags)) as Dictionary<int, byte>;
     }
 }

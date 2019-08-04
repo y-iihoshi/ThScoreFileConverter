@@ -25,35 +25,35 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public object Target
             => this.pobj.Target;
         public string Signature
-            => this.pobj.GetProperty(nameof(Signature)) as string;
+            => this.pobj.GetProperty(nameof(this.Signature)) as string;
         public ushort? Version
-            => this.pobj.GetProperty(nameof(Version)) as ushort?;
+            => this.pobj.GetProperty(nameof(this.Version)) as ushort?;
         public uint? Checksum
-            => this.pobj.GetProperty(nameof(Checksum)) as uint?;
+            => this.pobj.GetProperty(nameof(this.Checksum)) as uint?;
         public int? Size
-            => this.pobj.GetProperty(nameof(Size)) as int?;
+            => this.pobj.GetProperty(nameof(this.Size)) as int?;
         public bool? IsValid
-            => this.pobj.GetProperty(nameof(IsValid)) as bool?;
+            => this.pobj.GetProperty(nameof(this.IsValid)) as bool?;
         public IReadOnlyCollection<byte> Data
-            => this.pobj.GetProperty(nameof(Data)) as byte[];
+            => this.pobj.GetProperty(nameof(this.Data)) as byte[];
         public Th128Converter.RouteWithTotal? Route
-            => this.pobj.GetProperty(nameof(Route)) as Th128Converter.RouteWithTotal?;
+            => this.pobj.GetProperty(nameof(this.Route)) as Th128Converter.RouteWithTotal?;
         // NOTE: Th128Converter.ScoreData is a private class.
         // public IReadOnlyDictionary<Level, ScoreData[]> Rankings
-        //     => this.pobj.GetProperty(nameof(Rankings)) as Dictionary<Level, ScoreData[]>;
+        //     => this.pobj.GetProperty(nameof(this.Rankings)) as Dictionary<Level, ScoreData[]>;
         public object Rankings
-            => this.pobj.GetProperty(nameof(Rankings));
+            => this.pobj.GetProperty(nameof(this.Rankings));
         public object[] Ranking(ThConverter.Level level)
             => this.Rankings.GetType().GetProperty("Item").GetValue(this.Rankings, new object[] { level }) as object[];
         public ScoreDataWrapper<Th128Converter, Th128Converter.StageProgress>
             RankingItem(ThConverter.Level level, int index)
             => new ScoreDataWrapper<Th128Converter, Th128Converter.StageProgress>(this.Ranking(level)[index]);
         public int? TotalPlayCount
-            => this.pobj.GetProperty(nameof(TotalPlayCount)) as int?;
+            => this.pobj.GetProperty(nameof(this.TotalPlayCount)) as int?;
         public int? PlayTime
-            => this.pobj.GetProperty(nameof(PlayTime)) as int?;
+            => this.pobj.GetProperty(nameof(this.PlayTime)) as int?;
         public IReadOnlyDictionary<ThConverter.Level, int> ClearCounts
-            => this.pobj.GetProperty(nameof(ClearCounts)) as Dictionary<ThConverter.Level, int>;
+            => this.pobj.GetProperty(nameof(this.ClearCounts)) as Dictionary<ThConverter.Level, int>;
 
         public static bool CanInitialize(ChapterWrapper chapter)
             => (bool)PrivateType.InvokeStatic(

@@ -48,7 +48,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         // NOTE: Th155Converter.Story is a private struct.
         // public IReadOnlyDictionary<StoryChara, Story> StoryDictionary
-        //     => this.pobj.GetProperty(nameof(StoryDictionary)) as Dictionary<StoryChara, Story>;
+        //     => this.pobj.GetProperty(nameof(this.StoryDictionary)) as Dictionary<StoryChara, Story>;
         public object StoryDictionary
             => this.pobj.GetProperty(nameof(this.StoryDictionary));
         public int? StoryDictionaryCount

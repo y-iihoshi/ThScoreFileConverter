@@ -42,15 +42,15 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public object Target
             => this.pobj.Target;
         public ushort? Checksum
-            => this.pobj.GetProperty(nameof(Checksum)) as ushort?;
+            => this.pobj.GetProperty(nameof(this.Checksum)) as ushort?;
         public short? Version
-            => this.pobj.GetProperty(nameof(Version)) as short?;
+            => this.pobj.GetProperty(nameof(this.Version)) as short?;
         public int? Size
-            => this.pobj.GetProperty(nameof(Size)) as int?;
+            => this.pobj.GetProperty(nameof(this.Size)) as int?;
         public int? DecodedAllSize
-            => this.pobj.GetProperty(nameof(DecodedAllSize)) as int?;
+            => this.pobj.GetProperty(nameof(this.DecodedAllSize)) as int?;
         public bool? IsValid
-            => this.pobj.GetProperty(nameof(IsValid)) as bool?;
+            => this.pobj.GetProperty(nameof(this.IsValid)) as bool?;
 
         public void ReadFrom(BinaryReader reader)
             => this.pobj.Invoke(nameof(ReadFrom), new object[] { reader }, CultureInfo.InvariantCulture);

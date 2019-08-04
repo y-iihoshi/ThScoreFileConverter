@@ -14,11 +14,11 @@ namespace ThScoreFileConverterTests.Models
 
         [TestInitialize]
         public void Initialize()
-            => outputSeparator = Settings.Instance.OutputNumberGroupSeparator;
+            => this.outputSeparator = Settings.Instance.OutputNumberGroupSeparator;
 
         [TestCleanup]
         public void Cleanup()
-            => Settings.Instance.OutputNumberGroupSeparator = outputSeparator;
+            => Settings.Instance.OutputNumberGroupSeparator = this.outputSeparator;
 
         [TestMethod]
         public void ParseEnumTestValidName()

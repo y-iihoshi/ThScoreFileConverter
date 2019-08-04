@@ -47,26 +47,26 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public object Target
             => this.pobj.Target;
         public int? UseCount
-            => this.pobj.GetProperty(nameof(UseCount)) as int?;
+            => this.pobj.GetProperty(nameof(this.UseCount)) as int?;
         public int? ClearCount
-            => this.pobj.GetProperty(nameof(ClearCount)) as int?;
+            => this.pobj.GetProperty(nameof(this.ClearCount)) as int?;
         public int? MaxCombo
-            => this.pobj.GetProperty(nameof(MaxCombo)) as int?;
+            => this.pobj.GetProperty(nameof(this.MaxCombo)) as int?;
         public int? MaxDamage
-            => this.pobj.GetProperty(nameof(MaxDamage)) as int?;
+            => this.pobj.GetProperty(nameof(this.MaxDamage)) as int?;
         public IReadOnlyList<int> MaxBonuses
-            => this.pobj.GetProperty(nameof(MaxBonuses)) as List<int>;
+            => this.pobj.GetProperty(nameof(this.MaxBonuses)) as List<int>;
         public IReadOnlyList<short> CardGotCount
-            => this.pobj.GetProperty(nameof(CardGotCount)) as List<short>;
+            => this.pobj.GetProperty(nameof(this.CardGotCount)) as List<short>;
         public IReadOnlyList<short> CardTrialCount
-            => this.pobj.GetProperty(nameof(CardTrialCount)) as List<short>;
+            => this.pobj.GetProperty(nameof(this.CardTrialCount)) as List<short>;
         public IReadOnlyList<byte> CardTrulyGot
-            => this.pobj.GetProperty(nameof(CardTrulyGot)) as List<byte>;
+            => this.pobj.GetProperty(nameof(this.CardTrulyGot)) as List<byte>;
         // NOTE: Th075Converter.HighScore is a private class.
         // public IReadOnlyList<HighScore> Ranking
-        //     => this.pobj.GetProperty(nameof(Ranking)) as List<HighScore>;
+        //     => this.pobj.GetProperty(nameof(this.Ranking)) as List<HighScore>;
         public object Ranking
-            => this.pobj.GetProperty(nameof(Ranking));
+            => this.pobj.GetProperty(nameof(this.Ranking));
         public int RankingCount
             => (int)this.Ranking.GetType().GetProperty("Count").GetValue(this.Ranking);
         public Th075HighScoreWrapper RankingItem(int index)

@@ -24,25 +24,25 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public object Target
             => this.pobj.Target;
         public string Signature
-            => this.pobj.GetProperty(nameof(Signature)) as string;
+            => this.pobj.GetProperty(nameof(this.Signature)) as string;
         public short? Size1
-            => this.pobj.GetProperty(nameof(Size1)) as short?;
+            => this.pobj.GetProperty(nameof(this.Size1)) as short?;
         public short? Size2
-            => this.pobj.GetProperty(nameof(Size2)) as short?;
+            => this.pobj.GetProperty(nameof(this.Size2)) as short?;
         public byte? FirstByteOfData
-            => this.pobj.GetProperty(nameof(FirstByteOfData)) as byte?;
+            => this.pobj.GetProperty(nameof(this.FirstByteOfData)) as byte?;
         public IReadOnlyCollection<byte> Data
-            => this.pobj.GetProperty(nameof(Data)) as byte[];
+            => this.pobj.GetProperty(nameof(this.Data)) as byte[];
         public IReadOnlyDictionary<Th07Converter.CharaWithTotal, uint> MaxBonuses
-            => this.pobj.GetProperty(nameof(MaxBonuses)) as Dictionary<Th07Converter.CharaWithTotal, uint>;
+            => this.pobj.GetProperty(nameof(this.MaxBonuses)) as Dictionary<Th07Converter.CharaWithTotal, uint>;
         public short? CardId
-            => this.pobj.GetProperty(nameof(CardId)) as short?;
+            => this.pobj.GetProperty(nameof(this.CardId)) as short?;
         public IReadOnlyCollection<byte> CardName
-            => this.pobj.GetProperty(nameof(CardName)) as byte[];
+            => this.pobj.GetProperty(nameof(this.CardName)) as byte[];
         public IReadOnlyDictionary<Th07Converter.CharaWithTotal, ushort> TrialCounts
-            => this.pobj.GetProperty(nameof(TrialCounts)) as Dictionary<Th07Converter.CharaWithTotal, ushort>;
+            => this.pobj.GetProperty(nameof(this.TrialCounts)) as Dictionary<Th07Converter.CharaWithTotal, ushort>;
         public IReadOnlyDictionary<Th07Converter.CharaWithTotal, ushort> ClearCounts
-            => this.pobj.GetProperty(nameof(ClearCounts)) as Dictionary<Th07Converter.CharaWithTotal, ushort>;
+            => this.pobj.GetProperty(nameof(this.ClearCounts)) as Dictionary<Th07Converter.CharaWithTotal, ushort>;
 
         public bool? HasTried()
             => this.pobj.Invoke(nameof(HasTried), new object[] { }, CultureInfo.InvariantCulture) as bool?;

@@ -48,17 +48,17 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public object Target
             => this.pobj.Target;
         public IReadOnlyCollection<byte> Name
-            => this.pobj.GetProperty(nameof(Name)) as byte[];
+            => this.pobj.GetProperty(nameof(this.Name)) as byte[];
         public int? NoMissCount
-            => this.pobj.GetProperty(nameof(NoMissCount)) as int?;
+            => this.pobj.GetProperty(nameof(this.NoMissCount)) as int?;
         public int? NoIceCount
-            => this.pobj.GetProperty(nameof(NoIceCount)) as int?;
+            => this.pobj.GetProperty(nameof(this.NoIceCount)) as int?;
         public int? TrialCount
-            => this.pobj.GetProperty(nameof(TrialCount)) as int?;
+            => this.pobj.GetProperty(nameof(this.TrialCount)) as int?;
         public int? Id
-            => this.pobj.GetProperty(nameof(Id)) as int?;
+            => this.pobj.GetProperty(nameof(this.Id)) as int?;
         public ThConverter.Level? Level
-            => this.pobj.GetProperty(nameof(Level)) as ThConverter.Level?;
+            => this.pobj.GetProperty(nameof(this.Level)) as ThConverter.Level?;
 
         public void ReadFrom(BinaryReader reader)
             => this.pobj.Invoke(nameof(ReadFrom), new object[] { reader }, CultureInfo.InvariantCulture);

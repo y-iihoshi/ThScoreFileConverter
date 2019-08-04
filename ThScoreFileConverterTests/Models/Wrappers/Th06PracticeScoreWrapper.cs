@@ -23,22 +23,22 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public object Target
             => this.pobj.Target;
         public string Signature
-            => this.pobj.GetProperty(nameof(Signature)) as string;
+            => this.pobj.GetProperty(nameof(this.Signature)) as string;
         public short? Size1
-            => this.pobj.GetProperty(nameof(Size1)) as short?;
+            => this.pobj.GetProperty(nameof(this.Size1)) as short?;
         public short? Size2
-            => this.pobj.GetProperty(nameof(Size2)) as short?;
+            => this.pobj.GetProperty(nameof(this.Size2)) as short?;
         public byte? FirstByteOfData
-            => this.pobj.GetProperty(nameof(FirstByteOfData)) as byte?;
+            => this.pobj.GetProperty(nameof(this.FirstByteOfData)) as byte?;
         public IReadOnlyCollection<byte> Data
-            => this.pobj.GetProperty(nameof(Data)) as byte[];
+            => this.pobj.GetProperty(nameof(this.Data)) as byte[];
         public int? HighScore
-            => this.pobj.GetProperty(nameof(HighScore)) as int?;
+            => this.pobj.GetProperty(nameof(this.HighScore)) as int?;
         public Th06Converter.Chara? Chara
-            => this.pobj.GetProperty(nameof(Chara)) as Th06Converter.Chara?;
+            => this.pobj.GetProperty(nameof(this.Chara)) as Th06Converter.Chara?;
         public ThConverter.Level? Level
-            => this.pobj.GetProperty(nameof(Level)) as ThConverter.Level?;
+            => this.pobj.GetProperty(nameof(this.Level)) as ThConverter.Level?;
         public ThConverter.Stage? Stage
-            => this.pobj.GetProperty(nameof(Stage)) as ThConverter.Stage?;
+            => this.pobj.GetProperty(nameof(this.Stage)) as ThConverter.Stage?;
     }
 }

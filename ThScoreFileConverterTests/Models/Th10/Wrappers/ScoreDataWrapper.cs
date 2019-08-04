@@ -50,17 +50,17 @@ namespace ThScoreFileConverterTests.Models.Th10.Wrappers
         public object Target
             => this.pobj.Target;
         public uint? Score
-            => this.pobj.GetProperty(nameof(Score)) as uint?;
+            => this.pobj.GetProperty(nameof(this.Score)) as uint?;
         public TStageProgress? StageProgress
-            => this.pobj.GetProperty(nameof(StageProgress)) as TStageProgress?;
+            => this.pobj.GetProperty(nameof(this.StageProgress)) as TStageProgress?;
         public byte? ContinueCount
-            => this.pobj.GetProperty(nameof(ContinueCount)) as byte?;
+            => this.pobj.GetProperty(nameof(this.ContinueCount)) as byte?;
         public IReadOnlyCollection<byte> Name
-            => this.pobj.GetProperty(nameof(Name)) as byte[];
+            => this.pobj.GetProperty(nameof(this.Name)) as byte[];
         public uint? DateTime
-            => this.pobj.GetProperty(nameof(DateTime)) as uint?;
+            => this.pobj.GetProperty(nameof(this.DateTime)) as uint?;
         public float? SlowRate
-            => this.pobj.GetProperty(nameof(SlowRate)) as float?;
+            => this.pobj.GetProperty(nameof(this.SlowRate)) as float?;
 
         public void ReadFrom(BinaryReader reader)
             => this.pobj.Invoke(nameof(ReadFrom), new object[] { reader }, CultureInfo.InvariantCulture);

@@ -49,7 +49,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         // public IReadOnlyDictionary<Chara, Dictionary<Level, ClearData>> ClearData
         //     => this.pobj.GetProperty(nameof(ClearData)) as Dictionary<Chara, Dictionary<Level, ClearData>>;
         public object ClearData
-            => this.pobj.GetProperty(nameof(ClearData));
+            => this.pobj.GetProperty(nameof(this.ClearData));
         public int? ClearDataCount
             => this.ClearData.GetType().GetProperty("Count").GetValue(this.ClearData) as int?;
         public object ClearDataPerChara(Th075Converter.Chara chara)
@@ -71,7 +71,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         {
             get
             {
-                var status = this.pobj.GetProperty(nameof(Status));
+                var status = this.pobj.GetProperty(nameof(this.Status));
                 return (status != null) ? new Th075StatusWrapper(status) : null;
             }
         }

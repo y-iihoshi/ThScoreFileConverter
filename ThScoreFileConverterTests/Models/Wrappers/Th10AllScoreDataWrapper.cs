@@ -30,16 +30,16 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         {
             get
             {
-                var header = this.pobj.GetProperty(nameof(Header));
+                var header = this.pobj.GetProperty(nameof(this.Header));
                 return (header != null) ? new HeaderWrapper<TParent>(header) : null;
             }
         }
 
         // NOTE: Th10Converter.ClearData is a private class.
         // public IReadOnlyDictionary<CharaWithTotal, ClearData> ClearData
-        //     => this.pobj.GetProperty(nameof(ClearData)) as Dictionary<CharaWithTotal, ClearData>;
+        //     => this.pobj.GetProperty(nameof(this.ClearData)) as Dictionary<CharaWithTotal, ClearData>;
         public object ClearData
-            => this.pobj.GetProperty(nameof(ClearData));
+            => this.pobj.GetProperty(nameof(this.ClearData));
         public int? ClearDataCount
             => this.ClearData.GetType().GetProperty("Count").GetValue(this.ClearData) as int?;
         public Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress> ClearDataItem(TCharaWithTotal chara)
@@ -50,7 +50,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         {
             get
             {
-                var status = this.pobj.GetProperty(nameof(Status));
+                var status = this.pobj.GetProperty(nameof(this.Status));
                 return (status != null) ? new Th10StatusWrapper<TParent>(status) : null;
             }
         }

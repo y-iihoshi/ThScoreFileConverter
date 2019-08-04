@@ -26,24 +26,24 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public object Target
             => this.pobj.Target;
         public string Signature
-            => this.pobj.GetProperty(nameof(Signature)) as string;
+            => this.pobj.GetProperty(nameof(this.Signature)) as string;
         public ushort? Version
-            => this.pobj.GetProperty(nameof(Version)) as ushort?;
+            => this.pobj.GetProperty(nameof(this.Version)) as ushort?;
         public uint? Checksum
-            => this.pobj.GetProperty(nameof(Checksum)) as uint?;
+            => this.pobj.GetProperty(nameof(this.Checksum)) as uint?;
         public int? Size
-            => this.pobj.GetProperty(nameof(Size)) as int?;
+            => this.pobj.GetProperty(nameof(this.Size)) as int?;
         public bool? IsValid
-            => this.pobj.GetProperty(nameof(IsValid)) as bool?;
+            => this.pobj.GetProperty(nameof(this.IsValid)) as bool?;
         public IReadOnlyCollection<byte> Data
-            => this.pobj.GetProperty(nameof(Data)) as byte[];
+            => this.pobj.GetProperty(nameof(this.Data)) as byte[];
         public Th15Converter.CharaWithTotal? Chara
-            => this.pobj.GetProperty(nameof(Chara)) as Th15Converter.CharaWithTotal?;
+            => this.pobj.GetProperty(nameof(this.Chara)) as Th15Converter.CharaWithTotal?;
         // NOTE: Th15Converter.ClearDataPerGameMode is a private class.
         // public IReadOnlyDictionary<GameMode, ClearDataPerGameMode> Data1
-        //     => this.pobj.GetProperty(nameof(Data1)) as Dictionary<GameMode, ClearDataPerGameMode>;
+        //     => this.pobj.GetProperty(nameof(this.Data1)) as Dictionary<GameMode, ClearDataPerGameMode>;
         public object Data1
-            => this.pobj.GetProperty(nameof(Data1));
+            => this.pobj.GetProperty(nameof(this.Data1));
         public Th15ClearDataPerGameModeWrapper Data1Item(Th15Converter.GameMode mode)
             => new Th15ClearDataPerGameModeWrapper(
                 this.Data1.GetType().GetProperty("Item").GetValue(this.Data1, new object[] { mode }));

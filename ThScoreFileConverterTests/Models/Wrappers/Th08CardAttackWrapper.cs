@@ -24,29 +24,29 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public object Target
             => this.pobj.Target;
         public string Signature
-            => this.pobj.GetProperty(nameof(Signature)) as string;
+            => this.pobj.GetProperty(nameof(this.Signature)) as string;
         public short? Size1
-            => this.pobj.GetProperty(nameof(Size1)) as short?;
+            => this.pobj.GetProperty(nameof(this.Size1)) as short?;
         public short? Size2
-            => this.pobj.GetProperty(nameof(Size2)) as short?;
+            => this.pobj.GetProperty(nameof(this.Size2)) as short?;
         public byte? FirstByteOfData
-            => this.pobj.GetProperty(nameof(FirstByteOfData)) as byte?;
+            => this.pobj.GetProperty(nameof(this.FirstByteOfData)) as byte?;
         public IReadOnlyCollection<byte> Data
-            => this.pobj.GetProperty(nameof(Data)) as byte[];
+            => this.pobj.GetProperty(nameof(this.Data)) as byte[];
         public short? CardId
-            => this.pobj.GetProperty(nameof(CardId)) as short?;
+            => this.pobj.GetProperty(nameof(this.CardId)) as short?;
         public Th08Converter.LevelPracticeWithTotal? Level
-            => this.pobj.GetProperty(nameof(Level)) as Th08Converter.LevelPracticeWithTotal?;
+            => this.pobj.GetProperty(nameof(this.Level)) as Th08Converter.LevelPracticeWithTotal?;
         public IReadOnlyCollection<byte> CardName
-            => this.pobj.GetProperty(nameof(CardName)) as byte[];
+            => this.pobj.GetProperty(nameof(this.CardName)) as byte[];
         public IReadOnlyCollection<byte> EnemyName
-            => this.pobj.GetProperty(nameof(EnemyName)) as byte[];
+            => this.pobj.GetProperty(nameof(this.EnemyName)) as byte[];
         public IReadOnlyCollection<byte> Comment
-            => this.pobj.GetProperty(nameof(Comment)) as byte[];
+            => this.pobj.GetProperty(nameof(this.Comment)) as byte[];
         public Th08CardAttackCareerWrapper StoryCareer
-            => new Th08CardAttackCareerWrapper(this.pobj.GetProperty(nameof(StoryCareer)));
+            => new Th08CardAttackCareerWrapper(this.pobj.GetProperty(nameof(this.StoryCareer)));
         public Th08CardAttackCareerWrapper PracticeCareer
-            => new Th08CardAttackCareerWrapper(this.pobj.GetProperty(nameof(PracticeCareer)));
+            => new Th08CardAttackCareerWrapper(this.pobj.GetProperty(nameof(this.PracticeCareer)));
 
         public bool? HasTried()
             => this.pobj.Invoke(nameof(HasTried), new object[] { }, CultureInfo.InvariantCulture) as bool?;

@@ -19,10 +19,10 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public object Target
             => this.pobj.Target;
         public bool? Outputs
-            => this.pobj.GetProperty(nameof(Outputs)) as bool?;
+            => this.pobj.GetProperty(nameof(this.Outputs)) as bool?;
         public string Format
-            => this.pobj.GetProperty(nameof(Format)) as string;
+            => this.pobj.GetProperty(nameof(this.Format)) as string;
         public string Value
-            => this.pobj.GetProperty(nameof(Value)) as string;
+            => this.pobj.GetProperty(nameof(this.Value)) as string;
     }
 }

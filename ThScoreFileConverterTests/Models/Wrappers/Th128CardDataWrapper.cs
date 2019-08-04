@@ -25,22 +25,22 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public object Target
             => this.pobj.Target;
         public string Signature
-            => this.pobj.GetProperty(nameof(Signature)) as string;
+            => this.pobj.GetProperty(nameof(this.Signature)) as string;
         public ushort? Version
-            => this.pobj.GetProperty(nameof(Version)) as ushort?;
+            => this.pobj.GetProperty(nameof(this.Version)) as ushort?;
         public uint? Checksum
-            => this.pobj.GetProperty(nameof(Checksum)) as uint?;
+            => this.pobj.GetProperty(nameof(this.Checksum)) as uint?;
         public int? Size
-            => this.pobj.GetProperty(nameof(Size)) as int?;
+            => this.pobj.GetProperty(nameof(this.Size)) as int?;
         public bool? IsValid
-            => this.pobj.GetProperty(nameof(IsValid)) as bool?;
+            => this.pobj.GetProperty(nameof(this.IsValid)) as bool?;
         public IReadOnlyCollection<byte> Data
-            => this.pobj.GetProperty(nameof(Data)) as byte[];
+            => this.pobj.GetProperty(nameof(this.Data)) as byte[];
         // NOTE: Th128Converter.SpellCard is a private class.
         // public IReadOnlyDictionary<int, SpellCard> Cards
-        //     => this.pobj.GetProperty(nameof(Cards)) as Dictionary<int, SpellCard>;
+        //     => this.pobj.GetProperty(nameof(this.Cards)) as Dictionary<int, SpellCard>;
         public object Cards
-            => this.pobj.GetProperty(nameof(Cards));
+            => this.pobj.GetProperty(nameof(this.Cards));
         public Th128SpellCardWrapper CardsItem(int id)
             => new Th128SpellCardWrapper(
                 this.Cards.GetType().GetProperty("Item").GetValue(this.Cards, new object[] { id }));

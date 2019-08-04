@@ -27,16 +27,16 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         {
             get
             {
-                var header = this.pobj.GetProperty(nameof(Header));
+                var header = this.pobj.GetProperty(nameof(this.Header));
                 return (header != null) ? new HeaderWrapper<Th143Converter>(header) : null;
             }
         }
 
         // NOTE: Th143Converter.Score is a private class.
         // public IReadOnlyList<Score> Scores
-        //     => this.pobj.GetProperty(nameof(Scores)) as List<Score>;
+        //     => this.pobj.GetProperty(nameof(this.Scores)) as List<Score>;
         public object Scores
-            => this.pobj.GetProperty(nameof(Scores));
+            => this.pobj.GetProperty(nameof(this.Scores));
         public int? ScoresCount
             => this.Scores.GetType().GetProperty("Count").GetValue(this.Scores) as int?;
         public Th143ScoreWrapper ScoresItem(int index)
@@ -45,9 +45,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         // NOTE: Th143Converter.ItemStatus is a private class.
         // public IReadOnlyDictionary<ItemWithTotal, ItemStatus> ItemStatuses
-        //     => this.pobj.GetProperty(nameof(ItemStatuses)) as Dictionary<ItemWithTotal, ItemStatus>;
+        //     => this.pobj.GetProperty(nameof(this.ItemStatuses)) as Dictionary<ItemWithTotal, ItemStatus>;
         public object ItemStatuses
-            => this.pobj.GetProperty(nameof(ItemStatuses));
+            => this.pobj.GetProperty(nameof(this.ItemStatuses));
         public int? ItemStatusesCount
             => this.ItemStatuses.GetType().GetProperty("Count").GetValue(this.ItemStatuses) as int?;
         public Th143ItemStatusWrapper ItemStatusesItem(Th143Converter.ItemWithTotal item)
@@ -58,7 +58,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         {
             get
             {
-                var status = this.pobj.GetProperty(nameof(Status));
+                var status = this.pobj.GetProperty(nameof(this.Status));
                 return (status != null) ? new Th143StatusWrapper(status) : null;
             }
         }

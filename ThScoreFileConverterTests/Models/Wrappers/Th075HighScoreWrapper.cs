@@ -46,13 +46,13 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public object Target
             => this.pobj.Target;
         public string Name
-            => this.pobj.GetProperty(nameof(Name)) as string;
+            => this.pobj.GetProperty(nameof(this.Name)) as string;
         public byte? Month
-            => this.pobj.GetProperty(nameof(Month)) as byte?;
+            => this.pobj.GetProperty(nameof(this.Month)) as byte?;
         public byte? Day
-            => this.pobj.GetProperty(nameof(Day)) as byte?;
+            => this.pobj.GetProperty(nameof(this.Day)) as byte?;
         public int? Score
-            => this.pobj.GetProperty(nameof(Score)) as int?;
+            => this.pobj.GetProperty(nameof(this.Score)) as int?;
 
         public void ReadFrom(BinaryReader reader)
             => this.pobj.Invoke(nameof(ReadFrom), new object[] { reader }, CultureInfo.InvariantCulture);

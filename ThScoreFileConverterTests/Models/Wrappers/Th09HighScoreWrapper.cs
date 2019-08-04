@@ -23,28 +23,28 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public object Target
             => this.pobj.Target;
         public string Signature
-            => this.pobj.GetProperty(nameof(Signature)) as string;
+            => this.pobj.GetProperty(nameof(this.Signature)) as string;
         public short? Size1
-            => this.pobj.GetProperty(nameof(Size1)) as short?;
+            => this.pobj.GetProperty(nameof(this.Size1)) as short?;
         public short? Size2
-            => this.pobj.GetProperty(nameof(Size2)) as short?;
+            => this.pobj.GetProperty(nameof(this.Size2)) as short?;
         public byte? FirstByteOfData
-            => this.pobj.GetProperty(nameof(FirstByteOfData)) as byte?;
+            => this.pobj.GetProperty(nameof(this.FirstByteOfData)) as byte?;
         public IReadOnlyCollection<byte> Data
-            => this.pobj.GetProperty(nameof(Data)) as byte[];
+            => this.pobj.GetProperty(nameof(this.Data)) as byte[];
         public uint? Score
-            => this.pobj.GetProperty(nameof(Score)) as uint?;
+            => this.pobj.GetProperty(nameof(this.Score)) as uint?;
         public Th09Converter.Chara? Chara
-            => this.pobj.GetProperty(nameof(Chara)) as Th09Converter.Chara?;
+            => this.pobj.GetProperty(nameof(this.Chara)) as Th09Converter.Chara?;
         public ThConverter.Level? Level
-            => this.pobj.GetProperty(nameof(Level)) as ThConverter.Level?;
+            => this.pobj.GetProperty(nameof(this.Level)) as ThConverter.Level?;
         public short? Rank
-            => this.pobj.GetProperty(nameof(Rank)) as short?;
+            => this.pobj.GetProperty(nameof(this.Rank)) as short?;
         public IReadOnlyCollection<byte> Name
-            => this.pobj.GetProperty(nameof(Name)) as byte[];
+            => this.pobj.GetProperty(nameof(this.Name)) as byte[];
         public IReadOnlyCollection<byte> Date
-            => this.pobj.GetProperty(nameof(Date)) as byte[];
+            => this.pobj.GetProperty(nameof(this.Date)) as byte[];
         public byte? ContinueCount
-            => this.pobj.GetProperty(nameof(ContinueCount)) as byte?;
+            => this.pobj.GetProperty(nameof(this.ContinueCount)) as byte?;
     }
 }

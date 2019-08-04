@@ -21,10 +21,10 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public object Target
             => this.pobj.Target;
         public string Name
-            => this.pobj.GetProperty(nameof(Name)) as string;
+            => this.pobj.GetProperty(nameof(this.Name)) as string;
         public Th075Converter.Chara? Enemy
-            => this.pobj.GetProperty(nameof(Enemy)) as Th075Converter.Chara?;
+            => this.pobj.GetProperty(nameof(this.Enemy)) as Th075Converter.Chara?;
         public Th075Converter.Level? Level
-            => this.pobj.GetProperty(nameof(Level)) as Th075Converter.Level?;
+            => this.pobj.GetProperty(nameof(this.Level)) as Th075Converter.Level?;
     }
 }

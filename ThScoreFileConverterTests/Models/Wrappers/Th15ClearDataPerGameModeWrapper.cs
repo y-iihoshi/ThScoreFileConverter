@@ -50,26 +50,26 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.Target;
         // NOTE: Th15Converter.ScoreData is a private class.
         // public IReadOnlyDictionary<LevelWithTotal, ScoreData[]> Rankings
-        //     => this.pobj.GetProperty(nameof(Rankings)) as Dictionary<LevelWithTotal, ScoreData[]>;
+        //     => this.pobj.GetProperty(nameof(this.Rankings)) as Dictionary<LevelWithTotal, ScoreData[]>;
         public object Rankings
-            => this.pobj.GetProperty(nameof(Rankings));
+            => this.pobj.GetProperty(nameof(this.Rankings));
         public object[] Ranking(ThConverter.LevelWithTotal level)
             => this.Rankings.GetType().GetProperty("Item").GetValue(this.Rankings, new object[] { level }) as object[];
         public Th15ScoreDataWrapper RankingItem(ThConverter.LevelWithTotal level, int index)
             => new Th15ScoreDataWrapper(this.Ranking(level)[index]);
         public int? TotalPlayCount
-            => this.pobj.GetProperty(nameof(TotalPlayCount)) as int?;
+            => this.pobj.GetProperty(nameof(this.TotalPlayCount)) as int?;
         public int? PlayTime
-            => this.pobj.GetProperty(nameof(PlayTime)) as int?;
+            => this.pobj.GetProperty(nameof(this.PlayTime)) as int?;
         public IReadOnlyDictionary<ThConverter.LevelWithTotal, int> ClearCounts
-            => this.pobj.GetProperty(nameof(ClearCounts)) as Dictionary<ThConverter.LevelWithTotal, int>;
+            => this.pobj.GetProperty(nameof(this.ClearCounts)) as Dictionary<ThConverter.LevelWithTotal, int>;
         public IReadOnlyDictionary<ThConverter.LevelWithTotal, int> ClearFlags
-            => this.pobj.GetProperty(nameof(ClearFlags)) as Dictionary<ThConverter.LevelWithTotal, int>;
+            => this.pobj.GetProperty(nameof(this.ClearFlags)) as Dictionary<ThConverter.LevelWithTotal, int>;
         // NOTE: Th15Converter.SpellCard is a private class.
         // public IReadOnlyDictionary<int, SpellCard> Cards
-        //     => this.pobj.GetProperty(nameof(Cards)) as Dictionary<int, SpellCard>;
+        //     => this.pobj.GetProperty(nameof(this.Cards)) as Dictionary<int, SpellCard>;
         public object Cards
-            => this.pobj.GetProperty(nameof(Cards));
+            => this.pobj.GetProperty(nameof(this.Cards));
         public SpellCardWrapper<Th15Converter, ThConverter.Level> CardsItem(int id)
             => new SpellCardWrapper<Th15Converter, ThConverter.Level>(
                 this.Cards.GetType().GetProperty("Item").GetValue(this.Cards, new object[] { id }));

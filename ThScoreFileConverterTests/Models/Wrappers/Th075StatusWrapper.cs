@@ -48,9 +48,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public object Target
             => this.pobj.Target;
         public string LastName
-            => this.pobj.GetProperty(nameof(LastName)) as string;
+            => this.pobj.GetProperty(nameof(this.LastName)) as string;
         public IReadOnlyDictionary<Th075Converter.Chara, Dictionary<Th075Converter.Chara, int>> ArcadeScores
-            => this.pobj.GetProperty(nameof(ArcadeScores))
+            => this.pobj.GetProperty(nameof(this.ArcadeScores))
                 as Dictionary<Th075Converter.Chara, Dictionary<Th075Converter.Chara, int>>;
 
         public void ReadFrom(BinaryReader reader)

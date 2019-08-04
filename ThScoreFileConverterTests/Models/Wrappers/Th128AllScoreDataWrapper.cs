@@ -27,16 +27,16 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         {
             get
             {
-                var header = this.pobj.GetProperty(nameof(Header));
+                var header = this.pobj.GetProperty(nameof(this.Header));
                 return (header != null) ? new HeaderWrapper<Th128Converter>(header) : null;
             }
         }
 
         // NOTE: Th128Converter.ClearData is a private class.
         // public IReadOnlyDictionary<RouteWithTotal, ClearData> ClearData
-        //     => this.pobj.GetProperty(nameof(ClearData)) as Dictionary<RouteWithTotal, ClearData>;
+        //     => this.pobj.GetProperty(nameof(this.ClearData)) as Dictionary<RouteWithTotal, ClearData>;
         public object ClearData
-            => this.pobj.GetProperty(nameof(ClearData));
+            => this.pobj.GetProperty(nameof(this.ClearData));
         public int? ClearDataCount
             => this.ClearData.GetType().GetProperty("Count").GetValue(this.ClearData) as int?;
         public Th128ClearDataWrapper ClearDataItem(Th128Converter.RouteWithTotal route)
@@ -47,7 +47,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         {
             get
             {
-                var status = this.pobj.GetProperty(nameof(CardData));
+                var status = this.pobj.GetProperty(nameof(this.CardData));
                 return (status != null) ? new Th128CardDataWrapper(status) : null;
             }
         }
@@ -56,7 +56,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         {
             get
             {
-                var status = this.pobj.GetProperty(nameof(Status));
+                var status = this.pobj.GetProperty(nameof(this.Status));
                 return (status != null) ? new Th128StatusWrapper<Th128Converter>(status) : null;
             }
         }

@@ -33,7 +33,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(NotImplementedException))]
         public void EncryptTest()
         {
-            using (var input = new MemoryStream(decrypted))
+            using (var input = new MemoryStream(this.decrypted))
             using (var output = new MemoryStream())
             {
                 ThCrypt.Encrypt(input, output, (int)input.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
@@ -64,7 +64,7 @@ namespace ThScoreFileConverterTests.Models
         {
             using (var output = new MemoryStream())
             {
-                ThCrypt.Decrypt(null, output, encryptedBySmallBlock.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
+                ThCrypt.Decrypt(null, output, this.encryptedBySmallBlock.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
                 Assert.Fail(TestUtils.Unreachable);
             }
         }
@@ -74,7 +74,7 @@ namespace ThScoreFileConverterTests.Models
         {
             using (var output = new MemoryStream())
             {
-                ThCrypt.Decrypt(Stream.Null, output, encryptedBySmallBlock.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
+                ThCrypt.Decrypt(Stream.Null, output, this.encryptedBySmallBlock.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
                 Assert.AreEqual(0, output.Length);
             }
         }
@@ -85,7 +85,7 @@ namespace ThScoreFileConverterTests.Models
             using (var input = new MemoryStream())
             using (var output = new MemoryStream())
             {
-                ThCrypt.Decrypt(input, output, encryptedBySmallBlock.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
+                ThCrypt.Decrypt(input, output, this.encryptedBySmallBlock.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
                 Assert.AreEqual(0, output.Length);
             }
         }
@@ -97,7 +97,7 @@ namespace ThScoreFileConverterTests.Models
             using (var input = new UnreadableMemoryStream())
             using (var output = new MemoryStream())
             {
-                ThCrypt.Decrypt(input, output, encryptedBySmallBlock.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
+                ThCrypt.Decrypt(input, output, this.encryptedBySmallBlock.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
                 Assert.Fail(TestUtils.Unreachable);
             }
         }
