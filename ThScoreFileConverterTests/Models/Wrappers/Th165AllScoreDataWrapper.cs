@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Models.Th095.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -22,12 +23,12 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public object Target
             => this.pobj.Target;
 
-        public Th095HeaderWrapper<Th165Converter> Header
+        public HeaderWrapper<Th165Converter> Header
         {
             get
             {
                 var header = this.pobj.GetProperty(nameof(this.Header));
-                return (header != null) ? new Th095HeaderWrapper<Th165Converter>(header) : null;
+                return (header != null) ? new HeaderWrapper<Th165Converter>(header) : null;
             }
         }
 
@@ -51,7 +52,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             }
         }
 
-        public void Set(Th095HeaderWrapper<Th165Converter> header)
+        public void Set(HeaderWrapper<Th165Converter> header)
             => this.pobj.Invoke(nameof(Set), new object[] { header.Target }, CultureInfo.InvariantCulture);
         public void Set(Th165ScoreWrapper data)
             => this.pobj.Invoke(nameof(Set), new object[] { data.Target }, CultureInfo.InvariantCulture);

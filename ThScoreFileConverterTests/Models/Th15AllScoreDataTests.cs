@@ -1,5 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Models.Th095;
+using ThScoreFileConverterTests.Models.Th095.Wrappers;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -20,8 +22,8 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th15AllScoreDataSetHeaderTest() => TestUtils.Wrap(() =>
         {
-            var array = Th095HeaderTests.MakeByteArray(Th095HeaderTests.GetValidProperties("TH51"));
-            var header = Th095HeaderWrapper<Th15Converter>.Create(array);
+            var array = HeaderTests.MakeByteArray(HeaderTests.GetValidProperties("TH51"));
+            var header = HeaderWrapper<Th15Converter>.Create(array);
 
             var allScoreData = new Th15AllScoreDataWrapper();
             allScoreData.Set(header);
@@ -32,9 +34,9 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th15AllScoreDataSetHeaderTestTwice() => TestUtils.Wrap(() =>
         {
-            var array = Th095HeaderTests.MakeByteArray(Th095HeaderTests.GetValidProperties("TH51"));
-            var header1 = Th095HeaderWrapper<Th15Converter>.Create(array);
-            var header2 = Th095HeaderWrapper<Th15Converter>.Create(array);
+            var array = HeaderTests.MakeByteArray(HeaderTests.GetValidProperties("TH51"));
+            var header1 = HeaderWrapper<Th15Converter>.Create(array);
+            var header2 = HeaderWrapper<Th15Converter>.Create(array);
 
             var allScoreData = new Th15AllScoreDataWrapper();
             allScoreData.Set(header1);

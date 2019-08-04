@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Models.Th095;
+using ThScoreFileConverterTests.Models.Th095.Wrappers;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -28,8 +30,8 @@ namespace ThScoreFileConverterTests.Models
             where TStageProgress : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var array = Th095HeaderTests.MakeByteArray(Th095HeaderTests.GetValidProperties(signature));
-                var header = Th095HeaderWrapper<TParent>.Create(array);
+                var array = HeaderTests.MakeByteArray(HeaderTests.GetValidProperties(signature));
+                var header = HeaderWrapper<TParent>.Create(array);
 
                 var allScoreData = new Th10AllScoreDataWrapper<TParent, TCharaWithTotal, TStageProgress>();
                 allScoreData.Set(header);
@@ -44,9 +46,9 @@ namespace ThScoreFileConverterTests.Models
             where TStageProgress : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var array = Th095HeaderTests.MakeByteArray(Th095HeaderTests.GetValidProperties(signature));
-                var header1 = Th095HeaderWrapper<TParent>.Create(array);
-                var header2 = Th095HeaderWrapper<TParent>.Create(array);
+                var array = HeaderTests.MakeByteArray(HeaderTests.GetValidProperties(signature));
+                var header1 = HeaderWrapper<TParent>.Create(array);
+                var header2 = HeaderWrapper<TParent>.Create(array);
 
                 var allScoreData = new Th10AllScoreDataWrapper<TParent, TCharaWithTotal, TStageProgress>();
                 allScoreData.Set(header1);

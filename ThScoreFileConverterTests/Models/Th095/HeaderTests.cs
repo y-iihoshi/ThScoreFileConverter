@@ -3,12 +3,12 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverterTests.Models.Wrappers;
+using ThScoreFileConverterTests.Models.Th095.Wrappers;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th095
 {
     [TestClass]
-    public class Th095HeaderTests
+    public class HeaderTests
     {
         internal struct Properties
         {
@@ -45,7 +45,7 @@ namespace ThScoreFileConverterTests.Models
                 properties.encodedBodySize,
                 properties.decodedBodySize);
 
-        internal static void Validate<TParent>(in Th095HeaderWrapper<TParent> header, in Properties properties)
+        internal static void Validate<TParent>(in HeaderWrapper<TParent> header, in Properties properties)
             where TParent : ThConverter
         {
             Assert.AreEqual(properties.signature, header.Signature);
@@ -59,7 +59,7 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var header = new Th095HeaderWrapper<TParent>();
+                var header = new HeaderWrapper<TParent>();
 
                 Validate(header, DefaultProperties);
                 Assert.IsFalse(header.IsValid.Value);
@@ -72,7 +72,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 var properties = GetValidProperties(signature);
 
-                var header = Th095HeaderWrapper<TParent>.Create(MakeByteArray(properties));
+                var header = HeaderWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Validate(header, properties);
                 Assert.IsTrue(header.IsValid.Value);
@@ -83,7 +83,7 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var header = new Th095HeaderWrapper<TParent>();
+                var header = new HeaderWrapper<TParent>();
                 header.ReadFrom(null);
 
                 Assert.Fail(TestUtils.Unreachable);
@@ -102,7 +102,7 @@ namespace ThScoreFileConverterTests.Models
 
                 // The actual value of the DecodedBodySize property can not be read.
                 // so EndOfStreamException will be thrown.
-                Th095HeaderWrapper<TParent>.Create(MakeByteArray(properties));
+                HeaderWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -120,7 +120,7 @@ namespace ThScoreFileConverterTests.Models
 
                 // The actual value of the DecodedBodySize property can not be read.
                 // so EndOfStreamException will be thrown.
-                Th095HeaderWrapper<TParent>.Create(MakeByteArray(properties));
+                HeaderWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -136,7 +136,7 @@ namespace ThScoreFileConverterTests.Models
                 // xx xx xx xx 45 24 00 00 00 00 00 00 00 00 00 00 00 0c 00 00 00 38 00 00 00
                 // <-- sig --> < encAll -> <- unk1 --> <- unk2 --> < encBody > < decBody >
 
-                var header = Th095HeaderWrapper<TParent>.Create(MakeByteArray(properties));
+                var header = HeaderWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Assert.AreEqual(signature, header.Signature);
                 Assert.AreNotEqual(properties.encodedAllSize, header.EncodedAllSize);
@@ -153,7 +153,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = GetValidProperties(signature);
                 properties.encodedAllSize = -1;
 
-                Th095HeaderWrapper<TParent>.Create(MakeByteArray(properties));
+                HeaderWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -166,7 +166,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = GetValidProperties(signature);
                 properties.encodedAllSize = 0;
 
-                var header = Th095HeaderWrapper<TParent>.Create(MakeByteArray(properties));
+                var header = HeaderWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Validate(header, properties);
                 Assert.IsFalse(header.IsValid.Value);
@@ -180,7 +180,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = GetValidProperties(signature);
                 --properties.encodedAllSize;
 
-                var header = Th095HeaderWrapper<TParent>.Create(MakeByteArray(properties));
+                var header = HeaderWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Validate(header, properties);
                 Assert.IsFalse(header.IsValid.Value);
@@ -194,7 +194,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = GetValidProperties(signature);
                 ++properties.encodedAllSize;
 
-                var header = Th095HeaderWrapper<TParent>.Create(MakeByteArray(properties));
+                var header = HeaderWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Validate(header, properties);
                 Assert.IsFalse(header.IsValid.Value);
@@ -208,7 +208,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = GetValidProperties(signature);
                 properties.encodedBodySize = -1;
 
-                Th095HeaderWrapper<TParent>.Create(MakeByteArray(properties));
+                HeaderWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -221,7 +221,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = GetValidProperties(signature);
                 properties.encodedBodySize = 0;
 
-                var header = Th095HeaderWrapper<TParent>.Create(MakeByteArray(properties));
+                var header = HeaderWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Validate(header, properties);
                 Assert.IsFalse(header.IsValid.Value);
@@ -235,7 +235,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = GetValidProperties(signature);
                 --properties.encodedBodySize;
 
-                var header = Th095HeaderWrapper<TParent>.Create(MakeByteArray(properties));
+                var header = HeaderWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Validate(header, properties);
                 Assert.IsFalse(header.IsValid.Value);
@@ -249,7 +249,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = GetValidProperties(signature);
                 ++properties.encodedBodySize;
 
-                var header = Th095HeaderWrapper<TParent>.Create(MakeByteArray(properties));
+                var header = HeaderWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Validate(header, properties);
                 Assert.IsFalse(header.IsValid.Value);
@@ -263,7 +263,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = GetValidProperties(signature);
                 properties.decodedBodySize = -1;
 
-                Th095HeaderWrapper<TParent>.Create(MakeByteArray(properties));
+                HeaderWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -276,7 +276,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = GetValidProperties(signature);
                 properties.decodedBodySize = 0;
 
-                var header = Th095HeaderWrapper<TParent>.Create(MakeByteArray(properties));
+                var header = HeaderWrapper<TParent>.Create(MakeByteArray(properties));
 
                 Validate(header, properties);
                 Assert.IsTrue(header.IsValid.Value);
@@ -290,7 +290,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = GetValidProperties(signature);
                 var byteArray = MakeByteArray(properties);
 
-                var header = Th095HeaderWrapper<TParent>.Create(byteArray);
+                var header = HeaderWrapper<TParent>.Create(byteArray);
 
                 MemoryStream stream = null;
                 try
@@ -322,7 +322,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = GetValidProperties(signature);
                 var byteArray = MakeByteArray(properties);
 
-                var header = Th095HeaderWrapper<TParent>.Create(byteArray);
+                var header = HeaderWrapper<TParent>.Create(byteArray);
                 header.WriteTo(null);
 
                 Assert.Fail(TestUtils.Unreachable);
