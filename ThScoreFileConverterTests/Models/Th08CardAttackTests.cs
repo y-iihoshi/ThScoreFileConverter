@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -80,7 +81,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var properties = ValidProperties;
 
-            var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
             var cardAttack = new Th08CardAttackWrapper(chapter);
 
             Validate(cardAttack, properties);
@@ -106,7 +107,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             properties.signature = properties.signature.ToLowerInvariant();
 
-            var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
             var cardAttack = new Th08CardAttackWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -120,7 +121,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             --properties.size1;
 
-            var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
             var cardAttack = new Th08CardAttackWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -139,7 +140,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             properties.level = TestUtils.Cast<Th08Converter.LevelPracticeWithTotal>(level);
 
-            var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
             var cardAttack = new Th08CardAttackWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -152,7 +153,7 @@ namespace ThScoreFileConverterTests.Models
             properties.storyCareer.trialCounts[Th08Converter.CharaWithTotal.Total] = 0;
             properties.practiceCareer.trialCounts[Th08Converter.CharaWithTotal.Total] = 0;
 
-            var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
             var cardAttack = new Th08CardAttackWrapper(chapter);
 
             Validate(cardAttack, properties);

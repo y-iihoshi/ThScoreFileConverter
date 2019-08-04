@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Models.Th06.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -14,7 +15,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         private readonly PrivateObject pobj = null;
 
-        public Th08PracticeScoreWrapper(Th06ChapterWrapper chapter)
+        public Th08PracticeScoreWrapper(ChapterWrapper chapter)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { chapter?.Target });
         public Th08PracticeScoreWrapper(object obj)
             => this.pobj = new PrivateObject(obj);

@@ -3,12 +3,12 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using ThScoreFileConverterTests.Models.Wrappers;
+using ThScoreFileConverterTests.Models.Th06.Wrappers;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th06
 {
     [TestClass]
-    public class Th06ChapterTests
+    public class ChapterTests
     {
         internal struct Properties
         {
@@ -41,7 +41,7 @@ namespace ThScoreFileConverterTests.Models
                 properties.size2,
                 properties.data);
 
-        internal static void Validate(in Th06ChapterWrapper chapter, in Properties properties)
+        internal static void Validate(in ChapterWrapper chapter, in Properties properties)
         {
             Assert.AreEqual(properties.signature, chapter.Signature);
             Assert.AreEqual(properties.size1, chapter.Size1);
@@ -54,7 +54,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th06ChapterTest()
             => TestUtils.Wrap(() =>
             {
-                var chapter = new Th06ChapterWrapper();
+                var chapter = new ChapterWrapper();
 
                 Validate(chapter, DefaultProperties);
             });
@@ -63,8 +63,8 @@ namespace ThScoreFileConverterTests.Models
         public void Th06ChapterTestCopy()
             => TestUtils.Wrap(() =>
             {
-                var chapter1 = new Th06ChapterWrapper();
-                var chapter2 = new Th06ChapterWrapper(chapter1);
+                var chapter1 = new ChapterWrapper();
+                var chapter2 = new ChapterWrapper(chapter1);
 
                 Validate(chapter2, DefaultProperties);
             });
@@ -75,7 +75,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th06ChapterTestNull()
             => TestUtils.Wrap(() =>
             {
-                var chapter = new Th06ChapterWrapper(null);
+                var chapter = new ChapterWrapper(null);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -84,7 +84,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th06ChapterReadFromTest()
             => TestUtils.Wrap(() =>
             {
-                var chapter = Th06ChapterWrapper.Create(MakeByteArray(ValidProperties));
+                var chapter = ChapterWrapper.Create(MakeByteArray(ValidProperties));
 
                 Validate(chapter, ValidProperties);
             });
@@ -94,7 +94,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th06ChapterReadFromTestNull()
             => TestUtils.Wrap(() =>
             {
-                var chapter = new Th06ChapterWrapper();
+                var chapter = new ChapterWrapper();
                 chapter.ReadFrom(null);
 
                 Assert.Fail(TestUtils.Unreachable);
@@ -115,7 +115,7 @@ namespace ThScoreFileConverterTests.Models
                 // The actual value of the Size1 property becomes too large and
                 // the Data property becomes empty,
                 // so EndOfStreamException will be thrown.
-                Th06ChapterWrapper.Create(MakeByteArray(properties));
+                ChapterWrapper.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -134,7 +134,7 @@ namespace ThScoreFileConverterTests.Models
 
                 // The actual value of the Size1 property becomes too large,
                 // so EndOfStreamException will be thrown.
-                Th06ChapterWrapper.Create(MakeByteArray(properties));
+                ChapterWrapper.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -153,7 +153,7 @@ namespace ThScoreFileConverterTests.Models
 
                 // The actual value of the Size1 property becomes too large,
                 // so EndOfStreamException will be thrown.
-                Th06ChapterWrapper.Create(MakeByteArray(properties));
+                ChapterWrapper.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -166,7 +166,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = ValidProperties;
                 properties.size1 = -1;
 
-                Th06ChapterWrapper.Create(MakeByteArray(properties));
+                ChapterWrapper.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -179,7 +179,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = ValidProperties;
                 properties.size1 = 0;
 
-                Th06ChapterWrapper.Create(MakeByteArray(properties));
+                ChapterWrapper.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -191,7 +191,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = ValidProperties;
                 --properties.size1;
 
-                var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
+                var chapter = ChapterWrapper.Create(MakeByteArray(properties));
 
                 Assert.AreEqual(properties.signature, chapter.Signature);
                 Assert.AreEqual(properties.size1, chapter.Size1);
@@ -207,7 +207,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = ValidProperties;
                 ++properties.size1;
 
-                Th06ChapterWrapper.Create(MakeByteArray(properties));
+                ChapterWrapper.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -219,7 +219,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = ValidProperties;
                 properties.size2 = -1;
 
-                var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
+                var chapter = ChapterWrapper.Create(MakeByteArray(properties));
 
                 Validate(chapter, properties);
             });
@@ -231,7 +231,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = ValidProperties;
                 properties.size2 = 0;
 
-                var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
+                var chapter = ChapterWrapper.Create(MakeByteArray(properties));
 
                 Validate(chapter, properties);
             });
@@ -243,7 +243,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = ValidProperties;
                 --properties.size2;
 
-                var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
+                var chapter = ChapterWrapper.Create(MakeByteArray(properties));
 
                 Validate(chapter, properties);
             });
@@ -255,7 +255,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = ValidProperties;
                 ++properties.size2;
 
-                var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
+                var chapter = ChapterWrapper.Create(MakeByteArray(properties));
 
                 Validate(chapter, properties);
             });
@@ -268,7 +268,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = ValidProperties;
                 properties.data = new byte[] { };
 
-                Th06ChapterWrapper.Create(MakeByteArray(properties));
+                ChapterWrapper.Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -281,7 +281,7 @@ namespace ThScoreFileConverterTests.Models
                 --properties.size1;
                 properties.data = properties.data.Take(properties.data.Length - 1).ToArray();
 
-                var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
+                var chapter = ChapterWrapper.Create(MakeByteArray(properties));
 
                 Validate(chapter, properties);
             });

@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -68,7 +69,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var properties = ValidProperties;
 
-            var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
             var clearData = new Th08ClearDataWrapper(chapter);
 
             Validate(clearData, properties);
@@ -93,7 +94,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             properties.signature = properties.signature.ToLowerInvariant();
 
-            var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
             var clearData = new Th08ClearDataWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -107,7 +108,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             --properties.size1;
 
-            var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
             var clearData = new Th08ClearDataWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -126,7 +127,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             properties.chara = TestUtils.Cast<Th08Converter.CharaWithTotal>(chara);
 
-            var chapter = Th06ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
             var clearData = new Th08ClearDataWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);

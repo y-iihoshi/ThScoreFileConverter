@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -26,7 +27,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th08AllScoreDataSetHeaderTest() => TestUtils.Wrap(() =>
         {
-            var chapter = Th06ChapterWrapper.Create(
+            var chapter = ChapterWrapper.Create(
                 Th06HeaderTests.MakeByteArray(Th06HeaderTests.GetValidProperties("TH8K")));
             var header = new Th06HeaderWrapper<Th08Converter>(chapter);
 
@@ -39,7 +40,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th08AllScoreDataSetHeaderTestTwice() => TestUtils.Wrap(() =>
         {
-            var chapter = Th06ChapterWrapper.Create(
+            var chapter = ChapterWrapper.Create(
                 Th06HeaderTests.MakeByteArray(Th06HeaderTests.GetValidProperties("TH8K")));
             var header1 = new Th06HeaderWrapper<Th08Converter>(chapter);
             var header2 = new Th06HeaderWrapper<Th08Converter>(chapter);
@@ -57,7 +58,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var properties = Th08HighScoreTests.ValidProperties;
             properties.score = 87654u;
-            var chapter = Th06ChapterWrapper.Create(Th08HighScoreTests.MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(Th08HighScoreTests.MakeByteArray(properties));
             var score = new Th08HighScoreWrapper(chapter);
 
             var allScoreData = new Th08AllScoreDataWrapper();
@@ -71,7 +72,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var properties = Th08HighScoreTests.ValidProperties;
             properties.score = 87654u;
-            var chapter = Th06ChapterWrapper.Create(Th08HighScoreTests.MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(Th08HighScoreTests.MakeByteArray(properties));
             var score1 = new Th08HighScoreWrapper(chapter);
             var score2 = new Th08HighScoreWrapper(chapter);
 
@@ -87,7 +88,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th08AllScoreDataSetClearDataTest() => TestUtils.Wrap(() =>
         {
             var properties = Th08ClearDataTests.ValidProperties;
-            var chapter = Th06ChapterWrapper.Create(Th08ClearDataTests.MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(Th08ClearDataTests.MakeByteArray(properties));
             var clearData = new Th08ClearDataWrapper(chapter);
 
             var allScoreData = new Th08AllScoreDataWrapper();
@@ -100,7 +101,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th08AllScoreDataSetClearDataTestTwice() => TestUtils.Wrap(() =>
         {
             var properties = Th08ClearDataTests.ValidProperties;
-            var chapter = Th06ChapterWrapper.Create(Th08ClearDataTests.MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(Th08ClearDataTests.MakeByteArray(properties));
             var clearData1 = new Th08ClearDataWrapper(chapter);
             var clearData2 = new Th08ClearDataWrapper(chapter);
 
@@ -116,7 +117,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th08AllScoreDataSetCardAttackTest() => TestUtils.Wrap(() =>
         {
             var properties = Th08CardAttackTests.ValidProperties;
-            var chapter = Th06ChapterWrapper.Create(Th08CardAttackTests.MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(Th08CardAttackTests.MakeByteArray(properties));
             var attack = new Th08CardAttackWrapper(chapter);
 
             var allScoreData = new Th08AllScoreDataWrapper();
@@ -129,7 +130,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th08AllScoreDataSetCardAttackTestTwice() => TestUtils.Wrap(() =>
         {
             var properties = Th08CardAttackTests.ValidProperties;
-            var chapter = Th06ChapterWrapper.Create(Th08CardAttackTests.MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(Th08CardAttackTests.MakeByteArray(properties));
             var attack1 = new Th08CardAttackWrapper(chapter);
             var attack2 = new Th08CardAttackWrapper(chapter);
 
@@ -145,7 +146,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th08AllScoreDataSetPracticeScoreTest() => TestUtils.Wrap(() =>
         {
             var properties = Th08PracticeScoreTests.ValidProperties;
-            var chapter = Th06ChapterWrapper.Create(Th08PracticeScoreTests.MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(Th08PracticeScoreTests.MakeByteArray(properties));
             var score = new Th08PracticeScoreWrapper(chapter);
 
             var allScoreData = new Th08AllScoreDataWrapper();
@@ -158,7 +159,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th08AllScoreDataSetPracticeScoreTestTwice() => TestUtils.Wrap(() =>
         {
             var properties = Th08PracticeScoreTests.ValidProperties;
-            var chapter = Th06ChapterWrapper.Create(Th08PracticeScoreTests.MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(Th08PracticeScoreTests.MakeByteArray(properties));
             var score1 = new Th08PracticeScoreWrapper(chapter);
             var score2 = new Th08PracticeScoreWrapper(chapter);
 
@@ -173,7 +174,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th08AllScoreDataSetFlspTest() => TestUtils.Wrap(() =>
         {
-            var chapter = Th06ChapterWrapper.Create(
+            var chapter = ChapterWrapper.Create(
                 Th08FlspTests.MakeByteArray(Th08FlspTests.ValidProperties));
             var header = new Th08FlspWrapper(chapter);
 
@@ -186,7 +187,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th08AllScoreDataSetFlspTestTwice() => TestUtils.Wrap(() =>
         {
-            var chapter = Th06ChapterWrapper.Create(
+            var chapter = ChapterWrapper.Create(
                 Th08FlspTests.MakeByteArray(Th08FlspTests.ValidProperties));
             var header1 = new Th08FlspWrapper(chapter);
             var header2 = new Th08FlspWrapper(chapter);
@@ -202,7 +203,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th08AllScoreDataSetPlayStatusTest() => TestUtils.Wrap(() =>
         {
-            var chapter = Th06ChapterWrapper.Create(
+            var chapter = ChapterWrapper.Create(
                 Th08PlayStatusTests.MakeByteArray(Th08PlayStatusTests.ValidProperties));
             var header = new Th08PlayStatusWrapper(chapter);
 
@@ -215,7 +216,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th08AllScoreDataSetPlayStatusTestTwice() => TestUtils.Wrap(() =>
         {
-            var chapter = Th06ChapterWrapper.Create(
+            var chapter = ChapterWrapper.Create(
                 Th08PlayStatusTests.MakeByteArray(Th08PlayStatusTests.ValidProperties));
             var header1 = new Th08PlayStatusWrapper(chapter);
             var header2 = new Th08PlayStatusWrapper(chapter);
@@ -231,7 +232,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th08AllScoreDataSetLastNameTest() => TestUtils.Wrap(() =>
         {
-            var chapter = Th06ChapterWrapper.Create(
+            var chapter = ChapterWrapper.Create(
                 Th07LastNameTests.MakeByteArray(Th07LastNameTests.ValidProperties));
             var header = new Th07LastNameWrapper(chapter);
 
@@ -244,7 +245,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th08AllScoreDataSetLastNameTestTwice() => TestUtils.Wrap(() =>
         {
-            var chapter = Th06ChapterWrapper.Create(
+            var chapter = ChapterWrapper.Create(
                 Th07LastNameTests.MakeByteArray(Th07LastNameTests.ValidProperties));
             var header1 = new Th07LastNameWrapper(chapter);
             var header2 = new Th07LastNameWrapper(chapter);
@@ -260,7 +261,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th08AllScoreDataSetVersionInfoTest() => TestUtils.Wrap(() =>
         {
-            var chapter = Th06ChapterWrapper.Create(
+            var chapter = ChapterWrapper.Create(
                 Th07VersionInfoTests.MakeByteArray(Th07VersionInfoTests.ValidProperties));
             var header = new Th07VersionInfoWrapper(chapter);
 
@@ -273,7 +274,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th08AllScoreDataSetVersionInfoTestTwice() => TestUtils.Wrap(() =>
         {
-            var chapter = Th06ChapterWrapper.Create(
+            var chapter = ChapterWrapper.Create(
                 Th07VersionInfoTests.MakeByteArray(Th07VersionInfoTests.ValidProperties));
             var header1 = new Th07VersionInfoWrapper(chapter);
             var header2 = new Th07VersionInfoWrapper(chapter);

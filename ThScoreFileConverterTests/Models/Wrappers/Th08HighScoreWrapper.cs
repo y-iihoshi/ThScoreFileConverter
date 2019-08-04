@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Models.Th06.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -14,11 +15,11 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         private readonly PrivateObject pobj = null;
 
-        public Th08HighScoreWrapper(Th06ChapterWrapper chapter)
+        public Th08HighScoreWrapper(ChapterWrapper chapter)
             => this.pobj = new PrivateObject(
                 AssemblyNameToTest,
                 TypeNameToTest,
-                new Type[] { (chapter ?? new Th06ChapterWrapper()).Target.GetType() },
+                new Type[] { (chapter ?? new ChapterWrapper()).Target.GetType() },
                 new object[] { chapter?.Target });
         public Th08HighScoreWrapper(uint score)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { score });
