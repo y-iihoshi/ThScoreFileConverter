@@ -25,32 +25,32 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         public int? Stage
         {
-            get { return this.pobj.GetField(nameof(this.Stage)) as int?; }
-            set { this.pobj.SetField(nameof(this.Stage), value.Value); }
+            get => this.pobj.GetField(nameof(this.Stage)) as int?;
+            set => this.pobj.SetField(nameof(this.Stage), value.Value);
         }
 
         public Th155Converter.LevelFlag? Ed
         {
-            get { return this.pobj.GetField(nameof(this.Ed)) as Th155Converter.LevelFlag?; }
-            set { this.pobj.SetField(nameof(this.Ed), value.Value); }
+            get => this.pobj.GetField(nameof(this.Ed)) as Th155Converter.LevelFlag?;
+            set => this.pobj.SetField(nameof(this.Ed), value.Value);
         }
 
         public bool? Available
         {
-            get { return this.pobj.GetField(nameof(this.Available)) as bool?; }
-            set { this.pobj.SetField(nameof(this.Available), value.Value); }
+            get => this.pobj.GetField(nameof(this.Available)) as bool?;
+            set => this.pobj.SetField(nameof(this.Available), value.Value);
         }
 
         public int? OverDrive
         {
-            get { return this.pobj.GetField(nameof(this.OverDrive)) as int?; }
-            set { this.pobj.SetField(nameof(this.OverDrive), value.Value); }
+            get => this.pobj.GetField(nameof(this.OverDrive)) as int?;
+            set => this.pobj.SetField(nameof(this.OverDrive), value.Value);
         }
 
         public int? StageOverDrive
         {
-            get { return this.pobj.GetField(nameof(this.StageOverDrive)) as int?; }
-            set { this.pobj.SetField(nameof(this.StageOverDrive), value.Value); }
+            get => this.pobj.GetField(nameof(this.StageOverDrive)) as int?;
+            set => this.pobj.SetField(nameof(this.StageOverDrive), value.Value);
         }
     }
 }
