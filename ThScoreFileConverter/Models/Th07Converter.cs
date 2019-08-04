@@ -891,10 +891,7 @@ namespace ThScoreFileConverter.Models
 
             public Th07.VersionInfo VersionInfo { get; private set; }
 
-            public void Set(Header header)
-            {
-                this.Header = header;
-            }
+            public void Set(Header header) => this.Header = header;
 
             public void Set(HighScore score)
             {
@@ -938,20 +935,11 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            public void Set(PlayStatus status)
-            {
-                this.PlayStatus = status;
-            }
+            public void Set(PlayStatus status) => this.PlayStatus = status;
 
-            public void Set(Th07.LastName name)
-            {
-                this.LastName = name;
-            }
+            public void Set(Th07.LastName name) => this.LastName = name;
 
-            public void Set(Th07.VersionInfo info)
-            {
-                this.VersionInfo = info;
-            }
+            public void Set(Th07.VersionInfo info) => this.VersionInfo = info;
         }
 
         private class Header : Th06.Chapter
@@ -1090,10 +1078,7 @@ namespace ThScoreFileConverter.Models
 
             public Dictionary<CharaWithTotal, ushort> ClearCounts { get; private set; }
 
-            public bool HasTried()
-            {
-                return this.TrialCounts[CharaWithTotal.Total] > 0;
-            }
+            public bool HasTried() => this.TrialCounts[CharaWithTotal.Total] > 0;
         }
 
         private class PracticeScore : Th06.Chapter   // per character, level, stage

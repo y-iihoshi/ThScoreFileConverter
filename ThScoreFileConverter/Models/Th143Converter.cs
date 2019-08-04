@@ -828,15 +828,9 @@ namespace ThScoreFileConverter.Models
 
             public Status Status { get; private set; }
 
-            public void Set(Header header)
-            {
-                this.Header = header;
-            }
+            public void Set(Header header) => this.Header = header;
 
-            public void Set(Score score)
-            {
-                this.Scores.Add(score);
-            }
+            public void Set(Score score) => this.Scores.Add(score);
 
             public void Set(ItemStatus status)
             {
@@ -844,10 +838,7 @@ namespace ThScoreFileConverter.Models
                     this.ItemStatuses.Add(status.Item, status);
             }
 
-            public void Set(Status status)
-            {
-                this.Status = status;
-            }
+            public void Set(Status status) => this.Status = status;
         }
 
         private class Header : Th095.Header

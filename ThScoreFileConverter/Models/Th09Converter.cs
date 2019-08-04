@@ -422,10 +422,7 @@ namespace ThScoreFileConverter.Models
 
             public Th07.VersionInfo VersionInfo { get; private set; }
 
-            public void Set(Header header)
-            {
-                this.Header = header;
-            }
+            public void Set(Header header) => this.Header = header;
 
             public void Set(HighScore score)
             {
@@ -436,20 +433,11 @@ namespace ThScoreFileConverter.Models
                     this.Rankings[key][score.Rank] = score;
             }
 
-            public void Set(PlayStatus status)
-            {
-                this.PlayStatus = status;
-            }
+            public void Set(PlayStatus status) => this.PlayStatus = status;
 
-            public void Set(Th07.LastName name)
-            {
-                this.LastName = name;
-            }
+            public void Set(Th07.LastName name) => this.LastName = name;
 
-            public void Set(Th07.VersionInfo info)
-            {
-                this.VersionInfo = info;
-            }
+            public void Set(Th07.VersionInfo info) => this.VersionInfo = info;
         }
 
         private class Header : Th06.Chapter

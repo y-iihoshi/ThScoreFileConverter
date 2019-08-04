@@ -31,10 +31,8 @@ namespace ThScoreFileConverter.Models
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
 #pragma warning disable IDE0060 // Remove unused parameter
         public static void Compress(Stream input, Stream output)
+            => throw new NotImplementedException(Resources.NotImplementedExceptionLzssCompressionIsNotSupported);
 #pragma warning restore IDE0060 // Remove unused parameter
-        {
-            throw new NotImplementedException(Resources.NotImplementedExceptionLzssCompressionIsNotSupported);
-        }
 
         /// <summary>
         /// Decompresses the LZSS formatted data.

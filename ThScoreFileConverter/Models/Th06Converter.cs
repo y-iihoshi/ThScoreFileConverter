@@ -660,10 +660,7 @@ namespace ThScoreFileConverter.Models
                 get; private set;
             }
 
-            public void Set(Header header)
-            {
-                this.Header = header;
-            }
+            public void Set(Header header) => this.Header = header;
 
             public void Set(HighScore score)
             {
@@ -821,10 +818,7 @@ namespace ThScoreFileConverter.Models
 
             public ushort ClearCount { get; private set; }
 
-            public bool HasTried()
-            {
-                return this.TrialCount > 0;
-            }
+            public bool HasTried() => this.TrialCount > 0;
         }
 
         private class PracticeScore : Th06.Chapter   // per character, level, stage
