@@ -55,17 +55,17 @@ namespace ThScoreFileConverter.Models
         /// <summary>
         /// Gets the path of the last output file.
         /// </summary>
-        public string Path { get; private set; }
+        public string Path { get; }
 
         /// <summary>
         /// Gets the number of the files that have been output.
         /// </summary>
-        public int Current { get; private set; }
+        public int Current { get; }
 
         /// <summary>
         /// Gets the total number of the files.
         /// </summary>
-        public int Total { get; private set; }
+        public int Total { get; }
 
         /// <summary>
         /// Gets a message string that represents the current instance.

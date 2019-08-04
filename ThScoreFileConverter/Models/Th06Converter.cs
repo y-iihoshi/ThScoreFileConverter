@@ -743,15 +743,15 @@ namespace ThScoreFileConverter.Models
                 this.Name = Encoding.Default.GetBytes("Nanashi\0\0");
             }
 
-            public uint Score { get; private set; }
+            public uint Score { get; }
 
-            public Chara Chara { get; private set; }                    // size: 1Byte
+            public Chara Chara { get; }
 
-            public Level Level { get; private set; }                    // size: 1Byte
+            public Level Level { get; }
 
-            public StageProgress StageProgress { get; private set; }    // size: 1Byte
+            public StageProgress StageProgress { get; }
 
-            public byte[] Name { get; private set; }                    // .Length = 9, null-terminated
+            public byte[] Name { get; } // Null-terminated
         }
 
         private class ClearData : Th06.Chapter   // per character
@@ -779,12 +779,12 @@ namespace ThScoreFileConverter.Models
             }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public Dictionary<Level, byte> StoryFlags { get; private set; }     // really...?
+            public Dictionary<Level, byte> StoryFlags { get; }      // really...?
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public Dictionary<Level, byte> PracticeFlags { get; private set; }  // really...?
+            public Dictionary<Level, byte> PracticeFlags { get; }   // really...?
 
-            public Chara Chara { get; private set; }            // size: 2Bytes
+            public Chara Chara { get; }
         }
 
         private class CardAttack : Th06.Chapter      // per card
@@ -806,14 +806,14 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            public short CardId { get; private set; }       // 1-based
+            public short CardId { get; }    // 1-based
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] CardName { get; private set; }    // .Length = 0x24, null-terminated
+            public byte[] CardName { get; } // Null-terminated
 
-            public ushort TrialCount { get; private set; }
+            public ushort TrialCount { get; }
 
-            public ushort ClearCount { get; private set; }
+            public ushort ClearCount { get; }
 
             public bool HasTried() => this.TrialCount > 0;
         }
@@ -837,13 +837,13 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            public int HighScore { get; private set; }
+            public int HighScore { get; }
 
-            public Chara Chara { get; private set; }        // size: 1Byte
+            public Chara Chara { get; }
 
-            public Level Level { get; private set; }        // size: 1Byte
+            public Level Level { get; }
 
-            public Stage Stage { get; private set; }        // size: 1Byte
+            public Stage Stage { get; }
         }
     }
 }

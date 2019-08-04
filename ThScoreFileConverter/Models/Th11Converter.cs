@@ -905,19 +905,19 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            public CharaWithTotal Chara { get; private set; }   // size: 4Bytes
+            public CharaWithTotal Chara { get; }
 
-            public Dictionary<Level, ScoreData[]> Rankings { get; private set; }
+            public Dictionary<Level, ScoreData[]> Rankings { get; }
 
-            public int TotalPlayCount { get; private set; }
+            public int TotalPlayCount { get; }
 
-            public int PlayTime { get; private set; }           // = seconds * 60fps
+            public int PlayTime { get; }    // = seconds * 60fps
 
-            public Dictionary<Level, int> ClearCounts { get; private set; }
+            public Dictionary<Level, int> ClearCounts { get; }
 
-            public Dictionary<(Level, Stage), Th10.Practice> Practices { get; private set; }
+            public Dictionary<(Level, Stage), Th10.Practice> Practices { get; }
 
-            public Dictionary<int, Th10.SpellCard> Cards { get; private set; }
+            public Dictionary<int, Th10.SpellCard> Cards { get; }
 
             public static bool CanInitialize(Th10.Chapter chapter)
             {
@@ -946,10 +946,10 @@ namespace ThScoreFileConverter.Models
             }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] LastName { get; private set; }    // .Length = 10 (The last 2 bytes are always 0x00 ?)
+            public byte[] LastName { get; } // The last 2 bytes are always 0x00 ?
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] BgmFlags { get; private set; }    // .Length = 17
+            public byte[] BgmFlags { get; }
 
             public static bool CanInitialize(Th10.Chapter chapter)
             {

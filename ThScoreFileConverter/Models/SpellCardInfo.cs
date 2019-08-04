@@ -66,17 +66,17 @@ namespace ThScoreFileConverter.Models
         /// <summary>
         /// Gets a 1-based sequential number of the current spell card.
         /// </summary>
-        public int Id { get; private set; }
+        public int Id { get; }
 
         /// <summary>
         /// Gets a name of the current spell card.
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; }
 
         /// <summary>
         /// Gets the stage which the current spell card is used.
         /// </summary>
-        public TStage Stage { get; private set; }
+        public TStage Stage { get; }
 
         /// <summary>
         /// Gets the level which the current spell card is used.

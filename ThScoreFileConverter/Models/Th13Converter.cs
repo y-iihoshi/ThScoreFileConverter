@@ -951,21 +951,21 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            public CharaWithTotal Chara { get; private set; }   // size: 4Bytes
+            public CharaWithTotal Chara { get; }
 
-            public Dictionary<LevelPracticeWithTotal, ScoreData[]> Rankings { get; private set; }
+            public Dictionary<LevelPracticeWithTotal, ScoreData[]> Rankings { get; }
 
-            public int TotalPlayCount { get; private set; }
+            public int TotalPlayCount { get; }
 
-            public int PlayTime { get; private set; }           // = seconds * 60fps
+            public int PlayTime { get; }    // = seconds * 60fps
 
-            public Dictionary<LevelPracticeWithTotal, int> ClearCounts { get; private set; }
+            public Dictionary<LevelPracticeWithTotal, int> ClearCounts { get; }
 
-            public Dictionary<LevelPracticeWithTotal, int> ClearFlags { get; private set; }     // Really...?
+            public Dictionary<LevelPracticeWithTotal, int> ClearFlags { get; }  // Really...?
 
-            public Dictionary<(LevelPractice, StagePractice), Th13.Practice> Practices { get; private set; }
+            public Dictionary<(LevelPractice, StagePractice), Th13.Practice> Practices { get; }
 
-            public Dictionary<int, SpellCard> Cards { get; private set; }
+            public Dictionary<int, SpellCard> Cards { get; }
 
             public static bool CanInitialize(Th10.Chapter chapter)
             {
@@ -996,13 +996,13 @@ namespace ThScoreFileConverter.Models
             }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] LastName { get; private set; }    // .Length = 10 (The last 2 bytes are always 0x00 ?)
+            public byte[] LastName { get; }     // The last 2 bytes are always 0x00 ?
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] BgmFlags { get; private set; }    // .Length = 17
+            public byte[] BgmFlags { get; }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public int TotalPlayTime { get; private set; }  // unit: 10ms
+            public int TotalPlayTime { get; }   // unit: 10ms
 
             public static bool CanInitialize(Th10.Chapter chapter)
             {

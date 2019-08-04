@@ -1020,15 +1020,15 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            public RouteWithTotal Route { get; private set; }   // size: 4Bytes
+            public RouteWithTotal Route { get; }
 
-            public Dictionary<Level, ScoreData[]> Rankings { get; private set; }
+            public Dictionary<Level, ScoreData[]> Rankings { get; }
 
-            public int TotalPlayCount { get; private set; }
+            public int TotalPlayCount { get; }
 
-            public int PlayTime { get; private set; }           // = seconds * 60fps
+            public int PlayTime { get; }    // = seconds * 60fps
 
-            public Dictionary<Level, int> ClearCounts { get; private set; }
+            public Dictionary<Level, int> ClearCounts { get; }
 
             public static bool CanInitialize(Th10.Chapter chapter)
             {
@@ -1061,7 +1061,7 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            public Dictionary<int, SpellCard> Cards { get; private set; }
+            public Dictionary<int, SpellCard> Cards { get; }
 
             public static bool CanInitialize(Th10.Chapter chapter)
             {
@@ -1092,12 +1092,12 @@ namespace ThScoreFileConverter.Models
             }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] LastName { get; private set; }    // .Length = 10 (The last 2 bytes are always 0x00 ?)
+            public byte[] LastName { get; }     // The last 2 bytes are always 0x00 ?
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] BgmFlags { get; private set; }    // .Length = 10
+            public byte[] BgmFlags { get; }
 
-            public int TotalPlayTime { get; private set; }  // unit: 10ms
+            public int TotalPlayTime { get; }   // unit: 10ms
 
             public static bool CanInitialize(Th10.Chapter chapter)
             {
@@ -1122,7 +1122,7 @@ namespace ThScoreFileConverter.Models
         private class SpellCard : IBinaryReadable
         {
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] Name { get; private set; }        // .Length = 0x80
+            public byte[] Name { get; private set; }
 
             public int NoMissCount { get; private set; }
 
@@ -1130,7 +1130,7 @@ namespace ThScoreFileConverter.Models
 
             public int TrialCount { get; private set; }
 
-            public int Id { get; private set; }             // 1-based
+            public int Id { get; private set; } // 1-based
 
             public Level Level { get; private set; }
 

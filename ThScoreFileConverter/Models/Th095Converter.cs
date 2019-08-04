@@ -718,20 +718,20 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            public (Level Level, int Scene) LevelScene { get; private set; }
+            public (Level Level, int Scene) LevelScene { get; }
 
-            public int HighScore { get; private set; }
+            public int HighScore { get; }
 
-            public int BestshotScore { get; private set; }
+            public int BestshotScore { get; }
 
-            public uint DateTime { get; private set; }      // UNIX time (unit: [s])
+            public uint DateTime { get; }   // UNIX time
 
-            public int TrialCount { get; private set; }
+            public int TrialCount { get; }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public float SlowRate1 { get; private set; }    // ??
+            public float SlowRate1 { get; } // ??
 
-            public float SlowRate2 { get; private set; }    // ??
+            public float SlowRate2 { get; } // ??
 
             public static bool CanInitialize(Th095.Chapter chapter)
             {
@@ -758,7 +758,7 @@ namespace ThScoreFileConverter.Models
             }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] LastName { get; private set; }    // .Length = 10 (The last 2 bytes are always 0x00 ?)
+            public byte[] LastName { get; } // The last 2 bytes are always 0x00 ?
 
             public static bool CanInitialize(Th095.Chapter chapter)
             {
@@ -777,7 +777,7 @@ namespace ThScoreFileConverter.Models
 
             public Level Level { get; private set; }
 
-            public short Scene { get; private set; }        // 1-based
+            public short Scene { get; private set; }    // 1-based
 
             public short Width { get; private set; }
 
@@ -787,7 +787,7 @@ namespace ThScoreFileConverter.Models
 
             public float SlowRate { get; private set; }
 
-            public byte[] CardName { get; private set; }    // .Length = 0x50
+            public byte[] CardName { get; private set; }
 
             public void ReadFrom(BinaryReader reader)
             {

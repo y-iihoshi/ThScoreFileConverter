@@ -141,35 +141,35 @@ namespace ThScoreFileConverter.Models
         /// <summary>
         /// Gets the hours component of the time represented by the current instance.
         /// </summary>
-        public long Hours { get; private set; }
+        public long Hours { get; }
 
         /// <summary>
         /// Gets the minutes component of the time represented by the current instance.
         /// </summary>
-        public int Minutes { get; private set; }
+        public int Minutes { get; }
 
         /// <summary>
         /// Gets the seconds component of the time represented by the current instance.
         /// </summary>
-        public int Seconds { get; private set; }
+        public int Seconds { get; }
 
         /// <summary>
         /// Gets the milliseconds component of the time represented by the current instance.
         /// </summary>
         /// <remarks>This property should be used exclusively with <see cref="Frames"/>.</remarks>
-        public int Milliseconds { get; private set; }
+        public int Milliseconds { get; }
 
         /// <summary>
         /// Gets the frames component of the time represented by the current instance.
         /// </summary>
         /// <remarks>This property should be used exclusively with <see cref="Milliseconds"/>.</remarks>
-        public int Frames { get; private set; }
+        public int Frames { get; }
 
         /// <summary>
         /// Gets a value indicating whether the value less than a second is treated as fps or milliseconds.
         /// <c>true</c> if fps; <c>false</c> for milliseconds.
         /// </summary>
-        public bool IsFrames { get; private set; }
+        public bool IsFrames { get; }
 
         /// <summary>
         /// Returns a string that represents the current instance.

@@ -28,7 +28,7 @@ namespace ThScoreFileConverter.Models
         /// <summary>
         /// Gets a short name of the enumeration field.
         /// </summary>
-        public string ShortName { get; private set; }
+        public string ShortName { get; }
 
         /// <summary>
         /// Gets or sets a long name of the enumeration field.

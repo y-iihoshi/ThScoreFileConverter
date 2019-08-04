@@ -1236,41 +1236,41 @@ namespace ThScoreFileConverter.Models
                 this.CardFlags = new Dictionary<int, byte>();
             }
 
-            public uint Score { get; private set; }                     // * 10
+            public uint Score { get; }      // Divided by 10
 
-            public float SlowRate { get; private set; }
+            public float SlowRate { get; }
 
-            public Chara Chara { get; private set; }                    // size: 1Byte
+            public Chara Chara { get; }
 
-            public Level Level { get; private set; }                    // size: 1Byte
+            public Level Level { get; }
 
-            public StageProgress StageProgress { get; private set; }    // size: 1Byte
+            public StageProgress StageProgress { get; }
 
-            public byte[] Name { get; private set; }                    // .Length = 9, null-terminated
+            public byte[] Name { get; }     // Null-terminated
 
-            public byte[] Date { get; private set; }                    // .Length = 6, "mm/dd\0"
+            public byte[] Date { get; }     // "mm/dd\0"
 
-            public ushort ContinueCount { get; private set; }
+            public ushort ContinueCount { get; }
 
-            public byte PlayerNum { get; private set; }                 // 0-based
+            public byte PlayerNum { get; }  // 0-based
 
-            public uint PlayTime { get; private set; }                  // = seconds * 60fps
+            public uint PlayTime { get; }   // = seconds * 60fps
 
-            public int PointItem { get; private set; }
+            public int PointItem { get; }
 
-            public int MissCount { get; private set; }
+            public int MissCount { get; }
 
-            public int BombCount { get; private set; }
+            public int BombCount { get; }
 
-            public int LastSpellCount { get; private set; }
+            public int LastSpellCount { get; }
 
-            public int PauseCount { get; private set; }
+            public int PauseCount { get; }
 
-            public int TimePoint { get; private set; }
+            public int TimePoint { get; }
 
-            public int HumanRate { get; private set; }                  // / 100
+            public int HumanRate { get; }   // Multiplied by 100
 
-            public Dictionary<int, byte> CardFlags { get; private set; }
+            public Dictionary<int, byte> CardFlags { get; }
         }
 
         private class ClearData : Th06.Chapter   // per character-with-total
@@ -1299,11 +1299,11 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            public Dictionary<Level, PlayableStages> StoryFlags { get; private set; }       // really...?
+            public Dictionary<Level, PlayableStages> StoryFlags { get; }    // really...?
 
-            public Dictionary<Level, PlayableStages> PracticeFlags { get; private set; }    // really...?
+            public Dictionary<Level, PlayableStages> PracticeFlags { get; } // really...?
 
-            public CharaWithTotal Chara { get; private set; }                               // size: 1Byte
+            public CharaWithTotal Chara { get; }
         }
 
         private class CardAttack : Th06.Chapter      // per card
@@ -1332,22 +1332,22 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            public short CardId { get; private set; }       // 1-based
+            public short CardId { get; }    // 1-based
 
-            public LevelPracticeWithTotal Level { get; private set; }
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] CardName { get; private set; }    // .Length = 0x30
+            public LevelPracticeWithTotal Level { get; }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] EnemyName { get; private set; }   // .Length = 0x30
+            public byte[] CardName { get; }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] Comment { get; private set; }     // .Length = 0x80, should split by '\0'
+            public byte[] EnemyName { get; }
 
-            public CardAttackCareer StoryCareer { get; private set; }
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
+            public byte[] Comment { get; }  // Should be splitted by '\0'
 
-            public CardAttackCareer PracticeCareer { get; private set; }
+            public CardAttackCareer StoryCareer { get; }
+
+            public CardAttackCareer PracticeCareer { get; }
 
             public bool HasTried()
             {
@@ -1434,11 +1434,11 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            public Dictionary<(Stage, Level), int> PlayCounts { get; private set; }
+            public Dictionary<(Stage, Level), int> PlayCounts { get; }
 
-            public Dictionary<(Stage, Level), int> HighScores { get; private set; }     // * 10
+            public Dictionary<(Stage, Level), int> HighScores { get; }  // Divided by 10
 
-            public Chara Chara { get; private set; }        // size: 1Byte
+            public Chara Chara { get; }
         }
 
         private class FLSP : Th06.Chapter    // FIXME
@@ -1498,16 +1498,16 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            public Time TotalRunningTime { get; private set; }
+            public Time TotalRunningTime { get; }
 
-            public Time TotalPlayTime { get; private set; }
+            public Time TotalPlayTime { get; }
 
-            public Dictionary<Level, PlayCount> PlayCounts { get; private set; }
+            public Dictionary<Level, PlayCount> PlayCounts { get; }
 
-            public PlayCount TotalPlayCount { get; private set; }
+            public PlayCount TotalPlayCount { get; }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] BgmFlags { get; private set; }            // .Length = 21
+            public byte[] BgmFlags { get; }
         }
 
         private class PlayCount : IBinaryReadable   // per level-with-total

@@ -948,14 +948,14 @@ namespace ThScoreFileConverter.Models
             }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] LastName { get; }         // .Length = 14 (The last 2 bytes are always 0x00 ?)
+            public byte[] LastName { get; }         // The last 2 bytes are always 0x00 ?
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] BgmFlags { get; }         // .Length = 8
+            public byte[] BgmFlags { get; }
 
-            public int TotalPlayTime { get; }       // unit: [0.01s]
+            public int TotalPlayTime { get; }       // unit: 10ms
 
-            public byte[] NicknameFlags { get; }    // .Length = 51 (The first byte should be ignored)
+            public byte[] NicknameFlags { get; }    // The first byte should be ignored
 
             public static bool CanInitialize(Th10.Chapter chapter)
             {

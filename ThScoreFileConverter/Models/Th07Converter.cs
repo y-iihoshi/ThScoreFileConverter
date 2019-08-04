@@ -880,10 +880,7 @@ namespace ThScoreFileConverter.Models
 
             public Dictionary<int, CardAttack> CardAttacks { get; private set; }
 
-            public Dictionary<(Chara, Level), Dictionary<Stage, PracticeScore>> PracticeScores
-            {
-                get; private set;
-            }
+            public Dictionary<(Chara, Level), Dictionary<Stage, PracticeScore>> PracticeScores { get; private set; }
 
             public PlayStatus PlayStatus { get; private set; }
 
@@ -987,21 +984,21 @@ namespace ThScoreFileConverter.Models
                 this.Date = Encoding.Default.GetBytes("--/--\0");
             }
 
-            public uint Score { get; private set; }                     // * 10
+            public uint Score { get; }  // Divided by 10
 
-            public float SlowRate { get; private set; }
+            public float SlowRate { get; }
 
-            public Chara Chara { get; private set; }                    // size: 1Byte
+            public Chara Chara { get; }
 
-            public Level Level { get; private set; }                    // size: 1Byte
+            public Level Level { get; }
 
-            public StageProgress StageProgress { get; private set; }    // size: 1Byte
+            public StageProgress StageProgress { get; }
 
-            public byte[] Name { get; private set; }                    // .Length = 9, null-terminated
+            public byte[] Name { get; } // Null-terminated
 
-            public byte[] Date { get; private set; }                    // .Length = 6, "mm/dd\0"
+            public byte[] Date { get; } // "mm/dd\0"
 
-            public ushort ContinueCount { get; private set; }
+            public ushort ContinueCount { get; }
         }
 
         private class ClearData : Th06.Chapter   // per character
@@ -1029,12 +1026,12 @@ namespace ThScoreFileConverter.Models
             }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public Dictionary<Level, byte> StoryFlags { get; private set; }     // really...?
+            public Dictionary<Level, byte> StoryFlags { get; }      // really...?
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public Dictionary<Level, byte> PracticeFlags { get; private set; }  // really...?
+            public Dictionary<Level, byte> PracticeFlags { get; }   // really...?
 
-            public Chara Chara { get; private set; }            // size: 4Bytes
+            public Chara Chara { get; }
         }
 
         private class CardAttack : Th06.Chapter      // per card
@@ -1067,16 +1064,16 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            public Dictionary<CharaWithTotal, uint> MaxBonuses { get; private set; }
+            public Dictionary<CharaWithTotal, uint> MaxBonuses { get; }
 
-            public short CardId { get; private set; }       // 1-based
+            public short CardId { get; }    // 1-based
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] CardName { get; private set; }    // .Length = 0x30
+            public byte[] CardName { get; }
 
-            public Dictionary<CharaWithTotal, ushort> TrialCounts { get; private set; }
+            public Dictionary<CharaWithTotal, ushort> TrialCounts { get; }
 
-            public Dictionary<CharaWithTotal, ushort> ClearCounts { get; private set; }
+            public Dictionary<CharaWithTotal, ushort> ClearCounts { get; }
 
             public bool HasTried() => this.TrialCounts[CharaWithTotal.Total] > 0;
         }
@@ -1101,15 +1098,15 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            public int TrialCount { get; private set; }     // really...?
+            public int TrialCount { get; }  // really...?
 
-            public int HighScore { get; private set; }
+            public int HighScore { get; }
 
-            public Chara Chara { get; private set; }        // size: 1Byte
+            public Chara Chara { get; }
 
-            public Level Level { get; private set; }        // size: 1Byte
+            public Level Level { get; }
 
-            public Stage Stage { get; private set; }        // size: 1Byte
+            public Stage Stage { get; }
         }
 
         private class PlayStatus : Th06.Chapter
@@ -1147,11 +1144,11 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            public Time TotalRunningTime { get; private set; }
+            public Time TotalRunningTime { get; }
 
-            public Time TotalPlayTime { get; private set; }
+            public Time TotalPlayTime { get; }
 
-            public Dictionary<LevelWithTotal, PlayCount> PlayCounts { get; private set; }
+            public Dictionary<LevelWithTotal, PlayCount> PlayCounts { get; }
         }
 
         private class PlayCount : IBinaryReadable   // per level-with-total

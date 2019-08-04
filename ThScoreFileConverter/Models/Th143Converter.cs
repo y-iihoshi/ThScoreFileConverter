@@ -877,13 +877,13 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            public int Number { get; private set; }
+            public int Number { get; }
 
-            public Dictionary<ItemWithTotal, int> ClearCounts { get; private set; }
+            public Dictionary<ItemWithTotal, int> ClearCounts { get; }
 
-            public Dictionary<ItemWithTotal, int> ChallengeCounts { get; private set; }
+            public Dictionary<ItemWithTotal, int> ChallengeCounts { get; }
 
-            public int HighScore { get; private set; }  // * 10
+            public int HighScore { get; }   // Divided by 10
 
             public static bool CanInitialize(Th10.Chapter chapter)
             {
@@ -917,22 +917,22 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            public ItemWithTotal Item { get; private set; }
+            public ItemWithTotal Item { get; }
 
-            public int UseCount { get; private set; }
+            public int UseCount { get; }
 
-            public int ClearedCount { get; private set; }
+            public int ClearedCount { get; }
 
-            public int ClearedScenes { get; private set; }
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public int ItemLevel { get; private set; }
+            public int ClearedScenes { get; }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public int AvailableCount { get; private set; }
+            public int ItemLevel { get; }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public int FramesOrRanges { get; private set; }
+            public int AvailableCount { get; }
+
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
+            public int FramesOrRanges { get; }
 
             public static bool CanInitialize(Th10.Chapter chapter)
             {
@@ -968,20 +968,20 @@ namespace ThScoreFileConverter.Models
             }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] LastName { get; private set; }    // .Length = 14 (The last 2 bytes are always 0x00 ?)
+            public byte[] LastName { get; }     // The last 2 bytes are always 0x00 ?
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] BgmFlags { get; private set; }    // .Length = 9
+            public byte[] BgmFlags { get; }
 
-            public int TotalPlayTime { get; private set; }  // unit: [0.01s]
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public ItemWithTotal LastMainItem { get; private set; }
+            public int TotalPlayTime { get; }   // unit: 10ms
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public ItemWithTotal LastSubItem { get; private set; }
+            public ItemWithTotal LastMainItem { get; }
 
-            public byte[] NicknameFlags { get; private set; }   // .Length = 71?
+            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
+            public ItemWithTotal LastSubItem { get; }
+
+            public byte[] NicknameFlags { get; }
 
             public static bool CanInitialize(Th10.Chapter chapter)
             {

@@ -479,19 +479,19 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            public uint Score { get; private set; }         // * 10
+            public uint Score { get; }  // Divided by 10
 
-            public Chara Chara { get; private set; }        // size: 1Byte
+            public Chara Chara { get; }
 
-            public Level Level { get; private set; }        // size: 1Byte
+            public Level Level { get; }
 
-            public short Rank { get; private set; }         // 0-based
+            public short Rank { get; }  // 0-based
 
-            public byte[] Name { get; private set; }        // .Length = 9, null-terminated
+            public byte[] Name { get; } // Null-terminated
 
-            public byte[] Date { get; private set; }        // .Length = 9, "yy/mm/dd\0"
+            public byte[] Date { get; } // "yy/mm/dd\0"
 
-            public byte ContinueCount { get; private set; }
+            public byte ContinueCount { get; }
         }
 
         private class PlayStatus : Th06.Chapter
@@ -539,21 +539,21 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            public Time TotalRunningTime { get; private set; }
+            public Time TotalRunningTime { get; }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public Time TotalPlayTime { get; private set; }     // really...?
+            public Time TotalPlayTime { get; }  // really...?
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] BgmFlags { get; private set; }        // .Length = 19
+            public byte[] BgmFlags { get; }
 
-            public Dictionary<Chara, byte> MatchFlags { get; private set; }
+            public Dictionary<Chara, byte> MatchFlags { get; }
 
-            public Dictionary<Chara, byte> StoryFlags { get; private set; }
+            public Dictionary<Chara, byte> StoryFlags { get; }
 
-            public Dictionary<Chara, byte> ExtraFlags { get; private set; }
+            public Dictionary<Chara, byte> ExtraFlags { get; }
 
-            public Dictionary<Chara, ClearCount> ClearCounts { get; private set; }
+            public Dictionary<Chara, ClearCount> ClearCounts { get; }
         }
 
         private class ClearCount : IBinaryReadable

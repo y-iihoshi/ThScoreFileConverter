@@ -883,11 +883,11 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            public CharaWithTotal Chara { get; private set; }   // size: 4Bytes
+            public CharaWithTotal Chara { get; }
 
-            public Dictionary<GameMode, ClearDataPerGameMode> Data1 { get; private set; }
+            public Dictionary<GameMode, ClearDataPerGameMode> Data1 { get; }
 
-            public Dictionary<(Level, StagePractice), Th13.Practice> Practices { get; private set; }
+            public Dictionary<(Level, StagePractice), Th13.Practice> Practices { get; }
 
             public static bool CanInitialize(Th10.Chapter chapter)
             {
@@ -918,13 +918,13 @@ namespace ThScoreFileConverter.Models
             }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] LastName { get; private set; }    // .Length = 10 (The last 2 bytes are always 0x00 ?)
+            public byte[] LastName { get; }     // The last 2 bytes are always 0x00 ?
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] BgmFlags { get; private set; }    // .Length = 17
+            public byte[] BgmFlags { get; }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public int TotalPlayTime { get; private set; }  // unit: 10ms
+            public int TotalPlayTime { get; }   // unit: 10ms
 
             public static bool CanInitialize(Th10.Chapter chapter)
             {
@@ -940,11 +940,11 @@ namespace ThScoreFileConverter.Models
 
             public int TotalPlayCount { get; private set; }
 
-            public int PlayTime { get; private set; }           // unit: 10ms
+            public int PlayTime { get; private set; }   // unit: 10ms
 
             public Dictionary<LevelWithTotal, int> ClearCounts { get; private set; }
 
-            public Dictionary<LevelWithTotal, int> ClearFlags { get; private set; }     // Really...?
+            public Dictionary<LevelWithTotal, int> ClearFlags { get; private set; } // Really...?
 
             public Dictionary<int, SpellCard> Cards { get; private set; }
 
@@ -1008,15 +1008,15 @@ namespace ThScoreFileConverter.Models
 
         private class ScoreData : IBinaryReadable
         {
-            public uint Score { get; private set; }     // * 10
+            public uint Score { get; private set; }     // Divided by 10
 
-            public StageProgress StageProgress { get; private set; }    // size: 1Byte
+            public StageProgress StageProgress { get; private set; }
 
             public byte ContinueCount { get; private set; }
 
-            public byte[] Name { get; private set; }    // .Length = 10 (The last 2 bytes are always 0x00 ?)
+            public byte[] Name { get; private set; }    // The last 2 bytes are always 0x00 ?
 
-            public uint DateTime { get; private set; }  // UNIX time (unit: [s])
+            public uint DateTime { get; private set; }  // UNIX time
 
             public float SlowRate { get; private set; }
 

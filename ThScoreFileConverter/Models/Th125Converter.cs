@@ -881,19 +881,19 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            public (Level Level, int Scene) LevelScene { get; private set; }
+            public (Level Level, int Scene) LevelScene { get; }
 
-            public int HighScore { get; private set; }
+            public int HighScore { get; }
 
-            public Chara Chara { get; private set; }        // size: 4Bytes
+            public Chara Chara { get; }
 
-            public int TrialCount { get; private set; }
+            public int TrialCount { get; }
 
-            public int FirstSuccess { get; private set; }
+            public int FirstSuccess { get; }
 
-            public uint DateTime { get; private set; }      // UNIX time (unit: [s])
+            public uint DateTime { get; }   // UNIX time
 
-            public int BestshotScore { get; private set; }
+            public int BestshotScore { get; }
 
             public static bool CanInitialize(Th095.Chapter chapter)
             {
@@ -924,12 +924,12 @@ namespace ThScoreFileConverter.Models
             }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] LastName { get; private set; }    // .Length = 10 (The last 2 bytes are always 0x00 ?)
+            public byte[] LastName { get; }     // The last 2 bytes are always 0x00 ?
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] BgmFlags { get; private set; }    // .Length = 6
+            public byte[] BgmFlags { get; }
 
-            public int TotalPlayTime { get; private set; }  // unit: [0.01s]
+            public int TotalPlayTime { get; }   // unit: 10ms
 
             public static bool CanInitialize(Th095.Chapter chapter)
             {
@@ -997,7 +997,7 @@ namespace ThScoreFileConverter.Models
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public int ResultScore2 { get; private set; }   // ???
 
-            public byte[] CardName { get; private set; }    // .Length = 0x50
+            public byte[] CardName { get; private set; }
 
             public void ReadFrom(BinaryReader reader)
             {
@@ -1098,11 +1098,11 @@ namespace ThScoreFileConverter.Models
                 this.Value = value;
             }
 
-            public bool Outputs { get; private set; }
+            public bool Outputs { get; }
 
-            public string Format { get; private set; }
+            public string Format { get; }
 
-            public string Value { get; private set; }
+            public string Value { get; }
         }
     }
 }

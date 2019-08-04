@@ -777,11 +777,11 @@ namespace ThScoreFileConverter.Models
                 this.Level = level;
             }
 
-            public string Name { get; private set; }
+            public string Name { get; }
 
-            public Chara Enemy { get; private set; }
+            public Chara Enemy { get; }
 
-            public Level Level { get; private set; }
+            public Level Level { get; }
         }
 
         private class AllScoreData : IBinaryReadable
