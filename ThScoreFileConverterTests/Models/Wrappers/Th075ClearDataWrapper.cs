@@ -40,9 +40,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         public Th075ClearDataWrapper()
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "obj")]
-        public Th075ClearDataWrapper(object obj)
-            => this.pobj = new PrivateObject(obj);
+        public Th075ClearDataWrapper(object original)
+            => this.pobj = new PrivateObject(original);
 
         public object Target
             => this.pobj.Target;

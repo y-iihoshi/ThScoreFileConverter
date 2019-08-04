@@ -23,8 +23,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
                 new object[] { chapter?.Target });
         public Th08HighScoreWrapper(uint score)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { score });
-        public Th08HighScoreWrapper(object obj)
-            => this.pobj = new PrivateObject(obj);
+        public Th08HighScoreWrapper(object original)
+            => this.pobj = new PrivateObject(original);
 
         public object Target
             => this.pobj.Target;

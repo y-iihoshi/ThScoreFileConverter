@@ -15,9 +15,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         public Th125BonusFieldsWrapper(int data)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { data });
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "obj")]
-        public Th125BonusFieldsWrapper(object obj)
-            => this.pobj = new PrivateObject(obj);
+        public Th125BonusFieldsWrapper(object original)
+            => this.pobj = new PrivateObject(original);
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public object Target

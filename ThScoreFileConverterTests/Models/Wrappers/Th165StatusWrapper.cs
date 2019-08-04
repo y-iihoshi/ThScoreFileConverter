@@ -20,8 +20,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public Th165StatusWrapper(ChapterWrapper chapter)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { chapter?.Target });
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        public Th165StatusWrapper(object obj)
-            => this.pobj = new PrivateObject(obj);
+        public Th165StatusWrapper(object original)
+            => this.pobj = new PrivateObject(original);
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public object Target

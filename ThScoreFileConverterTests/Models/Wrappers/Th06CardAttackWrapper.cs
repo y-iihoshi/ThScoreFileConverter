@@ -18,8 +18,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         public Th06CardAttackWrapper(ChapterWrapper chapter)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { chapter?.Target });
-        public Th06CardAttackWrapper(object obj)
-            => this.pobj = new PrivateObject(obj);
+        public Th06CardAttackWrapper(object original)
+            => this.pobj = new PrivateObject(original);
 
         public object Target
             => this.pobj.Target;

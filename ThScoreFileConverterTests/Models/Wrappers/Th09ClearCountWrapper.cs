@@ -41,8 +41,8 @@ namespace ThScoreFileConverterTests.Models
 
         public Th09ClearCountWrapper()
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
-        public Th09ClearCountWrapper(object obj)
-            => this.pobj = new PrivateObject(obj);
+        public Th09ClearCountWrapper(object original)
+            => this.pobj = new PrivateObject(original);
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public object Target

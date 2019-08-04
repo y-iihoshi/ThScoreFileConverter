@@ -44,8 +44,8 @@ namespace ThScoreFileConverterTests.Models.Th13.Wrappers
 
         public SpellCardWrapper()
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
-        public SpellCardWrapper(object obj)
-            => this.pobj = new PrivateObject(obj);
+        public SpellCardWrapper(object original)
+            => this.pobj = new PrivateObject(original);
 
         public object Target
             => this.pobj.Target;

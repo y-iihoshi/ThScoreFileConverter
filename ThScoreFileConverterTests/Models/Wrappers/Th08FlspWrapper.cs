@@ -17,8 +17,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         public Th08FlspWrapper(ChapterWrapper chapter)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { chapter?.Target });
-        public Th08FlspWrapper(object obj)
-            => this.pobj = new PrivateObject(obj);
+        public Th08FlspWrapper(object original)
+            => this.pobj = new PrivateObject(original);
 
         public object Target
             => this.pobj.Target;

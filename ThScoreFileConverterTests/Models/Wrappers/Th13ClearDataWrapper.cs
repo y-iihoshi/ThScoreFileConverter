@@ -29,8 +29,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         public Th13ClearDataWrapper(ChapterWrapper chapter)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { chapter?.Target });
-        public Th13ClearDataWrapper(object obj)
-            => this.pobj = new PrivateObject(obj);
+        public Th13ClearDataWrapper(object original)
+            => this.pobj = new PrivateObject(original);
 
         public object Target
             => this.pobj.Target;

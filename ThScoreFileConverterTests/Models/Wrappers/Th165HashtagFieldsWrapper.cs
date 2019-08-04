@@ -16,9 +16,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         public Th165HashtagFieldsWrapper(int data1, int data2, int data3)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { data1, data2, data3 });
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "obj")]
-        public Th165HashtagFieldsWrapper(object obj)
-            => this.pobj = new PrivateObject(obj);
+        public Th165HashtagFieldsWrapper(object original)
+            => this.pobj = new PrivateObject(original);
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public object Target

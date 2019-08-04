@@ -19,8 +19,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         public Th143StatusWrapper(ChapterWrapper chapter)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { chapter?.Target });
-        public Th143StatusWrapper(object obj)
-            => this.pobj = new PrivateObject(obj);
+        public Th143StatusWrapper(object original)
+            => this.pobj = new PrivateObject(original);
 
         public object Target
             => this.pobj.Target;

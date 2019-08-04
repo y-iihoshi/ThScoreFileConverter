@@ -17,8 +17,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         public Th08PracticeScoreWrapper(ChapterWrapper chapter)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { chapter?.Target });
-        public Th08PracticeScoreWrapper(object obj)
-            => this.pobj = new PrivateObject(obj);
+        public Th08PracticeScoreWrapper(object original)
+            => this.pobj = new PrivateObject(original);
 
         public object Target
             => this.pobj.Target;

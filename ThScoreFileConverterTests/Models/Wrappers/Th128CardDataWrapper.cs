@@ -19,8 +19,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         public Th128CardDataWrapper(ChapterWrapper chapter)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { chapter?.Target });
-        public Th128CardDataWrapper(object obj)
-            => this.pobj = new PrivateObject(obj);
+        public Th128CardDataWrapper(object original)
+            => this.pobj = new PrivateObject(original);
 
         public object Target
             => this.pobj.Target;
