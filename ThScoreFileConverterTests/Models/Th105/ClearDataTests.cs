@@ -5,13 +5,12 @@ using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th105;
-using ThScoreFileConverterTests.Models.Th105;
-using ThScoreFileConverterTests.Models.Wrappers;
+using ThScoreFileConverterTests.Models.Th105.Wrappers;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th105
 {
     [TestClass]
-    public class Th105ClearDataTests
+    public class ClearDataTests
     {
         internal struct Properties<TChara, TLevel>
             where TChara : struct, Enum
@@ -56,7 +55,7 @@ namespace ThScoreFileConverterTests.Models
                     .SelectMany(pair => Th105SpellCardResultTests.MakeByteArray(pair.Value)).ToArray());
 
         internal static void Validate<TChara, TLevel>(
-            in Th105ClearDataWrapper<TChara, TLevel> clearData,
+            in ClearDataWrapper<TChara, TLevel> clearData,
             in Properties<TChara, TLevel> properties)
             where TChara : struct, Enum
             where TLevel : struct, Enum
@@ -85,7 +84,7 @@ namespace ThScoreFileConverterTests.Models
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var clearData = new Th105ClearDataWrapper<TChara, TLevel>();
+                var clearData = new ClearDataWrapper<TChara, TLevel>();
 
                 Assert.IsNull(clearData.CardsForDeck);
                 Assert.IsNull(clearData.SpellCardResults);
@@ -98,7 +97,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 var properties = GetValidProperties<TChara, TLevel>();
 
-                var clearData = Th105ClearDataWrapper<TChara, TLevel>.Create(MakeByteArray(properties));
+                var clearData = ClearDataWrapper<TChara, TLevel>.Create(MakeByteArray(properties));
 
                 Validate(clearData, properties);
             });
@@ -108,7 +107,7 @@ namespace ThScoreFileConverterTests.Models
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var clearData = new Th105ClearDataWrapper<TChara, TLevel>();
+                var clearData = new ClearDataWrapper<TChara, TLevel>();
                 clearData.ReadFrom(null);
 
                 Assert.Fail(TestUtils.Unreachable);
@@ -123,7 +122,7 @@ namespace ThScoreFileConverterTests.Models
                 var array = MakeByteArray(properties);
                 array = array.Take(array.Length - 1).ToArray();
 
-                Th105ClearDataWrapper<TChara, TLevel>.Create(array);
+                ClearDataWrapper<TChara, TLevel>.Create(array);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -136,7 +135,7 @@ namespace ThScoreFileConverterTests.Models
                 var properties = GetValidProperties<TChara, TLevel>();
                 var array = MakeByteArray(properties).Concat(new byte[1] { 1 }).ToArray();
 
-                var clearData = Th105ClearDataWrapper<TChara, TLevel>.Create(array);
+                var clearData = ClearDataWrapper<TChara, TLevel>.Create(array);
 
                 Validate(clearData, properties);
             });
@@ -157,7 +156,7 @@ namespace ThScoreFileConverterTests.Models
                         .SelectMany(pair => Th105SpellCardResultTests.MakeByteArray(pair.Value)).ToArray(),
                     Th105SpellCardResultTests.MakeByteArray(properties.spellCardResults.First().Value));
 
-                var clearData = Th105ClearDataWrapper<TChara, TLevel>.Create(array);
+                var clearData = ClearDataWrapper<TChara, TLevel>.Create(array);
 
                 Validate(clearData, properties);
             });

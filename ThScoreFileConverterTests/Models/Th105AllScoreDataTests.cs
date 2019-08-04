@@ -17,7 +17,7 @@ namespace ThScoreFileConverterTests.Models
         {
             public Dictionary<TChara, byte> storyClearCounts;
             public Dictionary<int, CardForDeckTests.Properties> systemCards;
-            public Dictionary<TChara, Th105ClearDataTests.Properties<TChara, TLevel>> clearData;
+            public Dictionary<TChara, ClearDataTests.Properties<TChara, TLevel>> clearData;
         };
 
         internal static Properties<TChara, TLevel> GetValidProperties<TChara, TLevel>()
@@ -40,7 +40,7 @@ namespace ThScoreFileConverterTests.Models
                     }),
                 clearData = charas.ToDictionary(
                     chara => chara,
-                    chara => Th105ClearDataTests.GetValidProperties<TChara, TLevel>())
+                    chara => ClearDataTests.GetValidProperties<TChara, TLevel>())
             };
         }
 
@@ -59,7 +59,7 @@ namespace ThScoreFileConverterTests.Models
                 properties.systemCards.Count,
                 properties.systemCards.SelectMany(pair => CardForDeckTests.MakeByteArray(pair.Value)).ToArray(),
                 properties.clearData.Count,
-                properties.clearData.SelectMany(pair => Th105ClearDataTests.MakeByteArray(pair.Value)).ToArray());
+                properties.clearData.SelectMany(pair => ClearDataTests.MakeByteArray(pair.Value)).ToArray());
 
         internal static void Validate<TParent, TChara, TLevel>(
             in Th105AllScoreDataWrapper<TParent, TChara, TLevel> allScoreData,
@@ -78,7 +78,7 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var pair in properties.clearData)
             {
-                Th105ClearDataTests.Validate(allScoreData.ClearData[pair.Key], pair.Value);
+                ClearDataTests.Validate(allScoreData.ClearData[pair.Key], pair.Value);
             }
         }
 
