@@ -5,10 +5,10 @@ using System.Globalization;
 using System.IO;
 using ThScoreFileConverter.Models.Th095;
 
-namespace ThScoreFileConverterTests.Models.Wrappers
+namespace ThScoreFileConverterTests.Models.Th095.Wrappers
 {
     // NOTE: Setting the accessibility as public causes CS0703.
-    internal sealed class Th095ChapterWrapper
+    internal sealed class ChapterWrapper
     {
         private static readonly Type TypeToTest = typeof(Chapter);
         private static readonly string AssemblyNameToTest = TypeToTest.Assembly.GetName().Name;
@@ -16,9 +16,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         private readonly PrivateObject pobj = null;
 
-        public static Th095ChapterWrapper Create(byte[] array)
+        public static ChapterWrapper Create(byte[] array)
         {
-            var chapter = new Th095ChapterWrapper();
+            var chapter = new ChapterWrapper();
 
             MemoryStream stream = null;
             try
@@ -38,9 +38,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             return chapter;
         }
 
-        public Th095ChapterWrapper()
+        public ChapterWrapper()
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
-        public Th095ChapterWrapper(Th095ChapterWrapper chapter)
+        public ChapterWrapper(ChapterWrapper chapter)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { chapter?.Target });
 
         public object Target

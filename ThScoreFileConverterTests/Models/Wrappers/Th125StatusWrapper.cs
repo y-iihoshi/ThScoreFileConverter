@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Models.Th095.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -16,7 +17,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         private readonly PrivateObject pobj = null;
 
-        public Th125StatusWrapper(Th095ChapterWrapper chapter)
+        public Th125StatusWrapper(ChapterWrapper chapter)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { chapter?.Target });
         public Th125StatusWrapper(object obj)
             => this.pobj = new PrivateObject(obj);
@@ -42,7 +43,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public int? TotalPlayTime
             => this.pobj.GetProperty(nameof(this.TotalPlayTime)) as int?;
 
-        public static bool CanInitialize(Th095ChapterWrapper chapter)
+        public static bool CanInitialize(ChapterWrapper chapter)
             => (bool)PrivateType.InvokeStatic(
                 nameof(CanInitialize), new object[] { chapter.Target }, CultureInfo.InvariantCulture);
     }

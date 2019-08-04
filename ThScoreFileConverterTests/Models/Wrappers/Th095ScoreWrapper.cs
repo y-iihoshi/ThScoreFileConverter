@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Models.Th095.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -16,7 +17,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         private readonly PrivateObject pobj = null;
 
-        public Th095ScoreWrapper(Th095ChapterWrapper chapter)
+        public Th095ScoreWrapper(ChapterWrapper chapter)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { chapter?.Target });
         public Th095ScoreWrapper(object obj)
             => this.pobj = new PrivateObject(obj);
@@ -50,7 +51,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public float? SlowRate2
             => this.pobj.GetProperty(nameof(this.SlowRate2)) as float?;
 
-        public static bool CanInitialize(Th095ChapterWrapper chapter)
+        public static bool CanInitialize(ChapterWrapper chapter)
             => (bool)PrivateType.InvokeStatic(
                 nameof(CanInitialize), new object[] { chapter.Target }, CultureInfo.InvariantCulture);
     }

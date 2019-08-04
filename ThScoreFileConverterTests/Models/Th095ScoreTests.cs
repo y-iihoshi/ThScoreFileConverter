@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Models.Th095.Wrappers;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -87,7 +88,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var properties = ValidProperties;
 
-            var chapter = Th095ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
             var score = new Th095ScoreWrapper(chapter);
 
             Validate(score, properties);
@@ -113,7 +114,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             properties.signature = properties.signature.ToLowerInvariant();
 
-            var chapter = Th095ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
             var score = new Th095ScoreWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -127,7 +128,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             ++properties.version;
 
-            var chapter = Th095ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
             var score = new Th095ScoreWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -141,7 +142,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             --properties.size;
 
-            var chapter = Th095ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
             var score = new Th095ScoreWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -160,7 +161,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             properties.levelScene.level = TestUtils.Cast<Th095Converter.Level>(level);
 
-            var chapter = Th095ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
             var score = new Th095ScoreWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -178,7 +179,7 @@ namespace ThScoreFileConverterTests.Models
                 var checksum = 0u;
                 var data = new byte[size];
 
-                var chapter = Th095ChapterWrapper.Create(
+                var chapter = ChapterWrapper.Create(
                     TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
 
                 Assert.AreEqual(expected, Th095ScoreWrapper.CanInitialize(chapter));
