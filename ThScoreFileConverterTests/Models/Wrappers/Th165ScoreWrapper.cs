@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Models.Th10.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -17,7 +18,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         private readonly PrivateObject pobj = null;
 
-        public Th165ScoreWrapper(Th10ChapterWrapper chapter)
+        public Th165ScoreWrapper(ChapterWrapper chapter)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { chapter?.Target });
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public Th165ScoreWrapper(object obj)
@@ -49,7 +50,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public int? HighScore
             => this.pobj.GetProperty(nameof(this.HighScore)) as int?;
 
-        public static bool CanInitialize(Th10ChapterWrapper chapter)
+        public static bool CanInitialize(ChapterWrapper chapter)
             => (bool)PrivateType.InvokeStatic(
                 nameof(CanInitialize), new object[] { chapter.Target }, CultureInfo.InvariantCulture);
     }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th10;
+using ThScoreFileConverterTests.Models.Th10.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -20,7 +21,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         private readonly PrivateObject pobj = null;
 
-        public Th10ClearDataWrapper(Th10ChapterWrapper chapter)
+        public Th10ClearDataWrapper(ChapterWrapper chapter)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { chapter?.Target });
         public Th10ClearDataWrapper(object obj)
             => this.pobj = new PrivateObject(obj);
@@ -62,7 +63,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public IReadOnlyDictionary<int, SpellCard> Cards
             => this.pobj.GetProperty(nameof(this.Cards)) as Dictionary<int, SpellCard>;
 
-        public static bool CanInitialize(Th10ChapterWrapper chapter)
+        public static bool CanInitialize(ChapterWrapper chapter)
             => (bool)PrivateType.InvokeStatic(
                 nameof(CanInitialize), new object[] { chapter.Target }, CultureInfo.InvariantCulture);
     }

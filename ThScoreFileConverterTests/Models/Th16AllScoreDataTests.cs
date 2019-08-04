@@ -2,6 +2,7 @@
 using ThScoreFileConverter.Models;
 using ThScoreFileConverterTests.Models.Th095;
 using ThScoreFileConverterTests.Models.Th095.Wrappers;
+using ChapterWrapper = ThScoreFileConverterTests.Models.Th10.Wrappers.ChapterWrapper;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -50,7 +51,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th16AllScoreDataSetClearDataTest() => TestUtils.Wrap(() =>
         {
             var properties = Th16ClearDataTests.GetValidProperties();
-            var chapter = Th10ChapterWrapper.Create(Th16ClearDataTests.MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(Th16ClearDataTests.MakeByteArray(properties));
             var clearData = new Th16ClearDataWrapper(chapter);
 
             var allScoreData = new Th16AllScoreDataWrapper();
@@ -63,7 +64,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th16AllScoreDataSetClearDataTestTwice() => TestUtils.Wrap(() =>
         {
             var properties = Th16ClearDataTests.GetValidProperties();
-            var chapter = Th10ChapterWrapper.Create(Th16ClearDataTests.MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(Th16ClearDataTests.MakeByteArray(properties));
             var clearData1 = new Th16ClearDataWrapper(chapter);
             var clearData2 = new Th16ClearDataWrapper(chapter);
 
@@ -78,7 +79,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th16AllScoreDataSetStatusTest() => TestUtils.Wrap(() =>
         {
-            var chapter = Th10ChapterWrapper.Create(Th128StatusTests.MakeByteArray(
+            var chapter = ChapterWrapper.Create(Th128StatusTests.MakeByteArray(
                 Th128StatusTests.GetValidProperties(1, 0x42C, 17), 0x10, 0x11));
             var status = new Th128StatusWrapper<Th16Converter>(chapter);
 
@@ -91,7 +92,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th16AllScoreDataSetStatusTestTwice() => TestUtils.Wrap(() =>
         {
-            var chapter = Th10ChapterWrapper.Create(Th128StatusTests.MakeByteArray(
+            var chapter = ChapterWrapper.Create(Th128StatusTests.MakeByteArray(
                 Th128StatusTests.GetValidProperties(1, 0x42C, 17), 0x10, 0x11));
             var status1 = new Th128StatusWrapper<Th16Converter>(chapter);
             var status2 = new Th128StatusWrapper<Th16Converter>(chapter);

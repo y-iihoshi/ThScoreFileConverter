@@ -5,9 +5,9 @@ using System.Globalization;
 using System.IO;
 using ThScoreFileConverter.Models.Th10;
 
-namespace ThScoreFileConverterTests.Models.Wrappers
+namespace ThScoreFileConverterTests.Models.Th10.Wrappers
 {
-    public sealed class Th10ChapterWrapper
+    public sealed class ChapterWrapper
     {
         private static readonly Type TypeToTest = typeof(Chapter);
         private static readonly string AssemblyNameToTest = TypeToTest.Assembly.GetName().Name;
@@ -15,9 +15,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         private readonly PrivateObject pobj = null;
 
-        public static Th10ChapterWrapper Create(byte[] array)
+        public static ChapterWrapper Create(byte[] array)
         {
-            var chapter = new Th10ChapterWrapper();
+            var chapter = new ChapterWrapper();
 
             MemoryStream stream = null;
             try
@@ -37,9 +37,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             return chapter;
         }
 
-        public Th10ChapterWrapper()
+        public ChapterWrapper()
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
-        public Th10ChapterWrapper(Th10ChapterWrapper chapter)
+        public ChapterWrapper(ChapterWrapper chapter)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { chapter?.Target });
 
         public object Target
