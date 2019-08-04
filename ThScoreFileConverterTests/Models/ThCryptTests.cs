@@ -342,7 +342,7 @@ namespace ThScoreFileConverterTests.Models
             using (var output = new MemoryStream())
             {
                 var size = (int)input.Length;
-                for (int block = 1; block <= SMALL_BLOCK * 2; ++block)
+                for (var block = 1; block <= SMALL_BLOCK * 2; ++block)
                 {
                     if (block == SMALL_BLOCK)
                         continue;
@@ -370,7 +370,7 @@ namespace ThScoreFileConverterTests.Models
             using (var output = new MemoryStream())
             {
                 var size = (int)input.Length;
-                for (int block = 1; block <= LARGE_BLOCK * 2; ++block)
+                for (var block = 1; block <= LARGE_BLOCK * 2; ++block)
                 {
                     if (block == LARGE_BLOCK)
                         continue;
