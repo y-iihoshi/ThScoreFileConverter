@@ -22,14 +22,11 @@ namespace ThScoreFileConverter.Models
         /// Initializes a new instance of the <see cref="ExceptionOccurredEventArgs"/> class.
         /// </summary>
         /// <param name="ex">The exception data.</param>
-        public ExceptionOccurredEventArgs(Exception ex)
-        {
-            this.Exception = ex;
-        }
+        public ExceptionOccurredEventArgs(Exception ex) => this.Exception = ex;
 
         /// <summary>
         /// Gets the exception data.
         /// </summary>
-        public Exception Exception { get; private set; }
+        public Exception Exception { get; }
     }
 }

@@ -1527,10 +1527,7 @@ namespace ThScoreFileConverter.Models
 
         private class PlayCount : IBinaryReadable   // per level-with-total
         {
-            public PlayCount()
-            {
-                this.Trials = new Dictionary<Chara, int>(Enum.GetValues(typeof(Chara)).Length);
-            }
+            public PlayCount() => this.Trials = new Dictionary<Chara, int>(Enum.GetValues(typeof(Chara)).Length);
 
             public int TotalTrial { get; private set; }
 

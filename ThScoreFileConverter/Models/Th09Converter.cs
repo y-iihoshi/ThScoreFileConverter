@@ -570,10 +570,7 @@ namespace ThScoreFileConverter.Models
 
         private class ClearCount : IBinaryReadable
         {
-            public ClearCount()
-            {
-                this.Counts = new Dictionary<Level, int>(Enum.GetValues(typeof(Level)).Length);
-            }
+            public ClearCount() => this.Counts = new Dictionary<Level, int>(Enum.GetValues(typeof(Level)).Length);
 
             public Dictionary<Level, int> Counts { get; private set; }
 

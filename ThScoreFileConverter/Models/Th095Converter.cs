@@ -669,10 +669,7 @@ namespace ThScoreFileConverter.Models
 
         private class AllScoreData
         {
-            public AllScoreData()
-            {
-                this.Scores = new List<Score>(SpellCards.Count);
-            }
+            public AllScoreData() => this.Scores = new List<Score>(SpellCards.Count);
 
             public Header Header { get; private set; }
 

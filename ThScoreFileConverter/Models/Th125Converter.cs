@@ -829,10 +829,7 @@ namespace ThScoreFileConverter.Models
 
         private class AllScoreData
         {
-            public AllScoreData()
-            {
-                this.Scores = new List<Score>(SpellCards.Count);
-            }
+            public AllScoreData() => this.Scores = new List<Score>(SpellCards.Count);
 
             public Header Header { get; private set; }
 
@@ -1056,10 +1053,7 @@ namespace ThScoreFileConverter.Models
             {
                 private BitVector32 data;
 
-                public BonusFields(int data)
-                {
-                    this.data = new BitVector32(data);
-                }
+                public BonusFields(int data) => this.data = new BitVector32(data);
 
                 [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
                 public int Data
