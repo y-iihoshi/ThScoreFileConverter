@@ -122,7 +122,7 @@ namespace ThScoreFileConverterTests.Squirrel
             DisplayName = "negative size")]
         [DataRow(new int[] { (int)SQOT.Array, 0, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
             DisplayName = "zero size and one element")]
-        [DataRow(new int[] { (int)SQOT.Array, 1, 999, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
+        [DataRow(new int[] { (int)SQOT.Array, 1, (int)SQOT.Float, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
             DisplayName = "invalid index type")]
         [DataRow(new int[] { (int)SQOT.Array, 1, (int)SQOT.Integer, 999, (int)SQOT.Integer, 123, (int)SQOT.Null },
             DisplayName = "invalid index data")]
