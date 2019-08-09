@@ -41,7 +41,7 @@ namespace ThScoreFileConverter.ViewModels
 
             var thisAsm = Assembly.GetExecutingAssembly();
             var asmName = thisAsm.GetName();
-            var gitVerInfoType = thisAsm.GetType(asmName.Name + ".GitVersionInformation");
+            var gitVerInfoType = thisAsm.GetType("GitVersionInformation");
             var verField = gitVerInfoType.GetField("MajorMinorPatch");
             var attrs = thisAsm.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), true);
 
