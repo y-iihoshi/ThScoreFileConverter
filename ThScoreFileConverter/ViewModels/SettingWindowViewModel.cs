@@ -79,7 +79,7 @@ namespace ThScoreFileConverter.ViewModels
                 if (Settings.Instance.OutputNumberGroupSeparator != value)
                 {
                     Settings.Instance.OutputNumberGroupSeparator = value;
-                    this.OnPropertyChanged(() => this.OutputNumberGroupSeparator);
+                    this.RaisePropertyChanged(nameof(this.OutputNumberGroupSeparator));
                 }
             }
         }
@@ -105,7 +105,7 @@ namespace ThScoreFileConverter.ViewModels
                 if (Settings.Instance.InputCodePageId != value)
                 {
                     Settings.Instance.InputCodePageId = value;
-                    this.OnPropertyChanged(() => this.InputCodePageId);
+                    this.RaisePropertyChanged(nameof(this.InputCodePageId));
                 }
             }
         }
@@ -131,7 +131,7 @@ namespace ThScoreFileConverter.ViewModels
                 if (Settings.Instance.OutputCodePageId != value)
                 {
                     Settings.Instance.OutputCodePageId = value;
-                    this.OnPropertyChanged(() => this.OutputCodePageId);
+                    this.RaisePropertyChanged(nameof(this.OutputCodePageId));
                 }
             }
         }
@@ -173,7 +173,7 @@ namespace ThScoreFileConverter.ViewModels
             if (App.Current is App app)
             {
                 app.UpdateResources(result.Font.FontFamily.Name, result.Font.Size);
-                this.OnPropertyChanged(() => this.Font);
+                this.RaisePropertyChanged(nameof(this.Font));
             }
         }
 
@@ -185,7 +185,7 @@ namespace ThScoreFileConverter.ViewModels
             if (App.Current is App app)
             {
                 app.UpdateResources(SystemFonts.MessageFontFamily, SystemFonts.MessageFontSize);
-                this.OnPropertyChanged(() => this.Font);
+                this.RaisePropertyChanged(nameof(this.Font));
             }
         }
 

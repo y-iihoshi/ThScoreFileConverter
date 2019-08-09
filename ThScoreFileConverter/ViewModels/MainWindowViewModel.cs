@@ -132,7 +132,7 @@ namespace ThScoreFileConverter.ViewModels
             if (string.IsNullOrEmpty(this.LastWorkNumber))
                 this.LastWorkNumber = WorksImpl.First().Number;
             else
-                this.OnPropertyChanged(() => this.LastWorkNumber);
+                this.RaisePropertyChanged(nameof(this.LastWorkNumber));
         }
 
         #region Properties to bind a view
@@ -185,7 +185,7 @@ namespace ThScoreFileConverter.ViewModels
                     Settings.Instance.LastTitle = value;
                     if (!Settings.Instance.Dictionary.ContainsKey(value))
                         Settings.Instance.Dictionary.Add(value, new SettingsPerTitle());
-                    this.OnPropertyChanged(() => this.LastWorkNumber);
+                    this.RaisePropertyChanged(nameof(this.LastWorkNumber));
                 }
 #endif
             }
@@ -219,7 +219,7 @@ namespace ThScoreFileConverter.ViewModels
                 if ((CurrentSetting.ScoreFile != value) && File.Exists(value))
                 {
                     CurrentSetting.ScoreFile = value;
-                    this.OnPropertyChanged(() => this.ScoreFile);
+                    this.RaisePropertyChanged(nameof(this.ScoreFile));
                 }
             }
         }
@@ -261,7 +261,7 @@ namespace ThScoreFileConverter.ViewModels
                 if ((CurrentSetting.BestShotDirectory != value) && Directory.Exists(value))
                 {
                     CurrentSetting.BestShotDirectory = value;
-                    this.OnPropertyChanged(() => this.BestShotDirectory);
+                    this.RaisePropertyChanged(nameof(this.BestShotDirectory));
                 }
             }
         }
@@ -279,7 +279,7 @@ namespace ThScoreFileConverter.ViewModels
             private set
             {
                 CurrentSetting.TemplateFiles = value.Where(elem => File.Exists(elem)).ToArray();
-                this.OnPropertyChanged(() => this.TemplateFiles);
+                this.RaisePropertyChanged(nameof(this.TemplateFiles));
             }
         }
 
@@ -320,7 +320,7 @@ namespace ThScoreFileConverter.ViewModels
                 if ((CurrentSetting.OutputDirectory != value) && Directory.Exists(value))
                 {
                     CurrentSetting.OutputDirectory = value;
-                    this.OnPropertyChanged(() => this.OutputDirectory);
+                    this.RaisePropertyChanged(nameof(this.OutputDirectory));
                 }
             }
         }
@@ -340,7 +340,7 @@ namespace ThScoreFileConverter.ViewModels
                 if (CurrentSetting.ImageOutputDirectory != value)
                 {
                     CurrentSetting.ImageOutputDirectory = value;
-                    this.OnPropertyChanged(() => this.ImageOutputDirectory);
+                    this.RaisePropertyChanged(nameof(this.ImageOutputDirectory));
                 }
             }
         }
@@ -371,7 +371,7 @@ namespace ThScoreFileConverter.ViewModels
                 if (CurrentSetting.HideUntriedCards != value)
                 {
                     CurrentSetting.HideUntriedCards = value;
-                    this.OnPropertyChanged(() => this.HidesUntriedCards);
+                    this.RaisePropertyChanged(nameof(this.HidesUntriedCards));
                 }
             }
         }
@@ -788,21 +788,21 @@ namespace ThScoreFileConverter.ViewModels
                     this.IsIdle = true;
                     this.Log = string.Empty;
 
-                    this.OnPropertyChanged(() => this.SupportedVersions);
-                    this.OnPropertyChanged(() => this.ScoreFile);
-                    this.OnPropertyChanged(() => this.CanHandleBestShot);
-                    this.OnPropertyChanged(() => this.BestShotDirectory);
-                    this.OnPropertyChanged(() => this.TemplateFiles);
-                    this.OnPropertyChanged(() => this.OutputDirectory);
-                    this.OnPropertyChanged(() => this.ImageOutputDirectory);
-                    this.OnPropertyChanged(() => this.CanReplaceCardNames);
-                    this.OnPropertyChanged(() => this.HidesUntriedCards);
+                    this.RaisePropertyChanged(nameof(this.SupportedVersions));
+                    this.RaisePropertyChanged(nameof(this.ScoreFile));
+                    this.RaisePropertyChanged(nameof(this.CanHandleBestShot));
+                    this.RaisePropertyChanged(nameof(this.BestShotDirectory));
+                    this.RaisePropertyChanged(nameof(this.TemplateFiles));
+                    this.RaisePropertyChanged(nameof(this.OutputDirectory));
+                    this.RaisePropertyChanged(nameof(this.ImageOutputDirectory));
+                    this.RaisePropertyChanged(nameof(this.CanReplaceCardNames));
+                    this.RaisePropertyChanged(nameof(this.HidesUntriedCards));
 
                     this.ConvertCommand.RaiseCanExecuteChanged();
                     break;
 
                 case "ScoreFile":
-                    this.OnPropertyChanged(() => this.OpenScoreFileDialogInitialDirectory);
+                    this.RaisePropertyChanged(nameof(this.OpenScoreFileDialogInitialDirectory));
                     this.ConvertCommand.RaiseCanExecuteChanged();
                     break;
 
@@ -811,7 +811,7 @@ namespace ThScoreFileConverter.ViewModels
                     break;
 
                 case "TemplateFiles":
-                    this.OnPropertyChanged(() => this.OpenTemplateFilesDialogInitialDirectory);
+                    this.RaisePropertyChanged(nameof(this.OpenTemplateFilesDialogInitialDirectory));
                     this.DeleteTemplateFilesCommand.RaiseCanExecuteChanged();
                     this.DeleteAllTemplateFilesCommand.RaiseCanExecuteChanged();
                     this.ConvertCommand.RaiseCanExecuteChanged();
