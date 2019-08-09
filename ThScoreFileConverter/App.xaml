@@ -1,11 +1,12 @@
-﻿<Application x:Class="ThScoreFileConverter.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             xmlns:vm="clr-namespace:ThScoreFileConverter.ViewModels"
-             xmlns:v="clr-namespace:ThScoreFileConverter.Views"
-             Exit="App_Exit"
-             Startup="App_Startup">
+﻿<prism:PrismApplication x:Class="ThScoreFileConverter.App"
+                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                        xmlns:prism="http://prismlibrary.com/"
+                        xmlns:vm="clr-namespace:ThScoreFileConverter.ViewModels"
+                        xmlns:v="clr-namespace:ThScoreFileConverter.Views"
+                        Exit="App_Exit"
+                        Startup="App_Startup">
     <Application.Resources>
 
         <FontFamily x:Key="FontFamilyKey">Meiryo</FontFamily>
@@ -83,4 +84,4 @@
         </DataTemplate>
 
     </Application.Resources>
-</Application>
+</prism:PrismApplication>

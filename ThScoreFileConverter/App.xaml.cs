@@ -10,6 +10,8 @@ using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Windows.Media;
+using Prism.Ioc;
+using Prism.Unity;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Views;
 using Prop = ThScoreFileConverter.Properties;
@@ -19,7 +21,7 @@ namespace ThScoreFileConverter
     /// <summary>
     /// Interaction logic for App.xaml.
     /// </summary>
-    public partial class App : Application
+    public partial class App : PrismApplication
     {
         /// <summary>
         /// Updates the resources of this application.
@@ -43,6 +45,14 @@ namespace ThScoreFileConverter
         {
             this.UpdateResources(new FontFamily(fontFamilyName), fontSize);
         }
+
+        /// <inheritdoc/>
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+        }
+
+        /// <inheritdoc/>
+        protected override Window CreateShell() => this.Container.Resolve<MainWindow>();
 
         /// <summary>
         /// Handles the <c>Startup</c> event of this application.
@@ -68,9 +78,6 @@ namespace ThScoreFileConverter
             }
 
             this.UpdateResources(Settings.Instance.FontFamilyName, Settings.Instance.FontSize);
-
-            this.MainWindow = new MainWindow();
-            this.MainWindow.Show();
         }
 
         /// <summary>
