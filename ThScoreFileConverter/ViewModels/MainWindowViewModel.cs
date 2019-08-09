@@ -578,7 +578,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </returns>
         private bool CanDeleteAllTemplateFiles()
         {
-            return this.TemplateFiles.Count() > 0;
+            return this.TemplateFiles.Any();
         }
 
         /// <summary>
@@ -607,7 +607,7 @@ namespace ThScoreFileConverter.ViewModels
         private bool CanConvert()
         {
             return !string.IsNullOrEmpty(this.ScoreFile) &&
-                   (this.TemplateFiles.Count() > 0) &&
+                   this.TemplateFiles.Any() &&
                    !string.IsNullOrEmpty(this.OutputDirectory) &&
                    !(this.CanHandleBestShot && string.IsNullOrEmpty(this.BestShotDirectory)) &&
                    !(this.CanHandleBestShot && string.IsNullOrEmpty(this.ImageOutputDirectory));

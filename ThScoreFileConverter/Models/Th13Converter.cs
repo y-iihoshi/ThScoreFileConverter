@@ -669,7 +669,7 @@ namespace ThScoreFileConverter.Models
 
                     var rankings = parent.allScoreData.ClearData[chara].Rankings[level]
                         .Where(ranking => ranking.DateTime > 0);
-                    var stageProgress = (rankings.Count() > 0)
+                    var stageProgress = rankings.Any()
                         ? rankings.Max(ranking => ranking.StageProgress) : StageProgress.None;
 
                     if (stageProgress == StageProgress.Extra)
