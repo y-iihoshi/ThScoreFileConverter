@@ -270,6 +270,81 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Templates\jcanvas.min.js" />
+    <Content Include="Templates\jquery-1.11.1.min.js" />
+    <Content Include="Templates\style.css" />
+    <Content Include="Templates\th06score1.html" />
+    <Content Include="Templates\th06score2.html" />
+    <Content Include="Templates\th06score3.html" />
+    <Content Include="Templates\th075card.html" />
+    <Content Include="Templates\th075score1.html" />
+    <Content Include="Templates\th075score2.html" />
+    <Content Include="Templates\th07card.html" />
+    <Content Include="Templates\th07score1.html" />
+    <Content Include="Templates\th07score2.html" />
+    <Content Include="Templates\th07score3.html" />
+    <Content Include="Templates\th08card1.html" />
+    <Content Include="Templates\th08card2.html" />
+    <Content Include="Templates\th08score1.html" />
+    <Content Include="Templates\th08score2.html" />
+    <Content Include="Templates\th08score3.html" />
+    <Content Include="Templates\th095bestshot.html" />
+    <Content Include="Templates\th095score.html" />
+    <Content Include="Templates\th09score1.html" />
+    <Content Include="Templates\th09score2.html" />
+    <Content Include="Templates\th105card1.html" />
+    <Content Include="Templates\th105card2.html" />
+    <Content Include="Templates\th10card.html" />
+    <Content Include="Templates\th10score1.html" />
+    <Content Include="Templates\th10score2.html" />
+    <Content Include="Templates\th10score3.html" />
+    <Content Include="Templates\th11card.html" />
+    <Content Include="Templates\th11score1.html" />
+    <Content Include="Templates\th11score2.html" />
+    <Content Include="Templates\th11score3.html" />
+    <Content Include="Templates\th123card1.html" />
+    <Content Include="Templates\th123card2.html" />
+    <Content Include="Templates\th125bestshot1.html" />
+    <Content Include="Templates\th125bestshot2.html" />
+    <Content Include="Templates\th125score1.html" />
+    <Content Include="Templates\th125score2.html" />
+    <Content Include="Templates\th128card.html" />
+    <Content Include="Templates\th128score1.html" />
+    <Content Include="Templates\th128score2.html" />
+    <Content Include="Templates\th12card.html" />
+    <Content Include="Templates\th12score1.html" />
+    <Content Include="Templates\th12score2.html" />
+    <Content Include="Templates\th12score3.html" />
+    <Content Include="Templates\th135score.html" />
+    <Content Include="Templates\th13card1.html" />
+    <Content Include="Templates\th13card2.html" />
+    <Content Include="Templates\th13score1.html" />
+    <Content Include="Templates\th13score2.html" />
+    <Content Include="Templates\th13score3.html" />
+    <Content Include="Templates\th143score1.html" />
+    <Content Include="Templates\th143score2.html" />
+    <Content Include="Templates\th143screenshot.html" />
+    <Content Include="Templates\th145score.html" />
+    <Content Include="Templates\th14card1.html" />
+    <Content Include="Templates\th14card2.html" />
+    <Content Include="Templates\th14score1.html" />
+    <Content Include="Templates\th14score2.html" />
+    <Content Include="Templates\th14score3.html" />
+    <Content Include="Templates\th155score.html" />
+    <Content Include="Templates\th15card1.html" />
+    <Content Include="Templates\th15card2.html" />
+    <Content Include="Templates\th15score1.html" />
+    <Content Include="Templates\th15score2.html" />
+    <Content Include="Templates\th15score3.html" />
+    <Content Include="Templates\th165bestshot.html" />
+    <Content Include="Templates\th165score.html" />
+    <Content Include="Templates\th16card1.html" />
+    <Content Include="Templates\th16card2.html" />
+    <Content Include="Templates\th16score1.html" />
+    <Content Include="Templates\th16score2.html" />
+    <Content Include="Templates\th16score3.html" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

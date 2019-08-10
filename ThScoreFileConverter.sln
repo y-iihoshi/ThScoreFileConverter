@@ -21,83 +21,6 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ManualGenerator", "ManualGe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThScoreFileConverterTests", "ThScoreFileConverterTests\ThScoreFileConverterTests.csproj", "{48809CD9-31FA-46FA-867B-5E8BCC2DED45}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{1952F069-3DE7-49AF-A4E2-6AF80CDEC5ED}"
-	ProjectSection(SolutionItems) = preProject
-		templates\jcanvas.min.js = templates\jcanvas.min.js
-		templates\jquery-1.11.1.min.js = templates\jquery-1.11.1.min.js
-		templates\style.css = templates\style.css
-		templates\th06score1.html = templates\th06score1.html
-		templates\th06score2.html = templates\th06score2.html
-		templates\th06score3.html = templates\th06score3.html
-		templates\th075card.html = templates\th075card.html
-		templates\th075score1.html = templates\th075score1.html
-		templates\th075score2.html = templates\th075score2.html
-		templates\th07card.html = templates\th07card.html
-		templates\th07score1.html = templates\th07score1.html
-		templates\th07score2.html = templates\th07score2.html
-		templates\th07score3.html = templates\th07score3.html
-		templates\th08card1.html = templates\th08card1.html
-		templates\th08card2.html = templates\th08card2.html
-		templates\th08score1.html = templates\th08score1.html
-		templates\th08score2.html = templates\th08score2.html
-		templates\th08score3.html = templates\th08score3.html
-		templates\th095bestshot.html = templates\th095bestshot.html
-		templates\th095score.html = templates\th095score.html
-		templates\th09score1.html = templates\th09score1.html
-		templates\th09score2.html = templates\th09score2.html
-		templates\th105card1.html = templates\th105card1.html
-		templates\th105card2.html = templates\th105card2.html
-		templates\th10card.html = templates\th10card.html
-		templates\th10score1.html = templates\th10score1.html
-		templates\th10score2.html = templates\th10score2.html
-		templates\th10score3.html = templates\th10score3.html
-		templates\th11card.html = templates\th11card.html
-		templates\th11score1.html = templates\th11score1.html
-		templates\th11score2.html = templates\th11score2.html
-		templates\th11score3.html = templates\th11score3.html
-		templates\th123card1.html = templates\th123card1.html
-		templates\th123card2.html = templates\th123card2.html
-		templates\th125bestshot1.html = templates\th125bestshot1.html
-		templates\th125bestshot2.html = templates\th125bestshot2.html
-		templates\th125score1.html = templates\th125score1.html
-		templates\th125score2.html = templates\th125score2.html
-		templates\th128card.html = templates\th128card.html
-		templates\th128score1.html = templates\th128score1.html
-		templates\th128score2.html = templates\th128score2.html
-		templates\th12card.html = templates\th12card.html
-		templates\th12score1.html = templates\th12score1.html
-		templates\th12score2.html = templates\th12score2.html
-		templates\th12score3.html = templates\th12score3.html
-		templates\th135score.html = templates\th135score.html
-		templates\th13card1.html = templates\th13card1.html
-		templates\th13card2.html = templates\th13card2.html
-		templates\th13score1.html = templates\th13score1.html
-		templates\th13score2.html = templates\th13score2.html
-		templates\th13score3.html = templates\th13score3.html
-		templates\th143score1.html = templates\th143score1.html
-		templates\th143score2.html = templates\th143score2.html
-		templates\th143screenshot.html = templates\th143screenshot.html
-		templates\th145score.html = templates\th145score.html
-		templates\th14card1.html = templates\th14card1.html
-		templates\th14card2.html = templates\th14card2.html
-		templates\th14score1.html = templates\th14score1.html
-		templates\th14score2.html = templates\th14score2.html
-		templates\th14score3.html = templates\th14score3.html
-		templates\th155score.html = templates\th155score.html
-		templates\th15card1.html = templates\th15card1.html
-		templates\th15card2.html = templates\th15card2.html
-		templates\th15score1.html = templates\th15score1.html
-		templates\th15score2.html = templates\th15score2.html
-		templates\th15score3.html = templates\th15score3.html
-		templates\th165bestshot.html = templates\th165bestshot.html
-		templates\th165score.html = templates\th165score.html
-		templates\th16card1.html = templates\th16card1.html
-		templates\th16card2.html = templates\th16card2.html
-		templates\th16score1.html = templates\th16score1.html
-		templates\th16score2.html = templates\th16score2.html
-		templates\th16score3.html = templates\th16score3.html
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -118,9 +41,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{1952F069-3DE7-49AF-A4E2-6AF80CDEC5ED} = {8332C86B-BB85-41F4-A6C8-F72AF538ECB2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F9FF4036-8B11-4183-A109-25508475052A}
