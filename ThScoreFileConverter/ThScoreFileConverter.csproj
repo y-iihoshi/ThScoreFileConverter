@@ -274,9 +274,34 @@
     <Content Include="Templates\jcanvas.min.js" />
     <Content Include="Templates\jquery-1.11.1.min.js" />
     <Content Include="Templates\style.css" />
-    <Content Include="Templates\th06score1.html" />
-    <Content Include="Templates\th06score2.html" />
-    <Content Include="Templates\th06score3.html" />
+    <None Include="Templates\th06.ttinclude" />
+    <Content Include="Templates\th06score1.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th06score1.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th06score1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th06score1.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th06score2.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th06score2.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th06score2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th06score2.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th06score3.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th06score3.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th06score3.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th06score3.html</LastGenOutput>
+    </None>
     <Content Include="Templates\th075card.html" />
     <Content Include="Templates\th075score1.html" />
     <Content Include="Templates\th075score2.html" />
@@ -344,6 +369,9 @@
     <Content Include="Templates\th16score1.html" />
     <Content Include="Templates\th16score2.html" />
     <Content Include="Templates\th16score3.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

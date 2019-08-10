@@ -29,6 +29,7 @@ after_build:
       xcopy ThScoreFileConverter\bin\%CONFIGURATION% publish /e /i /q
       xcopy ManualGenerator\_build\html publish\doc /e /i /q
       xcopy ThScoreFileConverter\Templates publish\template /e /i /q
+      del publish\template\*.tt* /q
 
 before_test:
   - ps: .\PrintTestEnvironment.ps1

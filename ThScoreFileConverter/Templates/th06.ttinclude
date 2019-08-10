@@ -1,0 +1,32 @@
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#
+    var levels = new Dictionary<string, string>
+    {
+        { "E", "Easy" },
+        { "N", "Normal" },
+        { "H", "Hard" },
+        { "L", "Lunatic" },
+        { "X", "Extra" },
+    };
+
+    var characters = new Dictionary<string, string>
+    {
+        { "RA", "博麗 霊夢（霊）" },
+        { "RB", "博麗 霊夢（夢）" },
+        { "MA", "霧雨 魔理沙（魔）" },
+        { "MB", "霧雨 魔理沙（恋）" },
+    };
+
+    var stages = new Dictionary<string, string>
+    {
+        { "1", "Stage 1" },
+        { "2", "Stage 2" },
+        { "3", "Stage 3" },
+        { "4", "Stage 4" },
+        { "5", "Stage 5" },
+        { "6", "Stage 6" },
+        { "X", "Extra" },
+    };
+#>
