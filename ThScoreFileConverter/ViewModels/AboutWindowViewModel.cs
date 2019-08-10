@@ -5,6 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
@@ -15,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Services.Dialogs;
 using Prop = ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.ViewModels
@@ -22,7 +24,7 @@ namespace ThScoreFileConverter.ViewModels
     /// <summary>
     /// The view model class for <see cref="ThScoreFileConverter.Views.AboutWindow"/>.
     /// </summary>
-    internal class AboutWindowViewModel : BindableBase
+    internal class AboutWindowViewModel : BindableBase, IDialogAware
     {
         /// <summary>
         /// The command which opens the specified URI.
@@ -50,6 +52,11 @@ namespace ThScoreFileConverter.ViewModels
             this.Copyright = (attrs[0] is AssemblyCopyrightAttribute attr) ? attr.Copyright : string.Empty;
             this.Uri = "https://www.colorless-sight.jp/thsfc/"; // FIXME
         }
+
+        /// <inheritdoc/>
+#pragma warning disable 0067
+        public event Action<IDialogResult> RequestClose;
+#pragma warning restore 0067
 
         /// <summary>
         /// Gets a title of the About window.
@@ -98,6 +105,19 @@ namespace ThScoreFileConverter.ViewModels
                 return this.openUriCommand ??
                     (this.openUriCommand = new DelegateCommand<object>(this.OpenUri));
             }
+        }
+
+        /// <inheritdoc/>
+        public bool CanCloseDialog() => true;
+
+        /// <inheritdoc/>
+        public void OnDialogClosed()
+        {
+        }
+
+        /// <inheritdoc/>
+        public void OnDialogOpened(IDialogParameters parameters)
+        {
         }
 
         /// <summary>

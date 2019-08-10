@@ -18,6 +18,7 @@ using System.Windows;
 using System.Windows.Input;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Services.Dialogs;
 using ThScoreFileConverter.Actions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Properties;
@@ -77,11 +78,6 @@ namespace ThScoreFileConverter.ViewModels
         private string log;
 
         /// <summary>
-        /// A view model for <see cref="Views.AboutWindow"/>.
-        /// </summary>
-        private BindableBase aboutWindowViewModel;
-
-        /// <summary>
         /// A view model for <see cref="Views.SettingWindow"/>.
         /// </summary>
         private BindableBase settingWindowViewModel;
@@ -89,8 +85,11 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
         /// </summary>
-        public MainWindowViewModel()
+        /// <param name="dialogService">An <see cref="IDialogService"/>.</param>
+        public MainWindowViewModel(IDialogService dialogService)
         {
+            this.DialogService = dialogService;
+
             this.converter = null;
 
             this.Title = Assembly.GetExecutingAssembly().GetName().Name;
@@ -386,15 +385,6 @@ namespace ThScoreFileConverter.ViewModels
         }
 
         /// <summary>
-        /// Gets a view model for <see cref="Views.AboutWindow"/>.
-        /// </summary>
-        public BindableBase AboutWindowViewModel
-        {
-            get { return this.aboutWindowViewModel; }
-            private set { this.SetProperty(ref this.aboutWindowViewModel, value); }
-        }
-
-        /// <summary>
         /// Gets a view model for <see cref="Views.SettingWindow"/>.
         /// </summary>
         public BindableBase SettingWindowViewModel
@@ -497,6 +487,11 @@ namespace ThScoreFileConverter.ViewModels
         {
             get { return Settings.Instance.Dictionary[Settings.Instance.LastTitle]; }
         }
+
+        /// <summary>
+        /// Gets the <see cref="IDialogService"/>.
+        /// </summary>
+        private IDialogService DialogService { get; }
 
         /// <summary>
         /// Overrides the mouse cursor for the entire application.
@@ -751,9 +746,7 @@ namespace ThScoreFileConverter.ViewModels
         /// Invoked when opening an about window is requested.
         /// </summary>
         private void OpenAboutWindow()
-        {
-            this.AboutWindowViewModel = new AboutWindowViewModel();
-        }
+            => this.DialogService.ShowDialog(nameof(AboutWindowViewModel), new DialogParameters(), result => { });
 
         /// <summary>
         /// Invoked when opening a setting window is requested.

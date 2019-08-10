@@ -13,6 +13,7 @@ using System.Windows.Media;
 using Prism.Ioc;
 using Prism.Unity;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.ViewModels;
 using ThScoreFileConverter.Views;
 using Prop = ThScoreFileConverter.Properties;
 
@@ -49,6 +50,7 @@ namespace ThScoreFileConverter
         /// <inheritdoc/>
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterDialog<AboutWindow>(nameof(AboutWindowViewModel));
         }
 
         /// <inheritdoc/>

@@ -16,17 +16,6 @@
         UseLayoutRounding="True">
 
     <i:Interaction.Behaviors>
-        <mdb:DialogBehavior Content="{Binding AboutWindowViewModel}"
-                            Owner="{Binding MainWindow, Source={x:Static Application.Current}}"
-                            WindowStartupLocation="CenterOwner">
-            <mdb:DialogBehavior.Style>
-                <Style BasedOn="{StaticResource DialogStyleKey}"
-                       TargetType="{x:Type Window}">
-                    <Setter Property="Title"
-                            Value="{Binding Content.Title, RelativeSource={x:Static RelativeSource.Self}}"/>
-                </Style>
-            </mdb:DialogBehavior.Style>
-        </mdb:DialogBehavior>
         <mdb:DialogBehavior Content="{Binding SettingWindowViewModel}"
                             Owner="{Binding MainWindow, Source={x:Static Application.Current}}"
                             WindowStartupLocation="CenterOwner">

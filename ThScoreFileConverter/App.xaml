@@ -76,9 +76,6 @@
                     Value="5"/>
         </Style>
 
-        <DataTemplate DataType="{x:Type vm:AboutWindowViewModel}">
-            <v:AboutWindow/>
-        </DataTemplate>
         <DataTemplate DataType="{x:Type vm:SettingWindowViewModel}">
             <v:SettingWindow/>
         </DataTemplate>
