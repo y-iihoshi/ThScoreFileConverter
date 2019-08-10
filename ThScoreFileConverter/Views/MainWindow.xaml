@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:prism="http://prismlibrary.com/"
-        xmlns:mdb="clr-namespace:MvvmDialogBehavior;assembly=MvvmDialogBehavior"
         xmlns:a="clr-namespace:ThScoreFileConverter.Actions"
         xmlns:b="clr-namespace:ThScoreFileConverter.Behaviors"
         xmlns:prop="clr-namespace:ThScoreFileConverter.Properties"
@@ -14,20 +13,6 @@
         Style="{StaticResource WindowStyleKey}"
         Title="{Binding Title}"
         UseLayoutRounding="True">
-
-    <i:Interaction.Behaviors>
-        <mdb:DialogBehavior Content="{Binding SettingWindowViewModel}"
-                            Owner="{Binding MainWindow, Source={x:Static Application.Current}}"
-                            WindowStartupLocation="CenterOwner">
-            <mdb:DialogBehavior.Style>
-                <Style BasedOn="{StaticResource DialogStyleKey}"
-                       TargetType="{x:Type Window}">
-                    <Setter Property="Title"
-                            Value="{Binding Content.Title, RelativeSource={x:Static RelativeSource.Self}}"/>
-                </Style>
-            </mdb:DialogBehavior.Style>
-        </mdb:DialogBehavior>
-    </i:Interaction.Behaviors>
 
     <StackPanel Margin="10"
                 Style="{StaticResource VerticalStackPanelStyle}">

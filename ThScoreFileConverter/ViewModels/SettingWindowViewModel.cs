@@ -13,6 +13,7 @@ using System.Linq;
 using System.Windows;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Services.Dialogs;
 using ThScoreFileConverter.Actions;
 using ThScoreFileConverter.Models;
 using SysDraw = System.Drawing;
@@ -22,7 +23,7 @@ namespace ThScoreFileConverter.ViewModels
     /// <summary>
     /// The view model class for <see cref="ThScoreFileConverter.Views.SettingWindow"/>.
     /// </summary>
-    internal class SettingWindowViewModel : BindableBase
+    internal class SettingWindowViewModel : BindableBase, IDialogAware
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SettingWindowViewModel"/> class.
@@ -41,6 +42,11 @@ namespace ThScoreFileConverter.ViewModels
             this.FontDialogCancelCommand = new DelegateCommand<FontDialogActionResult>(this.ApplyFont);
             this.ResetFontCommand = new DelegateCommand(this.ResetFont);
         }
+
+        /// <inheritdoc/>
+#pragma warning disable 0067
+        public event Action<IDialogResult> RequestClose;
+#pragma warning restore 0067
 
         #region Properties to bind a view
 
@@ -161,6 +167,19 @@ namespace ThScoreFileConverter.ViewModels
         #endregion
 
         #endregion
+
+        /// <inheritdoc/>
+        public bool CanCloseDialog() => true;
+
+        /// <inheritdoc/>
+        public void OnDialogClosed()
+        {
+        }
+
+        /// <inheritdoc/>
+        public void OnDialogOpened(IDialogParameters parameters)
+        {
+        }
 
         #region Methods for command implementation
 

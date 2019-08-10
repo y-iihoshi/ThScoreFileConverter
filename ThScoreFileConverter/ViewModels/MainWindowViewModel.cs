@@ -78,11 +78,6 @@ namespace ThScoreFileConverter.ViewModels
         private string log;
 
         /// <summary>
-        /// A view model for <see cref="Views.SettingWindow"/>.
-        /// </summary>
-        private BindableBase settingWindowViewModel;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
         /// </summary>
         /// <param name="dialogService">An <see cref="IDialogService"/>.</param>
@@ -382,15 +377,6 @@ namespace ThScoreFileConverter.ViewModels
         {
             get { return this.log; }
             private set { this.SetProperty(ref this.log, value); }
-        }
-
-        /// <summary>
-        /// Gets a view model for <see cref="Views.SettingWindow"/>.
-        /// </summary>
-        public BindableBase SettingWindowViewModel
-        {
-            get { return this.settingWindowViewModel; }
-            private set { this.SetProperty(ref this.settingWindowViewModel, value); }
         }
 
         #region Commands
@@ -752,9 +738,7 @@ namespace ThScoreFileConverter.ViewModels
         /// Invoked when opening a setting window is requested.
         /// </summary>
         private void OpenSettingWindow()
-        {
-            this.SettingWindowViewModel = new SettingWindowViewModel();
-        }
+            => this.DialogService.ShowDialog(nameof(SettingWindowViewModel), new DialogParameters(), result => { });
 
         #endregion
 

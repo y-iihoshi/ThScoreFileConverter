@@ -15,6 +15,13 @@
                     Key="Escape"/>
     </UserControl.InputBindings>
 
+    <prism:Dialog.WindowStyle>
+        <Style BasedOn="{StaticResource DialogStyleKey}"
+               TargetType="{x:Type Window}">
+            <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterOwner"/>
+        </Style>
+    </prism:Dialog.WindowStyle>
+
     <StackPanel Margin="10"
                 Style="{StaticResource VerticalStackPanelStyle}">
         <GroupBox Header="フォント設定">
