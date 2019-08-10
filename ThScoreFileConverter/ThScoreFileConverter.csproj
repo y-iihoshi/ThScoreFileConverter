@@ -223,12 +223,6 @@
     </CodeAnalysisDictionary>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MvvmDialogBehavior\MvvmDialogBehavior.csproj">
-      <Project>{2439633e-f917-4dbf-8fc1-1832b5c50ce4}</Project>
-      <Name>MvvmDialogBehavior</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.5 %28x86 および x64%29</ProductName>

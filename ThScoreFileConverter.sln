@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2026
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29201.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8332C86B-BB85-41F4-A6C8-F72AF538ECB2}"
 	ProjectSection(SolutionItems) = preProject
@@ -16,8 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThScoreFileConverter", "ThScoreFileConverter\ThScoreFileConverter.csproj", "{D6E125E5-92D3-48D3-B253-81B6405E9ED6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvvmDialogBehavior", "MvvmDialogBehavior\MvvmDialogBehavior.csproj", "{2439633E-F917-4DBF-8FC1-1832B5C50CE4}"
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ManualGenerator", "ManualGenerator\ManualGenerator.pyproj", "{3FDE820F-B99D-4936-AC8E-11A36697F9D1}"
 EndProject
@@ -110,10 +108,6 @@ Global
 		{D6E125E5-92D3-48D3-B253-81B6405E9ED6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6E125E5-92D3-48D3-B253-81B6405E9ED6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6E125E5-92D3-48D3-B253-81B6405E9ED6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2439633E-F917-4DBF-8FC1-1832B5C50CE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2439633E-F917-4DBF-8FC1-1832B5C50CE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2439633E-F917-4DBF-8FC1-1832B5C50CE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2439633E-F917-4DBF-8FC1-1832B5C50CE4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3FDE820F-B99D-4936-AC8E-11A36697F9D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3FDE820F-B99D-4936-AC8E-11A36697F9D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FDE820F-B99D-4936-AC8E-11A36697F9D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
