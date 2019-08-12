@@ -1,0 +1,36 @@
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#
+    var levelKeyTotal = "T";
+
+    var levels = new Dictionary<string, string>
+    {
+        { "E", "Easy" },
+        { "N", "Normal" },
+        { "H", "Hard" },
+        { "L", "Lunatic" },
+    };
+
+    var levelsWithTotal = levels.Concat(new Dictionary<string, string>
+    {
+        { levelKeyTotal, "Total" },
+    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+
+    var levelKeyOrderTotalFirst = new[] { levelKeyTotal }.Concat(levels.Keys);
+    var levelKeyOrderTotalLast = levelsWithTotal.Keys;
+
+    var characters = new Dictionary<string, (string Id, string ShortName, string LongName)>
+    {
+        { "RM", ("Reimu", "霊夢", "博麗 霊夢") },
+        { "MR", ("Marisa", "魔理沙", "霧雨 魔理沙") },
+        { "SK", ("Sakuya", "咲夜", "十六夜 咲夜") },
+        { "AL", ("Alice", "アリス", "アリス・マーガトロイド") },
+        { "PC", ("Patchouli", "パチュリー", "パチュリー・ノーレッジ") },
+        { "YM", ("Youmu", "妖夢", "魂魄 妖夢") },
+        { "RL", ("Remilia", "レミリア", "レミリア・スカーレット") },
+        { "YU", ("Yuyuko", "幽々子", "西行寺 幽々子") },
+        { "YK", ("Yukari", "紫", "八雲 紫") },
+        { "SU", ("Suika", "萃香", "伊吹 萃香") },
+    };
+#>

@@ -302,9 +302,34 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th06score3.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th075card.html" />
-    <Content Include="Templates\th075score1.html" />
-    <Content Include="Templates\th075score2.html" />
+    <None Include="Templates\th075.ttinclude" />
+    <Content Include="Templates\th075card.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th075card.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th075card.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th075card.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th075score1.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th075score1.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th075score1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th075score1.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th075score2.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th075score2.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th075score2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th075score2.html</LastGenOutput>
+    </None>
     <None Include="Templates\th07.ttinclude" />
     <Content Include="Templates\th07card.html">
       <AutoGen>True</AutoGen>
