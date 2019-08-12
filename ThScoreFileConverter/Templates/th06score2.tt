@@ -70,7 +70,7 @@
 <#
             foreach (var rank in Enumerable.Range(1, 10))
             {
-                var rankKey = (rank == 10) ? 0 : rank;
+                var rankKey = rank % 10;
 #>
       <tr>
        <td class="number"><#= rank #></td>

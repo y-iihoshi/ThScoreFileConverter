@@ -19,6 +19,8 @@
         { "MB", "霧雨 魔理沙（恋）" },
     };
 
+    var stageKeyTotal = "0";
+
     var stages = new Dictionary<string, string>
     {
         { "1", "Stage 1" },
@@ -29,4 +31,12 @@
         { "6", "Stage 6" },
         { "X", "Extra" },
     };
+
+    var stagesWithTotal = stages.Concat(new Dictionary<string, string>
+    {
+        { stageKeyTotal, "Total" },
+    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+
+    var stageKeyOrderTotalFirst = new[] { stageKeyTotal }.Concat(stages.Keys);
+    var stageKeyOrderTotalLast = stagesWithTotal.Keys;
 #>

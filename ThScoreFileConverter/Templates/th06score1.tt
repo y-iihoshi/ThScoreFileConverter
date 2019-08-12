@@ -2,7 +2,9 @@
 <#@ include file="th06.ttinclude" once="true" #>
 <#@ output extension=".html" encoding="utf-8" #>
 <#
-    var cards = new Dictionary<string, int>
+    var numCards = 64;
+
+    var cardsPerStage = new Dictionary<string, int>
     {
         { "1", 3 },
         { "2", 4 },
@@ -118,24 +120,32 @@
      </thead>
      <tbody>
 <#
-    foreach (var number in Enumerable.Range(1, 64))
+    foreach (var card in Enumerable.Range(1, numCards))
     {
-        var str = number.ToString("D2");
+        var cardKey = card.ToString("D2");
 #>
       <tr>
-       <td class="number">No.<#= str #></td>
-       <td class="card">%T06CARD<#= str #>N<br />(%T06CARD<#= str #>R)</td>
-       <td class="rate">%T06C<#= str #>1 / %T06C<#= str #>2</td>
+       <td class="number">No.<#= cardKey #></td>
+       <td class="card">%T06CARD<#= cardKey #>N<br />(%T06CARD<#= cardKey #>R)</td>
+       <td class="rate">%T06C<#= cardKey #>1 / %T06C<#= cardKey #>2</td>
       </tr>
 <#
     }
 #>
      </tbody>
      <tfoot>
+<#
+    {
+        var cardStrTotal = "Total";
+        var cardKeyTotal = 0.ToString("D2");
+#>
       <tr>
-       <td colspan="2">Total</td>
-       <td class="rate">%T06C001 / %T06C002</td>
+       <td colspan="2"><#= cardStrTotal #></td>
+       <td class="rate">%T06C<#= cardKeyTotal #>1 / %T06C<#= cardKeyTotal #>2</td>
       </tr>
+<#
+    }
+#>
      </tfoot>
     </table>
 
@@ -154,14 +164,22 @@
 #>
       <tr>
        <td class="stage"><#= stage.Value #></td>
-       <td class="rate">%T06CRG<#= stage.Key #>1 / %T06CRG<#= stage.Key #>2 / <#= cards[stage.Key] #></td>
+       <td class="rate"><#
+       #>%T06CRG<#= stage.Key #>1 / <#
+       #>%T06CRG<#= stage.Key #>2 / <#
+       #><#= cardsPerStage[stage.Key] #><#
+       #></td>
       </tr>
 <#
     }
 #>
       <tr>
-       <td>Total</td>
-       <td class="rate">%T06CRG01 / %T06CRG02 / 64</td>
+       <td><#= stagesWithTotal[stageKeyTotal] #></td>
+       <td class="rate"><#
+       #>%T06CRG<#= stageKeyTotal #>1 / <#
+       #>%T06CRG<#= stageKeyTotal #>2 / <#
+       #><#= numCards #><#
+       #></td>
       </tr>
      </tbody>
     </table>

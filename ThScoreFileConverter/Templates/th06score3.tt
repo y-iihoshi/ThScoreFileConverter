@@ -2,8 +2,8 @@
 <#@ include file="th06.ttinclude" once="true" #>
 <#@ output extension=".html" encoding="utf-8" #>
 <#
-    var levelsExceptExtra = levels.Where(pair => pair.Key != "X");
-    var stagesExceptExtra = stages.Where(pair => pair.Key != "X");
+    var levelsPractice = levels.Where(pair => pair.Key != "X");
+    var stagesPractice = stages.Where(pair => pair.Key != "X");
 #>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
@@ -34,7 +34,7 @@
     </ul>
     <ul>
 <#
-    foreach (var level in levelsExceptExtra)
+    foreach (var level in levelsPractice)
     {
 #>
      <li><a href="#<#= level.Value #>"><#= level.Value #></a></li>
@@ -48,7 +48,7 @@
   <main>
 
 <#
-    foreach (var level in levelsExceptExtra)
+    foreach (var level in levelsPractice)
     {
 #>
    <section>
@@ -68,7 +68,7 @@
      </thead>
      <tbody>
 <#
-            foreach (var stage in stagesExceptExtra)
+            foreach (var stage in stagesPractice)
             {
                 if ((level.Key == "E") && (stage.Key == "6"))
                     continue;
@@ -89,7 +89,7 @@
    </section>
 
 <#
-        if (level.Key != levelsExceptExtra.Last().Key)
+        if (level.Key != levelsPractice.Last().Key)
         {
 #>
    <hr />
