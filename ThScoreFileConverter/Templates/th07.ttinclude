@@ -1,0 +1,66 @@
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#
+    var levelKeyTotal = "T";
+
+    var levels = new Dictionary<string, string>
+    {
+        { "E", "Easy" },
+        { "N", "Normal" },
+        { "H", "Hard" },
+        { "L", "Lunatic" },
+        { "X", "Extra" },
+        { "P", "Phantasm" },
+    };
+
+    var levelsWithTotal = levels.Concat(new Dictionary<string, string>
+    {
+        { levelKeyTotal, "Total" },
+    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+
+    var levelKeyOrderTotalFirst = new[] { levelKeyTotal }.Concat(levels.Keys);
+    var levelKeyOrderTotalLast = levelsWithTotal.Keys;
+
+    var charaKeyTotal = "TL";
+
+    var characters = new Dictionary<string, string>
+    {
+        { "RA", "博麗 霊夢（霊）" },
+        { "RB", "博麗 霊夢（夢）" },
+        { "MA", "霧雨 魔理沙（魔）" },
+        { "MB", "霧雨 魔理沙（恋）" },
+        { "SA", "十六夜 咲夜（幻）" },
+        { "SB", "十六夜 咲夜（時）" },
+    };
+
+    var charactersWithTotal = characters.Concat(new Dictionary<string, string>
+    {
+        { charaKeyTotal, "全主人公合計" },
+    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+
+    var charaKeyOrderTotalFirst = new[] { charaKeyTotal }.Concat(characters.Keys);
+    var charaKeyOrderTotalLast = charactersWithTotal.Keys;
+
+    var stageKeyTotal = "0";
+
+    var stages = new Dictionary<string, string>
+    {
+        { "1", "Stage 1" },
+        { "2", "Stage 2" },
+        { "3", "Stage 3" },
+        { "4", "Stage 4" },
+        { "5", "Stage 5" },
+        { "6", "Stage 6" },
+        { "X", "Extra" },
+        { "P", "Phantasm" },
+    };
+
+    var stagesWithTotal = stages.Concat(new Dictionary<string, string>
+    {
+        { stageKeyTotal, "Total" },
+    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+
+    var stageKeyOrderTotalFirst = new[] { stageKeyTotal }.Concat(stages.Keys);
+    var stageKeyOrderTotalLast = stagesWithTotal.Keys;
+#>
