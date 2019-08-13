@@ -1,0 +1,110 @@
+<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ include file="th10.ttinclude" once="true" #>
+<#@ output extension=".html" encoding="utf-8" #>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+
+ <head>
+  <meta charset="UTF-8" />
+  <title>東方風神録 スコアデータ</title>
+  <link rel="stylesheet" href="style.css" />
+<style>
+/* <![CDATA[ */
+    td.score { min-width: 70px; }
+    td.stage { min-width: 70px; }
+    table.practice { float: left; }
+/* ]]> */
+</style>
+ </head>
+
+ <body>
+
+  <header>
+   <h1>東方風神録 スコアデータ</h1>
+   <hr />
+   <nav>
+    <ul>
+     <li><a href="th10score1.html">スコアデータ全般</a></li>
+     <li><a href="th10score2.html">個別ランキング</a></li>
+     <li>プラクティス</li>
+     <li><a href="th10card.html">御札戦歴</a></li>
+    </ul>
+    <ul>
+<#
+    foreach (var level in levelsPractice)
+    {
+#>
+     <li><a href="#<#= level.Value #>"><#= level.Value #></a></li>
+<#
+    }
+#>
+    </ul>
+   </nav>
+  </header>
+
+  <main>
+
+<#
+    foreach (var level in levelsPractice)
+    {
+#>
+   <section>
+    <h2 id="<#= level.Value #>"><#= level.Value #></h2>
+
+<#
+        foreach (var chara in characters)
+        {
+#>
+    <table class="practice">
+     <caption><#= chara.Value.Name #><#= chara.Value.Equip #></caption>
+     <thead>
+      <tr>
+       <th class="stage">Stage</th>
+       <th class="score">Score</th>
+      </tr>
+     </thead>
+     <tbody>
+<#
+            foreach (var stage in stagesPractice)
+            {
+#>
+      <tr>
+       <td class="stage"><#= stage.Value #></td>
+       <td class="score">%T10PRAC<#= level.Key #><#= chara.Key #><#= stage.Key #></td>
+      </tr>
+<#
+            }
+#>
+     </tbody>
+    </table>
+
+<#
+        }
+#>
+   </section>
+
+<#
+        if (level.Key != levelsPractice.Last().Key)
+        {
+#>
+   <hr />
+
+<#
+        }
+    }
+#>
+  </main>
+
+  <footer>
+   <p>
+    Data output by <a href="https://www.colorless-sight.jp/thsfc/">ThScoreFileConverter</a>.
+<script>
+// <![CDATA[
+    document.write("Last updated: ", document.lastModified, ".");
+// ]]>
+</script>
+   </p>
+  </footer>
+
+ </body>
+</html>
