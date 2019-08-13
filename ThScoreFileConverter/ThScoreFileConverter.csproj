@@ -367,11 +367,52 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th07score3.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th08card1.html" />
-    <Content Include="Templates\th08card2.html" />
-    <Content Include="Templates\th08score1.html" />
-    <Content Include="Templates\th08score2.html" />
-    <Content Include="Templates\th08score3.html" />
+    <None Include="Templates\th08.ttinclude" />
+    <Content Include="Templates\th08card1.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th08card1.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th08card1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th08card1.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th08card2.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th08card2.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th08card2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th08card2.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th08score1.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th08score1.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th08score1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th08score1.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th08score2.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th08score2.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th08score2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th08score2.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th08score3.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th08score3.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th08score3.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th08score3.html</LastGenOutput>
+    </None>
     <Content Include="Templates\th095bestshot.html" />
     <Content Include="Templates\th095score.html" />
     <Content Include="Templates\th09score1.html" />
