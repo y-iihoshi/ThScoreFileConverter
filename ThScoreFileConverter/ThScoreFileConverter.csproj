@@ -451,8 +451,25 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th09score2.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th105card1.html" />
-    <Content Include="Templates\th105card2.html" />
+    <None Include="Templates\th105.ttinclude" />
+    <Content Include="Templates\th105card1.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th105card1.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th105card1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th105card1.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th105card2.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th105card2.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th105card2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th105card2.html</LastGenOutput>
+    </None>
     <None Include="Templates\th10.ttinclude" />
     <Content Include="Templates\th10card.html">
       <AutoGen>True</AutoGen>

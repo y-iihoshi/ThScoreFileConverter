@@ -1,0 +1,129 @@
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#
+    var levelKeyTotal = "T";
+
+    var levels = new Dictionary<string, string>
+    {
+        { "E", "Easy" },
+        { "N", "Normal" },
+        { "H", "Hard" },
+        { "L", "Lunatic" },
+    };
+
+    var levelsWithTotal = levels.Concat(new Dictionary<string, string>
+    {
+        { levelKeyTotal, "Total" },
+    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+
+    var levelKeyOrderTotalFirst = new[] { levelKeyTotal }.Concat(levels.Keys);
+    var levelKeyOrderTotalLast = levelsWithTotal.Keys;
+
+    var characters = new Dictionary<string, (string Id, string ShortName, string LongName)>
+    {
+        { "RM", ("Reimu", "霊夢", "博麗 霊夢") },
+        { "MR", ("Marisa", "魔理沙", "霧雨 魔理沙") },
+        { "SK", ("Sakuya", "咲夜", "十六夜 咲夜") },
+        { "AL", ("Alice", "アリス", "アリス・マーガトロイド") },
+        { "PC", ("Patchouli", "パチュリー", "パチュリー・ノーレッジ") },
+        { "YM", ("Youmu", "妖夢", "魂魄 妖夢") },
+        { "RL", ("Remilia", "レミリア", "レミリア・スカーレット") },
+        { "YU", ("Yuyuko", "幽々子", "西行寺 幽々子") },
+        { "YK", ("Yukari", "紫", "八雲 紫") },
+        { "SU", ("Suika", "萃香", "伊吹 萃香") },
+        { "RS", ("Reisen", "鈴仙", "鈴仙・優曇華院・イナバ") },
+        { "AY", ("Aya", "文", "射命丸 文") },
+        { "KM", ("Komachi", "小町", "小野塚 小町") },
+        { "IK", ("Iku", "衣玖", "永江 衣玖") },
+        { "TN", ("Tenshi", "天子", "比那名居 天子") },
+    };
+
+    var cardsPerLevel = new Dictionary<string, int>
+    {
+        { "E", 23 },
+        { "N", 24 },
+        { "H", 25 },
+        { "L", 25 },
+        { "X", 13 },
+    };
+
+    var cardsPerChara = new Dictionary<string, int>
+    {
+        { "RM", 76 },
+        { "MR", 76 },
+        { "SK", 76 },
+        { "AL", 76 },
+        { "PC", 76 },
+        { "YM", 76 },
+        { "RL", 96 },
+        { "YU", 76 },
+        { "YK", 76 },
+        { "SU", 52 },
+        { "RS", 60 },
+        { "AY", 60 },
+        { "KM", 76 },
+        { "IK", 76 },
+        { "TN", 100 },
+    };
+
+    var cardTypes = new Dictionary<string, string>
+    {
+        { "Y", "System" },
+        { "K", "Skill" },
+        { "P", "Spell" },
+    };
+
+    var cardsPerCharaAndType = new Dictionary<(string Chara, string CardType), int>
+    {
+        { ("RM", "Y"), 6 },
+        { ("RM", "K"), 11 },
+        { ("RM", "P"), 8 },
+        { ("MR", "Y"), 6 },
+        { ("MR", "K"), 11 },
+        { ("MR", "P"), 10 },
+        { ("SK", "Y"), 6 },
+        { ("SK", "K"), 8 },
+        { ("SK", "P"), 10 },
+        { ("AL", "Y"), 6 },
+        { ("AL", "K"), 10 },
+        { ("AL", "P"), 10 },
+        { ("PC", "Y"), 6 },
+        { ("PC", "K"), 10 },
+        { ("PC", "P"), 9 },
+        { ("YM", "Y"), 6 },
+        { ("YM", "K"), 10 },
+        { ("YM", "P"), 8 },
+        { ("RL", "Y"), 6 },
+        { ("RL", "K"), 9 },
+        { ("RL", "P"), 8 },
+        { ("YU", "Y"), 6 },
+        { ("YU", "K"), 9 },
+        { ("YU", "P"), 9 },
+        { ("YK", "Y"), 6 },
+        { ("YK", "K"), 9 },
+        { ("YK", "P"), 9 },
+        { ("SU", "Y"), 6 },
+        { ("SU", "K"), 9 },
+        { ("SU", "P"), 9 },
+        { ("RS", "Y"), 6 },
+        { ("RS", "K"), 11 },
+        { ("RS", "P"), 8 },
+        { ("AY", "Y"), 6 },
+        { ("AY", "K"), 10 },
+        { ("AY", "P"), 8 },
+        { ("KM", "Y"), 6 },
+        { ("KM", "K"), 10 },
+        { ("KM", "P"), 8 },
+        { ("IK", "Y"), 6 },
+        { ("IK", "K"), 9 },
+        { ("IK", "P"), 8 },
+        { ("TN", "Y"), 6 },
+        { ("TN", "K"), 8 },
+        { ("TN", "P"), 8 },
+    };
+
+    var maxNumCardsPerType = cardTypes.ToDictionary(
+        pair => pair.Key,
+        pair => cardsPerCharaAndType.Where(p => p.Key.CardType == pair.Key).Max(p => p.Value));
+#>
