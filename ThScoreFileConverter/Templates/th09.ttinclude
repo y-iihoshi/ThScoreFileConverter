@@ -1,0 +1,41 @@
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#
+    var levels = new Dictionary<string, string>
+    {
+        { "E", "Easy" },
+        { "N", "Normal" },
+        { "H", "Hard" },
+        { "L", "Lunatic" },
+        { "X", "Extra" },
+    };
+
+    var characters = new Dictionary<string, (string Id, string ShortName, string LongName)>
+    {
+        { "RM", ("Reimu", "霊夢", "博麗 霊夢") },
+        { "MR", ("Marisa", "魔理沙", "霧雨 魔理沙") },
+        { "SK", ("Sakuya", "咲夜", "十六夜 咲夜") },
+        { "YM", ("Youmu", "妖夢", "魂魄 妖夢") },
+        { "RS", ("Reisen", "鈴仙", "鈴仙・優曇華院・イナバ") },
+        { "CI", ("Cirno", "チルノ", "チルノ") },
+        { "LY", ("Lyrica", "リリカ", "リリカ・プリズムリバー") },
+        { "MY", ("Mystia", "ミスティア", "ミスティア・ローレライ") },
+        { "TW", ("Tewi", "てゐ", "因幡 てゐ") },
+        { "AY", ("Aya", "文", "射命丸 文") },
+        { "MD", ("Medicine", "メディスン", "メディスン・メランコリー") },
+        { "YU", ("Yuka", "幽香", "風見 幽香") },
+        { "KM", ("Komachi", "小町", "小野塚 小町") },
+        { "SI", ("Sikieiki", "四季映姫", "四季映姫・ヤマザナドゥ") },
+    };
+
+    var rankOrdinals = new[]
+    {
+        "0th",  // unused
+        "1st",
+        "2nd",
+        "3rd",
+        "4th",
+        "5th",
+    };
+#>
