@@ -22,6 +22,8 @@
     var levelKeyOrderTotalFirst = new[] { levelKeyTotal }.Concat(levels.Keys);
     var levelKeyOrderTotalLast = levelsWithTotal.Keys;
 
+    var levelsPractice = levels.Where(pair => (pair.Key != "X") && (pair.Key != "P"));
+
     var charaKeyTotal = "TL";
 
     var characters = new Dictionary<string, string>
@@ -63,4 +65,30 @@
 
     var stageKeyOrderTotalFirst = new[] { stageKeyTotal }.Concat(stages.Keys);
     var stageKeyOrderTotalLast = stagesWithTotal.Keys;
+
+    var stagesPractice = stages.Where(pair => (pair.Key != "X") && (pair.Key != "P"));
+
+    var cardsPerLevel = new Dictionary<string, int>
+    {
+        { "E", 28 },
+        { "N", 28 },
+        { "H", 30 },
+        { "L", 30 },
+        { "X", 12 },
+        { "P", 13 },
+    };
+
+    var cardsPerStage = new Dictionary<string, int>
+    {
+        { "1", 10 },
+        { "2", 16 },
+        { "3", 18 },
+        { "4", 24 },
+        { "5", 20 },
+        { "6", 28 },
+        { "X", 12 },
+        { "P", 13 },
+    };
+
+    var numCards = cardsPerLevel.Values.Sum();
 #>

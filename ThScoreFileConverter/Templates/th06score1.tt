@@ -1,20 +1,6 @@
 <#@ template debug="false" hostspecific="false" language="C#" #>
 <#@ include file="th06.ttinclude" once="true" #>
 <#@ output extension=".html" encoding="utf-8" #>
-<#
-    var numCards = 64;
-
-    var cardsPerStage = new Dictionary<string, int>
-    {
-        { "1", 3 },
-        { "2", 4 },
-        { "3", 7 },
-        { "4", 18 },
-        { "5", 8 },
-        { "6", 11 },
-        { "X", 13 },
-    };
-#>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 

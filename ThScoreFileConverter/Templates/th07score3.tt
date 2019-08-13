@@ -1,10 +1,6 @@
 <#@ template debug="false" hostspecific="false" language="C#" #>
 <#@ include file="th07.ttinclude" once="true" #>
 <#@ output extension=".html" encoding="utf-8" #>
-<#
-    var levelsPractice = levels.Where(pair => (pair.Key != "X") && (pair.Key != "P"));
-    var stagesPractice = stages.Where(pair => (pair.Key != "X") && (pair.Key != "P"));
-#>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 
