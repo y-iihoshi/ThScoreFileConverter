@@ -413,8 +413,25 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th08score3.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th095bestshot.html" />
-    <Content Include="Templates\th095score.html" />
+    <None Include="Templates\th095.ttinclude" />
+    <Content Include="Templates\th095bestshot.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th095bestshot.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th095bestshot.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th095bestshot.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th095score.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th095score.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th095score.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th095score.html</LastGenOutput>
+    </None>
     <None Include="Templates\th09.ttinclude" />
     <Content Include="Templates\th09score1.html">
       <AutoGen>True</AutoGen>

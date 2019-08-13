@@ -1,0 +1,36 @@
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#
+    var levels = new Dictionary<string, (string Id, string Name)>
+    {
+        { "1", ("Level1", "Level 1") },
+        { "2", ("Level2", "Level 2") },
+        { "3", ("Level3", "Level 3") },
+        { "4", ("Level4", "Level 4") },
+        { "5", ("Level5", "Level 5") },
+        { "6", ("Level6", "Level 6") },
+        { "7", ("Level7", "Level 7") },
+        { "8", ("Level8", "Level 8") },
+        { "9", ("Level9", "Level 9") },
+        { "0", ("Level10", "Level 10") },
+        { "X", ("Extra", "Level Extra") },
+    };
+
+    var scenesPerLevel = new Dictionary<string, int>
+    {
+        { "1", 6 },
+        { "2", 6 },
+        { "3", 8 },
+        { "4", 9 },
+        { "5", 8 },
+        { "6", 8 },
+        { "7", 8 },
+        { "8", 8 },
+        { "9", 8 },
+        { "0", 8 },
+        { "X", 8 },
+    };
+
+    var numScenes = scenesPerLevel.Values.Sum();
+#>
