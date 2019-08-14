@@ -29,7 +29,7 @@ format from best shot files.
 * TH10.5 東方緋想天　～ Scarlet Weather Rhapsody.
 * TH11 東方地霊殿　～ Subterranean Animism.
 * TH12 東方星蓮船　～ Undefined Fantastic Object.
-* TH12.3 東方非想天則　～ 超弩級ギニョルの謎を追え (a.k.a Touhou Hisoutensoku)
+* TH12.3 東方非想天則　～ 超弩級ギニョルの謎を追え (a.k.a. Touhou Hisoutensoku)
 * TH12.5 ダブルスポイラー　～ 東方文花帖 (a.k.a. Double Spoiler)
 * TH12.8 妖精大戦争　～ 東方三月精 (a.k.a. Fairy Wars)
 * TH13 東方神霊廟　～ Ten Desires.
@@ -50,7 +50,7 @@ format from best shot files.
 ### Development environment
 * Windows 10 Pro Version 1903 (64bit)
 * .NET Framework 4.8
-* Visual Studio Community 2019 16.2.0
+* Visual Studio Community 2019 16.2.2
 * Python 3.7.4
 
 ### Tested environment
