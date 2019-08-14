@@ -507,10 +507,43 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th10score3.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th11card.html" />
-    <Content Include="Templates\th11score1.html" />
-    <Content Include="Templates\th11score2.html" />
-    <Content Include="Templates\th11score3.html" />
+    <None Include="Templates\th11.ttinclude" />
+    <Content Include="Templates\th11card.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th11card.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th11card.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th11card.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th11score1.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th11score1.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th11score1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th11score1.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th11score2.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th11score2.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th11score2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th11score2.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th11score3.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th11score3.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th11score3.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th11score3.html</LastGenOutput>
+    </None>
     <Content Include="Templates\th123card1.html" />
     <Content Include="Templates\th123card2.html" />
     <Content Include="Templates\th125bestshot1.html" />
