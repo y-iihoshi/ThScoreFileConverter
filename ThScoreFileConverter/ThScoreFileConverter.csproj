@@ -544,8 +544,25 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th11score3.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th123card1.html" />
-    <Content Include="Templates\th123card2.html" />
+    <None Include="Templates\th123.ttinclude" />
+    <Content Include="Templates\th123card1.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th123card1.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th123card1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th123card1.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th123card2.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th123card2.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th123card2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th123card2.html</LastGenOutput>
+    </None>
     <Content Include="Templates\th125bestshot1.html" />
     <Content Include="Templates\th125bestshot2.html" />
     <Content Include="Templates\th125score1.html" />
