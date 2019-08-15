@@ -1,0 +1,191 @@
+<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ include file="th128.ttinclude" once="true" #>
+<#@ output extension=".html" encoding="utf-8" #>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+
+ <head>
+  <meta charset="UTF-8" />
+  <title>妖精大戦争 スペルカードデータ</title>
+  <link rel="stylesheet" href="style.css" />
+<style>
+/* <![CDATA[ */
+    td.level { min-width: 70px; }
+    td.stage { min-width: 70px; }
+    table.rate_per_card td.number { min-width: 40px; }
+    table.rate_per_card td.card { min-width: 180px; }
+    table.rate_per_card td.count { min-width: 70px; }
+    table.rate_per_level td.count { min-width: 70px; }
+    table.rate_per_stage td.count { min-width: 70px; }
+/* ]]> */
+</style>
+ </head>
+
+ <body>
+
+  <header>
+   <h1>妖精大戦争 スペルカードデータ</h1>
+   <hr />
+   <nav>
+    <ul>
+     <li><a href="th128score1.html">スコアデータ全般</a></li>
+     <li><a href="th128score2.html">個別ランキング</a></li>
+     <li>御札戦歴</li>
+    </ul>
+    <ul>
+     <li><a href="#rate_per_card">スペルカード別</a></li>
+     <li><a href="#rate_per_level">難易度別</a></li>
+     <li><a href="#rate_per_stage">ステージ別</a></li>
+    </ul>
+   </nav>
+  </header>
+
+  <main>
+
+   <section>
+    <h2 id="Card">御札戦歴</h2>
+
+    <table class="rate_per_card">
+     <caption id="rate_per_card">スペルカード別取得率</caption>
+     <thead>
+      <tr>
+       <th class="number">No.</th>
+       <th class="card">スペルカード名<br />（難易度）</th>
+       <th class="count">ノーアイス<br />勝利回数</th>
+       <th class="count">ノーミス<br />勝利回数</th>
+       <th class="count">遭遇回数</th>
+      </tr>
+     </thead>
+     <tbody>
+<#
+    foreach (var card in Enumerable.Range(1, numCards))
+    {
+        var cardStr = card.ToString("D2");
+        var cardKey = card.ToString("D3");
+#>
+      <tr>
+       <td class="number">No.<#= cardStr #></td>
+       <td class="card">%T128CARD<#= cardKey #>N<br />(%T128CARD<#= cardKey #>R)</td>
+       <td class="count">%T128C<#= cardKey #>1</td>
+       <td class="count">%T128C<#= cardKey #>2</td>
+       <td class="count">%T128C<#= cardKey #>3</td>
+      </tr>
+<#
+        if ((card < numCards) && (card % 10 == 0))
+            WriteLine(string.Empty);
+    }
+#>
+     </tbody>
+     <tfoot>
+<#
+    {
+        var cardTotalStr = "Total";
+        var cardTotalKey = 0.ToString("D3");
+#>
+      <tr>
+       <td colspan="2"><#= cardTotalStr #></td>
+       <td class="count">%T128C<#= cardTotalKey #>1</td>
+       <td class="count">%T128C<#= cardTotalKey #>2</td>
+       <td class="count">%T128C<#= cardTotalKey #>3</td>
+      </tr>
+<#
+    }
+#>
+     </tfoot>
+    </table>
+
+    <table class="rate_per_level">
+     <caption id="rate_per_level">難易度別スペルカード蒐集率</caption>
+     <thead>
+      <tr>
+       <th class="level">難易度</th>
+       <th class="count">ノーアイス<br />勝利数</th>
+       <th class="count">ノーミス<br />勝利数</th>
+       <th class="count">挑戦数</th>
+       <th class="count">総数</th>
+      </tr>
+     </thead>
+     <tbody>
+<#
+    foreach (var level in levels)
+    {
+#>
+      <tr>
+       <td class="level"><#= level.Value #></td>
+       <td class="count">%T128CRG<#= level.Key #><#= stageKeyTotal #>1</td>
+       <td class="count">%T128CRG<#= level.Key #><#= stageKeyTotal #>2</td>
+       <td class="count">%T128CRG<#= level.Key #><#= stageKeyTotal #>3</td>
+       <td class="count"><#= cardsPerLevel[level.Key] #></td>
+      </tr>
+<#
+    }
+#>
+     </tbody>
+     <tfoot>
+      <tr>
+       <td><#= levelsWithTotal[levelKeyTotal] #></td>
+       <td class="count">%T128CRG<#= levelKeyTotal #><#= stageKeyTotal #>1</td>
+       <td class="count">%T128CRG<#= levelKeyTotal #><#= stageKeyTotal #>2</td>
+       <td class="count">%T128CRG<#= levelKeyTotal #><#= stageKeyTotal #>3</td>
+       <td class="count"><#= numCards #></td>
+      </tr>
+     </tfoot>
+    </table>
+
+    <table class="rate_per_stage">
+     <caption id="rate_per_stage">ステージ別スペルカード蒐集率</caption>
+     <thead>
+      <tr>
+       <th class="stage">ステージ</th>
+       <th class="count">ノーアイス<br />勝利数</th>
+       <th class="count">ノーミス<br />勝利数</th>
+       <th class="count">挑戦数</th>
+       <th class="count">総数</th>
+      </tr>
+     </thead>
+     <tbody>
+<#
+    foreach (var stage in stages)
+    {
+        var stageKey = (stage.Key == "EXT") ? stageKeyTotal : stage.Key;
+        var levelKey = (stage.Key == "EXT") ? "X" : levelKeyTotal;
+#>
+      <tr>
+       <td class="stage"><#= stage.Value #></td>
+       <td class="count">%T128CRG<#= levelKey #><#= stageKey #>1</td>
+       <td class="count">%T128CRG<#= levelKey #><#= stageKey #>2</td>
+       <td class="count">%T128CRG<#= levelKey #><#= stageKey #>3</td>
+       <td class="count"><#= cardsPerStage[stage.Key] #></td>
+      </tr>
+<#
+    }
+#>
+     </tbody>
+     <tfoot>
+      <tr>
+       <td><#= stagesWithTotal[stageKeyTotal] #></td>
+       <td class="count">%T128CRG<#= levelKeyTotal #><#= stageKeyTotal #>1</td>
+       <td class="count">%T128CRG<#= levelKeyTotal #><#= stageKeyTotal #>2</td>
+       <td class="count">%T128CRG<#= levelKeyTotal #><#= stageKeyTotal #>3</td>
+       <td class="count"><#= numCards #></td>
+      </tr>
+     </tfoot>
+    </table>
+
+   </section>
+
+  </main>
+
+  <footer>
+   <p>
+    Data output by <a href="https://www.colorless-sight.jp/thsfc/">ThScoreFileConverter</a>.
+<script>
+// <![CDATA[
+    document.write("Last updated: ", document.lastModified, ".");
+// ]]>
+</script>
+   </p>
+  </footer>
+
+ </body>
+</html>

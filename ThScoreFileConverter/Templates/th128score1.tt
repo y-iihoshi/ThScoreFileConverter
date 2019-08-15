@@ -1,0 +1,224 @@
+<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ include file="th128.ttinclude" once="true" #>
+<#@ output extension=".html" encoding="utf-8" #>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+
+ <head>
+  <meta charset="UTF-8" />
+  <title>妖精大戦争 スコアデータ</title>
+  <link rel="stylesheet" href="style.css" />
+<style>
+/* <![CDATA[ */
+    td.route { min-width: 70px; }
+    td.name { min-width: 70px; }
+    td.score { min-width: 70px; }
+    td.level { min-width: 70px; }
+    td.stage { min-width: 70px; }
+    td.date { min-width: 120px; }
+    td.slow { min-width: 50px; }
+    table.count td.count { min-width: 80px; }
+    table.count td.time { min-width: 80px; }
+/* ]]> */
+</style>
+ </head>
+
+ <body>
+
+  <header>
+   <h1>妖精大戦争 スコアデータ</h1>
+   <hr />
+   <nav>
+    <ul>
+     <li>スコアデータ全般</li>
+     <li><a href="th128score2.html">個別ランキング</a></li>
+     <li><a href="th128card.html">御札戦歴</a></li>
+    </ul>
+    <ul>
+<#
+    foreach (var level in levels)
+    {
+#>
+     <li><a href="#<#= level.Value #>"><#= level.Value #></a></li>
+<#
+    }
+#>
+     <li><a href="#Other">その他の状態一覧</a></li>
+     <li><a href="#Clear">クリア達成度</a></li>
+    </ul>
+   </nav>
+  </header>
+
+  <main>
+
+   <section>
+    <h2>難易度別スコア</h2>
+
+<#
+    foreach (var level in levels)
+    {
+#>
+    <table class="score_per_level">
+     <caption id="<#= level.Value #>"><#= level.Value #></caption>
+     <thead>
+      <tr>
+       <th class="route">Route</th>
+       <th class="name">Name</th>
+       <th class="score">Score</th>
+       <th class="date">Date</th>
+       <th class="stage">Stage</th>
+       <th class="slow">Slow</th>
+      </tr>
+     </thead>
+     <tbody>
+<#
+        foreach (var route in routes.Where(pair => (level.Key == "X") ^ (pair.Key != "EX")))
+        {
+#>
+      <tr>
+       <td class="route"><#= route.Value #></td>
+       <td class="name">%T128SCR<#= level.Key #><#= route.Key #>11</td>
+       <td class="score">%T128SCR<#= level.Key #><#= route.Key #>12</td>
+       <td class="date">%T128SCR<#= level.Key #><#= route.Key #>14</td>
+       <td class="stage">%T128SCR<#= level.Key #><#= route.Key #>13</td>
+       <td class="slow">%T128SCR<#= level.Key #><#= route.Key #>15</td>
+      </tr>
+<#
+        }
+#>
+     </tbody>
+    </table>
+
+<#
+    }
+#>
+   </section>
+
+   <hr />
+
+   <section>
+    <h2 id="Other">その他の状態一覧</h2>
+
+    <table class="count">
+     <thead>
+      <tr>
+       <th rowspan="2" class="route">Route</th>
+       <th rowspan="2" class="count">総プレイ回数</th>
+       <th rowspan="2" class="time">プレイ時間</th>
+       <th colspan="6">クリア回数</th>
+      </tr>
+      <tr>
+<#
+    foreach (var levelKey in levelKeyOrderTotalLast)
+    {
+#>
+       <th class="level"><#= levelsWithTotal[levelKey] #></th>
+<#
+    }
+#>
+      </tr>
+     </thead>
+     <tbody>
+<#
+    foreach (var route in routes)
+    {
+#>
+      <tr>
+       <td class="route"><#= route.Value #></td>
+       <td class="count">%T128ROUTE<#= route.Key #>1</td>
+       <td class="time">%T128ROUTE<#= route.Key #>2</td>
+<#
+        foreach (var levelKey in levelKeyOrderTotalLast)
+        {
+            var routeExFormat = string.Format("%T128ROUTEEX{0}{1}3", levelKey, route.Key);
+            if ((levelKey != levelKeyTotal) && ((levelKey == "X") ^ (route.Key == "EX")))
+                routeExFormat = "N/A";
+#>
+       <td class="level"><#= routeExFormat #></td>
+<#
+        }
+#>
+      </tr>
+<#
+    }
+#>
+     </tbody>
+     <tfoot>
+      <tr>
+       <td class="route"><#= routesWithTotal[routeKeyTotal] #></td>
+       <td class="count">%T128ROUTE<#= routeKeyTotal #>1</td>
+       <!-- <td class="time">%T128ROUTE<#= routeKeyTotal #>2</td> -->
+       <td class="time">%T128TIMEPLY</td>
+<#
+    foreach (var levelKey in levelKeyOrderTotalLast)
+    {
+#>
+       <td class="level">%T128ROUTEEX<#= levelKey #><#= routeKeyTotal #>3</td>
+<#
+    }
+#>
+      </tr>
+     </tfoot>
+    </table>
+   </section>
+
+   <hr />
+
+   <section>
+    <h2 id="Clear">クリア達成度</h2>
+
+    <table class="clear">
+     <thead>
+      <tr>
+       <th class="route">Route</th>
+<#
+    foreach (var level in levels)
+    {
+#>
+       <th class="level"><#= level.Value #></th>
+<#
+    }
+#>
+      </tr>
+     </thead>
+     <tbody>
+<#
+    foreach (var route in routes)
+    {
+#>
+      <tr>
+       <td class="route"><#= route.Value #></td>
+<#
+        foreach (var level in levels)
+        {
+            var clearFormat = string.Format("%T128CLEAR{0}{1}", level.Key, route.Key);
+            if ((level.Key == "X") ^ (route.Key == "EX"))
+                clearFormat = "N/A";
+#>
+       <td class="stage"><#= clearFormat #></td>
+<#
+        }
+#>
+      </tr>
+<#
+    }
+#>
+     </tbody>
+    </table>
+   </section>
+
+  </main>
+
+  <footer>
+   <p>
+    Data output by <a href="https://www.colorless-sight.jp/thsfc/">ThScoreFileConverter</a>.
+<script>
+// <![CDATA[
+    document.write("Last updated: ", document.lastModified, ".");
+// ]]>
+</script>
+   </p>
+  </footer>
+
+ </body>
+</html>
