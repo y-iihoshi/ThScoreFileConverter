@@ -1,0 +1,28 @@
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#
+    var levels = new Dictionary<string, string>
+    {
+        { "E", "Easy" },
+        { "N", "Normal" },
+        { "H", "Hard" },
+        { "L", "Lunatic" },
+        { "D", "Over Drive" },
+    };
+
+    var characters = new Dictionary<string, string>
+    {
+        { "RK", "霊夢 &amp; 華扇" },
+        { "MK", "魔理沙 &amp; こいし" },
+        { "NK", "にとり &amp; こころ" },
+        { "MM", "マミゾウ &amp; 妹紅" },
+        { "MB", "神子 &amp; 白蓮" },
+        { "FI", "布都 &amp; 一輪" },
+        { "RD", "鈴仙 &amp; ドレミー" },
+        { "SD", "菫子 &amp; ドレミー" },
+        { "TS", "天子 &amp; 針妙丸" },
+        { "YR", "紫 &amp; 霊夢" },
+        { "JS", "女苑 &amp; 紫苑" },
+    };
+#>

@@ -805,7 +805,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th14score3.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th155score.html" />
+    <None Include="Templates\th155.ttinclude" />
+    <Content Include="Templates\th155score.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th155score.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th155score.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th155score.html</LastGenOutput>
+    </None>
     <None Include="Templates\th15.ttinclude" />
     <Content Include="Templates\th15card1.html">
       <AutoGen>True</AutoGen>
