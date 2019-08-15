@@ -1,0 +1,219 @@
+<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ include file="th13.ttinclude" once="true" #>
+<#@ output extension=".html" encoding="utf-8" #>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+
+ <head>
+  <meta charset="UTF-8" />
+  <title>東方神霊廟 スコアデータ</title>
+  <link rel="stylesheet" href="style.css" />
+<style>
+/* <![CDATA[ */
+    td.character { min-width: 100px; }
+    td.name { min-width: 70px; }
+    td.score { min-width: 70px; }
+    td.level { min-width: 70px; }
+    td.stage { min-width: 70px; }
+    td.date { min-width: 120px; }
+    td.slow { min-width: 50px; }
+    table.count td.count { min-width: 80px; }
+    table.count td.time { min-width: 80px; }
+/* ]]> */
+</style>
+ </head>
+
+ <body>
+
+  <header>
+   <h1>東方神霊廟 スコアデータ</h1>
+   <hr />
+   <nav>
+    <ul>
+     <li>スコアデータ全般</li>
+     <li><a href="th13score2.html">個別ランキング</a></li>
+     <li><a href="th13score3.html">プラクティス</a></li>
+     <li><a href="th13card1.html">御札戦歴（ゲーム本編）</a></li>
+     <li><a href="th13card2.html">御札戦歴（スペルプラクティス）</a></li>
+    </ul>
+    <ul>
+<#
+    foreach (var level in levels)
+    {
+#>
+     <li><a href="#<#= level.Value #>"><#= level.Value #></a></li>
+<#
+    }
+#>
+     <li><a href="#Other">その他の状態一覧</a></li>
+     <li><a href="#Clear">クリア達成度</a></li>
+    </ul>
+   </nav>
+  </header>
+
+  <main>
+
+   <section>
+    <h2>難易度別スコア</h2>
+
+<#
+    foreach (var level in levels)
+    {
+#>
+    <table class="score_per_level">
+     <caption id="<#= level.Value #>"><#= level.Value #></caption>
+     <thead>
+      <tr>
+       <th class="character">Character</th>
+       <th class="name">Name</th>
+       <th class="score">Score</th>
+       <th class="date">Date</th>
+       <th class="stage">Stage</th>
+       <th class="slow">Slow</th>
+      </tr>
+     </thead>
+     <tbody>
+<#
+        foreach (var chara in characters)
+        {
+#>
+      <tr>
+       <td class="character"><#= chara.Value #></td>
+       <td class="name">%T13SCR<#= level.Key #><#= chara.Key #>11</td>
+       <td class="score">%T13SCR<#= level.Key #><#= chara.Key #>12</td>
+       <td class="date">%T13SCR<#= level.Key #><#= chara.Key #>14</td>
+       <td class="stage">%T13SCR<#= level.Key #><#= chara.Key #>13</td>
+       <td class="slow">%T13SCR<#= level.Key #><#= chara.Key #>15</td>
+      </tr>
+<#
+        }
+#>
+     </tbody>
+    </table>
+
+<#
+    }
+#>
+   </section>
+
+   <hr />
+
+   <section>
+    <h2 id="Other">その他の状態一覧</h2>
+
+    <table class="count">
+     <thead>
+      <tr>
+       <th rowspan="2" class="character">Character</th>
+       <th rowspan="2" class="count">総プレイ回数</th>
+       <th rowspan="2" class="time">プレイ時間</th>
+       <th colspan="6">クリア回数</th>
+      </tr>
+      <tr>
+<#
+    foreach (var levelKey in levelKeyOrderTotalLast)
+    {
+#>
+       <th class="level"><#= levelsWithTotal[levelKey] #></th>
+<#
+    }
+#>
+      </tr>
+     </thead>
+     <tbody>
+<#
+    foreach (var chara in characters)
+    {
+#>
+      <tr>
+       <td class="character"><#= chara.Value #></td>
+       <td class="count">%T13CHARA<#= chara.Key #>1</td>
+       <td class="time">%T13CHARA<#= chara.Key #>2</td>
+<#
+        foreach (var levelKey in levelKeyOrderTotalLast)
+        {
+#>
+       <td class="level">%T13CHARAEX<#= levelKey #><#= chara.Key #>3</td>
+<#
+        }
+#>
+      </tr>
+<#
+    }
+#>
+     </tbody>
+     <tfoot>
+      <tr>
+       <td class="character"><#= charactersWithTotal[charaKeyTotal] #></td>
+       <td class="count">%T13CHARA<#= charaKeyTotal #>1</td>
+       <td class="time">%T13CHARA<#= charaKeyTotal #>2</td>
+<#
+    foreach (var levelKey in levelKeyOrderTotalLast)
+    {
+#>
+       <td class="level">%T13CHARAEX<#= levelKey #><#= charaKeyTotal #>3</td>
+<#
+    }
+#>
+      </tr>
+     </tfoot>
+    </table>
+   </section>
+
+   <hr />
+
+   <section>
+    <h2 id="Clear">クリア達成度</h2>
+
+    <table class="clear">
+     <thead>
+      <tr>
+       <th class="character">Character</th>
+<#
+    foreach (var level in levels)
+    {
+#>
+       <th class="level"><#= level.Value #></th>
+<#
+    }
+#>
+      </tr>
+     </thead>
+     <tbody>
+<#
+    foreach (var chara in characters)
+    {
+#>
+      <tr>
+       <td class="character"><#= chara.Value #></td>
+<#
+        foreach (var level in levels)
+        {
+#>
+       <td class="stage">%T13CLEAR<#= level.Key #><#= chara.Key #></td>
+<#
+        }
+#>
+      </tr>
+<#
+    }
+#>
+     </tbody>
+    </table>
+   </section>
+
+  </main>
+
+  <footer>
+   <p>
+    Data output by <a href="https://www.colorless-sight.jp/thsfc/">ThScoreFileConverter</a>.
+<script>
+// <![CDATA[
+    document.write("Last updated: ", document.lastModified, ".");
+// ]]>
+</script>
+   </p>
+  </footer>
+
+ </body>
+</html>

@@ -1,0 +1,117 @@
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#
+    var levelKeyTotal = "T";
+
+    var levels = new Dictionary<string, string>
+    {
+        { "E", "Easy" },
+        { "N", "Normal" },
+        { "H", "Hard" },
+        { "L", "Lunatic" },
+        { "X", "Extra" },
+    };
+
+    var levelsWithTotal = levels.Concat(new Dictionary<string, string>
+    {
+        { levelKeyTotal, "Total" },
+    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+
+    var levelKeyOrderTotalFirst = new[] { levelKeyTotal }.Concat(levels.Keys);
+    var levelKeyOrderTotalLast = levelsWithTotal.Keys;
+
+    var levelsSpellPractice = levels.Concat(new Dictionary<string, string>
+    {
+        { "D", "Over Drive" },
+    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+
+    var levelsSpellPracticeWithTotal = levelsSpellPractice.Concat(new Dictionary<string, string>
+    {
+        { levelKeyTotal, "Total" },
+    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+
+    var levelSpellPracticeKeyOrderTotalFirst = new[] { levelKeyTotal }.Concat(levelsSpellPractice.Keys);
+    var levelSpellPracticeKeyOrderTotalLast = levelsSpellPracticeWithTotal.Keys;
+
+    var levelsPractice = levels.Where(pair => pair.Key != "X");
+
+    var charaKeyTotal = "TL";
+
+    var characters = new Dictionary<string, string>
+    {
+        { "RM", "博麗 霊夢" },
+        { "MR", "霧雨 魔理沙" },
+        { "SN", "東風谷 早苗" },
+        { "YM", "魂魄 妖夢" },
+    };
+
+    var charactersWithTotal = characters.Concat(new Dictionary<string, string>
+    {
+        { charaKeyTotal, "全主人公合計" },
+    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+
+    var charaKeyOrderTotalFirst = new[] { charaKeyTotal }.Concat(characters.Keys);
+    var charaKeyOrderTotalLast = charactersWithTotal.Keys;
+
+    var stageKeyTotal = "0";
+
+    var stages = new Dictionary<string, string>
+    {
+        { "1", "Stage 1" },
+        { "2", "Stage 2" },
+        { "3", "Stage 3" },
+        { "4", "Stage 4" },
+        { "5", "Stage 5" },
+        { "6", "Stage 6" },
+        { "X", "Extra" },
+    };
+
+    var stagesWithTotal = stages.Concat(new Dictionary<string, string>
+    {
+        { stageKeyTotal, "Total" },
+    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+
+    var stageKeyOrderTotalFirst = new[] { stageKeyTotal }.Concat(stages.Keys);
+    var stageKeyOrderTotalLast = stagesWithTotal.Keys;
+
+    var stagesSpellPractice = stages.Concat(new Dictionary<string, string>
+    {
+        { "D", "Over Drive" },
+    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+
+    var stagesSpellPracticeWithTotal = stagesSpellPractice.Concat(new Dictionary<string, string>
+    {
+        { stageKeyTotal, "Total" },
+    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+
+    var stageSpellPracticeKeyOrderTotalFirst = new[] { stageKeyTotal }.Concat(stagesSpellPractice.Keys);
+    var stageSpellPracticeKeyOrderTotalLast = stagesSpellPracticeWithTotal.Keys;
+
+    var stagesPractice = stages.Where(pair => pair.Key != "X");
+
+    var cardsPerLevel = new Dictionary<string, int>
+    {
+        { "E", 24 },
+        { "N", 26 },
+        { "H", 28 },
+        { "L", 28 },
+        { "X", 13 },
+        { "D", 8 },
+    };
+
+    var cardsPerStage = new Dictionary<string, int>
+    {
+        { "1", 14 },
+        { "2", 16 },
+        { "3", 14 },
+        { "4", 15 },
+        { "5", 19 },
+        { "6", 28 },
+        { "X", 13 },
+        { "D", 8 },
+    };
+
+    var numCardsSpellPractice = cardsPerLevel.Values.Sum();
+    var numCards = numCardsSpellPractice - cardsPerLevel["D"];
+#>
