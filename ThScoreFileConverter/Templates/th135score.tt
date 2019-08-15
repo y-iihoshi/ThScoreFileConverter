@@ -1,0 +1,82 @@
+<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ include file="th135.ttinclude" once="true" #>
+<#@ output extension=".html" encoding="utf-8" #>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+
+ <head>
+  <meta charset="UTF-8" />
+  <title>東方心綺楼 スコアデータ</title>
+  <link rel="stylesheet" href="style.css" />
+<style>
+/* <![CDATA[ */
+    td.character { min-width: 120px; }
+    td.level { min-width: 70px; }
+    table.clear td.clear { min-width: 70px; }
+/* ]]> */
+</style>
+ </head>
+
+ <body>
+
+  <header>
+   <h1>東方心綺楼 スコアデータ</h1>
+  </header>
+
+  <main>
+
+   <section>
+    <h2>クリア達成度</h2>
+
+    <table class="clear">
+     <thead>
+      <tr>
+       <th class="character">Character</th>
+<#
+    foreach (var level in levels)
+    {
+#>
+       <th class="level"><#= level.Value #></th>
+<#
+    }
+#>
+      </tr>
+     </thead>
+     <tbody>
+<#
+    foreach (var chara in characters)
+    {
+#>
+      <tr>
+       <td class="character"><#= chara.Value #></td>
+<#
+        foreach (var level in levels)
+        {
+#>
+       <td class="clear">%T135CLEAR<#= level.Key #><#= chara.Key #></td>
+<#
+        }
+#>
+      </tr>
+<#
+    }
+#>
+     </tbody>
+    </table>
+   </section>
+
+  </main>
+
+  <footer>
+   <p>
+    Data output by <a href="https://www.colorless-sight.jp/thsfc/">ThScoreFileConverter</a>.
+<script>
+// <![CDATA[
+    document.write("Last updated: ", document.lastModified, ".");
+// ]]>
+</script>
+   </p>
+  </footer>
+
+ </body>
+</html>
