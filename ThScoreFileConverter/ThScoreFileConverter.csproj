@@ -749,7 +749,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th143screenshot.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th145score.html" />
+    <None Include="Templates\th145.ttinclude" />
+    <Content Include="Templates\th145score.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th145score.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th145score.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th145score.html</LastGenOutput>
+    </None>
     <None Include="Templates\th14.ttinclude" />
     <Content Include="Templates\th14card1.html">
       <AutoGen>True</AutoGen>

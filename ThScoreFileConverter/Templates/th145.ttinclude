@@ -1,0 +1,51 @@
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#
+    var levelKeyTotal = "T";
+
+    var levels = new Dictionary<string, string>
+    {
+        { "E", "Easy" },
+        { "N", "Normal" },
+        { "H", "Hard" },
+        { "L", "Lunatic" },
+    };
+
+    var levelsWithTotal = levels.Concat(new Dictionary<string, string>
+    {
+        { levelKeyTotal, "Total" },
+    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+
+    var levelKeyOrderTotalFirst = new[] { levelKeyTotal }.Concat(levels.Keys);
+    var levelKeyOrderTotalLast = levelsWithTotal.Keys;
+
+    var charaKeyTotal = "TL";
+
+    var characters = new Dictionary<string, string>
+    {
+        { "RA", "博麗 霊夢（序）" },
+        { "MR", "霧雨 魔理沙" },
+        { "IU", "雲居 一輪 &amp; 雲山" },
+        { "BY", "聖 白蓮" },
+        { "FT", "物部 布都" },
+        { "MK", "豊聡耳 神子" },
+        { "NT", "河城 にとり" },
+        { "KO", "古明地 こいし" },
+        { "MM", "二ッ岩 マミゾウ" },
+        { "KK", "秦 こころ" },
+        { "KS", "茨木 華扇" },
+        { "MO", "藤原 妹紅" },
+        { "SN", "少名 針妙丸" },
+        { "SM", "宇佐見 菫子" },
+        { "RB", "博麗 霊夢（終）" },
+    };
+
+    var charactersWithTotal = characters.Concat(new Dictionary<string, string>
+    {
+        { charaKeyTotal, "全キャラ合計" },
+    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+
+    var charaKeyOrderTotalFirst = new[] { charaKeyTotal }.Concat(characters.Keys);
+    var charaKeyOrderTotalLast = charactersWithTotal.Keys;
+#>

@@ -1,0 +1,132 @@
+<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ include file="th145.ttinclude" once="true" #>
+<#@ output extension=".html" encoding="utf-8" #>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+
+ <head>
+  <meta charset="UTF-8" />
+  <title>東方深秘録 スコアデータ</title>
+  <link rel="stylesheet" href="style.css" />
+<style>
+/* <![CDATA[ */
+    td.character { min-width: 120px; }
+    td.level { min-width: 70px; }
+    table.clear td.clear { min-width: 70px; }
+    table.time td.time { min-width: 70px; }
+/* ]]> */
+</style>
+ </head>
+
+ <body>
+
+  <header>
+   <h1>東方深秘録 スコアデータ</h1>
+   <hr />
+   <nav>
+    <ul>
+     <li><a href="#Clear">クリア達成度</a></li>
+     <li><a href="#Time">クリア時間</a></li>
+    </ul>
+   </nav>
+  </header>
+
+  <main>
+
+   <section>
+    <h2 id="Clear">クリア達成度</h2>
+
+    <table class="clear">
+     <thead>
+      <tr>
+       <th class="character">Character</th>
+<#
+    foreach (var level in levels)
+    {
+#>
+       <th class="level"><#= level.Value #></th>
+<#
+    }
+#>
+      </tr>
+     </thead>
+     <tbody>
+<#
+    foreach (var chara in characters)
+    {
+#>
+      <tr>
+       <td class="character"><#= chara.Value #></td>
+<#
+        foreach (var level in levels)
+        {
+#>
+       <td class="clear">%T145CLEAR<#= level.Key #><#= chara.Key #></td>
+<#
+        }
+#>
+      </tr>
+<#
+    }
+#>
+     </tbody>
+    </table>
+   </section>
+
+   <hr />
+
+   <section>
+    <h2 id="Time">クリア時間</h2>
+
+    <table class="time">
+     <thead>
+      <tr>
+       <th class="character">Character</th>
+<#
+    foreach (var levelKey in levelKeyOrderTotalLast)
+    {
+#>
+       <th class="level"><#= levelsWithTotal[levelKey] #></th>
+<#
+    }
+#>
+      </tr>
+     </thead>
+     <tbody>
+<#
+    foreach (var charaKey in charaKeyOrderTotalLast)
+    {
+#>
+      <tr>
+       <td class="character"><#= charactersWithTotal[charaKey] #></td>
+<#
+        foreach (var levelKey in levelKeyOrderTotalLast)
+        {
+#>
+       <td class="time">%T145TIMECLR<#= levelKey #><#= charaKey #></td>
+<#
+        }
+#>
+      </tr>
+<#
+    }
+#>
+     </tbody>
+    </table>
+   </section>
+
+  </main>
+
+  <footer>
+   <p>
+    Data output by <a href="https://www.colorless-sight.jp/thsfc/">ThScoreFileConverter</a>.
+<script>
+// <![CDATA[
+    document.write("Last updated: ", document.lastModified, ".");
+// ]]>
+</script>
+   </p>
+  </footer>
+
+ </body>
+</html>
