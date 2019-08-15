@@ -725,11 +725,52 @@
     <Content Include="Templates\th143score2.html" />
     <Content Include="Templates\th143screenshot.html" />
     <Content Include="Templates\th145score.html" />
-    <Content Include="Templates\th14card1.html" />
-    <Content Include="Templates\th14card2.html" />
-    <Content Include="Templates\th14score1.html" />
-    <Content Include="Templates\th14score2.html" />
-    <Content Include="Templates\th14score3.html" />
+    <None Include="Templates\th14.ttinclude" />
+    <Content Include="Templates\th14card1.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th14card1.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th14card1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th14card1.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th14card2.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th14card2.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th14card2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th14card2.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th14score1.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th14score1.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th14score1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th14score1.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th14score2.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th14score2.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th14score2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th14score2.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th14score3.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th14score3.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th14score3.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th14score3.html</LastGenOutput>
+    </None>
     <Content Include="Templates\th155score.html" />
     <Content Include="Templates\th15card1.html" />
     <Content Include="Templates\th15card2.html" />
