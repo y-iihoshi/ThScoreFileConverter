@@ -1,0 +1,60 @@
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#
+    var days = new Dictionary<string, (string Id, string Name)>
+    {
+        { "1", ("Day1", "一日目") },
+        { "2", ("Day2", "二日目") },
+        { "3", ("Day3", "三日目") },
+        { "4", ("Day4", "四日目") },
+        { "5", ("Day5", "五日目") },
+        { "6", ("Day6", "六日目") },
+        { "7", ("Day7", "七日目") },
+        { "8", ("Day8", "八日目") },
+        { "9", ("Day9", "九日目") },
+        { "L", ("LastDay", "最終日") },
+    };
+
+    var scenesPerDay = new Dictionary<string, int>
+    {
+        { "1", 6 },
+        { "2", 6 },
+        { "3", 7 },
+        { "4", 7 },
+        { "5", 8 },
+        { "6", 8 },
+        { "7", 8 },
+        { "8", 7 },
+        { "9", 8 },
+        { "L", 10 },
+    };
+
+    var numScenes = scenesPerDay.Values.Sum();
+
+    var itemKeyTotal = "T";
+
+    var items = new Dictionary<string, (string ShortName, string LongName)>
+    {
+        { "1", ("布", "ひらり布") },
+        { "2", ("カメラ", "天狗のトイカメラ") },
+        { "3", ("傘", "隙間の折りたたみ傘") },
+        { "4", ("提灯", "亡霊の送り提灯") },
+        { "5", ("陰陽玉", "血に飢えた陰陽玉") },
+        { "6", ("ボム", "四尺マジックボム") },
+        { "7", ("地蔵", "身代わり地蔵") },
+        { "8", ("人形", "呪いのデコイ人形") },
+        { "9", ("小槌", "打ち出の小槌（レプリカ）") },
+        { "0", ("未使用", "ノーアイテム") },
+    };
+
+    var itemsWithTotal = items.Concat(new Dictionary<string, (string ShortName, string LongName)>
+    {
+        { itemKeyTotal, ("合計", "全アイテム合計") },
+    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+
+    var itemKeyOrderTotalFirst = new[] { itemKeyTotal }.Concat(items.Keys);
+    var itemKeyOrderTotalLast = itemsWithTotal.Keys;
+
+    var numNicknames = 70;
+#>

@@ -721,9 +721,34 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th13score3.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th143score1.html" />
-    <Content Include="Templates\th143score2.html" />
-    <Content Include="Templates\th143screenshot.html" />
+    <None Include="Templates\th143.ttinclude" />
+    <Content Include="Templates\th143score1.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th143score1.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th143score1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th143score1.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th143score2.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th143score2.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th143score2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th143score2.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th143screenshot.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th143screenshot.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th143screenshot.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th143screenshot.html</LastGenOutput>
+    </None>
     <Content Include="Templates\th145score.html" />
     <None Include="Templates\th14.ttinclude" />
     <Content Include="Templates\th14card1.html">
