@@ -563,10 +563,43 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th123card2.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th125bestshot1.html" />
-    <Content Include="Templates\th125bestshot2.html" />
-    <Content Include="Templates\th125score1.html" />
-    <Content Include="Templates\th125score2.html" />
+    <None Include="Templates\th125.ttinclude" />
+    <Content Include="Templates\th125bestshot1.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th125bestshot1.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th125bestshot1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th125bestshot1.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th125bestshot2.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th125bestshot2.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th125bestshot2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th125bestshot2.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th125score1.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th125score1.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th125score1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th125score1.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th125score2.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th125score2.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th125score2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th125score2.html</LastGenOutput>
+    </None>
     <Content Include="Templates\th128card.html" />
     <Content Include="Templates\th128score1.html" />
     <Content Include="Templates\th128score2.html" />

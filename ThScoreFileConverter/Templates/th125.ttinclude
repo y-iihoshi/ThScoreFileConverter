@@ -1,0 +1,63 @@
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#
+    var levels = new Dictionary<string, (string Id, string ShortName, string LongName)>
+    {
+        { "1", ("Level1", "1", "Level 1") },
+        { "2", ("Level2", "2", "Level 2") },
+        { "3", ("Level3", "3", "Level 3") },
+        { "4", ("Level4", "4", "Level 4") },
+        { "5", ("Level5", "5", "Level 5") },
+        { "6", ("Level6", "6", "Level 6") },
+        { "7", ("Level7", "7", "Level 7") },
+        { "8", ("Level8", "8", "Level 8") },
+        { "9", ("Level9", "9", "Level 9") },
+        { "A", ("Level10", "10", "Level 10") },
+        { "B", ("Level11", "11", "Level 11") },
+        { "C", ("Level12", "12", "Level 12") },
+        { "X", ("LevelEX", "EX", "Level EX") },
+        { "S", ("SPOILER", "??", "SPOILER") },
+    };
+
+    var characters = new Dictionary<string, (string Id, string ShortName, string LongName)>
+    {
+        { "A", ("Aya", "文", "射命丸 文") },
+        { "H", ("Hatate", "はたて", "姫海棠 はたて") },
+    };
+
+    var spoilerScenesPerChara = new Dictionary<string, IEnumerable<int>>
+    {
+        { "A", Enumerable.Range(start: 1, count: 4) },
+        { "H", Enumerable.Range(start: 5, count: 5) },
+    };
+
+    var scenesPerLevel = new Dictionary<string, int>
+    {
+        { "1", 6 },
+        { "2", 6 },
+        { "3", 8 },
+        { "4", 7 },
+        { "5", 8 },
+        { "6", 8 },
+        { "7", 7 },
+        { "8", 8 },
+        { "9", 8 },
+        { "A", 8 },
+        { "B", 8 },
+        { "C", 8 },
+        { "X", 9 },
+        { "S", spoilerScenesPerChara.Sum(pair => pair.Value.Count()) },
+    };
+
+    var numScenes = scenesPerLevel.Sum(pair => pair.Value);
+    var numScenesExceptSpoiler = numScenes - scenesPerLevel["S"];
+    var numScenesPerChara = characters.ToDictionary(
+        pair => pair.Key,
+        pair => numScenesExceptSpoiler + spoilerScenesPerChara[pair.Key].Count());
+    var numScenesPerCharaInGame = new Dictionary<string, int>
+    {
+        { "A", numScenes },
+        { "H", numScenesExceptSpoiler },
+    };
+#>
