@@ -863,11 +863,52 @@
     </None>
     <Content Include="Templates\th165bestshot.html" />
     <Content Include="Templates\th165score.html" />
-    <Content Include="Templates\th16card1.html" />
-    <Content Include="Templates\th16card2.html" />
-    <Content Include="Templates\th16score1.html" />
-    <Content Include="Templates\th16score2.html" />
-    <Content Include="Templates\th16score3.html" />
+    <None Include="Templates\th16.ttinclude" />
+    <Content Include="Templates\th16card1.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th16card1.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th16card1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th16card1.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th16card2.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th16card2.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th16card2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th16card2.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th16score1.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th16score1.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th16score1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th16score1.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th16score2.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th16score2.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th16score2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th16score2.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th16score3.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th16score3.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th16score3.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th16score3.html</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
