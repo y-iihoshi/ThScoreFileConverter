@@ -1,0 +1,90 @@
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#
+    var levelKeyTotal = "T";
+
+    var levels = new Dictionary<string, string>
+    {
+        { "E", "Easy" },
+        { "N", "Normal" },
+        { "H", "Hard" },
+        { "L", "Lunatic" },
+        { "X", "Extra" },
+    };
+
+    var levelsWithTotal = levels.Concat(new Dictionary<string, string>
+    {
+        { levelKeyTotal, "Total" },
+    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+
+    var levelKeyOrderTotalFirst = new[] { levelKeyTotal }.Concat(levels.Keys);
+    var levelKeyOrderTotalLast = levelsWithTotal.Keys;
+
+    var levelsPractice = levels.Where(pair => pair.Key != "X");
+
+    var charaKeyTotal = "TL";
+
+    var characters = new Dictionary<string, string>
+    {
+        { "RA", "博麗 霊夢（夢）" },
+        { "RB", "博麗 霊夢（霊）" },
+        { "MA", "霧雨 魔理沙（恋）" },
+        { "MB", "霧雨 魔理沙（魔）" },
+        { "SA", "東風谷 早苗（蛇）" },
+        { "SB", "東風谷 早苗（蛙）" },
+    };
+
+    var charactersWithTotal = characters.Concat(new Dictionary<string, string>
+    {
+        { charaKeyTotal, "全主人公合計" },
+    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+
+    var charaKeyOrderTotalFirst = new[] { charaKeyTotal }.Concat(characters.Keys);
+    var charaKeyOrderTotalLast = charactersWithTotal.Keys;
+
+    var stageKeyTotal = "0";
+
+    var stages = new Dictionary<string, string>
+    {
+        { "1", "Stage 1" },
+        { "2", "Stage 2" },
+        { "3", "Stage 3" },
+        { "4", "Stage 4" },
+        { "5", "Stage 5" },
+        { "6", "Stage 6" },
+        { "X", "Extra" },
+    };
+
+    var stagesWithTotal = stages.Concat(new Dictionary<string, string>
+    {
+        { stageKeyTotal, "Total" },
+    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+
+    var stageKeyOrderTotalFirst = new[] { stageKeyTotal }.Concat(stages.Keys);
+    var stageKeyOrderTotalLast = stagesWithTotal.Keys;
+
+    var stagesPractice = stages.Where(pair => pair.Key != "X");
+
+    var cardsPerLevel = new Dictionary<string, int>
+    {
+        { "E", 23 },
+        { "N", 25 },
+        { "H", 26 },
+        { "L", 26 },
+        { "X", 13 },
+    };
+
+    var cardsPerStage = new Dictionary<string, int>
+    {
+        { "1", 10 },
+        { "2", 16 },
+        { "3", 16 },
+        { "4", 15 },
+        { "5", 20 },
+        { "6", 23 },
+        { "X", 13 },
+    };
+
+    var numCards = cardsPerLevel.Values.Sum();
+#>

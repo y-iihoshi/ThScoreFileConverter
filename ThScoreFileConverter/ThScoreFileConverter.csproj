@@ -553,10 +553,43 @@
     <Content Include="Templates\th128card.html" />
     <Content Include="Templates\th128score1.html" />
     <Content Include="Templates\th128score2.html" />
-    <Content Include="Templates\th12card.html" />
-    <Content Include="Templates\th12score1.html" />
-    <Content Include="Templates\th12score2.html" />
-    <Content Include="Templates\th12score3.html" />
+    <None Include="Templates\th12.ttinclude" />
+    <Content Include="Templates\th12card.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th12card.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th12card.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th12card.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th12score1.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th12score1.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th12score1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th12score1.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th12score2.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th12score2.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th12score2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th12score2.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th12score3.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th12score3.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th12score3.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th12score3.html</LastGenOutput>
+    </None>
     <Content Include="Templates\th135score.html" />
     <Content Include="Templates\th13card1.html" />
     <Content Include="Templates\th13card2.html" />

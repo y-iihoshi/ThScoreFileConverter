@@ -1,0 +1,248 @@
+<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ include file="th12.ttinclude" once="true" #>
+<#@ output extension=".html" encoding="utf-8" #>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+
+ <head>
+  <meta charset="UTF-8" />
+  <title>東方星蓮船 スペルカードデータ</title>
+  <link rel="stylesheet" href="style.css" />
+<style>
+/* <![CDATA[ */
+    td.character { min-width: 100px; }
+    td.level { min-width: 70px; }
+    td.stage { min-width: 70px; }
+    table.rate_per_card td.number { min-width: 40px; }
+    table.rate_per_card td.card { min-width: 180px; }
+    table.rate_per_card td.rate { min-width: 80px; }
+    table.rate_per_level td.rate { min-width: 100px; }
+    table.rate_per_stage td.rate { min-width: 100px; }
+/* ]]> */
+</style>
+ </head>
+
+ <body>
+
+  <header>
+   <h1>東方星蓮船 スペルカードデータ</h1>
+   <hr />
+   <nav>
+    <ul>
+     <li><a href="th12score1.html">スコアデータ全般</a></li>
+     <li><a href="th12score2.html">個別ランキング</a></li>
+     <li><a href="th12score3.html">プラクティス</a></li>
+     <li>御札戦歴</li>
+    </ul>
+    <ul>
+     <li><a href="#rate_per_card">スペルカード別</a></li>
+     <li><a href="#rate_per_level">難易度別</a></li>
+     <li><a href="#rate_per_stage">ステージ別</a></li>
+    </ul>
+   </nav>
+  </header>
+
+  <main>
+
+   <section>
+    <h2 id="Card">御札戦歴</h2>
+
+    <table class="rate_per_card">
+     <caption id="rate_per_card">スペルカード別取得率（取得回数 / 遭遇回数）</caption>
+     <thead>
+      <tr>
+       <th class="number">No.</th>
+       <th class="card">スペルカード名<br />（難易度）</th>
+<#
+    foreach (var charaKey in charaKeyOrderTotalFirst)
+    {
+#>
+       <th class="character"><#= charactersWithTotal[charaKey] #></th>
+<#
+    }
+#>
+      </tr>
+     </thead>
+     <tbody>
+<#
+    foreach (var card in Enumerable.Range(1, numCards))
+    {
+        var cardStr = card.ToString("D2");
+        var cardKey = card.ToString("D3");
+#>
+      <tr>
+       <td class="number">No.<#= cardStr #></td>
+       <td class="card">%T12CARD<#= cardKey #>N<br />(%T12CARD<#= cardKey #>R)</td>
+<#
+        foreach (var charaKey in charaKeyOrderTotalFirst)
+        {
+#>
+       <td class="rate">%T12C<#= cardKey #><#= charaKey #>1 / %T12C<#= cardKey #><#= charaKey #>2</td>
+<#
+        }
+#>
+      </tr>
+<#
+        if (card % 10 == 0)
+            WriteLine(string.Empty);
+    }
+#>
+     </tbody>
+     <tfoot>
+<#
+    {
+        var cardTotalStr = "Total";
+        var cardTotalKey = 0.ToString("D3");
+#>
+      <tr>
+       <td colspan="2"><#= cardTotalStr #></td>
+<#
+        foreach (var charaKey in charaKeyOrderTotalFirst)
+        {
+#>
+       <td class="rate">%T12C<#= cardTotalKey #><#= charaKey #>1 / %T12C<#= cardTotalKey #><#= charaKey #>2</td>
+<#
+        }
+#>
+      </tr>
+<#
+    }
+#>
+     </tfoot>
+    </table>
+
+    <table class="rate_per_level">
+     <caption id="rate_per_level">難易度別スペルカード蒐集率（取得回数 / 挑戦回数 / 総数）</caption>
+     <thead>
+      <tr>
+       <th class="level">難易度</th>
+<#
+    foreach (var charaKey in charaKeyOrderTotalFirst)
+    {
+#>
+       <th class="character"><#= charactersWithTotal[charaKey] #></th>
+<#
+    }
+#>
+      </tr>
+     </thead>
+     <tbody>
+<#
+    foreach (var level in levels)
+    {
+#>
+      <tr>
+       <td class="level"><#= level.Value #></td>
+<#
+        foreach (var charaKey in charaKeyOrderTotalFirst)
+        {
+#>
+       <td class="rate"><#
+       #>%T12CRG<#= level.Key #><#= charaKey #><#= stageKeyTotal #>1 / <#
+       #>%T12CRG<#= level.Key #><#= charaKey #><#= stageKeyTotal #>2 / <#
+       #><#= cardsPerLevel[level.Key] #><#
+       #></td>
+<#
+        }
+#>
+      </tr>
+<#
+    }
+#>
+     </tbody>
+     <tfoot>
+      <tr>
+       <td><#= levelsWithTotal[levelKeyTotal] #></td>
+<#
+    foreach (var charaKey in charaKeyOrderTotalFirst)
+    {
+#>
+       <td class="rate"><#
+       #>%T12CRG<#= levelKeyTotal #><#= charaKey #><#= stageKeyTotal #>1 / <#
+       #>%T12CRG<#= levelKeyTotal #><#= charaKey #><#= stageKeyTotal #>2 / <#
+       #><#= numCards #><#
+       #></td>
+<#
+    }
+#>
+      </tr>
+     </tfoot>
+    </table>
+
+    <table class="rate_per_stage">
+     <caption id="rate_per_stage">ステージ別スペルカード蒐集率（取得回数 / 挑戦回数 / 総数）</caption>
+     <thead>
+      <tr>
+       <th class="stage">ステージ</th>
+<#
+    foreach (var charaKey in charaKeyOrderTotalFirst)
+    {
+#>
+       <th class="character"><#= charactersWithTotal[charaKey] #></th>
+<#
+    }
+#>
+      </tr>
+     </thead>
+     <tbody>
+<#
+    foreach (var stage in stages)
+    {
+        var stageKey = (stage.Key == "X") ? stageKeyTotal : stage.Key;
+        var levelKey = (stage.Key == "X") ? stage.Key : levelKeyTotal;
+#>
+      <tr>
+       <td class="stage"><#= stage.Value #></td>
+<#
+        foreach (var charaKey in charaKeyOrderTotalFirst)
+        {
+#>
+       <td class="rate"><#
+       #>%T12CRG<#= levelKey #><#= charaKey #><#= stageKey #>1 / <#
+       #>%T12CRG<#= levelKey #><#= charaKey #><#= stageKey #>2 / <#
+       #><#= cardsPerStage[stage.Key] #><#
+       #></td>
+<#
+        }
+#>
+      </tr>
+<#
+    }
+#>
+     </tbody>
+     <tfoot>
+      <tr>
+       <td><#= stagesWithTotal[stageKeyTotal] #></td>
+<#
+    foreach (var charaKey in charaKeyOrderTotalFirst)
+    {
+#>
+       <td class="rate"><#
+       #>%T12CRG<#= levelKeyTotal #><#= charaKey #><#= stageKeyTotal #>1 / <#
+       #>%T12CRG<#= levelKeyTotal #><#= charaKey #><#= stageKeyTotal #>2 / <#
+       #><#= numCards #><#
+       #></td>
+<#
+    }
+#>
+      </tr>
+     </tfoot>
+    </table>
+
+   </section>
+
+  </main>
+
+  <footer>
+   <p>
+    Data output by <a href="https://www.colorless-sight.jp/thsfc/">ThScoreFileConverter</a>.
+<script>
+// <![CDATA[
+    document.write("Last updated: ", document.lastModified, ".");
+// ]]>
+</script>
+   </p>
+  </footer>
+
+ </body>
+</html>

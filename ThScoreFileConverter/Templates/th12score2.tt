@@ -1,0 +1,123 @@
+<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ include file="th12.ttinclude" once="true" #>
+<#@ output extension=".html" encoding="utf-8" #>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+
+ <head>
+  <meta charset="UTF-8" />
+  <title>東方星蓮船 スコアデータ</title>
+  <link rel="stylesheet" href="style.css" />
+<style>
+/* <![CDATA[ */
+    td.name { min-width: 70px; }
+    td.score { min-width: 70px; }
+    td.stage { min-width: 70px; }
+    td.date { min-width: 120px; }
+    td.slow { min-width: 50px; }
+    table.score_per_level { float: left; }
+    table.score_per_level td.number { min-width: 20px; }
+/* ]]> */
+</style>
+ </head>
+
+ <body>
+
+  <header>
+   <h1>東方星蓮船 スコアデータ</h1>
+   <hr />
+   <nav>
+    <ul>
+     <li><a href="th12score1.html">スコアデータ全般</a></li>
+     <li>個別ランキング</li>
+     <li><a href="th12score3.html">プラクティス</a></li>
+     <li><a href="th12card.html">御札戦歴</a></li>
+    </ul>
+    <ul>
+<#
+    foreach (var level in levels)
+    {
+#>
+     <li><a href="#<#= level.Value #>"><#= level.Value #></a></li>
+<#
+    }
+#>
+    </ul>
+   </nav>
+  </header>
+
+  <main>
+
+<#
+    foreach (var level in levels)
+    {
+#>
+   <section>
+    <h2 id="<#= level.Value #>"><#= level.Value #></h2>
+
+<#
+        foreach (var chara in characters)
+        {
+#>
+    <table class="score_per_level">
+     <caption><#= chara.Value #></caption>
+     <thead>
+      <tr>
+       <th class="number">No.</th>
+       <th class="name">Name</th>
+       <th class="score">Score</th>
+       <th class="date">Date</th>
+       <th class="stage">Stage</th>
+       <th class="slow">Slow</th>
+      </tr>
+     </thead>
+     <tbody>
+<#
+            foreach (var rank in Enumerable.Range(1, 10))
+            {
+                var rankKey = rank % 10;
+#>
+      <tr>
+       <td class="number"><#= rank #></td>
+       <td class="name">%T12SCR<#= level.Key #><#= chara.Key #><#= rankKey #>1</td>
+       <td class="score">%T12SCR<#= level.Key #><#= chara.Key #><#= rankKey #>2</td>
+       <td class="date">%T12SCR<#= level.Key #><#= chara.Key #><#= rankKey #>4</td>
+       <td class="stage">%T12SCR<#= level.Key #><#= chara.Key #><#= rankKey #>3</td>
+       <td class="slow">%T12SCR<#= level.Key #><#= chara.Key #><#= rankKey #>5</td>
+      </tr>
+<#
+            }
+#>
+     </tbody>
+    </table>
+
+<#
+        }
+#>
+   </section>
+
+<#
+        if (level.Key != levels.Keys.Last())
+        {
+#>
+   <hr />
+
+<#
+        }
+    }
+#>
+  </main>
+
+  <footer>
+   <p>
+    Data output by <a href="https://www.colorless-sight.jp/thsfc/">ThScoreFileConverter</a>.
+<script>
+// <![CDATA[
+    document.write("Last updated: ", document.lastModified, ".");
+// ]]>
+</script>
+   </p>
+  </footer>
+
+ </body>
+</html>
