@@ -170,7 +170,7 @@
      </tfoot>
     </table>
 <#
-        if (gameMode.Key != gameModes.Keys.Last())
+        if (gameMode.Key != gameModes.Last().Key)
             WriteLine(string.Empty);
     }
 #>
@@ -222,7 +222,7 @@
      </tbody>
     </table>
 <#
-        if (gameMode.Key != gameModes.Keys.Last())
+        if (gameMode.Key != gameModes.Last().Key)
             WriteLine(string.Empty);
     }
 #>

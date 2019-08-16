@@ -88,7 +88,7 @@
    </section>
 
 <#
-        if (day.Key != days.Keys.Last())
+        if (day.Key != days.Last().Key)
         {
 #>
    <hr />

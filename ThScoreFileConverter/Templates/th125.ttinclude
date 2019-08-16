@@ -50,7 +50,7 @@
         { "S", spoilerScenesPerChara.Sum(pair => pair.Value.Count()) },
     };
 
-    var numScenes = scenesPerLevel.Sum(pair => pair.Value);
+    var numScenes = scenesPerLevel.Values.Sum();
     var numScenesExceptSpoiler = numScenes - scenesPerLevel["S"];
     var numScenesPerChara = characters.ToDictionary(
         pair => pair.Key,

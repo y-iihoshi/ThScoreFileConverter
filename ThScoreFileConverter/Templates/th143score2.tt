@@ -97,7 +97,7 @@
             foreach (var item in items)
             {
                 builder.AppendFormat("'%T143SCR{0}{1}{2}3'", day.Key, sceneKey, item.Key);
-                if (item.Key != items.Keys.Last())
+                if (item.Key != items.Last().Key)
                     builder.Append(", ");
             }
 
@@ -110,7 +110,7 @@
 <#
         }
 
-        if (day.Key != days.Keys.Last())
+        if (day.Key != days.Last().Key)
             WriteLine(string.Empty);
     }
 #>

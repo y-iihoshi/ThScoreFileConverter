@@ -90,13 +90,13 @@
      <tfoot>
 <#
         {
-            var cardTotalStr = "合計";
-            var cardTotalKey = 0.ToString("D3");
+            var cardStrTotal = "合計";
+            var cardKeyTotal = 0.ToString("D3");
 #>
       <tr>
-       <td colspan="2"><#= cardTotalStr #></td>
-       <td class="rate">%T105C<#= cardTotalKey #><#= chara.Key #>1 / %T105C<#= cardTotalKey #><#= chara.Key #>2</td>
-       <td class="date">%T105C<#= cardTotalKey #><#= chara.Key #>3</td>
+       <td colspan="2"><#= cardStrTotal #></td>
+       <td class="rate">%T105C<#= cardKeyTotal #><#= chara.Key #>1 / %T105C<#= cardKeyTotal #><#= chara.Key #>2</td>
+       <td class="date">%T105C<#= cardKeyTotal #><#= chara.Key #>3</td>
       </tr>
 <#
         }

@@ -97,7 +97,7 @@
    </section>
 
 <#
-        if (level.Key != levels.Keys.Last())
+        if (level.Key != levels.Last().Key)
         {
 #>
    <hr />

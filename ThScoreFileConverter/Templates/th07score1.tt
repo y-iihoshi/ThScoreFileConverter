@@ -136,7 +136,7 @@
 #>
       <tr>
 <#
-        if (chara.Key == characters.Keys.First())
+        if (chara.Key == characters.First().Key)
         {
 #>
        <th scope="row" class="vertical" rowspan="7">プレイ回数</th>

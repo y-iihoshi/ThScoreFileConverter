@@ -98,18 +98,18 @@
      <tfoot>
 <#
     {
-        var cardTotalStr = "Total";
-        var cardTotalKey = 0.ToString("D3");
+        var cardStrTotal = "Total";
+        var cardKeyTotal = 0.ToString("D3");
 #>
       <tr>
-       <td colspan="2"><#= cardTotalStr #></td>
+       <td colspan="2"><#= cardStrTotal #></td>
 <#
         foreach (var charaKey in charaKeyOrderTotalFirst)
         {
 #>
        <td class="rate"><#
-       #>%T14C<#= careerKindKey #><#= cardTotalKey #><#= charaKey #>1 / <#
-       #>%T14C<#= careerKindKey #><#= cardTotalKey #><#= charaKey #>2<#
+       #>%T14C<#= careerKindKey #><#= cardKeyTotal #><#= charaKey #>1 / <#
+       #>%T14C<#= careerKindKey #><#= cardKeyTotal #><#= charaKey #>2<#
        #></td>
 <#
         }

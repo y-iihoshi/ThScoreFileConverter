@@ -88,7 +88,7 @@
    </section>
 
 <#
-        if (chara.Key != characters.Keys.Last())
+        if (chara.Key != characters.Last().Key)
         {
 #>
    <hr />

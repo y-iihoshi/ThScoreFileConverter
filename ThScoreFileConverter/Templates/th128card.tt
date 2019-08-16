@@ -79,14 +79,14 @@
      <tfoot>
 <#
     {
-        var cardTotalStr = "Total";
-        var cardTotalKey = 0.ToString("D3");
+        var cardStrTotal = "Total";
+        var cardKeyTotal = 0.ToString("D3");
 #>
       <tr>
-       <td colspan="2"><#= cardTotalStr #></td>
-       <td class="count">%T128C<#= cardTotalKey #>1</td>
-       <td class="count">%T128C<#= cardTotalKey #>2</td>
-       <td class="count">%T128C<#= cardTotalKey #>3</td>
+       <td colspan="2"><#= cardStrTotal #></td>
+       <td class="count">%T128C<#= cardKeyTotal #>1</td>
+       <td class="count">%T128C<#= cardKeyTotal #>2</td>
+       <td class="count">%T128C<#= cardKeyTotal #>3</td>
       </tr>
 <#
     }

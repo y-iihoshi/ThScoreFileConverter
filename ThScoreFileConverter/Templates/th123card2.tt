@@ -101,7 +101,7 @@
 <#
             }
 
-            if (cardType.Key != cardTypes.Keys.Last())
+            if (cardType.Key != cardTypes.Last().Key)
                 WriteLine(string.Empty);
         }
 #>
