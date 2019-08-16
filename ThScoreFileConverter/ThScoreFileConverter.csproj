@@ -861,8 +861,25 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th15score3.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th165bestshot.html" />
-    <Content Include="Templates\th165score.html" />
+    <None Include="Templates\th165.ttinclude" />
+    <Content Include="Templates\th165bestshot.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th165bestshot.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th165bestshot.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th165bestshot.html</LastGenOutput>
+    </None>
+    <Content Include="Templates\th165score.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>th165score.tt</DependentUpon>
+    </Content>
+    <None Include="Templates\th165score.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>th165score.html</LastGenOutput>
+    </None>
     <None Include="Templates\th16.ttinclude" />
     <Content Include="Templates\th16card1.html">
       <AutoGen>True</AutoGen>

@@ -1,0 +1,60 @@
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#
+    var days = new Dictionary<string, (string Id, string Name)>
+    {
+        { "01", ("Sunday", "日曜日") },
+        { "02", ("Monday", "月曜日") },
+        { "03", ("Tuesday", "火曜日") },
+        { "04", ("Wednesday", "水曜日") },
+        { "05", ("Thursday", "木曜日") },
+        { "06", ("Friday", "金曜日") },
+        { "07", ("Saturday", "土曜日") },
+        { "W1", ("WrongSunday", "裏・日曜日") },
+        { "W2", ("WrongMonday", "裏・月曜日") },
+        { "W3", ("WrongTuesday", "裏・火曜日") },
+        { "W4", ("WrongWednesday", "裏・水曜日") },
+        { "W5", ("WrongThursday", "裏・木曜日") },
+        { "W6", ("WrongFriday", "裏・金曜日") },
+        { "W7", ("WrongSaturday", "裏・土曜日") },
+        { "N1", ("NightmareSunday", "悪夢日曜") },
+        { "N2", ("NightmareMonday", "悪夢月曜") },
+        { "N3", ("NightmareTuesday", "悪夢火曜") },
+        { "N4", ("NightmareWednesday", "悪夢水曜") },
+        { "N5", ("NightmareThursday", "悪夢木曜") },
+        { "N6", ("NightmareFriday", "悪夢金曜") },
+        { "N7", ("NightmareSaturday", "悪夢土曜") },
+        { "ND", ("NightmareDiary", "ナイトメアダイアリー") },
+    };
+
+    var dreamsPerDay = new Dictionary<string, int>
+    {
+        { "01", 2 },
+        { "02", 4 },
+        { "03", 3 },
+        { "04", 4 },
+        { "05", 3 },
+        { "06", 3 },
+        { "07", 1 },
+        { "W1", 7 },
+        { "W2", 4 },
+        { "W3", 4 },
+        { "W4", 6 },
+        { "W5", 5 },
+        { "W6", 5 },
+        { "W7", 6 },
+        { "N1", 6 },
+        { "N2", 6 },
+        { "N3", 6 },
+        { "N4", 6 },
+        { "N5", 6 },
+        { "N6", 6 },
+        { "N7", 6 },
+        { "ND", 4 },
+    };
+
+    var numDreams = dreamsPerDay.Values.Sum();
+
+    var numNicknames = 50;
+#>

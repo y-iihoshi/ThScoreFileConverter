@@ -1,0 +1,181 @@
+<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ include file="th165.ttinclude" once="true" #>
+<#@ output extension=".html" encoding="utf-8" #>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+
+ <head>
+  <meta charset="UTF-8" />
+  <title>秘封ナイトメアダイアリー スコアデータ</title>
+  <link rel="stylesheet" href="style.css" />
+<style>
+/* <![CDATA[ */
+    td.scene { min-width: 5em; }
+    td.target { min-width: 22em; }
+    td.score { min-width: 5em; }
+    td.count { min-width: 5em; text-align: right; }
+    table.total-score th { min-width: 11em; }
+    table.total-score td { min-width: 11em; }
+    table.total-score td.score { text-align: center; }
+    table.total-score td.count { text-align: center; }
+    table.nickname { float: left; }
+    table.nickname th.number { text-align: center; }
+    table.nickname td.number { min-width: 2em; }
+    table.nickname td.nickname { min-width: 12em; }
+/* ]]> */
+</style>
+ </head>
+
+ <body>
+
+  <header>
+   <h1>秘封ナイトメアダイアリー スコアデータ全般</h1>
+   <hr />
+   <nav>
+    <ul>
+     <li>スコアデータ全般</li>
+     <li><a href="th165bestshot.html">ベストショット一覧</a></li>
+    </ul>
+    <ul>
+<#
+    foreach (var day in days)
+    {
+#>
+     <li><a href="#<#= day.Value.Id #>"><#= day.Value.Name #></a></li>
+<#
+    }
+#>
+     <li><a href="#TotalScore">合計</a></li>
+     <li><a href="#Nickname">異名取得状況</a></li>
+    </ul>
+   </nav>
+  </header>
+
+  <main>
+
+   <section>
+    <h2 id="ScorePerDayOfWeek">曜日別スコア</h2>
+
+<#
+    foreach (var day in days)
+    {
+#>
+    <table class="score-per-dayofweek">
+     <caption id="<#= day.Value.Id #>"><#= day.Value.Name #></caption>
+     <thead>
+      <tr>
+       <th scope="col" class="scene">弾幕夢</th>
+       <th scope="col" class="target">スペルカード名<br />（使用者）</th>
+       <th scope="col" class="count">撃破回数</th>
+       <th scope="col" class="count">挑戦回数</th>
+       <th scope="col" class="score">写真評価点</th>
+       <th scope="col" class="count">撮影枚数</th>
+      </tr>
+     </thead>
+     <tbody>
+<#
+        foreach (var dream in Enumerable.Range(1, dreamsPerDay[day.Key]))
+        {
+#>
+      <tr>
+       <td class="scene">弾幕夢 <#= dream #></td>
+       <td class="target">%T165CARD<#= day.Key #><#= dream #>2<br />（%T165CARD<#= day.Key #><#= dream #>1）</td>
+       <td class="count">%T165SCR<#= day.Key #><#= dream #>3</td>
+       <td class="count">%T165SCR<#= day.Key #><#= dream #>2</td>
+       <td class="score">%T165SCR<#= day.Key #><#= dream #>1</td>
+       <td class="count">%T165SCR<#= day.Key #><#= dream #>4</td>
+      </tr>
+<#
+        }
+#>
+     </tbody>
+    </table>
+
+<#
+    }
+#>
+   </section>
+
+   <hr />
+
+   <section>
+    <h2 id="TotalScore">スコアの合計</h2>
+    <table class="total-score">
+     <tbody>
+      <tr>
+       <th scope="row">総プレイ時間</th>
+       <td class="playtime">%T165TIMEPLY</td>
+      </tr>
+      <tr>
+       <th scope="row">夢日記取得数</th>
+       <td class="count">%T165SCRTL4 / 103</td>
+      </tr>
+      <tr>
+       <th scope="row">総撮影枚数</th>
+       <td class="count">%T165SCRTL5</td>
+      </tr>
+      <tr>
+       <th scope="row">総合評価点</th>
+       <td class="score">%T165SCRTL1</td>
+      </tr>
+      <tr>
+       <th scope="row">異名取得数</th>
+       <td class="count">%T165SCRTL6</td>
+      </tr>
+      <tr>
+       <th scope="row">撃破回数 / 挑戦回数</th>
+       <td class="count">%T165SCRTL3 / %T165SCRTL2</td>
+      </tr>
+     </tbody>
+    </table>
+   </section>
+
+   <hr />
+
+   <section>
+    <h2 id="Nickname">異名取得状況</h2>
+
+<#
+    foreach (var place10 in Enumerable.Range(0, (int)Math.Ceiling(numNicknames / 10f)))
+    {
+#>
+    <table class="nickname">
+     <thead>
+      <tr>
+       <th scope="col" class="number">No.</th>
+       <th scope="col" class="nickname">異名</th>
+      </tr>
+     </thead>
+     <tbody>
+<#
+        foreach (var place1 in Enumerable.Range(0, 10))
+        {
+            var nickname = place10 * 10 + place1 + 1;
+            var nicknameKey = nickname.ToString("D2");
+#>
+      <tr><td class="number"><#= nickname #></td><td class="nickname">%T165NICK<#= nicknameKey #></td></tr>
+<#
+        }
+#>
+     </tbody>
+    </table>
+<#
+    }
+#>
+   </section>
+
+  </main>
+
+  <footer>
+   <p>
+    Data output by <a href="https://www.colorless-sight.jp/thsfc/">ThScoreFileConverter</a>.
+<script>
+// <![CDATA[
+    document.write("Last updated: ", document.lastModified, ".");
+// ]]>
+</script>
+   </p>
+  </footer>
+
+ </body>
+</html>
