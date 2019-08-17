@@ -16,6 +16,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Models.Th07;
 using CardInfo = ThScoreFileConverter.Models.SpellCardInfo<
     ThScoreFileConverter.Models.Th07Converter.Stage, ThScoreFileConverter.Models.Th07Converter.Level>;
 
@@ -849,14 +850,6 @@ namespace ThScoreFileConverter.Models
             {
                 return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
             }
-        }
-
-        private class FileHeader : Th07.FileHeaderBase
-        {
-            public const short ValidVersion = 0x000B;
-            public const int ValidSize = 0x0000001C;
-
-            public override bool IsValid => base.IsValid && (this.Version == ValidVersion) && (this.Size == ValidSize);
         }
 
         private class AllScoreData

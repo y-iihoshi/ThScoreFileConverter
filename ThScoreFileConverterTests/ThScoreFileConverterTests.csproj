@@ -79,7 +79,6 @@
     <Compile Include="Models\Th07\FileHeaderTests.cs" />
     <Compile Include="Models\Th07\LastNameTests.cs" />
     <Compile Include="Models\Th07\VersionInfoTests.cs" />
-    <Compile Include="Models\Th07\Wrappers\FileHeaderWrapper.cs" />
     <Compile Include="Models\Th07AllScoreDataTests.cs" />
     <Compile Include="Models\Th07CardAttackTests.cs" />
     <Compile Include="Models\Th07ClearDataTests.cs" />
@@ -92,6 +91,7 @@
     <Compile Include="Models\Th075HighScoreTests.cs" />
     <Compile Include="Models\Th075SpellCardInfoTests.cs" />
     <Compile Include="Models\Th075StatusTests.cs" />
+    <Compile Include="Models\Th08\FileHeaderTests.cs" />
     <Compile Include="Models\Th08AllScoreDataTests.cs" />
     <Compile Include="Models\Th08CardAttackCareerTests.cs" />
     <Compile Include="Models\Th08CardAttackTests.cs" />
@@ -101,9 +101,9 @@
     <Compile Include="Models\Th08PlayCountTests.cs" />
     <Compile Include="Models\Th08PlayStatusTests.cs" />
     <Compile Include="Models\Th08PracticeScoreTests.cs" />
+    <Compile Include="Models\Th09\FileHeaderTests.cs" />
     <Compile Include="Models\Th09AllScoreDataTests.cs" />
     <Compile Include="Models\Th09ClearCountTests.cs" />
-    <Compile Include="Models\Th09FileHeaderTests.cs" />
     <Compile Include="Models\Th09HighScoreTests.cs" />
     <Compile Include="Models\Th09PlayStatusTests.cs" />
     <Compile Include="Models\Th095\ChapterTests.cs" />

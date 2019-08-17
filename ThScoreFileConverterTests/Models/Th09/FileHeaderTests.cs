@@ -2,9 +2,9 @@
 using System;
 using System.IO;
 using System.Linq;
-using ThScoreFileConverter.Models.Th07;
+using ThScoreFileConverter.Models.Th09;
 
-namespace ThScoreFileConverterTests.Models.Th07
+namespace ThScoreFileConverterTests.Models
 {
     [TestClass]
     public class FileHeaderTests
@@ -22,9 +22,9 @@ namespace ThScoreFileConverterTests.Models.Th07
         internal static Properties ValidProperties => new Properties()
         {
             checksum = 12,
-            version = 0x0B,
-            size = 0x1C,
-            decodedAllSize = 78 + 0x1C,
+            version = 0x04,
+            size = 0x18,
+            decodedAllSize = 78 + 0x18,
             decodedBodySize = 78,
             encodedBodySize = 90
         };
@@ -36,7 +36,6 @@ namespace ThScoreFileConverterTests.Models.Th07
                 properties.version,
                 (ushort)0,
                 properties.size,
-                0u,
                 properties.decodedAllSize,
                 properties.decodedBodySize,
                 properties.encodedBodySize);
