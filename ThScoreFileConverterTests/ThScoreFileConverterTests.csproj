@@ -128,7 +128,6 @@
     <Compile Include="Models\Th105\ClearDataTests.cs" />
     <Compile Include="Models\Th105\SpellCardResultTests.cs" />
     <Compile Include="Models\Th105\StageInfoTests.cs" />
-    <Compile Include="Models\Th105\Wrappers\CardForDeckWrapper.cs" />
     <Compile Include="Models\Th105\Wrappers\ClearDataWrapper.cs" />
     <Compile Include="Models\Th105\Wrappers\SpellCardResultWrapper.cs" />
     <Compile Include="Models\Th105\Wrappers\StageInfoWrapper.cs" />
