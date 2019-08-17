@@ -16,6 +16,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Models.Th06;
 using CardInfo = ThScoreFileConverter.Models.SpellCardInfo<
     ThScoreFileConverter.Models.ThConverter.Stage, ThScoreFileConverter.Models.ThConverter.Level>;
 
@@ -224,7 +225,7 @@ namespace ThScoreFileConverter.Models
             using (var reader = new BinaryReader(input, Encoding.UTF8, true))
             using (var writer = new BinaryWriter(output, Encoding.UTF8, true))
             {
-                var header = new Th06.FileHeader();
+                var header = new FileHeader();
 
                 header.ReadFrom(reader);
                 if (!header.IsValid)
@@ -252,8 +253,8 @@ namespace ThScoreFileConverter.Models
         {
             using (var reader = new BinaryReader(input, Encoding.UTF8, true))
             {
-                var header = new Th06.FileHeader();
-                var chapter = new Th06.Chapter();
+                var header = new FileHeader();
+                var chapter = new Chapter();
 
                 header.ReadFrom(reader);
                 var remainSize = header.DecodedAllSize - header.Size;
@@ -292,7 +293,7 @@ namespace ThScoreFileConverter.Models
 
         private static AllScoreData Read(Stream input)
         {
-            var dictionary = new Dictionary<string, Action<AllScoreData, Th06.Chapter>>
+            var dictionary = new Dictionary<string, Action<AllScoreData, Chapter>>
             {
                 { Header.ValidSignature,        (data, ch) => data.Set(new Header(ch))        },
                 { HighScore.ValidSignature,     (data, ch) => data.Set(new HighScore(ch))     },
@@ -304,16 +305,16 @@ namespace ThScoreFileConverter.Models
             using (var reader = new BinaryReader(input, Encoding.UTF8, true))
             {
                 var allScoreData = new AllScoreData();
-                var chapter = new Th06.Chapter();
+                var chapter = new Chapter();
 
-                reader.ReadExactBytes(Th06.FileHeader.ValidSize);
+                reader.ReadExactBytes(FileHeader.ValidSize);
 
                 try
                 {
                     while (true)
                     {
                         chapter.ReadFrom(reader);
-                        if (dictionary.TryGetValue(chapter.Signature, out Action<AllScoreData, Th06.Chapter> setChapter))
+                        if (dictionary.TryGetValue(chapter.Signature, out var setChapter))
                             setChapter(allScoreData, chapter);
                     }
                 }
@@ -650,12 +651,12 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class Header : Th06.Chapter
+        private class Header : Chapter
         {
             public const string ValidSignature = "TH6K";
             public const short ValidSize = 0x000C;
 
-            public Header(Th06.Chapter chapter)
+            public Header(Chapter chapter)
                 : base(chapter, ValidSignature, ValidSize)
             {
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
@@ -665,12 +666,12 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class HighScore : Th06.Chapter   // per character, level, rank
+        private class HighScore : Chapter   // per character, level, rank
         {
             public const string ValidSignature = "HSCR";
             public const short ValidSize = 0x001C;
 
-            public HighScore(Th06.Chapter chapter)
+            public HighScore(Chapter chapter)
                 : base(chapter, ValidSignature, ValidSize)
             {
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
@@ -702,12 +703,12 @@ namespace ThScoreFileConverter.Models
             public byte[] Name { get; } // Null-terminated
         }
 
-        private class ClearData : Th06.Chapter   // per character
+        private class ClearData : Chapter   // per character
         {
             public const string ValidSignature = "CLRD";
             public const short ValidSize = 0x0018;
 
-            public ClearData(Th06.Chapter chapter)
+            public ClearData(Chapter chapter)
                 : base(chapter, ValidSignature, ValidSize)
             {
                 var levels = Utils.GetEnumerator<Level>();
@@ -735,12 +736,12 @@ namespace ThScoreFileConverter.Models
             public Chara Chara { get; }
         }
 
-        private class CardAttack : Th06.Chapter      // per card
+        private class CardAttack : Chapter  // per card
         {
             public const string ValidSignature = "CATK";
             public const short ValidSize = 0x0040;
 
-            public CardAttack(Th06.Chapter chapter)
+            public CardAttack(Chapter chapter)
                 : base(chapter, ValidSignature, ValidSize)
             {
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
@@ -766,12 +767,12 @@ namespace ThScoreFileConverter.Models
             public bool HasTried() => this.TrialCount > 0;
         }
 
-        private class PracticeScore : Th06.Chapter   // per character, level, stage
+        private class PracticeScore : Chapter   // per character, level, stage
         {
             public const string ValidSignature = "PSCR";
             public const short ValidSize = 0x0014;
 
-            public PracticeScore(Th06.Chapter chapter)
+            public PracticeScore(Chapter chapter)
                 : base(chapter, ValidSignature, ValidSize)
             {
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
