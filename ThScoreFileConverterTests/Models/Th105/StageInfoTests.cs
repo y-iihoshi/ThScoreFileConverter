@@ -1,9 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverterTests.Models.Th105.Wrappers;
+using ThScoreFileConverter.Models.Th105;
 
 namespace ThScoreFileConverterTests.Models.Th105
 {
@@ -30,7 +29,7 @@ namespace ThScoreFileConverterTests.Models.Th105
             };
 
         internal static void Validate<TStage, TChara>(
-            in StageInfoWrapper<TStage, TChara> spellCardInfo, in Properties<TStage, TChara> properties)
+            in StageInfo<TStage, TChara> spellCardInfo, in Properties<TStage, TChara> properties)
             where TStage : struct, Enum
             where TChara : struct, Enum
         {
@@ -46,7 +45,7 @@ namespace ThScoreFileConverterTests.Models.Th105
             {
                 var properties = GetValidProperties<TStage, TChara>();
 
-                var spellCardInfo = new StageInfoWrapper<TStage, TChara>(
+                var spellCardInfo = new StageInfo<TStage, TChara>(
                     properties.stage, properties.enemy, properties.cardIds);
 
                 Validate(spellCardInfo, properties);
