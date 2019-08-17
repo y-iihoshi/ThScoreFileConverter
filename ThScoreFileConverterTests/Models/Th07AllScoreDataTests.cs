@@ -5,7 +5,6 @@ using ThScoreFileConverter.Models.Th06;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ThScoreFileConverterTests.Models.Th07;
-using ThScoreFileConverterTests.Models.Th07.Wrappers;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -272,12 +271,12 @@ namespace ThScoreFileConverterTests.Models
         {
             var chapter = ChapterWrapper.Create(
                 VersionInfoTests.MakeByteArray(VersionInfoTests.ValidProperties));
-            var header = new VersionInfoWrapper(chapter);
+            var info = new VersionInfo(chapter.Target as Chapter);
 
             var allScoreData = new Th07AllScoreDataWrapper();
-            allScoreData.Set(header);
+            allScoreData.Set(info);
 
-            Assert.AreSame(header.Target, allScoreData.VersionInfo.Target);
+            Assert.AreSame(info, allScoreData.VersionInfo);
         });
 
         [TestMethod]
@@ -285,15 +284,15 @@ namespace ThScoreFileConverterTests.Models
         {
             var chapter = ChapterWrapper.Create(
                 VersionInfoTests.MakeByteArray(VersionInfoTests.ValidProperties));
-            var header1 = new VersionInfoWrapper(chapter);
-            var header2 = new VersionInfoWrapper(chapter);
+            var info1 = new VersionInfo(chapter.Target as Chapter);
+            var info2 = new VersionInfo(chapter.Target as Chapter);
 
             var allScoreData = new Th07AllScoreDataWrapper();
-            allScoreData.Set(header1);
-            allScoreData.Set(header2);
+            allScoreData.Set(info1);
+            allScoreData.Set(info2);
 
-            Assert.AreNotSame(header1.Target, allScoreData.VersionInfo.Target);
-            Assert.AreSame(header2.Target, allScoreData.VersionInfo.Target);
+            Assert.AreNotSame(info1, allScoreData.VersionInfo);
+            Assert.AreSame(info2, allScoreData.VersionInfo);
         });
     }
 }
