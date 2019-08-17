@@ -47,7 +47,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         }
 
         [TestMethod]
-        public void Th07LastNameTestChapter()
+        public void LastNameTestChapter()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -61,7 +61,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "lastName")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th07LastNameTestNullChapter()
+        public void LastNameTestNullChapter()
             => TestUtils.Wrap(() =>
             {
                 var lastName = new LastName(null);
@@ -73,7 +73,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "lastName")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th07LastNameTestInvalidSignature()
+        public void LastNameTestInvalidSignature()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -88,7 +88,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "lastName")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th07LastNameTestInvalidSize1()
+        public void LastNameTestInvalidSize1()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;

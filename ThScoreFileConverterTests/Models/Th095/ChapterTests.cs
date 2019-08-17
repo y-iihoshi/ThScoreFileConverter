@@ -55,7 +55,7 @@ namespace ThScoreFileConverterTests.Models.Th095
         }
 
         [TestMethod]
-        public void Th095ChapterTest()
+        public void ChapterTest()
             => TestUtils.Wrap(() =>
             {
                 var chapter = new ChapterWrapper();
@@ -65,7 +65,7 @@ namespace ThScoreFileConverterTests.Models.Th095
             });
 
         [TestMethod]
-        public void Th095ChapterTestCopy()
+        public void ChapterTestCopy()
             => TestUtils.Wrap(() =>
             {
                 var chapter1 = new ChapterWrapper();
@@ -78,7 +78,7 @@ namespace ThScoreFileConverterTests.Models.Th095
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "chapter")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th095ChapterTestNull()
+        public void ChapterTestNull()
             => TestUtils.Wrap(() =>
             {
                 var chapter = new ChapterWrapper(null);
@@ -87,7 +87,7 @@ namespace ThScoreFileConverterTests.Models.Th095
             });
 
         [TestMethod]
-        public void Th095ChapterReadFromTest()
+        public void ReadFromTest()
             => TestUtils.Wrap(() =>
             {
                 var chapter = ChapterWrapper.Create(MakeByteArray(ValidProperties));
@@ -98,7 +98,7 @@ namespace ThScoreFileConverterTests.Models.Th095
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th095ChapterReadFromTestNull()
+        public void ReadFromTestNull()
             => TestUtils.Wrap(() =>
             {
                 var chapter = new ChapterWrapper();
@@ -109,7 +109,7 @@ namespace ThScoreFileConverterTests.Models.Th095
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void Th095ChapterReadFromTestEmptySignature()
+        public void ReadFromTestEmptySignature()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -128,7 +128,7 @@ namespace ThScoreFileConverterTests.Models.Th095
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void Th095ChapterReadFromTestShortenedSignature()
+        public void ReadFromTestShortenedSignature()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -147,7 +147,7 @@ namespace ThScoreFileConverterTests.Models.Th095
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th095ChapterReadFromTestExceededSignature()
+        public void ReadFromTestExceededSignature()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -166,7 +166,7 @@ namespace ThScoreFileConverterTests.Models.Th095
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void Th095ChapterReadFromTestNegativeSize()
+        public void ReadFromTestNegativeSize()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -179,7 +179,7 @@ namespace ThScoreFileConverterTests.Models.Th095
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void Th095ChapterReadFromTestZeroSize()
+        public void ReadFromTestZeroSize()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -191,7 +191,7 @@ namespace ThScoreFileConverterTests.Models.Th095
             });
 
         [TestMethod]
-        public void Th095ChapterReadFromTestShortenedSize()
+        public void ReadFromTestShortenedSize()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -209,7 +209,7 @@ namespace ThScoreFileConverterTests.Models.Th095
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th095ChapterReadFromTestExceededSize()
+        public void ReadFromTestExceededSize()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -221,7 +221,7 @@ namespace ThScoreFileConverterTests.Models.Th095
             });
 
         [TestMethod]
-        public void Th095ChapterReadFromTestInvalidChecksum()
+        public void ReadFromTestInvalidChecksum()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -235,7 +235,7 @@ namespace ThScoreFileConverterTests.Models.Th095
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th095ChapterReadFromTestEmptyData()
+        public void ReadFromTestEmptyData()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -247,7 +247,7 @@ namespace ThScoreFileConverterTests.Models.Th095
             });
 
         [TestMethod]
-        public void Th095ChapterReadFromTestMisalignedData()
+        public void ReadFromTestMisalignedData()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;

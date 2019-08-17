@@ -52,7 +52,7 @@ namespace ThScoreFileConverterTests.Models.Th10
         }
 
         [TestMethod]
-        public void Th10PracticeTest()
+        public void PracticeTest()
             => TestUtils.Wrap(() =>
             {
                 var properties = new Properties();
@@ -62,7 +62,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             });
 
         [TestMethod]
-        public void Th10PracticeReadFromTest()
+        public void ReadFromTest()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -74,7 +74,7 @@ namespace ThScoreFileConverterTests.Models.Th10
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th10PracticeReadFromTestNull()
+        public void ReadFromTestNull()
             => TestUtils.Wrap(() =>
             {
                 var practice = new Practice();

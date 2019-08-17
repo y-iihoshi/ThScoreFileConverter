@@ -53,7 +53,7 @@ namespace ThScoreFileConverterTests.Models.Th105
         }
 
         [TestMethod]
-        public void Th105CardForDeckTest()
+        public void CardForDeckTest()
             => TestUtils.Wrap(() =>
             {
                 var properties = new Properties();
@@ -64,7 +64,7 @@ namespace ThScoreFileConverterTests.Models.Th105
             });
 
         [TestMethod]
-        public void Th105CardForDeckReadFromTest()
+        public void ReadFromTest()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -76,7 +76,7 @@ namespace ThScoreFileConverterTests.Models.Th105
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th105CardForDeckReadFromTestNull()
+        public void ReadFromTestNull()
             => TestUtils.Wrap(() =>
             {
                 var cardForDeck = new CardForDeck();
@@ -87,7 +87,7 @@ namespace ThScoreFileConverterTests.Models.Th105
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th105CardForDeckReadFromTestShortened()
+        public void ReadFromTestShortened()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -100,7 +100,7 @@ namespace ThScoreFileConverterTests.Models.Th105
             });
 
         [TestMethod]
-        public void Th105CardForDeckReadFromTestExceeded()
+        public void ReadFromTestExceeded()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;

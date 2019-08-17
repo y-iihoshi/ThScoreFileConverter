@@ -55,7 +55,7 @@ namespace ThScoreFileConverterTests.Models.Th13
         }
 
         [TestMethod]
-        public void Th13PracticeTest()
+        public void PracticeTest()
             => TestUtils.Wrap(() =>
             {
                 var properties = new Properties();
@@ -65,7 +65,7 @@ namespace ThScoreFileConverterTests.Models.Th13
             });
 
         [TestMethod]
-        public void Th13PracticeReadFromTest()
+        public void ReadFromTest()
             => TestUtils.Wrap(() =>
             {
                 var practice = Create(MakeByteArray(ValidProperties));
@@ -75,7 +75,7 @@ namespace ThScoreFileConverterTests.Models.Th13
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th13PracticeReadFromTestNull()
+        public void ReadFromTestNull()
             => TestUtils.Wrap(() =>
             {
                 var practice = new Practice();

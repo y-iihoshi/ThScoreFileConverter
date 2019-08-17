@@ -70,7 +70,7 @@ namespace ThScoreFileConverterTests.Models.Th10
         }
 
         [TestMethod]
-        public void Th10SpellCardTest()
+        public void SpellCardTest()
             => TestUtils.Wrap(() =>
             {
                 var properties = new Properties();
@@ -81,7 +81,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             });
 
         [TestMethod]
-        public void Th10SpellCardReadFromTest()
+        public void ReadFromTest()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -94,7 +94,7 @@ namespace ThScoreFileConverterTests.Models.Th10
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th10SpellCardReadFromTestNull()
+        public void ReadFromTestNull()
             => TestUtils.Wrap(() =>
             {
                 var spellCard = new SpellCard();
@@ -106,7 +106,7 @@ namespace ThScoreFileConverterTests.Models.Th10
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "spellCard")]
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th10SpellCardReadFromTestShortenedName()
+        public void ReadFromTestShortenedName()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -120,7 +120,7 @@ namespace ThScoreFileConverterTests.Models.Th10
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "spellCard")]
         [TestMethod]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th10SpellCardReadFromTestExceededName()
+        public void ReadFromTestExceededName()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -139,7 +139,7 @@ namespace ThScoreFileConverterTests.Models.Th10
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th10SpellCardReadFromTestInvalidLevel(int level)
+        public void ReadFromTestInvalidLevel(int level)
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;

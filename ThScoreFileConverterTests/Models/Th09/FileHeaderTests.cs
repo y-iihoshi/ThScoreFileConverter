@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models.Th09;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th09
 {
     [TestClass]
     public class FileHeaderTests

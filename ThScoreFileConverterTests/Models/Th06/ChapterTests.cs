@@ -51,7 +51,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         }
 
         [TestMethod]
-        public void Th06ChapterTest()
+        public void ChapterTest()
             => TestUtils.Wrap(() =>
             {
                 var chapter = new ChapterWrapper();
@@ -60,7 +60,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             });
 
         [TestMethod]
-        public void Th06ChapterTestCopy()
+        public void ChapterTestCopy()
             => TestUtils.Wrap(() =>
             {
                 var chapter1 = new ChapterWrapper();
@@ -72,7 +72,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "chapter")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th06ChapterTestNull()
+        public void ChapterTestNull()
             => TestUtils.Wrap(() =>
             {
                 var chapter = new ChapterWrapper(null);
@@ -81,7 +81,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             });
 
         [TestMethod]
-        public void Th06ChapterReadFromTest()
+        public void ReadFromTest()
             => TestUtils.Wrap(() =>
             {
                 var chapter = ChapterWrapper.Create(MakeByteArray(ValidProperties));
@@ -91,7 +91,7 @@ namespace ThScoreFileConverterTests.Models.Th06
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th06ChapterReadFromTestNull()
+        public void ReadFromTestNull()
             => TestUtils.Wrap(() =>
             {
                 var chapter = new ChapterWrapper();
@@ -102,7 +102,7 @@ namespace ThScoreFileConverterTests.Models.Th06
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th06ChapterReadFromTestEmptySignature()
+        public void ReadFromTestEmptySignature()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -122,7 +122,7 @@ namespace ThScoreFileConverterTests.Models.Th06
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th06ChapterReadFromTestShortenedSignature()
+        public void ReadFromTestShortenedSignature()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -141,7 +141,7 @@ namespace ThScoreFileConverterTests.Models.Th06
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th06ChapterReadFromTestExceededSignature()
+        public void ReadFromTestExceededSignature()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -160,7 +160,7 @@ namespace ThScoreFileConverterTests.Models.Th06
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void Th06ChapterReadFromTestNegativeSize1()
+        public void ReadFromTestNegativeSize1()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -173,7 +173,7 @@ namespace ThScoreFileConverterTests.Models.Th06
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void Th06ChapterReadFromTestZeroSize1()
+        public void ReadFromTestZeroSize1()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -185,7 +185,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             });
 
         [TestMethod]
-        public void Th06ChapterReadFromTestShortenedSize1()
+        public void ReadFromTestShortenedSize1()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -201,7 +201,7 @@ namespace ThScoreFileConverterTests.Models.Th06
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th06ChapterReadFromTestExceededSize1()
+        public void ReadFromTestExceededSize1()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -213,7 +213,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             });
 
         [TestMethod]
-        public void Th06ChapterReadFromTestNegativeSize2()
+        public void ReadFromTestNegativeSize2()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -225,7 +225,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             });
 
         [TestMethod]
-        public void Th06ChapterReadFromTestZeroSize2()
+        public void ReadFromTestZeroSize2()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -237,7 +237,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             });
 
         [TestMethod]
-        public void Th06ChapterReadFromTestShortenedSize2()
+        public void ReadFromTestShortenedSize2()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -249,7 +249,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             });
 
         [TestMethod]
-        public void Th06ChapterReadFromTestExceededSize2()
+        public void ReadFromTestExceededSize2()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -262,7 +262,7 @@ namespace ThScoreFileConverterTests.Models.Th06
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th06ChapterReadFromTestEmptyData()
+        public void ReadFromTestEmptyData()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
@@ -274,7 +274,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             });
 
         [TestMethod]
-        public void Th06ChapterReadFromTestMisalignedData()
+        public void ReadFromTestMisalignedData()
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
