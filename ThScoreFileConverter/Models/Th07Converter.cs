@@ -851,7 +851,7 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class FileHeader : Th07.FileHeader
+        private class FileHeader : Th07.FileHeaderBase
         {
             public const short ValidVersion = 0x000B;
             public const int ValidSize = 0x0000001C;

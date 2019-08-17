@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="FileHeader.cs" company="None">
+// <copyright file="FileHeaderBase.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
@@ -12,13 +12,13 @@ using System.IO;
 
 namespace ThScoreFileConverter.Models.Th07
 {
-    internal class FileHeader : IBinaryReadable, IBinaryWritable
+    internal class FileHeaderBase : IBinaryReadable, IBinaryWritable
     {
         private ushort unknown1;
         private ushort unknown2;
         private uint unknown3;
 
-        public FileHeader()
+        public FileHeaderBase()
         {
         }
 
