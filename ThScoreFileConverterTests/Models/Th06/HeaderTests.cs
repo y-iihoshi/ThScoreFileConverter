@@ -7,10 +7,10 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ThScoreFileConverterTests.Models.Wrappers;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th06
 {
     [TestClass]
-    public class Th06HeaderTests
+    public class HeaderTests
     {
         internal struct Properties
         {

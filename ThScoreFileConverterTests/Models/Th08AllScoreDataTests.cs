@@ -2,6 +2,7 @@
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th06;
 using ThScoreFileConverter.Models.Th07;
+using ThScoreFileConverterTests.Models.Th06;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ThScoreFileConverterTests.Models.Th07;
 using ThScoreFileConverterTests.Models.Wrappers;
@@ -31,7 +32,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th08AllScoreDataSetHeaderTest() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(
-                Th06HeaderTests.MakeByteArray(Th06HeaderTests.GetValidProperties("TH8K")));
+                HeaderTests.MakeByteArray(HeaderTests.GetValidProperties("TH8K")));
             var header = new Th06HeaderWrapper<Th08Converter>(chapter);
 
             var allScoreData = new Th08AllScoreDataWrapper();
@@ -44,7 +45,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th08AllScoreDataSetHeaderTestTwice() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(
-                Th06HeaderTests.MakeByteArray(Th06HeaderTests.GetValidProperties("TH8K")));
+                HeaderTests.MakeByteArray(HeaderTests.GetValidProperties("TH8K")));
             var header1 = new Th06HeaderWrapper<Th08Converter>(chapter);
             var header2 = new Th06HeaderWrapper<Th08Converter>(chapter);
 

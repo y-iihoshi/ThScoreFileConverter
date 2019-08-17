@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics.CodeAnalysis;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Models.Th06;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ThScoreFileConverterTests.Models.Wrappers;
 
@@ -25,7 +26,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th06AllScoreDataSetHeaderTest() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(
-                Th06HeaderTests.MakeByteArray(Th06HeaderTests.GetValidProperties("TH6K")));
+                HeaderTests.MakeByteArray(HeaderTests.GetValidProperties("TH6K")));
             var header = new Th06HeaderWrapper<Th06Converter>(chapter);
 
             var allScoreData = new Th06AllScoreDataWrapper();
@@ -38,7 +39,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th06AllScoreDataSetHeaderTestTwice() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(
-                Th06HeaderTests.MakeByteArray(Th06HeaderTests.GetValidProperties("TH6K")));
+                HeaderTests.MakeByteArray(HeaderTests.GetValidProperties("TH6K")));
             var header1 = new Th06HeaderWrapper<Th06Converter>(chapter);
             var header2 = new Th06HeaderWrapper<Th06Converter>(chapter);
 
