@@ -70,7 +70,6 @@
     <Compile Include="Models\Th06\ChapterTests.cs" />
     <Compile Include="Models\Th06\FileHeaderTests.cs" />
     <Compile Include="Models\Th06\Wrappers\ChapterWrapper.cs" />
-    <Compile Include="Models\Th06\Wrappers\FileHeaderWrapper.cs" />
     <Compile Include="Models\Th06AllScoreDataTests.cs" />
     <Compile Include="Models\Th06CardAttackTests.cs" />
     <Compile Include="Models\Th06ClearDataTests.cs" />
