@@ -3,10 +3,11 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using ThScoreFileConverter.Models.Th06;
-using ThScoreFileConverterTests.Models.Th06.Wrappers;
+using ThScoreFileConverter.Models.Th08;
+using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
+using ChapterWrapper = ThScoreFileConverterTests.Models.Th06.Wrappers.ChapterWrapper;
 
-namespace ThScoreFileConverterTests.Models.Th06
+namespace ThScoreFileConverterTests.Models.Th08
 {
     [TestClass]
     public class HeaderTests
@@ -21,7 +22,7 @@ namespace ThScoreFileConverterTests.Models.Th06
 
         internal static Properties ValidProperties => new Properties()
         {
-            signature = "TH6K",
+            signature = "TH8K",
             size1 = 12,
             size2 = 12,
             data = new byte[] { 0x10, 0x00, 0x00, 0x00 }

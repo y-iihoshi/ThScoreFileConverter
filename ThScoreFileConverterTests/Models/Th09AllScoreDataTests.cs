@@ -1,12 +1,14 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics.CodeAnalysis;
-using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Models.Th06;
-using ThScoreFileConverter.Models.Th07;
-using ThScoreFileConverterTests.Models.Th06;
+using ThScoreFileConverter.Models.Th09;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
-using ThScoreFileConverterTests.Models.Th07;
+using ThScoreFileConverterTests.Models.Th09;
 using ThScoreFileConverterTests.Models.Wrappers;
+using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
+using LastName = ThScoreFileConverter.Models.Th07.LastName;
+using VersionInfo = ThScoreFileConverter.Models.Th07.VersionInfo;
+using LastNameTests = ThScoreFileConverterTests.Models.Th07.LastNameTests;
+using VersionInfoTests = ThScoreFileConverterTests.Models.Th07.VersionInfoTests;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -29,29 +31,29 @@ namespace ThScoreFileConverterTests.Models
         public void Th09AllScoreDataSetHeaderTest() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(
-                HeaderTests.MakeByteArray(HeaderTests.GetValidProperties("TH9K")));
-            var header = new Th06HeaderWrapper<Th09Converter>(chapter);
+                HeaderTests.MakeByteArray(HeaderTests.ValidProperties));
+            var header = new Header(chapter.Target as Chapter);
 
             var allScoreData = new Th09AllScoreDataWrapper();
             allScoreData.Set(header);
 
-            Assert.AreSame(header.Target, allScoreData.Header.Target);
+            Assert.AreSame(header, allScoreData.Header);
         });
 
         [TestMethod]
         public void Th09AllScoreDataSetHeaderTestTwice() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(
-                HeaderTests.MakeByteArray(HeaderTests.GetValidProperties("TH9K")));
-            var header1 = new Th06HeaderWrapper<Th09Converter>(chapter);
-            var header2 = new Th06HeaderWrapper<Th09Converter>(chapter);
+                HeaderTests.MakeByteArray(HeaderTests.ValidProperties));
+            var header1 = new Header(chapter.Target as Chapter);
+            var header2 = new Header(chapter.Target as Chapter);
 
             var allScoreData = new Th09AllScoreDataWrapper();
             allScoreData.Set(header1);
             allScoreData.Set(header2);
 
-            Assert.AreNotSame(header1.Target, allScoreData.Header.Target);
-            Assert.AreSame(header2.Target, allScoreData.Header.Target);
+            Assert.AreNotSame(header1, allScoreData.Header);
+            Assert.AreSame(header2, allScoreData.Header);
         });
 
         [TestMethod]

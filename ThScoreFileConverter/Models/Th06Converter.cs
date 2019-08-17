@@ -651,21 +651,6 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class Header : Chapter
-        {
-            public const string ValidSignature = "TH6K";
-            public const short ValidSize = 0x000C;
-
-            public Header(Chapter chapter)
-                : base(chapter, ValidSignature, ValidSize)
-            {
-                using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-                {
-                    reader.ReadUInt32();    // always 0x00000010?
-                }
-            }
-        }
-
         private class HighScore : Chapter   // per character, level, rank
         {
             public const string ValidSignature = "HSCR";

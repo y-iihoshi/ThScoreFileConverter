@@ -3,7 +3,9 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Models.Th07;
+using ThScoreFileConverter.Models.Th08;
+using LastName = ThScoreFileConverter.Models.Th07.LastName;
+using VersionInfo = ThScoreFileConverter.Models.Th07.VersionInfo;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -23,14 +25,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public object Target
             => this.pobj.Target;
 
-        public Th06HeaderWrapper<Th08Converter> Header
-        {
-            get
-            {
-                var header = this.pobj.GetProperty(nameof(this.Header));
-                return (header != null) ? new Th06HeaderWrapper<Th08Converter>(header) : null;
-            }
-        }
+        public Header Header
+            => this.pobj.GetProperty(nameof(this.Header)) as Header;
 
         // NOTE: Th08Converter.HighScore are private classes.
         // public IReadOnlyDictionary<(Chara, Level), List<HighScore>> Rankings
@@ -105,8 +101,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public VersionInfo VersionInfo
             => this.pobj.GetProperty(nameof(this.VersionInfo)) as VersionInfo;
 
-        public void Set(Th06HeaderWrapper<Th08Converter> header)
-            => this.pobj.Invoke(nameof(Set), new object[] { header.Target }, CultureInfo.InvariantCulture);
+        public void Set(Header header)
+            => this.pobj.Invoke(nameof(Set), new object[] { header }, CultureInfo.InvariantCulture);
         public void Set(Th08HighScoreWrapper score)
             => this.pobj.Invoke(nameof(Set), new object[] { score.Target }, CultureInfo.InvariantCulture);
         public void Set(Th08ClearDataWrapper data)
