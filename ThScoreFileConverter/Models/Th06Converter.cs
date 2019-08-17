@@ -224,7 +224,7 @@ namespace ThScoreFileConverter.Models
             using (var reader = new BinaryReader(input, Encoding.UTF8, true))
             using (var writer = new BinaryWriter(output, Encoding.UTF8, true))
             {
-                var header = new FileHeader();
+                var header = new Th06.FileHeader();
 
                 header.ReadFrom(reader);
                 if (!header.IsValid)
@@ -252,7 +252,7 @@ namespace ThScoreFileConverter.Models
         {
             using (var reader = new BinaryReader(input, Encoding.UTF8, true))
             {
-                var header = new FileHeader();
+                var header = new Th06.FileHeader();
                 var chapter = new Th06.Chapter();
 
                 header.ReadFrom(reader);
@@ -306,7 +306,7 @@ namespace ThScoreFileConverter.Models
                 var allScoreData = new AllScoreData();
                 var chapter = new Th06.Chapter();
 
-                reader.ReadExactBytes(FileHeader.ValidSize);
+                reader.ReadExactBytes(Th06.FileHeader.ValidSize);
 
                 try
                 {
@@ -577,58 +577,6 @@ namespace ThScoreFileConverter.Models
             public string Replace(string input)
             {
                 return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-            }
-        }
-
-        private class FileHeader : IBinaryReadable, IBinaryWritable
-        {
-            public const short ValidVersion = 0x0010;
-            public const int ValidSize = 0x00000014;
-
-            private ushort unknown1;
-            private ushort unknown2;
-            private uint unknown3;
-
-            public FileHeader()
-            {
-            }
-
-            public ushort Checksum { get; private set; }
-
-            public short Version { get; private set; }
-
-            public int Size { get; private set; }
-
-            public int DecodedAllSize { get; private set; }
-
-            public bool IsValid => (this.Version == ValidVersion) && (this.Size == ValidSize);
-
-            public void ReadFrom(BinaryReader reader)
-            {
-                if (reader == null)
-                    throw new ArgumentNullException(nameof(reader));
-
-                this.unknown1 = reader.ReadUInt16();
-                this.Checksum = reader.ReadUInt16();
-                this.Version = reader.ReadInt16();
-                this.unknown2 = reader.ReadUInt16();
-                this.Size = reader.ReadInt32();
-                this.unknown3 = reader.ReadUInt32();
-                this.DecodedAllSize = reader.ReadInt32();
-            }
-
-            public void WriteTo(BinaryWriter writer)
-            {
-                if (writer == null)
-                    throw new ArgumentNullException(nameof(writer));
-
-                writer.Write(this.unknown1);
-                writer.Write(this.Checksum);
-                writer.Write(this.Version);
-                writer.Write(this.unknown2);
-                writer.Write(this.Size);
-                writer.Write(this.unknown3);
-                writer.Write(this.DecodedAllSize);
             }
         }
 

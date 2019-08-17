@@ -2,21 +2,21 @@
 using System;
 using System.Globalization;
 using System.IO;
-using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th06;
 
-namespace ThScoreFileConverterTests.Models.Wrappers
+namespace ThScoreFileConverterTests.Models.Th06.Wrappers
 {
-    public sealed class Th06FileHeaderWrapper
+    public sealed class FileHeaderWrapper
     {
-        private static readonly Type ParentType = typeof(Th06Converter);
-        private static readonly string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
-        private static readonly string TypeNameToTest = ParentType.FullName + "+FileHeader";
+        private static readonly Type TypeToTest = typeof(FileHeader);
+        private static readonly string AssemblyNameToTest = TypeToTest.Assembly.GetName().Name;
+        private static readonly string TypeNameToTest = TypeToTest.FullName;
 
         private readonly PrivateObject pobj = null;
 
-        public static Th06FileHeaderWrapper Create(byte[] array)
+        public static FileHeaderWrapper Create(byte[] array)
         {
-            var chapter = new Th06FileHeaderWrapper();
+            var chapter = new FileHeaderWrapper();
 
             MemoryStream stream = null;
             try
@@ -36,7 +36,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             return chapter;
         }
 
-        public Th06FileHeaderWrapper()
+        public FileHeaderWrapper()
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest);
 
         public object Target

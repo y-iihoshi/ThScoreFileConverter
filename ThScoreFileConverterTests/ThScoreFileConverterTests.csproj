@@ -68,11 +68,12 @@
     <Compile Include="Models\SpellCardInfoTests.cs" />
     <Compile Include="Models\TestUtils.cs" />
     <Compile Include="Models\Th06\ChapterTests.cs" />
+    <Compile Include="Models\Th06\FileHeaderTests.cs" />
     <Compile Include="Models\Th06\Wrappers\ChapterWrapper.cs" />
+    <Compile Include="Models\Th06\Wrappers\FileHeaderWrapper.cs" />
     <Compile Include="Models\Th06AllScoreDataTests.cs" />
     <Compile Include="Models\Th06CardAttackTests.cs" />
     <Compile Include="Models\Th06ClearDataTests.cs" />
-    <Compile Include="Models\Th06FileHeaderTests.cs" />
     <Compile Include="Models\Th06HeaderTests.cs" />
     <Compile Include="Models\Th06HighScoreTests.cs" />
     <Compile Include="Models\Th06PracticeScoreTests.cs" />
@@ -188,7 +189,6 @@
     <Compile Include="Models\Wrappers\Th06AllScoreDataWrapper.cs" />
     <Compile Include="Models\Wrappers\Th06CardAttackWrapper.cs" />
     <Compile Include="Models\Wrappers\Th06ClearDataWrapper.cs" />
-    <Compile Include="Models\Wrappers\Th06FileHeaderWrapper.cs" />
     <Compile Include="Models\Wrappers\Th06HeaderWrapper.cs" />
     <Compile Include="Models\Wrappers\Th06HighScoreWrapper.cs" />
     <Compile Include="Models\Wrappers\Th06PracticeScoreWrapper.cs" />
