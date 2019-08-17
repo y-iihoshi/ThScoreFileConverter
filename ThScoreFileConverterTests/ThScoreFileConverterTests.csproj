@@ -80,7 +80,6 @@
     <Compile Include="Models\Th07\LastNameTests.cs" />
     <Compile Include="Models\Th07\VersionInfoTests.cs" />
     <Compile Include="Models\Th07\Wrappers\FileHeaderWrapper.cs" />
-    <Compile Include="Models\Th07\Wrappers\LastNameWrapper.cs" />
     <Compile Include="Models\Th07\Wrappers\VersionInfoWrapper.cs" />
     <Compile Include="Models\Th07AllScoreDataTests.cs" />
     <Compile Include="Models\Th07CardAttackTests.cs" />

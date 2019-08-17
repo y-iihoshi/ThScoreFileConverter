@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics.CodeAnalysis;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th06;
+using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ThScoreFileConverterTests.Models.Th07;
 using ThScoreFileConverterTests.Models.Th07.Wrappers;
@@ -146,12 +148,12 @@ namespace ThScoreFileConverterTests.Models
         {
             var chapter = ChapterWrapper.Create(
                 LastNameTests.MakeByteArray(LastNameTests.ValidProperties));
-            var header = new LastNameWrapper(chapter);
+            var name = new LastName(chapter.Target as Chapter);
 
             var allScoreData = new Th09AllScoreDataWrapper();
-            allScoreData.Set(header);
+            allScoreData.Set(name);
 
-            Assert.AreSame(header.Target, allScoreData.LastName.Target);
+            Assert.AreSame(name, allScoreData.LastName);
         });
 
         [TestMethod]
@@ -159,15 +161,15 @@ namespace ThScoreFileConverterTests.Models
         {
             var chapter = ChapterWrapper.Create(
                 LastNameTests.MakeByteArray(LastNameTests.ValidProperties));
-            var header1 = new LastNameWrapper(chapter);
-            var header2 = new LastNameWrapper(chapter);
+            var name1 = new LastName(chapter.Target as Chapter);
+            var name2 = new LastName(chapter.Target as Chapter);
 
             var allScoreData = new Th09AllScoreDataWrapper();
-            allScoreData.Set(header1);
-            allScoreData.Set(header2);
+            allScoreData.Set(name1);
+            allScoreData.Set(name2);
 
-            Assert.AreNotSame(header1.Target, allScoreData.LastName.Target);
-            Assert.AreSame(header2.Target, allScoreData.LastName.Target);
+            Assert.AreNotSame(name1, allScoreData.LastName);
+            Assert.AreSame(name2, allScoreData.LastName);
         });
 
         [TestMethod]

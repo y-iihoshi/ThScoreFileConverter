@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Models.Th07.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
@@ -57,14 +58,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             }
         }
 
-        public LastNameWrapper LastName
-        {
-            get
-            {
-                var name = this.pobj.GetProperty(nameof(this.LastName));
-                return (name != null) ? new LastNameWrapper(name) : null;
-            }
-        }
+        public LastName LastName
+            => this.pobj.GetProperty(nameof(this.LastName)) as LastName;
 
         public VersionInfoWrapper VersionInfo
         {
@@ -81,8 +76,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.Invoke(nameof(Set), new object[] { score.Target }, CultureInfo.InvariantCulture);
         public void Set(Th09PlayStatusWrapper status)
             => this.pobj.Invoke(nameof(Set), new object[] { status.Target }, CultureInfo.InvariantCulture);
-        public void Set(LastNameWrapper name)
-            => this.pobj.Invoke(nameof(Set), new object[] { name.Target }, CultureInfo.InvariantCulture);
+        public void Set(LastName name)
+            => this.pobj.Invoke(nameof(Set), new object[] { name }, CultureInfo.InvariantCulture);
         public void Set(VersionInfoWrapper info)
             => this.pobj.Invoke(nameof(Set), new object[] { info.Target }, CultureInfo.InvariantCulture);
     }
