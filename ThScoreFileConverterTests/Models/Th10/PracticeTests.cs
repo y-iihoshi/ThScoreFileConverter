@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.IO;
 using ThScoreFileConverter.Models.Th10;
-using ThScoreFileConverterTests.Models.Th10.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Th10
 {
@@ -23,8 +23,27 @@ namespace ThScoreFileConverterTests.Models.Th10
         internal static byte[] MakeByteArray(in Properties properties)
             => TestUtils.MakeByteArray(properties.score, properties.stageFlag);
 
-        internal static void Validate(in PracticeWrapper practice, in Properties properties)
-            => Validate(practice.Target as Practice, properties);
+        internal static Practice Create(byte[] array)
+        {
+            var practice = new Practice();
+
+            MemoryStream stream = null;
+            try
+            {
+                stream = new MemoryStream(array);
+                using (var reader = new BinaryReader(stream))
+                {
+                    stream = null;
+                    practice.ReadFrom(reader);
+                }
+            }
+            finally
+            {
+                stream?.Dispose();
+            }
+
+            return practice;
+        }
 
         internal static void Validate(in Practice practice, in Properties properties)
         {
@@ -37,7 +56,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             => TestUtils.Wrap(() =>
             {
                 var properties = new Properties();
-                var practice = new PracticeWrapper();
+                var practice = new Practice();
 
                 Validate(practice, properties);
             });
@@ -48,7 +67,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             {
                 var properties = ValidProperties;
 
-                var practice = PracticeWrapper.Create(MakeByteArray(properties));
+                var practice = Create(MakeByteArray(properties));
 
                 Validate(practice, properties);
             });
@@ -58,7 +77,7 @@ namespace ThScoreFileConverterTests.Models.Th10
         public void Th10PracticeReadFromTestNull()
             => TestUtils.Wrap(() =>
             {
-                var practice = new PracticeWrapper();
+                var practice = new Practice();
                 practice.ReadFrom(null);
 
                 Assert.Fail(TestUtils.Unreachable);
