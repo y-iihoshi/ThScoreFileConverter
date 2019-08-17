@@ -121,7 +121,6 @@
     <Compile Include="Models\Th10\SpellCardTests.cs" />
     <Compile Include="Models\Th10\Wrappers\ChapterWrapper.cs" />
     <Compile Include="Models\Th10\Wrappers\ScoreDataWrapper.cs" />
-    <Compile Include="Models\Th10\Wrappers\SpellCardWrapper.cs" />
     <Compile Include="Models\Th10AllScoreDataTests.cs" />
     <Compile Include="Models\Th10ClearDataTests.cs" />
     <Compile Include="Models\Th10StatusTests.cs" />

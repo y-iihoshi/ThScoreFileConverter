@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th10;
-using ThScoreFileConverterTests.Models.Th10.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Th10
 {
@@ -39,8 +38,27 @@ namespace ThScoreFileConverterTests.Models.Th10
                 properties.id - 1,
                 (int)properties.level);
 
-        internal static void Validate(in SpellCardWrapper spellCard, in Properties properties)
-            => Validate(spellCard.Target as SpellCard, properties);
+        internal static SpellCard Create(byte[] array)
+        {
+            var spellCard = new SpellCard();
+
+            MemoryStream stream = null;
+            try
+            {
+                stream = new MemoryStream(array);
+                using (var reader = new BinaryReader(stream))
+                {
+                    stream = null;
+                    spellCard.ReadFrom(reader);
+                }
+            }
+            finally
+            {
+                stream?.Dispose();
+            }
+
+            return spellCard;
+        }
 
         internal static void Validate(in SpellCard spellCard, in Properties properties)
         {
@@ -56,10 +74,10 @@ namespace ThScoreFileConverterTests.Models.Th10
             => TestUtils.Wrap(() =>
             {
                 var properties = new Properties();
-                var spellCard = new SpellCardWrapper();
+                var spellCard = new SpellCard();
 
                 Validate(spellCard, properties);
-                Assert.IsFalse(spellCard.HasTried.Value);
+                Assert.IsFalse(spellCard.HasTried);
             });
 
         [TestMethod]
@@ -68,10 +86,10 @@ namespace ThScoreFileConverterTests.Models.Th10
             {
                 var properties = ValidProperties;
 
-                var spellCard = SpellCardWrapper.Create(MakeByteArray(properties));
+                var spellCard = Create(MakeByteArray(properties));
 
                 Validate(spellCard, properties);
-                Assert.IsTrue(spellCard.HasTried.Value);
+                Assert.IsTrue(spellCard.HasTried);
             });
 
         [TestMethod]
@@ -79,7 +97,7 @@ namespace ThScoreFileConverterTests.Models.Th10
         public void Th10SpellCardReadFromTestNull()
             => TestUtils.Wrap(() =>
             {
-                var spellCard = new SpellCardWrapper();
+                var spellCard = new SpellCard();
                 spellCard.ReadFrom(null);
 
                 Assert.Fail(TestUtils.Unreachable);
@@ -94,7 +112,7 @@ namespace ThScoreFileConverterTests.Models.Th10
                 var properties = ValidProperties;
                 properties.name = properties.name.Take(properties.name.Length - 1).ToArray();
 
-                var spellCard = SpellCardWrapper.Create(MakeByteArray(properties));
+                var spellCard = Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -108,7 +126,7 @@ namespace ThScoreFileConverterTests.Models.Th10
                 var properties = ValidProperties;
                 properties.name = properties.name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
 
-                var spellCard = SpellCardWrapper.Create(MakeByteArray(properties));
+                var spellCard = Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -127,7 +145,7 @@ namespace ThScoreFileConverterTests.Models.Th10
                 var properties = ValidProperties;
                 properties.level = TestUtils.Cast<ThConverter.Level>(level);
 
-                var spellCard = SpellCardWrapper.Create(MakeByteArray(properties));
+                var spellCard = Create(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
