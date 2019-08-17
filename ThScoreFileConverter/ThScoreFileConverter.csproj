@@ -110,6 +110,7 @@
     <Compile Include="Models\Th06\Chapter.cs" />
     <Compile Include="Models\Th06\FileHeader.cs" />
     <Compile Include="Models\Th06\Header.cs" />
+    <Compile Include="Models\Th06\HighScore.cs" />
     <Compile Include="Models\Th07Converter.cs" />
     <Compile Include="Models\Th075Converter.cs" />
     <Compile Include="Models\Th07\FileHeader.cs" />
