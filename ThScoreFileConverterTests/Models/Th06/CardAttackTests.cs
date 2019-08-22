@@ -3,13 +3,13 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Models.Th06;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
-using ThScoreFileConverterTests.Models.Wrappers;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th06
 {
     [TestClass]
-    public class Th06CardAttackTests
+    public class CardAttackTests
     {
         internal struct Properties
         {
@@ -46,14 +46,13 @@ namespace ThScoreFileConverterTests.Models
             => TestUtils.MakeByteArray(
                 properties.signature.ToCharArray(), properties.size1, properties.size2, MakeData(properties));
 
-        internal static void Validate(in Th06CardAttackWrapper cardAttack, in Properties properties)
+        internal static void Validate(in CardAttack cardAttack, in Properties properties)
         {
             var data = MakeData(properties);
 
             Assert.AreEqual(properties.signature, cardAttack.Signature);
             Assert.AreEqual(properties.size1, cardAttack.Size1);
             Assert.AreEqual(properties.size2, cardAttack.Size2);
-            CollectionAssert.AreEqual(data, cardAttack.Data.ToArray());
             Assert.AreEqual(data[0], cardAttack.FirstByteOfData);
             Assert.AreEqual(properties.cardId, cardAttack.CardId);
             CollectionAssert.AreEqual(properties.cardName, cardAttack.CardName.ToArray());
@@ -67,10 +66,10 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var cardAttack = new Th06CardAttackWrapper(chapter);
+            var cardAttack = new CardAttack(chapter.Target as Chapter);
 
             Validate(cardAttack, properties);
-            Assert.IsTrue(cardAttack.HasTried().Value);
+            Assert.IsTrue(cardAttack.HasTried());
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "cardAttack")]
@@ -78,7 +77,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th06CardAttackTestNullChapter() => TestUtils.Wrap(() =>
         {
-            var cardAttack = new Th06CardAttackWrapper(null);
+            var cardAttack = new CardAttack(null);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -93,7 +92,7 @@ namespace ThScoreFileConverterTests.Models
             properties.signature = properties.signature.ToLowerInvariant();
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var cardAttack = new Th06CardAttackWrapper(chapter);
+            var cardAttack = new CardAttack(chapter.Target as Chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -107,7 +106,7 @@ namespace ThScoreFileConverterTests.Models
             --properties.size1;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var cardAttack = new Th06CardAttackWrapper(chapter);
+            var cardAttack = new CardAttack(chapter.Target as Chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -119,10 +118,10 @@ namespace ThScoreFileConverterTests.Models
             properties.trialCount = 0;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var cardAttack = new Th06CardAttackWrapper(chapter);
+            var cardAttack = new CardAttack(chapter.Target as Chapter);
 
             Validate(cardAttack, properties);
-            Assert.IsFalse(cardAttack.HasTried().Value);
+            Assert.IsFalse(cardAttack.HasTried());
         });
     }
 }

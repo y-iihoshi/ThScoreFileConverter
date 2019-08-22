@@ -403,7 +403,7 @@ namespace ThScoreFileConverter.Models
                     }
                     else if (CardTable.ContainsKey(number))
                     {
-                        if (parent.allScoreData.CardAttacks.TryGetValue(number, out CardAttack attack))
+                        if (parent.allScoreData.CardAttacks.TryGetValue(number, out var attack))
                             return Utils.ToNumberString(getCount(attack));
                         else
                             return "0";
@@ -439,7 +439,7 @@ namespace ThScoreFileConverter.Models
                     {
                         if (hideUntriedCards)
                         {
-                            if (!parent.allScoreData.CardAttacks.TryGetValue(number, out CardAttack attack) ||
+                            if (!parent.allScoreData.CardAttacks.TryGetValue(number, out var attack) ||
                                 !attack.HasTried())
                                 return (type == "N") ? "??????????" : "?????";
                         }
@@ -649,37 +649,6 @@ namespace ThScoreFileConverter.Models
                         scores.Add(score.Stage, score);
                 }
             }
-        }
-
-        private class CardAttack : Chapter  // per card
-        {
-            public const string ValidSignature = "CATK";
-            public const short ValidSize = 0x0040;
-
-            public CardAttack(Chapter chapter)
-                : base(chapter, ValidSignature, ValidSize)
-            {
-                using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-                {
-                    reader.ReadExactBytes(8);
-                    this.CardId = (short)(reader.ReadInt16() + 1);
-                    reader.ReadExactBytes(6);
-                    this.CardName = reader.ReadExactBytes(0x24);
-                    this.TrialCount = reader.ReadUInt16();
-                    this.ClearCount = reader.ReadUInt16();
-                }
-            }
-
-            public short CardId { get; }    // 1-based
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] CardName { get; } // Null-terminated
-
-            public ushort TrialCount { get; }
-
-            public ushort ClearCount { get; }
-
-            public bool HasTried() => this.TrialCount > 0;
         }
 
         private class PracticeScore : Chapter   // per character, level, stage
