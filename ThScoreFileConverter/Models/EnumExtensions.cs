@@ -25,12 +25,8 @@ namespace ThScoreFileConverter.Models
         [CLSCompliant(false)]
         public static string ToShortName<T>(this T enumValue)
             where T : struct, Enum
-        {
-            if (AttributeCache<T, EnumAltNameAttribute>.Cache.TryGetValue(enumValue, out EnumAltNameAttribute attr))
-                return attr.ShortName;
-            else
-                return string.Empty;
-        }
+            => AttributeCache<T, EnumAltNameAttribute>.Cache.TryGetValue(enumValue, out var attr)
+                ? attr.ShortName : string.Empty;
 
         /// <summary>
         /// Gets a long name of the specified enumeration value.
@@ -41,12 +37,8 @@ namespace ThScoreFileConverter.Models
         [CLSCompliant(false)]
         public static string ToLongName<T>(this T enumValue)
             where T : struct, Enum
-        {
-            if (AttributeCache<T, EnumAltNameAttribute>.Cache.TryGetValue(enumValue, out EnumAltNameAttribute attr))
-                return attr.LongName;
-            else
-                return string.Empty;
-        }
+            => AttributeCache<T, EnumAltNameAttribute>.Cache.TryGetValue(enumValue, out var attr)
+                ? attr.LongName : string.Empty;
 
         /// <summary>
         /// Provides cache of attribute information.
