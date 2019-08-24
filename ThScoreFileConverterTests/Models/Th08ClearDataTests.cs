@@ -18,8 +18,8 @@ namespace ThScoreFileConverterTests.Models
             public string signature;
             public short size1;
             public short size2;
-            public Dictionary<ThConverter.Level, int> storyFlags;
-            public Dictionary<ThConverter.Level, int> practiceFlags;
+            public Dictionary<Level, int> storyFlags;
+            public Dictionary<Level, int> practiceFlags;
             public Th08Converter.CharaWithTotal chara;
         };
 
@@ -28,10 +28,10 @@ namespace ThScoreFileConverterTests.Models
             signature = "CLRD",
             size1 = 0x24,
             size2 = 0x24,
-            storyFlags = Utils.GetEnumerator<ThConverter.Level>()
+            storyFlags = Utils.GetEnumerator<Level>()
                 .Select((level, index) => new { level, index })
                 .ToDictionary(pair => pair.level, pair => pair.index),
-            practiceFlags = Utils.GetEnumerator<ThConverter.Level>()
+            practiceFlags = Utils.GetEnumerator<Level>()
                 .Select((level, index) => new { level, index })
                 .ToDictionary(pair => pair.level, pair => (10 - pair.index)),
             chara = Th08Converter.CharaWithTotal.MarisaAlice

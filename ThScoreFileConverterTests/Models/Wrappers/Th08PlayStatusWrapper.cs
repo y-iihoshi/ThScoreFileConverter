@@ -41,7 +41,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         //     => this.pobj.GetProperty(nameof(this.PlayCounts)) as Dictionary<ThConverter.Level, PlayCount>;
         public object PlayCounts
             => this.pobj.GetProperty(nameof(this.PlayCounts));
-        public Th08PlayCountWrapper PlayCountsItem(ThConverter.Level level)
+        public Th08PlayCountWrapper PlayCountsItem(Level level)
             => new Th08PlayCountWrapper(
                 this.PlayCounts.GetType().GetProperty("Item").GetValue(this.PlayCounts, new object[] { level }));
         // NOTE: Th08Converter.PlayCount is a private class.

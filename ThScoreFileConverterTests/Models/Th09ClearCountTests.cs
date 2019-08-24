@@ -13,15 +13,15 @@ namespace ThScoreFileConverterTests.Models
     {
         internal struct Properties
         {
-            public Dictionary<ThConverter.Level, int> counts;
+            public Dictionary<Level, int> counts;
 
             public Properties(in Properties properties)
-                => this.counts = new Dictionary<ThConverter.Level, int>(properties.counts);
+                => this.counts = new Dictionary<Level, int>(properties.counts);
         };
 
         internal static Properties ValidProperties => new Properties()
         {
-            counts = Utils.GetEnumerator<ThConverter.Level>()
+            counts = Utils.GetEnumerator<Level>()
                 .Select((level, index) => new { level, index })
                 .ToDictionary(pair => pair.level, pair => pair.index)
         };
@@ -66,7 +66,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th09ClearCountReadFromTestShortenedTrials() => TestUtils.Wrap(() =>
         {
             var properties = new Properties(ValidProperties);
-            properties.counts.Remove(ThConverter.Level.Extra);
+            properties.counts.Remove(Level.Extra);
 
             var clearCount = Th09ClearCountWrapper.Create(MakeByteArray(properties));
 
@@ -77,7 +77,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th09ClearCountReadFromTestExceededTrials() => TestUtils.Wrap(() =>
         {
             var properties = new Properties(ValidProperties);
-            properties.counts.Add(TestUtils.Cast<ThConverter.Level>(99), 99);
+            properties.counts.Add(TestUtils.Cast<Level>(99), 99);
 
             var clearCount = Th09ClearCountWrapper.Create(MakeByteArray(properties));
 

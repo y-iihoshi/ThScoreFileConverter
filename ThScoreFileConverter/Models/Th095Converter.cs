@@ -128,7 +128,7 @@ namespace ThScoreFileConverter.Models
 
         private Dictionary<(Level Level, int Scene), BestShotPair> bestshots = null;
 
-        public new enum Level
+        public enum Level
         {
 #pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("1", LongName = "01")] Lv1,

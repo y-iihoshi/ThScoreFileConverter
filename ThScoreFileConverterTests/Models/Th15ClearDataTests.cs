@@ -22,13 +22,13 @@ namespace ThScoreFileConverterTests.Models
             public int size;
             public Th15Converter.CharaWithTotal chara;
             public Dictionary<Th15Converter.GameMode, Th15ClearDataPerGameModeTests.Properties> data1;
-            public Dictionary<(ThConverter.Level, Th15Converter.StagePractice), PracticeTests.Properties> practices;
+            public Dictionary<(Level, Th15Converter.StagePractice), PracticeTests.Properties> practices;
         };
 
         internal static Properties GetValidProperties()
         {
             var modes = Utils.GetEnumerator<Th15Converter.GameMode>();
-            var levels = Utils.GetEnumerator<ThConverter.Level>();
+            var levels = Utils.GetEnumerator<Level>();
             var stages = Utils.GetEnumerator<Th15Converter.StagePractice>();
 
             return new Properties()

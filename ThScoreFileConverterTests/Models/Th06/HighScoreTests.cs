@@ -20,7 +20,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             public short size2;
             public uint score;
             public Th06Converter.Chara chara;
-            public ThConverter.Level level;
+            public Level level;
             public Th06Converter.StageProgress stageProgress;
             public byte[] name;
         };
@@ -32,7 +32,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             size2 = 0x1C,
             score = 1234567u,
             chara = Th06Converter.Chara.ReimuB,
-            level = ThConverter.Level.Hard,
+            level = Level.Hard,
             stageProgress = Th06Converter.StageProgress.St3,
             name = TestUtils.CP932Encoding.GetBytes("Player1\0\0")
         };
@@ -157,7 +157,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         });
 
         public static IEnumerable<object[]> InvalidLevels
-            => TestUtils.GetInvalidEnumerators(typeof(ThConverter.Level));
+            => TestUtils.GetInvalidEnumerators(typeof(Level));
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "highScore")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
@@ -167,7 +167,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         public void HighScoreTestInvalidLevel(int level) => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
-            properties.level = TestUtils.Cast<ThConverter.Level>(level);
+            properties.level = TestUtils.Cast<Level>(level);
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
             var highScore = new HighScore(chapter.Target as Chapter);

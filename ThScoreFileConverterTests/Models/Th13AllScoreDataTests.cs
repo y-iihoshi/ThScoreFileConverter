@@ -266,7 +266,7 @@ namespace ThScoreFileConverterTests.Models
             => Th13AllScoreDataTestHelper<
                 Th14Converter,
                 Th14Converter.CharaWithTotal,
-                ThConverter.Level,
+                Level,
                 Th14Converter.LevelPractice,
                 Th14Converter.LevelPracticeWithTotal,
                 Th14Converter.StagePractice,
@@ -277,7 +277,7 @@ namespace ThScoreFileConverterTests.Models
             => Th13AllScoreDataSetHeaderTestHelper<
                 Th14Converter,
                 Th14Converter.CharaWithTotal,
-                ThConverter.Level,
+                Level,
                 Th14Converter.LevelPractice,
                 Th14Converter.LevelPracticeWithTotal,
                 Th14Converter.StagePractice,
@@ -288,7 +288,7 @@ namespace ThScoreFileConverterTests.Models
             => Th13AllScoreDataSetHeaderTestTwiceHelper<
                 Th14Converter,
                 Th14Converter.CharaWithTotal,
-                ThConverter.Level,
+                Level,
                 Th14Converter.LevelPractice,
                 Th14Converter.LevelPracticeWithTotal,
                 Th14Converter.StagePractice,
@@ -299,7 +299,7 @@ namespace ThScoreFileConverterTests.Models
             => Th13AllScoreDataSetClearDataTestHelper<
                 Th14Converter,
                 Th14Converter.CharaWithTotal,
-                ThConverter.Level,
+                Level,
                 Th14Converter.LevelPractice,
                 Th14Converter.LevelPracticeWithTotal,
                 Th14Converter.StagePractice,
@@ -310,7 +310,7 @@ namespace ThScoreFileConverterTests.Models
             => Th13AllScoreDataSetClearDataTestTwiceHelper<
                 Th14Converter,
                 Th14Converter.CharaWithTotal,
-                ThConverter.Level,
+                Level,
                 Th14Converter.LevelPractice,
                 Th14Converter.LevelPracticeWithTotal,
                 Th14Converter.StagePractice,
@@ -321,7 +321,7 @@ namespace ThScoreFileConverterTests.Models
             => Th13AllScoreDataSetStatusTestHelper<
                 Th14Converter,
                 Th14Converter.CharaWithTotal,
-                ThConverter.Level,
+                Level,
                 Th14Converter.LevelPractice,
                 Th14Converter.LevelPracticeWithTotal,
                 Th14Converter.StagePractice,
@@ -332,7 +332,7 @@ namespace ThScoreFileConverterTests.Models
             => Th13AllScoreDataSetStatusTestTwiceHelper<
                 Th14Converter,
                 Th14Converter.CharaWithTotal,
-                ThConverter.Level,
+                Level,
                 Th14Converter.LevelPractice,
                 Th14Converter.LevelPracticeWithTotal,
                 Th14Converter.StagePractice,

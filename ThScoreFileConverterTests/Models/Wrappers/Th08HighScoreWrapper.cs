@@ -44,8 +44,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.SlowRate)) as float?;
         public Th08Converter.Chara? Chara
             => this.pobj.GetProperty(nameof(this.Chara)) as Th08Converter.Chara?;
-        public ThConverter.Level? Level
-            => this.pobj.GetProperty(nameof(this.Level)) as ThConverter.Level?;
+        public Level? Level
+            => this.pobj.GetProperty(nameof(this.Level)) as Level?;
         public Th08Converter.StageProgress? StageProgress
             => this.pobj.GetProperty(nameof(this.StageProgress)) as Th08Converter.StageProgress?;
         public IReadOnlyCollection<byte> Name

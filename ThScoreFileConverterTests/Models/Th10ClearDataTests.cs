@@ -23,11 +23,11 @@ namespace ThScoreFileConverterTests.Models
             public uint checksum;
             public int size;
             public TCharaWithTotal chara;
-            public Dictionary<ThConverter.Level, ScoreDataTests.Properties<TStageProgress>[]> rankings;
+            public Dictionary<Level, ScoreDataTests.Properties<TStageProgress>[]> rankings;
             public int totalPlayCount;
             public int playTime;
-            public Dictionary<ThConverter.Level, int> clearCounts;
-            public Dictionary<(ThConverter.Level, ThConverter.Stage), PracticeTests.Properties> practices;
+            public Dictionary<Level, int> clearCounts;
+            public Dictionary<(Level, ThConverter.Stage), PracticeTests.Properties> practices;
             public Dictionary<int, SpellCardTests.Properties> cards;
         };
 
@@ -36,8 +36,8 @@ namespace ThScoreFileConverterTests.Models
             where TCharaWithTotal : struct, Enum
             where TStageProgress : struct, Enum
         {
-            var levels = Utils.GetEnumerator<ThConverter.Level>();
-            var levelsExceptExtra = levels.Where(level => level != ThConverter.Level.Extra);
+            var levels = Utils.GetEnumerator<Level>();
+            var levelsExceptExtra = levels.Where(level => level != Level.Extra);
             var stages = Utils.GetEnumerator<ThConverter.Stage>();
             var stagesExceptExtra = stages.Where(stage => stage != ThConverter.Stage.Extra);
 
@@ -80,7 +80,7 @@ namespace ThScoreFileConverterTests.Models
                         clearCount = 123 + index,
                         trialCount = 456 + index,
                         id = index,
-                        level = ThConverter.Level.Hard
+                        level = Level.Hard
                     })
             };
         }

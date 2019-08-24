@@ -37,7 +37,7 @@ namespace ThScoreFileConverter.Models
 
         private AllScoreData allScoreData = null;
 
-        public new enum Level
+        public enum Level
         {
 #pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("E")] Easy,

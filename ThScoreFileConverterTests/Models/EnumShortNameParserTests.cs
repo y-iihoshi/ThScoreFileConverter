@@ -4,8 +4,6 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    using Level = ThConverter.Level;
-
     [TestClass]
     public class EnumShortNameParserTests
     {

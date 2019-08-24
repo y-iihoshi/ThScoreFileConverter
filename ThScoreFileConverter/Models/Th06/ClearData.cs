@@ -22,10 +22,10 @@ namespace ThScoreFileConverter.Models.Th06
         public ClearData(Chapter chapter)
             : base(chapter, ValidSignature, ValidSize)
         {
-            var levels = Utils.GetEnumerator<ThConverter.Level>();
+            var levels = Utils.GetEnumerator<Level>();
             var numLevels = levels.Count();
-            this.StoryFlags = new Dictionary<ThConverter.Level, byte>(numLevels);
-            this.PracticeFlags = new Dictionary<ThConverter.Level, byte>(numLevels);
+            this.StoryFlags = new Dictionary<Level, byte>(numLevels);
+            this.PracticeFlags = new Dictionary<Level, byte>(numLevels);
 
             using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
             {
@@ -39,10 +39,10 @@ namespace ThScoreFileConverter.Models.Th06
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-        public Dictionary<ThConverter.Level, byte> StoryFlags { get; }      // really...?
+        public Dictionary<Level, byte> StoryFlags { get; }      // really...?
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-        public Dictionary<ThConverter.Level, byte> PracticeFlags { get; }   // really...?
+        public Dictionary<Level, byte> PracticeFlags { get; }   // really...?
 
         public Th06Converter.Chara Chara { get; }
     }

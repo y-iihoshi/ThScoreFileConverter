@@ -414,7 +414,7 @@ namespace ThScoreFileConverterTests.Models
             => ClearDataTestChapterHelper<
                 Th14Converter,
                 Th14Converter.CharaWithTotal,
-                ThConverter.Level,
+                Level,
                 Th14Converter.LevelPractice,
                 Th14Converter.LevelPracticeWithTotal,
                 Th14Converter.StagePractice,
@@ -426,7 +426,7 @@ namespace ThScoreFileConverterTests.Models
             => ClearDataTestNullChapterHelper<
                 Th14Converter,
                 Th14Converter.CharaWithTotal,
-                ThConverter.Level,
+                Level,
                 Th14Converter.LevelPractice,
                 Th14Converter.LevelPracticeWithTotal,
                 Th14Converter.StagePractice,
@@ -438,7 +438,7 @@ namespace ThScoreFileConverterTests.Models
             => ClearDataTestInvalidSignatureHelper<
                 Th14Converter,
                 Th14Converter.CharaWithTotal,
-                ThConverter.Level,
+                Level,
                 Th14Converter.LevelPractice,
                 Th14Converter.LevelPracticeWithTotal,
                 Th14Converter.StagePractice,
@@ -450,7 +450,7 @@ namespace ThScoreFileConverterTests.Models
             => ClearDataTestInvalidVersionHelper<
                 Th14Converter,
                 Th14Converter.CharaWithTotal,
-                ThConverter.Level,
+                Level,
                 Th14Converter.LevelPractice,
                 Th14Converter.LevelPracticeWithTotal,
                 Th14Converter.StagePractice,
@@ -462,7 +462,7 @@ namespace ThScoreFileConverterTests.Models
             => ClearDataTestInvalidSizeHelper<
                 Th14Converter,
                 Th14Converter.CharaWithTotal,
-                ThConverter.Level,
+                Level,
                 Th14Converter.LevelPractice,
                 Th14Converter.LevelPracticeWithTotal,
                 Th14Converter.StagePractice,
@@ -478,7 +478,7 @@ namespace ThScoreFileConverterTests.Models
             => CanInitializeTestHelper<
                 Th14Converter,
                 Th14Converter.CharaWithTotal,
-                ThConverter.Level,
+                Level,
                 Th14Converter.LevelPractice,
                 Th14Converter.LevelPracticeWithTotal,
                 Th14Converter.StagePractice,

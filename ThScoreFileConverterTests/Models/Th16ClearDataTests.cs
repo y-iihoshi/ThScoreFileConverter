@@ -26,13 +26,13 @@ namespace ThScoreFileConverterTests.Models
             public int playTime;
             public Dictionary<ThConverter.LevelWithTotal, int> clearCounts;
             public Dictionary<ThConverter.LevelWithTotal, int> clearFlags;
-            public Dictionary<(ThConverter.Level, Th16Converter.StagePractice), PracticeTests.Properties> practices;
-            public Dictionary<int, SpellCardTests.Properties<ThConverter.Level>> cards;
+            public Dictionary<(Level, Th16Converter.StagePractice), PracticeTests.Properties> practices;
+            public Dictionary<int, SpellCardTests.Properties<Level>> cards;
         };
 
         internal static Properties GetValidProperties()
         {
-            var levels = Utils.GetEnumerator<ThConverter.Level>();
+            var levels = Utils.GetEnumerator<Level>();
             var levelsWithTotal = Utils.GetEnumerator<ThConverter.LevelWithTotal>();
             var stages = Utils.GetEnumerator<Th16Converter.StagePractice>();
 
@@ -72,7 +72,7 @@ namespace ThScoreFileConverterTests.Models
                         }),
                 cards = Enumerable.Range(1, 119).ToDictionary(
                     index => index,
-                    index => new SpellCardTests.Properties<ThConverter.Level>()
+                    index => new SpellCardTests.Properties<Level>()
                     {
                         name = TestUtils.MakeRandomArray<byte>(0x80),
                         clearCount = 12 + index,
@@ -80,7 +80,7 @@ namespace ThScoreFileConverterTests.Models
                         trialCount = 56 + index,
                         practiceTrialCount = 78 + index,
                         id = index,
-                        level = ThConverter.Level.Hard,
+                        level = Level.Hard,
                         practiceScore = 90123
                     })
             };

@@ -57,8 +57,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.TrialCount)) as int?;
         public int? Id
             => this.pobj.GetProperty(nameof(this.Id)) as int?;
-        public ThConverter.Level? Level
-            => this.pobj.GetProperty(nameof(this.Level)) as ThConverter.Level?;
+        public Level? Level
+            => this.pobj.GetProperty(nameof(this.Level)) as Level?;
 
         public void ReadFrom(BinaryReader reader)
             => this.pobj.Invoke(nameof(ReadFrom), new object[] { reader }, CultureInfo.InvariantCulture);

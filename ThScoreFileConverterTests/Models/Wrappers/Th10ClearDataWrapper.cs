@@ -47,19 +47,18 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         //     => this.pobj.GetProperty(nameof(this.Rankings)) as Dictionary<Level, ScoreData[]>;
         public object Rankings
             => this.pobj.GetProperty(nameof(this.Rankings));
-        public object[] Ranking(ThConverter.Level level)
+        public object[] Ranking(Level level)
             => this.Rankings.GetType().GetProperty("Item").GetValue(this.Rankings, new object[] { level }) as object[];
-        public ScoreDataWrapper<TParent, TStageProgress> RankingItem(ThConverter.Level level, int index)
+        public ScoreDataWrapper<TParent, TStageProgress> RankingItem(Level level, int index)
             => new ScoreDataWrapper<TParent, TStageProgress>(this.Ranking(level)[index]);
         public int? TotalPlayCount
             => this.pobj.GetProperty(nameof(this.TotalPlayCount)) as int?;
         public int? PlayTime
             => this.pobj.GetProperty(nameof(this.PlayTime)) as int?;
-        public IReadOnlyDictionary<ThConverter.Level, int> ClearCounts
-            => this.pobj.GetProperty(nameof(this.ClearCounts)) as Dictionary<ThConverter.Level, int>;
-        public IReadOnlyDictionary<(ThConverter.Level, ThConverter.Stage), Practice> Practices
-            => this.pobj.GetProperty(nameof(this.Practices))
-                as Dictionary<(ThConverter.Level, ThConverter.Stage), Practice>;
+        public IReadOnlyDictionary<Level, int> ClearCounts
+            => this.pobj.GetProperty(nameof(this.ClearCounts)) as Dictionary<Level, int>;
+        public IReadOnlyDictionary<(Level, ThConverter.Stage), Practice> Practices
+            => this.pobj.GetProperty(nameof(this.Practices)) as Dictionary<(Level, ThConverter.Stage), Practice>;
         public IReadOnlyDictionary<int, SpellCard> Cards
             => this.pobj.GetProperty(nameof(this.Cards)) as Dictionary<int, SpellCard>;
 

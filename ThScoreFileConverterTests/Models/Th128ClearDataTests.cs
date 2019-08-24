@@ -21,16 +21,15 @@ namespace ThScoreFileConverterTests.Models
             public uint checksum;
             public int size;
             public Th128Converter.RouteWithTotal route;
-            public Dictionary<
-                ThConverter.Level, ScoreDataTests.Properties<Th128Converter.StageProgress>[]> rankings;
+            public Dictionary<Level, ScoreDataTests.Properties<Th128Converter.StageProgress>[]> rankings;
             public int totalPlayCount;
             public int playTime;
-            public Dictionary<ThConverter.Level, int> clearCounts;
+            public Dictionary<Level, int> clearCounts;
         };
 
         internal static Properties GetValidProperties()
         {
-            var levels = Utils.GetEnumerator<ThConverter.Level>();
+            var levels = Utils.GetEnumerator<Level>();
 
             return new Properties()
             {

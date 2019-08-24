@@ -18,8 +18,8 @@ namespace ThScoreFileConverterTests.Models
             public string signature;
             public short size1;
             public short size2;
-            public Dictionary<(Th08Converter.Stage, ThConverter.Level), int> playCounts;
-            public Dictionary<(Th08Converter.Stage, ThConverter.Level), int> highScores;
+            public Dictionary<(Th08Converter.Stage, Level), int> playCounts;
+            public Dictionary<(Th08Converter.Stage, Level), int> highScores;
             public Th08Converter.Chara chara;
         };
 
@@ -29,10 +29,10 @@ namespace ThScoreFileConverterTests.Models
             size1 = 0x178,
             size2 = 0x178,
             playCounts = Utils.GetEnumerator<Th08Converter.Stage>()
-                .SelectMany(stage => Utils.GetEnumerator<ThConverter.Level>().Select(level => (stage, level)))
+                .SelectMany(stage => Utils.GetEnumerator<Level>().Select(level => (stage, level)))
                 .ToDictionary(pair => pair, pair => (int)pair.stage * 10 + (int)pair.level),
             highScores = Utils.GetEnumerator<Th08Converter.Stage>()
-                .SelectMany(stage => Utils.GetEnumerator<ThConverter.Level>().Select(level => (stage, level)))
+                .SelectMany(stage => Utils.GetEnumerator<Level>().Select(level => (stage, level)))
                 .ToDictionary(pair => pair, pair => (int)pair.level * 10 + (int)pair.stage),
             chara = Th08Converter.Chara.MarisaAlice
         };

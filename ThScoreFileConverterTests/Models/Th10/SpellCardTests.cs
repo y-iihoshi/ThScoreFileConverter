@@ -18,7 +18,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             public int clearCount;
             public int trialCount;
             public int id;
-            public ThConverter.Level level;
+            public Level level;
         };
 
         internal static Properties ValidProperties => new Properties()
@@ -27,7 +27,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             clearCount = 123,
             trialCount = 456,
             id = 789,
-            level = ThConverter.Level.Normal
+            level = Level.Normal
         };
 
         internal static byte[] MakeByteArray(in Properties properties)
@@ -132,7 +132,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             });
 
         public static IEnumerable<object[]> InvalidLevels
-            => TestUtils.GetInvalidEnumerators(typeof(ThConverter.Level));
+            => TestUtils.GetInvalidEnumerators(typeof(Level));
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "spellCard")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
@@ -143,7 +143,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             => TestUtils.Wrap(() =>
             {
                 var properties = ValidProperties;
-                properties.level = TestUtils.Cast<ThConverter.Level>(level);
+                properties.level = TestUtils.Cast<Level>(level);
 
                 var spellCard = Create(MakeByteArray(properties));
 

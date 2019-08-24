@@ -153,38 +153,38 @@ namespace ThScoreFileConverterTests.Models.Th13
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void Th13SpellCardTestHelper<TParent>()
             where TParent : ThConverter
-            => Th13SpellCardTestHelper<TParent, ThConverter.Level>();
+            => Th13SpellCardTestHelper<TParent, Level>();
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void Th13SpellCardReadFromTestHelper<TParent>()
             where TParent : ThConverter
-            => Th13SpellCardReadFromTestHelper<TParent, ThConverter.Level>();
+            => Th13SpellCardReadFromTestHelper<TParent, Level>();
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void Th13SpellCardReadFromTestNullHelper<TParent>()
             where TParent : ThConverter
-            => Th13SpellCardReadFromTestNullHelper<TParent, ThConverter.Level>();
+            => Th13SpellCardReadFromTestNullHelper<TParent, Level>();
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void Th13SpellCardReadFromTestShortenedNameHelper<TParent>()
             where TParent : ThConverter
-            => Th13SpellCardReadFromTestShortenedNameHelper<TParent, ThConverter.Level>();
+            => Th13SpellCardReadFromTestShortenedNameHelper<TParent, Level>();
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void Th13SpellCardReadFromTestExceededNameHelper<TParent>()
             where TParent : ThConverter
-            => Th13SpellCardReadFromTestExceededNameHelper<TParent, ThConverter.Level>();
+            => Th13SpellCardReadFromTestExceededNameHelper<TParent, Level>();
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void Th13SpellCardReadFromTestInvalidLevelHelper<TParent>(int level)
             where TParent : ThConverter
-            => Th13SpellCardReadFromTestInvalidLevelHelper<TParent, ThConverter.Level>(level);
+            => Th13SpellCardReadFromTestInvalidLevelHelper<TParent, Level>(level);
 
         public static IEnumerable<object[]> InvalidTh13LevelPractices
             => TestUtils.GetInvalidEnumerators(typeof(Th13Converter.LevelPractice));
 
         public static IEnumerable<object[]> InvalidLevels
-            => TestUtils.GetInvalidEnumerators(typeof(ThConverter.Level));
+            => TestUtils.GetInvalidEnumerators(typeof(Level));
 
         #region Th13
 

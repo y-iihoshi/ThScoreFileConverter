@@ -47,9 +47,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public Th15ClearDataPerGameModeWrapper Data1Item(Th15Converter.GameMode mode)
             => new Th15ClearDataPerGameModeWrapper(
                 this.Data1.GetType().GetProperty("Item").GetValue(this.Data1, new object[] { mode }));
-        public IReadOnlyDictionary<(ThConverter.Level, Th15Converter.StagePractice), Practice> Practices
+        public IReadOnlyDictionary<(Level, Th15Converter.StagePractice), Practice> Practices
             => this.pobj.GetProperty(nameof(this.Practices))
-                as Dictionary<(ThConverter.Level, Th15Converter.StagePractice), Practice>;
+                as Dictionary<(Level, Th15Converter.StagePractice), Practice>;
 
         public static bool CanInitialize(ChapterWrapper chapter)
             => (bool)PrivateType.InvokeStatic(

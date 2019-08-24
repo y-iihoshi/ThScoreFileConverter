@@ -32,12 +32,10 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.FirstByteOfData)) as byte?;
         public IReadOnlyCollection<byte> Data
             => this.pobj.GetProperty(nameof(this.Data)) as byte[];
-        public IReadOnlyDictionary<(Th08Converter.Stage, ThConverter.Level), int> PlayCounts
-            => this.pobj.GetProperty(nameof(this.PlayCounts))
-                as Dictionary<(Th08Converter.Stage, ThConverter.Level), int>;
-        public IReadOnlyDictionary<(Th08Converter.Stage, ThConverter.Level), int> HighScores
-            => this.pobj.GetProperty(nameof(this.HighScores))
-                as Dictionary<(Th08Converter.Stage, ThConverter.Level), int>;
+        public IReadOnlyDictionary<(Th08Converter.Stage, Level), int> PlayCounts
+            => this.pobj.GetProperty(nameof(this.PlayCounts)) as Dictionary<(Th08Converter.Stage, Level), int>;
+        public IReadOnlyDictionary<(Th08Converter.Stage, Level), int> HighScores
+            => this.pobj.GetProperty(nameof(this.HighScores)) as Dictionary<(Th08Converter.Stage, Level), int>;
         public Th08Converter.Chara? Chara
             => this.pobj.GetProperty(nameof(this.Chara)) as Th08Converter.Chara?;
     }

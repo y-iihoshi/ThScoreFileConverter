@@ -36,8 +36,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.Score)) as uint?;
         public Th09Converter.Chara? Chara
             => this.pobj.GetProperty(nameof(this.Chara)) as Th09Converter.Chara?;
-        public ThConverter.Level? Level
-            => this.pobj.GetProperty(nameof(this.Level)) as ThConverter.Level?;
+        public Level? Level
+            => this.pobj.GetProperty(nameof(this.Level)) as Level?;
         public short? Rank
             => this.pobj.GetProperty(nameof(this.Rank)) as short?;
         public IReadOnlyCollection<byte> Name

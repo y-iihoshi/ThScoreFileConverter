@@ -145,7 +145,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th06AllScoreDataSetPracticeScoreTest() => TestUtils.Wrap(() =>
         {
             var properties = PracticeScoreTests.ValidProperties;
-            properties.level = ThConverter.Level.Normal;
+            properties.level = Level.Normal;
             properties.stage = ThConverter.Stage.St6;
             var chapter = ChapterWrapper.Create(PracticeScoreTests.MakeByteArray(properties));
             var score = new PracticeScore(chapter.Target as Chapter);
@@ -162,7 +162,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th06AllScoreDataSetPracticeScoreTestTwice() => TestUtils.Wrap(() =>
         {
             var properties = PracticeScoreTests.ValidProperties;
-            properties.level = ThConverter.Level.Normal;
+            properties.level = Level.Normal;
             properties.stage = ThConverter.Stage.St6;
             var chapter = ChapterWrapper.Create(PracticeScoreTests.MakeByteArray(properties));
             var score1 = new PracticeScore(chapter.Target as Chapter);
@@ -182,15 +182,15 @@ namespace ThScoreFileConverterTests.Models
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
-        [DataRow(ThConverter.Level.Easy, ThConverter.Stage.St6)]
-        [DataRow(ThConverter.Level.Extra, ThConverter.Stage.Extra)]
-        [DataRow(ThConverter.Level.Extra, ThConverter.Stage.St6)]
-        [DataRow(ThConverter.Level.Normal, ThConverter.Stage.Extra)]
+        [DataRow(Level.Easy, ThConverter.Stage.St6)]
+        [DataRow(Level.Extra, ThConverter.Stage.Extra)]
+        [DataRow(Level.Extra, ThConverter.Stage.St6)]
+        [DataRow(Level.Normal, ThConverter.Stage.Extra)]
         public void Th06AllScoreDataSetPracticeScoreTestInvalidPracticeStage(int level, int stage)
             => TestUtils.Wrap(() =>
             {
                 var properties = PracticeScoreTests.ValidProperties;
-                properties.level = TestUtils.Cast<ThConverter.Level>(level);
+                properties.level = TestUtils.Cast<Level>(level);
                 properties.stage = TestUtils.Cast<ThConverter.Stage>(stage);
                 var chapter = ChapterWrapper.Create(
                     PracticeScoreTests.MakeByteArray(properties));

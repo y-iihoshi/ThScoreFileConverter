@@ -22,7 +22,7 @@ namespace ThScoreFileConverter.Models.Th10
 
         public int Id { get; private set; } // 1-based
 
-        public ThConverter.Level Level { get; private set; }
+        public Level Level { get; private set; }
 
         public bool HasTried => this.TrialCount > 0;
 
@@ -35,7 +35,7 @@ namespace ThScoreFileConverter.Models.Th10
             this.ClearCount = reader.ReadInt32();
             this.TrialCount = reader.ReadInt32();
             this.Id = reader.ReadInt32() + 1;
-            this.Level = Utils.ToEnum<ThConverter.Level>(reader.ReadInt32());
+            this.Level = Utils.ToEnum<Level>(reader.ReadInt32());
         }
     }
 }

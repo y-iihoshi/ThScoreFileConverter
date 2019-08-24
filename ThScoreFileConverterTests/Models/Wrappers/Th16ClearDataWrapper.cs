@@ -57,16 +57,16 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.ClearCounts)) as Dictionary<ThConverter.LevelWithTotal, int>;
         public IReadOnlyDictionary<ThConverter.LevelWithTotal, int> ClearFlags
             => this.pobj.GetProperty(nameof(this.ClearFlags)) as Dictionary<ThConverter.LevelWithTotal, int>;
-        public IReadOnlyDictionary<(ThConverter.Level, Th16Converter.StagePractice), Practice> Practices
+        public IReadOnlyDictionary<(Level, Th16Converter.StagePractice), Practice> Practices
             => this.pobj.GetProperty(nameof(this.Practices))
-                as Dictionary<(ThConverter.Level, Th16Converter.StagePractice), Practice>;
+                as Dictionary<(Level, Th16Converter.StagePractice), Practice>;
         // NOTE: Th16Converter.SpellCard is a private class.
         // public IReadOnlyDictionary<int, SpellCard> Cards
         //     => this.pobj.GetProperty(nameof(this.Cards)) as Dictionary<int, SpellCard>;
         public object Cards
             => this.pobj.GetProperty(nameof(this.Cards));
-        public SpellCardWrapper<Th16Converter, ThConverter.Level> CardsItem(int id)
-            => new SpellCardWrapper<Th16Converter, ThConverter.Level>(
+        public SpellCardWrapper<Th16Converter, Level> CardsItem(int id)
+            => new SpellCardWrapper<Th16Converter, Level>(
                 this.Cards.GetType().GetProperty("Item").GetValue(this.Cards, new object[] { id }));
 
         public static bool CanInitialize(ChapterWrapper chapter)

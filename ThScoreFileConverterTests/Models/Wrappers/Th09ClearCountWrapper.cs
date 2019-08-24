@@ -47,8 +47,8 @@ namespace ThScoreFileConverterTests.Models
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public object Target
             => this.pobj.Target;
-        public IReadOnlyDictionary<ThConverter.Level, int> Counts
-            => this.pobj.GetProperty(nameof(this.Counts)) as Dictionary<ThConverter.Level, int>;
+        public IReadOnlyDictionary<Level, int> Counts
+            => this.pobj.GetProperty(nameof(this.Counts)) as Dictionary<Level, int>;
 
         public void ReadFrom(BinaryReader reader)
             => this.pobj.Invoke(nameof(ReadFrom), new object[] { reader }, CultureInfo.InvariantCulture);

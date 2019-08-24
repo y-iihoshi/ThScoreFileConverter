@@ -35,9 +35,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.Rankings));
         public int? RankingsCount
             => this.Rankings.GetType().GetProperty("Count").GetValue(this.Rankings) as int?;
-        public object Ranking(Th08Converter.Chara chara, ThConverter.Level level)
+        public object Ranking(Th08Converter.Chara chara, Level level)
             => this.Rankings.GetType().GetProperty("Item").GetValue(this.Rankings, new object[] { (chara, level) });
-        public Th08HighScoreWrapper RankingItem(Th08Converter.Chara chara, ThConverter.Level level, int index)
+        public Th08HighScoreWrapper RankingItem(Th08Converter.Chara chara, Level level, int index)
         {
             var ranking = this.Ranking(chara, level);
             return new Th08HighScoreWrapper(

@@ -37,7 +37,7 @@ namespace ThScoreFileConverterTests.Models
                     noIceCount = 456 + index,
                     trialCount = 789 + index,
                     id = index,
-                    level = ThConverter.Level.Hard
+                    level = Level.Hard
                 })
         };
 

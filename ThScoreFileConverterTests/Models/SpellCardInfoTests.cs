@@ -6,8 +6,7 @@ using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
 {
-    using CardInfo = SpellCardInfo<ThConverter.Stage, ThConverter.Level>;
-    using Level = ThConverter.Level;
+    using CardInfo = SpellCardInfo<ThConverter.Stage, Level>;
     using Stage = ThConverter.Stage;
 
     [TestClass]

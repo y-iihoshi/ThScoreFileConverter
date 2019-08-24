@@ -18,8 +18,8 @@ namespace ThScoreFileConverterTests.Models.Th06
             public string signature;
             public short size1;
             public short size2;
-            public Dictionary<ThConverter.Level, byte> storyFlags;
-            public Dictionary<ThConverter.Level, byte> practiceFlags;
+            public Dictionary<Level, byte> storyFlags;
+            public Dictionary<Level, byte> practiceFlags;
             public Th06Converter.Chara chara;
         };
 
@@ -28,10 +28,10 @@ namespace ThScoreFileConverterTests.Models.Th06
             signature = "CLRD",
             size1 = 0x18,
             size2 = 0x18,
-            storyFlags = Utils.GetEnumerator<ThConverter.Level>()
+            storyFlags = Utils.GetEnumerator<Level>()
                 .Select((level, index) => new { level, index })
                 .ToDictionary(pair => pair.level, pair => (byte)pair.index),
-            practiceFlags = Utils.GetEnumerator<ThConverter.Level>()
+            practiceFlags = Utils.GetEnumerator<Level>()
                 .Select((level, index) => new { level, index })
                 .ToDictionary(pair => pair.level, pair => (byte)(10 - pair.index)),
             chara = Th06Converter.Chara.ReimuB
@@ -112,7 +112,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         });
 
         public static IEnumerable<object[]> InvalidCharacters
-            => TestUtils.GetInvalidEnumerators(typeof(ThConverter.Level));
+            => TestUtils.GetInvalidEnumerators(typeof(Level));
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]

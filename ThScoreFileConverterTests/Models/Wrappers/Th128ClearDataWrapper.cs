@@ -43,17 +43,16 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         //     => this.pobj.GetProperty(nameof(this.Rankings)) as Dictionary<Level, ScoreData[]>;
         public object Rankings
             => this.pobj.GetProperty(nameof(this.Rankings));
-        public object[] Ranking(ThConverter.Level level)
+        public object[] Ranking(Level level)
             => this.Rankings.GetType().GetProperty("Item").GetValue(this.Rankings, new object[] { level }) as object[];
-        public ScoreDataWrapper<Th128Converter, Th128Converter.StageProgress>
-            RankingItem(ThConverter.Level level, int index)
+        public ScoreDataWrapper<Th128Converter, Th128Converter.StageProgress> RankingItem(Level level, int index)
             => new ScoreDataWrapper<Th128Converter, Th128Converter.StageProgress>(this.Ranking(level)[index]);
         public int? TotalPlayCount
             => this.pobj.GetProperty(nameof(this.TotalPlayCount)) as int?;
         public int? PlayTime
             => this.pobj.GetProperty(nameof(this.PlayTime)) as int?;
-        public IReadOnlyDictionary<ThConverter.Level, int> ClearCounts
-            => this.pobj.GetProperty(nameof(this.ClearCounts)) as Dictionary<ThConverter.Level, int>;
+        public IReadOnlyDictionary<Level, int> ClearCounts
+            => this.pobj.GetProperty(nameof(this.ClearCounts)) as Dictionary<Level, int>;
 
         public static bool CanInitialize(ChapterWrapper chapter)
             => (bool)PrivateType.InvokeStatic(

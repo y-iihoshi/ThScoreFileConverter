@@ -20,7 +20,7 @@ namespace ThScoreFileConverterTests.Models
             public short size2;
             public Time totalRunningTime;
             public Time totalPlayTime;
-            public Dictionary<ThConverter.Level, Th08PlayCountTests.Properties> playCounts;
+            public Dictionary<Level, Th08PlayCountTests.Properties> playCounts;
             public Th08PlayCountTests.Properties totalPlayCount;
             public byte[] bgmFlags;
         };
@@ -32,7 +32,7 @@ namespace ThScoreFileConverterTests.Models
             size2 = 0x228,
             totalRunningTime = new Time(12, 34, 56, 789, false),
             totalPlayTime = new Time(23, 45, 19, 876, false),
-            playCounts = Utils.GetEnumerator<ThConverter.Level>()
+            playCounts = Utils.GetEnumerator<Level>()
                 .ToDictionary(
                     level => level,
                     level => new Th08PlayCountTests.Properties(Th08PlayCountTests.ValidProperties)),

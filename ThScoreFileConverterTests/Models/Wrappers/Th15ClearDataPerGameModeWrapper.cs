@@ -70,8 +70,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         //     => this.pobj.GetProperty(nameof(this.Cards)) as Dictionary<int, SpellCard>;
         public object Cards
             => this.pobj.GetProperty(nameof(this.Cards));
-        public SpellCardWrapper<Th15Converter, ThConverter.Level> CardsItem(int id)
-            => new SpellCardWrapper<Th15Converter, ThConverter.Level>(
+        public SpellCardWrapper<Th15Converter, Level> CardsItem(int id)
+            => new SpellCardWrapper<Th15Converter, Level>(
                 this.Cards.GetType().GetProperty("Item").GetValue(this.Cards, new object[] { id }));
 
         public void ReadFrom(BinaryReader reader)
