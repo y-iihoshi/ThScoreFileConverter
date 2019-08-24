@@ -20,7 +20,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             public short size2;
             public Dictionary<Level, byte> storyFlags;
             public Dictionary<Level, byte> practiceFlags;
-            public Th06Converter.Chara chara;
+            public Chara chara;
         };
 
         internal static Properties ValidProperties => new Properties()
@@ -34,7 +34,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             practiceFlags = Utils.GetEnumerator<Level>()
                 .Select((level, index) => new { level, index })
                 .ToDictionary(pair => pair.level, pair => (byte)(10 - pair.index)),
-            chara = Th06Converter.Chara.ReimuB
+            chara = Chara.ReimuB
         };
 
         internal static byte[] MakeData(in Properties properties)
@@ -122,7 +122,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         public void ClearDataTestInvalidChara(int chara) => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
-            properties.chara = TestUtils.Cast<Th06Converter.Chara>(chara);
+            properties.chara = TestUtils.Cast<Chara>(chara);
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
             var clearData = new ClearData(chapter.Target as Chapter);

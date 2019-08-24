@@ -34,7 +34,7 @@ namespace ThScoreFileConverter.Models.Th06
                     this.StoryFlags.Add(level, reader.ReadByte());
                 foreach (var level in levels)
                     this.PracticeFlags.Add(level, reader.ReadByte());
-                this.Chara = Utils.ToEnum<Th06Converter.Chara>(reader.ReadInt16());
+                this.Chara = Utils.ToEnum<Chara>(reader.ReadInt16());
             }
         }
 
@@ -44,6 +44,6 @@ namespace ThScoreFileConverter.Models.Th06
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
         public Dictionary<Level, byte> PracticeFlags { get; }   // really...?
 
-        public Th06Converter.Chara Chara { get; }
+        public Chara Chara { get; }
     }
 }

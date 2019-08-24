@@ -23,7 +23,7 @@ namespace ThScoreFileConverter.Models.Th06
             {
                 reader.ReadUInt32();    // always 0x00000001?
                 this.Score = reader.ReadUInt32();
-                this.Chara = Utils.ToEnum<Th06Converter.Chara>(reader.ReadByte());
+                this.Chara = Utils.ToEnum<Chara>(reader.ReadByte());
                 this.Level = Utils.ToEnum<Level>(reader.ReadByte());
                 this.StageProgress = Utils.ToEnum<Th06Converter.StageProgress>(reader.ReadByte());
                 this.Name = reader.ReadExactBytes(9);
@@ -39,7 +39,7 @@ namespace ThScoreFileConverter.Models.Th06
 
         public uint Score { get; }
 
-        public Th06Converter.Chara Chara { get; }
+        public Chara Chara { get; }
 
         public Level Level { get; }
 

@@ -113,6 +113,7 @@
     <Compile Include="Models\Th06Converter.cs" />
     <Compile Include="Models\Th06\CardAttack.cs" />
     <Compile Include="Models\Th06\Chapter.cs" />
+    <Compile Include="Models\Th06\Chara.cs" />
     <Compile Include="Models\Th06\ClearData.cs" />
     <Compile Include="Models\Th06\FileHeader.cs" />
     <Compile Include="Models\Th06\Header.cs" />
