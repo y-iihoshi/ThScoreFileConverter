@@ -17,7 +17,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using CardInfo = ThScoreFileConverter.Models.SpellCardInfo<
-    ThScoreFileConverter.Models.ThConverter.Stage, ThScoreFileConverter.Models.Level>;
+    ThScoreFileConverter.Models.Stage, ThScoreFileConverter.Models.Level>;
 
 namespace ThScoreFileConverter.Models
 {

@@ -57,8 +57,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.PlayTime)) as int?;
         public IReadOnlyDictionary<Level, int> ClearCounts
             => this.pobj.GetProperty(nameof(this.ClearCounts)) as Dictionary<Level, int>;
-        public IReadOnlyDictionary<(Level, ThConverter.Stage), Practice> Practices
-            => this.pobj.GetProperty(nameof(this.Practices)) as Dictionary<(Level, ThConverter.Stage), Practice>;
+        public IReadOnlyDictionary<(Level, Stage), Practice> Practices
+            => this.pobj.GetProperty(nameof(this.Practices)) as Dictionary<(Level, Stage), Practice>;
         public IReadOnlyDictionary<int, SpellCard> Cards
             => this.pobj.GetProperty(nameof(this.Cards)) as Dictionary<int, SpellCard>;
 

@@ -27,7 +27,7 @@ namespace ThScoreFileConverterTests.Models
             public int totalPlayCount;
             public int playTime;
             public Dictionary<Level, int> clearCounts;
-            public Dictionary<(Level, ThConverter.Stage), PracticeTests.Properties> practices;
+            public Dictionary<(Level, Stage), PracticeTests.Properties> practices;
             public Dictionary<int, SpellCardTests.Properties> cards;
         };
 
@@ -38,8 +38,8 @@ namespace ThScoreFileConverterTests.Models
         {
             var levels = Utils.GetEnumerator<Level>();
             var levelsExceptExtra = levels.Where(level => level != Level.Extra);
-            var stages = Utils.GetEnumerator<ThConverter.Stage>();
-            var stagesExceptExtra = stages.Where(stage => stage != ThConverter.Stage.Extra);
+            var stages = Utils.GetEnumerator<Stage>();
+            var stagesExceptExtra = stages.Where(stage => stage != Stage.Extra);
 
             return new Properties<TCharaWithTotal, TStageProgress>()
             {

@@ -146,7 +146,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var properties = PracticeScoreTests.ValidProperties;
             properties.level = Level.Normal;
-            properties.stage = ThConverter.Stage.St6;
+            properties.stage = Stage.St6;
             var chapter = ChapterWrapper.Create(PracticeScoreTests.MakeByteArray(properties));
             var score = new PracticeScore(chapter.Target as Chapter);
 
@@ -163,7 +163,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var properties = PracticeScoreTests.ValidProperties;
             properties.level = Level.Normal;
-            properties.stage = ThConverter.Stage.St6;
+            properties.stage = Stage.St6;
             var chapter = ChapterWrapper.Create(PracticeScoreTests.MakeByteArray(properties));
             var score1 = new PracticeScore(chapter.Target as Chapter);
             var score2 = new PracticeScore(chapter.Target as Chapter);
@@ -182,16 +182,16 @@ namespace ThScoreFileConverterTests.Models
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
-        [DataRow(Level.Easy, ThConverter.Stage.St6)]
-        [DataRow(Level.Extra, ThConverter.Stage.Extra)]
-        [DataRow(Level.Extra, ThConverter.Stage.St6)]
-        [DataRow(Level.Normal, ThConverter.Stage.Extra)]
+        [DataRow(Level.Easy, Stage.St6)]
+        [DataRow(Level.Extra, Stage.Extra)]
+        [DataRow(Level.Extra, Stage.St6)]
+        [DataRow(Level.Normal, Stage.Extra)]
         public void Th06AllScoreDataSetPracticeScoreTestInvalidPracticeStage(int level, int stage)
             => TestUtils.Wrap(() =>
             {
                 var properties = PracticeScoreTests.ValidProperties;
                 properties.level = TestUtils.Cast<Level>(level);
-                properties.stage = TestUtils.Cast<ThConverter.Stage>(stage);
+                properties.stage = TestUtils.Cast<Stage>(stage);
                 var chapter = ChapterWrapper.Create(
                     PracticeScoreTests.MakeByteArray(properties));
                 var score = new PracticeScore(chapter.Target as Chapter);

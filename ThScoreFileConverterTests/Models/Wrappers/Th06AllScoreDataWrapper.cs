@@ -33,9 +33,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.ClearData)) as Dictionary<Th06Converter.Chara, ClearData>;
         public IReadOnlyDictionary<int, CardAttack> CardAttacks
             => this.pobj.GetProperty(nameof(this.CardAttacks)) as Dictionary<int, CardAttack>;
-        public IReadOnlyDictionary<(Th06Converter.Chara, Level), Dictionary<ThConverter.Stage, PracticeScore>> PracticeScores
+        public IReadOnlyDictionary<(Th06Converter.Chara, Level), Dictionary<Stage, PracticeScore>> PracticeScores
             => this.pobj.GetProperty(nameof(this.PracticeScores))
-                as Dictionary<(Th06Converter.Chara, Level), Dictionary<ThConverter.Stage, PracticeScore>>;
+                as Dictionary<(Th06Converter.Chara, Level), Dictionary<Stage, PracticeScore>>;
 
         public void Set(Header header)
             => this.pobj.Invoke(nameof(Set), new object[] { header }, CultureInfo.InvariantCulture);
