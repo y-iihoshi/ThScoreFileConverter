@@ -24,7 +24,7 @@ namespace ThScoreFileConverter.Models
         /// <returns>A short name of <paramref name="enumValue"/>.</returns>
         [CLSCompliant(false)]
         public static string ToShortName<T>(this T enumValue)
-            where T : struct, IComparable, IFormattable, IConvertible
+            where T : struct, Enum
         {
             if (AttributeCache<T, EnumAltNameAttribute>.Cache.TryGetValue(enumValue, out EnumAltNameAttribute attr))
                 return attr.ShortName;
@@ -40,7 +40,7 @@ namespace ThScoreFileConverter.Models
         /// <returns>A long name of <paramref name="enumValue"/>.</returns>
         [CLSCompliant(false)]
         public static string ToLongName<T>(this T enumValue)
-            where T : struct, IComparable, IFormattable, IConvertible
+            where T : struct, Enum
         {
             if (AttributeCache<T, EnumAltNameAttribute>.Cache.TryGetValue(enumValue, out EnumAltNameAttribute attr))
                 return attr.LongName;
@@ -54,7 +54,7 @@ namespace ThScoreFileConverter.Models
         /// <typeparam name="TEnum">The enumeration type.</typeparam>
         /// <typeparam name="TAttribute">The attribute type for <typeparamref name="TEnum"/>.</typeparam>
         private static class AttributeCache<TEnum, TAttribute>
-            where TEnum : struct, IComparable, IFormattable, IConvertible
+            where TEnum : struct, Enum
             where TAttribute : Attribute
         {
             /// <summary>

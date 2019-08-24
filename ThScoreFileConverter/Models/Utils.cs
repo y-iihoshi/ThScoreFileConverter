@@ -29,7 +29,7 @@ namespace ThScoreFileConverter.Models
         /// </returns>
         [CLSCompliant(false)]
         public static TEnum ParseEnum<TEnum>(string value)
-            where TEnum : struct, IComparable, IFormattable, IConvertible
+            where TEnum : struct, Enum
             => ParseEnum<TEnum>(value, false);
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace ThScoreFileConverter.Models
         /// </returns>
         [CLSCompliant(false)]
         public static TEnum ParseEnum<TEnum>(string value, bool ignoreCase)
-            where TEnum : struct, IComparable, IFormattable, IConvertible
+            where TEnum : struct, Enum
             => (TEnum)Enum.Parse(typeof(TEnum), value, ignoreCase);
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace ThScoreFileConverter.Models
         /// <exception cref="InvalidCastException">No enumerator equal to <paramref name="value"/> exists.</exception>
         [CLSCompliant(false)]
         public static TEnum ToEnum<TEnum>(object value)
-            where TEnum : struct, IComparable, IFormattable, IConvertible
+            where TEnum : struct, Enum
         {
             var underlying = Convert.ChangeType(
                 value, typeof(TEnum).GetEnumUnderlyingType(), CultureInfo.InvariantCulture);
@@ -77,7 +77,7 @@ namespace ThScoreFileConverter.Models
         /// </returns>
         [CLSCompliant(false)]
         public static IEnumerable<TEnum> GetEnumerator<TEnum>()
-            where TEnum : struct, IComparable, IFormattable, IConvertible
+            where TEnum : struct, Enum
             => Enum.GetValues(typeof(TEnum)).Cast<TEnum>();
 
         /// <summary>

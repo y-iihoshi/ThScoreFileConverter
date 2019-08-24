@@ -17,8 +17,8 @@ namespace ThScoreFileConverter.Models
     /// <typeparam name="TStage">An enumeration type of the stage.</typeparam>
     /// <typeparam name="TLevel">An enumeration type of the level.</typeparam>
     internal class SpellCardInfo<TStage, TLevel>
-        where TStage : struct, IComparable, IFormattable, IConvertible
-        where TLevel : struct, IComparable, IFormattable, IConvertible
+        where TStage : struct, Enum
+        where TLevel : struct, Enum
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SpellCardInfo{TStage,TLevel}"/> class.
