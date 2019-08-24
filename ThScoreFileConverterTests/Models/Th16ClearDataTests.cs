@@ -21,11 +21,11 @@ namespace ThScoreFileConverterTests.Models
             public uint checksum;
             public int size;
             public Th16Converter.CharaWithTotal chara;
-            public Dictionary<ThConverter.LevelWithTotal, Th16ScoreDataTests.Properties[]> rankings;
+            public Dictionary<LevelWithTotal, Th16ScoreDataTests.Properties[]> rankings;
             public int totalPlayCount;
             public int playTime;
-            public Dictionary<ThConverter.LevelWithTotal, int> clearCounts;
-            public Dictionary<ThConverter.LevelWithTotal, int> clearFlags;
+            public Dictionary<LevelWithTotal, int> clearCounts;
+            public Dictionary<LevelWithTotal, int> clearFlags;
             public Dictionary<(Level, Th16Converter.StagePractice), PracticeTests.Properties> practices;
             public Dictionary<int, SpellCardTests.Properties<Level>> cards;
         };
@@ -33,7 +33,7 @@ namespace ThScoreFileConverterTests.Models
         internal static Properties GetValidProperties()
         {
             var levels = Utils.GetEnumerator<Level>();
-            var levelsWithTotal = Utils.GetEnumerator<ThConverter.LevelWithTotal>();
+            var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();
             var stages = Utils.GetEnumerator<Th16Converter.StagePractice>();
 
             return new Properties()

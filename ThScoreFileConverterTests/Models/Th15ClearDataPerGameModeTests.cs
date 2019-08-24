@@ -15,17 +15,17 @@ namespace ThScoreFileConverterTests.Models
     {
         internal struct Properties
         {
-            public Dictionary<ThConverter.LevelWithTotal, Th15ScoreDataTests.Properties[]> rankings;
+            public Dictionary<LevelWithTotal, Th15ScoreDataTests.Properties[]> rankings;
             public int totalPlayCount;
             public int playTime;
-            public Dictionary<ThConverter.LevelWithTotal, int> clearCounts;
-            public Dictionary<ThConverter.LevelWithTotal, int> clearFlags;
+            public Dictionary<LevelWithTotal, int> clearCounts;
+            public Dictionary<LevelWithTotal, int> clearFlags;
             public Dictionary<int, SpellCardTests.Properties<Level>> cards;
         };
 
         internal static Properties GetValidProperties()
         {
-            var levelsWithTotal = Utils.GetEnumerator<ThConverter.LevelWithTotal>();
+            var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();
 
             return new Properties()
             {
