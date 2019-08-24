@@ -109,6 +109,7 @@
     <Compile Include="Models\Lzss.cs" />
     <Compile Include="Models\SpellCardInfo.cs" />
     <Compile Include="Models\Stage.cs" />
+    <Compile Include="Models\StageWithTotal.cs" />
     <Compile Include="Models\Th06Converter.cs" />
     <Compile Include="Models\Th06\CardAttack.cs" />
     <Compile Include="Models\Th06\Chapter.cs" />

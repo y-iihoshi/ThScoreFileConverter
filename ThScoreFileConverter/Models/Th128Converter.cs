@@ -341,7 +341,7 @@ namespace ThScoreFileConverter.Models
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
-        public new enum StageWithTotal
+        public enum StageWithTotal
         {
 #pragma warning disable SA1134 // Attributes should not share line
             [EnumAltName("A11")] A_1,
