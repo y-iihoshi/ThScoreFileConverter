@@ -24,6 +24,9 @@ namespace ThScoreFileConverter.Models.Th06
 
         public CareerReplacer(IReadOnlyDictionary<int, CardAttack> cardAttacks)
         {
+            if (cardAttacks is null)
+                throw new ArgumentNullException(nameof(cardAttacks));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);

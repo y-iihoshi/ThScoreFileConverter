@@ -27,7 +27,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             signature = "CATK",
             size1 = 0x40,
             size2 = 0x40,
-            cardId = 123,
+            cardId = 23,
             cardName = TestUtils.MakeRandomArray<byte>(0x24),
             trialCount = 789,
             clearCount = 456
