@@ -98,6 +98,7 @@
     <Compile Include="Models\BitReader.cs" />
     <Compile Include="Models\Encoding.cs" />
     <Compile Include="Models\EnumAltNameAttribute.cs" />
+    <Compile Include="Models\EnumerableExtensions.cs" />
     <Compile Include="Models\EnumExtensions.cs" />
     <Compile Include="Models\EnumShortNameParser.cs" />
     <Compile Include="Models\ExceptionOccurredEventArgs.cs" />

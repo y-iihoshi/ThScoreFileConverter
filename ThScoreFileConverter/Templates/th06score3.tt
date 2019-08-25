@@ -66,7 +66,7 @@
 <#
             foreach (var stage in stagesPractice)
             {
-                if ((level.Key == "E") && (stage.Key == "6"))
+                if ((level.Key == Level.Easy.ToShortName()) && (stage.Key == Stage.St6.ToShortName()))
                     continue;
 #>
       <tr>

@@ -1,58 +1,60 @@
 <#@ assembly name="System.Core" #>
+<#@ assembly name="$(TargetPath)" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
+<#@ import namespace="ThScoreFileConverter.Models" #>
+<#@ import namespace="ThScoreFileConverter.Models.Th06" #>
 <#
-    var levels = new Dictionary<string, string>
-    {
-        { "E", "Easy" },
-        { "N", "Normal" },
-        { "H", "Hard" },
-        { "L", "Lunatic" },
-        { "X", "Extra" },
-    };
+    var levels = Utils.GetEnumerator<Level>().ToDictionary(level => level.ToShortName(), level => level.ToString());
 
-    var levelsPractice = levels.Where(pair => pair.Key != "X");
+    var levelsPractice = levels.Where(pair => pair.Key != Level.Extra.ToShortName());
 
     var characters = new Dictionary<string, string>
     {
-        { "RA", "博麗 霊夢（霊）" },
-        { "RB", "博麗 霊夢（夢）" },
-        { "MA", "霧雨 魔理沙（魔）" },
-        { "MB", "霧雨 魔理沙（恋）" },
+        { Chara.ReimuA.ToShortName(), "博麗 霊夢（霊）" },
+        { Chara.ReimuB.ToShortName(), "博麗 霊夢（夢）" },
+        { Chara.MarisaA.ToShortName(), "霧雨 魔理沙（魔）" },
+        { Chara.MarisaB.ToShortName(), "霧雨 魔理沙（恋）" },
     };
-
-    var stageKeyTotal = "0";
 
     var stages = new Dictionary<string, string>
     {
-        { "1", "Stage 1" },
-        { "2", "Stage 2" },
-        { "3", "Stage 3" },
-        { "4", "Stage 4" },
-        { "5", "Stage 5" },
-        { "6", "Stage 6" },
-        { "X", "Extra" },
+        { Stage.St1.ToShortName(), "Stage 1" },
+        { Stage.St2.ToShortName(), "Stage 2" },
+        { Stage.St3.ToShortName(), "Stage 3" },
+        { Stage.St4.ToShortName(), "Stage 4" },
+        { Stage.St5.ToShortName(), "Stage 5" },
+        { Stage.St6.ToShortName(), "Stage 6" },
+        { Stage.Extra.ToShortName(), "Extra" },
     };
 
-    var stagesWithTotal = stages.Concat(new Dictionary<string, string>
+    var stagesWithTotal = new Dictionary<string, string>
     {
-        { stageKeyTotal, "Total" },
-    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+        { StageWithTotal.St1.ToShortName(), "Stage 1" },
+        { StageWithTotal.St2.ToShortName(), "Stage 2" },
+        { StageWithTotal.St3.ToShortName(), "Stage 3" },
+        { StageWithTotal.St4.ToShortName(), "Stage 4" },
+        { StageWithTotal.St5.ToShortName(), "Stage 5" },
+        { StageWithTotal.St6.ToShortName(), "Stage 6" },
+        { StageWithTotal.Extra.ToShortName(), "Extra" },
+        { StageWithTotal.Total.ToShortName(), "Total" },
+    };
 
-    var stageKeyOrderTotalFirst = new[] { stageKeyTotal }.Concat(stages.Keys);
+    var stageKeyTotal = stagesWithTotal.Keys.Last();
+    var stageKeyOrderTotalFirst = stagesWithTotal.Keys.TakeLast(1).Concat(stagesWithTotal.Keys.SkipLast(1));
     var stageKeyOrderTotalLast = stagesWithTotal.Keys;
 
-    var stagesPractice = stages.Where(pair => pair.Key != "X");
+    var stagesPractice = stages.Where(pair => pair.Key != Stage.Extra.ToShortName());
 
     var cardsPerStage = new Dictionary<string, int>
     {
-        { "1", 3 },
-        { "2", 4 },
-        { "3", 7 },
-        { "4", 18 },
-        { "5", 8 },
-        { "6", 11 },
-        { "X", 13 },
+        { Stage.St1.ToShortName(), 3 },
+        { Stage.St2.ToShortName(), 4 },
+        { Stage.St3.ToShortName(), 7 },
+        { Stage.St4.ToShortName(), 18 },
+        { Stage.St5.ToShortName(), 8 },
+        { Stage.St6.ToShortName(), 11 },
+        { Stage.Extra.ToShortName(), 13 },
     };
 
     var numCards = cardsPerStage.Values.Sum();
