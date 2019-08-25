@@ -23,8 +23,6 @@ namespace ThScoreFileConverter.Models
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th06Converter : ThConverter
     {
-        private static readonly EnumShortNameParser<Chara> CharaParser = new EnumShortNameParser<Chara>();
-
         private AllScoreData allScoreData = null;
 
         public override string SupportedVersions
@@ -213,7 +211,7 @@ namespace ThScoreFileConverter.Models
         private class ScoreReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T06SCR({0})({1})(\d)([1-3])", LevelParser.Pattern, CharaParser.Pattern);
+                @"%T06SCR({0})({1})(\d)([1-3])", Parsers.LevelParser.Pattern, Parsers.CharaParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -221,8 +219,8 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var level = LevelParser.Parse(match.Groups[1].Value);
-                    var chara = CharaParser.Parse(match.Groups[2].Value);
+                    var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+                    var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
                     var rank = Utils.ToZeroBased(
                         int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
                     var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
@@ -341,7 +339,7 @@ namespace ThScoreFileConverter.Models
         private class CollectRateReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T06CRG({0})([12])", StageWithTotalParser.Pattern);
+                @"%T06CRG({0})([12])", Parsers.StageWithTotalParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -350,7 +348,7 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var stage = StageWithTotalParser.Parse(match.Groups[1].Value);
+                    var stage = Parsers.StageWithTotalParser.Parse(match.Groups[1].Value);
                     var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
                     Func<CardAttack, bool> findByStage;
@@ -381,7 +379,7 @@ namespace ThScoreFileConverter.Models
         private class ClearReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T06CLEAR({0})({1})", LevelParser.Pattern, CharaParser.Pattern);
+                @"%T06CLEAR({0})({1})", Parsers.LevelParser.Pattern, Parsers.CharaParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -389,8 +387,8 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var level = LevelParser.Parse(match.Groups[1].Value);
-                    var chara = CharaParser.Parse(match.Groups[2].Value);
+                    var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+                    var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
 
                     var key = (chara, level);
                     if (parent.allScoreData.Rankings.ContainsKey(key))
@@ -419,7 +417,10 @@ namespace ThScoreFileConverter.Models
         private class PracticeReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T06PRAC({0})({1})({2})", LevelParser.Pattern, CharaParser.Pattern, StageParser.Pattern);
+                @"%T06PRAC({0})({1})({2})",
+                Parsers.LevelParser.Pattern,
+                Parsers.CharaParser.Pattern,
+                Parsers.StageParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -427,9 +428,9 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var level = LevelParser.Parse(match.Groups[1].Value);
-                    var chara = CharaParser.Parse(match.Groups[2].Value);
-                    var stage = StageParser.Parse(match.Groups[3].Value);
+                    var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+                    var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
+                    var stage = Parsers.StageParser.Parse(match.Groups[3].Value);
 
                     if (level == Level.Extra)
                         return match.ToString();

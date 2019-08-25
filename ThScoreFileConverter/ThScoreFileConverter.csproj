@@ -120,6 +120,7 @@
     <Compile Include="Models\Th06\FileHeader.cs" />
     <Compile Include="Models\Th06\Header.cs" />
     <Compile Include="Models\Th06\HighScore.cs" />
+    <Compile Include="Models\Th06\Parsers.cs" />
     <Compile Include="Models\Th06\PracticeScore.cs" />
     <Compile Include="Models\Th06\StageProgress.cs" />
     <Compile Include="Models\Th07Converter.cs" />
