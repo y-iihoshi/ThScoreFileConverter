@@ -61,7 +61,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         }
 
         [TestMethod]
-        public void Th06CardAttackTestChapter() => TestUtils.Wrap(() =>
+        public void CardAttackTestChapter() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
 
@@ -75,7 +75,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "cardAttack")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th06CardAttackTestNullChapter() => TestUtils.Wrap(() =>
+        public void CardAttackTestNullChapter() => TestUtils.Wrap(() =>
         {
             var cardAttack = new CardAttack(null);
 
@@ -86,7 +86,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "cardAttack")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th06CardAttackTestInvalidSignature() => TestUtils.Wrap(() =>
+        public void CardAttackTestInvalidSignature() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
             properties.signature = properties.signature.ToLowerInvariant();
@@ -100,7 +100,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "cardAttack")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th06CardAttackTestInvalidSize1() => TestUtils.Wrap(() =>
+        public void CardAttackTestInvalidSize1() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
             --properties.size1;
@@ -112,7 +112,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         });
 
         [TestMethod]
-        public void Th06CardAttackTestNotTried() => TestUtils.Wrap(() =>
+        public void CardAttackTestNotTried() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
             properties.trialCount = 0;

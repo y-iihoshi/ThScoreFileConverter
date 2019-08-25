@@ -112,6 +112,7 @@
     <Compile Include="Models\Stage.cs" />
     <Compile Include="Models\StageWithTotal.cs" />
     <Compile Include="Models\Th06Converter.cs" />
+    <Compile Include="Models\Th06\AllScoreData.cs" />
     <Compile Include="Models\Th06\CardAttack.cs" />
     <Compile Include="Models\Th06\CardReplacer.cs" />
     <Compile Include="Models\Th06\CareerReplacer.cs" />

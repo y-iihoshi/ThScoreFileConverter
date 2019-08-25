@@ -62,7 +62,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         }
 
         [TestMethod]
-        public void Th06PracticeScoreTestChapter() => TestUtils.Wrap(() =>
+        public void PracticeScoreTestChapter() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
 
@@ -75,7 +75,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th06PracticeScoreTestNullChapter() => TestUtils.Wrap(() =>
+        public void PracticeScoreTestNullChapter() => TestUtils.Wrap(() =>
         {
             var score = new PracticeScore(null);
 
@@ -86,7 +86,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th06PracticeScoreTestInvalidSignature() => TestUtils.Wrap(() =>
+        public void PracticeScoreTestInvalidSignature() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
             properties.signature = properties.signature.ToLowerInvariant();
@@ -100,7 +100,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th06PracticeScoreTestInvalidSize1() => TestUtils.Wrap(() =>
+        public void PracticeScoreTestInvalidSize1() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
             --properties.size1;
@@ -119,7 +119,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [DataTestMethod]
         [DynamicData(nameof(InvalidCharacters))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th06PracticeScoreTestInvalidChara(int chara) => TestUtils.Wrap(() =>
+        public void PracticeScoreTestInvalidChara(int chara) => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
             properties.chara = TestUtils.Cast<Chara>(chara);
@@ -138,7 +138,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th06PracticeScoreTestInvalidLevel(int level) => TestUtils.Wrap(() =>
+        public void PracticeScoreTestInvalidLevel(int level) => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
             properties.level = TestUtils.Cast<Level>(level);
@@ -157,7 +157,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [DataTestMethod]
         [DynamicData(nameof(InvalidStages))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th06PracticeScoreTestInvalidStage(int stage) => TestUtils.Wrap(() =>
+        public void PracticeScoreTestInvalidStage(int stage) => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
             properties.stage = TestUtils.Cast<Stage>(stage);
