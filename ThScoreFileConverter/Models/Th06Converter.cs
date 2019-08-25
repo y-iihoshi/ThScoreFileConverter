@@ -62,12 +62,12 @@ namespace ThScoreFileConverter.Models
         {
             return new List<IStringReplaceable>
             {
-                new ScoreReplacer(this),
-                new CareerReplacer(this),
-                new CardReplacer(this, hideUntriedCards),
-                new CollectRateReplacer(this),
-                new ClearReplacer(this),
-                new PracticeReplacer(this),
+                new ScoreReplacer(this.allScoreData.Rankings),
+                new CareerReplacer(this.allScoreData.CardAttacks),
+                new CardReplacer(this.allScoreData.CardAttacks, hideUntriedCards),
+                new CollectRateReplacer(this.allScoreData.CardAttacks),
+                new ClearReplacer(this.allScoreData.Rankings),
+                new PracticeReplacer(this.allScoreData.PracticeScores),
             };
         }
 
@@ -215,7 +215,7 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public ScoreReplacer(Th06Converter parent)
+            public ScoreReplacer(IReadOnlyDictionary<(Chara, Level), List<HighScore>> rankings)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -226,8 +226,8 @@ namespace ThScoreFileConverter.Models
                     var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
                     var key = (chara, level);
-                    var score = parent.allScoreData.Rankings.ContainsKey(key)
-                        ? parent.allScoreData.Rankings[key][rank] : Definitions.InitialRanking[rank];
+                    var score = rankings.TryGetValue(key, out var ranking)
+                        ? ranking[rank] : Definitions.InitialRanking[rank];
 
                     switch (type)
                     {
@@ -257,7 +257,7 @@ namespace ThScoreFileConverter.Models
             private readonly MatchEvaluator evaluator;
 
             [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-            public CareerReplacer(Th06Converter parent)
+            public CareerReplacer(IReadOnlyDictionary<int, CardAttack> cardAttacks)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -272,14 +272,12 @@ namespace ThScoreFileConverter.Models
 
                     if (number == 0)
                     {
-                        return Utils.ToNumberString(parent.allScoreData.CardAttacks.Values.Sum(getCount));
+                        return Utils.ToNumberString(cardAttacks.Values.Sum(getCount));
                     }
                     else if (Definitions.CardTable.ContainsKey(number))
                     {
-                        if (parent.allScoreData.CardAttacks.TryGetValue(number, out var attack))
-                            return Utils.ToNumberString(getCount(attack));
-                        else
-                            return "0";
+                        return cardAttacks.TryGetValue(number, out var attack)
+                            ? Utils.ToNumberString(getCount(attack)) : "0";
                     }
                     else
                     {
@@ -301,7 +299,7 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public CardReplacer(Th06Converter parent, bool hideUntriedCards)
+            public CardReplacer(IReadOnlyDictionary<int, CardAttack> cardAttacks, bool hideUntriedCards)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -312,8 +310,7 @@ namespace ThScoreFileConverter.Models
                     {
                         if (hideUntriedCards)
                         {
-                            if (!parent.allScoreData.CardAttacks.TryGetValue(number, out var attack) ||
-                                !attack.HasTried())
+                            if (!cardAttacks.TryGetValue(number, out var attack) || !attack.HasTried())
                                 return (type == "N") ? "??????????" : "?????";
                         }
 
@@ -344,7 +341,7 @@ namespace ThScoreFileConverter.Models
             private readonly MatchEvaluator evaluator;
 
             [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-            public CollectRateReplacer(Th06Converter parent)
+            public CollectRateReplacer(IReadOnlyDictionary<int, CardAttack> cardAttacks)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -363,7 +360,7 @@ namespace ThScoreFileConverter.Models
                     else
                         findByType = (attack => attack.TrialCount > 0);
 
-                    return parent.allScoreData.CardAttacks.Values
+                    return cardAttacks.Values
                         .Count(Utils.MakeAndPredicate(findByStage, findByType))
                         .ToString(CultureInfo.CurrentCulture);
                 });
@@ -383,7 +380,7 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public ClearReplacer(Th06Converter parent)
+            public ClearReplacer(IReadOnlyDictionary<(Chara, Level), List<HighScore>> rankings)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -391,10 +388,9 @@ namespace ThScoreFileConverter.Models
                     var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
 
                     var key = (chara, level);
-                    if (parent.allScoreData.Rankings.ContainsKey(key))
+                    if (rankings.TryGetValue(key, out var ranking))
                     {
-                        var stageProgress =
-                            parent.allScoreData.Rankings[key].Max(rank => rank.StageProgress);
+                        var stageProgress = ranking.Max(rank => rank.StageProgress);
                         if (stageProgress == StageProgress.Extra)
                             return "Not Clear";
                         else
@@ -424,7 +420,7 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public PracticeReplacer(Th06Converter parent)
+            public PracticeReplacer(IReadOnlyDictionary<(Chara, Level, Stage), PracticeScore> practiceScores)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -438,7 +434,7 @@ namespace ThScoreFileConverter.Models
                         return match.ToString();
 
                     var key = (chara, level, stage);
-                    return parent.allScoreData.PracticeScores.TryGetValue(key, out var score)
+                    return practiceScores.TryGetValue(key, out var score)
                         ? Utils.ToNumberString(score.HighScore) : "0";
                 });
             }
