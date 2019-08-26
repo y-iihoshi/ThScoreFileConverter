@@ -9,6 +9,7 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.Models.Th06
@@ -57,7 +58,7 @@ namespace ThScoreFileConverter.Models.Th06
 
         public short Size2 { get; private set; }    // always equal to size1?
 
-        public byte FirstByteOfData => this.Data?.Length > 0 ? this.Data[0] : default;
+        public byte FirstByteOfData => this.Data.FirstOrDefault();
 
         protected byte[] Data { get; private set; }
 

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace ThScoreFileConverter.Models
@@ -50,33 +51,28 @@ namespace ThScoreFileConverter.Models
             where TAttribute : Attribute
         {
             /// <summary>
-            /// Caches attribute information collected by reflection.
+            /// Gets the cache of attribute information collected by reflection.
             /// </summary>
-            public static readonly Dictionary<TEnum, TAttribute> Cache = InitializeCache();
+            public static IReadOnlyDictionary<TEnum, TAttribute> Cache { get; } = InitializeCache();
 
             /// <summary>
             /// Initializes the cache.
             /// </summary>
             /// <returns>The cache of attribute information.</returns>
-            private static Dictionary<TEnum, TAttribute> InitializeCache()
+            private static IReadOnlyDictionary<TEnum, TAttribute> InitializeCache()
             {
                 var type = typeof(TEnum);
-                if (type.IsEnum)
-                {
-                    var lookup = type.GetFields()
-                        .Where(field => field.FieldType == type)
-                        .SelectMany(
-                            field => field.GetCustomAttributes(false),
-                            (field, attr) => new { enumValue = (TEnum)field.GetValue(null), attr })
-                        .ToLookup(a => a.attr.GetType());
+                Debug.Assert(type.IsEnum, $"{nameof(TEnum)} must be an enum type.");
 
-                    return lookup[typeof(TAttribute)]
-                        .ToDictionary(a => a.enumValue, a => a.attr as TAttribute);
-                }
-                else
-                {
-                    return new Dictionary<TEnum, TAttribute>();
-                }
+                var lookup = type.GetFields()
+                    .Where(field => field.FieldType == type)
+                    .SelectMany(
+                        field => field.GetCustomAttributes(false),
+                        (field, attr) => (enumValue: (TEnum)field.GetValue(null), attr))
+                    .ToLookup(pair => pair.attr.GetType());
+
+                return lookup[typeof(TAttribute)]
+                    .ToDictionary(pair => pair.enumValue, pair => pair.attr as TAttribute);
             }
         }
     }
