@@ -19,13 +19,15 @@ namespace ThScoreFileConverter.Models.Th06
     // %T06CRG[x][y]
     internal class CollectRateReplacer : IStringReplaceable
     {
-        private static readonly string Pattern = Utils.Format(
-            @"%T06CRG({0})([12])", StageWithTotalParser.Pattern);
+        private static readonly string Pattern = Utils.Format(@"%T06CRG({0})([12])", StageWithTotalParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 
         public CollectRateReplacer(IReadOnlyDictionary<int, CardAttack> cardAttacks)
         {
+            if (cardAttacks is null)
+                throw new ArgumentNullException(nameof(cardAttacks));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var stage = StageWithTotalParser.Parse(match.Groups[1].Value);
@@ -33,9 +35,14 @@ namespace ThScoreFileConverter.Models.Th06
 
                 Func<CardAttack, bool> findByStage;
                 if (stage == StageWithTotal.Total)
+                {
                     findByStage = attack => true;
+                }
                 else
-                    findByStage = attack => Definitions.CardTable[attack.CardId].Stage == (Stage)stage;
+                {
+                    findByStage = attack => Definitions.CardTable.Any(
+                        pair => (pair.Key == attack.CardId) && (pair.Value.Stage == (Stage)stage));
+                }
 
                 Func<CardAttack, bool> findByType;
                 if (type == 1)
