@@ -7,6 +7,7 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -24,6 +25,9 @@ namespace ThScoreFileConverter.Models.Th06
 
         public ClearReplacer(IReadOnlyDictionary<(Chara, Level), List<HighScore>> rankings)
         {
+            if (rankings is null)
+                throw new ArgumentNullException(nameof(rankings));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var level = LevelParser.Parse(match.Groups[1].Value);
@@ -32,7 +36,7 @@ namespace ThScoreFileConverter.Models.Th06
                 var key = (chara, level);
                 if (rankings.TryGetValue(key, out var ranking))
                 {
-                    var stageProgress = ranking.Max(rank => rank.StageProgress);
+                    var stageProgress = ranking.Select(rank => rank.StageProgress).DefaultIfEmpty().Max();
                     if (stageProgress == StageProgress.Extra)
                         return "Not Clear";
                     else
