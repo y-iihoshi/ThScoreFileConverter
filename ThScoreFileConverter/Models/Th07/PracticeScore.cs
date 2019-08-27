@@ -24,7 +24,7 @@ namespace ThScoreFileConverter.Models.Th07
                 reader.ReadUInt32();    // always 0x00000001?
                 this.TrialCount = reader.ReadInt32();
                 this.HighScore = reader.ReadInt32();
-                this.Chara = Utils.ToEnum<Th07Converter.Chara>(reader.ReadByte());
+                this.Chara = Utils.ToEnum<Chara>(reader.ReadByte());
                 this.Level = Utils.ToEnum<Level>(reader.ReadByte());
                 this.Stage = Utils.ToEnum<Th07Converter.Stage>(reader.ReadByte());
                 reader.ReadByte();      // always 0x00?
@@ -35,7 +35,7 @@ namespace ThScoreFileConverter.Models.Th07
 
         public int HighScore { get; }
 
-        public Th07Converter.Chara Chara { get; }
+        public Chara Chara { get; }
 
         public Level Level { get; }
 

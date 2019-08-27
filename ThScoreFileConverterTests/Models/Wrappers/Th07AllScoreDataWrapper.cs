@@ -27,16 +27,15 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         public Header Header
             => this.pobj.GetProperty(nameof(this.Header)) as Header;
-        public IReadOnlyDictionary<(Th07Converter.Chara, Level), List<HighScore>> Rankings
-            => this.pobj.GetProperty(nameof(this.Rankings))
-                as Dictionary<(Th07Converter.Chara, Level), List<HighScore>>;
-        public IReadOnlyDictionary<Th07Converter.Chara, ClearData> ClearData
-            => this.pobj.GetProperty(nameof(this.ClearData)) as Dictionary<Th07Converter.Chara, ClearData>;
+        public IReadOnlyDictionary<(Chara, Level), List<HighScore>> Rankings
+            => this.pobj.GetProperty(nameof(this.Rankings)) as Dictionary<(Chara, Level), List<HighScore>>;
+        public IReadOnlyDictionary<Chara, ClearData> ClearData
+            => this.pobj.GetProperty(nameof(this.ClearData)) as Dictionary<Chara, ClearData>;
         public IReadOnlyDictionary<int, CardAttack> CardAttacks
             => this.pobj.GetProperty(nameof(this.CardAttacks)) as Dictionary<int, CardAttack>;
-        public IReadOnlyDictionary<(Th07Converter.Chara, Level), Dictionary<Th07Converter.Stage, PracticeScore>> PracticeScores
+        public IReadOnlyDictionary<(Chara, Level), Dictionary<Th07Converter.Stage, PracticeScore>> PracticeScores
             => this.pobj.GetProperty(nameof(this.PracticeScores))
-                as Dictionary<(Th07Converter.Chara, Level), Dictionary<Th07Converter.Stage, PracticeScore>>;
+                as Dictionary<(Chara, Level), Dictionary<Th07Converter.Stage, PracticeScore>>;
         public PlayStatus PlayStatus
             => this.pobj.GetProperty(nameof(this.PlayStatus)) as PlayStatus;
         public LastName LastName

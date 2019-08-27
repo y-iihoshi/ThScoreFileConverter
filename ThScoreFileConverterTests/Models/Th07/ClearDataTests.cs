@@ -22,7 +22,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             public short size2;
             public Dictionary<Level, byte> storyFlags;
             public Dictionary<Level, byte> practiceFlags;
-            public Th07Converter.Chara chara;
+            public Chara chara;
         };
 
         internal static Properties ValidProperties => new Properties()
@@ -36,7 +36,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             practiceFlags = Utils.GetEnumerator<Level>()
                 .Select((level, index) => new { level, index })
                 .ToDictionary(pair => pair.level, pair => (byte)(10 - pair.index)),
-            chara = Th07Converter.Chara.ReimuB
+            chara = Chara.ReimuB
         };
 
         internal static byte[] MakeData(in Properties properties)
@@ -111,7 +111,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         });
 
         public static IEnumerable<object[]> InvalidCharacters
-            => TestUtils.GetInvalidEnumerators(typeof(Th07Converter.Chara));
+            => TestUtils.GetInvalidEnumerators(typeof(Chara));
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
@@ -120,7 +120,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         public void ClearDataTestInvalidChara(int chara) => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
-            properties.chara = TestUtils.Cast<Th07Converter.Chara>(chara);
+            properties.chara = TestUtils.Cast<Chara>(chara);
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
             _ = new ClearData(chapter.Target as Chapter);

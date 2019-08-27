@@ -209,18 +209,6 @@ namespace ThScoreFileConverter.Models
 
         private AllScoreData allScoreData = null;
 
-        public enum Chara
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("RA")] ReimuA,
-            [EnumAltName("RB")] ReimuB,
-            [EnumAltName("MA")] MarisaA,
-            [EnumAltName("MB")] MarisaB,
-            [EnumAltName("SA")] SakuyaA,
-            [EnumAltName("SB")] SakuyaB,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
         public enum CharaWithTotal
         {
 #pragma warning disable SA1134 // Attributes should not share line

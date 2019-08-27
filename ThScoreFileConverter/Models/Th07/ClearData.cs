@@ -33,7 +33,7 @@ namespace ThScoreFileConverter.Models.Th07
                     this.StoryFlags.Add(level, reader.ReadByte());
                 foreach (var level in levels)
                     this.PracticeFlags.Add(level, reader.ReadByte());
-                this.Chara = Utils.ToEnum<Th07Converter.Chara>(reader.ReadInt32());
+                this.Chara = Utils.ToEnum<Chara>(reader.ReadInt32());
             }
         }
 
@@ -41,6 +41,6 @@ namespace ThScoreFileConverter.Models.Th07
 
         public Dictionary<Level, byte> PracticeFlags { get; } // really...?
 
-        public Th07Converter.Chara Chara { get; }
+        public Chara Chara { get; }
     }
 }

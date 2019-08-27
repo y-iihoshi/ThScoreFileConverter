@@ -22,7 +22,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             public short size2;
             public uint score;
             public float slowRate;
-            public Th07Converter.Chara chara;
+            public Chara chara;
             public Level level;
             public Th07Converter.StageProgress stageProgress;
             public byte[] name;
@@ -37,7 +37,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             size2 = 0x28,
             score = 1234567u,
             slowRate = 9.87f,
-            chara = Th07Converter.Chara.ReimuB,
+            chara = Chara.ReimuB,
             level = Level.Hard,
             stageProgress = Th07Converter.StageProgress.St3,
             name = TestUtils.CP932Encoding.GetBytes("Player1\0\0"),
@@ -153,7 +153,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         });
 
         public static IEnumerable<object[]> InvalidCharacters
-            => TestUtils.GetInvalidEnumerators(typeof(Th07Converter.Chara));
+            => TestUtils.GetInvalidEnumerators(typeof(Chara));
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
@@ -162,7 +162,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         public void HighScoreTestInvalidChara(int chara) => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
-            properties.chara = TestUtils.Cast<Th07Converter.Chara>(chara);
+            properties.chara = TestUtils.Cast<Chara>(chara);
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
             _ = new HighScore(chapter.Target as Chapter);

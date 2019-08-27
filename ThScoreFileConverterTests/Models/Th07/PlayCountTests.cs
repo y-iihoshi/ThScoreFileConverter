@@ -14,7 +14,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         internal struct Properties
         {
             public int totalTrial;
-            public Dictionary<Th07Converter.Chara, int> trials;
+            public Dictionary<Chara, int> trials;
             public int totalRetry;
             public int totalClear;
             public int totalContinue;
@@ -23,7 +23,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             public Properties(in Properties properties)
             {
                 this.totalTrial = properties.totalTrial;
-                this.trials = new Dictionary<Th07Converter.Chara, int>(properties.trials);
+                this.trials = new Dictionary<Chara, int>(properties.trials);
                 this.totalRetry = properties.totalRetry;
                 this.totalClear = properties.totalClear;
                 this.totalContinue = properties.totalContinue;
@@ -34,7 +34,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         internal static Properties ValidProperties => new Properties()
         {
             totalTrial = 1,
-            trials = Utils.GetEnumerator<Th07Converter.Chara>()
+            trials = Utils.GetEnumerator<Chara>()
                 .Select((chara, index) => new { chara, index })
                 .ToDictionary(pair => pair.chara, pair => pair.index),
             totalRetry = 2,
@@ -122,7 +122,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         public void ReadFromTestShortenedTrials() => TestUtils.Wrap(() =>
         {
             var properties = new Properties(ValidProperties);
-            properties.trials.Remove(Th07Converter.Chara.SakuyaB);
+            properties.trials.Remove(Chara.SakuyaB);
 
             _ = Create(MakeByteArray(properties));
 
@@ -133,7 +133,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         public void ReadFromTestExceededTrials() => TestUtils.Wrap(() =>
         {
             var properties = new Properties(ValidProperties);
-            properties.trials.Add(TestUtils.Cast<Th07Converter.Chara>(99), 99);
+            properties.trials.Add(TestUtils.Cast<Chara>(99), 99);
 
             var playCount = Create(MakeByteArray(properties));
 

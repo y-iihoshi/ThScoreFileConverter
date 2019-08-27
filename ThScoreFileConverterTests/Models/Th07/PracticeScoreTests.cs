@@ -21,7 +21,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             public short size2;
             public int trialCount;
             public int highScore;
-            public Th07Converter.Chara chara;
+            public Chara chara;
             public Level level;
             public Th07Converter.Stage stage;
         };
@@ -33,7 +33,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             size2 = 0x18,
             trialCount = 987,
             highScore = 123456,
-            chara = Th07Converter.Chara.ReimuB,
+            chara = Chara.ReimuB,
             level = Level.Hard,
             stage = Th07Converter.Stage.Extra
         };
@@ -115,7 +115,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         });
 
         public static IEnumerable<object[]> InvalidCharacters
-            => TestUtils.GetInvalidEnumerators(typeof(Th07Converter.Chara));
+            => TestUtils.GetInvalidEnumerators(typeof(Chara));
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
@@ -124,7 +124,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         public void PracticeScoreTestInvalidChara(int chara) => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
-            properties.chara = TestUtils.Cast<Th07Converter.Chara>(chara);
+            properties.chara = TestUtils.Cast<Chara>(chara);
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
             _ = new PracticeScore(chapter.Target as Chapter);
