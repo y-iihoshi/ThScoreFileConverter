@@ -398,7 +398,7 @@ namespace ThScoreFileConverter.Models
                                 if (chapter.FirstByteOfData != 0x01)
                                     return false;
                                 break;
-                            case Th07.VersionInfo.ValidSignature:
+                            case VersionInfo.ValidSignature:
                                 if (chapter.FirstByteOfData != 0x01)
                                     return false;
                                 //// th07.exe does something more things here...
@@ -423,14 +423,14 @@ namespace ThScoreFileConverter.Models
         {
             var dictionary = new Dictionary<string, Action<AllScoreData, Th06.Chapter>>
             {
-                { Header.ValidSignature,           (data, ch) => data.Set(new Header(ch))           },
-                { HighScore.ValidSignature,        (data, ch) => data.Set(new HighScore(ch))        },
-                { ClearData.ValidSignature,        (data, ch) => data.Set(new ClearData(ch))        },
-                { CardAttack.ValidSignature,       (data, ch) => data.Set(new CardAttack(ch))       },
-                { PracticeScore.ValidSignature,    (data, ch) => data.Set(new PracticeScore(ch))    },
-                { PlayStatus.ValidSignature,       (data, ch) => data.Set(new PlayStatus(ch))       },
-                { Th07.LastName.ValidSignature,    (data, ch) => data.Set(new Th07.LastName(ch))    },
-                { Th07.VersionInfo.ValidSignature, (data, ch) => data.Set(new Th07.VersionInfo(ch)) },
+                { Header.ValidSignature,        (data, ch) => data.Set(new Header(ch))        },
+                { HighScore.ValidSignature,     (data, ch) => data.Set(new HighScore(ch))     },
+                { ClearData.ValidSignature,     (data, ch) => data.Set(new ClearData(ch))     },
+                { CardAttack.ValidSignature,    (data, ch) => data.Set(new CardAttack(ch))    },
+                { PracticeScore.ValidSignature, (data, ch) => data.Set(new PracticeScore(ch)) },
+                { PlayStatus.ValidSignature,    (data, ch) => data.Set(new PlayStatus(ch))    },
+                { LastName.ValidSignature,      (data, ch) => data.Set(new LastName(ch))      },
+                { VersionInfo.ValidSignature,   (data, ch) => data.Set(new VersionInfo(ch))   },
             };
 
             using (var reader = new BinaryReader(input, Encoding.UTF8, true))
@@ -445,7 +445,7 @@ namespace ThScoreFileConverter.Models
                     while (true)
                     {
                         chapter.ReadFrom(reader);
-                        if (dictionary.TryGetValue(chapter.Signature, out Action<AllScoreData, Th06.Chapter> setChapter))
+                        if (dictionary.TryGetValue(chapter.Signature, out var setChapter))
                             setChapter(allScoreData, chapter);
                     }
                 }
@@ -545,7 +545,7 @@ namespace ThScoreFileConverter.Models
                     }
                     else if (CardTable.ContainsKey(number))
                     {
-                        if (parent.allScoreData.CardAttacks.TryGetValue(number, out CardAttack attack))
+                        if (parent.allScoreData.CardAttacks.TryGetValue(number, out var attack))
                             return Utils.ToNumberString(getValue(attack));
                         else
                             return "0";
@@ -581,7 +581,7 @@ namespace ThScoreFileConverter.Models
                     {
                         if (hideUntriedCards)
                         {
-                            if (!parent.allScoreData.CardAttacks.TryGetValue(number, out CardAttack attack) ||
+                            if (!parent.allScoreData.CardAttacks.TryGetValue(number, out var attack) ||
                                 !attack.HasTried())
                                 return (type == "N") ? "??????????" : "?????";
                         }
@@ -722,7 +722,7 @@ namespace ThScoreFileConverter.Models
                     var level = LevelWithTotalParser.Parse(match.Groups[1].Value);
                     var charaAndMore = match.Groups[2].Value.ToUpperInvariant();
 
-                    var playCount = parent.allScoreData.PlayStatus.PlayCounts[(Th07.LevelWithTotal)level];
+                    var playCount = parent.allScoreData.PlayStatus.PlayCounts[level];
                     switch (charaAndMore)
                     {
                         case "CL":  // clear count
@@ -836,8 +836,7 @@ namespace ThScoreFileConverter.Models
                 this.Rankings = new Dictionary<(Chara, Th07.Level), List<HighScore>>(numPairs);
                 this.ClearData = new Dictionary<Chara, ClearData>(numCharas);
                 this.CardAttacks = new Dictionary<int, CardAttack>(CardTable.Count);
-                this.PracticeScores =
-                    new Dictionary<(Chara, Th07.Level), Dictionary<Stage, PracticeScore>>(numPairs);
+                this.PracticeScores = new Dictionary<(Chara, Th07.Level), Dictionary<Stage, PracticeScore>>(numPairs);
             }
 
             public Header Header { get; private set; }
@@ -852,9 +851,9 @@ namespace ThScoreFileConverter.Models
 
             public PlayStatus PlayStatus { get; private set; }
 
-            public Th07.LastName LastName { get; private set; }
+            public LastName LastName { get; private set; }
 
-            public Th07.VersionInfo VersionInfo { get; private set; }
+            public VersionInfo VersionInfo { get; private set; }
 
             public void Set(Header header) => this.Header = header;
 
@@ -902,9 +901,9 @@ namespace ThScoreFileConverter.Models
 
             public void Set(PlayStatus status) => this.PlayStatus = status;
 
-            public void Set(Th07.LastName name) => this.LastName = name;
+            public void Set(LastName name) => this.LastName = name;
 
-            public void Set(Th07.VersionInfo info) => this.VersionInfo = info;
+            public void Set(VersionInfo info) => this.VersionInfo = info;
         }
     }
 }
