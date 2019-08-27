@@ -33,25 +33,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.ClearData)) as Dictionary<Th07Converter.Chara, ClearData>;
         public IReadOnlyDictionary<int, CardAttack> CardAttacks
             => this.pobj.GetProperty(nameof(this.CardAttacks)) as Dictionary<int, CardAttack>;
-
-        // NOTE: Th07Converter.PracticeScore are private classes.
-        // public IReadOnlyDictionary<(Chara, Level), Dictionary<Stage, PracticeScore>> PracticeScores
-        //     => this.pobj.GetProperty(nameof(this.PracticeScores))
-        //         as Dictionary<(Chara, Level), Dictionary<Stage, PracticeScore>>;
-        public object PracticeScores
-            => this.pobj.GetProperty(nameof(this.PracticeScores));
-        public int? PracticeScoresCount
-            => this.PracticeScores.GetType().GetProperty("Count").GetValue(this.PracticeScores) as int?;
-        public object PracticeScoresPerCharaLevelPair(Th07Converter.Chara chara, Th07Converter.Level level)
-            => this.PracticeScores.GetType().GetProperty("Item").GetValue(
-                this.PracticeScores, new object[] { (chara, level) });
-        public Th07PracticeScoreWrapper PracticeScore(
-            Th07Converter.Chara chara, Th07Converter.Level level, Th07Converter.Stage stage)
-        {
-            var scoresPerPair = this.PracticeScoresPerCharaLevelPair(chara, level);
-            return new Th07PracticeScoreWrapper(
-                scoresPerPair.GetType().GetProperty("Item").GetValue(scoresPerPair, new object[] { stage }));
-        }
+        public IReadOnlyDictionary<(Th07Converter.Chara, Th07Converter.Level), Dictionary<Th07Converter.Stage, PracticeScore>> PracticeScores
+            => this.pobj.GetProperty(nameof(this.PracticeScores))
+                as Dictionary<(Th07Converter.Chara, Th07Converter.Level), Dictionary<Th07Converter.Stage, PracticeScore>>;
 
         public Th07PlayStatusWrapper PlayStatus
         {
@@ -75,8 +59,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.Invoke(nameof(Set), new object[] { data }, CultureInfo.InvariantCulture);
         public void Set(CardAttack attack)
             => this.pobj.Invoke(nameof(Set), new object[] { attack }, CultureInfo.InvariantCulture);
-        public void Set(Th07PracticeScoreWrapper score)
-            => this.pobj.Invoke(nameof(Set), new object[] { score.Target }, CultureInfo.InvariantCulture);
+        public void Set(PracticeScore score)
+            => this.pobj.Invoke(nameof(Set), new object[] { score }, CultureInfo.InvariantCulture);
         public void Set(Th07PlayStatusWrapper status)
             => this.pobj.Invoke(nameof(Set), new object[] { status.Target }, CultureInfo.InvariantCulture);
         public void Set(LastName name)

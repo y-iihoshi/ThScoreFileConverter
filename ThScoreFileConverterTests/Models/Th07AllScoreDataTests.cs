@@ -21,7 +21,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(0, allScoreData.Rankings.Count);
             Assert.AreEqual(0, allScoreData.ClearData.Count);
             Assert.AreEqual(0, allScoreData.CardAttacks.Count);
-            Assert.AreEqual(0, allScoreData.PracticeScoresCount);
+            Assert.AreEqual(0, allScoreData.PracticeScores.Count);
             Assert.IsNull(allScoreData.PlayStatus);
             Assert.IsNull(allScoreData.LastName);
             Assert.IsNull(allScoreData.VersionInfo);
@@ -148,40 +148,40 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th07AllScoreDataSetPracticeScoreTest() => TestUtils.Wrap(() =>
         {
-            var properties = Th07PracticeScoreTests.ValidProperties;
+            var properties = PracticeScoreTests.ValidProperties;
             properties.level = Th07Converter.Level.Normal;
             properties.stage = Th07Converter.Stage.St6;
-            var chapter = ChapterWrapper.Create(Th07PracticeScoreTests.MakeByteArray(properties));
-            var score = new Th07PracticeScoreWrapper(chapter);
+            var chapter = ChapterWrapper.Create(PracticeScoreTests.MakeByteArray(properties));
+            var score = new PracticeScore(chapter.Target as Chapter);
 
             var allScoreData = new Th07AllScoreDataWrapper();
             allScoreData.Set(score);
 
             Assert.AreSame(
-                score.Target,
-                allScoreData.PracticeScore(properties.chara, properties.level, properties.stage).Target);
+                score,
+                allScoreData.PracticeScores[(properties.chara, properties.level)][properties.stage]);
         });
 
         [TestMethod]
         public void Th07AllScoreDataSetPracticeScoreTestTwice() => TestUtils.Wrap(() =>
         {
-            var properties = Th07PracticeScoreTests.ValidProperties;
+            var properties = PracticeScoreTests.ValidProperties;
             properties.level = Th07Converter.Level.Normal;
             properties.stage = Th07Converter.Stage.St6;
-            var chapter = ChapterWrapper.Create(Th07PracticeScoreTests.MakeByteArray(properties));
-            var score1 = new Th07PracticeScoreWrapper(chapter);
-            var score2 = new Th07PracticeScoreWrapper(chapter);
+            var chapter = ChapterWrapper.Create(PracticeScoreTests.MakeByteArray(properties));
+            var score1 = new PracticeScore(chapter.Target as Chapter);
+            var score2 = new PracticeScore(chapter.Target as Chapter);
 
             var allScoreData = new Th07AllScoreDataWrapper();
             allScoreData.Set(score1);
             allScoreData.Set(score2);
 
             Assert.AreSame(
-                score1.Target,
-                allScoreData.PracticeScore(properties.chara, properties.level, properties.stage).Target);
+                score1,
+                allScoreData.PracticeScores[(properties.chara, properties.level)][properties.stage]);
             Assert.AreNotSame(
-                score2.Target,
-                allScoreData.PracticeScore(properties.chara, properties.level, properties.stage).Target);
+                score2,
+                allScoreData.PracticeScores[(properties.chara, properties.level)][properties.stage]);
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
@@ -195,17 +195,17 @@ namespace ThScoreFileConverterTests.Models
         public void Th07AllScoreDataSetPracticeScoreTestInvalidPracticeStage(int level, int stage)
             => TestUtils.Wrap(() =>
             {
-                var properties = Th07PracticeScoreTests.ValidProperties;
+                var properties = PracticeScoreTests.ValidProperties;
                 properties.level = TestUtils.Cast<Th07Converter.Level>(level);
                 properties.stage = TestUtils.Cast<Th07Converter.Stage>(stage);
                 var chapter = ChapterWrapper.Create(
-                    Th07PracticeScoreTests.MakeByteArray(properties));
-                var score = new Th07PracticeScoreWrapper(chapter);
+                    PracticeScoreTests.MakeByteArray(properties));
+                var score = new PracticeScore(chapter.Target as Chapter);
 
                 var allScoreData = new Th07AllScoreDataWrapper();
                 allScoreData.Set(score);
 
-                Assert.AreEqual(0, allScoreData.PracticeScoresCount);
+                Assert.AreEqual(0, allScoreData.PracticeScores.Count);
             });
 
         [TestMethod]

@@ -3,15 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
-using ThScoreFileConverterTests.Models.Wrappers;
+using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th07
 {
     [TestClass]
-    public class Th07PracticeScoreTests
+    public class PracticeScoreTests
     {
         internal struct Properties
         {
@@ -51,68 +51,64 @@ namespace ThScoreFileConverterTests.Models
             => TestUtils.MakeByteArray(
                 properties.signature.ToCharArray(), properties.size1, properties.size2, MakeData(properties));
 
-        internal static void Validate(in Th07PracticeScoreWrapper score, in Properties properties)
+        internal static void Validate(in PracticeScore score, in Properties properties)
         {
             var data = MakeData(properties);
 
             Assert.AreEqual(properties.signature, score.Signature);
             Assert.AreEqual(properties.size1, score.Size1);
             Assert.AreEqual(properties.size2, score.Size2);
-            CollectionAssert.AreEqual(data, score.Data.ToArray());
             Assert.AreEqual(data[0], score.FirstByteOfData);
-            Assert.AreEqual(properties.trialCount, score.TrialCount.Value);
-            Assert.AreEqual(properties.highScore, score.HighScore.Value);
-            Assert.AreEqual(properties.chara, score.Chara.Value);
-            Assert.AreEqual(properties.level, score.Level.Value);
-            Assert.AreEqual(properties.stage, score.Stage.Value);
+            Assert.AreEqual(properties.trialCount, score.TrialCount);
+            Assert.AreEqual(properties.highScore, score.HighScore);
+            Assert.AreEqual(properties.chara, score.Chara);
+            Assert.AreEqual(properties.level, score.Level);
+            Assert.AreEqual(properties.stage, score.Stage);
         }
 
         [TestMethod]
-        public void Th07PracticeScoreTestChapter() => TestUtils.Wrap(() =>
+        public void PracticeScoreTestChapter() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var score = new Th07PracticeScoreWrapper(chapter);
+            var score = new PracticeScore(chapter.Target as Chapter);
 
             Validate(score, properties);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th07PracticeScoreTestNullChapter() => TestUtils.Wrap(() =>
+        public void PracticeScoreTestNullChapter() => TestUtils.Wrap(() =>
         {
-            var score = new Th07PracticeScoreWrapper(null);
+            _ = new PracticeScore(null);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th07PracticeScoreTestInvalidSignature() => TestUtils.Wrap(() =>
+        public void PracticeScoreTestInvalidSignature() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
             properties.signature = properties.signature.ToLowerInvariant();
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var score = new Th07PracticeScoreWrapper(chapter);
+            _ = new PracticeScore(chapter.Target as Chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th07PracticeScoreTestInvalidSize1() => TestUtils.Wrap(() =>
+        public void PracticeScoreTestInvalidSize1() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
             --properties.size1;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var score = new Th07PracticeScoreWrapper(chapter);
+            _ = new PracticeScore(chapter.Target as Chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -120,18 +116,17 @@ namespace ThScoreFileConverterTests.Models
         public static IEnumerable<object[]> InvalidCharacters
             => TestUtils.GetInvalidEnumerators(typeof(Th07Converter.Chara));
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidCharacters))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th07PracticeScoreTestInvalidChara(int chara) => TestUtils.Wrap(() =>
+        public void PracticeScoreTestInvalidChara(int chara) => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
             properties.chara = TestUtils.Cast<Th07Converter.Chara>(chara);
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var score = new Th07PracticeScoreWrapper(chapter);
+            _ = new PracticeScore(chapter.Target as Chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -139,18 +134,17 @@ namespace ThScoreFileConverterTests.Models
         public static IEnumerable<object[]> InvalidLevels
             => TestUtils.GetInvalidEnumerators(typeof(Th07Converter.Level));
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th07PracticeScoreTestInvalidLevel(int level) => TestUtils.Wrap(() =>
+        public void PracticeScoreTestInvalidLevel(int level) => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
             properties.level = TestUtils.Cast<Th07Converter.Level>(level);
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var score = new Th07PracticeScoreWrapper(chapter);
+            _ = new PracticeScore(chapter.Target as Chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -158,18 +152,17 @@ namespace ThScoreFileConverterTests.Models
         public static IEnumerable<object[]> InvalidStages
             => TestUtils.GetInvalidEnumerators(typeof(Th07Converter.Stage));
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidStages))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th07PracticeScoreTestInvalidStage(int stage) => TestUtils.Wrap(() =>
+        public void PracticeScoreTestInvalidStage(int stage) => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
             properties.stage = TestUtils.Cast<Th07Converter.Stage>(stage);
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var score = new Th07PracticeScoreWrapper(chapter);
+            _ = new PracticeScore(chapter.Target as Chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
