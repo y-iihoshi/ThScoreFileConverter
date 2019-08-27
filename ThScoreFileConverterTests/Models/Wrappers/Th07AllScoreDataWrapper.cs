@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using ThScoreFileConverter.Models;
@@ -26,21 +27,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public Header Header
             => this.pobj.GetProperty(nameof(this.Header)) as Header;
 
-        // NOTE: Th07Converter.HighScore are private classes.
-        // public IReadOnlyDictionary<(Chara, Level), List<HighScore>> Rankings
-        //     => this.pobj.GetProperty(nameof(this.Rankings)) as Dictionary<(Chara, Level), List<HighScore>>;
-        public object Rankings
-            => this.pobj.GetProperty(nameof(this.Rankings));
-        public int? RankingsCount
-            => this.Rankings.GetType().GetProperty("Count").GetValue(this.Rankings) as int?;
-        public object Ranking(Th07Converter.Chara chara, Th07Converter.Level level)
-            => this.Rankings.GetType().GetProperty("Item").GetValue(this.Rankings, new object[] { (chara, level) });
-        public Th07HighScoreWrapper RankingItem(Th07Converter.Chara chara, Th07Converter.Level level, int index)
-        {
-            var ranking = this.Ranking(chara, level);
-            return new Th07HighScoreWrapper(
-                ranking.GetType().GetProperty("Item").GetValue(ranking, new object[] { index }));
-        }
+        public IReadOnlyDictionary<(Th07Converter.Chara, Th07Converter.Level), List<HighScore>> Rankings
+            => this.pobj.GetProperty(nameof(this.Rankings))
+                as Dictionary<(Th07Converter.Chara, Th07Converter.Level), List<HighScore>>;
 
         // NOTE: Th07Converter.ClearData is a private class.
         // public IReadOnlyDictionary<Chara, ClearData> ClearData
@@ -99,8 +88,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         public void Set(Header header)
             => this.pobj.Invoke(nameof(Set), new object[] { header }, CultureInfo.InvariantCulture);
-        public void Set(Th07HighScoreWrapper score)
-            => this.pobj.Invoke(nameof(Set), new object[] { score.Target }, CultureInfo.InvariantCulture);
+        public void Set(HighScore score)
+            => this.pobj.Invoke(nameof(Set), new object[] { score }, CultureInfo.InvariantCulture);
         public void Set(Th07ClearDataWrapper data)
             => this.pobj.Invoke(nameof(Set), new object[] { data.Target }, CultureInfo.InvariantCulture);
         public void Set(Th07CardAttackWrapper attack)
