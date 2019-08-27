@@ -5,14 +5,14 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
-using ThScoreFileConverterTests.Models.Th07;
-using ThScoreFileConverterTests.Models.Wrappers;
+using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th07
 {
     [TestClass]
-    public class Th07PlayStatusTests
+    public class PlayStatusTests
     {
         internal struct Properties
         {
@@ -54,14 +54,13 @@ namespace ThScoreFileConverterTests.Models
             => TestUtils.MakeByteArray(
                 properties.signature.ToCharArray(), properties.size1, properties.size2, MakeData(properties));
 
-        internal static void Validate(in Th07PlayStatusWrapper playStatus, in Properties properties)
+        internal static void Validate(in PlayStatus playStatus, in Properties properties)
         {
             var data = MakeData(properties);
 
             Assert.AreEqual(properties.signature, playStatus.Signature);
             Assert.AreEqual(properties.size1, playStatus.Size1);
             Assert.AreEqual(properties.size2, playStatus.Size2);
-            CollectionAssert.AreEqual(data, playStatus.Data.ToArray());
             Assert.AreEqual(data[0], playStatus.FirstByteOfData);
             Assert.AreEqual(properties.totalRunningTime.Hours, playStatus.TotalRunningTime.Hours);
             Assert.AreEqual(properties.totalRunningTime.Minutes, playStatus.TotalRunningTime.Minutes);
@@ -81,51 +80,48 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        public void Th07PlayStatusTestChapter() => TestUtils.Wrap(() =>
+        public void PlayStatusTestChapter() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var playStatus = new Th07PlayStatusWrapper(chapter);
+            var playStatus = new PlayStatus(chapter.Target as Chapter);
 
             Validate(playStatus, properties);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "playStatus")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th07PlayStatusTestNullChapter() => TestUtils.Wrap(() =>
+        public void PlayStatusTestNullChapter() => TestUtils.Wrap(() =>
         {
-            var playStatus = new Th07PlayStatusWrapper(null);
+            _ = new PlayStatus(null);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "playStatus")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th07PlayStatusTestInvalidSignature() => TestUtils.Wrap(() =>
+        public void PlayStatusTestInvalidSignature() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
             properties.signature = properties.signature.ToLowerInvariant();
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var playStatus = new Th07PlayStatusWrapper(chapter);
+            _ = new PlayStatus(chapter.Target as Chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "playStatus")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th07PlayStatusTestInvalidSize1() => TestUtils.Wrap(() =>
+        public void PlayStatusTestInvalidSize1() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
             --properties.size1;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var playStatus = new Th07PlayStatusWrapper(chapter);
+            _ = new PlayStatus(chapter.Target as Chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });

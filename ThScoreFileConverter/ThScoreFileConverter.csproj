@@ -140,6 +140,7 @@
     <Compile Include="Models\Th07\HighScore.cs" />
     <Compile Include="Models\Th07\LastName.cs" />
     <Compile Include="Models\Th07\PlayCount.cs" />
+    <Compile Include="Models\Th07\PlayStatus.cs" />
     <Compile Include="Models\Th07\PracticeScore.cs" />
     <Compile Include="Models\Th07\VersionInfo.cs" />
     <Compile Include="Models\Th08Converter.cs" />

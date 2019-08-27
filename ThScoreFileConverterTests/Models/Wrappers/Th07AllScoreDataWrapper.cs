@@ -36,16 +36,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public IReadOnlyDictionary<(Th07Converter.Chara, Th07Converter.Level), Dictionary<Th07Converter.Stage, PracticeScore>> PracticeScores
             => this.pobj.GetProperty(nameof(this.PracticeScores))
                 as Dictionary<(Th07Converter.Chara, Th07Converter.Level), Dictionary<Th07Converter.Stage, PracticeScore>>;
-
-        public Th07PlayStatusWrapper PlayStatus
-        {
-            get
-            {
-                var status = this.pobj.GetProperty(nameof(this.PlayStatus));
-                return (status != null) ? new Th07PlayStatusWrapper(status) : null;
-            }
-        }
-
+        public PlayStatus PlayStatus
+            => this.pobj.GetProperty(nameof(this.PlayStatus)) as PlayStatus;
         public LastName LastName
             => this.pobj.GetProperty(nameof(this.LastName)) as LastName;
         public VersionInfo VersionInfo
@@ -61,8 +53,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.Invoke(nameof(Set), new object[] { attack }, CultureInfo.InvariantCulture);
         public void Set(PracticeScore score)
             => this.pobj.Invoke(nameof(Set), new object[] { score }, CultureInfo.InvariantCulture);
-        public void Set(Th07PlayStatusWrapper status)
-            => this.pobj.Invoke(nameof(Set), new object[] { status.Target }, CultureInfo.InvariantCulture);
+        public void Set(PlayStatus status)
+            => this.pobj.Invoke(nameof(Set), new object[] { status }, CultureInfo.InvariantCulture);
         public void Set(LastName name)
             => this.pobj.Invoke(nameof(Set), new object[] { name }, CultureInfo.InvariantCulture);
         public void Set(VersionInfo info)
