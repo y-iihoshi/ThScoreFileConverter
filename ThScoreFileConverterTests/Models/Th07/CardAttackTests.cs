@@ -19,11 +19,11 @@ namespace ThScoreFileConverterTests.Models.Th07
             public string signature;
             public short size1;
             public short size2;
-            public Dictionary<Th07Converter.CharaWithTotal, uint> maxBonuses;
+            public Dictionary<CharaWithTotal, uint> maxBonuses;
             public short cardId;
             public byte[] cardName;
-            public Dictionary<Th07Converter.CharaWithTotal, ushort> trialCounts;
-            public Dictionary<Th07Converter.CharaWithTotal, ushort> clearCounts;
+            public Dictionary<CharaWithTotal, ushort> trialCounts;
+            public Dictionary<CharaWithTotal, ushort> clearCounts;
         };
 
         internal static Properties ValidProperties => new Properties()
@@ -31,15 +31,15 @@ namespace ThScoreFileConverterTests.Models.Th07
             signature = "CATK",
             size1 = 0x78,
             size2 = 0x78,
-            maxBonuses = Utils.GetEnumerator<Th07Converter.CharaWithTotal>()
+            maxBonuses = Utils.GetEnumerator<CharaWithTotal>()
                 .Select((chara, index) => new { chara, index })
                 .ToDictionary(pair => pair.chara, pair => (uint)pair.index),
             cardId = 123,
             cardName = TestUtils.MakeRandomArray<byte>(0x30),
-            trialCounts = Utils.GetEnumerator<Th07Converter.CharaWithTotal>()
+            trialCounts = Utils.GetEnumerator<CharaWithTotal>()
                 .Select((chara, index) => new { chara, index })
                 .ToDictionary(pair => pair.chara, pair => (ushort)(10 + pair.index)),
-            clearCounts = Utils.GetEnumerator<Th07Converter.CharaWithTotal>()
+            clearCounts = Utils.GetEnumerator<CharaWithTotal>()
                 .Select((chara, index) => new { chara, index })
                 .ToDictionary(pair => pair.chara, pair => (ushort)(10 - pair.index))
         };
@@ -126,7 +126,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         public void CardAttackTestNotTried() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
-            properties.trialCounts[Th07Converter.CharaWithTotal.Total] = 0;
+            properties.trialCounts[CharaWithTotal.Total] = 0;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
             var cardAttack = new CardAttack(chapter.Target as Chapter);

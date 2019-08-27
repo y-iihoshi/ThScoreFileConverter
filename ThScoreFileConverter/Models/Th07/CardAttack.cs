@@ -21,11 +21,11 @@ namespace ThScoreFileConverter.Models.Th07
         public CardAttack(Th06.Chapter chapter)
             : base(chapter, ValidSignature, ValidSize)
         {
-            var charas = Utils.GetEnumerator<Th07Converter.CharaWithTotal>();
+            var charas = Utils.GetEnumerator<CharaWithTotal>();
             var numCharas = charas.Count();
-            this.MaxBonuses = new Dictionary<Th07Converter.CharaWithTotal, uint>(numCharas);
-            this.TrialCounts = new Dictionary<Th07Converter.CharaWithTotal, ushort>(numCharas);
-            this.ClearCounts = new Dictionary<Th07Converter.CharaWithTotal, ushort>(numCharas);
+            this.MaxBonuses = new Dictionary<CharaWithTotal, uint>(numCharas);
+            this.TrialCounts = new Dictionary<CharaWithTotal, ushort>(numCharas);
+            this.ClearCounts = new Dictionary<CharaWithTotal, ushort>(numCharas);
 
             using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
             {
@@ -43,16 +43,16 @@ namespace ThScoreFileConverter.Models.Th07
             }
         }
 
-        public Dictionary<Th07Converter.CharaWithTotal, uint> MaxBonuses { get; }
+        public Dictionary<CharaWithTotal, uint> MaxBonuses { get; }
 
         public short CardId { get; }    // 1-based
 
         public byte[] CardName { get; }
 
-        public Dictionary<Th07Converter.CharaWithTotal, ushort> TrialCounts { get; }
+        public Dictionary<CharaWithTotal, ushort> TrialCounts { get; }
 
-        public Dictionary<Th07Converter.CharaWithTotal, ushort> ClearCounts { get; }
+        public Dictionary<CharaWithTotal, ushort> ClearCounts { get; }
 
-        public bool HasTried() => this.TrialCounts[Th07Converter.CharaWithTotal.Total] > 0;
+        public bool HasTried() => this.TrialCounts[CharaWithTotal.Total] > 0;
     }
 }
