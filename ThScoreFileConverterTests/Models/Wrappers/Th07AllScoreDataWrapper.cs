@@ -26,21 +26,11 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         public Header Header
             => this.pobj.GetProperty(nameof(this.Header)) as Header;
-
         public IReadOnlyDictionary<(Th07Converter.Chara, Th07Converter.Level), List<HighScore>> Rankings
             => this.pobj.GetProperty(nameof(this.Rankings))
                 as Dictionary<(Th07Converter.Chara, Th07Converter.Level), List<HighScore>>;
-
-        // NOTE: Th07Converter.ClearData is a private class.
-        // public IReadOnlyDictionary<Chara, ClearData> ClearData
-        //     => this.pobj.GetProperty(nameof(this.ClearData)) as Dictionary<Chara, ClearData>;
-        public object ClearData
-            => this.pobj.GetProperty(nameof(this.ClearData));
-        public int? ClearDataCount
-            => this.ClearData.GetType().GetProperty("Count").GetValue(this.ClearData) as int?;
-        public Th07ClearDataWrapper ClearDataItem(Th07Converter.Chara chara)
-            => new Th07ClearDataWrapper(
-                this.ClearData.GetType().GetProperty("Item").GetValue(this.ClearData, new object[] { chara }));
+        public IReadOnlyDictionary<Th07Converter.Chara, ClearData> ClearData
+            => this.pobj.GetProperty(nameof(this.ClearData)) as Dictionary<Th07Converter.Chara, ClearData>;
 
         // NOTE: Th07Converter.CardAttack is a private class.
         // public IReadOnlyDictionary<int, CardAttack> CardAttacks
@@ -90,8 +80,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.Invoke(nameof(Set), new object[] { header }, CultureInfo.InvariantCulture);
         public void Set(HighScore score)
             => this.pobj.Invoke(nameof(Set), new object[] { score }, CultureInfo.InvariantCulture);
-        public void Set(Th07ClearDataWrapper data)
-            => this.pobj.Invoke(nameof(Set), new object[] { data.Target }, CultureInfo.InvariantCulture);
+        public void Set(ClearData data)
+            => this.pobj.Invoke(nameof(Set), new object[] { data }, CultureInfo.InvariantCulture);
         public void Set(Th07CardAttackWrapper attack)
             => this.pobj.Invoke(nameof(Set), new object[] { attack.Target }, CultureInfo.InvariantCulture);
         public void Set(Th07PracticeScoreWrapper score)
