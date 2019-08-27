@@ -192,8 +192,8 @@ namespace ThScoreFileConverter.Models
         private static new readonly EnumShortNameParser<Th07.Level> LevelParser =
             new EnumShortNameParser<Th07.Level>();
 
-        private static new readonly EnumShortNameParser<LevelWithTotal> LevelWithTotalParser =
-            new EnumShortNameParser<LevelWithTotal>();
+        private static new readonly EnumShortNameParser<Th07.LevelWithTotal> LevelWithTotalParser =
+            new EnumShortNameParser<Th07.LevelWithTotal>();
 
         private static readonly EnumShortNameParser<Chara> CharaParser =
             new EnumShortNameParser<Chara>();
@@ -208,19 +208,6 @@ namespace ThScoreFileConverter.Models
             new EnumShortNameParser<StageWithTotal>();
 
         private AllScoreData allScoreData = null;
-
-        public enum LevelWithTotal
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("E")] Easy,
-            [EnumAltName("N")] Normal,
-            [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic,
-            [EnumAltName("X")] Extra,
-            [EnumAltName("P")] Phantasm,
-            [EnumAltName("T")] Total,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
 
         public enum Chara
         {
@@ -647,13 +634,13 @@ namespace ThScoreFileConverter.Models
                     Func<CardAttack, bool> findByLevel = (attack => true);
                     switch (level)
                     {
-                        case LevelWithTotal.Total:
+                        case Th07.LevelWithTotal.Total:
                             // Do nothing
                             break;
-                        case LevelWithTotal.Extra:
+                        case Th07.LevelWithTotal.Extra:
                             findByStage = (attack => CardTable[attack.CardId].Stage == Stage.Extra);
                             break;
-                        case LevelWithTotal.Phantasm:
+                        case Th07.LevelWithTotal.Phantasm:
                             findByStage = (attack => CardTable[attack.CardId].Stage == Stage.Phantasm);
                             break;
                         default:
@@ -735,7 +722,7 @@ namespace ThScoreFileConverter.Models
                     var level = LevelWithTotalParser.Parse(match.Groups[1].Value);
                     var charaAndMore = match.Groups[2].Value.ToUpperInvariant();
 
-                    var playCount = parent.allScoreData.PlayStatus.PlayCounts[(LevelWithTotal)level];
+                    var playCount = parent.allScoreData.PlayStatus.PlayCounts[(Th07.LevelWithTotal)level];
                     switch (charaAndMore)
                     {
                         case "CL":  // clear count

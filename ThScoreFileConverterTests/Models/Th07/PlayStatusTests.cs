@@ -8,6 +8,7 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
+using LevelWithTotal = ThScoreFileConverter.Models.Th07.LevelWithTotal;
 
 namespace ThScoreFileConverterTests.Models.Th07
 {
@@ -21,7 +22,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             public short size2;
             public Time totalRunningTime;
             public Time totalPlayTime;
-            public Dictionary<Th07Converter.LevelWithTotal, PlayCountTests.Properties> playCounts;
+            public Dictionary<LevelWithTotal, PlayCountTests.Properties> playCounts;
         };
 
         internal static Properties ValidProperties => new Properties()
@@ -31,7 +32,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             size2 = 0x160,
             totalRunningTime = new Time(12, 34, 56, 789, false),
             totalPlayTime = new Time(23, 45, 19, 876, false),
-            playCounts = Utils.GetEnumerator<Th07Converter.LevelWithTotal>()
+            playCounts = Utils.GetEnumerator<LevelWithTotal>()
                 .ToDictionary(
                     level => level,
                     level => new PlayCountTests.Properties(PlayCountTests.ValidProperties))

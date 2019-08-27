@@ -21,9 +21,9 @@ namespace ThScoreFileConverter.Models.Th07
         public PlayStatus(Th06.Chapter chapter)
             : base(chapter, ValidSignature, ValidSize)
         {
-            var levels = Utils.GetEnumerator<Th07Converter.LevelWithTotal>();
+            var levels = Utils.GetEnumerator<LevelWithTotal>();
             var numLevels = levels.Count();
-            this.PlayCounts = new Dictionary<Th07Converter.LevelWithTotal, PlayCount>(numLevels);
+            this.PlayCounts = new Dictionary<LevelWithTotal, PlayCount>(numLevels);
 
             using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
             {
@@ -52,6 +52,6 @@ namespace ThScoreFileConverter.Models.Th07
 
         public Time TotalPlayTime { get; }
 
-        public Dictionary<Th07Converter.LevelWithTotal, PlayCount> PlayCounts { get; }
+        public Dictionary<LevelWithTotal, PlayCount> PlayCounts { get; }
     }
 }
