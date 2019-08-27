@@ -147,6 +147,7 @@
     <Compile Include="Models\Th07\PlayStatus.cs" />
     <Compile Include="Models\Th07\PracticeScore.cs" />
     <Compile Include="Models\Th07\Stage.cs" />
+    <Compile Include="Models\Th07\StageWithTotal.cs" />
     <Compile Include="Models\Th07\VersionInfo.cs" />
     <Compile Include="Models\Th08Converter.cs" />
     <Compile Include="Models\Th08\FileHeader.cs" />

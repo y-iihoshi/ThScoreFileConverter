@@ -204,25 +204,10 @@ namespace ThScoreFileConverter.Models
         private static new readonly EnumShortNameParser<Th07.Stage> StageParser =
             new EnumShortNameParser<Th07.Stage>();
 
-        private static new readonly EnumShortNameParser<StageWithTotal> StageWithTotalParser =
-            new EnumShortNameParser<StageWithTotal>();
+        private static new readonly EnumShortNameParser<Th07.StageWithTotal> StageWithTotalParser =
+            new EnumShortNameParser<Th07.StageWithTotal>();
 
         private AllScoreData allScoreData = null;
-
-        public enum StageWithTotal
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("1")] St1,
-            [EnumAltName("2")] St2,
-            [EnumAltName("3")] St3,
-            [EnumAltName("4")] St4,
-            [EnumAltName("5")] St5,
-            [EnumAltName("6")] St6,
-            [EnumAltName("X")] Extra,
-            [EnumAltName("P")] Phantasm,
-            [EnumAltName("0")] Total,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
 
         public enum StageProgress
         {
@@ -583,11 +568,11 @@ namespace ThScoreFileConverter.Models
                     var stage = StageWithTotalParser.Parse(match.Groups[3].Value);
                     var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
-                    if ((stage == StageWithTotal.Extra) || (stage == StageWithTotal.Phantasm))
+                    if ((stage == Th07.StageWithTotal.Extra) || (stage == Th07.StageWithTotal.Phantasm))
                         return match.ToString();
 
                     Func<CardAttack, bool> findByStage;
-                    if (stage == StageWithTotal.Total)
+                    if (stage == Th07.StageWithTotal.Total)
                         findByStage = (attack => true);
                     else
                         findByStage = (attack => CardTable[attack.CardId].Stage == (Th07.Stage)stage);
