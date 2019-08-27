@@ -158,7 +158,7 @@ namespace ThScoreFileConverterTests.Models
 
             Assert.AreSame(
                 score,
-                allScoreData.PracticeScores[(properties.chara, properties.level)][properties.stage]);
+                allScoreData.PracticeScores[(properties.chara, properties.level, properties.stage)]);
         });
 
         [TestMethod]
@@ -177,10 +177,10 @@ namespace ThScoreFileConverterTests.Models
 
             Assert.AreSame(
                 score1,
-                allScoreData.PracticeScores[(properties.chara, properties.level)][properties.stage]);
+                allScoreData.PracticeScores[(properties.chara, properties.level, properties.stage)]);
             Assert.AreNotSame(
                 score2,
-                allScoreData.PracticeScores[(properties.chara, properties.level)][properties.stage]);
+                allScoreData.PracticeScores[(properties.chara, properties.level, properties.stage)]);
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]

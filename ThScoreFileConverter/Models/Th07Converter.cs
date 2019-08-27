@@ -546,20 +546,11 @@ namespace ThScoreFileConverter.Models
                     if ((stage == Th07.Stage.Extra) || (stage == Th07.Stage.Phantasm))
                         return match.ToString();
 
-                    var key = (chara, level);
-                    if (parent.allScoreData.PracticeScores.ContainsKey(key))
+                    var key = (chara, level, stage);
+                    if (parent.allScoreData.PracticeScores.TryGetValue(key, out var score))
                     {
-                        var scores = parent.allScoreData.PracticeScores[key];
-                        if (type == 1)
-                        {
-                            return scores.ContainsKey(stage)
-                                ? Utils.ToNumberString(scores[stage].HighScore * 10) : "0";
-                        }
-                        else
-                        {
-                            return scores.ContainsKey(stage)
-                                ? Utils.ToNumberString(scores[stage].TrialCount) : "0";
-                        }
+                        return (type == 1)
+                            ? Utils.ToNumberString(score.HighScore * 10) : Utils.ToNumberString(score.TrialCount);
                     }
                     else
                     {
@@ -583,7 +574,7 @@ namespace ThScoreFileConverter.Models
                 this.Rankings = new Dictionary<(Chara, Th07.Level), List<HighScore>>(numPairs);
                 this.ClearData = new Dictionary<Chara, ClearData>(numCharas);
                 this.CardAttacks = new Dictionary<int, CardAttack>(Definitions.CardTable.Count);
-                this.PracticeScores = new Dictionary<(Chara, Th07.Level), Dictionary<Th07.Stage, PracticeScore>>(numPairs);
+                this.PracticeScores = new Dictionary<(Chara, Th07.Level, Th07.Stage), PracticeScore>(numPairs);
             }
 
             public Header Header { get; private set; }
@@ -594,7 +585,7 @@ namespace ThScoreFileConverter.Models
 
             public Dictionary<int, CardAttack> CardAttacks { get; private set; }
 
-            public Dictionary<(Chara, Th07.Level), Dictionary<Th07.Stage, PracticeScore>> PracticeScores { get; private set; }
+            public Dictionary<(Chara, Th07.Level, Th07.Stage), PracticeScore> PracticeScores { get; private set; }
 
             public PlayStatus PlayStatus { get; private set; }
 
@@ -632,17 +623,9 @@ namespace ThScoreFileConverter.Models
                 if ((score.Level != Th07.Level.Extra) && (score.Level != Th07.Level.Phantasm) &&
                     (score.Stage != Th07.Stage.Extra) && (score.Stage != Th07.Stage.Phantasm))
                 {
-                    var key = (score.Chara, score.Level);
+                    var key = (score.Chara, score.Level, score.Stage);
                     if (!this.PracticeScores.ContainsKey(key))
-                    {
-                        var numStages = Utils.GetEnumerator<Th07.Stage>()
-                            .Where(st => (st != Th07.Stage.Extra) && (st != Th07.Stage.Phantasm)).Count();
-                        this.PracticeScores.Add(key, new Dictionary<Th07.Stage, PracticeScore>(numStages));
-                    }
-
-                    var scores = this.PracticeScores[key];
-                    if (!scores.ContainsKey(score.Stage))
-                        scores.Add(score.Stage, score);
+                        this.PracticeScores.Add(key, score);
                 }
             }
 
