@@ -7,6 +7,7 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
+using Level = ThScoreFileConverter.Models.Th07.Level;
 
 namespace ThScoreFileConverterTests.Models.Th07
 {
@@ -21,7 +22,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             public int trialCount;
             public int highScore;
             public Th07Converter.Chara chara;
-            public Th07Converter.Level level;
+            public Level level;
             public Th07Converter.Stage stage;
         };
 
@@ -33,7 +34,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             trialCount = 987,
             highScore = 123456,
             chara = Th07Converter.Chara.ReimuB,
-            level = Th07Converter.Level.Hard,
+            level = Level.Hard,
             stage = Th07Converter.Stage.Extra
         };
 
@@ -132,7 +133,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         });
 
         public static IEnumerable<object[]> InvalidLevels
-            => TestUtils.GetInvalidEnumerators(typeof(Th07Converter.Level));
+            => TestUtils.GetInvalidEnumerators(typeof(Level));
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
@@ -141,7 +142,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         public void PracticeScoreTestInvalidLevel(int level) => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
-            properties.level = TestUtils.Cast<Th07Converter.Level>(level);
+            properties.level = TestUtils.Cast<Level>(level);
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
             _ = new PracticeScore(chapter.Target as Chapter);

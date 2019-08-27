@@ -8,6 +8,7 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
+using Level = ThScoreFileConverter.Models.Th07.Level;
 
 namespace ThScoreFileConverterTests.Models.Th07
 {
@@ -19,8 +20,8 @@ namespace ThScoreFileConverterTests.Models.Th07
             public string signature;
             public short size1;
             public short size2;
-            public Dictionary<Th07Converter.Level, byte> storyFlags;
-            public Dictionary<Th07Converter.Level, byte> practiceFlags;
+            public Dictionary<Level, byte> storyFlags;
+            public Dictionary<Level, byte> practiceFlags;
             public Th07Converter.Chara chara;
         };
 
@@ -29,10 +30,10 @@ namespace ThScoreFileConverterTests.Models.Th07
             signature = "CLRD",
             size1 = 0x1C,
             size2 = 0x1C,
-            storyFlags = Utils.GetEnumerator<Th07Converter.Level>()
+            storyFlags = Utils.GetEnumerator<Level>()
                 .Select((level, index) => new { level, index })
                 .ToDictionary(pair => pair.level, pair => (byte)pair.index),
-            practiceFlags = Utils.GetEnumerator<Th07Converter.Level>()
+            practiceFlags = Utils.GetEnumerator<Level>()
                 .Select((level, index) => new { level, index })
                 .ToDictionary(pair => pair.level, pair => (byte)(10 - pair.index)),
             chara = Th07Converter.Chara.ReimuB

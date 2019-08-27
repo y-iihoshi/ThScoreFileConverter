@@ -25,7 +25,7 @@ namespace ThScoreFileConverter.Models.Th07
                 this.Score = reader.ReadUInt32();
                 this.SlowRate = reader.ReadSingle();
                 this.Chara = Utils.ToEnum<Th07Converter.Chara>(reader.ReadByte());
-                this.Level = Utils.ToEnum<Th07Converter.Level>(reader.ReadByte());
+                this.Level = Utils.ToEnum<Level>(reader.ReadByte());
                 this.StageProgress = Utils.ToEnum<Th07Converter.StageProgress>(reader.ReadByte());
                 this.Name = reader.ReadExactBytes(9);
                 this.Date = reader.ReadExactBytes(6);
@@ -47,7 +47,7 @@ namespace ThScoreFileConverter.Models.Th07
 
         public Th07Converter.Chara Chara { get; }
 
-        public Th07Converter.Level Level { get; }
+        public Level Level { get; }
 
         public Th07Converter.StageProgress StageProgress { get; }
 

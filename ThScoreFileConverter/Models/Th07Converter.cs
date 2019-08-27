@@ -18,7 +18,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Models.Th07;
 using CardInfo = ThScoreFileConverter.Models.SpellCardInfo<
-    ThScoreFileConverter.Models.Th07Converter.Stage, ThScoreFileConverter.Models.Th07Converter.Level>;
+    ThScoreFileConverter.Models.Th07Converter.Stage, ThScoreFileConverter.Models.Th07.Level>;
 
 namespace ThScoreFileConverter.Models
 {
@@ -30,147 +30,147 @@ namespace ThScoreFileConverter.Models
         private static readonly Dictionary<int, CardInfo> CardTable =
             new List<CardInfo>()
             {
-                new CardInfo(  1, "霜符「フロストコラムス」",                   Stage.St1,      Level.Hard),
-                new CardInfo(  2, "霜符「フロストコラムス -Lunatic-」",         Stage.St1,      Level.Lunatic),
-                new CardInfo(  3, "寒符「リンガリングコールド -Easy-」",        Stage.St1,      Level.Easy),
-                new CardInfo(  4, "寒符「リンガリングコールド」",               Stage.St1,      Level.Normal),
-                new CardInfo(  5, "寒符「リンガリングコールド -Hard-」",        Stage.St1,      Level.Hard),
-                new CardInfo(  6, "寒符「リンガリングコールド -Lunatic-」",     Stage.St1,      Level.Lunatic),
-                new CardInfo(  7, "冬符「フラワーウィザラウェイ -Easy-」",      Stage.St1,      Level.Easy),
-                new CardInfo(  8, "冬符「フラワーウィザラウェイ」",             Stage.St1,      Level.Normal),
-                new CardInfo(  9, "白符「アンデュレイションレイ」",             Stage.St1,      Level.Hard),
-                new CardInfo( 10, "怪符「テーブルターニング」",                 Stage.St1,      Level.Lunatic),
-                new CardInfo( 11, "仙符「鳳凰卵 -Easy-」",                      Stage.St2,      Level.Easy),
-                new CardInfo( 12, "仙符「鳳凰卵」",                             Stage.St2,      Level.Normal),
-                new CardInfo( 13, "仙符「鳳凰展翅」",                           Stage.St2,      Level.Hard),
-                new CardInfo( 14, "仙符「鳳凰展翅 -Lunatic-」",                 Stage.St2,      Level.Lunatic),
-                new CardInfo( 15, "式符「飛翔晴明 -Easy-」",                    Stage.St2,      Level.Easy),
-                new CardInfo( 16, "式符「飛翔晴明」",                           Stage.St2,      Level.Normal),
-                new CardInfo( 17, "陰陽「道満晴明」",                           Stage.St2,      Level.Hard),
-                new CardInfo( 18, "陰陽「晴明大紋」",                           Stage.St2,      Level.Lunatic),
-                new CardInfo( 19, "天符「天仙鳴動 -Easy-」",                    Stage.St2,      Level.Easy),
-                new CardInfo( 20, "天符「天仙鳴動」",                           Stage.St2,      Level.Normal),
-                new CardInfo( 21, "翔符「飛翔韋駄天」",                         Stage.St2,      Level.Hard),
-                new CardInfo( 22, "童符「護法天童乱舞」",                       Stage.St2,      Level.Lunatic),
-                new CardInfo( 23, "仙符「屍解永遠 -Easy-」",                    Stage.St2,      Level.Easy),
-                new CardInfo( 24, "仙符「屍解永遠」",                           Stage.St2,      Level.Normal),
-                new CardInfo( 25, "鬼符「鬼門金神」",                           Stage.St2,      Level.Hard),
-                new CardInfo( 26, "方符「奇門遁甲」",                           Stage.St2,      Level.Lunatic),
-                new CardInfo( 27, "操符「乙女文楽」",                           Stage.St3,      Level.Hard),
-                new CardInfo( 28, "操符「乙女文楽 -Lunatic-」",                 Stage.St3,      Level.Lunatic),
-                new CardInfo( 29, "蒼符「博愛の仏蘭西人形 -Easy-」",            Stage.St3,      Level.Easy),
-                new CardInfo( 30, "蒼符「博愛の仏蘭西人形」",                   Stage.St3,      Level.Normal),
-                new CardInfo( 31, "蒼符「博愛の仏蘭西人形 -Hard-」",            Stage.St3,      Level.Hard),
-                new CardInfo( 32, "蒼符「博愛のオルレアン人形」",               Stage.St3,      Level.Lunatic),
-                new CardInfo( 33, "紅符「紅毛の和蘭人形 -Easy-」",              Stage.St3,      Level.Easy),
-                new CardInfo( 34, "紅符「紅毛の和蘭人形」",                     Stage.St3,      Level.Normal),
-                new CardInfo( 35, "白符「白亜の露西亜人形」",                   Stage.St3,      Level.Hard),
-                new CardInfo( 36, "白符「白亜の露西亜人形 -Lunatic-」",         Stage.St3,      Level.Lunatic),
-                new CardInfo( 37, "闇符「霧の倫敦人形 -Easy-」",                Stage.St3,      Level.Easy),
-                new CardInfo( 38, "闇符「霧の倫敦人形」",                       Stage.St3,      Level.Normal),
-                new CardInfo( 39, "廻符「輪廻の西蔵人形」",                     Stage.St3,      Level.Hard),
-                new CardInfo( 40, "雅符「春の京人形」",                         Stage.St3,      Level.Lunatic),
-                new CardInfo( 41, "咒詛「魔彩光の上海人形 -Easy-」",            Stage.St3,      Level.Easy),
-                new CardInfo( 42, "咒詛「魔彩光の上海人形」",                   Stage.St3,      Level.Normal),
-                new CardInfo( 43, "咒詛「魔彩光の上海人形 -Hard-」",            Stage.St3,      Level.Hard),
-                new CardInfo( 44, "咒詛「首吊り蓬莱人形」",                     Stage.St3,      Level.Lunatic),
-                new CardInfo( 45, "騒符「ファントムディニング -Easy-」",        Stage.St4,      Level.Easy),
-                new CardInfo( 46, "騒符「ファントムディニング」",               Stage.St4,      Level.Normal),
-                new CardInfo( 47, "騒符「ライブポルターガイスト」",             Stage.St4,      Level.Hard),
-                new CardInfo( 48, "騒符「ライブポルターガイスト -Lunatic-」",   Stage.St4,      Level.Lunatic),
-                new CardInfo( 49, "弦奏「グァルネリ・デル・ジェス -Easy-」",    Stage.St4,      Level.Easy),
-                new CardInfo( 50, "弦奏「グァルネリ・デル・ジェス」",           Stage.St4,      Level.Normal),
-                new CardInfo( 51, "神弦「ストラディヴァリウス」",               Stage.St4,      Level.Hard),
-                new CardInfo( 52, "偽弦「スードストラディヴァリウス」",         Stage.St4,      Level.Lunatic),
-                new CardInfo( 53, "管霊「ヒノファンタズム -Easy-」",            Stage.St4,      Level.Easy),
-                new CardInfo( 54, "管霊「ヒノファンタズム」",                   Stage.St4,      Level.Normal),
-                new CardInfo( 55, "冥管「ゴーストクリフォード」",               Stage.St4,      Level.Hard),
-                new CardInfo( 56, "管霊「ゴーストクリフォード -Lunatic-」",     Stage.St4,      Level.Lunatic),
-                new CardInfo( 57, "冥鍵「ファツィオーリ冥奏 -Easy-」",          Stage.St4,      Level.Easy),
-                new CardInfo( 58, "冥鍵「ファツィオーリ冥奏」",                 Stage.St4,      Level.Normal),
-                new CardInfo( 59, "鍵霊「ベーゼンドルファー神奏」",             Stage.St4,      Level.Hard),
-                new CardInfo( 60, "鍵霊「ベーゼンドルファー神奏 -Lunatic-」",   Stage.St4,      Level.Lunatic),
-                new CardInfo( 61, "合葬「プリズムコンチェルト -Easy-」",        Stage.St4,      Level.Easy),
-                new CardInfo( 62, "合葬「プリズムコンチェルト」",               Stage.St4,      Level.Normal),
-                new CardInfo( 63, "騒葬「スティジャンリバーサイド」",           Stage.St4,      Level.Hard),
-                new CardInfo( 64, "騒葬「スティジャンリバーサイド -Lunatic-」", Stage.St4,      Level.Lunatic),
-                new CardInfo( 65, "大合葬「霊車コンチェルトグロッソ -Easy-」",  Stage.St4,      Level.Easy),
-                new CardInfo( 66, "大合葬「霊車コンチェルトグロッソ」",         Stage.St4,      Level.Normal),
-                new CardInfo( 67, "大合葬「霊車コンチェルトグロッソ改」",       Stage.St4,      Level.Hard),
-                new CardInfo( 68, "大合葬「霊車コンチェルトグロッソ怪」",       Stage.St4,      Level.Lunatic),
-                new CardInfo( 69, "幽鬼剣「妖童餓鬼の断食 -Easy-」",            Stage.St5,      Level.Easy),
-                new CardInfo( 70, "幽鬼剣「妖童餓鬼の断食」",                   Stage.St5,      Level.Normal),
-                new CardInfo( 71, "餓鬼剣「餓鬼道草紙」",                       Stage.St5,      Level.Hard),
-                new CardInfo( 72, "餓王剣「餓鬼十王の報い」",                   Stage.St5,      Level.Lunatic),
-                new CardInfo( 73, "獄界剣「二百由旬の一閃 -Easy-」",            Stage.St5,      Level.Easy),
-                new CardInfo( 74, "獄界剣「二百由旬の一閃」",                   Stage.St5,      Level.Normal),
-                new CardInfo( 75, "獄炎剣「業風閃影陣」",                       Stage.St5,      Level.Hard),
-                new CardInfo( 76, "獄神剣「業風神閃斬」",                       Stage.St5,      Level.Lunatic),
-                new CardInfo( 77, "畜趣剣「無為無策の冥罰 -Easy-」",            Stage.St5,      Level.Easy),
-                new CardInfo( 78, "畜趣剣「無為無策の冥罰」",                   Stage.St5,      Level.Normal),
-                new CardInfo( 79, "修羅剣「現世妄執」",                         Stage.St5,      Level.Hard),
-                new CardInfo( 80, "修羅剣「現世妄執 -Lunatic-」",               Stage.St5,      Level.Lunatic),
-                new CardInfo( 81, "人界剣「悟入幻想 -Easy-」",                  Stage.St5,      Level.Easy),
-                new CardInfo( 82, "人界剣「悟入幻想」",                         Stage.St5,      Level.Normal),
-                new CardInfo( 83, "人世剣「大悟顕晦」",                         Stage.St5,      Level.Hard),
-                new CardInfo( 84, "人神剣「俗諦常住」",                         Stage.St5,      Level.Lunatic),
-                new CardInfo( 85, "天上剣「天人の五衰 -Easy-」",                Stage.St5,      Level.Easy),
-                new CardInfo( 86, "天上剣「天人の五衰」",                       Stage.St5,      Level.Normal),
-                new CardInfo( 87, "天界剣「七魄忌諱」",                         Stage.St5,      Level.Hard),
-                new CardInfo( 88, "天神剣「三魂七魄」",                         Stage.St5,      Level.Lunatic),
-                new CardInfo( 89, "六道剣「一念無量劫 -Easy-」",                Stage.St6,      Level.Easy),
-                new CardInfo( 90, "六道剣「一念無量劫」",                       Stage.St6,      Level.Normal),
-                new CardInfo( 91, "六道剣「一念無量劫 -Hard-」",                Stage.St6,      Level.Hard),
-                new CardInfo( 92, "六道剣「一念無量劫 -Lunatic-」",             Stage.St6,      Level.Lunatic),
-                new CardInfo( 93, "亡郷「亡我郷 -さまよえる魂-」",              Stage.St6,      Level.Easy),
-                new CardInfo( 94, "亡郷「亡我郷 -宿罪-」",                      Stage.St6,      Level.Normal),
-                new CardInfo( 95, "亡郷「亡我郷 -道無き道-」",                  Stage.St6,      Level.Hard),
-                new CardInfo( 96, "亡郷「亡我郷 -自尽-」",                      Stage.St6,      Level.Lunatic),
-                new CardInfo( 97, "亡舞「生者必滅の理 -眩惑-」",                Stage.St6,      Level.Easy),
-                new CardInfo( 98, "亡舞「生者必滅の理 -死蝶-」",                Stage.St6,      Level.Normal),
-                new CardInfo( 99, "亡舞「生者必滅の理 -毒蛾-」",                Stage.St6,      Level.Hard),
-                new CardInfo(100, "亡舞「生者必滅の理 -魔境-」",                Stage.St6,      Level.Lunatic),
-                new CardInfo(101, "華霊「ゴーストバタフライ」",                 Stage.St6,      Level.Easy),
-                new CardInfo(102, "華霊「スワローテイルバタフライ」",           Stage.St6,      Level.Normal),
-                new CardInfo(103, "華霊「ディープルーティドバタフライ」",       Stage.St6,      Level.Hard),
-                new CardInfo(104, "華霊「バタフライディルージョン」",           Stage.St6,      Level.Lunatic),
-                new CardInfo(105, "幽曲「リポジトリ・オブ・ヒロカワ -偽霊-」",  Stage.St6,      Level.Easy),
-                new CardInfo(106, "幽曲「リポジトリ・オブ・ヒロカワ -亡霊-」",  Stage.St6,      Level.Normal),
-                new CardInfo(107, "幽曲「リポジトリ・オブ・ヒロカワ -幻霊-」",  Stage.St6,      Level.Hard),
-                new CardInfo(108, "幽曲「リポジトリ・オブ・ヒロカワ -神霊-」",  Stage.St6,      Level.Lunatic),
-                new CardInfo(109, "桜符「完全なる墨染の桜 -封印-」",            Stage.St6,      Level.Easy),
-                new CardInfo(110, "桜符「完全なる墨染の桜 -亡我-」",            Stage.St6,      Level.Normal),
-                new CardInfo(111, "桜符「完全なる墨染の桜 -春眠-」",            Stage.St6,      Level.Hard),
-                new CardInfo(112, "桜符「完全なる墨染の桜 -開花-」",            Stage.St6,      Level.Lunatic),
-                new CardInfo(113, "「反魂蝶 -一分咲-」",                        Stage.St6,      Level.Easy),
-                new CardInfo(114, "「反魂蝶 -参分咲-」",                        Stage.St6,      Level.Normal),
-                new CardInfo(115, "「反魂蝶 -伍分咲-」",                        Stage.St6,      Level.Hard),
-                new CardInfo(116, "「反魂蝶 -八分咲-」",                        Stage.St6,      Level.Lunatic),
-                new CardInfo(117, "鬼符「青鬼赤鬼」",                           Stage.Extra,    Level.Extra),
-                new CardInfo(118, "鬼神「飛翔毘沙門天」",                       Stage.Extra,    Level.Extra),
-                new CardInfo(119, "式神「仙狐思念」",                           Stage.Extra,    Level.Extra),
-                new CardInfo(120, "式神「十二神将の宴」",                       Stage.Extra,    Level.Extra),
-                new CardInfo(121, "式輝「狐狸妖怪レーザー」",                   Stage.Extra,    Level.Extra),
-                new CardInfo(122, "式輝「四面楚歌チャーミング」",               Stage.Extra,    Level.Extra),
-                new CardInfo(123, "式輝「プリンセス天狐 -Illusion-」",          Stage.Extra,    Level.Extra),
-                new CardInfo(124, "式弾「アルティメットブディスト」",           Stage.Extra,    Level.Extra),
-                new CardInfo(125, "式弾「ユーニラタルコンタクト」",             Stage.Extra,    Level.Extra),
-                new CardInfo(126, "式神「橙」",                                 Stage.Extra,    Level.Extra),
-                new CardInfo(127, "「狐狗狸さんの契約」",                       Stage.Extra,    Level.Extra),
-                new CardInfo(128, "幻神「飯綱権現降臨」",                       Stage.Extra,    Level.Extra),
-                new CardInfo(129, "式神「前鬼後鬼の守護」",                     Stage.Phantasm, Level.Phantasm),
-                new CardInfo(130, "式神「憑依荼吉尼天」",                       Stage.Phantasm, Level.Phantasm),
-                new CardInfo(131, "結界「夢と現の呪」",                         Stage.Phantasm, Level.Phantasm),
-                new CardInfo(132, "結界「動と静の均衡」",                       Stage.Phantasm, Level.Phantasm),
-                new CardInfo(133, "結界「光と闇の網目」",                       Stage.Phantasm, Level.Phantasm),
-                new CardInfo(134, "罔両「ストレートとカーブの夢郷」",           Stage.Phantasm, Level.Phantasm),
-                new CardInfo(135, "罔両「八雲紫の神隠し」",                     Stage.Phantasm, Level.Phantasm),
-                new CardInfo(136, "罔両「禅寺に棲む妖蝶」",                     Stage.Phantasm, Level.Phantasm),
-                new CardInfo(137, "魍魎「二重黒死蝶」",                         Stage.Phantasm, Level.Phantasm),
-                new CardInfo(138, "式神「八雲藍」",                             Stage.Phantasm, Level.Phantasm),
-                new CardInfo(139, "「人間と妖怪の境界」",                       Stage.Phantasm, Level.Phantasm),
-                new CardInfo(140, "結界「生と死の境界」",                       Stage.Phantasm, Level.Phantasm),
-                new CardInfo(141, "紫奥義「弾幕結界」",                         Stage.Phantasm, Level.Phantasm),
+                new CardInfo(  1, "霜符「フロストコラムス」",                   Stage.St1,      Th07.Level.Hard),
+                new CardInfo(  2, "霜符「フロストコラムス -Lunatic-」",         Stage.St1,      Th07.Level.Lunatic),
+                new CardInfo(  3, "寒符「リンガリングコールド -Easy-」",        Stage.St1,      Th07.Level.Easy),
+                new CardInfo(  4, "寒符「リンガリングコールド」",               Stage.St1,      Th07.Level.Normal),
+                new CardInfo(  5, "寒符「リンガリングコールド -Hard-」",        Stage.St1,      Th07.Level.Hard),
+                new CardInfo(  6, "寒符「リンガリングコールド -Lunatic-」",     Stage.St1,      Th07.Level.Lunatic),
+                new CardInfo(  7, "冬符「フラワーウィザラウェイ -Easy-」",      Stage.St1,      Th07.Level.Easy),
+                new CardInfo(  8, "冬符「フラワーウィザラウェイ」",             Stage.St1,      Th07.Level.Normal),
+                new CardInfo(  9, "白符「アンデュレイションレイ」",             Stage.St1,      Th07.Level.Hard),
+                new CardInfo( 10, "怪符「テーブルターニング」",                 Stage.St1,      Th07.Level.Lunatic),
+                new CardInfo( 11, "仙符「鳳凰卵 -Easy-」",                      Stage.St2,      Th07.Level.Easy),
+                new CardInfo( 12, "仙符「鳳凰卵」",                             Stage.St2,      Th07.Level.Normal),
+                new CardInfo( 13, "仙符「鳳凰展翅」",                           Stage.St2,      Th07.Level.Hard),
+                new CardInfo( 14, "仙符「鳳凰展翅 -Lunatic-」",                 Stage.St2,      Th07.Level.Lunatic),
+                new CardInfo( 15, "式符「飛翔晴明 -Easy-」",                    Stage.St2,      Th07.Level.Easy),
+                new CardInfo( 16, "式符「飛翔晴明」",                           Stage.St2,      Th07.Level.Normal),
+                new CardInfo( 17, "陰陽「道満晴明」",                           Stage.St2,      Th07.Level.Hard),
+                new CardInfo( 18, "陰陽「晴明大紋」",                           Stage.St2,      Th07.Level.Lunatic),
+                new CardInfo( 19, "天符「天仙鳴動 -Easy-」",                    Stage.St2,      Th07.Level.Easy),
+                new CardInfo( 20, "天符「天仙鳴動」",                           Stage.St2,      Th07.Level.Normal),
+                new CardInfo( 21, "翔符「飛翔韋駄天」",                         Stage.St2,      Th07.Level.Hard),
+                new CardInfo( 22, "童符「護法天童乱舞」",                       Stage.St2,      Th07.Level.Lunatic),
+                new CardInfo( 23, "仙符「屍解永遠 -Easy-」",                    Stage.St2,      Th07.Level.Easy),
+                new CardInfo( 24, "仙符「屍解永遠」",                           Stage.St2,      Th07.Level.Normal),
+                new CardInfo( 25, "鬼符「鬼門金神」",                           Stage.St2,      Th07.Level.Hard),
+                new CardInfo( 26, "方符「奇門遁甲」",                           Stage.St2,      Th07.Level.Lunatic),
+                new CardInfo( 27, "操符「乙女文楽」",                           Stage.St3,      Th07.Level.Hard),
+                new CardInfo( 28, "操符「乙女文楽 -Lunatic-」",                 Stage.St3,      Th07.Level.Lunatic),
+                new CardInfo( 29, "蒼符「博愛の仏蘭西人形 -Easy-」",            Stage.St3,      Th07.Level.Easy),
+                new CardInfo( 30, "蒼符「博愛の仏蘭西人形」",                   Stage.St3,      Th07.Level.Normal),
+                new CardInfo( 31, "蒼符「博愛の仏蘭西人形 -Hard-」",            Stage.St3,      Th07.Level.Hard),
+                new CardInfo( 32, "蒼符「博愛のオルレアン人形」",               Stage.St3,      Th07.Level.Lunatic),
+                new CardInfo( 33, "紅符「紅毛の和蘭人形 -Easy-」",              Stage.St3,      Th07.Level.Easy),
+                new CardInfo( 34, "紅符「紅毛の和蘭人形」",                     Stage.St3,      Th07.Level.Normal),
+                new CardInfo( 35, "白符「白亜の露西亜人形」",                   Stage.St3,      Th07.Level.Hard),
+                new CardInfo( 36, "白符「白亜の露西亜人形 -Lunatic-」",         Stage.St3,      Th07.Level.Lunatic),
+                new CardInfo( 37, "闇符「霧の倫敦人形 -Easy-」",                Stage.St3,      Th07.Level.Easy),
+                new CardInfo( 38, "闇符「霧の倫敦人形」",                       Stage.St3,      Th07.Level.Normal),
+                new CardInfo( 39, "廻符「輪廻の西蔵人形」",                     Stage.St3,      Th07.Level.Hard),
+                new CardInfo( 40, "雅符「春の京人形」",                         Stage.St3,      Th07.Level.Lunatic),
+                new CardInfo( 41, "咒詛「魔彩光の上海人形 -Easy-」",            Stage.St3,      Th07.Level.Easy),
+                new CardInfo( 42, "咒詛「魔彩光の上海人形」",                   Stage.St3,      Th07.Level.Normal),
+                new CardInfo( 43, "咒詛「魔彩光の上海人形 -Hard-」",            Stage.St3,      Th07.Level.Hard),
+                new CardInfo( 44, "咒詛「首吊り蓬莱人形」",                     Stage.St3,      Th07.Level.Lunatic),
+                new CardInfo( 45, "騒符「ファントムディニング -Easy-」",        Stage.St4,      Th07.Level.Easy),
+                new CardInfo( 46, "騒符「ファントムディニング」",               Stage.St4,      Th07.Level.Normal),
+                new CardInfo( 47, "騒符「ライブポルターガイスト」",             Stage.St4,      Th07.Level.Hard),
+                new CardInfo( 48, "騒符「ライブポルターガイスト -Lunatic-」",   Stage.St4,      Th07.Level.Lunatic),
+                new CardInfo( 49, "弦奏「グァルネリ・デル・ジェス -Easy-」",    Stage.St4,      Th07.Level.Easy),
+                new CardInfo( 50, "弦奏「グァルネリ・デル・ジェス」",           Stage.St4,      Th07.Level.Normal),
+                new CardInfo( 51, "神弦「ストラディヴァリウス」",               Stage.St4,      Th07.Level.Hard),
+                new CardInfo( 52, "偽弦「スードストラディヴァリウス」",         Stage.St4,      Th07.Level.Lunatic),
+                new CardInfo( 53, "管霊「ヒノファンタズム -Easy-」",            Stage.St4,      Th07.Level.Easy),
+                new CardInfo( 54, "管霊「ヒノファンタズム」",                   Stage.St4,      Th07.Level.Normal),
+                new CardInfo( 55, "冥管「ゴーストクリフォード」",               Stage.St4,      Th07.Level.Hard),
+                new CardInfo( 56, "管霊「ゴーストクリフォード -Lunatic-」",     Stage.St4,      Th07.Level.Lunatic),
+                new CardInfo( 57, "冥鍵「ファツィオーリ冥奏 -Easy-」",          Stage.St4,      Th07.Level.Easy),
+                new CardInfo( 58, "冥鍵「ファツィオーリ冥奏」",                 Stage.St4,      Th07.Level.Normal),
+                new CardInfo( 59, "鍵霊「ベーゼンドルファー神奏」",             Stage.St4,      Th07.Level.Hard),
+                new CardInfo( 60, "鍵霊「ベーゼンドルファー神奏 -Lunatic-」",   Stage.St4,      Th07.Level.Lunatic),
+                new CardInfo( 61, "合葬「プリズムコンチェルト -Easy-」",        Stage.St4,      Th07.Level.Easy),
+                new CardInfo( 62, "合葬「プリズムコンチェルト」",               Stage.St4,      Th07.Level.Normal),
+                new CardInfo( 63, "騒葬「スティジャンリバーサイド」",           Stage.St4,      Th07.Level.Hard),
+                new CardInfo( 64, "騒葬「スティジャンリバーサイド -Lunatic-」", Stage.St4,      Th07.Level.Lunatic),
+                new CardInfo( 65, "大合葬「霊車コンチェルトグロッソ -Easy-」",  Stage.St4,      Th07.Level.Easy),
+                new CardInfo( 66, "大合葬「霊車コンチェルトグロッソ」",         Stage.St4,      Th07.Level.Normal),
+                new CardInfo( 67, "大合葬「霊車コンチェルトグロッソ改」",       Stage.St4,      Th07.Level.Hard),
+                new CardInfo( 68, "大合葬「霊車コンチェルトグロッソ怪」",       Stage.St4,      Th07.Level.Lunatic),
+                new CardInfo( 69, "幽鬼剣「妖童餓鬼の断食 -Easy-」",            Stage.St5,      Th07.Level.Easy),
+                new CardInfo( 70, "幽鬼剣「妖童餓鬼の断食」",                   Stage.St5,      Th07.Level.Normal),
+                new CardInfo( 71, "餓鬼剣「餓鬼道草紙」",                       Stage.St5,      Th07.Level.Hard),
+                new CardInfo( 72, "餓王剣「餓鬼十王の報い」",                   Stage.St5,      Th07.Level.Lunatic),
+                new CardInfo( 73, "獄界剣「二百由旬の一閃 -Easy-」",            Stage.St5,      Th07.Level.Easy),
+                new CardInfo( 74, "獄界剣「二百由旬の一閃」",                   Stage.St5,      Th07.Level.Normal),
+                new CardInfo( 75, "獄炎剣「業風閃影陣」",                       Stage.St5,      Th07.Level.Hard),
+                new CardInfo( 76, "獄神剣「業風神閃斬」",                       Stage.St5,      Th07.Level.Lunatic),
+                new CardInfo( 77, "畜趣剣「無為無策の冥罰 -Easy-」",            Stage.St5,      Th07.Level.Easy),
+                new CardInfo( 78, "畜趣剣「無為無策の冥罰」",                   Stage.St5,      Th07.Level.Normal),
+                new CardInfo( 79, "修羅剣「現世妄執」",                         Stage.St5,      Th07.Level.Hard),
+                new CardInfo( 80, "修羅剣「現世妄執 -Lunatic-」",               Stage.St5,      Th07.Level.Lunatic),
+                new CardInfo( 81, "人界剣「悟入幻想 -Easy-」",                  Stage.St5,      Th07.Level.Easy),
+                new CardInfo( 82, "人界剣「悟入幻想」",                         Stage.St5,      Th07.Level.Normal),
+                new CardInfo( 83, "人世剣「大悟顕晦」",                         Stage.St5,      Th07.Level.Hard),
+                new CardInfo( 84, "人神剣「俗諦常住」",                         Stage.St5,      Th07.Level.Lunatic),
+                new CardInfo( 85, "天上剣「天人の五衰 -Easy-」",                Stage.St5,      Th07.Level.Easy),
+                new CardInfo( 86, "天上剣「天人の五衰」",                       Stage.St5,      Th07.Level.Normal),
+                new CardInfo( 87, "天界剣「七魄忌諱」",                         Stage.St5,      Th07.Level.Hard),
+                new CardInfo( 88, "天神剣「三魂七魄」",                         Stage.St5,      Th07.Level.Lunatic),
+                new CardInfo( 89, "六道剣「一念無量劫 -Easy-」",                Stage.St6,      Th07.Level.Easy),
+                new CardInfo( 90, "六道剣「一念無量劫」",                       Stage.St6,      Th07.Level.Normal),
+                new CardInfo( 91, "六道剣「一念無量劫 -Hard-」",                Stage.St6,      Th07.Level.Hard),
+                new CardInfo( 92, "六道剣「一念無量劫 -Lunatic-」",             Stage.St6,      Th07.Level.Lunatic),
+                new CardInfo( 93, "亡郷「亡我郷 -さまよえる魂-」",              Stage.St6,      Th07.Level.Easy),
+                new CardInfo( 94, "亡郷「亡我郷 -宿罪-」",                      Stage.St6,      Th07.Level.Normal),
+                new CardInfo( 95, "亡郷「亡我郷 -道無き道-」",                  Stage.St6,      Th07.Level.Hard),
+                new CardInfo( 96, "亡郷「亡我郷 -自尽-」",                      Stage.St6,      Th07.Level.Lunatic),
+                new CardInfo( 97, "亡舞「生者必滅の理 -眩惑-」",                Stage.St6,      Th07.Level.Easy),
+                new CardInfo( 98, "亡舞「生者必滅の理 -死蝶-」",                Stage.St6,      Th07.Level.Normal),
+                new CardInfo( 99, "亡舞「生者必滅の理 -毒蛾-」",                Stage.St6,      Th07.Level.Hard),
+                new CardInfo(100, "亡舞「生者必滅の理 -魔境-」",                Stage.St6,      Th07.Level.Lunatic),
+                new CardInfo(101, "華霊「ゴーストバタフライ」",                 Stage.St6,      Th07.Level.Easy),
+                new CardInfo(102, "華霊「スワローテイルバタフライ」",           Stage.St6,      Th07.Level.Normal),
+                new CardInfo(103, "華霊「ディープルーティドバタフライ」",       Stage.St6,      Th07.Level.Hard),
+                new CardInfo(104, "華霊「バタフライディルージョン」",           Stage.St6,      Th07.Level.Lunatic),
+                new CardInfo(105, "幽曲「リポジトリ・オブ・ヒロカワ -偽霊-」",  Stage.St6,      Th07.Level.Easy),
+                new CardInfo(106, "幽曲「リポジトリ・オブ・ヒロカワ -亡霊-」",  Stage.St6,      Th07.Level.Normal),
+                new CardInfo(107, "幽曲「リポジトリ・オブ・ヒロカワ -幻霊-」",  Stage.St6,      Th07.Level.Hard),
+                new CardInfo(108, "幽曲「リポジトリ・オブ・ヒロカワ -神霊-」",  Stage.St6,      Th07.Level.Lunatic),
+                new CardInfo(109, "桜符「完全なる墨染の桜 -封印-」",            Stage.St6,      Th07.Level.Easy),
+                new CardInfo(110, "桜符「完全なる墨染の桜 -亡我-」",            Stage.St6,      Th07.Level.Normal),
+                new CardInfo(111, "桜符「完全なる墨染の桜 -春眠-」",            Stage.St6,      Th07.Level.Hard),
+                new CardInfo(112, "桜符「完全なる墨染の桜 -開花-」",            Stage.St6,      Th07.Level.Lunatic),
+                new CardInfo(113, "「反魂蝶 -一分咲-」",                        Stage.St6,      Th07.Level.Easy),
+                new CardInfo(114, "「反魂蝶 -参分咲-」",                        Stage.St6,      Th07.Level.Normal),
+                new CardInfo(115, "「反魂蝶 -伍分咲-」",                        Stage.St6,      Th07.Level.Hard),
+                new CardInfo(116, "「反魂蝶 -八分咲-」",                        Stage.St6,      Th07.Level.Lunatic),
+                new CardInfo(117, "鬼符「青鬼赤鬼」",                           Stage.Extra,    Th07.Level.Extra),
+                new CardInfo(118, "鬼神「飛翔毘沙門天」",                       Stage.Extra,    Th07.Level.Extra),
+                new CardInfo(119, "式神「仙狐思念」",                           Stage.Extra,    Th07.Level.Extra),
+                new CardInfo(120, "式神「十二神将の宴」",                       Stage.Extra,    Th07.Level.Extra),
+                new CardInfo(121, "式輝「狐狸妖怪レーザー」",                   Stage.Extra,    Th07.Level.Extra),
+                new CardInfo(122, "式輝「四面楚歌チャーミング」",               Stage.Extra,    Th07.Level.Extra),
+                new CardInfo(123, "式輝「プリンセス天狐 -Illusion-」",          Stage.Extra,    Th07.Level.Extra),
+                new CardInfo(124, "式弾「アルティメットブディスト」",           Stage.Extra,    Th07.Level.Extra),
+                new CardInfo(125, "式弾「ユーニラタルコンタクト」",             Stage.Extra,    Th07.Level.Extra),
+                new CardInfo(126, "式神「橙」",                                 Stage.Extra,    Th07.Level.Extra),
+                new CardInfo(127, "「狐狗狸さんの契約」",                       Stage.Extra,    Th07.Level.Extra),
+                new CardInfo(128, "幻神「飯綱権現降臨」",                       Stage.Extra,    Th07.Level.Extra),
+                new CardInfo(129, "式神「前鬼後鬼の守護」",                     Stage.Phantasm, Th07.Level.Phantasm),
+                new CardInfo(130, "式神「憑依荼吉尼天」",                       Stage.Phantasm, Th07.Level.Phantasm),
+                new CardInfo(131, "結界「夢と現の呪」",                         Stage.Phantasm, Th07.Level.Phantasm),
+                new CardInfo(132, "結界「動と静の均衡」",                       Stage.Phantasm, Th07.Level.Phantasm),
+                new CardInfo(133, "結界「光と闇の網目」",                       Stage.Phantasm, Th07.Level.Phantasm),
+                new CardInfo(134, "罔両「ストレートとカーブの夢郷」",           Stage.Phantasm, Th07.Level.Phantasm),
+                new CardInfo(135, "罔両「八雲紫の神隠し」",                     Stage.Phantasm, Th07.Level.Phantasm),
+                new CardInfo(136, "罔両「禅寺に棲む妖蝶」",                     Stage.Phantasm, Th07.Level.Phantasm),
+                new CardInfo(137, "魍魎「二重黒死蝶」",                         Stage.Phantasm, Th07.Level.Phantasm),
+                new CardInfo(138, "式神「八雲藍」",                             Stage.Phantasm, Th07.Level.Phantasm),
+                new CardInfo(139, "「人間と妖怪の境界」",                       Stage.Phantasm, Th07.Level.Phantasm),
+                new CardInfo(140, "結界「生と死の境界」",                       Stage.Phantasm, Th07.Level.Phantasm),
+                new CardInfo(141, "紫奥義「弾幕結界」",                         Stage.Phantasm, Th07.Level.Phantasm),
             }.ToDictionary(card => card.Id);
 
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1008:OpeningParenthesisMustBeSpacedCorrectly", Justification = "Reviewed.")]
@@ -189,8 +189,8 @@ namespace ThScoreFileConverter.Models
                 new HighScore( 10000),
             };
 
-        private static new readonly EnumShortNameParser<Level> LevelParser =
-            new EnumShortNameParser<Level>();
+        private static new readonly EnumShortNameParser<Th07.Level> LevelParser =
+            new EnumShortNameParser<Th07.Level>();
 
         private static new readonly EnumShortNameParser<LevelWithTotal> LevelWithTotalParser =
             new EnumShortNameParser<LevelWithTotal>();
@@ -208,18 +208,6 @@ namespace ThScoreFileConverter.Models
             new EnumShortNameParser<StageWithTotal>();
 
         private AllScoreData allScoreData = null;
-
-        public enum Level
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("E")] Easy,
-            [EnumAltName("N")] Normal,
-            [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic,
-            [EnumAltName("X")] Extra,
-            [EnumAltName("P")] Phantasm,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
 
         public enum LevelWithTotal
         {
@@ -669,7 +657,7 @@ namespace ThScoreFileConverter.Models
                             findByStage = (attack => CardTable[attack.CardId].Stage == Stage.Phantasm);
                             break;
                         default:
-                            findByLevel = (attack => CardTable[attack.CardId].Level == (Level)level);
+                            findByLevel = (attack => CardTable[attack.CardId].Level == (Th07.Level)level);
                             break;
                     }
 
@@ -819,7 +807,7 @@ namespace ThScoreFileConverter.Models
                     var stage = StageParser.Parse(match.Groups[3].Value);
                     var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
-                    if ((level == Level.Extra) || (level == Level.Phantasm))
+                    if ((level == Th07.Level.Extra) || (level == Th07.Level.Phantasm))
                         return match.ToString();
                     if ((stage == Stage.Extra) || (stage == Stage.Phantasm))
                         return match.ToString();
@@ -857,23 +845,23 @@ namespace ThScoreFileConverter.Models
             public AllScoreData()
             {
                 var numCharas = Enum.GetValues(typeof(Chara)).Length;
-                var numPairs = numCharas * Enum.GetValues(typeof(Level)).Length;
-                this.Rankings = new Dictionary<(Chara, Level), List<HighScore>>(numPairs);
+                var numPairs = numCharas * Enum.GetValues(typeof(Th07.Level)).Length;
+                this.Rankings = new Dictionary<(Chara, Th07.Level), List<HighScore>>(numPairs);
                 this.ClearData = new Dictionary<Chara, ClearData>(numCharas);
                 this.CardAttacks = new Dictionary<int, CardAttack>(CardTable.Count);
                 this.PracticeScores =
-                    new Dictionary<(Chara, Level), Dictionary<Stage, PracticeScore>>(numPairs);
+                    new Dictionary<(Chara, Th07.Level), Dictionary<Stage, PracticeScore>>(numPairs);
             }
 
             public Header Header { get; private set; }
 
-            public Dictionary<(Chara, Level), List<HighScore>> Rankings { get; private set; }
+            public Dictionary<(Chara, Th07.Level), List<HighScore>> Rankings { get; private set; }
 
             public Dictionary<Chara, ClearData> ClearData { get; private set; }
 
             public Dictionary<int, CardAttack> CardAttacks { get; private set; }
 
-            public Dictionary<(Chara, Level), Dictionary<Stage, PracticeScore>> PracticeScores { get; private set; }
+            public Dictionary<(Chara, Th07.Level), Dictionary<Stage, PracticeScore>> PracticeScores { get; private set; }
 
             public PlayStatus PlayStatus { get; private set; }
 
@@ -908,7 +896,7 @@ namespace ThScoreFileConverter.Models
 
             public void Set(PracticeScore score)
             {
-                if ((score.Level != Level.Extra) && (score.Level != Level.Phantasm) &&
+                if ((score.Level != Th07.Level.Extra) && (score.Level != Th07.Level.Phantasm) &&
                     (score.Stage != Stage.Extra) && (score.Stage != Stage.Phantasm))
                 {
                     var key = (score.Chara, score.Level);

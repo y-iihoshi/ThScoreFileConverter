@@ -21,10 +21,10 @@ namespace ThScoreFileConverter.Models.Th07
         public ClearData(Th06.Chapter chapter)
             : base(chapter, ValidSignature, ValidSize)
         {
-            var levels = Utils.GetEnumerator<Th07Converter.Level>();
+            var levels = Utils.GetEnumerator<Level>();
             var numLevels = levels.Count();
-            this.StoryFlags = new Dictionary<Th07Converter.Level, byte>(numLevels);
-            this.PracticeFlags = new Dictionary<Th07Converter.Level, byte>(numLevels);
+            this.StoryFlags = new Dictionary<Level, byte>(numLevels);
+            this.PracticeFlags = new Dictionary<Level, byte>(numLevels);
 
             using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
             {
@@ -37,9 +37,9 @@ namespace ThScoreFileConverter.Models.Th07
             }
         }
 
-        public Dictionary<Th07Converter.Level, byte> StoryFlags { get; }    // really...?
+        public Dictionary<Level, byte> StoryFlags { get; }    // really...?
 
-        public Dictionary<Th07Converter.Level, byte> PracticeFlags { get; } // really...?
+        public Dictionary<Level, byte> PracticeFlags { get; } // really...?
 
         public Th07Converter.Chara Chara { get; }
     }
