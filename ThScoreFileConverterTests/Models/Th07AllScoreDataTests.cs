@@ -20,7 +20,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.IsNull(allScoreData.Header);
             Assert.AreEqual(0, allScoreData.Rankings.Count);
             Assert.AreEqual(0, allScoreData.ClearData.Count);
-            Assert.AreEqual(0, allScoreData.CardAttacksCount);
+            Assert.AreEqual(0, allScoreData.CardAttacks.Count);
             Assert.AreEqual(0, allScoreData.PracticeScoresCount);
             Assert.IsNull(allScoreData.PlayStatus);
             Assert.IsNull(allScoreData.LastName);
@@ -119,30 +119,30 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th07AllScoreDataSetCardAttackTest() => TestUtils.Wrap(() =>
         {
-            var properties = Th07CardAttackTests.ValidProperties;
-            var chapter = ChapterWrapper.Create(Th07CardAttackTests.MakeByteArray(properties));
-            var attack = new Th07CardAttackWrapper(chapter);
+            var properties = CardAttackTests.ValidProperties;
+            var chapter = ChapterWrapper.Create(CardAttackTests.MakeByteArray(properties));
+            var attack = new CardAttack(chapter.Target as Chapter);
 
             var allScoreData = new Th07AllScoreDataWrapper();
             allScoreData.Set(attack);
 
-            Assert.AreSame(attack.Target, allScoreData.CardAttacksItem(properties.cardId).Target);
+            Assert.AreSame(attack, allScoreData.CardAttacks[properties.cardId]);
         });
 
         [TestMethod]
         public void Th07AllScoreDataSetCardAttackTestTwice() => TestUtils.Wrap(() =>
         {
-            var properties = Th07CardAttackTests.ValidProperties;
-            var chapter = ChapterWrapper.Create(Th07CardAttackTests.MakeByteArray(properties));
-            var attack1 = new Th07CardAttackWrapper(chapter);
-            var attack2 = new Th07CardAttackWrapper(chapter);
+            var properties = CardAttackTests.ValidProperties;
+            var chapter = ChapterWrapper.Create(CardAttackTests.MakeByteArray(properties));
+            var attack1 = new CardAttack(chapter.Target as Chapter);
+            var attack2 = new CardAttack(chapter.Target as Chapter);
 
             var allScoreData = new Th07AllScoreDataWrapper();
             allScoreData.Set(attack1);
             allScoreData.Set(attack2);
 
-            Assert.AreSame(attack1.Target, allScoreData.CardAttacksItem(properties.cardId).Target);
-            Assert.AreNotSame(attack2.Target, allScoreData.CardAttacksItem(properties.cardId).Target);
+            Assert.AreSame(attack1, allScoreData.CardAttacks[properties.cardId]);
+            Assert.AreNotSame(attack2, allScoreData.CardAttacks[properties.cardId]);
         });
 
         [TestMethod]

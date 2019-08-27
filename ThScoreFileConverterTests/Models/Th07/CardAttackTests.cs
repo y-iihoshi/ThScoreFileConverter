@@ -5,13 +5,14 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
-using ThScoreFileConverterTests.Models.Wrappers;
+using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th07
 {
     [TestClass]
-    public class Th07CardAttackTests
+    public class CardAttackTests
     {
         internal struct Properties
         {
@@ -58,14 +59,13 @@ namespace ThScoreFileConverterTests.Models
             => TestUtils.MakeByteArray(
                 properties.signature.ToCharArray(), properties.size1, properties.size2, MakeData(properties));
 
-        internal static void Validate(in Th07CardAttackWrapper cardAttack, in Properties properties)
+        internal static void Validate(in CardAttack cardAttack, in Properties properties)
         {
             var data = MakeData(properties);
 
             Assert.AreEqual(properties.signature, cardAttack.Signature);
             Assert.AreEqual(properties.size1, cardAttack.Size1);
             Assert.AreEqual(properties.size2, cardAttack.Size2);
-            CollectionAssert.AreEqual(data, cardAttack.Data.ToArray());
             Assert.AreEqual(data[0], cardAttack.FirstByteOfData);
             CollectionAssert.AreEqual(properties.maxBonuses.Values, cardAttack.MaxBonuses.Values.ToArray());
             Assert.AreEqual(properties.cardId, cardAttack.CardId);
@@ -75,67 +75,64 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        public void Th07CardAttackTestChapter() => TestUtils.Wrap(() =>
+        public void CardAttackTestChapter() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var cardAttack = new Th07CardAttackWrapper(chapter);
+            var cardAttack = new CardAttack(chapter.Target as Chapter);
 
             Validate(cardAttack, properties);
-            Assert.IsTrue(cardAttack.HasTried().Value);
+            Assert.IsTrue(cardAttack.HasTried());
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "cardAttack")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th07CardAttackTestNullChapter() => TestUtils.Wrap(() =>
+        public void CardAttackTestNullChapter() => TestUtils.Wrap(() =>
         {
-            var cardAttack = new Th07CardAttackWrapper(null);
+            _ = new CardAttack(null);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "cardAttack")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th07CardAttackTestInvalidSignature() => TestUtils.Wrap(() =>
+        public void CardAttackTestInvalidSignature() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
             properties.signature = properties.signature.ToLowerInvariant();
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var cardAttack = new Th07CardAttackWrapper(chapter);
+            _ = new CardAttack(chapter.Target as Chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "cardAttack")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th07CardAttackTestInvalidSize1() => TestUtils.Wrap(() =>
+        public void CardAttackTestInvalidSize1() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
             --properties.size1;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var cardAttack = new Th07CardAttackWrapper(chapter);
+            _ = new CardAttack(chapter.Target as Chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
-        public void Th07CardAttackTestNotTried() => TestUtils.Wrap(() =>
+        public void CardAttackTestNotTried() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
             properties.trialCounts[Th07Converter.CharaWithTotal.Total] = 0;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var cardAttack = new Th07CardAttackWrapper(chapter);
+            var cardAttack = new CardAttack(chapter.Target as Chapter);
 
             Validate(cardAttack, properties);
-            Assert.IsFalse(cardAttack.HasTried().Value);
+            Assert.IsFalse(cardAttack.HasTried());
         });
     }
 }
