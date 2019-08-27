@@ -1,16 +1,15 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverterTests.Models.Wrappers;
+using ThScoreFileConverter.Models.Th07;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th07
 {
     [TestClass]
-    public class Th07PlayCountTests
+    public class PlayCountTests
     {
         internal struct Properties
         {
@@ -53,79 +52,100 @@ namespace ThScoreFileConverterTests.Models
                 properties.totalContinue,
                 properties.totalPractice);
 
-        internal static void Validate(in Th07PlayCountWrapper playCount, in Properties properties)
+        internal static PlayCount Create(byte[] array)
         {
-            Assert.AreEqual(properties.totalTrial, playCount.TotalTrial.Value);
+            var playCount = new PlayCount();
+
+            MemoryStream stream = null;
+            try
+            {
+                stream = new MemoryStream(array);
+                using (var reader = new BinaryReader(stream))
+                {
+                    stream = null;
+                    playCount.ReadFrom(reader);
+                }
+            }
+            finally
+            {
+                stream?.Dispose();
+            }
+
+            return playCount;
+        }
+
+        internal static void Validate(in PlayCount playCount, in Properties properties)
+        {
+            Assert.AreEqual(properties.totalTrial, playCount.TotalTrial);
             CollectionAssert.AreEqual(properties.trials.Values, playCount.Trials.Values.ToArray());
-            Assert.AreEqual(properties.totalRetry, playCount.TotalRetry.Value);
-            Assert.AreEqual(properties.totalClear, playCount.TotalClear.Value);
-            Assert.AreEqual(properties.totalContinue, playCount.TotalContinue.Value);
-            Assert.AreEqual(properties.totalPractice, playCount.TotalPractice.Value);
+            Assert.AreEqual(properties.totalRetry, playCount.TotalRetry);
+            Assert.AreEqual(properties.totalClear, playCount.TotalClear);
+            Assert.AreEqual(properties.totalContinue, playCount.TotalContinue);
+            Assert.AreEqual(properties.totalPractice, playCount.TotalPractice);
         }
 
         [TestMethod]
-        public void Th07PlayCountTest() => TestUtils.Wrap(() =>
+        public void PlayCountTest() => TestUtils.Wrap(() =>
         {
-            var playCount = new Th07PlayCountWrapper();
+            var playCount = new PlayCount();
 
-            Assert.AreEqual(default, playCount.TotalTrial.Value);
+            Assert.AreEqual(default, playCount.TotalTrial);
             Assert.AreEqual(0, playCount.Trials.Count);
-            Assert.AreEqual(default, playCount.TotalRetry.Value);
-            Assert.AreEqual(default, playCount.TotalClear.Value);
-            Assert.AreEqual(default, playCount.TotalContinue.Value);
-            Assert.AreEqual(default, playCount.TotalPractice.Value);
+            Assert.AreEqual(default, playCount.TotalRetry);
+            Assert.AreEqual(default, playCount.TotalClear);
+            Assert.AreEqual(default, playCount.TotalContinue);
+            Assert.AreEqual(default, playCount.TotalPractice);
         });
 
         [TestMethod]
-        public void Th07PlayCountReadFromTest() => TestUtils.Wrap(() =>
+        public void ReadFromTest() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
 
-            var playCount = Th07PlayCountWrapper.Create(MakeByteArray(properties));
+            var playCount = Create(MakeByteArray(properties));
 
             Validate(playCount, properties);
         });
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th07PlayCountReadFromTestNull() => TestUtils.Wrap(() =>
+        public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
-            var playCount = new Th07PlayCountWrapper();
+            var playCount = new PlayCount();
             playCount.ReadFrom(null);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "playCount")]
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th07PlayCountReadFromTestShortenedTrials() => TestUtils.Wrap(() =>
+        public void ReadFromTestShortenedTrials() => TestUtils.Wrap(() =>
         {
             var properties = new Properties(ValidProperties);
             properties.trials.Remove(Th07Converter.Chara.SakuyaB);
 
-            var playCount = Th07PlayCountWrapper.Create(MakeByteArray(properties));
+            _ = Create(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
-        public void Th07PlayCountReadFromTestExceededTrials() => TestUtils.Wrap(() =>
+        public void ReadFromTestExceededTrials() => TestUtils.Wrap(() =>
         {
             var properties = new Properties(ValidProperties);
             properties.trials.Add(TestUtils.Cast<Th07Converter.Chara>(99), 99);
 
-            var playCount = Th07PlayCountWrapper.Create(MakeByteArray(properties));
+            var playCount = Create(MakeByteArray(properties));
 
-            Assert.AreEqual(properties.totalTrial, playCount.TotalTrial.Value);
+            Assert.AreEqual(properties.totalTrial, playCount.TotalTrial);
             CollectionAssert.AreNotEqual(properties.trials.Values, playCount.Trials.Values.ToArray());
             CollectionAssert.AreEqual(
                 properties.trials.Values.Take(properties.trials.Count - 1).ToArray(),
                 playCount.Trials.Values.ToArray());
-            Assert.AreNotEqual(properties.totalRetry, playCount.TotalRetry.Value);
-            Assert.AreNotEqual(properties.totalClear, playCount.TotalClear.Value);
-            Assert.AreNotEqual(properties.totalContinue, playCount.TotalContinue.Value);
-            Assert.AreNotEqual(properties.totalPractice, playCount.TotalPractice.Value);
+            Assert.AreNotEqual(properties.totalRetry, playCount.TotalRetry);
+            Assert.AreNotEqual(properties.totalClear, playCount.TotalClear);
+            Assert.AreNotEqual(properties.totalContinue, playCount.TotalContinue);
+            Assert.AreNotEqual(properties.totalPractice, playCount.TotalPractice);
         });
     }
 }

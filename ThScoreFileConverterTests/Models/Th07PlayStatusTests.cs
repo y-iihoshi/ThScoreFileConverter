@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
+using ThScoreFileConverterTests.Models.Th07;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -20,7 +21,7 @@ namespace ThScoreFileConverterTests.Models
             public short size2;
             public Time totalRunningTime;
             public Time totalPlayTime;
-            public Dictionary<Th07Converter.LevelWithTotal, Th07PlayCountTests.Properties> playCounts;
+            public Dictionary<Th07Converter.LevelWithTotal, PlayCountTests.Properties> playCounts;
         };
 
         internal static Properties ValidProperties => new Properties()
@@ -33,7 +34,7 @@ namespace ThScoreFileConverterTests.Models
             playCounts = Utils.GetEnumerator<Th07Converter.LevelWithTotal>()
                 .ToDictionary(
                     level => level,
-                    level => new Th07PlayCountTests.Properties(Th07PlayCountTests.ValidProperties))
+                    level => new PlayCountTests.Properties(PlayCountTests.ValidProperties))
         };
 
         internal static byte[] MakeData(in Properties properties)
@@ -47,7 +48,7 @@ namespace ThScoreFileConverterTests.Models
                 properties.totalPlayTime.Minutes,
                 properties.totalPlayTime.Seconds,
                 properties.totalPlayTime.Milliseconds,
-                properties.playCounts.SelectMany(pair => Th07PlayCountTests.MakeByteArray(pair.Value)).ToArray());
+                properties.playCounts.SelectMany(pair => PlayCountTests.MakeByteArray(pair.Value)).ToArray());
 
         internal static byte[] MakeByteArray(in Properties properties)
             => TestUtils.MakeByteArray(
@@ -75,7 +76,7 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var key in properties.playCounts.Keys)
             {
-                Th07PlayCountTests.Validate(playStatus.PlayCountsItem(key), properties.playCounts[key]);
+                PlayCountTests.Validate(playStatus.PlayCounts[key], properties.playCounts[key]);
             }
         }
 

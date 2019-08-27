@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
@@ -36,13 +37,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.TotalRunningTime)) as Time;
         public Time TotalPlayTime
             => this.pobj.GetProperty(nameof(this.TotalPlayTime)) as Time;
-        // NOTE: Th07Converter.PlayCount is a private class.
-        // public IReadOnlyDictionary<Th07Converter.LevelWithTotal, PlayCount> PlayCounts
-        //     => this.pobj.GetProperty(nameof(this.PlayCounts)) as Dictionary<Th07Converter.LevelWithTotal, PlayCount>;
-        public object PlayCounts
-            => this.pobj.GetProperty(nameof(this.PlayCounts));
-        public Th07PlayCountWrapper PlayCountsItem(Th07Converter.LevelWithTotal level)
-            => new Th07PlayCountWrapper(
-                this.PlayCounts.GetType().GetProperty("Item").GetValue(this.PlayCounts, new object[] { level }));
+        public IReadOnlyDictionary<Th07Converter.LevelWithTotal, PlayCount> PlayCounts
+            => this.pobj.GetProperty(nameof(this.PlayCounts)) as Dictionary<Th07Converter.LevelWithTotal, PlayCount>;
     }
 }
