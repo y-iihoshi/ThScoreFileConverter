@@ -136,6 +136,7 @@
     <Compile Include="Models\Th07\Chara.cs" />
     <Compile Include="Models\Th07\CharaWithTotal.cs" />
     <Compile Include="Models\Th07\ClearData.cs" />
+    <Compile Include="Models\Th07\Definitions.cs" />
     <Compile Include="Models\Th07\FileHeader.cs" />
     <Compile Include="Models\Th07\FileHeaderBase.cs" />
     <Compile Include="Models\Th07\Header.cs" />
