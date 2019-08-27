@@ -4,11 +4,9 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
-using Level = ThScoreFileConverter.Models.Th07.Level;
 
 namespace ThScoreFileConverterTests.Models.Th07
 {
@@ -24,7 +22,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             public float slowRate;
             public Chara chara;
             public Level level;
-            public Th07Converter.StageProgress stageProgress;
+            public StageProgress stageProgress;
             public byte[] name;
             public byte[] date;
             public ushort continueCount;
@@ -39,7 +37,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             slowRate = 9.87f,
             chara = Chara.ReimuB,
             level = Level.Hard,
-            stageProgress = Th07Converter.StageProgress.St3,
+            stageProgress = StageProgress.St3,
             name = TestUtils.CP932Encoding.GetBytes("Player1\0\0"),
             date = TestUtils.CP932Encoding.GetBytes("01/23\0"),
             continueCount = 2
@@ -189,7 +187,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         });
 
         public static IEnumerable<object[]> InvalidStageProgresses
-            => TestUtils.GetInvalidEnumerators(typeof(Th07Converter.StageProgress));
+            => TestUtils.GetInvalidEnumerators(typeof(StageProgress));
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
@@ -198,7 +196,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         public void HighScoreTestInvalidStageProgress(int stageProgress) => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
-            properties.stageProgress = TestUtils.Cast<Th07Converter.StageProgress>(stageProgress);
+            properties.stageProgress = TestUtils.Cast<StageProgress>(stageProgress);
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
             _ = new HighScore(chapter.Target as Chapter);

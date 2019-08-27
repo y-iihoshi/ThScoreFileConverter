@@ -209,22 +209,6 @@ namespace ThScoreFileConverter.Models
 
         private AllScoreData allScoreData = null;
 
-        public enum StageProgress
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("-------")]        None,
-            [EnumAltName("Stage 1")]        St1,
-            [EnumAltName("Stage 2")]        St2,
-            [EnumAltName("Stage 3")]        St3,
-            [EnumAltName("Stage 4")]        St4,
-            [EnumAltName("Stage 5")]        St5,
-            [EnumAltName("Stage 6")]        St6,
-            [EnumAltName("Extra Stage")]    Extra,
-            [EnumAltName("Phantasm Stage")] Phantasm,
-            [EnumAltName("All Clear")]      Clear = 99,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
         public override string SupportedVersions
         {
             get { return "1.00b"; }
