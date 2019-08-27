@@ -1,12 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics.CodeAnalysis;
-using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ThScoreFileConverterTests.Models.Th07;
 using ThScoreFileConverterTests.Models.Wrappers;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
-using Level = ThScoreFileConverter.Models.Th07.Level;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -151,7 +149,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var properties = PracticeScoreTests.ValidProperties;
             properties.level = Level.Normal;
-            properties.stage = Th07Converter.Stage.St6;
+            properties.stage = Stage.St6;
             var chapter = ChapterWrapper.Create(PracticeScoreTests.MakeByteArray(properties));
             var score = new PracticeScore(chapter.Target as Chapter);
 
@@ -168,7 +166,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var properties = PracticeScoreTests.ValidProperties;
             properties.level = Level.Normal;
-            properties.stage = Th07Converter.Stage.St6;
+            properties.stage = Stage.St6;
             var chapter = ChapterWrapper.Create(PracticeScoreTests.MakeByteArray(properties));
             var score1 = new PracticeScore(chapter.Target as Chapter);
             var score2 = new PracticeScore(chapter.Target as Chapter);
@@ -187,18 +185,18 @@ namespace ThScoreFileConverterTests.Models
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
-        [DataRow(Level.Extra, Th07Converter.Stage.Extra)]
-        [DataRow(Level.Extra, Th07Converter.Stage.St6)]
-        [DataRow(Level.Normal, Th07Converter.Stage.Extra)]
-        [DataRow(Level.Phantasm, Th07Converter.Stage.Phantasm)]
-        [DataRow(Level.Phantasm, Th07Converter.Stage.St6)]
-        [DataRow(Level.Normal, Th07Converter.Stage.Phantasm)]
+        [DataRow(Level.Extra, Stage.Extra)]
+        [DataRow(Level.Extra, Stage.St6)]
+        [DataRow(Level.Normal, Stage.Extra)]
+        [DataRow(Level.Phantasm, Stage.Phantasm)]
+        [DataRow(Level.Phantasm, Stage.St6)]
+        [DataRow(Level.Normal, Stage.Phantasm)]
         public void Th07AllScoreDataSetPracticeScoreTestInvalidPracticeStage(int level, int stage)
             => TestUtils.Wrap(() =>
             {
                 var properties = PracticeScoreTests.ValidProperties;
                 properties.level = TestUtils.Cast<Level>(level);
-                properties.stage = TestUtils.Cast<Th07Converter.Stage>(stage);
+                properties.stage = TestUtils.Cast<Stage>(stage);
                 var chapter = ChapterWrapper.Create(
                     PracticeScoreTests.MakeByteArray(properties));
                 var score = new PracticeScore(chapter.Target as Chapter);

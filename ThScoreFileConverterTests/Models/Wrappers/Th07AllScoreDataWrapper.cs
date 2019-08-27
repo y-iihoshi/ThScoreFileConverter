@@ -6,6 +6,7 @@ using System.Globalization;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th07;
 using Level = ThScoreFileConverter.Models.Th07.Level;
+using Stage = ThScoreFileConverter.Models.Th07.Stage;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -33,9 +34,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.ClearData)) as Dictionary<Chara, ClearData>;
         public IReadOnlyDictionary<int, CardAttack> CardAttacks
             => this.pobj.GetProperty(nameof(this.CardAttacks)) as Dictionary<int, CardAttack>;
-        public IReadOnlyDictionary<(Chara, Level), Dictionary<Th07Converter.Stage, PracticeScore>> PracticeScores
+        public IReadOnlyDictionary<(Chara, Level), Dictionary<Stage, PracticeScore>> PracticeScores
             => this.pobj.GetProperty(nameof(this.PracticeScores))
-                as Dictionary<(Chara, Level), Dictionary<Th07Converter.Stage, PracticeScore>>;
+                as Dictionary<(Chara, Level), Dictionary<Stage, PracticeScore>>;
         public PlayStatus PlayStatus
             => this.pobj.GetProperty(nameof(this.PlayStatus)) as PlayStatus;
         public LastName LastName
