@@ -37,7 +37,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             slowRate = 9.87f,
             chara = Chara.ReimuB,
             level = Level.Hard,
-            stageProgress = StageProgress.St3,
+            stageProgress = StageProgress.Three,
             name = TestUtils.CP932Encoding.GetBytes("Player1\0\0"),
             date = TestUtils.CP932Encoding.GetBytes("01/23\0"),
             continueCount = 2

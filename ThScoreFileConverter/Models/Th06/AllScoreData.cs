@@ -63,7 +63,7 @@ namespace ThScoreFileConverter.Models.Th06
         public void Set(PracticeScore score)
         {
             if ((score.Level != Level.Extra) && (score.Stage != Stage.Extra) &&
-                !((score.Level == Level.Easy) && (score.Stage == Stage.St6)))
+                !((score.Level == Level.Easy) && (score.Stage == Stage.Six)))
             {
                 var key = (score.Chara, score.Level, score.Stage);
                 if (!this.PracticeScores.ContainsKey(key))

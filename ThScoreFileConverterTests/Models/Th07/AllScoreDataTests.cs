@@ -147,7 +147,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         {
             var properties = PracticeScoreTests.ValidProperties;
             properties.level = Level.Normal;
-            properties.stage = Stage.St6;
+            properties.stage = Stage.Six;
             var chapter = ChapterWrapper.Create(PracticeScoreTests.MakeByteArray(properties));
             var score = new PracticeScore(chapter.Target);
 
@@ -164,7 +164,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         {
             var properties = PracticeScoreTests.ValidProperties;
             properties.level = Level.Normal;
-            properties.stage = Stage.St6;
+            properties.stage = Stage.Six;
             var chapter = ChapterWrapper.Create(PracticeScoreTests.MakeByteArray(properties));
             var score1 = new PracticeScore(chapter.Target);
             var score2 = new PracticeScore(chapter.Target);
@@ -184,10 +184,10 @@ namespace ThScoreFileConverterTests.Models.Th07
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DataRow(Level.Extra, Stage.Extra)]
-        [DataRow(Level.Extra, Stage.St6)]
+        [DataRow(Level.Extra, Stage.Six)]
         [DataRow(Level.Normal, Stage.Extra)]
         [DataRow(Level.Phantasm, Stage.Phantasm)]
-        [DataRow(Level.Phantasm, Stage.St6)]
+        [DataRow(Level.Phantasm, Stage.Six)]
         [DataRow(Level.Normal, Stage.Phantasm)]
         public void SetPracticeScoreTestInvalidPracticeStage(int level, int stage)
             => TestUtils.Wrap(() =>

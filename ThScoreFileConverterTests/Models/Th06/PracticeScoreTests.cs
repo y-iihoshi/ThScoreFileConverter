@@ -31,7 +31,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             highScore = 123456,
             chara = Chara.ReimuB,
             level = Level.Hard,
-            stage = Stage.St6,
+            stage = Stage.Six,
         };
 
         internal static byte[] MakeData(in Properties properties)

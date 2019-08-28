@@ -14,11 +14,11 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void SpellCardInfoTest()
         {
-            var info = new CardInfo(1, "月符「ムーンライトレイ」", Stage.St1, Level.Hard, Level.Lunatic);
+            var info = new CardInfo(1, "月符「ムーンライトレイ」", Stage.One, Level.Hard, Level.Lunatic);
 
             Assert.AreEqual(1, info.Id);
             Assert.AreEqual("月符「ムーンライトレイ」", info.Name);
-            Assert.AreEqual(Stage.St1, info.Stage);
+            Assert.AreEqual(Stage.One, info.Stage);
             Assert.AreEqual(Level.Hard, info.Level);
             CollectionAssert.AreEqual(new Level[] { Level.Hard, Level.Lunatic }, info.Levels);
         }
@@ -28,7 +28,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void SpellCardInfoTestNegativeId()
         {
-            _ = new CardInfo(-1, "月符「ムーンライトレイ」", Stage.St1, Level.Hard, Level.Lunatic);
+            _ = new CardInfo(-1, "月符「ムーンライトレイ」", Stage.One, Level.Hard, Level.Lunatic);
             Assert.Fail(TestUtils.Unreachable);
         }
 
@@ -37,7 +37,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void SpellCardInfoTestZeroId()
         {
-            _ = new CardInfo(0, "月符「ムーンライトレイ」", Stage.St1, Level.Hard, Level.Lunatic);
+            _ = new CardInfo(0, "月符「ムーンライトレイ」", Stage.One, Level.Hard, Level.Lunatic);
             Assert.Fail(TestUtils.Unreachable);
         }
 
@@ -46,7 +46,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentNullException))]
         public void SpellCardInfoTestNullName()
         {
-            _ = new CardInfo(1, null, Stage.St1, Level.Hard, Level.Lunatic);
+            _ = new CardInfo(1, null, Stage.One, Level.Hard, Level.Lunatic);
             Assert.Fail(TestUtils.Unreachable);
         }
 
@@ -55,7 +55,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentException))]
         public void SpellCardInfoTestEmptyName()
         {
-            _ = new CardInfo(1, string.Empty, Stage.St1, Level.Hard, Level.Lunatic);
+            _ = new CardInfo(1, string.Empty, Stage.One, Level.Hard, Level.Lunatic);
             Assert.Fail(TestUtils.Unreachable);
         }
 
@@ -85,18 +85,18 @@ namespace ThScoreFileConverterTests.Models
         public void SpellCardInfoTestInvalidLevel(int level)
         {
             var invalid = TestUtils.Cast<Level>(level);
-            _ = new CardInfo(1, "月符「ムーンライトレイ」", Stage.St1, Level.Hard, invalid);
+            _ = new CardInfo(1, "月符「ムーンライトレイ」", Stage.One, Level.Hard, invalid);
             Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod]
         public void SpellCardInfoTestOneLevel()
         {
-            var info = new CardInfo(1, "霜符「フロストコラムス」", Stage.St1, Level.Hard);
+            var info = new CardInfo(1, "霜符「フロストコラムス」", Stage.One, Level.Hard);
 
             Assert.AreEqual(1, info.Id);
             Assert.AreEqual("霜符「フロストコラムス」", info.Name);
-            Assert.AreEqual(Stage.St1, info.Stage);
+            Assert.AreEqual(Stage.One, info.Stage);
             Assert.AreEqual(Level.Hard, info.Level);
             CollectionAssert.AreEqual(new Level[] { Level.Hard }, info.Levels);
         }
@@ -106,7 +106,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentException))]
         public void SpellCardInfoTestZeroLevels()
         {
-            _ = new CardInfo(1, "霜符「フロストコラムス」", Stage.St1);
+            _ = new CardInfo(1, "霜符「フロストコラムス」", Stage.One);
             Assert.Fail(TestUtils.Unreachable);
         }
 
@@ -115,7 +115,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentNullException))]
         public void SpellCardInfoTestNullLevels()
         {
-            _ = new CardInfo(1, "霜符「フロストコラムス」", Stage.St1, null);
+            _ = new CardInfo(1, "霜符「フロストコラムス」", Stage.One, null);
             Assert.Fail(TestUtils.Unreachable);
         }
     }

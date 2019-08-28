@@ -33,7 +33,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             score = 1234567u,
             chara = Chara.ReimuB,
             level = Level.Hard,
-            stageProgress = StageProgress.St3,
+            stageProgress = StageProgress.Three,
             name = TestUtils.CP932Encoding.GetBytes("Player1\0\0")
         };
 

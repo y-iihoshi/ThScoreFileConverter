@@ -76,7 +76,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         public void ReplaceTest()
         {
             var replacer = new ClearReplacer(Rankings);
-            Assert.AreEqual(StageProgress.St4.ToShortName(), replacer.Replace("%T06CLEARHRB"));
+            Assert.AreEqual(StageProgress.Four.ToShortName(), replacer.Replace("%T06CLEARHRB"));
         }
 
         [TestMethod]
