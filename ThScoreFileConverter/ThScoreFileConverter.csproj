@@ -132,6 +132,7 @@
     <Compile Include="Models\Th06\StageProgress.cs" />
     <Compile Include="Models\Th07Converter.cs" />
     <Compile Include="Models\Th075Converter.cs" />
+    <Compile Include="Models\Th07\AllScoreData.cs" />
     <Compile Include="Models\Th07\CardAttack.cs" />
     <Compile Include="Models\Th07\CardReplacer.cs" />
     <Compile Include="Models\Th07\CareerReplacer.cs" />

@@ -2,19 +2,17 @@
 using System.Diagnostics.CodeAnalysis;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
-using ThScoreFileConverterTests.Models.Th07;
-using ThScoreFileConverterTests.Models.Wrappers;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th07
 {
     [TestClass]
-    public class Th07AllScoreDataTests
+    public class AllScoreDataTests
     {
         [TestMethod]
         public void Th07AllScoreDataTest() => TestUtils.Wrap(() =>
         {
-            var allScoreData = new Th07AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
 
             Assert.IsNull(allScoreData.Header);
             Assert.AreEqual(0, allScoreData.Rankings.Count);
@@ -33,7 +31,7 @@ namespace ThScoreFileConverterTests.Models
                 HeaderTests.MakeByteArray(HeaderTests.ValidProperties));
             var header = new Header(chapter.Target as Chapter);
 
-            var allScoreData = new Th07AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(header);
 
             Assert.AreSame(header, allScoreData.Header);
@@ -47,7 +45,7 @@ namespace ThScoreFileConverterTests.Models
             var header1 = new Header(chapter.Target as Chapter);
             var header2 = new Header(chapter.Target as Chapter);
 
-            var allScoreData = new Th07AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(header1);
             allScoreData.Set(header2);
 
@@ -63,7 +61,7 @@ namespace ThScoreFileConverterTests.Models
             var chapter = ChapterWrapper.Create(HighScoreTests.MakeByteArray(properties));
             var score = new HighScore(chapter.Target as Chapter);
 
-            var allScoreData = new Th07AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(score);
 
             Assert.AreSame(score, allScoreData.Rankings[(properties.chara, properties.level)][2]);
@@ -78,7 +76,7 @@ namespace ThScoreFileConverterTests.Models
             var score1 = new HighScore(chapter.Target as Chapter);
             var score2 = new HighScore(chapter.Target as Chapter);
 
-            var allScoreData = new Th07AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(score1);
             allScoreData.Set(score2);
 
@@ -93,7 +91,7 @@ namespace ThScoreFileConverterTests.Models
             var chapter = ChapterWrapper.Create(ClearDataTests.MakeByteArray(properties));
             var clearData = new ClearData(chapter.Target as Chapter);
 
-            var allScoreData = new Th07AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(clearData);
 
             Assert.AreSame(clearData, allScoreData.ClearData[properties.chara]);
@@ -107,7 +105,7 @@ namespace ThScoreFileConverterTests.Models
             var clearData1 = new ClearData(chapter.Target as Chapter);
             var clearData2 = new ClearData(chapter.Target as Chapter);
 
-            var allScoreData = new Th07AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(clearData1);
             allScoreData.Set(clearData2);
 
@@ -122,7 +120,7 @@ namespace ThScoreFileConverterTests.Models
             var chapter = ChapterWrapper.Create(CardAttackTests.MakeByteArray(properties));
             var attack = new CardAttack(chapter.Target as Chapter);
 
-            var allScoreData = new Th07AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(attack);
 
             Assert.AreSame(attack, allScoreData.CardAttacks[properties.cardId]);
@@ -136,7 +134,7 @@ namespace ThScoreFileConverterTests.Models
             var attack1 = new CardAttack(chapter.Target as Chapter);
             var attack2 = new CardAttack(chapter.Target as Chapter);
 
-            var allScoreData = new Th07AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(attack1);
             allScoreData.Set(attack2);
 
@@ -153,7 +151,7 @@ namespace ThScoreFileConverterTests.Models
             var chapter = ChapterWrapper.Create(PracticeScoreTests.MakeByteArray(properties));
             var score = new PracticeScore(chapter.Target as Chapter);
 
-            var allScoreData = new Th07AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(score);
 
             Assert.AreSame(
@@ -171,7 +169,7 @@ namespace ThScoreFileConverterTests.Models
             var score1 = new PracticeScore(chapter.Target as Chapter);
             var score2 = new PracticeScore(chapter.Target as Chapter);
 
-            var allScoreData = new Th07AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(score1);
             allScoreData.Set(score2);
 
@@ -201,7 +199,7 @@ namespace ThScoreFileConverterTests.Models
                     PracticeScoreTests.MakeByteArray(properties));
                 var score = new PracticeScore(chapter.Target as Chapter);
 
-                var allScoreData = new Th07AllScoreDataWrapper();
+                var allScoreData = new AllScoreData();
                 allScoreData.Set(score);
 
                 Assert.AreEqual(0, allScoreData.PracticeScores.Count);
@@ -214,7 +212,7 @@ namespace ThScoreFileConverterTests.Models
                 PlayStatusTests.MakeByteArray(PlayStatusTests.ValidProperties));
             var status = new PlayStatus(chapter.Target as Chapter);
 
-            var allScoreData = new Th07AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(status);
 
             Assert.AreSame(status, allScoreData.PlayStatus);
@@ -228,7 +226,7 @@ namespace ThScoreFileConverterTests.Models
             var status1 = new PlayStatus(chapter.Target as Chapter);
             var status2 = new PlayStatus(chapter.Target as Chapter);
 
-            var allScoreData = new Th07AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(status1);
             allScoreData.Set(status2);
 
@@ -243,7 +241,7 @@ namespace ThScoreFileConverterTests.Models
                 LastNameTests.MakeByteArray(LastNameTests.ValidProperties));
             var name = new LastName(chapter.Target as Chapter);
 
-            var allScoreData = new Th07AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(name);
 
             Assert.AreSame(name, allScoreData.LastName);
@@ -257,7 +255,7 @@ namespace ThScoreFileConverterTests.Models
             var name1 = new LastName(chapter.Target as Chapter);
             var name2 = new LastName(chapter.Target as Chapter);
 
-            var allScoreData = new Th07AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(name1);
             allScoreData.Set(name2);
 
@@ -272,7 +270,7 @@ namespace ThScoreFileConverterTests.Models
                 VersionInfoTests.MakeByteArray(VersionInfoTests.ValidProperties));
             var info = new VersionInfo(chapter.Target as Chapter);
 
-            var allScoreData = new Th07AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(info);
 
             Assert.AreSame(info, allScoreData.VersionInfo);
@@ -286,7 +284,7 @@ namespace ThScoreFileConverterTests.Models
             var info1 = new VersionInfo(chapter.Target as Chapter);
             var info2 = new VersionInfo(chapter.Target as Chapter);
 
-            var allScoreData = new Th07AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(info1);
             allScoreData.Set(info2);
 
