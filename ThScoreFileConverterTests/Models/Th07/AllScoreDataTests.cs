@@ -10,7 +10,7 @@ namespace ThScoreFileConverterTests.Models.Th07
     public class AllScoreDataTests
     {
         [TestMethod]
-        public void Th07AllScoreDataTest() => TestUtils.Wrap(() =>
+        public void AllScoreDataTest() => TestUtils.Wrap(() =>
         {
             var allScoreData = new AllScoreData();
 
@@ -25,7 +25,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         });
 
         [TestMethod]
-        public void Th07AllScoreDataSetHeaderTest() => TestUtils.Wrap(() =>
+        public void SetHeaderTest() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(
                 HeaderTests.MakeByteArray(HeaderTests.ValidProperties));
@@ -38,7 +38,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         });
 
         [TestMethod]
-        public void Th07AllScoreDataSetHeaderTestTwice() => TestUtils.Wrap(() =>
+        public void SetHeaderTestTwice() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(
                 HeaderTests.MakeByteArray(HeaderTests.ValidProperties));
@@ -54,7 +54,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         });
 
         [TestMethod]
-        public void Th07AllScoreDataSetHighScoreTest() => TestUtils.Wrap(() =>
+        public void SetHighScoreTest() => TestUtils.Wrap(() =>
         {
             var properties = HighScoreTests.ValidProperties;
             properties.score = 87654u;
@@ -68,7 +68,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         });
 
         [TestMethod]
-        public void Th07AllScoreDataSetHighScoreTestTwice() => TestUtils.Wrap(() =>
+        public void SetHighScoreTestTwice() => TestUtils.Wrap(() =>
         {
             var properties = HighScoreTests.ValidProperties;
             properties.score = 87654u;
@@ -85,7 +85,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         });
 
         [TestMethod]
-        public void Th07AllScoreDataSetClearDataTest() => TestUtils.Wrap(() =>
+        public void SetClearDataTest() => TestUtils.Wrap(() =>
         {
             var properties = ClearDataTests.ValidProperties;
             var chapter = ChapterWrapper.Create(ClearDataTests.MakeByteArray(properties));
@@ -98,7 +98,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         });
 
         [TestMethod]
-        public void Th07AllScoreDataSetClearDataTestTwice() => TestUtils.Wrap(() =>
+        public void SetClearDataTestTwice() => TestUtils.Wrap(() =>
         {
             var properties = ClearDataTests.ValidProperties;
             var chapter = ChapterWrapper.Create(ClearDataTests.MakeByteArray(properties));
@@ -114,7 +114,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         });
 
         [TestMethod]
-        public void Th07AllScoreDataSetCardAttackTest() => TestUtils.Wrap(() =>
+        public void SetCardAttackTest() => TestUtils.Wrap(() =>
         {
             var properties = CardAttackTests.ValidProperties;
             var chapter = ChapterWrapper.Create(CardAttackTests.MakeByteArray(properties));
@@ -127,7 +127,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         });
 
         [TestMethod]
-        public void Th07AllScoreDataSetCardAttackTestTwice() => TestUtils.Wrap(() =>
+        public void SetCardAttackTestTwice() => TestUtils.Wrap(() =>
         {
             var properties = CardAttackTests.ValidProperties;
             var chapter = ChapterWrapper.Create(CardAttackTests.MakeByteArray(properties));
@@ -143,7 +143,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         });
 
         [TestMethod]
-        public void Th07AllScoreDataSetPracticeScoreTest() => TestUtils.Wrap(() =>
+        public void SetPracticeScoreTest() => TestUtils.Wrap(() =>
         {
             var properties = PracticeScoreTests.ValidProperties;
             properties.level = Level.Normal;
@@ -160,7 +160,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         });
 
         [TestMethod]
-        public void Th07AllScoreDataSetPracticeScoreTestTwice() => TestUtils.Wrap(() =>
+        public void SetPracticeScoreTestTwice() => TestUtils.Wrap(() =>
         {
             var properties = PracticeScoreTests.ValidProperties;
             properties.level = Level.Normal;
@@ -189,7 +189,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         [DataRow(Level.Phantasm, Stage.Phantasm)]
         [DataRow(Level.Phantasm, Stage.St6)]
         [DataRow(Level.Normal, Stage.Phantasm)]
-        public void Th07AllScoreDataSetPracticeScoreTestInvalidPracticeStage(int level, int stage)
+        public void SetPracticeScoreTestInvalidPracticeStage(int level, int stage)
             => TestUtils.Wrap(() =>
             {
                 var properties = PracticeScoreTests.ValidProperties;
@@ -206,7 +206,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             });
 
         [TestMethod]
-        public void Th07AllScoreDataSetPlayStatusTest() => TestUtils.Wrap(() =>
+        public void SetPlayStatusTest() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(
                 PlayStatusTests.MakeByteArray(PlayStatusTests.ValidProperties));
@@ -219,7 +219,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         });
 
         [TestMethod]
-        public void Th07AllScoreDataSetPlayStatusTestTwice() => TestUtils.Wrap(() =>
+        public void SetPlayStatusTestTwice() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(
                 PlayStatusTests.MakeByteArray(PlayStatusTests.ValidProperties));
@@ -235,7 +235,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         });
 
         [TestMethod]
-        public void Th07AllScoreDataSetLastNameTest() => TestUtils.Wrap(() =>
+        public void SetLastNameTest() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(
                 LastNameTests.MakeByteArray(LastNameTests.ValidProperties));
@@ -248,7 +248,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         });
 
         [TestMethod]
-        public void Th07AllScoreDataSetLastNameTestTwice() => TestUtils.Wrap(() =>
+        public void SetLastNameTestTwice() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(
                 LastNameTests.MakeByteArray(LastNameTests.ValidProperties));
@@ -264,7 +264,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         });
 
         [TestMethod]
-        public void Th07AllScoreDataSetVersionInfoTest() => TestUtils.Wrap(() =>
+        public void SetVersionInfoTest() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(
                 VersionInfoTests.MakeByteArray(VersionInfoTests.ValidProperties));
@@ -277,7 +277,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         });
 
         [TestMethod]
-        public void Th07AllScoreDataSetVersionInfoTestTwice() => TestUtils.Wrap(() =>
+        public void SetVersionInfoTestTwice() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(
                 VersionInfoTests.MakeByteArray(VersionInfoTests.ValidProperties));
