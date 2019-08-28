@@ -71,7 +71,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             var properties = ValidProperties;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var score = new PracticeScore(chapter.Target as Chapter);
+            var score = new PracticeScore(chapter.Target);
 
             Validate(score, properties);
         });
@@ -94,7 +94,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             properties.signature = properties.signature.ToLowerInvariant();
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            _ = new PracticeScore(chapter.Target as Chapter);
+            _ = new PracticeScore(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -107,7 +107,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             --properties.size1;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            _ = new PracticeScore(chapter.Target as Chapter);
+            _ = new PracticeScore(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -125,7 +125,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             properties.chara = TestUtils.Cast<Chara>(chara);
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            _ = new PracticeScore(chapter.Target as Chapter);
+            _ = new PracticeScore(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -143,7 +143,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             properties.level = TestUtils.Cast<Level>(level);
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            _ = new PracticeScore(chapter.Target as Chapter);
+            _ = new PracticeScore(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -161,7 +161,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             properties.stage = TestUtils.Cast<Stage>(stage);
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            _ = new PracticeScore(chapter.Target as Chapter);
+            _ = new PracticeScore(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });

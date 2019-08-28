@@ -7,7 +7,7 @@ using ThScoreFileConverter.Models.Th06;
 
 namespace ThScoreFileConverterTests.Models.Th06.Wrappers
 {
-    public sealed class ChapterWrapper
+    internal sealed class ChapterWrapper
     {
         private static readonly Type TypeToTest = typeof(Chapter);
         private static readonly string AssemblyNameToTest = TypeToTest.Assembly.GetName().Name;
@@ -42,8 +42,8 @@ namespace ThScoreFileConverterTests.Models.Th06.Wrappers
         public ChapterWrapper(ChapterWrapper chapter)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { chapter?.Target });
 
-        public object Target
-            => this.pobj.Target;
+        public Chapter Target
+            => this.pobj.Target as Chapter;
         public string Signature
             => this.pobj.GetProperty(nameof(this.Signature)) as string;
         public short? Size1

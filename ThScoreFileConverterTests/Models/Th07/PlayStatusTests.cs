@@ -86,7 +86,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             var properties = ValidProperties;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var playStatus = new PlayStatus(chapter.Target as Chapter);
+            var playStatus = new PlayStatus(chapter.Target);
 
             Validate(playStatus, properties);
         });
@@ -109,7 +109,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             properties.signature = properties.signature.ToLowerInvariant();
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            _ = new PlayStatus(chapter.Target as Chapter);
+            _ = new PlayStatus(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -122,7 +122,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             --properties.size1;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            _ = new PlayStatus(chapter.Target as Chapter);
+            _ = new PlayStatus(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });

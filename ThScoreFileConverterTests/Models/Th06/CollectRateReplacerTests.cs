@@ -15,7 +15,7 @@ namespace ThScoreFileConverterTests.Models.Th06
                 {
                     CardAttackTests.ValidProperties.cardId,
                     new CardAttack(ChapterWrapper.Create(
-                        CardAttackTests.MakeByteArray(CardAttackTests.ValidProperties)).Target as Chapter)
+                        CardAttackTests.MakeByteArray(CardAttackTests.ValidProperties)).Target)
                 },
                 {
                     CardAttackTests.ValidProperties.cardId + 1,
@@ -29,7 +29,7 @@ namespace ThScoreFileConverterTests.Models.Th06
                             cardName = TestUtils.MakeRandomArray<byte>(0x24),
                             clearCount = 0,
                             trialCount = 123,
-                        })).Target as Chapter)
+                        })).Target)
                 },
                 {
                     2,
@@ -43,7 +43,7 @@ namespace ThScoreFileConverterTests.Models.Th06
                             cardName = TestUtils.MakeRandomArray<byte>(0x24),
                             clearCount = 123,
                             trialCount = 123,
-                        })).Target as Chapter)
+                        })).Target)
                 },
             };
 
@@ -152,7 +152,7 @@ namespace ThScoreFileConverterTests.Models.Th06
                             cardName = CardAttackTests.ValidProperties.cardName,
                             clearCount = CardAttackTests.ValidProperties.clearCount,
                             trialCount = CardAttackTests.ValidProperties.trialCount,
-                        })).Target as Chapter)
+                        })).Target)
                 },
             };
             var replacer = new CollectRateReplacer(cardAttacks);

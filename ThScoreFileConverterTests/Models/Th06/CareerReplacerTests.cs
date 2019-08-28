@@ -16,7 +16,7 @@ namespace ThScoreFileConverterTests.Models.Th06
                 {
                     CardAttackTests.ValidProperties.cardId,
                     new CardAttack(ChapterWrapper.Create(CardAttackTests.MakeByteArray(
-                        CardAttackTests.ValidProperties)).Target as Chapter)
+                        CardAttackTests.ValidProperties)).Target)
                 },
                 {
                     CardAttackTests.ValidProperties.cardId + 1,
@@ -30,7 +30,7 @@ namespace ThScoreFileConverterTests.Models.Th06
                             cardName = TestUtils.MakeRandomArray<byte>(0x24),
                             clearCount = (ushort)(CardAttackTests.ValidProperties.clearCount + 2),
                             trialCount = (ushort)(CardAttackTests.ValidProperties.trialCount + 3),
-                        })).Target as Chapter)
+                        })).Target)
                 },
             };
 

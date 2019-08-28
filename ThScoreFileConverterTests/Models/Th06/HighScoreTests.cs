@@ -69,7 +69,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         public void HighScoreTestChapter() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(MakeByteArray(ValidProperties));
-            var highScore = new HighScore(chapter.Target as Chapter);
+            var highScore = new HighScore(chapter.Target);
 
             Validate(highScore, ValidProperties);
         });
@@ -118,7 +118,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             properties.signature = properties.signature.ToLowerInvariant();
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var highScore = new HighScore(chapter.Target as Chapter);
+            var highScore = new HighScore(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -132,7 +132,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             --properties.size1;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var highScore = new HighScore(chapter.Target as Chapter);
+            var highScore = new HighScore(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -151,7 +151,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             properties.chara = TestUtils.Cast<Chara>(chara);
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var highScore = new HighScore(chapter.Target as Chapter);
+            var highScore = new HighScore(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -170,7 +170,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             properties.level = TestUtils.Cast<Level>(level);
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var highScore = new HighScore(chapter.Target as Chapter);
+            var highScore = new HighScore(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -189,7 +189,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             properties.stageProgress = TestUtils.Cast<StageProgress>(stageProgress);
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var highScore = new HighScore(chapter.Target as Chapter);
+            var highScore = new HighScore(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });

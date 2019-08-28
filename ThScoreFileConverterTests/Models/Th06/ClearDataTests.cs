@@ -67,7 +67,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             var properties = ValidProperties;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var clearData = new ClearData(chapter.Target as Chapter);
+            var clearData = new ClearData(chapter.Target);
 
             Validate(clearData, properties);
         });
@@ -92,7 +92,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             properties.signature = properties.signature.ToLowerInvariant();
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var clearData = new ClearData(chapter.Target as Chapter);
+            var clearData = new ClearData(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -106,7 +106,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             --properties.size1;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var clearData = new ClearData(chapter.Target as Chapter);
+            var clearData = new ClearData(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -125,7 +125,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             properties.chara = TestUtils.Cast<Chara>(chara);
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var clearData = new ClearData(chapter.Target as Chapter);
+            var clearData = new ClearData(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });

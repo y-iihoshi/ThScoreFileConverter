@@ -29,7 +29,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         {
             var chapter = ChapterWrapper.Create(
                 HeaderTests.MakeByteArray(HeaderTests.ValidProperties));
-            var header = new Header(chapter.Target as Chapter);
+            var header = new Header(chapter.Target);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(header);
@@ -42,8 +42,8 @@ namespace ThScoreFileConverterTests.Models.Th07
         {
             var chapter = ChapterWrapper.Create(
                 HeaderTests.MakeByteArray(HeaderTests.ValidProperties));
-            var header1 = new Header(chapter.Target as Chapter);
-            var header2 = new Header(chapter.Target as Chapter);
+            var header1 = new Header(chapter.Target);
+            var header2 = new Header(chapter.Target);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(header1);
@@ -59,7 +59,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             var properties = HighScoreTests.ValidProperties;
             properties.score = 87654u;
             var chapter = ChapterWrapper.Create(HighScoreTests.MakeByteArray(properties));
-            var score = new HighScore(chapter.Target as Chapter);
+            var score = new HighScore(chapter.Target);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(score);
@@ -73,8 +73,8 @@ namespace ThScoreFileConverterTests.Models.Th07
             var properties = HighScoreTests.ValidProperties;
             properties.score = 87654u;
             var chapter = ChapterWrapper.Create(HighScoreTests.MakeByteArray(properties));
-            var score1 = new HighScore(chapter.Target as Chapter);
-            var score2 = new HighScore(chapter.Target as Chapter);
+            var score1 = new HighScore(chapter.Target);
+            var score2 = new HighScore(chapter.Target);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(score1);
@@ -89,7 +89,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         {
             var properties = ClearDataTests.ValidProperties;
             var chapter = ChapterWrapper.Create(ClearDataTests.MakeByteArray(properties));
-            var clearData = new ClearData(chapter.Target as Chapter);
+            var clearData = new ClearData(chapter.Target);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(clearData);
@@ -102,8 +102,8 @@ namespace ThScoreFileConverterTests.Models.Th07
         {
             var properties = ClearDataTests.ValidProperties;
             var chapter = ChapterWrapper.Create(ClearDataTests.MakeByteArray(properties));
-            var clearData1 = new ClearData(chapter.Target as Chapter);
-            var clearData2 = new ClearData(chapter.Target as Chapter);
+            var clearData1 = new ClearData(chapter.Target);
+            var clearData2 = new ClearData(chapter.Target);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(clearData1);
@@ -118,7 +118,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         {
             var properties = CardAttackTests.ValidProperties;
             var chapter = ChapterWrapper.Create(CardAttackTests.MakeByteArray(properties));
-            var attack = new CardAttack(chapter.Target as Chapter);
+            var attack = new CardAttack(chapter.Target);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(attack);
@@ -131,8 +131,8 @@ namespace ThScoreFileConverterTests.Models.Th07
         {
             var properties = CardAttackTests.ValidProperties;
             var chapter = ChapterWrapper.Create(CardAttackTests.MakeByteArray(properties));
-            var attack1 = new CardAttack(chapter.Target as Chapter);
-            var attack2 = new CardAttack(chapter.Target as Chapter);
+            var attack1 = new CardAttack(chapter.Target);
+            var attack2 = new CardAttack(chapter.Target);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(attack1);
@@ -149,7 +149,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             properties.level = Level.Normal;
             properties.stage = Stage.St6;
             var chapter = ChapterWrapper.Create(PracticeScoreTests.MakeByteArray(properties));
-            var score = new PracticeScore(chapter.Target as Chapter);
+            var score = new PracticeScore(chapter.Target);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(score);
@@ -166,8 +166,8 @@ namespace ThScoreFileConverterTests.Models.Th07
             properties.level = Level.Normal;
             properties.stage = Stage.St6;
             var chapter = ChapterWrapper.Create(PracticeScoreTests.MakeByteArray(properties));
-            var score1 = new PracticeScore(chapter.Target as Chapter);
-            var score2 = new PracticeScore(chapter.Target as Chapter);
+            var score1 = new PracticeScore(chapter.Target);
+            var score2 = new PracticeScore(chapter.Target);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(score1);
@@ -197,7 +197,7 @@ namespace ThScoreFileConverterTests.Models.Th07
                 properties.stage = TestUtils.Cast<Stage>(stage);
                 var chapter = ChapterWrapper.Create(
                     PracticeScoreTests.MakeByteArray(properties));
-                var score = new PracticeScore(chapter.Target as Chapter);
+                var score = new PracticeScore(chapter.Target);
 
                 var allScoreData = new AllScoreData();
                 allScoreData.Set(score);
@@ -210,7 +210,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         {
             var chapter = ChapterWrapper.Create(
                 PlayStatusTests.MakeByteArray(PlayStatusTests.ValidProperties));
-            var status = new PlayStatus(chapter.Target as Chapter);
+            var status = new PlayStatus(chapter.Target);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(status);
@@ -223,8 +223,8 @@ namespace ThScoreFileConverterTests.Models.Th07
         {
             var chapter = ChapterWrapper.Create(
                 PlayStatusTests.MakeByteArray(PlayStatusTests.ValidProperties));
-            var status1 = new PlayStatus(chapter.Target as Chapter);
-            var status2 = new PlayStatus(chapter.Target as Chapter);
+            var status1 = new PlayStatus(chapter.Target);
+            var status2 = new PlayStatus(chapter.Target);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(status1);
@@ -239,7 +239,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         {
             var chapter = ChapterWrapper.Create(
                 LastNameTests.MakeByteArray(LastNameTests.ValidProperties));
-            var name = new LastName(chapter.Target as Chapter);
+            var name = new LastName(chapter.Target);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(name);
@@ -252,8 +252,8 @@ namespace ThScoreFileConverterTests.Models.Th07
         {
             var chapter = ChapterWrapper.Create(
                 LastNameTests.MakeByteArray(LastNameTests.ValidProperties));
-            var name1 = new LastName(chapter.Target as Chapter);
-            var name2 = new LastName(chapter.Target as Chapter);
+            var name1 = new LastName(chapter.Target);
+            var name2 = new LastName(chapter.Target);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(name1);
@@ -268,7 +268,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         {
             var chapter = ChapterWrapper.Create(
                 VersionInfoTests.MakeByteArray(VersionInfoTests.ValidProperties));
-            var info = new VersionInfo(chapter.Target as Chapter);
+            var info = new VersionInfo(chapter.Target);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(info);
@@ -281,9 +281,8 @@ namespace ThScoreFileConverterTests.Models.Th07
         {
             var chapter = ChapterWrapper.Create(
                 VersionInfoTests.MakeByteArray(VersionInfoTests.ValidProperties));
-            var info1 = new VersionInfo(chapter.Target as Chapter);
-            var info2 = new VersionInfo(chapter.Target as Chapter);
-
+            var info1 = new VersionInfo(chapter.Target);
+            var info2 = new VersionInfo(chapter.Target);
             var allScoreData = new AllScoreData();
             allScoreData.Set(info1);
             allScoreData.Set(info2);

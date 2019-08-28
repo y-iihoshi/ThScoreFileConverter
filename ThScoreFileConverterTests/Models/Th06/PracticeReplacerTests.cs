@@ -21,7 +21,7 @@ namespace ThScoreFileConverterTests.Models.Th06
                         PracticeScoreTests.ValidProperties.stage
                     ),
                     new PracticeScore(ChapterWrapper.Create(
-                        PracticeScoreTests.MakeByteArray(PracticeScoreTests.ValidProperties)).Target as Chapter)
+                        PracticeScoreTests.MakeByteArray(PracticeScoreTests.ValidProperties)).Target)
                 },
             };
 
@@ -93,7 +93,7 @@ namespace ThScoreFileConverterTests.Models.Th06
                             chara = PracticeScoreTests.ValidProperties.chara,
                             level = Level.Extra,
                             stage = PracticeScoreTests.ValidProperties.stage,
-                        })).Target as Chapter)
+                        })).Target)
                 },
             };
             var replacer = new PracticeReplacer(practiceScores);
@@ -121,7 +121,7 @@ namespace ThScoreFileConverterTests.Models.Th06
                             chara = PracticeScoreTests.ValidProperties.chara,
                             level = PracticeScoreTests.ValidProperties.level,
                             stage = Stage.Extra,
-                        })).Target as Chapter)
+                        })).Target)
                 },
             };
             var replacer = new PracticeReplacer(practiceScores);

@@ -20,7 +20,7 @@ namespace ThScoreFileConverterTests.Models.Th06
                     new List<HighScore>
                     {
                         new HighScore(ChapterWrapper.Create(
-                            HighScoreTests.MakeByteArray(HighScoreTests.ValidProperties)).Target as Chapter),
+                            HighScoreTests.MakeByteArray(HighScoreTests.ValidProperties)).Target),
                     }
                 },
             };

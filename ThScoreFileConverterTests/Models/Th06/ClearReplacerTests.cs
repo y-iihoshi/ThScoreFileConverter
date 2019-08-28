@@ -18,7 +18,7 @@ namespace ThScoreFileConverterTests.Models.Th06
                     new List<HighScore>
                     {
                         new HighScore(ChapterWrapper.Create(HighScoreTests.MakeByteArray(
-                            HighScoreTests.ValidProperties)).Target as Chapter),
+                            HighScoreTests.ValidProperties)).Target),
                         new HighScore(ChapterWrapper.Create(HighScoreTests.MakeByteArray(
                             new HighScoreTests.Properties
                             {
@@ -30,7 +30,7 @@ namespace ThScoreFileConverterTests.Models.Th06
                                 level = HighScoreTests.ValidProperties.level,
                                 stageProgress = HighScoreTests.ValidProperties.stageProgress + 1,
                                 name = HighScoreTests.ValidProperties.name,
-                            })).Target as Chapter),
+                            })).Target),
                     }
                 },
             };
@@ -99,7 +99,7 @@ namespace ThScoreFileConverterTests.Models.Th06
                                 level = Level.Extra,
                                 stageProgress = StageProgress.Extra,
                                 name = HighScoreTests.ValidProperties.name,
-                            })).Target as Chapter),
+                            })).Target),
                     }
                 },
             };
