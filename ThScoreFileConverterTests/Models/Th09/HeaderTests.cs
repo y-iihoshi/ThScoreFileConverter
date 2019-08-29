@@ -4,7 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models.Th09;
-using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 using ChapterWrapper = ThScoreFileConverterTests.Models.Th06.Wrappers.ChapterWrapper;
 
 namespace ThScoreFileConverterTests.Models.Th09

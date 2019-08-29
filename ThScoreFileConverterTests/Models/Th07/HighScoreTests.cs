@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
-using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
 namespace ThScoreFileConverterTests.Models.Th07
 {

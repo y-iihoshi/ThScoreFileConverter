@@ -66,7 +66,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             var properties = ValidProperties;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var cardAttack = new CardAttack(chapter.Target as Chapter);
+            var cardAttack = new CardAttack(chapter.Target);
 
             Validate(cardAttack, properties);
             Assert.IsTrue(cardAttack.HasTried());
@@ -92,7 +92,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             properties.signature = properties.signature.ToLowerInvariant();
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var cardAttack = new CardAttack(chapter.Target as Chapter);
+            var cardAttack = new CardAttack(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -106,7 +106,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             --properties.size1;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var cardAttack = new CardAttack(chapter.Target as Chapter);
+            var cardAttack = new CardAttack(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -118,7 +118,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             properties.trialCount = 0;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var cardAttack = new CardAttack(chapter.Target as Chapter);
+            var cardAttack = new CardAttack(chapter.Target);
 
             Validate(cardAttack, properties);
             Assert.IsFalse(cardAttack.HasTried());

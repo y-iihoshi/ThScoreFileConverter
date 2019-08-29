@@ -3,7 +3,6 @@ using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ThScoreFileConverterTests.Models.Th08;
 using ThScoreFileConverterTests.Models.Wrappers;
-using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 using LastName = ThScoreFileConverter.Models.Th07.LastName;
 using VersionInfo = ThScoreFileConverter.Models.Th07.VersionInfo;
 using LastNameTests = ThScoreFileConverterTests.Models.Th07.LastNameTests;
