@@ -29,6 +29,9 @@ namespace ThScoreFileConverter.Models.Th07
 
         public CollectRateReplacer(IReadOnlyDictionary<int, CardAttack> cardAttacks)
         {
+            if (cardAttacks is null)
+                throw new ArgumentNullException(nameof(cardAttacks));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var level = LevelWithTotalParser.Parse(match.Groups[1].Value);
@@ -41,9 +44,14 @@ namespace ThScoreFileConverter.Models.Th07
 
                 Func<CardAttack, bool> findByStage;
                 if (stage == StageWithTotal.Total)
+                {
                     findByStage = attack => true;
+                }
                 else
-                    findByStage = attack => Definitions.CardTable[attack.CardId].Stage == (Stage)stage;
+                {
+                    findByStage = attack => Definitions.CardTable.Any(
+                        pair => (pair.Key == attack.CardId) && (pair.Value.Stage == (Stage)stage));
+                }
 
                 Func<CardAttack, bool> findByLevel = attack => true;
                 switch (level)
@@ -52,13 +60,16 @@ namespace ThScoreFileConverter.Models.Th07
                         // Do nothing
                         break;
                     case LevelWithTotal.Extra:
-                        findByStage = attack => Definitions.CardTable[attack.CardId].Stage == Stage.Extra;
+                        findByStage = attack => Definitions.CardTable.Any(
+                            pair => (pair.Key == attack.CardId) && (pair.Value.Stage == Stage.Extra));
                         break;
                     case LevelWithTotal.Phantasm:
-                        findByStage = attack => Definitions.CardTable[attack.CardId].Stage == Stage.Phantasm;
+                        findByStage = attack => Definitions.CardTable.Any(
+                            pair => (pair.Key == attack.CardId) && (pair.Value.Stage == Stage.Phantasm));
                         break;
                     default:
-                        findByLevel = attack => Definitions.CardTable[attack.CardId].Level == (Level)level;
+                        findByLevel = attack => Definitions.CardTable.Any(
+                            pair => (pair.Key == attack.CardId) && (pair.Value.Level == (Level)level));
                         break;
                 }
 
