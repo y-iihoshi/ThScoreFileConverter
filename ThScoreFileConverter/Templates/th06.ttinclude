@@ -19,23 +19,23 @@
 
     var stages = new Dictionary<string, string>
     {
-        { Stage.St1.ToShortName(), "Stage 1" },
-        { Stage.St2.ToShortName(), "Stage 2" },
-        { Stage.St3.ToShortName(), "Stage 3" },
-        { Stage.St4.ToShortName(), "Stage 4" },
-        { Stage.St5.ToShortName(), "Stage 5" },
-        { Stage.St6.ToShortName(), "Stage 6" },
+        { Stage.One.ToShortName(), "Stage 1" },
+        { Stage.Two.ToShortName(), "Stage 2" },
+        { Stage.Three.ToShortName(), "Stage 3" },
+        { Stage.Four.ToShortName(), "Stage 4" },
+        { Stage.Five.ToShortName(), "Stage 5" },
+        { Stage.Six.ToShortName(), "Stage 6" },
         { Stage.Extra.ToShortName(), "Extra" },
     };
 
     var stagesWithTotal = new Dictionary<string, string>
     {
-        { StageWithTotal.St1.ToShortName(), "Stage 1" },
-        { StageWithTotal.St2.ToShortName(), "Stage 2" },
-        { StageWithTotal.St3.ToShortName(), "Stage 3" },
-        { StageWithTotal.St4.ToShortName(), "Stage 4" },
-        { StageWithTotal.St5.ToShortName(), "Stage 5" },
-        { StageWithTotal.St6.ToShortName(), "Stage 6" },
+        { StageWithTotal.One.ToShortName(), "Stage 1" },
+        { StageWithTotal.Two.ToShortName(), "Stage 2" },
+        { StageWithTotal.Three.ToShortName(), "Stage 3" },
+        { StageWithTotal.Four.ToShortName(), "Stage 4" },
+        { StageWithTotal.Five.ToShortName(), "Stage 5" },
+        { StageWithTotal.Six.ToShortName(), "Stage 6" },
         { StageWithTotal.Extra.ToShortName(), "Extra" },
         { StageWithTotal.Total.ToShortName(), "Total" },
     };
@@ -48,12 +48,12 @@
 
     var cardsPerStage = new Dictionary<string, int>
     {
-        { Stage.St1.ToShortName(), 3 },
-        { Stage.St2.ToShortName(), 4 },
-        { Stage.St3.ToShortName(), 7 },
-        { Stage.St4.ToShortName(), 18 },
-        { Stage.St5.ToShortName(), 8 },
-        { Stage.St6.ToShortName(), 11 },
+        { Stage.One.ToShortName(), 3 },
+        { Stage.Two.ToShortName(), 4 },
+        { Stage.Three.ToShortName(), 7 },
+        { Stage.Four.ToShortName(), 18 },
+        { Stage.Five.ToShortName(), 8 },
+        { Stage.Six.ToShortName(), 11 },
         { Stage.Extra.ToShortName(), 13 },
     };
 
