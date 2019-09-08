@@ -13,7 +13,7 @@ if ($env:APPVEYOR -ieq "true")
 }
 
 & $opencover `
-    -register:user `
+    -register:Path32 `
     -target:$target `
     -targetargs:$targetArgs `
     -filter:$filter `
