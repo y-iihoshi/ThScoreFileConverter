@@ -2,7 +2,6 @@
 
 using System;
 using System.Reflection;
-using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -10,12 +9,6 @@ using System.Windows;
 // アセンブリに関する一般情報は以下の属性セットをとおして制御されます。
 // アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
-[assembly: AssemblyTitle("ThScoreFileConverter")]
-[assembly: AssemblyDescription("Touhou Project's score files converter")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ThScoreFileConverter")]
-[assembly: AssemblyCopyright("© 2013-2019 IIHOSHI Yoshinori")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -36,11 +29,11 @@ using System.Windows;
 
 [assembly: ThemeInfo(
     ResourceDictionaryLocation.None, //テーマ固有のリソース ディクショナリが置かれている場所
-    //(リソースがページ、
-    //またはアプリケーション リソース ディクショナリに見つからない場合に使用されます)
+                                     //(リソースがページ、
+                                     //またはアプリケーション リソース ディクショナリに見つからない場合に使用されます)
     ResourceDictionaryLocation.SourceAssembly //汎用リソース ディクショナリが置かれている場所
-    //(リソースがページ、
-    //アプリケーション、またはいずれのテーマ固有のリソース ディクショナリにも見つからない場合に使用されます)
+                                              //(リソースがページ、
+                                              //アプリケーション、またはいずれのテーマ固有のリソース ディクショナリにも見つからない場合に使用されます)
 )]
 
 
@@ -56,7 +49,6 @@ using System.Windows;
 // [assembly: AssemblyVersion("1.0.*")]
 
 [assembly: CLSCompliant(true)]
-[assembly: NeutralResourcesLanguage("ja-JP")]
 
 #if DEBUG
 [assembly: InternalsVisibleTo("ThScoreFileConverterTests")]

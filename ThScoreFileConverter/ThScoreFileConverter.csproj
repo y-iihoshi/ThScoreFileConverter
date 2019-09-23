@@ -1,66 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D6E125E5-92D3-48D3-B253-81B6405E9ED6}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ThScoreFileConverter</RootNamespace>
-    <AssemblyName>ThScoreFileConverter</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WarningLevel>4</WarningLevel>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>false</BootstrapperEnabled>
+    <TargetFramework>net45</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Authors>IIHOSHI Yoshinori</Authors>
+    <Company>None</Company>
+    <Copyright>© 2013-2019 IIHOSHI Yoshinori</Copyright>
+    <Description>Touhou Project's score files converter</Description>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <RepositoryUrl>https://github.com/y-iihoshi/ThScoreFileConverter</RepositoryUrl>
+    <NeutralLanguage>ja-JP</NeutralLanguage>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
     <DocumentationFile>bin\Debug\ThScoreFileConverter.xml</DocumentationFile>
     <CodeAnalysisRuleSet>ThScoreFileConverter.ruleset</CodeAnalysisRuleSet>
-    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>
-    </DocumentationFile>
     <CodeAnalysisRuleSet>ThScoreFileConverter.ruleset</CodeAnalysisRuleSet>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -75,199 +36,26 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Actions\CommonDialogAction.cs" />
-    <Compile Include="Actions\FolderBrowserDialogAction.cs" />
-    <Compile Include="Actions\FolderBrowserDialogActionResult.cs" />
-    <Compile Include="Actions\FontDialogAction.cs" />
-    <Compile Include="Actions\FontDialogActionResult.cs" />
-    <Compile Include="Actions\OpenFileDialogAction.cs" />
-    <Compile Include="Actions\OpenFileDialogActionResult.cs" />
-    <Compile Include="Actions\Win32Window.cs" />
-    <Compile Include="Behaviors\TextBoxBaseScrollBehavior.cs" />
-    <Compile Include="Behaviors\UIElementDropBehavior.cs" />
-    <Compile Include="Commands\CloseWindowCommand.cs" />
-    <Compile Include="Models\BinaryReaderExtensions.cs" />
-    <Compile Include="Models\BitReader.cs" />
-    <Compile Include="Models\Encoding.cs" />
-    <Compile Include="Models\EnumAltNameAttribute.cs" />
-    <Compile Include="Models\EnumerableExtensions.cs" />
-    <Compile Include="Models\EnumExtensions.cs" />
-    <Compile Include="Models\EnumShortNameParser.cs" />
-    <Compile Include="Models\ExceptionOccurredEventArgs.cs" />
-    <Compile Include="Models\IBinaryReadable.cs" />
-    <Compile Include="Models\IBinaryWritable.cs" />
-    <Compile Include="Models\IStringReplaceable.cs" />
-    <Compile Include="Models\Level.cs" />
-    <Compile Include="Models\LevelWithTotal.cs" />
-    <Compile Include="Models\Lzss.cs" />
-    <Compile Include="Models\SpellCardInfo.cs" />
-    <Compile Include="Models\Stage.cs" />
-    <Compile Include="Models\StageWithTotal.cs" />
-    <Compile Include="Models\Th06Converter.cs" />
-    <Compile Include="Models\Th06\AllScoreData.cs" />
-    <Compile Include="Models\Th06\CardAttack.cs" />
-    <Compile Include="Models\Th06\CardReplacer.cs" />
-    <Compile Include="Models\Th06\CareerReplacer.cs" />
-    <Compile Include="Models\Th06\Chapter.cs" />
-    <Compile Include="Models\Th06\Chara.cs" />
-    <Compile Include="Models\Th06\ClearData.cs" />
-    <Compile Include="Models\Th06\ClearReplacer.cs" />
-    <Compile Include="Models\Th06\CollectRateReplacer.cs" />
-    <Compile Include="Models\Th06\Definitions.cs" />
-    <Compile Include="Models\Th06\FileHeader.cs" />
-    <Compile Include="Models\Th06\Header.cs" />
-    <Compile Include="Models\Th06\HighScore.cs" />
-    <Compile Include="Models\Th06\Parsers.cs" />
-    <Compile Include="Models\Th06\PracticeReplacer.cs" />
-    <Compile Include="Models\Th06\PracticeScore.cs" />
-    <Compile Include="Models\Th06\ScoreReplacer.cs" />
-    <Compile Include="Models\Th06\StageProgress.cs" />
-    <Compile Include="Models\Th07Converter.cs" />
-    <Compile Include="Models\Th075Converter.cs" />
-    <Compile Include="Models\Th07\AllScoreData.cs" />
-    <Compile Include="Models\Th07\CardAttack.cs" />
-    <Compile Include="Models\Th07\CardReplacer.cs" />
-    <Compile Include="Models\Th07\CareerReplacer.cs" />
-    <Compile Include="Models\Th07\Chara.cs" />
-    <Compile Include="Models\Th07\CharaWithTotal.cs" />
-    <Compile Include="Models\Th07\ClearData.cs" />
-    <Compile Include="Models\Th07\ClearReplacer.cs" />
-    <Compile Include="Models\Th07\CollectRateReplacer.cs" />
-    <Compile Include="Models\Th07\Definitions.cs" />
-    <Compile Include="Models\Th07\FileHeader.cs" />
-    <Compile Include="Models\Th07\FileHeaderBase.cs" />
-    <Compile Include="Models\Th07\Header.cs" />
-    <Compile Include="Models\Th07\HighScore.cs" />
-    <Compile Include="Models\Th07\LastName.cs" />
-    <Compile Include="Models\Th07\Level.cs" />
-    <Compile Include="Models\Th07\LevelWithTotal.cs" />
-    <Compile Include="Models\Th07\Parsers.cs" />
-    <Compile Include="Models\Th07\PlayCount.cs" />
-    <Compile Include="Models\Th07\PlayReplacer.cs" />
-    <Compile Include="Models\Th07\PlayStatus.cs" />
-    <Compile Include="Models\Th07\PracticeReplacer.cs" />
-    <Compile Include="Models\Th07\PracticeScore.cs" />
-    <Compile Include="Models\Th07\ScoreReplacer.cs" />
-    <Compile Include="Models\Th07\Stage.cs" />
-    <Compile Include="Models\Th07\StageProgress.cs" />
-    <Compile Include="Models\Th07\StageWithTotal.cs" />
-    <Compile Include="Models\Th07\TimeReplacer.cs" />
-    <Compile Include="Models\Th07\VersionInfo.cs" />
-    <Compile Include="Models\Th08Converter.cs" />
-    <Compile Include="Models\Th08\FileHeader.cs" />
-    <Compile Include="Models\Th08\Header.cs" />
-    <Compile Include="Models\Th095\Chapter.cs" />
-    <Compile Include="Models\Th095\Header.cs" />
-    <Compile Include="Models\Th09Converter.cs" />
-    <Compile Include="Models\Th095Converter.cs" />
-    <Compile Include="Models\Th09\FileHeader.cs" />
-    <Compile Include="Models\Th09\Header.cs" />
-    <Compile Include="Models\Th105\CardForDeck.cs" />
-    <Compile Include="Models\Th105\ClearData.cs" />
-    <Compile Include="Models\Th105\SpellCardResult.cs" />
-    <Compile Include="Models\Th105\StageInfo.cs" />
-    <Compile Include="Models\Th10Converter.cs" />
-    <Compile Include="Models\Th105Converter.cs" />
-    <Compile Include="Models\Th10\Chapter.cs" />
-    <Compile Include="Models\Th10\Practice.cs" />
-    <Compile Include="Models\Th10\ScoreData.cs" />
-    <Compile Include="Models\Th10\SpellCard.cs" />
-    <Compile Include="Models\Th11Converter.cs" />
-    <Compile Include="Models\Th12Converter.cs" />
-    <Compile Include="Models\Th123Converter.cs" />
-    <Compile Include="Models\Th125Converter.cs" />
-    <Compile Include="Models\Th128Converter.cs" />
-    <Compile Include="Models\Th13Converter.cs" />
-    <Compile Include="Models\Th135Converter.cs" />
-    <Compile Include="Models\Th13\Practice.cs" />
-    <Compile Include="Models\Th13\SpellCard.cs" />
-    <Compile Include="Models\Th14Converter.cs" />
-    <Compile Include="Models\Th143Converter.cs" />
-    <Compile Include="Models\Th145Converter.cs" />
-    <Compile Include="Models\Th15Converter.cs" />
-    <Compile Include="Models\Th155Converter.cs" />
-    <Compile Include="Models\Th16Converter.cs" />
-    <Compile Include="Models\Th165Converter.cs" />
-    <Compile Include="Models\ThConverter.cs" />
-    <Compile Include="Models\ThConverterEventArgs.cs" />
-    <Compile Include="Models\ThConverterFactory.cs" />
-    <Compile Include="Models\ThCrypt.cs" />
-    <Compile Include="Models\Time.cs" />
-    <Compile Include="Models\Utils.cs" />
-    <Compile Include="Models\Work.cs" />
-    <Compile Include="Settings.cs" />
-    <Compile Include="SettingsPerTitle.cs" />
-    <Compile Include="Squirrel\RawType.cs" />
-    <Compile Include="Squirrel\SQArray.cs" />
-    <Compile Include="Squirrel\SQBool.cs" />
-    <Compile Include="Squirrel\SQClosure.cs" />
-    <Compile Include="Squirrel\SQFloat.cs" />
-    <Compile Include="Squirrel\SQInstance.cs" />
-    <Compile Include="Squirrel\SQInteger.cs" />
-    <Compile Include="Squirrel\SQNull.cs" />
-    <Compile Include="Squirrel\SQObject.cs" />
-    <Compile Include="Squirrel\SQObjectAttributes.cs" />
-    <Compile Include="Squirrel\SQObjectType.cs" />
-    <Compile Include="Squirrel\SQString.cs" />
-    <Compile Include="Squirrel\SQTable.cs" />
-    <Compile Include="ViewModels\AboutWindowViewModel.cs" />
-    <Compile Include="ViewModels\MainWindowViewModel.cs" />
-    <Compile Include="ViewModels\SettingWindowViewModel.cs" />
-    <Page Include="Views\AboutWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Compile Include="Views\AboutWindow.xaml.cs">
-      <DependentUpon>AboutWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="Views\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="Views\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="Views\SettingWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Compile Include="Views\SettingWindow.xaml.cs">
-      <DependentUpon>SettingWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
+    <Compile Update="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
+    <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
     <AdditionalFiles Include="stylecop.json" />
-    <None Include="ThScoreFileConverter.ruleset" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
@@ -275,49 +63,26 @@
     </CodeAnalysisDictionary>
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.5 %28x86 および x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="GitVersionTask">
-      <Version>5.0.1</Version>
+    <PackageReference Include="GitVersionTask" Version="5.0.1">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="IDisposableAnalyzers">
-      <Version>2.1.2</Version>
+    <PackageReference Include="IDisposableAnalyzers" Version="2.1.2">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers">
-      <Version>2.9.4</Version>
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.4">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf">
-      <Version>1.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="Prism.Unity">
-      <Version>7.2.0.1367</Version>
-    </PackageReference>
-    <PackageReference Include="StyleCop.Analyzers">
-      <Version>1.1.118</Version>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.0.1" />
+    <PackageReference Include="Prism.Unity" Version="7.2.0.1367" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="System.ValueTuple">
-      <Version>4.5.0</Version>
-    </PackageReference>
-    <PackageReference Include="WpfAnalyzers">
-      <Version>2.4.0</Version>
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+    <PackageReference Include="WpfAnalyzers" Version="2.4.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -326,655 +91,655 @@
     <Content Include="Templates\jcanvas.min.js" />
     <Content Include="Templates\jquery-1.11.1.min.js" />
     <Content Include="Templates\style.css" />
-    <None Include="Templates\th06.ttinclude" />
-    <Content Include="Templates\th06score1.html">
+    <None Update="Templates\th06.ttinclude" />
+    <None Update="Templates\th06score1.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th06score1.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th06score1.tt">
+    </None>
+    <None Update="Templates\th06score1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th06score1.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th06score2.html">
+    <None Update="Templates\th06score2.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th06score2.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th06score2.tt">
+    </None>
+    <None Update="Templates\th06score2.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th06score2.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th06score3.html">
+    <None Update="Templates\th06score3.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th06score3.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th06score3.tt">
+    </None>
+    <None Update="Templates\th06score3.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th06score3.html</LastGenOutput>
     </None>
-    <None Include="Templates\th075.ttinclude" />
-    <Content Include="Templates\th075card.html">
+    <None Update="Templates\th075.ttinclude" />
+    <None Update="Templates\th075card.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th075card.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th075card.tt">
+    </None>
+    <None Update="Templates\th075card.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th075card.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th075score1.html">
+    <None Update="Templates\th075score1.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th075score1.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th075score1.tt">
+    </None>
+    <None Update="Templates\th075score1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th075score1.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th075score2.html">
+    <None Update="Templates\th075score2.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th075score2.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th075score2.tt">
+    </None>
+    <None Update="Templates\th075score2.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th075score2.html</LastGenOutput>
     </None>
-    <None Include="Templates\th07.ttinclude" />
-    <Content Include="Templates\th07card.html">
+    <None Update="Templates\th07.ttinclude" />
+    <None Update="Templates\th07card.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th07card.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th07card.tt">
+    </None>
+    <None Update="Templates\th07card.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th07card.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th07score1.html">
+    <None Update="Templates\th07score1.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th07score1.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th07score1.tt">
+    </None>
+    <None Update="Templates\th07score1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th07score1.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th07score2.html">
+    <None Update="Templates\th07score2.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th07score2.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th07score2.tt">
+    </None>
+    <None Update="Templates\th07score2.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th07score2.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th07score3.html">
+    <None Update="Templates\th07score3.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th07score3.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th07score3.tt">
+    </None>
+    <None Update="Templates\th07score3.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th07score3.html</LastGenOutput>
     </None>
-    <None Include="Templates\th08.ttinclude" />
-    <Content Include="Templates\th08card1.html">
+    <None Update="Templates\th08.ttinclude" />
+    <None Update="Templates\th08card1.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th08card1.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th08card1.tt">
+    </None>
+    <None Update="Templates\th08card1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th08card1.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th08card2.html">
+    <None Update="Templates\th08card2.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th08card2.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th08card2.tt">
+    </None>
+    <None Update="Templates\th08card2.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th08card2.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th08score1.html">
+    <None Update="Templates\th08score1.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th08score1.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th08score1.tt">
+    </None>
+    <None Update="Templates\th08score1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th08score1.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th08score2.html">
+    <None Update="Templates\th08score2.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th08score2.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th08score2.tt">
+    </None>
+    <None Update="Templates\th08score2.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th08score2.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th08score3.html">
+    <None Update="Templates\th08score3.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th08score3.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th08score3.tt">
+    </None>
+    <None Update="Templates\th08score3.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th08score3.html</LastGenOutput>
     </None>
-    <None Include="Templates\th095.ttinclude" />
-    <Content Include="Templates\th095bestshot.html">
+    <None Update="Templates\th095.ttinclude" />
+    <None Update="Templates\th095bestshot.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th095bestshot.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th095bestshot.tt">
+    </None>
+    <None Update="Templates\th095bestshot.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th095bestshot.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th095score.html">
+    <None Update="Templates\th095score.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th095score.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th095score.tt">
+    </None>
+    <None Update="Templates\th095score.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th095score.html</LastGenOutput>
     </None>
-    <None Include="Templates\th09.ttinclude" />
-    <Content Include="Templates\th09score1.html">
+    <None Update="Templates\th09.ttinclude" />
+    <None Update="Templates\th09score1.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th09score1.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th09score1.tt">
+    </None>
+    <None Update="Templates\th09score1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th09score1.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th09score2.html">
+    <None Update="Templates\th09score2.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th09score2.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th09score2.tt">
+    </None>
+    <None Update="Templates\th09score2.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th09score2.html</LastGenOutput>
     </None>
-    <None Include="Templates\th105.ttinclude" />
-    <Content Include="Templates\th105card1.html">
+    <None Update="Templates\th105.ttinclude" />
+    <None Update="Templates\th105card1.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th105card1.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th105card1.tt">
+    </None>
+    <None Update="Templates\th105card1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th105card1.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th105card2.html">
+    <None Update="Templates\th105card2.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th105card2.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th105card2.tt">
+    </None>
+    <None Update="Templates\th105card2.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th105card2.html</LastGenOutput>
     </None>
-    <None Include="Templates\th10.ttinclude" />
-    <Content Include="Templates\th10card.html">
+    <None Update="Templates\th10.ttinclude" />
+    <None Update="Templates\th10card.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th10card.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th10card.tt">
+    </None>
+    <None Update="Templates\th10card.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th10card.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th10score1.html">
+    <None Update="Templates\th10score1.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th10score1.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th10score1.tt">
+    </None>
+    <None Update="Templates\th10score1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th10score1.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th10score2.html">
+    <None Update="Templates\th10score2.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th10score2.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th10score2.tt">
+    </None>
+    <None Update="Templates\th10score2.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th10score2.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th10score3.html">
+    <None Update="Templates\th10score3.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th10score3.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th10score3.tt">
+    </None>
+    <None Update="Templates\th10score3.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th10score3.html</LastGenOutput>
     </None>
-    <None Include="Templates\th11.ttinclude" />
-    <Content Include="Templates\th11card.html">
+    <None Update="Templates\th11.ttinclude" />
+    <None Update="Templates\th11card.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th11card.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th11card.tt">
+    </None>
+    <None Update="Templates\th11card.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th11card.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th11score1.html">
+    <None Update="Templates\th11score1.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th11score1.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th11score1.tt">
+    </None>
+    <None Update="Templates\th11score1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th11score1.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th11score2.html">
+    <None Update="Templates\th11score2.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th11score2.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th11score2.tt">
+    </None>
+    <None Update="Templates\th11score2.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th11score2.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th11score3.html">
+    <None Update="Templates\th11score3.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th11score3.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th11score3.tt">
+    </None>
+    <None Update="Templates\th11score3.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th11score3.html</LastGenOutput>
     </None>
-    <None Include="Templates\th123.ttinclude" />
-    <Content Include="Templates\th123card1.html">
+    <None Update="Templates\th123.ttinclude" />
+    <None Update="Templates\th123card1.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th123card1.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th123card1.tt">
+    </None>
+    <None Update="Templates\th123card1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th123card1.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th123card2.html">
+    <None Update="Templates\th123card2.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th123card2.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th123card2.tt">
+    </None>
+    <None Update="Templates\th123card2.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th123card2.html</LastGenOutput>
     </None>
-    <None Include="Templates\th125.ttinclude" />
-    <Content Include="Templates\th125bestshot1.html">
+    <None Update="Templates\th125.ttinclude" />
+    <None Update="Templates\th125bestshot1.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th125bestshot1.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th125bestshot1.tt">
+    </None>
+    <None Update="Templates\th125bestshot1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th125bestshot1.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th125bestshot2.html">
+    <None Update="Templates\th125bestshot2.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th125bestshot2.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th125bestshot2.tt">
+    </None>
+    <None Update="Templates\th125bestshot2.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th125bestshot2.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th125score1.html">
+    <None Update="Templates\th125score1.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th125score1.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th125score1.tt">
+    </None>
+    <None Update="Templates\th125score1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th125score1.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th125score2.html">
+    <None Update="Templates\th125score2.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th125score2.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th125score2.tt">
+    </None>
+    <None Update="Templates\th125score2.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th125score2.html</LastGenOutput>
     </None>
-    <None Include="Templates\th128.ttinclude" />
-    <Content Include="Templates\th128card.html">
+    <None Update="Templates\th128.ttinclude" />
+    <None Update="Templates\th128card.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th128card.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th128card.tt">
+    </None>
+    <None Update="Templates\th128card.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th128card.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th128score1.html">
+    <None Update="Templates\th128score1.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th128score1.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th128score1.tt">
+    </None>
+    <None Update="Templates\th128score1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th128score1.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th128score2.html">
+    <None Update="Templates\th128score2.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th128score2.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th128score2.tt">
+    </None>
+    <None Update="Templates\th128score2.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th128score2.html</LastGenOutput>
     </None>
-    <None Include="Templates\th12.ttinclude" />
-    <Content Include="Templates\th12card.html">
+    <None Update="Templates\th12.ttinclude" />
+    <None Update="Templates\th12card.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th12card.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th12card.tt">
+    </None>
+    <None Update="Templates\th12card.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th12card.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th12score1.html">
+    <None Update="Templates\th12score1.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th12score1.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th12score1.tt">
+    </None>
+    <None Update="Templates\th12score1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th12score1.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th12score2.html">
+    <None Update="Templates\th12score2.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th12score2.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th12score2.tt">
+    </None>
+    <None Update="Templates\th12score2.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th12score2.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th12score3.html">
+    <None Update="Templates\th12score3.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th12score3.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th12score3.tt">
+    </None>
+    <None Update="Templates\th12score3.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th12score3.html</LastGenOutput>
     </None>
-    <None Include="Templates\th135.ttinclude" />
-    <Content Include="Templates\th135score.html">
+    <None Update="Templates\th135.ttinclude" />
+    <None Update="Templates\th135score.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th135score.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th135score.tt">
+    </None>
+    <None Update="Templates\th135score.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th135score.html</LastGenOutput>
     </None>
-    <None Include="Templates\th13.ttinclude" />
-    <Content Include="Templates\th13card1.html">
+    <None Update="Templates\th13.ttinclude" />
+    <None Update="Templates\th13card1.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th13card1.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th13card1.tt">
+    </None>
+    <None Update="Templates\th13card1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th13card1.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th13card2.html">
+    <None Update="Templates\th13card2.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th13card2.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th13card2.tt">
+    </None>
+    <None Update="Templates\th13card2.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th13card2.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th13score1.html">
+    <None Update="Templates\th13score1.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th13score1.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th13score1.tt">
+    </None>
+    <None Update="Templates\th13score1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th13score1.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th13score2.html">
+    <None Update="Templates\th13score2.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th13score2.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th13score2.tt">
+    </None>
+    <None Update="Templates\th13score2.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th13score2.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th13score3.html">
+    <None Update="Templates\th13score3.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th13score3.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th13score3.tt">
+    </None>
+    <None Update="Templates\th13score3.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th13score3.html</LastGenOutput>
     </None>
-    <None Include="Templates\th143.ttinclude" />
-    <Content Include="Templates\th143score1.html">
+    <None Update="Templates\th143.ttinclude" />
+    <None Update="Templates\th143score1.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th143score1.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th143score1.tt">
+    </None>
+    <None Update="Templates\th143score1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th143score1.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th143score2.html">
+    <None Update="Templates\th143score2.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th143score2.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th143score2.tt">
+    </None>
+    <None Update="Templates\th143score2.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th143score2.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th143screenshot.html">
+    <None Update="Templates\th143screenshot.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th143screenshot.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th143screenshot.tt">
+    </None>
+    <None Update="Templates\th143screenshot.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th143screenshot.html</LastGenOutput>
     </None>
-    <None Include="Templates\th145.ttinclude" />
-    <Content Include="Templates\th145score.html">
+    <None Update="Templates\th145.ttinclude" />
+    <None Update="Templates\th145score.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th145score.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th145score.tt">
+    </None>
+    <None Update="Templates\th145score.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th145score.html</LastGenOutput>
     </None>
-    <None Include="Templates\th14.ttinclude" />
-    <Content Include="Templates\th14card1.html">
+    <None Update="Templates\th14.ttinclude" />
+    <None Update="Templates\th14card1.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th14card1.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th14card1.tt">
+    </None>
+    <None Update="Templates\th14card1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th14card1.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th14card2.html">
+    <None Update="Templates\th14card2.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th14card2.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th14card2.tt">
+    </None>
+    <None Update="Templates\th14card2.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th14card2.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th14score1.html">
+    <None Update="Templates\th14score1.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th14score1.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th14score1.tt">
+    </None>
+    <None Update="Templates\th14score1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th14score1.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th14score2.html">
+    <None Update="Templates\th14score2.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th14score2.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th14score2.tt">
+    </None>
+    <None Update="Templates\th14score2.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th14score2.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th14score3.html">
+    <None Update="Templates\th14score3.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th14score3.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th14score3.tt">
+    </None>
+    <None Update="Templates\th14score3.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th14score3.html</LastGenOutput>
     </None>
-    <None Include="Templates\th155.ttinclude" />
-    <Content Include="Templates\th155score.html">
+    <None Update="Templates\th155.ttinclude" />
+    <None Update="Templates\th155score.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th155score.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th155score.tt">
+    </None>
+    <None Update="Templates\th155score.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th155score.html</LastGenOutput>
     </None>
-    <None Include="Templates\th15.ttinclude" />
-    <Content Include="Templates\th15card1.html">
+    <None Update="Templates\th15.ttinclude" />
+    <None Update="Templates\th15card1.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th15card1.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th15card1.tt">
+    </None>
+    <None Update="Templates\th15card1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th15card1.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th15card2.html">
+    <None Update="Templates\th15card2.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th15card2.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th15card2.tt">
+    </None>
+    <None Update="Templates\th15card2.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th15card2.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th15score1.html">
+    <None Update="Templates\th15score1.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th15score1.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th15score1.tt">
+    </None>
+    <None Update="Templates\th15score1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th15score1.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th15score2.html">
+    <None Update="Templates\th15score2.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th15score2.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th15score2.tt">
+    </None>
+    <None Update="Templates\th15score2.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th15score2.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th15score3.html">
+    <None Update="Templates\th15score3.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th15score3.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th15score3.tt">
+    </None>
+    <None Update="Templates\th15score3.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th15score3.html</LastGenOutput>
     </None>
-    <None Include="Templates\th165.ttinclude" />
-    <Content Include="Templates\th165bestshot.html">
+    <None Update="Templates\th165.ttinclude" />
+    <None Update="Templates\th165bestshot.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th165bestshot.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th165bestshot.tt">
+    </None>
+    <None Update="Templates\th165bestshot.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th165bestshot.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th165score.html">
+    <None Update="Templates\th165score.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th165score.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th165score.tt">
+    </None>
+    <None Update="Templates\th165score.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th165score.html</LastGenOutput>
     </None>
-    <None Include="Templates\th16.ttinclude" />
-    <Content Include="Templates\th16card1.html">
+    <None Update="Templates\th16.ttinclude" />
+    <None Update="Templates\th16card1.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th16card1.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th16card1.tt">
+    </None>
+    <None Update="Templates\th16card1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th16card1.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th16card2.html">
+    <None Update="Templates\th16card2.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th16card2.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th16card2.tt">
+    </None>
+    <None Update="Templates\th16card2.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th16card2.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th16score1.html">
+    <None Update="Templates\th16score1.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th16score1.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th16score1.tt">
+    </None>
+    <None Update="Templates\th16score1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th16score1.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th16score2.html">
+    <None Update="Templates\th16score2.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th16score2.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th16score2.tt">
+    </None>
+    <None Update="Templates\th16score2.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th16score2.html</LastGenOutput>
     </None>
-    <Content Include="Templates\th16score3.html">
+    <None Update="Templates\th16score3.html">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>th16score3.tt</DependentUpon>
-    </Content>
-    <None Include="Templates\th16score3.tt">
+    </None>
+    <None Update="Templates\th16score3.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>th16score3.html</LastGenOutput>
     </None>
@@ -982,12 +747,4 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
