@@ -113,21 +113,21 @@ namespace ThScoreFileConverterTests.Models.Th06
         [TestMethod]
         public void SetCardAttackTest() => TestUtils.Wrap(() =>
         {
-            var properties = CardAttackTests.ValidProperties;
-            var chapter = ChapterWrapper.Create(CardAttackTests.MakeByteArray(properties));
+            var stub = CardAttackTests.ValidStub;
+            var chapter = ChapterWrapper.Create(CardAttackTests.MakeByteArray(stub));
             var attack = new CardAttack(chapter.Target);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(attack);
 
-            Assert.AreSame(attack, allScoreData.CardAttacks[properties.cardId]);
+            Assert.AreSame(attack, allScoreData.CardAttacks[stub.CardId]);
         });
 
         [TestMethod]
         public void SetCardAttackTestTwice() => TestUtils.Wrap(() =>
         {
-            var properties = CardAttackTests.ValidProperties;
-            var chapter = ChapterWrapper.Create(CardAttackTests.MakeByteArray(properties));
+            var stub = CardAttackTests.ValidStub;
+            var chapter = ChapterWrapper.Create(CardAttackTests.MakeByteArray(stub));
             var attack1 = new CardAttack(chapter.Target);
             var attack2 = new CardAttack(chapter.Target);
 
@@ -135,8 +135,8 @@ namespace ThScoreFileConverterTests.Models.Th06
             allScoreData.Set(attack1);
             allScoreData.Set(attack2);
 
-            Assert.AreSame(attack1, allScoreData.CardAttacks[properties.cardId]);
-            Assert.AreNotSame(attack2, allScoreData.CardAttacks[properties.cardId]);
+            Assert.AreSame(attack1, allScoreData.CardAttacks[stub.CardId]);
+            Assert.AreNotSame(attack2, allScoreData.CardAttacks[stub.CardId]);
         });
 
         [TestMethod]

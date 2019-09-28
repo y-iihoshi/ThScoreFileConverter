@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models.Th06;
+using ThScoreFileConverterTests.Models.Th06.Stubs;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Th06
@@ -11,102 +12,85 @@ namespace ThScoreFileConverterTests.Models.Th06
     [TestClass]
     public class CardAttackTests
     {
-        internal struct Properties
+        internal static CardAttackStub ValidStub => new CardAttackStub()
         {
-            public string signature;
-            public short size1;
-            public short size2;
-            public short cardId;
-            public byte[] cardName;
-            public ushort trialCount;
-            public ushort clearCount;
+            Signature = "CATK",
+            Size1 = 0x40,
+            Size2 = 0x40,
+            CardId = 23,
+            CardName = TestUtils.MakeRandomArray<byte>(0x24),
+            TrialCount = 789,
+            ClearCount = 456
         };
 
-        internal static Properties ValidProperties => new Properties()
-        {
-            signature = "CATK",
-            size1 = 0x40,
-            size2 = 0x40,
-            cardId = 23,
-            cardName = TestUtils.MakeRandomArray<byte>(0x24),
-            trialCount = 789,
-            clearCount = 456
-        };
-
-        internal static byte[] MakeData(in Properties properties)
+        internal static byte[] MakeByteArray(in ICardAttack cardAttack)
             => TestUtils.MakeByteArray(
+                cardAttack.Signature.ToCharArray(),
+                cardAttack.Size1,
+                cardAttack.Size2,
                 new byte[8],
-                (short)(properties.cardId - 1),
+                (short)(cardAttack.CardId - 1),
                 new byte[6],
-                properties.cardName,
-                properties.trialCount,
-                properties.clearCount);
+                cardAttack.CardName,
+                cardAttack.TrialCount,
+                cardAttack.ClearCount);
 
-        internal static byte[] MakeByteArray(in Properties properties)
-            => TestUtils.MakeByteArray(
-                properties.signature.ToCharArray(), properties.size1, properties.size2, MakeData(properties));
-
-        internal static void Validate(in CardAttack cardAttack, in Properties properties)
+        internal static void Validate(in ICardAttack expected, in ICardAttack actual)
         {
-            var data = MakeData(properties);
-
-            Assert.AreEqual(properties.signature, cardAttack.Signature);
-            Assert.AreEqual(properties.size1, cardAttack.Size1);
-            Assert.AreEqual(properties.size2, cardAttack.Size2);
-            Assert.AreEqual(data[0], cardAttack.FirstByteOfData);
-            Assert.AreEqual(properties.cardId, cardAttack.CardId);
-            CollectionAssert.AreEqual(properties.cardName, cardAttack.CardName.ToArray());
-            Assert.AreEqual(properties.trialCount, cardAttack.TrialCount);
-            Assert.AreEqual(properties.clearCount, cardAttack.ClearCount);
+            Assert.AreEqual(expected.Signature, actual.Signature);
+            Assert.AreEqual(expected.Size1, actual.Size1);
+            Assert.AreEqual(expected.Size2, actual.Size2);
+            Assert.AreEqual(expected.FirstByteOfData, actual.FirstByteOfData);
+            Assert.AreEqual(expected.CardId, actual.CardId);
+            CollectionAssert.AreEqual(expected.CardName.ToArray(), actual.CardName.ToArray());
+            Assert.AreEqual(expected.TrialCount, actual.TrialCount);
+            Assert.AreEqual(expected.ClearCount, actual.ClearCount);
         }
 
         [TestMethod]
         public void CardAttackTestChapter() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
+            var stub = ValidStub;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
             var cardAttack = new CardAttack(chapter.Target);
 
-            Validate(cardAttack, properties);
+            Validate(stub, cardAttack);
             Assert.IsTrue(cardAttack.HasTried());
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "cardAttack")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void CardAttackTestNullChapter() => TestUtils.Wrap(() =>
         {
-            var cardAttack = new CardAttack(null);
+            _ = new CardAttack(null);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "cardAttack")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void CardAttackTestInvalidSignature() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.signature = properties.signature.ToLowerInvariant();
+            var stub = ValidStub;
+            stub.Signature = stub.Signature.ToLowerInvariant();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var cardAttack = new CardAttack(chapter.Target);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new CardAttack(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "cardAttack")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void CardAttackTestInvalidSize1() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            --properties.size1;
+            var stub = ValidStub;
+            --stub.Size1;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var cardAttack = new CardAttack(chapter.Target);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new CardAttack(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -114,13 +98,13 @@ namespace ThScoreFileConverterTests.Models.Th06
         [TestMethod]
         public void CardAttackTestNotTried() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.trialCount = 0;
+            var stub = ValidStub;
+            stub.TrialCount = 0;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
             var cardAttack = new CardAttack(chapter.Target);
 
-            Validate(cardAttack, properties);
+            Validate(stub, cardAttack);
             Assert.IsFalse(cardAttack.HasTried());
         });
     }

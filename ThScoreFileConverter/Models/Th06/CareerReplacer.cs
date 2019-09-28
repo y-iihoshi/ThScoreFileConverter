@@ -22,7 +22,7 @@ namespace ThScoreFileConverter.Models.Th06
 
         private readonly MatchEvaluator evaluator;
 
-        public CareerReplacer(IReadOnlyDictionary<int, CardAttack> cardAttacks)
+        public CareerReplacer(IReadOnlyDictionary<int, ICardAttack> cardAttacks)
         {
             if (cardAttacks is null)
                 throw new ArgumentNullException(nameof(cardAttacks));
@@ -32,7 +32,7 @@ namespace ThScoreFileConverter.Models.Th06
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
                 var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
-                Func<CardAttack, int> getCount;
+                Func<ICardAttack, int> getCount;
                 if (type == 1)
                     getCount = attack => attack.ClearCount;
                 else

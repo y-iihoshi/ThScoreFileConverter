@@ -23,7 +23,7 @@ namespace ThScoreFileConverter.Models.Th06
 
         private readonly MatchEvaluator evaluator;
 
-        public CollectRateReplacer(IReadOnlyDictionary<int, CardAttack> cardAttacks)
+        public CollectRateReplacer(IReadOnlyDictionary<int, ICardAttack> cardAttacks)
         {
             if (cardAttacks is null)
                 throw new ArgumentNullException(nameof(cardAttacks));
@@ -33,7 +33,7 @@ namespace ThScoreFileConverter.Models.Th06
                 var stage = StageWithTotalParser.Parse(match.Groups[1].Value);
                 var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
-                Func<CardAttack, bool> findByStage;
+                Func<ICardAttack, bool> findByStage;
                 if (stage == StageWithTotal.Total)
                 {
                     findByStage = attack => true;
@@ -44,7 +44,7 @@ namespace ThScoreFileConverter.Models.Th06
                         pair => (pair.Key == attack.CardId) && (pair.Value.Stage == (Stage)stage));
                 }
 
-                Func<CardAttack, bool> findByType;
+                Func<ICardAttack, bool> findByType;
                 if (type == 1)
                     findByType = attack => attack.ClearCount > 0;
                 else

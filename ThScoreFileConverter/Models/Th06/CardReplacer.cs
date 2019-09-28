@@ -22,7 +22,7 @@ namespace ThScoreFileConverter.Models.Th06
 
         private readonly MatchEvaluator evaluator;
 
-        public CardReplacer(IReadOnlyDictionary<int, CardAttack> cardAttacks, bool hideUntriedCards)
+        public CardReplacer(IReadOnlyDictionary<int, ICardAttack> cardAttacks, bool hideUntriedCards)
         {
             if (cardAttacks is null)
                 throw new ArgumentNullException(nameof(cardAttacks));

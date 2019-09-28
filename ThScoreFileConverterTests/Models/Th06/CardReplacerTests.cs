@@ -1,37 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th06;
-using ThScoreFileConverterTests.Models.Th06.Wrappers;
+using ThScoreFileConverterTests.Models.Th06.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th06
 {
     [TestClass]
     public class CardReplacerTests
     {
-        internal static IReadOnlyDictionary<int, CardAttack> CardAttacks { get; } =
-            new Dictionary<int, CardAttack>
+        internal static IReadOnlyDictionary<int, ICardAttack> CardAttacks { get; } =
+            new List<ICardAttack>
             {
+                CardAttackTests.ValidStub,
+                new CardAttackStub(CardAttackTests.ValidStub)
                 {
-                    CardAttackTests.ValidProperties.cardId,
-                    new CardAttack(ChapterWrapper.Create(
-                        CardAttackTests.MakeByteArray(CardAttackTests.ValidProperties)).Target)
+                    CardId = (short)(CardAttackTests.ValidStub.CardId + 1),
+                    CardName = TestUtils.MakeRandomArray<byte>(0x24),
+                    ClearCount = 0,
+                    TrialCount = 0,
                 },
-                {
-                    CardAttackTests.ValidProperties.cardId + 1,
-                    new CardAttack(ChapterWrapper.Create(CardAttackTests.MakeByteArray(
-                        new CardAttackTests.Properties
-                        {
-                            signature = CardAttackTests.ValidProperties.signature,
-                            size1 = CardAttackTests.ValidProperties.size1,
-                            size2 = CardAttackTests.ValidProperties.size2,
-                            cardId = (short)(CardAttackTests.ValidProperties.cardId + 1),
-                            cardName = TestUtils.MakeRandomArray<byte>(0x24),
-                            clearCount = 0,
-                            trialCount = 0,
-                        })).Target)
-                },
-            };
+            }.ToDictionary(element => (int)element.CardId);
 
         [TestMethod]
         public void CardReplacerTest()
@@ -51,7 +41,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [TestMethod]
         public void CardReplacerTestEmpty()
         {
-            var cardAttacks = new Dictionary<int, CardAttack>();
+            var cardAttacks = new Dictionary<int, ICardAttack>();
             var replacer = new CardReplacer(cardAttacks, true);
             Assert.IsNotNull(replacer);
         }
