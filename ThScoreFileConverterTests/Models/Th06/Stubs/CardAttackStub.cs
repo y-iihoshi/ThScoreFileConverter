@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using ThScoreFileConverter.Models.Th06;
 
 namespace ThScoreFileConverterTests.Models.Th06.Stubs
@@ -11,7 +12,7 @@ namespace ThScoreFileConverterTests.Models.Th06.Stubs
             : this()
         {
             this.CardId = cardAttack.CardId;
-            this.CardName = cardAttack.CardName;
+            this.CardName = cardAttack.CardName?.ToArray();
             this.ClearCount = cardAttack.ClearCount;
             this.TrialCount = cardAttack.TrialCount;
             this.FirstByteOfData = cardAttack.FirstByteOfData;

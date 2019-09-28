@@ -23,7 +23,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             ClearCount = 456
         };
 
-        internal static byte[] MakeByteArray(in ICardAttack cardAttack)
+        internal static byte[] MakeByteArray(ICardAttack cardAttack)
             => TestUtils.MakeByteArray(
                 cardAttack.Signature.ToCharArray(),
                 cardAttack.Size1,
@@ -35,14 +35,14 @@ namespace ThScoreFileConverterTests.Models.Th06
                 cardAttack.TrialCount,
                 cardAttack.ClearCount);
 
-        internal static void Validate(in ICardAttack expected, in ICardAttack actual)
+        internal static void Validate(ICardAttack expected, ICardAttack actual)
         {
             Assert.AreEqual(expected.Signature, actual.Signature);
             Assert.AreEqual(expected.Size1, actual.Size1);
             Assert.AreEqual(expected.Size2, actual.Size2);
             Assert.AreEqual(expected.FirstByteOfData, actual.FirstByteOfData);
             Assert.AreEqual(expected.CardId, actual.CardId);
-            CollectionAssert.AreEqual(expected.CardName.ToArray(), actual.CardName.ToArray());
+            CollectionAssert.AreEqual(expected.CardName?.ToArray(), actual.CardName?.ToArray());
             Assert.AreEqual(expected.TrialCount, actual.TrialCount);
             Assert.AreEqual(expected.ClearCount, actual.ClearCount);
         }
