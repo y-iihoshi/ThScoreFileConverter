@@ -14,7 +14,7 @@ using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.Models.Th095
 {
-    internal class Chapter : IBinaryReadable
+    internal class Chapter : IBinaryReadable, IChapter
     {
         public const int SignatureSize = 2;
 

@@ -10,11 +10,12 @@
 using System;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Models.Th095;
 using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.Models.Th10
 {
-    internal class Chapter : IBinaryReadable
+    internal class Chapter : IBinaryReadable, IChapter
     {
         public const int SignatureSize = 2;
 

@@ -14,7 +14,7 @@ using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.Models.Th06
 {
-    internal class Chapter : IBinaryReadable
+    internal class Chapter : IBinaryReadable, IChapter
     {
         public Chapter()
         {

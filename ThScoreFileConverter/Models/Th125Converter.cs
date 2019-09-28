@@ -430,7 +430,7 @@ namespace ThScoreFileConverter.Models
                     while (true)
                     {
                         chapter.ReadFrom(reader);
-                        if (dictionary.TryGetValue(chapter.Signature, out Action<AllScoreData, Th095.Chapter> setChapter))
+                        if (dictionary.TryGetValue(chapter.Signature, out var setChapter))
                             setChapter(allScoreData, chapter);
                     }
                 }
