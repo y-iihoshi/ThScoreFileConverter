@@ -6,83 +6,66 @@ using System.IO;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
+using ThScoreFileConverterTests.Models.Th07.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th07
 {
     [TestClass]
     public class HighScoreTests
     {
-        internal struct Properties
+        internal static HighScoreStub ValidStub { get; } = new HighScoreStub()
         {
-            public string signature;
-            public short size1;
-            public short size2;
-            public uint score;
-            public float slowRate;
-            public Chara chara;
-            public Level level;
-            public StageProgress stageProgress;
-            public byte[] name;
-            public byte[] date;
-            public ushort continueCount;
+            Signature = "HSCR",
+            Size1 = 0x28,
+            Size2 = 0x28,
+            Score = 1234567u,
+            SlowRate = 9.87f,
+            Chara = Chara.ReimuB,
+            Level = Level.Hard,
+            StageProgress = StageProgress.Three,
+            Name = TestUtils.CP932Encoding.GetBytes("Player1\0\0"),
+            Date = TestUtils.CP932Encoding.GetBytes("01/23\0"),
+            ContinueCount = 2
         };
 
-        internal static Properties ValidProperties => new Properties()
-        {
-            signature = "HSCR",
-            size1 = 0x28,
-            size2 = 0x28,
-            score = 1234567u,
-            slowRate = 9.87f,
-            chara = Chara.ReimuB,
-            level = Level.Hard,
-            stageProgress = StageProgress.Three,
-            name = TestUtils.CP932Encoding.GetBytes("Player1\0\0"),
-            date = TestUtils.CP932Encoding.GetBytes("01/23\0"),
-            continueCount = 2
-        };
-
-        internal static byte[] MakeData(in Properties properties)
+        internal static byte[] MakeByteArray(IHighScore highScore)
             => TestUtils.MakeByteArray(
+                highScore.Signature.ToCharArray(),
+                highScore.Size1,
+                highScore.Size2,
                 0u,
-                properties.score,
-                properties.slowRate,
-                (byte)properties.chara,
-                (byte)properties.level,
-                (byte)properties.stageProgress,
-                properties.name,
-                properties.date,
-                properties.continueCount);
+                highScore.Score,
+                highScore.SlowRate,
+                (byte)highScore.Chara,
+                (byte)highScore.Level,
+                (byte)highScore.StageProgress,
+                highScore.Name,
+                highScore.Date,
+                highScore.ContinueCount);
 
-        internal static byte[] MakeByteArray(in Properties properties)
-            => TestUtils.MakeByteArray(
-                properties.signature.ToCharArray(), properties.size1, properties.size2, MakeData(properties));
-
-        internal static void Validate(in HighScore highScore, in Properties properties)
+        internal static void Validate(IHighScore expected, IHighScore actual)
         {
-            var data = MakeData(properties);
-
-            Assert.AreEqual(properties.signature, highScore.Signature);
-            Assert.AreEqual(properties.size1, highScore.Size1);
-            Assert.AreEqual(properties.size2, highScore.Size2);
-            Assert.AreEqual(data[0], highScore.FirstByteOfData);
-            Assert.AreEqual(properties.score, highScore.Score);
-            Assert.AreEqual(properties.slowRate, highScore.SlowRate);
-            Assert.AreEqual(properties.chara, highScore.Chara);
-            Assert.AreEqual(properties.level, highScore.Level);
-            Assert.AreEqual(properties.stageProgress, highScore.StageProgress);
-            CollectionAssert.That.AreEqual(properties.name, highScore.Name);
-            CollectionAssert.That.AreEqual(properties.date, highScore.Date);
-            Assert.AreEqual(properties.continueCount, highScore.ContinueCount);
+            Assert.AreEqual(expected.Signature, actual.Signature);
+            Assert.AreEqual(expected.Size1, actual.Size1);
+            Assert.AreEqual(expected.Size2, actual.Size2);
+            Assert.AreEqual(expected.FirstByteOfData, actual.FirstByteOfData);
+            Assert.AreEqual(expected.Score, actual.Score);
+            Assert.AreEqual(expected.SlowRate, actual.SlowRate);
+            Assert.AreEqual(expected.Chara, actual.Chara);
+            Assert.AreEqual(expected.Level, actual.Level);
+            Assert.AreEqual(expected.StageProgress, actual.StageProgress);
+            CollectionAssert.That.AreEqual(expected.Name, actual.Name);
+            CollectionAssert.That.AreEqual(expected.Date, actual.Date);
+            Assert.AreEqual(expected.ContinueCount, actual.ContinueCount);
         }
 
         [TestMethod]
         public void HighScoreTestChapter() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(MakeByteArray(ValidProperties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(ValidStub));
             var highScore = new HighScore(chapter.Target);
 
-            Validate(highScore, ValidProperties);
+            Validate(ValidStub, highScore);
         });
 
         [TestMethod]
@@ -127,10 +110,10 @@ namespace ThScoreFileConverterTests.Models.Th07
         [ExpectedException(typeof(InvalidDataException))]
         public void HighScoreTestInvalidSignature() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.signature = properties.signature.ToLowerInvariant();
+            var stub = new HighScoreStub(ValidStub);
+            stub.Signature = stub.Signature.ToLowerInvariant();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
             _ = new HighScore(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -140,10 +123,10 @@ namespace ThScoreFileConverterTests.Models.Th07
         [ExpectedException(typeof(InvalidDataException))]
         public void HighScoreTestInvalidSize1() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            --properties.size1;
+            var stub = new HighScoreStub(ValidStub);
+            --stub.Size1;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
             _ = new HighScore(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -158,10 +141,12 @@ namespace ThScoreFileConverterTests.Models.Th07
         [ExpectedException(typeof(InvalidCastException))]
         public void HighScoreTestInvalidChara(int chara) => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.chara = TestUtils.Cast<Chara>(chara);
+            var stub = new HighScoreStub(ValidStub)
+            {
+                Chara = TestUtils.Cast<Chara>(chara),
+            };
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
             _ = new HighScore(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -176,10 +161,12 @@ namespace ThScoreFileConverterTests.Models.Th07
         [ExpectedException(typeof(InvalidCastException))]
         public void HighScoreTestInvalidLevel(int level) => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.level = TestUtils.Cast<Level>(level);
+            var stub = new HighScoreStub(ValidStub)
+            {
+                Level = TestUtils.Cast<Level>(level),
+            };
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
             _ = new HighScore(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -194,10 +181,12 @@ namespace ThScoreFileConverterTests.Models.Th07
         [ExpectedException(typeof(InvalidCastException))]
         public void HighScoreTestInvalidStageProgress(int stageProgress) => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.stageProgress = TestUtils.Cast<StageProgress>(stageProgress);
+            var stub = new HighScoreStub(ValidStub)
+            {
+                StageProgress = TestUtils.Cast<StageProgress>(stageProgress),
+            };
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
             _ = new HighScore(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);

@@ -7,11 +7,12 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System.Collections.Generic;
 using System.IO;
 
 namespace ThScoreFileConverter.Models.Th07
 {
-    internal class HighScore : Th06.Chapter   // per character, level, rank
+    internal class HighScore : Th06.Chapter, IHighScore // per character, level, rank
     {
         public const string ValidSignature = "HSCR";
         public const short ValidSize = 0x0028;
@@ -51,9 +52,9 @@ namespace ThScoreFileConverter.Models.Th07
 
         public StageProgress StageProgress { get; }
 
-        public byte[] Name { get; } // Null-terminated
+        public IEnumerable<byte> Name { get; }  // Null-terminated
 
-        public byte[] Date { get; } // "mm/dd\0"
+        public IEnumerable<byte> Date { get; }  // "mm/dd\0"
 
         public ushort ContinueCount { get; }
     }

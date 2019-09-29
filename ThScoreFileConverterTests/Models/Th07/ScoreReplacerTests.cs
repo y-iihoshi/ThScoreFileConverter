@@ -4,22 +4,21 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models.Th07;
-using ThScoreFileConverterTests.Models.Th06.Wrappers;
+using ThScoreFileConverterTests.Models.Th07.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th07
 {
     [TestClass]
     public class ScoreReplacerTests
     {
-        internal static IReadOnlyDictionary<(Chara, Level), List<HighScore>> Rankings { get; } =
-            new Dictionary<(Chara, Level), List<HighScore>>
+        internal static IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> Rankings { get; } =
+            new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>
             {
                 {
-                    (HighScoreTests.ValidProperties.chara, HighScoreTests.ValidProperties.level),
-                    new List<HighScore>
+                    (HighScoreTests.ValidStub.Chara, HighScoreTests.ValidStub.Level),
+                    new List<IHighScore>
                     {
-                        new HighScore(ChapterWrapper.Create(
-                            HighScoreTests.MakeByteArray(HighScoreTests.ValidProperties)).Target),
+                        new HighScoreStub(HighScoreTests.ValidStub),
                     }
                 },
             };
@@ -42,7 +41,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void ScoreReplacerTestEmptyRankings()
         {
-            var rankings = new Dictionary<(Chara, Level), List<HighScore>>();
+            var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>();
             var replacer = new ScoreReplacer(rankings);
             Assert.IsNotNull(replacer);
         }
@@ -50,9 +49,9 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void ScoreReplacerTestEmptyScores()
         {
-            var rankings = new Dictionary<(Chara, Level), List<HighScore>>
+            var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>
             {
-                { Rankings.First().Key, new List<HighScore>() },
+                { Rankings.First().Key, new List<IHighScore>() },
             };
             var replacer = new ScoreReplacer(rankings);
             Assert.IsNotNull(replacer);
@@ -105,7 +104,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void ReplaceTestEmptyRankings()
         {
-            var rankings = new Dictionary<(Chara, Level), List<HighScore>>();
+            var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>();
             var replacer = new ScoreReplacer(rankings);
             Assert.AreEqual("--------", replacer.Replace("%T07SCRHRB11"));
         }
@@ -113,9 +112,9 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void ReplaceTestEmptyScores()
         {
-            var rankings = new Dictionary<(Chara, Level), List<HighScore>>
+            var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>
             {
-                { Rankings.First().Key, new List<HighScore>() },
+                { Rankings.First().Key, new List<IHighScore>() },
             };
             var replacer = new ScoreReplacer(rankings);
             Assert.AreEqual("--------", replacer.Replace("%T07SCRHRB11"));

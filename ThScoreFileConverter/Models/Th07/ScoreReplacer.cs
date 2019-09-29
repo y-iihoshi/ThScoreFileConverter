@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text.RegularExpressions;
 using static ThScoreFileConverter.Models.Th07.Parsers;
 
@@ -23,7 +24,7 @@ namespace ThScoreFileConverter.Models.Th07
 
         private readonly MatchEvaluator evaluator;
 
-        public ScoreReplacer(IReadOnlyDictionary<(Chara, Level), List<HighScore>> rankings)
+        public ScoreReplacer(IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> rankings)
         {
             if (rankings is null)
                 throw new ArgumentNullException(nameof(rankings));
@@ -42,13 +43,13 @@ namespace ThScoreFileConverter.Models.Th07
                 switch (type)
                 {
                     case 1:     // name
-                        return Encoding.Default.GetString(score.Name).Split('\0')[0];
+                        return Encoding.Default.GetString(score.Name.ToArray()).Split('\0')[0];
                     case 2:     // score
                         return Utils.ToNumberString((score.Score * 10) + score.ContinueCount);
                     case 3:     // stage
                         return score.StageProgress.ToShortName();
                     case 4:     // date
-                        return Encoding.Default.GetString(score.Date).TrimEnd('\0');
+                        return Encoding.Default.GetString(score.Date.ToArray()).TrimEnd('\0');
                     case 5:     // slow rate
                         return Utils.Format("{0:F3}%", score.SlowRate);
                     default:    // unreachable
