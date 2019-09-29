@@ -22,7 +22,7 @@ namespace ThScoreFileConverter.Models.Th06
 
         private readonly MatchEvaluator evaluator;
 
-        public PracticeReplacer(IReadOnlyDictionary<(Chara, Level, Stage), PracticeScore> practiceScores)
+        public PracticeReplacer(IReadOnlyDictionary<(Chara, Level, Stage), IPracticeScore> practiceScores)
         {
             if (practiceScores is null)
                 throw new ArgumentNullException(nameof(practiceScores));

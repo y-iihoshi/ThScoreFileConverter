@@ -11,7 +11,7 @@ using System.IO;
 
 namespace ThScoreFileConverter.Models.Th06
 {
-    internal class PracticeScore : Chapter  // per character, level, stage
+    internal class PracticeScore : Chapter, IPracticeScore  // per character, level, stage
     {
         public const string ValidSignature = "PSCR";
         public const short ValidSize = 0x0014;

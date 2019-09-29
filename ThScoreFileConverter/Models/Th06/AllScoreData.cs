@@ -18,6 +18,7 @@ namespace ThScoreFileConverter.Models.Th06
         private readonly Dictionary<(Chara, Level), IReadOnlyList<IHighScore>> rankings;
         private readonly Dictionary<Chara, IClearData> clearData;
         private readonly Dictionary<int, ICardAttack> cardAttacks;
+        private readonly Dictionary<(Chara, Level, Stage), IPracticeScore> practiceScores;
 
         public AllScoreData()
         {
@@ -27,7 +28,7 @@ namespace ThScoreFileConverter.Models.Th06
             this.rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>(numPairs);
             this.clearData = new Dictionary<Chara, IClearData>(numCharas);
             this.cardAttacks = new Dictionary<int, ICardAttack>(Definitions.CardTable.Count);
-            this.PracticeScores = new Dictionary<(Chara, Level, Stage), PracticeScore>(numTriples);
+            this.practiceScores = new Dictionary<(Chara, Level, Stage), IPracticeScore>(numTriples);
         }
 
         public Header Header { get; private set; }
@@ -38,7 +39,7 @@ namespace ThScoreFileConverter.Models.Th06
 
         public IReadOnlyDictionary<int, ICardAttack> CardAttacks => this.cardAttacks;
 
-        public Dictionary<(Chara, Level, Stage), PracticeScore> PracticeScores { get; private set; }
+        public IReadOnlyDictionary<(Chara, Level, Stage), IPracticeScore> PracticeScores => this.practiceScores;
 
         public void Set(Header header) => this.Header = header;
 
@@ -66,14 +67,14 @@ namespace ThScoreFileConverter.Models.Th06
                 this.cardAttacks.Add(attack.CardId, attack);
         }
 
-        public void Set(PracticeScore score)
+        public void Set(IPracticeScore score)
         {
             if ((score.Level != Level.Extra) && (score.Stage != Stage.Extra) &&
                 !((score.Level == Level.Easy) && (score.Stage == Stage.Six)))
             {
                 var key = (score.Chara, score.Level, score.Stage);
-                if (!this.PracticeScores.ContainsKey(key))
-                    this.PracticeScores.Add(key, score);
+                if (!this.practiceScores.ContainsKey(key))
+                    this.practiceScores.Add(key, score);
             }
         }
     }
