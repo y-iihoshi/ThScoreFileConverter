@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace ThScoreFileConverter.Models.Th07
 {
-    internal class ClearData : Th06.Chapter   // per character
+    internal class ClearData : Th06.Chapter, IClearData // per character
     {
         public const string ValidSignature = "CLRD";
         public const short ValidSize = 0x001C;
@@ -23,23 +23,28 @@ namespace ThScoreFileConverter.Models.Th07
         {
             var levels = Utils.GetEnumerator<Level>();
             var numLevels = levels.Count();
-            this.StoryFlags = new Dictionary<Level, byte>(numLevels);
-            this.PracticeFlags = new Dictionary<Level, byte>(numLevels);
+            var storyFlags = new Dictionary<Level, byte>(numLevels);
+            var practiceFlags = new Dictionary<Level, byte>(numLevels);
 
             using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
             {
                 reader.ReadUInt32();    // always 0x00000001?
+
                 foreach (var level in levels)
-                    this.StoryFlags.Add(level, reader.ReadByte());
+                    storyFlags.Add(level, reader.ReadByte());
+                this.StoryFlags = storyFlags;
+
                 foreach (var level in levels)
-                    this.PracticeFlags.Add(level, reader.ReadByte());
+                    practiceFlags.Add(level, reader.ReadByte());
+                this.PracticeFlags = practiceFlags;
+
                 this.Chara = Utils.ToEnum<Chara>(reader.ReadInt32());
             }
         }
 
-        public Dictionary<Level, byte> StoryFlags { get; }    // really...?
+        public IReadOnlyDictionary<Level, byte> StoryFlags { get; }     // really...?
 
-        public Dictionary<Level, byte> PracticeFlags { get; } // really...?
+        public IReadOnlyDictionary<Level, byte> PracticeFlags { get; }  // really...?
 
         public Chara Chara { get; }
     }

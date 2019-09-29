@@ -87,30 +87,26 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void SetClearDataTest() => TestUtils.Wrap(() =>
         {
-            var properties = ClearDataTests.ValidProperties;
-            var chapter = ChapterWrapper.Create(ClearDataTests.MakeByteArray(properties));
-            var clearData = new ClearData(chapter.Target);
+            var clearData = new ClearDataStub(ClearDataTests.ValidStub);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(clearData);
 
-            Assert.AreSame(clearData, allScoreData.ClearData[properties.chara]);
+            Assert.AreSame(clearData, allScoreData.ClearData[clearData.Chara]);
         });
 
         [TestMethod]
         public void SetClearDataTestTwice() => TestUtils.Wrap(() =>
         {
-            var properties = ClearDataTests.ValidProperties;
-            var chapter = ChapterWrapper.Create(ClearDataTests.MakeByteArray(properties));
-            var clearData1 = new ClearData(chapter.Target);
-            var clearData2 = new ClearData(chapter.Target);
+            var clearData1 = new ClearDataStub(ClearDataTests.ValidStub);
+            var clearData2 = new ClearDataStub(clearData1);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(clearData1);
             allScoreData.Set(clearData2);
 
-            Assert.AreSame(clearData1, allScoreData.ClearData[properties.chara]);
-            Assert.AreNotSame(clearData2, allScoreData.ClearData[properties.chara]);
+            Assert.AreSame(clearData1, allScoreData.ClearData[clearData1.Chara]);
+            Assert.AreNotSame(clearData2, allScoreData.ClearData[clearData2.Chara]);
         });
 
         [TestMethod]
