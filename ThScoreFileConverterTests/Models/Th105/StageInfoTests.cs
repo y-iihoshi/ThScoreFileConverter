@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th105;
+using ThScoreFileConverterTests.Extensions;
 
 namespace ThScoreFileConverterTests.Models.Th105
 {
@@ -35,7 +36,7 @@ namespace ThScoreFileConverterTests.Models.Th105
         {
             Assert.AreEqual(properties.stage, spellCardInfo.Stage);
             Assert.AreEqual(properties.enemy, spellCardInfo.Enemy);
-            CollectionAssert.AreEqual(properties.cardIds, spellCardInfo.CardIds.ToArray());
+            CollectionAssert.That.AreEqual(properties.cardIds, spellCardInfo.CardIds);
         }
 
         internal static void StageInfoTestHelper<TStage, TChara>()

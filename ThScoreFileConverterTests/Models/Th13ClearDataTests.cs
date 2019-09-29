@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
 using ThScoreFileConverterTests.Models.Th13;
 using ThScoreFileConverterTests.Models.Wrappers;
@@ -156,7 +157,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.version, clearData.Version);
             Assert.AreEqual(properties.checksum, clearData.Checksum);
             Assert.AreEqual(properties.size, clearData.Size);
-            CollectionAssert.AreEqual(data, clearData.Data.ToArray());
+            CollectionAssert.That.AreEqual(data, clearData.Data);
             Assert.AreEqual(properties.chara, clearData.Chara);
 
             foreach (var pair in properties.rankings)
@@ -169,8 +170,8 @@ namespace ThScoreFileConverterTests.Models
 
             Assert.AreEqual(properties.totalPlayCount, clearData.TotalPlayCount);
             Assert.AreEqual(properties.playTime, clearData.PlayTime);
-            CollectionAssert.AreEqual(properties.clearCounts.Values, clearData.ClearCounts.Values.ToArray());
-            CollectionAssert.AreEqual(properties.clearFlags.Values, clearData.ClearFlags.Values.ToArray());
+            CollectionAssert.That.AreEqual(properties.clearCounts.Values, clearData.ClearCounts.Values);
+            CollectionAssert.That.AreEqual(properties.clearFlags.Values, clearData.ClearFlags.Values);
 
             foreach (var pair in properties.practices)
             {

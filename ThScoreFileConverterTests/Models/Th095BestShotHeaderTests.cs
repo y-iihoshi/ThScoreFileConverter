@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -61,7 +62,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.height, header.Height);
             Assert.AreEqual(properties.score, header.Score);
             Assert.AreEqual(properties.slowRate, header.SlowRate);
-            CollectionAssert.AreEqual(properties.cardName, header.CardName?.ToArray());
+            CollectionAssert.That.AreEqual(properties.cardName, header.CardName);
         }
 
         [TestMethod]

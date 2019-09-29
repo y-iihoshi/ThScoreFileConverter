@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Th06
@@ -46,7 +47,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             Assert.AreEqual(properties.signature, chapter.Signature);
             Assert.AreEqual(properties.size1, chapter.Size1);
             Assert.AreEqual(properties.size2, chapter.Size2);
-            CollectionAssert.AreEqual(properties.data, chapter.Data.ToArray());
+            CollectionAssert.That.AreEqual(properties.data, chapter.Data);
             Assert.AreEqual((properties.data?.Length > 0 ? properties.data[0] : default), chapter.FirstByteOfData);
         }
 
@@ -196,7 +197,7 @@ namespace ThScoreFileConverterTests.Models.Th06
                 Assert.AreEqual(properties.signature, chapter.Signature);
                 Assert.AreEqual(properties.size1, chapter.Size1);
                 Assert.AreEqual(properties.size2, chapter.Size2);
-                CollectionAssert.AreNotEqual(properties.data, chapter.Data.ToArray());
+                CollectionAssert.That.AreNotEqual(properties.data, chapter.Data);
             });
 
         [TestMethod]

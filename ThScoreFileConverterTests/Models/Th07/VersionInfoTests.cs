@@ -2,9 +2,8 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
-using ThScoreFileConverter.Models.Th06;
 using ThScoreFileConverter.Models.Th07;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Th07
@@ -43,7 +42,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             Assert.AreEqual(properties.size1, versionInfo.Size1);
             Assert.AreEqual(properties.size2, versionInfo.Size2);
             Assert.AreEqual(data[0], versionInfo.FirstByteOfData);
-            CollectionAssert.AreEqual(properties.version, versionInfo.Version.ToArray());
+            CollectionAssert.That.AreEqual(properties.version, versionInfo.Version);
         }
 
         [TestMethod]

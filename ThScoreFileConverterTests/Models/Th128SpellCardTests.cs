@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -44,7 +45,7 @@ namespace ThScoreFileConverterTests.Models
 
         internal static void Validate(in Th128SpellCardWrapper spellCard, in Properties properties)
         {
-            CollectionAssert.AreEqual(properties.name, spellCard.Name?.ToArray());
+            CollectionAssert.That.AreEqual(properties.name, spellCard.Name);
             Assert.AreEqual(properties.noMissCount, spellCard.NoMissCount);
             Assert.AreEqual(properties.noIceCount, spellCard.NoIceCount);
             Assert.AreEqual(properties.trialCount, spellCard.TrialCount);

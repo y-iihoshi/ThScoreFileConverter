@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th095.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Th095
@@ -51,7 +52,7 @@ namespace ThScoreFileConverterTests.Models.Th095
             Assert.AreEqual(properties.version, chapter.Version);
             Assert.AreEqual(properties.size, chapter.Size);
             Assert.AreEqual(properties.checksum, chapter.Checksum);
-            CollectionAssert.AreEqual(properties.data, chapter.Data.ToArray());
+            CollectionAssert.That.AreEqual(properties.data, chapter.Data);
         }
 
         [TestMethod]
@@ -203,7 +204,7 @@ namespace ThScoreFileConverterTests.Models.Th095
                 Assert.AreEqual(properties.version, chapter.Version);
                 Assert.AreEqual(properties.size, chapter.Size);
                 Assert.AreEqual(properties.checksum, chapter.Checksum);
-                CollectionAssert.AreNotEqual(properties.data, chapter.Data.ToArray());
+                CollectionAssert.That.AreNotEqual(properties.data, chapter.Data);
                 Assert.IsFalse(chapter.IsValid.Value);
             });
 

@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th07;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Th07
@@ -66,11 +67,11 @@ namespace ThScoreFileConverterTests.Models.Th07
             Assert.AreEqual(properties.size1, cardAttack.Size1);
             Assert.AreEqual(properties.size2, cardAttack.Size2);
             Assert.AreEqual(data[0], cardAttack.FirstByteOfData);
-            CollectionAssert.AreEqual(properties.maxBonuses.Values, cardAttack.MaxBonuses.Values.ToArray());
+            CollectionAssert.That.AreEqual(properties.maxBonuses.Values, cardAttack.MaxBonuses.Values);
             Assert.AreEqual(properties.cardId, cardAttack.CardId);
-            CollectionAssert.AreEqual(properties.cardName, cardAttack.CardName.ToArray());
-            CollectionAssert.AreEqual(properties.trialCounts.Values, cardAttack.TrialCounts.Values.ToArray());
-            CollectionAssert.AreEqual(properties.clearCounts.Values, cardAttack.ClearCounts.Values.ToArray());
+            CollectionAssert.That.AreEqual(properties.cardName, cardAttack.CardName);
+            CollectionAssert.That.AreEqual(properties.trialCounts.Values, cardAttack.TrialCounts.Values);
+            CollectionAssert.That.AreEqual(properties.clearCounts.Values, cardAttack.ClearCounts.Values);
         }
 
         [TestMethod]

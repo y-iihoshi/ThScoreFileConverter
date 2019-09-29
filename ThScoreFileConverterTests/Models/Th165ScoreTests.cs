@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
 using ThScoreFileConverterTests.Models.Wrappers;
 
@@ -63,7 +63,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.version, score.Version);
             Assert.AreEqual(properties.checksum, score.Checksum);
             Assert.AreEqual(properties.size, score.Size);
-            CollectionAssert.AreEqual(data, score.Data.ToArray());
+            CollectionAssert.That.AreEqual(data, score.Data);
             Assert.AreEqual(properties.number, score.Number);
             Assert.AreEqual(properties.clearCount, score.ClearCount);
             Assert.AreEqual(properties.challengeCount, score.ChallengeCount);

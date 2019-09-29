@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -160,7 +160,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.dateTime, header.DateTime);
             Assert.AreEqual(properties.angle, header.Angle);
             Assert.AreEqual(properties.score, header.Score);
-            CollectionAssert.AreEqual(properties.fields, header.Fields.Data?.ToArray());
+            CollectionAssert.That.AreEqual(properties.fields, header.Fields.Data);
             Assert.AreEqual(properties.score2, header.Score2);
             Assert.AreEqual(properties.basePoint, header.BasePoint);
             Assert.AreEqual(properties.numViewed, header.NumViewed);

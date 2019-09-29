@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Extensions;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -30,7 +31,7 @@ namespace ThScoreFileConverterTests.Models
             => TestUtils.MakeByteArray(properties.counts.Values.ToArray(), 0u);
 
         internal static void Validate(in Th09ClearCountWrapper clearCount, in Properties properties)
-            => CollectionAssert.AreEqual(properties.counts.Values, clearCount.Counts.Values.ToArray());
+            => CollectionAssert.That.AreEqual(properties.counts.Values, clearCount.Counts.Values);
 
         [TestMethod]
         public void Th09ClearCountTest() => TestUtils.Wrap(() =>
@@ -81,10 +82,8 @@ namespace ThScoreFileConverterTests.Models
 
             var clearCount = Th09ClearCountWrapper.Create(MakeByteArray(properties));
 
-            CollectionAssert.AreNotEqual(properties.counts.Values, clearCount.Counts.Values.ToArray());
-            CollectionAssert.AreEqual(
-                properties.counts.Values.Take(properties.counts.Count - 1).ToArray(),
-                clearCount.Counts.Values.ToArray());
+            CollectionAssert.That.AreNotEqual(properties.counts.Values, clearCount.Counts.Values);
+            CollectionAssert.That.AreEqual(properties.counts.Values.SkipLast(1), clearCount.Counts.Values);
         });
     }
 }

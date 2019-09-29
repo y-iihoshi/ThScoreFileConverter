@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models.Th06;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th06.Stubs;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 
@@ -42,7 +43,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             Assert.AreEqual(expected.Size2, actual.Size2);
             Assert.AreEqual(expected.FirstByteOfData, actual.FirstByteOfData);
             Assert.AreEqual(expected.CardId, actual.CardId);
-            CollectionAssert.AreEqual(expected.CardName?.ToArray(), actual.CardName?.ToArray());
+            CollectionAssert.That.AreEqual(expected.CardName, actual.CardName);
             Assert.AreEqual(expected.TrialCount, actual.TrialCount);
             Assert.AreEqual(expected.ClearCount, actual.ClearCount);
         }

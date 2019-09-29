@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -50,7 +51,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.score, scoreData.Score);
             Assert.AreEqual(properties.stageProgress, scoreData.StageProgress);
             Assert.AreEqual(properties.continueCount, scoreData.ContinueCount);
-            CollectionAssert.AreEqual(properties.name, scoreData.Name?.ToArray());
+            CollectionAssert.That.AreEqual(properties.name, scoreData.Name);
             Assert.AreEqual(properties.dateTime, scoreData.DateTime);
             Assert.AreEqual(properties.slowRate, scoreData.SlowRate);
             Assert.AreEqual(properties.retryCount, scoreData.RetryCount);
@@ -128,8 +129,8 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.score, scoreData.Score);
             Assert.AreEqual(properties.stageProgress, scoreData.StageProgress);
             Assert.AreEqual(properties.continueCount, scoreData.ContinueCount);
-            CollectionAssert.AreNotEqual(properties.name, scoreData.Name.ToArray());
-            CollectionAssert.AreEqual(properties.name.Take(validNameLength).ToArray(), scoreData.Name.ToArray());
+            CollectionAssert.That.AreNotEqual(properties.name, scoreData.Name);
+            CollectionAssert.That.AreEqual(properties.name.Take(validNameLength), scoreData.Name);
             Assert.AreNotEqual(properties.dateTime, scoreData.DateTime);
             Assert.AreNotEqual(properties.slowRate, scoreData.SlowRate);
             Assert.AreNotEqual(properties.retryCount, scoreData.RetryCount);

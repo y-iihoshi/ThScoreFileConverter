@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -126,18 +127,15 @@ namespace ThScoreFileConverterTests.Models
                 Assert.AreEqual(pair.Value.StageOverDrive, story.StageOverDrive);
             }
 
-            CollectionAssert.AreEqual(
-                properties.characterDictionary.Keys, allScoreData.CharacterDictionary.Keys.ToArray());
-            CollectionAssert.AreEqual(
-                properties.characterDictionary.Values, allScoreData.CharacterDictionary.Values.ToArray());
-            CollectionAssert.AreEqual(properties.bgmDictionary.Keys, allScoreData.BgmDictionary.Keys.ToArray());
-            CollectionAssert.AreEqual(properties.bgmDictionary.Values, allScoreData.BgmDictionary.Values.ToArray());
-            CollectionAssert.AreEqual(
-                properties.endingDictionary.Keys, allScoreData.EndingDictionary.Keys.ToArray());
-            CollectionAssert.AreEqual(
-                properties.endingDictionary.Values, allScoreData.EndingDictionary.Values.ToArray());
-            CollectionAssert.AreEqual(properties.stageDictionary.Keys, allScoreData.StageDictionary.Keys.ToArray());
-            CollectionAssert.AreEqual(properties.stageDictionary.Values, allScoreData.StageDictionary.Values.ToArray());
+            CollectionAssert.That.AreEqual(properties.characterDictionary.Keys, allScoreData.CharacterDictionary.Keys);
+            CollectionAssert.That.AreEqual(
+                properties.characterDictionary.Values, allScoreData.CharacterDictionary.Values);
+            CollectionAssert.That.AreEqual(properties.bgmDictionary.Keys, allScoreData.BgmDictionary.Keys);
+            CollectionAssert.That.AreEqual(properties.bgmDictionary.Values, allScoreData.BgmDictionary.Values);
+            CollectionAssert.That.AreEqual(properties.endingDictionary.Keys, allScoreData.EndingDictionary.Keys);
+            CollectionAssert.That.AreEqual(properties.endingDictionary.Values, allScoreData.EndingDictionary.Values);
+            CollectionAssert.That.AreEqual(properties.stageDictionary.Keys, allScoreData.StageDictionary.Keys);
+            CollectionAssert.That.AreEqual(properties.stageDictionary.Values, allScoreData.StageDictionary.Values);
             Assert.AreEqual(properties.version, allScoreData.Version);
         }
 

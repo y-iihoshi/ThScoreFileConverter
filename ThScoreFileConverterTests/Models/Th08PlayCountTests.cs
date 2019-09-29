@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -53,7 +54,7 @@ namespace ThScoreFileConverterTests.Models
         internal static void Validate(in Th08PlayCountWrapper playCount, in Properties properties)
         {
             Assert.AreEqual(properties.totalTrial, playCount.TotalTrial.Value);
-            CollectionAssert.AreEqual(properties.trials.Values, playCount.Trials.Values.ToArray());
+            CollectionAssert.That.AreEqual(properties.trials.Values, playCount.Trials.Values);
             Assert.AreEqual(properties.totalClear, playCount.TotalClear.Value);
             Assert.AreEqual(properties.totalContinue, playCount.TotalContinue.Value);
             Assert.AreEqual(properties.totalPractice, playCount.TotalPractice.Value);
@@ -113,10 +114,8 @@ namespace ThScoreFileConverterTests.Models
             var playCount = Th08PlayCountWrapper.Create(MakeByteArray(properties));
 
             Assert.AreEqual(properties.totalTrial, playCount.TotalTrial.Value);
-            CollectionAssert.AreNotEqual(properties.trials.Values, playCount.Trials.Values.ToArray());
-            CollectionAssert.AreEqual(
-                properties.trials.Values.Take(properties.trials.Count - 1).ToArray(),
-                playCount.Trials.Values.ToArray());
+            CollectionAssert.That.AreNotEqual(properties.trials.Values, playCount.Trials.Values);
+            CollectionAssert.That.AreEqual(properties.trials.Values.SkipLast(1), playCount.Trials.Values);
             Assert.AreNotEqual(properties.totalClear, playCount.TotalClear.Value);
             Assert.AreNotEqual(properties.totalContinue, playCount.TotalContinue.Value);
             Assert.AreNotEqual(properties.totalPractice, playCount.TotalPractice.Value);

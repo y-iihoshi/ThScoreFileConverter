@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ThScoreFileConverterTests.Models.Wrappers;
 
@@ -102,15 +103,15 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.signature, highScore.Signature);
             Assert.AreEqual(properties.size1, highScore.Size1);
             Assert.AreEqual(properties.size2, highScore.Size2);
-            CollectionAssert.AreEqual(data, highScore.Data.ToArray());
+            CollectionAssert.That.AreEqual(data, highScore.Data);
             Assert.AreEqual(data[0], highScore.FirstByteOfData);
             Assert.AreEqual(properties.score, highScore.Score);
             Assert.AreEqual(properties.slowRate, highScore.SlowRate);
             Assert.AreEqual(properties.chara, highScore.Chara);
             Assert.AreEqual(properties.level, highScore.Level);
             Assert.AreEqual(properties.stageProgress, highScore.StageProgress);
-            CollectionAssert.AreEqual(properties.name, highScore.Name.ToArray());
-            CollectionAssert.AreEqual(properties.date, highScore.Date.ToArray());
+            CollectionAssert.That.AreEqual(properties.name, highScore.Name);
+            CollectionAssert.That.AreEqual(properties.date, highScore.Date);
             Assert.AreEqual(properties.continueCount, highScore.ContinueCount);
             Assert.AreEqual(properties.playerNum, highScore.PlayerNum);
             Assert.AreEqual(properties.playTime, highScore.PlayTime);
@@ -121,7 +122,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.pauseCount, highScore.PauseCount);
             Assert.AreEqual(properties.timePoint, highScore.TimePoint);
             Assert.AreEqual(properties.humanRate, highScore.HumanRate);
-            CollectionAssert.AreEqual(properties.cardFlags.Values.ToArray(), highScore.CardFlags.Values.ToArray());
+            CollectionAssert.That.AreEqual(properties.cardFlags.Values, highScore.CardFlags.Values);
         }
 
         [TestMethod]
@@ -156,9 +157,9 @@ namespace ThScoreFileConverterTests.Models
             var highScore = new Th08HighScoreWrapper(score);
 
             Assert.AreEqual(score, highScore.Score);
-            CollectionAssert.AreEqual(TestUtils.CP932Encoding.GetBytes(name), highScore.Name.ToArray());
-            CollectionAssert.AreEqual(TestUtils.CP932Encoding.GetBytes(date), highScore.Date.ToArray());
-            CollectionAssert.AreEqual(cardFlags, highScore.CardFlags.Values.ToArray());
+            CollectionAssert.That.AreEqual(TestUtils.CP932Encoding.GetBytes(name), highScore.Name);
+            CollectionAssert.That.AreEqual(TestUtils.CP932Encoding.GetBytes(date), highScore.Date);
+            CollectionAssert.That.AreEqual(cardFlags, highScore.CardFlags.Values);
         });
 
         [TestMethod]
@@ -172,9 +173,9 @@ namespace ThScoreFileConverterTests.Models
             var highScore = new Th08HighScoreWrapper(score);
 
             Assert.AreEqual(score, highScore.Score);
-            CollectionAssert.AreEqual(TestUtils.CP932Encoding.GetBytes(name), highScore.Name.ToArray());
-            CollectionAssert.AreEqual(TestUtils.CP932Encoding.GetBytes(date), highScore.Date.ToArray());
-            CollectionAssert.AreEqual(cardFlags, highScore.CardFlags.Values.ToArray());
+            CollectionAssert.That.AreEqual(TestUtils.CP932Encoding.GetBytes(name), highScore.Name);
+            CollectionAssert.That.AreEqual(TestUtils.CP932Encoding.GetBytes(date), highScore.Date);
+            CollectionAssert.That.AreEqual(cardFlags, highScore.CardFlags.Values);
         });
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]

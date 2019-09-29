@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
 using ThScoreFileConverterTests.Models.Wrappers;
 
@@ -62,7 +63,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.version, clearData.Version);
             Assert.AreEqual(properties.checksum, clearData.Checksum);
             Assert.AreEqual(properties.size, clearData.Size);
-            CollectionAssert.AreEqual(data, clearData.Data.ToArray());
+            CollectionAssert.That.AreEqual(data, clearData.Data);
 
             foreach (var pair in properties.cards)
             {

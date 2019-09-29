@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ThScoreFileConverterTests.Models.Wrappers;
 
@@ -68,7 +69,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.signature, playStatus.Signature);
             Assert.AreEqual(properties.size1, playStatus.Size1);
             Assert.AreEqual(properties.size2, playStatus.Size2);
-            CollectionAssert.AreEqual(data, playStatus.Data.ToArray());
+            CollectionAssert.That.AreEqual(data, playStatus.Data);
             Assert.AreEqual(data[0], playStatus.FirstByteOfData);
             Assert.AreEqual(properties.totalRunningTime.Hours, playStatus.TotalRunningTime.Hours);
             Assert.AreEqual(properties.totalRunningTime.Minutes, playStatus.TotalRunningTime.Minutes);
@@ -87,7 +88,7 @@ namespace ThScoreFileConverterTests.Models
             }
 
             Th08PlayCountTests.Validate(playStatus.TotalPlayCount, properties.totalPlayCount);
-            CollectionAssert.AreEqual(properties.bgmFlags, playStatus.BgmFlags.ToArray());
+            CollectionAssert.That.AreEqual(properties.bgmFlags, playStatus.BgmFlags);
         }
 
         [TestMethod]

@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ThScoreFileConverterTests.Models.Wrappers;
 
@@ -56,10 +57,10 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.signature, score.Signature);
             Assert.AreEqual(properties.size1, score.Size1);
             Assert.AreEqual(properties.size2, score.Size2);
-            CollectionAssert.AreEqual(data, score.Data.ToArray());
+            CollectionAssert.That.AreEqual(data, score.Data);
             Assert.AreEqual(data[0], score.FirstByteOfData);
-            CollectionAssert.AreEqual(properties.playCounts.Values, score.PlayCounts.Values.ToArray());
-            CollectionAssert.AreEqual(properties.highScores.Values, score.HighScores.Values.ToArray());
+            CollectionAssert.That.AreEqual(properties.playCounts.Values, score.PlayCounts.Values);
+            CollectionAssert.That.AreEqual(properties.highScores.Values, score.HighScores.Values);
             Assert.AreEqual(properties.chara, score.Chara);
         }
 

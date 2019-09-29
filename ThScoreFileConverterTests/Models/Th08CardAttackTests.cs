@@ -3,8 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ThScoreFileConverterTests.Models.Wrappers;
 
@@ -65,13 +65,13 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.signature, cardAttack.Signature);
             Assert.AreEqual(properties.size1, cardAttack.Size1);
             Assert.AreEqual(properties.size2, cardAttack.Size2);
-            CollectionAssert.AreEqual(data, cardAttack.Data.ToArray());
+            CollectionAssert.That.AreEqual(data, cardAttack.Data);
             Assert.AreEqual(data[0], cardAttack.FirstByteOfData);
             Assert.AreEqual(properties.cardId, cardAttack.CardId);
             Assert.AreEqual(properties.level, cardAttack.Level.Value);
-            CollectionAssert.AreEqual(properties.cardName, cardAttack.CardName.ToArray());
-            CollectionAssert.AreEqual(properties.enemyName, cardAttack.EnemyName.ToArray());
-            CollectionAssert.AreEqual(properties.comment, cardAttack.Comment.ToArray());
+            CollectionAssert.That.AreEqual(properties.cardName, cardAttack.CardName);
+            CollectionAssert.That.AreEqual(properties.enemyName, cardAttack.EnemyName);
+            CollectionAssert.That.AreEqual(properties.comment, cardAttack.Comment);
             Th08CardAttackCareerTests.Validate(cardAttack.StoryCareer, properties.storyCareer);
             Th08CardAttackCareerTests.Validate(cardAttack.PracticeCareer, properties.practiceCareer);
         }

@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th06;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th06.Stubs;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 
@@ -48,7 +49,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             Assert.AreEqual(expected.Chara, actual.Chara);
             Assert.AreEqual(expected.Level, actual.Level);
             Assert.AreEqual(expected.StageProgress, actual.StageProgress);
-            CollectionAssert.AreEqual(expected.Name?.ToArray(), actual.Name?.ToArray());
+            CollectionAssert.That.AreEqual(expected.Name, actual.Name);
         }
 
         [TestMethod]
@@ -78,7 +79,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             var highScore = new HighScore(score);
 
             Assert.AreEqual(score, highScore.Score);
-            CollectionAssert.AreEqual(TestUtils.CP932Encoding.GetBytes(name), highScore.Name.ToArray());
+            CollectionAssert.That.AreEqual(TestUtils.CP932Encoding.GetBytes(name), highScore.Name);
         });
 
         [TestMethod]
@@ -90,7 +91,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             var highScore = new HighScore(score);
 
             Assert.AreEqual(score, highScore.Score);
-            CollectionAssert.AreEqual(TestUtils.CP932Encoding.GetBytes(name), highScore.Name.ToArray());
+            CollectionAssert.That.AreEqual(TestUtils.CP932Encoding.GetBytes(name), highScore.Name);
         });
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th13.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Th13
@@ -55,7 +56,7 @@ namespace ThScoreFileConverterTests.Models.Th13
             where TParent : ThConverter
             where TLevel : struct, Enum
         {
-            CollectionAssert.AreEqual(properties.name, spellCard.Name?.ToArray());
+            CollectionAssert.That.AreEqual(properties.name, spellCard.Name);
             Assert.AreEqual(properties.clearCount, spellCard.ClearCount);
             Assert.AreEqual(properties.practiceClearCount, spellCard.PracticeClearCount);
             Assert.AreEqual(properties.trialCount, spellCard.TrialCount);

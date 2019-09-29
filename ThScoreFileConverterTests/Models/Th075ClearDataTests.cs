@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -79,10 +80,10 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.clearCount, clearData.ClearCount);
             Assert.AreEqual(properties.maxCombo, clearData.MaxCombo);
             Assert.AreEqual(properties.maxDamage, clearData.MaxDamage);
-            CollectionAssert.AreEqual(properties.maxBonuses, clearData.MaxBonuses.ToArray());
-            CollectionAssert.AreEqual(properties.cardGotCount, clearData.CardGotCount.ToArray());
-            CollectionAssert.AreEqual(properties.cardTrialCount, clearData.CardTrialCount.ToArray());
-            CollectionAssert.AreEqual(properties.cardTrulyGot, clearData.CardTrulyGot.ToArray());
+            CollectionAssert.That.AreEqual(properties.maxBonuses, clearData.MaxBonuses);
+            CollectionAssert.That.AreEqual(properties.cardGotCount, clearData.CardGotCount);
+            CollectionAssert.That.AreEqual(properties.cardTrialCount, clearData.CardTrialCount);
+            CollectionAssert.That.AreEqual(properties.cardTrulyGot, clearData.CardTrulyGot);
             Assert.AreEqual(properties.ranking.Count, clearData.RankingCount);
             foreach (var index in Enumerable.Range(0, properties.ranking.Count))
             {

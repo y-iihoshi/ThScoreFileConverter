@@ -3,8 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
 using ThScoreFileConverterTests.Models.Wrappers;
 
@@ -71,7 +71,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.version, itemStatus.Version);
             Assert.AreEqual(properties.checksum, itemStatus.Checksum);
             Assert.AreEqual(properties.size, itemStatus.Size);
-            CollectionAssert.AreEqual(data, itemStatus.Data.ToArray());
+            CollectionAssert.That.AreEqual(data, itemStatus.Data);
             Assert.AreEqual(properties.item, itemStatus.Item);
             Assert.AreEqual(properties.useCount, itemStatus.UseCount);
             Assert.AreEqual(properties.clearedCount, itemStatus.ClearedCount);

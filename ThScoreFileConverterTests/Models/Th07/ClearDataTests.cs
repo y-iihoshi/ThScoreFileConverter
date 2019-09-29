@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th07;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using Level = ThScoreFileConverter.Models.Th07.Level;
 
@@ -57,8 +58,8 @@ namespace ThScoreFileConverterTests.Models.Th07
             Assert.AreEqual(properties.size1, clearData.Size1);
             Assert.AreEqual(properties.size2, clearData.Size2);
             Assert.AreEqual(data[0], clearData.FirstByteOfData);
-            CollectionAssert.AreEqual(properties.storyFlags.Values, clearData.StoryFlags.Values.ToArray());
-            CollectionAssert.AreEqual(properties.practiceFlags.Values, clearData.PracticeFlags.Values.ToArray());
+            CollectionAssert.That.AreEqual(properties.storyFlags.Values, clearData.StoryFlags.Values);
+            CollectionAssert.That.AreEqual(properties.practiceFlags.Values, clearData.PracticeFlags.Values);
             Assert.AreEqual(properties.chara, clearData.Chara);
         }
 

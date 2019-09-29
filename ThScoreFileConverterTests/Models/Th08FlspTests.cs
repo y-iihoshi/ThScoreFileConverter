@@ -2,7 +2,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ThScoreFileConverterTests.Models.Wrappers;
 
@@ -42,7 +42,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.signature, flsp.Signature);
             Assert.AreEqual(properties.size1, flsp.Size1);
             Assert.AreEqual(properties.size2, flsp.Size2);
-            CollectionAssert.AreEqual(data, flsp.Data.ToArray());
+            CollectionAssert.That.AreEqual(data, flsp.Data);
             Assert.AreEqual(data[0], flsp.FirstByteOfData);
         }
 

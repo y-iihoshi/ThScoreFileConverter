@@ -1,6 +1,6 @@
-﻿using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Actions;
+using ThScoreFileConverterTests.Extensions;
 
 namespace ThScoreFileConverterTests.Interactivity
 {
@@ -15,10 +15,10 @@ namespace ThScoreFileConverterTests.Interactivity
             var result = new OpenFileDialogActionResult(filename, filenames);
 
             Assert.AreEqual(filename, result.FileName);
-            CollectionAssert.AreEqual(filenames, result.FileNames.ToArray());
+            CollectionAssert.That.AreEqual(filenames, result.FileNames);
 
             filenames[0] = "bs02_1.dat";
-            CollectionAssert.AreNotEqual(filenames, result.FileNames.ToArray());
+            CollectionAssert.That.AreNotEqual(filenames, result.FileNames);
         }
     }
 }

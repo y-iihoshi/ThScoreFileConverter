@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th105;
 using ThScoreFileConverterTests.Models.Wrappers;
 
@@ -68,8 +69,7 @@ namespace ThScoreFileConverterTests.Models
             where TChara : struct, Enum
             where TLevel : struct, Enum
         {
-            CollectionAssert.AreEqual(
-                properties.storyClearCounts.Values, allScoreData.StoryClearCounts.Values.ToArray());
+            CollectionAssert.That.AreEqual(properties.storyClearCounts.Values, allScoreData.StoryClearCounts.Values);
 
             foreach (var pair in properties.systemCards)
             {

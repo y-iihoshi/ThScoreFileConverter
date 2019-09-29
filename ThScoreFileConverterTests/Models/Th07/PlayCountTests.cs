@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th07;
+using ThScoreFileConverterTests.Extensions;
 
 namespace ThScoreFileConverterTests.Models.Th07
 {
@@ -77,7 +78,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         internal static void Validate(in PlayCount playCount, in Properties properties)
         {
             Assert.AreEqual(properties.totalTrial, playCount.TotalTrial);
-            CollectionAssert.AreEqual(properties.trials.Values, playCount.Trials.Values.ToArray());
+            CollectionAssert.That.AreEqual(properties.trials.Values, playCount.Trials.Values);
             Assert.AreEqual(properties.totalRetry, playCount.TotalRetry);
             Assert.AreEqual(properties.totalClear, playCount.TotalClear);
             Assert.AreEqual(properties.totalContinue, playCount.TotalContinue);
@@ -138,10 +139,8 @@ namespace ThScoreFileConverterTests.Models.Th07
             var playCount = Create(MakeByteArray(properties));
 
             Assert.AreEqual(properties.totalTrial, playCount.TotalTrial);
-            CollectionAssert.AreNotEqual(properties.trials.Values, playCount.Trials.Values.ToArray());
-            CollectionAssert.AreEqual(
-                properties.trials.Values.Take(properties.trials.Count - 1).ToArray(),
-                playCount.Trials.Values.ToArray());
+            CollectionAssert.That.AreNotEqual(properties.trials.Values, playCount.Trials.Values);
+            CollectionAssert.That.AreEqual(properties.trials.Values.SkipLast(1), playCount.Trials.Values);
             Assert.AreNotEqual(properties.totalRetry, playCount.TotalRetry);
             Assert.AreNotEqual(properties.totalClear, playCount.TotalClear);
             Assert.AreNotEqual(properties.totalContinue, playCount.TotalContinue);

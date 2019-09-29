@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -47,9 +48,9 @@ namespace ThScoreFileConverterTests.Models
 
         internal static void Validate(in Th08CardAttackCareerWrapper career, in Properties properties)
         {
-            CollectionAssert.AreEqual(properties.maxBonuses.Values, career.MaxBonuses.Values.ToArray());
-            CollectionAssert.AreEqual(properties.trialCounts.Values, career.TrialCounts.Values.ToArray());
-            CollectionAssert.AreEqual(properties.clearCounts.Values, career.ClearCounts.Values.ToArray());
+            CollectionAssert.That.AreEqual(properties.maxBonuses.Values, career.MaxBonuses.Values);
+            CollectionAssert.That.AreEqual(properties.trialCounts.Values, career.TrialCounts.Values);
+            CollectionAssert.That.AreEqual(properties.clearCounts.Values, career.ClearCounts.Values);
         }
 
         [TestMethod]
@@ -103,12 +104,10 @@ namespace ThScoreFileConverterTests.Models
 
             var career = Th08CardAttackCareerWrapper.Create(MakeByteArray(properties));
 
-            CollectionAssert.AreNotEqual(properties.maxBonuses.Values, career.MaxBonuses.Values.ToArray());
-            CollectionAssert.AreEqual(
-                properties.maxBonuses.Values.Take(properties.maxBonuses.Count - 1).ToArray(),
-                career.MaxBonuses.Values.ToArray());
-            CollectionAssert.AreNotEqual(properties.trialCounts.Values, career.TrialCounts.Values.ToArray());
-            CollectionAssert.AreNotEqual(properties.clearCounts.Values, career.ClearCounts.Values.ToArray());
+            CollectionAssert.That.AreNotEqual(properties.maxBonuses.Values, career.MaxBonuses.Values);
+            CollectionAssert.That.AreEqual(properties.maxBonuses.Values.SkipLast(1), career.MaxBonuses.Values);
+            CollectionAssert.That.AreNotEqual(properties.trialCounts.Values, career.TrialCounts.Values);
+            CollectionAssert.That.AreNotEqual(properties.clearCounts.Values, career.ClearCounts.Values);
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "career")]
@@ -132,12 +131,10 @@ namespace ThScoreFileConverterTests.Models
 
             var career = Th08CardAttackCareerWrapper.Create(MakeByteArray(properties));
 
-            CollectionAssert.AreEqual(properties.maxBonuses.Values, career.MaxBonuses.Values.ToArray());
-            CollectionAssert.AreNotEqual(properties.trialCounts.Values, career.TrialCounts.Values.ToArray());
-            CollectionAssert.AreEqual(
-                properties.trialCounts.Values.Take(properties.trialCounts.Count - 1).ToArray(),
-                career.TrialCounts.Values.ToArray());
-            CollectionAssert.AreNotEqual(properties.clearCounts.Values, career.ClearCounts.Values.ToArray());
+            CollectionAssert.That.AreEqual(properties.maxBonuses.Values, career.MaxBonuses.Values);
+            CollectionAssert.That.AreNotEqual(properties.trialCounts.Values, career.TrialCounts.Values);
+            CollectionAssert.That.AreEqual(properties.trialCounts.Values.SkipLast(1), career.TrialCounts.Values);
+            CollectionAssert.That.AreNotEqual(properties.clearCounts.Values, career.ClearCounts.Values);
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "career")]
@@ -161,12 +158,10 @@ namespace ThScoreFileConverterTests.Models
 
             var career = Th08CardAttackCareerWrapper.Create(MakeByteArray(properties));
 
-            CollectionAssert.AreEqual(properties.maxBonuses.Values, career.MaxBonuses.Values.ToArray());
-            CollectionAssert.AreEqual(properties.trialCounts.Values, career.TrialCounts.Values.ToArray());
-            CollectionAssert.AreNotEqual(properties.clearCounts.Values, career.ClearCounts.Values.ToArray());
-            CollectionAssert.AreEqual(
-                properties.clearCounts.Values.Take(properties.clearCounts.Count - 1).ToArray(),
-                career.ClearCounts.Values.ToArray());
+            CollectionAssert.That.AreEqual(properties.maxBonuses.Values, career.MaxBonuses.Values);
+            CollectionAssert.That.AreEqual(properties.trialCounts.Values, career.TrialCounts.Values);
+            CollectionAssert.That.AreNotEqual(properties.clearCounts.Values, career.ClearCounts.Values);
+            CollectionAssert.That.AreEqual(properties.clearCounts.Values.SkipLast(1), career.ClearCounts.Values);
         });
     }
 }

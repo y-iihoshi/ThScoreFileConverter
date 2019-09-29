@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -50,7 +51,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.score, scoreData.Score);
             Assert.AreEqual(properties.stageProgress, scoreData.StageProgress);
             Assert.AreEqual(properties.continueCount, scoreData.ContinueCount);
-            CollectionAssert.AreEqual(properties.name, scoreData.Name?.ToArray());
+            CollectionAssert.That.AreEqual(properties.name, scoreData.Name);
             Assert.AreEqual(properties.dateTime, scoreData.DateTime);
             Assert.AreEqual(properties.slowRate, scoreData.SlowRate);
             Assert.AreEqual(properties.season, scoreData.Season);

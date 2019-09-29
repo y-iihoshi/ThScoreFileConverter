@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th10;
+using ThScoreFileConverterTests.Extensions;
 
 namespace ThScoreFileConverterTests.Models.Th10
 {
@@ -62,7 +63,7 @@ namespace ThScoreFileConverterTests.Models.Th10
 
         internal static void Validate(in SpellCard spellCard, in Properties properties)
         {
-            CollectionAssert.AreEqual(properties.name, spellCard.Name?.ToArray());
+            CollectionAssert.That.AreEqual(properties.name, spellCard.Name);
             Assert.AreEqual(properties.clearCount, spellCard.ClearCount);
             Assert.AreEqual(properties.trialCount, spellCard.TrialCount);
             Assert.AreEqual(properties.id, spellCard.Id);

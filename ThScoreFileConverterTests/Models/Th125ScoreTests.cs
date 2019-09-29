@@ -3,8 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th095.Wrappers;
 using ThScoreFileConverterTests.Models.Wrappers;
 
@@ -74,7 +74,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.version, score.Version);
             Assert.AreEqual(properties.size, score.Size);
             Assert.AreEqual(properties.checksum, score.Checksum);
-            CollectionAssert.AreEqual(data, score.Data.ToArray());
+            CollectionAssert.That.AreEqual(data, score.Data);
             Assert.AreEqual(properties.levelScene, score.LevelScene);
             Assert.AreEqual(properties.highScore, score.HighScore);
             Assert.AreEqual(properties.chara, score.Chara);

@@ -3,8 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ThScoreFileConverterTests.Models.Wrappers;
 
@@ -65,14 +65,14 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.signature, highScore.Signature);
             Assert.AreEqual(properties.size1, highScore.Size1);
             Assert.AreEqual(properties.size2, highScore.Size2);
-            CollectionAssert.AreEqual(data, highScore.Data.ToArray());
+            CollectionAssert.That.AreEqual(data, highScore.Data);
             Assert.AreEqual(data[0], highScore.FirstByteOfData);
             Assert.AreEqual(properties.score, highScore.Score);
             Assert.AreEqual(properties.chara, highScore.Chara);
             Assert.AreEqual(properties.level, highScore.Level);
             Assert.AreEqual(properties.rank, highScore.Rank);
-            CollectionAssert.AreEqual(properties.name, highScore.Name.ToArray());
-            CollectionAssert.AreEqual(properties.date, highScore.Date.ToArray());
+            CollectionAssert.That.AreEqual(properties.name, highScore.Name);
+            CollectionAssert.That.AreEqual(properties.date, highScore.Date);
             Assert.AreEqual(properties.continueCount, highScore.ContinueCount);
         }
 

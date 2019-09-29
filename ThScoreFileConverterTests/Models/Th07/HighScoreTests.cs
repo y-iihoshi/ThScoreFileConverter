@@ -3,8 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
 using ThScoreFileConverter.Models.Th07;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Th07
@@ -71,8 +71,8 @@ namespace ThScoreFileConverterTests.Models.Th07
             Assert.AreEqual(properties.chara, highScore.Chara);
             Assert.AreEqual(properties.level, highScore.Level);
             Assert.AreEqual(properties.stageProgress, highScore.StageProgress);
-            CollectionAssert.AreEqual(properties.name, highScore.Name.ToArray());
-            CollectionAssert.AreEqual(properties.date, highScore.Date.ToArray());
+            CollectionAssert.That.AreEqual(properties.name, highScore.Name);
+            CollectionAssert.That.AreEqual(properties.date, highScore.Date);
             Assert.AreEqual(properties.continueCount, highScore.ContinueCount);
         }
 
@@ -104,8 +104,8 @@ namespace ThScoreFileConverterTests.Models.Th07
             var highScore = new HighScore(score);
 
             Assert.AreEqual(score, highScore.Score);
-            CollectionAssert.AreEqual(TestUtils.CP932Encoding.GetBytes(name), highScore.Name.ToArray());
-            CollectionAssert.AreEqual(TestUtils.CP932Encoding.GetBytes(date), highScore.Date.ToArray());
+            CollectionAssert.That.AreEqual(TestUtils.CP932Encoding.GetBytes(name), highScore.Name);
+            CollectionAssert.That.AreEqual(TestUtils.CP932Encoding.GetBytes(date), highScore.Date);
         });
 
         [TestMethod]
@@ -118,8 +118,8 @@ namespace ThScoreFileConverterTests.Models.Th07
             var highScore = new HighScore(score);
 
             Assert.AreEqual(score, highScore.Score);
-            CollectionAssert.AreEqual(TestUtils.CP932Encoding.GetBytes(name), highScore.Name.ToArray());
-            CollectionAssert.AreEqual(TestUtils.CP932Encoding.GetBytes(date), highScore.Date.ToArray());
+            CollectionAssert.That.AreEqual(TestUtils.CP932Encoding.GetBytes(name), highScore.Name);
+            CollectionAssert.That.AreEqual(TestUtils.CP932Encoding.GetBytes(date), highScore.Date);
         });
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]

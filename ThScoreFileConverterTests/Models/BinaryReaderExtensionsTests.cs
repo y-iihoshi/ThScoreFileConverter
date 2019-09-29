@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Extensions;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -23,7 +24,7 @@ namespace ThScoreFileConverterTests.Models
 
                     var readBytes = reader.ReadExactBytes(bytes.Length);
 
-                    CollectionAssert.AreEqual(bytes, readBytes);
+                    CollectionAssert.That.AreEqual(bytes, readBytes);
                 }
             }
             finally
@@ -104,7 +105,7 @@ namespace ThScoreFileConverterTests.Models
 
                     var readBytes = reader.ReadExactBytes(0);
 
-                    CollectionAssert.AreEqual(new byte[] { }, readBytes);
+                    CollectionAssert.That.AreEqual(new byte[] { }, readBytes);
                 }
             }
             finally
@@ -151,8 +152,8 @@ namespace ThScoreFileConverterTests.Models
 
                     var readBytes = reader.ReadExactBytes(bytes.Length - 1);
 
-                    CollectionAssert.AreNotEqual(bytes, readBytes);
-                    CollectionAssert.AreEqual(bytes.Take(readBytes.Length).ToArray(), readBytes);
+                    CollectionAssert.That.AreNotEqual(bytes, readBytes);
+                    CollectionAssert.That.AreEqual(bytes.Take(readBytes.Length), readBytes);
                 }
             }
             finally

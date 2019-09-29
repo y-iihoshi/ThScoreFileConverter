@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ThScoreFileConverterTests.Models.Wrappers;
 
@@ -79,7 +80,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.signature, playStatus.Signature);
             Assert.AreEqual(properties.size1, playStatus.Size1);
             Assert.AreEqual(properties.size2, playStatus.Size2);
-            CollectionAssert.AreEqual(data, playStatus.Data.ToArray());
+            CollectionAssert.That.AreEqual(data, playStatus.Data);
             Assert.AreEqual(data[0], playStatus.FirstByteOfData);
             Assert.AreEqual(properties.totalRunningTime.Hours, playStatus.TotalRunningTime.Hours);
             Assert.AreEqual(properties.totalRunningTime.Minutes, playStatus.TotalRunningTime.Minutes);
@@ -91,10 +92,10 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.totalPlayTime.Seconds, playStatus.TotalPlayTime.Seconds);
             Assert.AreEqual(properties.totalPlayTime.Milliseconds, playStatus.TotalPlayTime.Milliseconds);
             Assert.IsFalse(playStatus.TotalPlayTime.IsFrames);
-            CollectionAssert.AreEqual(properties.bgmFlags, playStatus.BgmFlags.ToArray());
-            CollectionAssert.AreEqual(properties.matchFlags.Values, playStatus.MatchFlags.Values.ToArray());
-            CollectionAssert.AreEqual(properties.storyFlags.Values, playStatus.StoryFlags.Values.ToArray());
-            CollectionAssert.AreEqual(properties.extraFlags.Values, playStatus.ExtraFlags.Values.ToArray());
+            CollectionAssert.That.AreEqual(properties.bgmFlags, playStatus.BgmFlags);
+            CollectionAssert.That.AreEqual(properties.matchFlags.Values, playStatus.MatchFlags.Values);
+            CollectionAssert.That.AreEqual(properties.storyFlags.Values, playStatus.StoryFlags.Values);
+            CollectionAssert.That.AreEqual(properties.extraFlags.Values, playStatus.ExtraFlags.Values);
 
             foreach (var key in properties.clearCounts.Keys)
             {

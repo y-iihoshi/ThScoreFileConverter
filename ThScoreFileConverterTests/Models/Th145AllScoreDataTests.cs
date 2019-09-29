@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -88,8 +89,8 @@ namespace ThScoreFileConverterTests.Models
         internal static void Validate(in Th145AllScoreDataWrapper allScoreData, in Properties properties)
         {
             Assert.AreEqual(properties.storyProgress, allScoreData.StoryProgress);
-            CollectionAssert.AreEqual(properties.storyClearFlags.Keys, allScoreData.StoryClearFlags.Keys.ToArray());
-            CollectionAssert.AreEqual(properties.storyClearFlags.Values, allScoreData.StoryClearFlags.Values.ToArray());
+            CollectionAssert.That.AreEqual(properties.storyClearFlags.Keys, allScoreData.StoryClearFlags.Keys);
+            CollectionAssert.That.AreEqual(properties.storyClearFlags.Values, allScoreData.StoryClearFlags.Values);
             Assert.AreEqual(properties.endingCount, allScoreData.EndingCount);
             Assert.AreEqual(properties.ending2Count, allScoreData.Ending2Count);
             Assert.AreEqual(properties.isEnabledStageTanuki1, allScoreData.IsEnabledStageTanuki1);
@@ -99,9 +100,9 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.isEnabledSt28, allScoreData.IsEnabledSt28);
             Assert.AreEqual(properties.isPlayableMamizou, allScoreData.IsPlayableMamizou);
             Assert.AreEqual(properties.isPlayableKokoro, allScoreData.IsPlayableKokoro);
-            CollectionAssert.AreEqual(properties.bgmFlags.Keys, allScoreData.BgmFlags.Keys.ToArray());
-            CollectionAssert.AreEqual(properties.bgmFlags.Values, allScoreData.BgmFlags.Values.ToArray());
-            CollectionAssert.AreEqual(properties.clearRanks.Keys, allScoreData.ClearRanks.Keys.ToArray());
+            CollectionAssert.That.AreEqual(properties.bgmFlags.Keys, allScoreData.BgmFlags.Keys);
+            CollectionAssert.That.AreEqual(properties.bgmFlags.Values, allScoreData.BgmFlags.Values);
+            CollectionAssert.That.AreEqual(properties.clearRanks.Keys, allScoreData.ClearRanks.Keys);
 
             foreach (var pair in properties.clearRanks)
             {
@@ -109,7 +110,7 @@ namespace ThScoreFileConverterTests.Models
                 CollectionAssert.AreEqual(pair.Value.Values, allScoreData.ClearRanks[pair.Key].Values);
             }
 
-            CollectionAssert.AreEqual(properties.clearTimes.Keys, allScoreData.ClearTimes.Keys.ToArray());
+            CollectionAssert.That.AreEqual(properties.clearTimes.Keys, allScoreData.ClearTimes.Keys);
 
             foreach (var pair in properties.clearTimes)
             {
