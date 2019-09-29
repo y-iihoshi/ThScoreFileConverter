@@ -15,8 +15,8 @@ namespace ThScoreFileConverter.Models.Th06
 {
     internal class AllScoreData
     {
-        private readonly Dictionary<int, ICardAttack> cardAttacks;
         private readonly Dictionary<(Chara, Level), IReadOnlyList<IHighScore>> rankings;
+        private readonly Dictionary<int, ICardAttack> cardAttacks;
 
         public AllScoreData()
         {

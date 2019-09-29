@@ -48,7 +48,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             Assert.AreEqual(expected.Chara, actual.Chara);
             Assert.AreEqual(expected.Level, actual.Level);
             Assert.AreEqual(expected.StageProgress, actual.StageProgress);
-            CollectionAssert.AreEqual(expected.Name.ToArray(), actual.Name.ToArray());
+            CollectionAssert.AreEqual(expected.Name?.ToArray(), actual.Name?.ToArray());
         }
 
         [TestMethod]

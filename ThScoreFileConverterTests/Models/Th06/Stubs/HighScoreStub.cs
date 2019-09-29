@@ -14,8 +14,8 @@ namespace ThScoreFileConverterTests.Models.Th06.Stubs
         {
             this.Chara = highScore.Chara;
             this.Level = highScore.Level;
+            this.Name = highScore.Name?.ToArray();
             this.Score = highScore.Score;
-            this.Name = highScore.Name.ToArray();
             this.StageProgress = highScore.StageProgress;
             this.FirstByteOfData = highScore.FirstByteOfData;
             this.Signature = highScore.Signature;
