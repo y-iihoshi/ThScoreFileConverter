@@ -9,19 +9,21 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ThScoreFileConverter.Models.Th06
 {
     internal class AllScoreData
     {
         private readonly Dictionary<int, ICardAttack> cardAttacks;
+        private readonly Dictionary<(Chara, Level), IReadOnlyList<IHighScore>> rankings;
 
         public AllScoreData()
         {
             var numCharas = Enum.GetValues(typeof(Chara)).Length;
             var numPairs = numCharas * Enum.GetValues(typeof(Level)).Length;
             var numTriples = numPairs * Enum.GetValues(typeof(Stage)).Length;
-            this.Rankings = new Dictionary<(Chara, Level), List<HighScore>>(numPairs);
+            this.rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>(numPairs);
             this.ClearData = new Dictionary<Chara, ClearData>(numCharas);
             this.cardAttacks = new Dictionary<int, ICardAttack>(Definitions.CardTable.Count);
             this.PracticeScores = new Dictionary<(Chara, Level, Stage), PracticeScore>(numTriples);
@@ -29,7 +31,7 @@ namespace ThScoreFileConverter.Models.Th06
 
         public Header Header { get; private set; }
 
-        public Dictionary<(Chara, Level), List<HighScore>> Rankings { get; private set; }
+        public IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> Rankings => this.rankings;
 
         public Dictionary<Chara, ClearData> ClearData { get; private set; }
 
@@ -39,15 +41,16 @@ namespace ThScoreFileConverter.Models.Th06
 
         public void Set(Header header) => this.Header = header;
 
-        public void Set(HighScore score)
+        public void Set(IHighScore score)
         {
             var key = (score.Chara, score.Level);
-            if (!this.Rankings.ContainsKey(key))
-                this.Rankings.Add(key, new List<HighScore>(Definitions.InitialRanking));
-            var ranking = this.Rankings[key];
+            if (!this.rankings.ContainsKey(key))
+                this.rankings.Add(key, new List<IHighScore>(Definitions.InitialRanking));
+            var ranking = this.rankings[key].ToList();
             ranking.Add(score);
             ranking.Sort((lhs, rhs) => rhs.Score.CompareTo(lhs.Score));
             ranking.RemoveAt(ranking.Count - 1);
+            this.rankings[key] = ranking;
         }
 
         public void Set(ClearData data)

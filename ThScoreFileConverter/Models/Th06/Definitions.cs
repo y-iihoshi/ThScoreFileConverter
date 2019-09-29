@@ -86,7 +86,7 @@ namespace ThScoreFileConverter.Models.Th06
 #pragma warning restore SA1008 // Opening parenthesis should be spaced correctly
         }.ToDictionary(card => card.Id);
 
-        public static IReadOnlyList<HighScore> InitialRanking { get; } =
+        public static IReadOnlyList<IHighScore> InitialRanking { get; } =
             Enumerable.Range(1, 10).Reverse().Select(index => new HighScore((uint)index * 100000)).ToList();
     }
 }

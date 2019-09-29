@@ -3,34 +3,25 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th06;
-using ThScoreFileConverterTests.Models.Th06.Wrappers;
+using ThScoreFileConverterTests.Models.Th06.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th06
 {
     [TestClass]
     public class ClearReplacerTests
     {
-        internal static IReadOnlyDictionary<(Chara, Level), List<HighScore>> Rankings { get; } =
-            new Dictionary<(Chara, Level), List<HighScore>>
+        internal static IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> Rankings { get; } =
+            new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>
             {
                 {
-                    (HighScoreTests.ValidProperties.chara, HighScoreTests.ValidProperties.level),
-                    new List<HighScore>
+                    (HighScoreTests.ValidStub.Chara, HighScoreTests.ValidStub.Level),
+                    new List<IHighScore>
                     {
-                        new HighScore(ChapterWrapper.Create(HighScoreTests.MakeByteArray(
-                            HighScoreTests.ValidProperties)).Target),
-                        new HighScore(ChapterWrapper.Create(HighScoreTests.MakeByteArray(
-                            new HighScoreTests.Properties
-                            {
-                                signature = HighScoreTests.ValidProperties.signature,
-                                size1 = HighScoreTests.ValidProperties.size1,
-                                size2 = HighScoreTests.ValidProperties.size2,
-                                score = HighScoreTests.ValidProperties.score,
-                                chara = HighScoreTests.ValidProperties.chara,
-                                level = HighScoreTests.ValidProperties.level,
-                                stageProgress = HighScoreTests.ValidProperties.stageProgress + 1,
-                                name = HighScoreTests.ValidProperties.name,
-                            })).Target),
+                        HighScoreTests.ValidStub,
+                        new HighScoreStub(HighScoreTests.ValidStub)
+                        {
+                            StageProgress = HighScoreTests.ValidStub.StageProgress + 1,
+                        },
                     }
                 },
             };
@@ -53,7 +44,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [TestMethod]
         public void ClearReplacerTestEmptyRankings()
         {
-            var rankings = new Dictionary<(Chara, Level), List<HighScore>>();
+            var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>();
             var replacer = new ClearReplacer(rankings);
             Assert.IsNotNull(replacer);
         }
@@ -61,11 +52,11 @@ namespace ThScoreFileConverterTests.Models.Th06
         [TestMethod]
         public void ClearReplacerTestEmptyScores()
         {
-            var rankings = new Dictionary<(Chara, Level), List<HighScore>>
+            var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>
             {
                 {
-                    (HighScoreTests.ValidProperties.chara, HighScoreTests.ValidProperties.level),
-                    new List<HighScore>()
+                    (HighScoreTests.ValidStub.Chara, HighScoreTests.ValidStub.Level),
+                    new List<IHighScore>()
                 },
             };
             var replacer = new ClearReplacer(rankings);
@@ -82,24 +73,17 @@ namespace ThScoreFileConverterTests.Models.Th06
         [TestMethod]
         public void ReplaceTestExtra()
         {
-            var rankings = new Dictionary<(Chara, Level), List<HighScore>>
+            var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>
             {
                 {
-                    (HighScoreTests.ValidProperties.chara, Level.Extra),
-                    new List<HighScore>
+                    (HighScoreTests.ValidStub.Chara, Level.Extra),
+                    new List<IHighScore>
                     {
-                        new HighScore(ChapterWrapper.Create(HighScoreTests.MakeByteArray(
-                            new HighScoreTests.Properties
-                            {
-                                signature = HighScoreTests.ValidProperties.signature,
-                                size1 = HighScoreTests.ValidProperties.size1,
-                                size2 = HighScoreTests.ValidProperties.size2,
-                                score = HighScoreTests.ValidProperties.score,
-                                chara = HighScoreTests.ValidProperties.chara,
-                                level = Level.Extra,
-                                stageProgress = StageProgress.Extra,
-                                name = HighScoreTests.ValidProperties.name,
-                            })).Target),
+                        new HighScoreStub(HighScoreTests.ValidStub)
+                        {
+                            Level = Level.Extra,
+                            StageProgress = StageProgress.Extra,
+                        },
                     }
                 },
             };
@@ -110,7 +94,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [TestMethod]
         public void ReplaceTestEmptyRankings()
         {
-            var rankings = new Dictionary<(Chara, Level), List<HighScore>>();
+            var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>();
             var replacer = new ClearReplacer(rankings);
             Assert.AreEqual(StageProgress.None.ToShortName(), replacer.Replace("%T06CLEARHRB"));
         }
@@ -118,11 +102,11 @@ namespace ThScoreFileConverterTests.Models.Th06
         [TestMethod]
         public void ReplaceTestEmptyScores()
         {
-            var rankings = new Dictionary<(Chara, Level), List<HighScore>>
+            var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>
             {
                 {
-                    (HighScoreTests.ValidProperties.chara, HighScoreTests.ValidProperties.level),
-                    new List<HighScore>()
+                    (HighScoreTests.ValidStub.Chara, HighScoreTests.ValidStub.Level),
+                    new List<IHighScore>()
                 },
             };
             var replacer = new ClearReplacer(rankings);

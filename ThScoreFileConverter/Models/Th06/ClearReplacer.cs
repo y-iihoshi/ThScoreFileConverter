@@ -23,7 +23,7 @@ namespace ThScoreFileConverter.Models.Th06
 
         private readonly MatchEvaluator evaluator;
 
-        public ClearReplacer(IReadOnlyDictionary<(Chara, Level), List<HighScore>> rankings)
+        public ClearReplacer(IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> rankings)
         {
             if (rankings is null)
                 throw new ArgumentNullException(nameof(rankings));
