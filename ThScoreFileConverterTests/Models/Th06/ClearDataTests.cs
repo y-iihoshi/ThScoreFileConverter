@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th06;
+using ThScoreFileConverterTests.Models.Th06.Stubs;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Th06
@@ -13,100 +14,82 @@ namespace ThScoreFileConverterTests.Models.Th06
     [TestClass]
     public class ClearDataTests
     {
-        internal struct Properties
+        internal static ClearDataStub ValidStub { get; } = new ClearDataStub()
         {
-            public string signature;
-            public short size1;
-            public short size2;
-            public Dictionary<Level, byte> storyFlags;
-            public Dictionary<Level, byte> practiceFlags;
-            public Chara chara;
-        };
-
-        internal static Properties ValidProperties => new Properties()
-        {
-            signature = "CLRD",
-            size1 = 0x18,
-            size2 = 0x18,
-            storyFlags = Utils.GetEnumerator<Level>()
+            Signature = "CLRD",
+            Size1 = 0x18,
+            Size2 = 0x18,
+            StoryFlags = Utils.GetEnumerator<Level>()
                 .Select((level, index) => new { level, index })
                 .ToDictionary(pair => pair.level, pair => (byte)pair.index),
-            practiceFlags = Utils.GetEnumerator<Level>()
+            PracticeFlags = Utils.GetEnumerator<Level>()
                 .Select((level, index) => new { level, index })
                 .ToDictionary(pair => pair.level, pair => (byte)(10 - pair.index)),
-            chara = Chara.ReimuB
+            Chara = Chara.ReimuB
         };
 
-        internal static byte[] MakeData(in Properties properties)
+        internal static byte[] MakeByteArray(IClearData clearData)
             => TestUtils.MakeByteArray(
+                clearData.Signature.ToCharArray(),
+                clearData.Size1,
+                clearData.Size2,
                 0u,
-                properties.storyFlags.Values.ToArray(),
-                properties.practiceFlags.Values.ToArray(),
-                (short)properties.chara);
+                clearData.StoryFlags.Values.ToArray(),
+                clearData.PracticeFlags.Values.ToArray(),
+                (short)clearData.Chara);
 
-        internal static byte[] MakeByteArray(in Properties properties)
-            => TestUtils.MakeByteArray(
-                properties.signature.ToCharArray(), properties.size1, properties.size2, MakeData(properties));
-
-        internal static void Validate(in ClearData clearData, in Properties properties)
+        internal static void Validate(IClearData expected, IClearData actual)
         {
-            var data = MakeData(properties);
-
-            Assert.AreEqual(properties.signature, clearData.Signature);
-            Assert.AreEqual(properties.size1, clearData.Size1);
-            Assert.AreEqual(properties.size2, clearData.Size2);
-            Assert.AreEqual(data[0], clearData.FirstByteOfData);
-            CollectionAssert.AreEqual(properties.storyFlags.Values, clearData.StoryFlags.Values.ToArray());
-            CollectionAssert.AreEqual(properties.practiceFlags.Values, clearData.PracticeFlags.Values.ToArray());
-            Assert.AreEqual(properties.chara, clearData.Chara);
+            Assert.AreEqual(expected.Signature, actual.Signature);
+            Assert.AreEqual(expected.Size1, actual.Size1);
+            Assert.AreEqual(expected.Size2, actual.Size2);
+            Assert.AreEqual(expected.FirstByteOfData, actual.FirstByteOfData);
+            CollectionAssert.AreEqual(expected.StoryFlags?.Values?.ToArray(), actual.StoryFlags?.Values?.ToArray());
+            CollectionAssert.AreEqual(expected.PracticeFlags?.Values?.ToArray(), actual.PracticeFlags?.Values?.ToArray());
+            Assert.AreEqual(expected.Chara, actual.Chara);
         }
 
         [TestMethod]
         public void ClearDataTestChapter() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(ValidStub));
             var clearData = new ClearData(chapter.Target);
 
-            Validate(clearData, properties);
+            Validate(ValidStub, clearData);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void ClearDataTestNullChapter() => TestUtils.Wrap(() =>
         {
-            var clearData = new ClearData(null);
+            _ = new ClearData(null);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void ClearDataTestInvalidSignature() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.signature = properties.signature.ToLowerInvariant();
+            var stub = new ClearDataStub(ValidStub);
+            stub.Signature = stub.Signature.ToLowerInvariant();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var clearData = new ClearData(chapter.Target);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new ClearData(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void ClearDataTestInvalidSize1() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            --properties.size1;
+            var stub = new ClearDataStub(ValidStub);
+            --stub.Size1;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var clearData = new ClearData(chapter.Target);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new ClearData(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -114,18 +97,19 @@ namespace ThScoreFileConverterTests.Models.Th06
         public static IEnumerable<object[]> InvalidCharacters
             => TestUtils.GetInvalidEnumerators(typeof(Level));
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidCharacters))]
         [ExpectedException(typeof(InvalidCastException))]
         public void ClearDataTestInvalidChara(int chara) => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.chara = TestUtils.Cast<Chara>(chara);
+            var stub = new ClearDataStub(ValidStub)
+            {
+                Chara = TestUtils.Cast<Chara>(chara),
+            };
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var clearData = new ClearData(chapter.Target);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new ClearData(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });
