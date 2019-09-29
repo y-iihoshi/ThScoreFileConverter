@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace ThScoreFileConverter.Models.Th07
 {
-    internal class CardAttack : Th06.Chapter    // per card
+    internal class CardAttack : Th06.Chapter, ICardAttack   // per card
     {
         public const string ValidSignature = "CATK";
         public const short ValidSize = 0x0078;
@@ -23,35 +23,42 @@ namespace ThScoreFileConverter.Models.Th07
         {
             var charas = Utils.GetEnumerator<CharaWithTotal>();
             var numCharas = charas.Count();
-            this.MaxBonuses = new Dictionary<CharaWithTotal, uint>(numCharas);
-            this.TrialCounts = new Dictionary<CharaWithTotal, ushort>(numCharas);
-            this.ClearCounts = new Dictionary<CharaWithTotal, ushort>(numCharas);
+            var maxBonuses = new Dictionary<CharaWithTotal, uint>(numCharas);
+            var trialCounts = new Dictionary<CharaWithTotal, ushort>(numCharas);
+            var clearCounts = new Dictionary<CharaWithTotal, ushort>(numCharas);
 
             using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
             {
                 reader.ReadUInt32();    // always 0x00000001?
+
                 foreach (var chara in charas)
-                    this.MaxBonuses.Add(chara, reader.ReadUInt32());
+                    maxBonuses.Add(chara, reader.ReadUInt32());
+                this.MaxBonuses = maxBonuses;
+
                 this.CardId = (short)(reader.ReadInt16() + 1);
                 reader.ReadByte();
                 this.CardName = reader.ReadExactBytes(0x30);
                 reader.ReadByte();      // always 0x00?
+
                 foreach (var chara in charas)
-                    this.TrialCounts.Add(chara, reader.ReadUInt16());
+                    trialCounts.Add(chara, reader.ReadUInt16());
+                this.TrialCounts = trialCounts;
+
                 foreach (var chara in charas)
-                    this.ClearCounts.Add(chara, reader.ReadUInt16());
+                    clearCounts.Add(chara, reader.ReadUInt16());
+                this.ClearCounts = clearCounts;
             }
         }
 
-        public Dictionary<CharaWithTotal, uint> MaxBonuses { get; }
+        public IReadOnlyDictionary<CharaWithTotal, uint> MaxBonuses { get; }
 
         public short CardId { get; }    // 1-based
 
-        public byte[] CardName { get; }
+        public IEnumerable<byte> CardName { get; }
 
-        public Dictionary<CharaWithTotal, ushort> TrialCounts { get; }
+        public IReadOnlyDictionary<CharaWithTotal, ushort> TrialCounts { get; }
 
-        public Dictionary<CharaWithTotal, ushort> ClearCounts { get; }
+        public IReadOnlyDictionary<CharaWithTotal, ushort> ClearCounts { get; }
 
         public bool HasTried() => this.TrialCounts[CharaWithTotal.Total] > 0;
     }

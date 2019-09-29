@@ -24,7 +24,7 @@ namespace ThScoreFileConverter.Models.Th07
 
         private readonly MatchEvaluator evaluator;
 
-        public CareerReplacer(IReadOnlyDictionary<int, CardAttack> cardAttacks)
+        public CareerReplacer(IReadOnlyDictionary<int, ICardAttack> cardAttacks)
         {
             if (cardAttacks is null)
                 throw new ArgumentNullException(nameof(cardAttacks));
@@ -35,7 +35,7 @@ namespace ThScoreFileConverter.Models.Th07
                 var chara = CharaWithTotalParser.Parse(match.Groups[2].Value);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                Func<CardAttack, long> getValue;
+                Func<ICardAttack, long> getValue;
                 if (type == 1)
                     getValue = attack => attack.MaxBonuses[chara];
                 else if (type == 2)

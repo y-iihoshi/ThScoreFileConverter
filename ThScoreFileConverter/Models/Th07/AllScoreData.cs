@@ -17,6 +17,7 @@ namespace ThScoreFileConverter.Models.Th07
     {
         private readonly Dictionary<(Chara, Level), IReadOnlyList<IHighScore>> rankings;
         private readonly Dictionary<Chara, IClearData> clearData;
+        private readonly Dictionary<int, ICardAttack> cardAttacks;
 
         public AllScoreData()
         {
@@ -24,7 +25,7 @@ namespace ThScoreFileConverter.Models.Th07
             var numPairs = numCharas * Enum.GetValues(typeof(Level)).Length;
             this.rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>(numPairs);
             this.clearData = new Dictionary<Chara, IClearData>(numCharas);
-            this.CardAttacks = new Dictionary<int, CardAttack>(Definitions.CardTable.Count);
+            this.cardAttacks = new Dictionary<int, ICardAttack>(Definitions.CardTable.Count);
             this.PracticeScores = new Dictionary<(Chara, Level, Stage), PracticeScore>(numPairs);
         }
 
@@ -34,7 +35,7 @@ namespace ThScoreFileConverter.Models.Th07
 
         public IReadOnlyDictionary<Chara, IClearData> ClearData => this.clearData;
 
-        public Dictionary<int, CardAttack> CardAttacks { get; private set; }
+        public IReadOnlyDictionary<int, ICardAttack> CardAttacks => this.cardAttacks;
 
         public Dictionary<(Chara, Level, Stage), PracticeScore> PracticeScores { get; private set; }
 
@@ -64,10 +65,10 @@ namespace ThScoreFileConverter.Models.Th07
                 this.clearData.Add(data.Chara, data);
         }
 
-        public void Set(CardAttack attack)
+        public void Set(ICardAttack attack)
         {
-            if (!this.CardAttacks.ContainsKey(attack.CardId))
-                this.CardAttacks.Add(attack.CardId, attack);
+            if (!this.cardAttacks.ContainsKey(attack.CardId))
+                this.cardAttacks.Add(attack.CardId, attack);
         }
 
         public void Set(PracticeScore score)
