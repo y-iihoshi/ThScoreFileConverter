@@ -14,7 +14,7 @@ namespace ThScoreFileConverterTests.Models.Th06
     [TestClass]
     public class HighScoreTests
     {
-        internal static HighScoreStub ValidStub => new HighScoreStub()
+        internal static HighScoreStub ValidStub { get; } = new HighScoreStub()
         {
             Signature = "HSCR",
             Size1 = 0x1C,
@@ -98,7 +98,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [ExpectedException(typeof(InvalidDataException))]
         public void HighScoreTestInvalidSignature() => TestUtils.Wrap(() =>
         {
-            var stub = ValidStub;
+            var stub = new HighScoreStub(ValidStub);
             stub.Signature = stub.Signature.ToLowerInvariant();
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
@@ -111,7 +111,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [ExpectedException(typeof(InvalidDataException))]
         public void HighScoreTestInvalidSize1() => TestUtils.Wrap(() =>
         {
-            var stub = ValidStub;
+            var stub = new HighScoreStub(ValidStub);
             --stub.Size1;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
@@ -129,8 +129,10 @@ namespace ThScoreFileConverterTests.Models.Th06
         [ExpectedException(typeof(InvalidCastException))]
         public void HighScoreTestInvalidChara(int chara) => TestUtils.Wrap(() =>
         {
-            var stub = ValidStub;
-            stub.Chara = TestUtils.Cast<Chara>(chara);
+            var stub = new HighScoreStub(ValidStub)
+            {
+                Chara = TestUtils.Cast<Chara>(chara),
+            };
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
             _ = new HighScore(chapter.Target);
@@ -147,8 +149,10 @@ namespace ThScoreFileConverterTests.Models.Th06
         [ExpectedException(typeof(InvalidCastException))]
         public void HighScoreTestInvalidLevel(int level) => TestUtils.Wrap(() =>
         {
-            var stub = ValidStub;
-            stub.Level = TestUtils.Cast<Level>(level);
+            var stub = new HighScoreStub(ValidStub)
+            {
+                Level = TestUtils.Cast<Level>(level),
+            };
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
             _ = new HighScore(chapter.Target);
@@ -165,8 +169,10 @@ namespace ThScoreFileConverterTests.Models.Th06
         [ExpectedException(typeof(InvalidCastException))]
         public void HighScoreTestInvalidStageProgress(int stageProgress) => TestUtils.Wrap(() =>
         {
-            var stub = ValidStub;
-            stub.StageProgress = TestUtils.Cast<StageProgress>(stageProgress);
+            var stub = new HighScoreStub(ValidStub)
+            {
+                StageProgress = TestUtils.Cast<StageProgress>(stageProgress),
+            };
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
             _ = new HighScore(chapter.Target);

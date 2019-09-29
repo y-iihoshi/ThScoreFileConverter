@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th06;
+using ThScoreFileConverterTests.Models.Th06.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th06
 {
@@ -18,7 +19,7 @@ namespace ThScoreFileConverterTests.Models.Th06
                     (HighScoreTests.ValidStub.Chara, HighScoreTests.ValidStub.Level),
                     new List<IHighScore>
                     {
-                        HighScoreTests.ValidStub,
+                        new HighScoreStub(HighScoreTests.ValidStub),
                     }
                 },
             };

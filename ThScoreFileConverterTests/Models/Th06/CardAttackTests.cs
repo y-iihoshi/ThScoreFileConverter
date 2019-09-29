@@ -12,7 +12,7 @@ namespace ThScoreFileConverterTests.Models.Th06
     [TestClass]
     public class CardAttackTests
     {
-        internal static CardAttackStub ValidStub => new CardAttackStub()
+        internal static CardAttackStub ValidStub { get; } = new CardAttackStub()
         {
             Signature = "CATK",
             Size1 = 0x40,
@@ -50,12 +50,10 @@ namespace ThScoreFileConverterTests.Models.Th06
         [TestMethod]
         public void CardAttackTestChapter() => TestUtils.Wrap(() =>
         {
-            var stub = ValidStub;
-
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            var chapter = ChapterWrapper.Create(MakeByteArray(ValidStub));
             var cardAttack = new CardAttack(chapter.Target);
 
-            Validate(stub, cardAttack);
+            Validate(ValidStub, cardAttack);
             Assert.IsTrue(cardAttack.HasTried());
         });
 
@@ -73,7 +71,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [ExpectedException(typeof(InvalidDataException))]
         public void CardAttackTestInvalidSignature() => TestUtils.Wrap(() =>
         {
-            var stub = ValidStub;
+            var stub = new CardAttackStub(ValidStub);
             stub.Signature = stub.Signature.ToLowerInvariant();
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
@@ -86,7 +84,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [ExpectedException(typeof(InvalidDataException))]
         public void CardAttackTestInvalidSize1() => TestUtils.Wrap(() =>
         {
-            var stub = ValidStub;
+            var stub = new CardAttackStub(ValidStub);
             --stub.Size1;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
@@ -98,8 +96,10 @@ namespace ThScoreFileConverterTests.Models.Th06
         [TestMethod]
         public void CardAttackTestNotTried() => TestUtils.Wrap(() =>
         {
-            var stub = ValidStub;
-            stub.TrialCount = 0;
+            var stub = new CardAttackStub(ValidStub)
+            {
+                TrialCount = 0,
+            };
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
             var cardAttack = new CardAttack(chapter.Target);

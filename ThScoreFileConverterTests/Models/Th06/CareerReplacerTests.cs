@@ -14,7 +14,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         internal static IReadOnlyDictionary<int, ICardAttack> CardAttacks { get; } =
             new List<ICardAttack>
             {
-                CardAttackTests.ValidStub,
+                new CardAttackStub(CardAttackTests.ValidStub),
                 new CardAttackStub(CardAttackTests.ValidStub)
                 {
                     CardId = (short)(CardAttackTests.ValidStub.CardId + 1),

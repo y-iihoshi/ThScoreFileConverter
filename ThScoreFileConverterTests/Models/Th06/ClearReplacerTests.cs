@@ -17,7 +17,7 @@ namespace ThScoreFileConverterTests.Models.Th06
                     (HighScoreTests.ValidStub.Chara, HighScoreTests.ValidStub.Level),
                     new List<IHighScore>
                     {
-                        HighScoreTests.ValidStub,
+                        new HighScoreStub(HighScoreTests.ValidStub),
                         new HighScoreStub(HighScoreTests.ValidStub)
                         {
                             StageProgress = HighScoreTests.ValidStub.StageProgress + 1,
