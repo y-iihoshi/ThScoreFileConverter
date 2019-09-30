@@ -7,6 +7,7 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System.Collections.Generic;
 using System.IO;
 
 namespace ThScoreFileConverter.Models.Th07
@@ -30,6 +31,6 @@ namespace ThScoreFileConverter.Models.Th07
             }
         }
 
-        public byte[] Version { get; }  // Null-terminated
+        public IEnumerable<byte> Version { get; }   // Null-terminated
     }
 }

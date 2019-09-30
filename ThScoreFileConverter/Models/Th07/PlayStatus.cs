@@ -18,12 +18,14 @@ namespace ThScoreFileConverter.Models.Th07
         public const string ValidSignature = "PLST";
         public const short ValidSize = 0x0160;
 
+        private readonly Dictionary<LevelWithTotal, PlayCount> playCounts;
+
         public PlayStatus(Th06.Chapter chapter)
             : base(chapter, ValidSignature, ValidSize)
         {
             var levels = Utils.GetEnumerator<LevelWithTotal>();
             var numLevels = levels.Count();
-            this.PlayCounts = new Dictionary<LevelWithTotal, PlayCount>(numLevels);
+            this.playCounts = new Dictionary<LevelWithTotal, PlayCount>(numLevels);
 
             using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
             {
@@ -42,8 +44,8 @@ namespace ThScoreFileConverter.Models.Th07
                 {
                     var playCount = new PlayCount();
                     playCount.ReadFrom(reader);
-                    if (!this.PlayCounts.ContainsKey(level))
-                        this.PlayCounts.Add(level, playCount);
+                    if (!this.playCounts.ContainsKey(level))
+                        this.playCounts.Add(level, playCount);
                 }
             }
         }
@@ -52,6 +54,6 @@ namespace ThScoreFileConverter.Models.Th07
 
         public Time TotalPlayTime { get; }
 
-        public Dictionary<LevelWithTotal, PlayCount> PlayCounts { get; }
+        public IReadOnlyDictionary<LevelWithTotal, PlayCount> PlayCounts => this.playCounts;
     }
 }
