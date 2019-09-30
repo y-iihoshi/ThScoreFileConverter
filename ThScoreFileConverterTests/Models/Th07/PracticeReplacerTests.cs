@@ -4,18 +4,17 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models.Th07;
-using ThScoreFileConverterTests.Models.Th06.Wrappers;
+using ThScoreFileConverterTests.Models.Th07.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th07
 {
     [TestClass]
     public class PracticeReplacerTests
     {
-        internal static IReadOnlyDictionary<(Chara, Level, Stage), PracticeScore> PracticeScores { get; } =
-            new List<PracticeScore>
+        internal static IReadOnlyDictionary<(Chara, Level, Stage), IPracticeScore> PracticeScores { get; } =
+            new List<IPracticeScore>
             {
-                new PracticeScore(ChapterWrapper.Create(
-                    PracticeScoreTests.MakeByteArray(PracticeScoreTests.ValidProperties)).Target),
+                new PracticeScoreStub(PracticeScoreTests.ValidStub),
             }.ToDictionary(element => (element.Chara, element.Level, element.Stage));
 
         [TestMethod]
@@ -36,7 +35,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void PracticeReplacerTestEmpty()
         {
-            var practiceScores = new Dictionary<(Chara, Level, Stage), PracticeScore>();
+            var practiceScores = new Dictionary<(Chara, Level, Stage), IPracticeScore>();
             var replacer = new PracticeReplacer(practiceScores);
             Assert.IsNotNull(replacer);
         }
@@ -67,7 +66,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void ReplaceTestEmpty()
         {
-            var practiceScores = new Dictionary<(Chara, Level, Stage), PracticeScore>();
+            var practiceScores = new Dictionary<(Chara, Level, Stage), IPracticeScore>();
             var replacer = new PracticeReplacer(practiceScores);
             Assert.AreEqual("0", replacer.Replace("%T07PRACHRB61"));
         }
@@ -75,19 +74,12 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void ReplaceTestLevelExtra()
         {
-            var practiceScores = new List<PracticeScore>
+            var practiceScores = new List<IPracticeScore>
             {
-                new PracticeScore(ChapterWrapper.Create(PracticeScoreTests.MakeByteArray(
-                    new PracticeScoreTests.Properties
-                    {
-                        signature = PracticeScoreTests.ValidProperties.signature,
-                        size1 = PracticeScoreTests.ValidProperties.size1,
-                        size2 = PracticeScoreTests.ValidProperties.size2,
-                        highScore = PracticeScoreTests.ValidProperties.highScore,
-                        chara = PracticeScoreTests.ValidProperties.chara,
-                        level = Level.Extra,
-                        stage = PracticeScoreTests.ValidProperties.stage,
-                    })).Target),
+                new PracticeScoreStub(PracticeScoreTests.ValidStub)
+                {
+                    Level = Level.Extra,
+                },
             }.ToDictionary(element => (element.Chara, element.Level, element.Stage));
             var replacer = new PracticeReplacer(practiceScores);
             Assert.AreEqual("%T07PRACXRB61", replacer.Replace("%T07PRACXRB61"));
@@ -96,19 +88,12 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void ReplaceTestStageExtra()
         {
-            var practiceScores = new List<PracticeScore>
+            var practiceScores = new List<IPracticeScore>
             {
-                new PracticeScore(ChapterWrapper.Create(PracticeScoreTests.MakeByteArray(
-                    new PracticeScoreTests.Properties
-                    {
-                        signature = PracticeScoreTests.ValidProperties.signature,
-                        size1 = PracticeScoreTests.ValidProperties.size1,
-                        size2 = PracticeScoreTests.ValidProperties.size2,
-                        highScore = PracticeScoreTests.ValidProperties.highScore,
-                        chara = PracticeScoreTests.ValidProperties.chara,
-                        level = PracticeScoreTests.ValidProperties.level,
-                        stage = Stage.Extra,
-                    })).Target),
+                new PracticeScoreStub(PracticeScoreTests.ValidStub)
+                {
+                    Stage = Stage.Extra,
+                },
             }.ToDictionary(element => (element.Chara, element.Level, element.Stage));
             var replacer = new PracticeReplacer(practiceScores);
             Assert.AreEqual("%T07PRACHRBX1", replacer.Replace("%T07PRACHRBX1"));
@@ -117,19 +102,12 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void ReplaceTestLevelPhantasm()
         {
-            var practiceScores = new List<PracticeScore>
+            var practiceScores = new List<IPracticeScore>
             {
-                new PracticeScore(ChapterWrapper.Create(PracticeScoreTests.MakeByteArray(
-                    new PracticeScoreTests.Properties
-                    {
-                        signature = PracticeScoreTests.ValidProperties.signature,
-                        size1 = PracticeScoreTests.ValidProperties.size1,
-                        size2 = PracticeScoreTests.ValidProperties.size2,
-                        highScore = PracticeScoreTests.ValidProperties.highScore,
-                        chara = PracticeScoreTests.ValidProperties.chara,
-                        level = Level.Phantasm,
-                        stage = PracticeScoreTests.ValidProperties.stage,
-                    })).Target),
+                new PracticeScoreStub(PracticeScoreTests.ValidStub)
+                {
+                    Level = Level.Phantasm,
+                },
             }.ToDictionary(element => (element.Chara, element.Level, element.Stage));
             var replacer = new PracticeReplacer(practiceScores);
             Assert.AreEqual("%T07PRACPRB61", replacer.Replace("%T07PRACPRB61"));
@@ -138,19 +116,12 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void ReplaceTestStagePhantasm()
         {
-            var practiceScores = new List<PracticeScore>
+            var practiceScores = new List<IPracticeScore>
             {
-                new PracticeScore(ChapterWrapper.Create(PracticeScoreTests.MakeByteArray(
-                    new PracticeScoreTests.Properties
-                    {
-                        signature = PracticeScoreTests.ValidProperties.signature,
-                        size1 = PracticeScoreTests.ValidProperties.size1,
-                        size2 = PracticeScoreTests.ValidProperties.size2,
-                        highScore = PracticeScoreTests.ValidProperties.highScore,
-                        chara = PracticeScoreTests.ValidProperties.chara,
-                        level = PracticeScoreTests.ValidProperties.level,
-                        stage = Stage.Phantasm,
-                    })).Target),
+                new PracticeScoreStub(PracticeScoreTests.ValidStub)
+                {
+                    Stage = Stage.Phantasm,
+                },
             }.ToDictionary(element => (element.Chara, element.Level, element.Stage));
             var replacer = new PracticeReplacer(practiceScores);
             Assert.AreEqual("%T07PRACHRBP1", replacer.Replace("%T07PRACHRBP1"));

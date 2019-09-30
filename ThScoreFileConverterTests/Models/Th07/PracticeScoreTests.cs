@@ -5,74 +5,58 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
+using ThScoreFileConverterTests.Models.Th07.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th07
 {
     [TestClass]
     public class PracticeScoreTests
     {
-        internal struct Properties
+        internal static PracticeScoreStub ValidStub { get; } = new PracticeScoreStub()
         {
-            public string signature;
-            public short size1;
-            public short size2;
-            public int trialCount;
-            public int highScore;
-            public Chara chara;
-            public Level level;
-            public Stage stage;
+            Signature = "PSCR",
+            Size1 = 0x18,
+            Size2 = 0x18,
+            TrialCount = 987,
+            HighScore = 123456,
+            Chara = Chara.ReimuB,
+            Level = Level.Hard,
+            Stage = Stage.Six,
         };
 
-        internal static Properties ValidProperties => new Properties()
-        {
-            signature = "PSCR",
-            size1 = 0x18,
-            size2 = 0x18,
-            trialCount = 987,
-            highScore = 123456,
-            chara = Chara.ReimuB,
-            level = Level.Hard,
-            stage = Stage.Six,
-        };
-
-        internal static byte[] MakeData(in Properties properties)
+        internal static byte[] MakeByteArray(IPracticeScore score)
             => TestUtils.MakeByteArray(
+                score.Signature.ToCharArray(),
+                score.Size1,
+                score.Size2,
                 0u,
-                properties.trialCount,
-                properties.highScore,
-                (byte)properties.chara,
-                (byte)properties.level,
-                (byte)properties.stage,
+                score.TrialCount,
+                score.HighScore,
+                (byte)score.Chara,
+                (byte)score.Level,
+                (byte)score.Stage,
                 (byte)0);
 
-        internal static byte[] MakeByteArray(in Properties properties)
-            => TestUtils.MakeByteArray(
-                properties.signature.ToCharArray(), properties.size1, properties.size2, MakeData(properties));
-
-        internal static void Validate(in PracticeScore score, in Properties properties)
+        internal static void Validate(IPracticeScore expected, IPracticeScore actual)
         {
-            var data = MakeData(properties);
-
-            Assert.AreEqual(properties.signature, score.Signature);
-            Assert.AreEqual(properties.size1, score.Size1);
-            Assert.AreEqual(properties.size2, score.Size2);
-            Assert.AreEqual(data[0], score.FirstByteOfData);
-            Assert.AreEqual(properties.trialCount, score.TrialCount);
-            Assert.AreEqual(properties.highScore, score.HighScore);
-            Assert.AreEqual(properties.chara, score.Chara);
-            Assert.AreEqual(properties.level, score.Level);
-            Assert.AreEqual(properties.stage, score.Stage);
+            Assert.AreEqual(expected.Signature, actual.Signature);
+            Assert.AreEqual(expected.Size1, actual.Size1);
+            Assert.AreEqual(expected.Size2, actual.Size2);
+            Assert.AreEqual(expected.FirstByteOfData, actual.FirstByteOfData);
+            Assert.AreEqual(expected.TrialCount, actual.TrialCount);
+            Assert.AreEqual(expected.HighScore, actual.HighScore);
+            Assert.AreEqual(expected.Chara, actual.Chara);
+            Assert.AreEqual(expected.Level, actual.Level);
+            Assert.AreEqual(expected.Stage, actual.Stage);
         }
 
         [TestMethod]
         public void PracticeScoreTestChapter() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(ValidStub));
             var score = new PracticeScore(chapter.Target);
 
-            Validate(score, properties);
+            Validate(ValidStub, score);
         });
 
         [TestMethod]
@@ -89,10 +73,10 @@ namespace ThScoreFileConverterTests.Models.Th07
         [ExpectedException(typeof(InvalidDataException))]
         public void PracticeScoreTestInvalidSignature() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.signature = properties.signature.ToLowerInvariant();
+            var stub = new PracticeScoreStub(ValidStub);
+            stub.Signature = stub.Signature.ToLowerInvariant();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
             _ = new PracticeScore(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -102,10 +86,10 @@ namespace ThScoreFileConverterTests.Models.Th07
         [ExpectedException(typeof(InvalidDataException))]
         public void PracticeScoreTestInvalidSize1() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            --properties.size1;
+            var stub = new PracticeScoreStub(ValidStub);
+            --stub.Size1;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
             _ = new PracticeScore(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -120,10 +104,12 @@ namespace ThScoreFileConverterTests.Models.Th07
         [ExpectedException(typeof(InvalidCastException))]
         public void PracticeScoreTestInvalidChara(int chara) => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.chara = TestUtils.Cast<Chara>(chara);
+            var stub = new PracticeScoreStub(ValidStub)
+            {
+                Chara = TestUtils.Cast<Chara>(chara),
+            };
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
             _ = new PracticeScore(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -138,10 +124,12 @@ namespace ThScoreFileConverterTests.Models.Th07
         [ExpectedException(typeof(InvalidCastException))]
         public void PracticeScoreTestInvalidLevel(int level) => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.level = TestUtils.Cast<Level>(level);
+            var stub = new PracticeScoreStub(ValidStub)
+            {
+                Level = TestUtils.Cast<Level>(level),
+            };
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
             _ = new PracticeScore(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -156,10 +144,12 @@ namespace ThScoreFileConverterTests.Models.Th07
         [ExpectedException(typeof(InvalidCastException))]
         public void PracticeScoreTestInvalidStage(int stage) => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.stage = TestUtils.Cast<Stage>(stage);
+            var stub = new PracticeScoreStub(ValidStub)
+            {
+                Stage = TestUtils.Cast<Stage>(stage),
+            };
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
             _ = new PracticeScore(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
