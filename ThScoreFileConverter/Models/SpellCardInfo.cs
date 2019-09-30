@@ -6,6 +6,7 @@
 //-----------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using ThScoreFileConverter.Properties;
 
@@ -81,12 +82,12 @@ namespace ThScoreFileConverter.Models
         /// <summary>
         /// Gets the level which the current spell card is used.
         /// </summary>
-        public TLevel Level => this.Levels[0];
+        public TLevel Level => this.Levels.First();
 
         /// <summary>
         /// Gets the levels which the current spell card is used.
         /// </summary>
         /// <remarks>This is for TH06 only.</remarks>
-        public TLevel[] Levels { get; }
+        public IEnumerable<TLevel> Levels { get; }
     }
 }

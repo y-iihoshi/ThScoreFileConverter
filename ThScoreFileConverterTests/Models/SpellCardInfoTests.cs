@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Extensions;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -20,7 +21,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual("月符「ムーンライトレイ」", info.Name);
             Assert.AreEqual(Stage.One, info.Stage);
             Assert.AreEqual(Level.Hard, info.Level);
-            CollectionAssert.AreEqual(new Level[] { Level.Hard, Level.Lunatic }, info.Levels);
+            CollectionAssert.That.AreEqual(new[] { Level.Hard, Level.Lunatic }, info.Levels);
         }
 
         [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.SpellCardInfo`2<ThScoreFileConverter.Models.ThConverter+Stage,ThScoreFileConverter.Models.ThConverter+Level>")]
@@ -98,7 +99,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual("霜符「フロストコラムス」", info.Name);
             Assert.AreEqual(Stage.One, info.Stage);
             Assert.AreEqual(Level.Hard, info.Level);
-            CollectionAssert.AreEqual(new Level[] { Level.Hard }, info.Levels);
+            CollectionAssert.That.AreEqual(new[] { Level.Hard }, info.Levels);
         }
 
         [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.SpellCardInfo`2<ThScoreFileConverter.Models.ThConverter+Stage,ThScoreFileConverter.Models.ThConverter+Level>")]
