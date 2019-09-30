@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
@@ -8,7 +7,6 @@ namespace ThScoreFileConverterTests.Models
     [TestClass]
     public class TimeTests
     {
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.Time")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestNegative()
@@ -43,7 +41,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.IsTrue(time.IsFrames);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.Time")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestNegativeFrame()
@@ -78,7 +75,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.IsTrue(time.IsFrames);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.Time")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestNegativeMillisecond()
@@ -126,7 +122,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.IsTrue(time.IsFrames);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.Time")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsNegativeHour()
@@ -148,7 +143,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.IsTrue(time.IsFrames);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.Time")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsNegativeMinute()
@@ -157,7 +151,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.Time")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsExceededMinutes()
@@ -166,7 +159,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.Time")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsNegativeSecond()
@@ -175,7 +167,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.Time")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsExceededSeconds()
@@ -184,7 +175,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.Time")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsNegativeFrame()
@@ -193,7 +183,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.Time")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsExceededFrames()
@@ -215,7 +204,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.IsTrue(time.IsFrames);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.Time")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsWithFramesNegativeHour()
@@ -237,7 +225,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.IsTrue(time.IsFrames);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.Time")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsWithFramesNegativeMinute()
@@ -246,7 +233,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.Time")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsWithFramesExceededMinutes()
@@ -255,7 +241,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.Time")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsWithFramesNegativeSecond()
@@ -264,7 +249,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.Time")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsWithFramesExceededSeconds()
@@ -273,7 +257,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.Time")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsWithFramesNegativeFrame()
@@ -282,7 +265,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.Time")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsWithFramesExceededFrames()
@@ -304,7 +286,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.IsFalse(time.IsFrames);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.Time")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsWithMillisecondsNegativeHour()
@@ -326,7 +307,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.IsFalse(time.IsFrames);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.Time")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsWithMillisecondsNegativeMinute()
@@ -335,7 +315,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.Time")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsWithMillisecondsExceededMinutes()
@@ -344,7 +323,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.Time")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsWithMillisecondsNegativeSecond()
@@ -353,7 +331,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.Time")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsWithMillisecondsExceededSeconds()
@@ -362,7 +339,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.Time")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsWithMillisecondsNegativeMillisecond()
@@ -371,7 +347,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.Time")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TimeTestComponentsWithMillisecondsExceededMilliseconds()

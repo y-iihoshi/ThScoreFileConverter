@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Interop;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -33,7 +32,6 @@ namespace ThScoreFileConverterTests.Interactivity
             Assert.AreEqual(IntPtr.Zero, win32window.Handle);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Actions.Win32Window")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Win32WindowTestNull()

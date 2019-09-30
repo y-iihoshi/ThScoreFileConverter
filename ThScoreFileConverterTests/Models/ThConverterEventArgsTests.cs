@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverterTests.Models
@@ -34,7 +33,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(default, args.Total);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.ThConverterEventArgs")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void ThConverterEventArgsTestNullPath()
@@ -43,7 +41,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.ThConverterEventArgs")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ThConverterEventArgsTestEmptyPath()
@@ -52,7 +49,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.ThConverterEventArgs")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ThConverterEventArgsTestNegativeCurrent()
@@ -61,7 +57,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.ThConverterEventArgs")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ThConverterEventArgsTestZeroCurrent()
@@ -70,7 +65,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.ThConverterEventArgs")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ThConverterEventArgsTestExtendedCurrent()
@@ -79,7 +73,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.ThConverterEventArgs")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ThConverterEventArgsTestNegativeTotal()
@@ -88,7 +81,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.ThConverterEventArgs")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ThConverterEventArgsTestZeroTotal()

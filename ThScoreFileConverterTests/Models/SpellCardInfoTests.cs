@@ -24,7 +24,6 @@ namespace ThScoreFileConverterTests.Models
             CollectionAssert.That.AreEqual(new[] { Level.Hard, Level.Lunatic }, info.Levels);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.SpellCardInfo`2<ThScoreFileConverter.Models.ThConverter+Stage,ThScoreFileConverter.Models.ThConverter+Level>")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void SpellCardInfoTestNegativeId()
@@ -33,7 +32,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.SpellCardInfo`2<ThScoreFileConverter.Models.ThConverter+Stage,ThScoreFileConverter.Models.ThConverter+Level>")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void SpellCardInfoTestZeroId()
@@ -42,7 +40,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.SpellCardInfo`2<ThScoreFileConverter.Models.ThConverter+Stage,ThScoreFileConverter.Models.ThConverter+Level>")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void SpellCardInfoTestNullName()
@@ -51,7 +48,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.SpellCardInfo`2<ThScoreFileConverter.Models.ThConverter+Stage,ThScoreFileConverter.Models.ThConverter+Level>")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void SpellCardInfoTestEmptyName()
@@ -63,7 +59,6 @@ namespace ThScoreFileConverterTests.Models
         public static IEnumerable<object[]> InvalidStages
             => TestUtils.GetInvalidEnumerators(typeof(Stage));
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.SpellCardInfo`2<ThScoreFileConverter.Models.ThConverter+Stage,ThScoreFileConverter.Models.ThConverter+Level>")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidStages))]
@@ -78,7 +73,6 @@ namespace ThScoreFileConverterTests.Models
         public static IEnumerable<object[]> InvalidLevels
             => TestUtils.GetInvalidEnumerators(typeof(Level));
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.SpellCardInfo`2<ThScoreFileConverter.Models.ThConverter+Stage,ThScoreFileConverter.Models.ThConverter+Level>")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
@@ -102,7 +96,6 @@ namespace ThScoreFileConverterTests.Models
             CollectionAssert.That.AreEqual(new[] { Level.Hard }, info.Levels);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.SpellCardInfo`2<ThScoreFileConverter.Models.ThConverter+Stage,ThScoreFileConverter.Models.ThConverter+Level>")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void SpellCardInfoTestZeroLevels()
@@ -111,7 +104,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.SpellCardInfo`2<ThScoreFileConverter.Models.ThConverter+Stage,ThScoreFileConverter.Models.ThConverter+Level>")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void SpellCardInfoTestNullLevels()

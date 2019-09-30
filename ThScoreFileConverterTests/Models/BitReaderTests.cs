@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using ThScoreFileConverter.Models;
 
@@ -9,7 +8,6 @@ namespace ThScoreFileConverterTests.Models
     [TestClass]
     public class BitReaderTests
     {
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.BitReader")]
         [TestMethod]
         public void BitReaderTest()
         {
@@ -23,7 +21,6 @@ namespace ThScoreFileConverterTests.Models
             }
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.BitReader")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void BitReaderTestNoStream()
@@ -33,7 +30,6 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "ThScoreFileConverter.Models.BitReader")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void BitReaderTestUnreadable()
