@@ -7,11 +7,9 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-using ThScoreFileConverter.Models.Th07;
-
 namespace ThScoreFileConverter.Models.Th08
 {
-    internal class FileHeader : FileHeaderBase
+    internal class FileHeader : Th07.FileHeaderBase
     {
         public const short ValidVersion = 0x0001;
         public const int ValidSize = 0x0000001C;

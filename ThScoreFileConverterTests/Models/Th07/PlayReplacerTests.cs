@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;

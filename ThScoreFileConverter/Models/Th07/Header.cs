@@ -8,16 +8,15 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.IO;
-using ThScoreFileConverter.Models.Th06;
 
 namespace ThScoreFileConverter.Models.Th07
 {
-    internal class Header : Chapter
+    internal class Header : Th06.Chapter
     {
         public const string ValidSignature = "TH7K";
         public const short ValidSize = 0x000C;
 
-        public Header(Chapter chapter)
+        public Header(Th06.Chapter chapter)
             : base(chapter, ValidSignature, ValidSize)
         {
             using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
