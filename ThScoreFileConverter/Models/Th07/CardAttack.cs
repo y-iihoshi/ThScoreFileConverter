@@ -22,31 +22,17 @@ namespace ThScoreFileConverter.Models.Th07
             : base(chapter, ValidSignature, ValidSize)
         {
             var charas = Utils.GetEnumerator<CharaWithTotal>();
-            var numCharas = charas.Count();
-            var maxBonuses = new Dictionary<CharaWithTotal, uint>(numCharas);
-            var trialCounts = new Dictionary<CharaWithTotal, ushort>(numCharas);
-            var clearCounts = new Dictionary<CharaWithTotal, ushort>(numCharas);
 
             using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
             {
                 reader.ReadUInt32();    // always 0x00000001?
-
-                foreach (var chara in charas)
-                    maxBonuses.Add(chara, reader.ReadUInt32());
-                this.MaxBonuses = maxBonuses;
-
+                this.MaxBonuses = charas.ToDictionary(chara => chara, chara => reader.ReadUInt32());
                 this.CardId = (short)(reader.ReadInt16() + 1);
                 reader.ReadByte();
                 this.CardName = reader.ReadExactBytes(0x30);
                 reader.ReadByte();      // always 0x00?
-
-                foreach (var chara in charas)
-                    trialCounts.Add(chara, reader.ReadUInt16());
-                this.TrialCounts = trialCounts;
-
-                foreach (var chara in charas)
-                    clearCounts.Add(chara, reader.ReadUInt16());
-                this.ClearCounts = clearCounts;
+                this.TrialCounts = charas.ToDictionary(chara => chara, chara => reader.ReadUInt16());
+                this.ClearCounts = charas.ToDictionary(chara => chara, chara => reader.ReadUInt16());
             }
         }
 

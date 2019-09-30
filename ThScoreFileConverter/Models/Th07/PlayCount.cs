@@ -10,18 +10,17 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace ThScoreFileConverter.Models.Th07
 {
     internal class PlayCount : IBinaryReadable  // per level-with-total
     {
-        private readonly Dictionary<Chara, int> trials;
-
-        public PlayCount() => this.trials = new Dictionary<Chara, int>(Enum.GetValues(typeof(Chara)).Length);
+        public PlayCount() => this.Trials = new Dictionary<Chara, int>(Enum.GetValues(typeof(Chara)).Length);
 
         public int TotalTrial { get; private set; }
 
-        public IReadOnlyDictionary<Chara, int> Trials => this.trials;
+        public IReadOnlyDictionary<Chara, int> Trials { get; private set; }
 
         public int TotalRetry { get; private set; }
 
@@ -37,8 +36,7 @@ namespace ThScoreFileConverter.Models.Th07
                 throw new ArgumentNullException(nameof(reader));
 
             this.TotalTrial = reader.ReadInt32();
-            foreach (var chara in Utils.GetEnumerator<Chara>())
-                this.trials.Add(chara, reader.ReadInt32());
+            this.Trials = Utils.GetEnumerator<Chara>().ToDictionary(chara => chara, chara => reader.ReadInt32());
             this.TotalRetry = reader.ReadInt32();
             this.TotalClear = reader.ReadInt32();
             this.TotalContinue = reader.ReadInt32();

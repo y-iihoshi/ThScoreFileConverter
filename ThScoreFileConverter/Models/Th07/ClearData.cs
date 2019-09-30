@@ -22,22 +22,12 @@ namespace ThScoreFileConverter.Models.Th07
             : base(chapter, ValidSignature, ValidSize)
         {
             var levels = Utils.GetEnumerator<Level>();
-            var numLevels = levels.Count();
-            var storyFlags = new Dictionary<Level, byte>(numLevels);
-            var practiceFlags = new Dictionary<Level, byte>(numLevels);
 
             using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
             {
                 reader.ReadUInt32();    // always 0x00000001?
-
-                foreach (var level in levels)
-                    storyFlags.Add(level, reader.ReadByte());
-                this.StoryFlags = storyFlags;
-
-                foreach (var level in levels)
-                    practiceFlags.Add(level, reader.ReadByte());
-                this.PracticeFlags = practiceFlags;
-
+                this.StoryFlags = levels.ToDictionary(level => level, level => reader.ReadByte());
+                this.PracticeFlags = levels.ToDictionary(level => level, level => reader.ReadByte());
                 this.Chara = Utils.ToEnum<Chara>(reader.ReadInt32());
             }
         }
