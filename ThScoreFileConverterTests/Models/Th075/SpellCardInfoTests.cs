@@ -1,11 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverterTests.Models.Wrappers;
+using ThScoreFileConverter.Models.Th075;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th075
 {
     [TestClass]
-    public class Th075SpellCardInfoTests
+    public class SpellCardInfoTests
     {
         internal struct Properties
         {
@@ -21,7 +21,7 @@ namespace ThScoreFileConverterTests.Models
             level = Th075Converter.Level.Normal
         };
 
-        internal static void Validate(in Th075SpellCardInfoWrapper spellCardInfo, in Properties properties)
+        internal static void Validate(in Properties properties, in SpellCardInfo spellCardInfo)
         {
             Assert.AreEqual(properties.name, spellCardInfo.Name);
             Assert.AreEqual(properties.enemy, spellCardInfo.Enemy);
@@ -29,13 +29,13 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        public void Th075SpellCardInfoTest() => TestUtils.Wrap(() =>
+        public void SpellCardInfoTest() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
 
-            var spellCardInfo = new Th075SpellCardInfoWrapper(properties.name, properties.enemy, properties.level);
+            var spellCardInfo = new SpellCardInfo(properties.name, properties.enemy, properties.level);
 
-            Validate(spellCardInfo, properties);
+            Validate(properties, spellCardInfo);
         });
     }
 }

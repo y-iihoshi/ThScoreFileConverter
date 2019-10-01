@@ -762,22 +762,6 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class SpellCardInfo
-        {
-            public SpellCardInfo(string name, Chara enemy, Level level)
-            {
-                this.Name = name;
-                this.Enemy = enemy;
-                this.Level = level;
-            }
-
-            public string Name { get; }
-
-            public Chara Enemy { get; }
-
-            public Level Level { get; }
-        }
-
         private class AllScoreData : IBinaryReadable
         {
             public AllScoreData()
