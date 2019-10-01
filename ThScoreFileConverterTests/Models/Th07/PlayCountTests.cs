@@ -53,28 +53,6 @@ namespace ThScoreFileConverterTests.Models.Th07
                 properties.totalContinue,
                 properties.totalPractice);
 
-        internal static PlayCount Create(byte[] array)
-        {
-            var playCount = new PlayCount();
-
-            MemoryStream stream = null;
-            try
-            {
-                stream = new MemoryStream(array);
-                using (var reader = new BinaryReader(stream))
-                {
-                    stream = null;
-                    playCount.ReadFrom(reader);
-                }
-            }
-            finally
-            {
-                stream?.Dispose();
-            }
-
-            return playCount;
-        }
-
         internal static void Validate(in PlayCount playCount, in Properties properties)
         {
             Assert.AreEqual(properties.totalTrial, playCount.TotalTrial);
@@ -103,7 +81,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         {
             var properties = ValidProperties;
 
-            var playCount = Create(MakeByteArray(properties));
+            var playCount = TestUtils.Create<PlayCount>(MakeByteArray(properties));
 
             Validate(playCount, properties);
         });
@@ -125,7 +103,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             var properties = new Properties(ValidProperties);
             properties.trials.Remove(Chara.SakuyaB);
 
-            _ = Create(MakeByteArray(properties));
+            _ = TestUtils.Create<PlayCount>(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -136,7 +114,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             var properties = new Properties(ValidProperties);
             properties.trials.Add(TestUtils.Cast<Chara>(99), 99);
 
-            var playCount = Create(MakeByteArray(properties));
+            var playCount = TestUtils.Create<PlayCount>(MakeByteArray(properties));
 
             Assert.AreEqual(properties.totalTrial, playCount.TotalTrial);
             CollectionAssert.That.AreNotEqual(properties.trials.Values, playCount.Trials.Values);

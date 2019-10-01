@@ -53,30 +53,6 @@ namespace ThScoreFileConverterTests.Models.Th105
                 properties.spellCardResults
                     .SelectMany(pair => SpellCardResultTests.MakeByteArray(pair.Value)).ToArray());
 
-        internal static ClearData<TChara, TLevel> Create<TChara, TLevel>(byte[] array)
-            where TChara : struct, Enum
-            where TLevel : struct, Enum
-        {
-            var clearData = new ClearData<TChara, TLevel>();
-
-            MemoryStream stream = null;
-            try
-            {
-                stream = new MemoryStream(array);
-                using (var reader = new BinaryReader(stream))
-                {
-                    stream = null;
-                    clearData.ReadFrom(reader);
-                }
-            }
-            finally
-            {
-                stream?.Dispose();
-            }
-
-            return clearData;
-        }
-
         internal static void Validate<TChara, TLevel>(
             in ClearData<TChara, TLevel> clearData,
             in Properties<TChara, TLevel> properties)
@@ -113,7 +89,7 @@ namespace ThScoreFileConverterTests.Models.Th105
             {
                 var properties = GetValidProperties<TChara, TLevel>();
 
-                var clearData = Create<TChara, TLevel>(MakeByteArray(properties));
+                var clearData = TestUtils.Create<ClearData<TChara, TLevel>>(MakeByteArray(properties));
 
                 Validate(clearData, properties);
             });
@@ -138,7 +114,7 @@ namespace ThScoreFileConverterTests.Models.Th105
                 var array = MakeByteArray(properties);
                 array = array.Take(array.Length - 1).ToArray();
 
-                Create<TChara, TLevel>(array);
+                _ = TestUtils.Create<ClearData<TChara, TLevel>>(array);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -151,7 +127,7 @@ namespace ThScoreFileConverterTests.Models.Th105
                 var properties = GetValidProperties<TChara, TLevel>();
                 var array = MakeByteArray(properties).Concat(new byte[1] { 1 }).ToArray();
 
-                var clearData = Create<TChara, TLevel>(array);
+                var clearData = TestUtils.Create<ClearData<TChara, TLevel>>(array);
 
                 Validate(clearData, properties);
             });
@@ -172,7 +148,7 @@ namespace ThScoreFileConverterTests.Models.Th105
                         .SelectMany(pair => SpellCardResultTests.MakeByteArray(pair.Value)).ToArray(),
                     SpellCardResultTests.MakeByteArray(properties.spellCardResults.First().Value));
 
-                var clearData = Create<TChara, TLevel>(array);
+                var clearData = TestUtils.Create<ClearData<TChara, TLevel>>(array);
 
                 Validate(clearData, properties);
             });

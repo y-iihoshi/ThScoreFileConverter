@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th075;
@@ -75,28 +74,6 @@ namespace ThScoreFileConverterTests.Models.Th075
                 new byte[0x38],
                 properties.ranking.SelectMany(element => HighScoreTests.MakeByteArray(element)).ToArray());
 
-        internal static ClearData Create(byte[] array)
-        {
-            var clearData = new ClearData();
-
-            MemoryStream stream = null;
-            try
-            {
-                stream = new MemoryStream(array);
-                using (var reader = new BinaryReader(stream))
-                {
-                    stream = null;
-                    clearData.ReadFrom(reader);
-                }
-            }
-            finally
-            {
-                stream?.Dispose();
-            }
-
-            return clearData;
-        }
-
         internal static void Validate(in Properties properties, in ClearData clearData)
         {
             Assert.AreEqual(properties.useCount, clearData.UseCount);
@@ -132,7 +109,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         {
             var properties = ValidProperties;
 
-            var clearData = Create(MakeByteArray(properties));
+            var clearData = TestUtils.Create<ClearData>(MakeByteArray(properties));
 
             Validate(properties, clearData);
         });

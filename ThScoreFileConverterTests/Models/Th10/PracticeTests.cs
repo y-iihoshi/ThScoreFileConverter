@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.IO;
 using ThScoreFileConverter.Models.Th10;
 
 namespace ThScoreFileConverterTests.Models.Th10
@@ -22,28 +21,6 @@ namespace ThScoreFileConverterTests.Models.Th10
 
         internal static byte[] MakeByteArray(in Properties properties)
             => TestUtils.MakeByteArray(properties.score, properties.stageFlag);
-
-        internal static Practice Create(byte[] array)
-        {
-            var practice = new Practice();
-
-            MemoryStream stream = null;
-            try
-            {
-                stream = new MemoryStream(array);
-                using (var reader = new BinaryReader(stream))
-                {
-                    stream = null;
-                    practice.ReadFrom(reader);
-                }
-            }
-            finally
-            {
-                stream?.Dispose();
-            }
-
-            return practice;
-        }
 
         internal static void Validate(in Practice practice, in Properties properties)
         {
@@ -67,7 +44,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             {
                 var properties = ValidProperties;
 
-                var practice = Create(MakeByteArray(properties));
+                var practice = TestUtils.Create<Practice>(MakeByteArray(properties));
 
                 Validate(practice, properties);
             });

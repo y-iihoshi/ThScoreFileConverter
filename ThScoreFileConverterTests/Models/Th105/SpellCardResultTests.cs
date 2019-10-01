@@ -46,30 +46,6 @@ namespace ThScoreFileConverterTests.Models.Th105
                 properties.gotCount,
                 properties.frames);
 
-        internal static SpellCardResult<TChara, TLevel> Create<TChara, TLevel>(byte[] array)
-            where TChara : struct, Enum
-            where TLevel : struct, Enum
-        {
-            var spellCardResult = new SpellCardResult<TChara, TLevel>();
-
-            MemoryStream stream = null;
-            try
-            {
-                stream = new MemoryStream(array);
-                using (var reader = new BinaryReader(stream))
-                {
-                    stream = null;
-                    spellCardResult.ReadFrom(reader);
-                }
-            }
-            finally
-            {
-                stream?.Dispose();
-            }
-
-            return spellCardResult;
-        }
-
         internal static void Validate<TChara, TLevel>(
             in SpellCardResult<TChara, TLevel> spellCardResult,
             in Properties<TChara, TLevel> properties)
@@ -103,7 +79,7 @@ namespace ThScoreFileConverterTests.Models.Th105
             {
                 var properties = GetValidProperties<TChara, TLevel>();
 
-                var spellCardResult = Create<TChara, TLevel>(MakeByteArray(properties));
+                var spellCardResult = TestUtils.Create<SpellCardResult<TChara, TLevel>>(MakeByteArray(properties));
 
                 Validate(spellCardResult, properties);
             });
@@ -128,7 +104,7 @@ namespace ThScoreFileConverterTests.Models.Th105
                 var array = MakeByteArray(properties);
                 array = array.Take(array.Length - 1).ToArray();
 
-                Create<TChara, TLevel>(array);
+                _ = TestUtils.Create<SpellCardResult<TChara, TLevel>>(array);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -141,7 +117,7 @@ namespace ThScoreFileConverterTests.Models.Th105
                 var properties = GetValidProperties<TChara, TLevel>();
                 var array = MakeByteArray(properties).Concat(new byte[1] { 1 }).ToArray();
 
-                var spellCardResult = Create<TChara, TLevel>(array);
+                var spellCardResult = TestUtils.Create<SpellCardResult<TChara, TLevel>>(array);
 
                 Validate(spellCardResult, properties);
             });

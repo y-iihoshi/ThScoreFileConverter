@@ -72,28 +72,6 @@ namespace ThScoreFileConverterTests.Models.Th075
                 new byte[0x128]);
         }
 
-        internal static Status Create(byte[] array)
-        {
-            var status = new Status();
-
-            MemoryStream stream = null;
-            try
-            {
-                stream = new MemoryStream(array);
-                using (var reader = new BinaryReader(stream))
-                {
-                    stream = null;
-                    status.ReadFrom(reader);
-                }
-            }
-            finally
-            {
-                stream?.Dispose();
-            }
-
-            return status;
-        }
-
         internal static void Validate(in Properties properties, in Status status)
         {
             Assert.AreEqual(properties.decodedLastName, status.LastName);
@@ -119,7 +97,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         {
             var properties = ValidProperties;
 
-            var status = Create(MakeByteArray(properties));
+            var status = TestUtils.Create<Status>(MakeByteArray(properties));
 
             Validate(properties, status);
         });
@@ -142,7 +120,7 @@ namespace ThScoreFileConverterTests.Models.Th075
             properties.encodedLastName =
                 properties.encodedLastName.Take(properties.encodedLastName.Length - 1).ToArray();
 
-            _ = Create(MakeByteArray(properties));
+            _ = TestUtils.Create<Status>(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -153,7 +131,7 @@ namespace ThScoreFileConverterTests.Models.Th075
             var properties = ValidProperties;
             properties.encodedLastName = properties.encodedLastName.Concat(new byte[1] { 1 }).ToArray();
 
-            var status = Create(MakeByteArray(properties));
+            var status = TestUtils.Create<Status>(MakeByteArray(properties));
 
             Assert.AreEqual("Player1 ", status.LastName);
             CollectionAssert.That.AreNotEqual(
@@ -170,7 +148,7 @@ namespace ThScoreFileConverterTests.Models.Th075
                 .ToDictionary(pair => pair.Key, pair => pair.Value);
             properties.arcadeScores[Chara.Meiling] = scores;
 
-            _ = Create(MakeByteArray(properties));
+            _ = TestUtils.Create<Status>(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -184,7 +162,7 @@ namespace ThScoreFileConverterTests.Models.Th075
             scores.Add(TestUtils.Cast<Chara>(99), 99);
             properties.arcadeScores[Chara.Meiling] = scores;
 
-            var status = Create(MakeByteArray(properties));
+            var status = TestUtils.Create<Status>(MakeByteArray(properties));
 
             Validate(ValidProperties, status);
         });

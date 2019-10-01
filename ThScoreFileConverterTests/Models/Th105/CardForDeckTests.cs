@@ -24,28 +24,6 @@ namespace ThScoreFileConverterTests.Models.Th105
         internal static byte[] MakeByteArray(in Properties properties)
             => TestUtils.MakeByteArray(properties.id, properties.maxNumber);
 
-        internal static CardForDeck Create(byte[] array)
-        {
-            var cardForDeck = new CardForDeck();
-
-            MemoryStream stream = null;
-            try
-            {
-                stream = new MemoryStream(array);
-                using (var reader = new BinaryReader(stream))
-                {
-                    stream = null;
-                    cardForDeck.ReadFrom(reader);
-                }
-            }
-            finally
-            {
-                stream?.Dispose();
-            }
-
-            return cardForDeck;
-        }
-
         internal static void Validate(in CardForDeck cardForDeck, in Properties properties)
         {
             Assert.AreEqual(properties.id, cardForDeck.Id);
@@ -69,7 +47,7 @@ namespace ThScoreFileConverterTests.Models.Th105
             {
                 var properties = ValidProperties;
 
-                var cardForDeck = Create(MakeByteArray(properties));
+                var cardForDeck = TestUtils.Create<CardForDeck>(MakeByteArray(properties));
 
                 Validate(cardForDeck, properties);
             });
@@ -94,7 +72,7 @@ namespace ThScoreFileConverterTests.Models.Th105
                 var array = MakeByteArray(properties);
                 array = array.Take(array.Length - 1).ToArray();
 
-                Create(array);
+                _ = TestUtils.Create<CardForDeck>(array);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -106,7 +84,7 @@ namespace ThScoreFileConverterTests.Models.Th105
                 var properties = ValidProperties;
                 var array = MakeByteArray(properties).Concat(new byte[1] { 1 }).ToArray();
 
-                var cardForDeck = Create(array);
+                var cardForDeck = TestUtils.Create<CardForDeck>(array);
 
                 Validate(cardForDeck, properties);
             });

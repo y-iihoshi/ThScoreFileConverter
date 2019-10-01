@@ -39,28 +39,6 @@ namespace ThScoreFileConverterTests.Models.Th10
                 properties.id - 1,
                 (int)properties.level);
 
-        internal static SpellCard Create(byte[] array)
-        {
-            var spellCard = new SpellCard();
-
-            MemoryStream stream = null;
-            try
-            {
-                stream = new MemoryStream(array);
-                using (var reader = new BinaryReader(stream))
-                {
-                    stream = null;
-                    spellCard.ReadFrom(reader);
-                }
-            }
-            finally
-            {
-                stream?.Dispose();
-            }
-
-            return spellCard;
-        }
-
         internal static void Validate(in SpellCard spellCard, in Properties properties)
         {
             CollectionAssert.That.AreEqual(properties.name, spellCard.Name);
@@ -87,7 +65,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             {
                 var properties = ValidProperties;
 
-                var spellCard = Create(MakeByteArray(properties));
+                var spellCard = TestUtils.Create<SpellCard>(MakeByteArray(properties));
 
                 Validate(spellCard, properties);
                 Assert.IsTrue(spellCard.HasTried);
@@ -113,7 +91,7 @@ namespace ThScoreFileConverterTests.Models.Th10
                 var properties = ValidProperties;
                 properties.name = properties.name.Take(properties.name.Length - 1).ToArray();
 
-                var spellCard = Create(MakeByteArray(properties));
+                var spellCard = TestUtils.Create<SpellCard>(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -127,7 +105,7 @@ namespace ThScoreFileConverterTests.Models.Th10
                 var properties = ValidProperties;
                 properties.name = properties.name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
 
-                var spellCard = Create(MakeByteArray(properties));
+                var spellCard = TestUtils.Create<SpellCard>(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -146,7 +124,7 @@ namespace ThScoreFileConverterTests.Models.Th10
                 var properties = ValidProperties;
                 properties.level = TestUtils.Cast<Level>(level);
 
-                var spellCard = Create(MakeByteArray(properties));
+                var spellCard = TestUtils.Create<SpellCard>(MakeByteArray(properties));
 
                 Assert.Fail(TestUtils.Unreachable);
             });

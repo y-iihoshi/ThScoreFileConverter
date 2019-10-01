@@ -37,28 +37,6 @@ namespace ThScoreFileConverterTests.Models.Th075
                 new byte[2],
                 properties.score);
 
-        internal static HighScore Create(byte[] array)
-        {
-            var highScore = new HighScore();
-
-            MemoryStream stream = null;
-            try
-            {
-                stream = new MemoryStream(array);
-                using (var reader = new BinaryReader(stream))
-                {
-                    stream = null;
-                    highScore.ReadFrom(reader);
-                }
-            }
-            finally
-            {
-                stream?.Dispose();
-            }
-
-            return highScore;
-        }
-
         internal static void Validate(in Properties properties, in HighScore highScore)
         {
             Assert.AreEqual(properties.decodedName, highScore.Name);
@@ -81,7 +59,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         [TestMethod]
         public void ReadFromTest() => TestUtils.Wrap(() =>
         {
-            var highScore = Create(MakeByteArray(ValidProperties));
+            var highScore = TestUtils.Create<HighScore>(MakeByteArray(ValidProperties));
 
             Validate(ValidProperties, highScore);
         });
@@ -103,7 +81,7 @@ namespace ThScoreFileConverterTests.Models.Th075
             var properties = ValidProperties;
             properties.encodedName = properties.encodedName.SkipLast(1).ToArray();
 
-            Create(MakeByteArray(properties));
+            _ = TestUtils.Create<HighScore>(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -116,7 +94,7 @@ namespace ThScoreFileConverterTests.Models.Th075
             var properties = ValidProperties;
             properties.encodedName = properties.encodedName.Concat(new byte[] { default }).ToArray();
 
-            var highScore = Create(MakeByteArray(properties));
+            var highScore = TestUtils.Create<HighScore>(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -155,7 +133,7 @@ namespace ThScoreFileConverterTests.Models.Th075
             properties.month = (byte)month;
             properties.day = (byte)day;
 
-            var highScore = Create(MakeByteArray(properties));
+            var highScore = TestUtils.Create<HighScore>(MakeByteArray(properties));
 
             Validate(properties, highScore);
         });
@@ -195,7 +173,7 @@ namespace ThScoreFileConverterTests.Models.Th075
             properties.month = (byte)month;
             properties.day = (byte)day;
 
-            Create(MakeByteArray(properties));
+            _ = TestUtils.Create<HighScore>(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
         });

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.ExceptionServices;
 using System.Text;
+using IBinaryReadable = ThScoreFileConverter.Models.IBinaryReadable;
 using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
 
 namespace ThScoreFileConverterTests.Models
@@ -217,6 +218,29 @@ namespace ThScoreFileConverterTests.Models
                 .Repeat(defaultValue, length)
                 .Select(i => (TResult)Convert.ChangeType(getNextValue(), typeof(TResult), CultureInfo.InvariantCulture))
                 .ToArray();
+        }
+
+        public static T Create<T>(byte[] array)
+            where T : IBinaryReadable, new()
+        {
+            var instance = new T();
+
+            MemoryStream stream = null;
+            try
+            {
+                stream = new MemoryStream(array);
+                using (var reader = new BinaryReader(stream))
+                {
+                    stream = null;
+                    instance.ReadFrom(reader);
+                }
+            }
+            finally
+            {
+                stream?.Dispose();
+            }
+
+            return instance;
         }
 
         public static TResult Cast<TResult>(object value)
