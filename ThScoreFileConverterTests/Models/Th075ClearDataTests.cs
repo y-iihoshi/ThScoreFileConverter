@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverterTests.Extensions;
+using ThScoreFileConverterTests.Models.Th075;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -21,7 +22,7 @@ namespace ThScoreFileConverterTests.Models
             public List<short> cardGotCount;
             public List<short> cardTrialCount;
             public List<byte> cardTrulyGot;
-            public List<Th075HighScoreTests.Properties> ranking;
+            public List<HighScoreTests.Properties> ranking;
         };
 
         internal static Properties DefaultProperties => new Properties()
@@ -34,7 +35,7 @@ namespace ThScoreFileConverterTests.Models
             cardGotCount = new List<short>(),
             cardTrialCount = new List<short>(),
             cardTrulyGot = new List<byte>(),
-            ranking = new List<Th075HighScoreTests.Properties>()
+            ranking = new List<HighScoreTests.Properties>()
         };
 
         internal static Properties ValidProperties => new Properties()
@@ -48,7 +49,7 @@ namespace ThScoreFileConverterTests.Models
             cardTrialCount = TestUtils.MakeRandomArray<short>(100).ToList(),
             cardTrulyGot = TestUtils.MakeRandomArray<byte>(100).ToList(),
             ranking = Enumerable.Range(0, 10)
-                .Select(index => new Th075HighScoreTests.Properties()
+                .Select(index => new HighScoreTests.Properties()
                 {
                     encodedName = new byte[] { 15, 37, 26, 50, 30, 43, (byte)(52 + index), 103 },
                     decodedName = Utils.Format("Player{0} ", index),
@@ -72,7 +73,7 @@ namespace ThScoreFileConverterTests.Models
                 new byte[0x64],
                 properties.cardTrulyGot.ToArray(),
                 new byte[0x38],
-                properties.ranking.SelectMany(element => Th075HighScoreTests.MakeByteArray(element)).ToArray());
+                properties.ranking.SelectMany(element => HighScoreTests.MakeByteArray(element)).ToArray());
 
         internal static void Validate(in Th075ClearDataWrapper clearData, in Properties properties)
         {
@@ -84,11 +85,11 @@ namespace ThScoreFileConverterTests.Models
             CollectionAssert.That.AreEqual(properties.cardGotCount, clearData.CardGotCount);
             CollectionAssert.That.AreEqual(properties.cardTrialCount, clearData.CardTrialCount);
             CollectionAssert.That.AreEqual(properties.cardTrulyGot, clearData.CardTrulyGot);
-            Assert.AreEqual(properties.ranking.Count, clearData.RankingCount);
+            Assert.AreEqual(properties.ranking.Count, clearData.Ranking.Count);
             foreach (var index in Enumerable.Range(0, properties.ranking.Count))
             {
                 var propHighScore = properties.ranking[index];
-                var highScore = clearData.RankingItem(index);
+                var highScore = clearData.Ranking[index];
                 Assert.AreEqual(propHighScore.decodedName, highScore.Name);
                 Assert.AreEqual(propHighScore.month, highScore.Month);
                 Assert.AreEqual(propHighScore.day, highScore.Day);

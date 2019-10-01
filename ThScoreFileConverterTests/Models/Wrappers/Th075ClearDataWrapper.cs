@@ -1,14 +1,14 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th075;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
-    public sealed class Th075ClearDataWrapper
+    internal sealed class Th075ClearDataWrapper
     {
         private static readonly Type ParentType = typeof(Th075Converter);
         private static readonly string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
@@ -61,16 +61,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.CardTrialCount)) as List<short>;
         public IReadOnlyList<byte> CardTrulyGot
             => this.pobj.GetProperty(nameof(this.CardTrulyGot)) as List<byte>;
-        // NOTE: Th075Converter.HighScore is a private class.
-        // public IReadOnlyList<HighScore> Ranking
-        //     => this.pobj.GetProperty(nameof(this.Ranking)) as List<HighScore>;
-        public object Ranking
-            => this.pobj.GetProperty(nameof(this.Ranking));
-        public int RankingCount
-            => (int)this.Ranking.GetType().GetProperty("Count").GetValue(this.Ranking);
-        public Th075HighScoreWrapper RankingItem(int index)
-            => new Th075HighScoreWrapper(
-                this.Ranking.GetType().GetProperty("Item").GetValue(this.Ranking, new object[] { index }));
+        public IReadOnlyList<HighScore> Ranking
+            => this.pobj.GetProperty(nameof(this.Ranking)) as List<HighScore>;
 
         public void ReadFrom(BinaryReader reader)
             => this.pobj.Invoke(nameof(ReadFrom), new object[] { reader }, CultureInfo.InvariantCulture);

@@ -17,7 +17,6 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Models.Th075;
-using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.Models
 {
@@ -884,53 +883,6 @@ namespace ThScoreFileConverter.Models
                     score.ReadFrom(reader);
                     this.Ranking.Add(score);
                 }
-            }
-        }
-
-        private class HighScore : IBinaryReadable
-        {
-            public HighScore()
-            {
-            }
-
-            public string Name { get; private set; }
-
-            public byte Month { get; private set; }     // 1-based
-
-            public byte Day { get; private set; }       // 1-based
-
-            public int Score { get; private set; }
-
-            public void ReadFrom(BinaryReader reader)
-            {
-                if (reader == null)
-                    throw new ArgumentNullException(nameof(reader));
-
-                this.Name = new string(reader.ReadExactBytes(8).Select(ch => Definitions.CharTable[ch]).ToArray());
-
-                this.Month = reader.ReadByte();
-                this.Day = reader.ReadByte();
-                if ((this.Month == 0) && (this.Day == 0))
-                {
-                    // It's allowed.
-                }
-                else
-                {
-                    if ((this.Month <= 0) || (this.Month > 12))
-                    {
-                        throw new InvalidDataException(
-                            Utils.Format(Resources.InvalidDataExceptionPropertyIsOutOfRange, nameof(this.Month)));
-                    }
-
-                    if ((this.Day <= 0) || (this.Day > DateTime.DaysInMonth(2000, this.Month)))
-                    {
-                        throw new InvalidDataException(
-                            Utils.Format(Resources.InvalidDataExceptionPropertyIsOutOfRange, nameof(this.Day)));
-                    }
-                }
-
-                reader.ReadUInt16();    // always 0x0000?
-                this.Score = reader.ReadInt32();
             }
         }
 

@@ -3,12 +3,13 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using ThScoreFileConverterTests.Models.Wrappers;
+using ThScoreFileConverter.Models.Th075;
+using static ThScoreFileConverter.Models.EnumerableExtensions;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th075
 {
     [TestClass]
-    public class Th075HighScoreTests
+    public class HighScoreTests
     {
         internal struct Properties
         {
@@ -36,7 +37,29 @@ namespace ThScoreFileConverterTests.Models
                 new byte[2],
                 properties.score);
 
-        internal static void Validate(in Th075HighScoreWrapper highScore, in Properties properties)
+        internal static HighScore Create(byte[] array)
+        {
+            var highScore = new HighScore();
+
+            MemoryStream stream = null;
+            try
+            {
+                stream = new MemoryStream(array);
+                using (var reader = new BinaryReader(stream))
+                {
+                    stream = null;
+                    highScore.ReadFrom(reader);
+                }
+            }
+            finally
+            {
+                stream?.Dispose();
+            }
+
+            return highScore;
+        }
+
+        internal static void Validate(in Properties properties, in HighScore highScore)
         {
             Assert.AreEqual(properties.decodedName, highScore.Name);
             Assert.AreEqual(properties.month, highScore.Month);
@@ -45,29 +68,29 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        public void Th075HighScoreTest() => TestUtils.Wrap(() =>
+        public void HighScoreTest() => TestUtils.Wrap(() =>
         {
-            var highScore = new Th075HighScoreWrapper();
+            var highScore = new HighScore();
 
             Assert.IsNull(highScore.Name);
-            Assert.AreEqual(default, highScore.Month.Value);
-            Assert.AreEqual(default, highScore.Day.Value);
-            Assert.AreEqual(default, highScore.Score.Value);
+            Assert.AreEqual(default, highScore.Month);
+            Assert.AreEqual(default, highScore.Day);
+            Assert.AreEqual(default, highScore.Score);
         });
 
         [TestMethod]
         public void ReadFromTest() => TestUtils.Wrap(() =>
         {
-            var highScore = Th075HighScoreWrapper.Create(MakeByteArray(ValidProperties));
+            var highScore = Create(MakeByteArray(ValidProperties));
 
-            Validate(highScore, ValidProperties);
+            Validate(ValidProperties, highScore);
         });
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
-            var highScore = new Th075HighScoreWrapper();
+            var highScore = new HighScore();
             highScore.ReadFrom(null);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -78,9 +101,9 @@ namespace ThScoreFileConverterTests.Models
         public void ReadFromTestShortenedName() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
-            properties.encodedName = properties.encodedName.Take(properties.encodedName.Length - 1).ToArray();
+            properties.encodedName = properties.encodedName.SkipLast(1).ToArray();
 
-            Th075HighScoreWrapper.Create(MakeByteArray(properties));
+            Create(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -93,7 +116,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             properties.encodedName = properties.encodedName.Concat(new byte[] { default }).ToArray();
 
-            var highScore = Th075HighScoreWrapper.Create(MakeByteArray(properties));
+            var highScore = Create(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -132,9 +155,9 @@ namespace ThScoreFileConverterTests.Models
             properties.month = (byte)month;
             properties.day = (byte)day;
 
-            var highScore = Th075HighScoreWrapper.Create(MakeByteArray(properties));
+            var highScore = Create(MakeByteArray(properties));
 
-            Validate(highScore, properties);
+            Validate(properties, highScore);
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
@@ -172,7 +195,7 @@ namespace ThScoreFileConverterTests.Models
             properties.month = (byte)month;
             properties.day = (byte)day;
 
-            Th075HighScoreWrapper.Create(MakeByteArray(properties));
+            Create(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
         });
