@@ -16,6 +16,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Models.Th075;
 using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.Models
@@ -23,12 +24,6 @@ namespace ThScoreFileConverter.Models
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th075Converter : ThConverter
     {
-        private const string CharTable =
-            @"ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-            @"abcdefghijklmnopqrstuvwxyz" +
-            @"0123456789+-/*=%#!?.,:;_@$" +
-            @"(){}[]<>&\|~^             ";
-
         // Thanks to thwiki.info
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1008:OpeningParenthesisMustBeSpacedCorrectly", Justification = "Reviewed.")]
         private static readonly Dictionary<int, SpellCardInfo> CardTable =
@@ -911,7 +906,7 @@ namespace ThScoreFileConverter.Models
                 if (reader == null)
                     throw new ArgumentNullException(nameof(reader));
 
-                this.Name = new string(reader.ReadExactBytes(8).Select(ch => CharTable[ch]).ToArray());
+                this.Name = new string(reader.ReadExactBytes(8).Select(ch => Definitions.CharTable[ch]).ToArray());
 
                 this.Month = reader.ReadByte();
                 this.Day = reader.ReadByte();
@@ -962,7 +957,7 @@ namespace ThScoreFileConverter.Models
                 var unknownCharas = Enumerable.Range(1, 4);
                 var numScores = charas.Count() + unknownCharas.Count();
 
-                this.LastName = new string(reader.ReadExactBytes(8).Select(ch => CharTable[ch]).ToArray());
+                this.LastName = new string(reader.ReadExactBytes(8).Select(ch => Definitions.CharTable[ch]).ToArray());
 
                 this.ArcadeScores = new Dictionary<Chara, Dictionary<Chara, int>>(numScores);
                 foreach (var chara in charas)
