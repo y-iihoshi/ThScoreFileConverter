@@ -120,7 +120,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         }
 
         [TestMethod]
-        public void Th075ClearDataTest() => TestUtils.Wrap(() =>
+        public void ClearDataTest() => TestUtils.Wrap(() =>
         {
             var clearData = new ClearData();
 

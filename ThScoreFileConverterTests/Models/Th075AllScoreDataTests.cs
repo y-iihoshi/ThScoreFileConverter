@@ -16,7 +16,7 @@ namespace ThScoreFileConverterTests.Models
             public Dictionary<
                 Th075Converter.Chara,
                 Dictionary<Th075Converter.Level, ClearDataTests.Properties>> clearData;
-            public Th075StatusTests.Properties status;
+            public StatusTests.Properties status;
         };
 
         internal static Properties ValidProperties => new Properties()
@@ -26,7 +26,7 @@ namespace ThScoreFileConverterTests.Models
                 chara => Utils.GetEnumerator<Th075Converter.Level>().ToDictionary(
                     level => level,
                     level => ClearDataTests.ValidProperties)),
-            status = Th075StatusTests.ValidProperties
+            status = StatusTests.ValidProperties
         };
 
         internal static byte[] MakeByteArray(in Properties properties)
@@ -37,7 +37,7 @@ namespace ThScoreFileConverterTests.Models
                 Enumerable.Range(1, 4).SelectMany(
                     index => Utils.GetEnumerator<Th075Converter.Level>().SelectMany(
                         level => ClearDataTests.MakeByteArray(ClearDataTests.ValidProperties))).ToArray(),
-                Th075StatusTests.MakeByteArray(properties.status));
+                StatusTests.MakeByteArray(properties.status));
 
         internal static void Validate(in Th075AllScoreDataWrapper allScoreData, in Properties properties)
         {
@@ -50,7 +50,7 @@ namespace ThScoreFileConverterTests.Models
                 }
             }
 
-            Th075StatusTests.Validate(allScoreData.Status, properties.status);
+            StatusTests.Validate(properties.status, allScoreData.Status);
         }
 
         [TestMethod]

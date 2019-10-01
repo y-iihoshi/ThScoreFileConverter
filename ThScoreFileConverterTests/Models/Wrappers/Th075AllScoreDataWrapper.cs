@@ -52,14 +52,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public IReadOnlyDictionary<Chara, Dictionary<Level, ClearData>> ClearData
             => this.pobj.GetProperty(nameof(this.ClearData)) as Dictionary<Chara, Dictionary<Level, ClearData>>;
 
-        public Th075StatusWrapper Status
-        {
-            get
-            {
-                var status = this.pobj.GetProperty(nameof(this.Status));
-                return (status != null) ? new Th075StatusWrapper(status) : null;
-            }
-        }
+        public Status Status
+            => this.pobj.GetProperty(nameof(this.Status)) as Status;
 
         public void ReadFrom(BinaryReader reader)
             => this.pobj.Invoke(nameof(ReadFrom), new object[] { reader }, CultureInfo.InvariantCulture);

@@ -821,55 +821,5 @@ namespace ThScoreFileConverter.Models
                 this.Status = status;
             }
         }
-
-        private class Status : IBinaryReadable
-        {
-            public Status()
-            {
-            }
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public string LastName { get; private set; }
-
-            public Dictionary<Chara, Dictionary<Chara, int>> ArcadeScores { get; private set; }
-
-            [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "unknownChara", Justification = "Reviewed.")]
-            [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "knownEnemy", Justification = "Reviewed.")]
-            [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "unknownEnemy", Justification = "Reviewed.")]
-            public void ReadFrom(BinaryReader reader)
-            {
-                if (reader == null)
-                    throw new ArgumentNullException(nameof(reader));
-
-                var charas = Utils.GetEnumerator<Chara>();
-                var unknownCharas = Enumerable.Range(1, 4);
-                var numScores = charas.Count() + unknownCharas.Count();
-
-                this.LastName = new string(reader.ReadExactBytes(8).Select(ch => Definitions.CharTable[ch]).ToArray());
-
-                this.ArcadeScores = new Dictionary<Chara, Dictionary<Chara, int>>(numScores);
-                foreach (var chara in charas)
-                {
-                    this.ArcadeScores[chara] = new Dictionary<Chara, int>(numScores);
-                    foreach (var enemy in charas)
-                        this.ArcadeScores[chara][enemy] = reader.ReadInt32() - 10;
-                    foreach (var unknownEnemy in unknownCharas)
-                        reader.ReadInt32();
-                }
-
-                foreach (var unknownChara in unknownCharas)
-                {
-                    foreach (var knownEnemy in charas)
-                        reader.ReadInt32();
-                    foreach (var unknownEnemy in unknownCharas)
-                        reader.ReadInt32();
-                }
-
-                // FIXME... BGM flags?
-                reader.ReadExactBytes(0x28);
-
-                reader.ReadExactBytes(0x100);
-            }
-        }
     }
 }
