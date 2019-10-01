@@ -23,8 +23,6 @@ namespace ThScoreFileConverter.Models
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th075Converter : ThConverter
     {
-        private static readonly Dictionary<Chara, IEnumerable<int>> CardIdTable = InitializeCardIdTable();
-
         private static new readonly EnumShortNameParser<Level> LevelParser =
             new EnumShortNameParser<Level>();
 
@@ -143,168 +141,6 @@ namespace ThScoreFileConverter.Models
             };
         }
 
-        private static Dictionary<Chara, IEnumerable<int>> InitializeCardIdTable()
-        {
-            var charaStageEnemyTable = new Dictionary<Chara, List<(Stage Stage, Chara Enemy)>>
-            {
-                {
-                    Chara.Reimu,
-                    new List<(Stage, Chara)>
-                    {
-                        (Stage.St1, Chara.Marisa),
-                        (Stage.St2, Chara.Alice),
-                        (Stage.St3, Chara.Youmu),
-                        (Stage.St4, Chara.Sakuya),
-                        (Stage.St5, Chara.Remilia),
-                        (Stage.St6, Chara.Yukari),
-                        (Stage.St7, Chara.Suika),
-                    }
-                },
-                {
-                    Chara.Marisa,
-                    new List<(Stage, Chara)>
-                    {
-                        (Stage.St1, Chara.Alice),
-                        (Stage.St2, Chara.Sakuya),
-                        (Stage.St3, Chara.Patchouli),
-                        (Stage.St4, Chara.Remilia),
-                        (Stage.St5, Chara.Reimu),
-                        (Stage.St6, Chara.Yukari),
-                        (Stage.St7, Chara.Suika),
-                    }
-                },
-                {
-                    Chara.Sakuya,
-                    new List<(Stage, Chara)>
-                    {
-                        (Stage.St1, Chara.Reimu),
-                        (Stage.St2, Chara.Alice),
-                        (Stage.St3, Chara.Marisa),
-                        (Stage.St4, Chara.Youmu),
-                        (Stage.St5, Chara.Yuyuko),
-                        (Stage.St6, Chara.Yukari),
-                        (Stage.St7, Chara.Suika),
-                    }
-                },
-                {
-                    Chara.Alice,
-                    new List<(Stage, Chara)>
-                    {
-                        (Stage.St1, Chara.Marisa),
-                        (Stage.St2, Chara.Reimu),
-                        (Stage.St3, Chara.Sakuya),
-                        (Stage.St4, Chara.Patchouli),
-                        (Stage.St5, Chara.Youmu),
-                        (Stage.St6, Chara.Yukari),
-                        (Stage.St7, Chara.Suika),
-                    }
-                },
-                {
-                    Chara.Patchouli,
-                    new List<(Stage, Chara)>
-                    {
-                        (Stage.St1, Chara.Marisa),
-                        (Stage.St2, Chara.Sakuya),
-                        (Stage.St3, Chara.Alice),
-                        (Stage.St4, Chara.Youmu),
-                        (Stage.St5, Chara.Yuyuko),
-                        (Stage.St6, Chara.Yukari),
-                        (Stage.St7, Chara.Suika),
-                    }
-                },
-                {
-                    Chara.Youmu,
-                    new List<(Stage, Chara)>
-                    {
-                        (Stage.St1, Chara.Reimu),
-                        (Stage.St2, Chara.Marisa),
-                        (Stage.St3, Chara.Patchouli),
-                        (Stage.St4, Chara.Sakuya),
-                        (Stage.St5, Chara.Remilia),
-                        (Stage.St6, Chara.Yukari),
-                        (Stage.St7, Chara.Suika),
-                    }
-                },
-                {
-                    Chara.Remilia,
-                    new List<(Stage, Chara)>
-                    {
-                        (Stage.St1, Chara.Sakuya),
-                        (Stage.St2, Chara.Marisa),
-                        (Stage.St3, Chara.Reimu),
-                        (Stage.St4, Chara.Youmu),
-                        (Stage.St5, Chara.Yuyuko),
-                        (Stage.St6, Chara.Yukari),
-                        (Stage.St7, Chara.Suika),
-                    }
-                },
-                {
-                    Chara.Yuyuko,
-                    new List<(Stage, Chara)>
-                    {
-                        (Stage.St1, Chara.Youmu),
-                        (Stage.St2, Chara.Marisa),
-                        (Stage.St3, Chara.Reimu),
-                        (Stage.St4, Chara.Sakuya),
-                        (Stage.St5, Chara.Remilia),
-                        (Stage.St6, Chara.Yukari),
-                        (Stage.St7, Chara.Suika),
-                    }
-                },
-                {
-                    Chara.Yukari,
-                    new List<(Stage, Chara)>
-                    {
-                        (Stage.St1, Chara.Remilia),
-                        (Stage.St2, Chara.Alice),
-                        (Stage.St3, Chara.Youmu),
-                        (Stage.St4, Chara.Marisa),
-                        (Stage.St5, Chara.Reimu),
-                        (Stage.St6, Chara.Yuyuko),
-                        (Stage.St7, Chara.Suika),
-                    }
-                },
-                {
-                    Chara.Suika,
-                    new List<(Stage, Chara)>
-                    {
-                        (Stage.St1, Chara.Sakuya),
-                        (Stage.St2, Chara.Alice),
-                        (Stage.St3, Chara.Youmu),
-                        (Stage.St4, Chara.Patchouli),
-                        (Stage.St5, Chara.Marisa),
-                        (Stage.St6, Chara.Remilia),
-                        (Stage.St7, Chara.Reimu),
-                    }
-                },
-            };
-
-            var cardNumberTable = Definitions.CardTable.ToLookup(pair => pair.Value.Enemy, pair => pair.Key);
-
-            return charaStageEnemyTable.ToDictionary(
-                charaStageEnemyPair => charaStageEnemyPair.Key,
-                charaStageEnemyPair => charaStageEnemyPair.Value.SelectMany(stageEnemyPair =>
-                {
-                    switch (stageEnemyPair.Stage)
-                    {
-                        case Stage.St1:
-                        case Stage.St2:
-                            return cardNumberTable[stageEnemyPair.Enemy].Take(8);
-                        case Stage.St3:
-                        case Stage.St4:
-                            return cardNumberTable[stageEnemyPair.Enemy].Take(12);
-                        case Stage.St5:
-                            return cardNumberTable[stageEnemyPair.Enemy].Take(16);
-                        case Stage.St6:
-                            return cardNumberTable[stageEnemyPair.Enemy].Take(20);
-                        case Stage.St7:
-                            return cardNumberTable[stageEnemyPair.Enemy].Take(24);
-                        default:
-                            return null;    // unreachable
-                    }
-                }));
-        }
-
         private static AllScoreData Read(Stream input)
         {
             using (var reader = new BinaryReader(input, Encoding.UTF8, true))
@@ -393,7 +229,7 @@ namespace ThScoreFileConverter.Models
 
                     if (type == 4)
                     {
-                        if ((number > 0) && (number <= CardIdTable[chara].Count()))
+                        if ((number > 0) && (number <= Definitions.CardIdTable[chara].Count()))
                         {
                             return parent.allScoreData.ClearData[chara].Values
                                 .Any(data => data.CardTrulyGot[number - 1] != 0x00) ? "★" : string.Empty;
@@ -418,7 +254,7 @@ namespace ThScoreFileConverter.Models
                         return Utils.ToNumberString(
                             parent.allScoreData.ClearData[chara].Values.Sum(data => getValues(data).Sum()));
                     }
-                    else if (number <= CardIdTable[chara].Count())
+                    else if (number <= Definitions.CardIdTable[chara].Count())
                     {
                         return Utils.ToNumberString(
                             parent.allScoreData.ClearData[chara].Values.Sum(data =>
@@ -456,7 +292,7 @@ namespace ThScoreFileConverter.Models
                     if (chara == Chara.Meiling)
                         return match.ToString();
 
-                    if ((number > 0) && (number <= CardIdTable[chara].Count()))
+                    if ((number > 0) && (number <= Definitions.CardIdTable[chara].Count()))
                     {
                         if (hideUntriedCards)
                         {
@@ -466,7 +302,7 @@ namespace ThScoreFileConverter.Models
                                 return (type == "N") ? "??????????" : "?????";
                         }
 
-                        var cardId = CardIdTable[chara].ElementAt(number - 1);
+                        var cardId = Definitions.CardIdTable[chara].ElementAt(number - 1);
                         return (type == "N")
                             ? Definitions.CardTable[cardId].Name : Definitions.CardTable[cardId].Level.ToString();
                     }
@@ -521,7 +357,7 @@ namespace ThScoreFileConverter.Models
                     }
                     else
                     {
-                        var cardIndexIdPairs = CardIdTable[chara]
+                        var cardIndexIdPairs = Definitions.CardIdTable[chara]
                             .Select((id, index) => new KeyValuePair<int, int>(index, id))
                             .Where(pair => Definitions.CardTable[pair.Value].Level == (Level)level);
                         return Utils.ToNumberString(
