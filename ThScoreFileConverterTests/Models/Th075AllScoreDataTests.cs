@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Models.Th075;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -14,7 +15,7 @@ namespace ThScoreFileConverterTests.Models
         {
             public Dictionary<
                 Th075Converter.Chara,
-                Dictionary<Th075Converter.Level, Th075ClearDataTests.Properties>> clearData;
+                Dictionary<Th075Converter.Level, ClearDataTests.Properties>> clearData;
             public Th075StatusTests.Properties status;
         };
 
@@ -24,7 +25,7 @@ namespace ThScoreFileConverterTests.Models
                 chara => chara,
                 chara => Utils.GetEnumerator<Th075Converter.Level>().ToDictionary(
                     level => level,
-                    level => Th075ClearDataTests.ValidProperties)),
+                    level => ClearDataTests.ValidProperties)),
             status = Th075StatusTests.ValidProperties
         };
 
@@ -32,10 +33,10 @@ namespace ThScoreFileConverterTests.Models
             => TestUtils.MakeByteArray(
                 properties.clearData.SelectMany(
                     perCharaPair => perCharaPair.Value.SelectMany(
-                        perLevelPair => Th075ClearDataTests.MakeByteArray(perLevelPair.Value))).ToArray(),
+                        perLevelPair => ClearDataTests.MakeByteArray(perLevelPair.Value))).ToArray(),
                 Enumerable.Range(1, 4).SelectMany(
                     index => Utils.GetEnumerator<Th075Converter.Level>().SelectMany(
-                        level => Th075ClearDataTests.MakeByteArray(Th075ClearDataTests.ValidProperties))).ToArray(),
+                        level => ClearDataTests.MakeByteArray(ClearDataTests.ValidProperties))).ToArray(),
                 Th075StatusTests.MakeByteArray(properties.status));
 
         internal static void Validate(in Th075AllScoreDataWrapper allScoreData, in Properties properties)
@@ -44,8 +45,8 @@ namespace ThScoreFileConverterTests.Models
             {
                 foreach (var perLevelPair in perCharaPair.Value)
                 {
-                    Th075ClearDataTests.Validate(
-                        allScoreData.ClearDataPerCharaLevel(perCharaPair.Key, perLevelPair.Key), perLevelPair.Value);
+                    ClearDataTests.Validate(
+                        perLevelPair.Value, allScoreData.ClearData[perCharaPair.Key][perLevelPair.Key]);
                 }
             }
 
@@ -58,11 +59,11 @@ namespace ThScoreFileConverterTests.Models
             var charas = Utils.GetEnumerator<Th075Converter.Chara>();
             var allScoreData = new Th075AllScoreDataWrapper();
 
-            Assert.AreEqual(charas.Count(), allScoreData.ClearDataCount);
+            Assert.AreEqual(charas.Count(), allScoreData.ClearData.Count);
 
             foreach (var chara in charas)
             {
-                Assert.AreEqual(0, allScoreData.ClearDataPerCharaCount(chara));
+                Assert.AreEqual(0, allScoreData.ClearData[chara].Count);
             }
 
             Assert.IsNull(allScoreData.Status);

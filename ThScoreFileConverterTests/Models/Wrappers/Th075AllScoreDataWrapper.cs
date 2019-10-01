@@ -1,9 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th075;
+using Chara = ThScoreFileConverter.Models.Th075Converter.Chara;
+using Level = ThScoreFileConverter.Models.Th075Converter.Level;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -45,27 +49,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public object Target
             => this.pobj.Target;
 
-        // NOTE: Th075Converter.ClearData is a private class.
-        // public IReadOnlyDictionary<Chara, Dictionary<Level, ClearData>> ClearData
-        //     => this.pobj.GetProperty(nameof(ClearData)) as Dictionary<Chara, Dictionary<Level, ClearData>>;
-        public object ClearData
-            => this.pobj.GetProperty(nameof(this.ClearData));
-        public int? ClearDataCount
-            => this.ClearData.GetType().GetProperty("Count").GetValue(this.ClearData) as int?;
-        public object ClearDataPerChara(Th075Converter.Chara chara)
-            => this.ClearData.GetType().GetProperty("Item").GetValue(this.ClearData, new object[] { chara });
-        public int? ClearDataPerCharaCount(Th075Converter.Chara chara)
-        {
-            var clearDataPerChara = this.ClearDataPerChara(chara);
-            return clearDataPerChara.GetType().GetProperty("Count").GetValue(clearDataPerChara) as int?;
-        }
-
-        public Th075ClearDataWrapper ClearDataPerCharaLevel(Th075Converter.Chara chara, Th075Converter.Level level)
-        {
-            var clearDataPerChara = this.ClearDataPerChara(chara);
-            return new Th075ClearDataWrapper(
-                clearDataPerChara.GetType().GetProperty("Item").GetValue(clearDataPerChara, new object[] { level }));
-        }
+        public IReadOnlyDictionary<Chara, Dictionary<Level, ClearData>> ClearData
+            => this.pobj.GetProperty(nameof(this.ClearData)) as Dictionary<Chara, Dictionary<Level, ClearData>>;
 
         public Th075StatusWrapper Status
         {

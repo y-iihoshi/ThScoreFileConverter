@@ -1,16 +1,16 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th075;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th075;
-using ThScoreFileConverterTests.Models.Wrappers;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th075
 {
     [TestClass]
-    public class Th075ClearDataTests
+    public class ClearDataTests
     {
         internal struct Properties
         {
@@ -75,7 +75,29 @@ namespace ThScoreFileConverterTests.Models
                 new byte[0x38],
                 properties.ranking.SelectMany(element => HighScoreTests.MakeByteArray(element)).ToArray());
 
-        internal static void Validate(in Th075ClearDataWrapper clearData, in Properties properties)
+        internal static ClearData Create(byte[] array)
+        {
+            var clearData = new ClearData();
+
+            MemoryStream stream = null;
+            try
+            {
+                stream = new MemoryStream(array);
+                using (var reader = new BinaryReader(stream))
+                {
+                    stream = null;
+                    clearData.ReadFrom(reader);
+                }
+            }
+            finally
+            {
+                stream?.Dispose();
+            }
+
+            return clearData;
+        }
+
+        internal static void Validate(in Properties properties, in ClearData clearData)
         {
             Assert.AreEqual(properties.useCount, clearData.UseCount);
             Assert.AreEqual(properties.clearCount, clearData.ClearCount);
@@ -100,9 +122,9 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th075ClearDataTest() => TestUtils.Wrap(() =>
         {
-            var clearData = new Th075ClearDataWrapper();
+            var clearData = new ClearData();
 
-            Validate(clearData, DefaultProperties);
+            Validate(DefaultProperties, clearData);
         });
 
         [TestMethod]
@@ -110,16 +132,16 @@ namespace ThScoreFileConverterTests.Models
         {
             var properties = ValidProperties;
 
-            var clearData = Th075ClearDataWrapper.Create(MakeByteArray(properties));
+            var clearData = Create(MakeByteArray(properties));
 
-            Validate(clearData, properties);
+            Validate(properties, clearData);
         });
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
-            var clearData = new Th075ClearDataWrapper();
+            var clearData = new ClearData();
             clearData.ReadFrom(null);
 
             Assert.Fail(TestUtils.Unreachable);
