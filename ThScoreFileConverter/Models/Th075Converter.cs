@@ -22,15 +22,6 @@ namespace ThScoreFileConverter.Models
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th075Converter : ThConverter
     {
-        private static new readonly EnumShortNameParser<Th075.Level> LevelParser =
-            new EnumShortNameParser<Th075.Level>();
-
-        private static new readonly EnumShortNameParser<Th075.LevelWithTotal> LevelWithTotalParser =
-            new EnumShortNameParser<Th075.LevelWithTotal>();
-
-        private static readonly EnumShortNameParser<Chara> CharaParser =
-            new EnumShortNameParser<Chara>();
-
         private AllScoreData allScoreData = null;
 
         public override string SupportedVersions
@@ -98,7 +89,7 @@ namespace ThScoreFileConverter.Models
         private class ScoreReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T75SCR({0})({1})(\d)([1-3])", LevelParser.Pattern, CharaParser.Pattern);
+                @"%T75SCR({0})({1})(\d)([1-3])", Parsers.LevelParser.Pattern, Parsers.CharaParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -106,8 +97,8 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var level = LevelParser.Parse(match.Groups[1].Value);
-                    var chara = CharaParser.Parse(match.Groups[2].Value);
+                    var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+                    var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
                     var rank = Utils.ToZeroBased(
                         int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
                     var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
@@ -141,7 +132,7 @@ namespace ThScoreFileConverter.Models
         private class CareerReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T75C(\d{{3}})({0})([1-4])", CharaParser.Pattern);
+                @"%T75C(\d{{3}})({0})([1-4])", Parsers.CharaParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -151,7 +142,7 @@ namespace ThScoreFileConverter.Models
                 this.evaluator = new MatchEvaluator(match =>
                 {
                     var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
-                    var chara = CharaParser.Parse(match.Groups[2].Value);
+                    var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                     if (chara == Chara.Meiling)
@@ -207,7 +198,7 @@ namespace ThScoreFileConverter.Models
         private class CardReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T75CARD(\d{{3}})({0})([NR])", CharaParser.Pattern);
+                @"%T75CARD(\d{{3}})({0})([NR])", Parsers.CharaParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -216,7 +207,7 @@ namespace ThScoreFileConverter.Models
                 this.evaluator = new MatchEvaluator(match =>
                 {
                     var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
-                    var chara = CharaParser.Parse(match.Groups[2].Value);
+                    var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
                     var type = match.Groups[3].Value.ToUpperInvariant();
 
                     if (chara == Chara.Meiling)
@@ -253,7 +244,7 @@ namespace ThScoreFileConverter.Models
         private class CollectRateReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T75CRG({0})({1})([1-3])", LevelWithTotalParser.Pattern, CharaParser.Pattern);
+                @"%T75CRG({0})({1})([1-3])", Parsers.LevelWithTotalParser.Pattern, Parsers.CharaParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -262,8 +253,8 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var level = LevelWithTotalParser.Parse(match.Groups[1].Value);
-                    var chara = CharaParser.Parse(match.Groups[2].Value);
+                    var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
+                    var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                     if (chara == Chara.Meiling)
@@ -308,7 +299,7 @@ namespace ThScoreFileConverter.Models
         private class CharaReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T75CHR({0})({1})([1-4])", LevelParser.Pattern, CharaParser.Pattern);
+                @"%T75CHR({0})({1})([1-4])", Parsers.LevelParser.Pattern, Parsers.CharaParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -316,8 +307,8 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var level = LevelParser.Parse(match.Groups[1].Value);
-                    var chara = CharaParser.Parse(match.Groups[2].Value);
+                    var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+                    var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                     if (chara == Chara.Meiling)
