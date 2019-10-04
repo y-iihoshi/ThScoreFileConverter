@@ -26,24 +26,13 @@ namespace ThScoreFileConverter.Models
         private static new readonly EnumShortNameParser<Th075.Level> LevelParser =
             new EnumShortNameParser<Th075.Level>();
 
-        private static new readonly EnumShortNameParser<LevelWithTotal> LevelWithTotalParser =
-            new EnumShortNameParser<LevelWithTotal>();
+        private static new readonly EnumShortNameParser<Th075.LevelWithTotal> LevelWithTotalParser =
+            new EnumShortNameParser<Th075.LevelWithTotal>();
 
         private static readonly EnumShortNameParser<Chara> CharaParser =
             new EnumShortNameParser<Chara>();
 
         private AllScoreData allScoreData = null;
-
-        public enum LevelWithTotal
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("E")] Easy,
-            [EnumAltName("N")] Normal,
-            [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic,
-            [EnumAltName("T")] Total,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
 
         public enum Chara
         {
@@ -339,7 +328,7 @@ namespace ThScoreFileConverter.Models
 
                     Func<short, bool> isPositive = (value => value > 0);
 
-                    if (level == LevelWithTotal.Total)
+                    if (level == Th075.LevelWithTotal.Total)
                     {
                         return Utils.ToNumberString(
                             parent.allScoreData.ClearData[chara].Values.Sum(data =>
