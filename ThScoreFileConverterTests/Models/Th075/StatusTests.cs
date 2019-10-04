@@ -6,7 +6,6 @@ using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th075;
 using ThScoreFileConverterTests.Extensions;
-using Chara = ThScoreFileConverter.Models.Th075Converter.Chara;
 
 namespace ThScoreFileConverterTests.Models.Th075
 {

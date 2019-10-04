@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th075;
 using Level = ThScoreFileConverter.Models.Th075.Level;
 
@@ -11,14 +10,14 @@ namespace ThScoreFileConverterTests.Models.Th075
         internal struct Properties
         {
             public string name;
-            public Th075Converter.Chara enemy;
+            public Chara enemy;
             public Level level;
         };
 
         internal static Properties ValidProperties => new Properties()
         {
             name = "「百万鬼夜行」",
-            enemy = Th075Converter.Chara.Suika,
+            enemy = Chara.Suika,
             level = Level.Normal
         };
 

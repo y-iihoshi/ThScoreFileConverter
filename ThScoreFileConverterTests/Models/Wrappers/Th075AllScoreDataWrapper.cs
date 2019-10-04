@@ -6,7 +6,6 @@ using System.Globalization;
 using System.IO;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th075;
-using Chara = ThScoreFileConverter.Models.Th075Converter.Chara;
 using Level = ThScoreFileConverter.Models.Th075.Level;
 
 namespace ThScoreFileConverterTests.Models.Wrappers

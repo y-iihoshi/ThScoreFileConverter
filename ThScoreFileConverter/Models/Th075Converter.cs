@@ -34,41 +34,6 @@ namespace ThScoreFileConverter.Models
 
         private AllScoreData allScoreData = null;
 
-        public enum Chara
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("RM")] Reimu,
-            [EnumAltName("MR")] Marisa,
-            [EnumAltName("SK")] Sakuya,
-            [EnumAltName("AL")] Alice,
-            [EnumAltName("PC")] Patchouli,
-            [EnumAltName("YM")] Youmu,
-            [EnumAltName("RL")] Remilia,
-            [EnumAltName("YU")] Yuyuko,
-            [EnumAltName("YK")] Yukari,
-            [EnumAltName("SU")] Suika,
-            [EnumAltName("ML")] Meiling,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum CharaWithTotal
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("RM")] Reimu,
-            [EnumAltName("MR")] Marisa,
-            [EnumAltName("SK")] Sakuya,
-            [EnumAltName("AL")] Alice,
-            [EnumAltName("PC")] Patchouli,
-            [EnumAltName("YM")] Youmu,
-            [EnumAltName("RL")] Remilia,
-            [EnumAltName("YU")] Yuyuko,
-            [EnumAltName("YK")] Yukari,
-            [EnumAltName("SU")] Suika,
-            [EnumAltName("ML")] Meiling,
-            [EnumAltName("TL")] Total,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
         public enum Stage
         {
 #pragma warning disable SA1134 // Attributes should not share line

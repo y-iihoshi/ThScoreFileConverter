@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th075;
 using ThScoreFileConverterTests.Models.Th075;
 using ThScoreFileConverterTests.Models.Wrappers;
 using Level = ThScoreFileConverter.Models.Th075.Level;
@@ -14,15 +15,13 @@ namespace ThScoreFileConverterTests.Models
     {
         internal struct Properties
         {
-            public Dictionary<
-                Th075Converter.Chara,
-                Dictionary<Level, ClearDataTests.Properties>> clearData;
+            public Dictionary<Chara, Dictionary<Level, ClearDataTests.Properties>> clearData;
             public StatusTests.Properties status;
         };
 
         internal static Properties ValidProperties => new Properties()
         {
-            clearData = Utils.GetEnumerator<Th075Converter.Chara>().ToDictionary(
+            clearData = Utils.GetEnumerator<Chara>().ToDictionary(
                 chara => chara,
                 chara => Utils.GetEnumerator<Level>().ToDictionary(
                     level => level,
@@ -57,7 +56,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th075AllScoreDataTest() => TestUtils.Wrap(() =>
         {
-            var charas = Utils.GetEnumerator<Th075Converter.Chara>();
+            var charas = Utils.GetEnumerator<Chara>();
             var allScoreData = new Th075AllScoreDataWrapper();
 
             Assert.AreEqual(charas.Count(), allScoreData.ClearData.Count);

@@ -12,7 +12,6 @@ using System.Linq;
 
 namespace ThScoreFileConverter.Models.Th075
 {
-    using Chara = Th075Converter.Chara;
     using Stage = Th075Converter.Stage;
 
     internal static class Definitions
