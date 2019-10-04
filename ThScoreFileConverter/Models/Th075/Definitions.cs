@@ -12,8 +12,6 @@ using System.Linq;
 
 namespace ThScoreFileConverter.Models.Th075
 {
-    using Stage = Th075Converter.Stage;
-
     internal static class Definitions
     {
         public static string CharTable { get; } =
@@ -213,130 +211,130 @@ namespace ThScoreFileConverter.Models.Th075
                     Chara.Reimu,
                     new List<(Stage, Chara)>
                     {
-                        (Stage.St1, Chara.Marisa),
-                        (Stage.St2, Chara.Alice),
-                        (Stage.St3, Chara.Youmu),
-                        (Stage.St4, Chara.Sakuya),
-                        (Stage.St5, Chara.Remilia),
-                        (Stage.St6, Chara.Yukari),
-                        (Stage.St7, Chara.Suika),
+                        (Stage.One,   Chara.Marisa),
+                        (Stage.Two,   Chara.Alice),
+                        (Stage.Three, Chara.Youmu),
+                        (Stage.Four,  Chara.Sakuya),
+                        (Stage.Five,  Chara.Remilia),
+                        (Stage.Six,   Chara.Yukari),
+                        (Stage.Seven, Chara.Suika),
                     }
                 },
                 {
                     Chara.Marisa,
                     new List<(Stage, Chara)>
                     {
-                        (Stage.St1, Chara.Alice),
-                        (Stage.St2, Chara.Sakuya),
-                        (Stage.St3, Chara.Patchouli),
-                        (Stage.St4, Chara.Remilia),
-                        (Stage.St5, Chara.Reimu),
-                        (Stage.St6, Chara.Yukari),
-                        (Stage.St7, Chara.Suika),
+                        (Stage.One,   Chara.Alice),
+                        (Stage.Two,   Chara.Sakuya),
+                        (Stage.Three, Chara.Patchouli),
+                        (Stage.Four,  Chara.Remilia),
+                        (Stage.Five,  Chara.Reimu),
+                        (Stage.Six,   Chara.Yukari),
+                        (Stage.Seven, Chara.Suika),
                     }
                 },
                 {
                     Chara.Sakuya,
                     new List<(Stage, Chara)>
                     {
-                        (Stage.St1, Chara.Reimu),
-                        (Stage.St2, Chara.Alice),
-                        (Stage.St3, Chara.Marisa),
-                        (Stage.St4, Chara.Youmu),
-                        (Stage.St5, Chara.Yuyuko),
-                        (Stage.St6, Chara.Yukari),
-                        (Stage.St7, Chara.Suika),
+                        (Stage.One,   Chara.Reimu),
+                        (Stage.Two,   Chara.Alice),
+                        (Stage.Three, Chara.Marisa),
+                        (Stage.Four,  Chara.Youmu),
+                        (Stage.Five,  Chara.Yuyuko),
+                        (Stage.Six,   Chara.Yukari),
+                        (Stage.Seven, Chara.Suika),
                     }
                 },
                 {
                     Chara.Alice,
                     new List<(Stage, Chara)>
                     {
-                        (Stage.St1, Chara.Marisa),
-                        (Stage.St2, Chara.Reimu),
-                        (Stage.St3, Chara.Sakuya),
-                        (Stage.St4, Chara.Patchouli),
-                        (Stage.St5, Chara.Youmu),
-                        (Stage.St6, Chara.Yukari),
-                        (Stage.St7, Chara.Suika),
+                        (Stage.One,   Chara.Marisa),
+                        (Stage.Two,   Chara.Reimu),
+                        (Stage.Three, Chara.Sakuya),
+                        (Stage.Four,  Chara.Patchouli),
+                        (Stage.Five,  Chara.Youmu),
+                        (Stage.Six,   Chara.Yukari),
+                        (Stage.Seven, Chara.Suika),
                     }
                 },
                 {
                     Chara.Patchouli,
                     new List<(Stage, Chara)>
                     {
-                        (Stage.St1, Chara.Marisa),
-                        (Stage.St2, Chara.Sakuya),
-                        (Stage.St3, Chara.Alice),
-                        (Stage.St4, Chara.Youmu),
-                        (Stage.St5, Chara.Yuyuko),
-                        (Stage.St6, Chara.Yukari),
-                        (Stage.St7, Chara.Suika),
+                        (Stage.One,   Chara.Marisa),
+                        (Stage.Two,   Chara.Sakuya),
+                        (Stage.Three, Chara.Alice),
+                        (Stage.Four,  Chara.Youmu),
+                        (Stage.Five,  Chara.Yuyuko),
+                        (Stage.Six,   Chara.Yukari),
+                        (Stage.Seven, Chara.Suika),
                     }
                 },
                 {
                     Chara.Youmu,
                     new List<(Stage, Chara)>
                     {
-                        (Stage.St1, Chara.Reimu),
-                        (Stage.St2, Chara.Marisa),
-                        (Stage.St3, Chara.Patchouli),
-                        (Stage.St4, Chara.Sakuya),
-                        (Stage.St5, Chara.Remilia),
-                        (Stage.St6, Chara.Yukari),
-                        (Stage.St7, Chara.Suika),
+                        (Stage.One,   Chara.Reimu),
+                        (Stage.Two,   Chara.Marisa),
+                        (Stage.Three, Chara.Patchouli),
+                        (Stage.Four,  Chara.Sakuya),
+                        (Stage.Five,  Chara.Remilia),
+                        (Stage.Six,   Chara.Yukari),
+                        (Stage.Seven, Chara.Suika),
                     }
                 },
                 {
                     Chara.Remilia,
                     new List<(Stage, Chara)>
                     {
-                        (Stage.St1, Chara.Sakuya),
-                        (Stage.St2, Chara.Marisa),
-                        (Stage.St3, Chara.Reimu),
-                        (Stage.St4, Chara.Youmu),
-                        (Stage.St5, Chara.Yuyuko),
-                        (Stage.St6, Chara.Yukari),
-                        (Stage.St7, Chara.Suika),
+                        (Stage.One,   Chara.Sakuya),
+                        (Stage.Two,   Chara.Marisa),
+                        (Stage.Three, Chara.Reimu),
+                        (Stage.Four,  Chara.Youmu),
+                        (Stage.Five,  Chara.Yuyuko),
+                        (Stage.Six,   Chara.Yukari),
+                        (Stage.Seven, Chara.Suika),
                     }
                 },
                 {
                     Chara.Yuyuko,
                     new List<(Stage, Chara)>
                     {
-                        (Stage.St1, Chara.Youmu),
-                        (Stage.St2, Chara.Marisa),
-                        (Stage.St3, Chara.Reimu),
-                        (Stage.St4, Chara.Sakuya),
-                        (Stage.St5, Chara.Remilia),
-                        (Stage.St6, Chara.Yukari),
-                        (Stage.St7, Chara.Suika),
+                        (Stage.One,   Chara.Youmu),
+                        (Stage.Two,   Chara.Marisa),
+                        (Stage.Three, Chara.Reimu),
+                        (Stage.Four,  Chara.Sakuya),
+                        (Stage.Five,  Chara.Remilia),
+                        (Stage.Six,   Chara.Yukari),
+                        (Stage.Seven, Chara.Suika),
                     }
                 },
                 {
                     Chara.Yukari,
                     new List<(Stage, Chara)>
                     {
-                        (Stage.St1, Chara.Remilia),
-                        (Stage.St2, Chara.Alice),
-                        (Stage.St3, Chara.Youmu),
-                        (Stage.St4, Chara.Marisa),
-                        (Stage.St5, Chara.Reimu),
-                        (Stage.St6, Chara.Yuyuko),
-                        (Stage.St7, Chara.Suika),
+                        (Stage.One,   Chara.Remilia),
+                        (Stage.Two,   Chara.Alice),
+                        (Stage.Three, Chara.Youmu),
+                        (Stage.Four,  Chara.Marisa),
+                        (Stage.Five,  Chara.Reimu),
+                        (Stage.Six,   Chara.Yuyuko),
+                        (Stage.Seven, Chara.Suika),
                     }
                 },
                 {
                     Chara.Suika,
                     new List<(Stage, Chara)>
                     {
-                        (Stage.St1, Chara.Sakuya),
-                        (Stage.St2, Chara.Alice),
-                        (Stage.St3, Chara.Youmu),
-                        (Stage.St4, Chara.Patchouli),
-                        (Stage.St5, Chara.Marisa),
-                        (Stage.St6, Chara.Remilia),
-                        (Stage.St7, Chara.Reimu),
+                        (Stage.One,   Chara.Sakuya),
+                        (Stage.Two,   Chara.Alice),
+                        (Stage.Three, Chara.Youmu),
+                        (Stage.Four,  Chara.Patchouli),
+                        (Stage.Five,  Chara.Marisa),
+                        (Stage.Six,   Chara.Remilia),
+                        (Stage.Seven, Chara.Reimu),
                     }
                 },
             };
@@ -349,17 +347,17 @@ namespace ThScoreFileConverter.Models.Th075
                 {
                     switch (stageEnemyPair.Stage)
                     {
-                        case Stage.St1:
-                        case Stage.St2:
+                        case Stage.One:
+                        case Stage.Two:
                             return cardNumberTable[stageEnemyPair.Enemy].Take(8);
-                        case Stage.St3:
-                        case Stage.St4:
+                        case Stage.Three:
+                        case Stage.Four:
                             return cardNumberTable[stageEnemyPair.Enemy].Take(12);
-                        case Stage.St5:
+                        case Stage.Five:
                             return cardNumberTable[stageEnemyPair.Enemy].Take(16);
-                        case Stage.St6:
+                        case Stage.Six:
                             return cardNumberTable[stageEnemyPair.Enemy].Take(20);
-                        case Stage.St7:
+                        case Stage.Seven:
                             return cardNumberTable[stageEnemyPair.Enemy].Take(24);
                         default:
                             return null;    // unreachable

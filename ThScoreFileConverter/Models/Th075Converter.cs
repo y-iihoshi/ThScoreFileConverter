@@ -7,7 +7,6 @@
 
 #pragma warning disable 1591
 #pragma warning disable SA1600 // ElementsMustBeDocumented
-#pragma warning disable SA1602 // EnumerationItemsMustBeDocumented
 
 using System;
 using System.Collections.Generic;
@@ -33,19 +32,6 @@ namespace ThScoreFileConverter.Models
             new EnumShortNameParser<Chara>();
 
         private AllScoreData allScoreData = null;
-
-        public enum Stage
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("1")] St1,
-            [EnumAltName("2")] St2,
-            [EnumAltName("3")] St3,
-            [EnumAltName("4")] St4,
-            [EnumAltName("5")] St5,
-            [EnumAltName("6")] St6,
-            [EnumAltName("7")] St7,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
 
         public override string SupportedVersions
         {
