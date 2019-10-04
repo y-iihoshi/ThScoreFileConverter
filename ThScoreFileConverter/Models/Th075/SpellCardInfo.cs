@@ -11,7 +11,7 @@ namespace ThScoreFileConverter.Models.Th075
 {
     internal class SpellCardInfo
     {
-        public SpellCardInfo(string name, Th075Converter.Chara enemy, Th075Converter.Level level)
+        public SpellCardInfo(string name, Th075Converter.Chara enemy, Level level)
         {
             this.Name = name;
             this.Enemy = enemy;
@@ -22,6 +22,6 @@ namespace ThScoreFileConverter.Models.Th075
 
         public Th075Converter.Chara Enemy { get; }
 
-        public Th075Converter.Level Level { get; }
+        public Level Level { get; }
     }
 }

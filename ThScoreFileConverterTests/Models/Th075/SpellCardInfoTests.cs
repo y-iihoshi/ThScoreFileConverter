@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th075;
+using Level = ThScoreFileConverter.Models.Th075.Level;
 
 namespace ThScoreFileConverterTests.Models.Th075
 {
@@ -11,14 +12,14 @@ namespace ThScoreFileConverterTests.Models.Th075
         {
             public string name;
             public Th075Converter.Chara enemy;
-            public Th075Converter.Level level;
+            public Level level;
         };
 
         internal static Properties ValidProperties => new Properties()
         {
             name = "「百万鬼夜行」",
             enemy = Th075Converter.Chara.Suika,
-            level = Th075Converter.Level.Normal
+            level = Level.Normal
         };
 
         internal static void Validate(in Properties properties, in SpellCardInfo spellCardInfo)

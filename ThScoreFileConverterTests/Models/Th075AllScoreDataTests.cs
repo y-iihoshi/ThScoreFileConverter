@@ -5,6 +5,7 @@ using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverterTests.Models.Th075;
 using ThScoreFileConverterTests.Models.Wrappers;
+using Level = ThScoreFileConverter.Models.Th075.Level;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -15,7 +16,7 @@ namespace ThScoreFileConverterTests.Models
         {
             public Dictionary<
                 Th075Converter.Chara,
-                Dictionary<Th075Converter.Level, ClearDataTests.Properties>> clearData;
+                Dictionary<Level, ClearDataTests.Properties>> clearData;
             public StatusTests.Properties status;
         };
 
@@ -23,7 +24,7 @@ namespace ThScoreFileConverterTests.Models
         {
             clearData = Utils.GetEnumerator<Th075Converter.Chara>().ToDictionary(
                 chara => chara,
-                chara => Utils.GetEnumerator<Th075Converter.Level>().ToDictionary(
+                chara => Utils.GetEnumerator<Level>().ToDictionary(
                     level => level,
                     level => ClearDataTests.ValidProperties)),
             status = StatusTests.ValidProperties
@@ -35,7 +36,7 @@ namespace ThScoreFileConverterTests.Models
                     perCharaPair => perCharaPair.Value.SelectMany(
                         perLevelPair => ClearDataTests.MakeByteArray(perLevelPair.Value))).ToArray(),
                 Enumerable.Range(1, 4).SelectMany(
-                    index => Utils.GetEnumerator<Th075Converter.Level>().SelectMany(
+                    index => Utils.GetEnumerator<Level>().SelectMany(
                         level => ClearDataTests.MakeByteArray(ClearDataTests.ValidProperties))).ToArray(),
                 StatusTests.MakeByteArray(properties.status));
 

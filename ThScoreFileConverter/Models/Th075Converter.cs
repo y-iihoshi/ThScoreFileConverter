@@ -23,8 +23,8 @@ namespace ThScoreFileConverter.Models
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th075Converter : ThConverter
     {
-        private static new readonly EnumShortNameParser<Level> LevelParser =
-            new EnumShortNameParser<Level>();
+        private static new readonly EnumShortNameParser<Th075.Level> LevelParser =
+            new EnumShortNameParser<Th075.Level>();
 
         private static new readonly EnumShortNameParser<LevelWithTotal> LevelWithTotalParser =
             new EnumShortNameParser<LevelWithTotal>();
@@ -33,16 +33,6 @@ namespace ThScoreFileConverter.Models
             new EnumShortNameParser<Chara>();
 
         private AllScoreData allScoreData = null;
-
-        public enum Level
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("E")] Easy,
-            [EnumAltName("N")] Normal,
-            [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
 
         public enum LevelWithTotal
         {
@@ -155,7 +145,7 @@ namespace ThScoreFileConverter.Models
                 {
                 }
 
-                var numPairs = Enum.GetValues(typeof(Chara)).Length * Enum.GetValues(typeof(Level)).Length;
+                var numPairs = Enum.GetValues(typeof(Chara)).Length * Enum.GetValues(typeof(Th075.Level)).Length;
                 if ((allScoreData.ClearData.Sum(data => data.Value.Count) == numPairs) &&
                     (allScoreData.Status != null))
                     return allScoreData;
@@ -359,9 +349,9 @@ namespace ThScoreFileConverter.Models
                     {
                         var cardIndexIdPairs = Definitions.CardIdTable[chara]
                             .Select((id, index) => new KeyValuePair<int, int>(index, id))
-                            .Where(pair => Definitions.CardTable[pair.Value].Level == (Level)level);
+                            .Where(pair => Definitions.CardTable[pair.Value].Level == (Th075.Level)level);
                         return Utils.ToNumberString(
-                            getValues(parent.allScoreData.ClearData[chara][Level.Easy])
+                            getValues(parent.allScoreData.ClearData[chara][Th075.Level.Easy])
                                 .Where((value, index) => cardIndexIdPairs.Any(pair => pair.Key == index))
                                 .Count(isPositive));
                     }
@@ -421,13 +411,13 @@ namespace ThScoreFileConverter.Models
             public AllScoreData()
             {
                 var charas = Utils.GetEnumerator<Chara>();
-                var numLevels = Enum.GetValues(typeof(Level)).Length;
-                this.ClearData = new Dictionary<Chara, Dictionary<Level, ClearData>>(charas.Count());
+                var numLevels = Enum.GetValues(typeof(Th075.Level)).Length;
+                this.ClearData = new Dictionary<Chara, Dictionary<Th075.Level, ClearData>>(charas.Count());
                 foreach (var chara in charas)
-                    this.ClearData.Add(chara, new Dictionary<Level, ClearData>(numLevels));
+                    this.ClearData.Add(chara, new Dictionary<Th075.Level, ClearData>(numLevels));
             }
 
-            public Dictionary<Chara, Dictionary<Level, ClearData>> ClearData { get; private set; }
+            public Dictionary<Chara, Dictionary<Th075.Level, ClearData>> ClearData { get; private set; }
 
             public Status Status { get; private set; }
 
@@ -435,7 +425,7 @@ namespace ThScoreFileConverter.Models
             [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "knownLevel", Justification = "Reviewed.")]
             public void ReadFrom(BinaryReader reader)
             {
-                var levels = Utils.GetEnumerator<Level>();
+                var levels = Utils.GetEnumerator<Th075.Level>();
 
                 foreach (var chara in Utils.GetEnumerator<Chara>())
                 {
