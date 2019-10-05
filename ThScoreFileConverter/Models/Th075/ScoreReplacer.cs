@@ -7,6 +7,7 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -23,6 +24,9 @@ namespace ThScoreFileConverter.Models.Th075
 
         public ScoreReplacer(IReadOnlyDictionary<(CharaWithReserved, Level), IClearData> clearData)
         {
+            if (clearData is null)
+                throw new ArgumentNullException(nameof(clearData));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
@@ -33,7 +37,9 @@ namespace ThScoreFileConverter.Models.Th075
                 if (chara == Chara.Meiling)
                     return match.ToString();
 
-                var score = clearData[((CharaWithReserved)chara, level)].Ranking[rank];
+                var key = ((CharaWithReserved)chara, level);
+                var score = clearData.TryGetValue(key, out var data) && rank < data.Ranking.Count
+                    ? data.Ranking[rank] : new HighScore();
 
                 switch (type)
                 {
