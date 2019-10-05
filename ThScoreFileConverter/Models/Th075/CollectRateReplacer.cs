@@ -25,6 +25,9 @@ namespace ThScoreFileConverter.Models.Th075
 
         public CollectRateReplacer(IReadOnlyDictionary<(CharaWithReserved chara, Level level), IClearData> clearData)
         {
+            if (clearData is null)
+                throw new ArgumentNullException(nameof(clearData));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
@@ -42,23 +45,29 @@ namespace ThScoreFileConverter.Models.Th075
                 else
                     getValues = data => data.CardTrulyGot.Select(got => (short)got);
 
+                IEnumerable<(int cardId, int cardIndex)> MakeCardIdIndexPairs(Level lv)
+                    => Definitions.CardIdTable[chara]
+                        .Select((id, index) => (id, index))
+                        .Where(pair => Definitions.CardTable[pair.id].Level == lv);
                 bool IsPositive(short value) => value > 0;
 
                 if (level == LevelWithTotal.Total)
                 {
                     return Utils.ToNumberString(clearData
-                        .Where(pair => pair.Key.chara == (CharaWithReserved)chara)
-                        .Sum(pair => getValues(pair.Value).Count(IsPositive)));
+                        .Where(dataPair => dataPair.Key.chara == (CharaWithReserved)chara)
+                        .Sum(dataPair => getValues(dataPair.Value)
+                            .Where((value, index) =>
+                                MakeCardIdIndexPairs(dataPair.Key.level).Any(pair => pair.cardIndex == index))
+                            .Count(IsPositive)));
                 }
                 else
                 {
-                    var cardIndexIdPairs = Definitions.CardIdTable[chara]
-                        .Select((id, index) => new KeyValuePair<int, int>(index, id))
-                        .Where(pair => Definitions.CardTable[pair.Value].Level == (Level)level);
-                    return Utils.ToNumberString(
-                        getValues(clearData[((CharaWithReserved)chara, Level.Easy)])
-                            .Where((value, index) => cardIndexIdPairs.Any(pair => pair.Key == index))
-                            .Count(IsPositive));
+                    return Utils.ToNumberString(clearData
+                        .Where(dataPair => dataPair.Key == ((CharaWithReserved)chara, (Level)level))
+                        .Sum(dataPair => getValues(dataPair.Value)
+                            .Where((value, index) =>
+                                MakeCardIdIndexPairs((Level)level).Any(pair => pair.cardIndex == index))
+                            .Count(IsPositive)));
                 }
             });
         }
