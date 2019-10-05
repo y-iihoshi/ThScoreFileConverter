@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models.Th075;
+using ThScoreFileConverterTests.Models.Th075.Stubs;
 using static ThScoreFileConverter.Models.EnumerableExtensions;
 
 namespace ThScoreFileConverterTests.Models.Th075
@@ -11,38 +12,29 @@ namespace ThScoreFileConverterTests.Models.Th075
     [TestClass]
     public class HighScoreTests
     {
-        internal struct Properties
+        internal static HighScoreStub ValidStub { get; } = new HighScoreStub()
         {
-            public byte[] encodedName;
-            public string decodedName;
-            public byte month;
-            public byte day;
-            public int score;
+            EncodedName = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 },
+            Name = "Player1 ",
+            Month = 6,
+            Day = 15,
+            Score = 1234567
         };
 
-        internal static Properties ValidProperties => new Properties()
-        {
-            encodedName = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 },
-            decodedName = "Player1 ",
-            month = 6,
-            day = 15,
-            score = 1234567
-        };
-
-        internal static byte[] MakeByteArray(in Properties properties)
+        internal static byte[] MakeByteArray(in HighScoreStub stub)
             => TestUtils.MakeByteArray(
-                properties.encodedName,
-                properties.month,
-                properties.day,
+                stub.EncodedName.ToArray(),
+                stub.Month,
+                stub.Day,
                 new byte[2],
-                properties.score);
+                stub.Score);
 
-        internal static void Validate(in Properties properties, in HighScore highScore)
+        internal static void Validate(IHighScore expected, IHighScore actual)
         {
-            Assert.AreEqual(properties.decodedName, highScore.Name);
-            Assert.AreEqual(properties.month, highScore.Month);
-            Assert.AreEqual(properties.day, highScore.Day);
-            Assert.AreEqual(properties.score, highScore.Score);
+            Assert.AreEqual(expected.Name, actual.Name);
+            Assert.AreEqual(expected.Month, actual.Month);
+            Assert.AreEqual(expected.Day, actual.Day);
+            Assert.AreEqual(expected.Score, actual.Score);
         }
 
         [TestMethod]
@@ -59,9 +51,9 @@ namespace ThScoreFileConverterTests.Models.Th075
         [TestMethod]
         public void ReadFromTest() => TestUtils.Wrap(() =>
         {
-            var highScore = TestUtils.Create<HighScore>(MakeByteArray(ValidProperties));
+            var highScore = TestUtils.Create<HighScore>(MakeByteArray(ValidStub));
 
-            Validate(ValidProperties, highScore);
+            Validate(ValidStub, highScore);
         });
 
         [TestMethod]
@@ -78,23 +70,22 @@ namespace ThScoreFileConverterTests.Models.Th075
         [ExpectedException(typeof(InvalidDataException))]
         public void ReadFromTestShortenedName() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.encodedName = properties.encodedName.SkipLast(1).ToArray();
+            var stub = new HighScoreStub(ValidStub);
+            stub.EncodedName = stub.EncodedName.SkipLast(1).ToArray();
 
-            _ = TestUtils.Create<HighScore>(MakeByteArray(properties));
+            _ = TestUtils.Create<HighScore>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "highScore")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void ReadFromTestExceededName() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.encodedName = properties.encodedName.Concat(new byte[] { default }).ToArray();
+            var stub = new HighScoreStub(ValidStub);
+            stub.EncodedName = stub.EncodedName.Concat(new byte[] { default }).ToArray();
 
-            var highScore = TestUtils.Create<HighScore>(MakeByteArray(properties));
+            _ = TestUtils.Create<HighScore>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -129,13 +120,15 @@ namespace ThScoreFileConverterTests.Models.Th075
         [DataRow(12, 31)]
         public void ReadFromTestValidMonthDay(int month, int day) => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.month = (byte)month;
-            properties.day = (byte)day;
+            var stub = new HighScoreStub(ValidStub)
+            {
+                Month = (byte)month,
+                Day = (byte)day,
+            };
 
-            var highScore = TestUtils.Create<HighScore>(MakeByteArray(properties));
+            var highScore = TestUtils.Create<HighScore>(MakeByteArray(stub));
 
-            Validate(properties, highScore);
+            Validate(stub, highScore);
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
@@ -169,9 +162,11 @@ namespace ThScoreFileConverterTests.Models.Th075
         [ExpectedException(typeof(InvalidDataException))]
         public void ReadFromTestInvalidMonthDay(int month, int day) => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.month = (byte)month;
-            properties.day = (byte)day;
+            var properties = new HighScoreStub(ValidStub)
+            {
+                Month = (byte)month,
+                Day = (byte)day,
+            };
 
             _ = TestUtils.Create<HighScore>(MakeByteArray(properties));
 

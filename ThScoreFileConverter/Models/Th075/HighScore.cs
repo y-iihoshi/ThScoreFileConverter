@@ -14,7 +14,7 @@ using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.Models.Th075
 {
-    internal class HighScore : IBinaryReadable
+    internal class HighScore : IBinaryReadable, IHighScore
     {
         public HighScore()
         {

@@ -22,7 +22,7 @@ namespace ThScoreFileConverter.Models.Th075
             this.CardGotCount = new List<short>(100);
             this.CardTrialCount = new List<short>(100);
             this.CardTrulyGot = new List<byte>(100);
-            this.Ranking = new List<HighScore>(10);
+            this.Ranking = new List<IHighScore>(10);
         }
 
         public int UseCount { get; private set; }
@@ -41,7 +41,7 @@ namespace ThScoreFileConverter.Models.Th075
 
         public IReadOnlyList<byte> CardTrulyGot { get; private set; }
 
-        public IReadOnlyList<HighScore> Ranking { get; private set; }
+        public IReadOnlyList<IHighScore> Ranking { get; private set; }
 
         public void ReadFrom(BinaryReader reader)
         {
