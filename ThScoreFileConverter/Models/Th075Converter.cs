@@ -54,11 +54,11 @@ namespace ThScoreFileConverter.Models
         {
             return new List<IStringReplaceable>
             {
-                new ScoreReplacer(this),
-                new CareerReplacer(this),
-                new CardReplacer(this, hideUntriedCards),
-                new CollectRateReplacer(this),
-                new CharaReplacer(this),
+                new ScoreReplacer(this.allScoreData.ClearData),
+                new CareerReplacer(this.allScoreData.ClearData),
+                new CardReplacer(this.allScoreData.ClearData, hideUntriedCards),
+                new CollectRateReplacer(this.allScoreData.ClearData),
+                new CharaReplacer(this.allScoreData.ClearData),
             };
         }
 
@@ -94,7 +94,7 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public ScoreReplacer(Th075Converter parent)
+            public ScoreReplacer(IReadOnlyDictionary<(CharaWithReserved, Th075.Level), ClearData> clearData)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -107,7 +107,7 @@ namespace ThScoreFileConverter.Models
                     if (chara == Chara.Meiling)
                         return match.ToString();
 
-                    var score = parent.allScoreData.ClearData[((CharaWithReserved)chara, level)].Ranking[rank];
+                    var score = clearData[((CharaWithReserved)chara, level)].Ranking[rank];
 
                     switch (type)
                     {
@@ -138,7 +138,8 @@ namespace ThScoreFileConverter.Models
             private readonly MatchEvaluator evaluator;
 
             [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-            public CareerReplacer(Th075Converter parent)
+            public CareerReplacer(
+                IReadOnlyDictionary<(CharaWithReserved chara, Th075.Level level), ClearData> clearData)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -153,8 +154,7 @@ namespace ThScoreFileConverter.Models
                     {
                         if ((number > 0) && (number <= Definitions.CardIdTable[chara].Count()))
                         {
-                            return parent.allScoreData.ClearData
-                                .Where(pair => pair.Key.chara == (CharaWithReserved)chara)
+                            return clearData.Where(pair => pair.Key.chara == (CharaWithReserved)chara)
                                 .Any(pair => pair.Value.CardTrulyGot[number - 1] != 0x00) ? "★" : string.Empty;
                         }
                         else
@@ -174,17 +174,15 @@ namespace ThScoreFileConverter.Models
 
                     if (number == 0)
                     {
-                        return Utils.ToNumberString(
-                            parent.allScoreData.ClearData
-                                .Where(pair => pair.Key.chara == (CharaWithReserved)chara)
-                                .Sum(pair => getValues(pair.Value).Sum()));
+                        return Utils.ToNumberString(clearData
+                            .Where(pair => pair.Key.chara == (CharaWithReserved)chara)
+                            .Sum(pair => getValues(pair.Value).Sum()));
                     }
                     else if (number <= Definitions.CardIdTable[chara].Count())
                     {
-                        return Utils.ToNumberString(
-                            parent.allScoreData.ClearData
-                                .Where(pair => pair.Key.chara == (CharaWithReserved)chara)
-                                .Sum(pair => getValues(pair.Value).ElementAt(number - 1)));
+                        return Utils.ToNumberString(clearData
+                            .Where(pair => pair.Key.chara == (CharaWithReserved)chara)
+                            .Sum(pair => getValues(pair.Value).ElementAt(number - 1)));
                     }
                     else
                     {
@@ -207,7 +205,9 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public CardReplacer(Th075Converter parent, bool hideUntriedCards)
+            public CardReplacer(
+                IReadOnlyDictionary<(CharaWithReserved chara, Th075.Level level), ClearData> clearData,
+                bool hideUntriedCards)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -222,7 +222,7 @@ namespace ThScoreFileConverter.Models
                     {
                         if (hideUntriedCards)
                         {
-                            var dataList = parent.allScoreData.ClearData
+                            var dataList = clearData
                                 .Where(pair => pair.Key.chara == (CharaWithReserved)chara).Select(pair => pair.Value);
                             if (dataList.All(data => data.CardTrialCount[number - 1] <= 0))
                                 return (type == "N") ? "??????????" : "?????";
@@ -254,7 +254,8 @@ namespace ThScoreFileConverter.Models
             private readonly MatchEvaluator evaluator;
 
             [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-            public CollectRateReplacer(Th075Converter parent)
+            public CollectRateReplacer(
+                IReadOnlyDictionary<(CharaWithReserved chara, Th075.Level level), ClearData> clearData)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -277,10 +278,9 @@ namespace ThScoreFileConverter.Models
 
                     if (level == Th075.LevelWithTotal.Total)
                     {
-                        return Utils.ToNumberString(
-                            parent.allScoreData.ClearData
-                                .Where(pair => pair.Key.chara == (CharaWithReserved)chara)
-                                .Sum(pair => getValues(pair.Value).Count(isPositive)));
+                        return Utils.ToNumberString(clearData
+                            .Where(pair => pair.Key.chara == (CharaWithReserved)chara)
+                            .Sum(pair => getValues(pair.Value).Count(isPositive)));
                     }
                     else
                     {
@@ -288,7 +288,7 @@ namespace ThScoreFileConverter.Models
                             .Select((id, index) => new KeyValuePair<int, int>(index, id))
                             .Where(pair => Definitions.CardTable[pair.Value].Level == (Th075.Level)level);
                         return Utils.ToNumberString(
-                            getValues(parent.allScoreData.ClearData[((CharaWithReserved)chara, Th075.Level.Easy)])
+                            getValues(clearData[((CharaWithReserved)chara, Th075.Level.Easy)])
                                 .Where((value, index) => cardIndexIdPairs.Any(pair => pair.Key == index))
                                 .Count(isPositive));
                     }
@@ -309,7 +309,7 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public CharaReplacer(Th075Converter parent)
+            public CharaReplacer(IReadOnlyDictionary<(CharaWithReserved, Th075.Level), ClearData> clearData)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -320,7 +320,7 @@ namespace ThScoreFileConverter.Models
                     if (chara == Chara.Meiling)
                         return match.ToString();
 
-                    var data = parent.allScoreData.ClearData[((CharaWithReserved)chara, level)];
+                    var data = clearData[((CharaWithReserved)chara, level)];
                     switch (type)
                     {
                         case 1:
