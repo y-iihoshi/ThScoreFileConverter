@@ -16,13 +16,13 @@ namespace ThScoreFileConverterTests.Models.Th075
         {
             public byte[] encodedLastName;
             public string decodedLastName;
-            public Dictionary<Chara, IReadOnlyDictionary<Chara, int>> arcadeScores;
+            public IReadOnlyDictionary<(CharaWithReserved player, CharaWithReserved enemy), int> arcadeScores;
 
             public Properties(in Properties properties)
             {
                 this.encodedLastName = properties.encodedLastName.ToArray();
                 this.decodedLastName = properties.decodedLastName;
-                this.arcadeScores = new Dictionary<Chara, IReadOnlyDictionary<Chara, int>>(properties.arcadeScores);
+                this.arcadeScores = properties.arcadeScores.ToDictionary(pair => pair.Key, pair => pair.Value);
             }
         };
 
@@ -30,56 +30,21 @@ namespace ThScoreFileConverterTests.Models.Th075
         {
             encodedLastName = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 },
             decodedLastName = "Player1 ",
-            arcadeScores = Utils.GetEnumerator<Chara>().ToDictionary(
-                chara => chara,
-                chara => Utils.GetEnumerator<Chara>().ToDictionary(
-                    enemy => enemy,
-                    enemy => (int)chara * 100 + (int)enemy) as IReadOnlyDictionary<Chara, int>)
+            arcadeScores = Utils.GetEnumerator<CharaWithReserved>()
+                .SelectMany(player => Utils.GetEnumerator<CharaWithReserved>().Select(enemy => (player, enemy)))
+                .ToDictionary(pair => pair, pair => (int)pair.player * 100 + (int)pair.enemy),
         };
 
         internal static byte[] MakeByteArray(in Properties properties)
-        {
-            var numCharas = Enum.GetValues(typeof(Chara)).Length;
-            var numUnknownCharas = 4;
-            int plus10(int value) => value + 10;
-
-            return TestUtils.MakeByteArray(
+            => TestUtils.MakeByteArray(
                 properties.encodedLastName,
-                properties.arcadeScores[Chara.Reimu].Values.Select(plus10).ToArray(),
-                new int[numUnknownCharas],
-                properties.arcadeScores[Chara.Marisa].Values.Select(plus10).ToArray(),
-                new int[numUnknownCharas],
-                properties.arcadeScores[Chara.Sakuya].Values.Select(plus10).ToArray(),
-                new int[numUnknownCharas],
-                properties.arcadeScores[Chara.Alice].Values.Select(plus10).ToArray(),
-                new int[numUnknownCharas],
-                properties.arcadeScores[Chara.Patchouli].Values.Select(plus10).ToArray(),
-                new int[numUnknownCharas],
-                properties.arcadeScores[Chara.Youmu].Values.Select(plus10).ToArray(),
-                new int[numUnknownCharas],
-                properties.arcadeScores[Chara.Remilia].Values.Select(plus10).ToArray(),
-                new int[numUnknownCharas],
-                properties.arcadeScores[Chara.Yuyuko].Values.Select(plus10).ToArray(),
-                new int[numUnknownCharas],
-                properties.arcadeScores[Chara.Yukari].Values.Select(plus10).ToArray(),
-                new int[numUnknownCharas],
-                properties.arcadeScores[Chara.Suika].Values.Select(plus10).ToArray(),
-                new int[numUnknownCharas],
-                properties.arcadeScores[Chara.Meiling].Values.Select(plus10).ToArray(),
-                new int[numUnknownCharas],
-                new int[(numCharas + numUnknownCharas) * numUnknownCharas],
+                properties.arcadeScores.Values.Select(score => score + 10).ToArray(),
                 new byte[0x128]);
-        }
 
         internal static void Validate(in Properties properties, in Status status)
         {
             Assert.AreEqual(properties.decodedLastName, status.LastName);
-
-            foreach (var chara in Utils.GetEnumerator<Chara>())
-            {
-                CollectionAssert.That.AreEqual(
-                    properties.arcadeScores[chara].Values, status.ArcadeScores[chara].Values);
-            }
+            CollectionAssert.That.AreEqual(properties.arcadeScores.Values, status.ArcadeScores.Values);
         }
 
         [TestMethod]
@@ -133,8 +98,7 @@ namespace ThScoreFileConverterTests.Models.Th075
             var status = TestUtils.Create<Status>(MakeByteArray(properties));
 
             Assert.AreEqual("Player1 ", status.LastName);
-            CollectionAssert.That.AreNotEqual(
-                properties.arcadeScores[Chara.Reimu].Values, status.ArcadeScores[Chara.Reimu].Values);
+            CollectionAssert.That.AreNotEqual(properties.arcadeScores.Values, status.ArcadeScores.Values);
         });
 
         [TestMethod]
@@ -142,10 +106,10 @@ namespace ThScoreFileConverterTests.Models.Th075
         public void ReadFromTestShortenedArcadeScores() => TestUtils.Wrap(() =>
         {
             var properties = new Properties(ValidProperties);
-            var scores = properties.arcadeScores[Chara.Meiling]
-                .Where(pair => pair.Key != Chara.Meiling)
+            var scores = properties.arcadeScores
+                .Where(pair => pair.Key != (CharaWithReserved.Meiling, CharaWithReserved.Meiling))
                 .ToDictionary(pair => pair.Key, pair => pair.Value);
-            properties.arcadeScores[Chara.Meiling] = scores;
+            properties.arcadeScores = scores;
 
             _ = TestUtils.Create<Status>(MakeByteArray(properties));
 
@@ -156,10 +120,9 @@ namespace ThScoreFileConverterTests.Models.Th075
         public void ReadFromTestExceededArcadeScores() => TestUtils.Wrap(() =>
         {
             var properties = new Properties(ValidProperties);
-            var scores = properties.arcadeScores[Chara.Meiling]
-                .ToDictionary(pair => pair.Key, pair => pair.Value);
-            scores.Add(TestUtils.Cast<Chara>(99), 99);
-            properties.arcadeScores[Chara.Meiling] = scores;
+            var scores = properties.arcadeScores.ToDictionary(pair => pair.Key, pair => pair.Value);
+            scores.Add((CharaWithReserved.Reserved15, TestUtils.Cast<CharaWithReserved>(99)), 99);
+            properties.arcadeScores = scores;
 
             var status = TestUtils.Create<Status>(MakeByteArray(properties));
 

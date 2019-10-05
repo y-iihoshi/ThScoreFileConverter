@@ -16,39 +16,24 @@ namespace ThScoreFileConverter.Models.Th075
 {
     internal class Status : IBinaryReadable
     {
-        private Dictionary<Chara, IReadOnlyDictionary<Chara, int>> arcadeScores;
-
         public Status()
         {
         }
 
         public string LastName { get; private set; }
 
-        public IReadOnlyDictionary<Chara, IReadOnlyDictionary<Chara, int>> ArcadeScores => this.arcadeScores;
+        public IReadOnlyDictionary<(CharaWithReserved player, CharaWithReserved enemy), int> ArcadeScores { get; private set; }
 
         public void ReadFrom(BinaryReader reader)
         {
             if (reader == null)
                 throw new ArgumentNullException(nameof(reader));
 
-            var charas = Utils.GetEnumerator<Chara>();
-            var unknownCharas = Enumerable.Range(1, 4);
-            var numScores = charas.Count() + unknownCharas.Count();
+            var charas = Utils.GetEnumerator<CharaWithReserved>();
 
             this.LastName = new string(reader.ReadExactBytes(8).Select(ch => Definitions.CharTable[ch]).ToArray());
-
-            this.arcadeScores = new Dictionary<Chara, IReadOnlyDictionary<Chara, int>>(numScores);
-            foreach (var chara in charas)
-            {
-                this.arcadeScores[chara] = charas.ToDictionary(enemy => enemy, _ => reader.ReadInt32() - 10);
-                _ = unknownCharas.Select(_ => reader.ReadInt32()).ToList();
-            }
-
-            foreach (var unknownChara in unknownCharas)
-            {
-                _ = charas.Select(_ => reader.ReadInt32()).ToList();
-                _ = unknownCharas.Select(_ => reader.ReadInt32()).ToList();
-            }
+            this.ArcadeScores = charas.SelectMany(player => charas.Select(enemy => (player, enemy)))
+                .ToDictionary(pair => pair, _ => reader.ReadInt32() - 10);
 
             // FIXME... BGM flags?
             reader.ReadExactBytes(0x28);
