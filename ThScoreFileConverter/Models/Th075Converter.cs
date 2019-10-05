@@ -12,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
 using ThScoreFileConverter.Models.Th075;
 
 namespace ThScoreFileConverter.Models
@@ -81,38 +80,6 @@ namespace ThScoreFileConverter.Models
                     return allScoreData;
                 else
                     return null;
-            }
-        }
-
-        private class AllScoreData : IBinaryReadable
-        {
-            public AllScoreData()
-            {
-                var numCharas = Enum.GetValues(typeof(CharaWithReserved)).Length;
-                var numLevels = Enum.GetValues(typeof(Th075.Level)).Length;
-                this.ClearData = new Dictionary<(CharaWithReserved, Th075.Level), ClearData>(numCharas * numLevels);
-            }
-
-            public IReadOnlyDictionary<(CharaWithReserved chara, Th075.Level level), ClearData> ClearData { get; private set; }
-
-            public Status Status { get; private set; }
-
-            public void ReadFrom(BinaryReader reader)
-            {
-                var levels = Utils.GetEnumerator<Th075.Level>();
-
-                this.ClearData = Utils.GetEnumerator<CharaWithReserved>()
-                    .SelectMany(chara => levels.Select(level => (chara, level)))
-                    .ToDictionary(pair => pair, pair =>
-                    {
-                        var clearData = new ClearData();
-                        clearData.ReadFrom(reader);
-                        return clearData;
-                    });
-
-                var status = new Status();
-                status.ReadFrom(reader);
-                this.Status = status;
             }
         }
     }

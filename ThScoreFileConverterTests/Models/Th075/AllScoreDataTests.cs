@@ -4,14 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th075;
-using ThScoreFileConverterTests.Models.Th075;
-using ThScoreFileConverterTests.Models.Wrappers;
 using Level = ThScoreFileConverter.Models.Th075.Level;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th075
 {
     [TestClass]
-    public class Th075AllScoreDataTests
+    public class AllScoreDataTests
     {
         internal struct Properties
         {
@@ -32,7 +30,7 @@ namespace ThScoreFileConverterTests.Models
                 properties.clearData.SelectMany(pair => ClearDataTests.MakeByteArray(pair.Value)).ToArray(),
                 StatusTests.MakeByteArray(properties.status));
 
-        internal static void Validate(in Th075AllScoreDataWrapper allScoreData, in Properties properties)
+        internal static void Validate(in Properties properties, in AllScoreData allScoreData)
         {
             foreach (var pair in properties.clearData)
             {
@@ -43,29 +41,29 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        public void Th075AllScoreDataTest() => TestUtils.Wrap(() =>
+        public void AllScoreDataTest() => TestUtils.Wrap(() =>
         {
-            var allScoreData = new Th075AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
 
             Assert.AreEqual(0, allScoreData.ClearData.Count);
             Assert.IsNull(allScoreData.Status);
         });
 
         [TestMethod]
-        public void Th075AllScoreDataReadFromTest() => TestUtils.Wrap(() =>
+        public void ReadFromTest() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
 
-            var allScoreData = Th075AllScoreDataWrapper.Create(MakeByteArray(properties));
+            var allScoreData = TestUtils.Create<AllScoreData>(MakeByteArray(properties));
 
-            Validate(allScoreData, properties);
+            Validate(properties, allScoreData);
         });
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th075AllScoreDataReadFromTestNull() => TestUtils.Wrap(() =>
+        public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
-            var allScoreData = new Th075AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.ReadFrom(null);
 
             Assert.Fail(TestUtils.Unreachable);
