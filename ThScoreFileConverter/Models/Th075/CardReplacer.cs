@@ -7,6 +7,7 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -25,6 +26,9 @@ namespace ThScoreFileConverter.Models.Th075
         public CardReplacer(
             IReadOnlyDictionary<(CharaWithReserved chara, Level level), IClearData> clearData, bool hideUntriedCards)
         {
+            if (clearData is null)
+                throw new ArgumentNullException(nameof(clearData));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
