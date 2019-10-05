@@ -76,8 +76,9 @@ namespace ThScoreFileConverter.Models
                 {
                 }
 
-                var numPairs = Enum.GetValues(typeof(Chara)).Length * Enum.GetValues(typeof(Th075.Level)).Length;
-                if ((allScoreData.ClearData.Count == numPairs) &&
+                var numCharas = Enum.GetValues(typeof(CharaWithReserved)).Length;
+                var numLevels = Enum.GetValues(typeof(Th075.Level)).Length;
+                if ((allScoreData.ClearData.Count == numCharas * numLevels) &&
                     (allScoreData.Status != null))
                     return allScoreData;
                 else
@@ -106,7 +107,7 @@ namespace ThScoreFileConverter.Models
                     if (chara == Chara.Meiling)
                         return match.ToString();
 
-                    var score = parent.allScoreData.ClearData[(chara, level)].Ranking[rank];
+                    var score = parent.allScoreData.ClearData[((CharaWithReserved)chara, level)].Ranking[rank];
 
                     switch (type)
                     {
@@ -152,7 +153,8 @@ namespace ThScoreFileConverter.Models
                     {
                         if ((number > 0) && (number <= Definitions.CardIdTable[chara].Count()))
                         {
-                            return parent.allScoreData.ClearData.Where(pair => pair.Key.chara == chara)
+                            return parent.allScoreData.ClearData
+                                .Where(pair => pair.Key.chara == (CharaWithReserved)chara)
                                 .Any(pair => pair.Value.CardTrulyGot[number - 1] != 0x00) ? "★" : string.Empty;
                         }
                         else
@@ -173,13 +175,15 @@ namespace ThScoreFileConverter.Models
                     if (number == 0)
                     {
                         return Utils.ToNumberString(
-                            parent.allScoreData.ClearData.Where(pair => pair.Key.chara == chara)
+                            parent.allScoreData.ClearData
+                                .Where(pair => pair.Key.chara == (CharaWithReserved)chara)
                                 .Sum(pair => getValues(pair.Value).Sum()));
                     }
                     else if (number <= Definitions.CardIdTable[chara].Count())
                     {
                         return Utils.ToNumberString(
-                            parent.allScoreData.ClearData.Where(pair => pair.Key.chara == chara)
+                            parent.allScoreData.ClearData
+                                .Where(pair => pair.Key.chara == (CharaWithReserved)chara)
                                 .Sum(pair => getValues(pair.Value).ElementAt(number - 1)));
                     }
                     else
@@ -219,7 +223,7 @@ namespace ThScoreFileConverter.Models
                         if (hideUntriedCards)
                         {
                             var dataList = parent.allScoreData.ClearData
-                                .Where(pair => pair.Key.chara == chara).Select(pair => pair.Value);
+                                .Where(pair => pair.Key.chara == (CharaWithReserved)chara).Select(pair => pair.Value);
                             if (dataList.All(data => data.CardTrialCount[number - 1] <= 0))
                                 return (type == "N") ? "??????????" : "?????";
                         }
@@ -274,7 +278,8 @@ namespace ThScoreFileConverter.Models
                     if (level == Th075.LevelWithTotal.Total)
                     {
                         return Utils.ToNumberString(
-                            parent.allScoreData.ClearData.Where(pair => pair.Key.chara == chara)
+                            parent.allScoreData.ClearData
+                                .Where(pair => pair.Key.chara == (CharaWithReserved)chara)
                                 .Sum(pair => getValues(pair.Value).Count(isPositive)));
                     }
                     else
@@ -283,7 +288,7 @@ namespace ThScoreFileConverter.Models
                             .Select((id, index) => new KeyValuePair<int, int>(index, id))
                             .Where(pair => Definitions.CardTable[pair.Value].Level == (Th075.Level)level);
                         return Utils.ToNumberString(
-                            getValues(parent.allScoreData.ClearData[(chara, Th075.Level.Easy)])
+                            getValues(parent.allScoreData.ClearData[((CharaWithReserved)chara, Th075.Level.Easy)])
                                 .Where((value, index) => cardIndexIdPairs.Any(pair => pair.Key == index))
                                 .Count(isPositive));
                     }
@@ -315,7 +320,7 @@ namespace ThScoreFileConverter.Models
                     if (chara == Chara.Meiling)
                         return match.ToString();
 
-                    var data = parent.allScoreData.ClearData[(chara, level)];
+                    var data = parent.allScoreData.ClearData[((CharaWithReserved)chara, level)];
                     switch (type)
                     {
                         case 1:
@@ -342,12 +347,12 @@ namespace ThScoreFileConverter.Models
         {
             public AllScoreData()
             {
-                var numCharas = Enum.GetValues(typeof(Chara)).Length;
+                var numCharas = Enum.GetValues(typeof(CharaWithReserved)).Length;
                 var numLevels = Enum.GetValues(typeof(Th075.Level)).Length;
-                this.ClearData = new Dictionary<(Chara, Th075.Level), ClearData>(numCharas * numLevels);
+                this.ClearData = new Dictionary<(CharaWithReserved, Th075.Level), ClearData>(numCharas * numLevels);
             }
 
-            public IReadOnlyDictionary<(Chara chara, Th075.Level level), ClearData> ClearData { get; private set; }
+            public IReadOnlyDictionary<(CharaWithReserved chara, Th075.Level level), ClearData> ClearData { get; private set; }
 
             public Status Status { get; private set; }
 
@@ -355,7 +360,7 @@ namespace ThScoreFileConverter.Models
             {
                 var levels = Utils.GetEnumerator<Th075.Level>();
 
-                this.ClearData = Utils.GetEnumerator<Chara>()
+                this.ClearData = Utils.GetEnumerator<CharaWithReserved>()
                     .SelectMany(chara => levels.Select(level => (chara, level)))
                     .ToDictionary(pair => pair, pair =>
                     {
@@ -363,13 +368,6 @@ namespace ThScoreFileConverter.Models
                         clearData.ReadFrom(reader);
                         return clearData;
                     });
-
-                _ = Enumerable.Range(1, 4).SelectMany(unknownChara => levels.Select(level =>
-                {
-                    var clearData = new ClearData();
-                    clearData.ReadFrom(reader);
-                    return clearData;
-                })).ToList();
 
                 var status = new Status();
                 status.ReadFrom(reader);
