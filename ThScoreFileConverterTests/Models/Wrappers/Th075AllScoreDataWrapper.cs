@@ -48,8 +48,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public object Target
             => this.pobj.Target;
 
-        public IReadOnlyDictionary<Chara, Dictionary<Level, ClearData>> ClearData
-            => this.pobj.GetProperty(nameof(this.ClearData)) as Dictionary<Chara, Dictionary<Level, ClearData>>;
+        public IReadOnlyDictionary<(Chara, Level), ClearData> ClearData
+            => this.pobj.GetProperty(nameof(this.ClearData)) as IReadOnlyDictionary<(Chara, Level), ClearData>;
 
         public Status Status
             => this.pobj.GetProperty(nameof(this.Status)) as Status;

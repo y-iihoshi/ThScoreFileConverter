@@ -15,25 +15,21 @@ namespace ThScoreFileConverterTests.Models
     {
         internal struct Properties
         {
-            public Dictionary<Chara, Dictionary<Level, ClearDataTests.Properties>> clearData;
+            public Dictionary<(Chara, Level), ClearDataTests.Properties> clearData;
             public StatusTests.Properties status;
         };
 
         internal static Properties ValidProperties => new Properties()
         {
-            clearData = Utils.GetEnumerator<Chara>().ToDictionary(
-                chara => chara,
-                chara => Utils.GetEnumerator<Level>().ToDictionary(
-                    level => level,
-                    level => ClearDataTests.ValidProperties)),
+            clearData = Utils.GetEnumerator<Chara>()
+                .SelectMany(chara => Utils.GetEnumerator<Level>().Select(level => (chara, level)))
+                .ToDictionary(pair => pair, pair => ClearDataTests.ValidProperties),
             status = StatusTests.ValidProperties
         };
 
         internal static byte[] MakeByteArray(in Properties properties)
             => TestUtils.MakeByteArray(
-                properties.clearData.SelectMany(
-                    perCharaPair => perCharaPair.Value.SelectMany(
-                        perLevelPair => ClearDataTests.MakeByteArray(perLevelPair.Value))).ToArray(),
+                properties.clearData.SelectMany(pair => ClearDataTests.MakeByteArray(pair.Value)).ToArray(),
                 Enumerable.Range(1, 4).SelectMany(
                     index => Utils.GetEnumerator<Level>().SelectMany(
                         level => ClearDataTests.MakeByteArray(ClearDataTests.ValidProperties))).ToArray(),
@@ -41,13 +37,9 @@ namespace ThScoreFileConverterTests.Models
 
         internal static void Validate(in Th075AllScoreDataWrapper allScoreData, in Properties properties)
         {
-            foreach (var perCharaPair in properties.clearData)
+            foreach (var pair in properties.clearData)
             {
-                foreach (var perLevelPair in perCharaPair.Value)
-                {
-                    ClearDataTests.Validate(
-                        perLevelPair.Value, allScoreData.ClearData[perCharaPair.Key][perLevelPair.Key]);
-                }
+                ClearDataTests.Validate(pair.Value, allScoreData.ClearData[pair.Key]);
             }
 
             StatusTests.Validate(properties.status, allScoreData.Status);
@@ -56,16 +48,9 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th075AllScoreDataTest() => TestUtils.Wrap(() =>
         {
-            var charas = Utils.GetEnumerator<Chara>();
             var allScoreData = new Th075AllScoreDataWrapper();
 
-            Assert.AreEqual(charas.Count(), allScoreData.ClearData.Count);
-
-            foreach (var chara in charas)
-            {
-                Assert.AreEqual(0, allScoreData.ClearData[chara].Count);
-            }
-
+            Assert.AreEqual(0, allScoreData.ClearData.Count);
             Assert.IsNull(allScoreData.Status);
         });
 

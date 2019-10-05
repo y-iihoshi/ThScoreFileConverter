@@ -77,7 +77,7 @@ namespace ThScoreFileConverter.Models
                 }
 
                 var numPairs = Enum.GetValues(typeof(Chara)).Length * Enum.GetValues(typeof(Th075.Level)).Length;
-                if ((allScoreData.ClearData.Sum(data => data.Value.Count) == numPairs) &&
+                if ((allScoreData.ClearData.Count == numPairs) &&
                     (allScoreData.Status != null))
                     return allScoreData;
                 else
@@ -106,7 +106,7 @@ namespace ThScoreFileConverter.Models
                     if (chara == Chara.Meiling)
                         return match.ToString();
 
-                    var score = parent.allScoreData.ClearData[chara][level].Ranking[rank];
+                    var score = parent.allScoreData.ClearData[(chara, level)].Ranking[rank];
 
                     switch (type)
                     {
@@ -152,8 +152,8 @@ namespace ThScoreFileConverter.Models
                     {
                         if ((number > 0) && (number <= Definitions.CardIdTable[chara].Count()))
                         {
-                            return parent.allScoreData.ClearData[chara].Values
-                                .Any(data => data.CardTrulyGot[number - 1] != 0x00) ? "★" : string.Empty;
+                            return parent.allScoreData.ClearData.Where(pair => pair.Key.chara == chara)
+                                .Any(pair => pair.Value.CardTrulyGot[number - 1] != 0x00) ? "★" : string.Empty;
                         }
                         else
                         {
@@ -173,13 +173,14 @@ namespace ThScoreFileConverter.Models
                     if (number == 0)
                     {
                         return Utils.ToNumberString(
-                            parent.allScoreData.ClearData[chara].Values.Sum(data => getValues(data).Sum()));
+                            parent.allScoreData.ClearData.Where(pair => pair.Key.chara == chara)
+                                .Sum(pair => getValues(pair.Value).Sum()));
                     }
                     else if (number <= Definitions.CardIdTable[chara].Count())
                     {
                         return Utils.ToNumberString(
-                            parent.allScoreData.ClearData[chara].Values.Sum(data =>
-                                getValues(data).ElementAt(number - 1)));
+                            parent.allScoreData.ClearData.Where(pair => pair.Key.chara == chara)
+                                .Sum(pair => getValues(pair.Value).ElementAt(number - 1)));
                     }
                     else
                     {
@@ -217,8 +218,8 @@ namespace ThScoreFileConverter.Models
                     {
                         if (hideUntriedCards)
                         {
-                            var dataList = parent.allScoreData.ClearData[chara]
-                                .Select(pair => pair.Value);
+                            var dataList = parent.allScoreData.ClearData
+                                .Where(pair => pair.Key.chara == chara).Select(pair => pair.Value);
                             if (dataList.All(data => data.CardTrialCount[number - 1] <= 0))
                                 return (type == "N") ? "??????????" : "?????";
                         }
@@ -273,8 +274,8 @@ namespace ThScoreFileConverter.Models
                     if (level == Th075.LevelWithTotal.Total)
                     {
                         return Utils.ToNumberString(
-                            parent.allScoreData.ClearData[chara].Values.Sum(data =>
-                                getValues(data).Count(isPositive)));
+                            parent.allScoreData.ClearData.Where(pair => pair.Key.chara == chara)
+                                .Sum(pair => getValues(pair.Value).Count(isPositive)));
                     }
                     else
                     {
@@ -282,7 +283,7 @@ namespace ThScoreFileConverter.Models
                             .Select((id, index) => new KeyValuePair<int, int>(index, id))
                             .Where(pair => Definitions.CardTable[pair.Value].Level == (Th075.Level)level);
                         return Utils.ToNumberString(
-                            getValues(parent.allScoreData.ClearData[chara][Th075.Level.Easy])
+                            getValues(parent.allScoreData.ClearData[(chara, Th075.Level.Easy)])
                                 .Where((value, index) => cardIndexIdPairs.Any(pair => pair.Key == index))
                                 .Count(isPositive));
                     }
@@ -314,7 +315,7 @@ namespace ThScoreFileConverter.Models
                     if (chara == Chara.Meiling)
                         return match.ToString();
 
-                    var data = parent.allScoreData.ClearData[chara][level];
+                    var data = parent.allScoreData.ClearData[(chara, level)];
                     switch (type)
                     {
                         case 1:
@@ -341,39 +342,34 @@ namespace ThScoreFileConverter.Models
         {
             public AllScoreData()
             {
-                var charas = Utils.GetEnumerator<Chara>();
+                var numCharas = Enum.GetValues(typeof(Chara)).Length;
                 var numLevels = Enum.GetValues(typeof(Th075.Level)).Length;
-                this.ClearData = new Dictionary<Chara, Dictionary<Th075.Level, ClearData>>(charas.Count());
-                foreach (var chara in charas)
-                    this.ClearData.Add(chara, new Dictionary<Th075.Level, ClearData>(numLevels));
+                this.ClearData = new Dictionary<(Chara, Th075.Level), ClearData>(numCharas * numLevels);
             }
 
-            public Dictionary<Chara, Dictionary<Th075.Level, ClearData>> ClearData { get; private set; }
+            public IReadOnlyDictionary<(Chara chara, Th075.Level level), ClearData> ClearData { get; private set; }
 
             public Status Status { get; private set; }
 
-            [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "unknownChara", Justification = "Reviewed.")]
-            [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "knownLevel", Justification = "Reviewed.")]
             public void ReadFrom(BinaryReader reader)
             {
                 var levels = Utils.GetEnumerator<Th075.Level>();
 
-                foreach (var chara in Utils.GetEnumerator<Chara>())
-                {
-                    foreach (var level in levels)
+                this.ClearData = Utils.GetEnumerator<Chara>()
+                    .SelectMany(chara => levels.Select(level => (chara, level)))
+                    .ToDictionary(pair => pair, pair =>
                     {
                         var clearData = new ClearData();
                         clearData.ReadFrom(reader);
-                        if (!this.ClearData[chara].ContainsKey(level))
-                            this.ClearData[chara].Add(level, clearData);
-                    }
-                }
+                        return clearData;
+                    });
 
-                foreach (var unknownChara in Enumerable.Range(1, 4))
+                _ = Enumerable.Range(1, 4).SelectMany(unknownChara => levels.Select(level =>
                 {
-                    foreach (var knownLevel in levels)
-                        new ClearData().ReadFrom(reader);
-                }
+                    var clearData = new ClearData();
+                    clearData.ReadFrom(reader);
+                    return clearData;
+                })).ToList();
 
                 var status = new Status();
                 status.ReadFrom(reader);

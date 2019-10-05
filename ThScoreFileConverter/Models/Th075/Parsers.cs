@@ -7,7 +7,6 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
-
 namespace ThScoreFileConverter.Models.Th075
 {
     internal static class Parsers
@@ -20,6 +19,5 @@ namespace ThScoreFileConverter.Models.Th075
 
         public static EnumShortNameParser<Chara> CharaParser { get; } =
             new EnumShortNameParser<Chara>();
-
     }
 }
