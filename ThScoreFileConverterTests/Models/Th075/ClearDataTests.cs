@@ -12,7 +12,7 @@ namespace ThScoreFileConverterTests.Models.Th075
     [TestClass]
     public class ClearDataTests
     {
-        internal static ClearDataStub DefaultStub => new ClearDataStub()
+        internal static ClearDataStub DefaultStub { get; } = new ClearDataStub()
         {
             UseCount = default,
             ClearCount = default,
@@ -25,16 +25,16 @@ namespace ThScoreFileConverterTests.Models.Th075
             Ranking = new List<IHighScore>()
         };
 
-        internal static ClearDataStub ValidStub => new ClearDataStub()
+        internal static ClearDataStub ValidStub { get; } = new ClearDataStub()
         {
             UseCount = 1234,
             ClearCount = 2345,
             MaxCombo = 3456,
             MaxDamage = 4567,
-            MaxBonuses = TestUtils.MakeRandomArray<int>(100).ToList(),
-            CardGotCount = TestUtils.MakeRandomArray<short>(100).ToList(),
-            CardTrialCount = TestUtils.MakeRandomArray<short>(100).ToList(),
-            CardTrulyGot = TestUtils.MakeRandomArray<byte>(100).ToList(),
+            MaxBonuses = Enumerable.Range(9, 100).ToList(),
+            CardGotCount = Enumerable.Range(8, 100).Select(count => (short)count).ToList(),
+            CardTrialCount = Enumerable.Range(7, 100).Select(count => (short)count).ToList(),
+            CardTrulyGot = Enumerable.Range(6, 100).Select(got => (byte)got).ToList(),
             Ranking = Enumerable.Range(0, 10)
                 .Select(index => new HighScoreStub()
                 {

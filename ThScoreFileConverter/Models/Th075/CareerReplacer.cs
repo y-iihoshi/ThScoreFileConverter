@@ -25,6 +25,9 @@ namespace ThScoreFileConverter.Models.Th075
 
         public CareerReplacer(IReadOnlyDictionary<(CharaWithReserved chara, Level level), IClearData> clearData)
         {
+            if (clearData is null)
+                throw new ArgumentNullException(nameof(clearData));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
