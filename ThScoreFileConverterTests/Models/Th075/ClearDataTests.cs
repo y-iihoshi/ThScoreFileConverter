@@ -12,43 +12,30 @@ namespace ThScoreFileConverterTests.Models.Th075
     [TestClass]
     public class ClearDataTests
     {
-        internal struct Properties
+        internal static ClearDataStub DefaultStub => new ClearDataStub()
         {
-            public int useCount;
-            public int clearCount;
-            public int maxCombo;
-            public int maxDamage;
-            public List<int> maxBonuses;
-            public List<short> cardGotCount;
-            public List<short> cardTrialCount;
-            public List<byte> cardTrulyGot;
-            public List<IHighScore> ranking;
+            UseCount = default,
+            ClearCount = default,
+            MaxCombo = default,
+            MaxDamage = default,
+            MaxBonuses = new List<int>(),
+            CardGotCount = new List<short>(),
+            CardTrialCount = new List<short>(),
+            CardTrulyGot = new List<byte>(),
+            Ranking = new List<IHighScore>()
         };
 
-        internal static Properties DefaultProperties => new Properties()
+        internal static ClearDataStub ValidStub => new ClearDataStub()
         {
-            useCount = default,
-            clearCount = default,
-            maxCombo = default,
-            maxDamage = default,
-            maxBonuses = new List<int>(),
-            cardGotCount = new List<short>(),
-            cardTrialCount = new List<short>(),
-            cardTrulyGot = new List<byte>(),
-            ranking = new List<IHighScore>()
-        };
-
-        internal static Properties ValidProperties => new Properties()
-        {
-            useCount = 1234,
-            clearCount = 2345,
-            maxCombo = 3456,
-            maxDamage = 4567,
-            maxBonuses = TestUtils.MakeRandomArray<int>(100).ToList(),
-            cardGotCount = TestUtils.MakeRandomArray<short>(100).ToList(),
-            cardTrialCount = TestUtils.MakeRandomArray<short>(100).ToList(),
-            cardTrulyGot = TestUtils.MakeRandomArray<byte>(100).ToList(),
-            ranking = Enumerable.Range(0, 10)
+            UseCount = 1234,
+            ClearCount = 2345,
+            MaxCombo = 3456,
+            MaxDamage = 4567,
+            MaxBonuses = TestUtils.MakeRandomArray<int>(100).ToList(),
+            CardGotCount = TestUtils.MakeRandomArray<short>(100).ToList(),
+            CardTrialCount = TestUtils.MakeRandomArray<short>(100).ToList(),
+            CardTrulyGot = TestUtils.MakeRandomArray<byte>(100).ToList(),
+            Ranking = Enumerable.Range(0, 10)
                 .Select(index => new HighScoreStub()
                 {
                     EncodedName = new byte[] { 15, 37, 26, 50, 30, 43, (byte)(52 + index), 103 },
@@ -59,38 +46,38 @@ namespace ThScoreFileConverterTests.Models.Th075
                 } as IHighScore).ToList()
         };
 
-        internal static byte[] MakeByteArray(in Properties properties)
+        internal static byte[] MakeByteArray(IClearData clearData)
             => TestUtils.MakeByteArray(
-                properties.useCount,
-                properties.clearCount,
-                properties.maxCombo,
-                properties.maxDamage,
-                properties.maxBonuses.ToArray(),
+                clearData.UseCount,
+                clearData.ClearCount,
+                clearData.MaxCombo,
+                clearData.MaxDamage,
+                clearData.MaxBonuses.ToArray(),
                 new byte[0xC8],
-                properties.cardGotCount.ToArray(),
+                clearData.CardGotCount.ToArray(),
                 new byte[0x64],
-                properties.cardTrialCount.ToArray(),
+                clearData.CardTrialCount.ToArray(),
                 new byte[0x64],
-                properties.cardTrulyGot.ToArray(),
+                clearData.CardTrulyGot.ToArray(),
                 new byte[0x38],
-                properties.ranking.SelectMany(
+                clearData.Ranking.SelectMany(
                     element => HighScoreTests.MakeByteArray(element as HighScoreStub)).ToArray());
 
-        internal static void Validate(in Properties properties, in ClearData clearData)
+        internal static void Validate(IClearData expected, IClearData actual)
         {
-            Assert.AreEqual(properties.useCount, clearData.UseCount);
-            Assert.AreEqual(properties.clearCount, clearData.ClearCount);
-            Assert.AreEqual(properties.maxCombo, clearData.MaxCombo);
-            Assert.AreEqual(properties.maxDamage, clearData.MaxDamage);
-            CollectionAssert.That.AreEqual(properties.maxBonuses, clearData.MaxBonuses);
-            CollectionAssert.That.AreEqual(properties.cardGotCount, clearData.CardGotCount);
-            CollectionAssert.That.AreEqual(properties.cardTrialCount, clearData.CardTrialCount);
-            CollectionAssert.That.AreEqual(properties.cardTrulyGot, clearData.CardTrulyGot);
-            Assert.AreEqual(properties.ranking.Count, clearData.Ranking.Count);
-            foreach (var index in Enumerable.Range(0, properties.ranking.Count))
+            Assert.AreEqual(expected.UseCount, actual.UseCount);
+            Assert.AreEqual(expected.ClearCount, actual.ClearCount);
+            Assert.AreEqual(expected.MaxCombo, actual.MaxCombo);
+            Assert.AreEqual(expected.MaxDamage, actual.MaxDamage);
+            CollectionAssert.That.AreEqual(expected.MaxBonuses, actual.MaxBonuses);
+            CollectionAssert.That.AreEqual(expected.CardGotCount, actual.CardGotCount);
+            CollectionAssert.That.AreEqual(expected.CardTrialCount, actual.CardTrialCount);
+            CollectionAssert.That.AreEqual(expected.CardTrulyGot, actual.CardTrulyGot);
+            Assert.AreEqual(expected.Ranking.Count, actual.Ranking.Count);
+            foreach (var index in Enumerable.Range(0, expected.Ranking.Count))
             {
-                var highScoreStub = properties.ranking[index];
-                var highScore = clearData.Ranking[index];
+                var highScoreStub = expected.Ranking[index];
+                var highScore = actual.Ranking[index];
                 Assert.AreEqual(highScoreStub.Name, highScore.Name);
                 Assert.AreEqual(highScoreStub.Month, highScore.Month);
                 Assert.AreEqual(highScoreStub.Day, highScore.Day);
@@ -103,17 +90,15 @@ namespace ThScoreFileConverterTests.Models.Th075
         {
             var clearData = new ClearData();
 
-            Validate(DefaultProperties, clearData);
+            Validate(DefaultStub, clearData);
         });
 
         [TestMethod]
         public void ReadFromTest() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
+            var clearData = TestUtils.Create<ClearData>(MakeByteArray(ValidStub));
 
-            var clearData = TestUtils.Create<ClearData>(MakeByteArray(properties));
-
-            Validate(properties, clearData);
+            Validate(ValidStub, clearData);
         });
 
         [TestMethod]

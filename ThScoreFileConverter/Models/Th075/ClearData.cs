@@ -14,7 +14,7 @@ using System.Linq;
 
 namespace ThScoreFileConverter.Models.Th075
 {
-    internal class ClearData : IBinaryReadable  // per character, level
+    internal class ClearData : IBinaryReadable, IClearData  // per character, level
     {
         public ClearData()
         {

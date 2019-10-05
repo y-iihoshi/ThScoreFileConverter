@@ -13,7 +13,7 @@ namespace ThScoreFileConverterTests.Models.Th075
     {
         internal struct Properties
         {
-            public Dictionary<(CharaWithReserved, Level), ClearDataTests.Properties> clearData;
+            public Dictionary<(CharaWithReserved, Level), IClearData> clearData;
             public StatusTests.Properties status;
         };
 
@@ -21,7 +21,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         {
             clearData = Utils.GetEnumerator<CharaWithReserved>()
                 .SelectMany(chara => Utils.GetEnumerator<Level>().Select(level => (chara, level)))
-                .ToDictionary(pair => pair, pair => ClearDataTests.ValidProperties),
+                .ToDictionary(pair => pair, _ => ClearDataTests.ValidStub as IClearData),
             status = StatusTests.ValidProperties
         };
 

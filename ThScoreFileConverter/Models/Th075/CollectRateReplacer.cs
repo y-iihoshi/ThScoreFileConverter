@@ -23,7 +23,7 @@ namespace ThScoreFileConverter.Models.Th075
 
         private readonly MatchEvaluator evaluator;
 
-        public CollectRateReplacer(IReadOnlyDictionary<(CharaWithReserved chara, Level level), ClearData> clearData)
+        public CollectRateReplacer(IReadOnlyDictionary<(CharaWithReserved chara, Level level), IClearData> clearData)
         {
             this.evaluator = new MatchEvaluator(match =>
             {
@@ -34,7 +34,7 @@ namespace ThScoreFileConverter.Models.Th075
                 if (chara == Chara.Meiling)
                     return match.ToString();
 
-                Func<ClearData, IEnumerable<short>> getValues;
+                Func<IClearData, IEnumerable<short>> getValues;
                 if (type == 1)
                     getValues = data => data.CardGotCount;
                 else if (type == 2)
@@ -44,7 +44,7 @@ namespace ThScoreFileConverter.Models.Th075
 
                 bool IsPositive(short value) => value > 0;
 
-                if (level == Th075.LevelWithTotal.Total)
+                if (level == LevelWithTotal.Total)
                 {
                     return Utils.ToNumberString(clearData
                         .Where(pair => pair.Key.chara == (CharaWithReserved)chara)

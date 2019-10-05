@@ -23,7 +23,7 @@ namespace ThScoreFileConverter.Models.Th075
 
         private readonly MatchEvaluator evaluator;
 
-        public CareerReplacer(IReadOnlyDictionary<(CharaWithReserved chara, Level level), ClearData> clearData)
+        public CareerReplacer(IReadOnlyDictionary<(CharaWithReserved chara, Level level), IClearData> clearData)
         {
             this.evaluator = new MatchEvaluator(match =>
             {
@@ -48,7 +48,7 @@ namespace ThScoreFileConverter.Models.Th075
                 }
 
                 int ToInteger(short value) => value;
-                Func<ClearData, IEnumerable<int>> getValues;
+                Func<IClearData, IEnumerable<int>> getValues;
                 if (type == 1)
                     getValues = data => data.MaxBonuses;
                 else if (type == 2)

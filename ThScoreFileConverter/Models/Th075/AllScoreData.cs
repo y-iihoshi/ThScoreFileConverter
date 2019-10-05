@@ -20,10 +20,10 @@ namespace ThScoreFileConverter.Models.Th075
         {
             var numCharas = Enum.GetValues(typeof(CharaWithReserved)).Length;
             var numLevels = Enum.GetValues(typeof(Level)).Length;
-            this.ClearData = new Dictionary<(CharaWithReserved, Level), ClearData>(numCharas * numLevels);
+            this.ClearData = new Dictionary<(CharaWithReserved, Level), IClearData>(numCharas * numLevels);
         }
 
-        public IReadOnlyDictionary<(CharaWithReserved chara, Level level), ClearData> ClearData { get; private set; }
+        public IReadOnlyDictionary<(CharaWithReserved chara, Level level), IClearData> ClearData { get; private set; }
 
         public Status Status { get; private set; }
 
@@ -37,7 +37,7 @@ namespace ThScoreFileConverter.Models.Th075
                 {
                     var clearData = new ClearData();
                     clearData.ReadFrom(reader);
-                    return clearData;
+                    return clearData as IClearData;
                 });
 
             var status = new Status();

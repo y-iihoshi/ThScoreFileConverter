@@ -23,7 +23,7 @@ namespace ThScoreFileConverter.Models.Th075
         private readonly MatchEvaluator evaluator;
 
         public CardReplacer(
-            IReadOnlyDictionary<(CharaWithReserved chara, Level level), ClearData> clearData, bool hideUntriedCards)
+            IReadOnlyDictionary<(CharaWithReserved chara, Level level), IClearData> clearData, bool hideUntriedCards)
         {
             this.evaluator = new MatchEvaluator(match =>
             {
