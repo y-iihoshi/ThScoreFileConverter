@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th06;
 using ThScoreFileConverterTests.Models.Th06.Stubs;

@@ -9,8 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using ThScoreFileConverter.Models;
 
-namespace ThScoreFileConverter.Models
+namespace ThScoreFileConverter.Extensions
 {
     /// <summary>
     /// Provides some extension methods for enumeration types.

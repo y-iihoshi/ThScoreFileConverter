@@ -3,9 +3,9 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th075;
 using ThScoreFileConverterTests.Models.Th075.Stubs;
-using static ThScoreFileConverter.Models.EnumerableExtensions;
 
 namespace ThScoreFileConverterTests.Models.Th075
 {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Models.Th07.Stubs;
-using static ThScoreFileConverter.Models.EnumExtensions;
 
 namespace ThScoreFileConverterTests.Models.Th07
 {

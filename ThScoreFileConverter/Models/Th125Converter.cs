@@ -22,6 +22,7 @@ using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.Permissions;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th125;
 
 namespace ThScoreFileConverter.Models

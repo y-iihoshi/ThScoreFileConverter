@@ -16,6 +16,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th09;
 
 namespace ThScoreFileConverter.Models

@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverterTests.Extensions;
 
 namespace ThScoreFileConverterTests.Models

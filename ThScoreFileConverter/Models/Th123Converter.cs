@@ -17,6 +17,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Extensions;
 using ClearData = ThScoreFileConverter.Models.Th105.ClearData<
     ThScoreFileConverter.Models.Th123Converter.Chara, ThScoreFileConverter.Models.Th123Converter.Level>;
 using SpellCardResult = ThScoreFileConverter.Models.Th105.SpellCardResult<

@@ -8,7 +8,7 @@
 using System;
 using System.IO;
 
-namespace ThScoreFileConverter.Models
+namespace ThScoreFileConverter.Extensions
 {
     /// <summary>
     /// Provides some extension methods for <see cref="BinaryReader"/>.
