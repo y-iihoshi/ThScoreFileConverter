@@ -7,6 +7,7 @@ using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th10;
+using ThScoreFileConverterTests.Models.Th10.Stubs;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
 using ThScoreFileConverterTests.Models.Wrappers;
 
@@ -22,7 +23,7 @@ namespace ThScoreFileConverterTests.Models
             public uint checksum;
             public int size;
             public Th128Converter.RouteWithTotal route;
-            public Dictionary<Level, ScoreDataTests.Properties<Th128Converter.StageProgress>[]> rankings;
+            public Dictionary<Level, ScoreDataStub<Th128Converter.StageProgress>[]> rankings;
             public int totalPlayCount;
             public int playTime;
             public Dictionary<Level, int> clearCounts;
@@ -42,14 +43,14 @@ namespace ThScoreFileConverterTests.Models
                 rankings = levels.ToDictionary(
                     level => level,
                     level => Enumerable.Range(0, 10).Select(
-                        index => new ScoreDataTests.Properties<Th128Converter.StageProgress>()
+                        index => new ScoreDataStub<Th128Converter.StageProgress>()
                         {
-                            score = 12345670u - (uint)index * 1000u,
-                            stageProgress = Th128Converter.StageProgress.A2Clear,
-                            continueCount = (byte)index,
-                            name = TestUtils.MakeRandomArray<byte>(10),
-                            dateTime = 34567890u,
-                            slowRate = 1.2f
+                            Score = 12345670u - (uint)index * 1000u,
+                            StageProgress = Th128Converter.StageProgress.A2Clear,
+                            ContinueCount = (byte)index,
+                            Name = TestUtils.MakeRandomArray<byte>(10),
+                            DateTime = 34567890u,
+                            SlowRate = 1.2f
                         }).ToArray()),
                 totalPlayCount = 23,
                 playTime = 4567890,
@@ -91,7 +92,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 for (var index = 0; index < pair.Value.Length; ++index)
                 {
-                    ScoreDataTests.Validate(clearData.RankingItem(pair.Key, index), pair.Value[index]);
+                    ScoreDataTests.Validate(pair.Value[index], clearData.RankingItem(pair.Key, index));
                 }
             }
 

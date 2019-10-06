@@ -5,7 +5,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th10;
 using ThScoreFileConverterTests.Extensions;
+using ThScoreFileConverterTests.Models.Th10.Stubs;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Th10
@@ -13,30 +15,19 @@ namespace ThScoreFileConverterTests.Models.Th10
     [TestClass]
     public class ScoreDataTests
     {
-        internal struct Properties<TStageProgress>
+        internal static ScoreDataStub<TStageProgress> GetValidStub<TStageProgress>()
             where TStageProgress : struct, Enum
-        {
-            public uint score;
-            public TStageProgress stageProgress;
-            public byte continueCount;
-            public byte[] name;
-            public uint dateTime;
-            public float slowRate;
-        };
-
-        internal static Properties<TStageProgress> GetValidProperties<TStageProgress>()
-            where TStageProgress : struct, Enum
-            => new Properties<TStageProgress>()
+            => new ScoreDataStub<TStageProgress>()
             {
-                score = 12u,
-                stageProgress = TestUtils.Cast<TStageProgress>(3),
-                continueCount = 4,
-                name = TestUtils.MakeRandomArray<byte>(10),
-                dateTime = 567u,
-                slowRate = 8.9f
+                Score = 12u,
+                StageProgress = TestUtils.Cast<TStageProgress>(3),
+                ContinueCount = 4,
+                Name = TestUtils.MakeRandomArray<byte>(10),
+                DateTime = 567u,
+                SlowRate = 8.9f
             };
 
-        internal static byte[] MakeByteArray<TParent, TStageProgress>(in Properties<TStageProgress> properties)
+        internal static byte[] MakeByteArray<TParent, TStageProgress>(IScoreData<TStageProgress> scoreData)
             where TParent : ThConverter
             where TStageProgress : struct, Enum
         {
@@ -57,26 +48,26 @@ namespace ThScoreFileConverterTests.Models.Th10
             }
 
             return TestUtils.MakeByteArray(
-                properties.score,
-                (byte)TestUtils.Cast<int>(properties.stageProgress),
-                properties.continueCount,
-                properties.name,
-                properties.dateTime,
-                properties.slowRate,
+                scoreData.Score,
+                (byte)TestUtils.Cast<int>(scoreData.StageProgress),
+                scoreData.ContinueCount,
+                scoreData.Name.ToArray(),
+                scoreData.DateTime,
+                scoreData.SlowRate,
                 new byte[unknownSize]);
         }
 
         internal static void Validate<TParent, TStageProgress>(
-            in ScoreDataWrapper<TParent, TStageProgress> scoreData, in Properties<TStageProgress> properties)
+            IScoreData<TStageProgress> expected, in ScoreDataWrapper<TParent, TStageProgress> actual)
             where TParent : ThConverter
             where TStageProgress : struct, Enum
         {
-            Assert.AreEqual(properties.score, scoreData.Score);
-            Assert.AreEqual(properties.stageProgress, scoreData.StageProgress);
-            Assert.AreEqual(properties.continueCount, scoreData.ContinueCount);
-            CollectionAssert.That.AreEqual(properties.name, scoreData.Name);
-            Assert.AreEqual(properties.dateTime, scoreData.DateTime);
-            Assert.AreEqual(properties.slowRate, scoreData.SlowRate);
+            Assert.AreEqual(expected.Score, actual.Score);
+            Assert.AreEqual(expected.StageProgress, actual.StageProgress);
+            Assert.AreEqual(expected.ContinueCount, actual.ContinueCount);
+            CollectionAssert.That.AreEqual(expected.Name, actual.Name);
+            Assert.AreEqual(expected.DateTime, actual.DateTime);
+            Assert.AreEqual(expected.SlowRate, actual.SlowRate);
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -85,10 +76,10 @@ namespace ThScoreFileConverterTests.Models.Th10
             where TStageProgress : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties = new Properties<TStageProgress>();
+                var stub = new ScoreDataStub<TStageProgress>();
                 var scoreData = new ScoreDataWrapper<TParent, TStageProgress>();
 
-                Validate(scoreData, properties);
+                Validate(stub, scoreData);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -97,12 +88,12 @@ namespace ThScoreFileConverterTests.Models.Th10
             where TStageProgress : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties = GetValidProperties<TStageProgress>();
+                var stub = GetValidStub<TStageProgress>();
 
                 var scoreData = ScoreDataWrapper<TParent, TStageProgress>.Create(
-                    MakeByteArray<TParent, TStageProgress>(properties));
+                    MakeByteArray<TParent, TStageProgress>(stub));
 
-                Validate(scoreData, properties);
+                Validate(stub, scoreData);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -124,11 +115,11 @@ namespace ThScoreFileConverterTests.Models.Th10
             where TStageProgress : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties = GetValidProperties<TStageProgress>();
-                properties.name = properties.name.Take(properties.name.Length - 1).ToArray();
+                var stub = GetValidStub<TStageProgress>();
+                stub.Name = stub.Name.SkipLast(1).ToArray();
 
                 var scoreData = ScoreDataWrapper<TParent, TStageProgress>.Create(
-                    MakeByteArray<TParent, TStageProgress>(properties));
+                    MakeByteArray<TParent, TStageProgress>(stub));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -139,35 +130,33 @@ namespace ThScoreFileConverterTests.Models.Th10
             where TStageProgress : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties = GetValidProperties<TStageProgress>();
-                var validNameLength = properties.name.Length;
-                properties.name = properties.name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
+                var stub = GetValidStub<TStageProgress>();
+                var validNameLength = stub.Name.Count();
+                stub.Name = stub.Name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
 
                 var scoreData = ScoreDataWrapper<TParent, TStageProgress>.Create(
-                    MakeByteArray<TParent, TStageProgress>(properties));
+                    MakeByteArray<TParent, TStageProgress>(stub));
 
-                Assert.AreEqual(properties.score, scoreData.Score);
-                Assert.AreEqual(properties.stageProgress, scoreData.StageProgress);
-                Assert.AreEqual(properties.continueCount, scoreData.ContinueCount);
-                CollectionAssert.That.AreNotEqual(properties.name, scoreData.Name);
-                CollectionAssert.That.AreEqual(properties.name.Take(validNameLength), scoreData.Name);
-                Assert.AreNotEqual(properties.dateTime, scoreData.DateTime);
-                Assert.AreNotEqual(properties.slowRate, scoreData.SlowRate);
+                Assert.AreEqual(stub.Score, scoreData.Score);
+                Assert.AreEqual(stub.StageProgress, scoreData.StageProgress);
+                Assert.AreEqual(stub.ContinueCount, scoreData.ContinueCount);
+                CollectionAssert.That.AreNotEqual(stub.Name, scoreData.Name);
+                CollectionAssert.That.AreEqual(stub.Name.Take(validNameLength), scoreData.Name);
+                Assert.AreNotEqual(stub.DateTime, scoreData.DateTime);
+                Assert.AreNotEqual(stub.SlowRate, scoreData.SlowRate);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "scoreData")]
         internal static void Th10ScoreDataReadFromTestInvalidStageProgressHelper<TParent, TStageProgress>(
             int stageProgress)
             where TParent : ThConverter
             where TStageProgress : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties = GetValidProperties<TStageProgress>();
-                properties.stageProgress = TestUtils.Cast<TStageProgress>(stageProgress);
+                var stub = GetValidStub<TStageProgress>();
+                stub.StageProgress = TestUtils.Cast<TStageProgress>(stageProgress);
 
-                var scoreData = ScoreDataWrapper<TParent, TStageProgress>.Create(
-                    MakeByteArray<TParent, TStageProgress>(properties));
+                _ = ScoreDataWrapper<TParent, TStageProgress>.Create(MakeByteArray<TParent, TStageProgress>(stub));
 
                 Assert.Fail(TestUtils.Unreachable);
             });

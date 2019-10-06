@@ -16,6 +16,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Models.Th16;
 using CardInfo = ThScoreFileConverter.Models.SpellCardInfo<
     ThScoreFileConverter.Models.Stage, ThScoreFileConverter.Models.Level>;
 
@@ -398,7 +399,7 @@ namespace ThScoreFileConverter.Models
                     switch (type)
                     {
                         case 1:     // name
-                            return Encoding.Default.GetString(ranking.Name).Split('\0')[0];
+                            return Encoding.Default.GetString(ranking.Name.ToArray()).Split('\0')[0];
                         case 2:     // score
                             return Utils.ToNumberString((ranking.Score * 10) + ranking.ContinueCount);
                         case 3:     // stage
@@ -978,7 +979,7 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class ScoreData : IBinaryReadable
+        private class ScoreData : IBinaryReadable, IScoreData
         {
             public uint Score { get; private set; }     // Divided by 10
 
@@ -986,7 +987,7 @@ namespace ThScoreFileConverter.Models
 
             public byte ContinueCount { get; private set; }
 
-            public byte[] Name { get; private set; }    // The last 2 bytes are always 0x00 ?
+            public IEnumerable<byte> Name { get; private set; } // The last 2 bytes are always 0x00 ?
 
             public uint DateTime { get; private set; }  // UNIX time
 

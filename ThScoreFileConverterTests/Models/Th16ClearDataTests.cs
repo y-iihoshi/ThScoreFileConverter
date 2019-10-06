@@ -8,6 +8,7 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
 using ThScoreFileConverterTests.Models.Th13;
+using ThScoreFileConverterTests.Models.Th16.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -22,7 +23,7 @@ namespace ThScoreFileConverterTests.Models
             public uint checksum;
             public int size;
             public Th16Converter.CharaWithTotal chara;
-            public Dictionary<LevelWithTotal, Th16ScoreDataTests.Properties[]> rankings;
+            public Dictionary<LevelWithTotal, ScoreDataStub[]> rankings;
             public int totalPlayCount;
             public int playTime;
             public Dictionary<LevelWithTotal, int> clearCounts;
@@ -47,15 +48,15 @@ namespace ThScoreFileConverterTests.Models
                 rankings = levelsWithTotal.ToDictionary(
                     level => level,
                     level => Enumerable.Range(0, 10).Select(
-                        index => new Th16ScoreDataTests.Properties()
+                        index => new ScoreDataStub()
                         {
-                            score = 12345670u - (uint)index * 1000u,
-                            stageProgress = Th16Converter.StageProgress.St6,
-                            continueCount = (byte)index,
-                            name = TestUtils.MakeRandomArray<byte>(10),
-                            dateTime = 34567890u,
-                            slowRate = 1.2f,
-                            season = Th16Converter.Season.Autumn
+                            Score = 12345670u - (uint)index * 1000u,
+                            StageProgress = Th16Converter.StageProgress.St6,
+                            ContinueCount = (byte)index,
+                            Name = TestUtils.MakeRandomArray<byte>(10),
+                            DateTime = 34567890u,
+                            SlowRate = 1.2f,
+                            Season = Th16Converter.Season.Autumn
                         }).ToArray()),
                 totalPlayCount = 23,
                 playTime = 4567890,
@@ -130,7 +131,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 for (var index = 0; index < pair.Value.Length; ++index)
                 {
-                    Th16ScoreDataTests.Validate(clearData.RankingItem(pair.Key, index), pair.Value[index]);
+                    Th16ScoreDataTests.Validate(pair.Value[index], clearData.RankingItem(pair.Key, index));
                 }
             }
 

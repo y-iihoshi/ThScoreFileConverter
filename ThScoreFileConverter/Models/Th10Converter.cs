@@ -368,7 +368,7 @@ namespace ThScoreFileConverter.Models
                     switch (type)
                     {
                         case 1:     // name
-                            return Encoding.Default.GetString(ranking.Name).Split('\0')[0];
+                            return Encoding.Default.GetString(ranking.Name.ToArray()).Split('\0')[0];
                         case 2:     // score
                             return Utils.ToNumberString((ranking.Score * 10) + ranking.ContinueCount);
                         case 3:     // stage
@@ -895,7 +895,7 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class ScoreData : Th10.ScoreData<StageProgress>
+        private class ScoreData : ScoreData<StageProgress>
         {
         }
     }

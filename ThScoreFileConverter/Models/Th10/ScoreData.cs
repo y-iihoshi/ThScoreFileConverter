@@ -8,11 +8,12 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace ThScoreFileConverter.Models.Th10
 {
-    internal class ScoreData<TStageProgress> : IBinaryReadable
+    internal class ScoreData<TStageProgress> : IBinaryReadable, IScoreData<TStageProgress>
         where TStageProgress : struct, Enum
     {
         public uint Score { get; private set; }     // Divided by 10
@@ -21,7 +22,7 @@ namespace ThScoreFileConverter.Models.Th10
 
         public byte ContinueCount { get; private set; }
 
-        public byte[] Name { get; private set; }    // The last 2 bytes are always 0x00 ?
+        public IEnumerable<byte> Name { get; private set; } // The last 2 bytes are always 0x00 ?
 
         public uint DateTime { get; private set; }  // UNIX time
 
