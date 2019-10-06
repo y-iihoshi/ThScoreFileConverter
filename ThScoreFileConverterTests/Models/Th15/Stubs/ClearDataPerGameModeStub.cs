@@ -13,12 +13,15 @@ namespace ThScoreFileConverterTests.Models.Th15.Stubs
         public ClearDataPerGameModeStub(IClearDataPerGameMode clearData)
             : this()
         {
-            this.Cards = clearData.Cards.ToDictionary(pair => pair.Key, pair => pair.Value);
-            this.ClearCounts = clearData.ClearCounts.ToDictionary(pair => pair.Key, pair => pair.Value);
-            this.ClearFlags = clearData.ClearFlags.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.Cards = clearData.Cards?.ToDictionary(
+                pair => pair.Key,
+                pair => new Th13.Stubs.SpellCardStub<Level>(pair.Value) as ISpellCard<Level>);
+            this.ClearCounts = clearData.ClearCounts?.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.ClearFlags = clearData.ClearFlags?.ToDictionary(pair => pair.Key, pair => pair.Value);
             this.PlayTime = clearData.PlayTime;
-            this.Rankings = clearData.Rankings.ToDictionary(
-                pair => pair.Key, pair => pair.Value.ToList() as IReadOnlyList<IScoreData>);
+            this.Rankings = clearData.Rankings?.ToDictionary(
+                pair => pair.Key,
+                pair => pair.Value?.Select(score => new ScoreDataStub(score))?.ToList() as IReadOnlyList<IScoreData>);
             this.TotalPlayCount = clearData.TotalPlayCount;
         }
 

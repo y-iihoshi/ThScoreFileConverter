@@ -13,9 +13,9 @@ namespace ThScoreFileConverterTests.Models.Th07.Stubs
         {
             this.Chara = highScore.Chara;
             this.ContinueCount = highScore.ContinueCount;
-            this.Date = highScore.Date.ToArray();
+            this.Date = highScore.Date?.ToArray();
             this.Level = highScore.Level;
-            this.Name = highScore.Name.ToArray();
+            this.Name = highScore.Name?.ToArray();
             this.Score = highScore.Score;
             this.SlowRate = highScore.SlowRate;
             this.StageProgress = highScore.StageProgress;

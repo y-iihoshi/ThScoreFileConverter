@@ -16,7 +16,7 @@ namespace ThScoreFileConverterTests.Models.Th10.Stubs
             this.HasTried = spellCard.HasTried;
             this.Id = spellCard.Id;
             this.Level = spellCard.Level;
-            this.Name = spellCard.Name.ToArray();
+            this.Name = spellCard.Name?.ToArray();
             this.TrialCount = spellCard.TrialCount;
         }
 

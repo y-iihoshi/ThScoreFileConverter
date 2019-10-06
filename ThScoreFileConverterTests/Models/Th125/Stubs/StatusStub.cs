@@ -12,8 +12,8 @@ namespace ThScoreFileConverterTests.Models.Th125.Stubs
             : this()
         {
             this.TotalPlayTime = status.TotalPlayTime;
-            this.BgmFlags = status.BgmFlags.ToArray();
-            this.LastName = status.LastName.ToArray();
+            this.BgmFlags = status.BgmFlags?.ToArray();
+            this.LastName = status.LastName?.ToArray();
             this.Checksum = status.Checksum;
             this.IsValid = status.IsValid;
             this.Signature = status.Signature;

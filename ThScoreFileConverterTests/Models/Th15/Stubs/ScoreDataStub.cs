@@ -15,7 +15,7 @@ namespace ThScoreFileConverterTests.Models.Th15.Stubs
             this.RetryCount = scoreData.RetryCount;
             this.ContinueCount = scoreData.ContinueCount;
             this.DateTime = scoreData.DateTime;
-            this.Name = scoreData.Name.ToArray();
+            this.Name = scoreData.Name?.ToArray();
             this.Score = scoreData.Score;
             this.SlowRate = scoreData.SlowRate;
             this.StageProgress = scoreData.StageProgress;

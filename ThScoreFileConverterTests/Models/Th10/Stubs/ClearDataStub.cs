@@ -15,14 +15,23 @@ namespace ThScoreFileConverterTests.Models.Th10.Stubs
         public ClearDataStub(IClearData<TCharaWithTotal, TStageProgress> clearData)
             : this()
         {
-            this.Cards = clearData.Cards.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.Cards = clearData.Cards?.ToDictionary(
+                pair => pair.Key, pair => new SpellCardStub(pair.Value) as ISpellCard<Level>);
             this.Chara = clearData.Chara;
-            this.ClearCounts = clearData.ClearCounts.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.ClearCounts = clearData.ClearCounts?.ToDictionary(pair => pair.Key, pair => pair.Value);
             this.PlayTime = clearData.PlayTime;
-            this.Practices = clearData.Practices.ToDictionary(pair => pair.Key, pair => pair.Value);
-            this.Rankings = clearData.Rankings.ToDictionary(
-                pair => pair.Key, pair => pair.Value.ToList() as IReadOnlyList<IScoreData<TStageProgress>>);
+            this.Practices = clearData.Practices?.ToDictionary(
+                pair => pair.Key, pair => new PracticeStub(pair.Value) as IPractice);
+            this.Rankings = clearData.Rankings?.ToDictionary(
+                pair => pair.Key,
+                pair => pair.Value.Select(score => new ScoreDataStub<TStageProgress>(score)).ToList()
+                    as IReadOnlyList<IScoreData<TStageProgress>>);
             this.TotalPlayCount = clearData.TotalPlayCount;
+            this.Chara = clearData.Chara;
+            this.IsValid = clearData.IsValid;
+            this.Signature = clearData.Signature;
+            this.Size = clearData.Size;
+            this.Version = clearData.Version;
         }
 
         public IReadOnlyDictionary<int, ISpellCard<Level>> Cards { get; set; }

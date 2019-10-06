@@ -15,12 +15,10 @@ namespace ThScoreFileConverterTests.Models.Th15.Stubs
             : this()
         {
             this.Chara = clearData.Chara;
-            this.GameModeData = clearData.GameModeData.ToDictionary(
-                pair => pair.Key,
-                pair => new ClearDataPerGameModeStub(pair.Value) as IClearDataPerGameMode);
-            this.Practices = clearData.Practices.ToDictionary(
-                pair => pair.Key,
-                pair => new PracticeStub(pair.Value) as IPractice);
+            this.GameModeData = clearData.GameModeData?.ToDictionary(
+                pair => pair.Key, pair => new ClearDataPerGameModeStub(pair.Value) as IClearDataPerGameMode);
+            this.Practices = clearData.Practices?.ToDictionary(
+                pair => pair.Key, pair => new PracticeStub(pair.Value) as IPractice);
             this.Checksum = clearData.Checksum;
             this.IsValid = clearData.IsValid;
             this.Signature = clearData.Signature;

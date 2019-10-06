@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ThScoreFileConverter.Models.Th13;
 
 namespace ThScoreFileConverterTests.Models.Th13.Stubs
@@ -14,6 +15,33 @@ namespace ThScoreFileConverterTests.Models.Th13.Stubs
         where TStagePractice : struct, Enum
         where TStageProgress : struct, Enum
     {
+        public ClearDataStub() { }
+
+        public ClearDataStub(
+            IClearData<TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice, TStageProgress>
+                clearData)
+            : this()
+        {
+            this.Cards = clearData.Cards?.ToDictionary(
+                pair => pair.Key, pair => new SpellCardStub<TLevel>(pair.Value) as ISpellCard<TLevel>);
+            this.Chara = clearData.Chara;
+            this.ClearCounts = clearData.ClearCounts?.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.ClearFlags = clearData.ClearFlags?.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.PlayTime = clearData.PlayTime;
+            this.Practices = clearData.Practices?.ToDictionary(
+                pair => pair.Key, pair => new PracticeStub(pair.Value) as IPractice);
+            this.Rankings = clearData.Rankings?.ToDictionary(
+                pair => pair.Key,
+                pair => pair.Value?.Select(score => new Th10.Stubs.ScoreDataStub<TStageProgress>(score))?.ToList()
+                    as IReadOnlyList<ThScoreFileConverter.Models.Th10.IScoreData<TStageProgress>>);
+            this.TotalPlayCount = clearData.TotalPlayCount;
+            this.Checksum = clearData.Checksum;
+            this.IsValid = clearData.IsValid;
+            this.Signature = clearData.Signature;
+            this.Size = clearData.Size;
+            this.Version = clearData.Version;
+        }
+
         public IReadOnlyDictionary<int, ISpellCard<TLevel>> Cards { get; set; }
 
         public TCharaWithTotal Chara { get; set; }

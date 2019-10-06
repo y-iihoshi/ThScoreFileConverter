@@ -11,8 +11,8 @@ namespace ThScoreFileConverterTests.Models.Th10.Stubs
         public StatusStub(IStatus status)
             : this()
         {
-            this.BgmFlags = status.BgmFlags.ToArray();
-            this.LastName = status.LastName.ToArray();
+            this.BgmFlags = status.BgmFlags?.ToArray();
+            this.LastName = status.LastName?.ToArray();
             this.Checksum = status.Checksum;
             this.IsValid = status.IsValid;
             this.Signature = status.Signature;

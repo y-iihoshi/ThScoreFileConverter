@@ -12,8 +12,8 @@ namespace ThScoreFileConverterTests.Models.Th07.Stubs
             : this()
         {
             this.Chara = clearData.Chara;
-            this.PracticeFlags = clearData.PracticeFlags.ToDictionary(pair => pair.Key, pair => pair.Value);
-            this.StoryFlags = clearData.StoryFlags.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.PracticeFlags = clearData.PracticeFlags?.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.StoryFlags = clearData.StoryFlags?.ToDictionary(pair => pair.Key, pair => pair.Value);
             this.FirstByteOfData = clearData.FirstByteOfData;
             this.Signature = clearData.Signature;
             this.Size1 = clearData.Size1;

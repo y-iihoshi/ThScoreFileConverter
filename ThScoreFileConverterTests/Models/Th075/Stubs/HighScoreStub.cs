@@ -11,7 +11,7 @@ namespace ThScoreFileConverterTests.Models.Th075.Stubs
         public HighScoreStub(in HighScoreStub stub)
             : this()
         {
-            this.EncodedName = stub.EncodedName.ToArray();
+            this.EncodedName = stub.EncodedName?.ToArray();
             this.Day = stub.Day;
             this.Month = stub.Month;
             this.Name = stub.Name;
