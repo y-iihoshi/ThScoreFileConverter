@@ -7,126 +7,111 @@ using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th10;
 using ThScoreFileConverterTests.Extensions;
+using ThScoreFileConverterTests.Models.Th10.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th10
 {
     [TestClass]
     public class SpellCardTests
     {
-        internal struct Properties
+        internal static SpellCardStub ValidStub { get; } = new SpellCardStub()
         {
-            public byte[] name;
-            public int clearCount;
-            public int trialCount;
-            public int id;
-            public Level level;
+            Name = TestUtils.MakeRandomArray<byte>(0x80),
+            ClearCount = 123,
+            TrialCount = 456,
+            Id = 789,
+            Level = Level.Normal
         };
 
-        internal static Properties ValidProperties => new Properties()
-        {
-            name = TestUtils.MakeRandomArray<byte>(0x80),
-            clearCount = 123,
-            trialCount = 456,
-            id = 789,
-            level = Level.Normal
-        };
-
-        internal static byte[] MakeByteArray(in Properties properties)
+        internal static byte[] MakeByteArray(ISpellCard<Level> spellCard)
             => TestUtils.MakeByteArray(
-                properties.name,
-                properties.clearCount,
-                properties.trialCount,
-                properties.id - 1,
-                (int)properties.level);
+                spellCard.Name,
+                spellCard.ClearCount,
+                spellCard.TrialCount,
+                spellCard.Id - 1,
+                (int)spellCard.Level);
 
-        internal static void Validate(in SpellCard spellCard, in Properties properties)
+        internal static void Validate(ISpellCard<Level> expected, ISpellCard<Level> actual)
         {
-            CollectionAssert.That.AreEqual(properties.name, spellCard.Name);
-            Assert.AreEqual(properties.clearCount, spellCard.ClearCount);
-            Assert.AreEqual(properties.trialCount, spellCard.TrialCount);
-            Assert.AreEqual(properties.id, spellCard.Id);
-            Assert.AreEqual(properties.level, spellCard.Level);
+            CollectionAssert.That.AreEqual(expected.Name, actual.Name);
+            Assert.AreEqual(expected.ClearCount, actual.ClearCount);
+            Assert.AreEqual(expected.TrialCount, actual.TrialCount);
+            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.AreEqual(expected.Level, actual.Level);
         }
 
         [TestMethod]
-        public void SpellCardTest()
-            => TestUtils.Wrap(() =>
-            {
-                var properties = new Properties();
-                var spellCard = new SpellCard();
+        public void SpellCardTest() => TestUtils.Wrap(() =>
+        {
+            var stub = new SpellCardStub();
+            var spellCard = new SpellCard();
 
-                Validate(spellCard, properties);
-                Assert.IsFalse(spellCard.HasTried);
-            });
+            Validate(stub, spellCard);
+            Assert.IsFalse(spellCard.HasTried);
+        });
 
         [TestMethod]
-        public void ReadFromTest()
-            => TestUtils.Wrap(() =>
-            {
-                var properties = ValidProperties;
+        public void ReadFromTest() => TestUtils.Wrap(() =>
+        {
+            var stub = ValidStub;
 
-                var spellCard = TestUtils.Create<SpellCard>(MakeByteArray(properties));
+            var spellCard = TestUtils.Create<SpellCard>(MakeByteArray(stub));
 
-                Validate(spellCard, properties);
-                Assert.IsTrue(spellCard.HasTried);
-            });
+            Validate(stub, spellCard);
+            Assert.IsTrue(spellCard.HasTried);
+        });
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ReadFromTestNull()
-            => TestUtils.Wrap(() =>
-            {
-                var spellCard = new SpellCard();
-                spellCard.ReadFrom(null);
+        public void ReadFromTestNull() => TestUtils.Wrap(() =>
+        {
+            var spellCard = new SpellCard();
+            spellCard.ReadFrom(null);
 
-                Assert.Fail(TestUtils.Unreachable);
-            });
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "spellCard")]
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void ReadFromTestShortenedName()
-            => TestUtils.Wrap(() =>
-            {
-                var properties = ValidProperties;
-                properties.name = properties.name.Take(properties.name.Length - 1).ToArray();
+        public void ReadFromTestShortenedName() => TestUtils.Wrap(() =>
+        {
+            var stub = new SpellCardStub(ValidStub);
+            stub.Name = stub.Name.SkipLast(1).ToArray();
 
-                var spellCard = TestUtils.Create<SpellCard>(MakeByteArray(properties));
+            _ = TestUtils.Create<SpellCard>(MakeByteArray(stub));
 
-                Assert.Fail(TestUtils.Unreachable);
-            });
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "spellCard")]
         [TestMethod]
         [ExpectedException(typeof(InvalidCastException))]
-        public void ReadFromTestExceededName()
-            => TestUtils.Wrap(() =>
-            {
-                var properties = ValidProperties;
-                properties.name = properties.name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
+        public void ReadFromTestExceededName() => TestUtils.Wrap(() =>
+        {
+            var stub = new SpellCardStub(ValidStub);
+            stub.Name = stub.Name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
 
-                var spellCard = TestUtils.Create<SpellCard>(MakeByteArray(properties));
+            _ = TestUtils.Create<SpellCard>(MakeByteArray(stub));
 
-                Assert.Fail(TestUtils.Unreachable);
-            });
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         public static IEnumerable<object[]> InvalidLevels
             => TestUtils.GetInvalidEnumerators(typeof(Level));
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "spellCard")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void ReadFromTestInvalidLevel(int level)
-            => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidLevel(int level) => TestUtils.Wrap(() =>
+        {
+            var stub = new SpellCardStub(ValidStub)
             {
-                var properties = ValidProperties;
-                properties.level = TestUtils.Cast<Level>(level);
+                Level = TestUtils.Cast<Level>(level),
+            };
 
-                var spellCard = TestUtils.Create<SpellCard>(MakeByteArray(properties));
+            _ = TestUtils.Create<SpellCard>(MakeByteArray(stub));
 
-                Assert.Fail(TestUtils.Unreachable);
-            });
+            Assert.Fail(TestUtils.Unreachable);
+        });
     }
 }

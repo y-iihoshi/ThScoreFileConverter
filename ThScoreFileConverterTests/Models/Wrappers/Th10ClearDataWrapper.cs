@@ -59,8 +59,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.ClearCounts)) as Dictionary<Level, int>;
         public IReadOnlyDictionary<(Level, Stage), IPractice> Practices
             => this.pobj.GetProperty(nameof(this.Practices)) as Dictionary<(Level, Stage), IPractice>;
-        public IReadOnlyDictionary<int, SpellCard> Cards
-            => this.pobj.GetProperty(nameof(this.Cards)) as Dictionary<int, SpellCard>;
+        public IReadOnlyDictionary<int, ISpellCard<Level>> Cards
+            => this.pobj.GetProperty(nameof(this.Cards)) as Dictionary<int, ISpellCard<Level>>;
 
         public static bool CanInitialize(ChapterWrapper chapter)
             => (bool)PrivateType.InvokeStatic(

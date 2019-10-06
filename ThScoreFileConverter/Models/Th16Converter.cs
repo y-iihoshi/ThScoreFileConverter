@@ -453,7 +453,7 @@ namespace ThScoreFileConverter.Models
                     var chara = CharaWithTotalParser.Parse(match.Groups[3].Value);
                     var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
-                    Func<SpellCard, int> getCount;
+                    Func<Th13.ISpellCard<Level>, int> getCount;
                     if (kind == "S")
                     {
                         if (type == 1)
@@ -548,7 +548,7 @@ namespace ThScoreFileConverter.Models
                 CharaWithTotalParser.Pattern,
                 StageWithTotalParser.Pattern);
 
-            private static readonly Func<SpellCard, string, int, bool> FindByKindTypeImpl =
+            private static readonly Func<Th13.ISpellCard<Level>, string, int, bool> FindByKindTypeImpl =
                 (card, kind, type) =>
                 {
                     if (kind == "S")
@@ -583,15 +583,15 @@ namespace ThScoreFileConverter.Models
                     if (stage == StageWithTotal.Extra)
                         return match.ToString();
 
-                    Func<SpellCard, bool> findByKindType = (card => FindByKindTypeImpl(card, kind, type));
+                    Func<Th13.ISpellCard<Level>, bool> findByKindType = (card => FindByKindTypeImpl(card, kind, type));
 
-                    Func<SpellCard, bool> findByStage;
+                    Func<Th13.ISpellCard<Level>, bool> findByStage;
                     if (stage == StageWithTotal.Total)
                         findByStage = (card => true);
                     else
                         findByStage = (card => CardTable[card.Id].Stage == (Stage)stage);
 
-                    Func<SpellCard, bool> findByLevel = (card => true);
+                    Func<Th13.ISpellCard<Level>, bool> findByLevel = (card => true);
                     switch (level)
                     {
                         case LevelWithTotal.Total:
@@ -859,7 +859,7 @@ namespace ThScoreFileConverter.Models
                 this.ClearFlags = new Dictionary<LevelWithTotal, int>(numLevelsWithTotal);
                 this.Practices =
                     new Dictionary<(Level, StagePractice), Th13.IPractice>(levels.Count() * stages.Count());
-                this.Cards = new Dictionary<int, SpellCard>(CardTable.Count);
+                this.Cards = new Dictionary<int, Th13.ISpellCard<Level>>(CardTable.Count);
 
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
@@ -936,7 +936,7 @@ namespace ThScoreFileConverter.Models
 
             public Dictionary<(Level, StagePractice), Th13.IPractice> Practices { get; }
 
-            public Dictionary<int, SpellCard> Cards { get; }
+            public Dictionary<int, Th13.ISpellCard<Level>> Cards { get; }
 
             public static bool CanInitialize(Th10.Chapter chapter)
             {

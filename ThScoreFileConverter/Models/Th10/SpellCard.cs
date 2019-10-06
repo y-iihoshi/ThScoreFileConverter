@@ -8,13 +8,14 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace ThScoreFileConverter.Models.Th10
 {
-    internal class SpellCard : IBinaryReadable
+    internal class SpellCard : IBinaryReadable, ISpellCard<Level>
     {
-        public byte[] Name { get; private set; }
+        public IEnumerable<byte> Name { get; private set; }
 
         public int ClearCount { get; private set; }
 

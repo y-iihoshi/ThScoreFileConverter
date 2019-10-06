@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th13;
 using ThScoreFileConverterTests.Extensions;
+using ThScoreFileConverterTests.Models.Th13.Stubs;
 using ThScoreFileConverterTests.Models.Th13.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Th13
@@ -12,58 +14,45 @@ namespace ThScoreFileConverterTests.Models.Th13
     [TestClass]
     public class SpellCardTests
     {
-        internal struct Properties<TLevel>
+        internal static SpellCardStub<TLevel> GetValidStub<TLevel>()
             where TLevel : struct, Enum
-        {
-            public byte[] name;
-            public int clearCount;
-            public int practiceClearCount;
-            public int trialCount;
-            public int practiceTrialCount;
-            public int id;
-            public TLevel level;
-            public int practiceScore;
-        };
-
-        internal static Properties<TLevel> GetValidProperties<TLevel>()
-            where TLevel : struct, Enum
-            => new Properties<TLevel>()
+            => new SpellCardStub<TLevel>()
             {
-                name = TestUtils.MakeRandomArray<byte>(0x80),
-                clearCount = 1,
-                practiceClearCount = 2,
-                trialCount = 3,
-                practiceTrialCount = 4,
-                id = 5,
-                level = TestUtils.Cast<TLevel>(1),
-                practiceScore = 6789
+                Name = TestUtils.MakeRandomArray<byte>(0x80),
+                ClearCount = 1,
+                PracticeClearCount = 2,
+                TrialCount = 3,
+                PracticeTrialCount = 4,
+                Id = 5,
+                Level = TestUtils.Cast<TLevel>(1),
+                PracticeScore = 6789
             };
 
-        internal static byte[] MakeByteArray<TLevel>(in Properties<TLevel> properties)
+        internal static byte[] MakeByteArray<TLevel>(ISpellCard<TLevel> spellCard)
             where TLevel : struct, Enum
             => TestUtils.MakeByteArray(
-                properties.name,
-                properties.clearCount,
-                properties.practiceClearCount,
-                properties.trialCount,
-                properties.practiceTrialCount,
-                properties.id - 1,
-                TestUtils.Cast<int>(properties.level),
-                properties.practiceScore);
+                spellCard.Name,
+                spellCard.ClearCount,
+                spellCard.PracticeClearCount,
+                spellCard.TrialCount,
+                spellCard.PracticeTrialCount,
+                spellCard.Id - 1,
+                TestUtils.Cast<int>(spellCard.Level),
+                spellCard.PracticeScore);
 
         internal static void Validate<TParent, TLevel>(
-            in SpellCardWrapper<TParent, TLevel> spellCard, in Properties<TLevel> properties)
+            ISpellCard<TLevel> expected, in SpellCardWrapper<TParent, TLevel> actual)
             where TParent : ThConverter
             where TLevel : struct, Enum
         {
-            CollectionAssert.That.AreEqual(properties.name, spellCard.Name);
-            Assert.AreEqual(properties.clearCount, spellCard.ClearCount);
-            Assert.AreEqual(properties.practiceClearCount, spellCard.PracticeClearCount);
-            Assert.AreEqual(properties.trialCount, spellCard.TrialCount);
-            Assert.AreEqual(properties.practiceTrialCount, spellCard.PracticeTrialCount);
-            Assert.AreEqual(properties.id, spellCard.Id);
-            Assert.AreEqual(properties.level, spellCard.Level);
-            Assert.AreEqual(properties.practiceScore, spellCard.PracticeScore);
+            CollectionAssert.That.AreEqual(expected.Name, actual.Name);
+            Assert.AreEqual(expected.ClearCount, actual.ClearCount);
+            Assert.AreEqual(expected.PracticeClearCount, actual.PracticeClearCount);
+            Assert.AreEqual(expected.TrialCount, actual.TrialCount);
+            Assert.AreEqual(expected.PracticeTrialCount, actual.PracticeTrialCount);
+            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.AreEqual(expected.Level, actual.Level);
+            Assert.AreEqual(expected.PracticeScore, actual.PracticeScore);
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
@@ -72,10 +61,10 @@ namespace ThScoreFileConverterTests.Models.Th13
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties = new Properties<TLevel>();
+                var stub = new SpellCardStub<TLevel>();
                 var spellCard = new SpellCardWrapper<TParent, TLevel>();
 
-                Validate(spellCard, properties);
+                Validate(stub, spellCard);
                 Assert.IsFalse(spellCard.HasTried.Value);
             });
 
@@ -85,11 +74,11 @@ namespace ThScoreFileConverterTests.Models.Th13
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties = GetValidProperties<TLevel>();
+                var stub = GetValidStub<TLevel>();
 
-                var spellCard = SpellCardWrapper<TParent, TLevel>.Create(MakeByteArray(properties));
+                var spellCard = SpellCardWrapper<TParent, TLevel>.Create(MakeByteArray(stub));
 
-                Validate(spellCard, properties);
+                Validate(stub, spellCard);
                 Assert.IsTrue(spellCard.HasTried.Value);
             });
 
@@ -107,46 +96,43 @@ namespace ThScoreFileConverterTests.Models.Th13
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "spellCard")]
         internal static void Th13SpellCardReadFromTestShortenedNameHelper<TParent, TLevel>()
             where TParent : ThConverter
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties = GetValidProperties<TLevel>();
-                properties.name = properties.name.Take(properties.name.Length - 1).ToArray();
+                var stub = GetValidStub<TLevel>();
+                stub.Name = stub.Name.SkipLast(1).ToArray();
 
-                var spellCard = SpellCardWrapper<TParent, TLevel>.Create(MakeByteArray(properties));
+                _ = SpellCardWrapper<TParent, TLevel>.Create(MakeByteArray(stub));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "spellCard")]
         internal static void Th13SpellCardReadFromTestExceededNameHelper<TParent, TLevel>()
             where TParent : ThConverter
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties = GetValidProperties<TLevel>();
-                properties.name = properties.name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
+                var stub = GetValidStub<TLevel>();
+                stub.Name = stub.Name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
 
-                var spellCard = SpellCardWrapper<TParent, TLevel>.Create(MakeByteArray(properties));
+                _ = SpellCardWrapper<TParent, TLevel>.Create(MakeByteArray(stub));
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "spellCard")]
         internal static void Th13SpellCardReadFromTestInvalidLevelHelper<TParent, TLevel>(int level)
             where TParent : ThConverter
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties = GetValidProperties<TLevel>();
-                properties.level = TestUtils.Cast<TLevel>(level);
+                var stub = GetValidStub<TLevel>();
+                stub.Level = TestUtils.Cast<TLevel>(level);
 
-                var spellCard = SpellCardWrapper<TParent, TLevel>.Create(MakeByteArray(properties));
+                _ = SpellCardWrapper<TParent, TLevel>.Create(MakeByteArray(stub));
 
                 Assert.Fail(TestUtils.Unreachable);
             });

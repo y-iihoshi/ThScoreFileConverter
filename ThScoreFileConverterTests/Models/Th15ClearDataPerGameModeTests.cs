@@ -5,8 +5,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th13;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th13;
+using ThScoreFileConverterTests.Models.Th13.Stubs;
 using ThScoreFileConverterTests.Models.Th15.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 
@@ -22,7 +24,7 @@ namespace ThScoreFileConverterTests.Models
             public int playTime;
             public Dictionary<LevelWithTotal, int> clearCounts;
             public Dictionary<LevelWithTotal, int> clearFlags;
-            public Dictionary<int, SpellCardTests.Properties<Level>> cards;
+            public Dictionary<int, ISpellCard<Level>> cards;
         };
 
         internal static Properties GetValidProperties()
@@ -50,17 +52,17 @@ namespace ThScoreFileConverterTests.Models
                 clearFlags = levelsWithTotal.ToDictionary(level => level, level => TestUtils.Cast<int>(level) % 2),
                 cards = Enumerable.Range(1, 119).ToDictionary(
                     index => index,
-                    index => new SpellCardTests.Properties<Level>()
+                    index => new SpellCardStub<Level>()
                     {
-                        name = TestUtils.MakeRandomArray<byte>(0x80),
-                        clearCount = 12 + index,
-                        practiceClearCount = 34 + index,
-                        trialCount = 56 + index,
-                        practiceTrialCount = 78 + index,
-                        id = index,
-                        level = Level.Hard,
-                        practiceScore = 90123
-                    })
+                        Name = TestUtils.MakeRandomArray<byte>(0x80),
+                        ClearCount = 12 + index,
+                        PracticeClearCount = 34 + index,
+                        TrialCount = 56 + index,
+                        PracticeTrialCount = 78 + index,
+                        Id = index,
+                        Level = Level.Hard,
+                        PracticeScore = 90123
+                    } as ISpellCard<Level>)
             };
         }
 
@@ -97,7 +99,7 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var pair in properties.cards)
             {
-                SpellCardTests.Validate(clearData.CardsItem(pair.Key), pair.Value);
+                SpellCardTests.Validate(pair.Value, clearData.CardsItem(pair.Key));
             }
         }
 

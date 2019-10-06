@@ -10,6 +10,7 @@ using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th10.Stubs;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
 using ThScoreFileConverterTests.Models.Th13;
+using ThScoreFileConverterTests.Models.Th13.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 using PracticeStub = ThScoreFileConverterTests.Models.Th13.Stubs.PracticeStub;
 using ScoreDataTests = ThScoreFileConverterTests.Models.Th10.ScoreDataTests;
@@ -38,7 +39,7 @@ namespace ThScoreFileConverterTests.Models
             public Dictionary<TLvPracWithT, int> clearCounts;
             public Dictionary<TLvPracWithT, int> clearFlags;
             public Dictionary<(TLvPrac, TStPrac), IPractice> practices;
-            public Dictionary<int, SpellCardTests.Properties<TLv>> cards;
+            public Dictionary<int, ISpellCard<TLv>> cards;
         };
 
         internal static Properties<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>
@@ -90,17 +91,17 @@ namespace ThScoreFileConverterTests.Models
                         } as IPractice),
                 cards = Enumerable.Range(1, numCards).ToDictionary(
                     index => index,
-                    index => new SpellCardTests.Properties<TLv>()
+                    index => new SpellCardStub<TLv>()
                     {
-                        name = TestUtils.MakeRandomArray<byte>(0x80),
-                        clearCount = 12 + index,
-                        practiceClearCount = 34 + index,
-                        trialCount = 56 + index,
-                        practiceTrialCount = 78 + index,
-                        id = index,
-                        level = TestUtils.Cast<TLv>(2),
-                        practiceScore = 90123
-                    })
+                        Name = TestUtils.MakeRandomArray<byte>(0x80),
+                        ClearCount = 12 + index,
+                        PracticeClearCount = 34 + index,
+                        TrialCount = 56 + index,
+                        PracticeTrialCount = 78 + index,
+                        Id = index,
+                        Level = TestUtils.Cast<TLv>(2),
+                        PracticeScore = 90123
+                    } as ISpellCard<TLv>)
             };
         }
 
@@ -183,7 +184,7 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var pair in properties.cards)
             {
-                SpellCardTests.Validate(clearData.CardsItem(pair.Key), pair.Value);
+                SpellCardTests.Validate(pair.Value, clearData.CardsItem(pair.Key));
             }
         }
 

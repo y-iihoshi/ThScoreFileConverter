@@ -462,7 +462,7 @@ namespace ThScoreFileConverter.Models
                     var chara = CharaWithTotalParser.Parse(match.Groups[3].Value);
                     var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
-                    Func<SpellCard, int> getCount;
+                    Func<Th13.ISpellCard<Level>, int> getCount;
                     if (type == 1)
                         getCount = (card => card.ClearCount);
                     else
@@ -570,19 +570,19 @@ namespace ThScoreFileConverter.Models
                         mode = GameMode.Pointdevice;
 #endif
 
-                    Func<SpellCard, bool> findByType;
+                    Func<Th13.ISpellCard<Level>, bool> findByType;
                     if (type == 1)
                         findByType = (card => card.ClearCount > 0);
                     else
                         findByType = (card => card.TrialCount > 0);
 
-                    Func<SpellCard, bool> findByStage;
+                    Func<Th13.ISpellCard<Level>, bool> findByStage;
                     if (stage == StageWithTotal.Total)
                         findByStage = (card => true);
                     else
                         findByStage = (card => CardTable[card.Id].Stage == (Stage)stage);
 
-                    Func<SpellCard, bool> findByLevel = (card => true);
+                    Func<Th13.ISpellCard<Level>, bool> findByLevel = (card => true);
                     switch (level)
                     {
                         case LevelWithTotal.Total:
@@ -945,7 +945,7 @@ namespace ThScoreFileConverter.Models
 
             public Dictionary<LevelWithTotal, int> ClearFlags { get; private set; } // Really...?
 
-            public Dictionary<int, SpellCard> Cards { get; private set; }
+            public Dictionary<int, Th13.ISpellCard<Level>> Cards { get; private set; }
 
             public void ReadFrom(BinaryReader reader)
             {
@@ -958,7 +958,7 @@ namespace ThScoreFileConverter.Models
                 this.Rankings = new Dictionary<LevelWithTotal, ScoreData[]>(numLevelsWithTotal);
                 this.ClearCounts = new Dictionary<LevelWithTotal, int>(numLevelsWithTotal);
                 this.ClearFlags = new Dictionary<LevelWithTotal, int>(numLevelsWithTotal);
-                this.Cards = new Dictionary<int, SpellCard>(CardTable.Count);
+                this.Cards = new Dictionary<int, Th13.ISpellCard<Level>>(CardTable.Count);
 
                 foreach (var level in levelsWithTotal)
                 {

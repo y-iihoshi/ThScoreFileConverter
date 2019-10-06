@@ -474,8 +474,8 @@ namespace ThScoreFileConverter.Models
                     var chara = CharaWithTotalParser.Parse(match.Groups[3].Value);
                     var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
-                    Func<SpellCard, bool> isValidLevel;
-                    Func<SpellCard, int> getCount;
+                    Func<ISpellCard<LevelPractice>, bool> isValidLevel;
+                    Func<ISpellCard<LevelPractice>, int> getCount;
                     if (kind == "S")
                     {
                         isValidLevel = (card => card.Level != LevelPractice.OverDrive);
@@ -579,7 +579,7 @@ namespace ThScoreFileConverter.Models
                 CharaWithTotalParser.Pattern,
                 StageWithTotalParser.Pattern);
 
-            private static readonly Func<SpellCard, string, int, bool> FindByKindTypeImpl =
+            private static readonly Func<ISpellCard<LevelPractice>, string, int, bool> FindByKindTypeImpl =
                 (card, kind, type) =>
                 {
                     if (kind == "S")
@@ -616,15 +616,15 @@ namespace ThScoreFileConverter.Models
                     if ((kind == "S") && (level == LevelPracticeWithTotal.OverDrive))
                         return match.ToString();
 
-                    Func<SpellCard, bool> findByKindType = (card => FindByKindTypeImpl(card, kind, type));
+                    Func<ISpellCard<LevelPractice>, bool> findByKindType = (card => FindByKindTypeImpl(card, kind, type));
 
-                    Func<SpellCard, bool> findByStage;
+                    Func<ISpellCard<LevelPractice>, bool> findByStage;
                     if (stage == StageWithTotal.Total)
                         findByStage = (card => true);
                     else
                         findByStage = (card => CardTable[card.Id].Stage == (StagePractice)stage);
 
-                    Func<SpellCard, bool> findByLevel = (card => true);
+                    Func<ISpellCard<LevelPractice>, bool> findByLevel = (card => true);
                     switch (level)
                     {
                         case LevelPracticeWithTotal.Total:
@@ -895,7 +895,7 @@ namespace ThScoreFileConverter.Models
                 this.ClearFlags = new Dictionary<LevelPracticeWithTotal, int>(numLevelsWithTotal);
                 this.Practices =
                     new Dictionary<(LevelPractice, StagePractice), IPractice>(levels.Count() * stages.Count());
-                this.Cards = new Dictionary<int, SpellCard>(CardTable.Count);
+                this.Cards = new Dictionary<int, ISpellCard<LevelPractice>>(CardTable.Count);
 
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
@@ -966,7 +966,7 @@ namespace ThScoreFileConverter.Models
 
             public Dictionary<(LevelPractice, StagePractice), IPractice> Practices { get; }
 
-            public Dictionary<int, SpellCard> Cards { get; }
+            public Dictionary<int, ISpellCard<LevelPractice>> Cards { get; }
 
             public static bool CanInitialize(Th10.Chapter chapter)
             {
@@ -1022,7 +1022,7 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class SpellCard : Th13.SpellCard<LevelPractice>
+        private class SpellCard : SpellCard<LevelPractice>
         {
         }
     }
