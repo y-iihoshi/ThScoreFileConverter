@@ -42,25 +42,29 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.Data)) as byte[];
         public TCharaWithTotal? Chara
             => this.pobj.GetProperty(nameof(this.Chara)) as TCharaWithTotal?;
+
         // NOTE: Th10Converter.ScoreData is a private class.
-        // public IReadOnlyDictionary<Level, ScoreData[]> Rankings
-        //     => this.pobj.GetProperty(nameof(this.Rankings)) as Dictionary<Level, ScoreData[]>;
+        // public IReadOnlyDictionary<Level, IReadOnlyList<IScoreData<TStageProgress>>> Rankings
+        //     => this.pobj.GetProperty(nameof(this.Rankings))
+        //         as IReadOnlyDictionary<Level, IReadOnlyList<IScoreData<TStageProgress>>>;
         public object Rankings
             => this.pobj.GetProperty(nameof(this.Rankings));
-        public object[] Ranking(Level level)
-            => this.Rankings.GetType().GetProperty("Item").GetValue(this.Rankings, new object[] { level }) as object[];
+        public IReadOnlyList<IScoreData<TStageProgress>> Ranking(Level level)
+            => this.Rankings.GetType().GetProperty("Item").GetValue(this.Rankings, new object[] { level })
+                as IReadOnlyList<IScoreData<TStageProgress>>;
         public ScoreDataWrapper<TParent, TStageProgress> RankingItem(Level level, int index)
             => new ScoreDataWrapper<TParent, TStageProgress>(this.Ranking(level)[index]);
+
         public int? TotalPlayCount
             => this.pobj.GetProperty(nameof(this.TotalPlayCount)) as int?;
         public int? PlayTime
             => this.pobj.GetProperty(nameof(this.PlayTime)) as int?;
         public IReadOnlyDictionary<Level, int> ClearCounts
-            => this.pobj.GetProperty(nameof(this.ClearCounts)) as Dictionary<Level, int>;
+            => this.pobj.GetProperty(nameof(this.ClearCounts)) as IReadOnlyDictionary<Level, int>;
         public IReadOnlyDictionary<(Level, Stage), IPractice> Practices
-            => this.pobj.GetProperty(nameof(this.Practices)) as Dictionary<(Level, Stage), IPractice>;
+            => this.pobj.GetProperty(nameof(this.Practices)) as IReadOnlyDictionary<(Level, Stage), IPractice>;
         public IReadOnlyDictionary<int, ISpellCard<Level>> Cards
-            => this.pobj.GetProperty(nameof(this.Cards)) as Dictionary<int, ISpellCard<Level>>;
+            => this.pobj.GetProperty(nameof(this.Cards)) as IReadOnlyDictionary<int, ISpellCard<Level>>;
 
         public static bool CanInitialize(ChapterWrapper chapter)
             => (bool)PrivateType.InvokeStatic(

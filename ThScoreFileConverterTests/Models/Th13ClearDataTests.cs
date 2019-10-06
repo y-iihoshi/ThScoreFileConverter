@@ -20,7 +20,9 @@ namespace ThScoreFileConverterTests.Models
     [TestClass]
     public class Th13ClearDataTests
     {
-        internal struct Properties<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>
+        internal static ClearDataStub<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>
+            GetValidStub<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(
+                ushort version, int size, int numCards)
             where TChWithT : struct, Enum       // TCharaWithTotal
             where TLv : struct, Enum            // TLevel
             where TLvPrac : struct, Enum        // TLevelPractice
@@ -28,42 +30,18 @@ namespace ThScoreFileConverterTests.Models
             where TStPrac : struct, Enum        // TStagePractice
             where TStProg : struct, Enum        // TStageProgress
         {
-            public string signature;
-            public ushort version;
-            public uint checksum;
-            public int size;
-            public TChWithT chara;
-            public Dictionary<TLvPracWithT, ScoreDataStub<TStProg>[]> rankings;
-            public int totalPlayCount;
-            public int playTime;
-            public Dictionary<TLvPracWithT, int> clearCounts;
-            public Dictionary<TLvPracWithT, int> clearFlags;
-            public Dictionary<(TLvPrac, TStPrac), IPractice> practices;
-            public Dictionary<int, ISpellCard<TLv>> cards;
-        };
-
-        internal static Properties<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>
-            GetValidProperties<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(
-                ushort version, int size, int numCards)
-            where TChWithT : struct, Enum
-            where TLv : struct, Enum
-            where TLvPrac : struct, Enum
-            where TLvPracWithT : struct, Enum
-            where TStPrac : struct, Enum
-            where TStProg : struct, Enum
-        {
             var levels = Utils.GetEnumerator<TLvPrac>();
             var levelsWithTotal = Utils.GetEnumerator<TLvPracWithT>();
             var stages = Utils.GetEnumerator<TStPrac>();
 
-            return new Properties<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>()
+            return new ClearDataStub<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>
             {
-                signature = "CR",
-                version = version,
-                checksum = 0u,
-                size = size,
-                chara = TestUtils.Cast<TChWithT>(1),
-                rankings = levelsWithTotal.ToDictionary(
+                Signature = "CR",
+                Version = version,
+                Checksum = 0u,
+                Size = size,
+                Chara = TestUtils.Cast<TChWithT>(1),
+                Rankings = levelsWithTotal.ToDictionary(
                     level => level,
                     level => Enumerable.Range(0, 10).Select(
                         index => new ScoreDataStub<TStProg>()
@@ -74,12 +52,12 @@ namespace ThScoreFileConverterTests.Models
                             Name = TestUtils.MakeRandomArray<byte>(10),
                             DateTime = 34567890u,
                             SlowRate = 1.2f
-                        }).ToArray()),
-                totalPlayCount = 23,
-                playTime = 4567890,
-                clearCounts = levelsWithTotal.ToDictionary(level => level, level => 100 - TestUtils.Cast<int>(level)),
-                clearFlags = levelsWithTotal.ToDictionary(level => level, level => TestUtils.Cast<int>(level) % 2),
-                practices = levels
+                        }).ToList() as IReadOnlyList<ThScoreFileConverter.Models.Th10.IScoreData<TStProg>>),
+                TotalPlayCount = 23,
+                PlayTime = 4567890,
+                ClearCounts = levelsWithTotal.ToDictionary(level => level, level => 100 - TestUtils.Cast<int>(level)),
+                ClearFlags = levelsWithTotal.ToDictionary(level => level, level => TestUtils.Cast<int>(level) % 2),
+                Practices = levels
                     .SelectMany(level => stages.Select(stage => (level, stage)))
                     .ToDictionary(
                         pair => pair,
@@ -89,7 +67,7 @@ namespace ThScoreFileConverterTests.Models
                             ClearFlag = (byte)(TestUtils.Cast<int>(pair.stage) % 2),
                             EnableFlag = (byte)(TestUtils.Cast<int>(pair.level) % 2)
                         } as IPractice),
-                cards = Enumerable.Range(1, numCards).ToDictionary(
+                Cards = Enumerable.Range(1, numCards).ToDictionary(
                     index => index,
                     index => new SpellCardStub<TLv>()
                     {
@@ -106,7 +84,7 @@ namespace ThScoreFileConverterTests.Models
         }
 
         internal static byte[] MakeData<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(
-            in Properties<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg> properties)
+            IClearData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg> clearData)
             where TParent : ThConverter
             where TChWithT : struct, Enum
             where TLv : struct, Enum
@@ -115,21 +93,19 @@ namespace ThScoreFileConverterTests.Models
             where TStPrac : struct, Enum
             where TStProg : struct, Enum
             => TestUtils.MakeByteArray(
-                TestUtils.Cast<int>(properties.chara),
-                properties.rankings.Values.SelectMany(
+                TestUtils.Cast<int>(clearData.Chara),
+                clearData.Rankings.Values.SelectMany(
                     ranking => ranking.SelectMany(
                         scoreData => ScoreDataTests.MakeByteArray<TParent, TStProg>(scoreData))).ToArray(),
-                properties.totalPlayCount,
-                properties.playTime,
-                properties.clearCounts.Values.ToArray(),
-                properties.clearFlags.Values.ToArray(),
-                properties.practices.Values.SelectMany(
-                    practice => PracticeTests.MakeByteArray(practice)).ToArray(),
-                properties.cards.Values.SelectMany(
-                    card => SpellCardTests.MakeByteArray(card)).ToArray());
+                clearData.TotalPlayCount,
+                clearData.PlayTime,
+                clearData.ClearCounts.Values.ToArray(),
+                clearData.ClearFlags.Values.ToArray(),
+                clearData.Practices.Values.SelectMany(practice => PracticeTests.MakeByteArray(practice)).ToArray(),
+                clearData.Cards.Values.SelectMany(card => SpellCardTests.MakeByteArray(card)).ToArray());
 
         internal static byte[] MakeByteArray<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(
-            in Properties<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg> properties)
+            IClearData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg> clearData)
             where TParent : ThConverter
             where TChWithT : struct, Enum
             where TLv : struct, Enum
@@ -138,15 +114,15 @@ namespace ThScoreFileConverterTests.Models
             where TStPrac : struct, Enum
             where TStProg : struct, Enum
             => TestUtils.MakeByteArray(
-                properties.signature.ToCharArray(),
-                properties.version,
-                properties.checksum,
-                properties.size,
-                MakeData<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(properties));
+                clearData.Signature.ToCharArray(),
+                clearData.Version,
+                clearData.Checksum,
+                clearData.Size,
+                MakeData<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(clearData));
 
         internal static void Validate<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(
-            in Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg> clearData,
-            in Properties<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg> properties)
+            IClearData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg> expected,
+            in Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg> actual)
             where TParent : ThConverter
             where TChWithT : struct, Enum
             where TLv : struct, Enum
@@ -155,36 +131,36 @@ namespace ThScoreFileConverterTests.Models
             where TStPrac : struct, Enum
             where TStProg : struct, Enum
         {
-            var data = MakeData<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(properties);
+            var data = MakeData<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(expected);
 
-            Assert.AreEqual(properties.signature, clearData.Signature);
-            Assert.AreEqual(properties.version, clearData.Version);
-            Assert.AreEqual(properties.checksum, clearData.Checksum);
-            Assert.AreEqual(properties.size, clearData.Size);
-            CollectionAssert.That.AreEqual(data, clearData.Data);
-            Assert.AreEqual(properties.chara, clearData.Chara);
+            Assert.AreEqual(expected.Signature, actual.Signature);
+            Assert.AreEqual(expected.Version, actual.Version);
+            Assert.AreEqual(expected.Checksum, actual.Checksum);
+            Assert.AreEqual(expected.Size, actual.Size);
+            CollectionAssert.That.AreEqual(data, actual.Data);
+            Assert.AreEqual(expected.Chara, actual.Chara);
 
-            foreach (var pair in properties.rankings)
+            foreach (var pair in expected.Rankings)
             {
-                for (var index = 0; index < pair.Value.Length; ++index)
+                for (var index = 0; index < pair.Value.Count(); ++index)
                 {
-                    ScoreDataTests.Validate(pair.Value[index], clearData.RankingItem(pair.Key, index));
+                    ScoreDataTests.Validate(pair.Value[index], actual.RankingItem(pair.Key, index));
                 }
             }
 
-            Assert.AreEqual(properties.totalPlayCount, clearData.TotalPlayCount);
-            Assert.AreEqual(properties.playTime, clearData.PlayTime);
-            CollectionAssert.That.AreEqual(properties.clearCounts.Values, clearData.ClearCounts.Values);
-            CollectionAssert.That.AreEqual(properties.clearFlags.Values, clearData.ClearFlags.Values);
+            Assert.AreEqual(expected.TotalPlayCount, actual.TotalPlayCount);
+            Assert.AreEqual(expected.PlayTime, actual.PlayTime);
+            CollectionAssert.That.AreEqual(expected.ClearCounts.Values, actual.ClearCounts.Values);
+            CollectionAssert.That.AreEqual(expected.ClearFlags.Values, actual.ClearFlags.Values);
 
-            foreach (var pair in properties.practices)
+            foreach (var pair in expected.Practices)
             {
-                PracticeTests.Validate(pair.Value, clearData.Practices[pair.Key]);
+                PracticeTests.Validate(pair.Value, actual.Practices[pair.Key]);
             }
 
-            foreach (var pair in properties.cards)
+            foreach (var pair in expected.Cards)
             {
-                SpellCardTests.Validate(pair.Value, clearData.CardsItem(pair.Key));
+                SpellCardTests.Validate(pair.Value, actual.CardsItem(pair.Key));
             }
         }
 
@@ -201,19 +177,18 @@ namespace ThScoreFileConverterTests.Models
             where TStProg : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties =
-                    GetValidProperties<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(version, size, numCards);
+                var stub =
+                    GetValidStub<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(version, size, numCards);
 
                 var chapter = ChapterWrapper.Create(
-                    MakeByteArray<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(properties));
+                    MakeByteArray<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(stub));
                 var clearData =
                     new Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(chapter);
 
-                Validate(clearData, properties);
+                Validate(stub, clearData);
                 Assert.IsFalse(clearData.IsValid.Value);
             });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void
             ClearDataTestNullChapterHelper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>()
@@ -226,14 +201,12 @@ namespace ThScoreFileConverterTests.Models
             where TStProg : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var clearData =
-                    new Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(null);
+                _ = new Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(null);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
         internal static void
             ClearDataTestInvalidSignatureHelper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(
                 ushort version, int size, int numCards)
@@ -246,19 +219,17 @@ namespace ThScoreFileConverterTests.Models
             where TStProg : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties =
-                    GetValidProperties<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(version, size, numCards);
-                properties.signature = properties.signature.ToLowerInvariant();
+                var stub =
+                    GetValidStub<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(version, size, numCards);
+                stub.Signature = stub.Signature.ToLowerInvariant();
 
                 var chapter = ChapterWrapper.Create(
-                    MakeByteArray<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(properties));
-                var clearData =
-                    new Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(chapter);
+                    MakeByteArray<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(stub));
+                _ = new Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
         internal static void
             ClearDataTestInvalidVersionHelper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(
                 ushort version, int size, int numCards)
@@ -271,19 +242,17 @@ namespace ThScoreFileConverterTests.Models
             where TStProg : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties =
-                    GetValidProperties<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(version, size, numCards);
-                ++properties.version;
+                var stub =
+                    GetValidStub<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(version, size, numCards);
+                ++stub.Version;
 
                 var chapter = ChapterWrapper.Create(
-                    MakeByteArray<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(properties));
-                var clearData =
-                    new Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(chapter);
+                    MakeByteArray<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(stub));
+                _ = new Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
         internal static void
             ClearDataTestInvalidSizeHelper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(
                 ushort version, int size, int numCards)
@@ -296,14 +265,13 @@ namespace ThScoreFileConverterTests.Models
             where TStProg : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties =
-                    GetValidProperties<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(version, size, numCards);
-                --properties.size;
+                var stub =
+                    GetValidStub<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(version, size, numCards);
+                --stub.Size;
 
                 var chapter = ChapterWrapper.Create(
-                    MakeByteArray<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(properties));
-                var clearData =
-                    new Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(chapter);
+                    MakeByteArray<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(stub));
+                _ = new Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
             });

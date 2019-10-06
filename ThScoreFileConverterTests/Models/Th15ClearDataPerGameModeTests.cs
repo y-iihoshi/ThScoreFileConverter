@@ -1,11 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th13;
+using ThScoreFileConverter.Models.Th15;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th13;
 using ThScoreFileConverterTests.Models.Th13.Stubs;
@@ -17,23 +17,13 @@ namespace ThScoreFileConverterTests.Models
     [TestClass]
     public class Th15ClearDataPerGameModeTests
     {
-        internal struct Properties
-        {
-            public Dictionary<LevelWithTotal, ScoreDataStub[]> rankings;
-            public int totalPlayCount;
-            public int playTime;
-            public Dictionary<LevelWithTotal, int> clearCounts;
-            public Dictionary<LevelWithTotal, int> clearFlags;
-            public Dictionary<int, ISpellCard<Level>> cards;
-        };
-
-        internal static Properties GetValidProperties()
+        internal static ClearDataPerGameModeStub GetValidStub()
         {
             var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();
 
-            return new Properties()
+            return new ClearDataPerGameModeStub()
             {
-                rankings = levelsWithTotal.ToDictionary(
+                Rankings = levelsWithTotal.ToDictionary(
                     level => level,
                     level => Enumerable.Range(0, 10).Select(
                         index => new ScoreDataStub()
@@ -45,12 +35,12 @@ namespace ThScoreFileConverterTests.Models
                             DateTime = 34567890u,
                             SlowRate = 1.2f,
                             RetryCount = (uint)index / 4u
-                        }).ToArray()),
-                totalPlayCount = 23,
-                playTime = 4567890,
-                clearCounts = levelsWithTotal.ToDictionary(level => level, level => 100 - TestUtils.Cast<int>(level)),
-                clearFlags = levelsWithTotal.ToDictionary(level => level, level => TestUtils.Cast<int>(level) % 2),
-                cards = Enumerable.Range(1, 119).ToDictionary(
+                        }).ToList() as IReadOnlyList<IScoreData>),
+                TotalPlayCount = 23,
+                PlayTime = 4567890,
+                ClearCounts = levelsWithTotal.ToDictionary(level => level, level => 100 - TestUtils.Cast<int>(level)),
+                ClearFlags = levelsWithTotal.ToDictionary(level => level, level => TestUtils.Cast<int>(level) % 2),
+                Cards = Enumerable.Range(1, 119).ToDictionary(
                     index => index,
                     index => new SpellCardStub<Level>()
                     {
@@ -66,40 +56,40 @@ namespace ThScoreFileConverterTests.Models
             };
         }
 
-        internal static byte[] MakeByteArray(in Properties properties)
+        internal static byte[] MakeByteArray(IClearDataPerGameMode clearData)
             => TestUtils.MakeByteArray(
-                properties.rankings.Values.SelectMany(
+                clearData.Rankings.Values.SelectMany(
                     ranking => ranking.SelectMany(
                         scoreData => Th15ScoreDataTests.MakeByteArray(scoreData))).ToArray(),
                 new byte[0x140],
-                properties.cards.Values.SelectMany(
+                clearData.Cards.Values.SelectMany(
                     card => SpellCardTests.MakeByteArray(card)).ToArray(),
-                properties.totalPlayCount,
-                properties.playTime,
+                clearData.TotalPlayCount,
+                clearData.PlayTime,
                 0u,
-                properties.clearCounts.Values.ToArray(),
+                clearData.ClearCounts.Values.ToArray(),
                 0u,
-                properties.clearFlags.Values.ToArray(),
+                clearData.ClearFlags.Values.ToArray(),
                 0u);
 
-        internal static void Validate(in Th15ClearDataPerGameModeWrapper clearData, in Properties properties)
+        internal static void Validate(IClearDataPerGameMode expected, in Th15ClearDataPerGameModeWrapper actual)
         {
-            foreach (var pair in properties.rankings)
+            foreach (var pair in expected.Rankings)
             {
-                for (var index = 0; index < pair.Value.Length; ++index)
+                for (var index = 0; index < pair.Value.Count(); ++index)
                 {
-                    Th15ScoreDataTests.Validate(pair.Value[index], clearData.RankingItem(pair.Key, index));
+                    Th15ScoreDataTests.Validate(pair.Value[index], actual.RankingItem(pair.Key, index));
                 }
             }
 
-            Assert.AreEqual(properties.totalPlayCount, clearData.TotalPlayCount);
-            Assert.AreEqual(properties.playTime, clearData.PlayTime);
-            CollectionAssert.That.AreEqual(properties.clearCounts.Values, clearData.ClearCounts.Values);
-            CollectionAssert.That.AreEqual(properties.clearFlags.Values, clearData.ClearFlags.Values);
+            Assert.AreEqual(expected.TotalPlayCount, actual.TotalPlayCount);
+            Assert.AreEqual(expected.PlayTime, actual.PlayTime);
+            CollectionAssert.That.AreEqual(expected.ClearCounts.Values, actual.ClearCounts.Values);
+            CollectionAssert.That.AreEqual(expected.ClearFlags.Values, actual.ClearFlags.Values);
 
-            foreach (var pair in properties.cards)
+            foreach (var pair in expected.Cards)
             {
-                SpellCardTests.Validate(pair.Value, clearData.CardsItem(pair.Key));
+                SpellCardTests.Validate(pair.Value, actual.CardsItem(pair.Key));
             }
         }
 
@@ -119,11 +109,11 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th15ClearDataPerGameModeReadFromTest() => TestUtils.Wrap(() =>
         {
-            var properties = GetValidProperties();
+            var stub = GetValidStub();
 
-            var clearData = Th15ClearDataPerGameModeWrapper.Create(MakeByteArray(properties));
+            var clearData = Th15ClearDataPerGameModeWrapper.Create(MakeByteArray(stub));
 
-            Validate(clearData, properties);
+            Validate(stub, clearData);
         });
 
         [TestMethod]
@@ -136,16 +126,14 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th15ClearDataPerGameModeReadFromTestShortened() => TestUtils.Wrap(() =>
         {
-            var properties = GetValidProperties();
-            var array = MakeByteArray(properties);
-            array = array.Take(array.Length - 1).ToArray();
+            var stub = GetValidStub();
+            var array = MakeByteArray(stub).SkipLast(1).ToArray();
 
-            var clearData = Th15ClearDataPerGameModeWrapper.Create(array);
+            _ = Th15ClearDataPerGameModeWrapper.Create(array);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -153,12 +141,12 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th15ClearDataPerGameModeReadFromTestExceeded() => TestUtils.Wrap(() =>
         {
-            var properties = GetValidProperties();
-            var array = MakeByteArray(properties).Concat(new byte[1] { 1 }).ToArray();
+            var stub = GetValidStub();
+            var array = MakeByteArray(stub).Concat(new byte[1] { 1 }).ToArray();
 
             var clearData = Th15ClearDataPerGameModeWrapper.Create(array);
 
-            Validate(clearData, properties);
+            Validate(stub, clearData);
         });
     }
 }

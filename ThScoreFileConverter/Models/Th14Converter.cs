@@ -854,7 +854,10 @@ namespace ThScoreFileConverter.Models
                 => base.IsValid && this.Signature.Equals(ValidSignature, StringComparison.Ordinal);
         }
 
-        private class ClearData : Th10.Chapter   // per character
+        private class ClearData // per character
+            : Th10.Chapter,
+              Th13.IClearData<
+                  CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice, StageProgress>
         {
             public const string ValidSignature = "CR";
             public const ushort ValidVersion = 0x0001;
@@ -866,85 +869,58 @@ namespace ThScoreFileConverter.Models
                 var levelsWithTotal = Utils.GetEnumerator<LevelPracticeWithTotal>();
                 var levels = Utils.GetEnumerator<LevelPractice>();
                 var stages = Utils.GetEnumerator<StagePractice>();
-                var numLevelsWithTotal = levelsWithTotal.Count();
-
-                this.Rankings = new Dictionary<LevelPracticeWithTotal, ScoreData[]>(numLevelsWithTotal);
-                this.ClearCounts = new Dictionary<LevelPracticeWithTotal, int>(numLevelsWithTotal);
-                this.ClearFlags = new Dictionary<LevelPracticeWithTotal, int>(numLevelsWithTotal);
-                this.Practices =
-                    new Dictionary<(LevelPractice, StagePractice), Th13.IPractice>(levels.Count() * stages.Count());
-                this.Cards = new Dictionary<int, Th13.ISpellCard<Level>>(CardTable.Count);
 
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
                     this.Chara = (CharaWithTotal)reader.ReadInt32();
 
-                    foreach (var level in levelsWithTotal)
-                    {
-                        if (!this.Rankings.ContainsKey(level))
-                            this.Rankings.Add(level, new ScoreData[10]);
-                        for (var rank = 0; rank < 10; rank++)
+                    this.Rankings = levelsWithTotal.ToDictionary(
+                        level => level,
+                        _ => Enumerable.Range(0, 10).Select(rank =>
                         {
                             var score = new ScoreData();
                             score.ReadFrom(reader);
-                            this.Rankings[level][rank] = score;
-                        }
-                    }
+                            return score;
+                        }).ToList() as IReadOnlyList<Th10.IScoreData<StageProgress>>);
 
                     this.TotalPlayCount = reader.ReadInt32();
                     this.PlayTime = reader.ReadInt32();
+                    this.ClearCounts = levelsWithTotal.ToDictionary(level => level, _ => reader.ReadInt32());
+                    this.ClearFlags = levelsWithTotal.ToDictionary(level => level, _ => reader.ReadInt32());
 
-                    foreach (var level in levelsWithTotal)
-                    {
-                        var clearCount = reader.ReadInt32();
-                        if (!this.ClearCounts.ContainsKey(level))
-                            this.ClearCounts.Add(level, clearCount);
-                    }
-
-                    foreach (var level in levelsWithTotal)
-                    {
-                        var clearFlag = reader.ReadInt32();
-                        if (!this.ClearFlags.ContainsKey(level))
-                            this.ClearFlags.Add(level, clearFlag);
-                    }
-
-                    foreach (var level in levels)
-                    {
-                        foreach (var stage in stages)
+                    this.Practices = levels
+                        .SelectMany(level => stages.Select(stage => (level, stage)))
+                        .ToDictionary(pair => pair, _ =>
                         {
                             var practice = new Th13.Practice();
                             practice.ReadFrom(reader);
-                            var key = (level, stage);
-                            if (!this.Practices.ContainsKey(key))
-                                this.Practices.Add(key, practice);
-                        }
-                    }
+                            return practice as Th13.IPractice;
+                        });
 
-                    for (var number = 0; number < CardTable.Count; number++)
+                    this.Cards = Enumerable.Range(0, CardTable.Count).Select(_ =>
                     {
                         var card = new SpellCard();
                         card.ReadFrom(reader);
-                        if (!this.Cards.ContainsKey(card.Id))
-                            this.Cards.Add(card.Id, card);
-                    }
+                        return card as Th13.ISpellCard<Level>;
+                    }).ToDictionary(card => card.Id);
                 }
             }
 
             public CharaWithTotal Chara { get; }
 
-            public Dictionary<LevelPracticeWithTotal, ScoreData[]> Rankings { get; }
+            public IReadOnlyDictionary<LevelPracticeWithTotal, IReadOnlyList<Th10.IScoreData<StageProgress>>> Rankings { get; }
 
             public int TotalPlayCount { get; }
 
             public int PlayTime { get; }    // = seconds * 60fps
 
-            public Dictionary<LevelPracticeWithTotal, int> ClearCounts { get; }
+            public IReadOnlyDictionary<LevelPracticeWithTotal, int> ClearCounts { get; }
 
-            public Dictionary<LevelPracticeWithTotal, int> ClearFlags { get; }  // Really...?
+            public IReadOnlyDictionary<LevelPracticeWithTotal, int> ClearFlags { get; }  // Really...?
 
-            public Dictionary<(LevelPractice, StagePractice), Th13.IPractice> Practices { get; }
+            public IReadOnlyDictionary<(LevelPractice, StagePractice), Th13.IPractice> Practices { get; }
 
-            public Dictionary<int, Th13.ISpellCard<Level>> Cards { get; }
+            public IReadOnlyDictionary<int, Th13.ISpellCard<Level>> Cards { get; }
 
             public static bool CanInitialize(Th10.Chapter chapter)
             {

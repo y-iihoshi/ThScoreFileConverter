@@ -1,15 +1,16 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th13;
+using ThScoreFileConverter.Models.Th15;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
 using ThScoreFileConverterTests.Models.Th13;
 using ThScoreFileConverterTests.Models.Th13.Stubs;
+using ThScoreFileConverterTests.Models.Th15.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -17,32 +18,23 @@ namespace ThScoreFileConverterTests.Models
     [TestClass]
     public class Th15ClearDataTests
     {
-        internal struct Properties
-        {
-            public string signature;
-            public ushort version;
-            public uint checksum;
-            public int size;
-            public Th15Converter.CharaWithTotal chara;
-            public Dictionary<Th15Converter.GameMode, Th15ClearDataPerGameModeTests.Properties> data1;
-            public Dictionary<(Level, Th15Converter.StagePractice), IPractice> practices;
-        };
-
-        internal static Properties GetValidProperties()
+        internal static ClearDataStub GetValidStub()
         {
             var modes = Utils.GetEnumerator<Th15Converter.GameMode>();
             var levels = Utils.GetEnumerator<Level>();
             var stages = Utils.GetEnumerator<Th15Converter.StagePractice>();
 
-            return new Properties()
+            return new ClearDataStub()
             {
-                signature = "CR",
-                version = 1,
-                checksum = 0u,
-                size = 0xA4A0,
-                chara = Th15Converter.CharaWithTotal.Reimu,
-                data1 = modes.ToDictionary(mode => mode, mode => Th15ClearDataPerGameModeTests.GetValidProperties()),
-                practices = levels
+                Signature = "CR",
+                Version = 1,
+                Checksum = 0u,
+                Size = 0xA4A0,
+                Chara = Th15Converter.CharaWithTotal.Reimu,
+                GameModeData = modes.ToDictionary(
+                    mode => mode,
+                    _ => Th15ClearDataPerGameModeTests.GetValidStub() as IClearDataPerGameMode),
+                Practices = levels
                     .SelectMany(level => stages.Select(stage => (level, stage)))
                     .ToDictionary(
                         pair => pair,
@@ -55,42 +47,42 @@ namespace ThScoreFileConverterTests.Models
             };
         }
 
-        internal static byte[] MakeData(in Properties properties)
+        internal static byte[] MakeData(IClearData clearData)
             => TestUtils.MakeByteArray(
-                (int)properties.chara,
-                properties.data1.Values.SelectMany(
+                (int)clearData.Chara,
+                clearData.GameModeData.Values.SelectMany(
                     data => Th15ClearDataPerGameModeTests.MakeByteArray(data)).ToArray(),
-                properties.practices.Values.SelectMany(
+                clearData.Practices.Values.SelectMany(
                     practice => PracticeTests.MakeByteArray(practice)).ToArray(),
                 new byte[0x40]);
 
-        internal static byte[] MakeByteArray(in Properties properties)
+        internal static byte[] MakeByteArray(IClearData clearData)
             => TestUtils.MakeByteArray(
-                properties.signature.ToCharArray(),
-                properties.version,
-                properties.checksum,
-                properties.size,
-                MakeData(properties));
+                clearData.Signature.ToCharArray(),
+                clearData.Version,
+                clearData.Checksum,
+                clearData.Size,
+                MakeData(clearData));
 
-        internal static void Validate(in Th15ClearDataWrapper clearData, in Properties properties)
+        internal static void Validate(IClearData expected, in Th15ClearDataWrapper actual)
         {
-            var data = MakeData(properties);
+            var data = MakeData(expected);
 
-            Assert.AreEqual(properties.signature, clearData.Signature);
-            Assert.AreEqual(properties.version, clearData.Version);
-            Assert.AreEqual(properties.checksum, clearData.Checksum);
-            Assert.AreEqual(properties.size, clearData.Size);
-            CollectionAssert.That.AreEqual(data, clearData.Data);
-            Assert.AreEqual(properties.chara, clearData.Chara);
+            Assert.AreEqual(expected.Signature, actual.Signature);
+            Assert.AreEqual(expected.Version, actual.Version);
+            Assert.AreEqual(expected.Checksum, actual.Checksum);
+            Assert.AreEqual(expected.Size, actual.Size);
+            CollectionAssert.That.AreEqual(data, actual.Data);
+            Assert.AreEqual(expected.Chara, actual.Chara);
 
-            foreach (var pair in properties.data1)
+            foreach (var pair in expected.GameModeData)
             {
-                Th15ClearDataPerGameModeTests.Validate(clearData.Data1Item(pair.Key), pair.Value);
+                Th15ClearDataPerGameModeTests.Validate(pair.Value, actual.GameModeDataItem(pair.Key));
             }
 
-            foreach (var pair in properties.practices)
+            foreach (var pair in expected.Practices)
             {
-                PracticeTests.Validate(pair.Value, clearData.Practices[pair.Key]);
+                PracticeTests.Validate(pair.Value, actual.Practices[pair.Key]);
             }
         }
 
@@ -98,64 +90,60 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th15ClearDataTestChapter() => TestUtils.Wrap(() =>
         {
-            var properties = GetValidProperties();
+            var stub = GetValidStub();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
             var clearData = new Th15ClearDataWrapper(chapter);
 
-            Validate(clearData, properties);
+            Validate(stub, clearData);
             Assert.IsFalse(clearData.IsValid.Value);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th15ClearDataTestNullChapter() => TestUtils.Wrap(() =>
         {
-            var clearData = new Th15ClearDataWrapper(null);
+            _ = new Th15ClearDataWrapper(null);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th15ClearDataTestInvalidSignature() => TestUtils.Wrap(() =>
         {
-            var properties = GetValidProperties();
-            properties.signature = properties.signature.ToLowerInvariant();
+            var stub = GetValidStub();
+            stub.Signature = stub.Signature.ToLowerInvariant();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var clearData = new Th15ClearDataWrapper(chapter);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new Th15ClearDataWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th15ClearDataTestInvalidVersion() => TestUtils.Wrap(() =>
         {
-            var properties = GetValidProperties();
-            ++properties.version;
+            var stub = GetValidStub();
+            ++stub.Version;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var clearData = new Th15ClearDataWrapper(chapter);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new Th15ClearDataWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th15ClearDataTestInvalidSize() => TestUtils.Wrap(() =>
         {
-            var properties = GetValidProperties();
-            --properties.size;
+            var stub = GetValidStub();
+            --stub.Size;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var clearData = new Th15ClearDataWrapper(chapter);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new Th15ClearDataWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });

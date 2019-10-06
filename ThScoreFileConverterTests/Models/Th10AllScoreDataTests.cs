@@ -66,16 +66,15 @@ namespace ThScoreFileConverterTests.Models
             where TStageProgress : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties =
-                    Th10ClearDataTests.GetValidProperties<TCharaWithTotal, TStageProgress>(version, size, numCards);
+                var stub = Th10ClearDataTests.GetValidStub<TCharaWithTotal, TStageProgress>(version, size, numCards);
                 var chapter = ChapterWrapper.Create(
-                    Th10ClearDataTests.MakeByteArray<TParent, TCharaWithTotal, TStageProgress>(properties));
+                    Th10ClearDataTests.MakeByteArray<TParent, TCharaWithTotal, TStageProgress>(stub));
                 var clearData = new Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress>(chapter);
 
                 var allScoreData = new Th10AllScoreDataWrapper<TParent, TCharaWithTotal, TStageProgress>();
                 allScoreData.Set(clearData);
 
-                Assert.AreSame(clearData.Target, allScoreData.ClearDataItem(properties.chara).Target);
+                Assert.AreSame(clearData.Target, allScoreData.ClearDataItem(stub.Chara).Target);
             });
 
         internal static void Th10AllScoreDataSetClearDataTestTwiceHelper<TParent, TCharaWithTotal, TStageProgress>(
@@ -85,10 +84,9 @@ namespace ThScoreFileConverterTests.Models
             where TStageProgress : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties =
-                    Th10ClearDataTests.GetValidProperties<TCharaWithTotal, TStageProgress>(version, size, numCards);
+                var stub = Th10ClearDataTests.GetValidStub<TCharaWithTotal, TStageProgress>(version, size, numCards);
                 var chapter = ChapterWrapper.Create(
-                    Th10ClearDataTests.MakeByteArray<TParent, TCharaWithTotal, TStageProgress>(properties));
+                    Th10ClearDataTests.MakeByteArray<TParent, TCharaWithTotal, TStageProgress>(stub));
                 var clearData1 = new Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress>(chapter);
                 var clearData2 = new Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress>(chapter);
 
@@ -96,8 +94,8 @@ namespace ThScoreFileConverterTests.Models
                 allScoreData.Set(clearData1);
                 allScoreData.Set(clearData2);
 
-                Assert.AreSame(clearData1.Target, allScoreData.ClearDataItem(properties.chara).Target);
-                Assert.AreNotSame(clearData2.Target, allScoreData.ClearDataItem(properties.chara).Target);
+                Assert.AreSame(clearData1.Target, allScoreData.ClearDataItem(stub.Chara).Target);
+                Assert.AreNotSame(clearData2.Target, allScoreData.ClearDataItem(stub.Chara).Target);
             });
 
         internal static void Th10AllScoreDataSetStatusTestHelper<TParent, TCharaWithTotal, TStageProgress>(

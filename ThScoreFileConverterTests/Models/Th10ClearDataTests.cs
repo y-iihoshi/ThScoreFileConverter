@@ -17,25 +17,8 @@ namespace ThScoreFileConverterTests.Models
     [TestClass]
     public class Th10ClearDataTests
     {
-        internal struct Properties<TCharaWithTotal, TStageProgress>
-            where TCharaWithTotal : struct, Enum
-            where TStageProgress : struct, Enum
-        {
-            public string signature;
-            public ushort version;
-            public uint checksum;
-            public int size;
-            public TCharaWithTotal chara;
-            public Dictionary<Level, ScoreDataStub<TStageProgress>[]> rankings;
-            public int totalPlayCount;
-            public int playTime;
-            public Dictionary<Level, int> clearCounts;
-            public Dictionary<(Level, Stage), IPractice> practices;
-            public Dictionary<int, ISpellCard<Level>> cards;
-        };
-
-        internal static Properties<TCharaWithTotal, TStageProgress>
-            GetValidProperties<TCharaWithTotal, TStageProgress>(ushort version, int size, int numCards)
+        internal static ClearDataStub<TCharaWithTotal, TStageProgress>
+            GetValidStub<TCharaWithTotal, TStageProgress>(ushort version, int size, int numCards)
             where TCharaWithTotal : struct, Enum
             where TStageProgress : struct, Enum
         {
@@ -44,14 +27,14 @@ namespace ThScoreFileConverterTests.Models
             var stages = Utils.GetEnumerator<Stage>();
             var stagesExceptExtra = stages.Where(stage => stage != Stage.Extra);
 
-            return new Properties<TCharaWithTotal, TStageProgress>()
+            return new ClearDataStub<TCharaWithTotal, TStageProgress>()
             {
-                signature = "CR",
-                version = version,
-                checksum = 0u,
-                size = size,
-                chara = TestUtils.Cast<TCharaWithTotal>(1),
-                rankings = levels.ToDictionary(
+                Signature = "CR",
+                Version = version,
+                Checksum = 0u,
+                Size = size,
+                Chara = TestUtils.Cast<TCharaWithTotal>(1),
+                Rankings = levels.ToDictionary(
                     level => level,
                     level => Enumerable.Range(0, 10).Select(
                         index => new ScoreDataStub<TStageProgress>()
@@ -62,11 +45,11 @@ namespace ThScoreFileConverterTests.Models
                             Name = TestUtils.MakeRandomArray<byte>(10),
                             DateTime = 34567890u,
                             SlowRate = 1.2f
-                        }).ToArray()),
-                totalPlayCount = 23,
-                playTime = 4567890,
-                clearCounts = levels.ToDictionary(level => level, level => 100 - (int)level),
-                practices = levelsExceptExtra
+                        }).ToList() as IReadOnlyList<IScoreData<TStageProgress>>),
+                TotalPlayCount = 23,
+                PlayTime = 4567890,
+                ClearCounts = levels.ToDictionary(level => level, level => 100 - (int)level),
+                Practices = levelsExceptExtra
                     .SelectMany(level => stagesExceptExtra.Select(stage => (level, stage)))
                     .ToDictionary(
                         pair => pair,
@@ -75,7 +58,7 @@ namespace ThScoreFileConverterTests.Models
                             Score = 123456u - (uint)pair.level * 10u,
                             StageFlag = (uint)pair.stage % 2u
                         } as IPractice),
-                cards = Enumerable.Range(1, numCards).ToDictionary(
+                Cards = Enumerable.Range(1, numCards).ToDictionary(
                     index => index,
                     index => new SpellCardStub()
                     {
@@ -89,71 +72,71 @@ namespace ThScoreFileConverterTests.Models
         }
 
         internal static byte[] MakeData<TParent, TCharaWithTotal, TStageProgress>(
-            in Properties<TCharaWithTotal, TStageProgress> properties)
+            IClearData<TCharaWithTotal, TStageProgress> clearData)
             where TParent : ThConverter
             where TCharaWithTotal : struct, Enum
             where TStageProgress : struct, Enum
             => TestUtils.MakeByteArray(
-                TestUtils.Cast<int>(properties.chara),
-                properties.rankings.Values.SelectMany(
+                TestUtils.Cast<int>(clearData.Chara),
+                clearData.Rankings.Values.SelectMany(
                     ranking => ranking.SelectMany(
                         scoreData => ScoreDataTests.MakeByteArray<TParent, TStageProgress>(scoreData))).ToArray(),
-                properties.totalPlayCount,
-                properties.playTime,
-                properties.clearCounts.Values.ToArray(),
-                properties.practices.Values.SelectMany(
+                clearData.TotalPlayCount,
+                clearData.PlayTime,
+                clearData.ClearCounts.Values.ToArray(),
+                clearData.Practices.Values.SelectMany(
                     practice => PracticeTests.MakeByteArray(practice)).ToArray(),
-                properties.cards.Values.SelectMany(
+                clearData.Cards.Values.SelectMany(
                     card => SpellCardTests.MakeByteArray(card)).ToArray());
 
         internal static byte[] MakeByteArray<TParent, TCharaWithTotal, TStageProgress>(
-            in Properties<TCharaWithTotal, TStageProgress> properties)
+            IClearData<TCharaWithTotal, TStageProgress> clearData)
             where TParent : ThConverter
             where TCharaWithTotal : struct, Enum
             where TStageProgress : struct, Enum
             => TestUtils.MakeByteArray(
-                properties.signature.ToCharArray(),
-                properties.version,
-                properties.checksum,
-                properties.size,
-                MakeData<TParent, TCharaWithTotal, TStageProgress>(properties));
+                clearData.Signature.ToCharArray(),
+                clearData.Version,
+                clearData.Checksum,
+                clearData.Size,
+                MakeData<TParent, TCharaWithTotal, TStageProgress>(clearData));
 
         internal static void Validate<TParent, TCharaWithTotal, TStageProgress>(
-            in Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress> clearData,
-            in Properties<TCharaWithTotal, TStageProgress> properties)
+            IClearData<TCharaWithTotal, TStageProgress> expected,
+            in Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress> actual)
             where TParent : ThConverter
             where TCharaWithTotal : struct, Enum
             where TStageProgress : struct, Enum
         {
-            var data = MakeData<TParent, TCharaWithTotal, TStageProgress>(properties);
+            var data = MakeData<TParent, TCharaWithTotal, TStageProgress>(expected);
 
-            Assert.AreEqual(properties.signature, clearData.Signature);
-            Assert.AreEqual(properties.version, clearData.Version);
-            Assert.AreEqual(properties.checksum, clearData.Checksum);
-            Assert.AreEqual(properties.size, clearData.Size);
-            CollectionAssert.That.AreEqual(data, clearData.Data);
-            Assert.AreEqual(properties.chara, clearData.Chara);
+            Assert.AreEqual(expected.Signature, actual.Signature);
+            Assert.AreEqual(expected.Version, actual.Version);
+            Assert.AreEqual(expected.Checksum, actual.Checksum);
+            Assert.AreEqual(expected.Size, actual.Size);
+            CollectionAssert.That.AreEqual(data, actual.Data);
+            Assert.AreEqual(expected.Chara, actual.Chara);
 
-            foreach (var pair in properties.rankings)
+            foreach (var pair in expected.Rankings)
             {
-                for (var index = 0; index < pair.Value.Length; ++index)
+                for (var index = 0; index < pair.Value.Count(); ++index)
                 {
-                    ScoreDataTests.Validate(pair.Value[index], clearData.RankingItem(pair.Key, index));
+                    ScoreDataTests.Validate(pair.Value[index], actual.RankingItem(pair.Key, index));
                 }
             }
 
-            Assert.AreEqual(properties.totalPlayCount, clearData.TotalPlayCount);
-            Assert.AreEqual(properties.playTime, clearData.PlayTime);
-            CollectionAssert.That.AreEqual(properties.clearCounts.Values, clearData.ClearCounts.Values);
+            Assert.AreEqual(expected.TotalPlayCount, actual.TotalPlayCount);
+            Assert.AreEqual(expected.PlayTime, actual.PlayTime);
+            CollectionAssert.That.AreEqual(expected.ClearCounts.Values, actual.ClearCounts.Values);
 
-            foreach (var pair in properties.practices)
+            foreach (var pair in expected.Practices)
             {
-                PracticeTests.Validate(pair.Value, clearData.Practices[pair.Key]);
+                PracticeTests.Validate(pair.Value, actual.Practices[pair.Key]);
             }
 
-            foreach (var pair in properties.cards)
+            foreach (var pair in expected.Cards)
             {
-                SpellCardTests.Validate(pair.Value, clearData.Cards[pair.Key]);
+                SpellCardTests.Validate(pair.Value, actual.Cards[pair.Key]);
             }
         }
 
@@ -165,17 +148,16 @@ namespace ThScoreFileConverterTests.Models
             where TStageProgress : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties = GetValidProperties<TCharaWithTotal, TStageProgress>(version, size, numCards);
+                var stub = GetValidStub<TCharaWithTotal, TStageProgress>(version, size, numCards);
 
                 var chapter = ChapterWrapper.Create(
-                    MakeByteArray<TParent, TCharaWithTotal, TStageProgress>(properties));
+                    MakeByteArray<TParent, TCharaWithTotal, TStageProgress>(stub));
                 var clearData = new Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress>(chapter);
 
-                Validate(clearData, properties);
+                Validate(stub, clearData);
                 Assert.IsFalse(clearData.IsValid.Value);
             });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ClearDataTestNullChapterHelper<TParent, TCharaWithTotal, TStageProgress>()
             where TParent : ThConverter
@@ -183,13 +165,12 @@ namespace ThScoreFileConverterTests.Models
             where TStageProgress : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var clearData = new Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress>(null);
+                _ = new Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress>(null);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
         internal static void ClearDataTestInvalidSignatureHelper<TParent, TCharaWithTotal, TStageProgress>(
             ushort version, int size, int numCards)
             where TParent : ThConverter
@@ -197,17 +178,16 @@ namespace ThScoreFileConverterTests.Models
             where TStageProgress : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties = GetValidProperties<TCharaWithTotal, TStageProgress>(version, size, numCards);
-                properties.signature = properties.signature.ToLowerInvariant();
+                var stub = GetValidStub<TCharaWithTotal, TStageProgress>(version, size, numCards);
+                stub.Signature = stub.Signature.ToLowerInvariant();
 
                 var chapter = ChapterWrapper.Create(
-                    MakeByteArray<TParent, TCharaWithTotal, TStageProgress>(properties));
-                var clearData = new Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress>(chapter);
+                    MakeByteArray<TParent, TCharaWithTotal, TStageProgress>(stub));
+                _ = new Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
         internal static void ClearDataTestInvalidVersionHelper<TParent, TCharaWithTotal, TStageProgress>(
             ushort version, int size, int numCards)
             where TParent : ThConverter
@@ -215,17 +195,16 @@ namespace ThScoreFileConverterTests.Models
             where TStageProgress : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties = GetValidProperties<TCharaWithTotal, TStageProgress>(version, size, numCards);
-                ++properties.version;
+                var stub = GetValidStub<TCharaWithTotal, TStageProgress>(version, size, numCards);
+                ++stub.Version;
 
                 var chapter = ChapterWrapper.Create(
-                    MakeByteArray<TParent, TCharaWithTotal, TStageProgress>(properties));
-                var clearData = new Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress>(chapter);
+                    MakeByteArray<TParent, TCharaWithTotal, TStageProgress>(stub));
+                _ = new Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
         internal static void ClearDataTestInvalidSizeHelper<TParent, TCharaWithTotal, TStageProgress>(
             ushort version, int size, int numCards)
             where TParent : ThConverter
@@ -233,12 +212,12 @@ namespace ThScoreFileConverterTests.Models
             where TStageProgress : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties = GetValidProperties<TCharaWithTotal, TStageProgress>(version, size, numCards);
-                --properties.size;
+                var stub = GetValidStub<TCharaWithTotal, TStageProgress>(version, size, numCards);
+                --stub.Size;
 
                 var chapter = ChapterWrapper.Create(
-                    MakeByteArray<TParent, TCharaWithTotal, TStageProgress>(properties));
-                var clearData = new Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress>(chapter);
+                    MakeByteArray<TParent, TCharaWithTotal, TStageProgress>(stub));
+                _ = new Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
             });

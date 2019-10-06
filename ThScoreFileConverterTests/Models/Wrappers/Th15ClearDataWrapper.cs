@@ -39,17 +39,20 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.Data)) as byte[];
         public Th15Converter.CharaWithTotal? Chara
             => this.pobj.GetProperty(nameof(this.Chara)) as Th15Converter.CharaWithTotal?;
+
         // NOTE: Th15Converter.ClearDataPerGameMode is a private class.
-        // public IReadOnlyDictionary<GameMode, ClearDataPerGameMode> Data1
-        //     => this.pobj.GetProperty(nameof(this.Data1)) as Dictionary<GameMode, ClearDataPerGameMode>;
-        public object Data1
-            => this.pobj.GetProperty(nameof(this.Data1));
-        public Th15ClearDataPerGameModeWrapper Data1Item(Th15Converter.GameMode mode)
+        // public IReadOnlyDictionary<GameMode, IClearDataPerGameMode> GameModeData
+        //     => this.pobj.GetProperty(nameof(this.GameModeData))
+        //         as IReadOnlyDictionary<GameMode, IClearDataPerGameMode>;
+        public object GameModeData
+            => this.pobj.GetProperty(nameof(this.GameModeData));
+        public Th15ClearDataPerGameModeWrapper GameModeDataItem(Th15Converter.GameMode mode)
             => new Th15ClearDataPerGameModeWrapper(
-                this.Data1.GetType().GetProperty("Item").GetValue(this.Data1, new object[] { mode }));
+                this.GameModeData.GetType().GetProperty("Item").GetValue(this.GameModeData, new object[] { mode }));
+
         public IReadOnlyDictionary<(Level, Th15Converter.StagePractice), IPractice> Practices
             => this.pobj.GetProperty(nameof(this.Practices))
-                as Dictionary<(Level, Th15Converter.StagePractice), IPractice>;
+                as IReadOnlyDictionary<(Level, Th15Converter.StagePractice), IPractice>;
 
         public static bool CanInitialize(ChapterWrapper chapter)
             => (bool)PrivateType.InvokeStatic(

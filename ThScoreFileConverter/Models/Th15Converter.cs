@@ -404,7 +404,7 @@ namespace ThScoreFileConverter.Models
                         mode = GameMode.Pointdevice;
 #endif
 
-                    var ranking = parent.allScoreData.ClearData[chara].Data1[mode].Rankings[level][rank];
+                    var ranking = parent.allScoreData.ClearData[chara].GameModeData[mode].Rankings[level][rank];
                     switch (type)
                     {
                         case 1:     // name
@@ -468,7 +468,7 @@ namespace ThScoreFileConverter.Models
                     else
                         getCount = (card => card.TrialCount);
 
-                    var cards = parent.allScoreData.ClearData[chara].Data1[mode].Cards;
+                    var cards = parent.allScoreData.ClearData[chara].GameModeData[mode].Cards;
                     if (number == 0)
                     {
                         return Utils.ToNumberString(cards.Values.Sum(getCount));
@@ -513,7 +513,7 @@ namespace ThScoreFileConverter.Models
                         {
                             if (hideUntriedCards)
                             {
-                                var tried = parent.allScoreData.ClearData[CharaWithTotal.Total].Data1.Any(
+                                var tried = parent.allScoreData.ClearData[CharaWithTotal.Total].GameModeData.Any(
                                     data => data.Value.Cards.TryGetValue(number, out var card) && card.HasTried);
                                 if (!tried)
                                     return "??????????";
@@ -596,7 +596,7 @@ namespace ThScoreFileConverter.Models
                             break;
                     }
 
-                    return parent.allScoreData.ClearData[chara].Data1[mode].Cards.Values
+                    return parent.allScoreData.ClearData[chara].GameModeData[mode].Cards.Values
                         .Count(Utils.MakeAndPredicate(findByType, findByLevel, findByStage))
                         .ToString(CultureInfo.CurrentCulture);
                 });
@@ -629,7 +629,7 @@ namespace ThScoreFileConverter.Models
                         mode = GameMode.Pointdevice;
 #endif
 
-                    var rankings = parent.allScoreData.ClearData[chara].Data1[mode].Rankings[level]
+                    var rankings = parent.allScoreData.ClearData[chara].GameModeData[mode].Rankings[level]
                         .Where(ranking => ranking.DateTime > 0);
                     var stageProgress = rankings.Any()
                         ? rankings.Max(ranking => ranking.StageProgress) : StageProgress.None;
@@ -670,17 +670,17 @@ namespace ThScoreFileConverter.Models
                     Func<long, string> toString;
                     if (type == 1)
                     {
-                        getValueByType = (data => data.Data1[mode].TotalPlayCount);
+                        getValueByType = (data => data.GameModeData[mode].TotalPlayCount);
                         toString = Utils.ToNumberString;
                     }
                     else if (type == 2)
                     {
-                        getValueByType = (data => data.Data1[mode].PlayTime);
+                        getValueByType = (data => data.GameModeData[mode].PlayTime);
                         toString = (value => new Time(value * 10, false).ToString());
                     }
                     else
                     {
-                        getValueByType = (data => data.Data1[mode].ClearCounts.Values.Sum());
+                        getValueByType = (data => data.GameModeData[mode].ClearCounts.Values.Sum());
                         toString = Utils.ToNumberString;
                     }
 
@@ -730,20 +730,20 @@ namespace ThScoreFileConverter.Models
                     Func<long, string> toString;
                     if (type == 1)
                     {
-                        getValueByType = (data => data.Data1[mode].TotalPlayCount);
+                        getValueByType = (data => data.GameModeData[mode].TotalPlayCount);
                         toString = Utils.ToNumberString;
                     }
                     else if (type == 2)
                     {
-                        getValueByType = (data => data.Data1[mode].PlayTime);
+                        getValueByType = (data => data.GameModeData[mode].PlayTime);
                         toString = (value => new Time(value * 10, false).ToString());
                     }
                     else
                     {
                         if (level == LevelWithTotal.Total)
-                            getValueByType = (data => data.Data1[mode].ClearCounts.Values.Sum());
+                            getValueByType = (data => data.GameModeData[mode].ClearCounts.Values.Sum());
                         else
-                            getValueByType = (data => data.Data1[mode].ClearCounts[level]);
+                            getValueByType = (data => data.GameModeData[mode].ClearCounts[level]);
                         toString = Utils.ToNumberString;
                     }
 
@@ -842,7 +842,7 @@ namespace ThScoreFileConverter.Models
                 => base.IsValid && this.Signature.Equals(ValidSignature, StringComparison.Ordinal);
         }
 
-        private class ClearData : Th10.Chapter   // per character
+        private class ClearData : Th10.Chapter, IClearData   // per character
         {
             public const string ValidSignature = "CR";
             public const ushort ValidVersion = 0x0001;
@@ -855,41 +855,33 @@ namespace ThScoreFileConverter.Models
                 var levels = Utils.GetEnumerator<Level>();
                 var stages = Utils.GetEnumerator<StagePractice>();
 
-                this.Data1 = new Dictionary<GameMode, ClearDataPerGameMode>(modes.Count());
-                this.Practices =
-                    new Dictionary<(Level, StagePractice), Th13.IPractice>(levels.Count() * stages.Count());
-
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
                     this.Chara = (CharaWithTotal)reader.ReadInt32();
 
-                    foreach (var mode in modes)
+                    this.GameModeData = modes.ToDictionary(mode => mode, _ =>
                     {
                         var data = new ClearDataPerGameMode();
                         data.ReadFrom(reader);
-                        if (!this.Data1.ContainsKey(mode))
-                            this.Data1.Add(mode, data);
-                    }
+                        return data as IClearDataPerGameMode;
+                    });
 
-                    foreach (var level in levels)
-                    {
-                        foreach (var stage in stages)
+                    this.Practices = levels
+                        .SelectMany(level => stages.Select(stage => (level, stage)))
+                        .ToDictionary(pair => pair, _ =>
                         {
                             var practice = new Th13.Practice();
                             practice.ReadFrom(reader);
-                            var key = (level, stage);
-                            if (!this.Practices.ContainsKey(key))
-                                this.Practices.Add(key, practice);
-                        }
-                    }
+                            return practice as Th13.IPractice;
+                        });
                 }
             }
 
             public CharaWithTotal Chara { get; }
 
-            public Dictionary<GameMode, ClearDataPerGameMode> Data1 { get; }
+            public IReadOnlyDictionary<GameMode, IClearDataPerGameMode> GameModeData { get; }
 
-            public Dictionary<(Level, StagePractice), Th13.IPractice> Practices { get; }
+            public IReadOnlyDictionary<(Level, StagePractice), Th13.IPractice> Practices { get; }
 
             public static bool CanInitialize(Th10.Chapter chapter)
             {
@@ -933,19 +925,19 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class ClearDataPerGameMode : IBinaryReadable
+        private class ClearDataPerGameMode : IBinaryReadable, IClearDataPerGameMode
         {
-            public Dictionary<LevelWithTotal, ScoreData[]> Rankings { get; private set; }
+            public IReadOnlyDictionary<LevelWithTotal, IReadOnlyList<IScoreData>> Rankings { get; private set; }
 
             public int TotalPlayCount { get; private set; }
 
             public int PlayTime { get; private set; }   // unit: 10ms
 
-            public Dictionary<LevelWithTotal, int> ClearCounts { get; private set; }
+            public IReadOnlyDictionary<LevelWithTotal, int> ClearCounts { get; private set; }
 
-            public Dictionary<LevelWithTotal, int> ClearFlags { get; private set; } // Really...?
+            public IReadOnlyDictionary<LevelWithTotal, int> ClearFlags { get; private set; } // Really...?
 
-            public Dictionary<int, Th13.ISpellCard<Level>> Cards { get; private set; }
+            public IReadOnlyDictionary<int, Th13.ISpellCard<Level>> Cards { get; private set; }
 
             public void ReadFrom(BinaryReader reader)
             {
@@ -953,54 +945,31 @@ namespace ThScoreFileConverter.Models
                     throw new ArgumentNullException(nameof(reader));
 
                 var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();
-                var numLevelsWithTotal = levelsWithTotal.Count();
 
-                this.Rankings = new Dictionary<LevelWithTotal, ScoreData[]>(numLevelsWithTotal);
-                this.ClearCounts = new Dictionary<LevelWithTotal, int>(numLevelsWithTotal);
-                this.ClearFlags = new Dictionary<LevelWithTotal, int>(numLevelsWithTotal);
-                this.Cards = new Dictionary<int, Th13.ISpellCard<Level>>(CardTable.Count);
-
-                foreach (var level in levelsWithTotal)
-                {
-                    if (!this.Rankings.ContainsKey(level))
-                        this.Rankings.Add(level, new ScoreData[10]);
-                    for (var rank = 0; rank < 10; rank++)
+                this.Rankings = levelsWithTotal.ToDictionary(
+                    level => level,
+                    _ => Enumerable.Range(0, 10).Select(rank =>
                     {
                         var score = new ScoreData();
                         score.ReadFrom(reader);
-                        this.Rankings[level][rank] = score;
-                    }
-                }
+                        return score;
+                    }).ToList() as IReadOnlyList<IScoreData>);
 
                 reader.ReadBytes(0x140);
 
-                for (var number = 0; number < CardTable.Count; number++)
+                this.Cards = Enumerable.Range(0, CardTable.Count).Select(_ =>
                 {
                     var card = new SpellCard();
                     card.ReadFrom(reader);
-                    if (!this.Cards.ContainsKey(card.Id))
-                        this.Cards.Add(card.Id, card);
-                }
+                    return card as Th13.ISpellCard<Level>;
+                }).ToDictionary(card => card.Id);
 
                 this.TotalPlayCount = reader.ReadInt32();
                 this.PlayTime = reader.ReadInt32();
-
                 reader.ReadUInt32();
-                foreach (var level in levelsWithTotal)
-                {
-                    var clearCount = reader.ReadInt32();
-                    if (!this.ClearCounts.ContainsKey(level))
-                        this.ClearCounts.Add(level, clearCount);
-                }
-
+                this.ClearCounts = levelsWithTotal.ToDictionary(level => level, _ => reader.ReadInt32());
                 reader.ReadUInt32();
-                foreach (var level in levelsWithTotal)
-                {
-                    var clearFlag = reader.ReadInt32();
-                    if (!this.ClearFlags.ContainsKey(level))
-                        this.ClearFlags.Add(level, clearFlag);
-                }
-
+                this.ClearFlags = levelsWithTotal.ToDictionary(level => level, _ => reader.ReadInt32());
                 reader.ReadUInt32();
             }
         }

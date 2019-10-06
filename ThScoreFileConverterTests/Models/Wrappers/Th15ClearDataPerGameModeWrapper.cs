@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th15;
 using ThScoreFileConverterTests.Models.Th13.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
@@ -48,26 +49,31 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public object Target
             => this.pobj.Target;
+
         // NOTE: Th15Converter.ScoreData is a private class.
-        // public IReadOnlyDictionary<LevelWithTotal, ScoreData[]> Rankings
-        //     => this.pobj.GetProperty(nameof(this.Rankings)) as Dictionary<LevelWithTotal, ScoreData[]>;
+        // public IReadOnlyDictionary<LevelWithTotal, IReadOnlyList<IScoreData>> Rankings
+        //     => this.pobj.GetProperty(nameof(this.Rankings))
+        //         as IReadOnlyDictionary<LevelWithTotal, IReadOnlyList<IScoreData>>;
         public object Rankings
             => this.pobj.GetProperty(nameof(this.Rankings));
-        public object[] Ranking(LevelWithTotal level)
-            => this.Rankings.GetType().GetProperty("Item").GetValue(this.Rankings, new object[] { level }) as object[];
+        public IReadOnlyList<IScoreData> Ranking(LevelWithTotal level)
+            => this.Rankings.GetType().GetProperty("Item").GetValue(this.Rankings, new object[] { level })
+                as IReadOnlyList<IScoreData>;
         public Th15ScoreDataWrapper RankingItem(LevelWithTotal level, int index)
             => new Th15ScoreDataWrapper(this.Ranking(level)[index]);
+
         public int? TotalPlayCount
             => this.pobj.GetProperty(nameof(this.TotalPlayCount)) as int?;
         public int? PlayTime
             => this.pobj.GetProperty(nameof(this.PlayTime)) as int?;
         public IReadOnlyDictionary<LevelWithTotal, int> ClearCounts
-            => this.pobj.GetProperty(nameof(this.ClearCounts)) as Dictionary<LevelWithTotal, int>;
+            => this.pobj.GetProperty(nameof(this.ClearCounts)) as IReadOnlyDictionary<LevelWithTotal, int>;
         public IReadOnlyDictionary<LevelWithTotal, int> ClearFlags
-            => this.pobj.GetProperty(nameof(this.ClearFlags)) as Dictionary<LevelWithTotal, int>;
+            => this.pobj.GetProperty(nameof(this.ClearFlags)) as IReadOnlyDictionary<LevelWithTotal, int>;
+
         // NOTE: Th15Converter.SpellCard is a private class.
         // public IReadOnlyDictionary<int, SpellCard> Cards
-        //     => this.pobj.GetProperty(nameof(this.Cards)) as Dictionary<int, SpellCard>;
+        //     => this.pobj.GetProperty(nameof(this.Cards)) as IReadOnlyDictionary<int, SpellCard>;
         public object Cards
             => this.pobj.GetProperty(nameof(this.Cards));
         public SpellCardWrapper<Th15Converter, Level> CardsItem(int id)
