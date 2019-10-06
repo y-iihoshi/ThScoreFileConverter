@@ -16,6 +16,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Models.Th13;
 using CardInfo = ThScoreFileConverter.Models.SpellCardInfo<
     ThScoreFileConverter.Models.Th13Converter.StagePractice, ThScoreFileConverter.Models.Th13Converter.LevelPractice>;
 
@@ -893,7 +894,7 @@ namespace ThScoreFileConverter.Models
                 this.ClearCounts = new Dictionary<LevelPracticeWithTotal, int>(numLevelsWithTotal);
                 this.ClearFlags = new Dictionary<LevelPracticeWithTotal, int>(numLevelsWithTotal);
                 this.Practices =
-                    new Dictionary<(LevelPractice, StagePractice), Th13.Practice>(levels.Count() * stages.Count());
+                    new Dictionary<(LevelPractice, StagePractice), IPractice>(levels.Count() * stages.Count());
                 this.Cards = new Dictionary<int, SpellCard>(CardTable.Count);
 
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
@@ -933,7 +934,7 @@ namespace ThScoreFileConverter.Models
                     {
                         foreach (var stage in stages)
                         {
-                            var practice = new Th13.Practice();
+                            var practice = new Practice();
                             practice.ReadFrom(reader);
                             var key = (level, stage);
                             if (!this.Practices.ContainsKey(key))
@@ -963,7 +964,7 @@ namespace ThScoreFileConverter.Models
 
             public Dictionary<LevelPracticeWithTotal, int> ClearFlags { get; }  // Really...?
 
-            public Dictionary<(LevelPractice, StagePractice), Th13.Practice> Practices { get; }
+            public Dictionary<(LevelPractice, StagePractice), IPractice> Practices { get; }
 
             public Dictionary<int, SpellCard> Cards { get; }
 

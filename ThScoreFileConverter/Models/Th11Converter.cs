@@ -854,7 +854,7 @@ namespace ThScoreFileConverter.Models
 
                 this.Rankings = new Dictionary<Level, ScoreData[]>(numLevels);
                 this.ClearCounts = new Dictionary<Level, int>(numLevels);
-                this.Practices = new Dictionary<(Level, Stage), Th10.Practice>(numPairs);
+                this.Practices = new Dictionary<(Level, Stage), Th10.IPractice>(numPairs);
                 this.Cards = new Dictionary<int, Th10.SpellCard>(CardTable.Count);
 
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
@@ -915,7 +915,7 @@ namespace ThScoreFileConverter.Models
 
             public Dictionary<Level, int> ClearCounts { get; }
 
-            public Dictionary<(Level, Stage), Th10.Practice> Practices { get; }
+            public Dictionary<(Level, Stage), Th10.IPractice> Practices { get; }
 
             public Dictionary<int, Th10.SpellCard> Cards { get; }
 

@@ -856,7 +856,8 @@ namespace ThScoreFileConverter.Models
                 var stages = Utils.GetEnumerator<StagePractice>();
 
                 this.Data1 = new Dictionary<GameMode, ClearDataPerGameMode>(modes.Count());
-                this.Practices = new Dictionary<(Level, StagePractice), Th13.Practice>(levels.Count() * stages.Count());
+                this.Practices =
+                    new Dictionary<(Level, StagePractice), Th13.IPractice>(levels.Count() * stages.Count());
 
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
@@ -888,7 +889,7 @@ namespace ThScoreFileConverter.Models
 
             public Dictionary<GameMode, ClearDataPerGameMode> Data1 { get; }
 
-            public Dictionary<(Level, StagePractice), Th13.Practice> Practices { get; }
+            public Dictionary<(Level, StagePractice), Th13.IPractice> Practices { get; }
 
             public static bool CanInitialize(Th10.Chapter chapter)
             {

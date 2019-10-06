@@ -5,9 +5,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th13;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
 using ThScoreFileConverterTests.Models.Th13;
+using ThScoreFileConverterTests.Models.Th13.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -23,7 +25,7 @@ namespace ThScoreFileConverterTests.Models
             public int size;
             public Th15Converter.CharaWithTotal chara;
             public Dictionary<Th15Converter.GameMode, Th15ClearDataPerGameModeTests.Properties> data1;
-            public Dictionary<(Level, Th15Converter.StagePractice), PracticeTests.Properties> practices;
+            public Dictionary<(Level, Th15Converter.StagePractice), IPractice> practices;
         };
 
         internal static Properties GetValidProperties()
@@ -44,12 +46,12 @@ namespace ThScoreFileConverterTests.Models
                     .SelectMany(level => stages.Select(stage => (level, stage)))
                     .ToDictionary(
                         pair => pair,
-                        pair => new PracticeTests.Properties()
+                        pair => new PracticeStub()
                         {
-                            score = 123456u - TestUtils.Cast<uint>(pair.level) * 10u,
-                            clearFlag = (byte)(TestUtils.Cast<int>(pair.stage) % 2),
-                            enableFlag = (byte)(TestUtils.Cast<int>(pair.level) % 2)
-                        })
+                            Score = 123456u - TestUtils.Cast<uint>(pair.level) * 10u,
+                            ClearFlag = (byte)(TestUtils.Cast<int>(pair.stage) % 2),
+                            EnableFlag = (byte)(TestUtils.Cast<int>(pair.level) % 2)
+                        } as IPractice)
             };
         }
 
@@ -88,7 +90,7 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var pair in properties.practices)
             {
-                PracticeTests.Validate(clearData.Practices[pair.Key], pair.Value);
+                PracticeTests.Validate(pair.Value, clearData.Practices[pair.Key]);
             }
         }
 

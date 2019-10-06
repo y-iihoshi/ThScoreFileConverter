@@ -5,9 +5,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th13;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
 using ThScoreFileConverterTests.Models.Th13;
+using ThScoreFileConverterTests.Models.Th13.Stubs;
 using ThScoreFileConverterTests.Models.Th16.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 
@@ -28,7 +30,7 @@ namespace ThScoreFileConverterTests.Models
             public int playTime;
             public Dictionary<LevelWithTotal, int> clearCounts;
             public Dictionary<LevelWithTotal, int> clearFlags;
-            public Dictionary<(Level, Th16Converter.StagePractice), PracticeTests.Properties> practices;
+            public Dictionary<(Level, Th16Converter.StagePractice), IPractice> practices;
             public Dictionary<int, SpellCardTests.Properties<Level>> cards;
         };
 
@@ -66,12 +68,12 @@ namespace ThScoreFileConverterTests.Models
                     .SelectMany(level => stages.Select(stage => (level, stage)))
                     .ToDictionary(
                         pair => pair,
-                        pair => new PracticeTests.Properties()
+                        pair => new PracticeStub()
                         {
-                            score = 123456u - TestUtils.Cast<uint>(pair.level) * 10u,
-                            clearFlag = (byte)(TestUtils.Cast<int>(pair.stage) % 2),
-                            enableFlag = (byte)(TestUtils.Cast<int>(pair.level) % 2)
-                        }),
+                            Score = 123456u - TestUtils.Cast<uint>(pair.level) * 10u,
+                            ClearFlag = (byte)(TestUtils.Cast<int>(pair.stage) % 2),
+                            EnableFlag = (byte)(TestUtils.Cast<int>(pair.level) % 2)
+                        } as IPractice),
                 cards = Enumerable.Range(1, 119).ToDictionary(
                     index => index,
                     index => new SpellCardTests.Properties<Level>()
@@ -142,7 +144,7 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var pair in properties.practices)
             {
-                PracticeTests.Validate(clearData.Practices[pair.Key], pair.Value);
+                PracticeTests.Validate(pair.Value, clearData.Practices[pair.Key]);
             }
 
             foreach (var pair in properties.cards)

@@ -1,63 +1,55 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using ThScoreFileConverter.Models.Th10;
+using ThScoreFileConverterTests.Models.Th10.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th10
 {
     [TestClass]
     public class PracticeTests
     {
-        internal struct Properties
+        internal static PracticeStub ValidStub => new PracticeStub()
         {
-            public uint score;
-            public uint stageFlag;
+            Score = 123456u,
+            StageFlag = 789u
         };
 
-        internal static Properties ValidProperties => new Properties()
-        {
-            score = 123456u,
-            stageFlag = 789u
-        };
+        internal static byte[] MakeByteArray(IPractice practice)
+            => TestUtils.MakeByteArray(practice.Score, practice.StageFlag);
 
-        internal static byte[] MakeByteArray(in Properties properties)
-            => TestUtils.MakeByteArray(properties.score, properties.stageFlag);
-
-        internal static void Validate(in Practice practice, in Properties properties)
+        internal static void Validate(IPractice expected, IPractice actual)
         {
-            Assert.AreEqual(properties.score, practice.Score);
-            Assert.AreEqual(properties.stageFlag, practice.StageFlag);
+            Assert.AreEqual(expected.Score, actual.Score);
+            Assert.AreEqual(expected.StageFlag, actual.StageFlag);
         }
 
         [TestMethod]
-        public void PracticeTest()
-            => TestUtils.Wrap(() =>
-            {
-                var properties = new Properties();
-                var practice = new Practice();
+        public void PracticeTest() => TestUtils.Wrap(() =>
+        {
+            var stub = new PracticeStub();
+            var practice = new Practice();
 
-                Validate(practice, properties);
-            });
+            Validate(stub, practice);
+        });
 
         [TestMethod]
-        public void ReadFromTest()
-            => TestUtils.Wrap(() =>
-            {
-                var properties = ValidProperties;
+        public void ReadFromTest() => TestUtils.Wrap(() =>
+        {
+            var stub = ValidStub;
 
-                var practice = TestUtils.Create<Practice>(MakeByteArray(properties));
+            var practice = TestUtils.Create<Practice>(MakeByteArray(stub));
 
-                Validate(practice, properties);
-            });
+            Validate(stub, practice);
+        });
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ReadFromTestNull()
-            => TestUtils.Wrap(() =>
-            {
-                var practice = new Practice();
-                practice.ReadFrom(null);
+        public void ReadFromTestNull() => TestUtils.Wrap(() =>
+        {
+            var practice = new Practice();
+            practice.ReadFrom(null);
 
-                Assert.Fail(TestUtils.Unreachable);
-            });
+            Assert.Fail(TestUtils.Unreachable);
+        });
     }
 }

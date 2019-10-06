@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th10;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th10;
 using ThScoreFileConverterTests.Models.Th10.Stubs;
@@ -29,7 +30,7 @@ namespace ThScoreFileConverterTests.Models
             public int totalPlayCount;
             public int playTime;
             public Dictionary<Level, int> clearCounts;
-            public Dictionary<(Level, Stage), PracticeTests.Properties> practices;
+            public Dictionary<(Level, Stage), IPractice> practices;
             public Dictionary<int, SpellCardTests.Properties> cards;
         };
 
@@ -69,11 +70,11 @@ namespace ThScoreFileConverterTests.Models
                     .SelectMany(level => stagesExceptExtra.Select(stage => (level, stage)))
                     .ToDictionary(
                         pair => pair,
-                        pair => new PracticeTests.Properties()
+                        pair => new PracticeStub()
                         {
-                            score = 123456u - (uint)pair.level * 10u,
-                            stageFlag = (uint)pair.stage % 2u
-                        }),
+                            Score = 123456u - (uint)pair.level * 10u,
+                            StageFlag = (uint)pair.stage % 2u
+                        } as IPractice),
                 cards = Enumerable.Range(1, numCards).ToDictionary(
                     index => index,
                     index => new SpellCardTests.Properties()
@@ -147,7 +148,7 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var pair in properties.practices)
             {
-                PracticeTests.Validate(clearData.Practices[pair.Key], pair.Value);
+                PracticeTests.Validate(pair.Value, clearData.Practices[pair.Key]);
             }
 
             foreach (var pair in properties.cards)
