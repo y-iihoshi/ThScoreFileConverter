@@ -108,7 +108,7 @@ namespace ThScoreFileConverterTests.Models
             => TestUtils.Wrap(() =>
             {
                 var chapter = ChapterWrapper.Create(
-                    Th10StatusTests.MakeByteArray(Th10StatusTests.GetValidProperties(version, size, numBgms)));
+                    Th10StatusTests.MakeByteArray(Th10StatusTests.GetValidStub(version, size, numBgms)));
                 var status = new Th10StatusWrapper<TParent>(chapter);
 
                 var allScoreData = new Th10AllScoreDataWrapper<TParent, TCharaWithTotal, TStageProgress>();
@@ -125,7 +125,7 @@ namespace ThScoreFileConverterTests.Models
             => TestUtils.Wrap(() =>
             {
                 var chapter = ChapterWrapper.Create(
-                    Th10StatusTests.MakeByteArray(Th10StatusTests.GetValidProperties(version, size, numBgms)));
+                    Th10StatusTests.MakeByteArray(Th10StatusTests.GetValidStub(version, size, numBgms)));
                 var status1 = new Th10StatusWrapper<TParent>(chapter);
                 var status2 = new Th10StatusWrapper<TParent>(chapter);
 

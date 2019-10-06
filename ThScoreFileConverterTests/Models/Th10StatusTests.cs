@@ -2,8 +2,11 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th10;
 using ThScoreFileConverterTests.Extensions;
+using ThScoreFileConverterTests.Models.Th10.Stubs;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
 using ThScoreFileConverterTests.Models.Wrappers;
 
@@ -12,124 +15,110 @@ namespace ThScoreFileConverterTests.Models
     [TestClass]
     public class Th10StatusTests
     {
-        internal struct Properties
+        internal static StatusStub GetValidStub(ushort version, int size, int numBgms) => new StatusStub()
         {
-            public string signature;
-            public ushort version;
-            public uint checksum;
-            public int size;
-            public byte[] lastName;
-            public byte[] bgmFlags;
+            Signature = "ST",
+            Version = version,
+            Checksum = 0u,
+            Size = size,
+            LastName = TestUtils.CP932Encoding.GetBytes("Player1\0\0\0"),
+            BgmFlags = TestUtils.MakeRandomArray<byte>(numBgms)
         };
 
-        internal static Properties GetValidProperties(ushort version, int size, int numBgms) => new Properties()
-        {
-            signature = "ST",
-            version = version,
-            checksum = 0u,
-            size = size,
-            lastName = TestUtils.CP932Encoding.GetBytes("Player1\0\0\0"),
-            bgmFlags = TestUtils.MakeRandomArray<byte>(numBgms)
-        };
-
-        internal static byte[] MakeData(in Properties properties)
+        internal static byte[] MakeData(IStatus status)
         {
             // NOTE: header == (signature, version, checksum, size)
             var headerSize =
-                TestUtils.CP932Encoding.GetByteCount(properties.signature) + sizeof(ushort) + sizeof(uint) + sizeof(int);
+                TestUtils.CP932Encoding.GetByteCount(status.Signature) + sizeof(ushort) + sizeof(uint) + sizeof(int);
             // NOTE: data == (lastName, gap1, bgms, gap2)
-            var dataSize = properties.size - headerSize;
+            var dataSize = status.Size - headerSize;
             var gap1Size = 0x10;
-            var gap2Size = dataSize - properties.lastName.Length - gap1Size - properties.bgmFlags.Length;
+            var gap2Size = dataSize - status.LastName.Count() - gap1Size - status.BgmFlags.Count();
 
             return TestUtils.MakeByteArray(
-                properties.lastName, new byte[gap1Size], properties.bgmFlags, new byte[gap2Size]);
+                status.LastName, new byte[gap1Size], status.BgmFlags, new byte[gap2Size]);
         }
 
-        internal static byte[] MakeByteArray(in Properties properties)
+        internal static byte[] MakeByteArray(IStatus status)
             => TestUtils.MakeByteArray(
-                properties.signature.ToCharArray(),
-                properties.version,
-                properties.checksum,
-                properties.size,
-                MakeData(properties));
+                status.Signature.ToCharArray(),
+                status.Version,
+                status.Checksum,
+                status.Size,
+                MakeData(status));
 
-        internal static void Validate<TParent>(in Th10StatusWrapper<TParent> status, in Properties properties)
+        internal static void Validate<TParent>(IStatus expected, in Th10StatusWrapper<TParent> actual)
             where TParent : ThConverter
         {
-            var data = MakeData(properties);
+            var data = MakeData(expected);
 
-            Assert.AreEqual(properties.signature, status.Signature);
-            Assert.AreEqual(properties.version, status.Version);
-            Assert.AreEqual(properties.checksum, status.Checksum);
-            Assert.AreEqual(properties.size, status.Size);
-            CollectionAssert.That.AreEqual(data, status.Data);
-            CollectionAssert.That.AreEqual(properties.lastName, status.LastName);
-            CollectionAssert.That.AreEqual(properties.bgmFlags, status.BgmFlags);
+            Assert.AreEqual(expected.Signature, actual.Signature);
+            Assert.AreEqual(expected.Version, actual.Version);
+            Assert.AreEqual(expected.Checksum, actual.Checksum);
+            Assert.AreEqual(expected.Size, actual.Size);
+            CollectionAssert.That.AreEqual(data, actual.Data);
+            CollectionAssert.That.AreEqual(expected.LastName, actual.LastName);
+            CollectionAssert.That.AreEqual(expected.BgmFlags, actual.BgmFlags);
         }
 
         internal static void StatusTestChapterHelper<TParent>(ushort version, int size, int numBgms)
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var properties = GetValidProperties(version, size, numBgms);
+                var stub = GetValidStub(version, size, numBgms);
 
-                var chapter = ChapterWrapper.Create(MakeByteArray(properties));
+                var chapter = ChapterWrapper.Create(MakeByteArray(stub));
                 var status = new Th10StatusWrapper<TParent>(chapter);
 
-                Validate(status, properties);
+                Validate(stub, status);
                 Assert.IsFalse(status.IsValid.Value);
             });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
         internal static void StatusTestNullChapterHelper<TParent>()
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var status = new Th10StatusWrapper<TParent>(null);
+                _ = new Th10StatusWrapper<TParent>(null);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
         internal static void StatusTestInvalidSignatureHelper<TParent>(ushort version, int size, int numBgms)
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var properties = GetValidProperties(version, size, numBgms);
-                properties.signature = properties.signature.ToLowerInvariant();
+                var stub = GetValidStub(version, size, numBgms);
+                stub.Signature = stub.Signature.ToLowerInvariant();
 
-                var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-                var status = new Th10StatusWrapper<TParent>(chapter);
+                var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+                _ = new Th10StatusWrapper<TParent>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
         internal static void StatusTestInvalidVersionHelper<TParent>(ushort version, int size, int numBgms)
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var properties = GetValidProperties(version, size, numBgms);
-                ++properties.version;
+                var stub = GetValidStub(version, size, numBgms);
+                ++stub.Version;
 
-                var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-                var status = new Th10StatusWrapper<TParent>(chapter);
+                var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+                _ = new Th10StatusWrapper<TParent>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
         internal static void StatusTestInvalidSizeHelper<TParent>(ushort version, int size, int numBgms)
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var properties = GetValidProperties(version, size, numBgms);
-                ++properties.size;
+                var stub = GetValidStub(version, size, numBgms);
+                ++stub.Size;
 
-                var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-                var status = new Th10StatusWrapper<TParent>(chapter);
+                var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+                _ = new Th10StatusWrapper<TParent>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
             });

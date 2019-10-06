@@ -955,7 +955,7 @@ namespace ThScoreFileConverter.Models
 
             public CardData CardData { get; private set; }
 
-            public Status Status { get; private set; }
+            public Th125.IStatus Status { get; private set; }
 
             public void Set(Header header) => this.Header = header;
 
@@ -967,7 +967,7 @@ namespace ThScoreFileConverter.Models
 
             public void Set(CardData data) => this.CardData = data;
 
-            public void Set(Status status) => this.Status = status;
+            public void Set(Th125.IStatus status) => this.Status = status;
         }
 
         private class Header : Th095.Header
@@ -1071,7 +1071,7 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class Status : Th10.Chapter
+        private class Status : Th10.Chapter, Th125.IStatus
         {
             public const string ValidSignature = "ST";
             public const ushort ValidVersion = 0x0002;
@@ -1091,11 +1091,9 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] LastName { get; }     // The last 2 bytes are always 0x00 ?
+            public IEnumerable<byte> LastName { get; }  // The last 2 bytes are always 0x00 ?
 
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] BgmFlags { get; }
+            public IEnumerable<byte> BgmFlags { get; }
 
             public int TotalPlayTime { get; }   // unit: 10ms
 

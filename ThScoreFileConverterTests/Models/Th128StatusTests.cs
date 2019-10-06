@@ -2,9 +2,12 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th125;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
+using ThScoreFileConverterTests.Models.Th125.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -12,69 +15,58 @@ namespace ThScoreFileConverterTests.Models
     [TestClass]
     public class Th128StatusTests
     {
-        internal struct Properties
+        internal static StatusStub GetValidStub(ushort version, int size, int numBgms) => new StatusStub()
         {
-            public string signature;
-            public ushort version;
-            public uint checksum;
-            public int size;
-            public byte[] lastName;
-            public byte[] bgmFlags;
-            public int totalPlayTime;
+            Signature = "ST",
+            Version = version,
+            Checksum = 0u,
+            Size = size,
+            LastName = TestUtils.CP932Encoding.GetBytes("Player1\0\0\0"),
+            BgmFlags = TestUtils.MakeRandomArray<byte>(numBgms),
+            TotalPlayTime = 12345678
         };
 
-        internal static Properties GetValidProperties(ushort version, int size, int numBgms) => new Properties()
-        {
-            signature = "ST",
-            version = version,
-            checksum = 0u,
-            size = size,
-            lastName = TestUtils.CP932Encoding.GetBytes("Player1\0\0\0"),
-            bgmFlags = TestUtils.MakeRandomArray<byte>(numBgms),
-            totalPlayTime = 12345678
-        };
-
-        internal static byte[] MakeData(in Properties properties, int gap1Size, int gap2Size)
+        internal static byte[] MakeData(IStatus status, int gap1Size, int gap2Size)
         {
             // NOTE: header == (signature, version, size, checksum)
             var headerSize =
-                TestUtils.CP932Encoding.GetByteCount(properties.signature) + sizeof(ushort) + sizeof(uint) + sizeof(int);
+                TestUtils.CP932Encoding.GetByteCount(status.Signature) + sizeof(ushort) + sizeof(uint) + sizeof(int);
             // NOTE: data == (lastName, gap1, bgms, gap2, totalPlayTime, gap3)
-            var dataSize = properties.size - headerSize;
+            var dataSize = status.Size - headerSize;
             var gap3Size =
-                dataSize - properties.lastName.Length - gap1Size - properties.bgmFlags.Length - gap2Size - sizeof(int);
+                dataSize - status.LastName.Count() - gap1Size - status.BgmFlags.Count() - gap2Size - sizeof(int);
 
             return TestUtils.MakeByteArray(
-                properties.lastName,
+                status.LastName,
                 new byte[gap1Size],
-                properties.bgmFlags,
+                status.BgmFlags,
                 new byte[gap2Size],
-                properties.totalPlayTime,
+                status.TotalPlayTime,
                 new byte[gap3Size]);
         }
 
-        internal static byte[] MakeByteArray(in Properties properties, int gap1Size, int gap2Size)
+        internal static byte[] MakeByteArray(IStatus status, int gap1Size, int gap2Size)
             => TestUtils.MakeByteArray(
-                properties.signature.ToCharArray(),
-                properties.version,
-                properties.checksum,
-                properties.size,
-                MakeData(properties, gap1Size, gap2Size));
+                status.Signature.ToCharArray(),
+                status.Version,
+                status.Checksum,
+                status.Size,
+                MakeData(status, gap1Size, gap2Size));
 
         internal static void Validate<TParent>(
-            in Th128StatusWrapper<TParent> status, in Properties properties, int gap1Size, int gap2Size)
+            IStatus expected, in Th128StatusWrapper<TParent> actual, int gap1Size, int gap2Size)
             where TParent : ThConverter
         {
-            var data = MakeData(properties, gap1Size, gap2Size);
+            var data = MakeData(expected, gap1Size, gap2Size);
 
-            Assert.AreEqual(properties.signature, status.Signature);
-            Assert.AreEqual(properties.checksum, status.Checksum);
-            Assert.AreEqual(properties.version, status.Version);
-            Assert.AreEqual(properties.size, status.Size);
-            CollectionAssert.That.AreEqual(data, status.Data);
-            CollectionAssert.That.AreEqual(properties.lastName, status.LastName);
-            CollectionAssert.That.AreEqual(properties.bgmFlags, status.BgmFlags);
-            Assert.AreEqual(properties.totalPlayTime, status.TotalPlayTime);
+            Assert.AreEqual(expected.Signature, actual.Signature);
+            Assert.AreEqual(expected.Checksum, actual.Checksum);
+            Assert.AreEqual(expected.Version, actual.Version);
+            Assert.AreEqual(expected.Size, actual.Size);
+            CollectionAssert.That.AreEqual(data, actual.Data);
+            CollectionAssert.That.AreEqual(expected.LastName, actual.LastName);
+            CollectionAssert.That.AreEqual(expected.BgmFlags, actual.BgmFlags);
+            Assert.AreEqual(expected.TotalPlayTime, actual.TotalPlayTime);
         }
 
         internal static void StatusTestChapterHelper<TParent>(
@@ -82,12 +74,12 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var properties = GetValidProperties(version, size, numBgms);
+                var stub = GetValidStub(version, size, numBgms);
 
-                var chapter = ChapterWrapper.Create(MakeByteArray(properties, gap1Size, gap2Size));
+                var chapter = ChapterWrapper.Create(MakeByteArray(stub, gap1Size, gap2Size));
                 var status = new Th128StatusWrapper<TParent>(chapter);
 
-                Validate(status, properties, gap1Size, gap2Size);
+                Validate(stub, status, gap1Size, gap2Size);
                 Assert.IsFalse(status.IsValid.Value);
             });
 
@@ -108,10 +100,10 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var properties = GetValidProperties(version, size, numBgms);
-                properties.signature = properties.signature.ToLowerInvariant();
+                var stub = GetValidStub(version, size, numBgms);
+                stub.Signature = stub.Signature.ToLowerInvariant();
 
-                var chapter = ChapterWrapper.Create(MakeByteArray(properties, gap1Size, gap2Size));
+                var chapter = ChapterWrapper.Create(MakeByteArray(stub, gap1Size, gap2Size));
                 var status = new Th128StatusWrapper<TParent>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
@@ -123,10 +115,10 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var properties = GetValidProperties(version, size, numBgms);
-                ++properties.version;
+                var stub = GetValidStub(version, size, numBgms);
+                ++stub.Version;
 
-                var chapter = ChapterWrapper.Create(MakeByteArray(properties, gap1Size, gap2Size));
+                var chapter = ChapterWrapper.Create(MakeByteArray(stub, gap1Size, gap2Size));
                 var status = new Th128StatusWrapper<TParent>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
@@ -138,10 +130,10 @@ namespace ThScoreFileConverterTests.Models
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var properties = GetValidProperties(version, size, numBgms);
-                ++properties.size;
+                var stub = GetValidStub(version, size, numBgms);
+                ++stub.Size;
 
-                var chapter = ChapterWrapper.Create(MakeByteArray(properties, gap1Size, gap2Size));
+                var chapter = ChapterWrapper.Create(MakeByteArray(stub, gap1Size, gap2Size));
                 var status = new Th128StatusWrapper<TParent>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);

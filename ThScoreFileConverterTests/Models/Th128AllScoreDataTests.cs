@@ -110,7 +110,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th128AllScoreDataSetStatusTest() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(
-                Th128StatusTests.MakeByteArray(Th128StatusTests.GetValidProperties(2, 0x42C, 10), 0x10, 0x18));
+                Th128StatusTests.MakeByteArray(Th128StatusTests.GetValidStub(2, 0x42C, 10), 0x10, 0x18));
             var status = new Th128StatusWrapper<Th128Converter>(chapter);
 
             var allScoreData = new Th128AllScoreDataWrapper();
@@ -123,7 +123,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th128AllScoreDataSetStatusTestTwice() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(
-                Th128StatusTests.MakeByteArray(Th128StatusTests.GetValidProperties(2, 0x42C, 10), 0x10, 0x18));
+                Th128StatusTests.MakeByteArray(Th128StatusTests.GetValidStub(2, 0x42C, 10), 0x10, 0x18));
             var status1 = new Th128StatusWrapper<Th128Converter>(chapter);
             var status2 = new Th128StatusWrapper<Th128Converter>(chapter);
 

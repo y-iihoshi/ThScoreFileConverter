@@ -79,7 +79,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th125AllScoreDataSetStatusTest() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(
-                Th125StatusTests.MakeByteArray(Th125StatusTests.ValidProperties));
+                Th125StatusTests.MakeByteArray(Th125StatusTests.ValidStub));
             var status = new Th125StatusWrapper(chapter);
 
             var allScoreData = new Th125AllScoreDataWrapper();
@@ -92,7 +92,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th125AllScoreDataSetStatusTestTwice() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(
-                Th125StatusTests.MakeByteArray(Th125StatusTests.ValidProperties));
+                Th125StatusTests.MakeByteArray(Th125StatusTests.ValidStub));
             var status1 = new Th125StatusWrapper(chapter);
             var status2 = new Th125StatusWrapper(chapter);
 

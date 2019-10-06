@@ -142,7 +142,7 @@ namespace ThScoreFileConverterTests.Models
             => TestUtils.Wrap(() =>
             {
                 var chapter = ChapterWrapper.Create(Th128StatusTests.MakeByteArray(
-                    Th128StatusTests.GetValidProperties(version, size, numBgms), gap1Size, gap2Size));
+                    Th128StatusTests.GetValidStub(version, size, numBgms), gap1Size, gap2Size));
                 var status = new Th128StatusWrapper<TParent>(chapter);
 
                 var allScoreData =
@@ -165,7 +165,7 @@ namespace ThScoreFileConverterTests.Models
             => TestUtils.Wrap(() =>
             {
                 var chapter = ChapterWrapper.Create(Th128StatusTests.MakeByteArray(
-                    Th128StatusTests.GetValidProperties(version, size, numBgms), gap1Size, gap2Size));
+                    Th128StatusTests.GetValidStub(version, size, numBgms), gap1Size, gap2Size));
                 var status1 = new Th128StatusWrapper<TParent>(chapter);
                 var status2 = new Th128StatusWrapper<TParent>(chapter);
 

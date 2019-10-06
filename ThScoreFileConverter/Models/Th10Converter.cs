@@ -16,6 +16,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Models.Th10;
 using CardInfo = ThScoreFileConverter.Models.SpellCardInfo<
     ThScoreFileConverter.Models.Stage, ThScoreFileConverter.Models.Level>;
 
@@ -752,7 +753,7 @@ namespace ThScoreFileConverter.Models
 
             public Dictionary<CharaWithTotal, ClearData> ClearData { get; private set; }
 
-            public Status Status { get; private set; }
+            public IStatus Status { get; private set; }
 
             public void Set(Header header) => this.Header = header;
 
@@ -762,7 +763,7 @@ namespace ThScoreFileConverter.Models
                     this.ClearData.Add(data.Chara, data);
             }
 
-            public void Set(Status status) => this.Status = status;
+            public void Set(IStatus status) => this.Status = status;
         }
 
         private class Header : Th095.Header
@@ -864,13 +865,13 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class Status : Th10.Chapter
+        private class Status : Chapter, IStatus
         {
             public const string ValidSignature = "ST";
             public const ushort ValidVersion = 0x0000;
             public const int ValidSize = 0x00000448;
 
-            public Status(Th10.Chapter chapter)
+            public Status(Chapter chapter)
                 : base(chapter, ValidSignature, ValidVersion, ValidSize)
             {
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
@@ -882,13 +883,11 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] LastName { get; } // The last 2 bytes are always 0x00 ?
+            public IEnumerable<byte> LastName { get; }  // The last 2 bytes are always 0x00 ?
 
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] BgmFlags { get; }
+            public IEnumerable<byte> BgmFlags { get; }
 
-            public static bool CanInitialize(Th10.Chapter chapter)
+            public static bool CanInitialize(Chapter chapter)
             {
                 return chapter.Signature.Equals(ValidSignature, StringComparison.Ordinal)
                     && (chapter.Version == ValidVersion)
