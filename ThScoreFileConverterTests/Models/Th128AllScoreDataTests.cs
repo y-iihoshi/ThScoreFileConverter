@@ -80,8 +80,8 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th128AllScoreDataSetCardDataTest() => TestUtils.Wrap(() =>
         {
-            var properties = Th128CardDataTests.ValidProperties;
-            var chapter = ChapterWrapper.Create(Th128CardDataTests.MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(
+                Th128CardDataTests.MakeByteArray(Th128CardDataTests.ValidStub));
             var clearData = new Th128CardDataWrapper(chapter);
 
             var allScoreData = new Th128AllScoreDataWrapper();
@@ -93,8 +93,8 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th128AllScoreDataSetCardDataTestTwice() => TestUtils.Wrap(() =>
         {
-            var properties = Th128CardDataTests.ValidProperties;
-            var chapter = ChapterWrapper.Create(Th128CardDataTests.MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(
+                Th128CardDataTests.MakeByteArray(Th128CardDataTests.ValidStub));
             var clearData1 = new Th128CardDataWrapper(chapter);
             var clearData2 = new Th128CardDataWrapper(chapter);
 

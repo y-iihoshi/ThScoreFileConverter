@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -16,22 +15,13 @@ namespace ThScoreFileConverterTests.Models
     [TestClass]
     public class Th128CardDataTests
     {
-        internal struct Properties
+        internal static CardDataStub ValidStub => new CardDataStub()
         {
-            public string signature;
-            public ushort version;
-            public uint checksum;
-            public int size;
-            public IReadOnlyDictionary<int, ISpellCard> cards;
-        };
-
-        internal static Properties ValidProperties => new Properties()
-        {
-            signature = "CD",
-            version = 1,
-            checksum = 0u,
-            size = 0x947C,
-            cards = Enumerable.Range(1, 250).ToDictionary(
+            Signature = "CD",
+            Version = 1,
+            Checksum = 0u,
+            Size = 0x947C,
+            Cards = Enumerable.Range(1, 250).ToDictionary(
                 index => index,
                 index => new SpellCardStub()
                 {
@@ -44,96 +34,91 @@ namespace ThScoreFileConverterTests.Models
                 } as ISpellCard)
         };
 
-        internal static byte[] MakeData(in Properties properties)
+        internal static byte[] MakeData(ICardData cardData)
             => TestUtils.MakeByteArray(
-                properties.cards.Values.SelectMany(
-                    card => Th128SpellCardTests.MakeByteArray(card)).ToArray());
+                cardData.Cards.Values.SelectMany(card => Th128SpellCardTests.MakeByteArray(card)).ToArray());
 
-        internal static byte[] MakeByteArray(in Properties properties)
+        internal static byte[] MakeByteArray(ICardData cardData)
             => TestUtils.MakeByteArray(
-                properties.signature.ToCharArray(),
-                properties.version,
-                properties.checksum,
-                properties.size,
-                MakeData(properties));
+                cardData.Signature.ToCharArray(),
+                cardData.Version,
+                cardData.Checksum,
+                cardData.Size,
+                MakeData(cardData));
 
-        internal static void Validate(in Th128CardDataWrapper clearData, in Properties properties)
+        internal static void Validate(ICardData expected, in Th128CardDataWrapper actual)
         {
-            var data = MakeData(properties);
+            var data = MakeData(expected);
 
-            Assert.AreEqual(properties.signature, clearData.Signature);
-            Assert.AreEqual(properties.version, clearData.Version);
-            Assert.AreEqual(properties.checksum, clearData.Checksum);
-            Assert.AreEqual(properties.size, clearData.Size);
-            CollectionAssert.That.AreEqual(data, clearData.Data);
+            Assert.AreEqual(expected.Signature, actual.Signature);
+            Assert.AreEqual(expected.Version, actual.Version);
+            Assert.AreEqual(expected.Checksum, actual.Checksum);
+            Assert.AreEqual(expected.Size, actual.Size);
+            CollectionAssert.That.AreEqual(data, actual.Data);
 
-            foreach (var pair in properties.cards)
+            foreach (var pair in expected.Cards)
             {
-                Th128SpellCardTests.Validate(pair.Value, clearData.CardsItem(pair.Key));
+                Th128SpellCardTests.Validate(pair.Value, actual.CardsItem(pair.Key));
             }
         }
 
         [TestMethod]
         public void Th128CardDataTestChapter() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
+            var stub = ValidStub;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
             var clearData = new Th128CardDataWrapper(chapter);
 
-            Validate(clearData, properties);
+            Validate(stub, clearData);
             Assert.IsFalse(clearData.IsValid.Value);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th128CardDataTestNullChapter() => TestUtils.Wrap(() =>
         {
-            var clearData = new Th128CardDataWrapper(null);
+            _ = new Th128CardDataWrapper(null);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th128CardDataTestInvalidSignature() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.signature = properties.signature.ToLowerInvariant();
+            var stub = new CardDataStub(ValidStub);
+            stub.Signature = stub.Signature.ToLowerInvariant();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var clearData = new Th128CardDataWrapper(chapter);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new Th128CardDataWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th128CardDataTestInvalidVersion() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            ++properties.version;
+            var stub = new CardDataStub(ValidStub);
+            ++stub.Version;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var clearData = new Th128CardDataWrapper(chapter);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new Th128CardDataWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th128CardDataTestInvalidSize() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            --properties.size;
+            var stub = new CardDataStub(ValidStub);
+            --stub.Size;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var clearData = new Th128CardDataWrapper(chapter);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new Th128CardDataWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });

@@ -955,7 +955,7 @@ namespace ThScoreFileConverter.Models
 
             public Dictionary<RouteWithTotal, ClearData> ClearData { get; private set; }
 
-            public CardData CardData { get; private set; }
+            public ICardData CardData { get; private set; }
 
             public Th125.IStatus Status { get; private set; }
 
@@ -967,7 +967,7 @@ namespace ThScoreFileConverter.Models
                     this.ClearData.Add(data.Route, data);
             }
 
-            public void Set(CardData data) => this.CardData = data;
+            public void Set(ICardData data) => this.CardData = data;
 
             public void Set(Th125.IStatus status) => this.Status = status;
         }
@@ -1040,7 +1040,7 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class CardData : Th10.Chapter
+        private class CardData : Th10.Chapter, ICardData
         {
             public const string ValidSignature = "CD";
             public const ushort ValidVersion = 0x0001;
