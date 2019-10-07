@@ -15,7 +15,7 @@ namespace ThScoreFileConverterTests.Models
     [TestClass]
     public class Th128CardDataTests
     {
-        internal static CardDataStub ValidStub => new CardDataStub()
+        internal static CardDataStub ValidStub { get; } = new CardDataStub()
         {
             Signature = "CD",
             Version = 1,

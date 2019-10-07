@@ -16,7 +16,7 @@ namespace ThScoreFileConverterTests.Models
     [TestClass]
     public class Th15ScoreDataTests
     {
-        internal static ScoreDataStub ValidStub => new ScoreDataStub()
+        internal static ScoreDataStub ValidStub { get; } = new ScoreDataStub()
         {
             Score = 12u,
             StageProgress = Th15Converter.StageProgress.St3,

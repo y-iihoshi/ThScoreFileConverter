@@ -15,7 +15,7 @@ namespace ThScoreFileConverterTests.Models
     [TestClass]
     public class Th125ScoreTests
     {
-        internal static ScoreStub ValidStub => new ScoreStub()
+        internal static ScoreStub ValidStub { get; } = new ScoreStub()
         {
             Signature = "SC",
             Version = 0,

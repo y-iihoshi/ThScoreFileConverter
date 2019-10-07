@@ -8,7 +8,7 @@ namespace ThScoreFileConverterTests.Models.Th13
     [TestClass]
     public class PracticeTests
     {
-        internal static PracticeStub ValidStub => new PracticeStub()
+        internal static PracticeStub ValidStub { get; } = new PracticeStub()
         {
             Score = 123456u,
             ClearFlag = 7,

@@ -16,7 +16,7 @@ namespace ThScoreFileConverterTests.Models
     [TestClass]
     public class Th128SpellCardTests
     {
-        internal static SpellCardStub ValidStub => new SpellCardStub()
+        internal static SpellCardStub ValidStub { get; } = new SpellCardStub()
         {
             Name = TestUtils.MakeRandomArray<byte>(0x80),
             NoMissCount = 12,
