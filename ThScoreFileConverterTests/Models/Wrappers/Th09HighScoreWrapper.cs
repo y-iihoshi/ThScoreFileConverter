@@ -40,10 +40,10 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.Level)) as Level?;
         public short? Rank
             => this.pobj.GetProperty(nameof(this.Rank)) as short?;
-        public IReadOnlyCollection<byte> Name
-            => this.pobj.GetProperty(nameof(this.Name)) as byte[];
-        public IReadOnlyCollection<byte> Date
-            => this.pobj.GetProperty(nameof(this.Date)) as byte[];
+        public IEnumerable<byte> Name
+            => this.pobj.GetProperty(nameof(this.Name)) as IEnumerable<byte>;
+        public IEnumerable<byte> Date
+            => this.pobj.GetProperty(nameof(this.Date)) as IEnumerable<byte>;
         public byte? ContinueCount
             => this.pobj.GetProperty(nameof(this.ContinueCount)) as byte?;
     }

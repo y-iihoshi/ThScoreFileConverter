@@ -258,11 +258,11 @@ namespace ThScoreFileConverter.Models
                     switch (type)
                     {
                         case 1:     // name
-                            return Encoding.Default.GetString(score.Name).Split('\0')[0];
+                            return Encoding.Default.GetString(score.Name.ToArray()).Split('\0')[0];
                         case 2:     // score
                             return Utils.ToNumberString((score.Score * 10) + score.ContinueCount);
                         case 3:     // date
-                            date = Encoding.Default.GetString(score.Date).Split('\0')[0];
+                            date = Encoding.Default.GetString(score.Date.ToArray()).Split('\0')[0];
                             return (date != "--/--") ? date : "--/--/--";
                         default:    // unreachable
                             return match.ToString();
@@ -328,7 +328,7 @@ namespace ThScoreFileConverter.Models
                         else
                         {
                             var score = parent.allScoreData.Rankings[(chara, level)][0];
-                            var date = Encoding.Default.GetString(score.Date).TrimEnd('\0');
+                            var date = Encoding.Default.GetString(score.Date.ToArray()).TrimEnd('\0');
                             return (date != "--/--") ? "Not Cleared" : "-------";
                         }
                     }
@@ -343,15 +343,17 @@ namespace ThScoreFileConverter.Models
 
         private class AllScoreData
         {
+            private readonly Dictionary<(Chara, Level), IReadOnlyList<IHighScore>> rankings;
+
             public AllScoreData()
             {
                 var numPairs = Enum.GetValues(typeof(Chara)).Length * Enum.GetValues(typeof(Level)).Length;
-                this.Rankings = new Dictionary<(Chara, Level), HighScore[]>(numPairs);
+                this.rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>(numPairs);
             }
 
             public Header Header { get; private set; }
 
-            public Dictionary<(Chara, Level), HighScore[]> Rankings { get; private set; }
+            public IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> Rankings => this.rankings;
 
             public PlayStatus PlayStatus { get; private set; }
 
@@ -361,13 +363,16 @@ namespace ThScoreFileConverter.Models
 
             public void Set(Header header) => this.Header = header;
 
-            public void Set(HighScore score)
+            public void Set(IHighScore score)
             {
                 var key = (score.Chara, score.Level);
-                if (!this.Rankings.ContainsKey(key))
-                    this.Rankings.Add(key, new HighScore[5]);
+                if (!this.rankings.ContainsKey(key))
+                    this.rankings.Add(key, new IHighScore[5].ToList());
                 if ((score.Rank >= 0) && (score.Rank < 5))
-                    this.Rankings[key][score.Rank] = score;
+                {
+                    var ranking = this.rankings[key] as List<IHighScore>;
+                    ranking[score.Rank] = score;
+                }
             }
 
             public void Set(PlayStatus status) => this.PlayStatus = status;
@@ -377,7 +382,7 @@ namespace ThScoreFileConverter.Models
             public void Set(Th07.VersionInfo info) => this.VersionInfo = info;
         }
 
-        private class HighScore : Th06.Chapter   // per character, level, rank
+        private class HighScore : Th06.Chapter, IHighScore   // per character, level, rank
         {
             public const string ValidSignature = "HSCR";
             public const short ValidSize = 0x002C;
@@ -408,9 +413,9 @@ namespace ThScoreFileConverter.Models
 
             public short Rank { get; }  // 0-based
 
-            public byte[] Name { get; } // Null-terminated
+            public IEnumerable<byte> Name { get; }  // Null-terminated
 
-            public byte[] Date { get; } // "yy/mm/dd\0"
+            public IEnumerable<byte> Date { get; }  // "yy/mm/dd\0"
 
             public byte ContinueCount { get; }
         }

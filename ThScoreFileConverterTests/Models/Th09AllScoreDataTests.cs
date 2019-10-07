@@ -8,6 +8,7 @@ using LastName = ThScoreFileConverter.Models.Th07.LastName;
 using VersionInfo = ThScoreFileConverter.Models.Th07.VersionInfo;
 using LastNameTests = ThScoreFileConverterTests.Models.Th07.LastNameTests;
 using VersionInfoTests = ThScoreFileConverterTests.Models.Th07.VersionInfoTests;
+using ThScoreFileConverterTests.Models.Th09.Stubs;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -58,27 +59,31 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th09AllScoreDataSetHighScoreTest() => TestUtils.Wrap(() =>
         {
-            var properties = Th09HighScoreTests.ValidProperties;
-            properties.score = 87654u;
-            properties.rank = 2;
-            var chapter = ChapterWrapper.Create(Th09HighScoreTests.MakeByteArray(properties));
+            var stub = new HighScoreStub(Th09HighScoreTests.ValidStub)
+            {
+                Score = 87654u,
+                Rank = 2,
+            };
+
+            var chapter = ChapterWrapper.Create(Th09HighScoreTests.MakeByteArray(stub));
             var score = new Th09HighScoreWrapper(chapter);
 
             var allScoreData = new Th09AllScoreDataWrapper();
             allScoreData.Set(score);
 
-            Assert.AreSame(
-                score.Target,
-                allScoreData.RankingItem(properties.chara, properties.level, properties.rank).Target);
+            Assert.AreSame(score.Target, allScoreData.RankingItem(stub.Chara, stub.Level, stub.Rank).Target);
         });
 
         [TestMethod]
         public void Th09AllScoreDataSetHighScoreTestTwice() => TestUtils.Wrap(() =>
         {
-            var properties = Th09HighScoreTests.ValidProperties;
-            properties.score = 87654u;
-            properties.rank = 2;
-            var chapter = ChapterWrapper.Create(Th09HighScoreTests.MakeByteArray(properties));
+            var stub = new HighScoreStub(Th09HighScoreTests.ValidStub)
+            {
+                Score = 87654u,
+                Rank = 2,
+            };
+
+            var chapter = ChapterWrapper.Create(Th09HighScoreTests.MakeByteArray(stub));
             var score1 = new Th09HighScoreWrapper(chapter);
             var score2 = new Th09HighScoreWrapper(chapter);
 
@@ -86,12 +91,8 @@ namespace ThScoreFileConverterTests.Models
             allScoreData.Set(score1);
             allScoreData.Set(score2);
 
-            Assert.AreNotSame(
-                score1.Target,
-                allScoreData.RankingItem(properties.chara, properties.level, properties.rank).Target);
-            Assert.AreSame(
-                score2.Target,
-                allScoreData.RankingItem(properties.chara, properties.level, properties.rank).Target);
+            Assert.AreNotSame(score1.Target, allScoreData.RankingItem(stub.Chara, stub.Level, stub.Rank).Target);
+            Assert.AreSame(score2.Target, allScoreData.RankingItem(stub.Chara, stub.Level, stub.Rank).Target);
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
@@ -100,18 +101,21 @@ namespace ThScoreFileConverterTests.Models
         [DataRow((short)5)]
         public void Th09AllScoreDataSetHighScoreTestInvalidRank(short rank) => TestUtils.Wrap(() =>
         {
-            var properties = Th09HighScoreTests.ValidProperties;
-            properties.score = 87654u;
-            properties.rank = rank;
-            var chapter = ChapterWrapper.Create(Th09HighScoreTests.MakeByteArray(properties));
+            var stub = new HighScoreStub(Th09HighScoreTests.ValidStub)
+            {
+                Score = 87654u,
+                Rank = rank,
+            };
+
+            var chapter = ChapterWrapper.Create(Th09HighScoreTests.MakeByteArray(stub));
             var score = new Th09HighScoreWrapper(chapter);
 
             var allScoreData = new Th09AllScoreDataWrapper();
             allScoreData.Set(score);
 
-            for (var index = 0; index < allScoreData.Ranking(properties.chara, properties.level).Length; ++index)
+            for (var index = 0; index < allScoreData.Ranking(stub.Chara, stub.Level).Count; ++index)
             {
-                Assert.IsNull(allScoreData.RankingItem(properties.chara, properties.level, index));
+                Assert.IsNull(allScoreData.RankingItem(stub.Chara, stub.Level, index));
             }
         });
 

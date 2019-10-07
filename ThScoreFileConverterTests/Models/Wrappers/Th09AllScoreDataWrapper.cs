@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using ThScoreFileConverter.Models;
@@ -29,15 +30,15 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.Header)) as Header;
 
         // NOTE: Th09Converter.HighScore are private classes.
-        // public IReadOnlyDictionary<(Chara, Level), HighScore[]> Rankings
-        //     => this.pobj.GetProperty(nameof(this.Rankings)) as Dictionary<(Chara, Level), HighScore[]>;
+        // public IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> Rankings
+        //     => this.pobj.GetProperty(nameof(this.Rankings)) as Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>;
         public object Rankings
             => this.pobj.GetProperty(nameof(this.Rankings));
         public int? RankingsCount
             => this.Rankings.GetType().GetProperty("Count").GetValue(this.Rankings) as int?;
-        public object[] Ranking(Th09Converter.Chara chara, Level level)
+        public IReadOnlyList<IHighScore> Ranking(Th09Converter.Chara chara, Level level)
             => this.Rankings.GetType().GetProperty("Item").GetValue(this.Rankings, new object[] { (chara, level) })
-                as object[];
+                as IReadOnlyList<IHighScore>;
         public Th09HighScoreWrapper RankingItem(Th09Converter.Chara chara, Level level, int index)
         {
             var item = this.Ranking(chara, level)[index];
