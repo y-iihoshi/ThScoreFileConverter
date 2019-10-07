@@ -816,11 +816,12 @@ namespace ThScoreFileConverter.Models
         private class AllScoreData
         {
             private readonly List<IScore> scores;
+            private readonly Dictionary<ItemWithTotal, IItemStatus> itemStatuses;
 
             public AllScoreData()
             {
                 this.scores = new List<IScore>(SpellCards.Count);
-                this.ItemStatuses = new Dictionary<ItemWithTotal, ItemStatus>(
+                this.itemStatuses = new Dictionary<ItemWithTotal, IItemStatus>(
                     Enum.GetValues(typeof(ItemWithTotal)).Length);
             }
 
@@ -828,7 +829,7 @@ namespace ThScoreFileConverter.Models
 
             public IReadOnlyList<IScore> Scores => this.scores;
 
-            public Dictionary<ItemWithTotal, ItemStatus> ItemStatuses { get; private set; }
+            public IReadOnlyDictionary<ItemWithTotal, IItemStatus> ItemStatuses => this.itemStatuses;
 
             public IStatus Status { get; private set; }
 
@@ -836,10 +837,10 @@ namespace ThScoreFileConverter.Models
 
             public void Set(IScore score) => this.scores.Add(score);
 
-            public void Set(ItemStatus status)
+            public void Set(IItemStatus status)
             {
-                if (!this.ItemStatuses.ContainsKey(status.Item))
-                    this.ItemStatuses.Add(status.Item, status);
+                if (!this.itemStatuses.ContainsKey(status.Item))
+                    this.itemStatuses.Add(status.Item, status);
             }
 
             public void Set(IStatus status) => this.Status = status;
@@ -890,7 +891,7 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class ItemStatus : Th10.Chapter
+        private class ItemStatus : Th10.Chapter, IItemStatus
         {
             public const string ValidSignature = "TI";
             public const ushort ValidVersion = 0x0001;
@@ -922,13 +923,10 @@ namespace ThScoreFileConverter.Models
 
             public int ClearedScenes { get; }
 
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public int ItemLevel { get; }
 
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public int AvailableCount { get; }
 
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public int FramesOrRanges { get; }
 
             public static bool CanInitialize(Th10.Chapter chapter)

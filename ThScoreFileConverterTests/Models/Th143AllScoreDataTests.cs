@@ -80,21 +80,21 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th143AllScoreDataSetItemStatusTest() => TestUtils.Wrap(() =>
         {
-            var properties = Th143ItemStatusTests.ValidProperties;
-            var chapter = ChapterWrapper.Create(Th143ItemStatusTests.MakeByteArray(properties));
+            var stub = Th143ItemStatusTests.ValidStub;
+            var chapter = ChapterWrapper.Create(Th143ItemStatusTests.MakeByteArray(stub));
             var status = new Th143ItemStatusWrapper(chapter);
 
             var allScoreData = new Th143AllScoreDataWrapper();
             allScoreData.Set(status);
 
-            Assert.AreSame(status.Target, allScoreData.ItemStatusesItem(properties.item).Target);
+            Assert.AreSame(status.Target, allScoreData.ItemStatusesItem(stub.Item).Target);
         });
 
         [TestMethod]
         public void Th143AllScoreDataSetItemStatusTestTwice() => TestUtils.Wrap(() =>
         {
-            var properties = Th143ItemStatusTests.ValidProperties;
-            var chapter = ChapterWrapper.Create(Th143ItemStatusTests.MakeByteArray(properties));
+            var stub = Th143ItemStatusTests.ValidStub;
+            var chapter = ChapterWrapper.Create(Th143ItemStatusTests.MakeByteArray(stub));
             var status1 = new Th143ItemStatusWrapper(chapter);
             var status2 = new Th143ItemStatusWrapper(chapter);
 
@@ -102,8 +102,8 @@ namespace ThScoreFileConverterTests.Models
             allScoreData.Set(status1);
             allScoreData.Set(status2);
 
-            Assert.AreSame(status1.Target, allScoreData.ItemStatusesItem(properties.item).Target);
-            Assert.AreNotSame(status2.Target, allScoreData.ItemStatusesItem(properties.item).Target);
+            Assert.AreSame(status1.Target, allScoreData.ItemStatusesItem(stub.Item).Target);
+            Assert.AreNotSame(status2.Target, allScoreData.ItemStatusesItem(stub.Item).Target);
         });
 
         [TestMethod]
