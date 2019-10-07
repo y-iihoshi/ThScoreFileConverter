@@ -7,6 +7,10 @@ using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ThScoreFileConverterTests.Models.Th07.Stubs;
+using IHighScore = ThScoreFileConverter.Models.Th07.IHighScore<
+    ThScoreFileConverter.Models.Th07.Chara,
+    ThScoreFileConverter.Models.Th07.Level,
+    ThScoreFileConverter.Models.Th07.StageProgress>;
 
 namespace ThScoreFileConverterTests.Models.Th07
 {

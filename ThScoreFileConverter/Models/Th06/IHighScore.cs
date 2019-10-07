@@ -7,20 +7,24 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
 using System.Collections.Generic;
 
 namespace ThScoreFileConverter.Models.Th06
 {
-    internal interface IHighScore : IChapter
+    internal interface IHighScore<TChara, TLevel, TStageProgress> : IChapter
+        where TChara : struct, Enum
+        where TLevel : struct, Enum
+        where TStageProgress : struct, Enum
     {
-        Chara Chara { get; }
+        TChara Chara { get; }
 
-        Level Level { get; }
+        TLevel Level { get; }
 
         IEnumerable<byte> Name { get; }
 
         uint Score { get; }
 
-        StageProgress StageProgress { get; }
+        TStageProgress StageProgress { get; }
     }
 }

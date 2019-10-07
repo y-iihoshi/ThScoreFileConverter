@@ -9,6 +9,10 @@ using ThScoreFileConverter.Models.Th06;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th06.Stubs;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
+using IHighScore = ThScoreFileConverter.Models.Th06.IHighScore<
+    ThScoreFileConverter.Models.Th06.Chara,
+    ThScoreFileConverter.Models.Level,
+    ThScoreFileConverter.Models.Th06.StageProgress>;
 
 namespace ThScoreFileConverterTests.Models.Th06
 {

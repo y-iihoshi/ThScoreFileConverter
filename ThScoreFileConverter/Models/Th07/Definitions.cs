@@ -11,6 +11,10 @@ using System.Collections.Generic;
 using System.Linq;
 using CardInfo = ThScoreFileConverter.Models.SpellCardInfo<
     ThScoreFileConverter.Models.Th07.Stage, ThScoreFileConverter.Models.Th07.Level>;
+using IHighScore = ThScoreFileConverter.Models.Th07.IHighScore<
+    ThScoreFileConverter.Models.Th07.Chara,
+    ThScoreFileConverter.Models.Th07.Level,
+    ThScoreFileConverter.Models.Th07.StageProgress>;
 
 namespace ThScoreFileConverter.Models.Th07
 {

@@ -13,6 +13,10 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
 using static ThScoreFileConverter.Models.Th07.Parsers;
+using IHighScore = ThScoreFileConverter.Models.Th07.IHighScore<
+    ThScoreFileConverter.Models.Th07.Chara,
+    ThScoreFileConverter.Models.Th07.Level,
+    ThScoreFileConverter.Models.Th07.StageProgress>;
 
 namespace ThScoreFileConverter.Models.Th07
 {
