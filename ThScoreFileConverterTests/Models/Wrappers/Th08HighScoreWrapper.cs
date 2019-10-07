@@ -48,10 +48,10 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.Level)) as Level?;
         public Th08Converter.StageProgress? StageProgress
             => this.pobj.GetProperty(nameof(this.StageProgress)) as Th08Converter.StageProgress?;
-        public IReadOnlyCollection<byte> Name
-            => this.pobj.GetProperty(nameof(this.Name)) as byte[];
-        public IReadOnlyCollection<byte> Date
-            => this.pobj.GetProperty(nameof(this.Date)) as byte[];
+        public IEnumerable<byte> Name
+            => this.pobj.GetProperty(nameof(this.Name)) as IEnumerable<byte>;
+        public IEnumerable<byte> Date
+            => this.pobj.GetProperty(nameof(this.Date)) as IEnumerable<byte>;
         public ushort? ContinueCount
             => this.pobj.GetProperty(nameof(this.ContinueCount)) as ushort?;
         public byte? PlayerNum
@@ -73,6 +73,6 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public int? HumanRate
             => this.pobj.GetProperty(nameof(this.HumanRate)) as int?;
         public IReadOnlyDictionary<int, byte> CardFlags
-            => this.pobj.GetProperty(nameof(this.CardFlags)) as Dictionary<int, byte>;
+            => this.pobj.GetProperty(nameof(this.CardFlags)) as IReadOnlyDictionary<int, byte>;
     }
 }

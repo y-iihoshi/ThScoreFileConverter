@@ -29,8 +29,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.Header)) as Header;
 
         // NOTE: Th08Converter.HighScore are private classes.
-        // public IReadOnlyDictionary<(Chara, Level), List<HighScore>> Rankings
-        //     => this.pobj.GetProperty(nameof(this.Rankings)) as Dictionary<(Chara, Level), List<HighScore>>;
+        // public IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> Rankings
+        //     => this.pobj.GetProperty(nameof(this.Rankings)) as Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>;
         public object Rankings
             => this.pobj.GetProperty(nameof(this.Rankings));
         public int? RankingsCount

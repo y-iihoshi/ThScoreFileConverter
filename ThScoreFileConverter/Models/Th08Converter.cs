@@ -20,6 +20,10 @@ using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th08;
 using CardInfo = ThScoreFileConverter.Models.SpellCardInfo<
     ThScoreFileConverter.Models.Th08Converter.StagePractice, ThScoreFileConverter.Models.Th08Converter.LevelPractice>;
+using IHighScore = ThScoreFileConverter.Models.Th08.IHighScore<
+    ThScoreFileConverter.Models.Th08Converter.Chara,
+    ThScoreFileConverter.Models.Level,
+    ThScoreFileConverter.Models.Th08Converter.StageProgress>;
 
 namespace ThScoreFileConverter.Models
 {
@@ -256,8 +260,8 @@ namespace ThScoreFileConverter.Models
             }.ToDictionary(card => card.Id);
 
         [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1008:OpeningParenthesisMustBeSpacedCorrectly", Justification = "Reviewed.")]
-        private static readonly List<HighScore> InitialRanking =
-            new List<HighScore>()
+        private static readonly List<IHighScore> InitialRanking =
+            new List<IHighScore>()
             {
                 new HighScore(100000),
                 new HighScore( 90000),
@@ -650,17 +654,17 @@ namespace ThScoreFileConverter.Models
                     switch (type)
                     {
                         case "1":   // name
-                            return Encoding.Default.GetString(score.Name).Split('\0')[0];
+                            return Encoding.Default.GetString(score.Name.ToArray()).Split('\0')[0];
                         case "2":   // score
                             return Utils.ToNumberString((score.Score * 10) + score.ContinueCount);
                         case "3":   // stage
                             if ((level == Level.Extra) &&
-                                (Encoding.Default.GetString(score.Date).TrimEnd('\0') == "--/--"))
+                                (Encoding.Default.GetString(score.Date.ToArray()).TrimEnd('\0') == "--/--"))
                                 return StageProgress.Extra.ToShortName();
                             else
                                 return score.StageProgress.ToShortName();
                         case "4":   // date
-                            return Encoding.Default.GetString(score.Date).TrimEnd('\0');
+                            return Encoding.Default.GetString(score.Date.ToArray()).TrimEnd('\0');
                         case "5":   // slow rate
                             return Utils.Format("{0:F3}%", score.SlowRate);
                         case "6":   // play time
@@ -1089,11 +1093,13 @@ namespace ThScoreFileConverter.Models
 
         private class AllScoreData
         {
+            private readonly Dictionary<(Chara, Level), IReadOnlyList<IHighScore<Chara, Level, StageProgress>>> rankings;
+
             public AllScoreData()
             {
                 var numCharas = Enum.GetValues(typeof(Chara)).Length;
                 var numPairs = numCharas * Enum.GetValues(typeof(Level)).Length;
-                this.Rankings = new Dictionary<(Chara, Level), List<HighScore>>(numPairs);
+                this.rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>(numPairs);
                 this.ClearData =
                     new Dictionary<CharaWithTotal, ClearData>(Enum.GetValues(typeof(CharaWithTotal)).Length);
                 this.CardAttacks = new Dictionary<int, CardAttack>(CardTable.Count);
@@ -1102,7 +1108,7 @@ namespace ThScoreFileConverter.Models
 
             public Header Header { get; private set; }
 
-            public Dictionary<(Chara, Level), List<HighScore>> Rankings { get; private set; }
+            public IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> Rankings => this.rankings;
 
             public Dictionary<CharaWithTotal, ClearData> ClearData { get; private set; }
 
@@ -1120,15 +1126,16 @@ namespace ThScoreFileConverter.Models
 
             public void Set(Header header) => this.Header = header;
 
-            public void Set(HighScore score)
+            public void Set(IHighScore score)
             {
                 var key = (score.Chara, score.Level);
-                if (!this.Rankings.ContainsKey(key))
-                    this.Rankings.Add(key, new List<HighScore>(InitialRanking));
-                var ranking = this.Rankings[key];
+                if (!this.rankings.ContainsKey(key))
+                    this.rankings.Add(key, new List<IHighScore>(InitialRanking));
+                var ranking = this.rankings[key].ToList();
                 ranking.Add(score);
                 ranking.Sort((lhs, rhs) => rhs.Score.CompareTo(lhs.Score));
                 ranking.RemoveAt(ranking.Count - 1);
+                this.rankings[key] = ranking;
             }
 
             public void Set(ClearData data)
@@ -1158,7 +1165,7 @@ namespace ThScoreFileConverter.Models
             public void Set(Th07.VersionInfo info) => this.VersionInfo = info;
         }
 
-        private class HighScore : Th06.Chapter   // per character, level, rank
+        private class HighScore : Th06.Chapter, IHighScore   // per character, level, rank
         {
             public const string ValidSignature = "HSCR";
             public const short ValidSize = 0x0168;
@@ -1166,8 +1173,6 @@ namespace ThScoreFileConverter.Models
             public HighScore(Th06.Chapter chapter)
                 : base(chapter, ValidSignature, ValidSize)
             {
-                this.CardFlags = new Dictionary<int, byte>();
-
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
                     reader.ReadUInt32();    // always 0x00000004?
@@ -1200,8 +1205,7 @@ namespace ThScoreFileConverter.Models
                     this.PauseCount = reader.ReadInt32();
                     this.TimePoint = reader.ReadInt32();
                     this.HumanRate = reader.ReadInt32();
-                    foreach (var key in CardTable.Keys)
-                        this.CardFlags.Add(key, reader.ReadByte());
+                    this.CardFlags = CardTable.Keys.ToDictionary(key => key, _ => reader.ReadByte());
                     reader.ReadExactBytes(2);
                 }
             }
@@ -1225,9 +1229,9 @@ namespace ThScoreFileConverter.Models
 
             public StageProgress StageProgress { get; }
 
-            public byte[] Name { get; }     // Null-terminated
+            public IEnumerable<byte> Name { get; }  // Null-terminated
 
-            public byte[] Date { get; }     // "mm/dd\0"
+            public IEnumerable<byte> Date { get; }  // "mm/dd\0"
 
             public ushort ContinueCount { get; }
 
@@ -1249,7 +1253,7 @@ namespace ThScoreFileConverter.Models
 
             public int HumanRate { get; }   // Multiplied by 100
 
-            public Dictionary<int, byte> CardFlags { get; }
+            public IReadOnlyDictionary<int, byte> CardFlags { get; }
         }
 
         private class ClearData : Th06.Chapter   // per character-with-total

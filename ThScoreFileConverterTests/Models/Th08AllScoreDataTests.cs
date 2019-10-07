@@ -7,6 +7,7 @@ using LastName = ThScoreFileConverter.Models.Th07.LastName;
 using VersionInfo = ThScoreFileConverter.Models.Th07.VersionInfo;
 using LastNameTests = ThScoreFileConverterTests.Models.Th07.LastNameTests;
 using VersionInfoTests = ThScoreFileConverterTests.Models.Th07.VersionInfoTests;
+using ThScoreFileConverterTests.Models.Th08.Stubs;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -61,23 +62,29 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th08AllScoreDataSetHighScoreTest() => TestUtils.Wrap(() =>
         {
-            var properties = Th08HighScoreTests.ValidProperties;
-            properties.score = 87654u;
-            var chapter = ChapterWrapper.Create(Th08HighScoreTests.MakeByteArray(properties));
+            var stub = new HighScoreStub(Th08HighScoreTests.ValidStub)
+            {
+                Score = 87654u,
+            };
+
+            var chapter = ChapterWrapper.Create(Th08HighScoreTests.MakeByteArray(stub));
             var score = new Th08HighScoreWrapper(chapter);
 
             var allScoreData = new Th08AllScoreDataWrapper();
             allScoreData.Set(score);
 
-            Assert.AreSame(score.Target, allScoreData.RankingItem(properties.chara, properties.level, 2).Target);
+            Assert.AreSame(score.Target, allScoreData.RankingItem(stub.Chara, stub.Level, 2).Target);
         });
 
         [TestMethod]
         public void Th08AllScoreDataSetHighScoreTestTwice() => TestUtils.Wrap(() =>
         {
-            var properties = Th08HighScoreTests.ValidProperties;
-            properties.score = 87654u;
-            var chapter = ChapterWrapper.Create(Th08HighScoreTests.MakeByteArray(properties));
+            var stub = new HighScoreStub(Th08HighScoreTests.ValidStub)
+            {
+                Score = 87654u,
+            };
+
+            var chapter = ChapterWrapper.Create(Th08HighScoreTests.MakeByteArray(stub));
             var score1 = new Th08HighScoreWrapper(chapter);
             var score2 = new Th08HighScoreWrapper(chapter);
 
@@ -85,8 +92,8 @@ namespace ThScoreFileConverterTests.Models
             allScoreData.Set(score1);
             allScoreData.Set(score2);
 
-            Assert.AreSame(score1.Target, allScoreData.RankingItem(properties.chara, properties.level, 2).Target);
-            Assert.AreSame(score2.Target, allScoreData.RankingItem(properties.chara, properties.level, 3).Target);
+            Assert.AreSame(score1.Target, allScoreData.RankingItem(stub.Chara, stub.Level, 2).Target);
+            Assert.AreSame(score2.Target, allScoreData.RankingItem(stub.Chara, stub.Level, 3).Target);
         });
 
         [TestMethod]
