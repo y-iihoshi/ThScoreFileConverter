@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th125;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th095.Wrappers;
+using ThScoreFileConverterTests.Models.Th125.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -13,138 +15,119 @@ namespace ThScoreFileConverterTests.Models
     [TestClass]
     public class Th125ScoreTests
     {
-        internal struct Properties
+        internal static ScoreStub ValidStub => new ScoreStub()
         {
-            public string signature;
-            public ushort version;
-            public int size;
-            public uint checksum;
-            public (Th125Converter.Level level, int scene) levelScene;
-            public int highScore;
-            public Th125Converter.Chara chara;
-            public int trialCount;
-            public int firstSuccess;
-            public uint dateTime;
-            public int bestshotScore;
+            Signature = "SC",
+            Version = 0,
+            Size = 0x48,
+            Checksum = 0u,
+            LevelScene = (Th125Converter.Level.Lv9, 7),
+            HighScore = 1234567,
+            Chara = Th125Converter.Chara.Hatate,
+            TrialCount = 9876,
+            FirstSuccess = 5432,
+            DateTime = 34567890,
+            BestshotScore = 23456
         };
 
-        internal static Properties ValidProperties => new Properties()
-        {
-            signature = "SC",
-            version = 0,
-            size = 0x48,
-            checksum = 0u,
-            levelScene = (Th125Converter.Level.Lv9, 7),
-            highScore = 1234567,
-            chara = Th125Converter.Chara.Hatate,
-            trialCount = 9876,
-            firstSuccess = 5432,
-            dateTime = 34567890,
-            bestshotScore = 23456
-        };
-
-        internal static byte[] MakeData(in Properties properties)
+        internal static byte[] MakeData(IScore score)
             => TestUtils.MakeByteArray(
-                (int)properties.levelScene.level * 10 + properties.levelScene.scene - 1,
-                properties.highScore,
+                (int)score.LevelScene.Level * 10 + score.LevelScene.Scene - 1,
+                score.HighScore,
                 new byte[4],
-                (int)properties.chara,
+                (int)score.Chara,
                 new byte[4],
-                properties.trialCount,
-                properties.firstSuccess,
+                score.TrialCount,
+                score.FirstSuccess,
                 0u,
-                properties.dateTime,
+                score.DateTime,
                 new uint[3],
-                properties.bestshotScore,
+                score.BestshotScore,
                 new byte[8]);
 
-        internal static byte[] MakeByteArray(in Properties properties)
+        internal static byte[] MakeByteArray(IScore score)
             => TestUtils.MakeByteArray(
-                properties.signature.ToCharArray(),
-                properties.version,
-                properties.size,
-                properties.checksum,
-                MakeData(properties));
+                score.Signature.ToCharArray(),
+                score.Version,
+                score.Size,
+                score.Checksum,
+                MakeData(score));
 
-        internal static void Validate(in Th125ScoreWrapper score, in Properties properties)
+        internal static void Validate(IScore expected, in Th125ScoreWrapper actual)
         {
-            var data = MakeData(properties);
+            var data = MakeData(expected);
 
-            Assert.AreEqual(properties.signature, score.Signature);
-            Assert.AreEqual(properties.version, score.Version);
-            Assert.AreEqual(properties.size, score.Size);
-            Assert.AreEqual(properties.checksum, score.Checksum);
-            CollectionAssert.That.AreEqual(data, score.Data);
-            Assert.AreEqual(properties.levelScene, score.LevelScene);
-            Assert.AreEqual(properties.highScore, score.HighScore);
-            Assert.AreEqual(properties.chara, score.Chara);
-            Assert.AreEqual(properties.trialCount, score.TrialCount);
-            Assert.AreEqual(properties.firstSuccess, score.FirstSuccess);
-            Assert.AreEqual(properties.dateTime, score.DateTime);
-            Assert.AreEqual(properties.bestshotScore, score.BestshotScore);
+            Assert.AreEqual(expected.Signature, actual.Signature);
+            Assert.AreEqual(expected.Version, actual.Version);
+            Assert.AreEqual(expected.Size, actual.Size);
+            Assert.AreEqual(expected.Checksum, actual.Checksum);
+            CollectionAssert.That.AreEqual(data, actual.Data);
+            Assert.AreEqual(expected.LevelScene, actual.LevelScene);
+            Assert.AreEqual(expected.HighScore, actual.HighScore);
+            Assert.AreEqual(expected.Chara, actual.Chara);
+            Assert.AreEqual(expected.TrialCount, actual.TrialCount);
+            Assert.AreEqual(expected.FirstSuccess, actual.FirstSuccess);
+            Assert.AreEqual(expected.DateTime, actual.DateTime);
+            Assert.AreEqual(expected.BestshotScore, actual.BestshotScore);
         }
 
         [TestMethod]
         public void Th125ScoreTestChapter() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
+            var stub = ValidStub;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
             var score = new Th125ScoreWrapper(chapter);
 
-            Validate(score, properties);
+            Validate(stub, score);
             Assert.IsFalse(score.IsValid.Value);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th125ScoreTestNullChapter() => TestUtils.Wrap(() =>
         {
-            var score = new Th125ScoreWrapper(null);
+            _ = new Th125ScoreWrapper(null);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th125ScoreTestInvalidSignature() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.signature = properties.signature.ToLowerInvariant();
+            var stub = new ScoreStub(ValidStub);
+            stub.Signature = stub.Signature.ToLowerInvariant();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var score = new Th125ScoreWrapper(chapter);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new Th125ScoreWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th125ScoreTestInvalidVersion() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            ++properties.version;
+            var stub = new ScoreStub(ValidStub);
+            ++stub.Version;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var score = new Th125ScoreWrapper(chapter);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new Th125ScoreWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th125ScoreTestInvalidSize() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            --properties.size;
+            var stub = new ScoreStub(ValidStub);
+            --stub.Size;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var score = new Th125ScoreWrapper(chapter);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new Th125ScoreWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -152,18 +135,17 @@ namespace ThScoreFileConverterTests.Models
         public static IEnumerable<object[]> InvalidLevels
             => TestUtils.GetInvalidEnumerators(typeof(Th125Converter.Level));
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
         [ExpectedException(typeof(InvalidCastException))]
         public void Th125ScoreTestInvalidLevel(int level) => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.levelScene.level = TestUtils.Cast<Th125Converter.Level>(level);
+            var stub = new ScoreStub(ValidStub);
+            stub.LevelScene = (TestUtils.Cast<Th125Converter.Level>(level), stub.LevelScene.Scene);
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var score = new Th125ScoreWrapper(chapter);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new Th125ScoreWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -171,18 +153,19 @@ namespace ThScoreFileConverterTests.Models
         public static IEnumerable<object[]> InvalidCharacters
             => TestUtils.GetInvalidEnumerators(typeof(Th125Converter.Chara));
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidCharacters))]
         [ExpectedException(typeof(InvalidCastException))]
         public void Th125ScoreTestInvalidChara(int chara) => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.chara = TestUtils.Cast<Th125Converter.Chara>(chara);
+            var stub = new ScoreStub(ValidStub)
+            {
+                Chara = TestUtils.Cast<Th125Converter.Chara>(chara),
+            };
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var score = new Th125ScoreWrapper(chapter);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new Th125ScoreWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });

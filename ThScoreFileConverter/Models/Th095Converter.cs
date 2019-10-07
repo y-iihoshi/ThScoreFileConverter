@@ -420,7 +420,7 @@ namespace ThScoreFileConverter.Models
                     if (!SpellCards.ContainsKey(key))
                         return match.ToString();
 
-                    var score = parent.allScoreData.Scores.Find(
+                    var score = parent.allScoreData.Scores.FirstOrDefault(
                         elem => (elem != null) && elem.LevelScene.Equals(key));
 
                     switch (type)
@@ -510,7 +510,7 @@ namespace ThScoreFileConverter.Models
 
                     if (hideUntriedCards)
                     {
-                        var score = parent.allScoreData.Scores.Find(
+                        var score = parent.allScoreData.Scores.FirstOrDefault(
                             elem => (elem != null) && elem.LevelScene.Equals(key));
                         if (score == null)
                             return "??????????";
@@ -611,7 +611,7 @@ namespace ThScoreFileConverter.Models
                                 return Utils.Format("{0:F6}%", bestshot.Header.SlowRate);
                             case 6:     // date & time
                                 {
-                                    var score = parent.allScoreData.Scores.Find(
+                                    var score = parent.allScoreData.Scores.FirstOrDefault(
                                         elem => (elem != null) && elem.LevelScene.Equals(key));
                                     if (score != null)
                                     {
@@ -671,17 +671,19 @@ namespace ThScoreFileConverter.Models
 
         private class AllScoreData
         {
-            public AllScoreData() => this.Scores = new List<Score>(SpellCards.Count);
+            private readonly List<IScore> scores;
+
+            public AllScoreData() => this.scores = new List<IScore>(SpellCards.Count);
 
             public Header Header { get; private set; }
 
-            public List<Score> Scores { get; private set; }
+            public IReadOnlyList<IScore> Scores => this.scores;
 
             public IStatus Status { get; private set; }
 
             public void Set(Header header) => this.Header = header;
 
-            public void Set(Score score) => this.Scores.Add(score);
+            public void Set(IScore score) => this.scores.Add(score);
 
             public void Set(IStatus status) => this.Status = status;
         }
@@ -694,13 +696,13 @@ namespace ThScoreFileConverter.Models
                 => base.IsValid && this.Signature.Equals(ValidSignature, StringComparison.Ordinal);
         }
 
-        private class Score : Th095.Chapter   // per scene
+        private class Score : Chapter, IScore   // per scene
         {
             public const string ValidSignature = "SC";
             public const ushort ValidVersion = 0x0001;
             public const int ValidSize = 0x00000060;
 
-            public Score(Th095.Chapter chapter)
+            public Score(Chapter chapter)
                 : base(chapter, ValidSignature, ValidVersion, ValidSize)
             {
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
@@ -730,12 +732,11 @@ namespace ThScoreFileConverter.Models
 
             public int TrialCount { get; }
 
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public float SlowRate1 { get; } // ??
 
             public float SlowRate2 { get; } // ??
 
-            public static bool CanInitialize(Th095.Chapter chapter)
+            public static bool CanInitialize(Chapter chapter)
             {
                 return chapter.Signature.Equals(ValidSignature, StringComparison.Ordinal)
                     && (chapter.Version == ValidVersion)

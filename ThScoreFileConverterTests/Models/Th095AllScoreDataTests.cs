@@ -49,8 +49,8 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th095AllScoreDataSetClearDataTest() => TestUtils.Wrap(() =>
         {
-            var properties = Th095ScoreTests.ValidProperties;
-            var chapter = ChapterWrapper.Create(Th095ScoreTests.MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(
+                Th095ScoreTests.MakeByteArray(Th095ScoreTests.ValidStub));
             var clearData = new Th095ScoreWrapper(chapter);
 
             var allScoreData = new Th095AllScoreDataWrapper();
@@ -62,8 +62,8 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th095AllScoreDataSetClearDataTestTwice() => TestUtils.Wrap(() =>
         {
-            var properties = Th095ScoreTests.ValidProperties;
-            var chapter = ChapterWrapper.Create(Th095ScoreTests.MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(
+                Th095ScoreTests.MakeByteArray(Th095ScoreTests.ValidStub));
             var clearData1 = new Th095ScoreWrapper(chapter);
             var clearData2 = new Th095ScoreWrapper(chapter);
 

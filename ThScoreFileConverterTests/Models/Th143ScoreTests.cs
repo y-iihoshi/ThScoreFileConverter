@@ -1,12 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th143;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
+using ThScoreFileConverterTests.Models.Th143.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -14,124 +15,108 @@ namespace ThScoreFileConverterTests.Models
     [TestClass]
     public class Th143ScoreTests
     {
-        internal struct Properties
+        internal static ScoreStub ValidStub { get; } = new ScoreStub()
         {
-            public string signature;
-            public ushort version;
-            public uint checksum;
-            public int size;
-            public int number;
-            public Dictionary<Th143Converter.ItemWithTotal, int> clearCounts;
-            public Dictionary<Th143Converter.ItemWithTotal, int> challengeCounts;
-            public int highScore;
-        };
-
-        internal static Properties ValidProperties => new Properties()
-        {
-            signature = "SN",
-            version = 1,
-            checksum = 0u,
-            size = 0x314,
-            number = 123,
-            clearCounts = Utils.GetEnumerator<Th143Converter.ItemWithTotal>()
+            Signature = "SN",
+            Version = 1,
+            Checksum = 0u,
+            Size = 0x314,
+            Number = 123,
+            ClearCounts = Utils.GetEnumerator<Th143Converter.ItemWithTotal>()
                 .ToDictionary(item => item, item => (int)item * 10),
-            challengeCounts = Utils.GetEnumerator<Th143Converter.ItemWithTotal>()
+            ChallengeCounts = Utils.GetEnumerator<Th143Converter.ItemWithTotal>()
                 .ToDictionary(item => item, item => (int)item * 100),
-            highScore = 456789
+            HighScore = 456789
         };
 
-        internal static byte[] MakeData(in Properties properties)
+        internal static byte[] MakeData(IScore score)
             => TestUtils.MakeByteArray(
-                properties.number,
-                properties.clearCounts.Values.ToArray(),
-                properties.challengeCounts.Values.ToArray(),
-                properties.highScore,
+                score.Number,
+                score.ClearCounts.Values.ToArray(),
+                score.ChallengeCounts.Values.ToArray(),
+                score.HighScore,
                 new byte[0x2A8]);
 
-        internal static byte[] MakeByteArray(in Properties properties)
+        internal static byte[] MakeByteArray(IScore score)
             => TestUtils.MakeByteArray(
-                properties.signature.ToCharArray(),
-                properties.version,
-                properties.checksum,
-                properties.size,
-                MakeData(properties));
+                score.Signature.ToCharArray(),
+                score.Version,
+                score.Checksum,
+                score.Size,
+                MakeData(score));
 
-        internal static void Validate(in Th143ScoreWrapper score, in Properties properties)
+        internal static void Validate(IScore expected, in Th143ScoreWrapper actual)
         {
-            var data = MakeData(properties);
+            var data = MakeData(expected);
 
-            Assert.AreEqual(properties.signature, score.Signature);
-            Assert.AreEqual(properties.version, score.Version);
-            Assert.AreEqual(properties.checksum, score.Checksum);
-            Assert.AreEqual(properties.size, score.Size);
-            CollectionAssert.That.AreEqual(data, score.Data);
-            Assert.AreEqual(properties.number, score.Number);
-            CollectionAssert.That.AreEqual(properties.clearCounts.Values, score.ClearCounts.Values);
-            CollectionAssert.That.AreEqual(properties.challengeCounts.Values, score.ChallengeCounts.Values);
-            Assert.AreEqual(properties.highScore, score.HighScore);
+            Assert.AreEqual(expected.Signature, actual.Signature);
+            Assert.AreEqual(expected.Version, actual.Version);
+            Assert.AreEqual(expected.Checksum, actual.Checksum);
+            Assert.AreEqual(expected.Size, actual.Size);
+            CollectionAssert.That.AreEqual(data, actual.Data);
+            Assert.AreEqual(expected.Number, actual.Number);
+            CollectionAssert.That.AreEqual(expected.ClearCounts.Values, actual.ClearCounts.Values);
+            CollectionAssert.That.AreEqual(expected.ChallengeCounts.Values, actual.ChallengeCounts.Values);
+            Assert.AreEqual(expected.HighScore, actual.HighScore);
         }
 
         [TestMethod]
         public void Th143ScoreTestChapter() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
+            var stub = ValidStub;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
             var score = new Th143ScoreWrapper(chapter);
 
-            Validate(score, properties);
+            Validate(stub, score);
             Assert.IsFalse(score.IsValid.Value);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th143ScoreTestNullChapter() => TestUtils.Wrap(() =>
         {
-            var score = new Th143ScoreWrapper(null);
+            _ = new Th143ScoreWrapper(null);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th143ScoreTestInvalidSignature() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.signature = properties.signature.ToLowerInvariant();
+            var stub = new ScoreStub(ValidStub);
+            stub.Signature = stub.Signature.ToLowerInvariant();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var score = new Th143ScoreWrapper(chapter);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new Th143ScoreWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th143ScoreTestInvalidVersion() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            ++properties.version;
+            var stub = new ScoreStub(ValidStub);
+            ++stub.Version;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var score = new Th143ScoreWrapper(chapter);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new Th143ScoreWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "score")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th143ScoreTestInvalidSize() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            --properties.size;
+            var stub = new ScoreStub(ValidStub);
+            --stub.Size;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var score = new Th143ScoreWrapper(chapter);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new Th143ScoreWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });

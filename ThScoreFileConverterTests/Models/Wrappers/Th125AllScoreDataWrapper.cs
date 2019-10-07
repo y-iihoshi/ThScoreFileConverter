@@ -33,8 +33,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         }
 
         // NOTE: Th125Converter.Score is a private class.
-        // public IReadOnlyList<Score> Scores
-        //     => this.pobj.GetProperty(nameof(this.Scores)) as List<Score>;
+        // public IReadOnlyList<IScore> Scores
+        //     => this.pobj.GetProperty(nameof(this.Scores)) as IReadOnlyList<IScore>;
         public object Scores
             => this.pobj.GetProperty(nameof(this.Scores));
         public int? ScoresCount

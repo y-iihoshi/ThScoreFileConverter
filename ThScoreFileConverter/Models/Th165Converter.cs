@@ -511,7 +511,7 @@ namespace ThScoreFileConverter.Models
                     if (!SpellCards.ContainsKey(key))
                         return match.ToString();
 
-                    var score = parent.allScoreData.Scores.Find(elem =>
+                    var score = parent.allScoreData.Scores.FirstOrDefault(elem =>
                         (elem != null) && ((elem.Number >= 0) && (elem.Number < SpellCards.Count)) &&
                         SpellCards.ElementAt(elem.Number).Key.Equals(key));
 
@@ -594,7 +594,7 @@ namespace ThScoreFileConverter.Models
 
                     if (hideUntriedCards)
                     {
-                        var score = parent.allScoreData.Scores.Find(elem =>
+                        var score = parent.allScoreData.Scores.FirstOrDefault(elem =>
                             (elem != null) && ((elem.Number >= 0) && (elem.Number < SpellCards.Count)) &&
                             SpellCards.ElementAt(elem.Number).Key.Equals(key));
                         if ((score == null) || (score.ChallengeCount <= 0))
@@ -862,17 +862,19 @@ namespace ThScoreFileConverter.Models
 
         private class AllScoreData
         {
-            public AllScoreData() => this.Scores = new List<Score>(SpellCards.Count);
+            private readonly List<IScore> scores;
+
+            public AllScoreData() => this.scores = new List<IScore>(SpellCards.Count);
 
             public Header Header { get; private set; }
 
-            public List<Score> Scores { get; private set; }
+            public IReadOnlyList<IScore> Scores => this.scores;
 
             public IStatus Status { get; private set; }
 
             public void Set(Header header) => this.Header = header;
 
-            public void Set(Score score) => this.Scores.Add(score);
+            public void Set(IScore score) => this.scores.Add(score);
 
             public void Set(IStatus status) => this.Status = status;
         }
@@ -885,7 +887,7 @@ namespace ThScoreFileConverter.Models
                 => base.IsValid && this.Signature.Equals(ValidSignature, StringComparison.Ordinal);
         }
 
-        private class Score : Th10.Chapter   // per scene
+        private class Score : Th10.Chapter, IScore  // per scene
         {
             public const string ValidSignature = "SN";
             public const ushort ValidVersion = 0x0001;

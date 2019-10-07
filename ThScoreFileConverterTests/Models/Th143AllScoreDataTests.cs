@@ -51,8 +51,8 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th143AllScoreDataSetScoreTest() => TestUtils.Wrap(() =>
         {
-            var properties = Th143ScoreTests.ValidProperties;
-            var chapter = ChapterWrapper.Create(Th143ScoreTests.MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(
+                Th143ScoreTests.MakeByteArray(Th143ScoreTests.ValidStub));
             var score = new Th143ScoreWrapper(chapter);
 
             var allScoreData = new Th143AllScoreDataWrapper();
@@ -64,8 +64,8 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th143AllScoreDataSetScoreTestTwice() => TestUtils.Wrap(() =>
         {
-            var properties = Th143ScoreTests.ValidProperties;
-            var chapter = ChapterWrapper.Create(Th143ScoreTests.MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(
+                Th143ScoreTests.MakeByteArray(Th143ScoreTests.ValidStub));
             var score1 = new Th143ScoreWrapper(chapter);
             var score2 = new Th143ScoreWrapper(chapter);
 

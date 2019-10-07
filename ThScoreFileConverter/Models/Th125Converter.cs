@@ -471,7 +471,7 @@ namespace ThScoreFileConverter.Models
                     if (!SpellCards.ContainsKey(key))
                         return match.ToString();
 
-                    var score = parent.allScoreData.Scores.Find(elem =>
+                    var score = parent.allScoreData.Scores.FirstOrDefault(elem =>
                         (elem != null) && (elem.Chara == chara) && elem.LevelScene.Equals(key));
 
                     switch (type)
@@ -507,7 +507,7 @@ namespace ThScoreFileConverter.Models
             private static readonly string Pattern = Utils.Format(
                 @"%T125SCRTL({0})([12])([1-5])", CharaParser.Pattern);
 
-            private static readonly Func<Score, Chara, int, bool> IsTargetImpl =
+            private static readonly Func<IScore, Chara, int, bool> IsTargetImpl =
                 (score, chara, method) =>
                 {
                     if (score == null)
@@ -551,8 +551,8 @@ namespace ThScoreFileConverter.Models
                     var method = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                    Func<Score, bool> isTarget = (score => IsTargetImpl(score, chara, method));
-                    Func<Score, bool> triedAndSucceeded =
+                    Func<IScore, bool> isTarget = (score => IsTargetImpl(score, chara, method));
+                    Func<IScore, bool> triedAndSucceeded =
                         (score => isTarget(score) && (score.TrialCount > 0) && (score.FirstSuccess > 0));
 
                     switch (type)
@@ -611,7 +611,7 @@ namespace ThScoreFileConverter.Models
 
                     if (hideUntriedCards)
                     {
-                        var score = parent.allScoreData.Scores.Find(
+                        var score = parent.allScoreData.Scores.FirstOrDefault(
                             elem => (elem != null) && elem.LevelScene.Equals(key));
                         if (score == null)
                             return "??????????";
@@ -753,7 +753,7 @@ namespace ThScoreFileConverter.Models
                         parent.bestshots.TryGetValue(chara, out var bestshots) &&
                         bestshots.TryGetValue(key, out var bestshot))
                     {
-                        Score score;
+                        IScore score;
                         IEnumerable<string> detailStrings;
                         switch (type)
                         {
@@ -769,7 +769,7 @@ namespace ThScoreFileConverter.Models
                             case 5:     // slow rate
                                 return Utils.Format("{0:F6}%", bestshot.Header.SlowRate);
                             case 6:     // date & time
-                                score = parent.allScoreData.Scores.Find(elem =>
+                                score = parent.allScoreData.Scores.FirstOrDefault(elem =>
                                     (elem != null) &&
                                     (elem.Chara == chara) &&
                                     elem.LevelScene.Equals(key));
@@ -831,17 +831,19 @@ namespace ThScoreFileConverter.Models
 
         private class AllScoreData
         {
-            public AllScoreData() => this.Scores = new List<Score>(SpellCards.Count);
+            private readonly List<IScore> scores;
+
+            public AllScoreData() => this.scores = new List<IScore>(SpellCards.Count);
 
             public Header Header { get; private set; }
 
-            public List<Score> Scores { get; private set; }
+            public IReadOnlyList<IScore> Scores => this.scores;
 
             public IStatus Status { get; private set; }
 
             public void Set(Header header) => this.Header = header;
 
-            public void Set(Score score) => this.Scores.Add(score);
+            public void Set(IScore score) => this.scores.Add(score);
 
             public void Set(IStatus status) => this.Status = status;
         }
@@ -854,7 +856,7 @@ namespace ThScoreFileConverter.Models
                 => base.IsValid && this.Signature.Equals(ValidSignature, StringComparison.Ordinal);
         }
 
-        private class Score : Th095.Chapter   // per scene
+        private class Score : Th095.Chapter, IScore // per scene
         {
             public const string ValidSignature = "SC";
             public const ushort ValidVersion = 0x0000;

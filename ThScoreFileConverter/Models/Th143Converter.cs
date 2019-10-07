@@ -22,7 +22,7 @@ using System.Security;
 using System.Security.Permissions;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Models.Th165;
+using ThScoreFileConverter.Models.Th143;
 
 namespace ThScoreFileConverter.Models
 {
@@ -513,7 +513,7 @@ namespace ThScoreFileConverter.Models
                     if (!SpellCards.ContainsKey(key))
                         return match.ToString();
 
-                    var score = parent.allScoreData.Scores.Find(elem =>
+                    var score = parent.allScoreData.Scores.FirstOrDefault(elem =>
                         (elem != null) && ((elem.Number > 0) && (elem.Number <= SpellCards.Count)) &&
                         SpellCards.ElementAt(elem.Number - 1).Key.Equals(key));
 
@@ -613,7 +613,7 @@ namespace ThScoreFileConverter.Models
 
                     if (hideUntriedCards)
                     {
-                        var score = parent.allScoreData.Scores.Find(elem =>
+                        var score = parent.allScoreData.Scores.FirstOrDefault(elem =>
                             (elem != null) && ((elem.Number > 0) && (elem.Number <= SpellCards.Count)) &&
                             SpellCards.ElementAt(elem.Number - 1).Key.Equals(key));
                         if ((score == null) || (score.ChallengeCounts[ItemWithTotal.Total] <= 0))
@@ -815,16 +815,18 @@ namespace ThScoreFileConverter.Models
 
         private class AllScoreData
         {
+            private readonly List<IScore> scores;
+
             public AllScoreData()
             {
-                this.Scores = new List<Score>(SpellCards.Count);
+                this.scores = new List<IScore>(SpellCards.Count);
                 this.ItemStatuses = new Dictionary<ItemWithTotal, ItemStatus>(
                     Enum.GetValues(typeof(ItemWithTotal)).Length);
             }
 
             public Header Header { get; private set; }
 
-            public List<Score> Scores { get; private set; }
+            public IReadOnlyList<IScore> Scores => this.scores;
 
             public Dictionary<ItemWithTotal, ItemStatus> ItemStatuses { get; private set; }
 
@@ -832,7 +834,7 @@ namespace ThScoreFileConverter.Models
 
             public void Set(Header header) => this.Header = header;
 
-            public void Set(Score score) => this.Scores.Add(score);
+            public void Set(IScore score) => this.scores.Add(score);
 
             public void Set(ItemStatus status)
             {
@@ -851,7 +853,7 @@ namespace ThScoreFileConverter.Models
                 => base.IsValid && this.Signature.Equals(ValidSignature, StringComparison.Ordinal);
         }
 
-        private class Score : Th10.Chapter   // per scene
+        private class Score : Th10.Chapter, IScore  // per scene
         {
             public const string ValidSignature = "SN";
             public const ushort ValidVersion = 0x0001;
@@ -865,15 +867,8 @@ namespace ThScoreFileConverter.Models
                     var items = Utils.GetEnumerator<ItemWithTotal>();
 
                     this.Number = reader.ReadInt32();
-
-                    this.ClearCounts = new Dictionary<ItemWithTotal, int>(items.Count());
-                    foreach (var item in items)
-                        this.ClearCounts.Add(item, reader.ReadInt32());
-
-                    this.ChallengeCounts = new Dictionary<ItemWithTotal, int>(items.Count());
-                    foreach (var item in items)
-                        this.ChallengeCounts.Add(item, reader.ReadInt32());
-
+                    this.ClearCounts = items.ToDictionary(item => item, _ => reader.ReadInt32());
+                    this.ChallengeCounts = items.ToDictionary(item => item, _ => reader.ReadInt32());
                     this.HighScore = reader.ReadInt32();
                     reader.ReadExactBytes(0x2A8);   // always all 0x00?
                 }
@@ -881,9 +876,9 @@ namespace ThScoreFileConverter.Models
 
             public int Number { get; }
 
-            public Dictionary<ItemWithTotal, int> ClearCounts { get; }
+            public IReadOnlyDictionary<ItemWithTotal, int> ClearCounts { get; }
 
-            public Dictionary<ItemWithTotal, int> ChallengeCounts { get; }
+            public IReadOnlyDictionary<ItemWithTotal, int> ChallengeCounts { get; }
 
             public int HighScore { get; }   // Divided by 10
 
