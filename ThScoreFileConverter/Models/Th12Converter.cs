@@ -19,6 +19,8 @@ using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
 using CardInfo = ThScoreFileConverter.Models.SpellCardInfo<
     ThScoreFileConverter.Models.Stage, ThScoreFileConverter.Models.Level>;
+using IClearData = ThScoreFileConverter.Models.Th10.IClearData<
+    ThScoreFileConverter.Models.Th12Converter.CharaWithTotal, ThScoreFileConverter.Models.Th12Converter.StageProgress>;
 
 namespace ThScoreFileConverter.Models
 {
@@ -603,7 +605,7 @@ namespace ThScoreFileConverter.Models
                     var chara = CharaWithTotalParser.Parse(match.Groups[1].Value);
                     var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
-                    Func<ClearData, long> getValueByType;
+                    Func<IClearData, long> getValueByType;
                     Func<long, string> toString;
                     if (type == 1)
                     {
@@ -659,7 +661,7 @@ namespace ThScoreFileConverter.Models
                     var chara = CharaWithTotalParser.Parse(match.Groups[2].Value);
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                    Func<ClearData, long> getValueByType;
+                    Func<IClearData, long> getValueByType;
                     Func<long, string> toString;
                     if (type == 1)
                     {
@@ -744,24 +746,26 @@ namespace ThScoreFileConverter.Models
 
         private class AllScoreData
         {
+            private readonly Dictionary<CharaWithTotal, IClearData> clearData;
+
             public AllScoreData()
             {
-                this.ClearData =
-                    new Dictionary<CharaWithTotal, ClearData>(Enum.GetValues(typeof(CharaWithTotal)).Length);
+                this.clearData =
+                    new Dictionary<CharaWithTotal, IClearData>(Enum.GetValues(typeof(CharaWithTotal)).Length);
             }
 
             public Header Header { get; private set; }
 
-            public Dictionary<CharaWithTotal, ClearData> ClearData { get; private set; }
+            public IReadOnlyDictionary<CharaWithTotal, IClearData> ClearData => this.clearData;
 
             public Th10.IStatus Status { get; private set; }
 
             public void Set(Header header) => this.Header = header;
 
-            public void Set(ClearData data)
+            public void Set(IClearData data)
             {
-                if (!this.ClearData.ContainsKey(data.Chara))
-                    this.ClearData.Add(data.Chara, data);
+                if (!this.clearData.ContainsKey(data.Chara))
+                    this.clearData.Add(data.Chara, data);
             }
 
             public void Set(Th10.IStatus status) => this.Status = status;
@@ -775,7 +779,7 @@ namespace ThScoreFileConverter.Models
                 => base.IsValid && this.Signature.Equals(ValidSignature, StringComparison.Ordinal);
         }
 
-        private class ClearData : Th10.Chapter, Th10.IClearData<CharaWithTotal, StageProgress>  // per character
+        private class ClearData : Th10.Chapter, IClearData  // per character
         {
             public const string ValidSignature = "CR";
             public const ushort ValidVersion = 0x0002;
