@@ -36,9 +36,10 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.IsValid)) as bool?;
         public IReadOnlyCollection<byte> Data
             => this.pobj.GetProperty(nameof(this.Data)) as byte[];
+
         // NOTE: Th128Converter.SpellCard is a private class.
-        // public IReadOnlyDictionary<int, SpellCard> Cards
-        //     => this.pobj.GetProperty(nameof(this.Cards)) as Dictionary<int, SpellCard>;
+        // public IReadOnlyDictionary<int, ISpellCard> Cards
+        //     => this.pobj.GetProperty(nameof(this.Cards)) as IReadOnlyDictionary<int, ISpellCard>;
         public object Cards
             => this.pobj.GetProperty(nameof(this.Cards));
         public Th128SpellCardWrapper CardsItem(int id)

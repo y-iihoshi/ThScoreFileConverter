@@ -4,8 +4,11 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th128;
 using ThScoreFileConverterTests.Extensions;
+using ThScoreFileConverterTests.Models.Th128.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -13,64 +16,54 @@ namespace ThScoreFileConverterTests.Models
     [TestClass]
     public class Th128SpellCardTests
     {
-        internal struct Properties
+        internal static SpellCardStub ValidStub => new SpellCardStub()
         {
-            public byte[] name;
-            public int noMissCount;
-            public int noIceCount;
-            public int trialCount;
-            public int id;
-            public Level level;
+            Name = TestUtils.MakeRandomArray<byte>(0x80),
+            NoMissCount = 12,
+            NoIceCount = 34,
+            TrialCount = 56,
+            Id = 78,
+            Level = Level.Normal
         };
 
-        internal static Properties ValidProperties => new Properties()
-        {
-            name = TestUtils.MakeRandomArray<byte>(0x80),
-            noMissCount = 12,
-            noIceCount = 34,
-            trialCount = 56,
-            id = 78,
-            level = Level.Normal
-        };
-
-        internal static byte[] MakeByteArray(in Properties properties)
+        internal static byte[] MakeByteArray(ISpellCard spellCard)
         => TestUtils.MakeByteArray(
-            properties.name,
-            properties.noMissCount,
-            properties.noIceCount,
+            spellCard.Name,
+            spellCard.NoMissCount,
+            spellCard.NoIceCount,
             0u,
-            properties.trialCount,
-            properties.id - 1,
-            (int)properties.level);
+            spellCard.TrialCount,
+            spellCard.Id - 1,
+            (int)spellCard.Level);
 
-        internal static void Validate(in Th128SpellCardWrapper spellCard, in Properties properties)
+        internal static void Validate(ISpellCard expected, in Th128SpellCardWrapper actual)
         {
-            CollectionAssert.That.AreEqual(properties.name, spellCard.Name);
-            Assert.AreEqual(properties.noMissCount, spellCard.NoMissCount);
-            Assert.AreEqual(properties.noIceCount, spellCard.NoIceCount);
-            Assert.AreEqual(properties.trialCount, spellCard.TrialCount);
-            Assert.AreEqual(properties.id, spellCard.Id);
-            Assert.AreEqual(properties.level, spellCard.Level);
+            CollectionAssert.That.AreEqual(expected.Name, actual.Name);
+            Assert.AreEqual(expected.NoMissCount, actual.NoMissCount);
+            Assert.AreEqual(expected.NoIceCount, actual.NoIceCount);
+            Assert.AreEqual(expected.TrialCount, actual.TrialCount);
+            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.AreEqual(expected.Level, actual.Level);
         }
 
         [TestMethod]
         public void Th128SpellCardTest() => TestUtils.Wrap(() =>
         {
-            var properties = new Properties();
+            var stub = new SpellCardStub();
             var spellCard = new Th128SpellCardWrapper();
 
-            Validate(spellCard, properties);
+            Validate(stub, spellCard);
             Assert.IsFalse(spellCard.HasTried().Value);
         });
 
         [TestMethod]
         public void Th128SpellCardReadFromTest() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
+            var stub = ValidStub;
 
-            var spellCard = Th128SpellCardWrapper.Create(MakeByteArray(properties));
+            var spellCard = Th128SpellCardWrapper.Create(MakeByteArray(stub));
 
-            Validate(spellCard, properties);
+            Validate(stub, spellCard);
             Assert.IsTrue(spellCard.HasTried().Value);
         });
 
@@ -84,28 +77,26 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "spellCard")]
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th128SpellCardReadFromTestShortenedName() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.name = properties.name.Take(properties.name.Length - 1).ToArray();
+            var stub = new SpellCardStub(ValidStub);
+            stub.Name = stub.Name.SkipLast(1).ToArray();
 
-            var spellCard = Th128SpellCardWrapper.Create(MakeByteArray(properties));
+            _ = Th128SpellCardWrapper.Create(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "spellCard")]
         [TestMethod]
         [ExpectedException(typeof(InvalidCastException))]
         public void Th128SpellCardReadFromTestExceededName() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.name = properties.name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
+            var stub = new SpellCardStub(ValidStub);
+            stub.Name = stub.Name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
 
-            var spellCard = Th128SpellCardWrapper.Create(MakeByteArray(properties));
+            _ = Th128SpellCardWrapper.Create(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -113,17 +104,18 @@ namespace ThScoreFileConverterTests.Models
         public static IEnumerable<object[]> InvalidLevels
             => TestUtils.GetInvalidEnumerators(typeof(Level));
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "spellCard")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
         [ExpectedException(typeof(InvalidCastException))]
         public void Th128SpellCardReadFromTestInvalidLevel(int level) => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.level = TestUtils.Cast<Level>(level);
+            var stub = new SpellCardStub(ValidStub)
+            {
+                Level = TestUtils.Cast<Level>(level),
+            };
 
-            var spellCard = Th128SpellCardWrapper.Create(MakeByteArray(properties));
+            _ = Th128SpellCardWrapper.Create(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });

@@ -5,8 +5,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th128;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
+using ThScoreFileConverterTests.Models.Th128.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -20,7 +22,7 @@ namespace ThScoreFileConverterTests.Models
             public ushort version;
             public uint checksum;
             public int size;
-            public Dictionary<int, Th128SpellCardTests.Properties> cards;
+            public IReadOnlyDictionary<int, ISpellCard> cards;
         };
 
         internal static Properties ValidProperties => new Properties()
@@ -31,15 +33,15 @@ namespace ThScoreFileConverterTests.Models
             size = 0x947C,
             cards = Enumerable.Range(1, 250).ToDictionary(
                 index => index,
-                index => new Th128SpellCardTests.Properties()
+                index => new SpellCardStub()
                 {
-                    name = TestUtils.MakeRandomArray<byte>(0x80),
-                    noMissCount = 123 + index,
-                    noIceCount = 456 + index,
-                    trialCount = 789 + index,
-                    id = index,
-                    level = Level.Hard
-                })
+                    Name = TestUtils.MakeRandomArray<byte>(0x80),
+                    NoMissCount = 123 + index,
+                    NoIceCount = 456 + index,
+                    TrialCount = 789 + index,
+                    Id = index,
+                    Level = Level.Hard
+                } as ISpellCard)
         };
 
         internal static byte[] MakeData(in Properties properties)
@@ -67,7 +69,7 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var pair in properties.cards)
             {
-                Th128SpellCardTests.Validate(clearData.CardsItem(pair.Key), pair.Value);
+                Th128SpellCardTests.Validate(pair.Value, clearData.CardsItem(pair.Key));
             }
         }
 

@@ -17,6 +17,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Models.Th128;
 using CardInfo = ThScoreFileConverter.Models.SpellCardInfo<
     ThScoreFileConverter.Models.Th128Converter.Stage, ThScoreFileConverter.Models.Level>;
 
@@ -625,7 +626,7 @@ namespace ThScoreFileConverter.Models
                     var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
                     var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
-                    Func<SpellCard, int> getCount;
+                    Func<ISpellCard, int> getCount;
                     if (type == 1)
                         getCount = (card => card.NoIceCount);
                     else if (type == 2)
@@ -640,7 +641,7 @@ namespace ThScoreFileConverter.Models
                     }
                     else if (CardTable.ContainsKey(number))
                     {
-                        if (parent.allScoreData.CardData.Cards.TryGetValue(number, out SpellCard card))
+                        if (parent.allScoreData.CardData.Cards.TryGetValue(number, out var card))
                             return Utils.ToNumberString(getCount(card));
                         else
                             return "0";
@@ -679,7 +680,7 @@ namespace ThScoreFileConverter.Models
                             if (hideUntriedCards)
                             {
                                 var cards = parent.allScoreData.CardData.Cards;
-                                if (!cards.TryGetValue(number, out SpellCard card) || !card.HasTried())
+                                if (!cards.TryGetValue(number, out var card) || !card.HasTried())
                                     return "??????????";
                             }
 
@@ -723,13 +724,13 @@ namespace ThScoreFileConverter.Models
                     if (stage == StageWithTotal.Extra)
                         return match.ToString();
 
-                    Func<SpellCard, bool> findByStage;
+                    Func<ISpellCard, bool> findByStage;
                     if (stage == StageWithTotal.Total)
                         findByStage = (card => true);
                     else
                         findByStage = (card => CardTable[card.Id].Stage == (Stage)stage);
 
-                    Func<SpellCard, bool> findByLevel = (card => true);
+                    Func<ISpellCard, bool> findByLevel = (card => true);
                     switch (level)
                     {
                         case LevelWithTotal.Total:
@@ -743,7 +744,7 @@ namespace ThScoreFileConverter.Models
                             break;
                     }
 
-                    Func<SpellCard, bool> findByType;
+                    Func<ISpellCard, bool> findByType;
                     if (type == 1)
                         findByType = (card => card.NoIceCount > 0);
                     else if (type == 2)
@@ -1048,21 +1049,18 @@ namespace ThScoreFileConverter.Models
             public CardData(Th10.Chapter chapter)
                 : base(chapter, ValidSignature, ValidVersion, ValidSize)
             {
-                this.Cards = new Dictionary<int, SpellCard>(CardTable.Count);
-
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
-                    for (var number = 0; number < CardTable.Count; number++)
+                    this.Cards = Enumerable.Range(0, CardTable.Count).Select(_ =>
                     {
                         var card = new SpellCard();
                         card.ReadFrom(reader);
-                        if (!this.Cards.ContainsKey(card.Id))
-                            this.Cards.Add(card.Id, card);
-                    }
+                        return card as ISpellCard;
+                    }).ToDictionary(card => card.Id);
                 }
             }
 
-            public Dictionary<int, SpellCard> Cards { get; }
+            public IReadOnlyDictionary<int, ISpellCard> Cards { get; }
 
             public static bool CanInitialize(Th10.Chapter chapter)
             {
@@ -1118,10 +1116,9 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class SpellCard : IBinaryReadable
+        private class SpellCard : IBinaryReadable, ISpellCard
         {
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] Name { get; private set; }
+            public IEnumerable<byte> Name { get; private set; }
 
             public int NoMissCount { get; private set; }
 

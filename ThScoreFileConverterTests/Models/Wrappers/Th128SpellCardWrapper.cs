@@ -47,8 +47,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public object Target
             => this.pobj.Target;
-        public IReadOnlyCollection<byte> Name
-            => this.pobj.GetProperty(nameof(this.Name)) as byte[];
+        public IEnumerable<byte> Name
+            => this.pobj.GetProperty(nameof(this.Name)) as IEnumerable<byte>;
         public int? NoMissCount
             => this.pobj.GetProperty(nameof(this.NoMissCount)) as int?;
         public int? NoIceCount
