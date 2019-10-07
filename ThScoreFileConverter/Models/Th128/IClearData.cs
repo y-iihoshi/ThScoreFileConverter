@@ -1,0 +1,27 @@
+﻿//-----------------------------------------------------------------------
+// <copyright file="IClearData.cs" company="None">
+// Copyright (c) IIHOSHI Yoshinori.
+// Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
+// </copyright>
+//-----------------------------------------------------------------------
+
+#pragma warning disable SA1600 // Elements should be documented
+
+using System.Collections.Generic;
+using ThScoreFileConverter.Models.Th10;
+
+namespace ThScoreFileConverter.Models.Th128
+{
+    internal interface IClearData : Th095.IChapter
+    {
+        IReadOnlyDictionary<Level, int> ClearCounts { get; }
+
+        int PlayTime { get; }
+
+        IReadOnlyDictionary<Level, IReadOnlyList<IScoreData<Th128Converter.StageProgress>>> Rankings { get; }
+
+        Th128Converter.RouteWithTotal Route { get; }
+
+        int TotalPlayCount { get; }
+    }
+}

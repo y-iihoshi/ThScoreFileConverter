@@ -33,8 +33,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         }
 
         // NOTE: Th128Converter.ClearData is a private class.
-        // public IReadOnlyDictionary<RouteWithTotal, ClearData> ClearData
-        //     => this.pobj.GetProperty(nameof(this.ClearData)) as Dictionary<RouteWithTotal, ClearData>;
+        // public IReadOnlyDictionary<RouteWithTotal, IClearData> ClearData
+        //     => this.pobj.GetProperty(nameof(this.ClearData)) as IReadOnlyDictionary<RouteWithTotal, IClearData>;
         public object ClearData
             => this.pobj.GetProperty(nameof(this.ClearData));
         public int? ClearDataCount

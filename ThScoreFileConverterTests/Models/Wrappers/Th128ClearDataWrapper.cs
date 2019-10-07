@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th10;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
@@ -38,15 +39,18 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.Data)) as byte[];
         public Th128Converter.RouteWithTotal? Route
             => this.pobj.GetProperty(nameof(this.Route)) as Th128Converter.RouteWithTotal?;
+
         // NOTE: Th128Converter.ScoreData is a private class.
-        // public IReadOnlyDictionary<Level, ScoreData[]> Rankings
-        //     => this.pobj.GetProperty(nameof(this.Rankings)) as Dictionary<Level, ScoreData[]>;
+        // public IReadOnlyDictionary<Level, IReadOnlyList<IScoreData>> Rankings
+        //     => this.pobj.GetProperty(nameof(this.Rankings)) as IReadOnlyDictionary<Level, IReadOnlyList<IScoreData>>;
         public object Rankings
             => this.pobj.GetProperty(nameof(this.Rankings));
-        public object[] Ranking(Level level)
-            => this.Rankings.GetType().GetProperty("Item").GetValue(this.Rankings, new object[] { level }) as object[];
+        public IReadOnlyList<IScoreData<Th128Converter.StageProgress>> Ranking(Level level)
+            => this.Rankings.GetType().GetProperty("Item").GetValue(this.Rankings, new object[] { level })
+                as IReadOnlyList<IScoreData<Th128Converter.StageProgress>>;
         public ScoreDataWrapper<Th128Converter, Th128Converter.StageProgress> RankingItem(Level level, int index)
             => new ScoreDataWrapper<Th128Converter, Th128Converter.StageProgress>(this.Ranking(level)[index]);
+
         public int? TotalPlayCount
             => this.pobj.GetProperty(nameof(this.TotalPlayCount)) as int?;
         public int? PlayTime

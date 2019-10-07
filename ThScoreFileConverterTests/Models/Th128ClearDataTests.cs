@@ -5,10 +5,13 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th10;
+using ThScoreFileConverter.Models.Th128;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th10;
 using ThScoreFileConverterTests.Models.Th10.Stubs;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
+using ThScoreFileConverterTests.Models.Th128.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -16,31 +19,18 @@ namespace ThScoreFileConverterTests.Models
     [TestClass]
     public class Th128ClearDataTests
     {
-        internal struct Properties
-        {
-            public string signature;
-            public ushort version;
-            public uint checksum;
-            public int size;
-            public Th128Converter.RouteWithTotal route;
-            public Dictionary<Level, ScoreDataStub<Th128Converter.StageProgress>[]> rankings;
-            public int totalPlayCount;
-            public int playTime;
-            public Dictionary<Level, int> clearCounts;
-        };
-
-        internal static Properties GetValidProperties()
+        internal static ClearDataStub GetValidStub()
         {
             var levels = Utils.GetEnumerator<Level>();
 
-            return new Properties()
+            return new ClearDataStub()
             {
-                signature = "CR",
-                version = 3,
-                checksum = 0u,
-                size = 0x66C,
-                route = Th128Converter.RouteWithTotal.A2,
-                rankings = levels.ToDictionary(
+                Signature = "CR",
+                Version = 3,
+                Checksum = 0u,
+                Size = 0x66C,
+                Route = Th128Converter.RouteWithTotal.A2,
+                Rankings = levels.ToDictionary(
                     level => level,
                     level => Enumerable.Range(0, 10).Select(
                         index => new ScoreDataStub<Th128Converter.StageProgress>()
@@ -51,117 +41,113 @@ namespace ThScoreFileConverterTests.Models
                             Name = TestUtils.MakeRandomArray<byte>(10),
                             DateTime = 34567890u,
                             SlowRate = 1.2f
-                        }).ToArray()),
-                totalPlayCount = 23,
-                playTime = 4567890,
-                clearCounts = levels.ToDictionary(level => level, level => 100 - (int)level)
+                        }).ToList() as IReadOnlyList<IScoreData<Th128Converter.StageProgress>>),
+                TotalPlayCount = 23,
+                PlayTime = 4567890,
+                ClearCounts = levels.ToDictionary(level => level, level => 100 - (int)level)
             };
         }
 
-        internal static byte[] MakeData(in Properties properties)
+        internal static byte[] MakeData(IClearData clearData)
             => TestUtils.MakeByteArray(
-                (int)properties.route,
-                properties.rankings.Values.SelectMany(
+                (int)clearData.Route,
+                clearData.Rankings.Values.SelectMany(
                     ranking => ranking.SelectMany(
                         scoreData => ScoreDataTests.MakeByteArray<Th128Converter, Th128Converter.StageProgress>(
                             scoreData))).ToArray(),
-                properties.totalPlayCount,
-                properties.playTime,
-                properties.clearCounts.Values.ToArray());
+                clearData.TotalPlayCount,
+                clearData.PlayTime,
+                clearData.ClearCounts.Values.ToArray());
 
-        internal static byte[] MakeByteArray(in Properties properties)
+        internal static byte[] MakeByteArray(IClearData clearData)
             => TestUtils.MakeByteArray(
-                properties.signature.ToCharArray(),
-                properties.version,
-                properties.checksum,
-                properties.size,
-                MakeData(properties));
+                clearData.Signature.ToCharArray(),
+                clearData.Version,
+                clearData.Checksum,
+                clearData.Size,
+                MakeData(clearData));
 
-        internal static void Validate(in Th128ClearDataWrapper clearData, in Properties properties)
+        internal static void Validate(IClearData expected, in Th128ClearDataWrapper actual)
         {
-            var data = MakeData(properties);
+            var data = MakeData(expected);
 
-            Assert.AreEqual(properties.signature, clearData.Signature);
-            Assert.AreEqual(properties.version, clearData.Version);
-            Assert.AreEqual(properties.checksum, clearData.Checksum);
-            Assert.AreEqual(properties.size, clearData.Size);
-            CollectionAssert.That.AreEqual(data, clearData.Data);
-            Assert.AreEqual(properties.route, clearData.Route);
+            Assert.AreEqual(expected.Signature, actual.Signature);
+            Assert.AreEqual(expected.Version, actual.Version);
+            Assert.AreEqual(expected.Checksum, actual.Checksum);
+            Assert.AreEqual(expected.Size, actual.Size);
+            CollectionAssert.That.AreEqual(data, actual.Data);
+            Assert.AreEqual(expected.Route, actual.Route);
 
-            foreach (var pair in properties.rankings)
+            foreach (var pair in expected.Rankings)
             {
-                for (var index = 0; index < pair.Value.Length; ++index)
+                for (var index = 0; index < pair.Value.Count(); ++index)
                 {
-                    ScoreDataTests.Validate(pair.Value[index], clearData.RankingItem(pair.Key, index));
+                    ScoreDataTests.Validate(pair.Value[index], actual.RankingItem(pair.Key, index));
                 }
             }
 
-            Assert.AreEqual(properties.totalPlayCount, clearData.TotalPlayCount);
-            Assert.AreEqual(properties.playTime, clearData.PlayTime);
-            CollectionAssert.That.AreEqual(properties.clearCounts.Values, clearData.ClearCounts.Values);
+            Assert.AreEqual(expected.TotalPlayCount, actual.TotalPlayCount);
+            Assert.AreEqual(expected.PlayTime, actual.PlayTime);
+            CollectionAssert.That.AreEqual(expected.ClearCounts.Values, actual.ClearCounts.Values);
         }
 
         [TestMethod]
         public void Th128ClearDataTestChapter() => TestUtils.Wrap(() =>
         {
-            var properties = GetValidProperties();
+            var stub = GetValidStub();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
             var clearData = new Th128ClearDataWrapper(chapter);
 
-            Validate(clearData, properties);
+            Validate(stub, clearData);
             Assert.IsFalse(clearData.IsValid.Value);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th128ClearDataTestNullChapter() => TestUtils.Wrap(() =>
         {
-            var clearData = new Th128ClearDataWrapper(null);
+            _ = new Th128ClearDataWrapper(null);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th128ClearDataTestInvalidSignature() => TestUtils.Wrap(() =>
         {
-            var properties = GetValidProperties();
-            properties.signature = properties.signature.ToLowerInvariant();
+            var stub = GetValidStub();
+            stub.Signature = stub.Signature.ToLowerInvariant();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var clearData = new Th128ClearDataWrapper(chapter);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new Th128ClearDataWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th128ClearDataTestInvalidVersion() => TestUtils.Wrap(() =>
         {
-            var properties = GetValidProperties();
-            ++properties.version;
+            var stub = GetValidStub();
+            ++stub.Version;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var clearData = new Th128ClearDataWrapper(chapter);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new Th128ClearDataWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearData")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th128ClearDataTestInvalidSize() => TestUtils.Wrap(() =>
         {
-            var properties = GetValidProperties();
-            --properties.size;
+            var stub = GetValidStub();
+            --stub.Size;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var clearData = new Th128ClearDataWrapper(chapter);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new Th128ClearDataWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });

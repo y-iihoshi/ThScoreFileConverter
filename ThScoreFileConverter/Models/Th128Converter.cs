@@ -815,7 +815,7 @@ namespace ThScoreFileConverter.Models
                     var route = RouteWithTotalParser.Parse(match.Groups[1].Value);
                     var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
-                    Func<ClearData, long> getValueByType;
+                    Func<IClearData, long> getValueByType;
                     Func<long, string> toString;
                     if (type == 1)
                     {
@@ -880,7 +880,7 @@ namespace ThScoreFileConverter.Models
                         ((level != LevelWithTotal.Extra) && (level != LevelWithTotal.Total)))
                         return match.ToString();
 
-                    Func<ClearData, long> getValueByType;
+                    Func<IClearData, long> getValueByType;
                     Func<long, string> toString;
                     if (type == 1)
                     {
@@ -945,15 +945,17 @@ namespace ThScoreFileConverter.Models
 
         private class AllScoreData
         {
+            private readonly Dictionary<RouteWithTotal, IClearData> clearData;
+
             public AllScoreData()
             {
-                this.ClearData =
-                    new Dictionary<RouteWithTotal, ClearData>(Enum.GetValues(typeof(RouteWithTotal)).Length);
+                this.clearData =
+                    new Dictionary<RouteWithTotal, IClearData>(Enum.GetValues(typeof(RouteWithTotal)).Length);
             }
 
             public Header Header { get; private set; }
 
-            public Dictionary<RouteWithTotal, ClearData> ClearData { get; private set; }
+            public IReadOnlyDictionary<RouteWithTotal, IClearData> ClearData => this.clearData;
 
             public ICardData CardData { get; private set; }
 
@@ -961,10 +963,10 @@ namespace ThScoreFileConverter.Models
 
             public void Set(Header header) => this.Header = header;
 
-            public void Set(ClearData data)
+            public void Set(IClearData data)
             {
-                if (!this.ClearData.ContainsKey(data.Route))
-                    this.ClearData.Add(data.Route, data);
+                if (!this.clearData.ContainsKey(data.Route))
+                    this.clearData.Add(data.Route, data);
             }
 
             public void Set(ICardData data) => this.CardData = data;
@@ -980,7 +982,7 @@ namespace ThScoreFileConverter.Models
                 => base.IsValid && this.Signature.Equals(ValidSignature, StringComparison.Ordinal);
         }
 
-        private class ClearData : Th10.Chapter   // per route
+        private class ClearData : Th10.Chapter, IClearData  // per route
         {
             public const string ValidSignature = "CR";
             public const ushort ValidVersion = 0x0003;
@@ -990,47 +992,35 @@ namespace ThScoreFileConverter.Models
                 : base(chapter, ValidSignature, ValidVersion, ValidSize)
             {
                 var levels = Utils.GetEnumerator<Level>();
-                var numLevels = levels.Count();
-                this.Rankings = new Dictionary<Level, ScoreData[]>(numLevels);
-                this.ClearCounts = new Dictionary<Level, int>(numLevels);
 
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
                     this.Route = (RouteWithTotal)reader.ReadInt32();
 
-                    foreach (var level in levels)
-                    {
-                        if (!this.Rankings.ContainsKey(level))
-                            this.Rankings.Add(level, new ScoreData[10]);
-                        for (var rank = 0; rank < 10; rank++)
+                    this.Rankings = levels.ToDictionary(
+                        level => level,
+                        _ => Enumerable.Range(0, 10).Select(rank =>
                         {
                             var score = new ScoreData();
                             score.ReadFrom(reader);
-                            this.Rankings[level][rank] = score;
-                        }
-                    }
+                            return score;
+                        }).ToList() as IReadOnlyList<Th10.IScoreData<StageProgress>>);
 
                     this.TotalPlayCount = reader.ReadInt32();
                     this.PlayTime = reader.ReadInt32();
-
-                    foreach (var level in levels)
-                    {
-                        var clearCount = reader.ReadInt32();
-                        if (!this.ClearCounts.ContainsKey(level))
-                            this.ClearCounts.Add(level, clearCount);
-                    }
+                    this.ClearCounts = levels.ToDictionary(level => level, _ => reader.ReadInt32());
                 }
             }
 
             public RouteWithTotal Route { get; }
 
-            public Dictionary<Level, ScoreData[]> Rankings { get; }
+            public IReadOnlyDictionary<Level, IReadOnlyList<Th10.IScoreData<StageProgress>>> Rankings { get; }
 
             public int TotalPlayCount { get; }
 
             public int PlayTime { get; }    // = seconds * 60fps
 
-            public Dictionary<Level, int> ClearCounts { get; }
+            public IReadOnlyDictionary<Level, int> ClearCounts { get; }
 
             public static bool CanInitialize(Th10.Chapter chapter)
             {
