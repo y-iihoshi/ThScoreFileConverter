@@ -3,6 +3,8 @@ using System.Diagnostics.CodeAnalysis;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ThScoreFileConverterTests.Models.Th07.Stubs;
+using ClearDataStub = ThScoreFileConverterTests.Models.Th06.Stubs.ClearDataStub<
+    ThScoreFileConverter.Models.Th07.Chara, ThScoreFileConverter.Models.Th07.Level>;
 
 namespace ThScoreFileConverterTests.Models.Th07
 {

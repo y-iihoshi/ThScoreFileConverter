@@ -7,16 +7,19 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
 using System.Collections.Generic;
 
 namespace ThScoreFileConverter.Models.Th06
 {
-    internal interface IClearData : IChapter
+    internal interface IClearData<TChara, TLevel> : IChapter
+        where TChara : struct, Enum
+        where TLevel : struct, Enum
     {
-        Chara Chara { get; }
+        TChara Chara { get; }
 
-        IReadOnlyDictionary<Level, byte> PracticeFlags { get; }
+        IReadOnlyDictionary<TLevel, byte> PracticeFlags { get; }
 
-        IReadOnlyDictionary<Level, byte> StoryFlags { get; }
+        IReadOnlyDictionary<TLevel, byte> StoryFlags { get; }
     }
 }

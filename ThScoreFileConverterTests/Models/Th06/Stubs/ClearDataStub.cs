@@ -1,15 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th06;
 
 namespace ThScoreFileConverterTests.Models.Th06.Stubs
 {
-    internal class ClearDataStub : IClearData
+    internal class ClearDataStub<TChara, TLevel> : IClearData<TChara, TLevel>
+        where TChara : struct, Enum
+        where TLevel : struct, Enum
     {
         public ClearDataStub() { }
 
-        public ClearDataStub(IClearData clearData)
+        public ClearDataStub(IClearData<TChara, TLevel> clearData)
             : this()
         {
             this.Chara = clearData.Chara;
@@ -21,11 +23,11 @@ namespace ThScoreFileConverterTests.Models.Th06.Stubs
             this.Size2 = clearData.Size2;
         }
 
-        public Chara Chara { get; set; }
+        public TChara Chara { get; set; }
 
-        public IReadOnlyDictionary<Level, byte> PracticeFlags { get; set; }
+        public IReadOnlyDictionary<TLevel, byte> PracticeFlags { get; set; }
 
-        public IReadOnlyDictionary<Level, byte> StoryFlags { get; set; }
+        public IReadOnlyDictionary<TLevel, byte> StoryFlags { get; set; }
 
         public byte FirstByteOfData { get; set; }
 

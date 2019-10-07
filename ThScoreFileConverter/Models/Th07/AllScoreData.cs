@@ -10,6 +10,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using IClearData = ThScoreFileConverter.Models.Th06.IClearData<
+    ThScoreFileConverter.Models.Th07.Chara,
+    ThScoreFileConverter.Models.Th07.Level>;
 using IHighScore = ThScoreFileConverter.Models.Th07.IHighScore<
     ThScoreFileConverter.Models.Th07.Chara,
     ThScoreFileConverter.Models.Th07.Level,

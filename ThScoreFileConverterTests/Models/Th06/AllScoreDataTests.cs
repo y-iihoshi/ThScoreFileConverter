@@ -4,6 +4,8 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th06;
 using ThScoreFileConverterTests.Models.Th06.Stubs;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
+using ClearDataStub = ThScoreFileConverterTests.Models.Th06.Stubs.ClearDataStub<
+    ThScoreFileConverter.Models.Th06.Chara, ThScoreFileConverter.Models.Level>;
 
 namespace ThScoreFileConverterTests.Models.Th06
 {

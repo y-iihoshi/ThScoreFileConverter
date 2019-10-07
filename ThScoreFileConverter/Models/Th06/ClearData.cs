@@ -14,7 +14,7 @@ using System.Linq;
 
 namespace ThScoreFileConverter.Models.Th06
 {
-    internal class ClearData : Chapter, IClearData  // per character
+    internal class ClearData : Chapter, IClearData<Chara, Level>    // per character
     {
         public const string ValidSignature = "CLRD";
         public const short ValidSize = 0x0018;
