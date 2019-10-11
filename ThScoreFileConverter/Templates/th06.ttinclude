@@ -2,6 +2,7 @@
 <#@ assembly name="$(TargetPath)" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
+<#@ import namespace="ThScoreFileConverter.Extensions" #>
 <#@ import namespace="ThScoreFileConverter.Models" #>
 <#@ import namespace="ThScoreFileConverter.Models.Th06" #>
 <#
