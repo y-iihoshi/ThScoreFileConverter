@@ -418,7 +418,7 @@ namespace ThScoreFileConverter.Models
         }
 
         [Flags]
-        private enum PlayableStages
+        public enum PlayableStages
         {
             Stage1   = 0x0001,
             Stage2   = 0x0002,
@@ -1094,14 +1094,15 @@ namespace ThScoreFileConverter.Models
         private class AllScoreData
         {
             private readonly Dictionary<(Chara, Level), IReadOnlyList<IHighScore<Chara, Level, StageProgress>>> rankings;
+            private readonly Dictionary<CharaWithTotal, IClearData> clearData;
 
             public AllScoreData()
             {
                 var numCharas = Enum.GetValues(typeof(Chara)).Length;
                 var numPairs = numCharas * Enum.GetValues(typeof(Level)).Length;
                 this.rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>(numPairs);
-                this.ClearData =
-                    new Dictionary<CharaWithTotal, ClearData>(Enum.GetValues(typeof(CharaWithTotal)).Length);
+                this.clearData =
+                    new Dictionary<CharaWithTotal, IClearData>(Enum.GetValues(typeof(CharaWithTotal)).Length);
                 this.CardAttacks = new Dictionary<int, CardAttack>(CardTable.Count);
                 this.PracticeScores = new Dictionary<Chara, PracticeScore>(numCharas);
             }
@@ -1110,7 +1111,7 @@ namespace ThScoreFileConverter.Models
 
             public IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> Rankings => this.rankings;
 
-            public Dictionary<CharaWithTotal, ClearData> ClearData { get; private set; }
+            public IReadOnlyDictionary<CharaWithTotal, IClearData> ClearData => this.clearData;
 
             public Dictionary<int, CardAttack> CardAttacks { get; private set; }
 
@@ -1138,10 +1139,10 @@ namespace ThScoreFileConverter.Models
                 this.rankings[key] = ranking;
             }
 
-            public void Set(ClearData data)
+            public void Set(IClearData data)
             {
-                if (!this.ClearData.ContainsKey(data.Chara))
-                    this.ClearData.Add(data.Chara, data);
+                if (!this.clearData.ContainsKey(data.Chara))
+                    this.clearData.Add(data.Chara, data);
             }
 
             public void Set(CardAttack attack)
@@ -1256,7 +1257,7 @@ namespace ThScoreFileConverter.Models
             public IReadOnlyDictionary<int, byte> CardFlags { get; }
         }
 
-        private class ClearData : Th06.Chapter   // per character-with-total
+        private class ClearData : Th06.Chapter, IClearData  // per character-with-total
         {
             public const string ValidSignature = "CLRD";
             public const short ValidSize = 0x0024;
@@ -1265,26 +1266,21 @@ namespace ThScoreFileConverter.Models
                 : base(chapter, ValidSignature, ValidSize)
             {
                 var levels = Utils.GetEnumerator<Level>();
-                var numLevels = levels.Count();
-                this.StoryFlags = new Dictionary<Level, PlayableStages>(numLevels);
-                this.PracticeFlags = new Dictionary<Level, PlayableStages>(numLevels);
 
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
                     reader.ReadUInt32();    // always 0x00000004?
-                    foreach (var level in levels)
-                        this.StoryFlags.Add(level, (PlayableStages)reader.ReadUInt16());
-                    foreach (var level in levels)
-                        this.PracticeFlags.Add(level, (PlayableStages)reader.ReadUInt16());
+                    this.StoryFlags = levels.ToDictionary(level => level, _ => (PlayableStages)reader.ReadUInt16());
+                    this.PracticeFlags = levels.ToDictionary(level => level, _ => (PlayableStages)reader.ReadUInt16());
                     reader.ReadByte();      // always 0x00?
                     this.Chara = Utils.ToEnum<CharaWithTotal>(reader.ReadByte());
                     reader.ReadUInt16();    // always 0x0000?
                 }
             }
 
-            public Dictionary<Level, PlayableStages> StoryFlags { get; }    // really...?
+            public IReadOnlyDictionary<Level, PlayableStages> StoryFlags { get; }    // really...?
 
-            public Dictionary<Level, PlayableStages> PracticeFlags { get; } // really...?
+            public IReadOnlyDictionary<Level, PlayableStages> PracticeFlags { get; } // really...?
 
             public CharaWithTotal Chara { get; }
         }

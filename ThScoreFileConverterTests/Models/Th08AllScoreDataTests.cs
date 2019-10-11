@@ -99,21 +99,21 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th08AllScoreDataSetClearDataTest() => TestUtils.Wrap(() =>
         {
-            var properties = Th08ClearDataTests.ValidProperties;
-            var chapter = ChapterWrapper.Create(Th08ClearDataTests.MakeByteArray(properties));
+            var stub = Th08ClearDataTests.ValidStub;
+            var chapter = ChapterWrapper.Create(Th08ClearDataTests.MakeByteArray(stub));
             var clearData = new Th08ClearDataWrapper(chapter);
 
             var allScoreData = new Th08AllScoreDataWrapper();
             allScoreData.Set(clearData);
 
-            Assert.AreSame(clearData.Target, allScoreData.ClearDataItem(properties.chara).Target);
+            Assert.AreSame(clearData.Target, allScoreData.ClearDataItem(stub.Chara).Target);
         });
 
         [TestMethod]
         public void Th08AllScoreDataSetClearDataTestTwice() => TestUtils.Wrap(() =>
         {
-            var properties = Th08ClearDataTests.ValidProperties;
-            var chapter = ChapterWrapper.Create(Th08ClearDataTests.MakeByteArray(properties));
+            var stub = Th08ClearDataTests.ValidStub;
+            var chapter = ChapterWrapper.Create(Th08ClearDataTests.MakeByteArray(stub));
             var clearData1 = new Th08ClearDataWrapper(chapter);
             var clearData2 = new Th08ClearDataWrapper(chapter);
 
@@ -121,8 +121,8 @@ namespace ThScoreFileConverterTests.Models
             allScoreData.Set(clearData1);
             allScoreData.Set(clearData2);
 
-            Assert.AreSame(clearData1.Target, allScoreData.ClearDataItem(properties.chara).Target);
-            Assert.AreNotSame(clearData2.Target, allScoreData.ClearDataItem(properties.chara).Target);
+            Assert.AreSame(clearData1.Target, allScoreData.ClearDataItem(stub.Chara).Target);
+            Assert.AreNotSame(clearData2.Target, allScoreData.ClearDataItem(stub.Chara).Target);
         });
 
         [TestMethod]
