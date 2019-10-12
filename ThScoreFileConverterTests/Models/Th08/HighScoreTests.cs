@@ -19,7 +19,7 @@ namespace ThScoreFileConverterTests.Models.Th08
     [TestClass]
     public class HighScoreTests
     {
-        internal static HighScoreStub ValidStub => new HighScoreStub()
+        internal static HighScoreStub ValidStub { get; } = new HighScoreStub()
         {
             Signature = "HSCR",
             Size1 = 0x0168,
@@ -41,9 +41,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             PauseCount = 3,
             TimePoint = 65432,
             HumanRate = 7890,
-            CardFlags = TestUtils.MakeRandomArray<byte>(222)
-                .Select((value, index) => new { index, value })
-                .ToDictionary(pair => pair.index, pair => pair.value)
+            CardFlags = Enumerable.Range(1, 222).ToDictionary(id => id, id => (byte)((id == 3) || (id == 7) ? id : 0)),
         };
 
         internal static byte[] MakeByteArray(IHighScore highScore)

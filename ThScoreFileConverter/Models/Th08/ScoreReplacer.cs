@@ -31,16 +31,19 @@ namespace ThScoreFileConverter.Models.Th08
 
         public ScoreReplacer(IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> rankings)
         {
+            if (rankings is null)
+                throw new ArgumentNullException(nameof(rankings));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var level = LevelParser.Parse(match.Groups[1].Value);
                 var chara = CharaParser.Parse(match.Groups[2].Value);
-                var rank = Utils.ToZeroBased(
-                    int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
+                var rank = Utils.ToZeroBased(int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
                 var type = match.Groups[4].Value.ToUpperInvariant();
 
                 var key = (chara, level);
-                var score = rankings.ContainsKey(key) ? rankings[key][rank] : Definitions.InitialRanking[rank];
+                var score = (rankings.TryGetValue(key, out var ranking) && (rank < ranking.Count))
+                    ? ranking[rank] : Definitions.InitialRanking[rank];
                 IEnumerable<string> cardStrings;
 
                 switch (type)
@@ -80,17 +83,14 @@ namespace ThScoreFileConverter.Models.Th08
                     case "E":   // human rate
                         return Utils.Format("{0:F2}%", score.HumanRate / 100.0);
                     case "F":   // got spell cards
-                        cardStrings = score.CardFlags
-                            .Where(pair => pair.Value > 0)
-                            .Select(pair =>
-                            {
-                                return Definitions.CardTable.TryGetValue(pair.Key, out var card)
-                                    ? Utils.Format("No.{0:D3} {1}", card.Id, card.Name) : string.Empty;
-                            });
+                        cardStrings = score.CardFlags.Where(pair => pair.Value > 0).Select(pair =>
+                        {
+                            return Definitions.CardTable.TryGetValue(pair.Key, out var card)
+                                ? Utils.Format("No.{0:D3} {1}", card.Id, card.Name) : string.Empty;
+                        });
                         return string.Join(Environment.NewLine, cardStrings.ToArray());
                     case "G":   // number of got spell cards
-                        return score.CardFlags.Values.Count(flag => flag > 0)
-                            .ToString(CultureInfo.CurrentCulture);
+                        return score.CardFlags.Values.Count(flag => flag > 0).ToString(CultureInfo.CurrentCulture);
                     default:    // unreachable
                         return match.ToString();
                 }
