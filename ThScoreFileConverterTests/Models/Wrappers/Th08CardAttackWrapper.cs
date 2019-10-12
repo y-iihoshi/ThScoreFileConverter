@@ -37,12 +37,12 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.CardId)) as short?;
         public Th08Converter.LevelPracticeWithTotal? Level
             => this.pobj.GetProperty(nameof(this.Level)) as Th08Converter.LevelPracticeWithTotal?;
-        public IReadOnlyCollection<byte> CardName
-            => this.pobj.GetProperty(nameof(this.CardName)) as byte[];
-        public IReadOnlyCollection<byte> EnemyName
-            => this.pobj.GetProperty(nameof(this.EnemyName)) as byte[];
-        public IReadOnlyCollection<byte> Comment
-            => this.pobj.GetProperty(nameof(this.Comment)) as byte[];
+        public IEnumerable<byte> CardName
+            => this.pobj.GetProperty(nameof(this.CardName)) as IEnumerable<byte>;
+        public IEnumerable<byte> EnemyName
+            => this.pobj.GetProperty(nameof(this.EnemyName)) as IEnumerable<byte>;
+        public IEnumerable<byte> Comment
+            => this.pobj.GetProperty(nameof(this.Comment)) as IEnumerable<byte>;
         public Th08CardAttackCareerWrapper StoryCareer
             => new Th08CardAttackCareerWrapper(this.pobj.GetProperty(nameof(this.StoryCareer)));
         public Th08CardAttackCareerWrapper PracticeCareer

@@ -729,8 +729,8 @@ namespace ThScoreFileConverter.Models
                     var chara = CharaWithTotalParser.Parse(match.Groups[3].Value);
                     var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
-                    Func<CardAttack, bool> isValidLevel;
-                    Func<CardAttack, ICardAttackCareer> getCareer;
+                    Func<ICardAttack, bool> isValidLevel;
+                    Func<ICardAttack, ICardAttackCareer> getCareer;
                     if (kind == "S")
                     {
                         isValidLevel = (attack => CardTable[attack.CardId].Level != LevelPractice.LastWord);
@@ -742,7 +742,7 @@ namespace ThScoreFileConverter.Models
                         getCareer = (attack => attack.PracticeCareer);
                     }
 
-                    Func<CardAttack, long> getValue;
+                    Func<ICardAttack, long> getValue;
                     if (type == 1)
                         getValue = (attack => getCareer(attack).MaxBonuses[chara]);
                     else if (type == 2)
@@ -757,7 +757,7 @@ namespace ThScoreFileConverter.Models
                     }
                     else if (CardTable.ContainsKey(number))
                     {
-                        if (parent.allScoreData.CardAttacks.TryGetValue(number, out CardAttack attack))
+                        if (parent.allScoreData.CardAttacks.TryGetValue(number, out var attack))
                         {
                             return isValidLevel(attack)
                                 ? Utils.ToNumberString(getValue(attack)) : match.ToString();
@@ -798,7 +798,7 @@ namespace ThScoreFileConverter.Models
                     {
                         if (hideUntriedCards)
                         {
-                            if (!parent.allScoreData.CardAttacks.TryGetValue(number, out CardAttack attack) ||
+                            if (!parent.allScoreData.CardAttacks.TryGetValue(number, out var attack) ||
                                 !attack.HasTried())
                                 return (type == "N") ? "??????????" : "?????";
                         }
@@ -837,7 +837,7 @@ namespace ThScoreFileConverter.Models
                 StageWithTotalParser.Pattern);
 
             [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-            private static readonly Func<CardAttack, CharaWithTotal, string, int, bool> FindByKindTypeImpl =
+            private static readonly Func<ICardAttack, CharaWithTotal, string, int, bool> FindByKindTypeImpl =
                 (attack, chara, kind, type) =>
                 {
                     Func<ICardAttackCareer, int> getCount;
@@ -875,16 +875,16 @@ namespace ThScoreFileConverter.Models
                     if ((kind == "S") && (level == LevelPracticeWithTotal.LastWord))
                         return match.ToString();
 
-                    Func<CardAttack, bool> findByKindType =
+                    Func<ICardAttack, bool> findByKindType =
                         (attack => FindByKindTypeImpl(attack, chara, kind, type));
 
-                    Func<CardAttack, bool> findByStage;
+                    Func<ICardAttack, bool> findByStage;
                     if (stage == StageWithTotal.Total)
                         findByStage = (attack => true);
                     else
                         findByStage = (attack => CardTable[attack.CardId].Stage == (StagePractice)stage);
 
-                    Func<CardAttack, bool> findByLevel = (attack => true);
+                    Func<ICardAttack, bool> findByLevel = (attack => true);
                     switch (level)
                     {
                         case LevelPracticeWithTotal.Total:
@@ -1103,7 +1103,7 @@ namespace ThScoreFileConverter.Models
                 this.rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>(numPairs);
                 this.clearData =
                     new Dictionary<CharaWithTotal, IClearData>(Enum.GetValues(typeof(CharaWithTotal)).Length);
-                this.CardAttacks = new Dictionary<int, CardAttack>(CardTable.Count);
+                this.CardAttacks = new Dictionary<int, ICardAttack>(CardTable.Count);
                 this.PracticeScores = new Dictionary<Chara, PracticeScore>(numCharas);
             }
 
@@ -1113,7 +1113,7 @@ namespace ThScoreFileConverter.Models
 
             public IReadOnlyDictionary<CharaWithTotal, IClearData> ClearData => this.clearData;
 
-            public Dictionary<int, CardAttack> CardAttacks { get; private set; }
+            public Dictionary<int, ICardAttack> CardAttacks { get; private set; }
 
             public Dictionary<Chara, PracticeScore> PracticeScores { get; private set; }
 
@@ -1145,7 +1145,7 @@ namespace ThScoreFileConverter.Models
                     this.clearData.Add(data.Chara, data);
             }
 
-            public void Set(CardAttack attack)
+            public void Set(ICardAttack attack)
             {
                 if (!this.CardAttacks.ContainsKey(attack.CardId))
                     this.CardAttacks.Add(attack.CardId, attack);
@@ -1285,7 +1285,7 @@ namespace ThScoreFileConverter.Models
             public CharaWithTotal Chara { get; }
         }
 
-        private class CardAttack : Th06.Chapter      // per card
+        private class CardAttack : Th06.Chapter, ICardAttack      // per card
         {
             public const string ValidSignature = "CATK";
             public const short ValidSize = 0x022C;
@@ -1318,14 +1318,11 @@ namespace ThScoreFileConverter.Models
 
             public LevelPracticeWithTotal Level { get; }
 
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] CardName { get; }
+            public IEnumerable<byte> CardName { get; }
 
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] EnemyName { get; }
+            public IEnumerable<byte> EnemyName { get; }
 
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] Comment { get; }  // Should be splitted by '\0'
+            public IEnumerable<byte> Comment { get; }  // Should be splitted by '\0'
 
             public ICardAttackCareer StoryCareer => this.storyCareer;
 
