@@ -1414,8 +1414,6 @@ namespace ThScoreFileConverter.Models
             {
                 var levels = Utils.GetEnumerator<Level>();
                 var numLevels = levels.Count();
-                this.PlayCounts = new Dictionary<Level, PlayCount>(numLevels);
-                this.TotalPlayCount = new PlayCount();
 
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
@@ -1431,16 +1429,17 @@ namespace ThScoreFileConverter.Models
                     milliseconds = reader.ReadInt32();
                     this.TotalPlayTime = new Time(hours, minutes, seconds, milliseconds, false);
 
-                    foreach (var level in levels)
+                    var playCounts = Utils.GetEnumerator<LevelPracticeWithTotal>().ToDictionary(level => level, _ =>
                     {
                         var playCount = new PlayCount();
                         playCount.ReadFrom(reader);
-                        if (!this.PlayCounts.ContainsKey(level))
-                            this.PlayCounts.Add(level, playCount);
-                    }
+                        return playCount as IPlayCount;
+                    });
+                    this.PlayCounts = playCounts
+                        .Where(pair => Enum.IsDefined(typeof(Level), (int)pair.Key))
+                        .ToDictionary(pair => (Level)pair.Key, pair => pair.Value);
+                    this.TotalPlayCount = playCounts[LevelPracticeWithTotal.Total];
 
-                    new PlayCount().ReadFrom(reader);   // always all 0?
-                    this.TotalPlayCount.ReadFrom(reader);
                     this.BgmFlags = reader.ReadExactBytes(21);
                     reader.ReadExactBytes(11);
                 }
@@ -1450,21 +1449,19 @@ namespace ThScoreFileConverter.Models
 
             public Time TotalPlayTime { get; }
 
-            public Dictionary<Level, PlayCount> PlayCounts { get; }
+            public IReadOnlyDictionary<Level, IPlayCount> PlayCounts { get; }
 
-            public PlayCount TotalPlayCount { get; }
+            public IPlayCount TotalPlayCount { get; }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public byte[] BgmFlags { get; }
         }
 
-        private class PlayCount : IBinaryReadable   // per level-with-total
+        private class PlayCount : IBinaryReadable, IPlayCount   // per level-with-total
         {
-            public PlayCount() => this.Trials = new Dictionary<Chara, int>(Enum.GetValues(typeof(Chara)).Length);
-
             public int TotalTrial { get; private set; }
 
-            public Dictionary<Chara, int> Trials { get; private set; }
+            public IReadOnlyDictionary<Chara, int> Trials { get; private set; }
 
             public int TotalClear { get; private set; }
 
@@ -1478,8 +1475,7 @@ namespace ThScoreFileConverter.Models
                     throw new ArgumentNullException(nameof(reader));
 
                 this.TotalTrial = reader.ReadInt32();
-                foreach (var chara in Utils.GetEnumerator<Chara>())
-                    this.Trials.Add(chara, reader.ReadInt32());
+                this.Trials = Utils.GetEnumerator<Chara>().ToDictionary(chara => chara, _ => reader.ReadInt32());
                 reader.ReadUInt32();    // always 0x00000000?
                 this.TotalClear = reader.ReadInt32();
                 this.TotalContinue = reader.ReadInt32();

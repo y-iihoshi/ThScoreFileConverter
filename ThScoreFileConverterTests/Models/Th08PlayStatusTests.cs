@@ -5,8 +5,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
+using ThScoreFileConverterTests.Models.Th08.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -21,8 +23,8 @@ namespace ThScoreFileConverterTests.Models
             public short size2;
             public Time totalRunningTime;
             public Time totalPlayTime;
-            public Dictionary<Level, Th08PlayCountTests.Properties> playCounts;
-            public Th08PlayCountTests.Properties totalPlayCount;
+            public Dictionary<Level, IPlayCount> playCounts;
+            public IPlayCount totalPlayCount;
             public byte[] bgmFlags;
         };
 
@@ -36,8 +38,8 @@ namespace ThScoreFileConverterTests.Models
             playCounts = Utils.GetEnumerator<Level>()
                 .ToDictionary(
                     level => level,
-                    level => new Th08PlayCountTests.Properties(Th08PlayCountTests.ValidProperties)),
-            totalPlayCount = new Th08PlayCountTests.Properties(Th08PlayCountTests.ValidProperties),
+                    level => new PlayCountStub(Th08PlayCountTests.ValidStub) as IPlayCount),
+            totalPlayCount = new PlayCountStub(Th08PlayCountTests.ValidStub),
             bgmFlags = TestUtils.MakeRandomArray<byte>(21)
         };
 
@@ -53,7 +55,7 @@ namespace ThScoreFileConverterTests.Models
                 properties.totalPlayTime.Seconds,
                 properties.totalPlayTime.Milliseconds,
                 properties.playCounts.SelectMany(pair => Th08PlayCountTests.MakeByteArray(pair.Value)).ToArray(),
-                Th08PlayCountTests.MakeByteArray(Th08PlayCountTests.ValidProperties),
+                Th08PlayCountTests.MakeByteArray(Th08PlayCountTests.ValidStub),
                 Th08PlayCountTests.MakeByteArray(properties.totalPlayCount),
                 properties.bgmFlags,
                 new byte[11]);
@@ -84,10 +86,10 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var key in properties.playCounts.Keys)
             {
-                Th08PlayCountTests.Validate(playStatus.PlayCountsItem(key), properties.playCounts[key]);
+                Th08PlayCountTests.Validate(properties.playCounts[key], playStatus.PlayCountsItem(key));
             }
 
-            Th08PlayCountTests.Validate(playStatus.TotalPlayCount, properties.totalPlayCount);
+            Th08PlayCountTests.Validate(properties.totalPlayCount, playStatus.TotalPlayCount);
             CollectionAssert.That.AreEqual(properties.bgmFlags, playStatus.BgmFlags);
         }
 

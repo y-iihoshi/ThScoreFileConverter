@@ -50,7 +50,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public int? TotalTrial
             => this.pobj.GetProperty(nameof(this.TotalTrial)) as int?;
         public IReadOnlyDictionary<Th08Converter.Chara, int> Trials
-            => this.pobj.GetProperty(nameof(this.Trials)) as Dictionary<Th08Converter.Chara, int>;
+            => this.pobj.GetProperty(nameof(this.Trials)) as IReadOnlyDictionary<Th08Converter.Chara, int>;
         public int? TotalClear
             => this.pobj.GetProperty(nameof(this.TotalClear)) as int?;
         public int? TotalContinue
