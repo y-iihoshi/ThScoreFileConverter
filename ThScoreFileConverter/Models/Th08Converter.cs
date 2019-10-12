@@ -18,6 +18,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th08;
+using static ThScoreFileConverter.Models.Th08.Parsers;
 using CardInfo = ThScoreFileConverter.Models.SpellCardInfo<
     ThScoreFileConverter.Models.Th08.StagePractice, ThScoreFileConverter.Models.Th08.LevelPractice>;
 using IHighScore = ThScoreFileConverter.Models.Th08.IHighScore<
@@ -274,21 +275,6 @@ namespace ThScoreFileConverter.Models
                 new HighScore( 20000),
                 new HighScore( 10000),
             };
-
-        private static readonly EnumShortNameParser<LevelPracticeWithTotal> LevelPracticeWithTotalParser =
-            new EnumShortNameParser<LevelPracticeWithTotal>();
-
-        private static readonly EnumShortNameParser<Chara> CharaParser =
-            new EnumShortNameParser<Chara>();
-
-        private static readonly EnumShortNameParser<CharaWithTotal> CharaWithTotalParser =
-            new EnumShortNameParser<CharaWithTotal>();
-
-        private static new readonly EnumShortNameParser<Th08.Stage> StageParser =
-            new EnumShortNameParser<Th08.Stage>();
-
-        private static new readonly EnumShortNameParser<Th08.StageWithTotal> StageWithTotalParser =
-            new EnumShortNameParser<Th08.StageWithTotal>();
 
         private AllScoreData allScoreData = null;
 
@@ -726,7 +712,7 @@ namespace ThScoreFileConverter.Models
                     var kind = match.Groups[1].Value.ToUpperInvariant();
                     var level = LevelPracticeWithTotalParser.Parse(match.Groups[2].Value);
                     var chara = CharaWithTotalParser.Parse(match.Groups[3].Value);
-                    var stage = StageWithTotalParser.Parse(match.Groups[4].Value);
+                    var stage = Parsers.StageWithTotalParser.Parse(match.Groups[4].Value);
                     var type = int.Parse(match.Groups[5].Value, CultureInfo.InvariantCulture);
 
                     if (stage == Th08.StageWithTotal.Extra)
@@ -915,7 +901,7 @@ namespace ThScoreFileConverter.Models
                 {
                     var level = LevelParser.Parse(match.Groups[1].Value);
                     var chara = CharaParser.Parse(match.Groups[2].Value);
-                    var stage = StageParser.Parse(match.Groups[3].Value);
+                    var stage = Parsers.StageParser.Parse(match.Groups[3].Value);
                     var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
                     if (level == Level.Extra)
