@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -16,129 +15,114 @@ namespace ThScoreFileConverterTests.Models
     [TestClass]
     public class Th08PlayStatusTests
     {
-        internal struct Properties
+        internal static PlayStatusStub ValidStub => new PlayStatusStub()
         {
-            public string signature;
-            public short size1;
-            public short size2;
-            public Time totalRunningTime;
-            public Time totalPlayTime;
-            public Dictionary<Level, IPlayCount> playCounts;
-            public IPlayCount totalPlayCount;
-            public byte[] bgmFlags;
-        };
-
-        internal static Properties ValidProperties => new Properties()
-        {
-            signature = "PLST",
-            size1 = 0x228,
-            size2 = 0x228,
-            totalRunningTime = new Time(12, 34, 56, 789, false),
-            totalPlayTime = new Time(23, 45, 19, 876, false),
-            playCounts = Utils.GetEnumerator<Level>()
+            Signature = "PLST",
+            Size1 = 0x228,
+            Size2 = 0x228,
+            TotalRunningTime = new Time(12, 34, 56, 789, false),
+            TotalPlayTime = new Time(23, 45, 19, 876, false),
+            PlayCounts = Utils.GetEnumerator<Level>()
                 .ToDictionary(
                     level => level,
                     level => new PlayCountStub(Th08PlayCountTests.ValidStub) as IPlayCount),
-            totalPlayCount = new PlayCountStub(Th08PlayCountTests.ValidStub),
-            bgmFlags = TestUtils.MakeRandomArray<byte>(21)
+            TotalPlayCount = new PlayCountStub(Th08PlayCountTests.ValidStub),
+            BgmFlags = TestUtils.MakeRandomArray<byte>(21)
         };
 
-        internal static byte[] MakeData(in Properties properties)
+        internal static byte[] MakeData(IPlayStatus status)
             => TestUtils.MakeByteArray(
                 0u,
-                (int)properties.totalRunningTime.Hours,
-                properties.totalRunningTime.Minutes,
-                properties.totalRunningTime.Seconds,
-                properties.totalRunningTime.Milliseconds,
-                (int)properties.totalPlayTime.Hours,
-                properties.totalPlayTime.Minutes,
-                properties.totalPlayTime.Seconds,
-                properties.totalPlayTime.Milliseconds,
-                properties.playCounts.SelectMany(pair => Th08PlayCountTests.MakeByteArray(pair.Value)).ToArray(),
+                (int)status.TotalRunningTime.Hours,
+                status.TotalRunningTime.Minutes,
+                status.TotalRunningTime.Seconds,
+                status.TotalRunningTime.Milliseconds,
+                (int)status.TotalPlayTime.Hours,
+                status.TotalPlayTime.Minutes,
+                status.TotalPlayTime.Seconds,
+                status.TotalPlayTime.Milliseconds,
+                status.PlayCounts.SelectMany(pair => Th08PlayCountTests.MakeByteArray(pair.Value)).ToArray(),
                 Th08PlayCountTests.MakeByteArray(Th08PlayCountTests.ValidStub),
-                Th08PlayCountTests.MakeByteArray(properties.totalPlayCount),
-                properties.bgmFlags,
+                Th08PlayCountTests.MakeByteArray(status.TotalPlayCount),
+                status.BgmFlags,
                 new byte[11]);
 
-        internal static byte[] MakeByteArray(in Properties properties)
+        internal static byte[] MakeByteArray(IPlayStatus status)
             => TestUtils.MakeByteArray(
-                properties.signature.ToCharArray(), properties.size1, properties.size2, MakeData(properties));
+                status.Signature.ToCharArray(), status.Size1, status.Size2, MakeData(status));
 
-        internal static void Validate(in Th08PlayStatusWrapper playStatus, in Properties properties)
+        internal static void Validate(IPlayStatus expected, in Th08PlayStatusWrapper actual)
         {
-            var data = MakeData(properties);
+            var data = MakeData(expected);
 
-            Assert.AreEqual(properties.signature, playStatus.Signature);
-            Assert.AreEqual(properties.size1, playStatus.Size1);
-            Assert.AreEqual(properties.size2, playStatus.Size2);
-            CollectionAssert.That.AreEqual(data, playStatus.Data);
-            Assert.AreEqual(data[0], playStatus.FirstByteOfData);
-            Assert.AreEqual(properties.totalRunningTime.Hours, playStatus.TotalRunningTime.Hours);
-            Assert.AreEqual(properties.totalRunningTime.Minutes, playStatus.TotalRunningTime.Minutes);
-            Assert.AreEqual(properties.totalRunningTime.Seconds, playStatus.TotalRunningTime.Seconds);
-            Assert.AreEqual(properties.totalRunningTime.Milliseconds, playStatus.TotalRunningTime.Milliseconds);
-            Assert.IsFalse(playStatus.TotalRunningTime.IsFrames);
-            Assert.AreEqual(properties.totalPlayTime.Hours, playStatus.TotalPlayTime.Hours);
-            Assert.AreEqual(properties.totalPlayTime.Minutes, playStatus.TotalPlayTime.Minutes);
-            Assert.AreEqual(properties.totalPlayTime.Seconds, playStatus.TotalPlayTime.Seconds);
-            Assert.AreEqual(properties.totalPlayTime.Milliseconds, playStatus.TotalPlayTime.Milliseconds);
-            Assert.IsFalse(playStatus.TotalPlayTime.IsFrames);
+            Assert.AreEqual(expected.Signature, actual.Signature);
+            Assert.AreEqual(expected.Size1, actual.Size1);
+            Assert.AreEqual(expected.Size2, actual.Size2);
+            CollectionAssert.That.AreEqual(data, actual.Data);
+            Assert.AreEqual(data[0], actual.FirstByteOfData);
+            Assert.AreEqual(expected.TotalRunningTime.Hours, actual.TotalRunningTime.Hours);
+            Assert.AreEqual(expected.TotalRunningTime.Minutes, actual.TotalRunningTime.Minutes);
+            Assert.AreEqual(expected.TotalRunningTime.Seconds, actual.TotalRunningTime.Seconds);
+            Assert.AreEqual(expected.TotalRunningTime.Milliseconds, actual.TotalRunningTime.Milliseconds);
+            Assert.IsFalse(actual.TotalRunningTime.IsFrames);
+            Assert.AreEqual(expected.TotalPlayTime.Hours, actual.TotalPlayTime.Hours);
+            Assert.AreEqual(expected.TotalPlayTime.Minutes, actual.TotalPlayTime.Minutes);
+            Assert.AreEqual(expected.TotalPlayTime.Seconds, actual.TotalPlayTime.Seconds);
+            Assert.AreEqual(expected.TotalPlayTime.Milliseconds, actual.TotalPlayTime.Milliseconds);
+            Assert.IsFalse(actual.TotalPlayTime.IsFrames);
 
-            foreach (var key in properties.playCounts.Keys)
+            foreach (var key in expected.PlayCounts.Keys)
             {
-                Th08PlayCountTests.Validate(properties.playCounts[key], playStatus.PlayCountsItem(key));
+                Th08PlayCountTests.Validate(expected.PlayCounts[key], actual.PlayCountsItem(key));
             }
 
-            Th08PlayCountTests.Validate(properties.totalPlayCount, playStatus.TotalPlayCount);
-            CollectionAssert.That.AreEqual(properties.bgmFlags, playStatus.BgmFlags);
+            Th08PlayCountTests.Validate(expected.TotalPlayCount, actual.TotalPlayCount);
+            CollectionAssert.That.AreEqual(expected.BgmFlags, actual.BgmFlags);
         }
 
         [TestMethod]
         public void Th08PlayStatusTestChapter() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
+            var stub = ValidStub;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
             var playStatus = new Th08PlayStatusWrapper(chapter);
 
-            Validate(playStatus, properties);
+            Validate(stub, playStatus);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "playStatus")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th08PlayStatusTestNullChapter() => TestUtils.Wrap(() =>
         {
-            var playStatus = new Th08PlayStatusWrapper(null);
+            _ = new Th08PlayStatusWrapper(null);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "playStatus")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th08PlayStatusTestInvalidSignature() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.signature = properties.signature.ToLowerInvariant();
+            var stub = new PlayStatusStub(ValidStub);
+            stub.Signature = stub.Signature.ToLowerInvariant();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var playStatus = new Th08PlayStatusWrapper(chapter);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new Th08PlayStatusWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "playStatus")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th08PlayStatusTestInvalidSize1() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            --properties.size1;
+            var stub = new PlayStatusStub(ValidStub);
+            --stub.Size1;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var playStatus = new Th08PlayStatusWrapper(chapter);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new Th08PlayStatusWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });

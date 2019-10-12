@@ -49,7 +49,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         //     => this.pobj.GetProperty(nameof(this.TotalPlayCounts)) as PlayCount;
         public Th08PlayCountWrapper TotalPlayCount
             => new Th08PlayCountWrapper(this.pobj.GetProperty(nameof(this.TotalPlayCount)));
-        public IReadOnlyCollection<byte> BgmFlags
-            => this.pobj.GetProperty(nameof(this.BgmFlags)) as byte[];
+        public IEnumerable<byte> BgmFlags
+            => this.pobj.GetProperty(nameof(this.BgmFlags)) as IEnumerable<byte>;
     }
 }

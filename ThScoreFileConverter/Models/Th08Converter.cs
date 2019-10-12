@@ -1121,7 +1121,7 @@ namespace ThScoreFileConverter.Models
 
             public FLSP Flsp { get; private set; }
 
-            public PlayStatus PlayStatus { get; private set; }
+            public IPlayStatus PlayStatus { get; private set; }
 
             public Th07.LastName LastName { get; private set; }
 
@@ -1161,7 +1161,7 @@ namespace ThScoreFileConverter.Models
 
             public void Set(FLSP flsp) => this.Flsp = flsp;
 
-            public void Set(PlayStatus status) => this.PlayStatus = status;
+            public void Set(IPlayStatus status) => this.PlayStatus = status;
 
             public void Set(Th07.LastName name) => this.LastName = name;
 
@@ -1404,7 +1404,7 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class PlayStatus : Th06.Chapter
+        private class PlayStatus : Th06.Chapter, IPlayStatus
         {
             public const string ValidSignature = "PLST";
             public const short ValidSize = 0x0228;
@@ -1453,8 +1453,7 @@ namespace ThScoreFileConverter.Models
 
             public IPlayCount TotalPlayCount { get; }
 
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] BgmFlags { get; }
+            public IEnumerable<byte> BgmFlags { get; }
         }
 
         private class PlayCount : IBinaryReadable, IPlayCount   // per level-with-total

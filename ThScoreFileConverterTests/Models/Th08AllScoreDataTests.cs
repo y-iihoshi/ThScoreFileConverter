@@ -216,7 +216,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th08AllScoreDataSetPlayStatusTest() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(
-                Th08PlayStatusTests.MakeByteArray(Th08PlayStatusTests.ValidProperties));
+                Th08PlayStatusTests.MakeByteArray(Th08PlayStatusTests.ValidStub));
             var header = new Th08PlayStatusWrapper(chapter);
 
             var allScoreData = new Th08AllScoreDataWrapper();
@@ -229,7 +229,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th08AllScoreDataSetPlayStatusTestTwice() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(
-                Th08PlayStatusTests.MakeByteArray(Th08PlayStatusTests.ValidProperties));
+                Th08PlayStatusTests.MakeByteArray(Th08PlayStatusTests.ValidStub));
             var header1 = new Th08PlayStatusWrapper(chapter);
             var header2 = new Th08PlayStatusWrapper(chapter);
 
