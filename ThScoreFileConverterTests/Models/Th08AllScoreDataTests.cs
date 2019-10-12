@@ -62,38 +62,32 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th08AllScoreDataSetHighScoreTest() => TestUtils.Wrap(() =>
         {
-            var stub = new HighScoreStub(HighScoreTests.ValidStub)
+            var score = new HighScoreStub(HighScoreTests.ValidStub)
             {
                 Score = 87654u,
             };
 
-            var chapter = ChapterWrapper.Create(HighScoreTests.MakeByteArray(stub));
-            var score = new HighScore(chapter.Target);
-
             var allScoreData = new Th08AllScoreDataWrapper();
             allScoreData.Set(score);
 
-            Assert.AreSame(score, allScoreData.Rankings[(stub.Chara, stub.Level)][2]);
+            Assert.AreSame(score, allScoreData.Rankings[(score.Chara, score.Level)][2]);
         });
 
         [TestMethod]
         public void Th08AllScoreDataSetHighScoreTestTwice() => TestUtils.Wrap(() =>
         {
-            var stub = new HighScoreStub(HighScoreTests.ValidStub)
+            var score1 = new HighScoreStub(HighScoreTests.ValidStub)
             {
                 Score = 87654u,
             };
-
-            var chapter = ChapterWrapper.Create(HighScoreTests.MakeByteArray(stub));
-            var score1 = new HighScore(chapter.Target);
-            var score2 = new HighScore(chapter.Target);
+            var score2 = new HighScoreStub(score1);
 
             var allScoreData = new Th08AllScoreDataWrapper();
             allScoreData.Set(score1);
             allScoreData.Set(score2);
 
-            Assert.AreSame(score1, allScoreData.Rankings[(stub.Chara, stub.Level)][2]);
-            Assert.AreSame(score2, allScoreData.Rankings[(stub.Chara, stub.Level)][3]);
+            Assert.AreSame(score1, allScoreData.Rankings[(score1.Chara, score1.Level)][2]);
+            Assert.AreSame(score2, allScoreData.Rankings[(score2.Chara, score2.Level)][3]);
         });
 
         [TestMethod]
