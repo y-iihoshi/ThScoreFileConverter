@@ -679,7 +679,7 @@ namespace ThScoreFileConverter.Models
                 @"%T08CRG([SP])({0})({1})({2})([12])",
                 LevelPracticeWithTotalParser.Pattern,
                 CharaWithTotalParser.Pattern,
-                StageWithTotalParser.Pattern);
+                Parsers.StageWithTotalParser.Pattern);
 
             [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
             private static readonly Func<ICardAttack, CharaWithTotal, string, int, bool> FindByKindTypeImpl =
@@ -891,7 +891,7 @@ namespace ThScoreFileConverter.Models
                 @"%T08PRAC({0})({1})({2})([12])",
                 LevelParser.Pattern,
                 CharaParser.Pattern,
-                StageParser.Pattern);
+                Parsers.StageParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
