@@ -1095,6 +1095,7 @@ namespace ThScoreFileConverter.Models
         {
             private readonly Dictionary<(Chara, Level), IReadOnlyList<IHighScore<Chara, Level, StageProgress>>> rankings;
             private readonly Dictionary<CharaWithTotal, IClearData> clearData;
+            private readonly Dictionary<int, ICardAttack> cardAttacks;
 
             public AllScoreData()
             {
@@ -1103,7 +1104,7 @@ namespace ThScoreFileConverter.Models
                 this.rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>(numPairs);
                 this.clearData =
                     new Dictionary<CharaWithTotal, IClearData>(Enum.GetValues(typeof(CharaWithTotal)).Length);
-                this.CardAttacks = new Dictionary<int, ICardAttack>(CardTable.Count);
+                this.cardAttacks = new Dictionary<int, ICardAttack>(CardTable.Count);
                 this.PracticeScores = new Dictionary<Chara, PracticeScore>(numCharas);
             }
 
@@ -1113,7 +1114,7 @@ namespace ThScoreFileConverter.Models
 
             public IReadOnlyDictionary<CharaWithTotal, IClearData> ClearData => this.clearData;
 
-            public Dictionary<int, ICardAttack> CardAttacks { get; private set; }
+            public IReadOnlyDictionary<int, ICardAttack> CardAttacks => this.cardAttacks;
 
             public Dictionary<Chara, PracticeScore> PracticeScores { get; private set; }
 
@@ -1147,8 +1148,8 @@ namespace ThScoreFileConverter.Models
 
             public void Set(ICardAttack attack)
             {
-                if (!this.CardAttacks.ContainsKey(attack.CardId))
-                    this.CardAttacks.Add(attack.CardId, attack);
+                if (!this.cardAttacks.ContainsKey(attack.CardId))
+                    this.cardAttacks.Add(attack.CardId, attack);
             }
 
             public void Set(PracticeScore score)
@@ -1285,7 +1286,7 @@ namespace ThScoreFileConverter.Models
             public CharaWithTotal Chara { get; }
         }
 
-        private class CardAttack : Th06.Chapter, ICardAttack      // per card
+        private class CardAttack : Th06.Chapter, ICardAttack    // per card
         {
             public const string ValidSignature = "CATK";
             public const short ValidSize = 0x022C;
