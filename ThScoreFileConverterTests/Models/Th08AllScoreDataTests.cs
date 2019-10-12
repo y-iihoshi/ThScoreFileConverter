@@ -21,7 +21,7 @@ namespace ThScoreFileConverterTests.Models
 
             Assert.IsNull(allScoreData.Header);
             Assert.AreEqual(0, allScoreData.Rankings.Count);
-            Assert.AreEqual(0, allScoreData.ClearDataCount);
+            Assert.AreEqual(0, allScoreData.ClearData.Count);
             Assert.AreEqual(0, allScoreData.CardAttacksCount);
             Assert.AreEqual(0, allScoreData.PracticeScoresCount);
             Assert.IsNull(allScoreData.Flsp);
@@ -93,30 +93,26 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th08AllScoreDataSetClearDataTest() => TestUtils.Wrap(() =>
         {
-            var stub = Th08ClearDataTests.ValidStub;
-            var chapter = ChapterWrapper.Create(Th08ClearDataTests.MakeByteArray(stub));
-            var clearData = new Th08ClearDataWrapper(chapter);
+            var clearData = ClearDataTests.ValidStub;
 
             var allScoreData = new Th08AllScoreDataWrapper();
             allScoreData.Set(clearData);
 
-            Assert.AreSame(clearData.Target, allScoreData.ClearDataItem(stub.Chara).Target);
+            Assert.AreSame(clearData, allScoreData.ClearData[clearData.Chara]);
         });
 
         [TestMethod]
         public void Th08AllScoreDataSetClearDataTestTwice() => TestUtils.Wrap(() =>
         {
-            var stub = Th08ClearDataTests.ValidStub;
-            var chapter = ChapterWrapper.Create(Th08ClearDataTests.MakeByteArray(stub));
-            var clearData1 = new Th08ClearDataWrapper(chapter);
-            var clearData2 = new Th08ClearDataWrapper(chapter);
+            var clearData1 = ClearDataTests.ValidStub;
+            var clearData2 = new ClearDataStub(clearData1);
 
             var allScoreData = new Th08AllScoreDataWrapper();
             allScoreData.Set(clearData1);
             allScoreData.Set(clearData2);
 
-            Assert.AreSame(clearData1.Target, allScoreData.ClearDataItem(stub.Chara).Target);
-            Assert.AreNotSame(clearData2.Target, allScoreData.ClearDataItem(stub.Chara).Target);
+            Assert.AreSame(clearData1, allScoreData.ClearData[clearData1.Chara]);
+            Assert.AreNotSame(clearData2, allScoreData.ClearData[clearData2.Chara]);
         });
 
         [TestMethod]

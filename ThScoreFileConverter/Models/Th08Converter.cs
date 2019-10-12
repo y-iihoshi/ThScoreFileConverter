@@ -766,34 +766,6 @@ namespace ThScoreFileConverter.Models
             public void Set(Th07.VersionInfo info) => this.VersionInfo = info;
         }
 
-        private class ClearData : Th06.Chapter, IClearData  // per character-with-total
-        {
-            public const string ValidSignature = "CLRD";
-            public const short ValidSize = 0x0024;
-
-            public ClearData(Th06.Chapter chapter)
-                : base(chapter, ValidSignature, ValidSize)
-            {
-                var levels = Utils.GetEnumerator<Level>();
-
-                using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-                {
-                    reader.ReadUInt32();    // always 0x00000004?
-                    this.StoryFlags = levels.ToDictionary(level => level, _ => (PlayableStages)reader.ReadUInt16());
-                    this.PracticeFlags = levels.ToDictionary(level => level, _ => (PlayableStages)reader.ReadUInt16());
-                    reader.ReadByte();      // always 0x00?
-                    this.Chara = Utils.ToEnum<CharaWithTotal>(reader.ReadByte());
-                    reader.ReadUInt16();    // always 0x0000?
-                }
-            }
-
-            public IReadOnlyDictionary<Level, PlayableStages> StoryFlags { get; }    // really...?
-
-            public IReadOnlyDictionary<Level, PlayableStages> PracticeFlags { get; } // really...?
-
-            public CharaWithTotal Chara { get; }
-        }
-
         private class CardAttack : Th06.Chapter, ICardAttack    // per card
         {
             public const string ValidSignature = "CATK";
