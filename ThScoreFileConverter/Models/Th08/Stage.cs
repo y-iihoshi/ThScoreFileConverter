@@ -16,49 +16,49 @@ namespace ThScoreFileConverter.Models.Th08
         /// Represents stage 1.
         /// </summary>
         [EnumAltName("1A")]
-        St1,
+        One,
 
         /// <summary>
         /// Represents stage 2.
         /// </summary>
         [EnumAltName("2A")]
-        St2,
+        Two,
 
         /// <summary>
         /// Represents stage 3.
         /// </summary>
         [EnumAltName("3A")]
-        St3,
+        Three,
 
         /// <summary>
         /// Represents stage 4 Uncanny.
         /// </summary>
         [EnumAltName("4A")]
-        St4A,
+        FourUncanny,
 
         /// <summary>
         /// Represents stage 4 Powerful.
         /// </summary>
         [EnumAltName("4B")]
-        St4B,
+        FourPowerful,
 
         /// <summary>
         /// Represents stage 5.
         /// </summary>
         [EnumAltName("5A")]
-        St5,
+        Five,
 
         /// <summary>
         /// Represents stage Final A.
         /// </summary>
         [EnumAltName("6A")]
-        St6A,
+        FinalA,
 
         /// <summary>
         /// Represents stage Final B.
         /// </summary>
         [EnumAltName("6B")]
-        St6B,
+        FinalB,
 
         /// <summary>
         /// Represents Extra stage.

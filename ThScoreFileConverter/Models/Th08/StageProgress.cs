@@ -16,49 +16,49 @@ namespace ThScoreFileConverter.Models.Th08
         /// Lost at stage 1.
         /// </summary>
         [EnumAltName("Stage 1")]
-        St1,
+        One,
 
         /// <summary>
         /// Lost at stage 2.
         /// </summary>
         [EnumAltName("Stage 2")]
-        St2,
+        Two,
 
         /// <summary>
         /// Lost at stage 3.
         /// </summary>
         [EnumAltName("Stage 3")]
-        St3,
+        Three,
 
         /// <summary>
         /// Lost at stage 4 Uncanny.
         /// </summary>
         [EnumAltName("Stage 4-uncanny")]
-        St4A,
+        FourUncanny,
 
         /// <summary>
         /// Lost at stage 4 Powerful.
         /// </summary>
         [EnumAltName("Stage 4-powerful")]
-        St4B,
+        FourPowerful,
 
         /// <summary>
         /// Lost at stage 5.
         /// </summary>
         [EnumAltName("Stage 5")]
-        St5,
+        Five,
 
         /// <summary>
         /// Lost at stage Final A.
         /// </summary>
         [EnumAltName("Stage 6-Eirin")]
-        St6A,
+        FinalA,
 
         /// <summary>
         /// Lost at stage Final B.
         /// </summary>
         [EnumAltName("Stage 6-Kaguya")]
-        St6B,
+        FinalB,
 
         /// <summary>
         /// Lost at Extra stage.
