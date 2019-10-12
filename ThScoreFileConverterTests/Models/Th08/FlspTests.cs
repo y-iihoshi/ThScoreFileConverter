@@ -2,14 +2,13 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using ThScoreFileConverterTests.Extensions;
+using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
-using ThScoreFileConverterTests.Models.Wrappers;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th08
 {
     [TestClass]
-    public class Th08FlspTests
+    public class FlspTests
     {
         internal struct Properties
         {
@@ -25,73 +24,66 @@ namespace ThScoreFileConverterTests.Models
             size2 = 0x20
         };
 
-        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "properties")]
-#pragma warning disable IDE0060 // Remove unused parameter
-        internal static byte[] MakeData(in Properties properties)
-#pragma warning restore IDE0060 // Remove unused parameter
+        internal static byte[] MakeData(in Properties _)
             => TestUtils.MakeByteArray(new byte[0x18]);
 
         internal static byte[] MakeByteArray(in Properties properties)
             => TestUtils.MakeByteArray(
                 properties.signature.ToCharArray(), properties.size1, properties.size2, MakeData(properties));
 
-        internal static void Validate(in Th08FlspWrapper flsp, in Properties properties)
+        internal static void Validate(in Properties expected, in FLSP actual)
         {
-            var data = MakeData(properties);
+            var data = MakeData(expected);
 
-            Assert.AreEqual(properties.signature, flsp.Signature);
-            Assert.AreEqual(properties.size1, flsp.Size1);
-            Assert.AreEqual(properties.size2, flsp.Size2);
-            CollectionAssert.That.AreEqual(data, flsp.Data);
-            Assert.AreEqual(data[0], flsp.FirstByteOfData);
+            Assert.AreEqual(expected.signature, actual.Signature);
+            Assert.AreEqual(expected.size1, actual.Size1);
+            Assert.AreEqual(expected.size2, actual.Size2);
+            Assert.AreEqual(data[0], actual.FirstByteOfData);
         }
 
         [TestMethod]
-        public void Th08FlspTestChapter() => TestUtils.Wrap(() =>
+        public void FlspTestChapter() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var flsp = new Th08FlspWrapper(chapter);
+            var flsp = new FLSP(chapter.Target);
 
-            Validate(flsp, properties);
+            Validate(properties, flsp);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "flsp")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th08FlspTestNullChapter() => TestUtils.Wrap(() =>
+        public void FlspTestNullChapter() => TestUtils.Wrap(() =>
         {
-            var flsp = new Th08FlspWrapper(null);
+            _ = new FLSP(null);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "flsp")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th08FlspTestInvalidSignature() => TestUtils.Wrap(() =>
+        public void FlspTestInvalidSignature() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
             properties.signature = properties.signature.ToLowerInvariant();
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var flsp = new Th08FlspWrapper(chapter);
+            _ = new FLSP(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "flsp")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th08FlspTestInvalidSize1() => TestUtils.Wrap(() =>
+        public void FlspTestInvalidSize1() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
             --properties.size1;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var flsp = new Th08FlspWrapper(chapter);
+            var flsp = new FLSP(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });

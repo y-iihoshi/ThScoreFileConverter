@@ -41,16 +41,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.CardAttacks)) as IReadOnlyDictionary<int, ICardAttack>;
         public IReadOnlyDictionary<Chara, IPracticeScore> PracticeScores
             => this.pobj.GetProperty(nameof(this.PracticeScores)) as IReadOnlyDictionary<Chara, IPracticeScore>;
-
-        public Th08FlspWrapper Flsp
-        {
-            get
-            {
-                var flsp = this.pobj.GetProperty(nameof(this.Flsp));
-                return (flsp != null) ? new Th08FlspWrapper(flsp) : null;
-            }
-        }
-
+        public FLSP Flsp
+            => this.pobj.GetProperty(nameof(this.Flsp)) as FLSP;
         public IPlayStatus PlayStatus
             => this.pobj.GetProperty(nameof(this.PlayStatus)) as IPlayStatus;
         public LastName LastName
@@ -68,8 +60,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.Invoke(nameof(Set), new object[] { attack }, CultureInfo.InvariantCulture);
         public void Set(IPracticeScore score)
             => this.pobj.Invoke(nameof(Set), new object[] { score }, CultureInfo.InvariantCulture);
-        public void Set(Th08FlspWrapper flsp)
-            => this.pobj.Invoke(nameof(Set), new object[] { flsp.Target }, CultureInfo.InvariantCulture);
+        public void Set(FLSP flsp)
+            => this.pobj.Invoke(nameof(Set), new object[] { flsp }, CultureInfo.InvariantCulture);
         public void Set(IPlayStatus status)
             => this.pobj.Invoke(nameof(Set), new object[] { status }, CultureInfo.InvariantCulture);
         public void Set(LastName name)

@@ -169,29 +169,29 @@ namespace ThScoreFileConverterTests.Models
         public void Th08AllScoreDataSetFlspTest() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(
-                Th08FlspTests.MakeByteArray(Th08FlspTests.ValidProperties));
-            var header = new Th08FlspWrapper(chapter);
+                FlspTests.MakeByteArray(FlspTests.ValidProperties));
+            var flsp = new FLSP(chapter.Target);
 
             var allScoreData = new Th08AllScoreDataWrapper();
-            allScoreData.Set(header);
+            allScoreData.Set(flsp);
 
-            Assert.AreSame(header.Target, allScoreData.Flsp.Target);
+            Assert.AreSame(flsp, allScoreData.Flsp);
         });
 
         [TestMethod]
         public void Th08AllScoreDataSetFlspTestTwice() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(
-                Th08FlspTests.MakeByteArray(Th08FlspTests.ValidProperties));
-            var header1 = new Th08FlspWrapper(chapter);
-            var header2 = new Th08FlspWrapper(chapter);
+                FlspTests.MakeByteArray(FlspTests.ValidProperties));
+            var flsp1 = new FLSP(chapter.Target);
+            var flsp2 = new FLSP(chapter.Target);
 
             var allScoreData = new Th08AllScoreDataWrapper();
-            allScoreData.Set(header1);
-            allScoreData.Set(header2);
+            allScoreData.Set(flsp1);
+            allScoreData.Set(flsp2);
 
-            Assert.AreNotSame(header1.Target, allScoreData.Flsp.Target);
-            Assert.AreSame(header2.Target, allScoreData.Flsp.Target);
+            Assert.AreNotSame(flsp1, allScoreData.Flsp);
+            Assert.AreSame(flsp2, allScoreData.Flsp);
         });
 
         [TestMethod]

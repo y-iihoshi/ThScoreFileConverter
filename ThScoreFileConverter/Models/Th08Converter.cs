@@ -765,20 +765,5 @@ namespace ThScoreFileConverter.Models
 
             public void Set(Th07.VersionInfo info) => this.VersionInfo = info;
         }
-
-        private class FLSP : Th06.Chapter    // FIXME
-        {
-            public const string ValidSignature = "FLSP";
-            public const short ValidSize = 0x0020;
-
-            public FLSP(Th06.Chapter chapter)
-                : base(chapter, ValidSignature, ValidSize)
-            {
-                using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-                {
-                    reader.ReadExactBytes(0x18);
-                }
-            }
-        }
     }
 }
