@@ -11,6 +11,10 @@ using System.Collections.Generic;
 using System.Linq;
 using CardInfo = ThScoreFileConverter.Models.SpellCardInfo<
     ThScoreFileConverter.Models.Th08.StagePractice, ThScoreFileConverter.Models.Th08.LevelPractice>;
+using IHighScore = ThScoreFileConverter.Models.Th08.IHighScore<
+    ThScoreFileConverter.Models.Th08.Chara,
+    ThScoreFileConverter.Models.Level,
+    ThScoreFileConverter.Models.Th08.StageProgress>;
 
 namespace ThScoreFileConverter.Models.Th08
 {
@@ -244,5 +248,8 @@ namespace ThScoreFileConverter.Models.Th08
             new CardInfo(222, "「深弾幕結界　-夢幻泡影-」",               StagePractice.LastWord,     LevelPractice.LastWord),
 #pragma warning restore SA1008 // Opening parenthesis should be spaced correctly
         }.ToDictionary(card => card.Id);
+
+        public static IReadOnlyList<IHighScore> InitialRanking { get; } =
+            Enumerable.Range(1, 10).Reverse().Select(index => new HighScore((uint)index * 10000)).ToList();
     }
 }

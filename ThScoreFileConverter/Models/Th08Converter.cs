@@ -28,22 +28,6 @@ namespace ThScoreFileConverter.Models
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th08Converter : ThConverter
     {
-        [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1008:OpeningParenthesisMustBeSpacedCorrectly", Justification = "Reviewed.")]
-        private static readonly List<IHighScore> InitialRanking =
-            new List<IHighScore>()
-            {
-                new HighScore(100000),
-                new HighScore( 90000),
-                new HighScore( 80000),
-                new HighScore( 70000),
-                new HighScore( 60000),
-                new HighScore( 50000),
-                new HighScore( 40000),
-                new HighScore( 30000),
-                new HighScore( 20000),
-                new HighScore( 10000),
-            };
-
         private AllScoreData allScoreData = null;
 
         public override string SupportedVersions
@@ -261,7 +245,7 @@ namespace ThScoreFileConverter.Models
 
                     var key = (chara, level);
                     var score = parent.allScoreData.Rankings.ContainsKey(key)
-                        ? parent.allScoreData.Rankings[key][rank] : InitialRanking[rank];
+                        ? parent.allScoreData.Rankings[key][rank] : Definitions.InitialRanking[rank];
                     IEnumerable<string> cardStrings;
 
                     switch (type)
@@ -747,7 +731,7 @@ namespace ThScoreFileConverter.Models
             {
                 var key = (score.Chara, score.Level);
                 if (!this.rankings.ContainsKey(key))
-                    this.rankings.Add(key, new List<IHighScore>(InitialRanking));
+                    this.rankings.Add(key, new List<IHighScore>(Definitions.InitialRanking));
                 var ranking = this.rankings[key].ToList();
                 ranking.Add(score);
                 ranking.Sort((lhs, rhs) => rhs.Score.CompareTo(lhs.Score));
