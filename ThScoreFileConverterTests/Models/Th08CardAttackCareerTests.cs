@@ -17,13 +17,13 @@ namespace ThScoreFileConverterTests.Models
     {
         internal static CardAttackCareerStub ValidStub => new CardAttackCareerStub()
         {
-            MaxBonuses = Utils.GetEnumerator<Th08Converter.CharaWithTotal>()
+            MaxBonuses = Utils.GetEnumerator<CharaWithTotal>()
                 .Select((chara, index) => (chara, index))
                 .ToDictionary(pair => pair.chara, pair => (uint)pair.index),
-            TrialCounts = Utils.GetEnumerator<Th08Converter.CharaWithTotal>()
+            TrialCounts = Utils.GetEnumerator<CharaWithTotal>()
                 .Select((chara, index) => (chara, index))
                 .ToDictionary(pair => pair.chara, pair => 20 + pair.index),
-            ClearCounts = Utils.GetEnumerator<Th08Converter.CharaWithTotal>()
+            ClearCounts = Utils.GetEnumerator<CharaWithTotal>()
                 .Select((chara, index) => (chara, index))
                 .ToDictionary(pair => pair.chara, pair => 20 - pair.index)
         };
@@ -66,7 +66,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th08CardAttackCareerReadFromTestShortenedMaxBonuses() => TestUtils.Wrap(() =>
         {
             var stub = new CardAttackCareerStub(ValidStub);
-            stub.MaxBonuses = stub.MaxBonuses.Where(pair => pair.Key != Th08Converter.CharaWithTotal.Total)
+            stub.MaxBonuses = stub.MaxBonuses.Where(pair => pair.Key != CharaWithTotal.Total)
                 .ToDictionary(pair => pair.Key, pair => pair.Value);
 
             _ = Th08CardAttackCareerWrapper.Create(MakeByteArray(stub));
@@ -78,9 +78,9 @@ namespace ThScoreFileConverterTests.Models
         public void Th08CardAttackCareerReadFromTestExceededMaxBonuses() => TestUtils.Wrap(() =>
         {
             var stub = new CardAttackCareerStub(ValidStub);
-            stub.MaxBonuses = stub.MaxBonuses.Concat(new Dictionary<Th08Converter.CharaWithTotal, uint>
+            stub.MaxBonuses = stub.MaxBonuses.Concat(new Dictionary<CharaWithTotal, uint>
             {
-                { TestUtils.Cast<Th08Converter.CharaWithTotal>(999), 999u },
+                { TestUtils.Cast<CharaWithTotal>(999), 999u },
             }).ToDictionary(pair => pair.Key, pair => pair.Value);
 
             var career = Th08CardAttackCareerWrapper.Create(MakeByteArray(stub));
@@ -96,7 +96,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th08CardAttackCareerReadFromTestShortenedTrialCounts() => TestUtils.Wrap(() =>
         {
             var stub = new CardAttackCareerStub(ValidStub);
-            stub.TrialCounts = stub.TrialCounts.Where(pair => pair.Key != Th08Converter.CharaWithTotal.Total)
+            stub.TrialCounts = stub.TrialCounts.Where(pair => pair.Key != CharaWithTotal.Total)
                 .ToDictionary(pair => pair.Key, pair => pair.Value);
 
             _ = Th08CardAttackCareerWrapper.Create(MakeByteArray(stub));
@@ -108,9 +108,9 @@ namespace ThScoreFileConverterTests.Models
         public void Th08CardAttackCareerReadFromTestExceededTrialCounts() => TestUtils.Wrap(() =>
         {
             var stub = new CardAttackCareerStub(ValidStub);
-            stub.TrialCounts = stub.TrialCounts.Concat(new Dictionary<Th08Converter.CharaWithTotal, int>
+            stub.TrialCounts = stub.TrialCounts.Concat(new Dictionary<CharaWithTotal, int>
             {
-                { TestUtils.Cast<Th08Converter.CharaWithTotal>(999), 999 },
+                { TestUtils.Cast<CharaWithTotal>(999), 999 },
             }).ToDictionary(pair => pair.Key, pair => pair.Value);
 
             var career = Th08CardAttackCareerWrapper.Create(MakeByteArray(stub));
@@ -126,7 +126,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th08CardAttackCareerReadFromTestShortenedClearCounts() => TestUtils.Wrap(() =>
         {
             var stub = new CardAttackCareerStub(ValidStub);
-            stub.ClearCounts = stub.ClearCounts.Where(pair => pair.Key != Th08Converter.CharaWithTotal.Total)
+            stub.ClearCounts = stub.ClearCounts.Where(pair => pair.Key != CharaWithTotal.Total)
                 .ToDictionary(pair => pair.Key, pair => pair.Value);
 
             _ = Th08CardAttackCareerWrapper.Create(MakeByteArray(stub));
@@ -138,9 +138,9 @@ namespace ThScoreFileConverterTests.Models
         public void Th08CardAttackCareerReadFromTestExceededClearCounts() => TestUtils.Wrap(() =>
         {
             var stub = new CardAttackCareerStub(ValidStub);
-            stub.ClearCounts = stub.ClearCounts.Concat(new Dictionary<Th08Converter.CharaWithTotal, int>
+            stub.ClearCounts = stub.ClearCounts.Concat(new Dictionary<CharaWithTotal, int>
             {
-                { TestUtils.Cast<Th08Converter.CharaWithTotal>(999), 999 },
+                { TestUtils.Cast<CharaWithTotal>(999), 999 },
             }).ToDictionary(pair => pair.Key, pair => pair.Value);
 
             var career = Th08CardAttackCareerWrapper.Create(MakeByteArray(stub));

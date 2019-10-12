@@ -21,6 +21,6 @@ namespace ThScoreFileConverter.Models.Th08
 
         int TotalTrial { get; }
 
-        IReadOnlyDictionary<Th08Converter.Chara, int> Trials { get; }
+        IReadOnlyDictionary<Chara, int> Trials { get; }
     }
 }

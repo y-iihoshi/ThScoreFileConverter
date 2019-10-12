@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
 
 namespace ThScoreFileConverterTests.Models.Th08.Stubs
@@ -17,10 +16,10 @@ namespace ThScoreFileConverterTests.Models.Th08.Stubs
             this.TrialCounts = career.TrialCounts.ToDictionary(pair => pair.Key, pair => pair.Value);
         }
 
-        public IReadOnlyDictionary<Th08Converter.CharaWithTotal, int> ClearCounts { get; set; }
+        public IReadOnlyDictionary<CharaWithTotal, int> ClearCounts { get; set; }
 
-        public IReadOnlyDictionary<Th08Converter.CharaWithTotal, uint> MaxBonuses { get; set; }
+        public IReadOnlyDictionary<CharaWithTotal, uint> MaxBonuses { get; set; }
 
-        public IReadOnlyDictionary<Th08Converter.CharaWithTotal, int> TrialCounts { get; set; }
+        public IReadOnlyDictionary<CharaWithTotal, int> TrialCounts { get; set; }
     }
 }

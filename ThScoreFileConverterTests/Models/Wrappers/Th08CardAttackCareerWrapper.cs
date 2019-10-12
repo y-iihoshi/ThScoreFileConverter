@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th08;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -47,15 +48,15 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public object Target
             => this.pobj.Target;
-        public IReadOnlyDictionary<Th08Converter.CharaWithTotal, uint> MaxBonuses
+        public IReadOnlyDictionary<CharaWithTotal, uint> MaxBonuses
             => this.pobj.GetProperty(nameof(this.MaxBonuses))
-                as IReadOnlyDictionary<Th08Converter.CharaWithTotal, uint>;
-        public IReadOnlyDictionary<Th08Converter.CharaWithTotal, int> TrialCounts
+                as IReadOnlyDictionary<CharaWithTotal, uint>;
+        public IReadOnlyDictionary<CharaWithTotal, int> TrialCounts
             => this.pobj.GetProperty(nameof(this.TrialCounts))
-                as IReadOnlyDictionary<Th08Converter.CharaWithTotal, int>;
-        public IReadOnlyDictionary<Th08Converter.CharaWithTotal, int> ClearCounts
+                as IReadOnlyDictionary<CharaWithTotal, int>;
+        public IReadOnlyDictionary<CharaWithTotal, int> ClearCounts
             => this.pobj.GetProperty(nameof(this.ClearCounts))
-                as IReadOnlyDictionary<Th08Converter.CharaWithTotal, int>;
+                as IReadOnlyDictionary<CharaWithTotal, int>;
 
         public void ReadFrom(BinaryReader reader)
             => this.pobj.Invoke(nameof(ReadFrom), new object[] { reader }, CultureInfo.InvariantCulture);

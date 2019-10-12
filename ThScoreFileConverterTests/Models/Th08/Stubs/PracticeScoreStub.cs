@@ -2,6 +2,7 @@
 using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
+using Stage = ThScoreFileConverter.Models.Th08.Stage;
 
 namespace ThScoreFileConverterTests.Models.Th08.Stubs
 {
@@ -21,11 +22,11 @@ namespace ThScoreFileConverterTests.Models.Th08.Stubs
             this.Size2 = score.Size2;
         }
 
-        public Th08Converter.Chara Chara { get; set; }
+        public Chara Chara { get; set; }
 
-        public IReadOnlyDictionary<(Th08Converter.Stage, Level), int> HighScores { get; set; }
+        public IReadOnlyDictionary<(Stage, Level), int> HighScores { get; set; }
 
-        public IReadOnlyDictionary<(Th08Converter.Stage, Level), int> PlayCounts { get; set; }
+        public IReadOnlyDictionary<(Stage, Level), int> PlayCounts { get; set; }
 
         public byte FirstByteOfData { get; set; }
 

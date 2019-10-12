@@ -19,11 +19,11 @@ using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th08;
 using CardInfo = ThScoreFileConverter.Models.SpellCardInfo<
-    ThScoreFileConverter.Models.Th08Converter.StagePractice, ThScoreFileConverter.Models.Th08Converter.LevelPractice>;
+    ThScoreFileConverter.Models.Th08.StagePractice, ThScoreFileConverter.Models.Th08.LevelPractice>;
 using IHighScore = ThScoreFileConverter.Models.Th08.IHighScore<
-    ThScoreFileConverter.Models.Th08Converter.Chara,
+    ThScoreFileConverter.Models.Th08.Chara,
     ThScoreFileConverter.Models.Level,
-    ThScoreFileConverter.Models.Th08Converter.StageProgress>;
+    ThScoreFileConverter.Models.Th08.StageProgress>;
 
 namespace ThScoreFileConverter.Models
 {
@@ -284,154 +284,13 @@ namespace ThScoreFileConverter.Models
         private static readonly EnumShortNameParser<CharaWithTotal> CharaWithTotalParser =
             new EnumShortNameParser<CharaWithTotal>();
 
-        private static new readonly EnumShortNameParser<Stage> StageParser =
-            new EnumShortNameParser<Stage>();
+        private static new readonly EnumShortNameParser<Th08.Stage> StageParser =
+            new EnumShortNameParser<Th08.Stage>();
 
-        private static new readonly EnumShortNameParser<StageWithTotal> StageWithTotalParser =
-            new EnumShortNameParser<StageWithTotal>();
+        private static new readonly EnumShortNameParser<Th08.StageWithTotal> StageWithTotalParser =
+            new EnumShortNameParser<Th08.StageWithTotal>();
 
         private AllScoreData allScoreData = null;
-
-        public enum LevelPractice
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("E")] Easy,
-            [EnumAltName("N")] Normal,
-            [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic,
-            [EnumAltName("X")] Extra,
-            [EnumAltName("W", LongName = "Last Word")] LastWord,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum LevelPracticeWithTotal
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("E")] Easy,
-            [EnumAltName("N")] Normal,
-            [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic,
-            [EnumAltName("X")] Extra,
-            [EnumAltName("W", LongName = "Last Word")] LastWord,
-            [EnumAltName("T")] Total,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum Chara
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("RY")] ReimuYukari,
-            [EnumAltName("MA")] MarisaAlice,
-            [EnumAltName("SR")] SakuyaRemilia,
-            [EnumAltName("YY")] YoumuYuyuko,
-            [EnumAltName("RM")] Reimu,
-            [EnumAltName("YK")] Yukari,
-            [EnumAltName("MR")] Marisa,
-            [EnumAltName("AL")] Alice,
-            [EnumAltName("SK")] Sakuya,
-            [EnumAltName("RL")] Remilia,
-            [EnumAltName("YM")] Youmu,
-            [EnumAltName("YU")] Yuyuko,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum CharaWithTotal
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("RY")] ReimuYukari,
-            [EnumAltName("MA")] MarisaAlice,
-            [EnumAltName("SR")] SakuyaRemilia,
-            [EnumAltName("YY")] YoumuYuyuko,
-            [EnumAltName("RM")] Reimu,
-            [EnumAltName("YK")] Yukari,
-            [EnumAltName("MR")] Marisa,
-            [EnumAltName("AL")] Alice,
-            [EnumAltName("SK")] Sakuya,
-            [EnumAltName("RL")] Remilia,
-            [EnumAltName("YM")] Youmu,
-            [EnumAltName("YU")] Yuyuko,
-            [EnumAltName("TL")] Total,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum Stage
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("1A")] St1,
-            [EnumAltName("2A")] St2,
-            [EnumAltName("3A")] St3,
-            [EnumAltName("4A")] St4A,
-            [EnumAltName("4B")] St4B,
-            [EnumAltName("5A")] St5,
-            [EnumAltName("6A")] St6A,
-            [EnumAltName("6B")] St6B,
-            [EnumAltName("EX")] Extra,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum StageWithTotal
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("1A")] St1,
-            [EnumAltName("2A")] St2,
-            [EnumAltName("3A")] St3,
-            [EnumAltName("4A")] St4A,
-            [EnumAltName("4B")] St4B,
-            [EnumAltName("5A")] St5,
-            [EnumAltName("6A")] St6A,
-            [EnumAltName("6B")] St6B,
-            [EnumAltName("EX")] Extra,
-            [EnumAltName("00")] Total,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum StagePractice
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("1A")] St1,
-            [EnumAltName("2A")] St2,
-            [EnumAltName("3A")] St3,
-            [EnumAltName("4A")] St4A,
-            [EnumAltName("4B")] St4B,
-            [EnumAltName("5A")] St5,
-            [EnumAltName("6A")] St6A,
-            [EnumAltName("6B")] St6B,
-            [EnumAltName("EX")] Extra,
-            [EnumAltName("LW", LongName = "Last Word")] LastWord,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum StageProgress
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("Stage 1")]          St1,
-            [EnumAltName("Stage 2")]          St2,
-            [EnumAltName("Stage 3")]          St3,
-            [EnumAltName("Stage 4-uncanny")]  St4A,
-            [EnumAltName("Stage 4-powerful")] St4B,
-            [EnumAltName("Stage 5")]          St5,
-            [EnumAltName("Stage 6-Eirin")]    St6A,
-            [EnumAltName("Stage 6-Kaguya")]   St6B,
-            [EnumAltName("Extra Stage")]      Extra,
-            [EnumAltName("All Clear")]        Clear = 99,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        [Flags]
-        public enum PlayableStages
-        {
-            Stage1   = 0x0001,
-            Stage2   = 0x0002,
-            Stage3   = 0x0004,
-            Stage4A  = 0x0008,
-            Stage4B  = 0x0010,
-            Stage5   = 0x0020,
-            Stage6A  = 0x0040,
-            Stage6B  = 0x0080,
-            Extra    = 0x0100,
-            Unknown  = 0x4000,
-            AllClear = 0x8000,
-        }
 
         public override string SupportedVersions
         {
@@ -870,7 +729,7 @@ namespace ThScoreFileConverter.Models
                     var stage = StageWithTotalParser.Parse(match.Groups[4].Value);
                     var type = int.Parse(match.Groups[5].Value, CultureInfo.InvariantCulture);
 
-                    if (stage == StageWithTotal.Extra)
+                    if (stage == Th08.StageWithTotal.Extra)
                         return match.ToString();
                     if ((kind == "S") && (level == LevelPracticeWithTotal.LastWord))
                         return match.ToString();
@@ -879,7 +738,7 @@ namespace ThScoreFileConverter.Models
                         (attack => FindByKindTypeImpl(attack, chara, kind, type));
 
                     Func<ICardAttack, bool> findByStage;
-                    if (stage == StageWithTotal.Total)
+                    if (stage == Th08.StageWithTotal.Total)
                         findByStage = (attack => true);
                     else
                         findByStage = (attack => CardTable[attack.CardId].Stage == (StagePractice)stage);
@@ -1060,7 +919,7 @@ namespace ThScoreFileConverter.Models
 
                     if (level == Level.Extra)
                         return match.ToString();
-                    if (stage == Stage.Extra)
+                    if (stage == Th08.Stage.Extra)
                         return match.ToString();
 
                     if (parent.allScoreData.PracticeScores.ContainsKey(chara))
@@ -1365,7 +1224,7 @@ namespace ThScoreFileConverter.Models
             public PracticeScore(Th06.Chapter chapter)
                 : base(chapter, ValidSignature, ValidSize)
             {
-                var stages = Utils.GetEnumerator<Stage>();
+                var stages = Utils.GetEnumerator<Th08.Stage>();
                 var levels = Utils.GetEnumerator<Level>();
 
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
@@ -1382,9 +1241,9 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            public IReadOnlyDictionary<(Stage, Level), int> PlayCounts { get; }
+            public IReadOnlyDictionary<(Th08.Stage, Level), int> PlayCounts { get; }
 
-            public IReadOnlyDictionary<(Stage, Level), int> HighScores { get; } // Divided by 10
+            public IReadOnlyDictionary<(Th08.Stage, Level), int> HighScores { get; } // Divided by 10
 
             public Chara Chara { get; }
         }

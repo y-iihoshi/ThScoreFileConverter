@@ -21,11 +21,11 @@ namespace ThScoreFileConverterTests.Models.Th08.Stubs
             this.Size2 = clearData.Size2;
         }
 
-        public Th08Converter.CharaWithTotal Chara { get; set; }
+        public CharaWithTotal Chara { get; set; }
 
-        public IReadOnlyDictionary<Level, Th08Converter.PlayableStages> PracticeFlags { get; set; }
+        public IReadOnlyDictionary<Level, PlayableStages> PracticeFlags { get; set; }
 
-        public IReadOnlyDictionary<Level, Th08Converter.PlayableStages> StoryFlags { get; set; }
+        public IReadOnlyDictionary<Level, PlayableStages> StoryFlags { get; set; }
 
         public byte FirstByteOfData { get; set; }
 

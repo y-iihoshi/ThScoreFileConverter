@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th08;
 using IHighScore = ThScoreFileConverter.Models.Th08.IHighScore<
-    ThScoreFileConverter.Models.Th08Converter.Chara,
+    ThScoreFileConverter.Models.Th08.Chara,
     ThScoreFileConverter.Models.Level,
-    ThScoreFileConverter.Models.Th08Converter.StageProgress>;
+    ThScoreFileConverter.Models.Th08.StageProgress>;
 
 namespace ThScoreFileConverterTests.Models.Th08.Stubs
 {
@@ -65,7 +66,7 @@ namespace ThScoreFileConverterTests.Models.Th08.Stubs
 
         public float SlowRate { get; set; }
 
-        public Th08Converter.Chara Chara { get; set; }
+        public Chara Chara { get; set; }
 
         public Level Level { get; set; }
 
@@ -73,7 +74,7 @@ namespace ThScoreFileConverterTests.Models.Th08.Stubs
 
         public uint Score { get; set; }
 
-        public Th08Converter.StageProgress StageProgress { get; set; }
+        public StageProgress StageProgress { get; set; }
 
         public byte FirstByteOfData { get; set; }
 

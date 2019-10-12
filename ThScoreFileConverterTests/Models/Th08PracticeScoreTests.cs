@@ -10,6 +10,7 @@ using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ThScoreFileConverterTests.Models.Th08.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
+using Stage = ThScoreFileConverter.Models.Th08.Stage;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -21,13 +22,13 @@ namespace ThScoreFileConverterTests.Models
             Signature = "PSCR",
             Size1 = 0x178,
             Size2 = 0x178,
-            PlayCounts = Utils.GetEnumerator<Th08Converter.Stage>()
+            PlayCounts = Utils.GetEnumerator<Stage>()
                 .SelectMany(stage => Utils.GetEnumerator<Level>().Select(level => (stage, level)))
                 .ToDictionary(pair => pair, pair => (int)pair.stage * 10 + (int)pair.level),
-            HighScores = Utils.GetEnumerator<Th08Converter.Stage>()
+            HighScores = Utils.GetEnumerator<Stage>()
                 .SelectMany(stage => Utils.GetEnumerator<Level>().Select(level => (stage, level)))
                 .ToDictionary(pair => pair, pair => (int)pair.level * 10 + (int)pair.stage),
-            Chara = Th08Converter.Chara.MarisaAlice
+            Chara = Chara.MarisaAlice
         };
 
         internal static byte[] MakeData(IPracticeScore score)
@@ -104,7 +105,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         public static IEnumerable<object[]> InvalidCharacters
-            => TestUtils.GetInvalidEnumerators(typeof(Th08Converter.Chara));
+            => TestUtils.GetInvalidEnumerators(typeof(Chara));
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
@@ -114,7 +115,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var stub = new PracticeScoreStub(ValidStub)
             {
-                Chara = TestUtils.Cast<Th08Converter.Chara>(chara),
+                Chara = TestUtils.Cast<Chara>(chara),
             };
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));

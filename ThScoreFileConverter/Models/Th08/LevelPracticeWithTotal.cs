@@ -1,16 +1,16 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="LevelWithTotal.cs" company="None">
+// <copyright file="LevelPracticeWithTotal.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace ThScoreFileConverter.Models.Th07
+namespace ThScoreFileConverter.Models.Th08
 {
     /// <summary>
-    /// Represents level of PCB and total.
+    /// Represents level of IN spell card practice and total.
     /// </summary>
-    public enum LevelWithTotal
+    public enum LevelPracticeWithTotal
     {
         /// <summary>
         /// Represents level Easy.
@@ -43,10 +43,10 @@ namespace ThScoreFileConverter.Models.Th07
         Extra,
 
         /// <summary>
-        /// Represents level Phantasm.
+        /// Represents level Last Word.
         /// </summary>
-        [EnumAltName("P")]
-        Phantasm,
+        [EnumAltName("W", LongName = "Last Word")]
+        LastWord,
 
         /// <summary>
         /// Represents total across levels.

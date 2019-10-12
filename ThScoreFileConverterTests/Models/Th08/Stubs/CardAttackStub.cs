@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
 
 namespace ThScoreFileConverterTests.Models.Th08.Stubs
@@ -33,7 +32,7 @@ namespace ThScoreFileConverterTests.Models.Th08.Stubs
 
         public IEnumerable<byte> EnemyName { get; set; }
 
-        public Th08Converter.LevelPracticeWithTotal Level { get; set; }
+        public LevelPracticeWithTotal Level { get; set; }
 
         public ICardAttackCareer PracticeCareer { get; set; }
 
@@ -49,8 +48,8 @@ namespace ThScoreFileConverterTests.Models.Th08.Stubs
 
         public bool HasTried()
         {
-            return this.StoryCareer.TrialCounts[Th08Converter.CharaWithTotal.Total] > 0
-                || this.PracticeCareer.TrialCounts[Th08Converter.CharaWithTotal.Total] > 0;
+            return this.StoryCareer.TrialCounts[CharaWithTotal.Total] > 0
+                || this.PracticeCareer.TrialCounts[CharaWithTotal.Total] > 0;
         }
     }
 }

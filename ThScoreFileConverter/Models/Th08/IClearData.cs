@@ -13,10 +13,10 @@ namespace ThScoreFileConverter.Models.Th08
 {
     internal interface IClearData : Th06.IChapter
     {
-        Th08Converter.CharaWithTotal Chara { get; }
+        CharaWithTotal Chara { get; }
 
-        IReadOnlyDictionary<Level, Th08Converter.PlayableStages> PracticeFlags { get; }
+        IReadOnlyDictionary<Level, PlayableStages> PracticeFlags { get; }
 
-        IReadOnlyDictionary<Level, Th08Converter.PlayableStages> StoryFlags { get; }
+        IReadOnlyDictionary<Level, PlayableStages> StoryFlags { get; }
     }
 }

@@ -5,14 +5,15 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ThScoreFileConverterTests.Models.Th08.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 using IHighScore = ThScoreFileConverter.Models.Th08.IHighScore<
-    ThScoreFileConverter.Models.Th08Converter.Chara,
+    ThScoreFileConverter.Models.Th08.Chara,
     ThScoreFileConverter.Models.Level,
-    ThScoreFileConverter.Models.Th08Converter.StageProgress>;
+    ThScoreFileConverter.Models.Th08.StageProgress>;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -26,9 +27,9 @@ namespace ThScoreFileConverterTests.Models
             Size2 = 0x0168,
             Score = 1234567u,
             SlowRate = 9.87f,
-            Chara = Th08Converter.Chara.MarisaAlice,
+            Chara = Chara.MarisaAlice,
             Level = Level.Hard,
-            StageProgress = Th08Converter.StageProgress.St3,
+            StageProgress = StageProgress.St3,
             Name = TestUtils.CP932Encoding.GetBytes("Player1\0\0"),
             Date = TestUtils.CP932Encoding.GetBytes("01/23\0"),
             ContinueCount = 2,
@@ -185,7 +186,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         public static IEnumerable<object[]> InvalidCharacters
-            => TestUtils.GetInvalidEnumerators(typeof(Th08Converter.Chara));
+            => TestUtils.GetInvalidEnumerators(typeof(Chara));
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
@@ -195,7 +196,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var stub = new HighScoreStub(ValidStub)
             {
-                Chara = TestUtils.Cast<Th08Converter.Chara>(chara),
+                Chara = TestUtils.Cast<Chara>(chara),
             };
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
@@ -225,7 +226,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         public static IEnumerable<object[]> InvalidStageProgresses
-            => TestUtils.GetInvalidEnumerators(typeof(Th08Converter.StageProgress));
+            => TestUtils.GetInvalidEnumerators(typeof(StageProgress));
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
@@ -235,7 +236,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var stub = new HighScoreStub(ValidStub)
             {
-                StageProgress = TestUtils.Cast<Th08Converter.StageProgress>(stageProgress),
+                StageProgress = TestUtils.Cast<StageProgress>(stageProgress),
             };
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));

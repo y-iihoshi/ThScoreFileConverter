@@ -13,10 +13,10 @@ namespace ThScoreFileConverter.Models.Th08
 {
     internal interface IPracticeScore : Th06.IChapter
     {
-        Th08Converter.Chara Chara { get; }
+        Chara Chara { get; }
 
-        IReadOnlyDictionary<(Th08Converter.Stage, Level), int> HighScores { get; }
+        IReadOnlyDictionary<(Stage, Level), int> HighScores { get; }
 
-        IReadOnlyDictionary<(Th08Converter.Stage, Level), int> PlayCounts { get; }
+        IReadOnlyDictionary<(Stage, Level), int> PlayCounts { get; }
     }
 }

@@ -35,9 +35,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.Rankings));
         public int? RankingsCount
             => this.Rankings.GetType().GetProperty("Count").GetValue(this.Rankings) as int?;
-        public object Ranking(Th08Converter.Chara chara, Level level)
+        public object Ranking(Chara chara, Level level)
             => this.Rankings.GetType().GetProperty("Item").GetValue(this.Rankings, new object[] { (chara, level) });
-        public Th08HighScoreWrapper RankingItem(Th08Converter.Chara chara, Level level, int index)
+        public Th08HighScoreWrapper RankingItem(Chara chara, Level level, int index)
         {
             var ranking = this.Ranking(chara, level);
             return new Th08HighScoreWrapper(
@@ -51,7 +51,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.ClearData));
         public int? ClearDataCount
             => this.ClearData.GetType().GetProperty("Count").GetValue(this.ClearData) as int?;
-        public Th08ClearDataWrapper ClearDataItem(Th08Converter.CharaWithTotal chara)
+        public Th08ClearDataWrapper ClearDataItem(CharaWithTotal chara)
             => new Th08ClearDataWrapper(
                 this.ClearData.GetType().GetProperty("Item").GetValue(this.ClearData, new object[] { chara }));
 
@@ -73,7 +73,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.PracticeScores));
         public int? PracticeScoresCount
             => this.PracticeScores.GetType().GetProperty("Count").GetValue(this.PracticeScores) as int?;
-        public Th08PracticeScoreWrapper PracticeScoresItem(Th08Converter.Chara chara)
+        public Th08PracticeScoreWrapper PracticeScoresItem(Chara chara)
             => new Th08PracticeScoreWrapper(
                 this.PracticeScores.GetType().GetProperty("Item").GetValue(
                     this.PracticeScores, new object[] { chara }));

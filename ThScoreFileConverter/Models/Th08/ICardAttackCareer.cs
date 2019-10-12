@@ -13,10 +13,10 @@ namespace ThScoreFileConverter.Models.Th08
 {
     internal interface ICardAttackCareer
     {
-        IReadOnlyDictionary<Th08Converter.CharaWithTotal, int> ClearCounts { get; }
+        IReadOnlyDictionary<CharaWithTotal, int> ClearCounts { get; }
 
-        IReadOnlyDictionary<Th08Converter.CharaWithTotal, uint> MaxBonuses { get; }
+        IReadOnlyDictionary<CharaWithTotal, uint> MaxBonuses { get; }
 
-        IReadOnlyDictionary<Th08Converter.CharaWithTotal, int> TrialCounts { get; }
+        IReadOnlyDictionary<CharaWithTotal, int> TrialCounts { get; }
     }
 }

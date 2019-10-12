@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th08;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -49,8 +50,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.Target;
         public int? TotalTrial
             => this.pobj.GetProperty(nameof(this.TotalTrial)) as int?;
-        public IReadOnlyDictionary<Th08Converter.Chara, int> Trials
-            => this.pobj.GetProperty(nameof(this.Trials)) as IReadOnlyDictionary<Th08Converter.Chara, int>;
+        public IReadOnlyDictionary<Chara, int> Trials
+            => this.pobj.GetProperty(nameof(this.Trials)) as IReadOnlyDictionary<Chara, int>;
         public int? TotalClear
             => this.pobj.GetProperty(nameof(this.TotalClear)) as int?;
         public int? TotalContinue

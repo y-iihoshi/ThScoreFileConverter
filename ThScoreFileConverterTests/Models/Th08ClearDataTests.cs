@@ -23,11 +23,11 @@ namespace ThScoreFileConverterTests.Models
             Size2 = 0x24,
             StoryFlags = Utils.GetEnumerator<Level>()
                 .Select((level, index) => (level, index))
-                .ToDictionary(pair => pair.level, pair => (Th08Converter.PlayableStages)pair.index),
+                .ToDictionary(pair => pair.level, pair => (PlayableStages)pair.index),
             PracticeFlags = Utils.GetEnumerator<Level>()
                 .Select((level, index) => (level, index))
-                .ToDictionary(pair => pair.level, pair => (Th08Converter.PlayableStages)(10 - pair.index)),
-            Chara = Th08Converter.CharaWithTotal.MarisaAlice
+                .ToDictionary(pair => pair.level, pair => (PlayableStages)(10 - pair.index)),
+            Chara = CharaWithTotal.MarisaAlice
         };
 
         internal static byte[] MakeData(IClearData clearData)
@@ -105,7 +105,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         public static IEnumerable<object[]> InvalidCharacters
-            => TestUtils.GetInvalidEnumerators(typeof(Th08Converter.CharaWithTotal));
+            => TestUtils.GetInvalidEnumerators(typeof(CharaWithTotal));
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
@@ -115,7 +115,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var stub = new ClearDataStub(ValidStub)
             {
-                Chara = TestUtils.Cast<Th08Converter.CharaWithTotal>(chara),
+                Chara = TestUtils.Cast<CharaWithTotal>(chara),
             };
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));

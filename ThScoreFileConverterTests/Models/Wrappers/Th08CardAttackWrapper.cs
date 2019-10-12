@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
@@ -35,8 +36,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.Data)) as byte[];
         public short? CardId
             => this.pobj.GetProperty(nameof(this.CardId)) as short?;
-        public Th08Converter.LevelPracticeWithTotal? Level
-            => this.pobj.GetProperty(nameof(this.Level)) as Th08Converter.LevelPracticeWithTotal?;
+        public LevelPracticeWithTotal? Level
+            => this.pobj.GetProperty(nameof(this.Level)) as LevelPracticeWithTotal?;
         public IEnumerable<byte> CardName
             => this.pobj.GetProperty(nameof(this.CardName)) as IEnumerable<byte>;
         public IEnumerable<byte> EnemyName

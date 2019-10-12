@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
@@ -22,7 +21,7 @@ namespace ThScoreFileConverterTests.Models
             Size1 = 0x22C,
             Size2 = 0x22C,
             CardId = 123,
-            Level = Th08Converter.LevelPracticeWithTotal.Normal,
+            Level = LevelPracticeWithTotal.Normal,
             CardName = TestUtils.MakeRandomArray<byte>(0x30),
             EnemyName = TestUtils.MakeRandomArray<byte>(0x30),
             Comment = TestUtils.MakeRandomArray<byte>(0x80),
@@ -114,7 +113,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         public static IEnumerable<object[]> InvalidLevels
-            => TestUtils.GetInvalidEnumerators(typeof(Th08Converter.LevelPracticeWithTotal));
+            => TestUtils.GetInvalidEnumerators(typeof(LevelPracticeWithTotal));
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
@@ -124,7 +123,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var stub = new CardAttackStub(ValidStub)
             {
-                Level = TestUtils.Cast<Th08Converter.LevelPracticeWithTotal>(level),
+                Level = TestUtils.Cast<LevelPracticeWithTotal>(level),
             };
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
@@ -141,13 +140,13 @@ namespace ThScoreFileConverterTests.Models
                 StoryCareer = new CardAttackCareerStub(ValidStub.StoryCareer)
                 {
                     TrialCounts = ValidStub.StoryCareer.TrialCounts
-                        .Select(pair => (pair.Key, Value: (pair.Key == Th08Converter.CharaWithTotal.Total) ? 0 : pair.Value))
+                        .Select(pair => (pair.Key, Value: (pair.Key == CharaWithTotal.Total) ? 0 : pair.Value))
                         .ToDictionary(pair => pair.Key, pair => pair.Value),
                 },
                 PracticeCareer = new CardAttackCareerStub(ValidStub.PracticeCareer)
                 {
                     TrialCounts = ValidStub.PracticeCareer.TrialCounts
-                        .Select(pair => (pair.Key, Value: (pair.Key == Th08Converter.CharaWithTotal.Total) ? 0 : pair.Value))
+                        .Select(pair => (pair.Key, Value: (pair.Key == CharaWithTotal.Total) ? 0 : pair.Value))
                         .ToDictionary(pair => pair.Key, pair => pair.Value),
                 },
             };

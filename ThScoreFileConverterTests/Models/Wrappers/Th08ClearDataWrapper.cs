@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
@@ -32,13 +33,11 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.FirstByteOfData)) as byte?;
         public IReadOnlyCollection<byte> Data
             => this.pobj.GetProperty(nameof(this.Data)) as byte[];
-        public IReadOnlyDictionary<Level, Th08Converter.PlayableStages> StoryFlags
-            => this.pobj.GetProperty(nameof(this.StoryFlags))
-                as IReadOnlyDictionary<Level, Th08Converter.PlayableStages>;
-        public IReadOnlyDictionary<Level, Th08Converter.PlayableStages> PracticeFlags
-            => this.pobj.GetProperty(nameof(this.PracticeFlags))
-                as IReadOnlyDictionary<Level, Th08Converter.PlayableStages>;
-        public Th08Converter.CharaWithTotal? Chara
-            => this.pobj.GetProperty(nameof(this.Chara)) as Th08Converter.CharaWithTotal?;
+        public IReadOnlyDictionary<Level, PlayableStages> StoryFlags
+            => this.pobj.GetProperty(nameof(this.StoryFlags)) as IReadOnlyDictionary<Level, PlayableStages>;
+        public IReadOnlyDictionary<Level, PlayableStages> PracticeFlags
+            => this.pobj.GetProperty(nameof(this.PracticeFlags)) as IReadOnlyDictionary<Level, PlayableStages>;
+        public CharaWithTotal? Chara
+            => this.pobj.GetProperty(nameof(this.Chara)) as CharaWithTotal?;
     }
 }

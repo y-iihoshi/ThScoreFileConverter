@@ -18,7 +18,7 @@ namespace ThScoreFileConverterTests.Models
         internal static PlayCountStub ValidStub => new PlayCountStub()
         {
             TotalTrial = 1,
-            Trials = Utils.GetEnumerator<Th08Converter.Chara>()
+            Trials = Utils.GetEnumerator<Chara>()
                 .Select((chara, index) => (chara, index))
                 .ToDictionary(pair => pair.chara, pair => pair.index),
             TotalClear = 3,
@@ -69,7 +69,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th08PlayCountReadFromTestShortenedTrials() => TestUtils.Wrap(() =>
         {
             var stub = new PlayCountStub(ValidStub);
-            stub.Trials = stub.Trials.Where(pair => pair.Key != Th08Converter.Chara.Yuyuko)
+            stub.Trials = stub.Trials.Where(pair => pair.Key != Chara.Yuyuko)
                 .ToDictionary(pair => pair.Key, pair => pair.Value);
 
             _ = Th08PlayCountWrapper.Create(MakeByteArray(stub));
@@ -81,9 +81,9 @@ namespace ThScoreFileConverterTests.Models
         public void Th08PlayCountReadFromTestExceededTrials() => TestUtils.Wrap(() =>
         {
             var stub = new PlayCountStub(ValidStub);
-            stub.Trials = stub.Trials.Concat(new Dictionary<Th08Converter.Chara, int>
+            stub.Trials = stub.Trials.Concat(new Dictionary<Chara, int>
             {
-                { TestUtils.Cast<Th08Converter.Chara>(99), 99 },
+                { TestUtils.Cast<Chara>(99), 99 },
             }).ToDictionary(pair => pair.Key, pair => pair.Value);
 
             var playCount = Th08PlayCountWrapper.Create(MakeByteArray(stub));

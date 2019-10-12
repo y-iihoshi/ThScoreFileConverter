@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
@@ -42,12 +43,12 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.Score)) as uint?;
         public float? SlowRate
             => this.pobj.GetProperty(nameof(this.SlowRate)) as float?;
-        public Th08Converter.Chara? Chara
-            => this.pobj.GetProperty(nameof(this.Chara)) as Th08Converter.Chara?;
+        public Chara? Chara
+            => this.pobj.GetProperty(nameof(this.Chara)) as Chara?;
         public Level? Level
             => this.pobj.GetProperty(nameof(this.Level)) as Level?;
-        public Th08Converter.StageProgress? StageProgress
-            => this.pobj.GetProperty(nameof(this.StageProgress)) as Th08Converter.StageProgress?;
+        public StageProgress? StageProgress
+            => this.pobj.GetProperty(nameof(this.StageProgress)) as StageProgress?;
         public IEnumerable<byte> Name
             => this.pobj.GetProperty(nameof(this.Name)) as IEnumerable<byte>;
         public IEnumerable<byte> Date

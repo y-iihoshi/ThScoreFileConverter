@@ -21,7 +21,7 @@ namespace ThScoreFileConverter.Models.Th08
 
         IEnumerable<byte> EnemyName { get; }
 
-        Th08Converter.LevelPracticeWithTotal Level { get; }
+        LevelPracticeWithTotal Level { get; }
 
         ICardAttackCareer PracticeCareer { get; }
 
