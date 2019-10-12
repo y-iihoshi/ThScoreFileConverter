@@ -832,31 +832,5 @@ namespace ThScoreFileConverter.Models
 
             public IEnumerable<byte> BgmFlags { get; }
         }
-
-        private class PlayCount : IBinaryReadable, IPlayCount   // per level-with-total
-        {
-            public int TotalTrial { get; private set; }
-
-            public IReadOnlyDictionary<Chara, int> Trials { get; private set; }
-
-            public int TotalClear { get; private set; }
-
-            public int TotalContinue { get; private set; }
-
-            public int TotalPractice { get; private set; }
-
-            public void ReadFrom(BinaryReader reader)
-            {
-                if (reader == null)
-                    throw new ArgumentNullException(nameof(reader));
-
-                this.TotalTrial = reader.ReadInt32();
-                this.Trials = Utils.GetEnumerator<Chara>().ToDictionary(chara => chara, _ => reader.ReadInt32());
-                reader.ReadUInt32();    // always 0x00000000?
-                this.TotalClear = reader.ReadInt32();
-                this.TotalContinue = reader.ReadInt32();
-                this.TotalPractice = reader.ReadInt32();
-            }
-        }
     }
 }

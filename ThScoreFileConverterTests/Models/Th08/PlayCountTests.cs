@@ -8,12 +8,11 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th08.Stubs;
-using ThScoreFileConverterTests.Models.Wrappers;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th08
 {
     [TestClass]
-    public class Th08PlayCountTests
+    public class PlayCountTests
     {
         internal static PlayCountStub ValidStub => new PlayCountStub()
         {
@@ -35,30 +34,30 @@ namespace ThScoreFileConverterTests.Models
                 playCount.TotalContinue,
                 playCount.TotalPractice);
 
-        internal static void Validate(IPlayCount expected, in Th08PlayCountWrapper actual)
+        internal static void Validate(IPlayCount expected, IPlayCount actual)
         {
-            Assert.AreEqual(expected.TotalTrial, actual.TotalTrial.Value);
+            Assert.AreEqual(expected.TotalTrial, actual.TotalTrial);
             CollectionAssert.That.AreEqual(expected.Trials.Values, actual.Trials.Values);
-            Assert.AreEqual(expected.TotalClear, actual.TotalClear.Value);
-            Assert.AreEqual(expected.TotalContinue, actual.TotalContinue.Value);
-            Assert.AreEqual(expected.TotalPractice, actual.TotalPractice.Value);
+            Assert.AreEqual(expected.TotalClear, actual.TotalClear);
+            Assert.AreEqual(expected.TotalContinue, actual.TotalContinue);
+            Assert.AreEqual(expected.TotalPractice, actual.TotalPractice);
         }
 
         [TestMethod]
-        public void Th08PlayCountReadFromTest() => TestUtils.Wrap(() =>
+        public void ReadFromTest() => TestUtils.Wrap(() =>
         {
             var stub = ValidStub;
 
-            var playCount = Th08PlayCountWrapper.Create(MakeByteArray(stub));
+            var playCount = TestUtils.Create<PlayCount>(MakeByteArray(stub));
 
             Validate(stub, playCount);
         });
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th08PlayCountReadFromTestNull() => TestUtils.Wrap(() =>
+        public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
-            var playCount = new Th08PlayCountWrapper();
+            var playCount = new PlayCount();
             playCount.ReadFrom(null);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -66,19 +65,19 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th08PlayCountReadFromTestShortenedTrials() => TestUtils.Wrap(() =>
+        public void ReadFromTestShortenedTrials() => TestUtils.Wrap(() =>
         {
             var stub = new PlayCountStub(ValidStub);
             stub.Trials = stub.Trials.Where(pair => pair.Key != Chara.Yuyuko)
                 .ToDictionary(pair => pair.Key, pair => pair.Value);
 
-            _ = Th08PlayCountWrapper.Create(MakeByteArray(stub));
+            _ = TestUtils.Create<PlayCount>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
-        public void Th08PlayCountReadFromTestExceededTrials() => TestUtils.Wrap(() =>
+        public void ReadFromTestExceededTrials() => TestUtils.Wrap(() =>
         {
             var stub = new PlayCountStub(ValidStub);
             stub.Trials = stub.Trials.Concat(new Dictionary<Chara, int>
@@ -86,14 +85,14 @@ namespace ThScoreFileConverterTests.Models
                 { TestUtils.Cast<Chara>(99), 99 },
             }).ToDictionary(pair => pair.Key, pair => pair.Value);
 
-            var playCount = Th08PlayCountWrapper.Create(MakeByteArray(stub));
+            var playCount = TestUtils.Create<PlayCount>(MakeByteArray(stub));
 
-            Assert.AreEqual(stub.TotalTrial, playCount.TotalTrial.Value);
+            Assert.AreEqual(stub.TotalTrial, playCount.TotalTrial);
             CollectionAssert.That.AreNotEqual(stub.Trials.Values, playCount.Trials.Values);
             CollectionAssert.That.AreEqual(stub.Trials.Values.SkipLast(1), playCount.Trials.Values);
-            Assert.AreNotEqual(stub.TotalClear, playCount.TotalClear.Value);
-            Assert.AreNotEqual(stub.TotalContinue, playCount.TotalContinue.Value);
-            Assert.AreNotEqual(stub.TotalPractice, playCount.TotalPractice.Value);
+            Assert.AreNotEqual(stub.TotalClear, playCount.TotalClear);
+            Assert.AreNotEqual(stub.TotalContinue, playCount.TotalContinue);
+            Assert.AreNotEqual(stub.TotalPractice, playCount.TotalPractice);
         });
     }
 }

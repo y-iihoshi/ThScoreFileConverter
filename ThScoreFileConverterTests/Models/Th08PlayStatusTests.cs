@@ -7,6 +7,7 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
+using ThScoreFileConverterTests.Models.Th08;
 using ThScoreFileConverterTests.Models.Th08.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 
@@ -25,8 +26,8 @@ namespace ThScoreFileConverterTests.Models
             PlayCounts = Utils.GetEnumerator<Level>()
                 .ToDictionary(
                     level => level,
-                    level => new PlayCountStub(Th08PlayCountTests.ValidStub) as IPlayCount),
-            TotalPlayCount = new PlayCountStub(Th08PlayCountTests.ValidStub),
+                    level => new PlayCountStub(PlayCountTests.ValidStub) as IPlayCount),
+            TotalPlayCount = new PlayCountStub(PlayCountTests.ValidStub),
             BgmFlags = TestUtils.MakeRandomArray<byte>(21)
         };
 
@@ -41,9 +42,9 @@ namespace ThScoreFileConverterTests.Models
                 status.TotalPlayTime.Minutes,
                 status.TotalPlayTime.Seconds,
                 status.TotalPlayTime.Milliseconds,
-                status.PlayCounts.SelectMany(pair => Th08PlayCountTests.MakeByteArray(pair.Value)).ToArray(),
-                Th08PlayCountTests.MakeByteArray(Th08PlayCountTests.ValidStub),
-                Th08PlayCountTests.MakeByteArray(status.TotalPlayCount),
+                status.PlayCounts.SelectMany(pair => PlayCountTests.MakeByteArray(pair.Value)).ToArray(),
+                PlayCountTests.MakeByteArray(PlayCountTests.ValidStub),
+                PlayCountTests.MakeByteArray(status.TotalPlayCount),
                 status.BgmFlags,
                 new byte[11]);
 
@@ -73,10 +74,10 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var key in expected.PlayCounts.Keys)
             {
-                Th08PlayCountTests.Validate(expected.PlayCounts[key], actual.PlayCountsItem(key));
+                PlayCountTests.Validate(expected.PlayCounts[key], actual.PlayCounts[key]);
             }
 
-            Th08PlayCountTests.Validate(expected.TotalPlayCount, actual.TotalPlayCount);
+            PlayCountTests.Validate(expected.TotalPlayCount, actual.TotalPlayCount);
             CollectionAssert.That.AreEqual(expected.BgmFlags, actual.BgmFlags);
         }
 

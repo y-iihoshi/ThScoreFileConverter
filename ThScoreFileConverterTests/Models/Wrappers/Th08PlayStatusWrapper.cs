@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
@@ -36,19 +37,10 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.TotalRunningTime)) as Time;
         public Time TotalPlayTime
             => this.pobj.GetProperty(nameof(this.TotalPlayTime)) as Time;
-        // NOTE: Th08Converter.PlayCount is a private class.
-        // public IReadOnlyDictionary<ThConverter.Level, PlayCount> PlayCounts
-        //     => this.pobj.GetProperty(nameof(this.PlayCounts)) as Dictionary<ThConverter.Level, PlayCount>;
-        public object PlayCounts
-            => this.pobj.GetProperty(nameof(this.PlayCounts));
-        public Th08PlayCountWrapper PlayCountsItem(Level level)
-            => new Th08PlayCountWrapper(
-                this.PlayCounts.GetType().GetProperty("Item").GetValue(this.PlayCounts, new object[] { level }));
-        // NOTE: Th08Converter.PlayCount is a private class.
-        // public PlayCount TotalPlayCounts
-        //     => this.pobj.GetProperty(nameof(this.TotalPlayCounts)) as PlayCount;
-        public Th08PlayCountWrapper TotalPlayCount
-            => new Th08PlayCountWrapper(this.pobj.GetProperty(nameof(this.TotalPlayCount)));
+        public IReadOnlyDictionary<Level, IPlayCount> PlayCounts
+            => this.pobj.GetProperty(nameof(this.PlayCounts)) as IReadOnlyDictionary<Level, IPlayCount>;
+        public IPlayCount TotalPlayCount
+            => this.pobj.GetProperty(nameof(this.TotalPlayCount)) as IPlayCount;
         public IEnumerable<byte> BgmFlags
             => this.pobj.GetProperty(nameof(this.BgmFlags)) as IEnumerable<byte>;
     }
