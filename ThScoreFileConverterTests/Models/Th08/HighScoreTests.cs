@@ -9,16 +9,15 @@ using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ThScoreFileConverterTests.Models.Th08.Stubs;
-using ThScoreFileConverterTests.Models.Wrappers;
 using IHighScore = ThScoreFileConverter.Models.Th08.IHighScore<
     ThScoreFileConverter.Models.Th08.Chara,
     ThScoreFileConverter.Models.Level,
     ThScoreFileConverter.Models.Th08.StageProgress>;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th08
 {
     [TestClass]
-    public class Th08HighScoreTests
+    public class HighScoreTests
     {
         internal static HighScoreStub ValidStub => new HighScoreStub()
         {
@@ -47,8 +46,11 @@ namespace ThScoreFileConverterTests.Models
                 .ToDictionary(pair => pair.index, pair => pair.value)
         };
 
-        internal static byte[] MakeData(IHighScore highScore)
+        internal static byte[] MakeByteArray(IHighScore highScore)
             => TestUtils.MakeByteArray(
+                highScore.Signature.ToCharArray(),
+                highScore.Size1,
+                highScore.Size2,
                 0u,
                 highScore.Score,
                 highScore.SlowRate,
@@ -73,19 +75,12 @@ namespace ThScoreFileConverterTests.Models
                 highScore.CardFlags.Values.ToArray(),
                 new byte[2]);
 
-        internal static byte[] MakeByteArray(IHighScore highScore)
-            => TestUtils.MakeByteArray(
-                highScore.Signature.ToCharArray(), highScore.Size1, highScore.Size2, MakeData(highScore));
-
-        internal static void Validate(IHighScore expected, in Th08HighScoreWrapper actual)
+        internal static void Validate(IHighScore expected, IHighScore actual)
         {
-            var data = MakeData(expected);
-
             Assert.AreEqual(expected.Signature, actual.Signature);
             Assert.AreEqual(expected.Size1, actual.Size1);
             Assert.AreEqual(expected.Size2, actual.Size2);
-            CollectionAssert.That.AreEqual(data, actual.Data);
-            Assert.AreEqual(data[0], actual.FirstByteOfData);
+            Assert.AreEqual(expected.FirstByteOfData, actual.FirstByteOfData);
             Assert.AreEqual(expected.Score, actual.Score);
             Assert.AreEqual(expected.SlowRate, actual.SlowRate);
             Assert.AreEqual(expected.Chara, actual.Chara);
@@ -107,34 +102,34 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        public void Th08HighScoreTestChapter() => TestUtils.Wrap(() =>
+        public void HighScoreTestChapter() => TestUtils.Wrap(() =>
         {
             var stub = ValidStub;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            var highScore = new Th08HighScoreWrapper(chapter);
+            var highScore = new HighScore(chapter.Target);
 
             Validate(stub, highScore);
         });
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th08HighScoreTestNullChapter() => TestUtils.Wrap(() =>
+        public void HighScoreTestNullChapter() => TestUtils.Wrap(() =>
         {
-            _ = new Th08HighScoreWrapper(null);
+            _ = new HighScore(null);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
-        public void Th08HighScoreTestScore() => TestUtils.Wrap(() =>
+        public void HighScoreTestScore() => TestUtils.Wrap(() =>
         {
             var score = 1234567u;
             var name = "--------\0";
             var date = "--/--\0";
             var cardFlags = new byte[] { };
 
-            var highScore = new Th08HighScoreWrapper(score);
+            var highScore = new HighScore(score);
 
             Assert.AreEqual(score, highScore.Score);
             CollectionAssert.That.AreEqual(TestUtils.CP932Encoding.GetBytes(name), highScore.Name);
@@ -143,14 +138,14 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th08HighScoreTestZeroScore() => TestUtils.Wrap(() =>
+        public void HighScoreTestZeroScore() => TestUtils.Wrap(() =>
         {
             var score = 0u;
             var name = "--------\0";
             var date = "--/--\0";
             var cardFlags = new byte[] { };
 
-            var highScore = new Th08HighScoreWrapper(score);
+            var highScore = new HighScore(score);
 
             Assert.AreEqual(score, highScore.Score);
             CollectionAssert.That.AreEqual(TestUtils.CP932Encoding.GetBytes(name), highScore.Name);
@@ -161,26 +156,26 @@ namespace ThScoreFileConverterTests.Models
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th08HighScoreTestInvalidSignature() => TestUtils.Wrap(() =>
+        public void HighScoreTestInvalidSignature() => TestUtils.Wrap(() =>
         {
             var stub = new HighScoreStub(ValidStub);
             stub.Signature = stub.Signature.ToLowerInvariant();
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th08HighScoreWrapper(chapter);
+            _ = new HighScore(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th08HighScoreTestInvalidSize1() => TestUtils.Wrap(() =>
+        public void HighScoreTestInvalidSize1() => TestUtils.Wrap(() =>
         {
             var stub = new HighScoreStub(ValidStub);
             --stub.Size1;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th08HighScoreWrapper(chapter);
+            _ = new HighScore(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -192,7 +187,7 @@ namespace ThScoreFileConverterTests.Models
         [DataTestMethod]
         [DynamicData(nameof(InvalidCharacters))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th08HighScoreTestInvalidChara(int chara) => TestUtils.Wrap(() =>
+        public void HighScoreTestInvalidChara(int chara) => TestUtils.Wrap(() =>
         {
             var stub = new HighScoreStub(ValidStub)
             {
@@ -200,7 +195,7 @@ namespace ThScoreFileConverterTests.Models
             };
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th08HighScoreWrapper(chapter);
+            _ = new HighScore(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -212,7 +207,7 @@ namespace ThScoreFileConverterTests.Models
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th08HighScoreTestInvalidLevel(int level) => TestUtils.Wrap(() =>
+        public void HighScoreTestInvalidLevel(int level) => TestUtils.Wrap(() =>
         {
             var stub = new HighScoreStub(ValidStub)
             {
@@ -220,7 +215,7 @@ namespace ThScoreFileConverterTests.Models
             };
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th08HighScoreWrapper(chapter);
+            _ = new HighScore(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -232,7 +227,7 @@ namespace ThScoreFileConverterTests.Models
         [DataTestMethod]
         [DynamicData(nameof(InvalidStageProgresses))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th08HighScoreTestInvalidStageProgress(int stageProgress) => TestUtils.Wrap(() =>
+        public void HighScoreTestInvalidStageProgress(int stageProgress) => TestUtils.Wrap(() =>
         {
             var stub = new HighScoreStub(ValidStub)
             {
@@ -240,7 +235,7 @@ namespace ThScoreFileConverterTests.Models
             };
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th08HighScoreWrapper(chapter);
+            _ = new HighScore(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });

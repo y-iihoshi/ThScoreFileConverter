@@ -1,11 +1,16 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
 using LastName = ThScoreFileConverter.Models.Th07.LastName;
 using VersionInfo = ThScoreFileConverter.Models.Th07.VersionInfo;
+using IHighScore = ThScoreFileConverter.Models.Th08.IHighScore<
+    ThScoreFileConverter.Models.Th08.Chara,
+    ThScoreFileConverter.Models.Level,
+    ThScoreFileConverter.Models.Th08.StageProgress>;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -27,22 +32,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         public Header Header
             => this.pobj.GetProperty(nameof(this.Header)) as Header;
-
-        // NOTE: Th08Converter.HighScore are private classes.
-        // public IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> Rankings
-        //     => this.pobj.GetProperty(nameof(this.Rankings)) as Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>;
-        public object Rankings
-            => this.pobj.GetProperty(nameof(this.Rankings));
-        public int? RankingsCount
-            => this.Rankings.GetType().GetProperty("Count").GetValue(this.Rankings) as int?;
-        public object Ranking(Chara chara, Level level)
-            => this.Rankings.GetType().GetProperty("Item").GetValue(this.Rankings, new object[] { (chara, level) });
-        public Th08HighScoreWrapper RankingItem(Chara chara, Level level, int index)
-        {
-            var ranking = this.Ranking(chara, level);
-            return new Th08HighScoreWrapper(
-                ranking.GetType().GetProperty("Item").GetValue(ranking, new object[] { index }));
-        }
+        public IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> Rankings
+            => this.pobj.GetProperty(nameof(this.Rankings)) as Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>;
 
         // NOTE: Th08Converter.ClearData is a private class.
         // public IReadOnlyDictionary<Chara, ClearData> ClearData
@@ -103,8 +94,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         public void Set(Header header)
             => this.pobj.Invoke(nameof(Set), new object[] { header }, CultureInfo.InvariantCulture);
-        public void Set(Th08HighScoreWrapper score)
-            => this.pobj.Invoke(nameof(Set), new object[] { score.Target }, CultureInfo.InvariantCulture);
+        public void Set(IHighScore score)
+            => this.pobj.Invoke(nameof(Set), new object[] { score }, CultureInfo.InvariantCulture);
         public void Set(Th08ClearDataWrapper data)
             => this.pobj.Invoke(nameof(Set), new object[] { data.Target }, CultureInfo.InvariantCulture);
         public void Set(Th08CardAttackWrapper attack)
