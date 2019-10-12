@@ -1,12 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Extensions;
+using ThScoreFileConverterTests.Models.Th08.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -14,64 +15,40 @@ namespace ThScoreFileConverterTests.Models
     [TestClass]
     public class Th08CardAttackCareerTests
     {
-        internal struct Properties
+        internal static CardAttackCareerStub ValidStub => new CardAttackCareerStub()
         {
-            public Dictionary<Th08Converter.CharaWithTotal, uint> maxBonuses;
-            public Dictionary<Th08Converter.CharaWithTotal, int> trialCounts;
-            public Dictionary<Th08Converter.CharaWithTotal, int> clearCounts;
-
-            public Properties(in Properties properties)
-            {
-                this.maxBonuses = new Dictionary<Th08Converter.CharaWithTotal, uint>(properties.maxBonuses);
-                this.trialCounts = new Dictionary<Th08Converter.CharaWithTotal, int>(properties.trialCounts);
-                this.clearCounts = new Dictionary<Th08Converter.CharaWithTotal, int>(properties.clearCounts);
-            }
-        };
-
-        internal static Properties ValidProperties => new Properties()
-        {
-            maxBonuses = Utils.GetEnumerator<Th08Converter.CharaWithTotal>()
-                .Select((chara, index) => new { chara, index })
+            MaxBonuses = Utils.GetEnumerator<Th08Converter.CharaWithTotal>()
+                .Select((chara, index) => (chara, index))
                 .ToDictionary(pair => pair.chara, pair => (uint)pair.index),
-            trialCounts = Utils.GetEnumerator<Th08Converter.CharaWithTotal>()
-                .Select((chara, index) => new { chara, index })
-                .ToDictionary(pair => pair.chara, pair => (20 + pair.index)),
-            clearCounts = Utils.GetEnumerator<Th08Converter.CharaWithTotal>()
-                .Select((chara, index) => new { chara, index })
-                .ToDictionary(pair => pair.chara, pair => (20 - pair.index))
+            TrialCounts = Utils.GetEnumerator<Th08Converter.CharaWithTotal>()
+                .Select((chara, index) => (chara, index))
+                .ToDictionary(pair => pair.chara, pair => 20 + pair.index),
+            ClearCounts = Utils.GetEnumerator<Th08Converter.CharaWithTotal>()
+                .Select((chara, index) => (chara, index))
+                .ToDictionary(pair => pair.chara, pair => 20 - pair.index)
         };
 
-        internal static byte[] MakeByteArray(in Properties properties)
+        internal static byte[] MakeByteArray(ICardAttackCareer career)
             => TestUtils.MakeByteArray(
-                properties.maxBonuses.Values.ToArray(),
-                properties.trialCounts.Values.ToArray(),
-                properties.clearCounts.Values.ToArray());
+                career.MaxBonuses.Values.ToArray(),
+                career.TrialCounts.Values.ToArray(),
+                career.ClearCounts.Values.ToArray());
 
-        internal static void Validate(in Th08CardAttackCareerWrapper career, in Properties properties)
+        internal static void Validate(ICardAttackCareer expected, in Th08CardAttackCareerWrapper actual)
         {
-            CollectionAssert.That.AreEqual(properties.maxBonuses.Values, career.MaxBonuses.Values);
-            CollectionAssert.That.AreEqual(properties.trialCounts.Values, career.TrialCounts.Values);
-            CollectionAssert.That.AreEqual(properties.clearCounts.Values, career.ClearCounts.Values);
+            CollectionAssert.That.AreEqual(expected.MaxBonuses.Values, actual.MaxBonuses.Values);
+            CollectionAssert.That.AreEqual(expected.TrialCounts.Values, actual.TrialCounts.Values);
+            CollectionAssert.That.AreEqual(expected.ClearCounts.Values, actual.ClearCounts.Values);
         }
-
-        [TestMethod]
-        public void Th08CardAttackCareerTest() => TestUtils.Wrap(() =>
-        {
-            var career = new Th08CardAttackCareerWrapper();
-
-            Assert.AreEqual(0, career.MaxBonuses.Count);
-            Assert.AreEqual(0, career.TrialCounts.Count);
-            Assert.AreEqual(0, career.ClearCounts.Count);
-        });
 
         [TestMethod]
         public void Th08CardAttackCareerReadFromTest() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
+            var stub = ValidStub;
 
-            var career = Th08CardAttackCareerWrapper.Create(MakeByteArray(properties));
+            var career = Th08CardAttackCareerWrapper.Create(MakeByteArray(stub));
 
-            Validate(career, properties);
+            Validate(stub, career);
         });
 
         [TestMethod]
@@ -84,15 +61,15 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "career")]
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th08CardAttackCareerReadFromTestShortenedMaxBonuses() => TestUtils.Wrap(() =>
         {
-            var properties = new Properties(ValidProperties);
-            properties.maxBonuses.Remove(Th08Converter.CharaWithTotal.Total);
+            var stub = new CardAttackCareerStub(ValidStub);
+            stub.MaxBonuses = stub.MaxBonuses.Where(pair => pair.Key != Th08Converter.CharaWithTotal.Total)
+                .ToDictionary(pair => pair.Key, pair => pair.Value);
 
-            var career = Th08CardAttackCareerWrapper.Create(MakeByteArray(properties));
+            _ = Th08CardAttackCareerWrapper.Create(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -100,26 +77,29 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th08CardAttackCareerReadFromTestExceededMaxBonuses() => TestUtils.Wrap(() =>
         {
-            var properties = new Properties(ValidProperties);
-            properties.maxBonuses.Add(TestUtils.Cast<Th08Converter.CharaWithTotal>(999), 999u);
+            var stub = new CardAttackCareerStub(ValidStub);
+            stub.MaxBonuses = stub.MaxBonuses.Concat(new Dictionary<Th08Converter.CharaWithTotal, uint>
+            {
+                { TestUtils.Cast<Th08Converter.CharaWithTotal>(999), 999u },
+            }).ToDictionary(pair => pair.Key, pair => pair.Value);
 
-            var career = Th08CardAttackCareerWrapper.Create(MakeByteArray(properties));
+            var career = Th08CardAttackCareerWrapper.Create(MakeByteArray(stub));
 
-            CollectionAssert.That.AreNotEqual(properties.maxBonuses.Values, career.MaxBonuses.Values);
-            CollectionAssert.That.AreEqual(properties.maxBonuses.Values.SkipLast(1), career.MaxBonuses.Values);
-            CollectionAssert.That.AreNotEqual(properties.trialCounts.Values, career.TrialCounts.Values);
-            CollectionAssert.That.AreNotEqual(properties.clearCounts.Values, career.ClearCounts.Values);
+            CollectionAssert.That.AreNotEqual(stub.MaxBonuses.Values, career.MaxBonuses.Values);
+            CollectionAssert.That.AreEqual(stub.MaxBonuses.Values.SkipLast(1), career.MaxBonuses.Values);
+            CollectionAssert.That.AreNotEqual(stub.TrialCounts.Values, career.TrialCounts.Values);
+            CollectionAssert.That.AreNotEqual(stub.ClearCounts.Values, career.ClearCounts.Values);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "career")]
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th08CardAttackCareerReadFromTestShortenedTrialCounts() => TestUtils.Wrap(() =>
         {
-            var properties = new Properties(ValidProperties);
-            properties.trialCounts.Remove(Th08Converter.CharaWithTotal.Total);
+            var stub = new CardAttackCareerStub(ValidStub);
+            stub.TrialCounts = stub.TrialCounts.Where(pair => pair.Key != Th08Converter.CharaWithTotal.Total)
+                .ToDictionary(pair => pair.Key, pair => pair.Value);
 
-            var career = Th08CardAttackCareerWrapper.Create(MakeByteArray(properties));
+            _ = Th08CardAttackCareerWrapper.Create(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -127,26 +107,29 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th08CardAttackCareerReadFromTestExceededTrialCounts() => TestUtils.Wrap(() =>
         {
-            var properties = new Properties(ValidProperties);
-            properties.trialCounts.Add(TestUtils.Cast<Th08Converter.CharaWithTotal>(999), 999);
+            var stub = new CardAttackCareerStub(ValidStub);
+            stub.TrialCounts = stub.TrialCounts.Concat(new Dictionary<Th08Converter.CharaWithTotal, int>
+            {
+                { TestUtils.Cast<Th08Converter.CharaWithTotal>(999), 999 },
+            }).ToDictionary(pair => pair.Key, pair => pair.Value);
 
-            var career = Th08CardAttackCareerWrapper.Create(MakeByteArray(properties));
+            var career = Th08CardAttackCareerWrapper.Create(MakeByteArray(stub));
 
-            CollectionAssert.That.AreEqual(properties.maxBonuses.Values, career.MaxBonuses.Values);
-            CollectionAssert.That.AreNotEqual(properties.trialCounts.Values, career.TrialCounts.Values);
-            CollectionAssert.That.AreEqual(properties.trialCounts.Values.SkipLast(1), career.TrialCounts.Values);
-            CollectionAssert.That.AreNotEqual(properties.clearCounts.Values, career.ClearCounts.Values);
+            CollectionAssert.That.AreEqual(stub.MaxBonuses.Values, career.MaxBonuses.Values);
+            CollectionAssert.That.AreNotEqual(stub.TrialCounts.Values, career.TrialCounts.Values);
+            CollectionAssert.That.AreEqual(stub.TrialCounts.Values.SkipLast(1), career.TrialCounts.Values);
+            CollectionAssert.That.AreNotEqual(stub.ClearCounts.Values, career.ClearCounts.Values);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "career")]
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th08CardAttackCareerReadFromTestShortenedClearCounts() => TestUtils.Wrap(() =>
         {
-            var properties = new Properties(ValidProperties);
-            properties.clearCounts.Remove(Th08Converter.CharaWithTotal.Total);
+            var stub = new CardAttackCareerStub(ValidStub);
+            stub.ClearCounts = stub.ClearCounts.Where(pair => pair.Key != Th08Converter.CharaWithTotal.Total)
+                .ToDictionary(pair => pair.Key, pair => pair.Value);
 
-            var career = Th08CardAttackCareerWrapper.Create(MakeByteArray(properties));
+            _ = Th08CardAttackCareerWrapper.Create(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -154,15 +137,18 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th08CardAttackCareerReadFromTestExceededClearCounts() => TestUtils.Wrap(() =>
         {
-            var properties = new Properties(ValidProperties);
-            properties.clearCounts.Add(TestUtils.Cast<Th08Converter.CharaWithTotal>(999), 999);
+            var stub = new CardAttackCareerStub(ValidStub);
+            stub.ClearCounts = stub.ClearCounts.Concat(new Dictionary<Th08Converter.CharaWithTotal, int>
+            {
+                { TestUtils.Cast<Th08Converter.CharaWithTotal>(999), 999 },
+            }).ToDictionary(pair => pair.Key, pair => pair.Value);
 
-            var career = Th08CardAttackCareerWrapper.Create(MakeByteArray(properties));
+            var career = Th08CardAttackCareerWrapper.Create(MakeByteArray(stub));
 
-            CollectionAssert.That.AreEqual(properties.maxBonuses.Values, career.MaxBonuses.Values);
-            CollectionAssert.That.AreEqual(properties.trialCounts.Values, career.TrialCounts.Values);
-            CollectionAssert.That.AreNotEqual(properties.clearCounts.Values, career.ClearCounts.Values);
-            CollectionAssert.That.AreEqual(properties.clearCounts.Values.SkipLast(1), career.ClearCounts.Values);
+            CollectionAssert.That.AreEqual(stub.MaxBonuses.Values, career.MaxBonuses.Values);
+            CollectionAssert.That.AreEqual(stub.TrialCounts.Values, career.TrialCounts.Values);
+            CollectionAssert.That.AreNotEqual(stub.ClearCounts.Values, career.ClearCounts.Values);
+            CollectionAssert.That.AreEqual(stub.ClearCounts.Values.SkipLast(1), career.ClearCounts.Values);
         });
     }
 }

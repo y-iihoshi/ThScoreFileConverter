@@ -730,7 +730,7 @@ namespace ThScoreFileConverter.Models
                     var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
                     Func<CardAttack, bool> isValidLevel;
-                    Func<CardAttack, CardAttackCareer> getCareer;
+                    Func<CardAttack, ICardAttackCareer> getCareer;
                     if (kind == "S")
                     {
                         isValidLevel = (attack => CardTable[attack.CardId].Level != LevelPractice.LastWord);
@@ -840,7 +840,7 @@ namespace ThScoreFileConverter.Models
             private static readonly Func<CardAttack, CharaWithTotal, string, int, bool> FindByKindTypeImpl =
                 (attack, chara, kind, type) =>
                 {
-                    Func<CardAttackCareer, int> getCount;
+                    Func<ICardAttackCareer, int> getCount;
                     if (type == 1)
                         getCount = (career => career.ClearCounts[chara]);
                     else
@@ -1290,11 +1290,14 @@ namespace ThScoreFileConverter.Models
             public const string ValidSignature = "CATK";
             public const short ValidSize = 0x022C;
 
+            private readonly CardAttackCareer storyCareer;
+            private readonly CardAttackCareer practiceCareer;
+
             public CardAttack(Th06.Chapter chapter)
                 : base(chapter, ValidSignature, ValidSize)
             {
-                this.StoryCareer = new CardAttackCareer();
-                this.PracticeCareer = new CardAttackCareer();
+                this.storyCareer = new CardAttackCareer();
+                this.practiceCareer = new CardAttackCareer();
 
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
@@ -1305,8 +1308,8 @@ namespace ThScoreFileConverter.Models
                     this.CardName = reader.ReadExactBytes(0x30);
                     this.EnemyName = reader.ReadExactBytes(0x30);
                     this.Comment = reader.ReadExactBytes(0x80);
-                    this.StoryCareer.ReadFrom(reader);
-                    this.PracticeCareer.ReadFrom(reader);
+                    this.storyCareer.ReadFrom(reader);
+                    this.practiceCareer.ReadFrom(reader);
                     reader.ReadUInt32();    // always 0x00000000?
                 }
             }
@@ -1324,9 +1327,9 @@ namespace ThScoreFileConverter.Models
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public byte[] Comment { get; }  // Should be splitted by '\0'
 
-            public CardAttackCareer StoryCareer { get; }
+            public ICardAttackCareer StoryCareer => this.storyCareer;
 
-            public CardAttackCareer PracticeCareer { get; }
+            public ICardAttackCareer PracticeCareer => this.practiceCareer;
 
             public bool HasTried()
             {
@@ -1335,21 +1338,13 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class CardAttackCareer : IBinaryReadable    // per story or practice
+        private class CardAttackCareer : IBinaryReadable, ICardAttackCareer // per story or practice
         {
-            public CardAttackCareer()
-            {
-                var numCharas = Enum.GetValues(typeof(CharaWithTotal)).Length;
-                this.MaxBonuses = new Dictionary<CharaWithTotal, uint>(numCharas);
-                this.TrialCounts = new Dictionary<CharaWithTotal, int>(numCharas);
-                this.ClearCounts = new Dictionary<CharaWithTotal, int>(numCharas);
-            }
+            public IReadOnlyDictionary<CharaWithTotal, uint> MaxBonuses { get; private set; }
 
-            public Dictionary<CharaWithTotal, uint> MaxBonuses { get; private set; }
+            public IReadOnlyDictionary<CharaWithTotal, int> TrialCounts { get; private set; }
 
-            public Dictionary<CharaWithTotal, int> TrialCounts { get; private set; }
-
-            public Dictionary<CharaWithTotal, int> ClearCounts { get; private set; }
+            public IReadOnlyDictionary<CharaWithTotal, int> ClearCounts { get; private set; }
 
             public void ReadFrom(BinaryReader reader)
             {
@@ -1357,12 +1352,9 @@ namespace ThScoreFileConverter.Models
                     throw new ArgumentNullException(nameof(reader));
 
                 var charas = Utils.GetEnumerator<CharaWithTotal>();
-                foreach (var chara in charas)
-                    this.MaxBonuses.Add(chara, reader.ReadUInt32());
-                foreach (var chara in charas)
-                    this.TrialCounts.Add(chara, reader.ReadInt32());
-                foreach (var chara in charas)
-                    this.ClearCounts.Add(chara, reader.ReadInt32());
+                this.MaxBonuses = charas.ToDictionary(chara => chara, _ => reader.ReadUInt32());
+                this.TrialCounts = charas.ToDictionary(chara => chara, _ => reader.ReadInt32());
+                this.ClearCounts = charas.ToDictionary(chara => chara, _ => reader.ReadInt32());
             }
         }
 

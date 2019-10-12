@@ -3,9 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
+using ThScoreFileConverterTests.Models.Th08.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -23,8 +25,8 @@ namespace ThScoreFileConverterTests.Models
             public byte[] cardName;
             public byte[] enemyName;
             public byte[] comment;
-            public Th08CardAttackCareerTests.Properties storyCareer;
-            public Th08CardAttackCareerTests.Properties practiceCareer;
+            public CardAttackCareerStub storyCareer;
+            public CardAttackCareerStub practiceCareer;
         };
 
         internal static Properties ValidProperties => new Properties()
@@ -37,8 +39,8 @@ namespace ThScoreFileConverterTests.Models
             cardName = TestUtils.MakeRandomArray<byte>(0x30),
             enemyName = TestUtils.MakeRandomArray<byte>(0x30),
             comment = TestUtils.MakeRandomArray<byte>(0x80),
-            storyCareer = new Th08CardAttackCareerTests.Properties(Th08CardAttackCareerTests.ValidProperties),
-            practiceCareer = new Th08CardAttackCareerTests.Properties(Th08CardAttackCareerTests.ValidProperties),
+            storyCareer = new CardAttackCareerStub(Th08CardAttackCareerTests.ValidStub),
+            practiceCareer = new CardAttackCareerStub(Th08CardAttackCareerTests.ValidStub),
         };
 
         internal static byte[] MakeData(in Properties properties)
@@ -72,8 +74,8 @@ namespace ThScoreFileConverterTests.Models
             CollectionAssert.That.AreEqual(properties.cardName, cardAttack.CardName);
             CollectionAssert.That.AreEqual(properties.enemyName, cardAttack.EnemyName);
             CollectionAssert.That.AreEqual(properties.comment, cardAttack.Comment);
-            Th08CardAttackCareerTests.Validate(cardAttack.StoryCareer, properties.storyCareer);
-            Th08CardAttackCareerTests.Validate(cardAttack.PracticeCareer, properties.practiceCareer);
+            Th08CardAttackCareerTests.Validate(properties.storyCareer, cardAttack.StoryCareer);
+            Th08CardAttackCareerTests.Validate(properties.practiceCareer, cardAttack.PracticeCareer);
         }
 
         [TestMethod]
@@ -150,8 +152,12 @@ namespace ThScoreFileConverterTests.Models
         public void Th08CardAttackTestNotTried() => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
-            properties.storyCareer.trialCounts[Th08Converter.CharaWithTotal.Total] = 0;
-            properties.practiceCareer.trialCounts[Th08Converter.CharaWithTotal.Total] = 0;
+            properties.storyCareer.TrialCounts = properties.storyCareer.TrialCounts
+                .Select(pair => (pair.Key, Value: (pair.Key == Th08Converter.CharaWithTotal.Total) ? 0 : pair.Value))
+                .ToDictionary(pair => pair.Key, pair => pair.Value);
+            properties.practiceCareer.TrialCounts = properties.practiceCareer.TrialCounts
+                .Select(pair => (pair.Key, Value: (pair.Key == Th08Converter.CharaWithTotal.Total) ? 0 : pair.Value))
+                .ToDictionary(pair => pair.Key, pair => pair.Value);
 
             var chapter = ChapterWrapper.Create(MakeByteArray(properties));
             var cardAttack = new Th08CardAttackWrapper(chapter);

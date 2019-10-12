@@ -48,11 +48,14 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public object Target
             => this.pobj.Target;
         public IReadOnlyDictionary<Th08Converter.CharaWithTotal, uint> MaxBonuses
-            => this.pobj.GetProperty(nameof(this.MaxBonuses)) as Dictionary<Th08Converter.CharaWithTotal, uint>;
+            => this.pobj.GetProperty(nameof(this.MaxBonuses))
+                as IReadOnlyDictionary<Th08Converter.CharaWithTotal, uint>;
         public IReadOnlyDictionary<Th08Converter.CharaWithTotal, int> TrialCounts
-            => this.pobj.GetProperty(nameof(this.TrialCounts)) as Dictionary<Th08Converter.CharaWithTotal, int>;
+            => this.pobj.GetProperty(nameof(this.TrialCounts))
+                as IReadOnlyDictionary<Th08Converter.CharaWithTotal, int>;
         public IReadOnlyDictionary<Th08Converter.CharaWithTotal, int> ClearCounts
-            => this.pobj.GetProperty(nameof(this.ClearCounts)) as Dictionary<Th08Converter.CharaWithTotal, int>;
+            => this.pobj.GetProperty(nameof(this.ClearCounts))
+                as IReadOnlyDictionary<Th08Converter.CharaWithTotal, int>;
 
         public void ReadFrom(BinaryReader reader)
             => this.pobj.Invoke(nameof(ReadFrom), new object[] { reader }, CultureInfo.InvariantCulture);
