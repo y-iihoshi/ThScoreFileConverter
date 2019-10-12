@@ -766,56 +766,6 @@ namespace ThScoreFileConverter.Models
             public void Set(Th07.VersionInfo info) => this.VersionInfo = info;
         }
 
-        private class CardAttack : Th06.Chapter, ICardAttack    // per card
-        {
-            public const string ValidSignature = "CATK";
-            public const short ValidSize = 0x022C;
-
-            private readonly CardAttackCareer storyCareer;
-            private readonly CardAttackCareer practiceCareer;
-
-            public CardAttack(Th06.Chapter chapter)
-                : base(chapter, ValidSignature, ValidSize)
-            {
-                this.storyCareer = new CardAttackCareer();
-                this.practiceCareer = new CardAttackCareer();
-
-                using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-                {
-                    reader.ReadUInt32();    // always 0x00000003?
-                    this.CardId = (short)(reader.ReadInt16() + 1);
-                    reader.ReadByte();
-                    this.Level = Utils.ToEnum<LevelPracticeWithTotal>(reader.ReadByte());   // Last Word == Normal...
-                    this.CardName = reader.ReadExactBytes(0x30);
-                    this.EnemyName = reader.ReadExactBytes(0x30);
-                    this.Comment = reader.ReadExactBytes(0x80);
-                    this.storyCareer.ReadFrom(reader);
-                    this.practiceCareer.ReadFrom(reader);
-                    reader.ReadUInt32();    // always 0x00000000?
-                }
-            }
-
-            public short CardId { get; }    // 1-based
-
-            public LevelPracticeWithTotal Level { get; }
-
-            public IEnumerable<byte> CardName { get; }
-
-            public IEnumerable<byte> EnemyName { get; }
-
-            public IEnumerable<byte> Comment { get; }  // Should be splitted by '\0'
-
-            public ICardAttackCareer StoryCareer => this.storyCareer;
-
-            public ICardAttackCareer PracticeCareer => this.practiceCareer;
-
-            public bool HasTried()
-            {
-                return (this.StoryCareer.TrialCounts[CharaWithTotal.Total] > 0)
-                    || (this.PracticeCareer.TrialCounts[CharaWithTotal.Total] > 0);
-            }
-        }
-
         private class PracticeScore : Th06.Chapter, IPracticeScore  // per character
         {
             public const string ValidSignature = "PSCR";

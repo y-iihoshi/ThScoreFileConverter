@@ -7,14 +7,12 @@ using System.Linq;
 using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
-using ThScoreFileConverterTests.Models.Th08;
 using ThScoreFileConverterTests.Models.Th08.Stubs;
-using ThScoreFileConverterTests.Models.Wrappers;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th08
 {
     [TestClass]
-    public class Th08CardAttackTests
+    public class CardAttackTests
     {
         internal static CardAttackStub ValidStub => new CardAttackStub()
         {
@@ -30,8 +28,11 @@ namespace ThScoreFileConverterTests.Models
             PracticeCareer = new CardAttackCareerStub(CardAttackCareerTests.ValidStub),
         };
 
-        internal static byte[] MakeData(ICardAttack attack)
+        internal static byte[] MakeByteArray(ICardAttack attack)
             => TestUtils.MakeByteArray(
+                attack.Signature.ToCharArray(),
+                attack.Size1,
+                attack.Size2,
                 0u,
                 (short)(attack.CardId - 1),
                 (byte)0,
@@ -43,21 +44,14 @@ namespace ThScoreFileConverterTests.Models
                 CardAttackCareerTests.MakeByteArray(attack.PracticeCareer),
                 0u);
 
-        internal static byte[] MakeByteArray(ICardAttack attack)
-            => TestUtils.MakeByteArray(
-                attack.Signature.ToCharArray(), attack.Size1, attack.Size2, MakeData(attack));
-
-        internal static void Validate(ICardAttack expected, in Th08CardAttackWrapper actual)
+        internal static void Validate(ICardAttack expected, ICardAttack actual)
         {
-            var data = MakeData(expected);
-
             Assert.AreEqual(expected.Signature, actual.Signature);
             Assert.AreEqual(expected.Size1, actual.Size1);
             Assert.AreEqual(expected.Size2, actual.Size2);
-            CollectionAssert.That.AreEqual(data, actual.Data);
-            Assert.AreEqual(data[0], actual.FirstByteOfData);
+            Assert.AreEqual(expected.FirstByteOfData, actual.FirstByteOfData);
             Assert.AreEqual(expected.CardId, actual.CardId);
-            Assert.AreEqual(expected.Level, actual.Level.Value);
+            Assert.AreEqual(expected.Level, actual.Level);
             CollectionAssert.That.AreEqual(expected.CardName, actual.CardName);
             CollectionAssert.That.AreEqual(expected.EnemyName, actual.EnemyName);
             CollectionAssert.That.AreEqual(expected.Comment, actual.Comment);
@@ -66,22 +60,22 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        public void Th08CardAttackTestChapter() => TestUtils.Wrap(() =>
+        public void CardAttackTestChapter() => TestUtils.Wrap(() =>
         {
             var stub = ValidStub;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            var cardAttack = new Th08CardAttackWrapper(chapter);
+            var cardAttack = new CardAttack(chapter.Target);
 
             Validate(stub, cardAttack);
-            Assert.IsTrue(cardAttack.HasTried().Value);
+            Assert.IsTrue(cardAttack.HasTried());
         });
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th08CardAttackTestNullChapter() => TestUtils.Wrap(() =>
+        public void CardAttackTestNullChapter() => TestUtils.Wrap(() =>
         {
-            _ = new Th08CardAttackWrapper(null);
+            _ = new CardAttack(null);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -89,26 +83,26 @@ namespace ThScoreFileConverterTests.Models
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th08CardAttackTestInvalidSignature() => TestUtils.Wrap(() =>
+        public void CardAttackTestInvalidSignature() => TestUtils.Wrap(() =>
         {
             var stub = new CardAttackStub(ValidStub);
             stub.Signature = stub.Signature.ToLowerInvariant();
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th08CardAttackWrapper(chapter);
+            _ = new CardAttack(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th08CardAttackTestInvalidSize1() => TestUtils.Wrap(() =>
+        public void CardAttackTestInvalidSize1() => TestUtils.Wrap(() =>
         {
             var stub = new CardAttackStub(ValidStub);
             --stub.Size1;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th08CardAttackWrapper(chapter);
+            _ = new CardAttack(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -120,7 +114,7 @@ namespace ThScoreFileConverterTests.Models
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th08CardAttackTestInvalidLevel(int level) => TestUtils.Wrap(() =>
+        public void CardAttackTestInvalidLevel(int level) => TestUtils.Wrap(() =>
         {
             var stub = new CardAttackStub(ValidStub)
             {
@@ -128,35 +122,35 @@ namespace ThScoreFileConverterTests.Models
             };
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th08CardAttackWrapper(chapter);
+            _ = new CardAttack(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
-        public void Th08CardAttackTestNotTried() => TestUtils.Wrap(() =>
+        public void CardAttackTestNotTried() => TestUtils.Wrap(() =>
         {
             var stub = new CardAttackStub(ValidStub)
             {
                 StoryCareer = new CardAttackCareerStub(ValidStub.StoryCareer)
                 {
                     TrialCounts = ValidStub.StoryCareer.TrialCounts
-                        .Select(pair => (pair.Key, Value: (pair.Key == CharaWithTotal.Total) ? 0 : pair.Value))
+                        .Select(pair => (pair.Key, Value: pair.Key == CharaWithTotal.Total ? 0 : pair.Value))
                         .ToDictionary(pair => pair.Key, pair => pair.Value),
                 },
                 PracticeCareer = new CardAttackCareerStub(ValidStub.PracticeCareer)
                 {
                     TrialCounts = ValidStub.PracticeCareer.TrialCounts
-                        .Select(pair => (pair.Key, Value: (pair.Key == CharaWithTotal.Total) ? 0 : pair.Value))
+                        .Select(pair => (pair.Key, Value: pair.Key == CharaWithTotal.Total ? 0 : pair.Value))
                         .ToDictionary(pair => pair.Key, pair => pair.Value),
                 },
             };
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            var cardAttack = new Th08CardAttackWrapper(chapter);
+            var cardAttack = new CardAttack(chapter.Target);
 
             Validate(stub, cardAttack);
-            Assert.IsFalse(cardAttack.HasTried().Value);
+            Assert.IsFalse(cardAttack.HasTried());
         });
     }
 }

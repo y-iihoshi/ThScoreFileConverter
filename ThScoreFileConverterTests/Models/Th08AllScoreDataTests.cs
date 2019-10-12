@@ -22,7 +22,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.IsNull(allScoreData.Header);
             Assert.AreEqual(0, allScoreData.Rankings.Count);
             Assert.AreEqual(0, allScoreData.ClearData.Count);
-            Assert.AreEqual(0, allScoreData.CardAttacksCount);
+            Assert.AreEqual(0, allScoreData.CardAttacks.Count);
             Assert.AreEqual(0, allScoreData.PracticeScoresCount);
             Assert.IsNull(allScoreData.Flsp);
             Assert.IsNull(allScoreData.PlayStatus);
@@ -118,30 +118,26 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th08AllScoreDataSetCardAttackTest() => TestUtils.Wrap(() =>
         {
-            var stub = Th08CardAttackTests.ValidStub;
-            var chapter = ChapterWrapper.Create(Th08CardAttackTests.MakeByteArray(stub));
-            var attack = new Th08CardAttackWrapper(chapter);
+            var attack = CardAttackTests.ValidStub;
 
             var allScoreData = new Th08AllScoreDataWrapper();
             allScoreData.Set(attack);
 
-            Assert.AreSame(attack.Target, allScoreData.CardAttacksItem(stub.CardId).Target);
+            Assert.AreSame(attack, allScoreData.CardAttacks[attack.CardId]);
         });
 
         [TestMethod]
         public void Th08AllScoreDataSetCardAttackTestTwice() => TestUtils.Wrap(() =>
         {
-            var stub = Th08CardAttackTests.ValidStub;
-            var chapter = ChapterWrapper.Create(Th08CardAttackTests.MakeByteArray(stub));
-            var attack1 = new Th08CardAttackWrapper(chapter);
-            var attack2 = new Th08CardAttackWrapper(chapter);
+            var attack1 = CardAttackTests.ValidStub;
+            var attack2 = new CardAttackStub(attack1);
 
             var allScoreData = new Th08AllScoreDataWrapper();
             allScoreData.Set(attack1);
             allScoreData.Set(attack2);
 
-            Assert.AreSame(attack1.Target, allScoreData.CardAttacksItem(stub.CardId).Target);
-            Assert.AreNotSame(attack2.Target, allScoreData.CardAttacksItem(stub.CardId).Target);
+            Assert.AreSame(attack1, allScoreData.CardAttacks[attack1.CardId]);
+            Assert.AreNotSame(attack2, allScoreData.CardAttacks[attack2.CardId]);
         });
 
         [TestMethod]
