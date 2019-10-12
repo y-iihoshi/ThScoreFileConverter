@@ -16,7 +16,7 @@ namespace ThScoreFileConverterTests.Models
     {
         public static string Unreachable => nameof(Unreachable);
 
-        public static Random Random => new Random();
+        public static Random Random { get; } = new Random();
 
         public static Encoding CP932Encoding => Encoding.GetEncoding(932);
 

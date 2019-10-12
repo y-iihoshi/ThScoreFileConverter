@@ -26,7 +26,7 @@ namespace ThScoreFileConverterTests.Models.Th075
             }
         };
 
-        internal static Properties ValidProperties => new Properties()
+        internal static Properties ValidProperties { get; } = new Properties()
         {
             encodedLastName = new byte[] { 15, 37, 26, 50, 30, 43, 53, 103 },
             decodedLastName = "Player1 ",

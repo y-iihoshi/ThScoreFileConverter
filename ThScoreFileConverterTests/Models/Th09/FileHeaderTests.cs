@@ -19,7 +19,7 @@ namespace ThScoreFileConverterTests.Models.Th09
             public int encodedBodySize;
         };
 
-        internal static Properties ValidProperties => new Properties()
+        internal static Properties ValidProperties { get; } = new Properties()
         {
             checksum = 12,
             version = 0x04,

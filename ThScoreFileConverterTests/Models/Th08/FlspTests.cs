@@ -17,7 +17,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             public short size2;
         };
 
-        internal static Properties ValidProperties => new Properties()
+        internal static Properties ValidProperties { get; } = new Properties()
         {
             signature = "FLSP",
             size1 = 0x20,

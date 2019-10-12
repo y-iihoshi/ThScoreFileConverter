@@ -16,7 +16,7 @@ namespace ThScoreFileConverterTests.Models.Th08
     [TestClass]
     public class PracticeScoreTests
     {
-        internal static PracticeScoreStub ValidStub => new PracticeScoreStub()
+        internal static PracticeScoreStub ValidStub { get; } = new PracticeScoreStub()
         {
             Signature = "PSCR",
             Size1 = 0x178,

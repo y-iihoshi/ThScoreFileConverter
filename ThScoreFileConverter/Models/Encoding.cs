@@ -15,16 +15,16 @@ namespace ThScoreFileConverter.Models
         /// <summary>
         /// Gets the code page 932 encoding.
         /// </summary>
-        public static System.Text.Encoding CP932 => System.Text.Encoding.GetEncoding(932);
+        public static System.Text.Encoding CP932 { get; } = System.Text.Encoding.GetEncoding(932);
 
         /// <summary>
         /// Gets the default encoding.
         /// </summary>
-        public static System.Text.Encoding Default => System.Text.Encoding.Default;
+        public static System.Text.Encoding Default { get; } = System.Text.Encoding.Default;
 
         /// <summary>
         /// Gets the UTF-8 encoding. The Unicode byte order mark is omitted.
         /// </summary>
-        public static System.Text.Encoding UTF8 => new System.Text.UTF8Encoding(false);
+        public static System.Text.Encoding UTF8 { get; } = new System.Text.UTF8Encoding(false);
     }
 }

@@ -14,7 +14,7 @@ namespace ThScoreFileConverterTests.Models.Th08
     [TestClass]
     public class PlayStatusTests
     {
-        internal static PlayStatusStub ValidStub => new PlayStatusStub()
+        internal static PlayStatusStub ValidStub { get; } = new PlayStatusStub()
         {
             Signature = "PLST",
             Size1 = 0x228,

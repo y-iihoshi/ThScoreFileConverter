@@ -19,7 +19,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             public byte[] version;
         };
 
-        internal static Properties ValidProperties => new Properties()
+        internal static Properties ValidProperties { get; } = new Properties()
         {
             signature = "VRSM",
             size1 = 0x1C,

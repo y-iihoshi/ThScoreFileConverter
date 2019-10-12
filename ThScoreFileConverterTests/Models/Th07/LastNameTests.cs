@@ -19,7 +19,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             public byte[] name;
         };
 
-        internal static Properties ValidProperties => new Properties()
+        internal static Properties ValidProperties { get; } = new Properties()
         {
             signature = "LSNM",
             size1 = 0x18,

@@ -14,7 +14,7 @@ namespace ThScoreFileConverterTests.Models.Th08
     [TestClass]
     public class CardAttackTests
     {
-        internal static CardAttackStub ValidStub => new CardAttackStub()
+        internal static CardAttackStub ValidStub { get; } = new CardAttackStub()
         {
             Signature = "CATK",
             Size1 = 0x22C,

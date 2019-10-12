@@ -33,7 +33,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             }
         };
 
-        internal static Properties ValidProperties => new Properties()
+        internal static Properties ValidProperties { get; } = new Properties()
         {
             totalTrial = 1,
             trials = Utils.GetEnumerator<Chara>()

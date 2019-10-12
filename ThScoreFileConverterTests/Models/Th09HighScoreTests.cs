@@ -15,7 +15,7 @@ namespace ThScoreFileConverterTests.Models
     [TestClass]
     public class Th09HighScoreTests
     {
-        internal static HighScoreStub ValidStub => new HighScoreStub()
+        internal static HighScoreStub ValidStub { get; } = new HighScoreStub()
         {
             Signature = "HSCR",
             Size1 = 0x2C,

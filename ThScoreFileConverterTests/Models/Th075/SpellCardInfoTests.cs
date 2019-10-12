@@ -13,7 +13,7 @@ namespace ThScoreFileConverterTests.Models.Th075
             public Level level;
         };
 
-        internal static Properties ValidProperties => new Properties()
+        internal static Properties ValidProperties { get; } = new Properties()
         {
             name = "「百万鬼夜行」",
             enemy = Chara.Suika,

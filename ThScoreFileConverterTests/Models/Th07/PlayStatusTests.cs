@@ -24,7 +24,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             public Dictionary<LevelWithTotal, PlayCountTests.Properties> playCounts;
         };
 
-        internal static Properties ValidProperties => new Properties()
+        internal static Properties ValidProperties { get; } = new Properties()
         {
             signature = "PLST",
             size1 = 0x160,

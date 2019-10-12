@@ -14,7 +14,7 @@ namespace ThScoreFileConverterTests.Models.Th08
     [TestClass]
     public class CardAttackCareerTests
     {
-        internal static CardAttackCareerStub ValidStub => new CardAttackCareerStub()
+        internal static CardAttackCareerStub ValidStub { get; } = new CardAttackCareerStub()
         {
             MaxBonuses = Utils.GetEnumerator<CharaWithTotal>()
                 .Select((chara, index) => (chara, index))

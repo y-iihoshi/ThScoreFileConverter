@@ -19,7 +19,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             public byte[] data;
         };
 
-        internal static Properties ValidProperties => new Properties()
+        internal static Properties ValidProperties { get; } = new Properties()
         {
             signature = "TH7K",
             size1 = 12,

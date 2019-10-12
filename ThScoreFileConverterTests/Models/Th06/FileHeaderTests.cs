@@ -17,7 +17,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             public int decodedAllSize;
         };
 
-        internal static Properties ValidProperties => new Properties()
+        internal static Properties ValidProperties { get; } = new Properties()
         {
             checksum = 12,
             version = 0x10,

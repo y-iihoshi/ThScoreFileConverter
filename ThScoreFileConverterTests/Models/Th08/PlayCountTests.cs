@@ -14,7 +14,7 @@ namespace ThScoreFileConverterTests.Models.Th08
     [TestClass]
     public class PlayCountTests
     {
-        internal static PlayCountStub ValidStub => new PlayCountStub()
+        internal static PlayCountStub ValidStub { get; } = new PlayCountStub()
         {
             TotalTrial = 1,
             Trials = Utils.GetEnumerator<Chara>()
