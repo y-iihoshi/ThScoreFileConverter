@@ -7,6 +7,7 @@ using System.Linq;
 using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
+using ThScoreFileConverterTests.Models.Th08;
 using ThScoreFileConverterTests.Models.Th08.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 
@@ -25,8 +26,8 @@ namespace ThScoreFileConverterTests.Models
             CardName = TestUtils.MakeRandomArray<byte>(0x30),
             EnemyName = TestUtils.MakeRandomArray<byte>(0x30),
             Comment = TestUtils.MakeRandomArray<byte>(0x80),
-            StoryCareer = new CardAttackCareerStub(Th08CardAttackCareerTests.ValidStub),
-            PracticeCareer = new CardAttackCareerStub(Th08CardAttackCareerTests.ValidStub),
+            StoryCareer = new CardAttackCareerStub(CardAttackCareerTests.ValidStub),
+            PracticeCareer = new CardAttackCareerStub(CardAttackCareerTests.ValidStub),
         };
 
         internal static byte[] MakeData(ICardAttack attack)
@@ -38,8 +39,8 @@ namespace ThScoreFileConverterTests.Models
                 attack.CardName,
                 attack.EnemyName,
                 attack.Comment,
-                Th08CardAttackCareerTests.MakeByteArray(attack.StoryCareer),
-                Th08CardAttackCareerTests.MakeByteArray(attack.PracticeCareer),
+                CardAttackCareerTests.MakeByteArray(attack.StoryCareer),
+                CardAttackCareerTests.MakeByteArray(attack.PracticeCareer),
                 0u);
 
         internal static byte[] MakeByteArray(ICardAttack attack)
@@ -60,8 +61,8 @@ namespace ThScoreFileConverterTests.Models
             CollectionAssert.That.AreEqual(expected.CardName, actual.CardName);
             CollectionAssert.That.AreEqual(expected.EnemyName, actual.EnemyName);
             CollectionAssert.That.AreEqual(expected.Comment, actual.Comment);
-            Th08CardAttackCareerTests.Validate(expected.StoryCareer, actual.StoryCareer);
-            Th08CardAttackCareerTests.Validate(expected.PracticeCareer, actual.PracticeCareer);
+            CardAttackCareerTests.Validate(expected.StoryCareer, actual.StoryCareer);
+            CardAttackCareerTests.Validate(expected.PracticeCareer, actual.PracticeCareer);
         }
 
         [TestMethod]

@@ -44,10 +44,10 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.EnemyName)) as IEnumerable<byte>;
         public IEnumerable<byte> Comment
             => this.pobj.GetProperty(nameof(this.Comment)) as IEnumerable<byte>;
-        public Th08CardAttackCareerWrapper StoryCareer
-            => new Th08CardAttackCareerWrapper(this.pobj.GetProperty(nameof(this.StoryCareer)));
-        public Th08CardAttackCareerWrapper PracticeCareer
-            => new Th08CardAttackCareerWrapper(this.pobj.GetProperty(nameof(this.PracticeCareer)));
+        public ICardAttackCareer StoryCareer
+            => this.pobj.GetProperty(nameof(this.StoryCareer)) as ICardAttackCareer;
+        public ICardAttackCareer PracticeCareer
+            => this.pobj.GetProperty(nameof(this.PracticeCareer)) as ICardAttackCareer;
 
         public bool? HasTried()
             => this.pobj.Invoke(nameof(HasTried), new object[] { }, CultureInfo.InvariantCulture) as bool?;

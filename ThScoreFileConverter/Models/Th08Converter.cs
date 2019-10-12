@@ -816,26 +816,6 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class CardAttackCareer : IBinaryReadable, ICardAttackCareer // per story or practice
-        {
-            public IReadOnlyDictionary<CharaWithTotal, uint> MaxBonuses { get; private set; }
-
-            public IReadOnlyDictionary<CharaWithTotal, int> TrialCounts { get; private set; }
-
-            public IReadOnlyDictionary<CharaWithTotal, int> ClearCounts { get; private set; }
-
-            public void ReadFrom(BinaryReader reader)
-            {
-                if (reader == null)
-                    throw new ArgumentNullException(nameof(reader));
-
-                var charas = Utils.GetEnumerator<CharaWithTotal>();
-                this.MaxBonuses = charas.ToDictionary(chara => chara, _ => reader.ReadUInt32());
-                this.TrialCounts = charas.ToDictionary(chara => chara, _ => reader.ReadInt32());
-                this.ClearCounts = charas.ToDictionary(chara => chara, _ => reader.ReadInt32());
-            }
-        }
-
         private class PracticeScore : Th06.Chapter, IPracticeScore  // per character
         {
             public const string ValidSignature = "PSCR";

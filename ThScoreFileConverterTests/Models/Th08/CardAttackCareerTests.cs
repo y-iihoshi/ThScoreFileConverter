@@ -8,12 +8,11 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th08.Stubs;
-using ThScoreFileConverterTests.Models.Wrappers;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th08
 {
     [TestClass]
-    public class Th08CardAttackCareerTests
+    public class CardAttackCareerTests
     {
         internal static CardAttackCareerStub ValidStub => new CardAttackCareerStub()
         {
@@ -34,7 +33,7 @@ namespace ThScoreFileConverterTests.Models
                 career.TrialCounts.Values.ToArray(),
                 career.ClearCounts.Values.ToArray());
 
-        internal static void Validate(ICardAttackCareer expected, in Th08CardAttackCareerWrapper actual)
+        internal static void Validate(ICardAttackCareer expected, ICardAttackCareer actual)
         {
             CollectionAssert.That.AreEqual(expected.MaxBonuses.Values, actual.MaxBonuses.Values);
             CollectionAssert.That.AreEqual(expected.TrialCounts.Values, actual.TrialCounts.Values);
@@ -42,20 +41,20 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        public void Th08CardAttackCareerReadFromTest() => TestUtils.Wrap(() =>
+        public void ReadFromTest() => TestUtils.Wrap(() =>
         {
             var stub = ValidStub;
 
-            var career = Th08CardAttackCareerWrapper.Create(MakeByteArray(stub));
+            var career = TestUtils.Create<CardAttackCareer>(MakeByteArray(stub));
 
             Validate(stub, career);
         });
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th08CardAttackCareerReadFromTestNull() => TestUtils.Wrap(() =>
+        public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
-            var career = new Th08CardAttackCareerWrapper();
+            var career = new CardAttackCareer();
             career.ReadFrom(null);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -63,19 +62,19 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th08CardAttackCareerReadFromTestShortenedMaxBonuses() => TestUtils.Wrap(() =>
+        public void ReadFromTestShortenedMaxBonuses() => TestUtils.Wrap(() =>
         {
             var stub = new CardAttackCareerStub(ValidStub);
             stub.MaxBonuses = stub.MaxBonuses.Where(pair => pair.Key != CharaWithTotal.Total)
                 .ToDictionary(pair => pair.Key, pair => pair.Value);
 
-            _ = Th08CardAttackCareerWrapper.Create(MakeByteArray(stub));
+            _ = TestUtils.Create<CardAttackCareer>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
-        public void Th08CardAttackCareerReadFromTestExceededMaxBonuses() => TestUtils.Wrap(() =>
+        public void ReadFromTestExceededMaxBonuses() => TestUtils.Wrap(() =>
         {
             var stub = new CardAttackCareerStub(ValidStub);
             stub.MaxBonuses = stub.MaxBonuses.Concat(new Dictionary<CharaWithTotal, uint>
@@ -83,7 +82,7 @@ namespace ThScoreFileConverterTests.Models
                 { TestUtils.Cast<CharaWithTotal>(999), 999u },
             }).ToDictionary(pair => pair.Key, pair => pair.Value);
 
-            var career = Th08CardAttackCareerWrapper.Create(MakeByteArray(stub));
+            var career = TestUtils.Create<CardAttackCareer>(MakeByteArray(stub));
 
             CollectionAssert.That.AreNotEqual(stub.MaxBonuses.Values, career.MaxBonuses.Values);
             CollectionAssert.That.AreEqual(stub.MaxBonuses.Values.SkipLast(1), career.MaxBonuses.Values);
@@ -93,19 +92,19 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th08CardAttackCareerReadFromTestShortenedTrialCounts() => TestUtils.Wrap(() =>
+        public void ReadFromTestShortenedTrialCounts() => TestUtils.Wrap(() =>
         {
             var stub = new CardAttackCareerStub(ValidStub);
             stub.TrialCounts = stub.TrialCounts.Where(pair => pair.Key != CharaWithTotal.Total)
                 .ToDictionary(pair => pair.Key, pair => pair.Value);
 
-            _ = Th08CardAttackCareerWrapper.Create(MakeByteArray(stub));
+            _ = TestUtils.Create<CardAttackCareer>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
-        public void Th08CardAttackCareerReadFromTestExceededTrialCounts() => TestUtils.Wrap(() =>
+        public void ReadFromTestExceededTrialCounts() => TestUtils.Wrap(() =>
         {
             var stub = new CardAttackCareerStub(ValidStub);
             stub.TrialCounts = stub.TrialCounts.Concat(new Dictionary<CharaWithTotal, int>
@@ -113,7 +112,7 @@ namespace ThScoreFileConverterTests.Models
                 { TestUtils.Cast<CharaWithTotal>(999), 999 },
             }).ToDictionary(pair => pair.Key, pair => pair.Value);
 
-            var career = Th08CardAttackCareerWrapper.Create(MakeByteArray(stub));
+            var career = TestUtils.Create<CardAttackCareer>(MakeByteArray(stub));
 
             CollectionAssert.That.AreEqual(stub.MaxBonuses.Values, career.MaxBonuses.Values);
             CollectionAssert.That.AreNotEqual(stub.TrialCounts.Values, career.TrialCounts.Values);
@@ -123,19 +122,19 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th08CardAttackCareerReadFromTestShortenedClearCounts() => TestUtils.Wrap(() =>
+        public void ReadFromTestShortenedClearCounts() => TestUtils.Wrap(() =>
         {
             var stub = new CardAttackCareerStub(ValidStub);
             stub.ClearCounts = stub.ClearCounts.Where(pair => pair.Key != CharaWithTotal.Total)
                 .ToDictionary(pair => pair.Key, pair => pair.Value);
 
-            _ = Th08CardAttackCareerWrapper.Create(MakeByteArray(stub));
+            _ = TestUtils.Create<CardAttackCareer>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
-        public void Th08CardAttackCareerReadFromTestExceededClearCounts() => TestUtils.Wrap(() =>
+        public void ReadFromTestExceededClearCounts() => TestUtils.Wrap(() =>
         {
             var stub = new CardAttackCareerStub(ValidStub);
             stub.ClearCounts = stub.ClearCounts.Concat(new Dictionary<CharaWithTotal, int>
@@ -143,7 +142,7 @@ namespace ThScoreFileConverterTests.Models
                 { TestUtils.Cast<CharaWithTotal>(999), 999 },
             }).ToDictionary(pair => pair.Key, pair => pair.Value);
 
-            var career = Th08CardAttackCareerWrapper.Create(MakeByteArray(stub));
+            var career = TestUtils.Create<CardAttackCareer>(MakeByteArray(stub));
 
             CollectionAssert.That.AreEqual(stub.MaxBonuses.Values, career.MaxBonuses.Values);
             CollectionAssert.That.AreEqual(stub.TrialCounts.Values, career.TrialCounts.Values);
