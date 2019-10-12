@@ -16,16 +16,6 @@ namespace ThScoreFileConverterTests.Models
     [TestClass]
     public class Th08PracticeScoreTests
     {
-        internal struct Properties
-        {
-            public string signature;
-            public short size1;
-            public short size2;
-            public Dictionary<(Th08Converter.Stage, Level), int> playCounts;
-            public Dictionary<(Th08Converter.Stage, Level), int> highScores;
-            public Th08Converter.Chara chara;
-        };
-
         internal static PracticeScoreStub ValidStub => new PracticeScoreStub()
         {
             Signature = "PSCR",
