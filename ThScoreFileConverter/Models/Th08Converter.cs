@@ -1096,6 +1096,7 @@ namespace ThScoreFileConverter.Models
             private readonly Dictionary<(Chara, Level), IReadOnlyList<IHighScore<Chara, Level, StageProgress>>> rankings;
             private readonly Dictionary<CharaWithTotal, IClearData> clearData;
             private readonly Dictionary<int, ICardAttack> cardAttacks;
+            private readonly Dictionary<Chara, IPracticeScore> practiceScores;
 
             public AllScoreData()
             {
@@ -1105,7 +1106,7 @@ namespace ThScoreFileConverter.Models
                 this.clearData =
                     new Dictionary<CharaWithTotal, IClearData>(Enum.GetValues(typeof(CharaWithTotal)).Length);
                 this.cardAttacks = new Dictionary<int, ICardAttack>(CardTable.Count);
-                this.PracticeScores = new Dictionary<Chara, PracticeScore>(numCharas);
+                this.practiceScores = new Dictionary<Chara, IPracticeScore>(numCharas);
             }
 
             public Header Header { get; private set; }
@@ -1116,7 +1117,7 @@ namespace ThScoreFileConverter.Models
 
             public IReadOnlyDictionary<int, ICardAttack> CardAttacks => this.cardAttacks;
 
-            public Dictionary<Chara, PracticeScore> PracticeScores { get; private set; }
+            public IReadOnlyDictionary<Chara, IPracticeScore> PracticeScores => this.practiceScores;
 
             public FLSP Flsp { get; private set; }
 
@@ -1152,10 +1153,10 @@ namespace ThScoreFileConverter.Models
                     this.cardAttacks.Add(attack.CardId, attack);
             }
 
-            public void Set(PracticeScore score)
+            public void Set(IPracticeScore score)
             {
-                if (!this.PracticeScores.ContainsKey(score.Chara))
-                    this.PracticeScores.Add(score.Chara, score);
+                if (!this.practiceScores.ContainsKey(score.Chara))
+                    this.practiceScores.Add(score.Chara, score);
             }
 
             public void Set(FLSP flsp) => this.Flsp = flsp;
@@ -1356,7 +1357,7 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class PracticeScore : Th06.Chapter   // per character
+        private class PracticeScore : Th06.Chapter, IPracticeScore  // per character
         {
             public const string ValidSignature = "PSCR";
             public const short ValidSize = 0x0178;
@@ -1366,46 +1367,24 @@ namespace ThScoreFileConverter.Models
             {
                 var stages = Utils.GetEnumerator<Stage>();
                 var levels = Utils.GetEnumerator<Level>();
-                var numPairs = stages.Count() * levels.Count();
-                this.PlayCounts = new Dictionary<(Stage, Level), int>(numPairs);
-                this.HighScores = new Dictionary<(Stage, Level), int>(numPairs);
 
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
                     //// The fields for Stage.Extra and Level.Extra actually exist...
 
-                    reader.ReadUInt32();    // always 0x00000002?
-
-                    foreach (var stage in stages)
-                    {
-                        foreach (var level in levels)
-                        {
-                            var key = (stage, level);
-                            if (!this.PlayCounts.ContainsKey(key))
-                                this.PlayCounts.Add(key, 0);
-                            this.PlayCounts[key] = reader.ReadInt32();
-                        }
-                    }
-
-                    foreach (var stage in stages)
-                    {
-                        foreach (var level in levels)
-                        {
-                            var key = (stage, level);
-                            if (!this.HighScores.ContainsKey(key))
-                                this.HighScores.Add(key, 0);
-                            this.HighScores[key] = reader.ReadInt32();
-                        }
-                    }
-
+                    reader.ReadUInt32();        // always 0x00000002?
+                    this.PlayCounts = stages.SelectMany(stage => levels.Select(level => (stage, level)))
+                        .ToDictionary(pair => pair, _ => reader.ReadInt32());
+                    this.HighScores = stages.SelectMany(stage => levels.Select(level => (stage, level)))
+                        .ToDictionary(pair => pair, _ => reader.ReadInt32());
                     this.Chara = Utils.ToEnum<Chara>(reader.ReadByte());
                     reader.ReadExactBytes(3);   // always 0x000001?
                 }
             }
 
-            public Dictionary<(Stage, Level), int> PlayCounts { get; }
+            public IReadOnlyDictionary<(Stage, Level), int> PlayCounts { get; }
 
-            public Dictionary<(Stage, Level), int> HighScores { get; }  // Divided by 10
+            public IReadOnlyDictionary<(Stage, Level), int> HighScores { get; } // Divided by 10
 
             public Chara Chara { get; }
         }

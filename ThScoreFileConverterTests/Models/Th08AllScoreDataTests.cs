@@ -157,21 +157,21 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th08AllScoreDataSetPracticeScoreTest() => TestUtils.Wrap(() =>
         {
-            var properties = Th08PracticeScoreTests.ValidProperties;
-            var chapter = ChapterWrapper.Create(Th08PracticeScoreTests.MakeByteArray(properties));
+            var stub = Th08PracticeScoreTests.ValidStub;
+            var chapter = ChapterWrapper.Create(Th08PracticeScoreTests.MakeByteArray(stub));
             var score = new Th08PracticeScoreWrapper(chapter);
 
             var allScoreData = new Th08AllScoreDataWrapper();
             allScoreData.Set(score);
 
-            Assert.AreSame(score.Target, allScoreData.PracticeScoresItem(properties.chara).Target);
+            Assert.AreSame(score.Target, allScoreData.PracticeScoresItem(stub.Chara).Target);
         });
 
         [TestMethod]
         public void Th08AllScoreDataSetPracticeScoreTestTwice() => TestUtils.Wrap(() =>
         {
-            var properties = Th08PracticeScoreTests.ValidProperties;
-            var chapter = ChapterWrapper.Create(Th08PracticeScoreTests.MakeByteArray(properties));
+            var stub = Th08PracticeScoreTests.ValidStub;
+            var chapter = ChapterWrapper.Create(Th08PracticeScoreTests.MakeByteArray(stub));
             var score1 = new Th08PracticeScoreWrapper(chapter);
             var score2 = new Th08PracticeScoreWrapper(chapter);
 
@@ -179,8 +179,8 @@ namespace ThScoreFileConverterTests.Models
             allScoreData.Set(score1);
             allScoreData.Set(score2);
 
-            Assert.AreSame(score1.Target, allScoreData.PracticeScoresItem(properties.chara).Target);
-            Assert.AreNotSame(score2.Target, allScoreData.PracticeScoresItem(properties.chara).Target);
+            Assert.AreSame(score1.Target, allScoreData.PracticeScoresItem(stub.Chara).Target);
+            Assert.AreNotSame(score2.Target, allScoreData.PracticeScoresItem(stub.Chara).Target);
         });
 
         [TestMethod]
