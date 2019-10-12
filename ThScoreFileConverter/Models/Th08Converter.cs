@@ -766,38 +766,6 @@ namespace ThScoreFileConverter.Models
             public void Set(Th07.VersionInfo info) => this.VersionInfo = info;
         }
 
-        private class PracticeScore : Th06.Chapter, IPracticeScore  // per character
-        {
-            public const string ValidSignature = "PSCR";
-            public const short ValidSize = 0x0178;
-
-            public PracticeScore(Th06.Chapter chapter)
-                : base(chapter, ValidSignature, ValidSize)
-            {
-                var stages = Utils.GetEnumerator<Th08.Stage>();
-                var levels = Utils.GetEnumerator<Level>();
-
-                using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-                {
-                    //// The fields for Stage.Extra and Level.Extra actually exist...
-
-                    reader.ReadUInt32();        // always 0x00000002?
-                    this.PlayCounts = stages.SelectMany(stage => levels.Select(level => (stage, level)))
-                        .ToDictionary(pair => pair, _ => reader.ReadInt32());
-                    this.HighScores = stages.SelectMany(stage => levels.Select(level => (stage, level)))
-                        .ToDictionary(pair => pair, _ => reader.ReadInt32());
-                    this.Chara = Utils.ToEnum<Chara>(reader.ReadByte());
-                    reader.ReadExactBytes(3);   // always 0x000001?
-                }
-            }
-
-            public IReadOnlyDictionary<(Th08.Stage, Level), int> PlayCounts { get; }
-
-            public IReadOnlyDictionary<(Th08.Stage, Level), int> HighScores { get; } // Divided by 10
-
-            public Chara Chara { get; }
-        }
-
         private class FLSP : Th06.Chapter    // FIXME
         {
             public const string ValidSignature = "FLSP";

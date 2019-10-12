@@ -23,7 +23,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(0, allScoreData.Rankings.Count);
             Assert.AreEqual(0, allScoreData.ClearData.Count);
             Assert.AreEqual(0, allScoreData.CardAttacks.Count);
-            Assert.AreEqual(0, allScoreData.PracticeScoresCount);
+            Assert.AreEqual(0, allScoreData.PracticeScores.Count);
             Assert.IsNull(allScoreData.Flsp);
             Assert.IsNull(allScoreData.PlayStatus);
             Assert.IsNull(allScoreData.LastName);
@@ -143,30 +143,26 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th08AllScoreDataSetPracticeScoreTest() => TestUtils.Wrap(() =>
         {
-            var stub = Th08PracticeScoreTests.ValidStub;
-            var chapter = ChapterWrapper.Create(Th08PracticeScoreTests.MakeByteArray(stub));
-            var score = new Th08PracticeScoreWrapper(chapter);
+            var score = PracticeScoreTests.ValidStub;
 
             var allScoreData = new Th08AllScoreDataWrapper();
             allScoreData.Set(score);
 
-            Assert.AreSame(score.Target, allScoreData.PracticeScoresItem(stub.Chara).Target);
+            Assert.AreSame(score, allScoreData.PracticeScores[score.Chara]);
         });
 
         [TestMethod]
         public void Th08AllScoreDataSetPracticeScoreTestTwice() => TestUtils.Wrap(() =>
         {
-            var stub = Th08PracticeScoreTests.ValidStub;
-            var chapter = ChapterWrapper.Create(Th08PracticeScoreTests.MakeByteArray(stub));
-            var score1 = new Th08PracticeScoreWrapper(chapter);
-            var score2 = new Th08PracticeScoreWrapper(chapter);
+            var score1 = PracticeScoreTests.ValidStub;
+            var score2 = new PracticeScoreStub(score1);
 
             var allScoreData = new Th08AllScoreDataWrapper();
             allScoreData.Set(score1);
             allScoreData.Set(score2);
 
-            Assert.AreSame(score1.Target, allScoreData.PracticeScoresItem(stub.Chara).Target);
-            Assert.AreNotSame(score2.Target, allScoreData.PracticeScoresItem(stub.Chara).Target);
+            Assert.AreSame(score1, allScoreData.PracticeScores[score1.Chara]);
+            Assert.AreNotSame(score2, allScoreData.PracticeScores[score1.Chara]);
         });
 
         [TestMethod]

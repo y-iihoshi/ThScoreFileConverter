@@ -39,18 +39,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.ClearData)) as IReadOnlyDictionary<CharaWithTotal, IClearData>;
         public IReadOnlyDictionary<int, ICardAttack> CardAttacks
             => this.pobj.GetProperty(nameof(this.CardAttacks)) as IReadOnlyDictionary<int, ICardAttack>;
-
-        // NOTE: Th08Converter.PracticeScore is a private class.
-        // public IReadOnlyDictionary<Chara, PracticeScore> PracticeScores
-        //     => this.pobj.GetProperty(nameof(this.PracticeScores)) as Dictionary<Chara, PracticeScore>;
-        public object PracticeScores
-            => this.pobj.GetProperty(nameof(this.PracticeScores));
-        public int? PracticeScoresCount
-            => this.PracticeScores.GetType().GetProperty("Count").GetValue(this.PracticeScores) as int?;
-        public Th08PracticeScoreWrapper PracticeScoresItem(Chara chara)
-            => new Th08PracticeScoreWrapper(
-                this.PracticeScores.GetType().GetProperty("Item").GetValue(
-                    this.PracticeScores, new object[] { chara }));
+        public IReadOnlyDictionary<Chara, IPracticeScore> PracticeScores
+            => this.pobj.GetProperty(nameof(this.PracticeScores)) as IReadOnlyDictionary<Chara, IPracticeScore>;
 
         public Th08FlspWrapper Flsp
         {
@@ -83,8 +73,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.Invoke(nameof(Set), new object[] { data }, CultureInfo.InvariantCulture);
         public void Set(ICardAttack attack)
             => this.pobj.Invoke(nameof(Set), new object[] { attack }, CultureInfo.InvariantCulture);
-        public void Set(Th08PracticeScoreWrapper score)
-            => this.pobj.Invoke(nameof(Set), new object[] { score.Target }, CultureInfo.InvariantCulture);
+        public void Set(IPracticeScore score)
+            => this.pobj.Invoke(nameof(Set), new object[] { score }, CultureInfo.InvariantCulture);
         public void Set(Th08FlspWrapper flsp)
             => this.pobj.Invoke(nameof(Set), new object[] { flsp.Target }, CultureInfo.InvariantCulture);
         public void Set(Th08PlayStatusWrapper status)
