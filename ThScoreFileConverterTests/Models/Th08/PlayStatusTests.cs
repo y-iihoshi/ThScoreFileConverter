@@ -7,14 +7,12 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
-using ThScoreFileConverterTests.Models.Th08;
 using ThScoreFileConverterTests.Models.Th08.Stubs;
-using ThScoreFileConverterTests.Models.Wrappers;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th08
 {
     [TestClass]
-    public class Th08PlayStatusTests
+    public class PlayStatusTests
     {
         internal static PlayStatusStub ValidStub => new PlayStatusStub()
         {
@@ -31,8 +29,11 @@ namespace ThScoreFileConverterTests.Models
             BgmFlags = TestUtils.MakeRandomArray<byte>(21)
         };
 
-        internal static byte[] MakeData(IPlayStatus status)
+        internal static byte[] MakeByteArray(IPlayStatus status)
             => TestUtils.MakeByteArray(
+                status.Signature.ToCharArray(),
+                status.Size1,
+                status.Size2,
                 0u,
                 (int)status.TotalRunningTime.Hours,
                 status.TotalRunningTime.Minutes,
@@ -48,19 +49,12 @@ namespace ThScoreFileConverterTests.Models
                 status.BgmFlags,
                 new byte[11]);
 
-        internal static byte[] MakeByteArray(IPlayStatus status)
-            => TestUtils.MakeByteArray(
-                status.Signature.ToCharArray(), status.Size1, status.Size2, MakeData(status));
-
-        internal static void Validate(IPlayStatus expected, in Th08PlayStatusWrapper actual)
+        internal static void Validate(IPlayStatus expected, IPlayStatus actual)
         {
-            var data = MakeData(expected);
-
             Assert.AreEqual(expected.Signature, actual.Signature);
             Assert.AreEqual(expected.Size1, actual.Size1);
             Assert.AreEqual(expected.Size2, actual.Size2);
-            CollectionAssert.That.AreEqual(data, actual.Data);
-            Assert.AreEqual(data[0], actual.FirstByteOfData);
+            Assert.AreEqual(expected.FirstByteOfData, actual.FirstByteOfData);
             Assert.AreEqual(expected.TotalRunningTime.Hours, actual.TotalRunningTime.Hours);
             Assert.AreEqual(expected.TotalRunningTime.Minutes, actual.TotalRunningTime.Minutes);
             Assert.AreEqual(expected.TotalRunningTime.Seconds, actual.TotalRunningTime.Seconds);
@@ -82,21 +76,21 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        public void Th08PlayStatusTestChapter() => TestUtils.Wrap(() =>
+        public void PlayStatusTestChapter() => TestUtils.Wrap(() =>
         {
             var stub = ValidStub;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            var playStatus = new Th08PlayStatusWrapper(chapter);
+            var playStatus = new PlayStatus(chapter.Target);
 
             Validate(stub, playStatus);
         });
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th08PlayStatusTestNullChapter() => TestUtils.Wrap(() =>
+        public void PlayStatusTestNullChapter() => TestUtils.Wrap(() =>
         {
-            _ = new Th08PlayStatusWrapper(null);
+            _ = new PlayStatus(null);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -104,26 +98,26 @@ namespace ThScoreFileConverterTests.Models
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th08PlayStatusTestInvalidSignature() => TestUtils.Wrap(() =>
+        public void PlayStatusTestInvalidSignature() => TestUtils.Wrap(() =>
         {
             var stub = new PlayStatusStub(ValidStub);
             stub.Signature = stub.Signature.ToLowerInvariant();
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th08PlayStatusWrapper(chapter);
+            _ = new PlayStatus(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th08PlayStatusTestInvalidSize1() => TestUtils.Wrap(() =>
+        public void PlayStatusTestInvalidSize1() => TestUtils.Wrap(() =>
         {
             var stub = new PlayStatusStub(ValidStub);
             --stub.Size1;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th08PlayStatusWrapper(chapter);
+            _ = new PlayStatus(chapter.Target);
 
             Assert.Fail(TestUtils.Unreachable);
         });

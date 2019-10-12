@@ -51,15 +51,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             }
         }
 
-        public Th08PlayStatusWrapper PlayStatus
-        {
-            get
-            {
-                var status = this.pobj.GetProperty(nameof(this.PlayStatus));
-                return (status != null) ? new Th08PlayStatusWrapper(status) : null;
-            }
-        }
-
+        public IPlayStatus PlayStatus
+            => this.pobj.GetProperty(nameof(this.PlayStatus)) as IPlayStatus;
         public LastName LastName
             => this.pobj.GetProperty(nameof(this.LastName)) as LastName;
         public VersionInfo VersionInfo
@@ -77,8 +70,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.Invoke(nameof(Set), new object[] { score }, CultureInfo.InvariantCulture);
         public void Set(Th08FlspWrapper flsp)
             => this.pobj.Invoke(nameof(Set), new object[] { flsp.Target }, CultureInfo.InvariantCulture);
-        public void Set(Th08PlayStatusWrapper status)
-            => this.pobj.Invoke(nameof(Set), new object[] { status.Target }, CultureInfo.InvariantCulture);
+        public void Set(IPlayStatus status)
+            => this.pobj.Invoke(nameof(Set), new object[] { status }, CultureInfo.InvariantCulture);
         public void Set(LastName name)
             => this.pobj.Invoke(nameof(Set), new object[] { name }, CultureInfo.InvariantCulture);
         public void Set(VersionInfo info)
