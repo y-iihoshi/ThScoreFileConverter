@@ -26,6 +26,9 @@ namespace ThScoreFileConverter.Models.Th08
 
         public CareerReplacer(IReadOnlyDictionary<int, ICardAttack> cardAttacks)
         {
+            if (cardAttacks is null)
+                throw new ArgumentNullException(nameof(cardAttacks));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var kind = match.Groups[1].Value.ToUpperInvariant();
