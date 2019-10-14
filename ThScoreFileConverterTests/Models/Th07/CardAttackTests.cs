@@ -6,8 +6,8 @@ using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ThScoreFileConverterTests.Models.Th07.Stubs;
+using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
 namespace ThScoreFileConverterTests.Models.Th07
 {
@@ -62,8 +62,8 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void CardAttackTestChapter() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(MakeByteArray(ValidStub));
-            var cardAttack = new CardAttack(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(ValidStub));
+            var cardAttack = new CardAttack(chapter);
 
             Validate(ValidStub, cardAttack);
             Assert.IsTrue(cardAttack.HasTried());
@@ -86,8 +86,8 @@ namespace ThScoreFileConverterTests.Models.Th07
             var stub = new CardAttackStub(ValidStub);
             stub.Signature = stub.Signature.ToLowerInvariant();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new CardAttack(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new CardAttack(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -99,8 +99,8 @@ namespace ThScoreFileConverterTests.Models.Th07
             var stub = new CardAttackStub(ValidStub);
             --stub.Size1;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new CardAttack(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new CardAttack(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -115,8 +115,8 @@ namespace ThScoreFileConverterTests.Models.Th07
                     pair => (pair.Key == CharaWithTotal.Total) ? (ushort)0 : pair.Value),
             };
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            var cardAttack = new CardAttack(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var cardAttack = new CardAttack(chapter);
 
             Validate(stub, cardAttack);
             Assert.IsFalse(cardAttack.HasTried());

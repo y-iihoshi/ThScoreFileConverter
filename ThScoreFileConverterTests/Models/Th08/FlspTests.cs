@@ -3,7 +3,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using ThScoreFileConverter.Models.Th08;
-using ThScoreFileConverterTests.Models.Th06.Wrappers;
+using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
 namespace ThScoreFileConverterTests.Models.Th08
 {
@@ -46,8 +46,8 @@ namespace ThScoreFileConverterTests.Models.Th08
         {
             var properties = ValidProperties;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var flsp = new FLSP(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
+            var flsp = new FLSP(chapter);
 
             Validate(properties, flsp);
         });
@@ -69,8 +69,8 @@ namespace ThScoreFileConverterTests.Models.Th08
             var properties = ValidProperties;
             properties.signature = properties.signature.ToLowerInvariant();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            _ = new FLSP(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
+            _ = new FLSP(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -82,8 +82,8 @@ namespace ThScoreFileConverterTests.Models.Th08
             var properties = ValidProperties;
             --properties.size1;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var flsp = new FLSP(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
+            var flsp = new FLSP(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });

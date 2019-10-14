@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th06.Wrappers;
+using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
 namespace ThScoreFileConverterTests.Models.Th07
 {
@@ -34,69 +34,62 @@ namespace ThScoreFileConverterTests.Models.Th07
             => TestUtils.MakeByteArray(
                 properties.signature.ToCharArray(), properties.size1, properties.size2, MakeData(properties));
 
-        internal static void Validate(in LastName lastName, in Properties properties)
+        internal static void Validate(in Properties expected, in LastName actual)
         {
-            var data = MakeData(properties);
+            var data = MakeData(expected);
 
-            Assert.AreEqual(properties.signature, lastName.Signature);
-            Assert.AreEqual(properties.size1, lastName.Size1);
-            Assert.AreEqual(properties.size2, lastName.Size2);
-            Assert.AreEqual(data[0], lastName.FirstByteOfData);
-            CollectionAssert.That.AreEqual(properties.name, lastName.Name);
+            Assert.AreEqual(expected.signature, actual.Signature);
+            Assert.AreEqual(expected.size1, actual.Size1);
+            Assert.AreEqual(expected.size2, actual.Size2);
+            Assert.AreEqual(data[0], actual.FirstByteOfData);
+            CollectionAssert.That.AreEqual(expected.name, actual.Name);
         }
 
         [TestMethod]
-        public void LastNameTestChapter()
-            => TestUtils.Wrap(() =>
-            {
-                var properties = ValidProperties;
+        public void LastNameTestChapter() => TestUtils.Wrap(() =>
+        {
+            var properties = ValidProperties;
 
-                var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-                var lastName = new LastName(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
+            var lastName = new LastName(chapter);
 
-                Validate(lastName, properties);
-            });
+            Validate(properties, lastName);
+        });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "lastName")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void LastNameTestNullChapter()
-            => TestUtils.Wrap(() =>
-            {
-                var lastName = new LastName(null);
+        public void LastNameTestNullChapter() => TestUtils.Wrap(() =>
+        {
+            _ = new LastName(null);
 
-                Assert.Fail(TestUtils.Unreachable);
-            });
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "lastName")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void LastNameTestInvalidSignature()
-            => TestUtils.Wrap(() =>
-            {
-                var properties = ValidProperties;
-                properties.signature = properties.signature.ToLowerInvariant();
+        public void LastNameTestInvalidSignature() => TestUtils.Wrap(() =>
+        {
+            var properties = ValidProperties;
+            properties.signature = properties.signature.ToLowerInvariant();
 
-                var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-                var lastName = new LastName(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
+            _ = new LastName(chapter);
 
-                Assert.Fail(TestUtils.Unreachable);
-            });
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "lastName")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void LastNameTestInvalidSize1()
-            => TestUtils.Wrap(() =>
-            {
-                var properties = ValidProperties;
-                --properties.size1;
+        public void LastNameTestInvalidSize1() => TestUtils.Wrap(() =>
+        {
+            var properties = ValidProperties;
+            --properties.size1;
 
-                var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-                var lastName = new LastName(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
+            _ = new LastName(chapter);
 
-                Assert.Fail(TestUtils.Unreachable);
-            });
+            Assert.Fail(TestUtils.Unreachable);
+        });
     }
 }

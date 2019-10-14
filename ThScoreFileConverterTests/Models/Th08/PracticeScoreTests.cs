@@ -7,8 +7,8 @@ using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ThScoreFileConverterTests.Models.Th08.Stubs;
+using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 using Stage = ThScoreFileConverter.Models.Th08.Stage;
 
 namespace ThScoreFileConverterTests.Models.Th08
@@ -57,8 +57,8 @@ namespace ThScoreFileConverterTests.Models.Th08
         {
             var stub = ValidStub;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            var score = new PracticeScore(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var score = new PracticeScore(chapter);
 
             Validate(stub, score);
         });
@@ -80,8 +80,8 @@ namespace ThScoreFileConverterTests.Models.Th08
             var stub = new PracticeScoreStub(ValidStub);
             stub.Signature = stub.Signature.ToLowerInvariant();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new PracticeScore(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new PracticeScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -93,8 +93,8 @@ namespace ThScoreFileConverterTests.Models.Th08
             var stub = new PracticeScoreStub(ValidStub);
             --stub.Size1;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new PracticeScore(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new PracticeScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -113,8 +113,8 @@ namespace ThScoreFileConverterTests.Models.Th08
                 Chara = TestUtils.Cast<Chara>(chara),
             };
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new PracticeScore(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new PracticeScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });

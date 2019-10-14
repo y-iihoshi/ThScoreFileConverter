@@ -6,8 +6,8 @@ using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ThScoreFileConverterTests.Models.Th08.Stubs;
+using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
 namespace ThScoreFileConverterTests.Models.Th08
 {
@@ -64,8 +64,8 @@ namespace ThScoreFileConverterTests.Models.Th08
         {
             var stub = ValidStub;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            var cardAttack = new CardAttack(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var cardAttack = new CardAttack(chapter);
 
             Validate(stub, cardAttack);
             Assert.IsTrue(cardAttack.HasTried());
@@ -88,8 +88,8 @@ namespace ThScoreFileConverterTests.Models.Th08
             var stub = new CardAttackStub(ValidStub);
             stub.Signature = stub.Signature.ToLowerInvariant();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new CardAttack(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new CardAttack(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -101,8 +101,8 @@ namespace ThScoreFileConverterTests.Models.Th08
             var stub = new CardAttackStub(ValidStub);
             --stub.Size1;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new CardAttack(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new CardAttack(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -121,8 +121,8 @@ namespace ThScoreFileConverterTests.Models.Th08
                 Level = TestUtils.Cast<LevelPracticeWithTotal>(level),
             };
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new CardAttack(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new CardAttack(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -146,8 +146,8 @@ namespace ThScoreFileConverterTests.Models.Th08
                 },
             };
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            var cardAttack = new CardAttack(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var cardAttack = new CardAttack(chapter);
 
             Validate(stub, cardAttack);
             Assert.IsFalse(cardAttack.HasTried());

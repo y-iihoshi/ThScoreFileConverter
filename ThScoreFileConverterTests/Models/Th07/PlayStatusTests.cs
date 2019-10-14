@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th07;
-using ThScoreFileConverterTests.Models.Th06.Wrappers;
+using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 using LevelWithTotal = ThScoreFileConverter.Models.Th07.LevelWithTotal;
 
 namespace ThScoreFileConverterTests.Models.Th07
@@ -54,28 +54,28 @@ namespace ThScoreFileConverterTests.Models.Th07
             => TestUtils.MakeByteArray(
                 properties.signature.ToCharArray(), properties.size1, properties.size2, MakeData(properties));
 
-        internal static void Validate(in PlayStatus playStatus, in Properties properties)
+        internal static void Validate(in Properties expected, in PlayStatus actual)
         {
-            var data = MakeData(properties);
+            var data = MakeData(expected);
 
-            Assert.AreEqual(properties.signature, playStatus.Signature);
-            Assert.AreEqual(properties.size1, playStatus.Size1);
-            Assert.AreEqual(properties.size2, playStatus.Size2);
-            Assert.AreEqual(data[0], playStatus.FirstByteOfData);
-            Assert.AreEqual(properties.totalRunningTime.Hours, playStatus.TotalRunningTime.Hours);
-            Assert.AreEqual(properties.totalRunningTime.Minutes, playStatus.TotalRunningTime.Minutes);
-            Assert.AreEqual(properties.totalRunningTime.Seconds, playStatus.TotalRunningTime.Seconds);
-            Assert.AreEqual(properties.totalRunningTime.Milliseconds, playStatus.TotalRunningTime.Milliseconds);
-            Assert.IsFalse(playStatus.TotalRunningTime.IsFrames);
-            Assert.AreEqual(properties.totalPlayTime.Hours, playStatus.TotalPlayTime.Hours);
-            Assert.AreEqual(properties.totalPlayTime.Minutes, playStatus.TotalPlayTime.Minutes);
-            Assert.AreEqual(properties.totalPlayTime.Seconds, playStatus.TotalPlayTime.Seconds);
-            Assert.AreEqual(properties.totalPlayTime.Milliseconds, playStatus.TotalPlayTime.Milliseconds);
-            Assert.IsFalse(playStatus.TotalPlayTime.IsFrames);
+            Assert.AreEqual(expected.signature, actual.Signature);
+            Assert.AreEqual(expected.size1, actual.Size1);
+            Assert.AreEqual(expected.size2, actual.Size2);
+            Assert.AreEqual(data[0], actual.FirstByteOfData);
+            Assert.AreEqual(expected.totalRunningTime.Hours, actual.TotalRunningTime.Hours);
+            Assert.AreEqual(expected.totalRunningTime.Minutes, actual.TotalRunningTime.Minutes);
+            Assert.AreEqual(expected.totalRunningTime.Seconds, actual.TotalRunningTime.Seconds);
+            Assert.AreEqual(expected.totalRunningTime.Milliseconds, actual.TotalRunningTime.Milliseconds);
+            Assert.IsFalse(actual.TotalRunningTime.IsFrames);
+            Assert.AreEqual(expected.totalPlayTime.Hours, actual.TotalPlayTime.Hours);
+            Assert.AreEqual(expected.totalPlayTime.Minutes, actual.TotalPlayTime.Minutes);
+            Assert.AreEqual(expected.totalPlayTime.Seconds, actual.TotalPlayTime.Seconds);
+            Assert.AreEqual(expected.totalPlayTime.Milliseconds, actual.TotalPlayTime.Milliseconds);
+            Assert.IsFalse(actual.TotalPlayTime.IsFrames);
 
-            foreach (var key in properties.playCounts.Keys)
+            foreach (var key in expected.playCounts.Keys)
             {
-                PlayCountTests.Validate(playStatus.PlayCounts[key], properties.playCounts[key]);
+                PlayCountTests.Validate(actual.PlayCounts[key], expected.playCounts[key]);
             }
         }
 
@@ -84,10 +84,10 @@ namespace ThScoreFileConverterTests.Models.Th07
         {
             var properties = ValidProperties;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var playStatus = new PlayStatus(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
+            var playStatus = new PlayStatus(chapter);
 
-            Validate(playStatus, properties);
+            Validate(properties, playStatus);
         });
 
         [TestMethod]
@@ -107,8 +107,8 @@ namespace ThScoreFileConverterTests.Models.Th07
             var properties = ValidProperties;
             properties.signature = properties.signature.ToLowerInvariant();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            _ = new PlayStatus(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
+            _ = new PlayStatus(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -120,8 +120,8 @@ namespace ThScoreFileConverterTests.Models.Th07
             var properties = ValidProperties;
             --properties.size1;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            _ = new PlayStatus(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
+            _ = new PlayStatus(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });

@@ -7,8 +7,8 @@ using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ThScoreFileConverterTests.Models.Th08.Stubs;
+using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 using IHighScore = ThScoreFileConverter.Models.Th08.IHighScore<
     ThScoreFileConverter.Models.Th08.Chara,
     ThScoreFileConverter.Models.Level,
@@ -104,8 +104,8 @@ namespace ThScoreFileConverterTests.Models.Th08
         {
             var stub = ValidStub;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            var highScore = new HighScore(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var highScore = new HighScore(chapter);
 
             Validate(stub, highScore);
         });
@@ -159,8 +159,8 @@ namespace ThScoreFileConverterTests.Models.Th08
             var stub = new HighScoreStub(ValidStub);
             stub.Signature = stub.Signature.ToLowerInvariant();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new HighScore(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new HighScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -172,8 +172,8 @@ namespace ThScoreFileConverterTests.Models.Th08
             var stub = new HighScoreStub(ValidStub);
             --stub.Size1;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new HighScore(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new HighScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -192,8 +192,8 @@ namespace ThScoreFileConverterTests.Models.Th08
                 Chara = TestUtils.Cast<Chara>(chara),
             };
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new HighScore(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new HighScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -212,8 +212,8 @@ namespace ThScoreFileConverterTests.Models.Th08
                 Level = TestUtils.Cast<Level>(level),
             };
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new HighScore(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new HighScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -232,8 +232,8 @@ namespace ThScoreFileConverterTests.Models.Th08
                 StageProgress = TestUtils.Cast<StageProgress>(stageProgress),
             };
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new HighScore(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new HighScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });

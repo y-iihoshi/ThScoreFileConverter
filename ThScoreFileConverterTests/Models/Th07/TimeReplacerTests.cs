@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th07;
-using ThScoreFileConverterTests.Models.Th06.Wrappers;
+using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
 namespace ThScoreFileConverterTests.Models.Th07
 {
@@ -9,7 +9,7 @@ namespace ThScoreFileConverterTests.Models.Th07
     public class TimeReplacerTests
     {
         internal static PlayStatus PlayStatus { get; } = new PlayStatus(
-            ChapterWrapper.Create(PlayStatusTests.MakeByteArray(PlayStatusTests.ValidProperties)).Target);
+            TestUtils.Create<Chapter>(PlayStatusTests.MakeByteArray(PlayStatusTests.ValidProperties)));
 
         [TestMethod]
         public void TimeReplacerTest()

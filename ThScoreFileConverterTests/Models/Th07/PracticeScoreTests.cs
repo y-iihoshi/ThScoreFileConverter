@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using ThScoreFileConverter.Models.Th07;
-using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ThScoreFileConverterTests.Models.Th07.Stubs;
+using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
 namespace ThScoreFileConverterTests.Models.Th07
 {
@@ -53,8 +53,8 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void PracticeScoreTestChapter() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(MakeByteArray(ValidStub));
-            var score = new PracticeScore(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(ValidStub));
+            var score = new PracticeScore(chapter);
 
             Validate(ValidStub, score);
         });
@@ -76,8 +76,8 @@ namespace ThScoreFileConverterTests.Models.Th07
             var stub = new PracticeScoreStub(ValidStub);
             stub.Signature = stub.Signature.ToLowerInvariant();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new PracticeScore(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new PracticeScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -89,8 +89,8 @@ namespace ThScoreFileConverterTests.Models.Th07
             var stub = new PracticeScoreStub(ValidStub);
             --stub.Size1;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new PracticeScore(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new PracticeScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -109,8 +109,8 @@ namespace ThScoreFileConverterTests.Models.Th07
                 Chara = TestUtils.Cast<Chara>(chara),
             };
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new PracticeScore(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new PracticeScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -129,8 +129,8 @@ namespace ThScoreFileConverterTests.Models.Th07
                 Level = TestUtils.Cast<Level>(level),
             };
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new PracticeScore(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new PracticeScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -149,8 +149,8 @@ namespace ThScoreFileConverterTests.Models.Th07
                 Stage = TestUtils.Cast<Stage>(stage),
             };
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new PracticeScore(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new PracticeScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });

@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models.Th09;
-using ThScoreFileConverterTests.Models.Th06.Wrappers;
+using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
 namespace ThScoreFileConverterTests.Models.Th09
 {
@@ -31,12 +31,12 @@ namespace ThScoreFileConverterTests.Models.Th09
             => TestUtils.MakeByteArray(
                 properties.signature.ToCharArray(), properties.size1, properties.size2, properties.data);
 
-        internal static void Validate(in Header header, in Properties properties)
+        internal static void Validate(in Properties expected, in Header actual)
         {
-            Assert.AreEqual(properties.signature, header.Signature);
-            Assert.AreEqual(properties.size1, header.Size1);
-            Assert.AreEqual(properties.size2, header.Size2);
-            Assert.AreEqual(properties.data[0], header.FirstByteOfData);
+            Assert.AreEqual(expected.signature, actual.Signature);
+            Assert.AreEqual(expected.size1, actual.Size1);
+            Assert.AreEqual(expected.size2, actual.Size2);
+            Assert.AreEqual(expected.data[0], actual.FirstByteOfData);
         }
 
         [TestMethod]
@@ -44,24 +44,22 @@ namespace ThScoreFileConverterTests.Models.Th09
         {
             var properties = ValidProperties;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var header = new Header(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
+            var header = new Header(chapter);
 
-            Validate(header, properties);
+            Validate(properties, header);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "header")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void HeaderTestNull() => TestUtils.Wrap(() =>
         {
-            var header = new Header(null);
+            _ = new Header(null);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "header")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void HeaderTestInvalidSignature() => TestUtils.Wrap(() =>
@@ -69,13 +67,12 @@ namespace ThScoreFileConverterTests.Models.Th09
             var properties = ValidProperties;
             properties.signature = properties.signature.ToLowerInvariant();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var header = new Header(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
+            _ = new Header(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "header")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void HeaderTestInvalidSize1() => TestUtils.Wrap(() =>
@@ -84,8 +81,8 @@ namespace ThScoreFileConverterTests.Models.Th09
             ++properties.size1;
             properties.data = properties.data.Concat(new byte[] { default }).ToArray();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var header = new Header(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
+            _ = new Header(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });

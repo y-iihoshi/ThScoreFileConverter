@@ -7,7 +7,7 @@ using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th06.Wrappers;
+using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 using ClearDataStub = ThScoreFileConverterTests.Models.Th06.Stubs.ClearDataStub<
     ThScoreFileConverter.Models.Th07.Chara, ThScoreFileConverter.Models.Th07.Level>;
 using IClearData = ThScoreFileConverter.Models.Th06.IClearData<
@@ -57,8 +57,8 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void ClearDataTestChapter() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(MakeByteArray(ValidStub));
-            var clearData = new ClearData(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(ValidStub));
+            var clearData = new ClearData(chapter);
 
             Validate(ValidStub, clearData);
         });
@@ -80,8 +80,8 @@ namespace ThScoreFileConverterTests.Models.Th07
             var stub = new ClearDataStub(ValidStub);
             stub.Signature = stub.Signature.ToLowerInvariant();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new ClearData(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new ClearData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -93,8 +93,8 @@ namespace ThScoreFileConverterTests.Models.Th07
             var stub = new ClearDataStub(ValidStub);
             --stub.Size1;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new ClearData(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new ClearData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -113,8 +113,8 @@ namespace ThScoreFileConverterTests.Models.Th07
                 Chara = TestUtils.Cast<Chara>(chara),
             };
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new ClearData(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new ClearData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });

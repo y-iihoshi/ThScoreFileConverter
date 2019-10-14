@@ -1,11 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th08;
-using ThScoreFileConverterTests.Models.Th06.Wrappers;
-using LastName = ThScoreFileConverter.Models.Th07.LastName;
-using VersionInfo = ThScoreFileConverter.Models.Th07.VersionInfo;
-using LastNameTests = ThScoreFileConverterTests.Models.Th07.LastNameTests;
-using VersionInfoTests = ThScoreFileConverterTests.Models.Th07.VersionInfoTests;
 using ThScoreFileConverterTests.Models.Th08.Stubs;
+using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
+using LastName = ThScoreFileConverter.Models.Th07.LastName;
+using LastNameTests = ThScoreFileConverterTests.Models.Th07.LastNameTests;
+using VersionInfo = ThScoreFileConverter.Models.Th07.VersionInfo;
+using VersionInfoTests = ThScoreFileConverterTests.Models.Th07.VersionInfoTests;
 
 namespace ThScoreFileConverterTests.Models.Th08
 {
@@ -31,9 +31,8 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void SetHeaderTest() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(
-                HeaderTests.MakeByteArray(HeaderTests.ValidProperties));
-            var header = new Header(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(HeaderTests.MakeByteArray(HeaderTests.ValidProperties));
+            var header = new Header(chapter);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(header);
@@ -44,10 +43,9 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void SetHeaderTestTwice() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(
-                HeaderTests.MakeByteArray(HeaderTests.ValidProperties));
-            var header1 = new Header(chapter.Target);
-            var header2 = new Header(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(HeaderTests.MakeByteArray(HeaderTests.ValidProperties));
+            var header1 = new Header(chapter);
+            var header2 = new Header(chapter);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(header1);
@@ -166,9 +164,8 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void SetFlspTest() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(
-                FlspTests.MakeByteArray(FlspTests.ValidProperties));
-            var flsp = new FLSP(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(FlspTests.MakeByteArray(FlspTests.ValidProperties));
+            var flsp = new FLSP(chapter);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(flsp);
@@ -179,10 +176,9 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void SetFlspTestTwice() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(
-                FlspTests.MakeByteArray(FlspTests.ValidProperties));
-            var flsp1 = new FLSP(chapter.Target);
-            var flsp2 = new FLSP(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(FlspTests.MakeByteArray(FlspTests.ValidProperties));
+            var flsp1 = new FLSP(chapter);
+            var flsp2 = new FLSP(chapter);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(flsp1);
@@ -220,9 +216,8 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void SetLastNameTest() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(
-                LastNameTests.MakeByteArray(LastNameTests.ValidProperties));
-            var name = new LastName(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(LastNameTests.MakeByteArray(LastNameTests.ValidProperties));
+            var name = new LastName(chapter);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(name);
@@ -233,10 +228,9 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void SetLastNameTestTwice() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(
-                LastNameTests.MakeByteArray(LastNameTests.ValidProperties));
-            var name1 = new LastName(chapter.Target);
-            var name2 = new LastName(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(LastNameTests.MakeByteArray(LastNameTests.ValidProperties));
+            var name1 = new LastName(chapter);
+            var name2 = new LastName(chapter);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(name1);
@@ -249,9 +243,8 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void SetVersionInfoTest() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(
-                VersionInfoTests.MakeByteArray(VersionInfoTests.ValidProperties));
-            var info = new VersionInfo(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(VersionInfoTests.MakeByteArray(VersionInfoTests.ValidProperties));
+            var info = new VersionInfo(chapter);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(info);
@@ -262,10 +255,9 @@ namespace ThScoreFileConverterTests.Models.Th08
         [TestMethod]
         public void SetVersionInfoTestTwice() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(
-                VersionInfoTests.MakeByteArray(VersionInfoTests.ValidProperties));
-            var info1 = new VersionInfo(chapter.Target);
-            var info2 = new VersionInfo(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(VersionInfoTests.MakeByteArray(VersionInfoTests.ValidProperties));
+            var info1 = new VersionInfo(chapter);
+            var info2 = new VersionInfo(chapter);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(info1);

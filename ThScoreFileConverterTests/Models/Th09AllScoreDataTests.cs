@@ -3,12 +3,13 @@ using System.Diagnostics.CodeAnalysis;
 using ThScoreFileConverter.Models.Th09;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ThScoreFileConverterTests.Models.Th09;
-using ThScoreFileConverterTests.Models.Wrappers;
-using LastName = ThScoreFileConverter.Models.Th07.LastName;
-using VersionInfo = ThScoreFileConverter.Models.Th07.VersionInfo;
-using LastNameTests = ThScoreFileConverterTests.Models.Th07.LastNameTests;
-using VersionInfoTests = ThScoreFileConverterTests.Models.Th07.VersionInfoTests;
 using ThScoreFileConverterTests.Models.Th09.Stubs;
+using ThScoreFileConverterTests.Models.Wrappers;
+using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
+using LastName = ThScoreFileConverter.Models.Th07.LastName;
+using LastNameTests = ThScoreFileConverterTests.Models.Th07.LastNameTests;
+using VersionInfo = ThScoreFileConverter.Models.Th07.VersionInfo;
+using VersionInfoTests = ThScoreFileConverterTests.Models.Th07.VersionInfoTests;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -30,9 +31,8 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th09AllScoreDataSetHeaderTest() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(
-                HeaderTests.MakeByteArray(HeaderTests.ValidProperties));
-            var header = new Header(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(HeaderTests.MakeByteArray(HeaderTests.ValidProperties));
+            var header = new Header(chapter);
 
             var allScoreData = new Th09AllScoreDataWrapper();
             allScoreData.Set(header);
@@ -43,10 +43,9 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th09AllScoreDataSetHeaderTestTwice() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(
-                HeaderTests.MakeByteArray(HeaderTests.ValidProperties));
-            var header1 = new Header(chapter.Target);
-            var header2 = new Header(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(HeaderTests.MakeByteArray(HeaderTests.ValidProperties));
+            var header1 = new Header(chapter);
+            var header2 = new Header(chapter);
 
             var allScoreData = new Th09AllScoreDataWrapper();
             allScoreData.Set(header1);

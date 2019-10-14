@@ -6,8 +6,8 @@ using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ThScoreFileConverterTests.Models.Th08.Stubs;
+using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
 namespace ThScoreFileConverterTests.Models.Th08
 {
@@ -80,8 +80,8 @@ namespace ThScoreFileConverterTests.Models.Th08
         {
             var stub = ValidStub;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            var playStatus = new PlayStatus(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var playStatus = new PlayStatus(chapter);
 
             Validate(stub, playStatus);
         });
@@ -103,8 +103,8 @@ namespace ThScoreFileConverterTests.Models.Th08
             var stub = new PlayStatusStub(ValidStub);
             stub.Signature = stub.Signature.ToLowerInvariant();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new PlayStatus(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new PlayStatus(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -116,8 +116,8 @@ namespace ThScoreFileConverterTests.Models.Th08
             var stub = new PlayStatusStub(ValidStub);
             --stub.Size1;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new PlayStatus(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new PlayStatus(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });

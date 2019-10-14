@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th06.Wrappers;
+using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
 namespace ThScoreFileConverterTests.Models.Th07
 {
@@ -34,69 +34,62 @@ namespace ThScoreFileConverterTests.Models.Th07
             => TestUtils.MakeByteArray(
                 properties.signature.ToCharArray(), properties.size1, properties.size2, MakeData(properties));
 
-        internal static void Validate(in VersionInfo versionInfo, in Properties properties)
+        internal static void Validate(in Properties expected, in VersionInfo actual)
         {
-            var data = MakeData(properties);
+            var data = MakeData(expected);
 
-            Assert.AreEqual(properties.signature, versionInfo.Signature);
-            Assert.AreEqual(properties.size1, versionInfo.Size1);
-            Assert.AreEqual(properties.size2, versionInfo.Size2);
-            Assert.AreEqual(data[0], versionInfo.FirstByteOfData);
-            CollectionAssert.That.AreEqual(properties.version, versionInfo.Version);
+            Assert.AreEqual(expected.signature, actual.Signature);
+            Assert.AreEqual(expected.size1, actual.Size1);
+            Assert.AreEqual(expected.size2, actual.Size2);
+            Assert.AreEqual(data[0], actual.FirstByteOfData);
+            CollectionAssert.That.AreEqual(expected.version, actual.Version);
         }
 
         [TestMethod]
-        public void VersionInfoTestChapter()
-            => TestUtils.Wrap(() =>
-            {
-                var properties = ValidProperties;
+        public void VersionInfoTestChapter() => TestUtils.Wrap(() =>
+        {
+            var properties = ValidProperties;
 
-                var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-                var versionInfo = new VersionInfo(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
+            var versionInfo = new VersionInfo(chapter);
 
-                Validate(versionInfo, properties);
-            });
+            Validate(properties, versionInfo);
+        });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "versionInfo")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void VersionInfoTestNullChapter()
-            => TestUtils.Wrap(() =>
-            {
-                var versionInfo = new VersionInfo(null);
+        public void VersionInfoTestNullChapter() => TestUtils.Wrap(() =>
+        {
+            _ = new VersionInfo(null);
 
-                Assert.Fail(TestUtils.Unreachable);
-            });
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "versionInfo")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void VersionInfoTestInvalidSignature()
-            => TestUtils.Wrap(() =>
-            {
-                var properties = ValidProperties;
-                properties.signature = properties.signature.ToLowerInvariant();
+        public void VersionInfoTestInvalidSignature() => TestUtils.Wrap(() =>
+        {
+            var properties = ValidProperties;
+            properties.signature = properties.signature.ToLowerInvariant();
 
-                var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-                var versionInfo = new VersionInfo(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
+            _ = new VersionInfo(chapter);
 
-                Assert.Fail(TestUtils.Unreachable);
-            });
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "versionInfo")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void VersionInfoTestInvalidSize1()
-            => TestUtils.Wrap(() =>
-            {
-                var properties = ValidProperties;
-                --properties.size1;
+        public void VersionInfoTestInvalidSize1() => TestUtils.Wrap(() =>
+        {
+            var properties = ValidProperties;
+            --properties.size1;
 
-                var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-                var versionInfo = new VersionInfo(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
+            _ = new VersionInfo(chapter);
 
-                Assert.Fail(TestUtils.Unreachable);
-            });
+            Assert.Fail(TestUtils.Unreachable);
+        });
     }
 }

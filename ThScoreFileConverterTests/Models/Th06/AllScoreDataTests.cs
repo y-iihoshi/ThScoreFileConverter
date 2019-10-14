@@ -3,7 +3,6 @@ using System.Diagnostics.CodeAnalysis;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th06;
 using ThScoreFileConverterTests.Models.Th06.Stubs;
-using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ClearDataStub = ThScoreFileConverterTests.Models.Th06.Stubs.ClearDataStub<
     ThScoreFileConverter.Models.Th06.Chara, ThScoreFileConverter.Models.Level>;
 
@@ -27,9 +26,8 @@ namespace ThScoreFileConverterTests.Models.Th06
         [TestMethod]
         public void SetHeaderTest() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(
-                HeaderTests.MakeByteArray(HeaderTests.ValidProperties));
-            var header = new Header(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(HeaderTests.MakeByteArray(HeaderTests.ValidProperties));
+            var header = new Header(chapter);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(header);
@@ -40,10 +38,9 @@ namespace ThScoreFileConverterTests.Models.Th06
         [TestMethod]
         public void SetHeaderTestTwice() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(
-                HeaderTests.MakeByteArray(HeaderTests.ValidProperties));
-            var header1 = new Header(chapter.Target);
-            var header2 = new Header(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(HeaderTests.MakeByteArray(HeaderTests.ValidProperties));
+            var header1 = new Header(chapter);
+            var header2 = new Header(chapter);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(header1);
@@ -173,19 +170,18 @@ namespace ThScoreFileConverterTests.Models.Th06
         [DataRow(Level.Extra, Stage.Extra)]
         [DataRow(Level.Extra, Stage.Six)]
         [DataRow(Level.Normal, Stage.Extra)]
-        public void SetPracticeScoreTestInvalidPracticeStage(int level, int stage)
-            => TestUtils.Wrap(() =>
+        public void SetPracticeScoreTestInvalidPracticeStage(int level, int stage) => TestUtils.Wrap(() =>
+        {
+            var score = new PracticeScoreStub(PracticeScoreTests.ValidStub)
             {
-                var score = new PracticeScoreStub(PracticeScoreTests.ValidStub)
-                {
-                    Level = TestUtils.Cast<Level>(level),
-                    Stage = TestUtils.Cast<Stage>(stage),
-                };
+                Level = TestUtils.Cast<Level>(level),
+                Stage = TestUtils.Cast<Stage>(stage),
+            };
 
-                var allScoreData = new AllScoreData();
-                allScoreData.Set(score);
+            var allScoreData = new AllScoreData();
+            allScoreData.Set(score);
 
-                Assert.AreEqual(0, allScoreData.PracticeScores.Count);
-            });
+            Assert.AreEqual(0, allScoreData.PracticeScores.Count);
+        });
     }
 }
