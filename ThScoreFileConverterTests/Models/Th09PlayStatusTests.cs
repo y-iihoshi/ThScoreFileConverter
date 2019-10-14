@@ -5,8 +5,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th09;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
+using ThScoreFileConverterTests.Models.Th09.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -25,7 +27,7 @@ namespace ThScoreFileConverterTests.Models
             public Dictionary<Th09Converter.Chara, byte> matchFlags;
             public Dictionary<Th09Converter.Chara, byte> storyFlags;
             public Dictionary<Th09Converter.Chara, byte> extraFlags;
-            public Dictionary<Th09Converter.Chara, Th09ClearCountTests.Properties> clearCounts;
+            public Dictionary<Th09Converter.Chara, IClearCount> clearCounts;
         };
 
         internal static Properties ValidProperties => new Properties()
@@ -48,7 +50,7 @@ namespace ThScoreFileConverterTests.Models
             clearCounts = Utils.GetEnumerator<Th09Converter.Chara>()
                 .ToDictionary(
                     level => level,
-                    level => new Th09ClearCountTests.Properties(Th09ClearCountTests.ValidProperties))
+                    level => new ClearCountStub(Th09ClearCountTests.ValidStub) as IClearCount)
         };
 
         internal static byte[] MakeData(in Properties properties)
@@ -99,7 +101,7 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var key in properties.clearCounts.Keys)
             {
-                Th09ClearCountTests.Validate(playStatus.ClearCountsItem(key), properties.clearCounts[key]);
+                Th09ClearCountTests.Validate(properties.clearCounts[key], playStatus.ClearCountsItem(key));
             }
         }
 

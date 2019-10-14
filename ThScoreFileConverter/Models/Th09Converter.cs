@@ -433,7 +433,6 @@ namespace ThScoreFileConverter.Models
                 this.MatchFlags = new Dictionary<Chara, byte>(numCharas);
                 this.StoryFlags = new Dictionary<Chara, byte>(numCharas);
                 this.ExtraFlags = new Dictionary<Chara, byte>(numCharas);
-                this.ClearCounts = new Dictionary<Chara, ClearCount>(numCharas);
 
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
@@ -456,12 +455,12 @@ namespace ThScoreFileConverter.Models
                         this.StoryFlags.Add(chara, reader.ReadByte());
                     foreach (var chara in charas)
                         this.ExtraFlags.Add(chara, reader.ReadByte());
-                    foreach (var chara in charas)
+                    this.ClearCounts = charas.ToDictionary(chara => chara, _ =>
                     {
                         var clearCount = new ClearCount();
                         clearCount.ReadFrom(reader);
-                        this.ClearCounts.Add(chara, clearCount);
-                    }
+                        return clearCount as IClearCount;
+                    });
                 }
             }
 
@@ -479,22 +478,19 @@ namespace ThScoreFileConverter.Models
 
             public Dictionary<Chara, byte> ExtraFlags { get; }
 
-            public Dictionary<Chara, ClearCount> ClearCounts { get; }
+            public Dictionary<Chara, IClearCount> ClearCounts { get; }
         }
 
-        private class ClearCount : IBinaryReadable
+        private class ClearCount : IBinaryReadable, IClearCount
         {
-            public ClearCount() => this.Counts = new Dictionary<Level, int>(Enum.GetValues(typeof(Level)).Length);
-
-            public Dictionary<Level, int> Counts { get; private set; }
+            public IReadOnlyDictionary<Level, int> Counts { get; private set; }
 
             public void ReadFrom(BinaryReader reader)
             {
                 if (reader == null)
                     throw new ArgumentNullException(nameof(reader));
 
-                foreach (var level in Utils.GetEnumerator<Level>())
-                    this.Counts.Add(level, reader.ReadInt32());
+                this.Counts = Utils.GetEnumerator<Level>().ToDictionary(level => level, _ => reader.ReadInt32());
                 reader.ReadUInt32();
             }
         }

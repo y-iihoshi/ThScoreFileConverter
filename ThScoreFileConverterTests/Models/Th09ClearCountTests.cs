@@ -1,55 +1,40 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th09;
 using ThScoreFileConverterTests.Extensions;
+using ThScoreFileConverterTests.Models.Th09.Stubs;
 
 namespace ThScoreFileConverterTests.Models
 {
     [TestClass]
     public class Th09ClearCountTests
     {
-        internal struct Properties
+        internal static ClearCountStub ValidStub => new ClearCountStub()
         {
-            public Dictionary<Level, int> counts;
-
-            public Properties(in Properties properties)
-                => this.counts = new Dictionary<Level, int>(properties.counts);
-        };
-
-        internal static Properties ValidProperties => new Properties()
-        {
-            counts = Utils.GetEnumerator<Level>()
+            Counts = Utils.GetEnumerator<Level>()
                 .Select((level, index) => new { level, index })
                 .ToDictionary(pair => pair.level, pair => pair.index)
         };
 
-        internal static byte[] MakeByteArray(in Properties properties)
-            => TestUtils.MakeByteArray(properties.counts.Values.ToArray(), 0u);
+        internal static byte[] MakeByteArray(IClearCount clearCount)
+            => TestUtils.MakeByteArray(clearCount.Counts.Values.ToArray(), 0u);
 
-        internal static void Validate(in Th09ClearCountWrapper clearCount, in Properties properties)
-            => CollectionAssert.That.AreEqual(properties.counts.Values, clearCount.Counts.Values);
-
-        [TestMethod]
-        public void Th09ClearCountTest() => TestUtils.Wrap(() =>
-        {
-            var clearCount = new Th09ClearCountWrapper();
-
-            Assert.AreEqual(0, clearCount.Counts.Count);
-        });
+        internal static void Validate(IClearCount expected, in Th09ClearCountWrapper actual)
+            => CollectionAssert.That.AreEqual(expected.Counts.Values, actual.Counts.Values);
 
         [TestMethod]
         public void Th09ClearCountReadFromTest() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
+            var stub = ValidStub;
 
-            var clearCount = Th09ClearCountWrapper.Create(MakeByteArray(properties));
+            var clearCount = Th09ClearCountWrapper.Create(MakeByteArray(stub));
 
-            Validate(clearCount, properties);
+            Validate(stub, clearCount);
         });
 
         [TestMethod]
@@ -62,15 +47,15 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "clearCount")]
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th09ClearCountReadFromTestShortenedTrials() => TestUtils.Wrap(() =>
         {
-            var properties = new Properties(ValidProperties);
-            properties.counts.Remove(Level.Extra);
+            var stub = new ClearCountStub(ValidStub);
+            stub.Counts = stub.Counts.Where(pair => pair.Key == Level.Extra)
+                .ToDictionary(pair => pair.Key, pair => pair.Value);
 
-            var clearCount = Th09ClearCountWrapper.Create(MakeByteArray(properties));
+            _ = Th09ClearCountWrapper.Create(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -78,13 +63,16 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th09ClearCountReadFromTestExceededTrials() => TestUtils.Wrap(() =>
         {
-            var properties = new Properties(ValidProperties);
-            properties.counts.Add(TestUtils.Cast<Level>(99), 99);
+            var stub = new ClearCountStub(ValidStub);
+            stub.Counts = stub.Counts.Concat(new Dictionary<Level, int>
+            {
+                { TestUtils.Cast<Level>(99), 99 },
+            }).ToDictionary(pair => pair.Key, pair => pair.Value);
 
-            var clearCount = Th09ClearCountWrapper.Create(MakeByteArray(properties));
+            var clearCount = Th09ClearCountWrapper.Create(MakeByteArray(stub));
 
-            CollectionAssert.That.AreNotEqual(properties.counts.Values, clearCount.Counts.Values);
-            CollectionAssert.That.AreEqual(properties.counts.Values.SkipLast(1), clearCount.Counts.Values);
+            CollectionAssert.That.AreNotEqual(stub.Counts.Values, clearCount.Counts.Values);
+            CollectionAssert.That.AreEqual(stub.Counts.Values.SkipLast(1), clearCount.Counts.Values);
         });
     }
 }
