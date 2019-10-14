@@ -7,6 +7,7 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -27,13 +28,19 @@ namespace ThScoreFileConverter.Models.Th09
             IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> rankings,
             IReadOnlyDictionary<Chara, IClearCount> clearCounts)
         {
+            if (rankings is null)
+                throw new ArgumentNullException(nameof(rankings));
+            if (clearCounts is null)
+                throw new ArgumentNullException(nameof(clearCounts));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var level = LevelParser.Parse(match.Groups[1].Value);
                 var chara = CharaParser.Parse(match.Groups[2].Value);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                var count = clearCounts[chara].Counts[level];
+                var count = clearCounts.TryGetValue(chara, out var clearCount)
+                    && clearCount.Counts.TryGetValue(level, out var c) ? c : 0;
 
                 if (type == 1)
                 {
@@ -47,8 +54,10 @@ namespace ThScoreFileConverter.Models.Th09
                     }
                     else
                     {
-                        var score = rankings[(chara, level)][0];
-                        var date = Encoding.Default.GetString(score.Date.ToArray()).TrimEnd('\0');
+                        var score = rankings.TryGetValue((chara, level), out var ranking) && (ranking.Count > 0)
+                            ? ranking[0] : null;
+                        var date = (score != null)
+                            ? Encoding.Default.GetString(score.Date.ToArray()).TrimEnd('\0') : "--/--";
                         return (date != "--/--") ? "Not Cleared" : "-------";
                     }
                 }
