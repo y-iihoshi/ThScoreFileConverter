@@ -36,7 +36,8 @@ namespace ThScoreFileConverter.Models.Th08
 
                 if (kind == "S")
                 {
-                    return (Definitions.CardTable[attack.CardId].Level != LevelPractice.LastWord)
+                    return Definitions.CardTable.Any(
+                        pair => (pair.Key == attack.CardId) && (pair.Value.Level != LevelPractice.LastWord))
                         && (getCount(attack.StoryCareer) > 0);
                 }
                 else
@@ -49,6 +50,9 @@ namespace ThScoreFileConverter.Models.Th08
 
         public CollectRateReplacer(IReadOnlyDictionary<int, ICardAttack> cardAttacks)
         {
+            if (cardAttacks is null)
+                throw new ArgumentNullException(nameof(cardAttacks));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var kind = match.Groups[1].Value.ToUpperInvariant();
@@ -66,9 +70,14 @@ namespace ThScoreFileConverter.Models.Th08
 
                 Func<ICardAttack, bool> findByStage;
                 if (stage == StageWithTotal.Total)
+                {
                     findByStage = attack => true;
+                }
                 else
-                    findByStage = attack => Definitions.CardTable[attack.CardId].Stage == (StagePractice)stage;
+                {
+                    findByStage = attack => Definitions.CardTable.Any(
+                        pair => (pair.Key == attack.CardId) && (pair.Value.Stage == (StagePractice)stage));
+                }
 
                 Func<ICardAttack, bool> findByLevel = attack => true;
                 switch (level)
@@ -77,10 +86,12 @@ namespace ThScoreFileConverter.Models.Th08
                         // Do nothing
                         break;
                     case LevelPracticeWithTotal.Extra:
-                        findByStage = attack => Definitions.CardTable[attack.CardId].Stage == StagePractice.Extra;
+                        findByStage = attack => Definitions.CardTable.Any(
+                            pair => (pair.Key == attack.CardId) && (pair.Value.Stage == StagePractice.Extra));
                         break;
                     case LevelPracticeWithTotal.LastWord:
-                        findByStage = attack => Definitions.CardTable[attack.CardId].Stage == StagePractice.LastWord;
+                        findByStage = attack => Definitions.CardTable.Any(
+                            pair => (pair.Key == attack.CardId) && (pair.Value.Stage == StagePractice.LastWord));
                         break;
                     default:
                         findByLevel = attack => attack.Level == level;

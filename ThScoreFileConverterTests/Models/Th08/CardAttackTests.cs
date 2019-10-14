@@ -20,7 +20,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             Size1 = 0x22C,
             Size2 = 0x22C,
             CardId = 123,
-            Level = LevelPracticeWithTotal.Normal,
+            Level = LevelPracticeWithTotal.Lunatic,
             CardName = TestUtils.MakeRandomArray<byte>(0x30),
             EnemyName = TestUtils.MakeRandomArray<byte>(0x30),
             Comment = TestUtils.MakeRandomArray<byte>(0x80),
