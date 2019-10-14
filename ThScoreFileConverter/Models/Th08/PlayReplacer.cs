@@ -7,6 +7,7 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
 using System.Text.RegularExpressions;
 using static ThScoreFileConverter.Models.Th08.Parsers;
 
@@ -22,6 +23,9 @@ namespace ThScoreFileConverter.Models.Th08
 
         public PlayReplacer(IPlayStatus playStatus)
         {
+            if (playStatus is null)
+                throw new ArgumentNullException(nameof(playStatus));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var level = LevelWithTotalParser.Parse(match.Groups[1].Value);
