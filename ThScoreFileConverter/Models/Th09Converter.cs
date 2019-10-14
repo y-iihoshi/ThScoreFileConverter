@@ -17,14 +17,13 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th09;
+using static ThScoreFileConverter.Models.Th09.Parsers;
 
 namespace ThScoreFileConverter.Models
 {
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th09Converter : ThConverter
     {
-        private static readonly EnumShortNameParser<Chara> CharaParser = new EnumShortNameParser<Chara>();
-
         private AllScoreData allScoreData = null;
 
         public override string SupportedVersions
