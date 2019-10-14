@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -16,141 +15,124 @@ namespace ThScoreFileConverterTests.Models
     [TestClass]
     public class Th09PlayStatusTests
     {
-        internal struct Properties
+        internal static PlayStatusStub ValidStub => new PlayStatusStub()
         {
-            public string signature;
-            public short size1;
-            public short size2;
-            public Time totalRunningTime;
-            public Time totalPlayTime;
-            public byte[] bgmFlags;
-            public Dictionary<Th09Converter.Chara, byte> matchFlags;
-            public Dictionary<Th09Converter.Chara, byte> storyFlags;
-            public Dictionary<Th09Converter.Chara, byte> extraFlags;
-            public Dictionary<Th09Converter.Chara, IClearCount> clearCounts;
-        };
-
-        internal static Properties ValidProperties => new Properties()
-        {
-            signature = "PLST",
-            size1 = 0x1FC,
-            size2 = 0x1FC,
-            totalRunningTime = new Time(12, 34, 56, 789, false),
-            totalPlayTime = new Time(23, 45, 19, 876, false),
-            bgmFlags = TestUtils.MakeRandomArray<byte>(19),
-            matchFlags = Utils.GetEnumerator<Th09Converter.Chara>()
+            Signature = "PLST",
+            Size1 = 0x1FC,
+            Size2 = 0x1FC,
+            TotalRunningTime = new Time(12, 34, 56, 789, false),
+            TotalPlayTime = new Time(23, 45, 19, 876, false),
+            BgmFlags = TestUtils.MakeRandomArray<byte>(19),
+            MatchFlags = Utils.GetEnumerator<Th09Converter.Chara>()
                 .Select((chara, index) => new { chara, index })
                 .ToDictionary(pair => pair.chara, pair => (byte)pair.index),
-            storyFlags = Utils.GetEnumerator<Th09Converter.Chara>()
+            StoryFlags = Utils.GetEnumerator<Th09Converter.Chara>()
                 .Select((chara, index) => new { chara, index })
                 .ToDictionary(pair => pair.chara, pair => (byte)(20 + pair.index)),
-            extraFlags = Utils.GetEnumerator<Th09Converter.Chara>()
+            ExtraFlags = Utils.GetEnumerator<Th09Converter.Chara>()
                 .Select((chara, index) => new { chara, index })
                 .ToDictionary(pair => pair.chara, pair => (byte)(40 + pair.index)),
-            clearCounts = Utils.GetEnumerator<Th09Converter.Chara>()
+            ClearCounts = Utils.GetEnumerator<Th09Converter.Chara>()
                 .ToDictionary(
                     level => level,
                     level => new ClearCountStub(Th09ClearCountTests.ValidStub) as IClearCount)
         };
 
-        internal static byte[] MakeData(in Properties properties)
+        internal static byte[] MakeData(IPlayStatus playStatus)
             => TestUtils.MakeByteArray(
                 0u,
-                (int)properties.totalRunningTime.Hours,
-                properties.totalRunningTime.Minutes,
-                properties.totalRunningTime.Seconds,
-                properties.totalRunningTime.Milliseconds,
-                (int)properties.totalPlayTime.Hours,
-                properties.totalPlayTime.Minutes,
-                properties.totalPlayTime.Seconds,
-                properties.totalPlayTime.Milliseconds,
-                properties.bgmFlags,
+                (int)playStatus.TotalRunningTime.Hours,
+                playStatus.TotalRunningTime.Minutes,
+                playStatus.TotalRunningTime.Seconds,
+                playStatus.TotalRunningTime.Milliseconds,
+                (int)playStatus.TotalPlayTime.Hours,
+                playStatus.TotalPlayTime.Minutes,
+                playStatus.TotalPlayTime.Seconds,
+                playStatus.TotalPlayTime.Milliseconds,
+                playStatus.BgmFlags,
                 new byte[13],
-                properties.matchFlags.Values.ToArray(),
-                properties.storyFlags.Values.ToArray(),
-                properties.extraFlags.Values.ToArray(),
-                properties.clearCounts.SelectMany(pair => Th09ClearCountTests.MakeByteArray(pair.Value)).ToArray());
+                playStatus.MatchFlags.Values.ToArray(),
+                playStatus.StoryFlags.Values.ToArray(),
+                playStatus.ExtraFlags.Values.ToArray(),
+                playStatus.ClearCounts.SelectMany(pair => Th09ClearCountTests.MakeByteArray(pair.Value)).ToArray());
 
-        internal static byte[] MakeByteArray(in Properties properties)
+        internal static byte[] MakeByteArray(IPlayStatus playStatus)
             => TestUtils.MakeByteArray(
-                properties.signature.ToCharArray(), properties.size1, properties.size2, MakeData(properties));
+                playStatus.Signature.ToCharArray(), playStatus.Size1, playStatus.Size2, MakeData(playStatus));
 
-        internal static void Validate(in Th09PlayStatusWrapper playStatus, in Properties properties)
+        internal static void Validate(IPlayStatus expected, in Th09PlayStatusWrapper actual)
         {
-            var data = MakeData(properties);
+            var data = MakeData(expected);
 
-            Assert.AreEqual(properties.signature, playStatus.Signature);
-            Assert.AreEqual(properties.size1, playStatus.Size1);
-            Assert.AreEqual(properties.size2, playStatus.Size2);
-            CollectionAssert.That.AreEqual(data, playStatus.Data);
-            Assert.AreEqual(data[0], playStatus.FirstByteOfData);
-            Assert.AreEqual(properties.totalRunningTime.Hours, playStatus.TotalRunningTime.Hours);
-            Assert.AreEqual(properties.totalRunningTime.Minutes, playStatus.TotalRunningTime.Minutes);
-            Assert.AreEqual(properties.totalRunningTime.Seconds, playStatus.TotalRunningTime.Seconds);
-            Assert.AreEqual(properties.totalRunningTime.Milliseconds, playStatus.TotalRunningTime.Milliseconds);
-            Assert.IsFalse(playStatus.TotalRunningTime.IsFrames);
-            Assert.AreEqual(properties.totalPlayTime.Hours, playStatus.TotalPlayTime.Hours);
-            Assert.AreEqual(properties.totalPlayTime.Minutes, playStatus.TotalPlayTime.Minutes);
-            Assert.AreEqual(properties.totalPlayTime.Seconds, playStatus.TotalPlayTime.Seconds);
-            Assert.AreEqual(properties.totalPlayTime.Milliseconds, playStatus.TotalPlayTime.Milliseconds);
-            Assert.IsFalse(playStatus.TotalPlayTime.IsFrames);
-            CollectionAssert.That.AreEqual(properties.bgmFlags, playStatus.BgmFlags);
-            CollectionAssert.That.AreEqual(properties.matchFlags.Values, playStatus.MatchFlags.Values);
-            CollectionAssert.That.AreEqual(properties.storyFlags.Values, playStatus.StoryFlags.Values);
-            CollectionAssert.That.AreEqual(properties.extraFlags.Values, playStatus.ExtraFlags.Values);
+            Assert.AreEqual(expected.Signature, actual.Signature);
+            Assert.AreEqual(expected.Size1, actual.Size1);
+            Assert.AreEqual(expected.Size2, actual.Size2);
+            CollectionAssert.That.AreEqual(data, actual.Data);
+            Assert.AreEqual(data[0], actual.FirstByteOfData);
+            Assert.AreEqual(expected.TotalRunningTime.Hours, actual.TotalRunningTime.Hours);
+            Assert.AreEqual(expected.TotalRunningTime.Minutes, actual.TotalRunningTime.Minutes);
+            Assert.AreEqual(expected.TotalRunningTime.Seconds, actual.TotalRunningTime.Seconds);
+            Assert.AreEqual(expected.TotalRunningTime.Milliseconds, actual.TotalRunningTime.Milliseconds);
+            Assert.IsFalse(actual.TotalRunningTime.IsFrames);
+            Assert.AreEqual(expected.TotalPlayTime.Hours, actual.TotalPlayTime.Hours);
+            Assert.AreEqual(expected.TotalPlayTime.Minutes, actual.TotalPlayTime.Minutes);
+            Assert.AreEqual(expected.TotalPlayTime.Seconds, actual.TotalPlayTime.Seconds);
+            Assert.AreEqual(expected.TotalPlayTime.Milliseconds, actual.TotalPlayTime.Milliseconds);
+            Assert.IsFalse(actual.TotalPlayTime.IsFrames);
+            CollectionAssert.That.AreEqual(expected.BgmFlags, actual.BgmFlags);
+            CollectionAssert.That.AreEqual(expected.MatchFlags.Values, actual.MatchFlags.Values);
+            CollectionAssert.That.AreEqual(expected.StoryFlags.Values, actual.StoryFlags.Values);
+            CollectionAssert.That.AreEqual(expected.ExtraFlags.Values, actual.ExtraFlags.Values);
 
-            foreach (var key in properties.clearCounts.Keys)
+            foreach (var key in expected.ClearCounts.Keys)
             {
-                Th09ClearCountTests.Validate(properties.clearCounts[key], playStatus.ClearCountsItem(key));
+                Th09ClearCountTests.Validate(expected.ClearCounts[key], actual.ClearCountsItem(key));
             }
         }
 
         [TestMethod]
         public void Th09PlayStatusTestChapter() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
+            var stub = ValidStub;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
             var playStatus = new Th09PlayStatusWrapper(chapter);
 
-            Validate(playStatus, properties);
+            Validate(stub, playStatus);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "playStatus")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th09PlayStatusTestNullChapter() => TestUtils.Wrap(() =>
         {
-            var playStatus = new Th09PlayStatusWrapper(null);
+            _ = new Th09PlayStatusWrapper(null);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "playStatus")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th09PlayStatusTestInvalidSignature() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.signature = properties.signature.ToLowerInvariant();
+            var stub = new PlayStatusStub(ValidStub);
+            stub.Signature = stub.Signature.ToLowerInvariant();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var playStatus = new Th09PlayStatusWrapper(chapter);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new Th09PlayStatusWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "playStatus")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th09PlayStatusTestInvalidSize1() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            --properties.size1;
+            var stub = new PlayStatusStub(ValidStub);
+            --stub.Size1;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
-            var playStatus = new Th09PlayStatusWrapper(chapter);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new Th09PlayStatusWrapper(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });

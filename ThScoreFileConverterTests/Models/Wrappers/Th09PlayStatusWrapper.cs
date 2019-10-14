@@ -36,17 +36,18 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.TotalRunningTime)) as Time;
         public Time TotalPlayTime
             => this.pobj.GetProperty(nameof(this.TotalPlayTime)) as Time;
-        public IReadOnlyCollection<byte> BgmFlags
-            => this.pobj.GetProperty(nameof(this.BgmFlags)) as byte[];
+        public IEnumerable<byte> BgmFlags
+            => this.pobj.GetProperty(nameof(this.BgmFlags)) as IEnumerable<byte>;
         public IReadOnlyDictionary<Th09Converter.Chara, byte> MatchFlags
-            => this.pobj.GetProperty(nameof(this.MatchFlags)) as Dictionary<Th09Converter.Chara, byte>;
+            => this.pobj.GetProperty(nameof(this.MatchFlags)) as IReadOnlyDictionary<Th09Converter.Chara, byte>;
         public IReadOnlyDictionary<Th09Converter.Chara, byte> StoryFlags
-            => this.pobj.GetProperty(nameof(this.StoryFlags)) as Dictionary<Th09Converter.Chara, byte>;
+            => this.pobj.GetProperty(nameof(this.StoryFlags)) as IReadOnlyDictionary<Th09Converter.Chara, byte>;
         public IReadOnlyDictionary<Th09Converter.Chara, byte> ExtraFlags
-            => this.pobj.GetProperty(nameof(this.ExtraFlags)) as Dictionary<Th09Converter.Chara, byte>;
+            => this.pobj.GetProperty(nameof(this.ExtraFlags)) as IReadOnlyDictionary<Th09Converter.Chara, byte>;
         // NOTE: Th09Converter.ClearCount is a private class.
-        // public IReadOnlyDictionary<Th09Converter.Chara, ClearCount> ClearCounts
-        //     => this.pobj.GetProperty(nameof(this.ClearCounts)) as Dictionary<Th09Converter.Chara, ClearCount>;
+        // public IReadOnlyDictionary<Th09Converter.Chara, IClearCount> ClearCounts
+        //     => this.pobj.GetProperty(nameof(this.ClearCounts))
+        //         as IReadOnlyDictionary<Th09Converter.Chara, IClearCount>;
         public object ClearCounts
             => this.pobj.GetProperty(nameof(this.ClearCounts));
         public Th09ClearCountWrapper ClearCountsItem(Th09Converter.Chara chara)

@@ -355,7 +355,7 @@ namespace ThScoreFileConverter.Models
 
             public IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> Rankings => this.rankings;
 
-            public PlayStatus PlayStatus { get; private set; }
+            public IPlayStatus PlayStatus { get; private set; }
 
             public Th07.LastName LastName { get; private set; }
 
@@ -375,7 +375,7 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            public void Set(PlayStatus status) => this.PlayStatus = status;
+            public void Set(IPlayStatus status) => this.PlayStatus = status;
 
             public void Set(Th07.LastName name) => this.LastName = name;
 
@@ -420,7 +420,7 @@ namespace ThScoreFileConverter.Models
             public byte ContinueCount { get; }
         }
 
-        private class PlayStatus : Th06.Chapter
+        private class PlayStatus : Th06.Chapter, IPlayStatus
         {
             public const string ValidSignature = "PLST";
             public const short ValidSize = 0x01FC;
@@ -429,10 +429,6 @@ namespace ThScoreFileConverter.Models
                 : base(chapter, ValidSignature, ValidSize)
             {
                 var charas = Utils.GetEnumerator<Chara>();
-                var numCharas = charas.Count();
-                this.MatchFlags = new Dictionary<Chara, byte>(numCharas);
-                this.StoryFlags = new Dictionary<Chara, byte>(numCharas);
-                this.ExtraFlags = new Dictionary<Chara, byte>(numCharas);
 
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
@@ -449,12 +445,9 @@ namespace ThScoreFileConverter.Models
                     this.TotalPlayTime = new Time(hours, minutes, seconds, milliseconds, false);
                     this.BgmFlags = reader.ReadExactBytes(19);
                     reader.ReadExactBytes(13);
-                    foreach (var chara in charas)
-                        this.MatchFlags.Add(chara, reader.ReadByte());
-                    foreach (var chara in charas)
-                        this.StoryFlags.Add(chara, reader.ReadByte());
-                    foreach (var chara in charas)
-                        this.ExtraFlags.Add(chara, reader.ReadByte());
+                    this.MatchFlags = charas.ToDictionary(chara => chara, _ => reader.ReadByte());
+                    this.StoryFlags = charas.ToDictionary(chara => chara, _ => reader.ReadByte());
+                    this.ExtraFlags = charas.ToDictionary(chara => chara, _ => reader.ReadByte());
                     this.ClearCounts = charas.ToDictionary(chara => chara, _ =>
                     {
                         var clearCount = new ClearCount();
@@ -466,19 +459,17 @@ namespace ThScoreFileConverter.Models
 
             public Time TotalRunningTime { get; }
 
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public Time TotalPlayTime { get; }  // really...?
 
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public byte[] BgmFlags { get; }
+            public IEnumerable<byte> BgmFlags { get; }
 
-            public Dictionary<Chara, byte> MatchFlags { get; }
+            public IReadOnlyDictionary<Chara, byte> MatchFlags { get; }
 
-            public Dictionary<Chara, byte> StoryFlags { get; }
+            public IReadOnlyDictionary<Chara, byte> StoryFlags { get; }
 
-            public Dictionary<Chara, byte> ExtraFlags { get; }
+            public IReadOnlyDictionary<Chara, byte> ExtraFlags { get; }
 
-            public Dictionary<Chara, IClearCount> ClearCounts { get; }
+            public IReadOnlyDictionary<Chara, IClearCount> ClearCounts { get; }
         }
 
         private class ClearCount : IBinaryReadable, IClearCount

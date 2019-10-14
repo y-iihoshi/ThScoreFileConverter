@@ -48,7 +48,7 @@ namespace ThScoreFileConverterTests.Models
         public object Target
             => this.pobj.Target;
         public IReadOnlyDictionary<Level, int> Counts
-            => this.pobj.GetProperty(nameof(this.Counts)) as Dictionary<Level, int>;
+            => this.pobj.GetProperty(nameof(this.Counts)) as IReadOnlyDictionary<Level, int>;
 
         public void ReadFrom(BinaryReader reader)
             => this.pobj.Invoke(nameof(ReadFrom), new object[] { reader }, CultureInfo.InvariantCulture);

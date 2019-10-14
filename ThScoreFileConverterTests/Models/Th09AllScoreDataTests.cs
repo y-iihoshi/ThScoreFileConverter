@@ -122,29 +122,29 @@ namespace ThScoreFileConverterTests.Models
         public void Th09AllScoreDataSetPlayStatusTest() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(
-                Th09PlayStatusTests.MakeByteArray(Th09PlayStatusTests.ValidProperties));
-            var header = new Th09PlayStatusWrapper(chapter);
+                Th09PlayStatusTests.MakeByteArray(Th09PlayStatusTests.ValidStub));
+            var status = new Th09PlayStatusWrapper(chapter);
 
             var allScoreData = new Th09AllScoreDataWrapper();
-            allScoreData.Set(header);
+            allScoreData.Set(status);
 
-            Assert.AreSame(header.Target, allScoreData.PlayStatus.Target);
+            Assert.AreSame(status.Target, allScoreData.PlayStatus.Target);
         });
 
         [TestMethod]
         public void Th09AllScoreDataSetPlayStatusTestTwice() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(
-                Th09PlayStatusTests.MakeByteArray(Th09PlayStatusTests.ValidProperties));
-            var header1 = new Th09PlayStatusWrapper(chapter);
-            var header2 = new Th09PlayStatusWrapper(chapter);
+                Th09PlayStatusTests.MakeByteArray(Th09PlayStatusTests.ValidStub));
+            var status1 = new Th09PlayStatusWrapper(chapter);
+            var status2 = new Th09PlayStatusWrapper(chapter);
 
             var allScoreData = new Th09AllScoreDataWrapper();
-            allScoreData.Set(header1);
-            allScoreData.Set(header2);
+            allScoreData.Set(status1);
+            allScoreData.Set(status2);
 
-            Assert.AreNotSame(header1.Target, allScoreData.PlayStatus.Target);
-            Assert.AreSame(header2.Target, allScoreData.PlayStatus.Target);
+            Assert.AreNotSame(status1.Target, allScoreData.PlayStatus.Target);
+            Assert.AreSame(status2.Target, allScoreData.PlayStatus.Target);
         });
 
         [TestMethod]
