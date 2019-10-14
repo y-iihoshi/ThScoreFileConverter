@@ -1,25 +1,22 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics.CodeAnalysis;
 using ThScoreFileConverter.Models.Th09;
-using ThScoreFileConverterTests.Models.Th06.Wrappers;
-using ThScoreFileConverterTests.Models.Th09;
 using ThScoreFileConverterTests.Models.Th09.Stubs;
-using ThScoreFileConverterTests.Models.Wrappers;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 using LastName = ThScoreFileConverter.Models.Th07.LastName;
 using LastNameTests = ThScoreFileConverterTests.Models.Th07.LastNameTests;
 using VersionInfo = ThScoreFileConverter.Models.Th07.VersionInfo;
 using VersionInfoTests = ThScoreFileConverterTests.Models.Th07.VersionInfoTests;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th09
 {
     [TestClass]
-    public class Th09AllScoreDataTests
+    public class AllScoreDataTests
     {
         [TestMethod]
-        public void Th09AllScoreDataTest() => TestUtils.Wrap(() =>
+        public void AllScoreDataTest() => TestUtils.Wrap(() =>
         {
-            var allScoreData = new Th09AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
 
             Assert.IsNull(allScoreData.Header);
             Assert.AreEqual(0, allScoreData.Rankings.Count);
@@ -29,25 +26,25 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th09AllScoreDataSetHeaderTest() => TestUtils.Wrap(() =>
+        public void SetHeaderTest() => TestUtils.Wrap(() =>
         {
             var chapter = TestUtils.Create<Chapter>(HeaderTests.MakeByteArray(HeaderTests.ValidProperties));
             var header = new Header(chapter);
 
-            var allScoreData = new Th09AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(header);
 
             Assert.AreSame(header, allScoreData.Header);
         });
 
         [TestMethod]
-        public void Th09AllScoreDataSetHeaderTestTwice() => TestUtils.Wrap(() =>
+        public void SetHeaderTestTwice() => TestUtils.Wrap(() =>
         {
             var chapter = TestUtils.Create<Chapter>(HeaderTests.MakeByteArray(HeaderTests.ValidProperties));
             var header1 = new Header(chapter);
             var header2 = new Header(chapter);
 
-            var allScoreData = new Th09AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(header1);
             allScoreData.Set(header2);
 
@@ -56,7 +53,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th09AllScoreDataSetHighScoreTest() => TestUtils.Wrap(() =>
+        public void SetHighScoreTest() => TestUtils.Wrap(() =>
         {
             var stub = new HighScoreStub(HighScoreTests.ValidStub)
             {
@@ -67,14 +64,14 @@ namespace ThScoreFileConverterTests.Models
             var chapter = TestUtils.Create<Chapter>(HighScoreTests.MakeByteArray(stub));
             var score = new HighScore(chapter);
 
-            var allScoreData = new Th09AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(score);
 
             Assert.AreSame(score, allScoreData.Rankings[(stub.Chara, stub.Level)][stub.Rank]);
         });
 
         [TestMethod]
-        public void Th09AllScoreDataSetHighScoreTestTwice() => TestUtils.Wrap(() =>
+        public void SetHighScoreTestTwice() => TestUtils.Wrap(() =>
         {
             var stub = new HighScoreStub(HighScoreTests.ValidStub)
             {
@@ -86,7 +83,7 @@ namespace ThScoreFileConverterTests.Models
             var score1 = new HighScore(chapter);
             var score2 = new HighScore(chapter);
 
-            var allScoreData = new Th09AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(score1);
             allScoreData.Set(score2);
 
@@ -98,7 +95,7 @@ namespace ThScoreFileConverterTests.Models
         [DataTestMethod]
         [DataRow((short)-1)]
         [DataRow((short)5)]
-        public void Th09AllScoreDataSetHighScoreTestInvalidRank(short rank) => TestUtils.Wrap(() =>
+        public void SetHighScoreTestInvalidRank(short rank) => TestUtils.Wrap(() =>
         {
             var stub = new HighScoreStub(HighScoreTests.ValidStub)
             {
@@ -109,7 +106,7 @@ namespace ThScoreFileConverterTests.Models
             var chapter = TestUtils.Create<Chapter>(HighScoreTests.MakeByteArray(stub));
             var score = new HighScore(chapter);
 
-            var allScoreData = new Th09AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(score);
 
             for (var index = 0; index < allScoreData.Rankings[(stub.Chara, stub.Level)].Count; ++index)
@@ -119,25 +116,25 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th09AllScoreDataSetPlayStatusTest() => TestUtils.Wrap(() =>
+        public void SetPlayStatusTest() => TestUtils.Wrap(() =>
         {
             var chapter = TestUtils.Create<Chapter>(PlayStatusTests.MakeByteArray(PlayStatusTests.ValidStub));
             var status = new PlayStatus(chapter);
 
-            var allScoreData = new Th09AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(status);
 
             Assert.AreSame(status, allScoreData.PlayStatus);
         });
 
         [TestMethod]
-        public void Th09AllScoreDataSetPlayStatusTestTwice() => TestUtils.Wrap(() =>
+        public void SetPlayStatusTestTwice() => TestUtils.Wrap(() =>
         {
             var chapter = TestUtils.Create<Chapter>(PlayStatusTests.MakeByteArray(PlayStatusTests.ValidStub));
             var status1 = new PlayStatus(chapter);
             var status2 = new PlayStatus(chapter);
 
-            var allScoreData = new Th09AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(status1);
             allScoreData.Set(status2);
 
@@ -146,27 +143,25 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th09AllScoreDataSetLastNameTest() => TestUtils.Wrap(() =>
+        public void SetLastNameTest() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(
-                LastNameTests.MakeByteArray(LastNameTests.ValidProperties));
-            var name = new LastName(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(LastNameTests.MakeByteArray(LastNameTests.ValidProperties));
+            var name = new LastName(chapter);
 
-            var allScoreData = new Th09AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(name);
 
             Assert.AreSame(name, allScoreData.LastName);
         });
 
         [TestMethod]
-        public void Th09AllScoreDataSetLastNameTestTwice() => TestUtils.Wrap(() =>
+        public void SetLastNameTestTwice() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(
-                LastNameTests.MakeByteArray(LastNameTests.ValidProperties));
-            var name1 = new LastName(chapter.Target);
-            var name2 = new LastName(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(LastNameTests.MakeByteArray(LastNameTests.ValidProperties));
+            var name1 = new LastName(chapter);
+            var name2 = new LastName(chapter);
 
-            var allScoreData = new Th09AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(name1);
             allScoreData.Set(name2);
 
@@ -175,27 +170,25 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th09AllScoreDataSetVersionInfoTest() => TestUtils.Wrap(() =>
+        public void SetVersionInfoTest() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(
-                VersionInfoTests.MakeByteArray(VersionInfoTests.ValidProperties));
-            var info = new VersionInfo(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(VersionInfoTests.MakeByteArray(VersionInfoTests.ValidProperties));
+            var info = new VersionInfo(chapter);
 
-            var allScoreData = new Th09AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(info);
 
             Assert.AreSame(info, allScoreData.VersionInfo);
         });
 
         [TestMethod]
-        public void Th09AllScoreDataSetVersionInfoTestTwice() => TestUtils.Wrap(() =>
+        public void SetVersionInfoTestTwice() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(
-                VersionInfoTests.MakeByteArray(VersionInfoTests.ValidProperties));
-            var info1 = new VersionInfo(chapter.Target);
-            var info2 = new VersionInfo(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(VersionInfoTests.MakeByteArray(VersionInfoTests.ValidProperties));
+            var info1 = new VersionInfo(chapter);
+            var info2 = new VersionInfo(chapter);
 
-            var allScoreData = new Th09AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(info1);
             allScoreData.Set(info2);
 
