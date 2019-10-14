@@ -7,6 +7,7 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -24,6 +25,9 @@ namespace ThScoreFileConverter.Models.Th08
 
         public PracticeReplacer(IReadOnlyDictionary<Chara, IPracticeScore> practiceScores)
         {
+            if (practiceScores is null)
+                throw new ArgumentNullException(nameof(practiceScores));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var level = LevelParser.Parse(match.Groups[1].Value);
@@ -36,19 +40,18 @@ namespace ThScoreFileConverter.Models.Th08
                 if (stage == Stage.Extra)
                     return match.ToString();
 
-                if (practiceScores.ContainsKey(chara))
+                if (practiceScores.TryGetValue(chara, out var practiceScore))
                 {
-                    var scores = practiceScores[chara];
                     var key = (stage, level);
                     if (type == 1)
                     {
-                        return scores.HighScores.ContainsKey(key)
-                            ? Utils.ToNumberString(scores.HighScores[key] * 10) : "0";
+                        return practiceScore.HighScores.TryGetValue(key, out var highScore)
+                            ? Utils.ToNumberString(highScore * 10) : "0";
                     }
                     else
                     {
-                        return scores.PlayCounts.ContainsKey(key)
-                            ? Utils.ToNumberString(scores.PlayCounts[key]) : "0";
+                        return practiceScore.PlayCounts.TryGetValue(key, out var playCount)
+                            ? Utils.ToNumberString(playCount) : "0";
                     }
                 }
                 else
