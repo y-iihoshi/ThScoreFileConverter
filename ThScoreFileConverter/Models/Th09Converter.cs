@@ -68,9 +68,9 @@ namespace ThScoreFileConverter.Models
         {
             return new List<IStringReplaceable>
             {
-                new ScoreReplacer(this),
-                new TimeReplacer(this),
-                new ClearReplacer(this),
+                new ScoreReplacer(this.allScoreData.Rankings),
+                new TimeReplacer(this.allScoreData.PlayStatus),
+                new ClearReplacer(this.allScoreData.Rankings, this.allScoreData.PlayStatus.ClearCounts),
             };
         }
 
@@ -218,7 +218,7 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public ScoreReplacer(Th09Converter parent)
+            public ScoreReplacer(IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> rankings)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -228,7 +228,7 @@ namespace ThScoreFileConverter.Models
                         int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
                     var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
-                    var score = parent.allScoreData.Rankings[(chara, level)][rank];
+                    var score = rankings[(chara, level)][rank];
                     var date = string.Empty;
 
                     switch (type)
@@ -259,11 +259,11 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public TimeReplacer(Th09Converter parent)
+            public TimeReplacer(IPlayStatus playStatus)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    return parent.allScoreData.PlayStatus.TotalRunningTime.ToLongString();
+                    return playStatus.TotalRunningTime.ToLongString();
                 });
             }
 
@@ -281,7 +281,9 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public ClearReplacer(Th09Converter parent)
+            public ClearReplacer(
+                IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> rankings,
+                IReadOnlyDictionary<Chara, IClearCount> clearCounts)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -289,7 +291,7 @@ namespace ThScoreFileConverter.Models
                     var chara = CharaParser.Parse(match.Groups[2].Value);
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                    var count = parent.allScoreData.PlayStatus.ClearCounts[chara].Counts[level];
+                    var count = clearCounts[chara].Counts[level];
 
                     if (type == 1)
                     {
@@ -303,7 +305,7 @@ namespace ThScoreFileConverter.Models
                         }
                         else
                         {
-                            var score = parent.allScoreData.Rankings[(chara, level)][0];
+                            var score = rankings[(chara, level)][0];
                             var date = Encoding.Default.GetString(score.Date.ToArray()).TrimEnd('\0');
                             return (date != "--/--") ? "Not Cleared" : "-------";
                         }
