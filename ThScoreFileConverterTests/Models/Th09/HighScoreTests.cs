@@ -60,7 +60,7 @@ namespace ThScoreFileConverterTests.Models.Th09
         }
 
         [TestMethod]
-        public void Th09HighScoreTestChapter() => TestUtils.Wrap(() =>
+        public void HighScoreTestChapter() => TestUtils.Wrap(() =>
         {
             var stub = ValidStub;
 
@@ -72,7 +72,7 @@ namespace ThScoreFileConverterTests.Models.Th09
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th09HighScoreTestNullChapter() => TestUtils.Wrap(() =>
+        public void HighScoreTestNullChapter() => TestUtils.Wrap(() =>
         {
             _ = new HighScore(null);
 
@@ -82,7 +82,7 @@ namespace ThScoreFileConverterTests.Models.Th09
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th09HighScoreTestInvalidSignature() => TestUtils.Wrap(() =>
+        public void HighScoreTestInvalidSignature() => TestUtils.Wrap(() =>
         {
             var stub = new HighScoreStub(ValidStub);
             stub.Signature = stub.Signature.ToLowerInvariant();
@@ -95,7 +95,7 @@ namespace ThScoreFileConverterTests.Models.Th09
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th09HighScoreTestInvalidSize() => TestUtils.Wrap(() =>
+        public void HighScoreTestInvalidSize() => TestUtils.Wrap(() =>
         {
             var stub = new HighScoreStub(ValidStub);
             --stub.Size1;
@@ -113,7 +113,7 @@ namespace ThScoreFileConverterTests.Models.Th09
         [DataTestMethod]
         [DynamicData(nameof(InvalidCharacters))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th09HighScoreTestInvalidChara(int chara) => TestUtils.Wrap(() =>
+        public void HighScoreTestInvalidChara(int chara) => TestUtils.Wrap(() =>
         {
             var stub = new HighScoreStub(ValidStub)
             {
@@ -133,7 +133,7 @@ namespace ThScoreFileConverterTests.Models.Th09
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th09HighScoreTestInvalidLevel(int level) => TestUtils.Wrap(() =>
+        public void HighScoreTestInvalidLevel(int level) => TestUtils.Wrap(() =>
         {
             var stub = new HighScoreStub(ValidStub)
             {
