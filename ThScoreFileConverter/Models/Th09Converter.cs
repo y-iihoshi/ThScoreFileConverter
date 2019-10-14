@@ -11,13 +11,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th09;
-using static ThScoreFileConverter.Models.Th09.Parsers;
 
 namespace ThScoreFileConverter.Models
 {
@@ -207,115 +203,6 @@ namespace ThScoreFileConverter.Models
                     return allScoreData;
                 else
                     return null;
-            }
-        }
-
-        // %T09SCR[w][xx][y][z]
-        private class ScoreReplacer : IStringReplaceable
-        {
-            private static readonly string Pattern = Utils.Format(
-                @"%T09SCR({0})({1})([1-5])([1-3])", LevelParser.Pattern, CharaParser.Pattern);
-
-            private readonly MatchEvaluator evaluator;
-
-            public ScoreReplacer(IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> rankings)
-            {
-                this.evaluator = new MatchEvaluator(match =>
-                {
-                    var level = LevelParser.Parse(match.Groups[1].Value);
-                    var chara = CharaParser.Parse(match.Groups[2].Value);
-                    var rank = Utils.ToZeroBased(
-                        int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
-                    var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
-
-                    var score = rankings[(chara, level)][rank];
-                    var date = string.Empty;
-
-                    switch (type)
-                    {
-                        case 1:     // name
-                            return Encoding.Default.GetString(score.Name.ToArray()).Split('\0')[0];
-                        case 2:     // score
-                            return Utils.ToNumberString((score.Score * 10) + score.ContinueCount);
-                        case 3:     // date
-                            date = Encoding.Default.GetString(score.Date.ToArray()).Split('\0')[0];
-                            return (date != "--/--") ? date : "--/--/--";
-                        default:    // unreachable
-                            return match.ToString();
-                    }
-                });
-            }
-
-            public string Replace(string input)
-            {
-                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-            }
-        }
-
-        // %T09TIMEALL
-        private class TimeReplacer : IStringReplaceable
-        {
-            private const string Pattern = @"%T09TIMEALL";
-
-            private readonly MatchEvaluator evaluator;
-
-            public TimeReplacer(IPlayStatus playStatus)
-            {
-                this.evaluator = new MatchEvaluator(match =>
-                {
-                    return playStatus.TotalRunningTime.ToLongString();
-                });
-            }
-
-            public string Replace(string input)
-            {
-                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-            }
-        }
-
-        // %T09CLEAR[x][yy][z]
-        private class ClearReplacer : IStringReplaceable
-        {
-            private static readonly string Pattern = Utils.Format(
-                @"%T09CLEAR({0})({1})([12])", LevelParser.Pattern, CharaParser.Pattern);
-
-            private readonly MatchEvaluator evaluator;
-
-            public ClearReplacer(
-                IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> rankings,
-                IReadOnlyDictionary<Chara, IClearCount> clearCounts)
-            {
-                this.evaluator = new MatchEvaluator(match =>
-                {
-                    var level = LevelParser.Parse(match.Groups[1].Value);
-                    var chara = CharaParser.Parse(match.Groups[2].Value);
-                    var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
-
-                    var count = clearCounts[chara].Counts[level];
-
-                    if (type == 1)
-                    {
-                        return Utils.ToNumberString(count);
-                    }
-                    else
-                    {
-                        if (count > 0)
-                        {
-                            return "Cleared";
-                        }
-                        else
-                        {
-                            var score = rankings[(chara, level)][0];
-                            var date = Encoding.Default.GetString(score.Date.ToArray()).TrimEnd('\0');
-                            return (date != "--/--") ? "Not Cleared" : "-------";
-                        }
-                    }
-                });
-            }
-
-            public string Replace(string input)
-            {
-                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
             }
         }
     }
