@@ -14,8 +14,8 @@ namespace ThScoreFileConverterTests.Models.Th08.Stubs
             : this()
         {
             this.Chara = score.Chara;
-            this.HighScores = score.HighScores.ToDictionary(pair => pair.Key, pair => pair.Value);
-            this.PlayCounts = score.PlayCounts.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.HighScores = score.HighScores?.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.PlayCounts = score.PlayCounts?.ToDictionary(pair => pair.Key, pair => pair.Value);
             this.FirstByteOfData = score.FirstByteOfData;
             this.Signature = score.Signature;
             this.Size1 = score.Size1;

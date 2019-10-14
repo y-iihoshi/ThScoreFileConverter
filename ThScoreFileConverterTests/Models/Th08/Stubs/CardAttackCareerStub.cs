@@ -11,9 +11,9 @@ namespace ThScoreFileConverterTests.Models.Th08.Stubs
         public CardAttackCareerStub(ICardAttackCareer career)
             : this()
         {
-            this.ClearCounts = career.ClearCounts.ToDictionary(pair => pair.Key, pair => pair.Value);
-            this.MaxBonuses = career.MaxBonuses.ToDictionary(pair => pair.Key, pair => pair.Value);
-            this.TrialCounts = career.TrialCounts.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.ClearCounts = career.ClearCounts?.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.MaxBonuses = career.MaxBonuses?.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.TrialCounts = career.TrialCounts?.ToDictionary(pair => pair.Key, pair => pair.Value);
         }
 
         public IReadOnlyDictionary<CharaWithTotal, int> ClearCounts { get; set; }

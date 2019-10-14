@@ -12,9 +12,9 @@ namespace ThScoreFileConverterTests.Models.Th08.Stubs
             : this()
         {
             this.CardId = attack.CardId;
-            this.CardName = attack.CardName.ToArray();
-            this.Comment = attack.Comment.ToArray();
-            this.EnemyName = attack.EnemyName.ToArray();
+            this.CardName = attack.CardName?.ToArray();
+            this.Comment = attack.Comment?.ToArray();
+            this.EnemyName = attack.EnemyName?.ToArray();
             this.Level = attack.Level;
             this.PracticeCareer = new CardAttackCareerStub(attack.PracticeCareer);
             this.StoryCareer = new CardAttackCareerStub(attack.StoryCareer);

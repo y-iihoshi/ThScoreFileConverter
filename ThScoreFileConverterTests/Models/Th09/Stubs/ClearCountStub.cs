@@ -11,7 +11,7 @@ namespace ThScoreFileConverterTests.Models.Th09.Stubs
 
         public ClearCountStub(IClearCount clearCount)
             : this()
-            => this.Counts = clearCount.Counts.ToDictionary(pair => pair.Key, pair => pair.Value);
+            => this.Counts = clearCount.Counts?.ToDictionary(pair => pair.Key, pair => pair.Value);
 
         public IReadOnlyDictionary<Level, int> Counts { get; set; }
     }
