@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th09;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
@@ -34,8 +35,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.Data)) as byte[];
         public uint? Score
             => this.pobj.GetProperty(nameof(this.Score)) as uint?;
-        public Th09Converter.Chara? Chara
-            => this.pobj.GetProperty(nameof(this.Chara)) as Th09Converter.Chara?;
+        public Chara? Chara
+            => this.pobj.GetProperty(nameof(this.Chara)) as Chara?;
         public Level? Level
             => this.pobj.GetProperty(nameof(this.Level)) as Level?;
         public short? Rank

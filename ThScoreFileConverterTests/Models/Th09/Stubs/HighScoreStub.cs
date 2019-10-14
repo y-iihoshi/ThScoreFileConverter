@@ -25,7 +25,7 @@ namespace ThScoreFileConverterTests.Models.Th09.Stubs
             this.Size2 = highScore.Size2;
         }
 
-        public Th09Converter.Chara Chara { get; set; }
+        public Chara Chara { get; set; }
 
         public byte ContinueCount { get; set; }
 

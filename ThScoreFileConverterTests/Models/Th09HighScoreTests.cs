@@ -21,7 +21,7 @@ namespace ThScoreFileConverterTests.Models
             Size1 = 0x2C,
             Size2 = 0x2C,
             Score = 1234567u,
-            Chara = Th09Converter.Chara.Marisa,
+            Chara = Chara.Marisa,
             Level = Level.Hard,
             Rank = 987,
             Name = TestUtils.CP932Encoding.GetBytes("Player1\0\0"),
@@ -112,7 +112,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         public static IEnumerable<object[]> InvalidCharacters
-            => TestUtils.GetInvalidEnumerators(typeof(Th09Converter.Chara));
+            => TestUtils.GetInvalidEnumerators(typeof(Chara));
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
@@ -122,7 +122,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var stub = new HighScoreStub(ValidStub)
             {
-                Chara = TestUtils.Cast<Th09Converter.Chara>(chara),
+                Chara = TestUtils.Cast<Chara>(chara),
             };
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));

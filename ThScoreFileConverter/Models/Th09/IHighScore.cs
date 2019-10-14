@@ -13,7 +13,7 @@ namespace ThScoreFileConverter.Models.Th09
 {
     internal interface IHighScore : Th06.IChapter
     {
-        Th09Converter.Chara Chara { get; }
+        Chara Chara { get; }
 
         byte ContinueCount { get; }
 

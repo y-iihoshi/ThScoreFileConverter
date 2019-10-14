@@ -23,16 +23,16 @@ namespace ThScoreFileConverterTests.Models
             TotalRunningTime = new Time(12, 34, 56, 789, false),
             TotalPlayTime = new Time(23, 45, 19, 876, false),
             BgmFlags = TestUtils.MakeRandomArray<byte>(19),
-            MatchFlags = Utils.GetEnumerator<Th09Converter.Chara>()
+            MatchFlags = Utils.GetEnumerator<Chara>()
                 .Select((chara, index) => new { chara, index })
                 .ToDictionary(pair => pair.chara, pair => (byte)pair.index),
-            StoryFlags = Utils.GetEnumerator<Th09Converter.Chara>()
+            StoryFlags = Utils.GetEnumerator<Chara>()
                 .Select((chara, index) => new { chara, index })
                 .ToDictionary(pair => pair.chara, pair => (byte)(20 + pair.index)),
-            ExtraFlags = Utils.GetEnumerator<Th09Converter.Chara>()
+            ExtraFlags = Utils.GetEnumerator<Chara>()
                 .Select((chara, index) => new { chara, index })
                 .ToDictionary(pair => pair.chara, pair => (byte)(40 + pair.index)),
-            ClearCounts = Utils.GetEnumerator<Th09Converter.Chara>()
+            ClearCounts = Utils.GetEnumerator<Chara>()
                 .ToDictionary(
                     level => level,
                     level => new ClearCountStub(Th09ClearCountTests.ValidStub) as IClearCount)

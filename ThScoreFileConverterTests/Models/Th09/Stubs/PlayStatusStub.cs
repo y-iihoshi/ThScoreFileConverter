@@ -27,13 +27,13 @@ namespace ThScoreFileConverterTests.Models.Th09.Stubs
 
         public IEnumerable<byte> BgmFlags { get; set; }
 
-        public IReadOnlyDictionary<Th09Converter.Chara, IClearCount> ClearCounts { get; set; }
+        public IReadOnlyDictionary<Chara, IClearCount> ClearCounts { get; set; }
 
-        public IReadOnlyDictionary<Th09Converter.Chara, byte> ExtraFlags { get; set; }
+        public IReadOnlyDictionary<Chara, byte> ExtraFlags { get; set; }
 
-        public IReadOnlyDictionary<Th09Converter.Chara, byte> MatchFlags { get; set; }
+        public IReadOnlyDictionary<Chara, byte> MatchFlags { get; set; }
 
-        public IReadOnlyDictionary<Th09Converter.Chara, byte> StoryFlags { get; set; }
+        public IReadOnlyDictionary<Chara, byte> StoryFlags { get; set; }
 
         public Time TotalPlayTime { get; set; }
 

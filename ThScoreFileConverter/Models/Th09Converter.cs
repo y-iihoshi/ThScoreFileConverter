@@ -7,7 +7,6 @@
 
 #pragma warning disable 1591
 #pragma warning disable SA1600 // ElementsMustBeDocumented
-#pragma warning disable SA1602 // EnumerationItemsMustBeDocumented
 
 using System;
 using System.Collections.Generic;
@@ -27,28 +26,6 @@ namespace ThScoreFileConverter.Models
         private static readonly EnumShortNameParser<Chara> CharaParser = new EnumShortNameParser<Chara>();
 
         private AllScoreData allScoreData = null;
-
-        public enum Chara
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("RM")] Reimu,
-            [EnumAltName("MR")] Marisa,
-            [EnumAltName("SK")] Sakuya,
-            [EnumAltName("YM")] Youmu,
-            [EnumAltName("RS")] Reisen,
-            [EnumAltName("CI")] Cirno,
-            [EnumAltName("LY")] Lyrica,
-            [EnumAltName("MY")] Mystia,
-            [EnumAltName("TW")] Tewi,
-            [EnumAltName("YU")] Yuuka,
-            [EnumAltName("AY")] Aya,
-            [EnumAltName("MD")] Medicine,
-            [EnumAltName("KM")] Komachi,
-            [EnumAltName("SI")] Shikieiki,
-            [EnumAltName("ML")] Merlin,
-            [EnumAltName("LN")] Lunasa,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
 
         public override string SupportedVersions
         {

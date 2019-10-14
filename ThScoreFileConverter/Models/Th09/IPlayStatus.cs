@@ -15,13 +15,13 @@ namespace ThScoreFileConverter.Models.Th09
     {
         IEnumerable<byte> BgmFlags { get; }
 
-        IReadOnlyDictionary<Th09Converter.Chara, IClearCount> ClearCounts { get; }
+        IReadOnlyDictionary<Chara, IClearCount> ClearCounts { get; }
 
-        IReadOnlyDictionary<Th09Converter.Chara, byte> ExtraFlags { get; }
+        IReadOnlyDictionary<Chara, byte> ExtraFlags { get; }
 
-        IReadOnlyDictionary<Th09Converter.Chara, byte> MatchFlags { get; }
+        IReadOnlyDictionary<Chara, byte> MatchFlags { get; }
 
-        IReadOnlyDictionary<Th09Converter.Chara, byte> StoryFlags { get; }
+        IReadOnlyDictionary<Chara, byte> StoryFlags { get; }
 
         Time TotalPlayTime { get; }
 

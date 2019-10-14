@@ -36,10 +36,10 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.Rankings));
         public int? RankingsCount
             => this.Rankings.GetType().GetProperty("Count").GetValue(this.Rankings) as int?;
-        public IReadOnlyList<IHighScore> Ranking(Th09Converter.Chara chara, Level level)
+        public IReadOnlyList<IHighScore> Ranking(Chara chara, Level level)
             => this.Rankings.GetType().GetProperty("Item").GetValue(this.Rankings, new object[] { (chara, level) })
                 as IReadOnlyList<IHighScore>;
-        public Th09HighScoreWrapper RankingItem(Th09Converter.Chara chara, Level level, int index)
+        public Th09HighScoreWrapper RankingItem(Chara chara, Level level, int index)
         {
             var item = this.Ranking(chara, level)[index];
             return (item != null) ? new Th09HighScoreWrapper(item) : null;
