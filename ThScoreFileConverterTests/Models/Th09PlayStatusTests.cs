@@ -7,6 +7,7 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th09;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th06.Wrappers;
+using ThScoreFileConverterTests.Models.Th09;
 using ThScoreFileConverterTests.Models.Th09.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 
@@ -35,7 +36,7 @@ namespace ThScoreFileConverterTests.Models
             ClearCounts = Utils.GetEnumerator<Chara>()
                 .ToDictionary(
                     level => level,
-                    level => new ClearCountStub(Th09ClearCountTests.ValidStub) as IClearCount)
+                    level => new ClearCountStub(ClearCountTests.ValidStub) as IClearCount)
         };
 
         internal static byte[] MakeData(IPlayStatus playStatus)
@@ -54,7 +55,7 @@ namespace ThScoreFileConverterTests.Models
                 playStatus.MatchFlags.Values.ToArray(),
                 playStatus.StoryFlags.Values.ToArray(),
                 playStatus.ExtraFlags.Values.ToArray(),
-                playStatus.ClearCounts.SelectMany(pair => Th09ClearCountTests.MakeByteArray(pair.Value)).ToArray());
+                playStatus.ClearCounts.SelectMany(pair => ClearCountTests.MakeByteArray(pair.Value)).ToArray());
 
         internal static byte[] MakeByteArray(IPlayStatus playStatus)
             => TestUtils.MakeByteArray(
@@ -86,7 +87,7 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var key in expected.ClearCounts.Keys)
             {
-                Th09ClearCountTests.Validate(expected.ClearCounts[key], actual.ClearCountsItem(key));
+                ClearCountTests.Validate(expected.ClearCounts[key], actual.ClearCounts[key]);
             }
         }
 

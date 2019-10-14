@@ -9,10 +9,10 @@ using ThScoreFileConverter.Models.Th09;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th09.Stubs;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th09
 {
     [TestClass]
-    public class Th09ClearCountTests
+    public class ClearCountTests
     {
         internal static ClearCountStub ValidStub => new ClearCountStub()
         {
@@ -24,24 +24,24 @@ namespace ThScoreFileConverterTests.Models
         internal static byte[] MakeByteArray(IClearCount clearCount)
             => TestUtils.MakeByteArray(clearCount.Counts.Values.ToArray(), 0u);
 
-        internal static void Validate(IClearCount expected, in Th09ClearCountWrapper actual)
+        internal static void Validate(IClearCount expected, IClearCount actual)
             => CollectionAssert.That.AreEqual(expected.Counts.Values, actual.Counts.Values);
 
         [TestMethod]
-        public void Th09ClearCountReadFromTest() => TestUtils.Wrap(() =>
+        public void ReadFromTest() => TestUtils.Wrap(() =>
         {
             var stub = ValidStub;
 
-            var clearCount = Th09ClearCountWrapper.Create(MakeByteArray(stub));
+            var clearCount = TestUtils.Create<ClearCount>(MakeByteArray(stub));
 
             Validate(stub, clearCount);
         });
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th09ClearCountReadFromTestNull() => TestUtils.Wrap(() =>
+        public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
-            var clearCount = new Th09ClearCountWrapper();
+            var clearCount = new ClearCount();
             clearCount.ReadFrom(null);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -49,19 +49,19 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th09ClearCountReadFromTestShortenedTrials() => TestUtils.Wrap(() =>
+        public void ReadFromTestShortenedTrials() => TestUtils.Wrap(() =>
         {
             var stub = new ClearCountStub(ValidStub);
             stub.Counts = stub.Counts.Where(pair => pair.Key == Level.Extra)
                 .ToDictionary(pair => pair.Key, pair => pair.Value);
 
-            _ = Th09ClearCountWrapper.Create(MakeByteArray(stub));
+            _ = TestUtils.Create<ClearCount>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
-        public void Th09ClearCountReadFromTestExceededTrials() => TestUtils.Wrap(() =>
+        public void ReadFromTestExceededTrials() => TestUtils.Wrap(() =>
         {
             var stub = new ClearCountStub(ValidStub);
             stub.Counts = stub.Counts.Concat(new Dictionary<Level, int>
@@ -69,7 +69,7 @@ namespace ThScoreFileConverterTests.Models
                 { TestUtils.Cast<Level>(99), 99 },
             }).ToDictionary(pair => pair.Key, pair => pair.Value);
 
-            var clearCount = Th09ClearCountWrapper.Create(MakeByteArray(stub));
+            var clearCount = TestUtils.Create<ClearCount>(MakeByteArray(stub));
 
             CollectionAssert.That.AreNotEqual(stub.Counts.Values, clearCount.Counts.Values);
             CollectionAssert.That.AreEqual(stub.Counts.Values.SkipLast(1), clearCount.Counts.Values);

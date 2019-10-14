@@ -409,19 +409,5 @@ namespace ThScoreFileConverter.Models
 
             public IReadOnlyDictionary<Chara, IClearCount> ClearCounts { get; }
         }
-
-        private class ClearCount : IBinaryReadable, IClearCount
-        {
-            public IReadOnlyDictionary<Level, int> Counts { get; private set; }
-
-            public void ReadFrom(BinaryReader reader)
-            {
-                if (reader == null)
-                    throw new ArgumentNullException(nameof(reader));
-
-                this.Counts = Utils.GetEnumerator<Level>().ToDictionary(level => level, _ => reader.ReadInt32());
-                reader.ReadUInt32();
-            }
-        }
     }
 }

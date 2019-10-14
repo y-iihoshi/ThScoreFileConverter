@@ -45,13 +45,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.StoryFlags)) as IReadOnlyDictionary<Chara, byte>;
         public IReadOnlyDictionary<Chara, byte> ExtraFlags
             => this.pobj.GetProperty(nameof(this.ExtraFlags)) as IReadOnlyDictionary<Chara, byte>;
-        // NOTE: Th09Converter.ClearCount is a private class.
-        // public IReadOnlyDictionary<Chara, IClearCount> ClearCounts
-        //     => this.pobj.GetProperty(nameof(this.ClearCounts)) as IReadOnlyDictionary<Chara, IClearCount>;
-        public object ClearCounts
-            => this.pobj.GetProperty(nameof(this.ClearCounts));
-        public Th09ClearCountWrapper ClearCountsItem(Chara chara)
-            => new Th09ClearCountWrapper(
-                this.ClearCounts.GetType().GetProperty("Item").GetValue(this.ClearCounts, new object[] { chara }));
+        public IReadOnlyDictionary<Chara, IClearCount> ClearCounts
+            => this.pobj.GetProperty(nameof(this.ClearCounts)) as IReadOnlyDictionary<Chara, IClearCount>;
     }
 }
