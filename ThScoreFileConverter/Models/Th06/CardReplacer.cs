@@ -32,17 +32,17 @@ namespace ThScoreFileConverter.Models.Th06
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
                 var type = match.Groups[2].Value.ToUpperInvariant();
 
-                if (Definitions.CardTable.ContainsKey(number))
+                if (Definitions.CardTable.TryGetValue(number, out var cardInfo))
                 {
                     if (hideUntriedCards)
                     {
                         if (!cardAttacks.TryGetValue(number, out var attack) || !attack.HasTried())
-                            return type == "N" ? "??????????" : "?????";
+                            return (type == "N") ? "??????????" : "?????";
                     }
 
-                    return type == "N"
-                        ? Definitions.CardTable[number].Name
-                        : string.Join(", ", Definitions.CardTable[number].Levels.Select(lv => lv.ToString()).ToArray());
+                    return (type == "N")
+                        ? cardInfo.Name
+                        : string.Join(", ", cardInfo.Levels.Select(level => level.ToString()).ToArray());
                 }
                 else
                 {

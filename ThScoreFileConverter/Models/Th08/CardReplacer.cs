@@ -32,7 +32,7 @@ namespace ThScoreFileConverter.Models.Th08
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
                 var type = match.Groups[2].Value.ToUpperInvariant();
 
-                if (Definitions.CardTable.ContainsKey(number))
+                if (Definitions.CardTable.TryGetValue(number, out var cardInfo))
                 {
                     if (hideUntriedCards)
                     {
@@ -42,13 +42,12 @@ namespace ThScoreFileConverter.Models.Th08
 
                     if (type == "N")
                     {
-                        return Definitions.CardTable[number].Name;
+                        return cardInfo.Name;
                     }
                     else
                     {
-                        var level = Definitions.CardTable[number].Level;
-                        var levelName = level.ToLongName();
-                        return (levelName.Length > 0) ? levelName : level.ToString();
+                        var levelName = cardInfo.Level.ToLongName();
+                        return (levelName.Length > 0) ? levelName : cardInfo.Level.ToString();
                     }
                 }
                 else
