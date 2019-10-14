@@ -22,7 +22,7 @@ namespace ThScoreFileConverterTests.Models
             var allScoreData = new Th09AllScoreDataWrapper();
 
             Assert.IsNull(allScoreData.Header);
-            Assert.AreEqual(0, allScoreData.RankingsCount);
+            Assert.AreEqual(0, allScoreData.Rankings.Count);
             Assert.IsNull(allScoreData.PlayStatus);
             Assert.IsNull(allScoreData.LastName);
             Assert.IsNull(allScoreData.VersionInfo);
@@ -58,40 +58,40 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th09AllScoreDataSetHighScoreTest() => TestUtils.Wrap(() =>
         {
-            var stub = new HighScoreStub(Th09HighScoreTests.ValidStub)
+            var stub = new HighScoreStub(HighScoreTests.ValidStub)
             {
                 Score = 87654u,
                 Rank = 2,
             };
 
-            var chapter = ChapterWrapper.Create(Th09HighScoreTests.MakeByteArray(stub));
-            var score = new Th09HighScoreWrapper(chapter);
+            var chapter = TestUtils.Create<Chapter>(HighScoreTests.MakeByteArray(stub));
+            var score = new HighScore(chapter);
 
             var allScoreData = new Th09AllScoreDataWrapper();
             allScoreData.Set(score);
 
-            Assert.AreSame(score.Target, allScoreData.RankingItem(stub.Chara, stub.Level, stub.Rank).Target);
+            Assert.AreSame(score, allScoreData.Rankings[(stub.Chara, stub.Level)][stub.Rank]);
         });
 
         [TestMethod]
         public void Th09AllScoreDataSetHighScoreTestTwice() => TestUtils.Wrap(() =>
         {
-            var stub = new HighScoreStub(Th09HighScoreTests.ValidStub)
+            var stub = new HighScoreStub(HighScoreTests.ValidStub)
             {
                 Score = 87654u,
                 Rank = 2,
             };
 
-            var chapter = ChapterWrapper.Create(Th09HighScoreTests.MakeByteArray(stub));
-            var score1 = new Th09HighScoreWrapper(chapter);
-            var score2 = new Th09HighScoreWrapper(chapter);
+            var chapter = TestUtils.Create<Chapter>(HighScoreTests.MakeByteArray(stub));
+            var score1 = new HighScore(chapter);
+            var score2 = new HighScore(chapter);
 
             var allScoreData = new Th09AllScoreDataWrapper();
             allScoreData.Set(score1);
             allScoreData.Set(score2);
 
-            Assert.AreNotSame(score1.Target, allScoreData.RankingItem(stub.Chara, stub.Level, stub.Rank).Target);
-            Assert.AreSame(score2.Target, allScoreData.RankingItem(stub.Chara, stub.Level, stub.Rank).Target);
+            Assert.AreNotSame(score1, allScoreData.Rankings[(stub.Chara, stub.Level)][stub.Rank]);
+            Assert.AreSame(score2, allScoreData.Rankings[(stub.Chara, stub.Level)][stub.Rank]);
         });
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
@@ -100,21 +100,21 @@ namespace ThScoreFileConverterTests.Models
         [DataRow((short)5)]
         public void Th09AllScoreDataSetHighScoreTestInvalidRank(short rank) => TestUtils.Wrap(() =>
         {
-            var stub = new HighScoreStub(Th09HighScoreTests.ValidStub)
+            var stub = new HighScoreStub(HighScoreTests.ValidStub)
             {
                 Score = 87654u,
                 Rank = rank,
             };
 
-            var chapter = ChapterWrapper.Create(Th09HighScoreTests.MakeByteArray(stub));
-            var score = new Th09HighScoreWrapper(chapter);
+            var chapter = TestUtils.Create<Chapter>(HighScoreTests.MakeByteArray(stub));
+            var score = new HighScore(chapter);
 
             var allScoreData = new Th09AllScoreDataWrapper();
             allScoreData.Set(score);
 
-            for (var index = 0; index < allScoreData.Ranking(stub.Chara, stub.Level).Count; ++index)
+            for (var index = 0; index < allScoreData.Rankings[(stub.Chara, stub.Level)].Count; ++index)
             {
-                Assert.IsNull(allScoreData.RankingItem(stub.Chara, stub.Level, index));
+                Assert.IsNull(allScoreData.Rankings[(stub.Chara, stub.Level)][index]);
             }
         });
 

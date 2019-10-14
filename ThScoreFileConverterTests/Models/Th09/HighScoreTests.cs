@@ -6,14 +6,13 @@ using System.IO;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th09;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th06.Wrappers;
 using ThScoreFileConverterTests.Models.Th09.Stubs;
-using ThScoreFileConverterTests.Models.Wrappers;
+using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th09
 {
     [TestClass]
-    public class Th09HighScoreTests
+    public class HighScoreTests
     {
         internal static HighScoreStub ValidStub { get; } = new HighScoreStub()
         {
@@ -29,8 +28,11 @@ namespace ThScoreFileConverterTests.Models
             ContinueCount = 2,
         };
 
-        internal static byte[] MakeData(IHighScore highScore)
+        internal static byte[] MakeByteArray(IHighScore highScore)
             => TestUtils.MakeByteArray(
+                highScore.Signature.ToCharArray(),
+                highScore.Size1,
+                highScore.Size2,
                 0u,
                 highScore.Score,
                 0u,
@@ -42,19 +44,12 @@ namespace ThScoreFileConverterTests.Models
                 (byte)0,
                 highScore.ContinueCount);
 
-        internal static byte[] MakeByteArray(IHighScore highScore)
-            => TestUtils.MakeByteArray(
-                highScore.Signature.ToCharArray(), highScore.Size1, highScore.Size2, MakeData(highScore));
-
-        internal static void Validate(IHighScore expected, in Th09HighScoreWrapper actual)
+        internal static void Validate(IHighScore expected, IHighScore actual)
         {
-            var data = MakeData(expected);
-
             Assert.AreEqual(expected.Signature, actual.Signature);
             Assert.AreEqual(expected.Size1, actual.Size1);
             Assert.AreEqual(expected.Size2, actual.Size2);
-            CollectionAssert.That.AreEqual(data, actual.Data);
-            Assert.AreEqual(data[0], actual.FirstByteOfData);
+            Assert.AreEqual(expected.FirstByteOfData, actual.FirstByteOfData);
             Assert.AreEqual(expected.Score, actual.Score);
             Assert.AreEqual(expected.Chara, actual.Chara);
             Assert.AreEqual(expected.Level, actual.Level);
@@ -69,8 +64,8 @@ namespace ThScoreFileConverterTests.Models
         {
             var stub = ValidStub;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            var highScore = new Th09HighScoreWrapper(chapter);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var highScore = new HighScore(chapter);
 
             Validate(stub, highScore);
         });
@@ -79,7 +74,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th09HighScoreTestNullChapter() => TestUtils.Wrap(() =>
         {
-            _ = new Th09HighScoreWrapper(null);
+            _ = new HighScore(null);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -92,8 +87,8 @@ namespace ThScoreFileConverterTests.Models
             var stub = new HighScoreStub(ValidStub);
             stub.Signature = stub.Signature.ToLowerInvariant();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th09HighScoreWrapper(chapter);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new HighScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -105,8 +100,8 @@ namespace ThScoreFileConverterTests.Models
             var stub = new HighScoreStub(ValidStub);
             --stub.Size1;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th09HighScoreWrapper(chapter);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new HighScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -125,8 +120,8 @@ namespace ThScoreFileConverterTests.Models
                 Chara = TestUtils.Cast<Chara>(chara),
             };
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th09HighScoreWrapper(chapter);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new HighScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -145,8 +140,8 @@ namespace ThScoreFileConverterTests.Models
                 Level = TestUtils.Cast<Level>(level),
             };
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th09HighScoreWrapper(chapter);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new HighScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });

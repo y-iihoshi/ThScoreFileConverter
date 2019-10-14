@@ -28,22 +28,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         public Header Header
             => this.pobj.GetProperty(nameof(this.Header)) as Header;
-
-        // NOTE: Th09Converter.HighScore are private classes.
-        // public IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> Rankings
-        //     => this.pobj.GetProperty(nameof(this.Rankings)) as Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>;
-        public object Rankings
-            => this.pobj.GetProperty(nameof(this.Rankings));
-        public int? RankingsCount
-            => this.Rankings.GetType().GetProperty("Count").GetValue(this.Rankings) as int?;
-        public IReadOnlyList<IHighScore> Ranking(Chara chara, Level level)
-            => this.Rankings.GetType().GetProperty("Item").GetValue(this.Rankings, new object[] { (chara, level) })
-                as IReadOnlyList<IHighScore>;
-        public Th09HighScoreWrapper RankingItem(Chara chara, Level level, int index)
-        {
-            var item = this.Ranking(chara, level)[index];
-            return (item != null) ? new Th09HighScoreWrapper(item) : null;
-        }
+        public IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> Rankings
+            => this.pobj.GetProperty(nameof(this.Rankings)) as Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>;
 
         public Th09PlayStatusWrapper PlayStatus
         {
@@ -61,8 +47,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         public void Set(Header header)
             => this.pobj.Invoke(nameof(Set), new object[] { header }, CultureInfo.InvariantCulture);
-        public void Set(Th09HighScoreWrapper score)
-            => this.pobj.Invoke(nameof(Set), new object[] { score.Target }, CultureInfo.InvariantCulture);
+        public void Set(IHighScore score)
+            => this.pobj.Invoke(nameof(Set), new object[] { score }, CultureInfo.InvariantCulture);
         public void Set(Th09PlayStatusWrapper status)
             => this.pobj.Invoke(nameof(Set), new object[] { status.Target }, CultureInfo.InvariantCulture);
         public void Set(LastName name)
