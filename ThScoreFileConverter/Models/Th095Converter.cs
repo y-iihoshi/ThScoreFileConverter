@@ -22,6 +22,7 @@ using System.Security.Permissions;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th095;
+using static ThScoreFileConverter.Models.Th095.Parsers;
 
 namespace ThScoreFileConverter.Models
 {
@@ -118,12 +119,6 @@ namespace ThScoreFileConverter.Models
                 { (Th095.Level.Extra, 7), (Enemy.Suika,     "鬼気「濛々迷霧」") },
                 { (Th095.Level.Extra, 8), (Enemy.Suika,     "「百万鬼夜行」") },
             };
-
-        private static new readonly EnumShortNameParser<Th095.Level> LevelParser =
-            new EnumShortNameParser<Th095.Level>();
-
-        private static readonly string LevelLongPattern =
-            string.Join("|", Utils.GetEnumerator<Th095.Level>().Select(lv => lv.ToLongName()).ToArray());
 
         private AllScoreData allScoreData = null;
 
@@ -363,7 +358,7 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var level = LevelParser.Parse(match.Groups[1].Value);
+                    var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
                     var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
@@ -443,7 +438,7 @@ namespace ThScoreFileConverter.Models
         private class CardReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T95CARD({0})([1-9])([12])", LevelParser.Pattern);
+                @"%T95CARD({0})([1-9])([12])", Parsers.LevelParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -451,7 +446,7 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var level = LevelParser.Parse(match.Groups[1].Value);
+                    var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
                     var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
@@ -481,7 +476,7 @@ namespace ThScoreFileConverter.Models
         private class ShotReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T95SHOT({0})([1-9])", LevelParser.Pattern);
+                @"%T95SHOT({0})([1-9])", Parsers.LevelParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -489,7 +484,7 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var level = LevelParser.Parse(match.Groups[1].Value);
+                    var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
                     var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
                     var key = (level, scene);
@@ -528,7 +523,7 @@ namespace ThScoreFileConverter.Models
         private class ShotExReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T95SHOTEX({0})([1-9])([1-6])", LevelParser.Pattern);
+                @"%T95SHOTEX({0})([1-9])([1-6])", Parsers.LevelParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -537,7 +532,7 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var level = LevelParser.Parse(match.Groups[1].Value);
+                    var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
                     var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
