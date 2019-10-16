@@ -16,61 +16,61 @@ namespace ThScoreFileConverter.Models.Th095
         /// Represents level 1.
         /// </summary>
         [EnumAltName("1", LongName = "01")]
-        Lv1,
+        One,
 
         /// <summary>
         /// Represents level 2.
         /// </summary>
         [EnumAltName("2", LongName = "02")]
-        Lv2,
+        Two,
 
         /// <summary>
         /// Represents level 3.
         /// </summary>
         [EnumAltName("3", LongName = "03")]
-        Lv3,
+        Three,
 
         /// <summary>
         /// Represents level 4.
         /// </summary>
         [EnumAltName("4", LongName = "04")]
-        Lv4,
+        Four,
 
         /// <summary>
         /// Represents level 5.
         /// </summary>
         [EnumAltName("5", LongName = "05")]
-        Lv5,
+        Five,
 
         /// <summary>
         /// Represents level 6.
         /// </summary>
         [EnumAltName("6", LongName = "06")]
-        Lv6,
+        Six,
 
         /// <summary>
         /// Represents level 7.
         /// </summary>
         [EnumAltName("7", LongName = "07")]
-        Lv7,
+        Seven,
 
         /// <summary>
         /// Represents level 8.
         /// </summary>
         [EnumAltName("8", LongName = "08")]
-        Lv8,
+        Eight,
 
         /// <summary>
         /// Represents level 9.
         /// </summary>
         [EnumAltName("9", LongName = "09")]
-        Lv9,
+        Nine,
 
         /// <summary>
         /// Represents level 10.
         /// </summary>
         [EnumAltName("0", LongName = "10")]
-        Lv10,
+        Ten,
 
         /// <summary>
         /// Represents level Extra.

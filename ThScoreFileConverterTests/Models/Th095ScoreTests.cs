@@ -20,7 +20,7 @@ namespace ThScoreFileConverterTests.Models
             Version = 1,
             Size = 0x60,
             Checksum = 0u,
-            LevelScene = (Level.Lv9, 6),
+            LevelScene = (Level.Nine, 6),
             HighScore = 1234567,
             BestshotScore = 23456,
             DateTime = 34567890,

@@ -28,7 +28,7 @@ namespace ThScoreFileConverterTests.Models
         internal static Properties ValidProperties => new Properties()
         {
             signature = "BSTS",
-            level = Level.Lv2,
+            level = Level.Two,
             scene = 3,
             width = 4,
             height = 5,
