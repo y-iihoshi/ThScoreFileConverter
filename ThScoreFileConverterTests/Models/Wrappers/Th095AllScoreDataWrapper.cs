@@ -1,8 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th095;
 using ThScoreFileConverterTests.Models.Th095.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
@@ -32,16 +34,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             }
         }
 
-        // NOTE: Th095Converter.Score is a private class.
-        // public IReadOnlyList<IScore> Scores
-        //     => this.pobj.GetProperty(nameof(this.Scores)) as IReadOnlyList<IScore>;
-        public object Scores
-            => this.pobj.GetProperty(nameof(this.Scores));
-        public int? ScoresCount
-            => this.Scores.GetType().GetProperty("Count").GetValue(this.Scores) as int?;
-        public Th095ScoreWrapper ScoresItem(int index)
-            => new Th095ScoreWrapper(
-                this.Scores.GetType().GetProperty("Item").GetValue(this.Scores, new object[] { index }));
+        public IReadOnlyList<IScore> Scores
+            => this.pobj.GetProperty(nameof(this.Scores)) as IReadOnlyList<IScore>;
 
         public Th095StatusWrapper Status
         {
@@ -54,8 +48,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         public void Set(HeaderWrapper<Th095Converter> header)
             => this.pobj.Invoke(nameof(Set), new object[] { header.Target }, CultureInfo.InvariantCulture);
-        public void Set(Th095ScoreWrapper data)
-            => this.pobj.Invoke(nameof(Set), new object[] { data.Target }, CultureInfo.InvariantCulture);
+        public void Set(IScore data)
+            => this.pobj.Invoke(nameof(Set), new object[] { data }, CultureInfo.InvariantCulture);
         public void Set(Th095StatusWrapper status)
             => this.pobj.Invoke(nameof(Set), new object[] { status.Target }, CultureInfo.InvariantCulture);
     }
