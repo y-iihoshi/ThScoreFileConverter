@@ -29,97 +29,6 @@ namespace ThScoreFileConverter.Models
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th095Converter : ThConverter
     {
-        // Thanks to thwiki.info
-        private static readonly Dictionary<(Th095.Level Level, int Scene), (Enemy Enemy, string Card)> SpellCards =
-            new Dictionary<(Th095.Level, int), (Enemy, string)>()
-            {
-                { (Th095.Level.One,   1), (Enemy.Wriggle,   string.Empty) },
-                { (Th095.Level.One,   2), (Enemy.Rumia,     string.Empty) },
-                { (Th095.Level.One,   3), (Enemy.Wriggle,   "蛍符「地上の恒星」") },
-                { (Th095.Level.One,   4), (Enemy.Rumia,     "闇符「ダークサイドオブザムーン」") },
-                { (Th095.Level.One,   5), (Enemy.Wriggle,   "蝶符「バタフライストーム」") },
-                { (Th095.Level.One,   6), (Enemy.Rumia,     "夜符「ミッドナイトバード」") },
-                { (Th095.Level.Two,   1), (Enemy.Cirno,     string.Empty) },
-                { (Th095.Level.Two,   2), (Enemy.Letty,     string.Empty) },
-                { (Th095.Level.Two,   3), (Enemy.Cirno,     "雪符「ダイアモンドブリザード」") },
-                { (Th095.Level.Two,   4), (Enemy.Letty,     "寒符「コールドスナップ」") },
-                { (Th095.Level.Two,   5), (Enemy.Cirno,     "凍符「マイナスＫ」") },
-                { (Th095.Level.Two,   6), (Enemy.Letty,     "冬符「ノーザンウイナー」") },
-                { (Th095.Level.Three, 1), (Enemy.Alice,     string.Empty) },
-                { (Th095.Level.Three, 2), (Enemy.Keine,     "光符「アマテラス」") },
-                { (Th095.Level.Three, 3), (Enemy.Alice,     "操符「ドールズインシー」") },
-                { (Th095.Level.Three, 4), (Enemy.Keine,     "包符「昭和の雨」") },
-                { (Th095.Level.Three, 5), (Enemy.Alice,     "呪符「ストロードールカミカゼ」") },
-                { (Th095.Level.Three, 6), (Enemy.Keine,     "葵符「水戸の光圀」") },
-                { (Th095.Level.Three, 7), (Enemy.Alice,     "赤符「ドールミラセティ」") },
-                { (Th095.Level.Three, 8), (Enemy.Keine,     "倭符「邪馬台の国」") },
-                { (Th095.Level.Four,  1), (Enemy.Reisen,    string.Empty) },
-                { (Th095.Level.Four,  2), (Enemy.Medicine,  "霧符「ガシングガーデン」") },
-                { (Th095.Level.Four,  3), (Enemy.Tewi,      "脱兎「フラスターエスケープ」") },
-                { (Th095.Level.Four,  4), (Enemy.Reisen,    "散符「朧月花栞（ロケット・イン・ミスト）」") },
-                { (Th095.Level.Four,  5), (Enemy.Medicine,  "毒符「ポイズンブレス」") },
-                { (Th095.Level.Four,  6), (Enemy.Reisen,    "波符「幻の月（インビジブルハーフムーン）」") },
-                { (Th095.Level.Four,  7), (Enemy.Medicine,  "譫妄「イントゥデリリウム」") },
-                { (Th095.Level.Four,  8), (Enemy.Tewi,      "借符「大穴牟遅様の薬」") },
-                { (Th095.Level.Four,  9), (Enemy.Reisen,    "狂夢「風狂の夢（ドリームワールド）」") },
-                { (Th095.Level.Five,  1), (Enemy.Meirin,    string.Empty) },
-                { (Th095.Level.Five,  2), (Enemy.Patchouli, "日＆水符「ハイドロジェナスプロミネンス」") },
-                { (Th095.Level.Five,  3), (Enemy.Meirin,    "華符「彩光蓮華掌」") },
-                { (Th095.Level.Five,  4), (Enemy.Patchouli, "水＆火符「フロギスティックレイン」") },
-                { (Th095.Level.Five,  5), (Enemy.Meirin,    "彩翔「飛花落葉」") },
-                { (Th095.Level.Five,  6), (Enemy.Patchouli, "月＆木符「サテライトヒマワリ」") },
-                { (Th095.Level.Five,  7), (Enemy.Meirin,    "彩華「虹色太極拳」") },
-                { (Th095.Level.Five,  8), (Enemy.Patchouli, "日＆月符「ロイヤルダイアモンドリング」") },
-                { (Th095.Level.Six,   1), (Enemy.Chen,      string.Empty) },
-                { (Th095.Level.Six,   2), (Enemy.Youmu,     "人智剣「天女返し」") },
-                { (Th095.Level.Six,   3), (Enemy.Chen,      "星符「飛び重ね鱗」") },
-                { (Th095.Level.Six,   4), (Enemy.Youmu,     "妄執剣「修羅の血」") },
-                { (Th095.Level.Six,   5), (Enemy.Chen,      "鬼神「鳴動持国天」") },
-                { (Th095.Level.Six,   6), (Enemy.Youmu,     "天星剣「涅槃寂静の如し」") },
-                { (Th095.Level.Six,   7), (Enemy.Chen,      "化猫「橙」") },
-                { (Th095.Level.Six,   8), (Enemy.Youmu,     "四生剣「衆生無情の響き」") },
-                { (Th095.Level.Seven, 1), (Enemy.Sakuya,    string.Empty) },
-                { (Th095.Level.Seven, 2), (Enemy.Remilia,   "魔符「全世界ナイトメア」") },
-                { (Th095.Level.Seven, 3), (Enemy.Sakuya,    "時符「トンネルエフェクト」") },
-                { (Th095.Level.Seven, 4), (Enemy.Remilia,   "紅符「ブラッディマジックスクウェア」") },
-                { (Th095.Level.Seven, 5), (Enemy.Sakuya,    "空虚「インフレーションスクウェア」") },
-                { (Th095.Level.Seven, 6), (Enemy.Remilia,   "紅蝙蝠「ヴァンピリッシュナイト」") },
-                { (Th095.Level.Seven, 7), (Enemy.Sakuya,    "銀符「パーフェクトメイド」") },
-                { (Th095.Level.Seven, 8), (Enemy.Remilia,   "神鬼「レミリアストーカー」") },
-                { (Th095.Level.Eight, 1), (Enemy.Ran,       string.Empty) },
-                { (Th095.Level.Eight, 2), (Enemy.Yuyuko,    "幽雅「死出の誘蛾灯」") },
-                { (Th095.Level.Eight, 3), (Enemy.Ran,       "密符「御大師様の秘鍵」") },
-                { (Th095.Level.Eight, 4), (Enemy.Yuyuko,    "蝶符「鳳蝶紋の死槍」") },
-                { (Th095.Level.Eight, 5), (Enemy.Ran,       "行符「八千万枚護摩」") },
-                { (Th095.Level.Eight, 6), (Enemy.Yuyuko,    "死符「酔人の生、死の夢幻」") },
-                { (Th095.Level.Eight, 7), (Enemy.Ran,       "超人「飛翔役小角」") },
-                { (Th095.Level.Eight, 8), (Enemy.Yuyuko,    "「死蝶浮月」") },
-                { (Th095.Level.Nine,  1), (Enemy.Eirin,     string.Empty) },
-                { (Th095.Level.Nine,  2), (Enemy.Kaguya,    "新難題「月のイルメナイト」") },
-                { (Th095.Level.Nine,  3), (Enemy.Eirin,     "薬符「胡蝶夢丸ナイトメア」") },
-                { (Th095.Level.Nine,  4), (Enemy.Kaguya,    "新難題「エイジャの赤石」") },
-                { (Th095.Level.Nine,  5), (Enemy.Eirin,     "錬丹「水銀の海」") },
-                { (Th095.Level.Nine,  6), (Enemy.Kaguya,    "新難題「金閣寺の一枚天井」") },
-                { (Th095.Level.Nine,  7), (Enemy.Eirin,     "秘薬「仙香玉兎」") },
-                { (Th095.Level.Nine,  8), (Enemy.Kaguya,    "新難題「ミステリウム」") },
-                { (Th095.Level.Ten,   1), (Enemy.Komachi,   string.Empty) },
-                { (Th095.Level.Ten,   2), (Enemy.Shikieiki, "嘘言「タン・オブ・ウルフ」") },
-                { (Th095.Level.Ten,   3), (Enemy.Komachi,   "死歌「八重霧の渡し」") },
-                { (Th095.Level.Ten,   4), (Enemy.Shikieiki, "審判「十王裁判」") },
-                { (Th095.Level.Ten,   5), (Enemy.Komachi,   "古雨「黄泉中有の旅の雨」") },
-                { (Th095.Level.Ten,   6), (Enemy.Shikieiki, "審判「ギルティ・オワ・ノットギルティ」") },
-                { (Th095.Level.Ten,   7), (Enemy.Komachi,   "死価「プライス・オブ・ライフ」") },
-                { (Th095.Level.Ten,   8), (Enemy.Shikieiki, "審判「浄頗梨審判 -射命丸文-」") },
-                { (Th095.Level.Extra, 1), (Enemy.Flandre,   "禁忌「フォービドゥンフルーツ」") },
-                { (Th095.Level.Extra, 2), (Enemy.Flandre,   "禁忌「禁じられた遊び」") },
-                { (Th095.Level.Extra, 3), (Enemy.Yukari,    "境符「色と空の境界」") },
-                { (Th095.Level.Extra, 4), (Enemy.Yukari,    "境符「波と粒の境界」") },
-                { (Th095.Level.Extra, 5), (Enemy.Mokou,     "貴人「サンジェルマンの忠告」") },
-                { (Th095.Level.Extra, 6), (Enemy.Mokou,     "蓬莱「瑞江浦嶋子と五色の瑞亀」") },
-                { (Th095.Level.Extra, 7), (Enemy.Suika,     "鬼気「濛々迷霧」") },
-                { (Th095.Level.Extra, 8), (Enemy.Suika,     "「百万鬼夜行」") },
-            };
-
         private AllScoreData allScoreData = null;
 
         private Dictionary<(Th095.Level Level, int Scene), BestShotPair> bestshots = null;
@@ -195,7 +104,7 @@ namespace ThScoreFileConverter.Models
 
                     var key = (header.Level, header.Scene);
                     if (this.bestshots == null)
-                        this.bestshots = new Dictionary<(Th095.Level, int), BestShotPair>(SpellCards.Count);
+                        this.bestshots = new Dictionary<(Th095.Level, int), BestShotPair>(Definitions.SpellCards.Count);
                     if (!this.bestshots.ContainsKey(key))
                         this.bestshots.Add(key, new BestShotPair(outputFile.Name, header));
 
@@ -363,7 +272,7 @@ namespace ThScoreFileConverter.Models
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                     var key = (level, scene);
-                    if (!SpellCards.ContainsKey(key))
+                    if (!Definitions.SpellCards.ContainsKey(key))
                         return match.ToString();
 
                     var score = parent.allScoreData.Scores.FirstOrDefault(
@@ -451,7 +360,7 @@ namespace ThScoreFileConverter.Models
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                     var key = (level, scene);
-                    if (!SpellCards.ContainsKey(key))
+                    if (!Definitions.SpellCards.ContainsKey(key))
                         return match.ToString();
 
                     if (hideUntriedCards)
@@ -462,7 +371,8 @@ namespace ThScoreFileConverter.Models
                             return "??????????";
                     }
 
-                    return (type == 1) ? SpellCards[key].Enemy.ToLongName() : SpellCards[key].Card;
+                    return (type == 1)
+                        ? Definitions.SpellCards[key].Enemy.ToLongName() : Definitions.SpellCards[key].Card;
                 });
             }
 
@@ -488,7 +398,7 @@ namespace ThScoreFileConverter.Models
                     var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
                     var key = (level, scene);
-                    if (!SpellCards.ContainsKey(key))
+                    if (!Definitions.SpellCards.ContainsKey(key))
                         return match.ToString();
 
                     if (!string.IsNullOrEmpty(outputFilePath) && parent.bestshots.TryGetValue(key, out var bestshot))
@@ -537,7 +447,7 @@ namespace ThScoreFileConverter.Models
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                     var key = (level, scene);
-                    if (!SpellCards.ContainsKey(key))
+                    if (!Definitions.SpellCards.ContainsKey(key))
                         return match.ToString();
 
                     if (!string.IsNullOrEmpty(outputFilePath) && parent.bestshots.TryGetValue(key, out var bestshot))
@@ -619,7 +529,7 @@ namespace ThScoreFileConverter.Models
         {
             private readonly List<IScore> scores;
 
-            public AllScoreData() => this.scores = new List<IScore>(SpellCards.Count);
+            public AllScoreData() => this.scores = new List<IScore>(Definitions.SpellCards.Count);
 
             public Header Header { get; private set; }
 
