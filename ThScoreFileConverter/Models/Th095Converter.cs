@@ -350,7 +350,7 @@ namespace ThScoreFileConverter.Models
         private class ScoreReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T95SCR({0})([1-9])([1-4])", LevelParser.Pattern);
+                @"%T95SCR({0})([1-9])([1-4])", Parsers.LevelParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
