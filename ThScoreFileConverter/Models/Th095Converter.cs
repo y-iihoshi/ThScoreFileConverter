@@ -552,32 +552,6 @@ namespace ThScoreFileConverter.Models
                 => base.IsValid && this.Signature.Equals(ValidSignature, StringComparison.Ordinal);
         }
 
-        private class Status : Chapter, IStatus
-        {
-            public const string ValidSignature = "ST";
-            public const ushort ValidVersion = 0x0000;
-            public const int ValidSize = 0x00000458;
-
-            public Status(Chapter chapter)
-                : base(chapter, ValidSignature, ValidVersion, ValidSize)
-            {
-                using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-                {
-                    this.LastName = reader.ReadExactBytes(10);
-                    reader.ReadExactBytes(0x0442);
-                }
-            }
-
-            public IEnumerable<byte> LastName { get; }  // The last 2 bytes are always 0x00 ?
-
-            public static bool CanInitialize(Chapter chapter)
-            {
-                return chapter.Signature.Equals(ValidSignature, StringComparison.Ordinal)
-                    && (chapter.Version == ValidVersion)
-                    && (chapter.Size == ValidSize);
-            }
-        }
-
         private class BestShotHeader : IBinaryReadable
         {
             public const string ValidSignature = "BSTS";

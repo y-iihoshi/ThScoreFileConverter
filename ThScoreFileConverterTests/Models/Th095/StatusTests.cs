@@ -5,13 +5,11 @@ using System.IO;
 using ThScoreFileConverter.Models.Th095;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th095.Stubs;
-using ThScoreFileConverterTests.Models.Th095.Wrappers;
-using ThScoreFileConverterTests.Models.Wrappers;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th095
 {
     [TestClass]
-    public class Th095StatusTests
+    public class StatusTests
     {
         internal static StatusStub ValidStub { get; } = new StatusStub()
         {
@@ -22,46 +20,41 @@ namespace ThScoreFileConverterTests.Models
             LastName = TestUtils.CP932Encoding.GetBytes("Player1\0\0\0")
         };
 
-        internal static byte[] MakeData(IStatus status)
-            => TestUtils.MakeByteArray(status.LastName, new byte[0x442]);
-
         internal static byte[] MakeByteArray(IStatus status)
             => TestUtils.MakeByteArray(
                 status.Signature.ToCharArray(),
                 status.Version,
                 status.Size,
                 status.Checksum,
-                MakeData(status));
+                status.LastName,
+                new byte[0x442]);
 
-        internal static void Validate(IStatus expected, in Th095StatusWrapper actual)
+        internal static void Validate(IStatus expected, IStatus actual)
         {
-            var data = MakeData(expected);
-
             Assert.AreEqual(expected.Signature, actual.Signature);
             Assert.AreEqual(expected.Version, actual.Version);
             Assert.AreEqual(expected.Size, actual.Size);
             Assert.AreEqual(expected.Checksum, actual.Checksum);
-            CollectionAssert.That.AreEqual(data, actual.Data);
             CollectionAssert.That.AreEqual(expected.LastName, actual.LastName);
         }
 
         [TestMethod]
-        public void Th095StatusTestChapter() => TestUtils.Wrap(() =>
+        public void StatusTestChapter() => TestUtils.Wrap(() =>
         {
             var stub = new StatusStub(ValidStub);
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            var status = new Th095StatusWrapper(chapter);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var status = new Status(chapter);
 
             Validate(stub, status);
-            Assert.IsFalse(status.IsValid.Value);
+            Assert.IsFalse(status.IsValid);
         });
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th095StatusTestNullChapter() => TestUtils.Wrap(() =>
+        public void StatusTestNullChapter() => TestUtils.Wrap(() =>
         {
-            _ = new Th095StatusWrapper(null);
+            _ = new Status(null);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -69,39 +62,39 @@ namespace ThScoreFileConverterTests.Models
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th095StatusTestInvalidSignature() => TestUtils.Wrap(() =>
+        public void StatusTestInvalidSignature() => TestUtils.Wrap(() =>
         {
             var stub = new StatusStub(ValidStub);
             stub.Signature = stub.Signature.ToLowerInvariant();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th095StatusWrapper(chapter);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new Status(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th095StatusTestInvalidVersion() => TestUtils.Wrap(() =>
+        public void StatusTestInvalidVersion() => TestUtils.Wrap(() =>
         {
             var stub = new StatusStub(ValidStub);
             ++stub.Version;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th095StatusWrapper(chapter);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new Status(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th095StatusTestInvalidSize() => TestUtils.Wrap(() =>
+        public void StatusTestInvalidSize() => TestUtils.Wrap(() =>
         {
             var stub = new StatusStub(ValidStub);
             --stub.Size;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th095StatusWrapper(chapter);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new Status(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -112,16 +105,16 @@ namespace ThScoreFileConverterTests.Models
         [DataRow("st", (ushort)0, 0x458, false)]
         [DataRow("ST", (ushort)1, 0x458, false)]
         [DataRow("ST", (ushort)0, 0x459, false)]
-        public void Th095StatusCanInitializeTest(string signature, ushort version, int size, bool expected)
+        public void CanInitializeTest(string signature, ushort version, int size, bool expected)
             => TestUtils.Wrap(() =>
             {
                 var checksum = 0u;
                 var data = new byte[size];
 
-                var chapter = ChapterWrapper.Create(
+                var chapter = TestUtils.Create<Chapter>(
                     TestUtils.MakeByteArray(signature.ToCharArray(), version, size, checksum, data));
 
-                Assert.AreEqual(expected, Th095StatusWrapper.CanInitialize(chapter));
+                Assert.AreEqual(expected, Status.CanInitialize(chapter));
             });
     }
 }

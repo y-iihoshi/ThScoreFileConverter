@@ -75,30 +75,26 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th095AllScoreDataSetStatusTest() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(
-                Th095StatusTests.MakeByteArray(Th095StatusTests.ValidStub));
-            var status = new Th095StatusWrapper(chapter);
+            var status = new StatusStub(StatusTests.ValidStub);
 
             var allScoreData = new Th095AllScoreDataWrapper();
             allScoreData.Set(status);
 
-            Assert.AreSame(status.Target, allScoreData.Status.Target);
+            Assert.AreSame(status, allScoreData.Status);
         });
 
         [TestMethod]
         public void Th095AllScoreDataSetStatusTestTwice() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(
-                Th095StatusTests.MakeByteArray(Th095StatusTests.ValidStub));
-            var status1 = new Th095StatusWrapper(chapter);
-            var status2 = new Th095StatusWrapper(chapter);
+            var status1 = new StatusStub(StatusTests.ValidStub);
+            var status2 = new StatusStub(status1);
 
             var allScoreData = new Th095AllScoreDataWrapper();
             allScoreData.Set(status1);
             allScoreData.Set(status2);
 
-            Assert.AreNotSame(status1.Target, allScoreData.Status.Target);
-            Assert.AreSame(status2.Target, allScoreData.Status.Target);
+            Assert.AreNotSame(status1, allScoreData.Status);
+            Assert.AreSame(status2, allScoreData.Status);
         });
     }
 }
