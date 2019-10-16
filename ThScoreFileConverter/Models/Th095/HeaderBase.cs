@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="Header.cs" company="None">
+// <copyright file="HeaderBase.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
@@ -14,7 +14,7 @@ using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.Models.Th095
 {
-    internal class Header : IBinaryReadable, IBinaryWritable
+    internal class HeaderBase : IBinaryReadable, IBinaryWritable
     {
         public const int SignatureSize = 4;
         public const int Size = SignatureSize + (sizeof(int) * 3) + (sizeof(uint) * 2);
@@ -22,7 +22,7 @@ namespace ThScoreFileConverter.Models.Th095
         private uint unknown1;
         private uint unknown2;
 
-        public Header()
+        public HeaderBase()
         {
             this.Signature = string.Empty;
             this.EncodedAllSize = 0;

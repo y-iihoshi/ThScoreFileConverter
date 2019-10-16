@@ -879,7 +879,7 @@ namespace ThScoreFileConverter.Models
             public void Set(IStatus status) => this.Status = status;
         }
 
-        private class Header : Th095.Header
+        private class Header : Th095.HeaderBase
         {
             public const string ValidSignature = "T561";
 
