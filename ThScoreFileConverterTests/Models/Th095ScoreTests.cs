@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th095;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th095.Stubs;
@@ -21,7 +20,7 @@ namespace ThScoreFileConverterTests.Models
             Version = 1,
             Size = 0x60,
             Checksum = 0u,
-            LevelScene = (Th095Converter.Level.Lv9, 6),
+            LevelScene = (Level.Lv9, 6),
             HighScore = 1234567,
             BestshotScore = 23456,
             DateTime = 34567890,
@@ -132,7 +131,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         public static IEnumerable<object[]> InvalidLevels
-            => TestUtils.GetInvalidEnumerators(typeof(Th095Converter.Level));
+            => TestUtils.GetInvalidEnumerators(typeof(Level));
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
@@ -141,7 +140,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th095ScoreTestInvalidLevel(int level) => TestUtils.Wrap(() =>
         {
             var stub = new ScoreStub(ValidStub);
-            stub.LevelScene = (TestUtils.Cast<Th095Converter.Level>(level), stub.LevelScene.Scene);
+            stub.LevelScene = (TestUtils.Cast<Level>(level), stub.LevelScene.Scene);
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
             _ = new Th095ScoreWrapper(chapter);

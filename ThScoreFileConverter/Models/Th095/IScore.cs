@@ -17,7 +17,7 @@ namespace ThScoreFileConverter.Models.Th095
 
         int HighScore { get; }
 
-        (Th095Converter.Level Level, int Scene) LevelScene { get; }
+        (Level Level, int Scene) LevelScene { get; }
 
         float SlowRate1 { get; }
 

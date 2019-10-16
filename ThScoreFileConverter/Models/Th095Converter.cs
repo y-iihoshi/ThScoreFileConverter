@@ -7,7 +7,6 @@
 
 #pragma warning disable 1591
 #pragma warning disable SA1600 // ElementsMustBeDocumented
-#pragma warning disable SA1602 // EnumerationItemsMustBeDocumented
 
 using System;
 using System.Collections.Generic;
@@ -30,153 +29,105 @@ namespace ThScoreFileConverter.Models
     internal class Th095Converter : ThConverter
     {
         // Thanks to thwiki.info
-        private static readonly Dictionary<(Level Level, int Scene), (Enemy Enemy, string Card)> SpellCards =
-            new Dictionary<(Level, int), (Enemy, string)>()
+        private static readonly Dictionary<(Th095.Level Level, int Scene), (Enemy Enemy, string Card)> SpellCards =
+            new Dictionary<(Th095.Level, int), (Enemy, string)>()
             {
-                { (Level.Lv1,   1), (Enemy.Wriggle,   string.Empty) },
-                { (Level.Lv1,   2), (Enemy.Rumia,     string.Empty) },
-                { (Level.Lv1,   3), (Enemy.Wriggle,   "蛍符「地上の恒星」") },
-                { (Level.Lv1,   4), (Enemy.Rumia,     "闇符「ダークサイドオブザムーン」") },
-                { (Level.Lv1,   5), (Enemy.Wriggle,   "蝶符「バタフライストーム」") },
-                { (Level.Lv1,   6), (Enemy.Rumia,     "夜符「ミッドナイトバード」") },
-                { (Level.Lv2,   1), (Enemy.Cirno,     string.Empty) },
-                { (Level.Lv2,   2), (Enemy.Letty,     string.Empty) },
-                { (Level.Lv2,   3), (Enemy.Cirno,     "雪符「ダイアモンドブリザード」") },
-                { (Level.Lv2,   4), (Enemy.Letty,     "寒符「コールドスナップ」") },
-                { (Level.Lv2,   5), (Enemy.Cirno,     "凍符「マイナスＫ」") },
-                { (Level.Lv2,   6), (Enemy.Letty,     "冬符「ノーザンウイナー」") },
-                { (Level.Lv3,   1), (Enemy.Alice,     string.Empty) },
-                { (Level.Lv3,   2), (Enemy.Keine,     "光符「アマテラス」") },
-                { (Level.Lv3,   3), (Enemy.Alice,     "操符「ドールズインシー」") },
-                { (Level.Lv3,   4), (Enemy.Keine,     "包符「昭和の雨」") },
-                { (Level.Lv3,   5), (Enemy.Alice,     "呪符「ストロードールカミカゼ」") },
-                { (Level.Lv3,   6), (Enemy.Keine,     "葵符「水戸の光圀」") },
-                { (Level.Lv3,   7), (Enemy.Alice,     "赤符「ドールミラセティ」") },
-                { (Level.Lv3,   8), (Enemy.Keine,     "倭符「邪馬台の国」") },
-                { (Level.Lv4,   1), (Enemy.Reisen,    string.Empty) },
-                { (Level.Lv4,   2), (Enemy.Medicine,  "霧符「ガシングガーデン」") },
-                { (Level.Lv4,   3), (Enemy.Tewi,      "脱兎「フラスターエスケープ」") },
-                { (Level.Lv4,   4), (Enemy.Reisen,    "散符「朧月花栞（ロケット・イン・ミスト）」") },
-                { (Level.Lv4,   5), (Enemy.Medicine,  "毒符「ポイズンブレス」") },
-                { (Level.Lv4,   6), (Enemy.Reisen,    "波符「幻の月（インビジブルハーフムーン）」") },
-                { (Level.Lv4,   7), (Enemy.Medicine,  "譫妄「イントゥデリリウム」") },
-                { (Level.Lv4,   8), (Enemy.Tewi,      "借符「大穴牟遅様の薬」") },
-                { (Level.Lv4,   9), (Enemy.Reisen,    "狂夢「風狂の夢（ドリームワールド）」") },
-                { (Level.Lv5,   1), (Enemy.Meirin,    string.Empty) },
-                { (Level.Lv5,   2), (Enemy.Patchouli, "日＆水符「ハイドロジェナスプロミネンス」") },
-                { (Level.Lv5,   3), (Enemy.Meirin,    "華符「彩光蓮華掌」") },
-                { (Level.Lv5,   4), (Enemy.Patchouli, "水＆火符「フロギスティックレイン」") },
-                { (Level.Lv5,   5), (Enemy.Meirin,    "彩翔「飛花落葉」") },
-                { (Level.Lv5,   6), (Enemy.Patchouli, "月＆木符「サテライトヒマワリ」") },
-                { (Level.Lv5,   7), (Enemy.Meirin,    "彩華「虹色太極拳」") },
-                { (Level.Lv5,   8), (Enemy.Patchouli, "日＆月符「ロイヤルダイアモンドリング」") },
-                { (Level.Lv6,   1), (Enemy.Chen,      string.Empty) },
-                { (Level.Lv6,   2), (Enemy.Youmu,     "人智剣「天女返し」") },
-                { (Level.Lv6,   3), (Enemy.Chen,      "星符「飛び重ね鱗」") },
-                { (Level.Lv6,   4), (Enemy.Youmu,     "妄執剣「修羅の血」") },
-                { (Level.Lv6,   5), (Enemy.Chen,      "鬼神「鳴動持国天」") },
-                { (Level.Lv6,   6), (Enemy.Youmu,     "天星剣「涅槃寂静の如し」") },
-                { (Level.Lv6,   7), (Enemy.Chen,      "化猫「橙」") },
-                { (Level.Lv6,   8), (Enemy.Youmu,     "四生剣「衆生無情の響き」") },
-                { (Level.Lv7,   1), (Enemy.Sakuya,    string.Empty) },
-                { (Level.Lv7,   2), (Enemy.Remilia,   "魔符「全世界ナイトメア」") },
-                { (Level.Lv7,   3), (Enemy.Sakuya,    "時符「トンネルエフェクト」") },
-                { (Level.Lv7,   4), (Enemy.Remilia,   "紅符「ブラッディマジックスクウェア」") },
-                { (Level.Lv7,   5), (Enemy.Sakuya,    "空虚「インフレーションスクウェア」") },
-                { (Level.Lv7,   6), (Enemy.Remilia,   "紅蝙蝠「ヴァンピリッシュナイト」") },
-                { (Level.Lv7,   7), (Enemy.Sakuya,    "銀符「パーフェクトメイド」") },
-                { (Level.Lv7,   8), (Enemy.Remilia,   "神鬼「レミリアストーカー」") },
-                { (Level.Lv8,   1), (Enemy.Ran,       string.Empty) },
-                { (Level.Lv8,   2), (Enemy.Yuyuko,    "幽雅「死出の誘蛾灯」") },
-                { (Level.Lv8,   3), (Enemy.Ran,       "密符「御大師様の秘鍵」") },
-                { (Level.Lv8,   4), (Enemy.Yuyuko,    "蝶符「鳳蝶紋の死槍」") },
-                { (Level.Lv8,   5), (Enemy.Ran,       "行符「八千万枚護摩」") },
-                { (Level.Lv8,   6), (Enemy.Yuyuko,    "死符「酔人の生、死の夢幻」") },
-                { (Level.Lv8,   7), (Enemy.Ran,       "超人「飛翔役小角」") },
-                { (Level.Lv8,   8), (Enemy.Yuyuko,    "「死蝶浮月」") },
-                { (Level.Lv9,   1), (Enemy.Eirin,     string.Empty) },
-                { (Level.Lv9,   2), (Enemy.Kaguya,    "新難題「月のイルメナイト」") },
-                { (Level.Lv9,   3), (Enemy.Eirin,     "薬符「胡蝶夢丸ナイトメア」") },
-                { (Level.Lv9,   4), (Enemy.Kaguya,    "新難題「エイジャの赤石」") },
-                { (Level.Lv9,   5), (Enemy.Eirin,     "錬丹「水銀の海」") },
-                { (Level.Lv9,   6), (Enemy.Kaguya,    "新難題「金閣寺の一枚天井」") },
-                { (Level.Lv9,   7), (Enemy.Eirin,     "秘薬「仙香玉兎」") },
-                { (Level.Lv9,   8), (Enemy.Kaguya,    "新難題「ミステリウム」") },
-                { (Level.Lv10,  1), (Enemy.Komachi,   string.Empty) },
-                { (Level.Lv10,  2), (Enemy.Shikieiki, "嘘言「タン・オブ・ウルフ」") },
-                { (Level.Lv10,  3), (Enemy.Komachi,   "死歌「八重霧の渡し」") },
-                { (Level.Lv10,  4), (Enemy.Shikieiki, "審判「十王裁判」") },
-                { (Level.Lv10,  5), (Enemy.Komachi,   "古雨「黄泉中有の旅の雨」") },
-                { (Level.Lv10,  6), (Enemy.Shikieiki, "審判「ギルティ・オワ・ノットギルティ」") },
-                { (Level.Lv10,  7), (Enemy.Komachi,   "死価「プライス・オブ・ライフ」") },
-                { (Level.Lv10,  8), (Enemy.Shikieiki, "審判「浄頗梨審判 -射命丸文-」") },
-                { (Level.Extra, 1), (Enemy.Flandre,   "禁忌「フォービドゥンフルーツ」") },
-                { (Level.Extra, 2), (Enemy.Flandre,   "禁忌「禁じられた遊び」") },
-                { (Level.Extra, 3), (Enemy.Yukari,    "境符「色と空の境界」") },
-                { (Level.Extra, 4), (Enemy.Yukari,    "境符「波と粒の境界」") },
-                { (Level.Extra, 5), (Enemy.Mokou,     "貴人「サンジェルマンの忠告」") },
-                { (Level.Extra, 6), (Enemy.Mokou,     "蓬莱「瑞江浦嶋子と五色の瑞亀」") },
-                { (Level.Extra, 7), (Enemy.Suika,     "鬼気「濛々迷霧」") },
-                { (Level.Extra, 8), (Enemy.Suika,     "「百万鬼夜行」") },
+                { (Th095.Level.Lv1,   1), (Enemy.Wriggle,   string.Empty) },
+                { (Th095.Level.Lv1,   2), (Enemy.Rumia,     string.Empty) },
+                { (Th095.Level.Lv1,   3), (Enemy.Wriggle,   "蛍符「地上の恒星」") },
+                { (Th095.Level.Lv1,   4), (Enemy.Rumia,     "闇符「ダークサイドオブザムーン」") },
+                { (Th095.Level.Lv1,   5), (Enemy.Wriggle,   "蝶符「バタフライストーム」") },
+                { (Th095.Level.Lv1,   6), (Enemy.Rumia,     "夜符「ミッドナイトバード」") },
+                { (Th095.Level.Lv2,   1), (Enemy.Cirno,     string.Empty) },
+                { (Th095.Level.Lv2,   2), (Enemy.Letty,     string.Empty) },
+                { (Th095.Level.Lv2,   3), (Enemy.Cirno,     "雪符「ダイアモンドブリザード」") },
+                { (Th095.Level.Lv2,   4), (Enemy.Letty,     "寒符「コールドスナップ」") },
+                { (Th095.Level.Lv2,   5), (Enemy.Cirno,     "凍符「マイナスＫ」") },
+                { (Th095.Level.Lv2,   6), (Enemy.Letty,     "冬符「ノーザンウイナー」") },
+                { (Th095.Level.Lv3,   1), (Enemy.Alice,     string.Empty) },
+                { (Th095.Level.Lv3,   2), (Enemy.Keine,     "光符「アマテラス」") },
+                { (Th095.Level.Lv3,   3), (Enemy.Alice,     "操符「ドールズインシー」") },
+                { (Th095.Level.Lv3,   4), (Enemy.Keine,     "包符「昭和の雨」") },
+                { (Th095.Level.Lv3,   5), (Enemy.Alice,     "呪符「ストロードールカミカゼ」") },
+                { (Th095.Level.Lv3,   6), (Enemy.Keine,     "葵符「水戸の光圀」") },
+                { (Th095.Level.Lv3,   7), (Enemy.Alice,     "赤符「ドールミラセティ」") },
+                { (Th095.Level.Lv3,   8), (Enemy.Keine,     "倭符「邪馬台の国」") },
+                { (Th095.Level.Lv4,   1), (Enemy.Reisen,    string.Empty) },
+                { (Th095.Level.Lv4,   2), (Enemy.Medicine,  "霧符「ガシングガーデン」") },
+                { (Th095.Level.Lv4,   3), (Enemy.Tewi,      "脱兎「フラスターエスケープ」") },
+                { (Th095.Level.Lv4,   4), (Enemy.Reisen,    "散符「朧月花栞（ロケット・イン・ミスト）」") },
+                { (Th095.Level.Lv4,   5), (Enemy.Medicine,  "毒符「ポイズンブレス」") },
+                { (Th095.Level.Lv4,   6), (Enemy.Reisen,    "波符「幻の月（インビジブルハーフムーン）」") },
+                { (Th095.Level.Lv4,   7), (Enemy.Medicine,  "譫妄「イントゥデリリウム」") },
+                { (Th095.Level.Lv4,   8), (Enemy.Tewi,      "借符「大穴牟遅様の薬」") },
+                { (Th095.Level.Lv4,   9), (Enemy.Reisen,    "狂夢「風狂の夢（ドリームワールド）」") },
+                { (Th095.Level.Lv5,   1), (Enemy.Meirin,    string.Empty) },
+                { (Th095.Level.Lv5,   2), (Enemy.Patchouli, "日＆水符「ハイドロジェナスプロミネンス」") },
+                { (Th095.Level.Lv5,   3), (Enemy.Meirin,    "華符「彩光蓮華掌」") },
+                { (Th095.Level.Lv5,   4), (Enemy.Patchouli, "水＆火符「フロギスティックレイン」") },
+                { (Th095.Level.Lv5,   5), (Enemy.Meirin,    "彩翔「飛花落葉」") },
+                { (Th095.Level.Lv5,   6), (Enemy.Patchouli, "月＆木符「サテライトヒマワリ」") },
+                { (Th095.Level.Lv5,   7), (Enemy.Meirin,    "彩華「虹色太極拳」") },
+                { (Th095.Level.Lv5,   8), (Enemy.Patchouli, "日＆月符「ロイヤルダイアモンドリング」") },
+                { (Th095.Level.Lv6,   1), (Enemy.Chen,      string.Empty) },
+                { (Th095.Level.Lv6,   2), (Enemy.Youmu,     "人智剣「天女返し」") },
+                { (Th095.Level.Lv6,   3), (Enemy.Chen,      "星符「飛び重ね鱗」") },
+                { (Th095.Level.Lv6,   4), (Enemy.Youmu,     "妄執剣「修羅の血」") },
+                { (Th095.Level.Lv6,   5), (Enemy.Chen,      "鬼神「鳴動持国天」") },
+                { (Th095.Level.Lv6,   6), (Enemy.Youmu,     "天星剣「涅槃寂静の如し」") },
+                { (Th095.Level.Lv6,   7), (Enemy.Chen,      "化猫「橙」") },
+                { (Th095.Level.Lv6,   8), (Enemy.Youmu,     "四生剣「衆生無情の響き」") },
+                { (Th095.Level.Lv7,   1), (Enemy.Sakuya,    string.Empty) },
+                { (Th095.Level.Lv7,   2), (Enemy.Remilia,   "魔符「全世界ナイトメア」") },
+                { (Th095.Level.Lv7,   3), (Enemy.Sakuya,    "時符「トンネルエフェクト」") },
+                { (Th095.Level.Lv7,   4), (Enemy.Remilia,   "紅符「ブラッディマジックスクウェア」") },
+                { (Th095.Level.Lv7,   5), (Enemy.Sakuya,    "空虚「インフレーションスクウェア」") },
+                { (Th095.Level.Lv7,   6), (Enemy.Remilia,   "紅蝙蝠「ヴァンピリッシュナイト」") },
+                { (Th095.Level.Lv7,   7), (Enemy.Sakuya,    "銀符「パーフェクトメイド」") },
+                { (Th095.Level.Lv7,   8), (Enemy.Remilia,   "神鬼「レミリアストーカー」") },
+                { (Th095.Level.Lv8,   1), (Enemy.Ran,       string.Empty) },
+                { (Th095.Level.Lv8,   2), (Enemy.Yuyuko,    "幽雅「死出の誘蛾灯」") },
+                { (Th095.Level.Lv8,   3), (Enemy.Ran,       "密符「御大師様の秘鍵」") },
+                { (Th095.Level.Lv8,   4), (Enemy.Yuyuko,    "蝶符「鳳蝶紋の死槍」") },
+                { (Th095.Level.Lv8,   5), (Enemy.Ran,       "行符「八千万枚護摩」") },
+                { (Th095.Level.Lv8,   6), (Enemy.Yuyuko,    "死符「酔人の生、死の夢幻」") },
+                { (Th095.Level.Lv8,   7), (Enemy.Ran,       "超人「飛翔役小角」") },
+                { (Th095.Level.Lv8,   8), (Enemy.Yuyuko,    "「死蝶浮月」") },
+                { (Th095.Level.Lv9,   1), (Enemy.Eirin,     string.Empty) },
+                { (Th095.Level.Lv9,   2), (Enemy.Kaguya,    "新難題「月のイルメナイト」") },
+                { (Th095.Level.Lv9,   3), (Enemy.Eirin,     "薬符「胡蝶夢丸ナイトメア」") },
+                { (Th095.Level.Lv9,   4), (Enemy.Kaguya,    "新難題「エイジャの赤石」") },
+                { (Th095.Level.Lv9,   5), (Enemy.Eirin,     "錬丹「水銀の海」") },
+                { (Th095.Level.Lv9,   6), (Enemy.Kaguya,    "新難題「金閣寺の一枚天井」") },
+                { (Th095.Level.Lv9,   7), (Enemy.Eirin,     "秘薬「仙香玉兎」") },
+                { (Th095.Level.Lv9,   8), (Enemy.Kaguya,    "新難題「ミステリウム」") },
+                { (Th095.Level.Lv10,  1), (Enemy.Komachi,   string.Empty) },
+                { (Th095.Level.Lv10,  2), (Enemy.Shikieiki, "嘘言「タン・オブ・ウルフ」") },
+                { (Th095.Level.Lv10,  3), (Enemy.Komachi,   "死歌「八重霧の渡し」") },
+                { (Th095.Level.Lv10,  4), (Enemy.Shikieiki, "審判「十王裁判」") },
+                { (Th095.Level.Lv10,  5), (Enemy.Komachi,   "古雨「黄泉中有の旅の雨」") },
+                { (Th095.Level.Lv10,  6), (Enemy.Shikieiki, "審判「ギルティ・オワ・ノットギルティ」") },
+                { (Th095.Level.Lv10,  7), (Enemy.Komachi,   "死価「プライス・オブ・ライフ」") },
+                { (Th095.Level.Lv10,  8), (Enemy.Shikieiki, "審判「浄頗梨審判 -射命丸文-」") },
+                { (Th095.Level.Extra, 1), (Enemy.Flandre,   "禁忌「フォービドゥンフルーツ」") },
+                { (Th095.Level.Extra, 2), (Enemy.Flandre,   "禁忌「禁じられた遊び」") },
+                { (Th095.Level.Extra, 3), (Enemy.Yukari,    "境符「色と空の境界」") },
+                { (Th095.Level.Extra, 4), (Enemy.Yukari,    "境符「波と粒の境界」") },
+                { (Th095.Level.Extra, 5), (Enemy.Mokou,     "貴人「サンジェルマンの忠告」") },
+                { (Th095.Level.Extra, 6), (Enemy.Mokou,     "蓬莱「瑞江浦嶋子と五色の瑞亀」") },
+                { (Th095.Level.Extra, 7), (Enemy.Suika,     "鬼気「濛々迷霧」") },
+                { (Th095.Level.Extra, 8), (Enemy.Suika,     "「百万鬼夜行」") },
             };
 
-        private static new readonly EnumShortNameParser<Level> LevelParser =
-            new EnumShortNameParser<Level>();
+        private static new readonly EnumShortNameParser<Th095.Level> LevelParser =
+            new EnumShortNameParser<Th095.Level>();
 
         private static readonly string LevelLongPattern =
-            string.Join("|", Utils.GetEnumerator<Level>().Select(lv => lv.ToLongName()).ToArray());
+            string.Join("|", Utils.GetEnumerator<Th095.Level>().Select(lv => lv.ToLongName()).ToArray());
 
         private AllScoreData allScoreData = null;
 
-        private Dictionary<(Level Level, int Scene), BestShotPair> bestshots = null;
-
-        public enum Level
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("1", LongName = "01")] Lv1,
-            [EnumAltName("2", LongName = "02")] Lv2,
-            [EnumAltName("3", LongName = "03")] Lv3,
-            [EnumAltName("4", LongName = "04")] Lv4,
-            [EnumAltName("5", LongName = "05")] Lv5,
-            [EnumAltName("6", LongName = "06")] Lv6,
-            [EnumAltName("7", LongName = "07")] Lv7,
-            [EnumAltName("8", LongName = "08")] Lv8,
-            [EnumAltName("9", LongName = "09")] Lv9,
-            [EnumAltName("0", LongName = "10")] Lv10,
-            [EnumAltName("X", LongName = "ex")] Extra,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum Enemy
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("リグル",     LongName = "リグル・ナイトバグ")]         Wriggle,
-            [EnumAltName("ルーミア",   LongName = "ルーミア")]                   Rumia,
-            [EnumAltName("チルノ",     LongName = "チルノ")]                     Cirno,
-            [EnumAltName("レティ",     LongName = "レティ・ホワイトロック")]     Letty,
-            [EnumAltName("アリス",     LongName = "アリス・マーガトロイド")]     Alice,
-            [EnumAltName("慧音",       LongName = "上白沢 慧音")]                Keine,
-            [EnumAltName("メディスン", LongName = "メディスン・メランコリー")]   Medicine,
-            [EnumAltName("てゐ",       LongName = "因幡 てゐ")]                  Tewi,
-            [EnumAltName("鈴仙",       LongName = "鈴仙・優曇華院・イナバ")]     Reisen,
-            [EnumAltName("美鈴",       LongName = "紅 美鈴")]                    Meirin,
-            [EnumAltName("パチュリー", LongName = "パチュリー・ノーレッジ")]     Patchouli,
-            [EnumAltName("橙",         LongName = "橙")]                         Chen,
-            [EnumAltName("妖夢",       LongName = "魂魄 妖夢")]                  Youmu,
-            [EnumAltName("咲夜",       LongName = "十六夜 咲夜")]                Sakuya,
-            [EnumAltName("レミリア",   LongName = "レミリア・スカーレット")]     Remilia,
-            [EnumAltName("藍",         LongName = "八雲 藍")]                    Ran,
-            [EnumAltName("幽々子",     LongName = "西行寺 幽々子")]              Yuyuko,
-            [EnumAltName("永琳",       LongName = "八意 永琳")]                  Eirin,
-            [EnumAltName("輝夜",       LongName = "蓬莱山 輝夜")]                Kaguya,
-            [EnumAltName("小町",       LongName = "小野塚 小町")]                Komachi,
-            [EnumAltName("映姫",       LongName = "四季映姫・ヤマザナドゥ")]     Shikieiki,
-            [EnumAltName("フラン",     LongName = "フランドール・スカーレット")] Flandre,
-            [EnumAltName("紫",         LongName = "八雲 紫")]                    Yukari,
-            [EnumAltName("妹紅",       LongName = "藤原 妹紅")]                  Mokou,
-            [EnumAltName("萃香",       LongName = "伊吹 萃香")]                  Suika,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
+        private Dictionary<(Th095.Level Level, int Scene), BestShotPair> bestshots = null;
 
         public override string SupportedVersions
         {
@@ -249,7 +200,7 @@ namespace ThScoreFileConverter.Models
 
                     var key = (header.Level, header.Scene);
                     if (this.bestshots == null)
-                        this.bestshots = new Dictionary<(Level, int), BestShotPair>(SpellCards.Count);
+                        this.bestshots = new Dictionary<(Th095.Level, int), BestShotPair>(SpellCards.Count);
                     if (!this.bestshots.ContainsKey(key))
                         this.bestshots.Add(key, new BestShotPair(outputFile.Name, header));
 
@@ -708,7 +659,7 @@ namespace ThScoreFileConverter.Models
                 using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
                 {
                     var number = reader.ReadUInt32();
-                    this.LevelScene = (Utils.ToEnum<Level>(number / 10), (int)((number % 10) + 1));
+                    this.LevelScene = (Utils.ToEnum<Th095.Level>(number / 10), (int)((number % 10) + 1));
                     this.HighScore = reader.ReadInt32();
                     reader.ReadUInt32();    // always 0x00000000?
                     this.BestshotScore = reader.ReadInt32();
@@ -722,7 +673,7 @@ namespace ThScoreFileConverter.Models
                 }
             }
 
-            public (Level Level, int Scene) LevelScene { get; }
+            public (Th095.Level Level, int Scene) LevelScene { get; }
 
             public int HighScore { get; }
 
@@ -777,7 +728,7 @@ namespace ThScoreFileConverter.Models
 
             public string Signature { get; private set; }
 
-            public Level Level { get; private set; }
+            public Th095.Level Level { get; private set; }
 
             public short Scene { get; private set; }    // 1-based
 
@@ -801,7 +752,7 @@ namespace ThScoreFileConverter.Models
                     throw new InvalidDataException();
 
                 reader.ReadUInt16();
-                this.Level = Utils.ToEnum<Level>(reader.ReadInt16() - 1);
+                this.Level = Utils.ToEnum<Th095.Level>(reader.ReadInt16() - 1);
                 this.Scene = reader.ReadInt16();
                 reader.ReadUInt16();    // 0x0102 ... Version?
                 this.Width = reader.ReadInt16();

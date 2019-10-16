@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverterTests.Models.Th095.Wrappers;
+using Level = ThScoreFileConverter.Models.Th095.Level;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -36,8 +37,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.IsValid)) as bool?;
         public IReadOnlyCollection<byte> Data
             => this.pobj.GetProperty(nameof(this.Data)) as byte[];
-        public (Th095Converter.Level Level, int Scene)? LevelScene
-            => this.pobj.GetProperty(nameof(this.LevelScene)) as (Th095Converter.Level, int)?;
+        public (Level Level, int Scene)? LevelScene
+            => this.pobj.GetProperty(nameof(this.LevelScene)) as (Level, int)?;
         public int? HighScore
             => this.pobj.GetProperty(nameof(this.HighScore)) as int?;
         public int? BestshotScore

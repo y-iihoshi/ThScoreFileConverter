@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using ThScoreFileConverter.Models;
+using Level = ThScoreFileConverter.Models.Th095.Level;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -49,8 +50,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.Target;
         public string Signature
             => this.pobj.GetProperty(nameof(this.Signature)) as string;
-        public Th095Converter.Level? Level
-            => this.pobj.GetProperty(nameof(this.Level)) as Th095Converter.Level?;
+        public Level? Level
+            => this.pobj.GetProperty(nameof(this.Level)) as Level?;
         public short? Scene
             => this.pobj.GetProperty(nameof(this.Scene)) as short?;
         public short? Width

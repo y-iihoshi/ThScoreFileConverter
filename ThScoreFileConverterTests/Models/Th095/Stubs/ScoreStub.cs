@@ -1,5 +1,4 @@
-﻿using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Models.Th095;
+﻿using ThScoreFileConverter.Models.Th095;
 
 namespace ThScoreFileConverterTests.Models.Th095.Stubs
 {
@@ -30,7 +29,7 @@ namespace ThScoreFileConverterTests.Models.Th095.Stubs
 
         public int HighScore { get; set; }
 
-        public (Th095Converter.Level Level, int Scene) LevelScene { get; set; }
+        public (Level Level, int Scene) LevelScene { get; set; }
 
         public float SlowRate1 { get; set; }
 
