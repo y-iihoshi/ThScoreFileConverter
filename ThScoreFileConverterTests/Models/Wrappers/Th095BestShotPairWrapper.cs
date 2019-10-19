@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th095;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -15,23 +16,23 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         private readonly PrivateObject pobj = null;
 
-        public Th095BestShotPairWrapper(string path, Th095BestShotHeaderWrapper header)
-            => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { path, header.Target });
+        public Th095BestShotPairWrapper(string path, IBestShotHeader header)
+            => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { path, header });
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public object Target
             => this.pobj.Target;
         public string Path
             => this.pobj.GetProperty(nameof(this.Path)) as string;
-        public Th095BestShotHeaderWrapper Header
-            => new Th095BestShotHeaderWrapper(this.pobj.GetProperty(nameof(this.Header)));
+        public IBestShotHeader Header
+            => this.pobj.GetProperty(nameof(this.Header)) as IBestShotHeader;
 
-        public void Deconstruct(out string path, out Th095BestShotHeaderWrapper header)
+        public void Deconstruct(out string path, out IBestShotHeader header)
         {
             var args = new object[] { null, null };
             this.pobj.Invoke(nameof(Deconstruct), args, CultureInfo.InvariantCulture);
             path = args[0] as string;
-            header = new Th095BestShotHeaderWrapper(args[1]);
+            header = args[1] as IBestShotHeader;
         }
     }
 }

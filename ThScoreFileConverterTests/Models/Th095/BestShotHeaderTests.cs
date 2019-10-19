@@ -8,12 +8,11 @@ using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th095;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th095.Stubs;
-using ThScoreFileConverterTests.Models.Wrappers;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th095
 {
     [TestClass]
-    public class Th095BestShotHeaderTests
+    public class BestShotHeaderTests
     {
         internal static BestShotHeaderStub ValidStub { get; } = new BestShotHeaderStub()
         {
@@ -40,7 +39,7 @@ namespace ThScoreFileConverterTests.Models
                 header.SlowRate,
                 header.CardName);
 
-        internal static void Validate(IBestShotHeader expected, in Th095BestShotHeaderWrapper actual)
+        internal static void Validate(IBestShotHeader expected, in IBestShotHeader actual)
         {
             if (actual == null)
                 throw new ArgumentNullException(nameof(actual));
@@ -56,10 +55,10 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        public void Th095BestShotHeaderTest() => TestUtils.Wrap(() =>
+        public void BestShotHeaderTest() => TestUtils.Wrap(() =>
         {
             var stub = new BestShotHeaderStub();
-            var header = new Th095BestShotHeaderWrapper();
+            var header = new BestShotHeader();
 
             Validate(stub, header);
         });
@@ -67,7 +66,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void ReadFromTest() => TestUtils.Wrap(() =>
         {
-            var header = Th095BestShotHeaderWrapper.Create(MakeByteArray(ValidStub));
+            var header = TestUtils.Create<BestShotHeader>(MakeByteArray(ValidStub));
 
             Validate(ValidStub, header);
         });
@@ -76,7 +75,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentNullException))]
         public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
-            var header = new Th095BestShotHeaderWrapper();
+            var header = new BestShotHeader();
 
             header.ReadFrom(null);
 
@@ -92,7 +91,7 @@ namespace ThScoreFileConverterTests.Models
                 Signature = string.Empty,
             };
 
-            _ = Th095BestShotHeaderWrapper.Create(MakeByteArray(stub));
+            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -104,7 +103,7 @@ namespace ThScoreFileConverterTests.Models
             var stub = new BestShotHeaderStub(ValidStub);
             stub.Signature = stub.Signature.Substring(0, stub.Signature.Length - 1);
 
-            _ = Th095BestShotHeaderWrapper.Create(MakeByteArray(stub));
+            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -116,7 +115,7 @@ namespace ThScoreFileConverterTests.Models
             var stub = new BestShotHeaderStub(ValidStub);
             stub.Signature += "E";
 
-            _ = Th095BestShotHeaderWrapper.Create(MakeByteArray(stub));
+            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -135,7 +134,7 @@ namespace ThScoreFileConverterTests.Models
                 Level = TestUtils.Cast<Level>(level),
             };
 
-            _ = Th095BestShotHeaderWrapper.Create(MakeByteArray(stub));
+            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -147,7 +146,7 @@ namespace ThScoreFileConverterTests.Models
             var stub = new BestShotHeaderStub(ValidStub);
             stub.CardName = stub.CardName.SkipLast(1).ToArray();
 
-            _ = Th095BestShotHeaderWrapper.Create(MakeByteArray(stub));
+            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -158,7 +157,7 @@ namespace ThScoreFileConverterTests.Models
             var stub = new BestShotHeaderStub(ValidStub);
             stub.CardName = stub.CardName.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
 
-            var header = Th095BestShotHeaderWrapper.Create(MakeByteArray(stub));
+            var header = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
 
             Validate(ValidStub, header);
         });
