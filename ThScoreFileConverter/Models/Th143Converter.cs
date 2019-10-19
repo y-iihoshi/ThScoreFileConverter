@@ -825,7 +825,7 @@ namespace ThScoreFileConverter.Models
                     Enum.GetValues(typeof(ItemWithTotal)).Length);
             }
 
-            public Header Header { get; private set; }
+            public Th095.HeaderBase Header { get; private set; }
 
             public IReadOnlyList<IScore> Scores => this.scores;
 
@@ -833,7 +833,7 @@ namespace ThScoreFileConverter.Models
 
             public IStatus Status { get; private set; }
 
-            public void Set(Header header) => this.Header = header;
+            public void Set(Th095.HeaderBase header) => this.Header = header;
 
             public void Set(IScore score) => this.scores.Add(score);
 
@@ -844,14 +844,6 @@ namespace ThScoreFileConverter.Models
             }
 
             public void Set(IStatus status) => this.Status = status;
-        }
-
-        private class Header : Th095.HeaderBase
-        {
-            public const string ValidSignature = "T341";
-
-            public override bool IsValid
-                => base.IsValid && this.Signature.Equals(ValidSignature, StringComparison.Ordinal);
         }
 
         private class Score : Th10.Chapter, IScore  // per scene

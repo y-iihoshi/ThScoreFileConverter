@@ -1,8 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th095;
 using ThScoreFileConverterTests.Models.Th095;
-using ThScoreFileConverterTests.Models.Th095.Wrappers;
 using ThScoreFileConverterTests.Models.Wrappers;
 using ChapterWrapper = ThScoreFileConverterTests.Models.Th10.Wrappers.ChapterWrapper;
 
@@ -24,39 +24,37 @@ namespace ThScoreFileConverterTests.Models
                 Assert.IsNull(allScoreData.Status);
             });
 
-        internal static void Th10AllScoreDataSetHeaderTestHelper<TParent, TCharaWithTotal, TStageProgress>(
-            string signature)
+        internal static void Th10AllScoreDataSetHeaderTestHelper<TParent, TCharaWithTotal, TStageProgress>()
             where TParent : ThConverter
             where TCharaWithTotal : struct, Enum
             where TStageProgress : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.GetValidProperties(signature));
-                var header = HeaderWrapper<TParent>.Create(array);
+                var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.ValidProperties);
+                var header = TestUtils.Create<HeaderBase>(array);
 
                 var allScoreData = new Th10AllScoreDataWrapper<TParent, TCharaWithTotal, TStageProgress>();
                 allScoreData.Set(header);
 
-                Assert.AreSame(header.Target, allScoreData.Header.Target);
+                Assert.AreSame(header, allScoreData.Header);
             });
 
-        internal static void Th10AllScoreDataSetHeaderTestTwiceHelper<TParent, TCharaWithTotal, TStageProgress>(
-            string signature)
+        internal static void Th10AllScoreDataSetHeaderTestTwiceHelper<TParent, TCharaWithTotal, TStageProgress>()
             where TParent : ThConverter
             where TCharaWithTotal : struct, Enum
             where TStageProgress : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.GetValidProperties(signature));
-                var header1 = HeaderWrapper<TParent>.Create(array);
-                var header2 = HeaderWrapper<TParent>.Create(array);
+                var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.ValidProperties);
+                var header1 = TestUtils.Create<HeaderBase>(array);
+                var header2 = TestUtils.Create<HeaderBase>(array);
 
                 var allScoreData = new Th10AllScoreDataWrapper<TParent, TCharaWithTotal, TStageProgress>();
                 allScoreData.Set(header1);
                 allScoreData.Set(header2);
 
-                Assert.AreNotSame(header1.Target, allScoreData.Header.Target);
-                Assert.AreSame(header2.Target, allScoreData.Header.Target);
+                Assert.AreNotSame(header1, allScoreData.Header);
+                Assert.AreSame(header2, allScoreData.Header);
             });
 
         internal static void Th10AllScoreDataSetClearDataTestHelper<TParent, TCharaWithTotal, TStageProgress>(
@@ -144,12 +142,12 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th10AllScoreDataSetHeaderTest()
             => Th10AllScoreDataSetHeaderTestHelper<
-                Th10Converter, Th10Converter.CharaWithTotal, Th10Converter.StageProgress>("TH10");
+                Th10Converter, Th10Converter.CharaWithTotal, Th10Converter.StageProgress>();
 
         [TestMethod]
         public void Th10AllScoreDataSetHeaderTestTwice()
             => Th10AllScoreDataSetHeaderTestTwiceHelper<
-                Th10Converter, Th10Converter.CharaWithTotal, Th10Converter.StageProgress>("TH10");
+                Th10Converter, Th10Converter.CharaWithTotal, Th10Converter.StageProgress>();
 
         [TestMethod]
         public void Th10AllScoreDataSetClearDataTest()
@@ -182,12 +180,12 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th11AllScoreDataSetHeaderTest()
             => Th10AllScoreDataSetHeaderTestHelper<
-                Th11Converter, Th11Converter.CharaWithTotal, Th11Converter.StageProgress>("TH11");
+                Th11Converter, Th11Converter.CharaWithTotal, Th11Converter.StageProgress>();
 
         [TestMethod]
         public void Th11AllScoreDataSetHeaderTestTwice()
             => Th10AllScoreDataSetHeaderTestTwiceHelper<
-                Th11Converter, Th11Converter.CharaWithTotal, Th11Converter.StageProgress>("TH11");
+                Th11Converter, Th11Converter.CharaWithTotal, Th11Converter.StageProgress>();
 
         [TestMethod]
         public void Th11AllScoreDataSetClearDataTest()
@@ -220,12 +218,12 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th12AllScoreDataSetHeaderTest()
             => Th10AllScoreDataSetHeaderTestHelper<
-                Th12Converter, Th12Converter.CharaWithTotal, Th12Converter.StageProgress>("TH21");
+                Th12Converter, Th12Converter.CharaWithTotal, Th12Converter.StageProgress>();
 
         [TestMethod]
         public void Th12AllScoreDataSetHeaderTestTwice()
             => Th10AllScoreDataSetHeaderTestTwiceHelper<
-                Th12Converter, Th12Converter.CharaWithTotal, Th12Converter.StageProgress>("TH21");
+                Th12Converter, Th12Converter.CharaWithTotal, Th12Converter.StageProgress>();
 
         [TestMethod]
         public void Th12AllScoreDataSetClearDataTest()

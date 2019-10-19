@@ -818,13 +818,13 @@ namespace ThScoreFileConverter.Models
                     new Dictionary<CharaWithTotal, IClearData>(Enum.GetValues(typeof(CharaWithTotal)).Length);
             }
 
-            public Header Header { get; private set; }
+            public Th095.HeaderBase Header { get; private set; }
 
             public IReadOnlyDictionary<CharaWithTotal, IClearData> ClearData => this.clearData;
 
             public Th125.IStatus Status { get; private set; }
 
-            public void Set(Header header) => this.Header = header;
+            public void Set(Th095.HeaderBase header) => this.Header = header;
 
             public void Set(IClearData data)
             {
@@ -833,14 +833,6 @@ namespace ThScoreFileConverter.Models
             }
 
             public void Set(Th125.IStatus status) => this.Status = status;
-        }
-
-        private class Header : Th095.HeaderBase
-        {
-            public const string ValidSignature = "TH61";
-
-            public override bool IsValid
-                => base.IsValid && this.Signature.Equals(ValidSignature, StringComparison.Ordinal);
         }
 
         private class ClearData : Th10.Chapter, IClearData  // per character

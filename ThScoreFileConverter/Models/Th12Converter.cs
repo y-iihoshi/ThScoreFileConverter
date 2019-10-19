@@ -17,6 +17,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Models.Th12;
 using CardInfo = ThScoreFileConverter.Models.SpellCardInfo<
     ThScoreFileConverter.Models.Stage, ThScoreFileConverter.Models.Level>;
 using IClearData = ThScoreFileConverter.Models.Th10.IClearData<
@@ -754,13 +755,13 @@ namespace ThScoreFileConverter.Models
                     new Dictionary<CharaWithTotal, IClearData>(Enum.GetValues(typeof(CharaWithTotal)).Length);
             }
 
-            public Header Header { get; private set; }
+            public Th095.HeaderBase Header { get; private set; }
 
             public IReadOnlyDictionary<CharaWithTotal, IClearData> ClearData => this.clearData;
 
             public Th10.IStatus Status { get; private set; }
 
-            public void Set(Header header) => this.Header = header;
+            public void Set(Th095.HeaderBase header) => this.Header = header;
 
             public void Set(IClearData data)
             {
@@ -769,14 +770,6 @@ namespace ThScoreFileConverter.Models
             }
 
             public void Set(Th10.IStatus status) => this.Status = status;
-        }
-
-        private class Header : Th095.HeaderBase
-        {
-            public const string ValidSignature = "TH21";
-
-            public override bool IsValid
-                => base.IsValid && this.Signature.Equals(ValidSignature, StringComparison.Ordinal);
         }
 
         private class ClearData : Th10.Chapter, IClearData  // per character

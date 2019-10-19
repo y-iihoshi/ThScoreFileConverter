@@ -2,9 +2,9 @@
 using System;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverterTests.Models.Th095;
-using ThScoreFileConverterTests.Models.Th095.Wrappers;
 using ThScoreFileConverterTests.Models.Wrappers;
 using ChapterWrapper = ThScoreFileConverterTests.Models.Th10.Wrappers.ChapterWrapper;
+using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -31,7 +31,7 @@ namespace ThScoreFileConverterTests.Models
             });
 
         internal static void Th13AllScoreDataSetHeaderTestHelper<
-            TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(string signature)
+            TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>()
             where TParent : ThConverter
             where TChWithT : struct, Enum
             where TLv : struct, Enum
@@ -41,18 +41,18 @@ namespace ThScoreFileConverterTests.Models
             where TStProg : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.GetValidProperties(signature));
-                var header = HeaderWrapper<TParent>.Create(array);
+                var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.ValidProperties);
+                var header = TestUtils.Create<HeaderBase>(array);
 
                 var allScoreData =
                     new Th13AllScoreDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>();
                 allScoreData.Set(header);
 
-                Assert.AreSame(header.Target, allScoreData.Header.Target);
+                Assert.AreSame(header, allScoreData.Header);
             });
 
         internal static void Th13AllScoreDataSetHeaderTestTwiceHelper<
-            TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(string signature)
+            TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>()
             where TParent : ThConverter
             where TChWithT : struct, Enum
             where TLv : struct, Enum
@@ -62,17 +62,17 @@ namespace ThScoreFileConverterTests.Models
             where TStProg : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.GetValidProperties(signature));
-                var header1 = HeaderWrapper<TParent>.Create(array);
-                var header2 = HeaderWrapper<TParent>.Create(array);
+                var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.ValidProperties);
+                var header1 = TestUtils.Create<HeaderBase>(array);
+                var header2 = TestUtils.Create<HeaderBase>(array);
 
                 var allScoreData =
                     new Th13AllScoreDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>();
                 allScoreData.Set(header1);
                 allScoreData.Set(header2);
 
-                Assert.AreNotSame(header1.Target, allScoreData.Header.Target);
-                Assert.AreSame(header2.Target, allScoreData.Header.Target);
+                Assert.AreNotSame(header1, allScoreData.Header);
+                Assert.AreSame(header2, allScoreData.Header);
             });
 
         internal static void Th13AllScoreDataSetClearDataTestHelper<
@@ -200,7 +200,7 @@ namespace ThScoreFileConverterTests.Models
                 Th13Converter.LevelPractice,
                 Th13Converter.LevelPracticeWithTotal,
                 Th13Converter.StagePractice,
-                Th13Converter.StageProgress>("TH31");
+                Th13Converter.StageProgress>();
 
         [TestMethod]
         public void Th13AllScoreDataSetHeaderTestTwice()
@@ -211,7 +211,7 @@ namespace ThScoreFileConverterTests.Models
                 Th13Converter.LevelPractice,
                 Th13Converter.LevelPracticeWithTotal,
                 Th13Converter.StagePractice,
-                Th13Converter.StageProgress>("TH31");
+                Th13Converter.StageProgress>();
 
         [TestMethod]
         public void Th13AllScoreDataSetClearDataTest()
@@ -281,7 +281,7 @@ namespace ThScoreFileConverterTests.Models
                 Th14Converter.LevelPractice,
                 Th14Converter.LevelPracticeWithTotal,
                 Th14Converter.StagePractice,
-                Th14Converter.StageProgress>("TH41");
+                Th14Converter.StageProgress>();
 
         [TestMethod]
         public void Th14AllScoreDataSetHeaderTestTwice()
@@ -292,7 +292,7 @@ namespace ThScoreFileConverterTests.Models
                 Th14Converter.LevelPractice,
                 Th14Converter.LevelPracticeWithTotal,
                 Th14Converter.StagePractice,
-                Th14Converter.StageProgress>("TH41");
+                Th14Converter.StageProgress>();
 
         [TestMethod]
         public void Th14AllScoreDataSetClearDataTest()

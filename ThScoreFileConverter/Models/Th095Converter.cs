@@ -531,25 +531,17 @@ namespace ThScoreFileConverter.Models
 
             public AllScoreData() => this.scores = new List<IScore>(Definitions.SpellCards.Count);
 
-            public Header Header { get; private set; }
+            public HeaderBase Header { get; private set; }
 
             public IReadOnlyList<IScore> Scores => this.scores;
 
             public IStatus Status { get; private set; }
 
-            public void Set(Header header) => this.Header = header;
+            public void Set(HeaderBase header) => this.Header = header;
 
             public void Set(IScore score) => this.scores.Add(score);
 
             public void Set(IStatus status) => this.Status = status;
-        }
-
-        private class Header : Th095.HeaderBase
-        {
-            public const string ValidSignature = "TH95";
-
-            public override bool IsValid
-                => base.IsValid && this.Signature.Equals(ValidSignature, StringComparison.Ordinal);
         }
 
         private class BestShotHeader : IBinaryReadable

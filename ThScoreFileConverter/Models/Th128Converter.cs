@@ -953,7 +953,7 @@ namespace ThScoreFileConverter.Models
                     new Dictionary<RouteWithTotal, IClearData>(Enum.GetValues(typeof(RouteWithTotal)).Length);
             }
 
-            public Header Header { get; private set; }
+            public Th095.HeaderBase Header { get; private set; }
 
             public IReadOnlyDictionary<RouteWithTotal, IClearData> ClearData => this.clearData;
 
@@ -961,7 +961,7 @@ namespace ThScoreFileConverter.Models
 
             public Th125.IStatus Status { get; private set; }
 
-            public void Set(Header header) => this.Header = header;
+            public void Set(Th095.HeaderBase header) => this.Header = header;
 
             public void Set(IClearData data)
             {
@@ -972,14 +972,6 @@ namespace ThScoreFileConverter.Models
             public void Set(ICardData data) => this.CardData = data;
 
             public void Set(Th125.IStatus status) => this.Status = status;
-        }
-
-        private class Header : Th095.HeaderBase
-        {
-            public const string ValidSignature = "T821";
-
-            public override bool IsValid
-                => base.IsValid && this.Signature.Equals(ValidSignature, StringComparison.Ordinal);
         }
 
         private class ClearData : Th10.Chapter, IClearData  // per route

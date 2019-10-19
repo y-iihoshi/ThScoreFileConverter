@@ -5,7 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th095;
-using ThScoreFileConverterTests.Models.Th095.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -24,23 +23,15 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public object Target
             => this.pobj.Target;
-
-        public HeaderWrapper<Th095Converter> Header
-        {
-            get
-            {
-                var header = this.pobj.GetProperty(nameof(this.Header));
-                return (header != null) ? new HeaderWrapper<Th095Converter>(header) : null;
-            }
-        }
-
+        public HeaderBase Header
+            => this.pobj.GetProperty(nameof(this.Header)) as HeaderBase;
         public IReadOnlyList<IScore> Scores
             => this.pobj.GetProperty(nameof(this.Scores)) as IReadOnlyList<IScore>;
         public IStatus Status
             => this.pobj.GetProperty(nameof(this.Status)) as IStatus;
 
-        public void Set(HeaderWrapper<Th095Converter> header)
-            => this.pobj.Invoke(nameof(Set), new object[] { header.Target }, CultureInfo.InvariantCulture);
+        public void Set(HeaderBase header)
+            => this.pobj.Invoke(nameof(Set), new object[] { header }, CultureInfo.InvariantCulture);
         public void Set(IScore data)
             => this.pobj.Invoke(nameof(Set), new object[] { data }, CultureInfo.InvariantCulture);
         public void Set(IStatus status)
