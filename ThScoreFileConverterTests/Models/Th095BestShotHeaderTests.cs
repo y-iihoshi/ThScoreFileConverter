@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th095;
 using ThScoreFileConverterTests.Extensions;
+using ThScoreFileConverterTests.Models.Th095.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -13,75 +15,61 @@ namespace ThScoreFileConverterTests.Models
     [TestClass]
     public class Th095BestShotHeaderTests
     {
-        internal struct Properties
+        internal static BestShotHeaderStub ValidStub { get; } = new BestShotHeaderStub()
         {
-            public string signature;
-            public Level level;
-            public short scene;
-            public short width;
-            public short height;
-            public int score;
-            public float slowRate;
-            public byte[] cardName;
+            Signature = "BSTS",
+            Level = Level.Two,
+            Scene = 3,
+            Width = 4,
+            Height = 5,
+            Score = 6,
+            SlowRate = 7f,
+            CardName = TestUtils.MakeRandomArray<byte>(0x50)
         };
 
-        internal static Properties ValidProperties => new Properties()
-        {
-            signature = "BSTS",
-            level = Level.Two,
-            scene = 3,
-            width = 4,
-            height = 5,
-            score = 6,
-            slowRate = 7f,
-            cardName = TestUtils.MakeRandomArray<byte>(0x50)
-        };
-
-        internal static byte[] MakeByteArray(in Properties properties)
+        internal static byte[] MakeByteArray(IBestShotHeader header)
             => TestUtils.MakeByteArray(
-                properties.signature.ToCharArray(),
+                header.Signature.ToCharArray(),
                 (ushort)0,
-                TestUtils.Cast<short>(properties.level + 1),
-                properties.scene,
+                TestUtils.Cast<short>(header.Level + 1),
+                header.Scene,
                 (ushort)0,
-                properties.width,
-                properties.height,
-                properties.score,
-                properties.slowRate,
-                properties.cardName);
+                header.Width,
+                header.Height,
+                header.Score,
+                header.SlowRate,
+                header.CardName);
 
-        internal static void Validate(in Th095BestShotHeaderWrapper header, in Properties properties)
+        internal static void Validate(IBestShotHeader expected, in Th095BestShotHeaderWrapper actual)
         {
-            if (header == null)
-                throw new ArgumentNullException(nameof(header));
+            if (actual == null)
+                throw new ArgumentNullException(nameof(actual));
 
-            Assert.AreEqual(properties.signature, header.Signature);
-            Assert.AreEqual(properties.level, header.Level);
-            Assert.AreEqual(properties.scene, header.Scene);
-            Assert.AreEqual(properties.width, header.Width);
-            Assert.AreEqual(properties.height, header.Height);
-            Assert.AreEqual(properties.score, header.Score);
-            Assert.AreEqual(properties.slowRate, header.SlowRate);
-            CollectionAssert.That.AreEqual(properties.cardName, header.CardName);
+            Assert.AreEqual(expected.Signature, actual.Signature);
+            Assert.AreEqual(expected.Level, actual.Level);
+            Assert.AreEqual(expected.Scene, actual.Scene);
+            Assert.AreEqual(expected.Width, actual.Width);
+            Assert.AreEqual(expected.Height, actual.Height);
+            Assert.AreEqual(expected.Score, actual.Score);
+            Assert.AreEqual(expected.SlowRate, actual.SlowRate);
+            CollectionAssert.That.AreEqual(expected.CardName, actual.CardName);
         }
 
         [TestMethod]
         public void Th095BestShotHeaderTest() => TestUtils.Wrap(() =>
         {
-            var properties = new Properties();
+            var stub = new BestShotHeaderStub();
             var header = new Th095BestShotHeaderWrapper();
 
-            Validate(header, properties);
+            Validate(stub, header);
         });
 
         [TestMethod]
         public void ReadFromTest() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
+            var header = Th095BestShotHeaderWrapper.Create(MakeByteArray(ValidStub));
 
-            var header = Th095BestShotHeaderWrapper.Create(MakeByteArray(properties));
-
-            Validate(header, properties);
+            Validate(ValidStub, header);
         });
 
         [TestMethod]
@@ -95,41 +83,40 @@ namespace ThScoreFileConverterTests.Models
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "header")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void ReadFromTestEmptySignature() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.signature = string.Empty;
+            var stub = new BestShotHeaderStub(ValidStub)
+            {
+                Signature = string.Empty,
+            };
 
-            var header = Th095BestShotHeaderWrapper.Create(MakeByteArray(properties));
+            _ = Th095BestShotHeaderWrapper.Create(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "header")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void ReadFromTestShortenedSignature() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.signature = properties.signature.Substring(0, properties.signature.Length - 1);
+            var stub = new BestShotHeaderStub(ValidStub);
+            stub.Signature = stub.Signature.Substring(0, stub.Signature.Length - 1);
 
-            var header = Th095BestShotHeaderWrapper.Create(MakeByteArray(properties));
+            _ = Th095BestShotHeaderWrapper.Create(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "header")]
         [TestMethod]
         [ExpectedException(typeof(InvalidCastException))]
         public void ReadFromTestExceededSignature() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.signature += "E";
+            var stub = new BestShotHeaderStub(ValidStub);
+            stub.Signature += "E";
 
-            var header = Th095BestShotHeaderWrapper.Create(MakeByteArray(properties));
+            _ = Th095BestShotHeaderWrapper.Create(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -137,30 +124,30 @@ namespace ThScoreFileConverterTests.Models
         public static IEnumerable<object[]> InvalidLevels
             => TestUtils.GetInvalidEnumerators(typeof(Level));
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "header")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
         [ExpectedException(typeof(InvalidCastException))]
         public void ReadFromTestInvalidLevel(int level) => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.level = TestUtils.Cast<Level>(level);
+            var stub = new BestShotHeaderStub(ValidStub)
+            {
+                Level = TestUtils.Cast<Level>(level),
+            };
 
-            var header = Th095BestShotHeaderWrapper.Create(MakeByteArray(properties));
+            _ = Th095BestShotHeaderWrapper.Create(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "header")]
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortenedCardName() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.cardName = properties.cardName.Take(properties.cardName.Length - 1).ToArray();
+            var stub = new BestShotHeaderStub(ValidStub);
+            stub.CardName = stub.CardName.SkipLast(1).ToArray();
 
-            var header = Th095BestShotHeaderWrapper.Create(MakeByteArray(properties));
+            _ = Th095BestShotHeaderWrapper.Create(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -168,13 +155,12 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void ReadFromTestExceededCardName() => TestUtils.Wrap(() =>
         {
-            var validProperties = ValidProperties;
-            var properties = validProperties;
-            properties.cardName = properties.cardName.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
+            var stub = new BestShotHeaderStub(ValidStub);
+            stub.CardName = stub.CardName.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
 
-            var header = Th095BestShotHeaderWrapper.Create(MakeByteArray(properties));
+            var header = Th095BestShotHeaderWrapper.Create(MakeByteArray(stub));
 
-            Validate(header, validProperties);
+            Validate(ValidStub, header);
         });
     }
 }

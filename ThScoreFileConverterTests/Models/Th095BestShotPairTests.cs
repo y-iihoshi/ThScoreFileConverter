@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ThScoreFileConverter.Models.Th095;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -9,19 +10,19 @@ namespace ThScoreFileConverterTests.Models
         internal struct Properties
         {
             public string path;
-            public Th095BestShotHeaderTests.Properties header;
+            public IBestShotHeader header;
         };
 
         internal static Properties GetValidProperties() => new Properties()
         {
             path = @"D:\path\to\東方文花帖\bestshot\bs_09_6.dat",
-            header = Th095BestShotHeaderTests.ValidProperties
+            header = Th095BestShotHeaderTests.ValidStub
         };
 
         internal static void Validate(in Th095BestShotPairWrapper pair, in Properties properties)
         {
             Assert.AreEqual(properties.path, pair.Path);
-            Th095BestShotHeaderTests.Validate(pair.Header, properties.header);
+            Th095BestShotHeaderTests.Validate(properties.header, pair.Header);
         }
 
         [TestMethod]
@@ -45,7 +46,7 @@ namespace ThScoreFileConverterTests.Models
             var (actualPath, actualHeader) = pair;
 
             Assert.AreEqual(properties.path, actualPath);
-            Th095BestShotHeaderTests.Validate(actualHeader, properties.header);
+            Th095BestShotHeaderTests.Validate(properties.header, actualHeader);
         });
     }
 }
