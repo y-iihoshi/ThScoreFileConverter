@@ -31,7 +31,7 @@ namespace ThScoreFileConverter.Models
     {
         private AllScoreData allScoreData = null;
 
-        private Dictionary<(Th095.Level Level, int Scene), BestShotPair> bestshots = null;
+        private Dictionary<(Th095.Level Level, int Scene), (string Path, IBestShotHeader Header)> bestshots = null;
 
         public override string SupportedVersions
         {
@@ -104,9 +104,13 @@ namespace ThScoreFileConverter.Models
 
                     var key = (header.Level, header.Scene);
                     if (this.bestshots == null)
-                        this.bestshots = new Dictionary<(Th095.Level, int), BestShotPair>(Definitions.SpellCards.Count);
+                    {
+                        this.bestshots =
+                            new Dictionary<(Th095.Level, int), (string, IBestShotHeader)>(Definitions.SpellCards.Count);
+                    }
+
                     if (!this.bestshots.ContainsKey(key))
-                        this.bestshots.Add(key, new BestShotPair(outputFile.Name, header));
+                        this.bestshots.Add(key, (outputFile.Name, header));
 
                     Lzss.Extract(input, decoded);
 
@@ -503,25 +507,6 @@ namespace ThScoreFileConverter.Models
             public string Replace(string input)
             {
                 return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-            }
-        }
-
-        private class BestShotPair : Tuple<string, IBestShotHeader>
-        {
-            public BestShotPair(string path, IBestShotHeader header)
-                : base(path, header)
-            {
-            }
-
-            public string Path => this.Item1;
-
-            public IBestShotHeader Header => this.Item2;
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public void Deconstruct(out string path, out IBestShotHeader header)
-            {
-                path = this.Path;
-                header = this.Header;
             }
         }
 

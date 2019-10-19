@@ -202,7 +202,7 @@ namespace ThScoreFileConverter.Models
 
         private AllScoreData allScoreData = null;
 
-        private Dictionary<(Day Day, int Scene), BestShotPair> bestshots = null;
+        private Dictionary<(Day Day, int Scene), (string Path, BestShotHeader Header)> bestshots = null;
 
         public enum Day
         {
@@ -345,11 +345,11 @@ namespace ThScoreFileConverter.Models
                     header.ReadFrom(reader);
 
                     if (this.bestshots == null)
-                        this.bestshots = new Dictionary<(Day, int), BestShotPair>(SpellCards.Count);
+                        this.bestshots = new Dictionary<(Day, int), (string, BestShotHeader)>(SpellCards.Count);
 
                     var key = (header.Weekday, header.Dream);
                     if (!this.bestshots.ContainsKey(key))
-                        this.bestshots.Add(key, new BestShotPair(outputFile.Name, header));
+                        this.bestshots.Add(key, (outputFile.Name, header));
 
                     Lzss.Extract(input, decoded);
 
@@ -839,25 +839,6 @@ namespace ThScoreFileConverter.Models
             }
 
             public string Replace(string input) => Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-        }
-
-        private class BestShotPair : Tuple<string, BestShotHeader>
-        {
-            public BestShotPair(string path, BestShotHeader header)
-                : base(path, header)
-            {
-            }
-
-            public string Path => this.Item1;
-
-            public BestShotHeader Header => this.Item2;
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public void Deconstruct(out string path, out BestShotHeader header)
-            {
-                path = this.Path;
-                header = this.Header;
-            }
         }
 
         private class AllScoreData

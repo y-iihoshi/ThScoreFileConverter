@@ -155,7 +155,7 @@ namespace ThScoreFileConverter.Models
 
         private AllScoreData allScoreData = null;
 
-        private Dictionary<Chara, Dictionary<(Level Level, int Scene), BestShotPair>> bestshots = null;
+        private Dictionary<Chara, Dictionary<(Level Level, int Scene), (string Path, BestShotHeader Header)>> bestshots = null;
 
         public enum Level
         {
@@ -296,19 +296,19 @@ namespace ThScoreFileConverter.Models
 
                     if (this.bestshots == null)
                     {
-                        this.bestshots = new Dictionary<Chara, Dictionary<(Level, int), BestShotPair>>(
+                        this.bestshots = new Dictionary<Chara, Dictionary<(Level, int), (string, BestShotHeader)>>(
                             Enum.GetValues(typeof(Chara)).Length);
                     }
 
                     if (!this.bestshots.ContainsKey(chara))
                     {
                         this.bestshots.Add(
-                            chara, new Dictionary<(Level, int), BestShotPair>(SpellCards.Count));
+                            chara, new Dictionary<(Level, int), (string, BestShotHeader)>(SpellCards.Count));
                     }
 
                     var key = (header.Level, header.Scene);
                     if (!this.bestshots[chara].ContainsKey(key))
-                        this.bestshots[chara].Add(key, new BestShotPair(outputFile.Name, header));
+                        this.bestshots[chara].Add(key, (outputFile.Name, header));
 
                     Lzss.Extract(input, decoded);
 
@@ -807,25 +807,6 @@ namespace ThScoreFileConverter.Models
             public string Replace(string input)
             {
                 return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-            }
-        }
-
-        private class BestShotPair : Tuple<string, BestShotHeader>
-        {
-            public BestShotPair(string path, BestShotHeader header)
-                : base(path, header)
-            {
-            }
-
-            public string Path => this.Item1;
-
-            public BestShotHeader Header => this.Item2;
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public void Deconstruct(out string path, out BestShotHeader header)
-            {
-                path = this.Path;
-                header = this.Header;
             }
         }
 
