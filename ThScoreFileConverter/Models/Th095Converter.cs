@@ -75,11 +75,11 @@ namespace ThScoreFileConverter.Models
         {
             return new List<IStringReplaceable>
             {
-                new ScoreReplacer(this),
-                new ScoreTotalReplacer(this),
-                new CardReplacer(this, hideUntriedCards),
-                new ShotReplacer(this, outputFilePath),
-                new ShotExReplacer(this, outputFilePath),
+                new ScoreReplacer(this.allScoreData.Scores),
+                new ScoreTotalReplacer(this.allScoreData.Scores),
+                new CardReplacer(this.allScoreData.Scores, hideUntriedCards),
+                new ShotReplacer(this.bestshots, outputFilePath),
+                new ShotExReplacer(this.bestshots, this.allScoreData.Scores, outputFilePath),
             };
         }
 
@@ -267,7 +267,7 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public ScoreReplacer(Th095Converter parent)
+            public ScoreReplacer(IReadOnlyList<IScore> scores)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -279,8 +279,7 @@ namespace ThScoreFileConverter.Models
                     if (!Definitions.SpellCards.ContainsKey(key))
                         return match.ToString();
 
-                    var score = parent.allScoreData.Scores.FirstOrDefault(
-                        elem => (elem != null) && elem.LevelScene.Equals(key));
+                    var score = scores.FirstOrDefault(elem => (elem != null) && elem.LevelScene.Equals(key));
 
                     switch (type)
                     {
@@ -311,7 +310,7 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public ScoreTotalReplacer(Th095Converter parent)
+            public ScoreTotalReplacer(IReadOnlyList<IScore> scores)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -321,19 +320,15 @@ namespace ThScoreFileConverter.Models
                     {
                         case 1:     // total score
                             return Utils.ToNumberString(
-                                parent.allScoreData.Scores.Sum(
-                                    score => (score != null) ? (long)score.HighScore : 0L));
+                                scores.Sum(score => (score != null) ? (long)score.HighScore : 0L));
                         case 2:     // total of bestshot scores
                             return Utils.ToNumberString(
-                                parent.allScoreData.Scores.Sum(
-                                    score => (score != null) ? (long)score.BestshotScore : 0L));
+                                scores.Sum(score => (score != null) ? (long)score.BestshotScore : 0L));
                         case 3:     // total of num of shots
                             return Utils.ToNumberString(
-                                parent.allScoreData.Scores.Sum(
-                                    score => (score != null) ? score.TrialCount : 0));
+                                scores.Sum(score => (score != null) ? score.TrialCount : 0));
                         case 4:     // num of succeeded scenes
-                            return parent.allScoreData.Scores
-                                .Count(score => (score != null) && (score.HighScore > 0))
+                            return scores.Count(score => (score != null) && (score.HighScore > 0))
                                 .ToString(CultureInfo.CurrentCulture);
                         default:    // unreachable
                             return match.ToString();
@@ -355,7 +350,7 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public CardReplacer(Th095Converter parent, bool hideUntriedCards)
+            public CardReplacer(IReadOnlyList<IScore> scores, bool hideUntriedCards)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -369,8 +364,7 @@ namespace ThScoreFileConverter.Models
 
                     if (hideUntriedCards)
                     {
-                        var score = parent.allScoreData.Scores.FirstOrDefault(
-                            elem => (elem != null) && elem.LevelScene.Equals(key));
+                        var score = scores.FirstOrDefault(elem => (elem != null) && elem.LevelScene.Equals(key));
                         if (score == null)
                             return "??????????";
                     }
@@ -394,7 +388,9 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public ShotReplacer(Th095Converter parent, string outputFilePath)
+            public ShotReplacer(
+                IReadOnlyDictionary<(Th095.Level, int), (string Path, IBestShotHeader Header)> bestshots,
+                string outputFilePath)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -405,7 +401,7 @@ namespace ThScoreFileConverter.Models
                     if (!Definitions.SpellCards.ContainsKey(key))
                         return match.ToString();
 
-                    if (!string.IsNullOrEmpty(outputFilePath) && parent.bestshots.TryGetValue(key, out var bestshot))
+                    if (!string.IsNullOrEmpty(outputFilePath) && bestshots.TryGetValue(key, out var bestshot))
                     {
                         var relativePath = new Uri(outputFilePath)
                             .MakeRelativeUri(new Uri(bestshot.Path)).OriginalString;
@@ -442,7 +438,10 @@ namespace ThScoreFileConverter.Models
             private readonly MatchEvaluator evaluator;
 
             [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine", Justification = "Reviewed.")]
-            public ShotExReplacer(Th095Converter parent, string outputFilePath)
+            public ShotExReplacer(
+                IReadOnlyDictionary<(Th095.Level, int), (string Path, IBestShotHeader Header)> bestshots,
+                IReadOnlyList<IScore> scores,
+                string outputFilePath)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -454,7 +453,7 @@ namespace ThScoreFileConverter.Models
                     if (!Definitions.SpellCards.ContainsKey(key))
                         return match.ToString();
 
-                    if (!string.IsNullOrEmpty(outputFilePath) && parent.bestshots.TryGetValue(key, out var bestshot))
+                    if (!string.IsNullOrEmpty(outputFilePath) && bestshots.TryGetValue(key, out var bestshot))
                     {
                         switch (type)
                         {
@@ -471,7 +470,7 @@ namespace ThScoreFileConverter.Models
                                 return Utils.Format("{0:F6}%", bestshot.Header.SlowRate);
                             case 6:     // date & time
                                 {
-                                    var score = parent.allScoreData.Scores.FirstOrDefault(
+                                    var score = scores.FirstOrDefault(
                                         elem => (elem != null) && elem.LevelScene.Equals(key));
                                     if (score != null)
                                     {
