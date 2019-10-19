@@ -13,16 +13,13 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.Permissions;
 using System.Text.RegularExpressions;
-using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th095;
-using static ThScoreFileConverter.Models.Th095.Parsers;
 
 namespace ThScoreFileConverter.Models
 {
@@ -85,7 +82,7 @@ namespace ThScoreFileConverter.Models
 
         protected override string[] FilterBestShotFiles(string[] files)
         {
-            var pattern = Utils.Format(@"bs_({0})_[1-9].dat", LevelLongPattern);
+            var pattern = Utils.Format(@"bs_({0})_[1-9].dat", Parsers.LevelLongPattern);
 
             return files.Where(file => Regex.IsMatch(
                 Path.GetFileName(file), pattern, RegexOptions.IgnoreCase)).ToArray();
@@ -195,7 +192,7 @@ namespace ThScoreFileConverter.Models
                 var header = new Header();
                 header.ReadFrom(reader);
                 var remainSize = header.DecodedBodySize;
-                var chapter = new Th095.Chapter();
+                var chapter = new Chapter();
 
                 try
                 {
@@ -221,7 +218,7 @@ namespace ThScoreFileConverter.Models
 
         private static AllScoreData Read(Stream input)
         {
-            var dictionary = new Dictionary<string, Action<AllScoreData, Th095.Chapter>>
+            var dictionary = new Dictionary<string, Action<AllScoreData, Chapter>>
             {
                 { Score.ValidSignature,  (data, ch) => data.Set(new Score(ch))  },
                 { Status.ValidSignature, (data, ch) => data.Set(new Status(ch)) },
@@ -230,7 +227,7 @@ namespace ThScoreFileConverter.Models
             using (var reader = new BinaryReader(input, Encoding.UTF8, true))
             {
                 var allScoreData = new AllScoreData();
-                var chapter = new Th095.Chapter();
+                var chapter = new Chapter();
 
                 var header = new Header();
                 header.ReadFrom(reader);
@@ -256,256 +253,6 @@ namespace ThScoreFileConverter.Models
                     return allScoreData;
                 else
                     return null;
-            }
-        }
-
-        // %T95SCR[x][y][z]
-        private class ScoreReplacer : IStringReplaceable
-        {
-            private static readonly string Pattern = Utils.Format(
-                @"%T95SCR({0})([1-9])([1-4])", Parsers.LevelParser.Pattern);
-
-            private readonly MatchEvaluator evaluator;
-
-            public ScoreReplacer(IReadOnlyList<IScore> scores)
-            {
-                this.evaluator = new MatchEvaluator(match =>
-                {
-                    var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-                    var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
-                    var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
-
-                    var key = (level, scene);
-                    if (!Definitions.SpellCards.ContainsKey(key))
-                        return match.ToString();
-
-                    var score = scores.FirstOrDefault(elem => (elem != null) && elem.LevelScene.Equals(key));
-
-                    switch (type)
-                    {
-                        case 1:     // high score
-                            return (score != null) ? Utils.ToNumberString(score.HighScore) : "0";
-                        case 2:     // bestshot score
-                            return (score != null) ? Utils.ToNumberString(score.BestshotScore) : "0";
-                        case 3:     // num of shots
-                            return (score != null) ? Utils.ToNumberString(score.TrialCount) : "0";
-                        case 4:     // slow rate
-                            return (score != null) ? Utils.Format("{0:F3}%", score.SlowRate2) : "-----%";
-                        default:    // unreachable
-                            return match.ToString();
-                    }
-                });
-            }
-
-            public string Replace(string input)
-            {
-                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-            }
-        }
-
-        // %T95SCRTL[x]
-        private class ScoreTotalReplacer : IStringReplaceable
-        {
-            private const string Pattern = @"%T95SCRTL([1-4])";
-
-            private readonly MatchEvaluator evaluator;
-
-            public ScoreTotalReplacer(IReadOnlyList<IScore> scores)
-            {
-                this.evaluator = new MatchEvaluator(match =>
-                {
-                    var type = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
-
-                    switch (type)
-                    {
-                        case 1:     // total score
-                            return Utils.ToNumberString(
-                                scores.Sum(score => (score != null) ? (long)score.HighScore : 0L));
-                        case 2:     // total of bestshot scores
-                            return Utils.ToNumberString(
-                                scores.Sum(score => (score != null) ? (long)score.BestshotScore : 0L));
-                        case 3:     // total of num of shots
-                            return Utils.ToNumberString(
-                                scores.Sum(score => (score != null) ? score.TrialCount : 0));
-                        case 4:     // num of succeeded scenes
-                            return scores.Count(score => (score != null) && (score.HighScore > 0))
-                                .ToString(CultureInfo.CurrentCulture);
-                        default:    // unreachable
-                            return match.ToString();
-                    }
-                });
-            }
-
-            public string Replace(string input)
-            {
-                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-            }
-        }
-
-        // %T95CARD[x][y][z]
-        private class CardReplacer : IStringReplaceable
-        {
-            private static readonly string Pattern = Utils.Format(
-                @"%T95CARD({0})([1-9])([12])", Parsers.LevelParser.Pattern);
-
-            private readonly MatchEvaluator evaluator;
-
-            public CardReplacer(IReadOnlyList<IScore> scores, bool hideUntriedCards)
-            {
-                this.evaluator = new MatchEvaluator(match =>
-                {
-                    var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-                    var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
-                    var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
-
-                    var key = (level, scene);
-                    if (!Definitions.SpellCards.ContainsKey(key))
-                        return match.ToString();
-
-                    if (hideUntriedCards)
-                    {
-                        var score = scores.FirstOrDefault(elem => (elem != null) && elem.LevelScene.Equals(key));
-                        if (score == null)
-                            return "??????????";
-                    }
-
-                    return (type == 1)
-                        ? Definitions.SpellCards[key].Enemy.ToLongName() : Definitions.SpellCards[key].Card;
-                });
-            }
-
-            public string Replace(string input)
-            {
-                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-            }
-        }
-
-        // %T95SHOT[x][y]
-        private class ShotReplacer : IStringReplaceable
-        {
-            private static readonly string Pattern = Utils.Format(
-                @"%T95SHOT({0})([1-9])", Parsers.LevelParser.Pattern);
-
-            private readonly MatchEvaluator evaluator;
-
-            public ShotReplacer(
-                IReadOnlyDictionary<(Th095.Level, int), (string Path, IBestShotHeader Header)> bestshots,
-                string outputFilePath)
-            {
-                this.evaluator = new MatchEvaluator(match =>
-                {
-                    var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-                    var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
-
-                    var key = (level, scene);
-                    if (!Definitions.SpellCards.ContainsKey(key))
-                        return match.ToString();
-
-                    if (!string.IsNullOrEmpty(outputFilePath) && bestshots.TryGetValue(key, out var bestshot))
-                    {
-                        var relativePath = new Uri(outputFilePath)
-                            .MakeRelativeUri(new Uri(bestshot.Path)).OriginalString;
-                        var alternativeString = Utils.Format(
-                            "ClearData: {0}{3}Slow: {1:F6}%{3}SpellName: {2}",
-                            Utils.ToNumberString(bestshot.Header.Score),
-                            bestshot.Header.SlowRate,
-                            Encoding.Default.GetString(bestshot.Header.CardName.ToArray()).TrimEnd('\0'),
-                            Environment.NewLine);
-                        return Utils.Format(
-                            "<img src=\"{0}\" alt=\"{1}\" title=\"{1}\" border=0>",
-                            relativePath,
-                            alternativeString);
-                    }
-                    else
-                    {
-                        return string.Empty;
-                    }
-                });
-            }
-
-            public string Replace(string input)
-            {
-                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-            }
-        }
-
-        // %T95SHOTEX[x][y][z]
-        private class ShotExReplacer : IStringReplaceable
-        {
-            private static readonly string Pattern = Utils.Format(
-                @"%T95SHOTEX({0})([1-9])([1-6])", Parsers.LevelParser.Pattern);
-
-            private readonly MatchEvaluator evaluator;
-
-            [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1513:ClosingCurlyBracketMustBeFollowedByBlankLine", Justification = "Reviewed.")]
-            public ShotExReplacer(
-                IReadOnlyDictionary<(Th095.Level, int), (string Path, IBestShotHeader Header)> bestshots,
-                IReadOnlyList<IScore> scores,
-                string outputFilePath)
-            {
-                this.evaluator = new MatchEvaluator(match =>
-                {
-                    var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-                    var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
-                    var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
-
-                    var key = (level, scene);
-                    if (!Definitions.SpellCards.ContainsKey(key))
-                        return match.ToString();
-
-                    if (!string.IsNullOrEmpty(outputFilePath) && bestshots.TryGetValue(key, out var bestshot))
-                    {
-                        switch (type)
-                        {
-                            case 1:     // relative path to the bestshot file
-                                return new Uri(outputFilePath)
-                                    .MakeRelativeUri(new Uri(bestshot.Path)).OriginalString;
-                            case 2:     // width
-                                return bestshot.Header.Width.ToString(CultureInfo.InvariantCulture);
-                            case 3:     // height
-                                return bestshot.Header.Height.ToString(CultureInfo.InvariantCulture);
-                            case 4:     // score
-                                return Utils.ToNumberString(bestshot.Header.Score);
-                            case 5:     // slow rate
-                                return Utils.Format("{0:F6}%", bestshot.Header.SlowRate);
-                            case 6:     // date & time
-                                {
-                                    var score = scores.FirstOrDefault(
-                                        elem => (elem != null) && elem.LevelScene.Equals(key));
-                                    if (score != null)
-                                    {
-                                        return new DateTime(1970, 1, 1)
-                                            .AddSeconds(score.DateTime).ToLocalTime()
-                                            .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
-                                    }
-                                    else
-                                    {
-                                        return "----/--/-- --:--:--";
-                                    }
-                                }
-                            default:    // unreachable
-                                return match.ToString();
-                        }
-                    }
-                    else
-                    {
-                        switch (type)
-                        {
-                            case 1: return string.Empty;
-                            case 2: return "0";
-                            case 3: return "0";
-                            case 4: return "--------";
-                            case 5: return "-----%";
-                            case 6: return "----/--/-- --:--:--";
-                            default: return match.ToString();
-                        }
-                    }
-                });
-            }
-
-            public string Replace(string input)
-            {
-                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
             }
         }
     }
