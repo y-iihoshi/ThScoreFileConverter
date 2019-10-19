@@ -28,6 +28,11 @@ namespace ThScoreFileConverter.Models.Th095
             IReadOnlyList<IScore> scores,
             string outputFilePath)
         {
+            if (bestshots is null)
+                throw new ArgumentNullException(nameof(bestshots));
+            if (scores is null)
+                throw new ArgumentNullException(nameof(scores));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
@@ -38,12 +43,21 @@ namespace ThScoreFileConverter.Models.Th095
                 if (!Definitions.SpellCards.ContainsKey(key))
                     return match.ToString();
 
-                if (!string.IsNullOrEmpty(outputFilePath) && bestshots.TryGetValue(key, out var bestshot))
+                if (bestshots.TryGetValue(key, out var bestshot))
                 {
                     switch (type)
                     {
                         case 1:     // relative path to the bestshot file
-                            return new Uri(outputFilePath).MakeRelativeUri(new Uri(bestshot.Path)).OriginalString;
+                            if (Uri.TryCreate(outputFilePath, UriKind.Absolute, out var outputFileUri) &&
+                                Uri.TryCreate(bestshot.Path, UriKind.Absolute, out var bestshotUri))
+                            {
+                                return outputFileUri.MakeRelativeUri(bestshotUri).OriginalString;
+                            }
+                            else
+                            {
+                                return string.Empty;
+                            }
+
                         case 2:     // width
                             return bestshot.Header.Width.ToString(CultureInfo.InvariantCulture);
                         case 3:     // height
