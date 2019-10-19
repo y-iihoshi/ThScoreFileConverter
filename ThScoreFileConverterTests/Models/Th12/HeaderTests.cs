@@ -10,16 +10,25 @@ namespace ThScoreFileConverterTests.Models.Th12
         [TestMethod]
         public void IsValidTest()
         {
-            var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.MakeValidProperties("TH21"));
+            var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.MakeProperties("TH21"));
             var header = TestUtils.Create<Header>(array);
 
             Assert.IsTrue(header.IsValid);
         }
 
         [TestMethod]
-        public void IsValidTestFalse()
+        public void IsValidTestInvalidSignature()
         {
-            var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.MakeValidProperties("th21"));
+            var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.MakeProperties("th21"));
+            var header = TestUtils.Create<Header>(array);
+
+            Assert.IsFalse(header.IsValid);
+        }
+
+        [TestMethod]
+        public void IsValidTestExceededSignature()
+        {
+            var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.MakeProperties("TH21."));
             var header = TestUtils.Create<Header>(array);
 
             Assert.IsFalse(header.IsValid);

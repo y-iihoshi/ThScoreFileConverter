@@ -24,9 +24,9 @@ namespace ThScoreFileConverterTests.Models.Th095
             decodedBodySize = default
         };
 
-        internal static Properties ValidProperties { get; } = MakeValidProperties("abcd");
+        internal static Properties ValidProperties { get; } = MakeProperties("abcd");
 
-        internal static Properties MakeValidProperties(string signature) => new Properties()
+        internal static Properties MakeProperties(string signature) => new Properties()
         {
             signature = signature,
             encodedAllSize = 36,
@@ -85,8 +85,7 @@ namespace ThScoreFileConverterTests.Models.Th095
         [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestEmptySignature() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.signature = string.Empty;
+            var properties = MakeProperties(string.Empty);
 
             // <-- sig --> < encAll -> <- unk1 --> <- unk2 --> < encBody > < decBody >
             // __ __ __ __ 24 00 00 00 00 00 00 00 00 00 00 00 0c 00 00 00 38 00 00 00
@@ -103,8 +102,7 @@ namespace ThScoreFileConverterTests.Models.Th095
         [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortenedSignature() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.signature = properties.signature.Substring(0, properties.signature.Length - 1);
+            var properties = MakeProperties(ValidProperties.signature.Substring(0, 3));;
 
             // <-- sig --> < encAll -> <- unk1 --> <- unk2 --> < encBody > < decBody >
             // __ xx xx xx 24 00 00 00 00 00 00 00 00 00 00 00 0c 00 00 00 38 00 00 00
@@ -120,11 +118,10 @@ namespace ThScoreFileConverterTests.Models.Th095
         [TestMethod]
         public void ReadFromTestExceededSignature() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.signature += "e";
+            var properties = MakeProperties(ValidProperties.signature + "e");
 
             // <--- sig ----> < encAll -> <- unk1 --> <- unk2 --> < encBody > < decBody >
-            // xx xx xx xx 45 24 00 00 00 00 00 00 00 00 00 00 00 0c 00 00 00 38 00 00 00
+            // xx xx xx xx 65 24 00 00 00 00 00 00 00 00 00 00 00 0c 00 00 00 38 00 00 00
             // <-- sig --> < encAll -> <- unk1 --> <- unk2 --> < encBody > < decBody >
 
             var header = TestUtils.Create<HeaderBase>(MakeByteArray(properties));

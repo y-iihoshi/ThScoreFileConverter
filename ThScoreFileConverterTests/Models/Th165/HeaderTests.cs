@@ -10,16 +10,25 @@ namespace ThScoreFileConverterTests.Models.Th165
         [TestMethod]
         public void IsValidTest()
         {
-            var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.MakeValidProperties("T561"));
+            var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.MakeProperties("T561"));
             var header = TestUtils.Create<Header>(array);
 
             Assert.IsTrue(header.IsValid);
         }
 
         [TestMethod]
-        public void IsValidTestFalse()
+        public void IsValidTestInvalidSignature()
         {
-            var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.MakeValidProperties("t561"));
+            var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.MakeProperties("t561"));
+            var header = TestUtils.Create<Header>(array);
+
+            Assert.IsFalse(header.IsValid);
+        }
+
+        [TestMethod]
+        public void IsValidTestExceededSignature()
+        {
+            var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.MakeProperties("T561."));
             var header = TestUtils.Create<Header>(array);
 
             Assert.IsFalse(header.IsValid);
