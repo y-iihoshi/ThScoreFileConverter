@@ -134,7 +134,8 @@ namespace ThScoreFileConverterTests.Models.Th095
         public void ReplaceTestDateTime()
         {
             var replacer = new ShotExReplacer(BestShots, Scores, @"C:\path\to\output\");
-            Assert.AreEqual("1971/02/05 11:11:30", replacer.Replace("%T95SHOTEX236"));
+            var expected = new DateTime(1970, 1, 1).AddSeconds(34567890).ToLocalTime().ToString("yyyy/MM/dd HH:mm:ss");
+            Assert.AreEqual(expected, replacer.Replace("%T95SHOTEX236"));
         }
 
         [TestMethod]
