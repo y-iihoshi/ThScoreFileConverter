@@ -25,6 +25,9 @@ namespace ThScoreFileConverter.Models.Th095
         public ShotReplacer(
             IReadOnlyDictionary<(Level, int), (string Path, IBestShotHeader Header)> bestshots, string outputFilePath)
         {
+            if (bestshots is null)
+                throw new ArgumentNullException(nameof(bestshots));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
@@ -34,10 +37,11 @@ namespace ThScoreFileConverter.Models.Th095
                 if (!Definitions.SpellCards.ContainsKey(key))
                     return match.ToString();
 
-                if (!string.IsNullOrEmpty(outputFilePath) && bestshots.TryGetValue(key, out var bestshot))
+                if (bestshots.TryGetValue(key, out var bestshot) &&
+                    Uri.TryCreate(outputFilePath, UriKind.Absolute, out var outputFileUri) &&
+                    Uri.TryCreate(bestshot.Path, UriKind.Absolute, out var bestshotUri))
                 {
-                    var relativePath = new Uri(outputFilePath)
-                        .MakeRelativeUri(new Uri(bestshot.Path)).OriginalString;
+                    var relativePath = outputFileUri.MakeRelativeUri(bestshotUri).OriginalString;
                     var alternativeString = Utils.Format(
                         "ClearData: {0}{3}Slow: {1:F6}%{3}SpellName: {2}",
                         Utils.ToNumberString(bestshot.Header.Score),
