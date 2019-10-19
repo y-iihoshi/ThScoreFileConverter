@@ -24,9 +24,11 @@ namespace ThScoreFileConverterTests.Models.Th095
             decodedBodySize = default
         };
 
-        internal static Properties ValidProperties { get; } = new Properties()
+        internal static Properties ValidProperties { get; } = MakeValidProperties("abcd");
+
+        internal static Properties MakeValidProperties(string signature) => new Properties()
         {
-            signature = "abcd",
+            signature = signature,
             encodedAllSize = 36,
             encodedBodySize = 12,
             decodedBodySize = 56
