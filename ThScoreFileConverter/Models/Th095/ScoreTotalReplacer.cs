@@ -7,6 +7,7 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -23,6 +24,9 @@ namespace ThScoreFileConverter.Models.Th095
 
         public ScoreTotalReplacer(IReadOnlyList<IScore> scores)
         {
+            if (scores is null)
+                throw new ArgumentNullException(nameof(scores));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var type = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
