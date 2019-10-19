@@ -24,7 +24,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th143AllScoreDataSetHeaderTest() => TestUtils.Wrap(() =>
         {
-            var array = HeaderTests.MakeByteArray(HeaderTests.GetValidProperties("T341"));
+            var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.GetValidProperties("T341"));
             var header = HeaderWrapper<Th143Converter>.Create(array);
 
             var allScoreData = new Th143AllScoreDataWrapper();
@@ -36,7 +36,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th143AllScoreDataSetHeaderTestTwice() => TestUtils.Wrap(() =>
         {
-            var array = HeaderTests.MakeByteArray(HeaderTests.GetValidProperties("T341"));
+            var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.GetValidProperties("T341"));
             var header1 = HeaderWrapper<Th143Converter>.Create(array);
             var header2 = HeaderWrapper<Th143Converter>.Create(array);
 

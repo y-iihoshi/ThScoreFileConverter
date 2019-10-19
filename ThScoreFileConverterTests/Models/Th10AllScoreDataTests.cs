@@ -31,7 +31,7 @@ namespace ThScoreFileConverterTests.Models
             where TStageProgress : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var array = HeaderTests.MakeByteArray(HeaderTests.GetValidProperties(signature));
+                var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.GetValidProperties(signature));
                 var header = HeaderWrapper<TParent>.Create(array);
 
                 var allScoreData = new Th10AllScoreDataWrapper<TParent, TCharaWithTotal, TStageProgress>();
@@ -47,7 +47,7 @@ namespace ThScoreFileConverterTests.Models
             where TStageProgress : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var array = HeaderTests.MakeByteArray(HeaderTests.GetValidProperties(signature));
+                var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.GetValidProperties(signature));
                 var header1 = HeaderWrapper<TParent>.Create(array);
                 var header2 = HeaderWrapper<TParent>.Create(array);
 

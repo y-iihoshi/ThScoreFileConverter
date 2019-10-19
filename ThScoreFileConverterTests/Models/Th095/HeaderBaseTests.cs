@@ -8,7 +8,7 @@ using ThScoreFileConverterTests.Models.Th095.Wrappers;
 namespace ThScoreFileConverterTests.Models.Th095
 {
     [TestClass]
-    public class HeaderTests
+    public class HeaderBaseTests
     {
         internal struct Properties
         {
