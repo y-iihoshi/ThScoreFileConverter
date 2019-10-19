@@ -74,11 +74,14 @@ namespace ThScoreFileConverterTests.Models.Th095
         public void ReplaceTest()
         {
             var replacer = new ShotReplacer(BestShots, @"C:\path\to\output\");
-            var expected = @"<img src=""bestshots/bs_02_3.png"" alt=""ClearData: 6
-Slow: 7.000000%
-SpellName: abcde"" title=""ClearData: 6
-Slow: 7.000000%
-SpellName: abcde"" border=0>";
+            var expected = string.Join(Environment.NewLine, new string[]
+            {
+                @"<img src=""bestshots/bs_02_3.png"" alt=""ClearData: 6",
+                @"Slow: 7.000000%",
+                @"SpellName: abcde"" title=""ClearData: 6",
+                @"Slow: 7.000000%",
+                @"SpellName: abcde"" border=0>",
+            });
 
             Assert.AreEqual(expected, replacer.Replace("%T95SHOT23"));
         }
