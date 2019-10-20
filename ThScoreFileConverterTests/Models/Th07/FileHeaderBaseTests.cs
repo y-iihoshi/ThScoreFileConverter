@@ -7,7 +7,7 @@ using ThScoreFileConverter.Models.Th07;
 namespace ThScoreFileConverterTests.Models.Th07
 {
     [TestClass]
-    public class FileHeaderTests
+    public class FileHeaderBaseTests
     {
         internal struct Properties
         {
@@ -19,12 +19,14 @@ namespace ThScoreFileConverterTests.Models.Th07
             public int encodedBodySize;
         };
 
-        internal static Properties ValidProperties { get; } = new Properties()
+        internal static Properties ValidProperties { get; } = MakeProperties(34, 56);
+
+        internal static Properties MakeProperties(short version, int size) => new Properties()
         {
             checksum = 12,
-            version = 0x0B,
-            size = 0x1C,
-            decodedAllSize = 78 + 0x1C,
+            version = version,
+            size = size,
+            decodedAllSize = 78 + size,
             decodedBodySize = 78,
             encodedBodySize = 90
         };
@@ -41,25 +43,25 @@ namespace ThScoreFileConverterTests.Models.Th07
                 properties.decodedBodySize,
                 properties.encodedBodySize);
 
-        internal static void Validate(in FileHeader header, in Properties properties)
+        internal static void Validate(in Properties expected, in FileHeaderBase actual)
         {
-            Assert.AreEqual(properties.checksum, header.Checksum);
-            Assert.AreEqual(properties.version, header.Version);
-            Assert.AreEqual(properties.size, header.Size);
-            Assert.AreEqual(properties.decodedAllSize, header.DecodedAllSize);
-            Assert.AreEqual(properties.decodedBodySize, header.DecodedBodySize);
-            Assert.AreEqual(properties.encodedBodySize, header.EncodedBodySize);
+            Assert.AreEqual(expected.checksum, actual.Checksum);
+            Assert.AreEqual(expected.version, actual.Version);
+            Assert.AreEqual(expected.size, actual.Size);
+            Assert.AreEqual(expected.decodedAllSize, actual.DecodedAllSize);
+            Assert.AreEqual(expected.decodedBodySize, actual.DecodedBodySize);
+            Assert.AreEqual(expected.encodedBodySize, actual.EncodedBodySize);
         }
 
         [TestMethod]
-        public void FileHeaderTest() => TestUtils.Wrap(() =>
+        public void FileHeaderBaseTest() => TestUtils.Wrap(() =>
         {
             var properties = new Properties();
 
-            var header = new FileHeader();
+            var header = new FileHeaderBase();
 
-            Validate(header, properties);
-            Assert.IsFalse(header.IsValid);
+            Validate(properties, header);
+            Assert.IsTrue(header.IsValid);
         });
 
         [TestMethod]
@@ -67,9 +69,9 @@ namespace ThScoreFileConverterTests.Models.Th07
         {
             var properties = ValidProperties;
 
-            var header = TestUtils.Create<FileHeader>(MakeByteArray(properties));
+            var header = TestUtils.Create<FileHeaderBase>(MakeByteArray(properties));
 
-            Validate(header, properties);
+            Validate(properties, header);
             Assert.IsTrue(header.IsValid);
         });
 
@@ -77,7 +79,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         [ExpectedException(typeof(ArgumentNullException))]
         public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
-            var header = new FileHeader();
+            var header = new FileHeaderBase();
             header.ReadFrom(null);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -91,7 +93,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             var array = MakeByteArray(properties);
             array = array.Take(array.Length - 1).ToArray();
 
-            _ = TestUtils.Create<FileHeader>(array);
+            _ = TestUtils.Create<FileHeaderBase>(array);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -102,22 +104,10 @@ namespace ThScoreFileConverterTests.Models.Th07
             var properties = ValidProperties;
             var array = MakeByteArray(properties).Concat(new byte[] { 1 }).ToArray();
 
-            var header = TestUtils.Create<FileHeader>(array);
+            var header = TestUtils.Create<FileHeaderBase>(array);
 
-            Validate(header, properties);
+            Validate(properties, header);
             Assert.IsTrue(header.IsValid);
-        });
-
-        [TestMethod]
-        public void ReadFromTestInvalidVersion() => TestUtils.Wrap(() =>
-        {
-            var properties = ValidProperties;
-            ++properties.version;
-
-            var header = TestUtils.Create<FileHeader>(MakeByteArray(properties));
-
-            Validate(header, properties);
-            Assert.IsFalse(header.IsValid);
         });
 
         [TestMethod]
@@ -126,9 +116,9 @@ namespace ThScoreFileConverterTests.Models.Th07
             var properties = ValidProperties;
             ++properties.size;
 
-            var header = TestUtils.Create<FileHeader>(MakeByteArray(properties));
+            var header = TestUtils.Create<FileHeaderBase>(MakeByteArray(properties));
 
-            Validate(header, properties);
+            Validate(properties, header);
             Assert.IsFalse(header.IsValid);
         });
 
@@ -138,9 +128,9 @@ namespace ThScoreFileConverterTests.Models.Th07
             var properties = ValidProperties;
             ++properties.decodedAllSize;
 
-            var header = TestUtils.Create<FileHeader>(MakeByteArray(properties));
+            var header = TestUtils.Create<FileHeaderBase>(MakeByteArray(properties));
 
-            Validate(header, properties);
+            Validate(properties, header);
             Assert.IsFalse(header.IsValid);
         });
 
@@ -150,9 +140,9 @@ namespace ThScoreFileConverterTests.Models.Th07
             var properties = ValidProperties;
             ++properties.decodedBodySize;
 
-            var header = TestUtils.Create<FileHeader>(MakeByteArray(properties));
+            var header = TestUtils.Create<FileHeaderBase>(MakeByteArray(properties));
 
-            Validate(header, properties);
+            Validate(properties, header);
             Assert.IsFalse(header.IsValid);
         });
 
@@ -170,7 +160,7 @@ namespace ThScoreFileConverterTests.Models.Th07
                     var properties = ValidProperties;
                     var array = MakeByteArray(properties);
 
-                    var header = TestUtils.Create<FileHeader>(array);
+                    var header = TestUtils.Create<FileHeaderBase>(array);
                     header.WriteTo(writer);
 
                     writer.Flush();
@@ -192,7 +182,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         [ExpectedException(typeof(ArgumentNullException))]
         public void WriteToTestNull() => TestUtils.Wrap(() =>
         {
-            var header = new FileHeader();
+            var header = new FileHeaderBase();
             header.WriteTo(null);
 
             Assert.Fail(TestUtils.Unreachable);
