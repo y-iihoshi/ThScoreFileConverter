@@ -8,9 +8,9 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th10;
 using ThScoreFileConverter.Models.Th128;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th10;
 using ThScoreFileConverterTests.Models.Th10.Stubs;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
+using ThScoreFileConverterTests.Models.Th128;
 using ThScoreFileConverterTests.Models.Th128.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 
@@ -53,8 +53,7 @@ namespace ThScoreFileConverterTests.Models
                 (int)clearData.Route,
                 clearData.Rankings.Values.SelectMany(
                     ranking => ranking.SelectMany(
-                        scoreData => ScoreDataTests.MakeByteArray<Th128Converter, Th128Converter.StageProgress>(
-                            scoreData))).ToArray(),
+                        scoreData => ScoreDataTests.MakeByteArray(scoreData))).ToArray(),
                 clearData.TotalPlayCount,
                 clearData.PlayTime,
                 clearData.ClearCounts.Values.ToArray());
@@ -82,7 +81,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 for (var index = 0; index < pair.Value.Count(); ++index)
                 {
-                    ScoreDataTests.Validate(pair.Value[index], actual.RankingItem(pair.Key, index));
+                    Th10.ScoreDataTests.Validate(pair.Value[index], actual.Rankings[pair.Key][index]);
                 }
             }
 

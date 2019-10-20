@@ -121,7 +121,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 for (var index = 0; index < pair.Value.Count(); ++index)
                 {
-                    ScoreDataTests.Validate(pair.Value[index], actual.RankingItem(pair.Key, index));
+                    ScoreDataTests.Validate(pair.Value[index], actual.Rankings[pair.Key][index]);
                 }
             }
 

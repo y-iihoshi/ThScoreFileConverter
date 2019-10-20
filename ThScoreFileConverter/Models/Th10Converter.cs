@@ -871,9 +871,5 @@ namespace ThScoreFileConverter.Models
                     && (chapter.Size == ValidSize);
             }
         }
-
-        private class ScoreData : ScoreDataBase<StageProgress>
-        {
-        }
     }
 }

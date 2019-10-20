@@ -79,11 +79,9 @@ namespace ThScoreFileConverterTests.Models
             => TestUtils.MakeByteArray(
                 (int)clearData.Chara,
                 clearData.Rankings.Values.SelectMany(
-                    ranking => ranking.SelectMany(
-                        scoreData => Th16ScoreDataTests.MakeByteArray(scoreData))).ToArray(),
+                    ranking => ranking.SelectMany(scoreData => Th16.ScoreDataTests.MakeByteArray(scoreData))).ToArray(),
                 new byte[0x140],
-                clearData.Cards.Values.SelectMany(
-                    card => SpellCardTests.MakeByteArray(card)).ToArray(),
+                clearData.Cards.Values.SelectMany(card => SpellCardTests.MakeByteArray(card)).ToArray(),
                 clearData.TotalPlayCount,
                 clearData.PlayTime,
                 0u,
@@ -91,8 +89,7 @@ namespace ThScoreFileConverterTests.Models
                 0u,
                 clearData.ClearFlags.Values.ToArray(),
                 0u,
-                clearData.Practices.Values.SelectMany(
-                    practice => PracticeTests.MakeByteArray(practice)).ToArray(),
+                clearData.Practices.Values.SelectMany(practice => PracticeTests.MakeByteArray(practice)).ToArray(),
                 new byte[0x40]);
 
         internal static byte[] MakeByteArray(IClearData clearData)
@@ -118,7 +115,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 for (var index = 0; index < pair.Value.Count(); ++index)
                 {
-                    Th16ScoreDataTests.Validate(pair.Value[index], actual.RankingItem(pair.Key, index));
+                    Th16.ScoreDataTests.Validate(pair.Value[index], actual.Rankings[pair.Key][index]);
                 }
             }
 

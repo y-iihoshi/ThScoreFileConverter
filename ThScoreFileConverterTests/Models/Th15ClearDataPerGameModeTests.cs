@@ -60,11 +60,9 @@ namespace ThScoreFileConverterTests.Models
         internal static byte[] MakeByteArray(IClearDataPerGameMode clearData)
             => TestUtils.MakeByteArray(
                 clearData.Rankings.Values.SelectMany(
-                    ranking => ranking.SelectMany(
-                        scoreData => Th15ScoreDataTests.MakeByteArray(scoreData))).ToArray(),
+                    ranking => ranking.SelectMany(scoreData => Th15.ScoreDataTests.MakeByteArray(scoreData))).ToArray(),
                 new byte[0x140],
-                clearData.Cards.Values.SelectMany(
-                    card => SpellCardTests.MakeByteArray(card)).ToArray(),
+                clearData.Cards.Values.SelectMany(card => SpellCardTests.MakeByteArray(card)).ToArray(),
                 clearData.TotalPlayCount,
                 clearData.PlayTime,
                 0u,
@@ -79,7 +77,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 for (var index = 0; index < pair.Value.Count(); ++index)
                 {
-                    Th15ScoreDataTests.Validate(pair.Value[index], actual.RankingItem(pair.Key, index));
+                    Th15.ScoreDataTests.Validate(pair.Value[index], actual.Rankings[pair.Key][index]);
                 }
             }
 

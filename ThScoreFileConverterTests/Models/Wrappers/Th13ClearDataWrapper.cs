@@ -3,9 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Models.Th13;
+using ThScoreFileConverter.Models.Th10;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
 using ThScoreFileConverterTests.Models.Th13.Wrappers;
+using IPractice = ThScoreFileConverter.Models.Th13.IPractice;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -48,20 +49,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.Data)) as byte[];
         public TCharaWithTotal? Chara
             => this.pobj.GetProperty(nameof(this.Chara)) as TCharaWithTotal?;
-
-        // NOTE: Th13Converter.ScoreData is a private class.
-        // public IReadOnlyDictionary<TLevelPracticeWithTotal, IReadOnlyList<IScoreData<TStageProgress>>> Rankings
-        //     => this.pobj.GetProperty(nameof(this.Rankings))
-        //         as IReadOnlyDictionary<TLevelPracticeWithTotal, IReadOnlyList<IScoreData<TStageProgress>>>;
-        public object Rankings
-            => this.pobj.GetProperty(nameof(this.Rankings));
-        public IReadOnlyList<ThScoreFileConverter.Models.Th10.IScoreData<TStageProgress>> Ranking(
-            TLevelPracticeWithTotal level)
-            => this.Rankings.GetType().GetProperty("Item").GetValue(this.Rankings, new object[] { level })
-                as IReadOnlyList<ThScoreFileConverter.Models.Th10.IScoreData<TStageProgress>>;
-        public ScoreDataWrapper<TParent, TStageProgress> RankingItem(TLevelPracticeWithTotal level, int index)
-            => new ScoreDataWrapper<TParent, TStageProgress>(this.Ranking(level)[index]);
-
+        public IReadOnlyDictionary<TLevelPracticeWithTotal, IReadOnlyList<IScoreData<TStageProgress>>> Rankings
+            => this.pobj.GetProperty(nameof(this.Rankings))
+                as IReadOnlyDictionary<TLevelPracticeWithTotal, IReadOnlyList<IScoreData<TStageProgress>>>;
         public int? TotalPlayCount
             => this.pobj.GetProperty(nameof(this.TotalPlayCount)) as int?;
         public int? PlayTime

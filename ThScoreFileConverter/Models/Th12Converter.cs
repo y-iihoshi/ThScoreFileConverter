@@ -872,17 +872,5 @@ namespace ThScoreFileConverter.Models
                     && (chapter.Size == ValidSize);
             }
         }
-
-        private class ScoreData : Th10.ScoreDataBase<StageProgress>
-        {
-            public new void ReadFrom(BinaryReader reader)
-            {
-                if (reader is null)
-                    throw new ArgumentNullException(nameof(reader));
-
-                base.ReadFrom(reader);
-                reader.ReadUInt32();
-            }
-        }
     }
 }

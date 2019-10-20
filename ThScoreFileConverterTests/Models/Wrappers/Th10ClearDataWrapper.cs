@@ -42,19 +42,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.Data)) as byte[];
         public TCharaWithTotal? Chara
             => this.pobj.GetProperty(nameof(this.Chara)) as TCharaWithTotal?;
-
-        // NOTE: Th10Converter.ScoreData is a private class.
-        // public IReadOnlyDictionary<Level, IReadOnlyList<IScoreData<TStageProgress>>> Rankings
-        //     => this.pobj.GetProperty(nameof(this.Rankings))
-        //         as IReadOnlyDictionary<Level, IReadOnlyList<IScoreData<TStageProgress>>>;
-        public object Rankings
-            => this.pobj.GetProperty(nameof(this.Rankings));
-        public IReadOnlyList<IScoreData<TStageProgress>> Ranking(Level level)
-            => this.Rankings.GetType().GetProperty("Item").GetValue(this.Rankings, new object[] { level })
-                as IReadOnlyList<IScoreData<TStageProgress>>;
-        public ScoreDataWrapper<TParent, TStageProgress> RankingItem(Level level, int index)
-            => new ScoreDataWrapper<TParent, TStageProgress>(this.Ranking(level)[index]);
-
+        public IReadOnlyDictionary<Level, IReadOnlyList<IScoreData<TStageProgress>>> Rankings
+            => this.pobj.GetProperty(nameof(this.Rankings))
+                as IReadOnlyDictionary<Level, IReadOnlyList<IScoreData<TStageProgress>>>;
         public int? TotalPlayCount
             => this.pobj.GetProperty(nameof(this.TotalPlayCount)) as int?;
         public int? PlayTime

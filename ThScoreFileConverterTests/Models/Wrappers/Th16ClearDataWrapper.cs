@@ -41,19 +41,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.Data)) as byte[];
         public Th16Converter.CharaWithTotal? Chara
             => this.pobj.GetProperty(nameof(this.Chara)) as Th16Converter.CharaWithTotal?;
-
-        // NOTE: Th16Converter.ScoreData is a private class.
-        // public IReadOnlyDictionary<LevelWithTotal, IReadOnlyList<IScoreData>> Rankings
-        //     => this.pobj.GetProperty(nameof(this.Rankings))
-        //         as IReadOnlyDictionary<LevelWithTotal, IReadOnlyList<IScoreData>>;
-        public object Rankings
-            => this.pobj.GetProperty(nameof(this.Rankings));
-        public IReadOnlyList<IScoreData> Ranking(LevelWithTotal level)
-            => this.Rankings.GetType().GetProperty("Item").GetValue(this.Rankings, new object[] { level })
-                as IReadOnlyList<IScoreData>;
-        public Th16ScoreDataWrapper RankingItem(LevelWithTotal level, int index)
-            => new Th16ScoreDataWrapper(this.Ranking(level)[index]);
-
+        public IReadOnlyDictionary<LevelWithTotal, IReadOnlyList<IScoreData>> Rankings
+            => this.pobj.GetProperty(nameof(this.Rankings))
+                as IReadOnlyDictionary<LevelWithTotal, IReadOnlyList<IScoreData>>;
         public int? TotalPlayCount
             => this.pobj.GetProperty(nameof(this.TotalPlayCount)) as int?;
         public int? PlayTime

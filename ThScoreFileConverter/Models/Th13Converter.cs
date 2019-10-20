@@ -985,18 +985,6 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class ScoreData : Th10.ScoreDataBase<StageProgress>
-        {
-            public new void ReadFrom(BinaryReader reader)
-            {
-                if (reader is null)
-                    throw new ArgumentNullException(nameof(reader));
-
-                base.ReadFrom(reader);
-                reader.ReadUInt32();
-            }
-        }
-
         private class SpellCard : SpellCard<LevelPractice>
         {
         }
