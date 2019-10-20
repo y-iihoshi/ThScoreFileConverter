@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="ScoreData.cs" company="None">
+// <copyright file="ScoreDataBase.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
@@ -14,7 +14,7 @@ using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th10
 {
-    internal class ScoreData<TStageProgress> : IBinaryReadable, IScoreData<TStageProgress>
+    internal class ScoreDataBase<TStageProgress> : IBinaryReadable, IScoreData<TStageProgress>
         where TStageProgress : struct, Enum
     {
         public uint Score { get; private set; }     // Divided by 10

@@ -964,7 +964,7 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class ScoreData : Th10.ScoreData<StageProgress>
+        private class ScoreData : Th10.ScoreDataBase<StageProgress>
         {
             public new void ReadFrom(BinaryReader reader)
             {

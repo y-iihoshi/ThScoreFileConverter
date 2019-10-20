@@ -872,7 +872,7 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class ScoreData : ScoreData<StageProgress>
+        private class ScoreData : ScoreDataBase<StageProgress>
         {
         }
     }
