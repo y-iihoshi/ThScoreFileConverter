@@ -9,7 +9,7 @@
 
 namespace ThScoreFileConverter.Models.Th10
 {
-    internal class ScoreData : ScoreDataBase<Th10Converter.StageProgress>
+    internal class ScoreData : ScoreDataBase<StageProgress>
     {
     }
 }

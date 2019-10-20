@@ -15,8 +15,7 @@ namespace ThScoreFileConverterTests.Models.Th10
     [TestClass]
     public class ScoreDataTests
     {
-        internal static ScoreDataStub<Th10Converter.StageProgress> ValidStub { get; }
-            = MakeValidStub<Th10Converter.StageProgress>();
+        internal static ScoreDataStub<StageProgress> ValidStub { get; } = MakeValidStub<StageProgress>();
 
         internal static ScoreDataStub<TStageProgress> MakeValidStub<TStageProgress>()
             where TStageProgress : struct, Enum
@@ -64,8 +63,7 @@ namespace ThScoreFileConverterTests.Models.Th10
                 scoreData.SlowRate,
                 new byte[unknownSize]);
 
-        internal static byte[] MakeByteArray(IScoreData<Th10Converter.StageProgress> scoreData)
-            => MakeByteArray(scoreData, 0);
+        internal static byte[] MakeByteArray(IScoreData<StageProgress> scoreData) => MakeByteArray(scoreData, 0);
 
         internal static void Validate<TStageProgress>(
             IScoreData<TStageProgress> expected, IScoreData<TStageProgress> actual)
@@ -82,7 +80,7 @@ namespace ThScoreFileConverterTests.Models.Th10
         [TestMethod]
         public void ScoreDataTest() => TestUtils.Wrap(() =>
         {
-            var stub = new ScoreDataStub<Th10Converter.StageProgress>();
+            var stub = new ScoreDataStub<StageProgress>();
             var scoreData = new ScoreData();
 
             Validate(stub, scoreData);
@@ -112,7 +110,7 @@ namespace ThScoreFileConverterTests.Models.Th10
         [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortenedName() => TestUtils.Wrap(() =>
         {
-            var stub = new ScoreDataStub<Th10Converter.StageProgress>(ValidStub);
+            var stub = new ScoreDataStub<StageProgress>(ValidStub);
             stub.Name = stub.Name.SkipLast(1).ToArray();
 
             _ = TestUtils.Create<ScoreData>(MakeByteArray(stub));
@@ -123,7 +121,7 @@ namespace ThScoreFileConverterTests.Models.Th10
         [TestMethod]
         public void ReadFromTestExceededName() => TestUtils.Wrap(() =>
         {
-            var stub = new ScoreDataStub<Th10Converter.StageProgress>(ValidStub);
+            var stub = new ScoreDataStub<StageProgress>(ValidStub);
             stub.Name = stub.Name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
 
             var scoreData = TestUtils.Create<ScoreData>(MakeByteArray(stub));
@@ -138,7 +136,7 @@ namespace ThScoreFileConverterTests.Models.Th10
         });
 
         public static IEnumerable<object[]> InvalidStageProgresses
-            => TestUtils.GetInvalidEnumerators(typeof(Th10Converter.StageProgress));
+            => TestUtils.GetInvalidEnumerators(typeof(StageProgress));
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
@@ -146,9 +144,9 @@ namespace ThScoreFileConverterTests.Models.Th10
         [ExpectedException(typeof(InvalidCastException))]
         public void ReadFromTestInvalidStageProgress(int stageProgress) => TestUtils.Wrap(() =>
         {
-            var stub = new ScoreDataStub<Th10Converter.StageProgress>(ValidStub)
+            var stub = new ScoreDataStub<StageProgress>(ValidStub)
             {
-                StageProgress = TestUtils.Cast<Th10Converter.StageProgress>(stageProgress),
+                StageProgress = TestUtils.Cast<StageProgress>(stageProgress),
             };
 
             _ = TestUtils.Create<ScoreData>(MakeByteArray(stub));

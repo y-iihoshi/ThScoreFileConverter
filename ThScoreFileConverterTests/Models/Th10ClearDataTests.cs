@@ -243,32 +243,27 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         public void Th10ClearDataTestChapter()
-            => ClearDataTestChapterHelper<
-                Th10Converter, Th10Converter.CharaWithTotal, Th10Converter.StageProgress>(0, 0x437C, 110);
+            => ClearDataTestChapterHelper<Th10Converter, CharaWithTotal, StageProgress>(0, 0x437C, 110);
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th10ClearDataTestNullChapter()
-            => ClearDataTestNullChapterHelper<
-                Th10Converter, Th10Converter.CharaWithTotal, Th10Converter.StageProgress>();
+            => ClearDataTestNullChapterHelper<Th10Converter, CharaWithTotal, StageProgress>();
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th10ClearDataTestInvalidSignature()
-            => ClearDataTestInvalidSignatureHelper<
-                Th10Converter, Th10Converter.CharaWithTotal, Th10Converter.StageProgress>(0, 0x437C, 110);
+            => ClearDataTestInvalidSignatureHelper<Th10Converter, CharaWithTotal, StageProgress>(0, 0x437C, 110);
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th10ClearDataTestInvalidVersion()
-            => ClearDataTestInvalidVersionHelper<
-                Th10Converter, Th10Converter.CharaWithTotal, Th10Converter.StageProgress>(0, 0x437C, 110);
+            => ClearDataTestInvalidVersionHelper<Th10Converter, CharaWithTotal, StageProgress>(0, 0x437C, 110);
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th10ClearDataTestInvalidSize()
-            => ClearDataTestInvalidSizeHelper<
-                Th10Converter, Th10Converter.CharaWithTotal, Th10Converter.StageProgress>(0, 0x437C, 110);
+            => ClearDataTestInvalidSizeHelper<Th10Converter, CharaWithTotal, StageProgress>(0, 0x437C, 110);
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
@@ -277,8 +272,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow("CR", (ushort)1, 0x437C, false)]
         [DataRow("CR", (ushort)0, 0x437D, false)]
         public void Th10ClearDataCanInitializeTest(string signature, ushort version, int size, bool expected)
-            => CanInitializeTestHelper<
-                Th10Converter, Th10Converter.CharaWithTotal, Th10Converter.StageProgress>(
+            => CanInitializeTestHelper<Th10Converter, CharaWithTotal, StageProgress>(
                 signature, version, size, expected);
 
         #endregion

@@ -7,7 +7,6 @@
 
 #pragma warning disable 1591
 #pragma warning disable SA1600 // ElementsMustBeDocumented
-#pragma warning disable SA1602 // EnumerationItemsMustBeDocumented
 
 using System;
 using System.Collections.Generic;
@@ -21,7 +20,7 @@ using ThScoreFileConverter.Models.Th10;
 using CardInfo = ThScoreFileConverter.Models.SpellCardInfo<
     ThScoreFileConverter.Models.Stage, ThScoreFileConverter.Models.Level>;
 using IClearData = ThScoreFileConverter.Models.Th10.IClearData<
-    ThScoreFileConverter.Models.Th10Converter.CharaWithTotal, ThScoreFileConverter.Models.Th10Converter.StageProgress>;
+    ThScoreFileConverter.Models.Th10.CharaWithTotal, ThScoreFileConverter.Models.Th10.StageProgress>;
 
 namespace ThScoreFileConverter.Models
 {
@@ -152,46 +151,6 @@ namespace ThScoreFileConverter.Models
             new EnumShortNameParser<CharaWithTotal>();
 
         private AllScoreData allScoreData = null;
-
-        public enum Chara
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("RA")] ReimuA,
-            [EnumAltName("RB")] ReimuB,
-            [EnumAltName("RC")] ReimuC,
-            [EnumAltName("MA")] MarisaA,
-            [EnumAltName("MB")] MarisaB,
-            [EnumAltName("MC")] MarisaC,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum CharaWithTotal
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("RA")] ReimuA,
-            [EnumAltName("RB")] ReimuB,
-            [EnumAltName("RC")] ReimuC,
-            [EnumAltName("MA")] MarisaA,
-            [EnumAltName("MB")] MarisaB,
-            [EnumAltName("MC")] MarisaC,
-            [EnumAltName("TL")] Total,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum StageProgress
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("-------")]     None,
-            [EnumAltName("Stage 1")]     St1,
-            [EnumAltName("Stage 2")]     St2,
-            [EnumAltName("Stage 3")]     St3,
-            [EnumAltName("Stage 4")]     St4,
-            [EnumAltName("Stage 5")]     St5,
-            [EnumAltName("Stage 6")]     St6,
-            [EnumAltName("Extra Stage")] Extra,
-            [EnumAltName("All Clear")]   Clear,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
 
         public override string SupportedVersions
         {

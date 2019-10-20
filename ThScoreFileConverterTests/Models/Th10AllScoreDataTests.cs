@@ -2,6 +2,7 @@
 using System;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th095;
+using ThScoreFileConverter.Models.Th10;
 using ThScoreFileConverterTests.Models.Th095;
 using ThScoreFileConverterTests.Models.Wrappers;
 using ChapterWrapper = ThScoreFileConverterTests.Models.Th10.Wrappers.ChapterWrapper;
@@ -137,37 +138,32 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         public void Th10AllScoreDataTest()
-            => Th10AllScoreDataTestHelper<Th10Converter, Th10Converter.CharaWithTotal, Th10Converter.StageProgress>();
+            => Th10AllScoreDataTestHelper<Th10Converter, CharaWithTotal, StageProgress>();
 
         [TestMethod]
         public void Th10AllScoreDataSetHeaderTest()
-            => Th10AllScoreDataSetHeaderTestHelper<
-                Th10Converter, Th10Converter.CharaWithTotal, Th10Converter.StageProgress>();
+            => Th10AllScoreDataSetHeaderTestHelper<Th10Converter, CharaWithTotal, StageProgress>();
 
         [TestMethod]
         public void Th10AllScoreDataSetHeaderTestTwice()
-            => Th10AllScoreDataSetHeaderTestTwiceHelper<
-                Th10Converter, Th10Converter.CharaWithTotal, Th10Converter.StageProgress>();
+            => Th10AllScoreDataSetHeaderTestTwiceHelper<Th10Converter, CharaWithTotal, StageProgress>();
 
         [TestMethod]
         public void Th10AllScoreDataSetClearDataTest()
-            => Th10AllScoreDataSetClearDataTestHelper<
-                Th10Converter, Th10Converter.CharaWithTotal, Th10Converter.StageProgress>(0, 0x437C, 110);
+            => Th10AllScoreDataSetClearDataTestHelper<Th10Converter, CharaWithTotal, StageProgress>(0, 0x437C, 110);
 
         [TestMethod]
         public void Th10AllScoreDataSetClearDataTestTwice()
             => Th10AllScoreDataSetClearDataTestTwiceHelper<
-                Th10Converter, Th10Converter.CharaWithTotal, Th10Converter.StageProgress>(0, 0x437C, 110);
+                Th10Converter, CharaWithTotal, StageProgress>(0, 0x437C, 110);
 
         [TestMethod]
         public void Th10AllScoreDataSetStatusTest()
-            => Th10AllScoreDataSetStatusTestHelper<
-                Th10Converter, Th10Converter.CharaWithTotal, Th10Converter.StageProgress>(0, 0x448, 18);
+            => Th10AllScoreDataSetStatusTestHelper<Th10Converter, CharaWithTotal, StageProgress>(0, 0x448, 18);
 
         [TestMethod]
         public void Th10AllScoreDataSetStatusTestTwice()
-            => Th10AllScoreDataSetStatusTestTwiceHelper<
-                Th10Converter, Th10Converter.CharaWithTotal, Th10Converter.StageProgress>(0, 0x448, 18);
+            => Th10AllScoreDataSetStatusTestTwiceHelper<Th10Converter, CharaWithTotal, StageProgress>(0, 0x448, 18);
 
         #endregion
 
