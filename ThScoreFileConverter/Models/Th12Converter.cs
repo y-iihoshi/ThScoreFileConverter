@@ -843,34 +843,18 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class Status : Th10.Chapter, Th10.IStatus
+        private class Status : Th10.StatusBase
         {
-            public const string ValidSignature = "ST";
             public const ushort ValidVersion = 0x0002;
-            public const int ValidSize = 0x00000448;
+            public const int NumBgms = 17;
 
             public Status(Th10.Chapter chapter)
-                : base(chapter, ValidSignature, ValidVersion, ValidSize)
+                : base(chapter, ValidVersion, NumBgms)
             {
-                using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-                {
-                    this.LastName = reader.ReadExactBytes(10);
-                    reader.ReadExactBytes(0x10);
-                    this.BgmFlags = reader.ReadExactBytes(17);
-                    reader.ReadExactBytes(0x0411);
-                }
             }
 
-            public IEnumerable<byte> LastName { get; }  // The last 2 bytes are always 0x00 ?
-
-            public IEnumerable<byte> BgmFlags { get; }
-
-            public static bool CanInitialize(Th10.Chapter chapter)
-            {
-                return chapter.Signature.Equals(ValidSignature, StringComparison.Ordinal)
-                    && (chapter.Version == ValidVersion)
-                    && (chapter.Size == ValidSize);
-            }
+            public static new bool CanInitialize(Th10.Chapter chapter)
+                => Th10.StatusBase.CanInitialize(chapter) && (chapter.Version == ValidVersion);
         }
     }
 }
