@@ -842,19 +842,5 @@ namespace ThScoreFileConverter.Models
                     && (chapter.Size == ValidSize);
             }
         }
-
-        private class Status : Th10.StatusBase
-        {
-            public const ushort ValidVersion = 0x0002;
-            public const int NumBgms = 17;
-
-            public Status(Th10.Chapter chapter)
-                : base(chapter, ValidVersion, NumBgms)
-            {
-            }
-
-            public static new bool CanInitialize(Th10.Chapter chapter)
-                => Th10.StatusBase.CanInitialize(chapter) && (chapter.Version == ValidVersion);
-        }
     }
 }
