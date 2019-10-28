@@ -3,8 +3,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Models.Th095;
-using IStatus = ThScoreFileConverter.Models.Th10.IStatus;
+using ThScoreFileConverter.Models.Th10;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -26,8 +25,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public object Target
             => this.pobj.Target;
-        public HeaderBase Header
-            => this.pobj.GetProperty(nameof(this.Header)) as HeaderBase;
+        public ThScoreFileConverter.Models.Th095.HeaderBase Header
+            => this.pobj.GetProperty(nameof(this.Header)) as ThScoreFileConverter.Models.Th095.HeaderBase;
 
         // NOTE: Th10Converter.ClearData is a private class.
         // public IReadOnlyDictionary<CharaWithTotal, ClearData> ClearData
@@ -43,10 +42,12 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public IStatus Status
             => this.pobj.GetProperty(nameof(this.Status)) as IStatus;
 
-        public void Set(HeaderBase header)
+        public void Set(ThScoreFileConverter.Models.Th095.HeaderBase header)
             => this.pobj.Invoke(nameof(Set), new object[] { header }, CultureInfo.InvariantCulture);
         public void Set(Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress> data)
             => this.pobj.Invoke(nameof(Set), new object[] { data.Target }, CultureInfo.InvariantCulture);
+        public void Set(IClearData<TCharaWithTotal, TStageProgress> data)
+            => this.pobj.Invoke(nameof(Set), new object[] { data }, CultureInfo.InvariantCulture);
         public void Set(IStatus status)
             => this.pobj.Invoke(nameof(Set), new object[] { status }, CultureInfo.InvariantCulture);
     }
