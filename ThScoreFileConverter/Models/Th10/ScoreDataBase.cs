@@ -29,7 +29,7 @@ namespace ThScoreFileConverter.Models.Th10
 
         public float SlowRate { get; private set; } // Really...?
 
-        public void ReadFrom(BinaryReader reader)
+        public virtual void ReadFrom(BinaryReader reader)
         {
             if (reader is null)
                 throw new ArgumentNullException(nameof(reader));

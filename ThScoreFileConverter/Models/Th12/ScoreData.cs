@@ -14,7 +14,7 @@ namespace ThScoreFileConverter.Models.Th12
 {
     internal class ScoreData : Th10.ScoreDataBase<Th12Converter.StageProgress>
     {
-        public new void ReadFrom(BinaryReader reader)
+        public override void ReadFrom(BinaryReader reader)
         {
             if (reader is null)
                 throw new ArgumentNullException(nameof(reader));

@@ -608,72 +608,19 @@ namespace ThScoreFileConverter.Models
             public void Set(IStatus status) => this.Status = status;
         }
 
-        private class ClearData : Chapter, IClearData   // per character
+        private class ClearData : ClearDataBase<CharaWithTotal, StageProgress, ScoreData>   // per character
         {
-            public const string ValidSignature = "CR";
             public const ushort ValidVersion = 0x0000;
             public const int ValidSize = 0x0000437C;
 
             public ClearData(Chapter chapter)
-                : base(chapter, ValidSignature, ValidVersion, ValidSize)
+                : base(chapter, ValidVersion, ValidSize, Definitions.CardTable.Count)
             {
-                var levels = Utils.GetEnumerator<Level>();
-                var levelsExceptExtra = levels.Where(lv => lv != Level.Extra);
-                var stages = Utils.GetEnumerator<Stage>();
-                var stagesExceptExtra = stages.Where(st => st != Stage.Extra);
-
-                using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-                {
-                    this.Chara = (CharaWithTotal)reader.ReadInt32();
-
-                    this.Rankings = levels.ToDictionary(
-                        level => level,
-                        _ => Enumerable.Range(0, 10).Select(rank =>
-                        {
-                            var score = new ScoreData();
-                            score.ReadFrom(reader);
-                            return score;
-                        }).ToList() as IReadOnlyList<IScoreData<StageProgress>>);
-
-                    this.TotalPlayCount = reader.ReadInt32();
-                    this.PlayTime = reader.ReadInt32();
-                    this.ClearCounts = levels.ToDictionary(level => level, _ => reader.ReadInt32());
-
-                    this.Practices = levelsExceptExtra
-                        .SelectMany(level => stagesExceptExtra.Select(stage => (level, stage)))
-                        .ToDictionary(pair => pair, _ =>
-                        {
-                            var practice = new Practice();
-                            practice.ReadFrom(reader);
-                            return practice as IPractice;
-                        });
-
-                    this.Cards = Enumerable.Range(0, Definitions.CardTable.Count).Select(_ =>
-                    {
-                        var card = new SpellCard();
-                        card.ReadFrom(reader);
-                        return card as ISpellCard<Level>;
-                    }).ToDictionary(card => card.Id);
-                }
             }
 
-            public CharaWithTotal Chara { get; }
-
-            public IReadOnlyDictionary<Level, IReadOnlyList<IScoreData<StageProgress>>> Rankings { get; }
-
-            public int TotalPlayCount { get; }
-
-            public int PlayTime { get; }    // = seconds * 60fps
-
-            public IReadOnlyDictionary<Level, int> ClearCounts { get; }
-
-            public IReadOnlyDictionary<(Level, Stage), IPractice> Practices { get; }
-
-            public IReadOnlyDictionary<int, ISpellCard<Level>> Cards { get; }
-
-            public static bool CanInitialize(Chapter chapter)
+            public static new bool CanInitialize(Chapter chapter)
             {
-                return chapter.Signature.Equals(ValidSignature, StringComparison.Ordinal)
+                return ClearDataBase<CharaWithTotal, StageProgress, ScoreData>.CanInitialize(chapter)
                     && (chapter.Version == ValidVersion)
                     && (chapter.Size == ValidSize);
             }

@@ -772,72 +772,19 @@ namespace ThScoreFileConverter.Models
             public void Set(Th10.IStatus status) => this.Status = status;
         }
 
-        private class ClearData : Th10.Chapter, IClearData  // per character
+        private class ClearData : Th10.ClearDataBase<CharaWithTotal, StageProgress, ScoreData>  // per character
         {
-            public const string ValidSignature = "CR";
             public const ushort ValidVersion = 0x0002;
             public const int ValidSize = 0x000045F4;
 
             public ClearData(Th10.Chapter chapter)
-                : base(chapter, ValidSignature, ValidVersion, ValidSize)
+                : base(chapter, ValidVersion, ValidSize, CardTable.Count)
             {
-                var levels = Utils.GetEnumerator<Level>();
-                var levelsExceptExtra = levels.Where(lv => lv != Level.Extra);
-                var stages = Utils.GetEnumerator<Stage>();
-                var stagesExceptExtra = stages.Where(st => st != Stage.Extra);
-
-                using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-                {
-                    this.Chara = (CharaWithTotal)reader.ReadInt32();
-
-                    this.Rankings = levels.ToDictionary(
-                        level => level,
-                        _ => Enumerable.Range(0, 10).Select(rank =>
-                        {
-                            var score = new ScoreData();
-                            score.ReadFrom(reader);
-                            return score;
-                        }).ToList() as IReadOnlyList<Th10.IScoreData<StageProgress>>);
-
-                    this.TotalPlayCount = reader.ReadInt32();
-                    this.PlayTime = reader.ReadInt32();
-                    this.ClearCounts = levels.ToDictionary(level => level, _ => reader.ReadInt32());
-
-                    this.Practices = levelsExceptExtra
-                        .SelectMany(level => stagesExceptExtra.Select(stage => (level, stage)))
-                        .ToDictionary(pair => pair, _ =>
-                        {
-                            var practice = new Th10.Practice();
-                            practice.ReadFrom(reader);
-                            return practice as Th10.IPractice;
-                        });
-
-                    this.Cards = Enumerable.Range(0, CardTable.Count).Select(_ =>
-                    {
-                        var card = new Th10.SpellCard();
-                        card.ReadFrom(reader);
-                        return card as Th10.ISpellCard<Level>;
-                    }).ToDictionary(card => card.Id);
-                }
             }
 
-            public CharaWithTotal Chara { get; }
-
-            public IReadOnlyDictionary<Level, IReadOnlyList<Th10.IScoreData<StageProgress>>> Rankings { get; }
-
-            public int TotalPlayCount { get; }
-
-            public int PlayTime { get; }    // = seconds * 60fps
-
-            public IReadOnlyDictionary<Level, int> ClearCounts { get; }
-
-            public IReadOnlyDictionary<(Level, Stage), Th10.IPractice> Practices { get; }
-
-            public IReadOnlyDictionary<int, Th10.ISpellCard<Level>> Cards { get; }
-
-            public static bool CanInitialize(Th10.Chapter chapter)
+            public static new bool CanInitialize(Th10.Chapter chapter)
             {
-                return chapter.Signature.Equals(ValidSignature, StringComparison.Ordinal)
+                return Th10.ClearDataBase<CharaWithTotal, StageProgress, ScoreData>.CanInitialize(chapter)
                     && (chapter.Version == ValidVersion)
                     && (chapter.Size == ValidSize);
             }
