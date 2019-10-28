@@ -17,35 +17,32 @@ namespace ThScoreFileConverterTests.Models
     [TestClass]
     public class Th10ClearDataTests
     {
-        internal static ClearDataStub<TCharaWithTotal, TStageProgress>
-            GetValidStub<TCharaWithTotal, TStageProgress>(ushort version, int size, int numCards)
-            where TCharaWithTotal : struct, Enum
-            where TStageProgress : struct, Enum
+        internal static ClearDataStub<CharaWithTotal, StageProgress> MakeValidStub()
         {
             var levels = Utils.GetEnumerator<Level>();
             var levelsExceptExtra = levels.Where(level => level != Level.Extra);
             var stages = Utils.GetEnumerator<Stage>();
             var stagesExceptExtra = stages.Where(stage => stage != Stage.Extra);
 
-            return new ClearDataStub<TCharaWithTotal, TStageProgress>()
+            return new ClearDataStub<CharaWithTotal, StageProgress>()
             {
                 Signature = "CR",
-                Version = version,
+                Version = 0x0000,
                 Checksum = 0u,
-                Size = size,
-                Chara = TestUtils.Cast<TCharaWithTotal>(1),
+                Size = 0x437C,
+                Chara = TestUtils.Cast<CharaWithTotal>(1),
                 Rankings = levels.ToDictionary(
                     level => level,
                     level => Enumerable.Range(0, 10).Select(
-                        index => new ScoreDataStub<TStageProgress>()
+                        index => new ScoreDataStub<StageProgress>()
                         {
                             Score = 12345670u - (uint)index * 1000u,
-                            StageProgress = TestUtils.Cast<TStageProgress>(5),
+                            StageProgress = TestUtils.Cast<StageProgress>(5),
                             ContinueCount = (byte)index,
                             Name = TestUtils.MakeRandomArray<byte>(10),
                             DateTime = 34567890u,
                             SlowRate = 1.2f
-                        }).ToList() as IReadOnlyList<IScoreData<TStageProgress>>),
+                        }).ToList() as IReadOnlyList<IScoreData<StageProgress>>),
                 TotalPlayCount = 23,
                 PlayTime = 4567890,
                 ClearCounts = levels.ToDictionary(level => level, level => 100 - (int)level),
@@ -58,7 +55,7 @@ namespace ThScoreFileConverterTests.Models
                             Score = 123456u - (uint)pair.level * 10u,
                             StageFlag = (uint)pair.stage % 2u
                         } as IPractice),
-                Cards = Enumerable.Range(1, numCards).ToDictionary(
+                Cards = Enumerable.Range(1, 110).ToDictionary(
                     index => index,
                     index => new SpellCardStub()
                     {
@@ -71,16 +68,15 @@ namespace ThScoreFileConverterTests.Models
             };
         }
 
-        internal static byte[] MakeData<TParent, TCharaWithTotal, TStageProgress>(
+        internal static byte[] MakeData<TCharaWithTotal, TStageProgress>(
             IClearData<TCharaWithTotal, TStageProgress> clearData)
-            where TParent : ThConverter
             where TCharaWithTotal : struct, Enum
             where TStageProgress : struct, Enum
             => TestUtils.MakeByteArray(
                 TestUtils.Cast<int>(clearData.Chara),
                 clearData.Rankings.Values.SelectMany(
                     ranking => ranking.SelectMany(
-                        scoreData => ScoreDataTests.MakeByteArray<TParent, TStageProgress>(scoreData))).ToArray(),
+                        scoreData => ScoreDataTests.MakeByteArray<Th10Converter, TStageProgress>(scoreData))).ToArray(),
                 clearData.TotalPlayCount,
                 clearData.PlayTime,
                 clearData.ClearCounts.Values.ToArray(),
@@ -89,9 +85,8 @@ namespace ThScoreFileConverterTests.Models
                 clearData.Cards.Values.SelectMany(
                     card => SpellCardTests.MakeByteArray(card)).ToArray());
 
-        internal static byte[] MakeByteArray<TParent, TCharaWithTotal, TStageProgress>(
+        internal static byte[] MakeByteArray<TCharaWithTotal, TStageProgress>(
             IClearData<TCharaWithTotal, TStageProgress> clearData)
-            where TParent : ThConverter
             where TCharaWithTotal : struct, Enum
             where TStageProgress : struct, Enum
             => TestUtils.MakeByteArray(
@@ -99,16 +94,15 @@ namespace ThScoreFileConverterTests.Models
                 clearData.Version,
                 clearData.Checksum,
                 clearData.Size,
-                MakeData<TParent, TCharaWithTotal, TStageProgress>(clearData));
+                MakeData(clearData));
 
-        internal static void Validate<TParent, TCharaWithTotal, TStageProgress>(
+        internal static void Validate<TCharaWithTotal, TStageProgress>(
             IClearData<TCharaWithTotal, TStageProgress> expected,
-            in Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress> actual)
-            where TParent : ThConverter
+            in Th10ClearDataWrapper<Th10Converter, TCharaWithTotal, TStageProgress> actual)
             where TCharaWithTotal : struct, Enum
             where TStageProgress : struct, Enum
         {
-            var data = MakeData<TParent, TCharaWithTotal, TStageProgress>(expected);
+            var data = MakeData(expected);
 
             Assert.AreEqual(expected.Signature, actual.Signature);
             Assert.AreEqual(expected.Version, actual.Version);
@@ -141,92 +135,75 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        internal static void ClearDataTestChapterHelper<TParent, TCharaWithTotal, TStageProgress>(
-            ushort version, int size, int numCards)
-            where TParent : ThConverter
-            where TCharaWithTotal : struct, Enum
-            where TStageProgress : struct, Enum
-            => TestUtils.Wrap(() =>
-            {
-                var stub = GetValidStub<TCharaWithTotal, TStageProgress>(version, size, numCards);
+        [TestMethod]
+        public void Th10ClearDataTestChapter() => TestUtils.Wrap(() =>
+        {
+            var stub = MakeValidStub();
 
-                var chapter = ChapterWrapper.Create(
-                    MakeByteArray<TParent, TCharaWithTotal, TStageProgress>(stub));
-                var clearData = new Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress>(chapter);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            var clearData = new Th10ClearDataWrapper<Th10Converter, CharaWithTotal, StageProgress>(chapter);
 
-                Validate(stub, clearData);
-                Assert.IsFalse(clearData.IsValid.Value);
-            });
+            Validate(stub, clearData);
+            Assert.IsFalse(clearData.IsValid.Value);
+        });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        internal static void ClearDataTestNullChapterHelper<TParent, TCharaWithTotal, TStageProgress>()
-            where TParent : ThConverter
-            where TCharaWithTotal : struct, Enum
-            where TStageProgress : struct, Enum
-            => TestUtils.Wrap(() =>
-            {
-                _ = new Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress>(null);
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Th10ClearDataTestNullChapter() => TestUtils.Wrap(() =>
+        {
+            _ = new Th10ClearDataWrapper<Th10Converter, CharaWithTotal, StageProgress>(null);
 
-                Assert.Fail(TestUtils.Unreachable);
-            });
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
-        internal static void ClearDataTestInvalidSignatureHelper<TParent, TCharaWithTotal, TStageProgress>(
-            ushort version, int size, int numCards)
-            where TParent : ThConverter
-            where TCharaWithTotal : struct, Enum
-            where TStageProgress : struct, Enum
-            => TestUtils.Wrap(() =>
-            {
-                var stub = GetValidStub<TCharaWithTotal, TStageProgress>(version, size, numCards);
-                stub.Signature = stub.Signature.ToLowerInvariant();
+        [TestMethod]
+        [ExpectedException(typeof(InvalidDataException))]
+        public void Th10ClearDataTestInvalidSignature() => TestUtils.Wrap(() =>
+        {
+            var stub = MakeValidStub();
+            stub.Signature = stub.Signature.ToLowerInvariant();
 
-                var chapter = ChapterWrapper.Create(
-                    MakeByteArray<TParent, TCharaWithTotal, TStageProgress>(stub));
-                _ = new Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress>(chapter);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new Th10ClearDataWrapper<Th10Converter, CharaWithTotal, StageProgress>(chapter);
 
-                Assert.Fail(TestUtils.Unreachable);
-            });
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
-        internal static void ClearDataTestInvalidVersionHelper<TParent, TCharaWithTotal, TStageProgress>(
-            ushort version, int size, int numCards)
-            where TParent : ThConverter
-            where TCharaWithTotal : struct, Enum
-            where TStageProgress : struct, Enum
-            => TestUtils.Wrap(() =>
-            {
-                var stub = GetValidStub<TCharaWithTotal, TStageProgress>(version, size, numCards);
-                ++stub.Version;
+        [TestMethod]
+        [ExpectedException(typeof(InvalidDataException))]
+        public void Th10ClearDataTestInvalidVersion() => TestUtils.Wrap(() =>
+        {
+            var stub = MakeValidStub();
+            ++stub.Version;
 
-                var chapter = ChapterWrapper.Create(
-                    MakeByteArray<TParent, TCharaWithTotal, TStageProgress>(stub));
-                _ = new Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress>(chapter);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new Th10ClearDataWrapper<Th10Converter, CharaWithTotal, StageProgress>(chapter);
 
-                Assert.Fail(TestUtils.Unreachable);
-            });
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
-        internal static void ClearDataTestInvalidSizeHelper<TParent, TCharaWithTotal, TStageProgress>(
-            ushort version, int size, int numCards)
-            where TParent : ThConverter
-            where TCharaWithTotal : struct, Enum
-            where TStageProgress : struct, Enum
-            => TestUtils.Wrap(() =>
-            {
-                var stub = GetValidStub<TCharaWithTotal, TStageProgress>(version, size, numCards);
-                --stub.Size;
+        [TestMethod]
+        [ExpectedException(typeof(InvalidDataException))]
+        public void Th10ClearDataTestInvalidSize() => TestUtils.Wrap(() =>
+        {
+            var stub = MakeValidStub();
+            --stub.Size;
 
-                var chapter = ChapterWrapper.Create(
-                    MakeByteArray<TParent, TCharaWithTotal, TStageProgress>(stub));
-                _ = new Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress>(chapter);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new Th10ClearDataWrapper<Th10Converter, CharaWithTotal, StageProgress>(chapter);
 
-                Assert.Fail(TestUtils.Unreachable);
-            });
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
-        internal static void CanInitializeTestHelper<TParent, TCharaWithTotal, TStageProgress>(
-            string signature, ushort version, int size, bool expected)
-            where TParent : ThConverter
-            where TCharaWithTotal : struct, Enum
-            where TStageProgress : struct, Enum
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        [DataTestMethod]
+        [DataRow("CR", (ushort)0, 0x437C, true)]
+        [DataRow("cr", (ushort)0, 0x437C, false)]
+        [DataRow("CR", (ushort)1, 0x437C, false)]
+        [DataRow("CR", (ushort)0, 0x437D, false)]
+        public void Th10ClearDataCanInitializeTest(string signature, ushort version, int size, bool expected)
             => TestUtils.Wrap(() =>
             {
                 var checksum = 0u;
@@ -236,133 +213,8 @@ namespace ThScoreFileConverterTests.Models
                     TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
 
                 Assert.AreEqual(
-                    expected, Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress>.CanInitialize(chapter));
+                    expected,
+                    Th10ClearDataWrapper<Th10Converter, CharaWithTotal, StageProgress>.CanInitialize(chapter));
             });
-
-        #region Th10
-
-        [TestMethod]
-        public void Th10ClearDataTestChapter()
-            => ClearDataTestChapterHelper<Th10Converter, CharaWithTotal, StageProgress>(0, 0x437C, 110);
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Th10ClearDataTestNullChapter()
-            => ClearDataTestNullChapterHelper<Th10Converter, CharaWithTotal, StageProgress>();
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
-        public void Th10ClearDataTestInvalidSignature()
-            => ClearDataTestInvalidSignatureHelper<Th10Converter, CharaWithTotal, StageProgress>(0, 0x437C, 110);
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
-        public void Th10ClearDataTestInvalidVersion()
-            => ClearDataTestInvalidVersionHelper<Th10Converter, CharaWithTotal, StageProgress>(0, 0x437C, 110);
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
-        public void Th10ClearDataTestInvalidSize()
-            => ClearDataTestInvalidSizeHelper<Th10Converter, CharaWithTotal, StageProgress>(0, 0x437C, 110);
-
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        [DataTestMethod]
-        [DataRow("CR", (ushort)0, 0x437C, true)]
-        [DataRow("cr", (ushort)0, 0x437C, false)]
-        [DataRow("CR", (ushort)1, 0x437C, false)]
-        [DataRow("CR", (ushort)0, 0x437D, false)]
-        public void Th10ClearDataCanInitializeTest(string signature, ushort version, int size, bool expected)
-            => CanInitializeTestHelper<Th10Converter, CharaWithTotal, StageProgress>(
-                signature, version, size, expected);
-
-        #endregion
-
-        #region Th11
-
-        [TestMethod]
-        public void Th11ClearDataTestChapter()
-            => ClearDataTestChapterHelper<
-                Th11Converter, Th11Converter.CharaWithTotal, Th11Converter.StageProgress>(0, 0x68D4, 175);
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Th11ClearDataTestNullChapter()
-            => ClearDataTestNullChapterHelper<
-                Th11Converter, Th11Converter.CharaWithTotal, Th11Converter.StageProgress>();
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
-        public void Th11ClearDataTestInvalidSignature()
-            => ClearDataTestInvalidSignatureHelper<
-                Th11Converter, Th11Converter.CharaWithTotal, Th11Converter.StageProgress>(0, 0x68D4, 175);
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
-        public void Th11ClearDataTestInvalidVersion()
-            => ClearDataTestInvalidVersionHelper<
-                Th11Converter, Th11Converter.CharaWithTotal, Th11Converter.StageProgress>(0, 0x68D4, 175);
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
-        public void Th11ClearDataTestInvalidSize()
-            => ClearDataTestInvalidSizeHelper<
-                Th11Converter, Th11Converter.CharaWithTotal, Th11Converter.StageProgress>(0, 0x68D4, 175);
-
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        [DataTestMethod]
-        [DataRow("CR", (ushort)0, 0x68D4, true)]
-        [DataRow("cr", (ushort)0, 0x68D4, false)]
-        [DataRow("CR", (ushort)1, 0x68D4, false)]
-        [DataRow("CR", (ushort)0, 0x68D5, false)]
-        public void Th11ClearDataCanInitializeTest(string signature, ushort version, int size, bool expected)
-            => CanInitializeTestHelper<
-                Th11Converter, Th11Converter.CharaWithTotal, Th11Converter.StageProgress>(
-                signature, version, size, expected);
-
-        #endregion
-
-        #region Th12
-
-        [TestMethod]
-        public void Th12ClearDataTestChapter()
-            => ClearDataTestChapterHelper<
-                Th12Converter, Th12Converter.CharaWithTotal, Th12Converter.StageProgress>(2, 0x45F4, 113);
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Th12ClearDataTestNullChapter()
-            => ClearDataTestNullChapterHelper<
-                Th12Converter, Th12Converter.CharaWithTotal, Th12Converter.StageProgress>();
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
-        public void Th12ClearDataTestInvalidSignature()
-            => ClearDataTestInvalidSignatureHelper<
-                Th12Converter, Th12Converter.CharaWithTotal, Th12Converter.StageProgress>(2, 0x45F4, 113);
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
-        public void Th12ClearDataTestInvalidVersion()
-            => ClearDataTestInvalidVersionHelper<
-                Th12Converter, Th12Converter.CharaWithTotal, Th12Converter.StageProgress>(2, 0x45F4, 113);
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
-        public void Th12ClearDataTestInvalidSize()
-            => ClearDataTestInvalidSizeHelper<
-                Th12Converter, Th12Converter.CharaWithTotal, Th12Converter.StageProgress>(2, 0x45F4, 113);
-
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        [DataTestMethod]
-        [DataRow("CR", (ushort)2, 0x45F4, true)]
-        [DataRow("cr", (ushort)2, 0x45F4, false)]
-        [DataRow("CR", (ushort)1, 0x45F4, false)]
-        [DataRow("CR", (ushort)2, 0x45F5, false)]
-        public void Th12ClearDataCanInitializeTest(string signature, ushort version, int size, bool expected)
-            => CanInitializeTestHelper<
-                Th12Converter, Th12Converter.CharaWithTotal, Th12Converter.StageProgress>(
-                signature, version, size, expected);
-
-        #endregion
     }
 }
