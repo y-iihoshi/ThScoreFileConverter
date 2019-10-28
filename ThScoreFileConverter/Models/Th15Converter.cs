@@ -971,7 +971,7 @@ namespace ThScoreFileConverter.Models
 
         private class SpellCard : Th13.SpellCard<Level>
         {
-            public new bool HasTried => this.TrialCount > 0;
+            public override bool HasTried => this.TrialCount > 0;
         }
     }
 }

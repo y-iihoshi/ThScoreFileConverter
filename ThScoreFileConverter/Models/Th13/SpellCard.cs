@@ -33,7 +33,7 @@ namespace ThScoreFileConverter.Models.Th13
 
         public int PracticeScore { get; private set; }
 
-        public bool HasTried => (this.TrialCount > 0) || (this.PracticeTrialCount > 0);
+        public virtual bool HasTried => (this.TrialCount > 0) || (this.PracticeTrialCount > 0);
 
         public void ReadFrom(BinaryReader reader)
         {
