@@ -113,7 +113,7 @@ namespace ThScoreFileConverter.Models
                 var header = new Header();
                 header.ReadFrom(reader);
                 var remainSize = header.DecodedBodySize;
-                var chapter = new Th10.Chapter();
+                var chapter = new Chapter();
 
                 try
                 {
@@ -139,7 +139,7 @@ namespace ThScoreFileConverter.Models
 
         private static AllScoreData Read(Stream input)
         {
-            var dictionary = new Dictionary<string, Action<AllScoreData, Th10.Chapter>>
+            var dictionary = new Dictionary<string, Action<AllScoreData, Chapter>>
             {
                 { ClearData.ValidSignature, (data, ch) => data.Set(new ClearData(ch)) },
                 { Status.ValidSignature,    (data, ch) => data.Set(new Status(ch))    },
@@ -148,7 +148,7 @@ namespace ThScoreFileConverter.Models
             using (var reader = new BinaryReader(input, Encoding.UTF8, true))
             {
                 var allScoreData = new AllScoreData();
-                var chapter = new Th10.Chapter();
+                var chapter = new Chapter();
 
                 var header = new Header();
                 header.ReadFrom(reader);
