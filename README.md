@@ -44,17 +44,18 @@ format from best shot files.
 
 ### Will be supported
 * TH17 東方鬼形獣　～ Wily Beast and Weakest Creature.
+* TH17.5 東方剛欲異聞　～ 水没した沈愁地獄 (a.k.a. Touhou Gouyoku Ibun)
 
 ## Environments
 
 ### Development environment
 * Windows 10 Pro Version 1903 (64bit)
 * .NET Framework 4.8
-* Visual Studio Community 2019 16.2.2
-* Python 3.7.4
+* Visual Studio Community 2019 16.3.7
+* Python 3.8.0
 
 ### Tested environment
-* Same as above but you can use .NET Framework 4.5.2 or later.
+* Same as above but you can use .NET Framework 4.5 or later.
 
 ## Installation
 
