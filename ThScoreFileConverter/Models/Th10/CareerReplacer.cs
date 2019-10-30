@@ -26,6 +26,9 @@ namespace ThScoreFileConverter.Models.Th10
         public CareerReplacer(
             IReadOnlyDictionary<CharaWithTotal, IClearData<CharaWithTotal, StageProgress>> clearDataDictionary)
         {
+            if (clearDataDictionary is null)
+                throw new ArgumentNullException(nameof(clearDataDictionary));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
@@ -38,7 +41,8 @@ namespace ThScoreFileConverter.Models.Th10
                 else
                     getCount = card => card.TrialCount;
 
-                var cards = clearDataDictionary[chara].Cards;
+                var cards = clearDataDictionary.TryGetValue(chara, out var clearData)
+                    ? clearData.Cards : new Dictionary<int, ISpellCard<Level>>();
                 if (number == 0)
                 {
                     return Utils.ToNumberString(cards.Values.Sum(getCount));
