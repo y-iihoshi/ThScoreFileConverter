@@ -102,7 +102,7 @@ namespace ThScoreFileConverterTests.Models.Th095
         [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortenedSignature() => TestUtils.Wrap(() =>
         {
-            var properties = MakeProperties(ValidProperties.signature.Substring(0, 3));;
+            var properties = MakeProperties(ValidProperties.signature.Substring(0, 3));
 
             // <-- sig --> < encAll -> <- unk1 --> <- unk2 --> < encBody > < decBody >
             // __ xx xx xx 24 00 00 00 00 00 00 00 00 00 00 00 0c 00 00 00 38 00 00 00
