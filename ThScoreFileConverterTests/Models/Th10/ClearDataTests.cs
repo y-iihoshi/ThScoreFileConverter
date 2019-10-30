@@ -28,16 +28,16 @@ namespace ThScoreFileConverterTests.Models.Th10
                 Version = 0x0000,
                 Checksum = 0u,
                 Size = 0x437C,
-                Chara = TestUtils.Cast<CharaWithTotal>(1),
+                Chara = CharaWithTotal.ReimuB,
                 Rankings = levels.ToDictionary(
                     level => level,
                     level => Enumerable.Range(0, 10).Select(
                         index => new ScoreDataStub<StageProgress>()
                         {
                             Score = 12345670u - (uint)index * 1000u,
-                            StageProgress = TestUtils.Cast<StageProgress>(5),
+                            StageProgress = StageProgress.Five,
                             ContinueCount = (byte)index,
-                            Name = TestUtils.MakeRandomArray<byte>(10),
+                            Name = TestUtils.CP932Encoding.GetBytes($"Player{index}\0\0\0"),
                             DateTime = 34567890u,
                             SlowRate = 1.2f
                         }).ToList() as IReadOnlyList<IScoreData<StageProgress>>),
