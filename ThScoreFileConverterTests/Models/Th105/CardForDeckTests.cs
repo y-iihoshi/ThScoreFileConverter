@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th105;
 
 namespace ThScoreFileConverterTests.Models.Th105
@@ -15,7 +16,7 @@ namespace ThScoreFileConverterTests.Models.Th105
             public int maxNumber;
         };
 
-        internal static Properties ValidProperties => new Properties()
+        internal static Properties ValidProperties { get; } = new Properties()
         {
             id = 1,
             maxNumber = 2
@@ -24,69 +25,63 @@ namespace ThScoreFileConverterTests.Models.Th105
         internal static byte[] MakeByteArray(in Properties properties)
             => TestUtils.MakeByteArray(properties.id, properties.maxNumber);
 
-        internal static void Validate(in CardForDeck cardForDeck, in Properties properties)
+        internal static void Validate(in Properties expected, in CardForDeck actual)
         {
-            Assert.AreEqual(properties.id, cardForDeck.Id);
-            Assert.AreEqual(properties.maxNumber, cardForDeck.MaxNumber);
+            Assert.AreEqual(expected.id, actual.Id);
+            Assert.AreEqual(expected.maxNumber, actual.MaxNumber);
         }
 
         [TestMethod]
-        public void CardForDeckTest()
-            => TestUtils.Wrap(() =>
-            {
-                var properties = new Properties();
+        public void CardForDeckTest() => TestUtils.Wrap(() =>
+        {
+            var properties = new Properties();
 
-                var cardForDeck = new CardForDeck();
+            var cardForDeck = new CardForDeck();
 
-                Validate(cardForDeck, properties);
-            });
+            Validate(properties, cardForDeck);
+        });
 
         [TestMethod]
-        public void ReadFromTest()
-            => TestUtils.Wrap(() =>
-            {
-                var properties = ValidProperties;
+        public void ReadFromTest() => TestUtils.Wrap(() =>
+        {
+            var properties = ValidProperties;
 
-                var cardForDeck = TestUtils.Create<CardForDeck>(MakeByteArray(properties));
+            var cardForDeck = TestUtils.Create<CardForDeck>(MakeByteArray(properties));
 
-                Validate(cardForDeck, properties);
-            });
+            Validate(properties, cardForDeck);
+        });
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ReadFromTestNull()
-            => TestUtils.Wrap(() =>
-            {
-                var cardForDeck = new CardForDeck();
-                cardForDeck.ReadFrom(null);
+        public void ReadFromTestNull() => TestUtils.Wrap(() =>
+        {
+            var cardForDeck = new CardForDeck();
+            cardForDeck.ReadFrom(null);
 
-                Assert.Fail(TestUtils.Unreachable);
-            });
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void ReadFromTestShortened()
-            => TestUtils.Wrap(() =>
-            {
-                var properties = ValidProperties;
-                var array = MakeByteArray(properties);
-                array = array.Take(array.Length - 1).ToArray();
+        public void ReadFromTestShortened() => TestUtils.Wrap(() =>
+        {
+            var properties = ValidProperties;
+            var array = MakeByteArray(properties).SkipLast(1).ToArray();
 
-                _ = TestUtils.Create<CardForDeck>(array);
+            _ = TestUtils.Create<CardForDeck>(array);
 
-                Assert.Fail(TestUtils.Unreachable);
-            });
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [TestMethod]
-        public void ReadFromTestExceeded()
-            => TestUtils.Wrap(() =>
-            {
-                var properties = ValidProperties;
-                var array = MakeByteArray(properties).Concat(new byte[1] { 1 }).ToArray();
+        public void ReadFromTestExceeded() => TestUtils.Wrap(() =>
+        {
+            var properties = ValidProperties;
+            var array = MakeByteArray(properties).Concat(new byte[1] { 1 }).ToArray();
 
-                var cardForDeck = TestUtils.Create<CardForDeck>(array);
+            var cardForDeck = TestUtils.Create<CardForDeck>(array);
 
-                Validate(cardForDeck, properties);
-            });
+            Validate(properties, cardForDeck);
+        });
     }
 }
