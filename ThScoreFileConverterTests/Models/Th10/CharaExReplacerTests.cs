@@ -169,7 +169,14 @@ namespace ThScoreFileConverterTests.Models.Th10
         public void ReplaceTestInvalidFormat()
         {
             var replacer = new CharaExReplacer(ClearDataDictionary);
-            Assert.AreEqual("%T10XXXXXRB1", replacer.Replace("%T10XXXXXRB1"));
+            Assert.AreEqual("%T10XXXXXXXHRB1", replacer.Replace("%T10XXXXXXXHRB1"));
+        }
+
+        [TestMethod]
+        public void ReplaceTestInvalidLevel()
+        {
+            var replacer = new CharaExReplacer(ClearDataDictionary);
+            Assert.AreEqual("%T10CHARAEXYRB1", replacer.Replace("%T10CHARAEXYRB1"));
         }
 
         [TestMethod]
