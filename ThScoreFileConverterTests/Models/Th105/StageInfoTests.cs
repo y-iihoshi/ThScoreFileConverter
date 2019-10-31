@@ -18,10 +18,10 @@ namespace ThScoreFileConverterTests.Models.Th105
         {
             public TStage stage;
             public TChara enemy;
-            public List<int> cardIds;
+            public IEnumerable<int> cardIds;
         };
 
-        internal static Properties<TStage, TChara> GetValidProperties<TStage, TChara>()
+        internal static Properties<TStage, TChara> MakeValidProperties<TStage, TChara>()
             where TStage : struct, Enum
             where TChara : struct, Enum
             => new Properties<TStage, TChara>()
@@ -32,13 +32,13 @@ namespace ThScoreFileConverterTests.Models.Th105
             };
 
         internal static void Validate<TStage, TChara>(
-            in StageInfo<TStage, TChara> spellCardInfo, in Properties<TStage, TChara> properties)
+            in Properties<TStage, TChara> expected, in StageInfo<TStage, TChara> actual)
             where TStage : struct, Enum
             where TChara : struct, Enum
         {
-            Assert.AreEqual(properties.stage, spellCardInfo.Stage);
-            Assert.AreEqual(properties.enemy, spellCardInfo.Enemy);
-            CollectionAssert.That.AreEqual(properties.cardIds, spellCardInfo.CardIds);
+            Assert.AreEqual(expected.stage, actual.Stage);
+            Assert.AreEqual(expected.enemy, actual.Enemy);
+            CollectionAssert.That.AreEqual(expected.cardIds, actual.CardIds);
         }
 
         internal static void StageInfoTestHelper<TStage, TChara>()
@@ -46,12 +46,12 @@ namespace ThScoreFileConverterTests.Models.Th105
             where TChara : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties = GetValidProperties<TStage, TChara>();
+                var properties = MakeValidProperties<TStage, TChara>();
 
                 var spellCardInfo = new StageInfo<TStage, TChara>(
                     properties.stage, properties.enemy, properties.cardIds);
 
-                Validate(spellCardInfo, properties);
+                Validate(properties, spellCardInfo);
             });
 
         [TestMethod]

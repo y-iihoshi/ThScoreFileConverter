@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th105;
 using Chara = ThScoreFileConverter.Models.Th105.Chara;
@@ -17,13 +18,13 @@ namespace ThScoreFileConverterTests.Models.Th105
             where TChara : struct, Enum
             where TLevel : struct, Enum
         {
-            public Dictionary<int, CardForDeckTests.Properties> cardsForDeck;
-            public Dictionary<
+            public IReadOnlyDictionary<int, CardForDeckTests.Properties> cardsForDeck;
+            public IReadOnlyDictionary<
                 (TChara Chara, int CardId),
                 SpellCardResultTests.Properties<TChara, TLevel>> spellCardResults;
         };
 
-        internal static Properties<TChara, TLevel> GetValidProperties<TChara, TLevel>()
+        internal static Properties<TChara, TLevel> MakeValidProperties<TChara, TLevel>()
             where TChara : struct, Enum
             where TLevel : struct, Enum
             => new Properties<TChara, TLevel>()
@@ -56,20 +57,19 @@ namespace ThScoreFileConverterTests.Models.Th105
                     .SelectMany(pair => SpellCardResultTests.MakeByteArray(pair.Value)).ToArray());
 
         internal static void Validate<TChara, TLevel>(
-            in ClearData<TChara, TLevel> clearData,
-            in Properties<TChara, TLevel> properties)
+            in Properties<TChara, TLevel> expected, in ClearData<TChara, TLevel> actual)
             where TChara : struct, Enum
             where TLevel : struct, Enum
         {
-            foreach (var pair in properties.cardsForDeck)
+            foreach (var pair in expected.cardsForDeck)
             {
-                CardForDeckTests.Validate(pair.Value, clearData.CardsForDeck[pair.Key]);
+                CardForDeckTests.Validate(pair.Value, actual.CardsForDeck[pair.Key]);
             }
 
-            foreach (var pair in properties.spellCardResults)
+            foreach (var pair in expected.spellCardResults)
             {
                 SpellCardResultTests.Validate(
-                    pair.Value, clearData.SpellCardResults[(pair.Key.Chara, pair.Key.CardId)]);
+                    pair.Value, actual.SpellCardResults[(pair.Key.Chara, pair.Key.CardId)]);
             }
         }
 
@@ -89,11 +89,11 @@ namespace ThScoreFileConverterTests.Models.Th105
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties = GetValidProperties<TChara, TLevel>();
+                var properties = MakeValidProperties<TChara, TLevel>();
 
                 var clearData = TestUtils.Create<ClearData<TChara, TLevel>>(MakeByteArray(properties));
 
-                Validate(clearData, properties);
+                Validate(properties, clearData);
             });
 
         internal static void ReadFromTestNullHelper<TChara, TLevel>()
@@ -112,9 +112,8 @@ namespace ThScoreFileConverterTests.Models.Th105
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties = GetValidProperties<TChara, TLevel>();
-                var array = MakeByteArray(properties);
-                array = array.Take(array.Length - 1).ToArray();
+                var properties = MakeValidProperties<TChara, TLevel>();
+                var array = MakeByteArray(properties).SkipLast(1).ToArray();
 
                 _ = TestUtils.Create<ClearData<TChara, TLevel>>(array);
 
@@ -126,12 +125,12 @@ namespace ThScoreFileConverterTests.Models.Th105
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties = GetValidProperties<TChara, TLevel>();
+                var properties = MakeValidProperties<TChara, TLevel>();
                 var array = MakeByteArray(properties).Concat(new byte[1] { 1 }).ToArray();
 
                 var clearData = TestUtils.Create<ClearData<TChara, TLevel>>(array);
 
-                Validate(clearData, properties);
+                Validate(properties, clearData);
             });
 
         internal static void ReadFromTestDuplicatedHelper<TChara, TLevel>()
@@ -139,7 +138,7 @@ namespace ThScoreFileConverterTests.Models.Th105
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties = GetValidProperties<TChara, TLevel>();
+                var properties = MakeValidProperties<TChara, TLevel>();
                 var array = TestUtils.MakeByteArray(
                     properties.cardsForDeck.Count + 1,
                     properties.cardsForDeck
@@ -152,7 +151,7 @@ namespace ThScoreFileConverterTests.Models.Th105
 
                 var clearData = TestUtils.Create<ClearData<TChara, TLevel>>(array);
 
-                Validate(clearData, properties);
+                Validate(properties, clearData);
             });
 
         #region Th105

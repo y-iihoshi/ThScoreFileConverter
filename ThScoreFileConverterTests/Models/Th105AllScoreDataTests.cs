@@ -43,7 +43,7 @@ namespace ThScoreFileConverterTests.Models
                     }),
                 clearData = charas.ToDictionary(
                     chara => chara,
-                    chara => ClearDataTests.GetValidProperties<TChara, TLevel>())
+                    chara => ClearDataTests.MakeValidProperties<TChara, TLevel>())
             };
         }
 
@@ -80,7 +80,7 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var pair in properties.clearData)
             {
-                ClearDataTests.Validate(allScoreData.ClearData[pair.Key], pair.Value);
+                ClearDataTests.Validate(pair.Value, allScoreData.ClearData[pair.Key]);
             }
         }
 

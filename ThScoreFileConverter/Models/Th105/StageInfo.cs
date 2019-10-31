@@ -28,6 +28,6 @@ namespace ThScoreFileConverter.Models.Th105
 
         public TChara Enemy { get; }
 
-        public List<int> CardIds { get; }   // 0-based
+        public IEnumerable<int> CardIds { get; }    // 0-based
     }
 }
