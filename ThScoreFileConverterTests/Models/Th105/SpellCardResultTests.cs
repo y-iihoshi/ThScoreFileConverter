@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th105;
+using Chara = ThScoreFileConverter.Models.Th105.Chara;
+using Level = ThScoreFileConverter.Models.Th105.Level;
 
 namespace ThScoreFileConverterTests.Models.Th105
 {
@@ -126,25 +128,25 @@ namespace ThScoreFileConverterTests.Models.Th105
 
         [TestMethod]
         public void Th105SpellCardResultTest()
-            => SpellCardResultTestHelper<Th105Converter.Chara, Th105Converter.Level>();
+            => SpellCardResultTestHelper<Chara, Level>();
 
         [TestMethod]
         public void Th105SpellCardResultReadFromTest()
-            => ReadFromTestHelper<Th105Converter.Chara, Th105Converter.Level>();
+            => ReadFromTestHelper<Chara, Level>();
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th105SpellCardResultReadFromTestNull()
-            => ReadFromTestNullHelper<Th105Converter.Chara, Th105Converter.Level>();
+            => ReadFromTestNullHelper<Chara, Level>();
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th105SpellCardResultReadFromTestShortened()
-            => ReadFromTestShortenedHelper<Th105Converter.Chara, Th105Converter.Level>();
+            => ReadFromTestShortenedHelper<Chara, Level>();
 
         [TestMethod]
         public void Th105SpellCardResultReadFromTestExceeded()
-            => ReadFromTestExceededHelper<Th105Converter.Chara, Th105Converter.Level>();
+            => ReadFromTestExceededHelper<Chara, Level>();
 
         #endregion
 

@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th105;
+using Chara = ThScoreFileConverter.Models.Th105.Chara;
+using Level = ThScoreFileConverter.Models.Th105.Level;
 
 namespace ThScoreFileConverterTests.Models.Th105
 {
@@ -157,29 +159,29 @@ namespace ThScoreFileConverterTests.Models.Th105
 
         [TestMethod]
         public void Th105ClearDataTest()
-            => ClearDataTestHelper<Th105Converter.Chara, Th105Converter.Level>();
+            => ClearDataTestHelper<Chara, Level>();
 
         [TestMethod]
         public void Th105ClearDataReadFromTest()
-            => ReadFromTestHelper<Th105Converter.Chara, Th105Converter.Level>();
+            => ReadFromTestHelper<Chara, Level>();
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th105ClearDataReadFromTestNull()
-            => ReadFromTestNullHelper<Th105Converter.Chara, Th105Converter.Level>();
+            => ReadFromTestNullHelper<Chara, Level>();
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void Th105ClearDataReadFromTestShortened()
-            => ReadFromTestShortenedHelper<Th105Converter.Chara, Th105Converter.Level>();
+            => ReadFromTestShortenedHelper<Chara, Level>();
 
         [TestMethod]
         public void Th105ClearDataReadFromTestExceeded()
-            => ReadFromTestExceededHelper<Th105Converter.Chara, Th105Converter.Level>();
+            => ReadFromTestExceededHelper<Chara, Level>();
 
         [TestMethod]
         public void Th105ClearDataReadFromTestDuplicated()
-            => ReadFromTestDuplicatedHelper<Th105Converter.Chara, Th105Converter.Level>();
+            => ReadFromTestDuplicatedHelper<Chara, Level>();
 
         #endregion
 

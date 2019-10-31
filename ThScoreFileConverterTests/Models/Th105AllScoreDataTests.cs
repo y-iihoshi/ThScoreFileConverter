@@ -6,6 +6,8 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th105;
 using ThScoreFileConverterTests.Models.Wrappers;
+using Chara = ThScoreFileConverter.Models.Th105.Chara;
+using Level = ThScoreFileConverter.Models.Th105.Level;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -124,16 +126,16 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         public void Th105AllScoreDataTest()
-            => Th105AllScoreDataTestHelper<Th105Converter, Th105Converter.Chara, Th105Converter.Level>();
+            => Th105AllScoreDataTestHelper<Th105Converter, Chara, Level>();
 
         [TestMethod]
         public void Th105AllScoreDataReadFromTest()
-            => Th105AllScoreDataReadFromTestHelper<Th105Converter, Th105Converter.Chara, Th105Converter.Level>();
+            => Th105AllScoreDataReadFromTestHelper<Th105Converter, Chara, Level>();
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th105AllScoreDataReadFromTestNull()
-            => Th105AllScoreDataReadFromTestNullHelper<Th105Converter, Th105Converter.Chara, Th105Converter.Level>();
+            => Th105AllScoreDataReadFromTestNullHelper<Th105Converter, Chara, Level>();
 
         #endregion
 

@@ -7,7 +7,6 @@
 
 #pragma warning disable 1591
 #pragma warning disable SA1600 // ElementsMustBeDocumented
-#pragma warning disable SA1602 // EnumerationItemsMustBeDocumented
 
 using System;
 using System.Collections.Generic;
@@ -18,12 +17,13 @@ using System.IO.Compression;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Models.Th105;
 using ClearData = ThScoreFileConverter.Models.Th105.ClearData<
-    ThScoreFileConverter.Models.Th105Converter.Chara, ThScoreFileConverter.Models.Th105Converter.Level>;
+    ThScoreFileConverter.Models.Th105.Chara, ThScoreFileConverter.Models.Th105.Level>;
 using SpellCardResult = ThScoreFileConverter.Models.Th105.SpellCardResult<
-    ThScoreFileConverter.Models.Th105Converter.Chara, ThScoreFileConverter.Models.Th105Converter.Level>;
+    ThScoreFileConverter.Models.Th105.Chara, ThScoreFileConverter.Models.Th105.Level>;
 using StageInfo = ThScoreFileConverter.Models.Th105.StageInfo<
-    ThScoreFileConverter.Models.Th105Converter.Stage, ThScoreFileConverter.Models.Th105Converter.Chara>;
+    ThScoreFileConverter.Models.Th105.Stage, ThScoreFileConverter.Models.Th105.Chara>;
 
 namespace ThScoreFileConverter.Models
 {
@@ -388,178 +388,178 @@ namespace ThScoreFileConverter.Models
                     Chara.Reimu,
                     new List<StageInfo>
                     {
-                        new StageInfo(Stage.St1, Chara.Marisa,  Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St2, Chara.Alice,   Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St3, Chara.Komachi, Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St4, Chara.Aya,     Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St5, Chara.Iku,     Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St6, Chara.Tenshi,  Enumerable.Range(0, 5)),
+                        new StageInfo(Th105.Stage.St1, Chara.Marisa,  Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.St2, Chara.Alice,   Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.St3, Chara.Komachi, Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.St4, Chara.Aya,     Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.St5, Chara.Iku,     Enumerable.Range(0, 4)),
+                        new StageInfo(Th105.Stage.St6, Chara.Tenshi,  Enumerable.Range(0, 5)),
                     }
                 },
                 {
                     Chara.Marisa,
                     new List<StageInfo>
                     {
-                        new StageInfo(Stage.St1, Chara.Alice,  Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St2, Chara.Reimu,  Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St3, Chara.Reisen, Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St4, Chara.Aya,    Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St5, Chara.Iku,    Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St6, Chara.Tenshi, Enumerable.Range(0, 5)),
+                        new StageInfo(Th105.Stage.St1, Chara.Alice,  Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.St2, Chara.Reimu,  Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.St3, Chara.Reisen, Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.St4, Chara.Aya,    Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.St5, Chara.Iku,    Enumerable.Range(0, 4)),
+                        new StageInfo(Th105.Stage.St6, Chara.Tenshi, Enumerable.Range(0, 5)),
                     }
                 },
                 {
                     Chara.Sakuya,
                     new List<StageInfo>
                     {
-                        new StageInfo(Stage.St1, Chara.Marisa, Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St2, Chara.Youmu,  Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St3, Chara.Yuyuko, Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St4, Chara.Aya,    Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St5, Chara.Iku,    Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St6, Chara.Tenshi, Enumerable.Range(0, 5)),
+                        new StageInfo(Th105.Stage.St1, Chara.Marisa, Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.St2, Chara.Youmu,  Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.St3, Chara.Yuyuko, Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.St4, Chara.Aya,    Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.St5, Chara.Iku,    Enumerable.Range(0, 4)),
+                        new StageInfo(Th105.Stage.St6, Chara.Tenshi, Enumerable.Range(0, 5)),
                     }
                 },
                 {
                     Chara.Alice,
                     new List<StageInfo>
                     {
-                        new StageInfo(Stage.St1, Chara.Reimu,     Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St2, Chara.Youmu,     Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St3, Chara.Patchouli, Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St4, Chara.Sakuya,    Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St5, Chara.Iku,       Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St6, Chara.Tenshi,    Enumerable.Range(0, 5)),
+                        new StageInfo(Th105.Stage.St1, Chara.Reimu,     Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.St2, Chara.Youmu,     Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.St3, Chara.Patchouli, Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.St4, Chara.Sakuya,    Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.St5, Chara.Iku,       Enumerable.Range(0, 4)),
+                        new StageInfo(Th105.Stage.St6, Chara.Tenshi,    Enumerable.Range(0, 5)),
                     }
                 },
                 {
                     Chara.Patchouli,
                     new List<StageInfo>
                     {
-                        new StageInfo(Stage.St1, Chara.Sakuya, Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St2, Chara.Reimu,  Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St3, Chara.Marisa, Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St4, Chara.Iku,    Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St5, Chara.Tenshi, Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St6, Chara.Suika,  Enumerable.Range(0, 5)),
+                        new StageInfo(Th105.Stage.St1, Chara.Sakuya, Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.St2, Chara.Reimu,  Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.St3, Chara.Marisa, Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.St4, Chara.Iku,    Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.St5, Chara.Tenshi, Enumerable.Range(0, 4)),
+                        new StageInfo(Th105.Stage.St6, Chara.Suika,  Enumerable.Range(0, 5)),
                     }
                 },
                 {
                     Chara.Youmu,
                     new List<StageInfo>
                     {
-                        new StageInfo(Stage.St1, Chara.Yuyuko,  Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St2, Chara.Reimu,   Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St3, Chara.Komachi, Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St4, Chara.Yukari,  Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St5, Chara.Iku,     Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St6, Chara.Tenshi,  Enumerable.Range(0, 5)),
+                        new StageInfo(Th105.Stage.St1, Chara.Yuyuko,  Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.St2, Chara.Reimu,   Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.St3, Chara.Komachi, Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.St4, Chara.Yukari,  Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.St5, Chara.Iku,     Enumerable.Range(0, 4)),
+                        new StageInfo(Th105.Stage.St6, Chara.Tenshi,  Enumerable.Range(0, 5)),
                     }
                 },
                 {
                     Chara.Remilia,
                     new List<StageInfo>
                     {
-                        new StageInfo(Stage.St1, Chara.Sakuya,    Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St2, Chara.Patchouli, Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St3, Chara.Alice,     Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St4, Chara.Reisen,    Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St5, Chara.Youmu,     Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St6, Chara.Komachi,   Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St7, Chara.Reimu,     Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St8, Chara.Yukari,    Enumerable.Range(0, 5)),
+                        new StageInfo(Th105.Stage.St1, Chara.Sakuya,    Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.St2, Chara.Patchouli, Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.St3, Chara.Alice,     Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.St4, Chara.Reisen,    Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.St5, Chara.Youmu,     Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.St6, Chara.Komachi,   Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.St7, Chara.Reimu,     Enumerable.Range(0, 4)),
+                        new StageInfo(Th105.Stage.St8, Chara.Yukari,    Enumerable.Range(0, 5)),
                     }
                 },
                 {
                     Chara.Yuyuko,
                     new List<StageInfo>
                     {
-                        new StageInfo(Stage.St1, Chara.Reimu,   Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St2, Chara.Marisa,  Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St3, Chara.Komachi, Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St4, Chara.Aya,     Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St5, Chara.Iku,     Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St6, Chara.Tenshi,  Enumerable.Range(0, 5)),
+                        new StageInfo(Th105.Stage.St1, Chara.Reimu,   Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.St2, Chara.Marisa,  Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.St3, Chara.Komachi, Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.St4, Chara.Aya,     Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.St5, Chara.Iku,     Enumerable.Range(0, 4)),
+                        new StageInfo(Th105.Stage.St6, Chara.Tenshi,  Enumerable.Range(0, 5)),
                     }
                 },
                 {
                     Chara.Yukari,
                     new List<StageInfo>
                     {
-                        new StageInfo(Stage.St1, Chara.Reimu,   Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St2, Chara.Komachi, Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St3, Chara.Marisa,  Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St4, Chara.Iku,     Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St5, Chara.Suika,   Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St6, Chara.Tenshi,  Enumerable.Range(0, 5)),
+                        new StageInfo(Th105.Stage.St1, Chara.Reimu,   Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.St2, Chara.Komachi, Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.St3, Chara.Marisa,  Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.St4, Chara.Iku,     Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.St5, Chara.Suika,   Enumerable.Range(0, 4)),
+                        new StageInfo(Th105.Stage.St6, Chara.Tenshi,  Enumerable.Range(0, 5)),
                     }
                 },
                 {
                     Chara.Suika,
                     new List<StageInfo>
                     {
-                        new StageInfo(Stage.St1, Chara.Aya,    Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St2, Chara.Iku,    Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St3, Chara.Tenshi, Enumerable.Range(0, 5)),
+                        new StageInfo(Th105.Stage.St1, Chara.Aya,    Enumerable.Range(0, 4)),
+                        new StageInfo(Th105.Stage.St2, Chara.Iku,    Enumerable.Range(0, 4)),
+                        new StageInfo(Th105.Stage.St3, Chara.Tenshi, Enumerable.Range(0, 5)),
                     }
                 },
                 {
                     Chara.Reisen,
                     new List<StageInfo>
                     {
-                        new StageInfo(Stage.St1, Chara.Remilia, Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St2, Chara.Yuyuko,  Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St3, Chara.Yukari,  Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St4, Chara.Tenshi,  Enumerable.Range(0, 5)),
+                        new StageInfo(Th105.Stage.St1, Chara.Remilia, Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.St2, Chara.Yuyuko,  Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.St3, Chara.Yukari,  Enumerable.Range(0, 4)),
+                        new StageInfo(Th105.Stage.St4, Chara.Tenshi,  Enumerable.Range(0, 5)),
                     }
                 },
                 {
                     Chara.Aya,
                     new List<StageInfo>
                     {
-                        new StageInfo(Stage.St1, Chara.Reimu,   Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St2, Chara.Marisa,  Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St3, Chara.Sakuya,  Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St4, Chara.Remilia, Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St5, Chara.Reimu,   Enumerable.Range(2, 3)),    // FIXME
+                        new StageInfo(Th105.Stage.St1, Chara.Reimu,   Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.St2, Chara.Marisa,  Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.St3, Chara.Sakuya,  Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.St4, Chara.Remilia, Enumerable.Range(0, 4)),
+                        new StageInfo(Th105.Stage.St5, Chara.Reimu,   Enumerable.Range(2, 3)),    // FIXME
                     }
                 },
                 {
                     Chara.Komachi,
                     new List<StageInfo>
                     {
-                        new StageInfo(Stage.St1, Chara.Marisa, Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St2, Chara.Sakuya, Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St3, Chara.Youmu,  Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St4, Chara.Reisen, Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St5, Chara.Reimu,  Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St6, Chara.Tenshi, Enumerable.Range(0, 5)),
+                        new StageInfo(Th105.Stage.St1, Chara.Marisa, Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.St2, Chara.Sakuya, Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.St3, Chara.Youmu,  Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.St4, Chara.Reisen, Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.St5, Chara.Reimu,  Enumerable.Range(0, 4)),
+                        new StageInfo(Th105.Stage.St6, Chara.Tenshi, Enumerable.Range(0, 5)),
                     }
                 },
                 {
                     Chara.Iku,
                     new List<StageInfo>
                     {
-                        new StageInfo(Stage.St1, Chara.Suika,   Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St2, Chara.Aya,     Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St3, Chara.Remilia, Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St4, Chara.Yuyuko,  Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St5, Chara.Yukari,  Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St6, Chara.Tenshi,  Enumerable.Range(0, 5)),
+                        new StageInfo(Th105.Stage.St1, Chara.Suika,   Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.St2, Chara.Aya,     Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.St3, Chara.Remilia, Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.St4, Chara.Yuyuko,  Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.St5, Chara.Yukari,  Enumerable.Range(0, 4)),
+                        new StageInfo(Th105.Stage.St6, Chara.Tenshi,  Enumerable.Range(0, 5)),
                     }
                 },
                 {
                     Chara.Tenshi,
                     new List<StageInfo>
                     {
-                        new StageInfo(Stage.St1, Chara.Yuyuko,    Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St2, Chara.Suika,     Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St3, Chara.Patchouli, Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St4, Chara.Alice,     Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St5, Chara.Marisa,    Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St6, Chara.Sakuya,    Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St7, Chara.Youmu,     Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St8, Chara.Reimu,     Enumerable.Range(0, 5)),
+                        new StageInfo(Th105.Stage.St1, Chara.Yuyuko,    Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.St2, Chara.Suika,     Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.St3, Chara.Patchouli, Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.St4, Chara.Alice,     Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.St5, Chara.Marisa,    Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.St6, Chara.Sakuya,    Enumerable.Range(0, 4)),
+                        new StageInfo(Th105.Stage.St7, Chara.Youmu,     Enumerable.Range(0, 4)),
+                        new StageInfo(Th105.Stage.St8, Chara.Reimu,     Enumerable.Range(0, 5)),
                     }
                 },
             };
@@ -570,8 +570,8 @@ namespace ThScoreFileConverter.Models
                 stageInfoPair => stageInfoPair.Value.SelectMany(
                     stageInfo => stageInfo.CardIds.Select(id => (stageInfo.Enemy, id))));
 
-        private static new readonly EnumShortNameParser<LevelWithTotal> LevelWithTotalParser =
-            new EnumShortNameParser<LevelWithTotal>();
+        private static new readonly EnumShortNameParser<Th105.LevelWithTotal> LevelWithTotalParser =
+            new EnumShortNameParser<Th105.LevelWithTotal>();
 
         private static readonly EnumShortNameParser<Chara> CharaParser =
             new EnumShortNameParser<Chara>();
@@ -580,93 +580,6 @@ namespace ThScoreFileConverter.Models
             new EnumShortNameParser<CardType>();
 
         private AllScoreData allScoreData = null;
-
-        public enum Level
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("E")] Easy,
-            [EnumAltName("N")] Normal,
-            [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum LevelWithTotal
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("E")] Easy,
-            [EnumAltName("N")] Normal,
-            [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic,
-            [EnumAltName("T")] Total,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum Chara
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("RM")] Reimu,
-            [EnumAltName("MR")] Marisa,
-            [EnumAltName("SK")] Sakuya,
-            [EnumAltName("AL")] Alice,
-            [EnumAltName("PC")] Patchouli,
-            [EnumAltName("YM")] Youmu,
-            [EnumAltName("RL")] Remilia,
-            [EnumAltName("YU")] Yuyuko,
-            [EnumAltName("YK")] Yukari,
-            [EnumAltName("SU")] Suika,
-            [EnumAltName("RS")] Reisen,
-            [EnumAltName("AY")] Aya,
-            [EnumAltName("KM")] Komachi,
-            [EnumAltName("IK")] Iku,
-            [EnumAltName("TN")] Tenshi,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum CharaWithTotal
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("RM")] Reimu,
-            [EnumAltName("MR")] Marisa,
-            [EnumAltName("SK")] Sakuya,
-            [EnumAltName("AL")] Alice,
-            [EnumAltName("PC")] Patchouli,
-            [EnumAltName("YM")] Youmu,
-            [EnumAltName("RL")] Remilia,
-            [EnumAltName("YU")] Yuyuko,
-            [EnumAltName("YK")] Yukari,
-            [EnumAltName("SU")] Suika,
-            [EnumAltName("RS")] Reisen,
-            [EnumAltName("AY")] Aya,
-            [EnumAltName("KM")] Komachi,
-            [EnumAltName("IK")] Iku,
-            [EnumAltName("TN")] Tenshi,
-            [EnumAltName("TL")] Total,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum Stage
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("1")] St1,
-            [EnumAltName("2")] St2,
-            [EnumAltName("3")] St3,
-            [EnumAltName("4")] St4,
-            [EnumAltName("5")] St5,
-            [EnumAltName("6")] St6,
-            [EnumAltName("7")] St7,
-            [EnumAltName("8")] St8,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum CardType
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("Y")] System,
-            [EnumAltName("K")] Skill,
-            [EnumAltName("P")] Spell,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
 
         public override string SupportedVersions
         {
@@ -832,7 +745,7 @@ namespace ThScoreFileConverter.Models
                     }
                     else
                     {
-                        var numLevels = Enum.GetValues(typeof(Level)).Length;
+                        var numLevels = Enum.GetValues(typeof(Th105.Level)).Length;
                         var index = (number - 1) / numLevels;
                         if ((index >= 0) && (index < EnemyCardIdTable[chara].Count()))
                         {
@@ -873,11 +786,11 @@ namespace ThScoreFileConverter.Models
                     if (number <= 0)
                         return match.ToString();
 
-                    var numLevels = Enum.GetValues(typeof(Level)).Length;
+                    var numLevels = Enum.GetValues(typeof(Th105.Level)).Length;
                     var index = (number - 1) / numLevels;
                     if ((index >= 0) && (index < EnemyCardIdTable[chara].Count()))
                     {
-                        var level = (Level)((number - 1) % numLevels);
+                        var level = (Th105.Level)((number - 1) % numLevels);
                         var enemyCardIdPair = EnemyCardIdTable[chara].ElementAt(index);
                         if (hideUntriedCards)
                         {
@@ -924,10 +837,10 @@ namespace ThScoreFileConverter.Models
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                     Func<KeyValuePair<(Chara, int), SpellCardResult>, bool> findByLevel;
-                    if (level == LevelWithTotal.Total)
+                    if (level == Th105.LevelWithTotal.Total)
                         findByLevel = (pair => true);
                     else
-                        findByLevel = (pair => pair.Value.Level == (Level)level);
+                        findByLevel = (pair => pair.Value.Level == (Th105.Level)level);
 
                     Func<KeyValuePair<(Chara, int), SpellCardResult>, bool> countByType;
                     if (type == 1)
@@ -1034,7 +947,7 @@ namespace ThScoreFileConverter.Models
 
             public Dictionary<Chara, byte> StoryClearCounts { get; private set; }
 
-            public Dictionary<int, Th105.CardForDeck> SystemCards { get; private set; }
+            public Dictionary<int, CardForDeck> SystemCards { get; private set; }
 
             public Dictionary<Chara, ClearData> ClearData { get; private set; }
 
@@ -1071,10 +984,10 @@ namespace ThScoreFileConverter.Models
                     reader.ReadUInt32();        // always 0x0000000A and 0x0000000B?
 
                 var numSystemCards = reader.ReadInt32();
-                this.SystemCards = new Dictionary<int, Th105.CardForDeck>(numSystemCards);
+                this.SystemCards = new Dictionary<int, CardForDeck>(numSystemCards);
                 for (var index = 0; index < numSystemCards; index++)
                 {
-                    var card = new Th105.CardForDeck();
+                    var card = new CardForDeck();
                     card.ReadFrom(reader);
                     if (!this.SystemCards.ContainsKey(card.Id))
                         this.SystemCards.Add(card.Id, card);
