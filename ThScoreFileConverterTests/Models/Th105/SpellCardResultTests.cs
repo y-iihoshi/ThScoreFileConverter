@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th105;
 using Chara = ThScoreFileConverter.Models.Th105.Chara;
@@ -24,7 +25,7 @@ namespace ThScoreFileConverterTests.Models.Th105
             public uint frames;
         };
 
-        internal static Properties<TChara, TLevel> GetValidProperties<TChara, TLevel>()
+        internal static Properties<TChara, TLevel> MakeValidProperties<TChara, TLevel>()
             where TChara : struct, Enum
             where TLevel : struct, Enum
             => new Properties<TChara, TLevel>()
@@ -49,17 +50,16 @@ namespace ThScoreFileConverterTests.Models.Th105
                 properties.frames);
 
         internal static void Validate<TChara, TLevel>(
-            in SpellCardResult<TChara, TLevel> spellCardResult,
-            in Properties<TChara, TLevel> properties)
+            in Properties<TChara, TLevel> expected, in SpellCardResult<TChara, TLevel> actual)
             where TChara : struct, Enum
             where TLevel : struct, Enum
         {
-            Assert.AreEqual(properties.enemy, spellCardResult.Enemy);
-            Assert.AreEqual(properties.level, spellCardResult.Level);
-            Assert.AreEqual(properties.id, spellCardResult.Id);
-            Assert.AreEqual(properties.trialCount, spellCardResult.TrialCount);
-            Assert.AreEqual(properties.gotCount, spellCardResult.GotCount);
-            Assert.AreEqual(properties.frames, spellCardResult.Frames);
+            Assert.AreEqual(expected.enemy, actual.Enemy);
+            Assert.AreEqual(expected.level, actual.Level);
+            Assert.AreEqual(expected.id, actual.Id);
+            Assert.AreEqual(expected.trialCount, actual.TrialCount);
+            Assert.AreEqual(expected.gotCount, actual.GotCount);
+            Assert.AreEqual(expected.frames, actual.Frames);
         }
 
         internal static void SpellCardResultTestHelper<TChara, TLevel>()
@@ -71,7 +71,7 @@ namespace ThScoreFileConverterTests.Models.Th105
 
                 var spellCardResult = new SpellCardResult<TChara, TLevel>();
 
-                Validate(spellCardResult, properties);
+                Validate(properties, spellCardResult);
             });
 
         internal static void ReadFromTestHelper<TChara, TLevel>()
@@ -79,11 +79,11 @@ namespace ThScoreFileConverterTests.Models.Th105
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties = GetValidProperties<TChara, TLevel>();
+                var properties = MakeValidProperties<TChara, TLevel>();
 
                 var spellCardResult = TestUtils.Create<SpellCardResult<TChara, TLevel>>(MakeByteArray(properties));
 
-                Validate(spellCardResult, properties);
+                Validate(properties, spellCardResult);
             });
 
         internal static void ReadFromTestNullHelper<TChara, TLevel>()
@@ -102,9 +102,8 @@ namespace ThScoreFileConverterTests.Models.Th105
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties = GetValidProperties<TChara, TLevel>();
-                var array = MakeByteArray(properties);
-                array = array.Take(array.Length - 1).ToArray();
+                var properties = MakeValidProperties<TChara, TLevel>();
+                var array = MakeByteArray(properties).SkipLast(1).ToArray();
 
                 _ = TestUtils.Create<SpellCardResult<TChara, TLevel>>(array);
 
@@ -116,12 +115,12 @@ namespace ThScoreFileConverterTests.Models.Th105
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties = GetValidProperties<TChara, TLevel>();
+                var properties = MakeValidProperties<TChara, TLevel>();
                 var array = MakeByteArray(properties).Concat(new byte[1] { 1 }).ToArray();
 
                 var spellCardResult = TestUtils.Create<SpellCardResult<TChara, TLevel>>(array);
 
-                Validate(spellCardResult, properties);
+                Validate(properties, spellCardResult);
             });
 
         #region Th105
