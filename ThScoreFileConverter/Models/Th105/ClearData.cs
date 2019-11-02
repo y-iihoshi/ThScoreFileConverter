@@ -17,14 +17,14 @@ namespace ThScoreFileConverter.Models.Th105
         where TChara : struct, Enum
         where TLevel : struct, Enum
     {
-        private Dictionary<int, CardForDeck> cardsForDeck;
+        private Dictionary<int, ICardForDeck> cardsForDeck;
         private Dictionary<(TChara Chara, int CardId), SpellCardResult<TChara, TLevel>> spellCardResults;
 
         public ClearData()
         {
         }
 
-        public IReadOnlyDictionary<int, CardForDeck> CardsForDeck => this.cardsForDeck;
+        public IReadOnlyDictionary<int, ICardForDeck> CardsForDeck => this.cardsForDeck;
 
         public IReadOnlyDictionary<(TChara Chara, int CardId), SpellCardResult<TChara, TLevel>> SpellCardResults
             => this.spellCardResults;
@@ -35,7 +35,7 @@ namespace ThScoreFileConverter.Models.Th105
                 throw new ArgumentNullException(nameof(reader));
 
             var numCards = reader.ReadInt32();
-            this.cardsForDeck = new Dictionary<int, CardForDeck>(numCards);
+            this.cardsForDeck = new Dictionary<int, ICardForDeck>(numCards);
             for (var index = 0; index < numCards; index++)
             {
                 var card = new CardForDeck();

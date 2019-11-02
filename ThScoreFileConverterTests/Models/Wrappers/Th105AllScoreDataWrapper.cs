@@ -51,11 +51,11 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.Target;
 
         public IReadOnlyDictionary<TChara, byte> StoryClearCounts
-            => this.pobj.GetProperty(nameof(this.StoryClearCounts)) as Dictionary<TChara, byte>;
-        public IReadOnlyDictionary<int, CardForDeck> SystemCards
-            => this.pobj.GetProperty(nameof(this.SystemCards)) as Dictionary<int, CardForDeck>;
+            => this.pobj.GetProperty(nameof(this.StoryClearCounts)) as IReadOnlyDictionary<TChara, byte>;
+        public IReadOnlyDictionary<int, ICardForDeck> SystemCards
+            => this.pobj.GetProperty(nameof(this.SystemCards)) as IReadOnlyDictionary<int, ICardForDeck>;
         public IReadOnlyDictionary<TChara, ClearData<TChara, TLevel>> ClearData
-            => this.pobj.GetProperty(nameof(this.ClearData)) as Dictionary<TChara, ClearData<TChara, TLevel>>;
+            => this.pobj.GetProperty(nameof(this.ClearData)) as IReadOnlyDictionary<TChara, ClearData<TChara, TLevel>>;
 
         public void ReadFrom(BinaryReader reader)
             => this.pobj.Invoke(nameof(ReadFrom), new object[] { reader }, CultureInfo.InvariantCulture);

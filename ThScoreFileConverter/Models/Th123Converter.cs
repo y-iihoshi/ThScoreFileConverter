@@ -1438,7 +1438,7 @@ namespace ThScoreFileConverter.Models
 
             public Dictionary<Chara, byte> StoryClearCounts { get; private set; }
 
-            public Dictionary<int, Th105.CardForDeck> SystemCards { get; private set; }
+            public Dictionary<int, Th105.ICardForDeck> SystemCards { get; private set; }
 
             public Dictionary<Chara, ClearData> ClearData { get; private set; }
 
@@ -1475,7 +1475,7 @@ namespace ThScoreFileConverter.Models
                     reader.ReadUInt32();
 
                 var numSystemCards = reader.ReadInt32();
-                this.SystemCards = new Dictionary<int, Th105.CardForDeck>(numSystemCards);
+                this.SystemCards = new Dictionary<int, Th105.ICardForDeck>(numSystemCards);
                 for (var index = 0; index < numSystemCards; index++)
                 {
                     var card = new Th105.CardForDeck();

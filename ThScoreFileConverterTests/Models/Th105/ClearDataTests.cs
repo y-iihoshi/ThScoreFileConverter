@@ -6,6 +6,7 @@ using System.Linq;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th105;
+using ThScoreFileConverterTests.Models.Th105.Stubs;
 using Chara = ThScoreFileConverter.Models.Th105.Chara;
 using Level = ThScoreFileConverter.Models.Th105.Level;
 
@@ -18,7 +19,7 @@ namespace ThScoreFileConverterTests.Models.Th105
             where TChara : struct, Enum
             where TLevel : struct, Enum
         {
-            public IReadOnlyDictionary<int, CardForDeckTests.Properties> cardsForDeck;
+            public IReadOnlyDictionary<int, ICardForDeck> cardsForDeck;
             public IReadOnlyDictionary<
                 (TChara Chara, int CardId),
                 SpellCardResultTests.Properties<TChara, TLevel>> spellCardResults;
@@ -30,8 +31,12 @@ namespace ThScoreFileConverterTests.Models.Th105
             => new Properties<TChara, TLevel>()
             {
                 cardsForDeck = Enumerable.Range(1, 10)
-                    .Select(value => new CardForDeckTests.Properties() { id = value, maxNumber = (value % 4) + 1 })
-                    .ToDictionary(card => card.id, card => card),
+                    .Select(value => new CardForDeckStub
+                    {
+                        Id = value,
+                        MaxNumber = (value % 4) + 1
+                    } as ICardForDeck)
+                    .ToDictionary(card => card.Id),
                 spellCardResults = Utils.GetEnumerator<TChara>()
                     .Select((chara, index) => new SpellCardResultTests.Properties<TChara, TLevel>()
                     {
@@ -42,7 +47,7 @@ namespace ThScoreFileConverterTests.Models.Th105
                         gotCount = index * 50,
                         frames = 8901u - (uint)index
                     })
-                    .ToDictionary(result => (result.enemy, result.id), result => result)
+                    .ToDictionary(result => (result.enemy, result.id))
             };
 
         internal static byte[] MakeByteArray<TChara, TLevel>(in Properties<TChara, TLevel> properties)

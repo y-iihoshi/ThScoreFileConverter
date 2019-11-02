@@ -4,51 +4,46 @@ using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th105;
+using ThScoreFileConverterTests.Models.Th105.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th105
 {
     [TestClass]
     public class CardForDeckTests
     {
-        internal struct Properties
+        internal static CardForDeckStub ValidStub { get; } = new CardForDeckStub
         {
-            public int id;
-            public int maxNumber;
+            Id = 1,
+            MaxNumber = 2
         };
 
-        internal static Properties ValidProperties { get; } = new Properties()
-        {
-            id = 1,
-            maxNumber = 2
-        };
+        internal static byte[] MakeByteArray(ICardForDeck cardForDeck)
+            => TestUtils.MakeByteArray(cardForDeck.Id, cardForDeck.MaxNumber);
 
-        internal static byte[] MakeByteArray(in Properties properties)
-            => TestUtils.MakeByteArray(properties.id, properties.maxNumber);
-
-        internal static void Validate(in Properties expected, in CardForDeck actual)
+        internal static void Validate(ICardForDeck expected, ICardForDeck actual)
         {
-            Assert.AreEqual(expected.id, actual.Id);
-            Assert.AreEqual(expected.maxNumber, actual.MaxNumber);
+            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.AreEqual(expected.MaxNumber, actual.MaxNumber);
         }
 
         [TestMethod]
         public void CardForDeckTest() => TestUtils.Wrap(() =>
         {
-            var properties = new Properties();
+            var stub = new CardForDeckStub();
 
             var cardForDeck = new CardForDeck();
 
-            Validate(properties, cardForDeck);
+            Validate(stub, cardForDeck);
         });
 
         [TestMethod]
         public void ReadFromTest() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
+            var stub = ValidStub;
 
-            var cardForDeck = TestUtils.Create<CardForDeck>(MakeByteArray(properties));
+            var cardForDeck = TestUtils.Create<CardForDeck>(MakeByteArray(stub));
 
-            Validate(properties, cardForDeck);
+            Validate(stub, cardForDeck);
         });
 
         [TestMethod]
@@ -65,8 +60,8 @@ namespace ThScoreFileConverterTests.Models.Th105
         [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortened() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            var array = MakeByteArray(properties).SkipLast(1).ToArray();
+            var stub = ValidStub;
+            var array = MakeByteArray(stub).SkipLast(1).ToArray();
 
             _ = TestUtils.Create<CardForDeck>(array);
 
@@ -76,12 +71,12 @@ namespace ThScoreFileConverterTests.Models.Th105
         [TestMethod]
         public void ReadFromTestExceeded() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            var array = MakeByteArray(properties).Concat(new byte[1] { 1 }).ToArray();
+            var stub = ValidStub;
+            var array = MakeByteArray(stub).Concat(new byte[1] { 1 }).ToArray();
 
             var cardForDeck = TestUtils.Create<CardForDeck>(array);
 
-            Validate(properties, cardForDeck);
+            Validate(stub, cardForDeck);
         });
     }
 }

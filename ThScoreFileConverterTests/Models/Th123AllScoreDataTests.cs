@@ -3,8 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th105;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th105;
+using ThScoreFileConverterTests.Models.Th105.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -15,7 +17,7 @@ namespace ThScoreFileConverterTests.Models
         internal struct Properties
         {
             public Dictionary<Th123Converter.Chara, byte> storyClearCounts;
-            public Dictionary<int, CardForDeckTests.Properties> systemCards;
+            public Dictionary<int, ICardForDeck> systemCards;
             public Dictionary<
                 Th123Converter.Chara, ClearDataTests.Properties<Th123Converter.Chara, Th123Converter.Level>> clearData;
         };
@@ -31,11 +33,11 @@ namespace ThScoreFileConverterTests.Models
                     chara => TestUtils.Cast<byte>(chara)),
                 systemCards = Enumerable.Range(1, 5).ToDictionary(
                     id => id,
-                    id => new CardForDeckTests.Properties()
+                    id => new CardForDeckStub
                     {
-                        id = id,
-                        maxNumber = id % 4 + 1
-                    }),
+                        Id = id,
+                        MaxNumber = id % 4 + 1
+                    } as ICardForDeck),
                 clearData = charas.ToDictionary(
                     chara => chara,
                     chara => ClearDataTests.MakeValidProperties<Th123Converter.Chara, Th123Converter.Level>())

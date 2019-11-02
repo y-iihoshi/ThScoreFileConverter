@@ -24,7 +24,7 @@ namespace ThScoreFileConverter.Models.Th105
         private readonly MatchEvaluator evaluator;
 
         public CardForDeckReplacer(
-            IReadOnlyDictionary<int, CardForDeck> systemCards,
+            IReadOnlyDictionary<int, ICardForDeck> systemCards,
             IReadOnlyDictionary<Chara, ClearData<Chara, Level>> clearDataDictionary,
             bool hideUntriedCards)
         {
