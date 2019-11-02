@@ -39,7 +39,7 @@ namespace ThScoreFileConverterTests.Models
                         index => new ScoreDataStub<StageProgress>()
                         {
                             Score = 12345670u - (uint)index * 1000u,
-                            StageProgress = StageProgress.St5,
+                            StageProgress = StageProgress.Five,
                             ContinueCount = (byte)index,
                             Name = TestUtils.MakeRandomArray<byte>(10),
                             DateTime = 34567890u,
