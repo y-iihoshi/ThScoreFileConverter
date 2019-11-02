@@ -60,10 +60,10 @@ namespace ThScoreFileConverter.Models
         {
             return new List<IStringReplaceable>
             {
-                new CareerReplacer(this),
-                new CardReplacer(this, hideUntriedCards),
-                new CollectRateReplacer(this),
-                new CardForDeckReplacer(this, hideUntriedCards),
+                new CareerReplacer(this.allScoreData.ClearData),
+                new CardReplacer(this.allScoreData.ClearData, hideUntriedCards),
+                new CollectRateReplacer(this.allScoreData.ClearData),
+                new CardForDeckReplacer(this.allScoreData.SystemCards, this.allScoreData.ClearData, hideUntriedCards),
             };
         }
 
@@ -150,7 +150,7 @@ namespace ThScoreFileConverter.Models
             private readonly MatchEvaluator evaluator;
 
             [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-            public CareerReplacer(Th105Converter parent)
+            public CareerReplacer(IReadOnlyDictionary<Chara, ClearData<Chara, Th105.Level>> clearDataDictionary)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -184,7 +184,7 @@ namespace ThScoreFileConverter.Models
                         });
                     }
 
-                    var clearData = parent.allScoreData.ClearData[chara];
+                    var clearData = clearDataDictionary[chara];
                     if (number == 0)
                     {
                         return toString(clearData.SpellCardResults.Values.Sum(getValue));
@@ -221,7 +221,8 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public CardReplacer(Th105Converter parent, bool hideUntriedCards)
+            public CardReplacer(
+                IReadOnlyDictionary<Chara, ClearData<Chara, Th105.Level>> clearDataDictionary, bool hideUntriedCards)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -240,7 +241,7 @@ namespace ThScoreFileConverter.Models
                         var enemyCardIdPair = Definitions.EnemyCardIdTable[chara].ElementAt(index);
                         if (hideUntriedCards)
                         {
-                            var clearData = parent.allScoreData.ClearData[chara];
+                            var clearData = clearDataDictionary[chara];
                             var key = (
                                 enemyCardIdPair.Enemy,
                                 (enemyCardIdPair.CardId * numLevels) + (int)level);
@@ -267,14 +268,12 @@ namespace ThScoreFileConverter.Models
         private class CollectRateReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T105CRG({0})({1})([1-2])",
-                Parsers.LevelWithTotalParser.Pattern,
-                Parsers.CharaParser.Pattern);
+                @"%T105CRG({0})({1})([1-2])", Parsers.LevelWithTotalParser.Pattern, Parsers.CharaParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
             [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-            public CollectRateReplacer(Th105Converter parent)
+            public CollectRateReplacer(IReadOnlyDictionary<Chara, ClearData<Chara, Th105.Level>> clearDataDictionary)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -294,7 +293,7 @@ namespace ThScoreFileConverter.Models
                     else
                         countByType = (pair => pair.Value.TrialCount > 0);
 
-                    return Utils.ToNumberString(parent.allScoreData.ClearData[chara]
+                    return Utils.ToNumberString(clearDataDictionary[chara]
                         .SpellCardResults.Where(findByLevel).Count(countByType));
                 });
             }
@@ -313,7 +312,10 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public CardForDeckReplacer(Th105Converter parent, bool hideUntriedCards)
+            public CardForDeckReplacer(
+                IReadOnlyDictionary<int, CardForDeck> systemCards,
+                IReadOnlyDictionary<Chara, ClearData<Chara, Th105.Level>> clearDataDictionary,
+                bool hideUntriedCards)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -326,7 +328,7 @@ namespace ThScoreFileConverter.Models
                     {
                         if (Definitions.SystemCardNameTable.ContainsKey(number - 1))
                         {
-                            var card = parent.allScoreData.SystemCards[number - 1];
+                            var card = systemCards[number - 1];
                             if (type == "N")
                             {
                                 if (hideUntriedCards)
@@ -352,7 +354,7 @@ namespace ThScoreFileConverter.Models
                         var key = GetCharaCardIdPair(chara, cardType, number - 1);
                         if (key != null)
                         {
-                            var card = parent.allScoreData.ClearData[key.Value.Chara].CardsForDeck[key.Value.CardId];
+                            var card = clearDataDictionary[key.Value.Chara].CardsForDeck[key.Value.CardId];
                             if (type == "N")
                             {
                                 if (hideUntriedCards)
