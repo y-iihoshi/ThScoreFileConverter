@@ -25,6 +25,9 @@ namespace ThScoreFileConverter.Models.Th105
 
         public CareerReplacer(IReadOnlyDictionary<Chara, IClearData<Chara, Level>> clearDataDictionary)
         {
+            if (clearDataDictionary is null)
+                throw new ArgumentNullException(nameof(clearDataDictionary));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
@@ -57,20 +60,22 @@ namespace ThScoreFileConverter.Models.Th105
                     };
                 }
 
-                var clearData = clearDataDictionary[chara];
+                var spellCardResults = clearDataDictionary.TryGetValue(chara, out var clearData)
+                    ? clearData.SpellCardResults : new Dictionary<(Chara, int), ISpellCardResult<Chara, Level>>();
                 if (number == 0)
                 {
-                    return toString(clearData.SpellCardResults.Values.Sum(getValue));
+                    return toString(spellCardResults.Values.Sum(getValue));
                 }
                 else
                 {
                     var numLevels = Enum.GetValues(typeof(Level)).Length;
                     var index = (number - 1) / numLevels;
-                    if ((index >= 0) && (index < Definitions.EnemyCardIdTable[chara].Count()))
+                    if (Definitions.EnemyCardIdTable.TryGetValue(chara, out var enemyCardIdPairs)
+                        && (index < enemyCardIdPairs.Count()))
                     {
-                        var (enemy, cardId) = Definitions.EnemyCardIdTable[chara].ElementAt(index);
+                        var (enemy, cardId) = enemyCardIdPairs.ElementAt(index);
                         var key = (enemy, (cardId * numLevels) + ((number - 1) % numLevels));
-                        return toString(getValue(clearData.SpellCardResults[key]));
+                        return toString(spellCardResults.TryGetValue(key, out var result) ? getValue(result) : 0);
                     }
                     else
                     {
