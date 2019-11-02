@@ -367,8 +367,8 @@ namespace ThScoreFileConverter.Models.Th105
             };
 
         // Thanks to en.touhouwiki.net
-        public static IReadOnlyDictionary<Chara, List<StageInfo>> StageInfoTable { get; } =
-            new Dictionary<Chara, List<StageInfo>>
+        public static IReadOnlyDictionary<Chara, IReadOnlyList<StageInfo>> StageInfoTable { get; } =
+            new Dictionary<Chara, IReadOnlyList<StageInfo>>
             {
                 {
                     Chara.Reimu,

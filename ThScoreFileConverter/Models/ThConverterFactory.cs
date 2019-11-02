@@ -19,7 +19,7 @@ namespace ThScoreFileConverter.Models
         /// <summary>
         /// The dictionary of the types of the subclasses of the <see cref="ThConverter"/> class.
         /// </summary>
-        private static readonly Dictionary<string, Type> ConverterTypes = new Dictionary<string, Type>
+        private static readonly IReadOnlyDictionary<string, Type> ConverterTypes = new Dictionary<string, Type>
         {
             { Resources.keyTh06,  typeof(Th06Converter)  },
             { Resources.keyTh07,  typeof(Th07Converter)  },
@@ -52,7 +52,7 @@ namespace ThScoreFileConverter.Models
         /// <returns>An instance of the subclass specified by <paramref name="key"/>.</returns>
         public static ThConverter Create(string key)
         {
-            return ConverterTypes.TryGetValue(key, out Type type)
+            return ConverterTypes.TryGetValue(key, out var type)
                 ? Activator.CreateInstance(type) as ThConverter : null;
         }
     }

@@ -16,7 +16,7 @@ namespace ThScoreFileConverter.Squirrel
 {
     internal class SQObject
     {
-        private static readonly Dictionary<SQObjectType, Func<BinaryReader, SQObject>> SQObjectReaders =
+        private static readonly IReadOnlyDictionary<SQObjectType, Func<BinaryReader, SQObject>> SQObjectReaders =
             new Dictionary<SQObjectType, Func<BinaryReader, SQObject>>
             {
                 { SQObjectType.Null,     reader => SQNull.Create(reader, true) },
