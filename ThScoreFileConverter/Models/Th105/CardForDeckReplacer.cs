@@ -28,6 +28,11 @@ namespace ThScoreFileConverter.Models.Th105
             IReadOnlyDictionary<Chara, IClearData<Chara, Level>> clearDataDictionary,
             bool hideUntriedCards)
         {
+            if (systemCards is null)
+                throw new ArgumentNullException(nameof(systemCards));
+            if (clearDataDictionary is null)
+                throw new ArgumentNullException(nameof(clearDataDictionary));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var chara = Parsers.CharaParser.Parse(match.Groups[1].Value);
@@ -35,25 +40,15 @@ namespace ThScoreFileConverter.Models.Th105
                 var number = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
                 var type = match.Groups[4].Value.ToUpperInvariant();
 
+                ICardForDeck cardForDeck;
+                string cardName;
+
                 if (cardType == CardType.System)
                 {
-                    if (Definitions.SystemCardNameTable.ContainsKey(number - 1))
+                    if (Definitions.SystemCardNameTable.TryGetValue(number - 1, out var name))
                     {
-                        var card = systemCards[number - 1];
-                        if (type == "N")
-                        {
-                            if (hideUntriedCards)
-                            {
-                                if (card.MaxNumber <= 0)
-                                    return "??????????";
-                            }
-
-                            return Definitions.SystemCardNameTable[number - 1];
-                        }
-                        else
-                        {
-                            return Utils.ToNumberString(card.MaxNumber);
-                        }
+                        cardForDeck = systemCards.TryGetValue(number - 1, out var card) ? card : new CardForDeck();
+                        cardName = name;
                     }
                     else
                     {
@@ -63,28 +58,32 @@ namespace ThScoreFileConverter.Models.Th105
                 else
                 {
                     var key = GetCharaCardIdPair(chara, cardType, number - 1);
-                    if (key != null)
+                    if ((key != null) && Definitions.CardNameTable.TryGetValue(key.Value, out var name))
                     {
-                        var card = clearDataDictionary[key.Value.Chara].CardsForDeck[key.Value.CardId];
-                        if (type == "N")
-                        {
-                            if (hideUntriedCards)
-                            {
-                                if (card.MaxNumber <= 0)
-                                    return "??????????";
-                            }
-
-                            return Definitions.CardNameTable[key.Value];
-                        }
-                        else
-                        {
-                            return Utils.ToNumberString(card.MaxNumber);
-                        }
+                        cardForDeck = clearDataDictionary.TryGetValue(key.Value.Chara, out var clearData)
+                            && clearData.CardsForDeck.TryGetValue(key.Value.CardId, out var card)
+                            ? card : new CardForDeck();
+                        cardName = name;
                     }
                     else
                     {
                         return match.ToString();
                     }
+                }
+
+                if (type == "N")
+                {
+                    if (hideUntriedCards)
+                    {
+                        if (cardForDeck.MaxNumber <= 0)
+                            return "??????????";
+                    }
+
+                    return cardName;
+                }
+                else
+                {
+                    return Utils.ToNumberString(cardForDeck.MaxNumber);
                 }
             });
         }
@@ -97,13 +96,13 @@ namespace ThScoreFileConverter.Models.Th105
             if (type == CardType.System)
                 return null;
 
-            Func<(Chara Chara, int CardId), bool> matchesCharaAndType;
-            if (type == CardType.Skill)
-                matchesCharaAndType = pair => (pair.Chara == chara) && (pair.CardId / 100 == 1);
-            else
-                matchesCharaAndType = pair => (pair.Chara == chara) && (pair.CardId / 100 == 2);
+            var charaCardIdPairs = Definitions.CardNameTable.Keys.Where(
+                pair => (pair.Chara == chara) && (pair.CardId / 100 == (int)type));
 
-            return Definitions.CardNameTable.Keys.Where(matchesCharaAndType).ElementAtOrDefault(serialNumber);
+            if (serialNumber >= charaCardIdPairs.Count())
+                return null;
+
+            return charaCardIdPairs.ElementAt(serialNumber);
         }
     }
 }
