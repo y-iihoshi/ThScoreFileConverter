@@ -6,24 +6,24 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th105;
 using ThScoreFileConverterTests.Models.Wrappers;
-using Chara = ThScoreFileConverter.Models.Th105.Chara;
-using Level = ThScoreFileConverter.Models.Th105.Level;
 
 namespace ThScoreFileConverterTests.Models
 {
     [TestClass]
-    public class Th105AllScoreDataTests
+    public class Th123AllScoreDataTests
     {
         internal struct Properties
         {
-            public Dictionary<Chara, byte> storyClearCounts;
+            public Dictionary<Th123Converter.Chara, byte> storyClearCounts;
             public Dictionary<int, CardForDeckTests.Properties> systemCards;
-            public Dictionary<Chara, ClearDataTests.Properties<Chara, Level>> clearData;
+            public Dictionary<
+                Th123Converter.Chara, ClearDataTests.Properties<Th123Converter.Chara, Th123Converter.Level>> clearData;
         };
 
         internal static Properties GetValidProperties()
         {
-            var charas = Utils.GetEnumerator<Chara>();
+            var charas = Utils.GetEnumerator<Th123Converter.Chara>()
+                .Where(chara => chara != Th123Converter.Chara.Oonamazu);
             return new Properties()
             {
                 storyClearCounts = charas.ToDictionary(
@@ -38,7 +38,7 @@ namespace ThScoreFileConverterTests.Models
                     }),
                 clearData = charas.ToDictionary(
                     chara => chara,
-                    chara => ClearDataTests.MakeValidProperties<Chara, Level>())
+                    chara => ClearDataTests.MakeValidProperties<Th123Converter.Chara, Th123Converter.Level>())
             };
         }
 
@@ -58,7 +58,7 @@ namespace ThScoreFileConverterTests.Models
                 properties.clearData.SelectMany(pair => ClearDataTests.MakeByteArray(pair.Value)).ToArray());
 
         internal static void Validate(
-            in Th105AllScoreDataWrapper<Th105Converter, Chara, Level> allScoreData,
+            in Th105AllScoreDataWrapper<Th123Converter, Th123Converter.Chara, Th123Converter.Level> allScoreData,
             in Properties properties)
         {
             CollectionAssert.That.AreEqual(properties.storyClearCounts.Values, allScoreData.StoryClearCounts.Values);
@@ -75,9 +75,10 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        public void Th105AllScoreDataTest() => TestUtils.Wrap(() =>
+        public void Th123AllScoreDataTest() => TestUtils.Wrap(() =>
         {
-            var allScoreData = new Th105AllScoreDataWrapper<Th105Converter, Chara, Level>();
+            var allScoreData = new Th105AllScoreDataWrapper<
+                Th123Converter, Th123Converter.Chara, Th123Converter.Level>();
 
             Assert.AreEqual(0, allScoreData.StoryClearCounts.Count);
             Assert.IsNull(allScoreData.SystemCards);
@@ -85,20 +86,22 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th105AllScoreDataReadFromTest() => TestUtils.Wrap(() =>
+        public void Th123AllScoreDataReadFromTest() => TestUtils.Wrap(() =>
         {
             var properties = GetValidProperties();
 
-            var allScoreData = Th105AllScoreDataWrapper<Th105Converter, Chara, Level>.Create(MakeByteArray(properties));
+            var allScoreData = Th105AllScoreDataWrapper<
+                Th123Converter, Th123Converter.Chara, Th123Converter.Level>.Create(MakeByteArray(properties));
 
             Validate(allScoreData, properties);
         });
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th105AllScoreDataReadFromTestNull() => TestUtils.Wrap(() =>
+        public void Th123AllScoreDataReadFromTestNull() => TestUtils.Wrap(() =>
         {
-            var allScoreData = new Th105AllScoreDataWrapper<Th105Converter, Chara, Level>();
+            var allScoreData = new Th105AllScoreDataWrapper<
+                Th123Converter, Th123Converter.Chara, Th123Converter.Level>();
             allScoreData.ReadFrom(null);
 
             Assert.Fail(TestUtils.Unreachable);
