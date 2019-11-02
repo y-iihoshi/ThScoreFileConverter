@@ -48,9 +48,7 @@ namespace ThScoreFileConverter.Models.Th105
                 var count = reader.ReadByte();
                 if (index < validNumCharas)
                 {
-                    var chara = (Chara)index;
-                    if (!this.storyClearCounts.ContainsKey(chara))
-                        this.storyClearCounts.Add(chara, count);    // really...?
+                    this.storyClearCounts.Add((Chara)index, count); // really...?
                 }
             }
 
@@ -83,9 +81,7 @@ namespace ThScoreFileConverter.Models.Th105
                 data.ReadFrom(reader);
                 if (index < validNumCharas)
                 {
-                    var chara = (Chara)index;
-                    if (!this.clearData.ContainsKey(chara))
-                        this.clearData.Add(chara, data);
+                    this.clearData.Add((Chara)index, data);
                 }
             }
         }

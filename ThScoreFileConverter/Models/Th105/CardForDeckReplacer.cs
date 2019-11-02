@@ -57,11 +57,27 @@ namespace ThScoreFileConverter.Models.Th105
                 }
                 else
                 {
-                    var key = GetCharaCardIdPair(chara, cardType, number - 1);
-                    if ((key != null) && Definitions.CardNameTable.TryGetValue(key.Value, out var name))
+                    // serialNumber : 0-based
+                    bool TryGetCharaCardIdPair(int serialNumber, out (Chara Chara, int CardId) charaCardIdPair)
                     {
-                        cardForDeck = clearDataDictionary.TryGetValue(key.Value.Chara, out var clearData)
-                            && clearData.CardsForDeck.TryGetValue(key.Value.CardId, out var card)
+                        var charaCardIdPairs = Definitions.CardNameTable.Keys.Where(
+                            pair => (pair.Chara == chara) && (pair.CardId / 100 == (int)cardType));
+
+                        if (serialNumber < charaCardIdPairs.Count())
+                        {
+                            charaCardIdPair = charaCardIdPairs.ElementAt(serialNumber);
+                            return true;
+                        }
+
+                        charaCardIdPair = default;
+                        return false;
+                    }
+
+                    if (TryGetCharaCardIdPair(number - 1, out var key)
+                        && Definitions.CardNameTable.TryGetValue(key, out var name))
+                    {
+                        cardForDeck = clearDataDictionary.TryGetValue(key.Chara, out var clearData)
+                            && clearData.CardsForDeck.TryGetValue(key.CardId, out var card)
                             ? card : new CardForDeck();
                         cardName = name;
                     }
@@ -89,20 +105,5 @@ namespace ThScoreFileConverter.Models.Th105
         }
 
         public string Replace(string input) => Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-
-        // serialNumber: 0-based
-        private static (Chara Chara, int CardId)? GetCharaCardIdPair(Chara chara, CardType type, int serialNumber)
-        {
-            if (type == CardType.System)
-                return null;
-
-            var charaCardIdPairs = Definitions.CardNameTable.Keys.Where(
-                pair => (pair.Chara == chara) && (pair.CardId / 100 == (int)type));
-
-            if (serialNumber >= charaCardIdPairs.Count())
-                return null;
-
-            return charaCardIdPairs.ElementAt(serialNumber);
-        }
     }
 }
