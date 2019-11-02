@@ -109,6 +109,31 @@ namespace ThScoreFileConverterTests.Models.Th105
         }
 
         [TestMethod]
+        public void ReplaceTestEmpty()
+        {
+            var dictionary = new Dictionary<Chara, IClearData<Chara, Level>>();
+            var replacer = new CollectRateReplacer(dictionary);
+            Assert.AreEqual("0", replacer.Replace("%T105CRGHMR1"));
+        }
+
+        [TestMethod]
+        public void ReplaceTestEmptySpellCardResults()
+        {
+            var dictionary = new Dictionary<Chara, IClearData<Chara, Level>>
+            {
+                {
+                    Chara.Marisa,
+                    new ClearDataStub<Chara, Level>
+                    {
+                        SpellCardResults = new Dictionary<(Chara, int), ISpellCardResult<Chara, Level>>(),
+                    }
+                },
+            };
+            var replacer = new CollectRateReplacer(dictionary);
+            Assert.AreEqual("0", replacer.Replace("%T105CRGHMR1"));
+        }
+
+        [TestMethod]
         public void ReplaceTestInvalidFormat()
         {
             var replacer = new CollectRateReplacer(ClearDataDictionary);
