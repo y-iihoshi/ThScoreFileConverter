@@ -16,10 +16,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text.RegularExpressions;
-using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th105;
-using ClearData = ThScoreFileConverter.Models.Th105.ClearData<
-    ThScoreFileConverter.Models.Th105.Chara, ThScoreFileConverter.Models.Th105.Level>;
 using SpellCardResult = ThScoreFileConverter.Models.Th105.SpellCardResult<
     ThScoreFileConverter.Models.Th105.Chara, ThScoreFileConverter.Models.Th105.Level>;
 
@@ -382,79 +379,6 @@ namespace ThScoreFileConverter.Models
             public string Replace(string input)
             {
                 return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-            }
-        }
-
-        private class AllScoreData : IBinaryReadable
-        {
-            public AllScoreData()
-            {
-                this.StoryClearCounts = new Dictionary<Chara, byte>(Enum.GetValues(typeof(Chara)).Length);
-                this.SystemCards = null;
-                this.ClearData = null;
-            }
-
-            public Dictionary<Chara, byte> StoryClearCounts { get; private set; }
-
-            public Dictionary<int, CardForDeck> SystemCards { get; private set; }
-
-            public Dictionary<Chara, ClearData> ClearData { get; private set; }
-
-            public void ReadFrom(BinaryReader reader)
-            {
-                if (reader == null)
-                    throw new ArgumentNullException(nameof(reader));
-
-                var validNumCharas = Enum.GetValues(typeof(Chara)).Length;
-
-                reader.ReadUInt32();            // version? (0x6A == 106 --> ver.1.06?)
-                reader.ReadUInt32();
-
-                for (var index = 0; index < 0x14; index++)
-                {
-                    var count = reader.ReadByte();
-                    if (index < validNumCharas)
-                    {
-                        var chara = (Chara)index;
-                        if (!this.StoryClearCounts.ContainsKey(chara))
-                            this.StoryClearCounts.Add(chara, count);    // really...?
-                    }
-                }
-
-                reader.ReadExactBytes(0x14);    // flags of story playable characters?
-                reader.ReadExactBytes(0x14);    // flags of versus/arcade playable characters?
-
-                var numBgmFlags = reader.ReadInt32();
-                for (var index = 0; index < numBgmFlags; index++)
-                    reader.ReadUInt32();        // signature of an unlocked bgm?
-
-                var num = reader.ReadInt32();   // always 2?
-                for (var index = 0; index < num; index++)
-                    reader.ReadUInt32();        // always 0x0000000A and 0x0000000B?
-
-                var numSystemCards = reader.ReadInt32();
-                this.SystemCards = new Dictionary<int, CardForDeck>(numSystemCards);
-                for (var index = 0; index < numSystemCards; index++)
-                {
-                    var card = new CardForDeck();
-                    card.ReadFrom(reader);
-                    if (!this.SystemCards.ContainsKey(card.Id))
-                        this.SystemCards.Add(card.Id, card);
-                }
-
-                this.ClearData = new Dictionary<Chara, ClearData>(validNumCharas);
-                var numCharas = reader.ReadInt32();
-                for (var index = 0; index < numCharas; index++)
-                {
-                    var data = new ClearData();
-                    data.ReadFrom(reader);
-                    if (index < validNumCharas)
-                    {
-                        var chara = (Chara)index;
-                        if (!this.ClearData.ContainsKey(chara))
-                            this.ClearData.Add(chara, data);
-                    }
-                }
             }
         }
     }
