@@ -12,7 +12,7 @@ using System.IO;
 
 namespace ThScoreFileConverter.Models.Th105
 {
-    internal class SpellCardResult<TChara, TLevel> : IBinaryReadable
+    internal class SpellCardResult<TChara, TLevel> : IBinaryReadable, ISpellCardResult<TChara, TLevel>
         where TChara : struct, Enum
         where TLevel : struct, Enum
     {

@@ -20,7 +20,7 @@ using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
 using ClearData = ThScoreFileConverter.Models.Th105.ClearData<
     ThScoreFileConverter.Models.Th123Converter.Chara, ThScoreFileConverter.Models.Th123Converter.Level>;
-using SpellCardResult = ThScoreFileConverter.Models.Th105.SpellCardResult<
+using ISpellCardResult = ThScoreFileConverter.Models.Th105.ISpellCardResult<
     ThScoreFileConverter.Models.Th123Converter.Chara, ThScoreFileConverter.Models.Th123Converter.Level>;
 using StageInfo = ThScoreFileConverter.Models.Th105.StageInfo<
     ThScoreFileConverter.Models.Th123Converter.Stage, ThScoreFileConverter.Models.Th123Converter.Chara>;
@@ -1194,7 +1194,7 @@ namespace ThScoreFileConverter.Models
                     if ((chara != Chara.Sanae) && (chara != Chara.Cirno) && (chara != Chara.Meiling))
                         return match.ToString();
 
-                    Func<SpellCardResult, long> getValue;
+                    Func<ISpellCardResult, long> getValue;
                     Func<long, string> toString;
                     if (type == 1)
                     {
@@ -1323,13 +1323,13 @@ namespace ThScoreFileConverter.Models
                     if ((chara != Chara.Sanae) && (chara != Chara.Cirno) && (chara != Chara.Meiling))
                         return match.ToString();
 
-                    Func<KeyValuePair<(Chara, int), SpellCardResult>, bool> findByLevel;
+                    Func<KeyValuePair<(Chara, int), ISpellCardResult>, bool> findByLevel;
                     if (level == LevelWithTotal.Total)
                         findByLevel = (pair => true);
                     else
                         findByLevel = (pair => pair.Value.Level == (Level)level);
 
-                    Func<KeyValuePair<(Chara, int), SpellCardResult>, bool> countByType;
+                    Func<KeyValuePair<(Chara, int), ISpellCardResult>, bool> countByType;
                     if (type == 1)
                         countByType = (pair => pair.Value.GotCount > 0);
                     else

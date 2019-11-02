@@ -20,9 +20,7 @@ namespace ThScoreFileConverterTests.Models.Th105
             where TLevel : struct, Enum
         {
             public IReadOnlyDictionary<int, ICardForDeck> cardsForDeck;
-            public IReadOnlyDictionary<
-                (TChara Chara, int CardId),
-                SpellCardResultTests.Properties<TChara, TLevel>> spellCardResults;
+            public IReadOnlyDictionary<(TChara Chara, int CardId), ISpellCardResult<TChara, TLevel>> spellCardResults;
         };
 
         internal static Properties<TChara, TLevel> MakeValidProperties<TChara, TLevel>()
@@ -38,16 +36,16 @@ namespace ThScoreFileConverterTests.Models.Th105
                     } as ICardForDeck)
                     .ToDictionary(card => card.Id),
                 spellCardResults = Utils.GetEnumerator<TChara>()
-                    .Select((chara, index) => new SpellCardResultTests.Properties<TChara, TLevel>()
+                    .Select((chara, index) => new SpellCardResultStub<TChara, TLevel>()
                     {
-                        enemy = chara,
-                        level = TestUtils.Cast<TLevel>(1),
-                        id = index + 1,
-                        trialCount = index * 100,
-                        gotCount = index * 50,
-                        frames = 8901u - (uint)index
-                    })
-                    .ToDictionary(result => (result.enemy, result.id))
+                        Enemy = chara,
+                        Level = TestUtils.Cast<TLevel>(1),
+                        Id = index + 1,
+                        TrialCount = index * 100,
+                        GotCount = index * 50,
+                        Frames = 8901u - (uint)index
+                    } as ISpellCardResult<TChara, TLevel>)
+                    .ToDictionary(result => (result.Enemy, result.Id))
             };
 
         internal static byte[] MakeByteArray<TChara, TLevel>(in Properties<TChara, TLevel> properties)

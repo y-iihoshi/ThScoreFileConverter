@@ -18,7 +18,7 @@ namespace ThScoreFileConverter.Models.Th105
         where TLevel : struct, Enum
     {
         private Dictionary<int, ICardForDeck> cardsForDeck;
-        private Dictionary<(TChara Chara, int CardId), SpellCardResult<TChara, TLevel>> spellCardResults;
+        private Dictionary<(TChara Chara, int CardId), ISpellCardResult<TChara, TLevel>> spellCardResults;
 
         public ClearData()
         {
@@ -26,7 +26,7 @@ namespace ThScoreFileConverter.Models.Th105
 
         public IReadOnlyDictionary<int, ICardForDeck> CardsForDeck => this.cardsForDeck;
 
-        public IReadOnlyDictionary<(TChara Chara, int CardId), SpellCardResult<TChara, TLevel>> SpellCardResults
+        public IReadOnlyDictionary<(TChara Chara, int CardId), ISpellCardResult<TChara, TLevel>> SpellCardResults
             => this.spellCardResults;
 
         public void ReadFrom(BinaryReader reader)
@@ -45,7 +45,7 @@ namespace ThScoreFileConverter.Models.Th105
             }
 
             var numResults = reader.ReadInt32();
-            this.spellCardResults = new Dictionary<(TChara, int), SpellCardResult<TChara, TLevel>>(numResults);
+            this.spellCardResults = new Dictionary<(TChara, int), ISpellCardResult<TChara, TLevel>>(numResults);
             for (var index = 0; index < numResults; index++)
             {
                 var result = new SpellCardResult<TChara, TLevel>();

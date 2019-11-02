@@ -31,7 +31,7 @@ namespace ThScoreFileConverter.Models.Th105
                 var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                Func<SpellCardResult<Chara, Level>, long> getValue;
+                Func<ISpellCardResult<Chara, Level>, long> getValue;
                 Func<long, string> toString;
                 if (type == 1)
                 {

@@ -5,6 +5,7 @@ using System.Linq;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th105;
+using ThScoreFileConverterTests.Models.Th105.Stubs;
 using Chara = ThScoreFileConverter.Models.Th105.Chara;
 using Level = ThScoreFileConverter.Models.Th105.Level;
 
@@ -13,53 +14,41 @@ namespace ThScoreFileConverterTests.Models.Th105
     [TestClass]
     public class SpellCardResultTests
     {
-        internal struct Properties<TChara, TLevel>
+        internal static SpellCardResultStub<TChara, TLevel> MakeValidStub<TChara, TLevel>()
             where TChara : struct, Enum
             where TLevel : struct, Enum
-        {
-            public TChara enemy;
-            public TLevel level;
-            public int id;
-            public int trialCount;
-            public int gotCount;
-            public uint frames;
-        };
-
-        internal static Properties<TChara, TLevel> MakeValidProperties<TChara, TLevel>()
-            where TChara : struct, Enum
-            where TLevel : struct, Enum
-            => new Properties<TChara, TLevel>()
+            => new SpellCardResultStub<TChara, TLevel>()
             {
-                enemy = TestUtils.Cast<TChara>(1),
-                level = TestUtils.Cast<TLevel>(2),
-                id = 3,
-                trialCount = 67,
-                gotCount = 45,
-                frames = 8901
+                Enemy = TestUtils.Cast<TChara>(1),
+                Level = TestUtils.Cast<TLevel>(2),
+                Id = 3,
+                TrialCount = 67,
+                GotCount = 45,
+                Frames = 8901
             };
 
-        internal static byte[] MakeByteArray<TChara, TLevel>(in Properties<TChara, TLevel> properties)
+        internal static byte[] MakeByteArray<TChara, TLevel>(ISpellCardResult<TChara, TLevel> properties)
             where TChara : struct, Enum
             where TLevel : struct, Enum
             => TestUtils.MakeByteArray(
-                TestUtils.Cast<int>(properties.enemy),
-                TestUtils.Cast<int>(properties.level),
-                properties.id,
-                properties.trialCount,
-                properties.gotCount,
-                properties.frames);
+                TestUtils.Cast<int>(properties.Enemy),
+                TestUtils.Cast<int>(properties.Level),
+                properties.Id,
+                properties.TrialCount,
+                properties.GotCount,
+                properties.Frames);
 
         internal static void Validate<TChara, TLevel>(
-            in Properties<TChara, TLevel> expected, in SpellCardResult<TChara, TLevel> actual)
+            ISpellCardResult<TChara, TLevel> expected, ISpellCardResult<TChara, TLevel> actual)
             where TChara : struct, Enum
             where TLevel : struct, Enum
         {
-            Assert.AreEqual(expected.enemy, actual.Enemy);
-            Assert.AreEqual(expected.level, actual.Level);
-            Assert.AreEqual(expected.id, actual.Id);
-            Assert.AreEqual(expected.trialCount, actual.TrialCount);
-            Assert.AreEqual(expected.gotCount, actual.GotCount);
-            Assert.AreEqual(expected.frames, actual.Frames);
+            Assert.AreEqual(expected.Enemy, actual.Enemy);
+            Assert.AreEqual(expected.Level, actual.Level);
+            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.AreEqual(expected.TrialCount, actual.TrialCount);
+            Assert.AreEqual(expected.GotCount, actual.GotCount);
+            Assert.AreEqual(expected.Frames, actual.Frames);
         }
 
         internal static void SpellCardResultTestHelper<TChara, TLevel>()
@@ -67,11 +56,11 @@ namespace ThScoreFileConverterTests.Models.Th105
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties = new Properties<TChara, TLevel>();
+                var stub = new SpellCardResultStub<TChara, TLevel>();
 
                 var spellCardResult = new SpellCardResult<TChara, TLevel>();
 
-                Validate(properties, spellCardResult);
+                Validate(stub, spellCardResult);
             });
 
         internal static void ReadFromTestHelper<TChara, TLevel>()
@@ -79,11 +68,11 @@ namespace ThScoreFileConverterTests.Models.Th105
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties = MakeValidProperties<TChara, TLevel>();
+                var stub = MakeValidStub<TChara, TLevel>();
 
-                var spellCardResult = TestUtils.Create<SpellCardResult<TChara, TLevel>>(MakeByteArray(properties));
+                var spellCardResult = TestUtils.Create<SpellCardResult<TChara, TLevel>>(MakeByteArray(stub));
 
-                Validate(properties, spellCardResult);
+                Validate(stub, spellCardResult);
             });
 
         internal static void ReadFromTestNullHelper<TChara, TLevel>()
@@ -102,8 +91,8 @@ namespace ThScoreFileConverterTests.Models.Th105
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties = MakeValidProperties<TChara, TLevel>();
-                var array = MakeByteArray(properties).SkipLast(1).ToArray();
+                var stub = MakeValidStub<TChara, TLevel>();
+                var array = MakeByteArray(stub).SkipLast(1).ToArray();
 
                 _ = TestUtils.Create<SpellCardResult<TChara, TLevel>>(array);
 
@@ -115,12 +104,12 @@ namespace ThScoreFileConverterTests.Models.Th105
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var properties = MakeValidProperties<TChara, TLevel>();
-                var array = MakeByteArray(properties).Concat(new byte[1] { 1 }).ToArray();
+                var stub = MakeValidStub<TChara, TLevel>();
+                var array = MakeByteArray(stub).Concat(new byte[1] { 1 }).ToArray();
 
                 var spellCardResult = TestUtils.Create<SpellCardResult<TChara, TLevel>>(array);
 
-                Validate(properties, spellCardResult);
+                Validate(stub, spellCardResult);
             });
 
         #region Th105
