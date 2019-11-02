@@ -23,7 +23,7 @@ namespace ThScoreFileConverter.Models.Th105
 
         private readonly MatchEvaluator evaluator;
 
-        public CollectRateReplacer(IReadOnlyDictionary<Chara, ClearData<Chara, Level>> clearDataDictionary)
+        public CollectRateReplacer(IReadOnlyDictionary<Chara, IClearData<Chara, Level>> clearDataDictionary)
         {
             this.evaluator = new MatchEvaluator(match =>
             {

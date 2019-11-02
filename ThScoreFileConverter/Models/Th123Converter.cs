@@ -18,10 +18,6 @@ using System.IO.Compression;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
-using ClearData = ThScoreFileConverter.Models.Th105.ClearData<
-    ThScoreFileConverter.Models.Th123Converter.Chara, ThScoreFileConverter.Models.Th123Converter.Level>;
-using ISpellCardResult = ThScoreFileConverter.Models.Th105.ISpellCardResult<
-    ThScoreFileConverter.Models.Th123Converter.Chara, ThScoreFileConverter.Models.Th123Converter.Level>;
 using StageInfo = ThScoreFileConverter.Models.Th105.StageInfo<
     ThScoreFileConverter.Models.Th123Converter.Stage, ThScoreFileConverter.Models.Th123Converter.Chara>;
 
@@ -1194,7 +1190,7 @@ namespace ThScoreFileConverter.Models
                     if ((chara != Chara.Sanae) && (chara != Chara.Cirno) && (chara != Chara.Meiling))
                         return match.ToString();
 
-                    Func<ISpellCardResult, long> getValue;
+                    Func<Th105.ISpellCardResult<Chara, Level>, long> getValue;
                     Func<long, string> toString;
                     if (type == 1)
                     {
@@ -1323,13 +1319,13 @@ namespace ThScoreFileConverter.Models
                     if ((chara != Chara.Sanae) && (chara != Chara.Cirno) && (chara != Chara.Meiling))
                         return match.ToString();
 
-                    Func<KeyValuePair<(Chara, int), ISpellCardResult>, bool> findByLevel;
+                    Func<KeyValuePair<(Chara, int), Th105.ISpellCardResult<Chara, Level>>, bool> findByLevel;
                     if (level == LevelWithTotal.Total)
                         findByLevel = (pair => true);
                     else
                         findByLevel = (pair => pair.Value.Level == (Level)level);
 
-                    Func<KeyValuePair<(Chara, int), ISpellCardResult>, bool> countByType;
+                    Func<KeyValuePair<(Chara, int), Th105.ISpellCardResult<Chara, Level>>, bool> countByType;
                     if (type == 1)
                         countByType = (pair => pair.Value.GotCount > 0);
                     else
@@ -1440,7 +1436,7 @@ namespace ThScoreFileConverter.Models
 
             public Dictionary<int, Th105.ICardForDeck> SystemCards { get; private set; }
 
-            public Dictionary<Chara, ClearData> ClearData { get; private set; }
+            public Dictionary<Chara, Th105.IClearData<Chara, Level>> ClearData { get; private set; }
 
             public void ReadFrom(BinaryReader reader)
             {
@@ -1484,11 +1480,11 @@ namespace ThScoreFileConverter.Models
                         this.SystemCards.Add(card.Id, card);
                 }
 
-                this.ClearData = new Dictionary<Chara, ClearData>(validNumCharas);
+                this.ClearData = new Dictionary<Chara, Th105.IClearData<Chara, Level>>(validNumCharas);
                 var numCharas = reader.ReadInt32();
                 for (var index = 0; index < numCharas; index++)
                 {
-                    var data = new ClearData();
+                    var data = new Th105.ClearData<Chara, Level>();
                     data.ReadFrom(reader);
                     if (index < validNumCharas)
                     {

@@ -13,7 +13,7 @@ using System.IO;
 
 namespace ThScoreFileConverter.Models.Th105
 {
-    internal class ClearData<TChara, TLevel> : IBinaryReadable   // per character
+    internal class ClearData<TChara, TLevel> : IBinaryReadable, IClearData<TChara, TLevel>  // per character
         where TChara : struct, Enum
         where TLevel : struct, Enum
     {

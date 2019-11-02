@@ -18,8 +18,7 @@ namespace ThScoreFileConverterTests.Models
         {
             public Dictionary<Th123Converter.Chara, byte> storyClearCounts;
             public Dictionary<int, ICardForDeck> systemCards;
-            public Dictionary<
-                Th123Converter.Chara, ClearDataTests.Properties<Th123Converter.Chara, Th123Converter.Level>> clearData;
+            public Dictionary<Th123Converter.Chara, IClearData<Th123Converter.Chara, Th123Converter.Level>> clearData;
         };
 
         internal static Properties GetValidProperties()
@@ -40,7 +39,8 @@ namespace ThScoreFileConverterTests.Models
                     } as ICardForDeck),
                 clearData = charas.ToDictionary(
                     chara => chara,
-                    chara => ClearDataTests.MakeValidProperties<Th123Converter.Chara, Th123Converter.Level>())
+                    chara => ClearDataTests.MakeValidStub<Th123Converter.Chara, Th123Converter.Level>()
+                        as IClearData<Th123Converter.Chara, Th123Converter.Level>)
             };
         }
 

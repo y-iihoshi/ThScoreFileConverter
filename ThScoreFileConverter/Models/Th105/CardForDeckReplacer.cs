@@ -25,7 +25,7 @@ namespace ThScoreFileConverter.Models.Th105
 
         public CardForDeckReplacer(
             IReadOnlyDictionary<int, ICardForDeck> systemCards,
-            IReadOnlyDictionary<Chara, ClearData<Chara, Level>> clearDataDictionary,
+            IReadOnlyDictionary<Chara, IClearData<Chara, Level>> clearDataDictionary,
             bool hideUntriedCards)
         {
             this.evaluator = new MatchEvaluator(match =>
