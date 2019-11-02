@@ -11,22 +11,22 @@ namespace ThScoreFileConverter.Models.Th07
 {
     internal static class Parsers
     {
-        public static EnumShortNameParser<Level> LevelParser { get; }
-            = new EnumShortNameParser<Level>();
+        public static EnumShortNameParser<Level> LevelParser { get; } =
+            new EnumShortNameParser<Level>();
 
-        public static EnumShortNameParser<LevelWithTotal> LevelWithTotalParser { get; }
-            = new EnumShortNameParser<LevelWithTotal>();
+        public static EnumShortNameParser<LevelWithTotal> LevelWithTotalParser { get; } =
+            new EnumShortNameParser<LevelWithTotal>();
 
-        public static EnumShortNameParser<Chara> CharaParser { get; }
-            = new EnumShortNameParser<Chara>();
+        public static EnumShortNameParser<Chara> CharaParser { get; } =
+            new EnumShortNameParser<Chara>();
 
-        public static EnumShortNameParser<CharaWithTotal> CharaWithTotalParser { get; }
-            = new EnumShortNameParser<CharaWithTotal>();
+        public static EnumShortNameParser<CharaWithTotal> CharaWithTotalParser { get; } =
+            new EnumShortNameParser<CharaWithTotal>();
 
-        public static EnumShortNameParser<Stage> StageParser { get; }
-            = new EnumShortNameParser<Stage>();
+        public static EnumShortNameParser<Stage> StageParser { get; } =
+            new EnumShortNameParser<Stage>();
 
-        public static EnumShortNameParser<StageWithTotal> StageWithTotalParser { get; }
-            = new EnumShortNameParser<StageWithTotal>();
+        public static EnumShortNameParser<StageWithTotal> StageWithTotalParser { get; } =
+            new EnumShortNameParser<StageWithTotal>();
     }
 }

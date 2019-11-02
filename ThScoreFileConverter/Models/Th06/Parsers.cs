@@ -11,16 +11,16 @@ namespace ThScoreFileConverter.Models.Th06
 {
     internal static class Parsers
     {
-        public static EnumShortNameParser<Level> LevelParser { get; }
-            = new EnumShortNameParser<Level>();
+        public static EnumShortNameParser<Level> LevelParser { get; } =
+            new EnumShortNameParser<Level>();
 
-        public static EnumShortNameParser<Chara> CharaParser { get; }
-            = new EnumShortNameParser<Chara>();
+        public static EnumShortNameParser<Chara> CharaParser { get; } =
+            new EnumShortNameParser<Chara>();
 
-        public static EnumShortNameParser<Stage> StageParser { get; }
-            = new EnumShortNameParser<Stage>();
+        public static EnumShortNameParser<Stage> StageParser { get; } =
+            new EnumShortNameParser<Stage>();
 
-        public static EnumShortNameParser<StageWithTotal> StageWithTotalParser { get; }
-            = new EnumShortNameParser<StageWithTotal>();
+        public static EnumShortNameParser<StageWithTotal> StageWithTotalParser { get; } =
+            new EnumShortNameParser<StageWithTotal>();
     }
 }
