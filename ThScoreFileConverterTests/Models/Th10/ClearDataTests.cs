@@ -67,14 +67,14 @@ namespace ThScoreFileConverterTests.Models.Th10
         }
 
         internal static byte[] MakeData<TCharaWithTotal, TStageProgress>(
-            IClearData<TCharaWithTotal, TStageProgress> clearData)
+            IClearData<TCharaWithTotal, TStageProgress> clearData, int scoreDataUnknownSize)
             where TCharaWithTotal : struct, Enum
             where TStageProgress : struct, Enum
             => TestUtils.MakeByteArray(
                 TestUtils.Cast<int>(clearData.Chara),
                 clearData.Rankings.Values.SelectMany(
                     ranking => ranking.SelectMany(
-                        scoreData => ScoreDataTests.MakeByteArray<Th10Converter, TStageProgress>(scoreData))).ToArray(),
+                        scoreData => ScoreDataTests.MakeByteArray(scoreData, scoreDataUnknownSize))).ToArray(),
                 clearData.TotalPlayCount,
                 clearData.PlayTime,
                 clearData.ClearCounts.Values.ToArray(),
@@ -84,7 +84,7 @@ namespace ThScoreFileConverterTests.Models.Th10
                     card => SpellCardTests.MakeByteArray(card)).ToArray());
 
         internal static byte[] MakeByteArray<TCharaWithTotal, TStageProgress>(
-            IClearData<TCharaWithTotal, TStageProgress> clearData)
+            IClearData<TCharaWithTotal, TStageProgress> clearData, int scoreDataUnknownSize)
             where TCharaWithTotal : struct, Enum
             where TStageProgress : struct, Enum
             => TestUtils.MakeByteArray(
@@ -92,7 +92,10 @@ namespace ThScoreFileConverterTests.Models.Th10
                 clearData.Version,
                 clearData.Checksum,
                 clearData.Size,
-                MakeData(clearData));
+                MakeData(clearData, scoreDataUnknownSize));
+
+        internal static byte[] MakeByteArray(IClearData<CharaWithTotal, StageProgress> clearData)
+            => MakeByteArray(clearData, 0);
 
         internal static void Validate<TCharaWithTotal, TStageProgress>(
             IClearData<TCharaWithTotal, TStageProgress> expected, IClearData<TCharaWithTotal, TStageProgress> actual)
@@ -189,7 +192,6 @@ namespace ThScoreFileConverterTests.Models.Th10
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DataRow("CR", (ushort)0, 0x437C, true)]
         [DataRow("cr", (ushort)0, 0x437C, false)]

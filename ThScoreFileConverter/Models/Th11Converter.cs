@@ -608,23 +608,5 @@ namespace ThScoreFileConverter.Models
 
             public void Set(Th10.IStatus status) => this.Status = status;
         }
-
-        private class ClearData : Th10.ClearDataBase<CharaWithTotal, StageProgress, ScoreData>  // per character
-        {
-            public const ushort ValidVersion = 0x0000;
-            public const int ValidSize = 0x000068D4;
-
-            public ClearData(Th10.Chapter chapter)
-                : base(chapter, ValidVersion, ValidSize, Definitions.CardTable.Count)
-            {
-            }
-
-            public static new bool CanInitialize(Th10.Chapter chapter)
-            {
-                return Th10.ClearDataBase<CharaWithTotal, StageProgress, ScoreData>.CanInitialize(chapter)
-                    && (chapter.Version == ValidVersion)
-                    && (chapter.Size == ValidSize);
-            }
-        }
     }
 }

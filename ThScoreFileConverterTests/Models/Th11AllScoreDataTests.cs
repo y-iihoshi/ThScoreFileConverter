@@ -3,6 +3,7 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th095;
 using ThScoreFileConverter.Models.Th11;
 using ThScoreFileConverterTests.Models.Th095;
+using ThScoreFileConverterTests.Models.Th11;
 using ThScoreFileConverterTests.Models.Wrappers;
 using ChapterWrapper = ThScoreFileConverterTests.Models.Th10.Wrappers.ChapterWrapper;
 
@@ -51,30 +52,30 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th11AllScoreDataSetClearDataTest() => TestUtils.Wrap(() =>
         {
-            var stub = Th11ClearDataTests.MakeValidStub();
-            var chapter = ChapterWrapper.Create(Th11ClearDataTests.MakeByteArray(stub));
-            var clearData = new Th10ClearDataWrapper<Th11Converter, CharaWithTotal, StageProgress>(chapter);
+            var stub = ClearDataTests.MakeValidStub();
+            var chapter = ChapterWrapper.Create(ClearDataTests.MakeByteArray(stub));
+            var clearData = new ClearData(chapter.Target);
 
             var allScoreData = new Th10AllScoreDataWrapper<Th11Converter, CharaWithTotal, StageProgress>();
             allScoreData.Set(clearData);
 
-            Assert.AreSame(clearData.Target, allScoreData.ClearDataItem(stub.Chara).Target);
+            Assert.AreSame(clearData, allScoreData.ClearDataItem(stub.Chara).Target);
         });
 
         [TestMethod]
         public void Th11AllScoreDataSetClearDataTestTwice() => TestUtils.Wrap(() =>
         {
-            var stub = Th11ClearDataTests.MakeValidStub();
-            var chapter = ChapterWrapper.Create(Th11ClearDataTests.MakeByteArray(stub));
-            var clearData1 = new Th10ClearDataWrapper<Th11Converter, CharaWithTotal, StageProgress>(chapter);
-            var clearData2 = new Th10ClearDataWrapper<Th11Converter, CharaWithTotal, StageProgress>(chapter);
+            var stub = ClearDataTests.MakeValidStub();
+            var chapter = ChapterWrapper.Create(ClearDataTests.MakeByteArray(stub));
+            var clearData1 = new ClearData(chapter.Target);
+            var clearData2 = new ClearData(chapter.Target);
 
             var allScoreData = new Th10AllScoreDataWrapper<Th11Converter, CharaWithTotal, StageProgress>();
             allScoreData.Set(clearData1);
             allScoreData.Set(clearData2);
 
-            Assert.AreSame(clearData1.Target, allScoreData.ClearDataItem(stub.Chara).Target);
-            Assert.AreNotSame(clearData2.Target, allScoreData.ClearDataItem(stub.Chara).Target);
+            Assert.AreSame(clearData1, allScoreData.ClearDataItem(stub.Chara).Target);
+            Assert.AreNotSame(clearData2, allScoreData.ClearDataItem(stub.Chara).Target);
         });
 
         [TestMethod]
