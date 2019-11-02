@@ -7,7 +7,6 @@
 
 #pragma warning disable 1591
 #pragma warning disable SA1600 // ElementsMustBeDocumented
-#pragma warning disable SA1602 // EnumerationItemsMustBeDocumented
 
 using System;
 using System.Collections.Generic;
@@ -18,6 +17,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th11;
+using AllScoreData = ThScoreFileConverter.Models.Th10.AllScoreData<
+    ThScoreFileConverter.Models.Th11.CharaWithTotal, ThScoreFileConverter.Models.Th11.StageProgress>;
 using IClearData = ThScoreFileConverter.Models.Th10.IClearData<
     ThScoreFileConverter.Models.Th11.CharaWithTotal, ThScoreFileConverter.Models.Th11.StageProgress>;
 
@@ -580,33 +581,6 @@ namespace ThScoreFileConverter.Models
             {
                 return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
             }
-        }
-
-        private class AllScoreData
-        {
-            private readonly Dictionary<CharaWithTotal, IClearData> clearData;
-
-            public AllScoreData()
-            {
-                this.clearData =
-                    new Dictionary<CharaWithTotal, IClearData>(Enum.GetValues(typeof(CharaWithTotal)).Length);
-            }
-
-            public Th095.HeaderBase Header { get; private set; }
-
-            public IReadOnlyDictionary<CharaWithTotal, IClearData> ClearData => this.clearData;
-
-            public Th10.IStatus Status { get; private set; }
-
-            public void Set(Th095.HeaderBase header) => this.Header = header;
-
-            public void Set(IClearData data)
-            {
-                if (!this.clearData.ContainsKey(data.Chara))
-                    this.clearData.Add(data.Chara, data);
-            }
-
-            public void Set(Th10.IStatus status) => this.Status = status;
         }
     }
 }

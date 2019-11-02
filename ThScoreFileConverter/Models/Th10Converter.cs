@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using ThScoreFileConverter.Models.Th10;
+using AllScoreData = ThScoreFileConverter.Models.Th10.AllScoreData<
+    ThScoreFileConverter.Models.Th10.CharaWithTotal, ThScoreFileConverter.Models.Th10.StageProgress>;
 
 namespace ThScoreFileConverter.Models
 {

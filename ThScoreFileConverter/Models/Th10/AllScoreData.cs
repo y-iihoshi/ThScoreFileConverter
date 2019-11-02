@@ -9,30 +9,31 @@
 
 using System;
 using System.Collections.Generic;
-using IClearData = ThScoreFileConverter.Models.Th10.IClearData<
-    ThScoreFileConverter.Models.Th10.CharaWithTotal, ThScoreFileConverter.Models.Th10.StageProgress>;
 
 namespace ThScoreFileConverter.Models.Th10
 {
-    internal class AllScoreData
+    internal class AllScoreData<TCharaWithTotal, TStageProgress>
+        where TCharaWithTotal : struct, Enum
+        where TStageProgress : struct, Enum
     {
-        private readonly Dictionary<CharaWithTotal, IClearData> clearData;
+        private readonly Dictionary<TCharaWithTotal, IClearData<TCharaWithTotal, TStageProgress>> clearData;
 
         public AllScoreData()
         {
-            this.clearData =
-                new Dictionary<CharaWithTotal, IClearData>(Enum.GetValues(typeof(CharaWithTotal)).Length);
+            this.clearData = new Dictionary<TCharaWithTotal, IClearData<TCharaWithTotal, TStageProgress>>(
+                Enum.GetValues(typeof(TCharaWithTotal)).Length);
         }
 
         public Th095.HeaderBase Header { get; private set; }
 
-        public IReadOnlyDictionary<CharaWithTotal, IClearData> ClearData => this.clearData;
+        public IReadOnlyDictionary<TCharaWithTotal, IClearData<TCharaWithTotal, TStageProgress>> ClearData
+            => this.clearData;
 
         public IStatus Status { get; private set; }
 
         public void Set(Th095.HeaderBase header) => this.Header = header;
 
-        public void Set(IClearData data)
+        public void Set(IClearData<TCharaWithTotal, TStageProgress> data)
         {
             if (!this.clearData.ContainsKey(data.Chara))
                 this.clearData.Add(data.Chara, data);
