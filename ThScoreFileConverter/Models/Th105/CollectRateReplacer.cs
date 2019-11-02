@@ -25,6 +25,9 @@ namespace ThScoreFileConverter.Models.Th105
 
         public CollectRateReplacer(IReadOnlyDictionary<Chara, IClearData<Chara, Level>> clearDataDictionary)
         {
+            if (clearDataDictionary is null)
+                throw new ArgumentNullException(nameof(clearDataDictionary));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
@@ -43,8 +46,9 @@ namespace ThScoreFileConverter.Models.Th105
                 else
                     countByType = pair => pair.Value.TrialCount > 0;
 
-                return Utils.ToNumberString(clearDataDictionary[chara]
-                    .SpellCardResults.Where(findByLevel).Count(countByType));
+                var spellCardResults = clearDataDictionary.TryGetValue(chara, out var clearData)
+                    ? clearData.SpellCardResults : new Dictionary<(Chara, int), ISpellCardResult<Chara, Level>>();
+                return Utils.ToNumberString(spellCardResults.Where(findByLevel).Count(countByType));
             });
         }
 
