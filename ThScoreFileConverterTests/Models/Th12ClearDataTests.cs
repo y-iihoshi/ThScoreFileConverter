@@ -15,34 +15,34 @@ using ThScoreFileConverterTests.Models.Wrappers;
 namespace ThScoreFileConverterTests.Models
 {
     [TestClass]
-    public class Th11ClearDataTests
+    public class Th12ClearDataTests
     {
-        internal static ClearDataStub<Th11Converter.CharaWithTotal, Th11Converter.StageProgress> MakeValidStub()
+        internal static ClearDataStub<Th12Converter.CharaWithTotal, Th12Converter.StageProgress> MakeValidStub()
         {
             var levels = Utils.GetEnumerator<Level>();
             var levelsExceptExtra = levels.Where(level => level != Level.Extra);
             var stages = Utils.GetEnumerator<Stage>();
             var stagesExceptExtra = stages.Where(stage => stage != Stage.Extra);
 
-            return new ClearDataStub<Th11Converter.CharaWithTotal, Th11Converter.StageProgress>()
+            return new ClearDataStub<Th12Converter.CharaWithTotal, Th12Converter.StageProgress>()
             {
                 Signature = "CR",
-                Version = 0x0000,
+                Version = 0x0002,
                 Checksum = 0u,
-                Size = 0x68D4,
-                Chara = Th11Converter.CharaWithTotal.ReimuSuika,
+                Size = 0x45F4,
+                Chara = Th12Converter.CharaWithTotal.ReimuB,
                 Rankings = levels.ToDictionary(
                     level => level,
                     level => Enumerable.Range(0, 10).Select(
-                        index => new ScoreDataStub<Th11Converter.StageProgress>()
+                        index => new ScoreDataStub<Th12Converter.StageProgress>()
                         {
                             Score = 12345670u - (uint)index * 1000u,
-                            StageProgress = Th11Converter.StageProgress.St5,
+                            StageProgress = Th12Converter.StageProgress.St5,
                             ContinueCount = (byte)index,
                             Name = TestUtils.MakeRandomArray<byte>(10),
                             DateTime = 34567890u,
                             SlowRate = 1.2f
-                        }).ToList() as IReadOnlyList<IScoreData<Th11Converter.StageProgress>>),
+                        }).ToList() as IReadOnlyList<IScoreData<Th12Converter.StageProgress>>),
                 TotalPlayCount = 23,
                 PlayTime = 4567890,
                 ClearCounts = levels.ToDictionary(level => level, level => 100 - (int)level),
@@ -55,7 +55,7 @@ namespace ThScoreFileConverterTests.Models
                             Score = 123456u - (uint)pair.level * 10u,
                             StageFlag = (uint)pair.stage % 2u
                         } as IPractice),
-                Cards = Enumerable.Range(1, 175).ToDictionary(
+                Cards = Enumerable.Range(1, 113).ToDictionary(
                     index => index,
                     index => new SpellCardStub()
                     {
@@ -68,13 +68,13 @@ namespace ThScoreFileConverterTests.Models
             };
         }
 
-        internal static byte[] MakeData(IClearData<Th11Converter.CharaWithTotal, Th11Converter.StageProgress> clearData)
+        internal static byte[] MakeData(IClearData<Th12Converter.CharaWithTotal, Th12Converter.StageProgress> clearData)
             => TestUtils.MakeByteArray(
                 TestUtils.Cast<int>(clearData.Chara),
                 clearData.Rankings.Values.SelectMany(
                     ranking => ranking.SelectMany(
                         scoreData => ScoreDataTests.MakeByteArray<
-                            Th11Converter, Th11Converter.StageProgress>(scoreData))).ToArray(),
+                            Th12Converter, Th12Converter.StageProgress>(scoreData))).ToArray(),
                 clearData.TotalPlayCount,
                 clearData.PlayTime,
                 clearData.ClearCounts.Values.ToArray(),
@@ -84,7 +84,7 @@ namespace ThScoreFileConverterTests.Models
                     card => SpellCardTests.MakeByteArray(card)).ToArray());
 
         internal static byte[] MakeByteArray(
-            IClearData<Th11Converter.CharaWithTotal, Th11Converter.StageProgress> clearData)
+            IClearData<Th12Converter.CharaWithTotal, Th12Converter.StageProgress> clearData)
             => TestUtils.MakeByteArray(
                 clearData.Signature.ToCharArray(),
                 clearData.Version,
@@ -93,8 +93,8 @@ namespace ThScoreFileConverterTests.Models
                 MakeData(clearData));
 
         internal static void Validate(
-            IClearData<Th11Converter.CharaWithTotal, Th11Converter.StageProgress> expected,
-            in Th10ClearDataWrapper<Th11Converter, Th11Converter.CharaWithTotal, Th11Converter.StageProgress> actual)
+            IClearData<Th12Converter.CharaWithTotal, Th12Converter.StageProgress> expected,
+            in Th10ClearDataWrapper<Th12Converter, Th12Converter.CharaWithTotal, Th12Converter.StageProgress> actual)
         {
             var data = MakeData(expected);
 
@@ -129,13 +129,13 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        public void Th11ClearDataTestChapter() => TestUtils.Wrap(() =>
+        public void Th12ClearDataTestChapter() => TestUtils.Wrap(() =>
         {
             var stub = MakeValidStub();
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
             var clearData = new Th10ClearDataWrapper<
-                Th11Converter, Th11Converter.CharaWithTotal, Th11Converter.StageProgress>(chapter);
+                Th12Converter, Th12Converter.CharaWithTotal, Th12Converter.StageProgress>(chapter);
 
             Validate(stub, clearData);
             Assert.IsFalse(clearData.IsValid.Value);
@@ -143,10 +143,10 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th11ClearDataTestNullChapter() => TestUtils.Wrap(() =>
+        public void Th12ClearDataTestNullChapter() => TestUtils.Wrap(() =>
         {
             _ = new Th10ClearDataWrapper<
-                Th11Converter, Th11Converter.CharaWithTotal, Th11Converter.StageProgress>(null);
+                Th12Converter, Th12Converter.CharaWithTotal, Th12Converter.StageProgress>(null);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -154,52 +154,52 @@ namespace ThScoreFileConverterTests.Models
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th11ClearDataTestInvalidSignature() => TestUtils.Wrap(() =>
+        public void Th12ClearDataTestInvalidSignature() => TestUtils.Wrap(() =>
         {
             var stub = MakeValidStub();
             stub.Signature = stub.Signature.ToLowerInvariant();
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
             _ = new Th10ClearDataWrapper<
-                Th11Converter, Th11Converter.CharaWithTotal, Th11Converter.StageProgress>(chapter);
+                Th12Converter, Th12Converter.CharaWithTotal, Th12Converter.StageProgress>(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th11ClearDataTestInvalidVersion() => TestUtils.Wrap(() =>
+        public void Th12ClearDataTestInvalidVersion() => TestUtils.Wrap(() =>
         {
             var stub = MakeValidStub();
             ++stub.Version;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
             _ = new Th10ClearDataWrapper<
-                Th11Converter, Th11Converter.CharaWithTotal, Th11Converter.StageProgress>(chapter);
+                Th12Converter, Th12Converter.CharaWithTotal, Th12Converter.StageProgress>(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th11ClearDataTestInvalidSize() => TestUtils.Wrap(() =>
+        public void Th12ClearDataTestInvalidSize() => TestUtils.Wrap(() =>
         {
             var stub = MakeValidStub();
             --stub.Size;
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
             _ = new Th10ClearDataWrapper<
-                Th11Converter, Th11Converter.CharaWithTotal, Th11Converter.StageProgress>(chapter);
+                Th12Converter, Th12Converter.CharaWithTotal, Th12Converter.StageProgress>(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [DataTestMethod]
-        [DataRow("CR", (ushort)0, 0x68D4, true)]
-        [DataRow("cr", (ushort)0, 0x68D4, false)]
-        [DataRow("CR", (ushort)1, 0x68D4, false)]
-        [DataRow("CR", (ushort)0, 0x68D5, false)]
-        public void Th11ClearDataCanInitializeTest(string signature, ushort version, int size, bool expected)
+        [DataRow("CR", (ushort)2, 0x45F4, true)]
+        [DataRow("cr", (ushort)2, 0x45F4, false)]
+        [DataRow("CR", (ushort)1, 0x45F4, false)]
+        [DataRow("CR", (ushort)2, 0x45F5, false)]
+        public void Th12ClearDataCanInitializeTest(string signature, ushort version, int size, bool expected)
             => TestUtils.Wrap(() =>
             {
                 var checksum = 0u;
@@ -211,7 +211,7 @@ namespace ThScoreFileConverterTests.Models
                 Assert.AreEqual(
                     expected,
                     Th10ClearDataWrapper<
-                        Th11Converter, Th11Converter.CharaWithTotal, Th11Converter.StageProgress>.CanInitialize(chapter));
+                        Th12Converter, Th12Converter.CharaWithTotal, Th12Converter.StageProgress>.CanInitialize(chapter));
             });
     }
 }
