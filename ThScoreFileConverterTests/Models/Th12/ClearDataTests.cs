@@ -42,7 +42,7 @@ namespace ThScoreFileConverterTests.Models.Th12
                             Score = 12345670u - (uint)index * 1000u,
                             StageProgress = StageProgress.Five,
                             ContinueCount = (byte)index,
-                            Name = TestUtils.MakeRandomArray<byte>(10),
+                            Name = TestUtils.CP932Encoding.GetBytes($"Player{index}\0\0\0"),
                             DateTime = 34567890u,
                             SlowRate = 1.2f
                         }).ToList() as IReadOnlyList<IScoreData>),

@@ -28,6 +28,9 @@ namespace ThScoreFileConverter.Models.Th12
 
         public ScoreReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
         {
+            if (clearDataDictionary is null)
+                throw new ArgumentNullException(nameof(clearDataDictionary));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
@@ -35,11 +38,15 @@ namespace ThScoreFileConverter.Models.Th12
                 var rank = Utils.ToZeroBased(int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
-                var ranking = clearDataDictionary[chara].Rankings[level][rank];
+                var ranking = clearDataDictionary.TryGetValue(chara, out var clearData)
+                    && clearData.Rankings.TryGetValue(level, out var rankings)
+                    && (rank < rankings.Count)
+                    ? rankings[rank] : new ScoreData();
                 switch (type)
                 {
                     case 1:     // name
-                        return Encoding.Default.GetString(ranking.Name.ToArray()).Split('\0')[0];
+                        return (ranking.Name != null)
+                            ? Encoding.Default.GetString(ranking.Name.ToArray()).Split('\0')[0] : "--------";
                     case 2:     // score
                         return Utils.ToNumberString((ranking.Score * 10) + ranking.ContinueCount);
                     case 3:     // stage
