@@ -26,6 +26,9 @@ namespace ThScoreFileConverter.Models.Th123
         public CardReplacer(
             IReadOnlyDictionary<Chara, Th105.IClearData<Chara>> clearDataDictionary, bool hideUntriedCards)
         {
+            if (clearDataDictionary is null)
+                throw new ArgumentNullException(nameof(clearDataDictionary));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
@@ -39,17 +42,18 @@ namespace ThScoreFileConverter.Models.Th123
 
                 var numLevels = Enum.GetValues(typeof(Th105.Level)).Length;
                 var index = (number - 1) / numLevels;
-                if ((index >= 0) && (index < Definitions.EnemyCardIdTable[chara].Count()))
+                if (Definitions.EnemyCardIdTable.TryGetValue(chara, out var enemyCardIdPairs)
+                    && (index < enemyCardIdPairs.Count()))
                 {
                     var level = (Th105.Level)((number - 1) % numLevels);
-                    var enemyCardIdPair = Definitions.EnemyCardIdTable[chara].ElementAt(index);
+                    var enemyCardIdPair = enemyCardIdPairs.ElementAt(index);
                     if (hideUntriedCards)
                     {
-                        var clearData = clearDataDictionary[chara];
-                        var key = (
-                            enemyCardIdPair.Enemy,
-                            (enemyCardIdPair.CardId * numLevels) + (int)level);
-                        if (clearData.SpellCardResults[key].TrialCount <= 0)
+                        var spellCardResults = clearDataDictionary.TryGetValue(chara, out var clearData)
+                            ? clearData.SpellCardResults
+                            : new Dictionary<(Chara, int), Th105.ISpellCardResult<Chara>>();
+                        var key = (enemyCardIdPair.Enemy, (enemyCardIdPair.CardId * numLevels) + (int)level);
+                        if (!spellCardResults.TryGetValue(key, out var result) || (result.TrialCount <= 0))
                             return (type == "N") ? "??????????" : "?????";
                     }
 
