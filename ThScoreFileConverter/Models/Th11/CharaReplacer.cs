@@ -25,9 +25,11 @@ namespace ThScoreFileConverter.Models.Th11
 
         private readonly MatchEvaluator evaluator;
 
-        public CharaReplacer(
-            IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
+        public CharaReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
         {
+            if (clearDataDictionary is null)
+                throw new ArgumentNullException(nameof(clearDataDictionary));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[1].Value);
@@ -59,7 +61,8 @@ namespace ThScoreFileConverter.Models.Th11
                 }
                 else
                 {
-                    getValueByChara = dictionary => getValueByType(dictionary[chara]);
+                    getValueByChara = dictionary => dictionary.TryGetValue(chara, out var clearData)
+                        ? getValueByType(clearData) : 0;
                 }
 
                 return toString(getValueByChara(clearDataDictionary));
