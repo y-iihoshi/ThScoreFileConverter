@@ -7,7 +7,6 @@
 
 #pragma warning disable 1591
 #pragma warning disable SA1600 // ElementsMustBeDocumented
-#pragma warning disable SA1602 // EnumerationItemsMustBeDocumented
 
 using System;
 using System.Collections.Generic;
@@ -18,8 +17,10 @@ using System.IO.Compression;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Models.Th123;
+using CardType = ThScoreFileConverter.Models.Th105.CardType;
 using StageInfo = ThScoreFileConverter.Models.Th105.StageInfo<
-    ThScoreFileConverter.Models.Th123Converter.Stage, ThScoreFileConverter.Models.Th123Converter.Chara>;
+    ThScoreFileConverter.Models.Th105.Stage, ThScoreFileConverter.Models.Th123.Chara>;
 
 namespace ThScoreFileConverter.Models
 {
@@ -891,33 +892,33 @@ namespace ThScoreFileConverter.Models
                     Chara.Sanae,
                     new List<StageInfo>
                     {
-                        new StageInfo(Stage.St1, Chara.Cirno,   Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St2, Chara.Meiling, Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St3, Chara.Reimu,   Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St4, Chara.Utsuho,  Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St5, Chara.Suwako,  Enumerable.Range(0, 5)),
+                        new StageInfo(Th105.Stage.One,   Chara.Cirno,   Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.Two,   Chara.Meiling, Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.Three, Chara.Reimu,   Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.Four,  Chara.Utsuho,  Enumerable.Range(0, 4)),
+                        new StageInfo(Th105.Stage.Five,  Chara.Suwako,  Enumerable.Range(0, 5)),
                     }
                 },
                 {
                     Chara.Cirno,
                     new List<StageInfo>
                     {
-                        new StageInfo(Stage.St1, Chara.Sanae,   Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St2, Chara.Meiling, Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St3, Chara.Marisa,  Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St4, Chara.Utsuho,  Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St5, Chara.Alice,   Enumerable.Range(0, 5)),
+                        new StageInfo(Th105.Stage.One,   Chara.Sanae,   Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.Two,   Chara.Meiling, Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.Three, Chara.Marisa,  Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.Four,  Chara.Utsuho,  Enumerable.Range(0, 4)),
+                        new StageInfo(Th105.Stage.Five,  Chara.Alice,   Enumerable.Range(0, 5)),
                     }
                 },
                 {
                     Chara.Meiling,
                     new List<StageInfo>
                     {
-                        new StageInfo(Stage.St1, Chara.Patchouli, Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St2, Chara.Alice,     Enumerable.Range(0, 2)),
-                        new StageInfo(Stage.St3, Chara.Marisa,    Enumerable.Range(0, 3)),
-                        new StageInfo(Stage.St4, Chara.Reimu,     Enumerable.Range(0, 4)),
-                        new StageInfo(Stage.St5, Chara.Oonamazu,  Enumerable.Range(0, 5)),
+                        new StageInfo(Th105.Stage.One,   Chara.Patchouli, Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.Two,   Chara.Alice,     Enumerable.Range(0, 2)),
+                        new StageInfo(Th105.Stage.Three, Chara.Marisa,    Enumerable.Range(0, 3)),
+                        new StageInfo(Th105.Stage.Four,  Chara.Reimu,     Enumerable.Range(0, 4)),
+                        new StageInfo(Th105.Stage.Five,  Chara.Oonamazu,  Enumerable.Range(0, 5)),
                     }
                 },
             };
@@ -928,8 +929,8 @@ namespace ThScoreFileConverter.Models
                 stageInfoPair => stageInfoPair.Value.SelectMany(
                     stageInfo => stageInfo.CardIds.Select(id => (stageInfo.Enemy, id))));
 
-        private static new readonly EnumShortNameParser<LevelWithTotal> LevelWithTotalParser =
-            new EnumShortNameParser<LevelWithTotal>();
+        private static new readonly EnumShortNameParser<Th105.LevelWithTotal> LevelWithTotalParser =
+            new EnumShortNameParser<Th105.LevelWithTotal>();
 
         private static readonly EnumShortNameParser<Chara> CharaParser =
             new EnumShortNameParser<Chara>();
@@ -938,102 +939,6 @@ namespace ThScoreFileConverter.Models
             new EnumShortNameParser<CardType>();
 
         private AllScoreData allScoreData = null;
-
-        public enum Level
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("E")] Easy,
-            [EnumAltName("N")] Normal,
-            [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum LevelWithTotal
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("E")] Easy,
-            [EnumAltName("N")] Normal,
-            [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic,
-            [EnumAltName("T")] Total,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum Chara
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("RM")] Reimu,
-            [EnumAltName("MR")] Marisa,
-            [EnumAltName("SK")] Sakuya,
-            [EnumAltName("AL")] Alice,
-            [EnumAltName("PC")] Patchouli,
-            [EnumAltName("YM")] Youmu,
-            [EnumAltName("RL")] Remilia,
-            [EnumAltName("YU")] Yuyuko,
-            [EnumAltName("YK")] Yukari,
-            [EnumAltName("SU")] Suika,
-            [EnumAltName("RS")] Reisen,
-            [EnumAltName("AY")] Aya,
-            [EnumAltName("KM")] Komachi,
-            [EnumAltName("IK")] Iku,
-            [EnumAltName("TN")] Tenshi,
-            [EnumAltName("SN")] Sanae,
-            [EnumAltName("CI")] Cirno,
-            [EnumAltName("ML")] Meiling,
-            [EnumAltName("UT")] Utsuho,
-            [EnumAltName("SW")] Suwako,
-            [EnumAltName("NM")] Oonamazu = 0x15,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum CharaWithTotal
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("RM")] Reimu,
-            [EnumAltName("MR")] Marisa,
-            [EnumAltName("SK")] Sakuya,
-            [EnumAltName("AL")] Alice,
-            [EnumAltName("PC")] Patchouli,
-            [EnumAltName("YM")] Youmu,
-            [EnumAltName("RL")] Remilia,
-            [EnumAltName("YU")] Yuyuko,
-            [EnumAltName("YK")] Yukari,
-            [EnumAltName("SU")] Suika,
-            [EnumAltName("RS")] Reisen,
-            [EnumAltName("AY")] Aya,
-            [EnumAltName("KM")] Komachi,
-            [EnumAltName("IK")] Iku,
-            [EnumAltName("TN")] Tenshi,
-            [EnumAltName("SN")] Sanae,
-            [EnumAltName("CI")] Cirno,
-            [EnumAltName("ML")] Meiling,
-            [EnumAltName("UT")] Utsuho,
-            [EnumAltName("SW")] Suwako,
-            [EnumAltName("NM")] Oonamazu = 0x15,
-            [EnumAltName("TL")] Total,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum Stage
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("1")] St1,
-            [EnumAltName("2")] St2,
-            [EnumAltName("3")] St3,
-            [EnumAltName("4")] St4,
-            [EnumAltName("5")] St5,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum CardType
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("Y")] System,
-            [EnumAltName("K")] Skill,
-            [EnumAltName("P")] Spell,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
 
         public override string SupportedVersions
         {
@@ -1190,7 +1095,7 @@ namespace ThScoreFileConverter.Models
                     if ((chara != Chara.Sanae) && (chara != Chara.Cirno) && (chara != Chara.Meiling))
                         return match.ToString();
 
-                    Func<Th105.ISpellCardResult<Chara, Level>, long> getValue;
+                    Func<Th105.ISpellCardResult<Chara, Th105.Level>, long> getValue;
                     Func<long, string> toString;
                     if (type == 1)
                     {
@@ -1223,7 +1128,7 @@ namespace ThScoreFileConverter.Models
                     }
                     else
                     {
-                        var numLevels = Enum.GetValues(typeof(Level)).Length;
+                        var numLevels = Enum.GetValues(typeof(Th105.Level)).Length;
                         var index = (number - 1) / numLevels;
                         if ((index >= 0) && (index < EnemyCardIdTable[chara].Count()))
                         {
@@ -1266,11 +1171,11 @@ namespace ThScoreFileConverter.Models
                     if ((chara != Chara.Sanae) && (chara != Chara.Cirno) && (chara != Chara.Meiling))
                         return match.ToString();
 
-                    var numLevels = Enum.GetValues(typeof(Level)).Length;
+                    var numLevels = Enum.GetValues(typeof(Th105.Level)).Length;
                     var index = (number - 1) / numLevels;
                     if ((index >= 0) && (index < EnemyCardIdTable[chara].Count()))
                     {
-                        var level = (Level)((number - 1) % numLevels);
+                        var level = (Th105.Level)((number - 1) % numLevels);
                         var enemyCardIdPair = EnemyCardIdTable[chara].ElementAt(index);
                         if (hideUntriedCards)
                         {
@@ -1319,13 +1224,13 @@ namespace ThScoreFileConverter.Models
                     if ((chara != Chara.Sanae) && (chara != Chara.Cirno) && (chara != Chara.Meiling))
                         return match.ToString();
 
-                    Func<KeyValuePair<(Chara, int), Th105.ISpellCardResult<Chara, Level>>, bool> findByLevel;
-                    if (level == LevelWithTotal.Total)
+                    Func<KeyValuePair<(Chara, int), Th105.ISpellCardResult<Chara, Th105.Level>>, bool> findByLevel;
+                    if (level == Th105.LevelWithTotal.Total)
                         findByLevel = (pair => true);
                     else
-                        findByLevel = (pair => pair.Value.Level == (Level)level);
+                        findByLevel = (pair => pair.Value.Level == (Th105.Level)level);
 
-                    Func<KeyValuePair<(Chara, int), Th105.ISpellCardResult<Chara, Level>>, bool> countByType;
+                    Func<KeyValuePair<(Chara, int), Th105.ISpellCardResult<Chara, Th105.Level>>, bool> countByType;
                     if (type == 1)
                         countByType = (pair => pair.Value.GotCount > 0);
                     else
@@ -1436,7 +1341,7 @@ namespace ThScoreFileConverter.Models
 
             public Dictionary<int, Th105.ICardForDeck> SystemCards { get; private set; }
 
-            public Dictionary<Chara, Th105.IClearData<Chara, Level>> ClearData { get; private set; }
+            public Dictionary<Chara, Th105.IClearData<Chara, Th105.Level>> ClearData { get; private set; }
 
             public void ReadFrom(BinaryReader reader)
             {
@@ -1480,11 +1385,11 @@ namespace ThScoreFileConverter.Models
                         this.SystemCards.Add(card.Id, card);
                 }
 
-                this.ClearData = new Dictionary<Chara, Th105.IClearData<Chara, Level>>(validNumCharas);
+                this.ClearData = new Dictionary<Chara, Th105.IClearData<Chara, Th105.Level>>(validNumCharas);
                 var numCharas = reader.ReadInt32();
                 for (var index = 0; index < numCharas; index++)
                 {
-                    var data = new Th105.ClearData<Chara, Level>();
+                    var data = new Th105.ClearData<Chara, Th105.Level>();
                     data.ReadFrom(reader);
                     if (index < validNumCharas)
                     {

@@ -8,6 +8,8 @@ using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th105;
 using ThScoreFileConverterTests.Models.Th105.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
+using Chara = ThScoreFileConverter.Models.Th123.Chara;
+using Level = ThScoreFileConverter.Models.Th105.Level;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -16,15 +18,14 @@ namespace ThScoreFileConverterTests.Models
     {
         internal struct Properties
         {
-            public Dictionary<Th123Converter.Chara, byte> storyClearCounts;
+            public Dictionary<Chara, byte> storyClearCounts;
             public Dictionary<int, ICardForDeck> systemCards;
-            public Dictionary<Th123Converter.Chara, IClearData<Th123Converter.Chara, Th123Converter.Level>> clearData;
+            public Dictionary<Chara, IClearData<Chara, Level>> clearData;
         };
 
         internal static Properties GetValidProperties()
         {
-            var charas = Utils.GetEnumerator<Th123Converter.Chara>()
-                .Where(chara => chara != Th123Converter.Chara.Oonamazu);
+            var charas = Utils.GetEnumerator<Chara>().Where(chara => chara != Chara.Oonamazu);
             return new Properties()
             {
                 storyClearCounts = charas.ToDictionary(
@@ -39,8 +40,7 @@ namespace ThScoreFileConverterTests.Models
                     } as ICardForDeck),
                 clearData = charas.ToDictionary(
                     chara => chara,
-                    chara => ClearDataTests.MakeValidStub<Th123Converter.Chara, Th123Converter.Level>()
-                        as IClearData<Th123Converter.Chara, Th123Converter.Level>)
+                    chara => ClearDataTests.MakeValidStub<Chara, Level>() as IClearData<Chara, Level>)
             };
         }
 
@@ -60,7 +60,7 @@ namespace ThScoreFileConverterTests.Models
                 properties.clearData.SelectMany(pair => ClearDataTests.MakeByteArray(pair.Value)).ToArray());
 
         internal static void Validate(
-            in Th105AllScoreDataWrapper<Th123Converter, Th123Converter.Chara, Th123Converter.Level> allScoreData,
+            in Th105AllScoreDataWrapper<Th123Converter, Chara, Level> allScoreData,
             in Properties properties)
         {
             CollectionAssert.That.AreEqual(properties.storyClearCounts.Values, allScoreData.StoryClearCounts.Values);
@@ -79,8 +79,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th123AllScoreDataTest() => TestUtils.Wrap(() =>
         {
-            var allScoreData = new Th105AllScoreDataWrapper<
-                Th123Converter, Th123Converter.Chara, Th123Converter.Level>();
+            var allScoreData = new Th105AllScoreDataWrapper<Th123Converter, Chara, Level>();
 
             Assert.AreEqual(0, allScoreData.StoryClearCounts.Count);
             Assert.IsNull(allScoreData.SystemCards);
@@ -92,8 +91,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var properties = GetValidProperties();
 
-            var allScoreData = Th105AllScoreDataWrapper<
-                Th123Converter, Th123Converter.Chara, Th123Converter.Level>.Create(MakeByteArray(properties));
+            var allScoreData = Th105AllScoreDataWrapper<Th123Converter, Chara, Level>.Create(MakeByteArray(properties));
 
             Validate(allScoreData, properties);
         });
@@ -102,8 +100,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th123AllScoreDataReadFromTestNull() => TestUtils.Wrap(() =>
         {
-            var allScoreData = new Th105AllScoreDataWrapper<
-                Th123Converter, Th123Converter.Chara, Th123Converter.Level>();
+            var allScoreData = new Th105AllScoreDataWrapper<Th123Converter, Chara, Level>();
             allScoreData.ReadFrom(null);
 
             Assert.Fail(TestUtils.Unreachable);
