@@ -928,15 +928,6 @@ namespace ThScoreFileConverter.Models
                 stageInfoPair => stageInfoPair.Value.SelectMany(
                     stageInfo => stageInfo.CardIds.Select(id => (stageInfo.Enemy, id))));
 
-        private static new readonly EnumShortNameParser<Th105.LevelWithTotal> LevelWithTotalParser =
-            new EnumShortNameParser<Th105.LevelWithTotal>();
-
-        private static readonly EnumShortNameParser<Chara> CharaParser =
-            new EnumShortNameParser<Chara>();
-
-        private static readonly EnumShortNameParser<CardType> CardTypeParser =
-            new EnumShortNameParser<CardType>();
-
         private AllScoreData allScoreData = null;
 
         public override string SupportedVersions
@@ -1078,7 +1069,7 @@ namespace ThScoreFileConverter.Models
         private class CareerReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T123C(\d{{2}})({0})([1-3])", CharaParser.Pattern);
+                @"%T123C(\d{{2}})({0})([1-3])", Parsers.CharaParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -1088,7 +1079,7 @@ namespace ThScoreFileConverter.Models
                 this.evaluator = new MatchEvaluator(match =>
                 {
                     var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
-                    var chara = CharaParser.Parse(match.Groups[2].Value);
+                    var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                     if ((chara != Chara.Sanae) && (chara != Chara.Cirno) && (chara != Chara.Meiling))
@@ -1153,7 +1144,7 @@ namespace ThScoreFileConverter.Models
         private class CardReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T123CARD(\d{{2}})({0})([NR])", CharaParser.Pattern);
+                @"%T123CARD(\d{{2}})({0})([NR])", Parsers.CharaParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -1162,7 +1153,7 @@ namespace ThScoreFileConverter.Models
                 this.evaluator = new MatchEvaluator(match =>
                 {
                     var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
-                    var chara = CharaParser.Parse(match.Groups[2].Value);
+                    var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
                     var type = match.Groups[3].Value.ToUpperInvariant();
 
                     if (number <= 0)
@@ -1205,9 +1196,7 @@ namespace ThScoreFileConverter.Models
         private class CollectRateReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T123CRG({0})({1})([1-2])",
-                LevelWithTotalParser.Pattern,
-                CharaParser.Pattern);
+                @"%T123CRG({0})({1})([1-2])", Parsers.LevelWithTotalParser.Pattern, Parsers.CharaParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -1216,8 +1205,8 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var level = LevelWithTotalParser.Parse(match.Groups[1].Value);
-                    var chara = CharaParser.Parse(match.Groups[2].Value);
+                    var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
+                    var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                     if ((chara != Chara.Sanae) && (chara != Chara.Cirno) && (chara != Chara.Meiling))
@@ -1250,7 +1239,7 @@ namespace ThScoreFileConverter.Models
         private class CardForDeckReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T123DC({0})({1})(\d{{2}})([NC])", CharaParser.Pattern, CardTypeParser.Pattern);
+                @"%T123DC({0})({1})(\d{{2}})([NC])", Parsers.CharaParser.Pattern, Parsers.CardTypeParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -1258,8 +1247,8 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var chara = CharaParser.Parse(match.Groups[1].Value);
-                    var cardType = CardTypeParser.Parse(match.Groups[2].Value);
+                    var chara = Parsers.CharaParser.Parse(match.Groups[1].Value);
+                    var cardType = Parsers.CardTypeParser.Parse(match.Groups[2].Value);
                     var number = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
                     var type = match.Groups[4].Value.ToUpperInvariant();
 
