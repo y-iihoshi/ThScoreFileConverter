@@ -7,6 +7,7 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using IClearData = ThScoreFileConverter.Models.Th10.IClearData<
@@ -27,6 +28,9 @@ namespace ThScoreFileConverter.Models.Th12
 
         public PracticeReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
         {
+            if (clearDataDictionary is null)
+                throw new ArgumentNullException(nameof(clearDataDictionary));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
@@ -38,17 +42,9 @@ namespace ThScoreFileConverter.Models.Th12
                 if (stage == Stage.Extra)
                     return match.ToString();
 
-                if (clearDataDictionary.ContainsKey(chara))
-                {
-                    var key = (level, stage);
-                    var practices = clearDataDictionary[chara].Practices;
-                    return practices.ContainsKey(key)
-                        ? Utils.ToNumberString(practices[key].Score * 10) : "0";
-                }
-                else
-                {
-                    return "0";
-                }
+                return clearDataDictionary.TryGetValue(chara, out var clearData)
+                    && clearData.Practices.TryGetValue((level, stage), out var practice)
+                    ? Utils.ToNumberString(practice.Score * 10) : "0";
             });
         }
 
