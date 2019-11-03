@@ -1,9 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th095;
+using ThScoreFileConverter.Models.Th12;
 using ThScoreFileConverterTests.Models.Th095;
 using ThScoreFileConverterTests.Models.Wrappers;
 using ChapterWrapper = ThScoreFileConverterTests.Models.Th10.Wrappers.ChapterWrapper;
+using StageProgress = ThScoreFileConverter.Models.Th10.StageProgress;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -13,8 +15,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th12AllScoreDataTest() => TestUtils.Wrap(() =>
         {
-            var allScoreData = new Th10AllScoreDataWrapper<
-                Th12Converter, Th12Converter.CharaWithTotal, Th12Converter.StageProgress>();
+            var allScoreData = new Th10AllScoreDataWrapper<Th12Converter, CharaWithTotal, StageProgress>();
 
             Assert.IsNull(allScoreData.Header);
             Assert.AreEqual(0, allScoreData.ClearDataCount);
@@ -27,8 +28,7 @@ namespace ThScoreFileConverterTests.Models
             var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.ValidProperties);
             var header = TestUtils.Create<HeaderBase>(array);
 
-            var allScoreData = new Th10AllScoreDataWrapper<
-                Th12Converter, Th12Converter.CharaWithTotal, Th12Converter.StageProgress>();
+            var allScoreData = new Th10AllScoreDataWrapper<Th12Converter, CharaWithTotal, StageProgress>();
             allScoreData.Set(header);
 
             Assert.AreSame(header, allScoreData.Header);
@@ -41,8 +41,7 @@ namespace ThScoreFileConverterTests.Models
             var header1 = TestUtils.Create<HeaderBase>(array);
             var header2 = TestUtils.Create<HeaderBase>(array);
 
-            var allScoreData = new Th10AllScoreDataWrapper<
-                Th12Converter, Th12Converter.CharaWithTotal, Th12Converter.StageProgress>();
+            var allScoreData = new Th10AllScoreDataWrapper<Th12Converter, CharaWithTotal, StageProgress>();
             allScoreData.Set(header1);
             allScoreData.Set(header2);
 
@@ -55,11 +54,9 @@ namespace ThScoreFileConverterTests.Models
         {
             var stub = Th12ClearDataTests.MakeValidStub();
             var chapter = ChapterWrapper.Create(Th12ClearDataTests.MakeByteArray(stub));
-            var clearData = new Th10ClearDataWrapper<
-                Th12Converter, Th12Converter.CharaWithTotal, Th12Converter.StageProgress>(chapter);
+            var clearData = new Th10ClearDataWrapper<Th12Converter, CharaWithTotal, StageProgress>(chapter);
 
-            var allScoreData = new Th10AllScoreDataWrapper<
-                Th12Converter, Th12Converter.CharaWithTotal, Th12Converter.StageProgress>();
+            var allScoreData = new Th10AllScoreDataWrapper<Th12Converter, CharaWithTotal, StageProgress>();
             allScoreData.Set(clearData);
 
             Assert.AreSame(clearData.Target, allScoreData.ClearDataItem(stub.Chara).Target);
@@ -70,13 +67,10 @@ namespace ThScoreFileConverterTests.Models
         {
             var stub = Th12ClearDataTests.MakeValidStub();
             var chapter = ChapterWrapper.Create(Th12ClearDataTests.MakeByteArray(stub));
-            var clearData1 = new Th10ClearDataWrapper<
-                Th12Converter, Th12Converter.CharaWithTotal, Th12Converter.StageProgress>(chapter);
-            var clearData2 = new Th10ClearDataWrapper<
-                Th12Converter, Th12Converter.CharaWithTotal, Th12Converter.StageProgress>(chapter);
+            var clearData1 = new Th10ClearDataWrapper<Th12Converter, CharaWithTotal, StageProgress>(chapter);
+            var clearData2 = new Th10ClearDataWrapper<Th12Converter, CharaWithTotal, StageProgress>(chapter);
 
-            var allScoreData = new Th10AllScoreDataWrapper<
-                Th12Converter, Th12Converter.CharaWithTotal, Th12Converter.StageProgress>();
+            var allScoreData = new Th10AllScoreDataWrapper<Th12Converter, CharaWithTotal, StageProgress>();
             allScoreData.Set(clearData1);
             allScoreData.Set(clearData2);
 
@@ -90,8 +84,7 @@ namespace ThScoreFileConverterTests.Models
             var chapter = ChapterWrapper.Create(Th10.StatusTests.MakeByteArray(Th12.StatusTests.ValidStub));
             var status = new ThScoreFileConverter.Models.Th12.Status(chapter.Target);
 
-            var allScoreData = new Th10AllScoreDataWrapper<
-                Th12Converter, Th12Converter.CharaWithTotal, Th12Converter.StageProgress>();
+            var allScoreData = new Th10AllScoreDataWrapper<Th12Converter, CharaWithTotal, StageProgress>();
             allScoreData.Set(status);
 
             Assert.AreSame(status, allScoreData.Status);
@@ -104,8 +97,7 @@ namespace ThScoreFileConverterTests.Models
             var status1 = new ThScoreFileConverter.Models.Th12.Status(chapter.Target);
             var status2 = new ThScoreFileConverter.Models.Th12.Status(chapter.Target);
 
-            var allScoreData = new Th10AllScoreDataWrapper<
-                Th12Converter, Th12Converter.CharaWithTotal, Th12Converter.StageProgress>();
+            var allScoreData = new Th10AllScoreDataWrapper<Th12Converter, CharaWithTotal, StageProgress>();
             allScoreData.Set(status1);
             allScoreData.Set(status2);
 
