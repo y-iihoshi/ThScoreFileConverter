@@ -7,7 +7,6 @@
 
 #pragma warning disable 1591
 #pragma warning disable SA1600 // ElementsMustBeDocumented
-#pragma warning disable SA1602 // EnumerationItemsMustBeDocumented
 
 using System;
 using System.Collections.Generic;
@@ -607,24 +606,6 @@ namespace ThScoreFileConverter.Models
             }
 
             public void Set(Th10.IStatus status) => this.Status = status;
-        }
-
-        private class ClearData : Th10.ClearDataBase<CharaWithTotal, StageProgress, ScoreData>  // per character
-        {
-            public const ushort ValidVersion = 0x0002;
-            public const int ValidSize = 0x000045F4;
-
-            public ClearData(Th10.Chapter chapter)
-                : base(chapter, ValidVersion, ValidSize, Definitions.CardTable.Count)
-            {
-            }
-
-            public static new bool CanInitialize(Th10.Chapter chapter)
-            {
-                return Th10.ClearDataBase<CharaWithTotal, StageProgress, ScoreData>.CanInitialize(chapter)
-                    && (chapter.Version == ValidVersion)
-                    && (chapter.Size == ValidSize);
-            }
         }
     }
 }

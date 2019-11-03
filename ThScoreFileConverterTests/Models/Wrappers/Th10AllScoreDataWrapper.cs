@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using ThScoreFileConverter.Models;
@@ -27,25 +28,14 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.Target;
         public ThScoreFileConverter.Models.Th095.HeaderBase Header
             => this.pobj.GetProperty(nameof(this.Header)) as ThScoreFileConverter.Models.Th095.HeaderBase;
-
-        // NOTE: Th10Converter.ClearData is a private class.
-        // public IReadOnlyDictionary<CharaWithTotal, ClearData> ClearData
-        //     => this.pobj.GetProperty(nameof(this.ClearData)) as Dictionary<CharaWithTotal, ClearData>;
-        public object ClearData
-            => this.pobj.GetProperty(nameof(this.ClearData));
-        public int? ClearDataCount
-            => this.ClearData.GetType().GetProperty("Count").GetValue(this.ClearData) as int?;
-        public Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress> ClearDataItem(TCharaWithTotal chara)
-            => new Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress>(
-                this.ClearData.GetType().GetProperty("Item").GetValue(this.ClearData, new object[] { chara }));
-
+        public IReadOnlyDictionary<TCharaWithTotal, IClearData<TCharaWithTotal, TStageProgress>> ClearData
+            => this.pobj.GetProperty(nameof(this.ClearData))
+                as IReadOnlyDictionary<TCharaWithTotal, IClearData<TCharaWithTotal, TStageProgress>>;
         public IStatus Status
             => this.pobj.GetProperty(nameof(this.Status)) as IStatus;
 
         public void Set(ThScoreFileConverter.Models.Th095.HeaderBase header)
             => this.pobj.Invoke(nameof(Set), new object[] { header }, CultureInfo.InvariantCulture);
-        public void Set(Th10ClearDataWrapper<TParent, TCharaWithTotal, TStageProgress> data)
-            => this.pobj.Invoke(nameof(Set), new object[] { data.Target }, CultureInfo.InvariantCulture);
         public void Set(IClearData<TCharaWithTotal, TStageProgress> data)
             => this.pobj.Invoke(nameof(Set), new object[] { data }, CultureInfo.InvariantCulture);
         public void Set(IStatus status)

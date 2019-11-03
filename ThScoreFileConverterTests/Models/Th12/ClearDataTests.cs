@@ -5,17 +5,17 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Models.Th11;
+using ThScoreFileConverter.Models.Th12;
 using ThScoreFileConverterTests.Models.Th10.Stubs;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
 using IClearData = ThScoreFileConverter.Models.Th10.IClearData<
-    ThScoreFileConverter.Models.Th11.CharaWithTotal, ThScoreFileConverter.Models.Th10.StageProgress>;
+    ThScoreFileConverter.Models.Th12.CharaWithTotal, ThScoreFileConverter.Models.Th10.StageProgress>;
 using IPractice = ThScoreFileConverter.Models.Th10.IPractice;
 using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th10.StageProgress>;
 using ISpellCard = ThScoreFileConverter.Models.Th10.ISpellCard<ThScoreFileConverter.Models.Level>;
 using StageProgress = ThScoreFileConverter.Models.Th10.StageProgress;
 
-namespace ThScoreFileConverterTests.Models.Th11
+namespace ThScoreFileConverterTests.Models.Th12
 {
     [TestClass]
     public class ClearDataTests
@@ -30,10 +30,10 @@ namespace ThScoreFileConverterTests.Models.Th11
             return new ClearDataStub<CharaWithTotal, StageProgress>()
             {
                 Signature = "CR",
-                Version = 0x0000,
+                Version = 0x0002,
                 Checksum = 0u,
-                Size = 0x68D4,
-                Chara = CharaWithTotal.ReimuSuika,
+                Size = 0x45F4,
+                Chara = CharaWithTotal.ReimuB,
                 Rankings = levels.ToDictionary(
                     level => level,
                     level => Enumerable.Range(0, 10).Select(
@@ -42,7 +42,7 @@ namespace ThScoreFileConverterTests.Models.Th11
                             Score = 12345670u - (uint)index * 1000u,
                             StageProgress = StageProgress.Five,
                             ContinueCount = (byte)index,
-                            Name = TestUtils.CP932Encoding.GetBytes($"Player{index}\0\0\0"),
+                            Name = TestUtils.MakeRandomArray<byte>(10),
                             DateTime = 34567890u,
                             SlowRate = 1.2f
                         }).ToList() as IReadOnlyList<IScoreData>),
@@ -58,7 +58,7 @@ namespace ThScoreFileConverterTests.Models.Th11
                             Score = 123456u - (uint)pair.level * 10u,
                             StageFlag = (uint)pair.stage % 2u
                         } as IPractice),
-                Cards = Enumerable.Range(1, 175).ToDictionary(
+                Cards = Enumerable.Range(1, 113).ToDictionary(
                     index => index,
                     index => new SpellCardStub()
                     {
@@ -136,10 +136,10 @@ namespace ThScoreFileConverterTests.Models.Th11
         });
 
         [DataTestMethod]
-        [DataRow("CR", (ushort)0, 0x68D4, true)]
-        [DataRow("cr", (ushort)0, 0x68D4, false)]
-        [DataRow("CR", (ushort)1, 0x68D4, false)]
-        [DataRow("CR", (ushort)0, 0x68D5, false)]
+        [DataRow("CR", (ushort)2, 0x45F4, true)]
+        [DataRow("cr", (ushort)2, 0x45F4, false)]
+        [DataRow("CR", (ushort)1, 0x45F4, false)]
+        [DataRow("CR", (ushort)2, 0x45F5, false)]
         public void CanInitializeTest(string signature, ushort version, int size, bool expected) => TestUtils.Wrap(() =>
         {
             var checksum = 0u;
