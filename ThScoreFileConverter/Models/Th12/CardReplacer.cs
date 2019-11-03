@@ -23,8 +23,7 @@ namespace ThScoreFileConverter.Models.Th12
 
         private readonly MatchEvaluator evaluator;
 
-        public CardReplacer(
-            IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, bool hideUntriedCards)
+        public CardReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, bool hideUntriedCards)
         {
             if (clearDataDictionary is null)
                 throw new ArgumentNullException(nameof(clearDataDictionary));
