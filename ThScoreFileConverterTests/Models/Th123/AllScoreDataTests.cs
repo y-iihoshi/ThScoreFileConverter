@@ -101,5 +101,53 @@ namespace ThScoreFileConverterTests.Models.Th123
 
             Assert.Fail(TestUtils.Unreachable);
         });
+
+        [TestMethod]
+        public void ReadFromTestDuplicatedSystemCard() => TestUtils.Wrap(() =>
+        {
+            var properties = MakeValidProperties();
+            var array = TestUtils.MakeByteArray(
+                new uint[2],
+                properties.storyClearCounts.Select(pair => pair.Value).ToArray(),
+                new byte[0x14 - properties.storyClearCounts.Count],
+                new byte[0x28],
+                3,
+                new uint[3],
+                2,
+                new uint[2],
+                properties.systemCards.Count + 1,
+                properties.systemCards.SelectMany(pair => Th105.CardForDeckTests.MakeByteArray(pair.Value)).ToArray(),
+                Th105.CardForDeckTests.MakeByteArray(properties.systemCards.First().Value).ToArray(),
+                properties.clearData.Count,
+                properties.clearData.SelectMany(pair => Th105.ClearDataTests.MakeByteArray(pair.Value)).ToArray());
+
+            var allScoreData = TestUtils.Create<AllScoreData>(array);
+
+            Validate(properties, allScoreData);
+        });
+
+        [TestMethod]
+        public void ReadFromTestExceededClearData() => TestUtils.Wrap(() =>
+        {
+            var properties = MakeValidProperties();
+            var array = TestUtils.MakeByteArray(
+                new uint[2],
+                properties.storyClearCounts.Select(pair => pair.Value).ToArray(),
+                new byte[0x14 - properties.storyClearCounts.Count],
+                new byte[0x28],
+                3,
+                new uint[3],
+                2,
+                new uint[2],
+                properties.systemCards.Count,
+                properties.systemCards.SelectMany(pair => Th105.CardForDeckTests.MakeByteArray(pair.Value)).ToArray(),
+                properties.clearData.Count + 1,
+                properties.clearData.SelectMany(pair => Th105.ClearDataTests.MakeByteArray(pair.Value)).ToArray(),
+                Th105.ClearDataTests.MakeByteArray(properties.clearData.First().Value));
+
+            var allScoreData = TestUtils.Create<AllScoreData>(array);
+
+            Validate(properties, allScoreData);
+        });
     }
 }

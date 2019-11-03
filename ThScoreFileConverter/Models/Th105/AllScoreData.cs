@@ -47,9 +47,7 @@ namespace ThScoreFileConverter.Models.Th105
             {
                 var count = reader.ReadByte();
                 if (index < validNumCharas)
-                {
                     this.storyClearCounts.Add((Chara)index, count); // really...?
-                }
             }
 
             reader.ReadExactBytes(0x14);    // flags of story playable characters?
@@ -80,9 +78,7 @@ namespace ThScoreFileConverter.Models.Th105
                 var data = new ClearData<Chara>();
                 data.ReadFrom(reader);
                 if (index < validNumCharas)
-                {
                     this.clearData.Add((Chara)index, data);
-                }
             }
         }
     }

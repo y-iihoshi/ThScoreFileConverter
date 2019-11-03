@@ -45,19 +45,14 @@ namespace ThScoreFileConverter.Models.Th123
             reader.ReadUInt32();            // version? (0xD2 == 210 --> ver.1.10?)
             reader.ReadUInt32();
 
-            for (var index = 0; index < 0x14; index++)
+            for (var index = 0; index < validNumCharas; index++)
             {
                 var count = reader.ReadByte();
-                if (index < validNumCharas)
-                {
-                    var chara = (Chara)index;
-                    if (!this.storyClearCounts.ContainsKey(chara))
-                        this.storyClearCounts.Add(chara, count);    // really...?
-                }
+                this.storyClearCounts.Add((Chara)index, count); // really...?
             }
 
-            reader.ReadExactBytes(0x14);    // flags of story playable characters?
-            reader.ReadExactBytes(0x14);    // flags of versus/arcade playable characters?
+            reader.ReadExactBytes(validNumCharas);  // flags of story playable characters?
+            reader.ReadExactBytes(validNumCharas);  // flags of versus/arcade playable characters?
 
             var numBgmFlags = reader.ReadInt32();
             for (var index = 0; index < numBgmFlags; index++)
@@ -84,11 +79,7 @@ namespace ThScoreFileConverter.Models.Th123
                 var data = new Th105.ClearData<Chara>();
                 data.ReadFrom(reader);
                 if (index < validNumCharas)
-                {
-                    var chara = (Chara)index;
-                    if (!this.clearData.ContainsKey(chara))
-                        this.clearData.Add(chara, data);
-                }
+                    this.clearData.Add((Chara)index, data);
             }
         }
     }
