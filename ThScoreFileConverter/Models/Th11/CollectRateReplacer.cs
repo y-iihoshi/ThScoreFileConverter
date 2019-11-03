@@ -29,6 +29,9 @@ namespace ThScoreFileConverter.Models.Th11
         public CollectRateReplacer(
             IReadOnlyDictionary<CharaWithTotal, Th10.IClearData<CharaWithTotal, StageProgress>> clearDataDictionary)
         {
+            if (clearDataDictionary is null)
+                throw new ArgumentNullException(nameof(clearDataDictionary));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
@@ -65,9 +68,11 @@ namespace ThScoreFileConverter.Models.Th11
                 else
                     findByType = card => card.TrialCount > 0;
 
-                return clearDataDictionary[chara].Cards.Values
-                    .Count(Utils.MakeAndPredicate(findByLevel, findByStage, findByType))
-                    .ToString(CultureInfo.CurrentCulture);
+                return clearDataDictionary.TryGetValue(chara, out var clearData)
+                    ? clearData.Cards.Values
+                        .Count(Utils.MakeAndPredicate(findByLevel, findByStage, findByType))
+                        .ToString(CultureInfo.CurrentCulture)
+                    : "0";
             });
         }
 
