@@ -17,12 +17,12 @@ namespace ThScoreFileConverterTests.Models.Th105
                 new CardForDeckStub { Id = 1, MaxNumber = 0 },
             }.ToDictionary(card => card.Id);
 
-        internal static IReadOnlyDictionary<Chara, IClearData<Chara, Level>> ClearDataDictionary { get; } =
-            new Dictionary<Chara, IClearData<Chara, Level>>
+        internal static IReadOnlyDictionary<Chara, IClearData<Chara>> ClearDataDictionary { get; } =
+            new Dictionary<Chara, IClearData<Chara>>
             {
                 {
                     Chara.Marisa,
-                    new ClearDataStub<Chara, Level>
+                    new ClearDataStub<Chara>
                     {
                         CardsForDeck = new List<ICardForDeck>
                         {
@@ -70,7 +70,7 @@ namespace ThScoreFileConverterTests.Models.Th105
         [TestMethod]
         public void CardForDeckReplacerTestEmptyClearDataDictionary()
         {
-            var dictionary = new Dictionary<Chara, IClearData<Chara, Level>>();
+            var dictionary = new Dictionary<Chara, IClearData<Chara>>();
             var replacer = new CardForDeckReplacer(SystemCards, dictionary, false);
             Assert.IsNotNull(replacer);
         }
@@ -187,7 +187,7 @@ namespace ThScoreFileConverterTests.Models.Th105
         [TestMethod]
         public void ReplaceTestEmptyClearDataDictionary()
         {
-            var dictionary = new Dictionary<Chara, IClearData<Chara, Level>>();
+            var dictionary = new Dictionary<Chara, IClearData<Chara>>();
             var replacer = new CardForDeckReplacer(SystemCards, dictionary, true);
             Assert.AreEqual("「気質発現」", replacer.Replace("%T105DCMRY01N"));
             Assert.AreEqual("12", replacer.Replace("%T105DCMRY01C"));

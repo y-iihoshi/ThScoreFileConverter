@@ -12,12 +12,11 @@ using System.Collections.Generic;
 
 namespace ThScoreFileConverter.Models.Th105
 {
-    internal interface IClearData<TChara, TLevel>
+    internal interface IClearData<TChara>
         where TChara : struct, Enum
-        where TLevel : struct, Enum
     {
         IReadOnlyDictionary<int, ICardForDeck> CardsForDeck { get; }
 
-        IReadOnlyDictionary<(TChara Chara, int CardId), ISpellCardResult<TChara, TLevel>> SpellCardResults { get; }
+        IReadOnlyDictionary<(TChara Chara, int CardId), ISpellCardResult<TChara>> SpellCardResults { get; }
     }
 }

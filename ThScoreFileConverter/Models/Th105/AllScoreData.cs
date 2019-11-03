@@ -18,7 +18,7 @@ namespace ThScoreFileConverter.Models.Th105
     {
         private readonly Dictionary<Chara, byte> storyClearCounts;
         private Dictionary<int, ICardForDeck> systemCards;
-        private Dictionary<Chara, IClearData<Chara, Level>> clearData;
+        private Dictionary<Chara, IClearData<Chara>> clearData;
 
         public AllScoreData()
         {
@@ -31,7 +31,7 @@ namespace ThScoreFileConverter.Models.Th105
 
         public IReadOnlyDictionary<int, ICardForDeck> SystemCards => this.systemCards;
 
-        public IReadOnlyDictionary<Chara, IClearData<Chara, Level>> ClearData => this.clearData;
+        public IReadOnlyDictionary<Chara, IClearData<Chara>> ClearData => this.clearData;
 
         public void ReadFrom(BinaryReader reader)
         {
@@ -73,11 +73,11 @@ namespace ThScoreFileConverter.Models.Th105
                     this.systemCards.Add(card.Id, card);
             }
 
-            this.clearData = new Dictionary<Chara, IClearData<Chara, Level>>(validNumCharas);
+            this.clearData = new Dictionary<Chara, IClearData<Chara>>(validNumCharas);
             var numCharas = reader.ReadInt32();
             for (var index = 0; index < numCharas; index++)
             {
-                var data = new ClearData<Chara, Level>();
+                var data = new ClearData<Chara>();
                 data.ReadFrom(reader);
                 if (index < validNumCharas)
                 {

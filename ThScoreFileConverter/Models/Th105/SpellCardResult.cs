@@ -12,9 +12,8 @@ using System.IO;
 
 namespace ThScoreFileConverter.Models.Th105
 {
-    internal class SpellCardResult<TChara, TLevel> : IBinaryReadable, ISpellCardResult<TChara, TLevel>
+    internal class SpellCardResult<TChara> : IBinaryReadable, ISpellCardResult<TChara>
         where TChara : struct, Enum
-        where TLevel : struct, Enum
     {
         public SpellCardResult()
         {
@@ -22,7 +21,7 @@ namespace ThScoreFileConverter.Models.Th105
 
         public TChara Enemy { get; private set; }
 
-        public TLevel Level { get; private set; }
+        public Level Level { get; private set; }
 
         public int Id { get; private set; } // 0-based
 
@@ -38,7 +37,7 @@ namespace ThScoreFileConverter.Models.Th105
                 throw new ArgumentNullException(nameof(reader));
 
             this.Enemy = Utils.ToEnum<TChara>(reader.ReadInt32());
-            this.Level = Utils.ToEnum<TLevel>(reader.ReadInt32());
+            this.Level = Utils.ToEnum<Level>(reader.ReadInt32());
             this.Id = reader.ReadInt32();
             this.TrialCount = reader.ReadInt32();
             this.GotCount = reader.ReadInt32();

@@ -13,12 +13,11 @@ using System.IO;
 
 namespace ThScoreFileConverter.Models.Th105
 {
-    internal class ClearData<TChara, TLevel> : IBinaryReadable, IClearData<TChara, TLevel>  // per character
+    internal class ClearData<TChara> : IBinaryReadable, IClearData<TChara>  // per character
         where TChara : struct, Enum
-        where TLevel : struct, Enum
     {
         private Dictionary<int, ICardForDeck> cardsForDeck;
-        private Dictionary<(TChara Chara, int CardId), ISpellCardResult<TChara, TLevel>> spellCardResults;
+        private Dictionary<(TChara Chara, int CardId), ISpellCardResult<TChara>> spellCardResults;
 
         public ClearData()
         {
@@ -26,7 +25,7 @@ namespace ThScoreFileConverter.Models.Th105
 
         public IReadOnlyDictionary<int, ICardForDeck> CardsForDeck => this.cardsForDeck;
 
-        public IReadOnlyDictionary<(TChara Chara, int CardId), ISpellCardResult<TChara, TLevel>> SpellCardResults
+        public IReadOnlyDictionary<(TChara Chara, int CardId), ISpellCardResult<TChara>> SpellCardResults
             => this.spellCardResults;
 
         public void ReadFrom(BinaryReader reader)
@@ -45,10 +44,10 @@ namespace ThScoreFileConverter.Models.Th105
             }
 
             var numResults = reader.ReadInt32();
-            this.spellCardResults = new Dictionary<(TChara, int), ISpellCardResult<TChara, TLevel>>(numResults);
+            this.spellCardResults = new Dictionary<(TChara, int), ISpellCardResult<TChara>>(numResults);
             for (var index = 0; index < numResults; index++)
             {
-                var result = new SpellCardResult<TChara, TLevel>();
+                var result = new SpellCardResult<TChara>();
                 result.ReadFrom(reader);
                 var key = (result.Enemy, result.Id);
                 if (!this.spellCardResults.ContainsKey(key))

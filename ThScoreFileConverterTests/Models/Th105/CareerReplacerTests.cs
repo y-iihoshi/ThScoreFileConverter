@@ -10,16 +10,16 @@ namespace ThScoreFileConverterTests.Models.Th105
     [TestClass]
     public class CareerReplacerTests
     {
-        internal static IReadOnlyDictionary<Chara, IClearData<Chara, Level>> ClearDataDictionary { get; } =
-            new Dictionary<Chara, IClearData<Chara, Level>>
+        internal static IReadOnlyDictionary<Chara, IClearData<Chara>> ClearDataDictionary { get; } =
+            new Dictionary<Chara, IClearData<Chara>>
             {
                 {
                     Chara.Marisa,
-                    new ClearDataStub<Chara, Level>
+                    new ClearDataStub<Chara>
                     {
-                        SpellCardResults = new List<ISpellCardResult<Chara, Level>>
+                        SpellCardResults = new List<ISpellCardResult<Chara>>
                         {
-                            new SpellCardResultStub<Chara, Level>
+                            new SpellCardResultStub<Chara>
                             {
                                 Enemy = Chara.Reimu,
                                 Id = 6,
@@ -27,7 +27,7 @@ namespace ThScoreFileConverterTests.Models.Th105
                                 TrialCount = 34,
                                 Frames = 5678,
                             },
-                            new SpellCardResultStub<Chara, Level>
+                            new SpellCardResultStub<Chara>
                             {
                                 Enemy = Chara.Tenshi,
                                 Id = 18,
@@ -59,7 +59,7 @@ namespace ThScoreFileConverterTests.Models.Th105
         [TestMethod]
         public void CareerReplacerTestEmpty()
         {
-            var dictionary = new Dictionary<Chara, IClearData<Chara, Level>>();
+            var dictionary = new Dictionary<Chara, IClearData<Chara>>();
             var replacer = new CareerReplacer(dictionary);
             Assert.IsNotNull(replacer);
         }
@@ -109,7 +109,7 @@ namespace ThScoreFileConverterTests.Models.Th105
         [TestMethod]
         public void ReplaceTestEmpty()
         {
-            var dictionary = new Dictionary<Chara, IClearData<Chara, Level>>();
+            var dictionary = new Dictionary<Chara, IClearData<Chara>>();
             var replacer = new CareerReplacer(dictionary);
             Assert.AreEqual("0", replacer.Replace("%T105C015MR1"));
             Assert.AreEqual("0", replacer.Replace("%T105C015MR2"));
@@ -119,13 +119,13 @@ namespace ThScoreFileConverterTests.Models.Th105
         [TestMethod]
         public void ReplaceTestEmptySpellCardResults()
         {
-            var dictionary = new Dictionary<Chara, IClearData<Chara, Level>>
+            var dictionary = new Dictionary<Chara, IClearData<Chara>>
             {
                 {
                     Chara.Marisa,
-                    new ClearDataStub<Chara, Level>
+                    new ClearDataStub<Chara>
                     {
-                        SpellCardResults = new Dictionary<(Chara, int), ISpellCardResult<Chara, Level>>(),
+                        SpellCardResults = new Dictionary<(Chara, int), ISpellCardResult<Chara>>(),
                     }
                 },
             };

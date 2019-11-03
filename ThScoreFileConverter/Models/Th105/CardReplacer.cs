@@ -23,8 +23,7 @@ namespace ThScoreFileConverter.Models.Th105
 
         private readonly MatchEvaluator evaluator;
 
-        public CardReplacer(
-            IReadOnlyDictionary<Chara, IClearData<Chara, Level>> clearDataDictionary, bool hideUntriedCards)
+        public CardReplacer(IReadOnlyDictionary<Chara, IClearData<Chara>> clearDataDictionary, bool hideUntriedCards)
         {
             if (clearDataDictionary is null)
                 throw new ArgumentNullException(nameof(clearDataDictionary));
@@ -48,8 +47,7 @@ namespace ThScoreFileConverter.Models.Th105
                     if (hideUntriedCards)
                     {
                         var spellCardResults = clearDataDictionary.TryGetValue(chara, out var clearData)
-                            ? clearData.SpellCardResults
-                            : new Dictionary<(Chara, int), ISpellCardResult<Chara, Level>>();
+                            ? clearData.SpellCardResults : new Dictionary<(Chara, int), ISpellCardResult<Chara>>();
                         var key = (enemyCardIdPair.Enemy, (enemyCardIdPair.CardId * numLevels) + (int)level);
                         if (!spellCardResults.TryGetValue(key, out var result) || (result.TrialCount <= 0))
                             return (type == "N") ? "??????????" : "?????";

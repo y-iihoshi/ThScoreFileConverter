@@ -13,10 +13,9 @@ namespace ThScoreFileConverterTests.Models.Th105
     [TestClass]
     public class ClearDataTests
     {
-        internal static ClearDataStub<TChara, TLevel> MakeValidStub<TChara, TLevel>()
+        internal static ClearDataStub<TChara> MakeValidStub<TChara>()
             where TChara : struct, Enum
-            where TLevel : struct, Enum
-            => new ClearDataStub<TChara, TLevel>()
+            => new ClearDataStub<TChara>()
             {
                 CardsForDeck = Enumerable.Range(1, 10)
                     .Select(value => new CardForDeckStub
@@ -26,21 +25,20 @@ namespace ThScoreFileConverterTests.Models.Th105
                     } as ICardForDeck)
                     .ToDictionary(card => card.Id),
                 SpellCardResults = Utils.GetEnumerator<TChara>()
-                    .Select((chara, index) => new SpellCardResultStub<TChara, TLevel>()
+                    .Select((chara, index) => new SpellCardResultStub<TChara>()
                     {
                         Enemy = chara,
-                        Level = TestUtils.Cast<TLevel>(1),
+                        Level = Level.Normal,
                         Id = index + 1,
                         TrialCount = index * 100,
                         GotCount = index * 50,
                         Frames = 8901u - (uint)index
-                    } as ISpellCardResult<TChara, TLevel>)
+                    } as ISpellCardResult<TChara>)
                     .ToDictionary(result => (result.Enemy, result.Id))
             };
 
-        internal static byte[] MakeByteArray<TChara, TLevel>(IClearData<TChara, TLevel> properties)
+        internal static byte[] MakeByteArray<TChara>(IClearData<TChara> properties)
             where TChara : struct, Enum
-            where TLevel : struct, Enum
             => TestUtils.MakeByteArray(
                 properties.CardsForDeck.Count,
                 properties.CardsForDeck
@@ -49,10 +47,8 @@ namespace ThScoreFileConverterTests.Models.Th105
                 properties.SpellCardResults
                     .SelectMany(pair => SpellCardResultTests.MakeByteArray(pair.Value)).ToArray());
 
-        internal static void Validate<TChara, TLevel>(
-            IClearData<TChara, TLevel> expected, IClearData<TChara, TLevel> actual)
+        internal static void Validate<TChara>(IClearData<TChara> expected, IClearData<TChara> actual)
             where TChara : struct, Enum
-            where TLevel : struct, Enum
         {
             foreach (var pair in expected.CardsForDeck)
             {
@@ -66,72 +62,66 @@ namespace ThScoreFileConverterTests.Models.Th105
             }
         }
 
-        internal static void ClearDataTestHelper<TChara, TLevel>()
+        internal static void ClearDataTestHelper<TChara>()
             where TChara : struct, Enum
-            where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var clearData = new ClearData<TChara, TLevel>();
+                var clearData = new ClearData<TChara>();
 
                 Assert.IsNull(clearData.CardsForDeck);
                 Assert.IsNull(clearData.SpellCardResults);
             });
 
-        internal static void ReadFromTestHelper<TChara, TLevel>()
+        internal static void ReadFromTestHelper<TChara>()
             where TChara : struct, Enum
-            where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var stub = MakeValidStub<TChara, TLevel>();
+                var stub = MakeValidStub<TChara>();
 
-                var clearData = TestUtils.Create<ClearData<TChara, TLevel>>(MakeByteArray(stub));
+                var clearData = TestUtils.Create<ClearData<TChara>>(MakeByteArray(stub));
 
                 Validate(stub, clearData);
             });
 
-        internal static void ReadFromTestNullHelper<TChara, TLevel>()
+        internal static void ReadFromTestNullHelper<TChara>()
             where TChara : struct, Enum
-            where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var clearData = new ClearData<TChara, TLevel>();
+                var clearData = new ClearData<TChara>();
                 clearData.ReadFrom(null);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
-        internal static void ReadFromTestShortenedHelper<TChara, TLevel>()
+        internal static void ReadFromTestShortenedHelper<TChara>()
             where TChara : struct, Enum
-            where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var stub = MakeValidStub<TChara, TLevel>();
+                var stub = MakeValidStub<TChara>();
                 var array = MakeByteArray(stub).SkipLast(1).ToArray();
 
-                _ = TestUtils.Create<ClearData<TChara, TLevel>>(array);
+                _ = TestUtils.Create<ClearData<TChara>>(array);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
-        internal static void ReadFromTestExceededHelper<TChara, TLevel>()
+        internal static void ReadFromTestExceededHelper<TChara>()
             where TChara : struct, Enum
-            where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var stub = MakeValidStub<TChara, TLevel>();
+                var stub = MakeValidStub<TChara>();
                 var array = MakeByteArray(stub).Concat(new byte[1] { 1 }).ToArray();
 
-                var clearData = TestUtils.Create<ClearData<TChara, TLevel>>(array);
+                var clearData = TestUtils.Create<ClearData<TChara>>(array);
 
                 Validate(stub, clearData);
             });
 
-        internal static void ReadFromTestDuplicatedHelper<TChara, TLevel>()
+        internal static void ReadFromTestDuplicatedHelper<TChara>()
             where TChara : struct, Enum
-            where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var stub = MakeValidStub<TChara, TLevel>();
+                var stub = MakeValidStub<TChara>();
                 var array = TestUtils.MakeByteArray(
                     stub.CardsForDeck.Count + 1,
                     stub.CardsForDeck
@@ -142,29 +132,29 @@ namespace ThScoreFileConverterTests.Models.Th105
                         .SelectMany(pair => SpellCardResultTests.MakeByteArray(pair.Value)).ToArray(),
                     SpellCardResultTests.MakeByteArray(stub.SpellCardResults.First().Value));
 
-                var clearData = TestUtils.Create<ClearData<TChara, TLevel>>(array);
+                var clearData = TestUtils.Create<ClearData<TChara>>(array);
 
                 Validate(stub, clearData);
             });
 
         [TestMethod]
-        public void ClearDataTest() => ClearDataTestHelper<Chara, Level>();
+        public void ClearDataTest() => ClearDataTestHelper<Chara>();
 
         [TestMethod]
-        public void ReadFromTest() => ReadFromTestHelper<Chara, Level>();
+        public void ReadFromTest() => ReadFromTestHelper<Chara>();
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ReadFromTestNull() => ReadFromTestNullHelper<Chara, Level>();
+        public void ReadFromTestNull() => ReadFromTestNullHelper<Chara>();
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void ReadFromTestShortened() => ReadFromTestShortenedHelper<Chara, Level>();
+        public void ReadFromTestShortened() => ReadFromTestShortenedHelper<Chara>();
 
         [TestMethod]
-        public void ReadFromTestExceeded() => ReadFromTestExceededHelper<Chara, Level>();
+        public void ReadFromTestExceeded() => ReadFromTestExceededHelper<Chara>();
 
         [TestMethod]
-        public void ReadFromTestDuplicated() => ReadFromTestDuplicatedHelper<Chara, Level>();
+        public void ReadFromTestDuplicated() => ReadFromTestDuplicatedHelper<Chara>();
     }
 }

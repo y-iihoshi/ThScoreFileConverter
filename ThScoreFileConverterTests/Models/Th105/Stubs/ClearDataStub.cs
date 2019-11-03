@@ -5,13 +5,12 @@ using ThScoreFileConverter.Models.Th105;
 
 namespace ThScoreFileConverterTests.Models.Th105.Stubs
 {
-    internal class ClearDataStub<TChara, TLevel> : IClearData<TChara, TLevel>
+    internal class ClearDataStub<TChara> : IClearData<TChara>
         where TChara : struct, Enum
-        where TLevel : struct, Enum
     {
         public ClearDataStub() { }
 
-        public ClearDataStub(IClearData<TChara, TLevel> clearData)
+        public ClearDataStub(IClearData<TChara> clearData)
             : base()
         {
             this.CardsForDeck = clearData.CardsForDeck.ToDictionary(
@@ -19,11 +18,11 @@ namespace ThScoreFileConverterTests.Models.Th105.Stubs
                 pair => new CardForDeckStub(pair.Value) as ICardForDeck);
             this.SpellCardResults = clearData.SpellCardResults.ToDictionary(
                 pair => pair.Key,
-                pair => new SpellCardResultStub<TChara, TLevel>(pair.Value) as ISpellCardResult<TChara, TLevel>);
+                pair => new SpellCardResultStub<TChara>(pair.Value) as ISpellCardResult<TChara>);
         }
 
         public IReadOnlyDictionary<int, ICardForDeck> CardsForDeck { get; set; }
 
-        public IReadOnlyDictionary<(TChara Chara, int CardId), ISpellCardResult<TChara, TLevel>> SpellCardResults { get; set; }
+        public IReadOnlyDictionary<(TChara Chara, int CardId), ISpellCardResult<TChara>> SpellCardResults { get; set; }
     }
 }

@@ -6,7 +6,6 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th105;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th105.Stubs;
-using Level = ThScoreFileConverter.Models.Th105.Level;
 
 namespace ThScoreFileConverterTests.Models.Th105
 {
@@ -17,7 +16,7 @@ namespace ThScoreFileConverterTests.Models.Th105
         {
             public IReadOnlyDictionary<Chara, byte> storyClearCounts;
             public IReadOnlyDictionary<int, ICardForDeck> systemCards;
-            public IReadOnlyDictionary<Chara, IClearData<Chara, Level>> clearData;
+            public IReadOnlyDictionary<Chara, IClearData<Chara>> clearData;
         };
 
         internal static Properties MakeValidProperties()
@@ -37,7 +36,7 @@ namespace ThScoreFileConverterTests.Models.Th105
                     } as ICardForDeck),
                 clearData = charas.ToDictionary(
                     chara => chara,
-                    chara => ClearDataTests.MakeValidStub<Chara, Level>() as IClearData<Chara, Level>)
+                    chara => ClearDataTests.MakeValidStub<Chara>() as IClearData<Chara>)
             };
         }
 

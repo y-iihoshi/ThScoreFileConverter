@@ -23,7 +23,7 @@ namespace ThScoreFileConverter.Models.Th105
 
         private readonly MatchEvaluator evaluator;
 
-        public CareerReplacer(IReadOnlyDictionary<Chara, IClearData<Chara, Level>> clearDataDictionary)
+        public CareerReplacer(IReadOnlyDictionary<Chara, IClearData<Chara>> clearDataDictionary)
         {
             if (clearDataDictionary is null)
                 throw new ArgumentNullException(nameof(clearDataDictionary));
@@ -34,7 +34,7 @@ namespace ThScoreFileConverter.Models.Th105
                 var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                Func<ISpellCardResult<Chara, Level>, long> getValue;
+                Func<ISpellCardResult<Chara>, long> getValue;
                 Func<long, string> toString;
                 if (type == 1)
                 {
@@ -61,7 +61,7 @@ namespace ThScoreFileConverter.Models.Th105
                 }
 
                 var spellCardResults = clearDataDictionary.TryGetValue(chara, out var clearData)
-                    ? clearData.SpellCardResults : new Dictionary<(Chara, int), ISpellCardResult<Chara, Level>>();
+                    ? clearData.SpellCardResults : new Dictionary<(Chara, int), ISpellCardResult<Chara>>();
                 if (number == 0)
                 {
                     return toString(spellCardResults.Values.Sum(getValue));

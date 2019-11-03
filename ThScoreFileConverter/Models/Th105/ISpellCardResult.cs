@@ -11,9 +11,8 @@ using System;
 
 namespace ThScoreFileConverter.Models.Th105
 {
-    internal interface ISpellCardResult<TChara, TLevel>
+    internal interface ISpellCardResult<TChara>
         where TChara : struct, Enum
-        where TLevel : struct, Enum
     {
         TChara Enemy { get; }
 
@@ -23,7 +22,7 @@ namespace ThScoreFileConverter.Models.Th105
 
         int Id { get; }
 
-        TLevel Level { get; }
+        Level Level { get; }
 
         int TrialCount { get; }
     }

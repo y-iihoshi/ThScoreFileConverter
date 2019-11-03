@@ -9,8 +9,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using StageInfo = ThScoreFileConverter.Models.Th105.StageInfo<
-    ThScoreFileConverter.Models.Th105.Stage, ThScoreFileConverter.Models.Th105.Chara>;
+using StageInfo = ThScoreFileConverter.Models.Th105.StageInfo<ThScoreFileConverter.Models.Th105.Chara>;
 
 namespace ThScoreFileConverter.Models.Th105
 {

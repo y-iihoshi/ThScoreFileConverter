@@ -25,7 +25,7 @@ namespace ThScoreFileConverter.Models.Th105
 
         public CardForDeckReplacer(
             IReadOnlyDictionary<int, ICardForDeck> systemCards,
-            IReadOnlyDictionary<Chara, IClearData<Chara, Level>> clearDataDictionary,
+            IReadOnlyDictionary<Chara, IClearData<Chara>> clearDataDictionary,
             bool hideUntriedCards)
         {
             if (systemCards is null)

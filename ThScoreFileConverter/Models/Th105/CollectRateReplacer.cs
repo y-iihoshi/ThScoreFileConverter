@@ -23,7 +23,7 @@ namespace ThScoreFileConverter.Models.Th105
 
         private readonly MatchEvaluator evaluator;
 
-        public CollectRateReplacer(IReadOnlyDictionary<Chara, IClearData<Chara, Level>> clearDataDictionary)
+        public CollectRateReplacer(IReadOnlyDictionary<Chara, IClearData<Chara>> clearDataDictionary)
         {
             if (clearDataDictionary is null)
                 throw new ArgumentNullException(nameof(clearDataDictionary));
@@ -34,20 +34,20 @@ namespace ThScoreFileConverter.Models.Th105
                 var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                Func<KeyValuePair<(Chara, int), ISpellCardResult<Chara, Level>>, bool> findByLevel;
+                Func<KeyValuePair<(Chara, int), ISpellCardResult<Chara>>, bool> findByLevel;
                 if (level == LevelWithTotal.Total)
                     findByLevel = pair => true;
                 else
                     findByLevel = pair => pair.Value.Level == (Level)level;
 
-                Func<KeyValuePair<(Chara, int), ISpellCardResult<Chara, Level>>, bool> countByType;
+                Func<KeyValuePair<(Chara, int), ISpellCardResult<Chara>>, bool> countByType;
                 if (type == 1)
                     countByType = pair => pair.Value.GotCount > 0;
                 else
                     countByType = pair => pair.Value.TrialCount > 0;
 
                 var spellCardResults = clearDataDictionary.TryGetValue(chara, out var clearData)
-                    ? clearData.SpellCardResults : new Dictionary<(Chara, int), ISpellCardResult<Chara, Level>>();
+                    ? clearData.SpellCardResults : new Dictionary<(Chara, int), ISpellCardResult<Chara>>();
                 return Utils.ToNumberString(spellCardResults.Where(findByLevel).Count(countByType));
             });
         }

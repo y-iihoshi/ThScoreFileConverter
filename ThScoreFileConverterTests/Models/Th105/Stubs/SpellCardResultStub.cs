@@ -3,13 +3,12 @@ using ThScoreFileConverter.Models.Th105;
 
 namespace ThScoreFileConverterTests.Models.Th105.Stubs
 {
-    internal class SpellCardResultStub<TChara, TLevel> : ISpellCardResult<TChara, TLevel>
+    internal class SpellCardResultStub<TChara> : ISpellCardResult<TChara>
         where TChara : struct, Enum
-        where TLevel : struct, Enum
     {
         public SpellCardResultStub() { }
 
-        public SpellCardResultStub(ISpellCardResult<TChara, TLevel> result)
+        public SpellCardResultStub(ISpellCardResult<TChara> result)
             : base()
         {
             this.Enemy = result.Enemy;
@@ -28,7 +27,7 @@ namespace ThScoreFileConverterTests.Models.Th105.Stubs
 
         public int Id { get; set; }
 
-        public TLevel Level { get; set; }
+        public Level Level { get; set; }
 
         public int TrialCount { get; set; }
     }

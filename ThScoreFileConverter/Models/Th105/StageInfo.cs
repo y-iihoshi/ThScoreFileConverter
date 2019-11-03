@@ -13,18 +13,17 @@ using System.Linq;
 
 namespace ThScoreFileConverter.Models.Th105
 {
-    internal class StageInfo<TStage, TChara>
-        where TStage : struct, Enum
+    internal class StageInfo<TChara>
         where TChara : struct, Enum
     {
-        public StageInfo(TStage stage, TChara enemy, IEnumerable<int> cardIds)
+        public StageInfo(Stage stage, TChara enemy, IEnumerable<int> cardIds)
         {
             this.Stage = stage;
             this.Enemy = enemy;
             this.CardIds = cardIds.ToList();
         }
 
-        public TStage Stage { get; }
+        public Stage Stage { get; }
 
         public TChara Enemy { get; }
 

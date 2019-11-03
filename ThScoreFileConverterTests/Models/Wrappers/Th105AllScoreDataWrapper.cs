@@ -10,10 +10,9 @@ using ThScoreFileConverter.Models.Th105;
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
     // NOTE: Setting the accessibility as public causes CS0050 and CS0703.
-    internal sealed class Th105AllScoreDataWrapper<TParent, TChara, TLevel>
+    internal sealed class Th105AllScoreDataWrapper<TParent, TChara>
         where TParent : ThConverter
         where TChara : struct, Enum
-        where TLevel : struct, Enum
     {
         private static readonly Type ParentType = typeof(TParent);
         private static readonly string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
@@ -21,9 +20,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         private readonly PrivateObject pobj = null;
 
-        public static Th105AllScoreDataWrapper<TParent, TChara, TLevel> Create(byte[] array)
+        public static Th105AllScoreDataWrapper<TParent, TChara> Create(byte[] array)
         {
-            var allScoreData = new Th105AllScoreDataWrapper<TParent, TChara, TLevel>();
+            var allScoreData = new Th105AllScoreDataWrapper<TParent, TChara>();
 
             MemoryStream stream = null;
             try
@@ -54,8 +53,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.StoryClearCounts)) as IReadOnlyDictionary<TChara, byte>;
         public IReadOnlyDictionary<int, ICardForDeck> SystemCards
             => this.pobj.GetProperty(nameof(this.SystemCards)) as IReadOnlyDictionary<int, ICardForDeck>;
-        public IReadOnlyDictionary<TChara, IClearData<TChara, TLevel>> ClearData
-            => this.pobj.GetProperty(nameof(this.ClearData)) as IReadOnlyDictionary<TChara, IClearData<TChara, TLevel>>;
+        public IReadOnlyDictionary<TChara, IClearData<TChara>> ClearData
+            => this.pobj.GetProperty(nameof(this.ClearData)) as IReadOnlyDictionary<TChara, IClearData<TChara>>;
 
         public void ReadFrom(BinaryReader reader)
             => this.pobj.Invoke(nameof(ReadFrom), new object[] { reader }, CultureInfo.InvariantCulture);
