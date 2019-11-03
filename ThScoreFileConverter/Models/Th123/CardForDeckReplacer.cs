@@ -7,6 +7,7 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -26,6 +27,11 @@ namespace ThScoreFileConverter.Models.Th123
             IReadOnlyDictionary<Chara, Th105.IClearData<Chara>> clearDataDictionary,
             bool hideUntriedCards)
         {
+            if (systemCards is null)
+                throw new ArgumentNullException(nameof(systemCards));
+            if (clearDataDictionary is null)
+                throw new ArgumentNullException(nameof(clearDataDictionary));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var chara = Parsers.CharaParser.Parse(match.Groups[1].Value);
@@ -36,25 +42,16 @@ namespace ThScoreFileConverter.Models.Th123
                 if (chara == Chara.Oonamazu)
                     return match.ToString();
 
+                Th105.ICardForDeck cardForDeck;
+                string cardName;
+
                 if (cardType == Th105.CardType.System)
                 {
-                    if (Definitions.SystemCardNameTable.ContainsKey(number - 1))
+                    if (Definitions.SystemCardNameTable.TryGetValue(number - 1, out var name))
                     {
-                        var card = systemCards[number - 1];
-                        if (type == "N")
-                        {
-                            if (hideUntriedCards)
-                            {
-                                if (card.MaxNumber <= 0)
-                                    return "??????????";
-                            }
-
-                            return Definitions.SystemCardNameTable[number - 1];
-                        }
-                        else
-                        {
-                            return Utils.ToNumberString(card.MaxNumber);
-                        }
+                        cardForDeck = systemCards.TryGetValue(number - 1, out var card)
+                            ? card : new Th105.CardForDeck();
+                        cardName = name;
                     }
                     else
                     {
@@ -63,69 +60,52 @@ namespace ThScoreFileConverter.Models.Th123
                 }
                 else
                 {
-                    var key = GetCharaCardIdPair(chara, cardType, number - 1);
-                    if (key != null)
+                    // serialNumber : 0-based
+                    bool TryGetCharaCardIdPair(int serialNumber, out (Chara Chara, int CardId) charaCardIdPair)
                     {
-                        var card = clearDataDictionary[key.Value.Chara].CardsForDeck[key.Value.CardId];
-                        if (type == "N")
+                        if (Definitions.CardOrderTable.TryGetValue(chara, out var cardTypeIdDict)
+                            && cardTypeIdDict.TryGetValue(cardType, out var cardIds)
+                            && serialNumber < cardIds.Count)
                         {
-                            if (hideUntriedCards)
-                            {
-                                if (card.MaxNumber <= 0)
-                                    return "??????????";
-                            }
+                            charaCardIdPair = (chara, cardIds[serialNumber]);
+                            return true;
+                        }
 
-                            return Definitions.CardNameTable[key.Value];
-                        }
-                        else
-                        {
-                            return Utils.ToNumberString(card.MaxNumber);
-                        }
+                        charaCardIdPair = default;
+                        return false;
+                    }
+
+                    if (TryGetCharaCardIdPair(number - 1, out var key)
+                        && Definitions.CardNameTable.TryGetValue(key, out var name))
+                    {
+                        cardForDeck = clearDataDictionary.TryGetValue(key.Chara, out var clearData)
+                            && clearData.CardsForDeck.TryGetValue(key.CardId, out var card)
+                            ? card : new Th105.CardForDeck();
+                        cardName = name;
                     }
                     else
                     {
                         return match.ToString();
                     }
+                }
+
+                if (type == "N")
+                {
+                    if (hideUntriedCards)
+                    {
+                        if (cardForDeck.MaxNumber <= 0)
+                            return "??????????";
+                    }
+
+                    return cardName;
+                }
+                else
+                {
+                    return Utils.ToNumberString(cardForDeck.MaxNumber);
                 }
             });
         }
 
         public string Replace(string input) => Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-
-        // serialNumber: 0-based
-        private static (Chara Chara, int CardId)? GetCharaCardIdPair(Chara chara, Th105.CardType type, int serialNumber)
-        {
-#if false
-            if (type == Th105.CardType.System)
-                return null;
-
-            Func<(Chara Chara, int CardId), bool> matchesCharaAndType;
-            if (type == Th105.CardType.Skill)
-                matchesCharaAndType = pair => (pair.Chara == chara) && (pair.CardId / 100 == 1);
-            else
-                matchesCharaAndType = pair => (pair.Chara == chara) && (pair.CardId / 100 == 2);
-
-            return Definitions.CardNameTable.Keys.Where(matchesCharaAndType).ElementAtOrDefault(serialNumber);
-#else
-            if (Definitions.CardOrderTable.TryGetValue(chara, out var cardTypeIdDict))
-            {
-                if (cardTypeIdDict.TryGetValue(type, out var cardIds))
-                {
-                    if (serialNumber < cardIds.Count)
-                        return (chara, cardIds[serialNumber]);
-                    else
-                        return null;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            else
-            {
-                return null;
-            }
-#endif
-        }
     }
 }
