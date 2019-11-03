@@ -6,7 +6,6 @@ using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th105;
 using ThScoreFileConverterTests.Models.Th105.Stubs;
-using Chara = ThScoreFileConverter.Models.Th105.Chara;
 using Level = ThScoreFileConverter.Models.Th105.Level;
 
 namespace ThScoreFileConverterTests.Models.Th105
@@ -148,64 +147,24 @@ namespace ThScoreFileConverterTests.Models.Th105
                 Validate(stub, clearData);
             });
 
-        #region Th105
+        [TestMethod]
+        public void ClearDataTest() => ClearDataTestHelper<Chara, Level>();
 
         [TestMethod]
-        public void Th105ClearDataTest()
-            => ClearDataTestHelper<Chara, Level>();
-
-        [TestMethod]
-        public void Th105ClearDataReadFromTest()
-            => ReadFromTestHelper<Chara, Level>();
+        public void ReadFromTest() => ReadFromTestHelper<Chara, Level>();
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th105ClearDataReadFromTestNull()
-            => ReadFromTestNullHelper<Chara, Level>();
+        public void ReadFromTestNull() => ReadFromTestNullHelper<Chara, Level>();
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th105ClearDataReadFromTestShortened()
-            => ReadFromTestShortenedHelper<Chara, Level>();
+        public void ReadFromTestShortened() => ReadFromTestShortenedHelper<Chara, Level>();
 
         [TestMethod]
-        public void Th105ClearDataReadFromTestExceeded()
-            => ReadFromTestExceededHelper<Chara, Level>();
+        public void ReadFromTestExceeded() => ReadFromTestExceededHelper<Chara, Level>();
 
         [TestMethod]
-        public void Th105ClearDataReadFromTestDuplicated()
-            => ReadFromTestDuplicatedHelper<Chara, Level>();
-
-        #endregion
-
-        #region Th123
-
-        [TestMethod]
-        public void Th123ClearDataTest()
-            => ClearDataTestHelper<Th123Converter.Chara, Th123Converter.Level>();
-
-        [TestMethod]
-        public void Th123ClearDataReadFromTest()
-            => ReadFromTestHelper<Th123Converter.Chara, Th123Converter.Level>();
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Th123ClearDataReadFromTestNull()
-            => ReadFromTestNullHelper<Th123Converter.Chara, Th123Converter.Level>();
-
-        [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
-        public void Th123ClearDataReadFromTestShortened()
-            => ReadFromTestShortenedHelper<Th123Converter.Chara, Th123Converter.Level>();
-
-        [TestMethod]
-        public void Th123ClearDataReadFromTestExceeded()
-            => ReadFromTestExceededHelper<Th123Converter.Chara, Th123Converter.Level>();
-
-        [TestMethod]
-        public void Th123ClearDataReadFromTestDuplicated()
-            => ReadFromTestDuplicatedHelper<Th123Converter.Chara, Th123Converter.Level>();
-
-        #endregion
+        public void ReadFromTestDuplicated() => ReadFromTestDuplicatedHelper<Chara, Level>();
     }
 }

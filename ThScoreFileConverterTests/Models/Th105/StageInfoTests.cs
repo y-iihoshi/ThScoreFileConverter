@@ -1,11 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th105;
 using ThScoreFileConverterTests.Extensions;
-using Chara = ThScoreFileConverter.Models.Th105.Chara;
-using Stage = ThScoreFileConverter.Models.Th105.Stage;
 
 namespace ThScoreFileConverterTests.Models.Th105
 {
@@ -55,11 +52,6 @@ namespace ThScoreFileConverterTests.Models.Th105
             });
 
         [TestMethod]
-        public void Th105StageInfoTest()
-            => StageInfoTestHelper<Stage, Chara>();
-
-        [TestMethod]
-        public void Th123StageInfoTest()
-            => StageInfoTestHelper<Th123Converter.Stage, Th123Converter.Chara>();
+        public void StageInfoTest() => StageInfoTestHelper<Stage, Chara>();
     }
 }

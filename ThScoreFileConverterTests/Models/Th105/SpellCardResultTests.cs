@@ -3,11 +3,8 @@ using System;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th105;
 using ThScoreFileConverterTests.Models.Th105.Stubs;
-using Chara = ThScoreFileConverter.Models.Th105.Chara;
-using Level = ThScoreFileConverter.Models.Th105.Level;
 
 namespace ThScoreFileConverterTests.Models.Th105
 {
@@ -112,56 +109,21 @@ namespace ThScoreFileConverterTests.Models.Th105
                 Validate(stub, spellCardResult);
             });
 
-        #region Th105
+        [TestMethod]
+        public void SpellCardResultTest() => SpellCardResultTestHelper<Chara, Level>();
 
         [TestMethod]
-        public void Th105SpellCardResultTest()
-            => SpellCardResultTestHelper<Chara, Level>();
-
-        [TestMethod]
-        public void Th105SpellCardResultReadFromTest()
-            => ReadFromTestHelper<Chara, Level>();
+        public void ReadFromTest() => ReadFromTestHelper<Chara, Level>();
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th105SpellCardResultReadFromTestNull()
-            => ReadFromTestNullHelper<Chara, Level>();
+        public void ReadFromTestNull() => ReadFromTestNullHelper<Chara, Level>();
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th105SpellCardResultReadFromTestShortened()
-            => ReadFromTestShortenedHelper<Chara, Level>();
+        public void ReadFromTestShortened() => ReadFromTestShortenedHelper<Chara, Level>();
 
         [TestMethod]
-        public void Th105SpellCardResultReadFromTestExceeded()
-            => ReadFromTestExceededHelper<Chara, Level>();
-
-        #endregion
-
-        #region Th123
-
-        [TestMethod]
-        public void Th123SpellCardResultTest()
-            => SpellCardResultTestHelper<Th123Converter.Chara, Th123Converter.Level>();
-
-        [TestMethod]
-        public void Th123SpellCardResultReadFromTest()
-            => ReadFromTestHelper<Th123Converter.Chara, Th123Converter.Level>();
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Th123SpellCardResultReadFromTestNull()
-            => ReadFromTestNullHelper<Th123Converter.Chara, Th123Converter.Level>();
-
-        [TestMethod]
-        [ExpectedException(typeof(EndOfStreamException))]
-        public void Th123SpellCardResultReadFromTestShortened()
-            => ReadFromTestShortenedHelper<Th123Converter.Chara, Th123Converter.Level>();
-
-        [TestMethod]
-        public void Th123SpellCardResultReadFromTestExceeded()
-            => ReadFromTestExceededHelper<Th123Converter.Chara, Th123Converter.Level>();
-
-        #endregion
+        public void ReadFromTestExceeded() => ReadFromTestExceededHelper<Chara, Level>();
     }
 }
