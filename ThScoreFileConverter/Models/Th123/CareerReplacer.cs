@@ -25,6 +25,9 @@ namespace ThScoreFileConverter.Models.Th123
 
         public CareerReplacer(IReadOnlyDictionary<Chara, Th105.IClearData<Chara>> clearDataDictionary)
         {
+            if (clearDataDictionary is null)
+                throw new ArgumentNullException(nameof(clearDataDictionary));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
@@ -56,24 +59,26 @@ namespace ThScoreFileConverter.Models.Th123
                             "{0:D2}:{1:D2}.{2:D3}",
                             (time.Hours * 60) + time.Minutes,
                             time.Seconds,
-                            (time.Frames * 1000) / 60);
+                            time.Frames * 1000 / 60);
                     };
                 }
 
-                var clearData = clearDataDictionary[chara];
+                var spellCardResults = clearDataDictionary.TryGetValue(chara, out var clearData)
+                    ? clearData.SpellCardResults : new Dictionary<(Chara, int), Th105.ISpellCardResult<Chara>>();
                 if (number == 0)
                 {
-                    return toString(clearData.SpellCardResults.Values.Sum(getValue));
+                    return toString(spellCardResults.Values.Sum(getValue));
                 }
                 else
                 {
                     var numLevels = Enum.GetValues(typeof(Th105.Level)).Length;
                     var index = (number - 1) / numLevels;
-                    if ((index >= 0) && (index < Definitions.EnemyCardIdTable[chara].Count()))
+                    if (Definitions.EnemyCardIdTable.TryGetValue(chara, out var enemyCardIdPairs)
+                        && (index < enemyCardIdPairs.Count()))
                     {
-                        var (enemy, cardId) = Definitions.EnemyCardIdTable[chara].ElementAt(index);
+                        var (enemy, cardId) = enemyCardIdPairs.ElementAt(index);
                         var key = (enemy, (cardId * numLevels) + ((number - 1) % numLevels));
-                        return toString(getValue(clearData.SpellCardResults[key]));
+                        return toString(spellCardResults.TryGetValue(key, out var result) ? getValue(result) : 0);
                     }
                     else
                     {
