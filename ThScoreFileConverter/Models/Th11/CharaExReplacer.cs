@@ -13,7 +13,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using IClearData = ThScoreFileConverter.Models.Th10.IClearData<
-    ThScoreFileConverter.Models.Th11.CharaWithTotal, ThScoreFileConverter.Models.Th11.StageProgress>;
+    ThScoreFileConverter.Models.Th11.CharaWithTotal, ThScoreFileConverter.Models.Th10.StageProgress>;
 
 namespace ThScoreFileConverter.Models.Th11
 {

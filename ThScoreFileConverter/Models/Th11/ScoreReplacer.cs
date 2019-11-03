@@ -13,6 +13,8 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
+using IClearData = ThScoreFileConverter.Models.Th10.IClearData<
+    ThScoreFileConverter.Models.Th11.CharaWithTotal, ThScoreFileConverter.Models.Th10.StageProgress>;
 
 namespace ThScoreFileConverter.Models.Th11
 {
@@ -24,8 +26,7 @@ namespace ThScoreFileConverter.Models.Th11
 
         private readonly MatchEvaluator evaluator;
 
-        public ScoreReplacer(
-            IReadOnlyDictionary<CharaWithTotal, Th10.IClearData<CharaWithTotal, StageProgress>> clearDataDictionary)
+        public ScoreReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
         {
             if (clearDataDictionary is null)
                 throw new ArgumentNullException(nameof(clearDataDictionary));
@@ -50,8 +51,8 @@ namespace ThScoreFileConverter.Models.Th11
                         return Utils.ToNumberString((ranking.Score * 10) + ranking.ContinueCount);
                     case 3:     // stage
                         if (ranking.DateTime == 0)
-                            return StageProgress.None.ToShortName();
-                        if (ranking.StageProgress == StageProgress.Extra)
+                            return Th10.StageProgress.None.ToShortName();
+                        if (ranking.StageProgress == Th10.StageProgress.Extra)
                             return "Not Clear";
                         return ranking.StageProgress.ToShortName();
                     case 4:     // date & time

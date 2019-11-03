@@ -5,12 +5,15 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Models.Th10;
+using ThScoreFileConverter.Models.Th11;
 using ThScoreFileConverterTests.Models.Th10.Stubs;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
-using CharaWithTotal = ThScoreFileConverter.Models.Th11.CharaWithTotal;
-using ClearData = ThScoreFileConverter.Models.Th11.ClearData;
-using StageProgress = ThScoreFileConverter.Models.Th11.StageProgress;
+using IClearData = ThScoreFileConverter.Models.Th10.IClearData<
+    ThScoreFileConverter.Models.Th11.CharaWithTotal, ThScoreFileConverter.Models.Th10.StageProgress>;
+using IPractice = ThScoreFileConverter.Models.Th10.IPractice;
+using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th10.StageProgress>;
+using ISpellCard = ThScoreFileConverter.Models.Th10.ISpellCard<ThScoreFileConverter.Models.Level>;
+using StageProgress = ThScoreFileConverter.Models.Th10.StageProgress;
 
 namespace ThScoreFileConverterTests.Models.Th11
 {
@@ -42,7 +45,7 @@ namespace ThScoreFileConverterTests.Models.Th11
                             Name = TestUtils.CP932Encoding.GetBytes($"Player{index}\0\0\0"),
                             DateTime = 34567890u,
                             SlowRate = 1.2f
-                        }).ToList() as IReadOnlyList<IScoreData<StageProgress>>),
+                        }).ToList() as IReadOnlyList<IScoreData>),
                 TotalPlayCount = 23,
                 PlayTime = 4567890,
                 ClearCounts = levels.ToDictionary(level => level, level => 100 - (int)level),
@@ -64,11 +67,11 @@ namespace ThScoreFileConverterTests.Models.Th11
                         TrialCount = 456 + index,
                         Id = index,
                         Level = Level.Hard
-                    } as ISpellCard<Level>)
+                    } as ISpellCard)
             };
         }
 
-        internal static byte[] MakeByteArray(IClearData<CharaWithTotal, StageProgress> clearData)
+        internal static byte[] MakeByteArray(IClearData clearData)
             => Th10.ClearDataTests.MakeByteArray(clearData, 4);
 
         [TestMethod]

@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using IClearData = ThScoreFileConverter.Models.Th10.IClearData<
+    ThScoreFileConverter.Models.Th11.CharaWithTotal, ThScoreFileConverter.Models.Th10.StageProgress>;
 
 namespace ThScoreFileConverter.Models.Th11
 {
@@ -23,8 +25,7 @@ namespace ThScoreFileConverter.Models.Th11
 
         private readonly MatchEvaluator evaluator;
 
-        public CareerReplacer(
-            IReadOnlyDictionary<CharaWithTotal, Th10.IClearData<CharaWithTotal, StageProgress>> clearDataDictionary)
+        public CareerReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
         {
             if (clearDataDictionary is null)
                 throw new ArgumentNullException(nameof(clearDataDictionary));

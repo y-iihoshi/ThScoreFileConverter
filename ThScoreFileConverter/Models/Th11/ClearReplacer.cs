@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
+using IClearData = ThScoreFileConverter.Models.Th10.IClearData<
+    ThScoreFileConverter.Models.Th11.CharaWithTotal, ThScoreFileConverter.Models.Th10.StageProgress>;
 
 namespace ThScoreFileConverter.Models.Th11
 {
@@ -23,8 +25,7 @@ namespace ThScoreFileConverter.Models.Th11
 
         private readonly MatchEvaluator evaluator;
 
-        public ClearReplacer(
-            IReadOnlyDictionary<CharaWithTotal, Th10.IClearData<CharaWithTotal, StageProgress>> clearDataDictionary)
+        public ClearReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
         {
             if (clearDataDictionary is null)
                 throw new ArgumentNullException(nameof(clearDataDictionary));
@@ -37,10 +38,10 @@ namespace ThScoreFileConverter.Models.Th11
                 var scores = clearDataDictionary.TryGetValue(chara, out var clearData)
                     && clearData.Rankings.TryGetValue(level, out var ranking)
                     ? ranking.Where(score => score.DateTime > 0)
-                    : new List<Th10.IScoreData<StageProgress>>();
-                var stageProgress = scores.Any() ? scores.Max(score => score.StageProgress) : StageProgress.None;
+                    : new List<Th10.IScoreData<Th10.StageProgress>>();
+                var stageProgress = scores.Any() ? scores.Max(score => score.StageProgress) : Th10.StageProgress.None;
 
-                return (stageProgress == StageProgress.Extra) ? "Not Clear" : stageProgress.ToShortName();
+                return (stageProgress == Th10.StageProgress.Extra) ? "Not Clear" : stageProgress.ToShortName();
             });
         }
 

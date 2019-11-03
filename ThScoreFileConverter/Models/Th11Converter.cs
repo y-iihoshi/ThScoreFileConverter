@@ -14,7 +14,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using ThScoreFileConverter.Models.Th11;
 using AllScoreData = ThScoreFileConverter.Models.Th10.AllScoreData<
-    ThScoreFileConverter.Models.Th11.CharaWithTotal, ThScoreFileConverter.Models.Th11.StageProgress>;
+    ThScoreFileConverter.Models.Th11.CharaWithTotal, ThScoreFileConverter.Models.Th10.StageProgress>;
 
 namespace ThScoreFileConverter.Models
 {

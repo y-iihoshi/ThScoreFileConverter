@@ -2,7 +2,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th11;
 using ThScoreFileConverterTests.Models.Th10.Stubs;
-using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th11.StageProgress>;
+using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th10.StageProgress>;
+using StageProgress = ThScoreFileConverter.Models.Th10.StageProgress;
 
 namespace ThScoreFileConverterTests.Models.Th11
 {

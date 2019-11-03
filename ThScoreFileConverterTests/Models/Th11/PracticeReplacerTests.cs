@@ -7,8 +7,9 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th11;
 using ThScoreFileConverterTests.Models.Th10.Stubs;
 using IClearData = ThScoreFileConverter.Models.Th10.IClearData<
-    ThScoreFileConverter.Models.Th11.CharaWithTotal, ThScoreFileConverter.Models.Th11.StageProgress>;
+    ThScoreFileConverter.Models.Th11.CharaWithTotal, ThScoreFileConverter.Models.Th10.StageProgress>;
 using IPractice = ThScoreFileConverter.Models.Th10.IPractice;
+using StageProgress = ThScoreFileConverter.Models.Th10.StageProgress;
 
 namespace ThScoreFileConverterTests.Models.Th11
 {
