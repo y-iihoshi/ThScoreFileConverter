@@ -118,8 +118,7 @@ namespace ThScoreFileConverterTests.Models.Th09
         [TestMethod]
         public void SetPlayStatusTest() => TestUtils.Wrap(() =>
         {
-            var chapter = TestUtils.Create<Chapter>(PlayStatusTests.MakeByteArray(PlayStatusTests.ValidStub));
-            var status = new PlayStatus(chapter);
+            var status = PlayStatusTests.ValidStub;
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(status);
@@ -130,9 +129,8 @@ namespace ThScoreFileConverterTests.Models.Th09
         [TestMethod]
         public void SetPlayStatusTestTwice() => TestUtils.Wrap(() =>
         {
-            var chapter = TestUtils.Create<Chapter>(PlayStatusTests.MakeByteArray(PlayStatusTests.ValidStub));
-            var status1 = new PlayStatus(chapter);
-            var status2 = new PlayStatus(chapter);
+            var status1 = PlayStatusTests.ValidStub;
+            var status2 = new PlayStatusStub(status1);
 
             var allScoreData = new AllScoreData();
             allScoreData.Set(status1);

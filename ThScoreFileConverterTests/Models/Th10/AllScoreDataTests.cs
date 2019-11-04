@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th10;
 using ThScoreFileConverterTests.Models.Th10.Stubs;
+using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
 
 namespace ThScoreFileConverterTests.Models.Th10
 {
@@ -25,7 +26,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             where TStageProgress : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var header = new ThScoreFileConverter.Models.Th095.HeaderBase();
+                var header = new HeaderBase();
 
                 var allScoreData = new AllScoreData<TCharaWithTotal, TStageProgress>();
                 allScoreData.Set(header);
@@ -38,8 +39,8 @@ namespace ThScoreFileConverterTests.Models.Th10
             where TStageProgress : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var header1 = new ThScoreFileConverter.Models.Th095.HeaderBase();
-                var header2 = new ThScoreFileConverter.Models.Th095.HeaderBase();
+                var header1 = new HeaderBase();
+                var header2 = new HeaderBase();
 
                 var allScoreData = new AllScoreData<TCharaWithTotal, TStageProgress>();
                 allScoreData.Set(header1);
