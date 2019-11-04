@@ -1,8 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverter.Models.Th095;
+using ThScoreFileConverter.Models.Th125;
 using ThScoreFileConverterTests.Models.Th095;
 using ThScoreFileConverterTests.Models.Th095.Wrappers;
 using ThScoreFileConverterTests.Models.Wrappers;
+using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -15,7 +16,7 @@ namespace ThScoreFileConverterTests.Models
             var allScoreData = new Th125AllScoreDataWrapper();
 
             Assert.IsNull(allScoreData.Header);
-            Assert.AreEqual(0, allScoreData.ScoresCount);
+            Assert.AreEqual(0, allScoreData.Scores.Count);
             Assert.IsNull(allScoreData.Status);
         });
 
@@ -50,29 +51,29 @@ namespace ThScoreFileConverterTests.Models
         public void Th125AllScoreDataSetClearDataTest() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(
-                Th125ScoreTests.MakeByteArray(Th125ScoreTests.ValidStub));
-            var clearData = new Th125ScoreWrapper(chapter);
+                Th125.ScoreTests.MakeByteArray(Th125.ScoreTests.ValidStub));
+            var score = new Score(chapter.Target);
 
             var allScoreData = new Th125AllScoreDataWrapper();
-            allScoreData.Set(clearData);
+            allScoreData.Set(score);
 
-            Assert.AreSame(clearData.Target, allScoreData.ScoresItem(0).Target);
+            Assert.AreSame(score, allScoreData.Scores[0]);
         });
 
         [TestMethod]
         public void Th125AllScoreDataSetClearDataTestTwice() => TestUtils.Wrap(() =>
         {
             var chapter = ChapterWrapper.Create(
-                Th125ScoreTests.MakeByteArray(Th125ScoreTests.ValidStub));
-            var clearData1 = new Th125ScoreWrapper(chapter);
-            var clearData2 = new Th125ScoreWrapper(chapter);
+                Th125.ScoreTests.MakeByteArray(Th125.ScoreTests.ValidStub));
+            var score1 = new Score(chapter.Target);
+            var score2 = new Score(chapter.Target);
 
             var allScoreData = new Th125AllScoreDataWrapper();
-            allScoreData.Set(clearData1);
-            allScoreData.Set(clearData2);
+            allScoreData.Set(score1);
+            allScoreData.Set(score2);
 
-            Assert.AreSame(clearData1.Target, allScoreData.ScoresItem(0).Target);
-            Assert.AreSame(clearData2.Target, allScoreData.ScoresItem(1).Target);
+            Assert.AreSame(score1, allScoreData.Scores[0]);
+            Assert.AreSame(score2, allScoreData.Scores[1]);
         });
 
         [TestMethod]

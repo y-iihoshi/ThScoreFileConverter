@@ -43,8 +43,8 @@ namespace ThScoreFileConverterTests.Models.Th095.Wrappers
         public ChapterWrapper(ChapterWrapper chapter)
             => this.pobj = new PrivateObject(AssemblyNameToTest, TypeNameToTest, new object[] { chapter?.Target });
 
-        public object Target
-            => this.pobj.Target;
+        public Chapter Target
+            => this.pobj.Target as Chapter;
         public string Signature
             => this.pobj.GetProperty(nameof(this.Signature)) as string;
         public ushort? Version
