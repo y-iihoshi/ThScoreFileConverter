@@ -1,5 +1,4 @@
-﻿using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Models.Th125;
+﻿using ThScoreFileConverter.Models.Th125;
 
 namespace ThScoreFileConverterTests.Models.Th125.Stubs
 {
@@ -26,7 +25,7 @@ namespace ThScoreFileConverterTests.Models.Th125.Stubs
 
         public int BestshotScore { get; set; }
 
-        public Th125Converter.Chara Chara { get; set; }
+        public Chara Chara { get; set; }
 
         public uint DateTime { get; set; }
 
@@ -34,7 +33,7 @@ namespace ThScoreFileConverterTests.Models.Th125.Stubs
 
         public int HighScore { get; set; }
 
-        public (Th125Converter.Level Level, int Scene) LevelScene { get; set; }
+        public (Level Level, int Scene) LevelScene { get; set; }
 
         public int TrialCount { get; set; }
 

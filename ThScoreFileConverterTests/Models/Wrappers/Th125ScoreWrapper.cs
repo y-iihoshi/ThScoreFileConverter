@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th125;
 using ThScoreFileConverterTests.Models.Th095.Wrappers;
+using Level = ThScoreFileConverter.Models.Th125.Level;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -36,12 +38,12 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.IsValid)) as bool?;
         public IReadOnlyCollection<byte> Data
             => this.pobj.GetProperty(nameof(this.Data)) as byte[];
-        public (Th125Converter.Level Level, int Scene)? LevelScene
-            => this.pobj.GetProperty(nameof(this.LevelScene)) as (Th125Converter.Level, int)?;
+        public (Level Level, int Scene)? LevelScene
+            => this.pobj.GetProperty(nameof(this.LevelScene)) as (Level, int)?;
         public int? HighScore
             => this.pobj.GetProperty(nameof(this.HighScore)) as int?;
-        public Th125Converter.Chara? Chara
-            => this.pobj.GetProperty(nameof(this.Chara)) as Th125Converter.Chara?;
+        public Chara? Chara
+            => this.pobj.GetProperty(nameof(this.Chara)) as Chara?;
         public int? TrialCount
             => this.pobj.GetProperty(nameof(this.TrialCount)) as int?;
         public int? FirstSuccess

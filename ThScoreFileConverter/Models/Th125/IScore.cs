@@ -13,7 +13,7 @@ namespace ThScoreFileConverter.Models.Th125
     {
         int BestshotScore { get; }
 
-        Th125Converter.Chara Chara { get; }
+        Chara Chara { get; }
 
         uint DateTime { get; }
 
@@ -21,7 +21,7 @@ namespace ThScoreFileConverter.Models.Th125
 
         int HighScore { get; }
 
-        (Th125Converter.Level Level, int Scene) LevelScene { get; }
+        (Level Level, int Scene) LevelScene { get; }
 
         int TrialCount { get; }
     }

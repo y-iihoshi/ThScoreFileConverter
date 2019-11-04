@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th125;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Wrappers;
 
@@ -16,7 +16,7 @@ namespace ThScoreFileConverterTests.Models
         internal struct Properties
         {
             public string signature;
-            public Th125Converter.Level level;
+            public Level level;
             public short scene;
             public short width;
             public short height;
@@ -44,7 +44,7 @@ namespace ThScoreFileConverterTests.Models
         internal static Properties ValidProperties => new Properties()
         {
             signature = "BST2",
-            level = Th125Converter.Level.Lv2,
+            level = Level.Two,
             scene = 3,
             width = 4,
             height = 5,
@@ -204,7 +204,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         public static IEnumerable<object[]> InvalidLevels
-            => TestUtils.GetInvalidEnumerators(typeof(Th125Converter.Level));
+            => TestUtils.GetInvalidEnumerators(typeof(Level));
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "header")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
@@ -214,7 +214,7 @@ namespace ThScoreFileConverterTests.Models
         public void ReadFromTestInvalidLevel(int level) => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
-            properties.level = TestUtils.Cast<Th125Converter.Level>(level);
+            properties.level = TestUtils.Cast<Level>(level);
 
             var header = Th125BestShotHeaderWrapper.Create(MakeByteArray(properties));
 

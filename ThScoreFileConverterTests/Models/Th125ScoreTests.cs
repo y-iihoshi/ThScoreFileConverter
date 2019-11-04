@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th125;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th095.Wrappers;
@@ -21,9 +20,9 @@ namespace ThScoreFileConverterTests.Models
             Version = 0,
             Size = 0x48,
             Checksum = 0u,
-            LevelScene = (Th125Converter.Level.Lv9, 7),
+            LevelScene = (Level.Nine, 7),
             HighScore = 1234567,
-            Chara = Th125Converter.Chara.Hatate,
+            Chara = Chara.Hatate,
             TrialCount = 9876,
             FirstSuccess = 5432,
             DateTime = 34567890,
@@ -133,7 +132,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         public static IEnumerable<object[]> InvalidLevels
-            => TestUtils.GetInvalidEnumerators(typeof(Th125Converter.Level));
+            => TestUtils.GetInvalidEnumerators(typeof(Level));
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
@@ -142,7 +141,7 @@ namespace ThScoreFileConverterTests.Models
         public void Th125ScoreTestInvalidLevel(int level) => TestUtils.Wrap(() =>
         {
             var stub = new ScoreStub(ValidStub);
-            stub.LevelScene = (TestUtils.Cast<Th125Converter.Level>(level), stub.LevelScene.Scene);
+            stub.LevelScene = (TestUtils.Cast<Level>(level), stub.LevelScene.Scene);
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
             _ = new Th125ScoreWrapper(chapter);
@@ -151,7 +150,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         public static IEnumerable<object[]> InvalidCharacters
-            => TestUtils.GetInvalidEnumerators(typeof(Th125Converter.Chara));
+            => TestUtils.GetInvalidEnumerators(typeof(Chara));
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
@@ -161,7 +160,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var stub = new ScoreStub(ValidStub)
             {
-                Chara = TestUtils.Cast<Th125Converter.Chara>(chara),
+                Chara = TestUtils.Cast<Chara>(chara),
             };
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
