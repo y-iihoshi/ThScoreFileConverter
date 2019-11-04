@@ -15,8 +15,8 @@ namespace ThScoreFileConverterTests.Models.Th125
             new ScoreStub(ScoreTests.ValidStub),
             new ScoreStub(ScoreTests.ValidStub)
             {
-                LevelScene = (Level.Nine, 7),
-                HighScore = 0,
+                LevelScene = (Level.Spoiler, 4),
+                Chara = Chara.Aya,
             },
             new ScoreStub(ScoreTests.ValidStub)
             {
@@ -55,11 +55,11 @@ namespace ThScoreFileConverterTests.Models.Th125
             var replacer = new ScoreTotalReplacer(Scores);
 
             Settings.Instance.OutputNumberGroupSeparator = true;
-            Assert.AreEqual("1,234,567", replacer.Replace("%T125SCRTLA11"));
+            Assert.AreEqual("2,469,134", replacer.Replace("%T125SCRTLA11"));
             Assert.AreEqual("1,234,567", replacer.Replace("%T125SCRTLH11"));
 
             Settings.Instance.OutputNumberGroupSeparator = false;
-            Assert.AreEqual("1234567", replacer.Replace("%T125SCRTLA11"));
+            Assert.AreEqual("2469134", replacer.Replace("%T125SCRTLA11"));
             Assert.AreEqual("1234567", replacer.Replace("%T125SCRTLH11"));
 
             Settings.Instance.OutputNumberGroupSeparator = outputSeparator;
@@ -73,12 +73,12 @@ namespace ThScoreFileConverterTests.Models.Th125
             var replacer = new ScoreTotalReplacer(Scores);
 
             Settings.Instance.OutputNumberGroupSeparator = true;
-            Assert.AreEqual("23,456", replacer.Replace("%T125SCRTLA12"));
-            Assert.AreEqual("46,912", replacer.Replace("%T125SCRTLH12"));
+            Assert.AreEqual("46,912", replacer.Replace("%T125SCRTLA12"));
+            Assert.AreEqual("23,456", replacer.Replace("%T125SCRTLH12"));
 
             Settings.Instance.OutputNumberGroupSeparator = false;
-            Assert.AreEqual("23456", replacer.Replace("%T125SCRTLA12"));
-            Assert.AreEqual("46912", replacer.Replace("%T125SCRTLH12"));
+            Assert.AreEqual("46912", replacer.Replace("%T125SCRTLA12"));
+            Assert.AreEqual("23456", replacer.Replace("%T125SCRTLH12"));
 
             Settings.Instance.OutputNumberGroupSeparator = outputSeparator;
         }
@@ -91,12 +91,12 @@ namespace ThScoreFileConverterTests.Models.Th125
             var replacer = new ScoreTotalReplacer(Scores);
 
             Settings.Instance.OutputNumberGroupSeparator = true;
-            Assert.AreEqual("9,876", replacer.Replace("%T125SCRTLA13"));
-            Assert.AreEqual("19,752", replacer.Replace("%T125SCRTLH13"));
+            Assert.AreEqual("19,752", replacer.Replace("%T125SCRTLA13"));
+            Assert.AreEqual("9,876", replacer.Replace("%T125SCRTLH13"));
 
             Settings.Instance.OutputNumberGroupSeparator = false;
-            Assert.AreEqual("9876", replacer.Replace("%T125SCRTLA13"));
-            Assert.AreEqual("19752", replacer.Replace("%T125SCRTLH13"));
+            Assert.AreEqual("19752", replacer.Replace("%T125SCRTLA13"));
+            Assert.AreEqual("9876", replacer.Replace("%T125SCRTLH13"));
 
             Settings.Instance.OutputNumberGroupSeparator = outputSeparator;
         }
@@ -109,12 +109,12 @@ namespace ThScoreFileConverterTests.Models.Th125
             var replacer = new ScoreTotalReplacer(Scores);
 
             Settings.Instance.OutputNumberGroupSeparator = true;
-            Assert.AreEqual("5,432", replacer.Replace("%T125SCRTLA14"));
-            Assert.AreEqual("10,864", replacer.Replace("%T125SCRTLH14"));
+            Assert.AreEqual("10,864", replacer.Replace("%T125SCRTLA14"));
+            Assert.AreEqual("5,432", replacer.Replace("%T125SCRTLH14"));
 
             Settings.Instance.OutputNumberGroupSeparator = false;
-            Assert.AreEqual("5432", replacer.Replace("%T125SCRTLA14"));
-            Assert.AreEqual("10864", replacer.Replace("%T125SCRTLH14"));
+            Assert.AreEqual("10864", replacer.Replace("%T125SCRTLA14"));
+            Assert.AreEqual("5432", replacer.Replace("%T125SCRTLH14"));
 
             Settings.Instance.OutputNumberGroupSeparator = outputSeparator;
         }
@@ -123,8 +123,8 @@ namespace ThScoreFileConverterTests.Models.Th125
         public void ReplaceTestNumSucceededScenesInGame()
         {
             var replacer = new ScoreTotalReplacer(Scores);
-            Assert.AreEqual("1", replacer.Replace("%T125SCRTLA15"));
-            Assert.AreEqual("2", replacer.Replace("%T125SCRTLH15"));
+            Assert.AreEqual("2", replacer.Replace("%T125SCRTLA15"));
+            Assert.AreEqual("1", replacer.Replace("%T125SCRTLH15"));
         }
 
         [TestMethod]
@@ -135,11 +135,11 @@ namespace ThScoreFileConverterTests.Models.Th125
             var replacer = new ScoreTotalReplacer(Scores);
 
             Settings.Instance.OutputNumberGroupSeparator = true;
-            Assert.AreEqual("0", replacer.Replace("%T125SCRTLA21"));
+            Assert.AreEqual("1,234,567", replacer.Replace("%T125SCRTLA21"));
             Assert.AreEqual("2,469,134", replacer.Replace("%T125SCRTLH21"));
 
             Settings.Instance.OutputNumberGroupSeparator = false;
-            Assert.AreEqual("0", replacer.Replace("%T125SCRTLA21"));
+            Assert.AreEqual("1234567", replacer.Replace("%T125SCRTLA21"));
             Assert.AreEqual("2469134", replacer.Replace("%T125SCRTLH21"));
 
             Settings.Instance.OutputNumberGroupSeparator = outputSeparator;
@@ -153,12 +153,12 @@ namespace ThScoreFileConverterTests.Models.Th125
             var replacer = new ScoreTotalReplacer(Scores);
 
             Settings.Instance.OutputNumberGroupSeparator = true;
-            Assert.AreEqual("0", replacer.Replace("%T125SCRTLA22"));
-            Assert.AreEqual("70,368", replacer.Replace("%T125SCRTLH22"));
+            Assert.AreEqual("23,456", replacer.Replace("%T125SCRTLA22"));
+            Assert.AreEqual("46,912", replacer.Replace("%T125SCRTLH22"));
 
             Settings.Instance.OutputNumberGroupSeparator = false;
-            Assert.AreEqual("0", replacer.Replace("%T125SCRTLA22"));
-            Assert.AreEqual("70368", replacer.Replace("%T125SCRTLH22"));
+            Assert.AreEqual("23456", replacer.Replace("%T125SCRTLA22"));
+            Assert.AreEqual("46912", replacer.Replace("%T125SCRTLH22"));
 
             Settings.Instance.OutputNumberGroupSeparator = outputSeparator;
         }
@@ -171,12 +171,12 @@ namespace ThScoreFileConverterTests.Models.Th125
             var replacer = new ScoreTotalReplacer(Scores);
 
             Settings.Instance.OutputNumberGroupSeparator = true;
-            Assert.AreEqual("0", replacer.Replace("%T125SCRTLA23"));
-            Assert.AreEqual("29,628", replacer.Replace("%T125SCRTLH23"));
+            Assert.AreEqual("9,876", replacer.Replace("%T125SCRTLA23"));
+            Assert.AreEqual("19,752", replacer.Replace("%T125SCRTLH23"));
 
             Settings.Instance.OutputNumberGroupSeparator = false;
-            Assert.AreEqual("0", replacer.Replace("%T125SCRTLA23"));
-            Assert.AreEqual("29628", replacer.Replace("%T125SCRTLH23"));
+            Assert.AreEqual("9876", replacer.Replace("%T125SCRTLA23"));
+            Assert.AreEqual("19752", replacer.Replace("%T125SCRTLH23"));
 
             Settings.Instance.OutputNumberGroupSeparator = outputSeparator;
         }
@@ -189,12 +189,12 @@ namespace ThScoreFileConverterTests.Models.Th125
             var replacer = new ScoreTotalReplacer(Scores);
 
             Settings.Instance.OutputNumberGroupSeparator = true;
-            Assert.AreEqual("0", replacer.Replace("%T125SCRTLA24"));
-            Assert.AreEqual("16,296", replacer.Replace("%T125SCRTLH24"));
+            Assert.AreEqual("5,432", replacer.Replace("%T125SCRTLA24"));
+            Assert.AreEqual("10,864", replacer.Replace("%T125SCRTLH24"));
 
             Settings.Instance.OutputNumberGroupSeparator = false;
-            Assert.AreEqual("0", replacer.Replace("%T125SCRTLA24"));
-            Assert.AreEqual("16296", replacer.Replace("%T125SCRTLH24"));
+            Assert.AreEqual("5432", replacer.Replace("%T125SCRTLA24"));
+            Assert.AreEqual("10864", replacer.Replace("%T125SCRTLH24"));
 
             Settings.Instance.OutputNumberGroupSeparator = outputSeparator;
         }
@@ -203,14 +203,26 @@ namespace ThScoreFileConverterTests.Models.Th125
         public void ReplaceTestNumSucceededScenesPerChara()
         {
             var replacer = new ScoreTotalReplacer(Scores);
-            Assert.AreEqual("0", replacer.Replace("%T125SCRTLA25"));
-            Assert.AreEqual("3", replacer.Replace("%T125SCRTLH25"));
+            Assert.AreEqual("1", replacer.Replace("%T125SCRTLA25"));
+            Assert.AreEqual("2", replacer.Replace("%T125SCRTLH25"));
         }
 
         [TestMethod]
         public void ReplaceTestEmpty()
         {
             var scores = new List<IScore>();
+            var replacer = new ScoreTotalReplacer(scores);
+            Assert.AreEqual("0", replacer.Replace("%T125SCRTLH11"));
+            Assert.AreEqual("0", replacer.Replace("%T125SCRTLH12"));
+            Assert.AreEqual("0", replacer.Replace("%T125SCRTLH13"));
+            Assert.AreEqual("0", replacer.Replace("%T125SCRTLH14"));
+            Assert.AreEqual("0", replacer.Replace("%T125SCRTLH15"));
+        }
+
+        [TestMethod]
+        public void ReplaceTestNullScore()
+        {
+            var scores = new List<IScore>() { null };
             var replacer = new ScoreTotalReplacer(scores);
             Assert.AreEqual("0", replacer.Replace("%T125SCRTLH11"));
             Assert.AreEqual("0", replacer.Replace("%T125SCRTLH12"));
