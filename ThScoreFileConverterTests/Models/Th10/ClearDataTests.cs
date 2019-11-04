@@ -8,7 +8,6 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th10;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th10.Stubs;
-using ThScoreFileConverterTests.Models.Th10.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Th10
 {
@@ -136,8 +135,8 @@ namespace ThScoreFileConverterTests.Models.Th10
         {
             var stub = MakeValidStub();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            var clearData = new ClearData(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var clearData = new ClearData(chapter);
 
             Validate(stub, clearData);
             Assert.IsFalse(clearData.IsValid);
@@ -160,8 +159,8 @@ namespace ThScoreFileConverterTests.Models.Th10
             var stub = MakeValidStub();
             stub.Signature = stub.Signature.ToLowerInvariant();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new ClearData(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new ClearData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -173,8 +172,8 @@ namespace ThScoreFileConverterTests.Models.Th10
             var stub = MakeValidStub();
             ++stub.Version;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new ClearData(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new ClearData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -186,8 +185,8 @@ namespace ThScoreFileConverterTests.Models.Th10
             var stub = MakeValidStub();
             --stub.Size;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new ClearData(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new ClearData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -202,10 +201,10 @@ namespace ThScoreFileConverterTests.Models.Th10
             var checksum = 0u;
             var data = new byte[size];
 
-            var chapter = ChapterWrapper.Create(
+            var chapter = TestUtils.Create<Chapter>(
                 TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
 
-            Assert.AreEqual(expected, ClearData.CanInitialize(chapter.Target));
+            Assert.AreEqual(expected, ClearData.CanInitialize(chapter));
         });
     }
 }

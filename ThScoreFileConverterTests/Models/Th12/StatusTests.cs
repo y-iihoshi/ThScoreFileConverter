@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using ThScoreFileConverter.Models.Th12;
 using ThScoreFileConverterTests.Models.Th10.Stubs;
-using ThScoreFileConverterTests.Models.Th10.Wrappers;
+using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 
 namespace ThScoreFileConverterTests.Models.Th12
 {
@@ -18,8 +18,8 @@ namespace ThScoreFileConverterTests.Models.Th12
         {
             var stub = ValidStub;
 
-            var chapter = ChapterWrapper.Create(Th10.StatusTests.MakeByteArray(stub));
-            var status = new Status(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(Th10.StatusTests.MakeByteArray(stub));
+            var status = new Status(chapter);
 
             Th10.StatusTests.Validate(stub, status);
             Assert.IsFalse(status.IsValid);
@@ -42,8 +42,8 @@ namespace ThScoreFileConverterTests.Models.Th12
             var stub = new StatusStub(ValidStub);
             stub.Signature = stub.Signature.ToLowerInvariant();
 
-            var chapter = ChapterWrapper.Create(Th10.StatusTests.MakeByteArray(stub));
-            _ = new Status(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(Th10.StatusTests.MakeByteArray(stub));
+            _ = new Status(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -55,8 +55,8 @@ namespace ThScoreFileConverterTests.Models.Th12
             var stub = new StatusStub(ValidStub);
             ++stub.Version;
 
-            var chapter = ChapterWrapper.Create(Th10.StatusTests.MakeByteArray(stub));
-            _ = new Status(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(Th10.StatusTests.MakeByteArray(stub));
+            _ = new Status(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -68,8 +68,8 @@ namespace ThScoreFileConverterTests.Models.Th12
             var stub = new StatusStub(ValidStub);
             ++stub.Size;
 
-            var chapter = ChapterWrapper.Create(Th10.StatusTests.MakeByteArray(stub));
-            _ = new Status(chapter.Target);
+            var chapter = TestUtils.Create<Chapter>(Th10.StatusTests.MakeByteArray(stub));
+            _ = new Status(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -85,10 +85,10 @@ namespace ThScoreFileConverterTests.Models.Th12
             var checksum = 0u;
             var data = new byte[size];
 
-            var chapter = ChapterWrapper.Create(
+            var chapter = TestUtils.Create<Chapter>(
                 TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
 
-            Assert.AreEqual(expected, Status.CanInitialize(chapter.Target));
+            Assert.AreEqual(expected, Status.CanInitialize(chapter));
         });
     }
 }
