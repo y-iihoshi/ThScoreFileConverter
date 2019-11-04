@@ -25,6 +25,9 @@ namespace ThScoreFileConverter.Models.Th125
 
         public ScoreReplacer(IReadOnlyList<IScore> scores)
         {
+            if (scores is null)
+                throw new ArgumentNullException(nameof(scores));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var chara = Parsers.CharaParser.Parse(match.Groups[1].Value);
