@@ -13,7 +13,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         [DataRow(int.MaxValue)]
         public void DataTest(int data) => TestUtils.Wrap(() =>
         {
-            var fields = new BestShotHeader.BonusFields(data);
+            var fields = new BonusFields(data);
             Assert.AreEqual(data, fields.Data);
         });
 
@@ -22,7 +22,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         [DataRow(~0x4, false)]
         public void TwoShotTest(int data, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new BestShotHeader.BonusFields(data);
+            var fields = new BonusFields(data);
             Assert.AreEqual(expected, fields.TwoShot);
         });
 
@@ -31,7 +31,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         [DataRow(~0x8, false)]
         public void NiceShotTest(int data, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new BestShotHeader.BonusFields(data);
+            var fields = new BonusFields(data);
             Assert.AreEqual(expected, fields.NiceShot);
         });
 
@@ -40,7 +40,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         [DataRow(~0x10, false)]
         public void RiskBonusTest(int data, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new BestShotHeader.BonusFields(data);
+            var fields = new BonusFields(data);
             Assert.AreEqual(expected, fields.RiskBonus);
         });
 
@@ -49,7 +49,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         [DataRow(~0x40, false)]
         public void RedShotTest(int data, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new BestShotHeader.BonusFields(data);
+            var fields = new BonusFields(data);
             Assert.AreEqual(expected, fields.RedShot);
         });
 
@@ -58,7 +58,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         [DataRow(~0x80, false)]
         public void PurpleShotTest(int data, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new BestShotHeader.BonusFields(data);
+            var fields = new BonusFields(data);
             Assert.AreEqual(expected, fields.PurpleShot);
         });
 
@@ -67,7 +67,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         [DataRow(~0x100, false)]
         public void BlueShotTest(int data, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new BestShotHeader.BonusFields(data);
+            var fields = new BonusFields(data);
             Assert.AreEqual(expected, fields.BlueShot);
         });
 
@@ -76,7 +76,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         [DataRow(~0x200, false)]
         public void CyanShotTest(int data, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new BestShotHeader.BonusFields(data);
+            var fields = new BonusFields(data);
             Assert.AreEqual(expected, fields.CyanShot);
         });
 
@@ -85,7 +85,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         [DataRow(~0x400, false)]
         public void GreenShotTest(int data, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new BestShotHeader.BonusFields(data);
+            var fields = new BonusFields(data);
             Assert.AreEqual(expected, fields.GreenShot);
         });
 
@@ -94,7 +94,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         [DataRow(~0x800, false)]
         public void YellowShotTest(int data, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new BestShotHeader.BonusFields(data);
+            var fields = new BonusFields(data);
             Assert.AreEqual(expected, fields.YellowShot);
         });
 
@@ -103,7 +103,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         [DataRow(~0x1000, false)]
         public void OrangeShotTest(int data, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new BestShotHeader.BonusFields(data);
+            var fields = new BonusFields(data);
             Assert.AreEqual(expected, fields.OrangeShot);
         });
 
@@ -112,7 +112,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         [DataRow(~0x2000, false)]
         public void ColorfulShotTest(int data, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new BestShotHeader.BonusFields(data);
+            var fields = new BonusFields(data);
             Assert.AreEqual(expected, fields.ColorfulShot);
         });
 
@@ -121,7 +121,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         [DataRow(~0x4000, false)]
         public void RainbowShotTest(int data, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new BestShotHeader.BonusFields(data);
+            var fields = new BonusFields(data);
             Assert.AreEqual(expected, fields.RainbowShot);
         });
 
@@ -130,7 +130,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         [DataRow(~0x1_0000, false)]
         public void SoloShotTest(int data, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new BestShotHeader.BonusFields(data);
+            var fields = new BonusFields(data);
             Assert.AreEqual(expected, fields.SoloShot);
         });
 
@@ -139,7 +139,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         [DataRow(~0x40_0000, false)]
         public void MacroBonusTest(int data, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new BestShotHeader.BonusFields(data);
+            var fields = new BonusFields(data);
             Assert.AreEqual(expected, fields.MacroBonus);
         });
 
@@ -148,7 +148,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         [DataRow(~0x100_0000, false)]
         public void FrontShotTest(int data, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new BestShotHeader.BonusFields(data);
+            var fields = new BonusFields(data);
             Assert.AreEqual(expected, fields.FrontShot);
         });
 
@@ -157,7 +157,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         [DataRow(~0x200_0000, false)]
         public void BackShotTest(int data, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new BestShotHeader.BonusFields(data);
+            var fields = new BonusFields(data);
             Assert.AreEqual(expected, fields.BackShot);
         });
 
@@ -166,7 +166,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         [DataRow(~0x400_0000, false)]
         public void SideShotTest(int data, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new BestShotHeader.BonusFields(data);
+            var fields = new BonusFields(data);
             Assert.AreEqual(expected, fields.SideShot);
         });
 
@@ -175,7 +175,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         [DataRow(~0x800_0000, false)]
         public void ClearShotTest(int data, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new BestShotHeader.BonusFields(data);
+            var fields = new BonusFields(data);
             Assert.AreEqual(expected, fields.ClearShot);
         });
 
@@ -184,7 +184,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         [DataRow(~0x1000_0000, false)]
         public void CatBonusTest(int data, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new BestShotHeader.BonusFields(data);
+            var fields = new BonusFields(data);
             Assert.AreEqual(expected, fields.CatBonus);
         });
     }
