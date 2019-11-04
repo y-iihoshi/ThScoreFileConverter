@@ -10,7 +10,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -493,7 +492,7 @@ namespace ThScoreFileConverter.Models
                             "ClearData: {0}{3}Slow: {1:F6}%{3}SpellName: {2}",
                             Utils.ToNumberString(bestshot.Header.ResultScore),
                             bestshot.Header.SlowRate,
-                            Encoding.Default.GetString(bestshot.Header.CardName).TrimEnd('\0'),
+                            Encoding.Default.GetString(bestshot.Header.CardName.ToArray()).TrimEnd('\0'),
                             Environment.NewLine);
                         return Utils.Format(
                             "<img src=\"{0}\" alt=\"{1}\" title=\"{1}\" border=0>",

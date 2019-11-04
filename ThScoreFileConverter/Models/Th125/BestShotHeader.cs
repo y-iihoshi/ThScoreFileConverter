@@ -8,6 +8,7 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using ThScoreFileConverter.Extensions;
@@ -65,7 +66,7 @@ namespace ThScoreFileConverter.Models.Th125
 
         public int ResultScore2 { get; private set; }   // ???
 
-        public byte[] CardName { get; private set; }
+        public IEnumerable<byte> CardName { get; private set; }
 
         public void ReadFrom(BinaryReader reader)
         {
