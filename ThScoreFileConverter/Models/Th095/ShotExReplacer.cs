@@ -63,7 +63,7 @@ namespace ThScoreFileConverter.Models.Th095
                         case 3:     // height
                             return bestshot.Header.Height.ToString(CultureInfo.InvariantCulture);
                         case 4:     // score
-                            return Utils.ToNumberString(bestshot.Header.Score);
+                            return Utils.ToNumberString(bestshot.Header.ResultScore);
                         case 5:     // slow rate
                             return Utils.Format("{0:F6}%", bestshot.Header.SlowRate);
                         case 6:     // date & time

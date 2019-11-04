@@ -29,7 +29,7 @@ namespace ThScoreFileConverter.Models.Th095
 
         public short Height { get; private set; }
 
-        public int Score { get; private set; }
+        public int ResultScore { get; private set; }
 
         public float SlowRate { get; private set; }
 
@@ -50,7 +50,7 @@ namespace ThScoreFileConverter.Models.Th095
             reader.ReadUInt16();    // 0x0102 ... Version?
             this.Width = reader.ReadInt16();
             this.Height = reader.ReadInt16();
-            this.Score = reader.ReadInt32();
+            this.ResultScore = reader.ReadInt32();
             this.SlowRate = reader.ReadSingle();
             this.CardName = reader.ReadExactBytes(0x50);
         }

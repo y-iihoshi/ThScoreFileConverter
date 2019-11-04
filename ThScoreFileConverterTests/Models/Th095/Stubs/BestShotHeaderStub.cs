@@ -14,8 +14,8 @@ namespace ThScoreFileConverterTests.Models.Th095.Stubs
             this.CardName = header.CardName?.ToArray();
             this.Height = header.Height;
             this.Level = header.Level;
+            this.ResultScore = header.ResultScore;
             this.Scene = header.Scene;
-            this.Score = header.Score;
             this.Signature = header.Signature;
             this.SlowRate = header.SlowRate;
             this.Width = header.Width;
@@ -27,9 +27,9 @@ namespace ThScoreFileConverterTests.Models.Th095.Stubs
 
         public Level Level { get; set; }
 
-        public short Scene { get; set; }
+        public int ResultScore { get; set; }
 
-        public int Score { get; set; }
+        public short Scene { get; set; }
 
         public string Signature { get; set; }
 

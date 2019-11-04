@@ -44,7 +44,7 @@ namespace ThScoreFileConverter.Models.Th095
                     var relativePath = outputFileUri.MakeRelativeUri(bestshotUri).OriginalString;
                     var alternativeString = Utils.Format(
                         "ClearData: {0}{3}Slow: {1:F6}%{3}SpellName: {2}",
-                        Utils.ToNumberString(bestshot.Header.Score),
+                        Utils.ToNumberString(bestshot.Header.ResultScore),
                         bestshot.Header.SlowRate,
                         Encoding.Default.GetString(bestshot.Header.CardName.ToArray()).TrimEnd('\0'),
                         Environment.NewLine);

@@ -30,7 +30,9 @@ namespace ThScoreFileConverter.Models
     {
         private AllScoreData allScoreData = null;
 
-        private Dictionary<Chara, Dictionary<(Th125.Level Level, int Scene), (string Path, BestShotHeader Header)>> bestshots = null;
+        private Dictionary<
+            Chara,
+            Dictionary<(Th125.Level Level, int Scene), (string Path, IBestShotHeader Header)>> bestshots = null;
 
         public override string SupportedVersions
         {
@@ -108,7 +110,7 @@ namespace ThScoreFileConverter.Models
                     if (this.bestshots == null)
                     {
                         this.bestshots =
-                            new Dictionary<Chara, Dictionary<(Th125.Level, int), (string, BestShotHeader)>>(
+                            new Dictionary<Chara, Dictionary<(Th125.Level, int), (string, IBestShotHeader)>>(
                                 Enum.GetValues(typeof(Chara)).Length);
                     }
 
@@ -116,7 +118,7 @@ namespace ThScoreFileConverter.Models
                     {
                         this.bestshots.Add(
                             chara,
-                            new Dictionary<(Th125.Level, int), (string, BestShotHeader)>(Definitions.SpellCards.Count));
+                            new Dictionary<(Th125.Level, int), (string, IBestShotHeader)>(Definitions.SpellCards.Count));
                     }
 
                     var key = (header.Level, header.Scene);
@@ -518,7 +520,7 @@ namespace ThScoreFileConverter.Models
             private static readonly string Pattern = Utils.Format(
                 @"%T125SHOTEX({0})({1})([1-9])([1-7])", Parsers.CharaParser.Pattern, Parsers.LevelParser.Pattern);
 
-            private static readonly Func<BestShotHeader, List<Detail>> DetailList =
+            private static readonly Func<IBestShotHeader, List<Detail>> DetailList =
                 header => new List<Detail>
                 {
                     new Detail(true,                       "Base Point    {0,9}", Utils.ToNumberString(header.BasePoint)),

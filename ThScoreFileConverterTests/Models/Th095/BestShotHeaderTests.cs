@@ -21,7 +21,7 @@ namespace ThScoreFileConverterTests.Models.Th095
             Scene = 3,
             Width = 4,
             Height = 5,
-            Score = 6,
+            ResultScore = 6,
             SlowRate = 7f,
             CardName = TestUtils.CP932Encoding.GetBytes("abcde").Concat(Enumerable.Repeat((byte)'\0', 75)).ToArray()
         };
@@ -35,7 +35,7 @@ namespace ThScoreFileConverterTests.Models.Th095
                 (ushort)0,
                 header.Width,
                 header.Height,
-                header.Score,
+                header.ResultScore,
                 header.SlowRate,
                 header.CardName);
 
@@ -49,7 +49,7 @@ namespace ThScoreFileConverterTests.Models.Th095
             Assert.AreEqual(expected.Scene, actual.Scene);
             Assert.AreEqual(expected.Width, actual.Width);
             Assert.AreEqual(expected.Height, actual.Height);
-            Assert.AreEqual(expected.Score, actual.Score);
+            Assert.AreEqual(expected.ResultScore, actual.ResultScore);
             Assert.AreEqual(expected.SlowRate, actual.SlowRate);
             CollectionAssert.That.AreEqual(expected.CardName, actual.CardName);
         }
