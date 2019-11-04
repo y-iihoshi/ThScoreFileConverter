@@ -29,120 +29,6 @@ namespace ThScoreFileConverter.Models
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th125Converter : ThConverter
     {
-        // Thanks to thwiki.info
-        private static readonly Dictionary<(Th125.Level Level, int Scene), (Enemy Enemy, string Card)> SpellCards =
-            new Dictionary<(Th125.Level, int), (Enemy, string)>()
-            {
-                { (Th125.Level.One,     1), (Enemy.Minoriko,  string.Empty) },
-                { (Th125.Level.One,     2), (Enemy.Minoriko,  string.Empty) },
-                { (Th125.Level.One,     3), (Enemy.Shizuha,   "秋符「フォーリンブラスト」") },
-                { (Th125.Level.One,     4), (Enemy.Minoriko,  "実符「ウォームカラーハーヴェスト」") },
-                { (Th125.Level.One,     5), (Enemy.Shizuha,   "枯道「ロストウィンドロウ」") },
-                { (Th125.Level.One,     6), (Enemy.Minoriko,  "焼芋「スイートポテトルーム」") },
-                { (Th125.Level.Two,     1), (Enemy.Parsee,    string.Empty) },
-                { (Th125.Level.Two,     2), (Enemy.Hina,      string.Empty) },
-                { (Th125.Level.Two,     3), (Enemy.Parsee,    "嫉妬「ジェラシーボンバー」") },
-                { (Th125.Level.Two,     4), (Enemy.Hina,      "厄野「禊川の堆積」") },
-                { (Th125.Level.Two,     5), (Enemy.Parsee,    "怨み念法「積怨返し」") },
-                { (Th125.Level.Two,     6), (Enemy.Hina,      "災禍「呪いの雛人形」") },
-                { (Th125.Level.Three,   1), (Enemy.Yamame,    string.Empty) },
-                { (Th125.Level.Three,   2), (Enemy.Kogasa,    "傘符「一本足ピッチャー返し」") },
-                { (Th125.Level.Three,   3), (Enemy.Kisume,    "釣瓶「飛んで井の中」") },
-                { (Th125.Level.Three,   4), (Enemy.Yamame,    "細綱「カンダタロープ」") },
-                { (Th125.Level.Three,   5), (Enemy.Kogasa,    "虹符「オーバー・ザ・レインボー」") },
-                { (Th125.Level.Three,   6), (Enemy.Kisume,    "釣瓶「ウェルディストラクター」") },
-                { (Th125.Level.Three,   7), (Enemy.Yamame,    "毒符「樺黄小町」") },
-                { (Th125.Level.Three,   8), (Enemy.Kogasa,    "傘符「細雪の過客」") },
-                { (Th125.Level.Four,    1), (Enemy.Nitori,    string.Empty) },
-                { (Th125.Level.Four,    2), (Enemy.Momiji,    string.Empty) },
-                { (Th125.Level.Four,    3), (Enemy.Nitori,    "水符「ウォーターカーペット」") },
-                { (Th125.Level.Four,    4), (Enemy.Momiji,    "狗符「レイビーズバイト」") },
-                { (Th125.Level.Four,    5), (Enemy.Nitori,    "河符「ディバイディングエッジ」") },
-                { (Th125.Level.Four,    6), (Enemy.Momiji,    "山窩「エクスペリーズカナン」") },
-                { (Th125.Level.Four,    7), (Enemy.Nitori,    "河童「乾燥尻子玉」") },
-                { (Th125.Level.Five,    1), (Enemy.Ichirin,   string.Empty) },
-                { (Th125.Level.Five,    2), (Enemy.Minamitsu, string.Empty) },
-                { (Th125.Level.Five,    3), (Enemy.Ichirin,   "拳骨「天空鉄槌落とし」") },
-                { (Th125.Level.Five,    4), (Enemy.Minamitsu, "錨符「幽霊船長期停泊」") },
-                { (Th125.Level.Five,    5), (Enemy.Ichirin,   "稲妻「帯電入道」") },
-                { (Th125.Level.Five,    6), (Enemy.Minamitsu, "浸水「船底のヴィーナス」") },
-                { (Th125.Level.Five,    7), (Enemy.Ichirin,   "鉄拳「入道にょき」") },
-                { (Th125.Level.Five,    8), (Enemy.Minamitsu, "「ディープシンカー」") },
-                { (Th125.Level.Six,     1), (Enemy.Yuugi,     string.Empty) },
-                { (Th125.Level.Six,     2), (Enemy.Suika,     string.Empty) },
-                { (Th125.Level.Six,     3), (Enemy.Yuugi,     "光鬼「金剛螺旋」") },
-                { (Th125.Level.Six,     4), (Enemy.Suika,     "鬼符「豆粒大の針地獄」") },
-                { (Th125.Level.Six,     5), (Enemy.Yuugi,     "鬼符「鬼気狂瀾」") },
-                { (Th125.Level.Six,     6), (Enemy.Suika,     "地獄「煉獄吐息」") },
-                { (Th125.Level.Six,     7), (Enemy.Yuugi,     "鬼声「壊滅の咆哮」") },
-                { (Th125.Level.Six,     8), (Enemy.Suika,     "鬼符「ミッシングパワー」") },
-                { (Th125.Level.Seven,   1), (Enemy.Shou,      string.Empty) },
-                { (Th125.Level.Seven,   2), (Enemy.Nazrin,    string.Empty) },
-                { (Th125.Level.Seven,   3), (Enemy.Shou,      "寅符「ハングリータイガー」") },
-                { (Th125.Level.Seven,   4), (Enemy.Nazrin,    "棒符「ナズーリンロッド」") },
-                { (Th125.Level.Seven,   5), (Enemy.Shou,      "天符「焦土曼荼羅」") },
-                { (Th125.Level.Seven,   6), (Enemy.Nazrin,    "財宝「ゴールドラッシュ」") },
-                { (Th125.Level.Seven,   7), (Enemy.Shou,      "宝符「黄金の震眩」") },
-                { (Th125.Level.Eight,   1), (Enemy.Rin,       string.Empty) },
-                { (Th125.Level.Eight,   2), (Enemy.Utsuho,    "熔解「メルティングホワイト」") },
-                { (Th125.Level.Eight,   3), (Enemy.Rin,       "死符「ゴーストタウン」") },
-                { (Th125.Level.Eight,   4), (Enemy.Utsuho,    "巨星「レッドジャイアント」") },
-                { (Th125.Level.Eight,   5), (Enemy.Rin,       "「死体繁華街」") },
-                { (Th125.Level.Eight,   6), (Enemy.Utsuho,    "星符「巨星墜つ」") },
-                { (Th125.Level.Eight,   7), (Enemy.Rin,       "酔歩「キャットランダムウォーク」") },
-                { (Th125.Level.Eight,   8), (Enemy.Utsuho,    "七星「セプテントリオン」") },
-                { (Th125.Level.Nine,    1), (Enemy.Satori,    string.Empty) },
-                { (Th125.Level.Nine,    2), (Enemy.Koishi,    "心符「没我の愛」") },
-                { (Th125.Level.Nine,    3), (Enemy.Satori,    "脳符「ブレインフィンガープリント」") },
-                { (Th125.Level.Nine,    4), (Enemy.Koishi,    "記憶「ＤＮＡの瑕」") },
-                { (Th125.Level.Nine,    5), (Enemy.Satori,    "心花「カメラシャイローズ」") },
-                { (Th125.Level.Nine,    6), (Enemy.Koishi,    "「胎児の夢」") },
-                { (Th125.Level.Nine,    7), (Enemy.Satori,    "想起「うろおぼえの金閣寺」") },
-                { (Th125.Level.Nine,    8), (Enemy.Koishi,    "「ローズ地獄」") },
-                { (Th125.Level.Ten,     1), (Enemy.Tenshi,    "気性「勇気凛々の剣」") },
-                { (Th125.Level.Ten,     2), (Enemy.Iku,       "雷符「ライトニングフィッシュ」") },
-                { (Th125.Level.Ten,     3), (Enemy.Tenshi,    "地震「避難険路」") },
-                { (Th125.Level.Ten,     4), (Enemy.Iku,       "珠符「五爪龍の珠」") },
-                { (Th125.Level.Ten,     5), (Enemy.Tenshi,    "要石「カナメファンネル」") },
-                { (Th125.Level.Ten,     6), (Enemy.Iku,       "龍宮「タイヤヒラメダンス」") },
-                { (Th125.Level.Ten,     7), (Enemy.Tenshi,    "「全人類の緋想天」") },
-                { (Th125.Level.Ten,     8), (Enemy.Iku,       "龍魚「龍宮の使い遊泳弾」") },
-                { (Th125.Level.Eleven,  1), (Enemy.Kanako,    string.Empty) },
-                { (Th125.Level.Eleven,  2), (Enemy.Suwako,    "神桜「湛えの桜吹雪」") },
-                { (Th125.Level.Eleven,  3), (Enemy.Kanako,    "蛇符「グラウンドサーペント」") },
-                { (Th125.Level.Eleven,  4), (Enemy.Suwako,    "姫川「プリンセスジェイドグリーン」") },
-                { (Th125.Level.Eleven,  5), (Enemy.Kanako,    "御柱「メテオリックオンバシラ」") },
-                { (Th125.Level.Eleven,  6), (Enemy.Suwako,    "鉄輪「ミシカルリング」") },
-                { (Th125.Level.Eleven,  7), (Enemy.Kanako,    "儚道「御神渡りクロス」") },
-                { (Th125.Level.Eleven,  8), (Enemy.Suwako,    "土着神「御射軍神さま」") },
-                { (Th125.Level.Twelve,  1), (Enemy.Byakuren,  string.Empty) },
-                { (Th125.Level.Twelve,  2), (Enemy.Nue,       "正体不明「紫鏡」") },
-                { (Th125.Level.Twelve,  3), (Enemy.Byakuren,  "「遊行聖」") },
-                { (Th125.Level.Twelve,  4), (Enemy.Nue,       "正体不明「赤マント青マント」") },
-                { (Th125.Level.Twelve,  5), (Enemy.Byakuren,  "習合「垂迹大日如来」") },
-                { (Th125.Level.Twelve,  6), (Enemy.Nue,       "正体不明「厠の花子さん」") },
-                { (Th125.Level.Twelve,  7), (Enemy.Byakuren,  "「スターソードの護法」") },
-                { (Th125.Level.Twelve,  8), (Enemy.Nue,       "「遊星よりの弾幕Ｘ」") },
-                { (Th125.Level.Extra,   1), (Enemy.Reimu,     "お札「新聞拡張団調伏」") },
-                { (Th125.Level.Extra,   2), (Enemy.Marisa,    "星符「オールトクラウド」") },
-                { (Th125.Level.Extra,   3), (Enemy.Sanae,     "奇跡「弘安の神風」") },
-                { (Th125.Level.Extra,   4), (Enemy.Reimu,     "結界「パパラッチ撃退結界」") },
-                { (Th125.Level.Extra,   5), (Enemy.Marisa,    "天儀「オーレリーズソーラーシステム」") },
-                { (Th125.Level.Extra,   6), (Enemy.Sanae,     "蛙符「手管の蝦蟇」") },
-                { (Th125.Level.Extra,   7), (Enemy.Reimu,     "夢符「夢想亜空穴」") },
-                { (Th125.Level.Extra,   8), (Enemy.Marisa,    "彗星「ブレイジングスター」") },
-                { (Th125.Level.Extra,   9), (Enemy.Sanae,     "妖怪退治「妖力スポイラー」") },
-                { (Th125.Level.Spoiler, 1), (Enemy.Hatate,    string.Empty) },
-                { (Th125.Level.Spoiler, 2), (Enemy.Hatate,    "取材「姫海棠はたての練習取材」") },
-                { (Th125.Level.Spoiler, 3), (Enemy.Hatate,    "連写「ラピッドショット」") },
-                { (Th125.Level.Spoiler, 4), (Enemy.Hatate,    "遠眼「天狗サイコグラフィ」") },
-                { (Th125.Level.Spoiler, 5), (Enemy.Aya,       string.Empty) },
-                { (Th125.Level.Spoiler, 6), (Enemy.Aya,       "取材「射命丸文の圧迫取材」") },
-                { (Th125.Level.Spoiler, 7), (Enemy.Aya,       "望遠「キャンディッドショット」") },
-                { (Th125.Level.Spoiler, 8), (Enemy.Aya,       "速写「ファストショット」") },
-                { (Th125.Level.Spoiler, 9), (Enemy.Aya,       "「幻想風靡」") },
-            };
-
         private AllScoreData allScoreData = null;
 
         private Dictionary<Chara, Dictionary<(Th125.Level Level, int Scene), (string Path, BestShotHeader Header)>> bestshots = null;
@@ -222,14 +108,16 @@ namespace ThScoreFileConverter.Models
 
                     if (this.bestshots == null)
                     {
-                        this.bestshots = new Dictionary<Chara, Dictionary<(Th125.Level, int), (string, BestShotHeader)>>(
-                            Enum.GetValues(typeof(Chara)).Length);
+                        this.bestshots =
+                            new Dictionary<Chara, Dictionary<(Th125.Level, int), (string, BestShotHeader)>>(
+                                Enum.GetValues(typeof(Chara)).Length);
                     }
 
                     if (!this.bestshots.ContainsKey(chara))
                     {
                         this.bestshots.Add(
-                            chara, new Dictionary<(Th125.Level, int), (string, BestShotHeader)>(SpellCards.Count));
+                            chara,
+                            new Dictionary<(Th125.Level, int), (string, BestShotHeader)>(Definitions.SpellCards.Count));
                     }
 
                     var key = (header.Level, header.Scene);
@@ -394,7 +282,7 @@ namespace ThScoreFileConverter.Models
                     var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
                     var key = (level, scene);
-                    if (!SpellCards.ContainsKey(key))
+                    if (!Definitions.SpellCards.ContainsKey(key))
                         return match.ToString();
 
                     var score = parent.allScoreData.Scores.FirstOrDefault(elem =>
@@ -532,7 +420,7 @@ namespace ThScoreFileConverter.Models
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                     var key = (level, scene);
-                    if (!SpellCards.ContainsKey(key))
+                    if (!Definitions.SpellCards.ContainsKey(key))
                         return match.ToString();
 
                     if (hideUntriedCards)
@@ -543,7 +431,8 @@ namespace ThScoreFileConverter.Models
                             return "??????????";
                     }
 
-                    return (type == 1) ? SpellCards[key].Enemy.ToLongName() : SpellCards[key].Card;
+                    return (type == 1)
+                        ? Definitions.SpellCards[key].Enemy.ToLongName() : Definitions.SpellCards[key].Card;
                 });
             }
 
@@ -591,7 +480,7 @@ namespace ThScoreFileConverter.Models
                     var scene = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                     var key = (level, scene);
-                    if (!SpellCards.ContainsKey(key))
+                    if (!Definitions.SpellCards.ContainsKey(key))
                         return match.ToString();
 
                     if (!string.IsNullOrEmpty(outputFilePath) &&
@@ -672,7 +561,7 @@ namespace ThScoreFileConverter.Models
                     var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
                     var key = (level, scene);
-                    if (!SpellCards.ContainsKey(key))
+                    if (!Definitions.SpellCards.ContainsKey(key))
                         return match.ToString();
 
                     if (!string.IsNullOrEmpty(outputFilePath) &&
@@ -740,7 +629,7 @@ namespace ThScoreFileConverter.Models
         {
             private readonly List<IScore> scores;
 
-            public AllScoreData() => this.scores = new List<IScore>(SpellCards.Count);
+            public AllScoreData() => this.scores = new List<IScore>(Definitions.SpellCards.Count);
 
             public Th095.HeaderBase Header { get; private set; }
 
