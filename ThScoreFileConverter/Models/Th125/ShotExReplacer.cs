@@ -21,36 +21,6 @@ namespace ThScoreFileConverter.Models.Th125
         private static readonly string Pattern = Utils.Format(
             @"%T125SHOTEX({0})({1})([1-9])([1-7])", Parsers.CharaParser.Pattern, Parsers.LevelParser.Pattern);
 
-        private static readonly Func<IBestShotHeader, List<Detail>> DetailList =
-            header => new List<Detail>
-            {
-                new Detail(true,                       "Base Point    {0,9}", Utils.ToNumberString(header.BasePoint)),
-                new Detail(header.Fields.ClearShot,    "Clear Shot!   {0,9}", Utils.Format("+ {0}", header.ClearShot)),
-                new Detail(header.Fields.SoloShot,     "Solo Shot     {0,9}", "+ 100"),
-                new Detail(header.Fields.RedShot,      "Red Shot      {0,9}", "+ 300"),
-                new Detail(header.Fields.PurpleShot,   "Purple Shot   {0,9}", "+ 300"),
-                new Detail(header.Fields.BlueShot,     "Blue Shot     {0,9}", "+ 300"),
-                new Detail(header.Fields.CyanShot,     "Cyan Shot     {0,9}", "+ 300"),
-                new Detail(header.Fields.GreenShot,    "Green Shot    {0,9}", "+ 300"),
-                new Detail(header.Fields.YellowShot,   "Yellow Shot   {0,9}", "+ 300"),
-                new Detail(header.Fields.OrangeShot,   "Orange Shot   {0,9}", "+ 300"),
-                new Detail(header.Fields.ColorfulShot, "Colorful Shot {0,9}", "+ 900"),
-                new Detail(header.Fields.RainbowShot,  "Rainbow Shot  {0,9}", Utils.Format("+ {0}", Utils.ToNumberString(2100))),
-                new Detail(header.Fields.RiskBonus,    "Risk Bonus    {0,9}", Utils.Format("+ {0}", Utils.ToNumberString(header.RiskBonus))),
-                new Detail(header.Fields.MacroBonus,   "Macro Bonus   {0,9}", Utils.Format("+ {0}", Utils.ToNumberString(header.MacroBonus))),
-                new Detail(header.Fields.FrontShot,    "Front Shot    {0,9}", Utils.Format("+ {0}", header.FrontSideBackShot)),
-                new Detail(header.Fields.SideShot,     "Side Shot     {0,9}", Utils.Format("+ {0}", header.FrontSideBackShot)),
-                new Detail(header.Fields.BackShot,     "Back Shot     {0,9}", Utils.Format("+ {0}", header.FrontSideBackShot)),
-                new Detail(header.Fields.CatBonus,     "Cat Bonus     {0,9}", "+ 666"),
-                new Detail(true,                       string.Empty,          string.Empty),
-                new Detail(true,                       "Boss Shot!    {0,9}", Utils.Format("* {0:F2}", header.BossShot)),
-                new Detail(header.Fields.TwoShot,      "Two Shot!     {0,9}", "* 1.50"),
-                new Detail(header.Fields.NiceShot,     "Nice Shot!    {0,9}", Utils.Format("* {0:F2}", header.NiceShot)),
-                new Detail(true,                       "Angle Bonus   {0,9}", Utils.Format("* {0:F2}", header.AngleBonus)),
-                new Detail(true,                       string.Empty,          string.Empty),
-                new Detail(true,                       "Result Score  {0,9}", Utils.ToNumberString(header.ResultScore)),
-            };
-
         private readonly MatchEvaluator evaluator;
 
         public ShotExReplacer(
@@ -58,6 +28,11 @@ namespace ThScoreFileConverter.Models.Th125
             IReadOnlyList<IScore> scores,
             string outputFilePath)
         {
+            if (bestshots is null)
+                throw new ArgumentNullException(nameof(bestshots));
+            if (scores is null)
+                throw new ArgumentNullException(nameof(scores));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var chara = Parsers.CharaParser.Parse(match.Groups[1].Value);
@@ -69,16 +44,23 @@ namespace ThScoreFileConverter.Models.Th125
                 if (!Definitions.SpellCards.ContainsKey(key))
                     return match.ToString();
 
-                if (!string.IsNullOrEmpty(outputFilePath) &&
-                    bestshots.TryGetValue((chara, level, scene), out var bestshot))
+                if (bestshots.TryGetValue((chara, level, scene), out var bestshot))
                 {
                     IScore score;
                     IEnumerable<string> detailStrings;
                     switch (type)
                     {
                         case 1:     // relative path to the bestshot file
-                            return new Uri(outputFilePath)
-                                .MakeRelativeUri(new Uri(bestshot.Path)).OriginalString;
+                            if (Uri.TryCreate(outputFilePath, UriKind.Absolute, out var outputFileUri) &&
+                                Uri.TryCreate(bestshot.Path, UriKind.Absolute, out var bestshotUri))
+                            {
+                                return outputFileUri.MakeRelativeUri(bestshotUri).OriginalString;
+                            }
+                            else
+                            {
+                                return string.Empty;
+                            }
+
                         case 2:     // width
                             return bestshot.Header.Width.ToString(CultureInfo.InvariantCulture);
                         case 3:     // height
@@ -96,7 +78,7 @@ namespace ThScoreFileConverter.Models.Th125
                                 .AddSeconds(score.DateTime).ToLocalTime()
                                 .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture);
                         case 7:     // detail info
-                            detailStrings = DetailList(bestshot.Header)
+                            detailStrings = MakeDetailList(bestshot.Header)
                                 .Where(detail => detail.Outputs)
                                 .Select(detail => Utils.Format(detail.Format, detail.Value));
                             return string.Join(Environment.NewLine, detailStrings.ToArray());
@@ -122,6 +104,41 @@ namespace ThScoreFileConverter.Models.Th125
         }
 
         public string Replace(string input) => Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+
+        private static IEnumerable<Detail> MakeDetailList(IBestShotHeader header)
+        {
+            string Str(int value) => Utils.ToNumberString(value);
+            string Fmt(string format, object value) => Utils.Format(format, value);
+
+            return new[]
+            {
+                new Detail(true,                       "Base Point    {0,9}", Str(header.BasePoint)),
+                new Detail(header.Fields.ClearShot,    "Clear Shot!   {0,9}", Fmt("+ {0}", header.ClearShot)),
+                new Detail(header.Fields.SoloShot,     "Solo Shot     {0,9}", "+ 100"),
+                new Detail(header.Fields.RedShot,      "Red Shot      {0,9}", "+ 300"),
+                new Detail(header.Fields.PurpleShot,   "Purple Shot   {0,9}", "+ 300"),
+                new Detail(header.Fields.BlueShot,     "Blue Shot     {0,9}", "+ 300"),
+                new Detail(header.Fields.CyanShot,     "Cyan Shot     {0,9}", "+ 300"),
+                new Detail(header.Fields.GreenShot,    "Green Shot    {0,9}", "+ 300"),
+                new Detail(header.Fields.YellowShot,   "Yellow Shot   {0,9}", "+ 300"),
+                new Detail(header.Fields.OrangeShot,   "Orange Shot   {0,9}", "+ 300"),
+                new Detail(header.Fields.ColorfulShot, "Colorful Shot {0,9}", "+ 900"),
+                new Detail(header.Fields.RainbowShot,  "Rainbow Shot  {0,9}", Fmt("+ {0}", Str(2100))),
+                new Detail(header.Fields.RiskBonus,    "Risk Bonus    {0,9}", Fmt("+ {0}", Str(header.RiskBonus))),
+                new Detail(header.Fields.MacroBonus,   "Macro Bonus   {0,9}", Fmt("+ {0}", Str(header.MacroBonus))),
+                new Detail(header.Fields.FrontShot,    "Front Shot    {0,9}", Fmt("+ {0}", header.FrontSideBackShot)),
+                new Detail(header.Fields.SideShot,     "Side Shot     {0,9}", Fmt("+ {0}", header.FrontSideBackShot)),
+                new Detail(header.Fields.BackShot,     "Back Shot     {0,9}", Fmt("+ {0}", header.FrontSideBackShot)),
+                new Detail(header.Fields.CatBonus,     "Cat Bonus     {0,9}", "+ 666"),
+                new Detail(true,                       string.Empty,          string.Empty),
+                new Detail(true,                       "Boss Shot!    {0,9}", Fmt("* {0:F2}", header.BossShot)),
+                new Detail(header.Fields.TwoShot,      "Two Shot!     {0,9}", "* 1.50"),
+                new Detail(header.Fields.NiceShot,     "Nice Shot!    {0,9}", Fmt("* {0:F2}", header.NiceShot)),
+                new Detail(true,                       "Angle Bonus   {0,9}", Fmt("* {0:F2}", header.AngleBonus)),
+                new Detail(true,                       string.Empty,          string.Empty),
+                new Detail(true,                       "Result Score  {0,9}", Str(header.ResultScore)),
+            };
+        }
 
         private class Detail
         {
