@@ -52,7 +52,7 @@ namespace ThScoreFileConverterTests.Models
             public int numLightBullets;
         };
 
-        internal static Properties ValidProperties => new Properties()
+        internal static Properties ValidProperties { get; } = new Properties()
         {
             signature = "BST4",
             weekday = Th165Converter.Day.Monday,

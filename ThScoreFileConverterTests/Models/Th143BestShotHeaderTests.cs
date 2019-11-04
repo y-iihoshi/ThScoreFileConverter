@@ -22,7 +22,7 @@ namespace ThScoreFileConverterTests.Models
             public float slowRate;
         };
 
-        internal static Properties ValidProperties => new Properties()
+        internal static Properties ValidProperties { get; } = new Properties()
         {
             signature = "BST3",
             day = Th143Converter.Day.Second,

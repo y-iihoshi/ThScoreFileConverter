@@ -19,7 +19,7 @@ namespace ThScoreFileConverterTests.Models.Th095
             public byte[] data;
         };
 
-        internal static Properties DefaultProperties => new Properties()
+        internal static Properties DefaultProperties { get; } = new Properties()
         {
             signature = string.Empty,
             version = default,
@@ -28,7 +28,7 @@ namespace ThScoreFileConverterTests.Models.Th095
             data = new byte[] { }
         };
 
-        internal static Properties ValidProperties => new Properties()
+        internal static Properties ValidProperties { get; } = new Properties()
         {
             signature = "AB",
             version = 1234,

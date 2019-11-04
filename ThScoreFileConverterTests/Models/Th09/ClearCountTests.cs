@@ -14,7 +14,7 @@ namespace ThScoreFileConverterTests.Models.Th09
     [TestClass]
     public class ClearCountTests
     {
-        internal static ClearCountStub ValidStub => new ClearCountStub()
+        internal static ClearCountStub ValidStub { get; } = new ClearCountStub()
         {
             Counts = Utils.GetEnumerator<Level>()
                 .Select((level, index) => new { level, index })

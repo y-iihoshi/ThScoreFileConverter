@@ -12,7 +12,7 @@ namespace ThScoreFileConverterTests.Models
             public string name;
         };
 
-        internal static Properties ValidProperties => new Properties()
+        internal static Properties ValidProperties { get; } = new Properties()
         {
             outputs = true,
             name = "＃座薬ｗｗｗ"
