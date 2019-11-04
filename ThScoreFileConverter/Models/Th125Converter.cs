@@ -31,8 +31,7 @@ namespace ThScoreFileConverter.Models
         private AllScoreData allScoreData = null;
 
         private Dictionary<
-            Chara,
-            Dictionary<(Th125.Level Level, int Scene), (string Path, IBestShotHeader Header)>> bestshots = null;
+            (Chara, Th125.Level Level, int Scene), (string Path, IBestShotHeader Header)> bestshots = null;
 
         public override string SupportedVersions
         {
@@ -76,12 +75,12 @@ namespace ThScoreFileConverter.Models
         {
             return new List<IStringReplaceable>
             {
-                new ScoreReplacer(this),
-                new ScoreTotalReplacer(this),
-                new CardReplacer(this, hideUntriedCards),
-                new TimeReplacer(this),
-                new ShotReplacer(this, outputFilePath),
-                new ShotExReplacer(this, outputFilePath),
+                new ScoreReplacer(this.allScoreData.Scores),
+                new ScoreTotalReplacer(this.allScoreData.Scores),
+                new CardReplacer(this.allScoreData.Scores, hideUntriedCards),
+                new TimeReplacer(this.allScoreData.Status),
+                new ShotReplacer(this.bestshots, outputFilePath),
+                new ShotExReplacer(this.bestshots, this.allScoreData.Scores, outputFilePath),
             };
         }
 
@@ -110,20 +109,13 @@ namespace ThScoreFileConverter.Models
                     if (this.bestshots == null)
                     {
                         this.bestshots =
-                            new Dictionary<Chara, Dictionary<(Th125.Level, int), (string, IBestShotHeader)>>(
-                                Enum.GetValues(typeof(Chara)).Length);
+                            new Dictionary<(Chara, Th125.Level, int), (string, IBestShotHeader)>(
+                                Enum.GetValues(typeof(Chara)).Length * Definitions.SpellCards.Count);
                     }
 
-                    if (!this.bestshots.ContainsKey(chara))
-                    {
-                        this.bestshots.Add(
-                            chara,
-                            new Dictionary<(Th125.Level, int), (string, IBestShotHeader)>(Definitions.SpellCards.Count));
-                    }
-
-                    var key = (header.Level, header.Scene);
-                    if (!this.bestshots[chara].ContainsKey(key))
-                        this.bestshots[chara].Add(key, (outputFile.Name, header));
+                    var key = (chara, header.Level, header.Scene);
+                    if (!this.bestshots.ContainsKey(key))
+                        this.bestshots.Add(key, (outputFile.Name, header));
 
                     Lzss.Extract(input, decoded);
 
@@ -273,7 +265,7 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public ScoreReplacer(Th125Converter parent)
+            public ScoreReplacer(IReadOnlyList<IScore> scores)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -286,7 +278,7 @@ namespace ThScoreFileConverter.Models
                     if (!Definitions.SpellCards.ContainsKey(key))
                         return match.ToString();
 
-                    var score = parent.allScoreData.Scores.FirstOrDefault(elem =>
+                    var score = scores.FirstOrDefault(elem =>
                         (elem != null) && (elem.Chara == chara) && elem.LevelScene.Equals(key));
 
                     switch (type)
@@ -358,7 +350,7 @@ namespace ThScoreFileConverter.Models
             private readonly MatchEvaluator evaluator;
 
             [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-            public ScoreTotalReplacer(Th125Converter parent)
+            public ScoreTotalReplacer(IReadOnlyList<IScore> scores)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -374,24 +366,18 @@ namespace ThScoreFileConverter.Models
                     {
                         case 1:     // total score
                             return Utils.ToNumberString(
-                                parent.allScoreData.Scores.Sum(
-                                    score => triedAndSucceeded(score) ? (long)score.HighScore : 0L));
+                                scores.Sum(score => triedAndSucceeded(score) ? score.HighScore : 0L));
                         case 2:     // total of bestshot scores
                             return Utils.ToNumberString(
-                                parent.allScoreData.Scores.Sum(
-                                    score => isTarget(score) ? (long)score.BestshotScore : 0L));
+                                scores.Sum(score => isTarget(score) ? score.BestshotScore : 0L));
                         case 3:     // total of num of shots
                             return Utils.ToNumberString(
-                                parent.allScoreData.Scores.Sum(
-                                    score => isTarget(score) ? score.TrialCount : 0));
+                                scores.Sum(score => isTarget(score) ? score.TrialCount : 0));
                         case 4:     // total of num of shots for the first success
                             return Utils.ToNumberString(
-                                parent.allScoreData.Scores.Sum(
-                                    score => triedAndSucceeded(score) ? (long)score.FirstSuccess : 0L));
+                                scores.Sum(score => triedAndSucceeded(score) ? score.FirstSuccess : 0L));
                         case 5:     // num of succeeded scenes
-                            return parent.allScoreData.Scores
-                                .Count(triedAndSucceeded)
-                                .ToString(CultureInfo.CurrentCulture);
+                            return scores.Count(triedAndSucceeded).ToString(CultureInfo.CurrentCulture);
                         default:    // unreachable
                             return match.ToString();
                     }
@@ -412,7 +398,7 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public CardReplacer(Th125Converter parent, bool hideUntriedCards)
+            public CardReplacer(IReadOnlyList<IScore> scores, bool hideUntriedCards)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -426,8 +412,7 @@ namespace ThScoreFileConverter.Models
 
                     if (hideUntriedCards)
                     {
-                        var score = parent.allScoreData.Scores.FirstOrDefault(
-                            elem => (elem != null) && elem.LevelScene.Equals(key));
+                        var score = scores.FirstOrDefault(elem => (elem != null) && elem.LevelScene.Equals(key));
                         if (score == null)
                             return "??????????";
                     }
@@ -450,11 +435,11 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public TimeReplacer(Th125Converter parent)
+            public TimeReplacer(IStatus status)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    return new Time(parent.allScoreData.Status.TotalPlayTime * 10, false).ToLongString();
+                    return new Time(status.TotalPlayTime * 10, false).ToLongString();
                 });
             }
 
@@ -472,7 +457,9 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public ShotReplacer(Th125Converter parent, string outputFilePath)
+            public ShotReplacer(
+                IReadOnlyDictionary<(Chara, Th125.Level, int), (string Path, IBestShotHeader Header)> bestshots,
+                string outputFilePath)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -480,13 +467,11 @@ namespace ThScoreFileConverter.Models
                     var level = Parsers.LevelParser.Parse(match.Groups[2].Value);
                     var scene = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                    var key = (level, scene);
-                    if (!Definitions.SpellCards.ContainsKey(key))
+                    if (!Definitions.SpellCards.ContainsKey((level, scene)))
                         return match.ToString();
 
                     if (!string.IsNullOrEmpty(outputFilePath) &&
-                        parent.bestshots.TryGetValue(chara, out var bestshots) &&
-                        bestshots.TryGetValue(key, out var bestshot))
+                        bestshots.TryGetValue((chara, level, scene), out var bestshot))
                     {
                         var relativePath = new Uri(outputFilePath)
                             .MakeRelativeUri(new Uri(bestshot.Path)).OriginalString;
@@ -552,7 +537,10 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public ShotExReplacer(Th125Converter parent, string outputFilePath)
+            public ShotExReplacer(
+                IReadOnlyDictionary<(Chara, Th125.Level, int), (string Path, IBestShotHeader Header)> bestshots,
+                IReadOnlyList<IScore> scores,
+                string outputFilePath)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -566,8 +554,7 @@ namespace ThScoreFileConverter.Models
                         return match.ToString();
 
                     if (!string.IsNullOrEmpty(outputFilePath) &&
-                        parent.bestshots.TryGetValue(chara, out var bestshots) &&
-                        bestshots.TryGetValue(key, out var bestshot))
+                        bestshots.TryGetValue((chara, level, scene), out var bestshot))
                     {
                         IScore score;
                         IEnumerable<string> detailStrings;
@@ -585,10 +572,8 @@ namespace ThScoreFileConverter.Models
                             case 5:     // slow rate
                                 return Utils.Format("{0:F6}%", bestshot.Header.SlowRate);
                             case 6:     // date & time
-                                score = parent.allScoreData.Scores.FirstOrDefault(elem =>
-                                    (elem != null) &&
-                                    (elem.Chara == chara) &&
-                                    elem.LevelScene.Equals(key));
+                                score = scores.FirstOrDefault(elem =>
+                                    (elem != null) && (elem.Chara == chara) && elem.LevelScene.Equals(key));
                                 if (score == null)
                                     return "----/--/-- --:--:--";
                                 return new DateTime(1970, 1, 1)
