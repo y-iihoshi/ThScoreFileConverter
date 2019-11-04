@@ -36,7 +36,7 @@ namespace ThScoreFileConverter.Models.Th095
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                 var key = (level, scene);
-                if (!Definitions.SpellCards.ContainsKey(key))
+                if (!Definitions.SpellCards.TryGetValue(key, out var enemyCardPair))
                     return match.ToString();
 
                 if (hideUntriedCards)
@@ -46,7 +46,7 @@ namespace ThScoreFileConverter.Models.Th095
                         return "??????????";
                 }
 
-                return (type == 1) ? Definitions.SpellCards[key].Enemy.ToLongName() : Definitions.SpellCards[key].Card;
+                return (type == 1) ? enemyCardPair.Enemy.ToLongName() : enemyCardPair.Card;
             });
         }
 
