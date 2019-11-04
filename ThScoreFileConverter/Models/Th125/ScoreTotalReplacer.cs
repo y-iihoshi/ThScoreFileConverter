@@ -21,52 +21,21 @@ namespace ThScoreFileConverter.Models.Th125
         private static readonly string Pattern = Utils.Format(
             @"%T125SCRTL({0})([12])([1-5])", Parsers.CharaParser.Pattern);
 
-        private static readonly Func<IScore, Chara, int, bool> IsTargetImpl =
-            (score, chara, method) =>
-            {
-                if (score == null)
-                    return false;
-
-                if (method == 1)
-                {
-                    if (score.LevelScene.Level == Level.Spoiler)
-                    {
-                        if (chara == Chara.Aya)
-                        {
-                            if (score.LevelScene.Scene <= 4)
-                                return score.Chara == Chara.Aya;
-                            else
-                                return score.Chara == Chara.Hatate;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    }
-                    else
-                    {
-                        return score.Chara == chara;
-                    }
-                }
-                else
-                {
-                    return score.Chara == chara;
-                }
-            };
-
         private readonly MatchEvaluator evaluator;
 
         public ScoreTotalReplacer(IReadOnlyList<IScore> scores)
         {
+            if (scores is null)
+                throw new ArgumentNullException(nameof(scores));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var chara = Parsers.CharaParser.Parse(match.Groups[1].Value);
                 var method = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                bool IsTarget(IScore score) => IsTargetImpl(score, chara, method);
                 bool TriedAndSucceeded(IScore score)
-                    => IsTarget(score) && (score.TrialCount > 0) && (score.FirstSuccess > 0);
+                    => IsTarget(score, chara, method) && (score.TrialCount > 0) && (score.FirstSuccess > 0);
 
                 switch (type)
                 {
@@ -75,10 +44,10 @@ namespace ThScoreFileConverter.Models.Th125
                             scores.Sum(score => TriedAndSucceeded(score) ? score.HighScore : 0L));
                     case 2:     // total of bestshot scores
                         return Utils.ToNumberString(
-                            scores.Sum(score => IsTarget(score) ? score.BestshotScore : 0L));
+                            scores.Sum(score => IsTarget(score, chara, method) ? score.BestshotScore : 0L));
                     case 3:     // total of num of shots
                         return Utils.ToNumberString(
-                            scores.Sum(score => IsTarget(score) ? score.TrialCount : 0));
+                            scores.Sum(score => IsTarget(score, chara, method) ? score.TrialCount : 0));
                     case 4:     // total of num of shots for the first success
                         return Utils.ToNumberString(
                             scores.Sum(score => TriedAndSucceeded(score) ? score.FirstSuccess : 0L));
@@ -91,5 +60,22 @@ namespace ThScoreFileConverter.Models.Th125
         }
 
         public string Replace(string input) => Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+
+        private static bool IsTarget(IScore score, Chara chara, int method)
+        {
+            if (score == null)
+                return false;
+
+            if (method == 2)
+                return score.Chara == chara;
+
+            if (score.LevelScene.Level != Level.Spoiler)
+                return score.Chara == chara;
+
+            if (chara == Chara.Hatate)
+                return false;
+
+            return score.Chara == (score.LevelScene.Scene <= 4 ? Chara.Aya : Chara.Hatate);
+        }
     }
 }
