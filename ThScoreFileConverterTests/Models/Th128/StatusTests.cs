@@ -10,10 +10,10 @@ using ThScoreFileConverterTests.Models.Th10.Wrappers;
 using ThScoreFileConverterTests.Models.Th125.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th128
 {
     [TestClass]
-    public class Th128StatusTests
+    public class StatusTests
     {
         internal static StatusStub GetValidStub(ushort version, int size, int numBgms) => new StatusStub()
         {
@@ -152,30 +152,28 @@ namespace ThScoreFileConverterTests.Models
                 Assert.AreEqual(expected, Th128StatusWrapper<TParent>.CanInitialize(chapter));
             });
 
-        #region Th128
-
         [TestMethod]
-        public void Th128StatusTestChapter()
+        public void StatusTestChapter()
             => StatusTestChapterHelper<Th128Converter>(2, 0x42C, 10, 0x10, 0x18);
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th128StatusTestNullChapter()
+        public void StatusTestNullChapter()
             => StatusTestNullChapterHelper<Th128Converter>();
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th128StatusTestInvalidSignature()
+        public void StatusTestInvalidSignature()
             => StatusTestInvalidSignatureHelper<Th128Converter>(2, 0x42C, 10, 0x10, 0x18);
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th128StatusTestInvalidVersion()
+        public void StatusTestInvalidVersion()
             => StatusTestInvalidVersionHelper<Th128Converter>(2, 0x42C, 10, 0x10, 0x18);
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th128StatusTestInvalidSize()
+        public void StatusTestInvalidSize()
             => StatusTestInvalidSizeHelper<Th128Converter>(2, 0x42C, 10, 0x10, 0x18);
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
@@ -184,157 +182,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow("st", (ushort)2, 0x42C, false)]
         [DataRow("ST", (ushort)1, 0x42C, false)]
         [DataRow("ST", (ushort)2, 0x42D, false)]
-        public void Th128StatusCanInitializeTest(string signature, ushort version, int size, bool expected)
+        public void CanInitializeTest(string signature, ushort version, int size, bool expected)
             => CanInitializeTestHelper<Th128Converter>(signature, version, size, expected);
-
-        #endregion
-
-        #region Th13
-
-        [TestMethod]
-        public void Th13StatusTestChapter()
-            => StatusTestChapterHelper<Th13Converter>(1, 0x42C, 17, 0x10, 0x11);
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Th13StatusTestNullChapter()
-            => StatusTestNullChapterHelper<Th13Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
-        public void Th13StatusTestInvalidSignature()
-            => StatusTestInvalidSignatureHelper<Th13Converter>(1, 0x42C, 17, 0x10, 0x11);
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
-        public void Th13StatusTestInvalidVersion()
-            => StatusTestInvalidVersionHelper<Th13Converter>(1, 0x42C, 17, 0x10, 0x11);
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
-        public void Th13StatusTestInvalidSize()
-            => StatusTestInvalidSizeHelper<Th13Converter>(1, 0x42C, 17, 0x10, 0x11);
-
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        [DataTestMethod]
-        [DataRow("ST", (ushort)1, 0x42C, true)]
-        [DataRow("st", (ushort)1, 0x42C, false)]
-        [DataRow("ST", (ushort)0, 0x42C, false)]
-        [DataRow("ST", (ushort)1, 0x42D, false)]
-        public void Th13StatusCanInitializeTest(string signature, ushort version, int size, bool expected)
-            => CanInitializeTestHelper<Th13Converter>(signature, version, size, expected);
-
-        #endregion
-
-        #region Th14
-
-        [TestMethod]
-        public void Th14StatusTestChapter()
-            => StatusTestChapterHelper<Th14Converter>(1, 0x42C, 17, 0x10, 0x11);
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Th14StatusTestNullChapter()
-            => StatusTestNullChapterHelper<Th14Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
-        public void Th14StatusTestInvalidSignature()
-            => StatusTestInvalidSignatureHelper<Th14Converter>(1, 0x42C, 17, 0x10, 0x11);
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
-        public void Th14StatusTestInvalidVersion()
-            => StatusTestInvalidVersionHelper<Th14Converter>(1, 0x42C, 17, 0x10, 0x11);
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
-        public void Th14StatusTestInvalidSize()
-            => StatusTestInvalidSizeHelper<Th14Converter>(1, 0x42C, 17, 0x10, 0x11);
-
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        [DataTestMethod]
-        [DataRow("ST", (ushort)1, 0x42C, true)]
-        [DataRow("st", (ushort)1, 0x42C, false)]
-        [DataRow("ST", (ushort)0, 0x42C, false)]
-        [DataRow("ST", (ushort)1, 0x42D, false)]
-        public void Th14StatusCanInitializeTest(string signature, ushort version, int size, bool expected)
-            => CanInitializeTestHelper<Th14Converter>(signature, version, size, expected);
-
-        #endregion
-
-        #region Th15
-
-        [TestMethod]
-        public void Th15StatusTestChapter()
-            => StatusTestChapterHelper<Th15Converter>(1, 0x42C, 17, 0x10, 0x11);
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Th15StatusTestNullChapter()
-            => StatusTestNullChapterHelper<Th15Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
-        public void Th15StatusTestInvalidSignature()
-            => StatusTestInvalidSignatureHelper<Th15Converter>(1, 0x42C, 17, 0x10, 0x11);
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
-        public void Th15StatusTestInvalidVersion()
-            => StatusTestInvalidVersionHelper<Th15Converter>(1, 0x42C, 17, 0x10, 0x11);
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
-        public void Th15StatusTestInvalidSize()
-            => StatusTestInvalidSizeHelper<Th15Converter>(1, 0x42C, 17, 0x10, 0x11);
-
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        [DataTestMethod]
-        [DataRow("ST", (ushort)1, 0x42C, true)]
-        [DataRow("st", (ushort)1, 0x42C, false)]
-        [DataRow("ST", (ushort)0, 0x42C, false)]
-        [DataRow("ST", (ushort)1, 0x42D, false)]
-        public void Th15StatusCanInitializeTest(string signature, ushort version, int size, bool expected)
-            => CanInitializeTestHelper<Th15Converter>(signature, version, size, expected);
-
-        #endregion
-
-        #region Th16
-
-        [TestMethod]
-        public void Th16StatusTestChapter()
-            => StatusTestChapterHelper<Th16Converter>(1, 0x42C, 17, 0x10, 0x11);
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Th16StatusTestNullChapter()
-            => StatusTestNullChapterHelper<Th16Converter>();
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
-        public void Th16StatusTestInvalidSignature()
-            => StatusTestInvalidSignatureHelper<Th16Converter>(1, 0x42C, 17, 0x10, 0x11);
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
-        public void Th16StatusTestInvalidVersion()
-            => StatusTestInvalidVersionHelper<Th16Converter>(1, 0x42C, 17, 0x10, 0x11);
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidDataException))]
-        public void Th16StatusTestInvalidSize()
-            => StatusTestInvalidSizeHelper<Th16Converter>(1, 0x42C, 17, 0x10, 0x11);
-
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        [DataTestMethod]
-        [DataRow("ST", (ushort)1, 0x42C, true)]
-        [DataRow("st", (ushort)1, 0x42C, false)]
-        [DataRow("ST", (ushort)0, 0x42C, false)]
-        [DataRow("ST", (ushort)1, 0x42D, false)]
-        public void Th16StatusCanInitializeTest(string signature, ushort version, int size, bool expected)
-            => CanInitializeTestHelper<Th16Converter>(signature, version, size, expected);
-
-        #endregion
     }
 }
