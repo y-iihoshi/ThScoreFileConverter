@@ -8,18 +8,16 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th128;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th10.Stubs;
-using ThScoreFileConverterTests.Models.Th10.Wrappers;
-using ThScoreFileConverterTests.Models.Th128;
 using ThScoreFileConverterTests.Models.Th128.Stubs;
-using ThScoreFileConverterTests.Models.Wrappers;
+using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th128.StageProgress>;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th128
 {
     [TestClass]
-    public class Th128ClearDataTests
+    public class ClearDataTests
     {
-        internal static ClearDataStub GetValidStub()
+        internal static ClearDataStub MakeValidStub()
         {
             var levels = Utils.GetEnumerator<Level>();
 
@@ -66,15 +64,12 @@ namespace ThScoreFileConverterTests.Models
                 clearData.Size,
                 MakeData(clearData));
 
-        internal static void Validate(IClearData expected, in Th128ClearDataWrapper actual)
+        internal static void Validate(IClearData expected, IClearData actual)
         {
-            var data = MakeData(expected);
-
             Assert.AreEqual(expected.Signature, actual.Signature);
             Assert.AreEqual(expected.Version, actual.Version);
             Assert.AreEqual(expected.Checksum, actual.Checksum);
             Assert.AreEqual(expected.Size, actual.Size);
-            CollectionAssert.That.AreEqual(data, actual.Data);
             Assert.AreEqual(expected.Route, actual.Route);
 
             foreach (var pair in expected.Rankings)
@@ -91,22 +86,22 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        public void Th128ClearDataTestChapter() => TestUtils.Wrap(() =>
+        public void ClearDataTestChapter() => TestUtils.Wrap(() =>
         {
-            var stub = GetValidStub();
+            var stub = MakeValidStub();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            var clearData = new Th128ClearDataWrapper(chapter);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var clearData = new ClearData(chapter);
 
             Validate(stub, clearData);
-            Assert.IsFalse(clearData.IsValid.Value);
+            Assert.IsFalse(clearData.IsValid);
         });
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th128ClearDataTestNullChapter() => TestUtils.Wrap(() =>
+        public void ClearDataTestNullChapter() => TestUtils.Wrap(() =>
         {
-            _ = new Th128ClearDataWrapper(null);
+            _ = new ClearData(null);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -114,59 +109,57 @@ namespace ThScoreFileConverterTests.Models
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th128ClearDataTestInvalidSignature() => TestUtils.Wrap(() =>
+        public void ClearDataTestInvalidSignature() => TestUtils.Wrap(() =>
         {
-            var stub = GetValidStub();
+            var stub = MakeValidStub();
             stub.Signature = stub.Signature.ToLowerInvariant();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th128ClearDataWrapper(chapter);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new ClearData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th128ClearDataTestInvalidVersion() => TestUtils.Wrap(() =>
+        public void ClearDataTestInvalidVersion() => TestUtils.Wrap(() =>
         {
-            var stub = GetValidStub();
+            var stub = MakeValidStub();
             ++stub.Version;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th128ClearDataWrapper(chapter);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new ClearData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th128ClearDataTestInvalidSize() => TestUtils.Wrap(() =>
+        public void ClearDataTestInvalidSize() => TestUtils.Wrap(() =>
         {
-            var stub = GetValidStub();
+            var stub = MakeValidStub();
             --stub.Size;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th128ClearDataWrapper(chapter);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new ClearData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DataRow("CR", (ushort)3, 0x66C, true)]
         [DataRow("cr", (ushort)3, 0x66C, false)]
         [DataRow("CR", (ushort)2, 0x66C, false)]
         [DataRow("CR", (ushort)3, 0x66D, false)]
-        public void Th128ClearDataCanInitializeTest(string signature, ushort version, int size, bool expected)
-            => TestUtils.Wrap(() =>
-            {
-                var checksum = 0u;
-                var data = new byte[size];
+        public void CanInitializeTest(string signature, ushort version, int size, bool expected) => TestUtils.Wrap(() =>
+        {
+            var checksum = 0u;
+            var data = new byte[size];
 
-                var chapter = ChapterWrapper.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
+            var chapter = TestUtils.Create<Chapter>(
+                TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
 
-                Assert.AreEqual(expected, Th128ClearDataWrapper.CanInitialize(chapter));
-            });
+            Assert.AreEqual(expected, ClearData.CanInitialize(chapter));
+        });
     }
 }
