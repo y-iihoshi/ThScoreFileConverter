@@ -2,18 +2,17 @@
 using ThScoreFileConverter.Models.Th128;
 using ThScoreFileConverterTests.Models.Th125.Stubs;
 using ThScoreFileConverterTests.Models.Th128.Stubs;
-using ThScoreFileConverterTests.Models.Wrappers;
 using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th128
 {
     [TestClass]
-    public class Th128AllScoreDataTests
+    public class AllScoreDataTests
     {
         [TestMethod]
-        public void Th128AllScoreDataTest() => TestUtils.Wrap(() =>
+        public void AllScoreDataTest() => TestUtils.Wrap(() =>
         {
-            var allScoreData = new Th128AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
 
             Assert.IsNull(allScoreData.Header);
             Assert.AreEqual(0, allScoreData.ClearData.Count);
@@ -22,25 +21,25 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th128AllScoreDataSetHeaderTest() => TestUtils.Wrap(() =>
+        public void SetHeaderTest() => TestUtils.Wrap(() =>
         {
             var array = Th095.HeaderBaseTests.MakeByteArray(Th095.HeaderBaseTests.ValidProperties);
             var header = TestUtils.Create<HeaderBase>(array);
 
-            var allScoreData = new Th128AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(header);
 
             Assert.AreSame(header, allScoreData.Header);
         });
 
         [TestMethod]
-        public void Th128AllScoreDataSetHeaderTestTwice() => TestUtils.Wrap(() =>
+        public void SetHeaderTestTwice() => TestUtils.Wrap(() =>
         {
             var array = Th095.HeaderBaseTests.MakeByteArray(Th095.HeaderBaseTests.ValidProperties);
             var header1 = TestUtils.Create<HeaderBase>(array);
             var header2 = TestUtils.Create<HeaderBase>(array);
 
-            var allScoreData = new Th128AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(header1);
             allScoreData.Set(header2);
 
@@ -49,25 +48,25 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th128AllScoreDataSetClearDataTest() => TestUtils.Wrap(() =>
+        public void SetClearDataTest() => TestUtils.Wrap(() =>
         {
             var route = RouteWithTotal.A2;
             var clearData = new ClearDataStub { Route = route };
 
-            var allScoreData = new Th128AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(clearData);
 
             Assert.AreSame(clearData, allScoreData.ClearData[route]);
         });
 
         [TestMethod]
-        public void Th128AllScoreDataSetClearDataTestTwice() => TestUtils.Wrap(() =>
+        public void SetClearDataTestTwice() => TestUtils.Wrap(() =>
         {
             var route = RouteWithTotal.A2;
             var clearData1 = new ClearDataStub { Route = route };
             var clearData2 = new ClearDataStub { Route = route };
 
-            var allScoreData = new Th128AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(clearData1);
             allScoreData.Set(clearData2);
 
@@ -76,23 +75,23 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th128AllScoreDataSetCardDataTest() => TestUtils.Wrap(() =>
+        public void SetCardDataTest() => TestUtils.Wrap(() =>
         {
             var cardData = new CardDataStub();
 
-            var allScoreData = new Th128AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(cardData);
 
             Assert.AreSame(cardData, allScoreData.CardData);
         });
 
         [TestMethod]
-        public void Th128AllScoreDataSetCardDataTestTwice() => TestUtils.Wrap(() =>
+        public void SetCardDataTestTwice() => TestUtils.Wrap(() =>
         {
             var cardData1 = new CardDataStub();
             var cardData2 = new CardDataStub();
 
-            var allScoreData = new Th128AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(cardData1);
             allScoreData.Set(cardData2);
 
@@ -101,23 +100,23 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th128AllScoreDataSetStatusTest() => TestUtils.Wrap(() =>
+        public void SetStatusTest() => TestUtils.Wrap(() =>
         {
             var status = new StatusStub();
 
-            var allScoreData = new Th128AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(status);
 
             Assert.AreSame(status, allScoreData.Status);
         });
 
         [TestMethod]
-        public void Th128AllScoreDataSetStatusTestTwice() => TestUtils.Wrap(() =>
+        public void SetStatusTestTwice() => TestUtils.Wrap(() =>
         {
             var status1 = new StatusStub();
             var status2 = new StatusStub();
 
-            var allScoreData = new Th128AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(status1);
             allScoreData.Set(status2);
 
