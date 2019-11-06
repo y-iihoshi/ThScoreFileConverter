@@ -282,15 +282,6 @@ namespace ThScoreFileConverter.Models
                 new CardInfo(250, "「妖精尽滅光」",                           Th128.Stage.Extra, Level.Extra),
             }.ToDictionary(card => card.Id);
 
-        private static readonly EnumShortNameParser<Route> RouteParser =
-            new EnumShortNameParser<Route>();
-
-        private static readonly EnumShortNameParser<RouteWithTotal> RouteWithTotalParser =
-            new EnumShortNameParser<RouteWithTotal>();
-
-        private static new readonly EnumShortNameParser<StageWithTotal> StageWithTotalParser =
-            new EnumShortNameParser<StageWithTotal>();
-
         private AllScoreData allScoreData = null;
 
         public override string SupportedVersions
@@ -457,7 +448,7 @@ namespace ThScoreFileConverter.Models
         private class ScoreReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T128SCR({0})({1})(\d)([1-5])", LevelParser.Pattern, RouteParser.Pattern);
+                @"%T128SCR({0})({1})(\d)([1-5])", Parsers.LevelParser.Pattern, Parsers.RouteParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -465,8 +456,8 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var level = LevelParser.Parse(match.Groups[1].Value);
-                    var route = (RouteWithTotal)RouteParser.Parse(match.Groups[2].Value);
+                    var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+                    var route = (RouteWithTotal)Parsers.RouteParser.Parse(match.Groups[2].Value);
                     var rank = Utils.ToZeroBased(
                         int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
                     var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
@@ -605,7 +596,9 @@ namespace ThScoreFileConverter.Models
         private class CollectRateReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T128CRG({0})({1})([1-3])", LevelWithTotalParser.Pattern, StageWithTotalParser.Pattern);
+                @"%T128CRG({0})({1})([1-3])",
+                Parsers.LevelWithTotalParser.Pattern,
+                Parsers.StageWithTotalParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -614,15 +607,15 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var level = LevelWithTotalParser.Parse(match.Groups[1].Value);
-                    var stage = StageWithTotalParser.Parse(match.Groups[2].Value);
+                    var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
+                    var stage = Parsers.StageWithTotalParser.Parse(match.Groups[2].Value);
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                    if (stage == StageWithTotal.Extra)
+                    if (stage == Th128.StageWithTotal.Extra)
                         return match.ToString();
 
                     Func<ISpellCard, bool> findByStage;
-                    if (stage == StageWithTotal.Total)
+                    if (stage == Th128.StageWithTotal.Total)
                         findByStage = (card => true);
                     else
                         findByStage = (card => CardTable[card.Id].Stage == (Th128.Stage)stage);
@@ -665,7 +658,7 @@ namespace ThScoreFileConverter.Models
         private class ClearReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T128CLEAR({0})({1})", LevelParser.Pattern, RouteParser.Pattern);
+                @"%T128CLEAR({0})({1})", Parsers.LevelParser.Pattern, Parsers.RouteParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -673,8 +666,8 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var level = LevelParser.Parse(match.Groups[1].Value);
-                    var route = (RouteWithTotal)RouteParser.Parse(match.Groups[2].Value);
+                    var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+                    var route = (RouteWithTotal)Parsers.RouteParser.Parse(match.Groups[2].Value);
 
                     if ((level == Level.Extra) && (route != RouteWithTotal.Extra))
                         return match.ToString();
@@ -700,7 +693,7 @@ namespace ThScoreFileConverter.Models
         private class RouteReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T128ROUTE({0})([1-3])", RouteWithTotalParser.Pattern);
+                @"%T128ROUTE({0})([1-3])", Parsers.RouteWithTotalParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -709,7 +702,7 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var route = RouteWithTotalParser.Parse(match.Groups[1].Value);
+                    var route = Parsers.RouteWithTotalParser.Parse(match.Groups[1].Value);
                     var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
                     Func<IClearData, long> getValueByType;
@@ -756,8 +749,8 @@ namespace ThScoreFileConverter.Models
         {
             private static readonly string Pattern = Utils.Format(
                 @"%T128ROUTEEX({0})({1})([1-3])",
-                LevelWithTotalParser.Pattern,
-                RouteWithTotalParser.Pattern);
+                Parsers.LevelWithTotalParser.Pattern,
+                Parsers.RouteWithTotalParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -766,8 +759,8 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var level = LevelWithTotalParser.Parse(match.Groups[1].Value);
-                    var route = RouteWithTotalParser.Parse(match.Groups[2].Value);
+                    var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
+                    var route = Parsers.RouteWithTotalParser.Parse(match.Groups[2].Value);
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                     if ((level == LevelWithTotal.Extra) &&
