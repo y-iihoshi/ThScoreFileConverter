@@ -7,6 +7,7 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th128;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
+using ThScoreFileConverterTests.Models.Th128;
 using ThScoreFileConverterTests.Models.Th128.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 
@@ -36,7 +37,7 @@ namespace ThScoreFileConverterTests.Models
 
         internal static byte[] MakeData(ICardData cardData)
             => TestUtils.MakeByteArray(
-                cardData.Cards.Values.SelectMany(card => Th128SpellCardTests.MakeByteArray(card)).ToArray());
+                cardData.Cards.Values.SelectMany(card => SpellCardTests.MakeByteArray(card)).ToArray());
 
         internal static byte[] MakeByteArray(ICardData cardData)
             => TestUtils.MakeByteArray(
@@ -58,7 +59,7 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var pair in expected.Cards)
             {
-                Th128SpellCardTests.Validate(pair.Value, actual.CardsItem(pair.Key));
+                SpellCardTests.Validate(pair.Value, actual.Cards[pair.Key]);
             }
         }
 

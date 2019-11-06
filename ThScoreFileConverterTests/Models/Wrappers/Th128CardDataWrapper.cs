@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th128;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
@@ -37,14 +38,16 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public IReadOnlyCollection<byte> Data
             => this.pobj.GetProperty(nameof(this.Data)) as byte[];
 
-        // NOTE: Th128Converter.SpellCard is a private class.
-        // public IReadOnlyDictionary<int, ISpellCard> Cards
-        //     => this.pobj.GetProperty(nameof(this.Cards)) as IReadOnlyDictionary<int, ISpellCard>;
+#if true
+        public IReadOnlyDictionary<int, ISpellCard> Cards
+            => this.pobj.GetProperty(nameof(this.Cards)) as IReadOnlyDictionary<int, ISpellCard>;
+#else
         public object Cards
             => this.pobj.GetProperty(nameof(this.Cards));
         public Th128SpellCardWrapper CardsItem(int id)
             => new Th128SpellCardWrapper(
                 this.Cards.GetType().GetProperty("Item").GetValue(this.Cards, new object[] { id }));
+#endif
 
         public static bool CanInitialize(ChapterWrapper chapter)
             => (bool)PrivateType.InvokeStatic(
