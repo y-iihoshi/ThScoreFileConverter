@@ -79,30 +79,26 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th128AllScoreDataSetCardDataTest() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(
-                Th128CardDataTests.MakeByteArray(Th128CardDataTests.ValidStub));
-            var clearData = new Th128CardDataWrapper(chapter);
+            var cardData = new CardDataStub();
 
             var allScoreData = new Th128AllScoreDataWrapper();
-            allScoreData.Set(clearData);
+            allScoreData.Set(cardData);
 
-            Assert.AreSame(clearData.Target, allScoreData.CardData.Target);
+            Assert.AreSame(cardData, allScoreData.CardData);
         });
 
         [TestMethod]
         public void Th128AllScoreDataSetCardDataTestTwice() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(
-                Th128CardDataTests.MakeByteArray(Th128CardDataTests.ValidStub));
-            var clearData1 = new Th128CardDataWrapper(chapter);
-            var clearData2 = new Th128CardDataWrapper(chapter);
+            var cardData1 = new CardDataStub();
+            var cardData2 = new CardDataStub();
 
             var allScoreData = new Th128AllScoreDataWrapper();
-            allScoreData.Set(clearData1);
-            allScoreData.Set(clearData2);
+            allScoreData.Set(cardData1);
+            allScoreData.Set(cardData2);
 
-            Assert.AreNotSame(clearData1.Target, allScoreData.CardData.Target);
-            Assert.AreSame(clearData2.Target, allScoreData.CardData.Target);
+            Assert.AreNotSame(cardData1, allScoreData.CardData);
+            Assert.AreSame(cardData2, allScoreData.CardData);
         });
 
         [TestMethod]

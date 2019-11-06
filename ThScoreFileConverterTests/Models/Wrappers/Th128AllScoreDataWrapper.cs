@@ -28,15 +28,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.Header)) as HeaderBase;
         public IReadOnlyDictionary<RouteWithTotal, IClearData> ClearData
             => this.pobj.GetProperty(nameof(this.ClearData)) as IReadOnlyDictionary<RouteWithTotal, IClearData>;
-
-        public Th128CardDataWrapper CardData
-        {
-            get
-            {
-                var status = this.pobj.GetProperty(nameof(this.CardData));
-                return (status != null) ? new Th128CardDataWrapper(status) : null;
-            }
-        }
+        public ICardData CardData
+            => this.pobj.GetProperty(nameof(this.CardData)) as ICardData;
 
         public Th128StatusWrapper<Th128Converter> Status
         {
@@ -51,8 +44,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.Invoke(nameof(Set), new object[] { header }, CultureInfo.InvariantCulture);
         public void Set(IClearData data)
             => this.pobj.Invoke(nameof(Set), new object[] { data }, CultureInfo.InvariantCulture);
-        public void Set(Th128CardDataWrapper data)
-            => this.pobj.Invoke(nameof(Set), new object[] { data.Target }, CultureInfo.InvariantCulture);
+        public void Set(ICardData data)
+            => this.pobj.Invoke(nameof(Set), new object[] { data }, CultureInfo.InvariantCulture);
         public void Set(Th128StatusWrapper<Th128Converter> status)
             => this.pobj.Invoke(nameof(Set), new object[] { status.Target }, CultureInfo.InvariantCulture);
     }

@@ -5,16 +5,13 @@ using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th128;
-using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th10.Wrappers;
-using ThScoreFileConverterTests.Models.Th128;
 using ThScoreFileConverterTests.Models.Th128.Stubs;
-using ThScoreFileConverterTests.Models.Wrappers;
+using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th128
 {
     [TestClass]
-    public class Th128CardDataTests
+    public class CardDataTests
     {
         internal static CardDataStub ValidStub { get; } = new CardDataStub()
         {
@@ -47,15 +44,12 @@ namespace ThScoreFileConverterTests.Models
                 cardData.Size,
                 MakeData(cardData));
 
-        internal static void Validate(ICardData expected, in Th128CardDataWrapper actual)
+        internal static void Validate(ICardData expected, ICardData actual)
         {
-            var data = MakeData(expected);
-
             Assert.AreEqual(expected.Signature, actual.Signature);
             Assert.AreEqual(expected.Version, actual.Version);
             Assert.AreEqual(expected.Checksum, actual.Checksum);
             Assert.AreEqual(expected.Size, actual.Size);
-            CollectionAssert.That.AreEqual(data, actual.Data);
 
             foreach (var pair in expected.Cards)
             {
@@ -64,22 +58,22 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        public void Th128CardDataTestChapter() => TestUtils.Wrap(() =>
+        public void CardDataTestChapter() => TestUtils.Wrap(() =>
         {
             var stub = ValidStub;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            var clearData = new Th128CardDataWrapper(chapter);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var clearData = new CardData(chapter);
 
             Validate(stub, clearData);
-            Assert.IsFalse(clearData.IsValid.Value);
+            Assert.IsFalse(clearData.IsValid);
         });
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th128CardDataTestNullChapter() => TestUtils.Wrap(() =>
+        public void CardDataTestNullChapter() => TestUtils.Wrap(() =>
         {
-            _ = new Th128CardDataWrapper(null);
+            _ = new CardData(null);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -87,60 +81,58 @@ namespace ThScoreFileConverterTests.Models
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th128CardDataTestInvalidSignature() => TestUtils.Wrap(() =>
+        public void CardDataTestInvalidSignature() => TestUtils.Wrap(() =>
         {
             var stub = new CardDataStub(ValidStub);
             stub.Signature = stub.Signature.ToLowerInvariant();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th128CardDataWrapper(chapter);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new CardData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th128CardDataTestInvalidVersion() => TestUtils.Wrap(() =>
+        public void CardDataTestInvalidVersion() => TestUtils.Wrap(() =>
         {
             var stub = new CardDataStub(ValidStub);
             ++stub.Version;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th128CardDataWrapper(chapter);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new CardData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th128CardDataTestInvalidSize() => TestUtils.Wrap(() =>
+        public void CardDataTestInvalidSize() => TestUtils.Wrap(() =>
         {
             var stub = new CardDataStub(ValidStub);
             --stub.Size;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th128CardDataWrapper(chapter);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new CardData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DataRow("CD", (ushort)1, 0x947C, true)]
         [DataRow("cd", (ushort)1, 0x947C, false)]
         [DataRow("CD", (ushort)0, 0x947C, false)]
         [DataRow("CD", (ushort)1, 0x947D, false)]
-        public void Th128CardDataCanInitializeTest(string signature, ushort version, int size, bool expected)
-            => TestUtils.Wrap(() =>
-            {
-                var checksum = 0u;
-                var data = new byte[size];
+        public void CanInitializeTest(string signature, ushort version, int size, bool expected) => TestUtils.Wrap(() =>
+        {
+            var checksum = 0u;
+            var data = new byte[size];
 
-                var chapter = ChapterWrapper.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
+            var chapter = TestUtils.Create<Chapter>(
+                TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
 
-                Assert.AreEqual(
-                    expected, Th128CardDataWrapper.CanInitialize(chapter));
-            });
+            Assert.AreEqual(
+                expected, CardData.CanInitialize(chapter));
+        });
     }
 }
