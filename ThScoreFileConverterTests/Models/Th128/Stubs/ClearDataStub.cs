@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Models.Th10;
 using ThScoreFileConverter.Models.Th128;
 using ThScoreFileConverterTests.Models.Th10.Stubs;
+using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th128.StageProgress>;
 
 namespace ThScoreFileConverterTests.Models.Th128.Stubs
 {
@@ -18,8 +18,8 @@ namespace ThScoreFileConverterTests.Models.Th128.Stubs
             this.PlayTime = clearData.PlayTime;
             this.Rankings = clearData.Rankings?.ToDictionary(
                 pair => pair.Key,
-                pair => pair.Value?.Select(score => new ScoreDataStub<Th128Converter.StageProgress>(score))?.ToList()
-                    as IReadOnlyList<IScoreData<Th128Converter.StageProgress>>);
+                pair => pair.Value?.Select(score => new ScoreDataStub<StageProgress>(score))?.ToList()
+                    as IReadOnlyList<IScoreData>);
             this.Route = clearData.Route;
             this.TotalPlayCount = clearData.TotalPlayCount;
             this.Checksum = clearData.Checksum;
@@ -33,9 +33,9 @@ namespace ThScoreFileConverterTests.Models.Th128.Stubs
 
         public int PlayTime { get; set; }
 
-        public IReadOnlyDictionary<Level, IReadOnlyList<IScoreData<Th128Converter.StageProgress>>> Rankings { get; set; }
+        public IReadOnlyDictionary<Level, IReadOnlyList<IScoreData>> Rankings { get; set; }
 
-        public Th128Converter.RouteWithTotal Route { get; set; }
+        public RouteWithTotal Route { get; set; }
 
         public int TotalPlayCount { get; set; }
 

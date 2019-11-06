@@ -18,9 +18,9 @@ namespace ThScoreFileConverter.Models.Th128
 
         int PlayTime { get; }
 
-        IReadOnlyDictionary<Level, IReadOnlyList<IScoreData<Th128Converter.StageProgress>>> Rankings { get; }
+        IReadOnlyDictionary<Level, IReadOnlyList<IScoreData<StageProgress>>> Rankings { get; }
 
-        Th128Converter.RouteWithTotal Route { get; }
+        RouteWithTotal Route { get; }
 
         int TotalPlayCount { get; }
     }

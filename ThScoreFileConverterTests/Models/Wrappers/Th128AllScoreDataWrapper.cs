@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th095;
+using ThScoreFileConverter.Models.Th128;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -32,7 +33,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.ClearData));
         public int? ClearDataCount
             => this.ClearData.GetType().GetProperty("Count").GetValue(this.ClearData) as int?;
-        public Th128ClearDataWrapper ClearDataItem(Th128Converter.RouteWithTotal route)
+        public Th128ClearDataWrapper ClearDataItem(RouteWithTotal route)
             => new Th128ClearDataWrapper(
                 this.ClearData.GetType().GetProperty("Item").GetValue(this.ClearData, new object[] { route }));
 

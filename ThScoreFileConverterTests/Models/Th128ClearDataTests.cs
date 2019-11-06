@@ -5,7 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Models.Th10;
 using ThScoreFileConverter.Models.Th128;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th10.Stubs;
@@ -13,6 +12,7 @@ using ThScoreFileConverterTests.Models.Th10.Wrappers;
 using ThScoreFileConverterTests.Models.Th128;
 using ThScoreFileConverterTests.Models.Th128.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
+using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th128.StageProgress>;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -29,19 +29,19 @@ namespace ThScoreFileConverterTests.Models
                 Version = 3,
                 Checksum = 0u,
                 Size = 0x66C,
-                Route = Th128Converter.RouteWithTotal.A2,
+                Route = RouteWithTotal.A2,
                 Rankings = levels.ToDictionary(
                     level => level,
                     level => Enumerable.Range(0, 10).Select(
-                        index => new ScoreDataStub<Th128Converter.StageProgress>()
+                        index => new ScoreDataStub<StageProgress>()
                         {
                             Score = 12345670u - (uint)index * 1000u,
-                            StageProgress = Th128Converter.StageProgress.A2Clear,
+                            StageProgress = StageProgress.A2Clear,
                             ContinueCount = (byte)index,
                             Name = TestUtils.MakeRandomArray<byte>(10),
                             DateTime = 34567890u,
                             SlowRate = 1.2f
-                        }).ToList() as IReadOnlyList<IScoreData<Th128Converter.StageProgress>>),
+                        }).ToList() as IReadOnlyList<IScoreData>),
                 TotalPlayCount = 23,
                 PlayTime = 4567890,
                 ClearCounts = levels.ToDictionary(level => level, level => 100 - (int)level)
