@@ -2,6 +2,7 @@
 using System;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -11,8 +12,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void ThConverterTest()
         {
-            var pobj = new PrivateObject(typeof(ThConverter));
-            var converter = pobj.Target as ThConverter;
+            var converter = new ThConverterWrapper() as ThConverter;
 
             Assert.IsNull(converter.SupportedVersions);
             Assert.IsFalse(converter.HasBestShotConverter);
@@ -23,8 +23,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(NullReferenceException))]
         public void ConvertTestNull()
         {
-            var pobj = new PrivateObject(typeof(ThConverter));
-            var converter = pobj.Target as ThConverter;
+            var converter = new ThConverterWrapper() as ThConverter;
 
             converter.ConvertFinished +=
                 (sender, e) => Assert.Fail(nameof(converter.ConvertFinished) + ": " + TestUtils.Unreachable);
@@ -43,8 +42,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(NullReferenceException))]
         public void ConvertTestInvalidType()
         {
-            var pobj = new PrivateObject(typeof(ThConverter));
-            var converter = pobj.Target as ThConverter;
+            var converter = new ThConverterWrapper() as ThConverter;
 
             converter.ConvertFinished +=
                 (sender, e) => Assert.Fail(nameof(converter.ConvertFinished) + ": " + TestUtils.Unreachable);
@@ -63,8 +61,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentException))]
         public void ConvertTestNoSettings()
         {
-            var pobj = new PrivateObject(typeof(ThConverter));
-            var converter = pobj.Target as ThConverter;
+            var converter = new ThConverterWrapper() as ThConverter;
 
             converter.ConvertFinished +=
                 (sender, e) => Assert.Fail(nameof(converter.ConvertFinished) + ": " + TestUtils.Unreachable);

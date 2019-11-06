@@ -113,9 +113,7 @@ namespace ThScoreFileConverter.Models
         /// <param name="input">The input stream that treats a score file.</param>
         /// <returns><c>true</c> if read successfully; otherwise, <c>false</c>.</returns>
         protected virtual bool ReadScoreFile(Stream input)
-        {
-            throw new NotImplementedException();
-        }
+            => throw new NotImplementedException();
 
         /// <summary>
         /// Converts the stream indicating score data.
@@ -154,9 +152,7 @@ namespace ThScoreFileConverter.Models
         /// <param name="input">The input stream that treats the best shot data to convert.</param>
         /// <param name="output">The stream for outputting converted best shot data.</param>
         protected virtual void ConvertBestShot(Stream input, Stream output)
-        {
-            throw new NotImplementedException();
-        }
+            => throw new NotImplementedException();
 
         /// <summary>
         /// Creates the instances which implement IStringReplaceable interface.
@@ -164,11 +160,8 @@ namespace ThScoreFileConverter.Models
         /// <param name="hideUntriedCards"><c>true</c> if it hides untried spell cards.</param>
         /// <param name="outputFilePath">The file path for outputting the converted data.</param>
         /// <returns>The created instances which implement IStringReplaceable interface.</returns>
-        protected virtual IEnumerable<IStringReplaceable> CreateReplacers(
-            bool hideUntriedCards, string outputFilePath)
-        {
-            throw new NotImplementedException();
-        }
+        protected virtual IEnumerable<IStringReplaceable> CreateReplacers(bool hideUntriedCards, string outputFilePath)
+            => throw new NotImplementedException();
 
         /// <summary>
         /// Filters the file paths to extract the paths of best shot files.
@@ -179,9 +172,7 @@ namespace ThScoreFileConverter.Models
         /// <param name="files">The array of file paths to filter.</param>
         /// <returns>An array of the paths of best shot files.</returns>
         protected virtual string[] FilterBestShotFiles(string[] files)
-        {
-            throw new NotImplementedException();
-        }
+            => throw new NotImplementedException();
 
         /// <summary>
         /// Gets a path string of the output file.
@@ -267,27 +258,18 @@ namespace ThScoreFileConverter.Models
         /// Raises the event indicating the conversion process per file has finished.
         /// </summary>
         /// <param name="e">The event data issued by the <see cref="ThConverter"/> class.</param>
-        private void OnConvertFinished(ThConverterEventArgs e)
-        {
-            this.ConvertFinished?.Invoke(this, e);
-        }
+        private void OnConvertFinished(ThConverterEventArgs e) => this.ConvertFinished?.Invoke(this, e);
 
         /// <summary>
         /// Raises the event indicating the all conversion process has finished.
         /// </summary>
         /// <param name="e">The event data issued by the <see cref="ThConverter"/> class.</param>
-        private void OnConvertAllFinished(ThConverterEventArgs e)
-        {
-            this.ConvertAllFinished?.Invoke(this, e);
-        }
+        private void OnConvertAllFinished(ThConverterEventArgs e) => this.ConvertAllFinished?.Invoke(this, e);
 
         /// <summary>
         /// Raises the event indicating an exception has occurred.
         /// </summary>
         /// <param name="e">The event data that indicates occurring of an exception.</param>
-        private void OnExceptionOccurred(ExceptionOccurredEventArgs e)
-        {
-            this.ExceptionOccurred?.Invoke(this, e);
-        }
+        private void OnExceptionOccurred(ExceptionOccurredEventArgs e) => this.ExceptionOccurred?.Invoke(this, e);
     }
 }
