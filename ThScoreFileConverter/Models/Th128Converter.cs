@@ -62,14 +62,14 @@ namespace ThScoreFileConverter.Models
         {
             return new List<IStringReplaceable>
             {
-                new ScoreReplacer(this),
-                new CareerReplacer(this),
-                new CardReplacer(this, hideUntriedCards),
-                new CollectRateReplacer(this),
-                new ClearReplacer(this),
-                new RouteReplacer(this),
-                new RouteExReplacer(this),
-                new TimeReplacer(this),
+                new ScoreReplacer(this.allScoreData.ClearData),
+                new CareerReplacer(this.allScoreData.CardData.Cards),
+                new CardReplacer(this.allScoreData.CardData.Cards, hideUntriedCards),
+                new CollectRateReplacer(this.allScoreData.CardData.Cards),
+                new ClearReplacer(this.allScoreData.ClearData),
+                new RouteReplacer(this.allScoreData.ClearData),
+                new RouteExReplacer(this.allScoreData.ClearData),
+                new TimeReplacer(this.allScoreData.Status),
             };
         }
 
@@ -193,7 +193,7 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public ScoreReplacer(Th128Converter parent)
+            public ScoreReplacer(IReadOnlyDictionary<RouteWithTotal, IClearData> clearDataDictionary)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -208,7 +208,7 @@ namespace ThScoreFileConverter.Models
                     if ((route == RouteWithTotal.Extra) && (level != Level.Extra))
                         return match.ToString();
 
-                    var ranking = parent.allScoreData.ClearData[route].Rankings[level][rank];
+                    var ranking = clearDataDictionary[route].Rankings[level][rank];
                     switch (type)
                     {
                         case 1:     // name
@@ -248,7 +248,7 @@ namespace ThScoreFileConverter.Models
             private readonly MatchEvaluator evaluator;
 
             [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-            public CareerReplacer(Th128Converter parent)
+            public CareerReplacer(IReadOnlyDictionary<int, ISpellCard> spellCards)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -265,12 +265,11 @@ namespace ThScoreFileConverter.Models
 
                     if (number == 0)
                     {
-                        return Utils.ToNumberString(
-                            parent.allScoreData.CardData.Cards.Values.Sum(getCount));
+                        return Utils.ToNumberString(spellCards.Values.Sum(getCount));
                     }
                     else if (Definitions.CardTable.ContainsKey(number))
                     {
-                        if (parent.allScoreData.CardData.Cards.TryGetValue(number, out var card))
+                        if (spellCards.TryGetValue(number, out var card))
                             return Utils.ToNumberString(getCount(card));
                         else
                             return "0";
@@ -295,7 +294,7 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public CardReplacer(Th128Converter parent, bool hideUntriedCards)
+            public CardReplacer(IReadOnlyDictionary<int, ISpellCard> spellCards, bool hideUntriedCards)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -308,8 +307,7 @@ namespace ThScoreFileConverter.Models
                         {
                             if (hideUntriedCards)
                             {
-                                var cards = parent.allScoreData.CardData.Cards;
-                                if (!cards.TryGetValue(number, out var card) || !card.HasTried())
+                                if (!spellCards.TryGetValue(number, out var card) || !card.HasTried())
                                     return "??????????";
                             }
 
@@ -344,7 +342,7 @@ namespace ThScoreFileConverter.Models
             private readonly MatchEvaluator evaluator;
 
             [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-            public CollectRateReplacer(Th128Converter parent)
+            public CollectRateReplacer(IReadOnlyDictionary<int, ISpellCard> spellCards)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -383,7 +381,7 @@ namespace ThScoreFileConverter.Models
                     else
                         findByType = (card => card.TrialCount > 0);
 
-                    return parent.allScoreData.CardData.Cards.Values
+                    return spellCards.Values
                         .Count(Utils.MakeAndPredicate(findByLevel, findByStage, findByType))
                         .ToString(CultureInfo.CurrentCulture);
                 });
@@ -403,7 +401,7 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public ClearReplacer(Th128Converter parent)
+            public ClearReplacer(IReadOnlyDictionary<RouteWithTotal, IClearData> clearDataDictionary)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -415,7 +413,7 @@ namespace ThScoreFileConverter.Models
                     if ((route == RouteWithTotal.Extra) && (level != Level.Extra))
                         return match.ToString();
 
-                    var rankings = parent.allScoreData.ClearData[route].Rankings[level]
+                    var rankings = clearDataDictionary[route].Rankings[level]
                         .Where(ranking => ranking.DateTime > 0);
                     var stageProgress = rankings.Any()
                         ? rankings.Max(ranking => ranking.StageProgress) : StageProgress.None;
@@ -439,7 +437,7 @@ namespace ThScoreFileConverter.Models
             private readonly MatchEvaluator evaluator;
 
             [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-            public RouteReplacer(Th128Converter parent)
+            public RouteReplacer(IReadOnlyDictionary<RouteWithTotal, IClearData> clearDataDictionary)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -450,32 +448,32 @@ namespace ThScoreFileConverter.Models
                     Func<long, string> toString;
                     if (type == 1)
                     {
-                        getValueByType = (data => data.TotalPlayCount);
+                        getValueByType = (clearData => clearData.TotalPlayCount);
                         toString = Utils.ToNumberString;
                     }
                     else if (type == 2)
                     {
-                        getValueByType = (data => data.PlayTime);
+                        getValueByType = (clearData => clearData.PlayTime);
                         toString = (value => new Time(value).ToString());
                     }
                     else
                     {
-                        getValueByType = (data => data.ClearCounts.Values.Sum());
+                        getValueByType = (clearData => clearData.ClearCounts.Values.Sum());
                         toString = Utils.ToNumberString;
                     }
 
-                    Func<AllScoreData, long> getValueByRoute;
+                    Func<IReadOnlyDictionary<RouteWithTotal, IClearData>, long> getValueByRoute;
                     if (route == RouteWithTotal.Total)
                     {
-                        getValueByRoute = (allData => allData.ClearData.Values
-                            .Where(data => data.Route != route).Sum(getValueByType));
+                        getValueByRoute = (dictionary => dictionary.Values
+                            .Where(clearData => clearData.Route != route).Sum(getValueByType));
                     }
                     else
                     {
-                        getValueByRoute = (allData => getValueByType(allData.ClearData[route]));
+                        getValueByRoute = (dictionary => getValueByType(dictionary[route]));
                     }
 
-                    return toString(getValueByRoute(parent.allScoreData));
+                    return toString(getValueByRoute(clearDataDictionary));
                 });
             }
 
@@ -496,7 +494,7 @@ namespace ThScoreFileConverter.Models
             private readonly MatchEvaluator evaluator;
 
             [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-            public RouteExReplacer(Th128Converter parent)
+            public RouteExReplacer(IReadOnlyDictionary<RouteWithTotal, IClearData> clearDataDictionary)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -515,35 +513,35 @@ namespace ThScoreFileConverter.Models
                     Func<long, string> toString;
                     if (type == 1)
                     {
-                        getValueByType = (data => data.TotalPlayCount);
+                        getValueByType = (clearData => clearData.TotalPlayCount);
                         toString = Utils.ToNumberString;
                     }
                     else if (type == 2)
                     {
-                        getValueByType = (data => data.PlayTime);
+                        getValueByType = (clearData => clearData.PlayTime);
                         toString = (value => new Time(value).ToString());
                     }
                     else
                     {
                         if (level == LevelWithTotal.Total)
-                            getValueByType = (data => data.ClearCounts.Values.Sum());
+                            getValueByType = (clearData => clearData.ClearCounts.Values.Sum());
                         else
-                            getValueByType = (data => data.ClearCounts[(Level)level]);
+                            getValueByType = (clearData => clearData.ClearCounts[(Level)level]);
                         toString = Utils.ToNumberString;
                     }
 
-                    Func<AllScoreData, long> getValueByRoute;
+                    Func<IReadOnlyDictionary<RouteWithTotal, IClearData>, long> getValueByRoute;
                     if (route == RouteWithTotal.Total)
                     {
-                        getValueByRoute = (allData => allData.ClearData.Values
-                            .Where(data => data.Route != route).Sum(getValueByType));
+                        getValueByRoute = (dictionary => dictionary.Values
+                            .Where(clearData => clearData.Route != route).Sum(getValueByType));
                     }
                     else
                     {
-                        getValueByRoute = (allData => getValueByType(allData.ClearData[route]));
+                        getValueByRoute = (dictionary => getValueByType(dictionary[route]));
                     }
 
-                    return toString(getValueByRoute(parent.allScoreData));
+                    return toString(getValueByRoute(clearDataDictionary));
                 });
             }
 
@@ -560,11 +558,11 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public TimeReplacer(Th128Converter parent)
+            public TimeReplacer(Th125.IStatus status)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    return new Time(parent.allScoreData.Status.TotalPlayTime * 10, false).ToLongString();
+                    return new Time(status.TotalPlayTime * 10, false).ToLongString();
                 });
             }
 
