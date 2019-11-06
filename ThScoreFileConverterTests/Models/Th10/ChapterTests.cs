@@ -2,8 +2,10 @@
 using System;
 using System.IO;
 using System.Linq;
+using ThScoreFileConverter.Models.Th10;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
+using IChapter = ThScoreFileConverter.Models.Th095.IChapter;
 
 namespace ThScoreFileConverterTests.Models.Th10
 {
@@ -45,12 +47,17 @@ namespace ThScoreFileConverterTests.Models.Th10
                 properties.size,
                 properties.data);
 
-        internal static void Validate(in Properties expected, in ChapterWrapper actual)
+        internal static void Validate(in Properties expected, IChapter actual)
         {
             Assert.AreEqual(expected.signature, actual.Signature);
             Assert.AreEqual(expected.version, actual.Version);
             Assert.AreEqual(expected.checksum, actual.Checksum);
             Assert.AreEqual(expected.size, actual.Size);
+        }
+
+        internal static void Validate(in Properties expected, in ChapterWrapper actual)
+        {
+            Validate(expected, actual as IChapter);
             CollectionAssert.That.AreEqual(expected.data, actual.Data);
         }
 
@@ -60,17 +67,17 @@ namespace ThScoreFileConverterTests.Models.Th10
             var chapter = new ChapterWrapper();
 
             Validate(DefaultProperties, chapter);
-            Assert.IsTrue(chapter.IsValid.Value);
+            Assert.IsTrue(chapter.IsValid);
         });
 
         [TestMethod]
         public void ChapterTestCopy() => TestUtils.Wrap(() =>
         {
-            var chapter1 = new ChapterWrapper();
+            var chapter1 = new Chapter();
             var chapter2 = new ChapterWrapper(chapter1);
 
             Validate(DefaultProperties, chapter2);
-            Assert.IsTrue(chapter2.IsValid.Value);
+            Assert.IsTrue(chapter2.IsValid);
         });
 
         [TestMethod]
@@ -83,19 +90,69 @@ namespace ThScoreFileConverterTests.Models.Th10
         });
 
         [TestMethod]
+        public void ChapterTestCopyWithExpected()
+        {
+            var chapter1 = TestUtils.Create<Chapter>(MakeByteArray(ValidProperties));
+            var chapter2 = new ChapterWrapper(chapter1, chapter1.Signature, chapter1.Version, chapter1.Size);
+
+            Validate(ValidProperties, chapter2);
+            Assert.IsTrue(chapter2.IsValid);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ChapterTestNullWithExpected()
+        {
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(ValidProperties));
+            _ = new ChapterWrapper(null, chapter.Signature, chapter.Version, chapter.Size);
+
+            Assert.Fail(TestUtils.Unreachable);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidDataException))]
+        public void ChapterTestInvalidSignature()
+        {
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(ValidProperties));
+            _ = new ChapterWrapper(chapter, chapter.Signature.ToLowerInvariant(), chapter.Version, chapter.Size);
+
+            Assert.Fail(TestUtils.Unreachable);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidDataException))]
+        public void ChapterTestInvalidVersion()
+        {
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(ValidProperties));
+            _ = new ChapterWrapper(chapter, chapter.Signature, (ushort)(chapter.Version - 1), chapter.Size);
+
+            Assert.Fail(TestUtils.Unreachable);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidDataException))]
+        public void ChapterTestInvalidSize()
+        {
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(ValidProperties));
+            _ = new ChapterWrapper(chapter, chapter.Signature, chapter.Version, chapter.Size - 1);
+
+            Assert.Fail(TestUtils.Unreachable);
+        }
+
+        [TestMethod]
         public void ReadFromTest() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(MakeByteArray(ValidProperties));
+            var chapter = TestUtils.Create<ChapterWrapper>(MakeByteArray(ValidProperties));
 
             Validate(ValidProperties, chapter);
-            Assert.IsTrue(chapter.IsValid.Value);
+            Assert.IsTrue(chapter.IsValid);
         });
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
-            var chapter = new ChapterWrapper();
+            var chapter = new Chapter();
             chapter.ReadFrom(null);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -114,7 +171,7 @@ namespace ThScoreFileConverterTests.Models.Th10
 
             // The actual value of the Size property becomes too large,
             // so EndOfStreamException will be thrown.
-            ChapterWrapper.Create(MakeByteArray(properties));
+            _ = TestUtils.Create<Chapter>(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -132,7 +189,7 @@ namespace ThScoreFileConverterTests.Models.Th10
 
             // The actual value of the Size property becomes too large,
             // so EndOfStreamException will be thrown.
-            ChapterWrapper.Create(MakeByteArray(properties));
+            _ = TestUtils.Create<Chapter>(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -150,7 +207,7 @@ namespace ThScoreFileConverterTests.Models.Th10
 
             // The actual value of the Size property becomes large,
             // so EndOfStreamException will be thrown.
-            ChapterWrapper.Create(MakeByteArray(properties));
+            _ = TestUtils.Create<Chapter>(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -162,7 +219,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             var properties = ValidProperties;
             properties.size = -1;
 
-            ChapterWrapper.Create(MakeByteArray(properties));
+            _ = TestUtils.Create<Chapter>(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -174,7 +231,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             var properties = ValidProperties;
             properties.size = 0;
 
-            ChapterWrapper.Create(MakeByteArray(properties));
+            _ = TestUtils.Create<Chapter>(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -186,14 +243,11 @@ namespace ThScoreFileConverterTests.Models.Th10
             var properties = ValidProperties;
             --properties.size;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = TestUtils.Create<ChapterWrapper>(MakeByteArray(properties));
 
-            Assert.AreEqual(properties.signature, chapter.Signature);
-            Assert.AreEqual(properties.version, chapter.Version);
-            Assert.AreEqual(properties.checksum, chapter.Checksum);
-            Assert.AreEqual(properties.size, chapter.Size);
+            Validate(properties, chapter as IChapter);
             CollectionAssert.That.AreNotEqual(properties.data, chapter.Data);
-            Assert.IsFalse(chapter.IsValid.Value);
+            Assert.IsFalse(chapter.IsValid);
         });
 
         [TestMethod]
@@ -203,7 +257,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             var properties = ValidProperties;
             ++properties.size;
 
-            ChapterWrapper.Create(MakeByteArray(properties));
+            _ = TestUtils.Create<Chapter>(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -214,10 +268,10 @@ namespace ThScoreFileConverterTests.Models.Th10
             var properties = ValidProperties;
             --properties.checksum;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = TestUtils.Create<ChapterWrapper>(MakeByteArray(properties));
 
             Validate(properties, chapter);
-            Assert.IsFalse(chapter.IsValid.Value);
+            Assert.IsFalse(chapter.IsValid);
         });
 
         [TestMethod]
@@ -227,7 +281,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             var properties = ValidProperties;
             properties.data = new byte[] { };
 
-            ChapterWrapper.Create(MakeByteArray(properties));
+            _ = TestUtils.Create<Chapter>(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -239,10 +293,10 @@ namespace ThScoreFileConverterTests.Models.Th10
             --properties.size;
             properties.data = properties.data.Take(properties.data.Length - 1).ToArray();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(properties));
+            var chapter = TestUtils.Create<ChapterWrapper>(MakeByteArray(properties));
 
             Validate(properties, chapter);
-            Assert.IsFalse(chapter.IsValid.Value);
+            Assert.IsFalse(chapter.IsValid);
         });
     }
 }
