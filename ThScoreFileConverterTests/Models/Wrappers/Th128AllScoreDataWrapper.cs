@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Models.Th095;
 using ThScoreFileConverter.Models.Th128;
+using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
+using IStatus = ThScoreFileConverter.Models.Th125.IStatus;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -30,15 +31,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.ClearData)) as IReadOnlyDictionary<RouteWithTotal, IClearData>;
         public ICardData CardData
             => this.pobj.GetProperty(nameof(this.CardData)) as ICardData;
-
-        public Th128StatusWrapper<Th128Converter> Status
-        {
-            get
-            {
-                var status = this.pobj.GetProperty(nameof(this.Status));
-                return (status != null) ? new Th128StatusWrapper<Th128Converter>(status) : null;
-            }
-        }
+        public IStatus Status
+            => this.pobj.GetProperty(nameof(this.Status)) as IStatus;
 
         public void Set(HeaderBase header)
             => this.pobj.Invoke(nameof(Set), new object[] { header }, CultureInfo.InvariantCulture);
@@ -46,7 +40,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.Invoke(nameof(Set), new object[] { data }, CultureInfo.InvariantCulture);
         public void Set(ICardData data)
             => this.pobj.Invoke(nameof(Set), new object[] { data }, CultureInfo.InvariantCulture);
-        public void Set(Th128StatusWrapper<Th128Converter> status)
-            => this.pobj.Invoke(nameof(Set), new object[] { status.Target }, CultureInfo.InvariantCulture);
+        public void Set(IStatus status)
+            => this.pobj.Invoke(nameof(Set), new object[] { status }, CultureInfo.InvariantCulture);
     }
 }

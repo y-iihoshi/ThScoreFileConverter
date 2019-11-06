@@ -604,18 +604,5 @@ namespace ThScoreFileConverter.Models
 
             public void Set(Th125.IStatus status) => this.Status = status;
         }
-
-        private class Status : StatusBase
-        {
-            public const ushort ValidVersion = 0x0002;
-
-            public Status(Th10.Chapter chapter)
-                : base(chapter, ValidVersion, 10, 0x18)
-            {
-            }
-
-            public static new bool CanInitialize(Th10.Chapter chapter)
-                => StatusBase.CanInitialize(chapter) && (chapter.Version == ValidVersion);
-        }
     }
 }

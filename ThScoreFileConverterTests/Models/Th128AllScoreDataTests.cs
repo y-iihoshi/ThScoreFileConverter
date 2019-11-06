@@ -1,9 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th128;
+using ThScoreFileConverterTests.Models.Th125.Stubs;
 using ThScoreFileConverterTests.Models.Th128.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
-using ChapterWrapper = ThScoreFileConverterTests.Models.Th10.Wrappers.ChapterWrapper;
 using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
 
 namespace ThScoreFileConverterTests.Models
@@ -104,30 +103,26 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th128AllScoreDataSetStatusTest() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(
-                Th128.StatusTests.MakeByteArray(Th128.StatusTests.GetValidStub(2, 0x42C, 10), 0x10, 0x18));
-            var status = new Th128StatusWrapper<Th128Converter>(chapter);
+            var status = new StatusStub();
 
             var allScoreData = new Th128AllScoreDataWrapper();
             allScoreData.Set(status);
 
-            Assert.AreSame(status.Target, allScoreData.Status.Target);
+            Assert.AreSame(status, allScoreData.Status);
         });
 
         [TestMethod]
         public void Th128AllScoreDataSetStatusTestTwice() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(
-                Th128.StatusTests.MakeByteArray(Th128.StatusTests.GetValidStub(2, 0x42C, 10), 0x10, 0x18));
-            var status1 = new Th128StatusWrapper<Th128Converter>(chapter);
-            var status2 = new Th128StatusWrapper<Th128Converter>(chapter);
+            var status1 = new StatusStub();
+            var status2 = new StatusStub();
 
             var allScoreData = new Th128AllScoreDataWrapper();
             allScoreData.Set(status1);
             allScoreData.Set(status2);
 
-            Assert.AreNotSame(status1.Target, allScoreData.Status.Target);
-            Assert.AreSame(status2.Target, allScoreData.Status.Target);
+            Assert.AreNotSame(status1, allScoreData.Status);
+            Assert.AreSame(status2, allScoreData.Status);
         });
     }
 }
