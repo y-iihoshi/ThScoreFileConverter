@@ -9,14 +9,13 @@ using IStatus = ThScoreFileConverter.Models.Th125.IStatus;
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
     // NOTE: Setting the accessibility as public causes CS0050, CS0051 and CS0053.
-    internal sealed class Th13AllScoreDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>
+    internal sealed class Th13AllScoreDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>
         where TParent : ThConverter
         where TChWithT : struct, Enum       // TCharaWithTotal
         where TLv : struct, Enum            // TLevel
         where TLvPrac : struct, Enum        // TLevelPractice
         where TLvPracWithT : struct, Enum   // TLevelPracticeWithTotal
         where TStPrac : struct, Enum        // TStagePractice
-        where TStProg : struct, Enum        // TStageProgress
     {
         private static readonly Type ParentType = typeof(TParent);
         private static readonly string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
@@ -40,9 +39,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.ClearData));
         public int? ClearDataCount
             => this.ClearData.GetType().GetProperty("Count").GetValue(this.ClearData) as int?;
-        public Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>
+        public Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>
             ClearDataItem(TChWithT chara)
-            => new Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(
+            => new Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>(
                 this.ClearData.GetType().GetProperty("Item").GetValue(this.ClearData, new object[] { chara }));
 
         public IStatus Status
@@ -50,7 +49,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         public void Set(HeaderBase header)
             => this.pobj.Invoke(nameof(Set), new object[] { header }, CultureInfo.InvariantCulture);
-        public void Set(Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg> data)
+        public void Set(Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac> data)
             => this.pobj.Invoke(nameof(Set), new object[] { data.Target }, CultureInfo.InvariantCulture);
         public void Set(IStatus status)
             => this.pobj.Invoke(nameof(Set), new object[] { status }, CultureInfo.InvariantCulture);

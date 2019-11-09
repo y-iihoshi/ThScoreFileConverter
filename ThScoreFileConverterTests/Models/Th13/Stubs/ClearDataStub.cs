@@ -5,20 +5,18 @@ using ThScoreFileConverter.Models.Th13;
 
 namespace ThScoreFileConverterTests.Models.Th13.Stubs
 {
-    internal class ClearDataStub<
-        TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice, TStageProgress>
-        : IClearData<TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice, TStageProgress>
+    internal class ClearDataStub<TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice>
+        : IClearData<TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice>
         where TCharaWithTotal : struct, Enum
         where TLevel : struct, Enum
         where TLevelPractice : struct, Enum
         where TLevelPracticeWithTotal : struct, Enum
         where TStagePractice : struct, Enum
-        where TStageProgress : struct, Enum
     {
         public ClearDataStub() { }
 
         public ClearDataStub(
-            IClearData<TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice, TStageProgress>
+            IClearData<TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice>
                 clearData)
             : this()
         {
@@ -32,8 +30,8 @@ namespace ThScoreFileConverterTests.Models.Th13.Stubs
                 pair => pair.Key, pair => new PracticeStub(pair.Value) as IPractice);
             this.Rankings = clearData.Rankings?.ToDictionary(
                 pair => pair.Key,
-                pair => pair.Value?.Select(score => new Th10.Stubs.ScoreDataStub<TStageProgress>(score))?.ToList()
-                    as IReadOnlyList<ThScoreFileConverter.Models.Th10.IScoreData<TStageProgress>>);
+                pair => pair.Value?.Select(score => new Th10.Stubs.ScoreDataStub<StageProgress>(score))?.ToList()
+                    as IReadOnlyList<ThScoreFileConverter.Models.Th10.IScoreData<StageProgress>>);
             this.TotalPlayCount = clearData.TotalPlayCount;
             this.Checksum = clearData.Checksum;
             this.IsValid = clearData.IsValid;
@@ -56,7 +54,7 @@ namespace ThScoreFileConverterTests.Models.Th13.Stubs
 
         public IReadOnlyDictionary<
             TLevelPracticeWithTotal,
-            IReadOnlyList<ThScoreFileConverter.Models.Th10.IScoreData<TStageProgress>>> Rankings { get; set; }
+            IReadOnlyList<ThScoreFileConverter.Models.Th10.IScoreData<StageProgress>>> Rankings { get; set; }
 
         public int TotalPlayCount { get; set; }
 

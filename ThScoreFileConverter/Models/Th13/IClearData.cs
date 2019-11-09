@@ -13,14 +13,13 @@ using System.Collections.Generic;
 namespace ThScoreFileConverter.Models.Th13
 {
     internal interface IClearData<
-        TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice, TStageProgress>
+        TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice>
         : Th095.IChapter
         where TCharaWithTotal : struct, Enum
         where TLevel : struct, Enum
         where TLevelPractice : struct, Enum
         where TLevelPracticeWithTotal : struct, Enum
         where TStagePractice : struct, Enum
-        where TStageProgress : struct, Enum
     {
         IReadOnlyDictionary<int, ISpellCard<TLevel>> Cards { get; }
 
@@ -34,7 +33,7 @@ namespace ThScoreFileConverter.Models.Th13
 
         IReadOnlyDictionary<(TLevelPractice, TStagePractice), IPractice> Practices { get; }
 
-        IReadOnlyDictionary<TLevelPracticeWithTotal, IReadOnlyList<Th10.IScoreData<TStageProgress>>> Rankings { get; }
+        IReadOnlyDictionary<TLevelPracticeWithTotal, IReadOnlyList<Th10.IScoreData<StageProgress>>> Rankings { get; }
 
         int TotalPlayCount { get; }
     }

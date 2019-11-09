@@ -25,16 +25,13 @@ using ClearDataBase = ThScoreFileConverter.Models.Th13.ClearDataBase<
     ThScoreFileConverter.Models.Level,
     ThScoreFileConverter.Models.Th14Converter.LevelPractice,
     ThScoreFileConverter.Models.Th14Converter.LevelPracticeWithTotal,
-    ThScoreFileConverter.Models.Th14Converter.StagePractice,
-    ThScoreFileConverter.Models.Th13.StageProgress,
-    ThScoreFileConverter.Models.Th13.ScoreData>;
+    ThScoreFileConverter.Models.Th14Converter.StagePractice>;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th14Converter.CharaWithTotal,
     ThScoreFileConverter.Models.Level,
     ThScoreFileConverter.Models.Th14Converter.LevelPractice,
     ThScoreFileConverter.Models.Th14Converter.LevelPracticeWithTotal,
-    ThScoreFileConverter.Models.Th14Converter.StagePractice,
-    ThScoreFileConverter.Models.Th13.StageProgress>;
+    ThScoreFileConverter.Models.Th14Converter.StagePractice>;
 
 namespace ThScoreFileConverter.Models
 {

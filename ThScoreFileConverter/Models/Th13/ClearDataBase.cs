@@ -15,16 +15,14 @@ using System.Linq;
 namespace ThScoreFileConverter.Models.Th13
 {
     internal class ClearDataBase<
-        TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice, TStageProgress, TScoreData>
+        TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice>
         : Th10.Chapter,
-          IClearData<TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice, TStageProgress>
+          IClearData<TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice>
         where TCharaWithTotal : struct, Enum
         where TLevel : struct, Enum
         where TLevelPractice : struct, Enum
         where TLevelPracticeWithTotal : struct, Enum
         where TStagePractice : struct, Enum
-        where TStageProgress : struct, Enum
-        where TScoreData : IBinaryReadable, Th10.IScoreData<TStageProgress>, new()
     {
         public const string ValidSignature = "CR";
         public const ushort ValidVersion = 0x0001;
@@ -44,10 +42,10 @@ namespace ThScoreFileConverter.Models.Th13
                     level => level,
                     _ => Enumerable.Range(0, 10).Select(rank =>
                     {
-                        var score = new TScoreData();
+                        var score = new ScoreData();
                         score.ReadFrom(reader);
                         return score;
-                    }).ToList() as IReadOnlyList<Th10.IScoreData<TStageProgress>>);
+                    }).ToList() as IReadOnlyList<Th10.IScoreData<StageProgress>>);
 
                 this.TotalPlayCount = reader.ReadInt32();
                 this.PlayTime = reader.ReadInt32();
@@ -74,7 +72,7 @@ namespace ThScoreFileConverter.Models.Th13
 
         public TCharaWithTotal Chara { get; }
 
-        public IReadOnlyDictionary<TLevelPracticeWithTotal, IReadOnlyList<Th10.IScoreData<TStageProgress>>> Rankings { get; }
+        public IReadOnlyDictionary<TLevelPracticeWithTotal, IReadOnlyList<Th10.IScoreData<StageProgress>>> Rankings { get; }
 
         public int TotalPlayCount { get; }
 

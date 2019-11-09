@@ -10,14 +10,13 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 {
     // NOTE: Setting the accessibility as public causes CS0050, CS0051 and CS0703.
     internal sealed class Th13ClearDataWrapper<
-        TParent, TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice, TStageProgress>
+        TParent, TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice>
         where TParent : ThConverter
         where TCharaWithTotal : struct, Enum
         where TLevel : struct, Enum
         where TLevelPractice : struct, Enum
         where TLevelPracticeWithTotal : struct, Enum
         where TStagePractice : struct, Enum
-        where TStageProgress : struct, Enum
     {
         private static readonly Type ParentType = typeof(TParent);
         private static readonly string AssemblyNameToTest = ParentType.Assembly.GetName().Name;
@@ -49,11 +48,11 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.Chara)) as TCharaWithTotal?;
         public IReadOnlyDictionary<
             TLevelPracticeWithTotal,
-            IReadOnlyList<ThScoreFileConverter.Models.Th10.IScoreData<TStageProgress>>> Rankings
+            IReadOnlyList<ThScoreFileConverter.Models.Th10.IScoreData<StageProgress>>> Rankings
             => this.pobj.GetProperty(nameof(this.Rankings))
                 as IReadOnlyDictionary<
                     TLevelPracticeWithTotal,
-                    IReadOnlyList<ThScoreFileConverter.Models.Th10.IScoreData<TStageProgress>>>;
+                    IReadOnlyList<ThScoreFileConverter.Models.Th10.IScoreData<StageProgress>>>;
         public int? TotalPlayCount
             => this.pobj.GetProperty(nameof(this.TotalPlayCount)) as int?;
         public int? PlayTime
