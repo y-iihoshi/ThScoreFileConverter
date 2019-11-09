@@ -2,6 +2,7 @@
 using System;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverterTests.Models.Th095;
+using ThScoreFileConverterTests.Models.Th13;
 using ThScoreFileConverterTests.Models.Wrappers;
 using ChapterWrapper = ThScoreFileConverterTests.Models.Th10.Wrappers.ChapterWrapper;
 using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
@@ -141,7 +142,7 @@ namespace ThScoreFileConverterTests.Models
             where TStProg : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var chapter = ChapterWrapper.Create(Th13StatusTests.MakeByteArray(Th13StatusTests.ValidStub));
+                var chapter = ChapterWrapper.Create(Th13.StatusTests.MakeByteArray(Th13.StatusTests.ValidStub));
                 var status = new Th128StatusWrapper<TParent>(chapter);
 
                 var allScoreData =
@@ -163,7 +164,7 @@ namespace ThScoreFileConverterTests.Models
             where TStProg : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var chapter = ChapterWrapper.Create(Th13StatusTests.MakeByteArray(Th13StatusTests.ValidStub));
+                var chapter = ChapterWrapper.Create(Th13.StatusTests.MakeByteArray(Th13.StatusTests.ValidStub));
                 var status1 = new Th128StatusWrapper<TParent>(chapter);
                 var status2 = new Th128StatusWrapper<TParent>(chapter);
 

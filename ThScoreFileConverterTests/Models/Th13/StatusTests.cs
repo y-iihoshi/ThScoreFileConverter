@@ -10,10 +10,10 @@ using ThScoreFileConverterTests.Models.Th10.Wrappers;
 using ThScoreFileConverterTests.Models.Th125.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th13
 {
     [TestClass]
-    public class Th13StatusTests
+    public class StatusTests
     {
         internal static StatusStub ValidStub { get; } = new StatusStub()
         {
