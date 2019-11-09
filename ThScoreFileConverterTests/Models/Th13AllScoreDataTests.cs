@@ -2,7 +2,7 @@
 using System;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverterTests.Models.Th095;
-using ThScoreFileConverterTests.Models.Th13;
+using ThScoreFileConverterTests.Models.Th125.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 using ChapterWrapper = ThScoreFileConverterTests.Models.Th10.Wrappers.ChapterWrapper;
 using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
@@ -142,14 +142,13 @@ namespace ThScoreFileConverterTests.Models
             where TStProg : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var chapter = ChapterWrapper.Create(Th13.StatusTests.MakeByteArray(Th13.StatusTests.ValidStub));
-                var status = new Th128StatusWrapper<TParent>(chapter);
+                var status = new StatusStub();
 
                 var allScoreData =
                     new Th13AllScoreDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>();
                 allScoreData.Set(status);
 
-                Assert.AreSame(status.Target, allScoreData.Status.Target);
+                Assert.AreSame(status, allScoreData.Status);
             });
 
         internal static void Th13AllScoreDataSetStatusTestTwiceHelper<
@@ -164,17 +163,16 @@ namespace ThScoreFileConverterTests.Models
             where TStProg : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var chapter = ChapterWrapper.Create(Th13.StatusTests.MakeByteArray(Th13.StatusTests.ValidStub));
-                var status1 = new Th128StatusWrapper<TParent>(chapter);
-                var status2 = new Th128StatusWrapper<TParent>(chapter);
+                var status1 = new StatusStub();
+                var status2 = new StatusStub();
 
                 var allScoreData =
                     new Th13AllScoreDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>();
                 allScoreData.Set(status1);
                 allScoreData.Set(status2);
 
-                Assert.AreNotSame(status1.Target, allScoreData.Status.Target);
-                Assert.AreSame(status2.Target, allScoreData.Status.Target);
+                Assert.AreNotSame(status1, allScoreData.Status);
+                Assert.AreSame(status2, allScoreData.Status);
             });
 
         #region Th13

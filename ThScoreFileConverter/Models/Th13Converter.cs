@@ -951,19 +951,6 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        private class Status : Th128.StatusBase
-        {
-            public const ushort ValidVersion = 0x0001;
-
-            public Status(Th10.Chapter chapter)
-                : base(chapter, ValidVersion, 17, 0x11)
-            {
-            }
-
-            public static new bool CanInitialize(Th10.Chapter chapter)
-                => Th128.StatusBase.CanInitialize(chapter) && (chapter.Version == ValidVersion);
-        }
-
         private class SpellCard : SpellCard<LevelPractice>
         {
         }

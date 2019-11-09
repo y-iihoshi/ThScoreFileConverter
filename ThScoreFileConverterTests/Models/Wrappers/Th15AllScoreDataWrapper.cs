@@ -3,7 +3,8 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Models.Th095;
+using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
+using IStatus = ThScoreFileConverter.Models.Th125.IStatus;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -36,20 +37,14 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => new Th15ClearDataWrapper(
                 this.ClearData.GetType().GetProperty("Item").GetValue(this.ClearData, new object[] { chara }));
 
-        public Th128StatusWrapper<Th15Converter> Status
-        {
-            get
-            {
-                var status = this.pobj.GetProperty(nameof(this.Status));
-                return (status != null) ? new Th128StatusWrapper<Th15Converter>(status) : null;
-            }
-        }
+        public IStatus Status
+            => this.pobj.GetProperty(nameof(this.Status)) as IStatus;
 
         public void Set(HeaderBase header)
             => this.pobj.Invoke(nameof(Set), new object[] { header }, CultureInfo.InvariantCulture);
         public void Set(Th15ClearDataWrapper data)
             => this.pobj.Invoke(nameof(Set), new object[] { data.Target }, CultureInfo.InvariantCulture);
-        public void Set(Th128StatusWrapper<Th15Converter> status)
-            => this.pobj.Invoke(nameof(Set), new object[] { status.Target }, CultureInfo.InvariantCulture);
+        public void Set(IStatus status)
+            => this.pobj.Invoke(nameof(Set), new object[] { status }, CultureInfo.InvariantCulture);
     }
 }

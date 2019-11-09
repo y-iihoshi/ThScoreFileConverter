@@ -1,10 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Models.Th095;
 using ThScoreFileConverterTests.Models.Th095;
-using ThScoreFileConverterTests.Models.Th13;
+using ThScoreFileConverterTests.Models.Th125.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 using ChapterWrapper = ThScoreFileConverterTests.Models.Th10.Wrappers.ChapterWrapper;
+using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -80,28 +79,26 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th16AllScoreDataSetStatusTest() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(Th13.StatusTests.MakeByteArray(Th13.StatusTests.ValidStub));
-            var status = new Th128StatusWrapper<Th16Converter>(chapter);
+            var status = new StatusStub();
 
             var allScoreData = new Th16AllScoreDataWrapper();
             allScoreData.Set(status);
 
-            Assert.AreSame(status.Target, allScoreData.Status.Target);
+            Assert.AreSame(status, allScoreData.Status);
         });
 
         [TestMethod]
         public void Th16AllScoreDataSetStatusTestTwice() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(Th13.StatusTests.MakeByteArray(Th13.StatusTests.ValidStub));
-            var status1 = new Th128StatusWrapper<Th16Converter>(chapter);
-            var status2 = new Th128StatusWrapper<Th16Converter>(chapter);
+            var status1 = new StatusStub();
+            var status2 = new StatusStub();
 
             var allScoreData = new Th16AllScoreDataWrapper();
             allScoreData.Set(status1);
             allScoreData.Set(status2);
 
-            Assert.AreNotSame(status1.Target, allScoreData.Status.Target);
-            Assert.AreSame(status2.Target, allScoreData.Status.Target);
+            Assert.AreNotSame(status1, allScoreData.Status);
+            Assert.AreSame(status2, allScoreData.Status);
         });
     }
 }
