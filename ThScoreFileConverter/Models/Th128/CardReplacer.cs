@@ -7,6 +7,7 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -22,12 +23,15 @@ namespace ThScoreFileConverter.Models.Th128
 
         public CardReplacer(IReadOnlyDictionary<int, ISpellCard> spellCards, bool hideUntriedCards)
         {
+            if (spellCards is null)
+                throw new ArgumentNullException(nameof(spellCards));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
                 var type = match.Groups[2].Value.ToUpperInvariant();
 
-                if (Definitions.CardTable.ContainsKey(number))
+                if (Definitions.CardTable.TryGetValue(number, out var cardInfo))
                 {
                     if (type == "N")
                     {
@@ -37,11 +41,11 @@ namespace ThScoreFileConverter.Models.Th128
                                 return "??????????";
                         }
 
-                        return Definitions.CardTable[number].Name;
+                        return cardInfo.Name;
                     }
                     else
                     {
-                        return Definitions.CardTable[number].Level.ToString();
+                        return cardInfo.Level.ToString();
                     }
                 }
                 else
