@@ -7,6 +7,7 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -24,6 +25,9 @@ namespace ThScoreFileConverter.Models.Th128
 
         public ClearReplacer(IReadOnlyDictionary<RouteWithTotal, IClearData> clearDataDictionary)
         {
+            if (clearDataDictionary is null)
+                throw new ArgumentNullException(nameof(clearDataDictionary));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
@@ -34,10 +38,12 @@ namespace ThScoreFileConverter.Models.Th128
                 if ((route == RouteWithTotal.Extra) && (level != Level.Extra))
                     return match.ToString();
 
-                var rankings = clearDataDictionary[route].Rankings[level]
-                    .Where(ranking => ranking.DateTime > 0);
-                var stageProgress = rankings.Any()
-                    ? rankings.Max(ranking => ranking.StageProgress) : StageProgress.None;
+                var scores = clearDataDictionary.TryGetValue(route, out var clearData)
+                    && clearData.Rankings.TryGetValue(level, out var ranking)
+                    ? ranking.Where(score => score.DateTime > 0)
+                    : new List<Th10.IScoreData<StageProgress>>();
+                var stageProgress = scores.Any()
+                    ? scores.Max(score => score.StageProgress) : StageProgress.None;
 
                 return stageProgress.ToShortName();
             });
