@@ -11,7 +11,6 @@ using ThScoreFileConverterTests.Models.Th10.Stubs;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
 using ThScoreFileConverterTests.Models.Th13;
 using ThScoreFileConverterTests.Models.Th13.Stubs;
-using ThScoreFileConverterTests.Models.Wrappers;
 using ClearDataStub = ThScoreFileConverterTests.Models.Th13.Stubs.ClearDataStub<
     ThScoreFileConverter.Models.Th13.CharaWithTotal,
     ThScoreFileConverter.Models.Th13.LevelPractice,
@@ -26,6 +25,13 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th13.StagePractice>;
 using PracticeStub = ThScoreFileConverterTests.Models.Th13.Stubs.PracticeStub;
 using ScoreDataTests = ThScoreFileConverterTests.Models.Th10.ScoreDataTests;
+using Th13ClearDataWrapper = ThScoreFileConverterTests.Models.Wrappers.Th13ClearDataWrapper<
+    ThScoreFileConverter.Models.Th13Converter,
+    ThScoreFileConverter.Models.Th13.CharaWithTotal,
+    ThScoreFileConverter.Models.Th13.LevelPractice,
+    ThScoreFileConverter.Models.Th13.LevelPractice,
+    ThScoreFileConverter.Models.Th13.LevelPracticeWithTotal,
+    ThScoreFileConverter.Models.Th13.StagePractice>;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -109,15 +115,7 @@ namespace ThScoreFileConverterTests.Models
                 clearData.Size,
                 MakeData(clearData));
 
-        internal static void Validate<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>(
-            IClearData expected,
-            in Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac> actual)
-            where TParent : ThConverter
-            where TChWithT : struct, Enum
-            where TLv : struct, Enum
-            where TLvPrac : struct, Enum
-            where TLvPracWithT : struct, Enum
-            where TStPrac : struct, Enum
+        internal static void Validate(IClearData expected, in Th13ClearDataWrapper actual)
         {
             var data = MakeData(expected);
 
@@ -132,8 +130,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 for (var index = 0; index < pair.Value.Count(); ++index)
                 {
-                    ScoreDataTests.Validate(
-                        pair.Value[index], actual.Rankings[TestUtils.Cast<TLvPracWithT>(pair.Key)][index]);
+                    ScoreDataTests.Validate(pair.Value[index], actual.Rankings[pair.Key][index]);
                 }
             }
 
@@ -144,164 +141,76 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var pair in expected.Practices)
             {
-                var key = (TestUtils.Cast<TLvPrac>(pair.Key.Item1), TestUtils.Cast<TStPrac>(pair.Key.Item2));
-                PracticeTests.Validate(pair.Value, actual.Practices[key]);
+                PracticeTests.Validate(pair.Value, actual.Practices[pair.Key]);
             }
 
             foreach (var pair in expected.Cards)
             {
-                SpellCardTests.Validate(pair.Value, actual.Cards[pair.Key] as ISpellCard<LevelPractice>);
+                SpellCardTests.Validate(pair.Value, actual.Cards[pair.Key]);
             }
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         [TestMethod]
-        public void Th13ClearDataTestChapter()
-            => ClearDataTestChapterHelper<
-                Th13Converter,
-                CharaWithTotal,
-                LevelPractice,
-                LevelPractice,
-                LevelPracticeWithTotal,
-                StagePractice>(1, 0x56DC, 127);
-        internal static void
-            ClearDataTestChapterHelper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>(
-                ushort version, int size, int numCards)
-            where TParent : ThConverter
-            where TChWithT : struct, Enum
-            where TLv : struct, Enum
-            where TLvPrac : struct, Enum
-            where TLvPracWithT : struct, Enum
-            where TStPrac : struct, Enum
-            => TestUtils.Wrap(() =>
-            {
-                var stub = GetValidStub(version, size, numCards);
+        public void Th13ClearDataTestChapter() => TestUtils.Wrap(() =>
+        {
+            var stub = GetValidStub(0x0001, 0x56DC, 127);
 
-                var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-                var clearData =
-                    new Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>(chapter);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            var clearData = new Th13ClearDataWrapper(chapter);
 
-                Validate(stub, clearData);
-                Assert.IsFalse(clearData.IsValid.Value);
-            });
+            Validate(stub, clearData);
+            Assert.IsFalse(clearData.IsValid.Value);
+        });
 
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th13ClearDataTestNullChapter()
-            => ClearDataTestNullChapterHelper<
-                Th13Converter,
-                CharaWithTotal,
-                LevelPractice,
-                LevelPractice,
-                LevelPracticeWithTotal,
-                StagePractice>();
-        internal static void ClearDataTestNullChapterHelper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>()
-            where TParent : ThConverter
-            where TChWithT : struct, Enum
-            where TLv : struct, Enum
-            where TLvPrac : struct, Enum
-            where TLvPracWithT : struct, Enum
-            where TStPrac : struct, Enum
-            => TestUtils.Wrap(() =>
-            {
-                _ = new Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>(null);
+        public void Th13ClearDataTestNullChapter() => TestUtils.Wrap(() =>
+        {
+            _ = new Th13ClearDataWrapper(null);
 
-                Assert.Fail(TestUtils.Unreachable);
-            });
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th13ClearDataTestInvalidSignature()
-            => ClearDataTestInvalidSignatureHelper<
-                Th13Converter,
-                CharaWithTotal,
-                LevelPractice,
-                LevelPractice,
-                LevelPracticeWithTotal,
-                StagePractice>(1, 0x56DC, 127);
-        internal static void
-            ClearDataTestInvalidSignatureHelper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>(
-                ushort version, int size, int numCards)
-            where TParent : ThConverter
-            where TChWithT : struct, Enum
-            where TLv : struct, Enum
-            where TLvPrac : struct, Enum
-            where TLvPracWithT : struct, Enum
-            where TStPrac : struct, Enum
-            => TestUtils.Wrap(() =>
-            {
-                var stub = GetValidStub(version, size, numCards);
-                stub.Signature = stub.Signature.ToLowerInvariant();
+        public void Th13ClearDataTestInvalidSignature() => TestUtils.Wrap(() =>
+        {
+            var stub = GetValidStub(0x0001, 0x56DC, 127);
+            stub.Signature = stub.Signature.ToLowerInvariant();
 
-                var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-                _ = new Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>(chapter);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new Th13ClearDataWrapper(chapter);
 
-                Assert.Fail(TestUtils.Unreachable);
-            });
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th13ClearDataTestInvalidVersion()
-            => ClearDataTestInvalidVersionHelper<
-                Th13Converter,
-                CharaWithTotal,
-                LevelPractice,
-                LevelPractice,
-                LevelPracticeWithTotal,
-                StagePractice>(1, 0x56DC, 127);
-        internal static void
-            ClearDataTestInvalidVersionHelper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>(
-                ushort version, int size, int numCards)
-            where TParent : ThConverter
-            where TChWithT : struct, Enum
-            where TLv : struct, Enum
-            where TLvPrac : struct, Enum
-            where TLvPracWithT : struct, Enum
-            where TStPrac : struct, Enum
-            => TestUtils.Wrap(() =>
-            {
-                var stub = GetValidStub(version, size, numCards);
-                ++stub.Version;
+        public void ClearDataTestInvalidVersion() => TestUtils.Wrap(() =>
+        {
+            var stub = GetValidStub(0x0001, 0x56DC, 127);
+            ++stub.Version;
 
-                var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-                _ = new Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>(chapter);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new Th13ClearDataWrapper(chapter);
 
-                Assert.Fail(TestUtils.Unreachable);
-            });
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th13ClearDataTestInvalidSize()
-            => ClearDataTestInvalidSizeHelper<
-                Th13Converter,
-                CharaWithTotal,
-                LevelPractice,
-                LevelPractice,
-                LevelPracticeWithTotal,
-                StagePractice>(1, 0x56DC, 127);
-        internal static void
-            ClearDataTestInvalidSizeHelper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>(
-                ushort version, int size, int numCards)
-            where TParent : ThConverter
-            where TChWithT : struct, Enum
-            where TLv : struct, Enum
-            where TLvPrac : struct, Enum
-            where TLvPracWithT : struct, Enum
-            where TStPrac : struct, Enum
-            => TestUtils.Wrap(() =>
-            {
-                var stub = GetValidStub(version, size, numCards);
-                --stub.Size;
+        public void ClearDataTestInvalidSize() => TestUtils.Wrap(() =>
+        {
+            var stub = GetValidStub(0x0001, 0x56DC, 127);
+            --stub.Size;
 
-                var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-                _ = new Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>(chapter);
+            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+            _ = new Th13ClearDataWrapper(chapter);
 
-                Assert.Fail(TestUtils.Unreachable);
-            });
+            Assert.Fail(TestUtils.Unreachable);
+        });
 
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DataRow("CR", (ushort)1, 0x56DC, true)]
         [DataRow("cr", (ushort)1, 0x56DC, false)]
@@ -315,15 +224,7 @@ namespace ThScoreFileConverterTests.Models
             var chapter = ChapterWrapper.Create(
                 TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
 
-            Assert.AreEqual(
-                expected,
-                Th13ClearDataWrapper<
-                    Th13Converter,
-                    CharaWithTotal,
-                    LevelPractice,
-                    LevelPractice,
-                    LevelPracticeWithTotal,
-                    StagePractice>.CanInitialize(chapter));
+            Assert.AreEqual(expected, Th13ClearDataWrapper.CanInitialize(chapter));
         });
     }
 }
