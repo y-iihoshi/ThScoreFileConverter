@@ -17,6 +17,14 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th13;
+using ClearDataBase = ThScoreFileConverter.Models.Th13.ClearDataBase<
+    ThScoreFileConverter.Models.Th13.CharaWithTotal,
+    ThScoreFileConverter.Models.Th13.LevelPractice,
+    ThScoreFileConverter.Models.Th13.LevelPractice,
+    ThScoreFileConverter.Models.Th13.LevelPracticeWithTotal,
+    ThScoreFileConverter.Models.Th13.StagePractice,
+    ThScoreFileConverter.Models.Th13.StageProgress,
+    ThScoreFileConverter.Models.Th13.ScoreData>;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th13.CharaWithTotal,
     ThScoreFileConverter.Models.Th13.LevelPractice,
@@ -661,77 +669,17 @@ namespace ThScoreFileConverter.Models
             public void Set(Th125.IStatus status) => this.Status = status;
         }
 
-        private class ClearData : Th10.Chapter, IClearData  // per character
+        private class ClearData : ClearDataBase // per character
         {
-            public const string ValidSignature = "CR";
-            public const ushort ValidVersion = 0x0001;
             public const int ValidSize = 0x000056DC;
 
             public ClearData(Th10.Chapter chapter)
-                : base(chapter, ValidSignature, ValidVersion, ValidSize)
+                : base(chapter, ValidSize, Definitions.CardTable.Count)
             {
-                var levelsWithTotal = Utils.GetEnumerator<LevelPracticeWithTotal>();
-                var levels = Utils.GetEnumerator<LevelPractice>();
-                var stages = Utils.GetEnumerator<StagePractice>();
-
-                using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-                {
-                    this.Chara = (CharaWithTotal)reader.ReadInt32();
-
-                    this.Rankings = levelsWithTotal.ToDictionary(
-                        level => level,
-                        _ => Enumerable.Range(0, 10).Select(rank =>
-                        {
-                            var score = new ScoreData();
-                            score.ReadFrom(reader);
-                            return score;
-                        }).ToList() as IReadOnlyList<Th10.IScoreData<StageProgress>>);
-
-                    this.TotalPlayCount = reader.ReadInt32();
-                    this.PlayTime = reader.ReadInt32();
-                    this.ClearCounts = levelsWithTotal.ToDictionary(level => level, _ => reader.ReadInt32());
-                    this.ClearFlags = levelsWithTotal.ToDictionary(level => level, _ => reader.ReadInt32());
-
-                    this.Practices = levels
-                        .SelectMany(level => stages.Select(stage => (level, stage)))
-                        .ToDictionary(pair => pair, _ =>
-                        {
-                            var practice = new Practice();
-                            practice.ReadFrom(reader);
-                            return practice as IPractice;
-                        });
-
-                    this.Cards = Enumerable.Range(0, Definitions.CardTable.Count).Select(_ =>
-                    {
-                        var card = new SpellCard<LevelPractice>();
-                        card.ReadFrom(reader);
-                        return card as ISpellCard<LevelPractice>;
-                    }).ToDictionary(card => card.Id);
-                }
             }
 
-            public CharaWithTotal Chara { get; }
-
-            public IReadOnlyDictionary<LevelPracticeWithTotal, IReadOnlyList<Th10.IScoreData<StageProgress>>> Rankings { get; }
-
-            public int TotalPlayCount { get; }
-
-            public int PlayTime { get; }    // = seconds * 60fps
-
-            public IReadOnlyDictionary<LevelPracticeWithTotal, int> ClearCounts { get; }
-
-            public IReadOnlyDictionary<LevelPracticeWithTotal, int> ClearFlags { get; }  // Really...?
-
-            public IReadOnlyDictionary<(LevelPractice, StagePractice), IPractice> Practices { get; }
-
-            public IReadOnlyDictionary<int, ISpellCard<LevelPractice>> Cards { get; }
-
-            public static bool CanInitialize(Th10.Chapter chapter)
-            {
-                return chapter.Signature.Equals(ValidSignature, StringComparison.Ordinal)
-                    && (chapter.Version == ValidVersion)
-                    && (chapter.Size == ValidSize);
-            }
+            public static new bool CanInitialize(Th10.Chapter chapter)
+                => ClearDataBase.CanInitialize(chapter) && (chapter.Size == ValidSize);
         }
     }
 }
