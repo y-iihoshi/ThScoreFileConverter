@@ -15,24 +15,26 @@ namespace ThScoreFileConverterTests.Models
     [TestClass]
     public class Th13StatusTests
     {
-        internal static StatusStub GetValidStub(ushort version, int size, int numBgms) => new StatusStub()
+        internal static StatusStub ValidStub { get; } = new StatusStub()
         {
             Signature = "ST",
-            Version = version,
+            Version = 0x0001,
             Checksum = 0u,
-            Size = size,
+            Size = 0x42C,
             LastName = TestUtils.CP932Encoding.GetBytes("Player1\0\0\0"),
-            BgmFlags = TestUtils.MakeRandomArray<byte>(numBgms),
+            BgmFlags = TestUtils.MakeRandomArray<byte>(17),
             TotalPlayTime = 12345678
         };
 
-        internal static byte[] MakeData(IStatus status, int gap1Size, int gap2Size)
+        internal static byte[] MakeData(IStatus status)
         {
             // NOTE: header == (signature, version, size, checksum)
             var headerSize =
                 TestUtils.CP932Encoding.GetByteCount(status.Signature) + sizeof(ushort) + sizeof(uint) + sizeof(int);
             // NOTE: data == (lastName, gap1, bgms, gap2, totalPlayTime, gap3)
             var dataSize = status.Size - headerSize;
+            var gap1Size = 0x10;
+            var gap2Size = 0x11;
             var gap3Size =
                 dataSize - status.LastName.Count() - gap1Size - status.BgmFlags.Count() - gap2Size - sizeof(int);
 
@@ -45,19 +47,18 @@ namespace ThScoreFileConverterTests.Models
                 new byte[gap3Size]);
         }
 
-        internal static byte[] MakeByteArray(IStatus status, int gap1Size, int gap2Size)
+        internal static byte[] MakeByteArray(IStatus status)
             => TestUtils.MakeByteArray(
                 status.Signature.ToCharArray(),
                 status.Version,
                 status.Checksum,
                 status.Size,
-                MakeData(status, gap1Size, gap2Size));
+                MakeData(status));
 
-        internal static void Validate<TParent>(
-            IStatus expected, in Th128StatusWrapper<TParent> actual, int gap1Size, int gap2Size)
+        internal static void Validate<TParent>(IStatus expected, in Th128StatusWrapper<TParent> actual)
             where TParent : ThConverter
         {
-            var data = MakeData(expected, gap1Size, gap2Size);
+            var data = MakeData(expected);
 
             Assert.AreEqual(expected.Signature, actual.Signature);
             Assert.AreEqual(expected.Checksum, actual.Checksum);
@@ -69,72 +70,64 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(expected.TotalPlayTime, actual.TotalPlayTime);
         }
 
-        internal static void StatusTestChapterHelper<TParent>(
-            ushort version, int size, int numBgms, int gap1Size, int gap2Size)
+        internal static void StatusTestChapterHelper<TParent>()
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var stub = GetValidStub(version, size, numBgms);
+                var stub = ValidStub;
 
-                var chapter = ChapterWrapper.Create(MakeByteArray(stub, gap1Size, gap2Size));
+                var chapter = ChapterWrapper.Create(MakeByteArray(stub));
                 var status = new Th128StatusWrapper<TParent>(chapter);
 
-                Validate(stub, status, gap1Size, gap2Size);
+                Validate(stub, status);
                 Assert.IsFalse(status.IsValid.Value);
             });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
         internal static void StatusTestNullChapterHelper<TParent>()
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var status = new Th128StatusWrapper<TParent>(null);
+                _ = new Th128StatusWrapper<TParent>(null);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
-        internal static void StatusTestInvalidSignatureHelper<TParent>(
-            ushort version, int size, int numBgms, int gap1Size, int gap2Size)
+        internal static void StatusTestInvalidSignatureHelper<TParent>()
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var stub = GetValidStub(version, size, numBgms);
+                var stub = new StatusStub(ValidStub);
                 stub.Signature = stub.Signature.ToLowerInvariant();
 
-                var chapter = ChapterWrapper.Create(MakeByteArray(stub, gap1Size, gap2Size));
-                var status = new Th128StatusWrapper<TParent>(chapter);
+                var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+                _ = new Th128StatusWrapper<TParent>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
-        internal static void StatusTestInvalidVersionHelper<TParent>(
-            ushort version, int size, int numBgms, int gap1Size, int gap2Size)
+        internal static void StatusTestInvalidVersionHelper<TParent>()
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var stub = GetValidStub(version, size, numBgms);
+                var stub = new StatusStub(ValidStub);
                 ++stub.Version;
 
-                var chapter = ChapterWrapper.Create(MakeByteArray(stub, gap1Size, gap2Size));
-                var status = new Th128StatusWrapper<TParent>(chapter);
+                var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+                _ = new Th128StatusWrapper<TParent>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "status")]
-        internal static void StatusTestInvalidSizeHelper<TParent>(
-            ushort version, int size, int numBgms, int gap1Size, int gap2Size)
+        internal static void StatusTestInvalidSizeHelper<TParent>()
             where TParent : ThConverter
             => TestUtils.Wrap(() =>
             {
-                var stub = GetValidStub(version, size, numBgms);
+                var stub = new StatusStub(ValidStub);
                 ++stub.Size;
 
-                var chapter = ChapterWrapper.Create(MakeByteArray(stub, gap1Size, gap2Size));
-                var status = new Th128StatusWrapper<TParent>(chapter);
+                var chapter = ChapterWrapper.Create(MakeByteArray(stub));
+                _ = new Th128StatusWrapper<TParent>(chapter);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
@@ -156,7 +149,7 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         public void Th13StatusTestChapter()
-            => StatusTestChapterHelper<Th13Converter>(1, 0x42C, 17, 0x10, 0x11);
+            => StatusTestChapterHelper<Th13Converter>();
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -166,17 +159,17 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th13StatusTestInvalidSignature()
-            => StatusTestInvalidSignatureHelper<Th13Converter>(1, 0x42C, 17, 0x10, 0x11);
+            => StatusTestInvalidSignatureHelper<Th13Converter>();
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th13StatusTestInvalidVersion()
-            => StatusTestInvalidVersionHelper<Th13Converter>(1, 0x42C, 17, 0x10, 0x11);
+            => StatusTestInvalidVersionHelper<Th13Converter>();
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th13StatusTestInvalidSize()
-            => StatusTestInvalidSizeHelper<Th13Converter>(1, 0x42C, 17, 0x10, 0x11);
+            => StatusTestInvalidSizeHelper<Th13Converter>();
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
@@ -193,7 +186,7 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         public void Th14StatusTestChapter()
-            => StatusTestChapterHelper<Th14Converter>(1, 0x42C, 17, 0x10, 0x11);
+            => StatusTestChapterHelper<Th14Converter>();
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -203,17 +196,17 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th14StatusTestInvalidSignature()
-            => StatusTestInvalidSignatureHelper<Th14Converter>(1, 0x42C, 17, 0x10, 0x11);
+            => StatusTestInvalidSignatureHelper<Th14Converter>();
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th14StatusTestInvalidVersion()
-            => StatusTestInvalidVersionHelper<Th14Converter>(1, 0x42C, 17, 0x10, 0x11);
+            => StatusTestInvalidVersionHelper<Th14Converter>();
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th14StatusTestInvalidSize()
-            => StatusTestInvalidSizeHelper<Th14Converter>(1, 0x42C, 17, 0x10, 0x11);
+            => StatusTestInvalidSizeHelper<Th14Converter>();
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
@@ -230,7 +223,7 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         public void Th15StatusTestChapter()
-            => StatusTestChapterHelper<Th15Converter>(1, 0x42C, 17, 0x10, 0x11);
+            => StatusTestChapterHelper<Th15Converter>();
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -240,17 +233,17 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th15StatusTestInvalidSignature()
-            => StatusTestInvalidSignatureHelper<Th15Converter>(1, 0x42C, 17, 0x10, 0x11);
+            => StatusTestInvalidSignatureHelper<Th15Converter>();
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th15StatusTestInvalidVersion()
-            => StatusTestInvalidVersionHelper<Th15Converter>(1, 0x42C, 17, 0x10, 0x11);
+            => StatusTestInvalidVersionHelper<Th15Converter>();
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th15StatusTestInvalidSize()
-            => StatusTestInvalidSizeHelper<Th15Converter>(1, 0x42C, 17, 0x10, 0x11);
+            => StatusTestInvalidSizeHelper<Th15Converter>();
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
@@ -267,7 +260,7 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         public void Th16StatusTestChapter()
-            => StatusTestChapterHelper<Th16Converter>(1, 0x42C, 17, 0x10, 0x11);
+            => StatusTestChapterHelper<Th16Converter>();
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -277,17 +270,17 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th16StatusTestInvalidSignature()
-            => StatusTestInvalidSignatureHelper<Th16Converter>(1, 0x42C, 17, 0x10, 0x11);
+            => StatusTestInvalidSignatureHelper<Th16Converter>();
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th16StatusTestInvalidVersion()
-            => StatusTestInvalidVersionHelper<Th16Converter>(1, 0x42C, 17, 0x10, 0x11);
+            => StatusTestInvalidVersionHelper<Th16Converter>();
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th16StatusTestInvalidSize()
-            => StatusTestInvalidSizeHelper<Th16Converter>(1, 0x42C, 17, 0x10, 0x11);
+            => StatusTestInvalidSizeHelper<Th16Converter>();
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]

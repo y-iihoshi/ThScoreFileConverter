@@ -141,8 +141,7 @@ namespace ThScoreFileConverterTests.Models
             where TStProg : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var chapter = ChapterWrapper.Create(Th13StatusTests.MakeByteArray(
-                    Th13StatusTests.GetValidStub(version, size, numBgms), gap1Size, gap2Size));
+                var chapter = ChapterWrapper.Create(Th13StatusTests.MakeByteArray(Th13StatusTests.ValidStub));
                 var status = new Th128StatusWrapper<TParent>(chapter);
 
                 var allScoreData =
@@ -164,8 +163,7 @@ namespace ThScoreFileConverterTests.Models
             where TStProg : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var chapter = ChapterWrapper.Create(Th13StatusTests.MakeByteArray(
-                    Th13StatusTests.GetValidStub(version, size, numBgms), gap1Size, gap2Size));
+                var chapter = ChapterWrapper.Create(Th13StatusTests.MakeByteArray(Th13StatusTests.ValidStub));
                 var status1 = new Th128StatusWrapper<TParent>(chapter);
                 var status2 = new Th128StatusWrapper<TParent>(chapter);
 
