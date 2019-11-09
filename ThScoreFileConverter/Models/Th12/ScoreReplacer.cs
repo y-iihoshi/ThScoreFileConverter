@@ -41,7 +41,7 @@ namespace ThScoreFileConverter.Models.Th12
                 var ranking = clearDataDictionary.TryGetValue(chara, out var clearData)
                     && clearData.Rankings.TryGetValue(level, out var rankings)
                     && (rank < rankings.Count)
-                    ? rankings[rank] : new ScoreData();
+                    ? rankings[rank] : new Th11.ScoreData();
                 switch (type)
                 {
                     case 1:     // name
