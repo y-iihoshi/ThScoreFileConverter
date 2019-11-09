@@ -25,6 +25,9 @@ namespace ThScoreFileConverter.Models.Th128
 
         public RouteReplacer(IReadOnlyDictionary<RouteWithTotal, IClearData> clearDataDictionary)
         {
+            if (clearDataDictionary is null)
+                throw new ArgumentNullException(nameof(clearDataDictionary));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var route = Parsers.RouteWithTotalParser.Parse(match.Groups[1].Value);
@@ -56,7 +59,8 @@ namespace ThScoreFileConverter.Models.Th128
                 }
                 else
                 {
-                    getValueByRoute = dictionary => getValueByType(dictionary[route]);
+                    getValueByRoute = dictionary => dictionary.TryGetValue(route, out var clearData)
+                        ? getValueByType(clearData) : 0;
                 }
 
                 return toString(getValueByRoute(clearDataDictionary));
