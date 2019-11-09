@@ -1,8 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th13;
 using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
 using IStatus = ThScoreFileConverter.Models.Th125.IStatus;
 
@@ -32,23 +34,25 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public HeaderBase Header
             => this.pobj.GetProperty(nameof(this.Header)) as HeaderBase;
 
-        // NOTE: Th13Converter.ClearData is a private class.
-        // public IReadOnlyDictionary<CharaWithTotal, ClearData> ClearData
-        //     => this.pobj.GetProperty(nameof(this.ClearData)) as Dictionary<CharaWithTotal, ClearData>;
-        public object ClearData
+        public IReadOnlyDictionary<TChWithT, IClearData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>> ClearData
+            => this.pobj.GetProperty(nameof(this.ClearData))
+                as IReadOnlyDictionary<TChWithT, IClearData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>>;
+        public object ClearDataObject
             => this.pobj.GetProperty(nameof(this.ClearData));
         public int? ClearDataCount
-            => this.ClearData.GetType().GetProperty("Count").GetValue(this.ClearData) as int?;
+            => this.ClearDataObject.GetType().GetProperty("Count").GetValue(this.ClearDataObject) as int?;
         public Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>
             ClearDataItem(TChWithT chara)
             => new Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>(
-                this.ClearData.GetType().GetProperty("Item").GetValue(this.ClearData, new object[] { chara }));
+                this.ClearDataObject.GetType().GetProperty("Item").GetValue(this.ClearDataObject, new object[] { chara }));
 
         public IStatus Status
             => this.pobj.GetProperty(nameof(this.Status)) as IStatus;
 
         public void Set(HeaderBase header)
             => this.pobj.Invoke(nameof(Set), new object[] { header }, CultureInfo.InvariantCulture);
+        public void Set(IClearData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac> data)
+            => this.pobj.Invoke(nameof(Set), new object[] { data }, CultureInfo.InvariantCulture);
         public void Set(Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac> data)
             => this.pobj.Invoke(nameof(Set), new object[] { data.Target }, CultureInfo.InvariantCulture);
         public void Set(IStatus status)

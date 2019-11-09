@@ -36,7 +36,7 @@ namespace ThScoreFileConverter.Models.Th13
 
             using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
             {
-                this.Chara = (TCharaWithTotal)Enum.ToObject(typeof(TCharaWithTotal), reader.ReadInt32());
+                this.Chara = Utils.ToEnum<TCharaWithTotal>(reader.ReadInt32());
 
                 this.Rankings = levelsWithTotal.ToDictionary(
                     level => level,
