@@ -304,60 +304,60 @@ namespace ThScoreFileConverterTests.Models
         public void Th13ClearDataTestChapter()
             => ClearDataTestChapterHelper<
                 Th13Converter,
-                Th13Converter.CharaWithTotal,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPracticeWithTotal,
-                Th13Converter.StagePractice,
-                Th13Converter.StageProgress>(1, 0x56DC, 127);
+                CharaWithTotal,
+                LevelPractice,
+                LevelPractice,
+                LevelPracticeWithTotal,
+                StagePractice,
+                StageProgress>(1, 0x56DC, 127);
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th13ClearDataTestNullChapter()
             => ClearDataTestNullChapterHelper<
                 Th13Converter,
-                Th13Converter.CharaWithTotal,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPracticeWithTotal,
-                Th13Converter.StagePractice,
-                Th13Converter.StageProgress>();
+                CharaWithTotal,
+                LevelPractice,
+                LevelPractice,
+                LevelPracticeWithTotal,
+                StagePractice,
+                StageProgress>();
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th13ClearDataTestInvalidSignature()
             => ClearDataTestInvalidSignatureHelper<
                 Th13Converter,
-                Th13Converter.CharaWithTotal,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPracticeWithTotal,
-                Th13Converter.StagePractice,
-                Th13Converter.StageProgress>(1, 0x56DC, 127);
+                CharaWithTotal,
+                LevelPractice,
+                LevelPractice,
+                LevelPracticeWithTotal,
+                StagePractice,
+                StageProgress>(1, 0x56DC, 127);
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th13ClearDataTestInvalidVersion()
             => ClearDataTestInvalidVersionHelper<
                 Th13Converter,
-                Th13Converter.CharaWithTotal,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPracticeWithTotal,
-                Th13Converter.StagePractice,
-                Th13Converter.StageProgress>(1, 0x56DC, 127);
+                CharaWithTotal,
+                LevelPractice,
+                LevelPractice,
+                LevelPracticeWithTotal,
+                StagePractice,
+                StageProgress>(1, 0x56DC, 127);
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th13ClearDataTestInvalidSize()
             => ClearDataTestInvalidSizeHelper<
                 Th13Converter,
-                Th13Converter.CharaWithTotal,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPracticeWithTotal,
-                Th13Converter.StagePractice,
-                Th13Converter.StageProgress>(1, 0x56DC, 127);
+                CharaWithTotal,
+                LevelPractice,
+                LevelPractice,
+                LevelPracticeWithTotal,
+                StagePractice,
+                StageProgress>(1, 0x56DC, 127);
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
@@ -368,12 +368,11 @@ namespace ThScoreFileConverterTests.Models
         public void Th13ClearDataCanInitializeTest(string signature, ushort version, int size, bool expected)
             => CanInitializeTestHelper<
                 Th13Converter,
-                Th13Converter.CharaWithTotal,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPracticeWithTotal,
-                Th13Converter.StagePractice,
-                Th13Converter.StageProgress>(
-                signature, version, size, expected);
+                CharaWithTotal,
+                LevelPractice,
+                LevelPractice,
+                LevelPracticeWithTotal,
+                StagePractice,
+                StageProgress>(signature, version, size, expected);
     }
 }

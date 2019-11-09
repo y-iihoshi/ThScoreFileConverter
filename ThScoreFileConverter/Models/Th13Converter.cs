@@ -7,7 +7,6 @@
 
 #pragma warning disable 1591
 #pragma warning disable SA1600 // ElementsMustBeDocumented
-#pragma warning disable SA1602 // EnumerationItemsMustBeDocumented
 
 using System;
 using System.Collections.Generic;
@@ -19,14 +18,14 @@ using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th13;
 using CardInfo = ThScoreFileConverter.Models.SpellCardInfo<
-    ThScoreFileConverter.Models.Th13Converter.StagePractice, ThScoreFileConverter.Models.Th13Converter.LevelPractice>;
+    ThScoreFileConverter.Models.Th13.StagePractice, ThScoreFileConverter.Models.Th13.LevelPractice>;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
-    ThScoreFileConverter.Models.Th13Converter.CharaWithTotal,
-    ThScoreFileConverter.Models.Th13Converter.LevelPractice,
-    ThScoreFileConverter.Models.Th13Converter.LevelPractice,
-    ThScoreFileConverter.Models.Th13Converter.LevelPracticeWithTotal,
-    ThScoreFileConverter.Models.Th13Converter.StagePractice,
-    ThScoreFileConverter.Models.Th13Converter.StageProgress>;
+    ThScoreFileConverter.Models.Th13.CharaWithTotal,
+    ThScoreFileConverter.Models.Th13.LevelPractice,
+    ThScoreFileConverter.Models.Th13.LevelPractice,
+    ThScoreFileConverter.Models.Th13.LevelPracticeWithTotal,
+    ThScoreFileConverter.Models.Th13.StagePractice,
+    ThScoreFileConverter.Models.Th13.StageProgress>;
 
 namespace ThScoreFileConverter.Models
 {
@@ -38,112 +37,112 @@ namespace ThScoreFileConverter.Models
         private static readonly Dictionary<int, CardInfo> CardTable =
             new List<CardInfo>()
             {
-                new CardInfo(  1, "符牒「死蝶の舞」",                     StagePractice.St1,       LevelPractice.Easy),
-                new CardInfo(  2, "符牒「死蝶の舞」",                     StagePractice.St1,       LevelPractice.Normal),
-                new CardInfo(  3, "符牒「死蝶の舞　- 桜花 -」",           StagePractice.St1,       LevelPractice.Hard),
-                new CardInfo(  4, "符牒「死蝶の舞　- 桜花 -」",           StagePractice.St1,       LevelPractice.Lunatic),
-                new CardInfo(  5, "幽蝶「ゴーストスポット」",             StagePractice.St1,       LevelPractice.Easy),
-                new CardInfo(  6, "幽蝶「ゴーストスポット」",             StagePractice.St1,       LevelPractice.Normal),
-                new CardInfo(  7, "幽蝶「ゴーストスポット　- 桜花 -」",   StagePractice.St1,       LevelPractice.Hard),
-                new CardInfo(  8, "幽蝶「ゴーストスポット　- 桜花 -」",   StagePractice.St1,       LevelPractice.Lunatic),
-                new CardInfo(  9, "冥符「常夜桜」",                       StagePractice.St1,       LevelPractice.Easy),
-                new CardInfo( 10, "冥符「常夜桜」",                       StagePractice.St1,       LevelPractice.Normal),
-                new CardInfo( 11, "冥符「常夜桜」",                       StagePractice.St1,       LevelPractice.Hard),
-                new CardInfo( 12, "冥符「常夜桜」",                       StagePractice.St1,       LevelPractice.Lunatic),
-                new CardInfo( 13, "桜符「西行桜吹雪」",                   StagePractice.St1,       LevelPractice.Hard),
-                new CardInfo( 14, "桜符「西行桜吹雪」",                   StagePractice.St1,       LevelPractice.Lunatic),
-                new CardInfo( 15, "響符「マウンテンエコー」",             StagePractice.St2,       LevelPractice.Easy),
-                new CardInfo( 16, "響符「マウンテンエコー」",             StagePractice.St2,       LevelPractice.Normal),
-                new CardInfo( 17, "響符「マウンテンエコースクランブル」", StagePractice.St2,       LevelPractice.Hard),
-                new CardInfo( 18, "響符「マウンテンエコースクランブル」", StagePractice.St2,       LevelPractice.Lunatic),
-                new CardInfo( 19, "響符「パワーレゾナンス」",             StagePractice.St2,       LevelPractice.Easy),
-                new CardInfo( 20, "響符「パワーレゾナンス」",             StagePractice.St2,       LevelPractice.Normal),
-                new CardInfo( 21, "響符「パワーレゾナンス」",             StagePractice.St2,       LevelPractice.Hard),
-                new CardInfo( 22, "響符「パワーレゾナンス」",             StagePractice.St2,       LevelPractice.Lunatic),
-                new CardInfo( 23, "山彦「ロングレンジエコー」",           StagePractice.St2,       LevelPractice.Easy),
-                new CardInfo( 24, "山彦「ロングレンジエコー」",           StagePractice.St2,       LevelPractice.Normal),
-                new CardInfo( 25, "山彦「アンプリファイエコー」",         StagePractice.St2,       LevelPractice.Hard),
-                new CardInfo( 26, "山彦「アンプリファイエコー」",         StagePractice.St2,       LevelPractice.Lunatic),
-                new CardInfo( 27, "大声「チャージドクライ」",             StagePractice.St2,       LevelPractice.Easy),
-                new CardInfo( 28, "大声「チャージドクライ」",             StagePractice.St2,       LevelPractice.Normal),
-                new CardInfo( 29, "大声「チャージドヤッホー」",           StagePractice.St2,       LevelPractice.Hard),
-                new CardInfo( 30, "大声「チャージドヤッホー」",           StagePractice.St2,       LevelPractice.Lunatic),
-                new CardInfo( 31, "虹符「アンブレラサイクロン」",         StagePractice.St3,       LevelPractice.Hard),
-                new CardInfo( 32, "虹符「アンブレラサイクロン」",         StagePractice.St3,       LevelPractice.Lunatic),
-                new CardInfo( 33, "回復「ヒールバイデザイア」",           StagePractice.St3,       LevelPractice.Easy),
-                new CardInfo( 34, "回復「ヒールバイデザイア」",           StagePractice.St3,       LevelPractice.Normal),
-                new CardInfo( 35, "回復「ヒールバイデザイア」",           StagePractice.St3,       LevelPractice.Hard),
-                new CardInfo( 36, "回復「ヒールバイデザイア」",           StagePractice.St3,       LevelPractice.Lunatic),
-                new CardInfo( 37, "毒爪「ポイズンレイズ」",               StagePractice.St3,       LevelPractice.Easy),
-                new CardInfo( 38, "毒爪「ポイズンレイズ」",               StagePractice.St3,       LevelPractice.Normal),
-                new CardInfo( 39, "毒爪「ポイズンマーダー」",             StagePractice.St3,       LevelPractice.Hard),
-                new CardInfo( 40, "毒爪「ポイズンマーダー」",             StagePractice.St3,       LevelPractice.Lunatic),
-                new CardInfo( 41, "欲符「稼欲霊招来」",                   StagePractice.St3,       LevelPractice.Easy),
-                new CardInfo( 42, "欲符「稼欲霊招来」",                   StagePractice.St3,       LevelPractice.Normal),
-                new CardInfo( 43, "欲霊「スコアデザイアイーター」",       StagePractice.St3,       LevelPractice.Hard),
-                new CardInfo( 44, "欲霊「スコアデザイアイーター」",       StagePractice.St3,       LevelPractice.Lunatic),
-                new CardInfo( 45, "邪符「ヤンシャオグイ」",               StagePractice.St4,       LevelPractice.Normal),
-                new CardInfo( 46, "邪符「グーフンイエグイ」",             StagePractice.St4,       LevelPractice.Hard),
-                new CardInfo( 47, "邪符「グーフンイエグイ」",             StagePractice.St4,       LevelPractice.Lunatic),
-                new CardInfo( 48, "入魔「ゾウフォルゥモォ」",             StagePractice.St4,       LevelPractice.Easy),
-                new CardInfo( 49, "入魔「ゾウフォルゥモォ」",             StagePractice.St4,       LevelPractice.Normal),
-                new CardInfo( 50, "入魔「ゾウフォルゥモォ」",             StagePractice.St4,       LevelPractice.Hard),
-                new CardInfo( 51, "入魔「ゾウフォルゥモォ」",             StagePractice.St4,       LevelPractice.Lunatic),
-                new CardInfo( 52, "降霊「死人タンキー」",                 StagePractice.St4,       LevelPractice.Easy),
-                new CardInfo( 53, "降霊「死人タンキー」",                 StagePractice.St4,       LevelPractice.Normal),
-                new CardInfo( 54, "通霊「トンリン芳香」",                 StagePractice.St4,       LevelPractice.Hard),
-                new CardInfo( 55, "通霊「トンリン芳香」",                 StagePractice.St4,       LevelPractice.Lunatic),
-                new CardInfo( 56, "道符「タオ胎動」",                     StagePractice.St4,       LevelPractice.Easy),
-                new CardInfo( 57, "道符「タオ胎動」",                     StagePractice.St4,       LevelPractice.Normal),
-                new CardInfo( 58, "道符「タオ胎動」",                     StagePractice.St4,       LevelPractice.Hard),
-                new CardInfo( 59, "道符「タオ胎動」",                     StagePractice.St4,       LevelPractice.Lunatic),
-                new CardInfo( 60, "雷矢「ガゴウジサイクロン」",           StagePractice.St5,       LevelPractice.Normal),
-                new CardInfo( 61, "雷矢「ガゴウジサイクロン」",           StagePractice.St5,       LevelPractice.Hard),
-                new CardInfo( 62, "雷矢「ガゴウジトルネード」",           StagePractice.St5,       LevelPractice.Lunatic),
-                new CardInfo( 63, "天符「雨の磐舟」",                     StagePractice.St5,       LevelPractice.Easy),
-                new CardInfo( 64, "天符「雨の磐舟」",                     StagePractice.St5,       LevelPractice.Normal),
-                new CardInfo( 65, "天符「天の磐舟よ天へ昇れ」",           StagePractice.St5,       LevelPractice.Hard),
-                new CardInfo( 66, "天符「天の磐舟よ天へ昇れ」",           StagePractice.St5,       LevelPractice.Lunatic),
-                new CardInfo( 67, "投皿「物部の八十平瓮」",               StagePractice.St5,       LevelPractice.Easy),
-                new CardInfo( 68, "投皿「物部の八十平瓮」",               StagePractice.St5,       LevelPractice.Normal),
-                new CardInfo( 69, "投皿「物部の八十平瓮」",               StagePractice.St5,       LevelPractice.Hard),
-                new CardInfo( 70, "投皿「物部の八十平瓮」",               StagePractice.St5,       LevelPractice.Lunatic),
-                new CardInfo( 71, "炎符「廃仏の炎風」",                   StagePractice.St5,       LevelPractice.Easy),
-                new CardInfo( 72, "炎符「廃仏の炎風」",                   StagePractice.St5,       LevelPractice.Normal),
-                new CardInfo( 73, "炎符「桜井寺炎上」",                   StagePractice.St5,       LevelPractice.Hard),
-                new CardInfo( 74, "炎符「桜井寺炎上」",                   StagePractice.St5,       LevelPractice.Lunatic),
-                new CardInfo( 75, "聖童女「大物忌正餐」",                 StagePractice.St5,       LevelPractice.Easy),
-                new CardInfo( 76, "聖童女「大物忌正餐」",                 StagePractice.St5,       LevelPractice.Normal),
-                new CardInfo( 77, "聖童女「大物忌正餐」",                 StagePractice.St5,       LevelPractice.Hard),
-                new CardInfo( 78, "聖童女「大物忌正餐」",                 StagePractice.St5,       LevelPractice.Lunatic),
-                new CardInfo( 79, "名誉「十二階の色彩」",                 StagePractice.St6,       LevelPractice.Easy),
-                new CardInfo( 80, "名誉「十二階の色彩」",                 StagePractice.St6,       LevelPractice.Normal),
-                new CardInfo( 81, "名誉「十二階の冠位」",                 StagePractice.St6,       LevelPractice.Hard),
-                new CardInfo( 82, "名誉「十二階の冠位」",                 StagePractice.St6,       LevelPractice.Lunatic),
-                new CardInfo( 83, "仙符「日出ずる処の道士」",             StagePractice.St6,       LevelPractice.Easy),
-                new CardInfo( 84, "仙符「日出ずる処の道士」",             StagePractice.St6,       LevelPractice.Normal),
-                new CardInfo( 85, "仙符「日出ずる処の天子」",             StagePractice.St6,       LevelPractice.Hard),
-                new CardInfo( 86, "仙符「日出ずる処の天子」",             StagePractice.St6,       LevelPractice.Lunatic),
-                new CardInfo( 87, "召喚「豪族乱舞」",                     StagePractice.St6,       LevelPractice.Easy),
-                new CardInfo( 88, "召喚「豪族乱舞」",                     StagePractice.St6,       LevelPractice.Normal),
-                new CardInfo( 89, "召喚「豪族乱舞」",                     StagePractice.St6,       LevelPractice.Hard),
-                new CardInfo( 90, "召喚「豪族乱舞」",                     StagePractice.St6,       LevelPractice.Lunatic),
-                new CardInfo( 91, "秘宝「斑鳩寺の天球儀」",               StagePractice.St6,       LevelPractice.Easy),
-                new CardInfo( 92, "秘宝「斑鳩寺の天球儀」",               StagePractice.St6,       LevelPractice.Normal),
-                new CardInfo( 93, "秘宝「斑鳩寺の天球儀」",               StagePractice.St6,       LevelPractice.Hard),
-                new CardInfo( 94, "秘宝「聖徳太子のオーパーツ」",         StagePractice.St6,       LevelPractice.Lunatic),
-                new CardInfo( 95, "光符「救世観音の光後光」",             StagePractice.St6,       LevelPractice.Easy),
-                new CardInfo( 96, "光符「救世観音の光後光」",             StagePractice.St6,       LevelPractice.Normal),
-                new CardInfo( 97, "光符「グセフラッシュ」",               StagePractice.St6,       LevelPractice.Hard),
-                new CardInfo( 98, "光符「グセフラッシュ」",               StagePractice.St6,       LevelPractice.Lunatic),
-                new CardInfo( 99, "眼光「十七条のレーザー」",             StagePractice.St6,       LevelPractice.Easy),
-                new CardInfo(100, "眼光「十七条のレーザー」",             StagePractice.St6,       LevelPractice.Normal),
-                new CardInfo(101, "神光「逆らう事なきを宗とせよ」",       StagePractice.St6,       LevelPractice.Hard),
-                new CardInfo(102, "神光「逆らう事なきを宗とせよ」",       StagePractice.St6,       LevelPractice.Lunatic),
-                new CardInfo(103, "「星降る神霊廟」",                     StagePractice.St6,       LevelPractice.Easy),
-                new CardInfo(104, "「星降る神霊廟」",                     StagePractice.St6,       LevelPractice.Normal),
-                new CardInfo(105, "「生まれたての神霊」",                 StagePractice.St6,       LevelPractice.Hard),
-                new CardInfo(106, "「生まれたての神霊」",                 StagePractice.St6,       LevelPractice.Lunatic),
+                new CardInfo(  1, "符牒「死蝶の舞」",                     StagePractice.One,       LevelPractice.Easy),
+                new CardInfo(  2, "符牒「死蝶の舞」",                     StagePractice.One,       LevelPractice.Normal),
+                new CardInfo(  3, "符牒「死蝶の舞　- 桜花 -」",           StagePractice.One,       LevelPractice.Hard),
+                new CardInfo(  4, "符牒「死蝶の舞　- 桜花 -」",           StagePractice.One,       LevelPractice.Lunatic),
+                new CardInfo(  5, "幽蝶「ゴーストスポット」",             StagePractice.One,       LevelPractice.Easy),
+                new CardInfo(  6, "幽蝶「ゴーストスポット」",             StagePractice.One,       LevelPractice.Normal),
+                new CardInfo(  7, "幽蝶「ゴーストスポット　- 桜花 -」",   StagePractice.One,       LevelPractice.Hard),
+                new CardInfo(  8, "幽蝶「ゴーストスポット　- 桜花 -」",   StagePractice.One,       LevelPractice.Lunatic),
+                new CardInfo(  9, "冥符「常夜桜」",                       StagePractice.One,       LevelPractice.Easy),
+                new CardInfo( 10, "冥符「常夜桜」",                       StagePractice.One,       LevelPractice.Normal),
+                new CardInfo( 11, "冥符「常夜桜」",                       StagePractice.One,       LevelPractice.Hard),
+                new CardInfo( 12, "冥符「常夜桜」",                       StagePractice.One,       LevelPractice.Lunatic),
+                new CardInfo( 13, "桜符「西行桜吹雪」",                   StagePractice.One,       LevelPractice.Hard),
+                new CardInfo( 14, "桜符「西行桜吹雪」",                   StagePractice.One,       LevelPractice.Lunatic),
+                new CardInfo( 15, "響符「マウンテンエコー」",             StagePractice.Two,       LevelPractice.Easy),
+                new CardInfo( 16, "響符「マウンテンエコー」",             StagePractice.Two,       LevelPractice.Normal),
+                new CardInfo( 17, "響符「マウンテンエコースクランブル」", StagePractice.Two,       LevelPractice.Hard),
+                new CardInfo( 18, "響符「マウンテンエコースクランブル」", StagePractice.Two,       LevelPractice.Lunatic),
+                new CardInfo( 19, "響符「パワーレゾナンス」",             StagePractice.Two,       LevelPractice.Easy),
+                new CardInfo( 20, "響符「パワーレゾナンス」",             StagePractice.Two,       LevelPractice.Normal),
+                new CardInfo( 21, "響符「パワーレゾナンス」",             StagePractice.Two,       LevelPractice.Hard),
+                new CardInfo( 22, "響符「パワーレゾナンス」",             StagePractice.Two,       LevelPractice.Lunatic),
+                new CardInfo( 23, "山彦「ロングレンジエコー」",           StagePractice.Two,       LevelPractice.Easy),
+                new CardInfo( 24, "山彦「ロングレンジエコー」",           StagePractice.Two,       LevelPractice.Normal),
+                new CardInfo( 25, "山彦「アンプリファイエコー」",         StagePractice.Two,       LevelPractice.Hard),
+                new CardInfo( 26, "山彦「アンプリファイエコー」",         StagePractice.Two,       LevelPractice.Lunatic),
+                new CardInfo( 27, "大声「チャージドクライ」",             StagePractice.Two,       LevelPractice.Easy),
+                new CardInfo( 28, "大声「チャージドクライ」",             StagePractice.Two,       LevelPractice.Normal),
+                new CardInfo( 29, "大声「チャージドヤッホー」",           StagePractice.Two,       LevelPractice.Hard),
+                new CardInfo( 30, "大声「チャージドヤッホー」",           StagePractice.Two,       LevelPractice.Lunatic),
+                new CardInfo( 31, "虹符「アンブレラサイクロン」",         StagePractice.Three,     LevelPractice.Hard),
+                new CardInfo( 32, "虹符「アンブレラサイクロン」",         StagePractice.Three,     LevelPractice.Lunatic),
+                new CardInfo( 33, "回復「ヒールバイデザイア」",           StagePractice.Three,     LevelPractice.Easy),
+                new CardInfo( 34, "回復「ヒールバイデザイア」",           StagePractice.Three,     LevelPractice.Normal),
+                new CardInfo( 35, "回復「ヒールバイデザイア」",           StagePractice.Three,     LevelPractice.Hard),
+                new CardInfo( 36, "回復「ヒールバイデザイア」",           StagePractice.Three,     LevelPractice.Lunatic),
+                new CardInfo( 37, "毒爪「ポイズンレイズ」",               StagePractice.Three,     LevelPractice.Easy),
+                new CardInfo( 38, "毒爪「ポイズンレイズ」",               StagePractice.Three,     LevelPractice.Normal),
+                new CardInfo( 39, "毒爪「ポイズンマーダー」",             StagePractice.Three,     LevelPractice.Hard),
+                new CardInfo( 40, "毒爪「ポイズンマーダー」",             StagePractice.Three,     LevelPractice.Lunatic),
+                new CardInfo( 41, "欲符「稼欲霊招来」",                   StagePractice.Three,     LevelPractice.Easy),
+                new CardInfo( 42, "欲符「稼欲霊招来」",                   StagePractice.Three,     LevelPractice.Normal),
+                new CardInfo( 43, "欲霊「スコアデザイアイーター」",       StagePractice.Three,     LevelPractice.Hard),
+                new CardInfo( 44, "欲霊「スコアデザイアイーター」",       StagePractice.Three,     LevelPractice.Lunatic),
+                new CardInfo( 45, "邪符「ヤンシャオグイ」",               StagePractice.Four,      LevelPractice.Normal),
+                new CardInfo( 46, "邪符「グーフンイエグイ」",             StagePractice.Four,      LevelPractice.Hard),
+                new CardInfo( 47, "邪符「グーフンイエグイ」",             StagePractice.Four,      LevelPractice.Lunatic),
+                new CardInfo( 48, "入魔「ゾウフォルゥモォ」",             StagePractice.Four,      LevelPractice.Easy),
+                new CardInfo( 49, "入魔「ゾウフォルゥモォ」",             StagePractice.Four,      LevelPractice.Normal),
+                new CardInfo( 50, "入魔「ゾウフォルゥモォ」",             StagePractice.Four,      LevelPractice.Hard),
+                new CardInfo( 51, "入魔「ゾウフォルゥモォ」",             StagePractice.Four,      LevelPractice.Lunatic),
+                new CardInfo( 52, "降霊「死人タンキー」",                 StagePractice.Four,      LevelPractice.Easy),
+                new CardInfo( 53, "降霊「死人タンキー」",                 StagePractice.Four,      LevelPractice.Normal),
+                new CardInfo( 54, "通霊「トンリン芳香」",                 StagePractice.Four,      LevelPractice.Hard),
+                new CardInfo( 55, "通霊「トンリン芳香」",                 StagePractice.Four,      LevelPractice.Lunatic),
+                new CardInfo( 56, "道符「タオ胎動」",                     StagePractice.Four,      LevelPractice.Easy),
+                new CardInfo( 57, "道符「タオ胎動」",                     StagePractice.Four,      LevelPractice.Normal),
+                new CardInfo( 58, "道符「タオ胎動」",                     StagePractice.Four,      LevelPractice.Hard),
+                new CardInfo( 59, "道符「タオ胎動」",                     StagePractice.Four,      LevelPractice.Lunatic),
+                new CardInfo( 60, "雷矢「ガゴウジサイクロン」",           StagePractice.Five,      LevelPractice.Normal),
+                new CardInfo( 61, "雷矢「ガゴウジサイクロン」",           StagePractice.Five,      LevelPractice.Hard),
+                new CardInfo( 62, "雷矢「ガゴウジトルネード」",           StagePractice.Five,      LevelPractice.Lunatic),
+                new CardInfo( 63, "天符「雨の磐舟」",                     StagePractice.Five,      LevelPractice.Easy),
+                new CardInfo( 64, "天符「雨の磐舟」",                     StagePractice.Five,      LevelPractice.Normal),
+                new CardInfo( 65, "天符「天の磐舟よ天へ昇れ」",           StagePractice.Five,      LevelPractice.Hard),
+                new CardInfo( 66, "天符「天の磐舟よ天へ昇れ」",           StagePractice.Five,      LevelPractice.Lunatic),
+                new CardInfo( 67, "投皿「物部の八十平瓮」",               StagePractice.Five,      LevelPractice.Easy),
+                new CardInfo( 68, "投皿「物部の八十平瓮」",               StagePractice.Five,      LevelPractice.Normal),
+                new CardInfo( 69, "投皿「物部の八十平瓮」",               StagePractice.Five,      LevelPractice.Hard),
+                new CardInfo( 70, "投皿「物部の八十平瓮」",               StagePractice.Five,      LevelPractice.Lunatic),
+                new CardInfo( 71, "炎符「廃仏の炎風」",                   StagePractice.Five,      LevelPractice.Easy),
+                new CardInfo( 72, "炎符「廃仏の炎風」",                   StagePractice.Five,      LevelPractice.Normal),
+                new CardInfo( 73, "炎符「桜井寺炎上」",                   StagePractice.Five,      LevelPractice.Hard),
+                new CardInfo( 74, "炎符「桜井寺炎上」",                   StagePractice.Five,      LevelPractice.Lunatic),
+                new CardInfo( 75, "聖童女「大物忌正餐」",                 StagePractice.Five,      LevelPractice.Easy),
+                new CardInfo( 76, "聖童女「大物忌正餐」",                 StagePractice.Five,      LevelPractice.Normal),
+                new CardInfo( 77, "聖童女「大物忌正餐」",                 StagePractice.Five,      LevelPractice.Hard),
+                new CardInfo( 78, "聖童女「大物忌正餐」",                 StagePractice.Five,      LevelPractice.Lunatic),
+                new CardInfo( 79, "名誉「十二階の色彩」",                 StagePractice.Six,       LevelPractice.Easy),
+                new CardInfo( 80, "名誉「十二階の色彩」",                 StagePractice.Six,       LevelPractice.Normal),
+                new CardInfo( 81, "名誉「十二階の冠位」",                 StagePractice.Six,       LevelPractice.Hard),
+                new CardInfo( 82, "名誉「十二階の冠位」",                 StagePractice.Six,       LevelPractice.Lunatic),
+                new CardInfo( 83, "仙符「日出ずる処の道士」",             StagePractice.Six,       LevelPractice.Easy),
+                new CardInfo( 84, "仙符「日出ずる処の道士」",             StagePractice.Six,       LevelPractice.Normal),
+                new CardInfo( 85, "仙符「日出ずる処の天子」",             StagePractice.Six,       LevelPractice.Hard),
+                new CardInfo( 86, "仙符「日出ずる処の天子」",             StagePractice.Six,       LevelPractice.Lunatic),
+                new CardInfo( 87, "召喚「豪族乱舞」",                     StagePractice.Six,       LevelPractice.Easy),
+                new CardInfo( 88, "召喚「豪族乱舞」",                     StagePractice.Six,       LevelPractice.Normal),
+                new CardInfo( 89, "召喚「豪族乱舞」",                     StagePractice.Six,       LevelPractice.Hard),
+                new CardInfo( 90, "召喚「豪族乱舞」",                     StagePractice.Six,       LevelPractice.Lunatic),
+                new CardInfo( 91, "秘宝「斑鳩寺の天球儀」",               StagePractice.Six,       LevelPractice.Easy),
+                new CardInfo( 92, "秘宝「斑鳩寺の天球儀」",               StagePractice.Six,       LevelPractice.Normal),
+                new CardInfo( 93, "秘宝「斑鳩寺の天球儀」",               StagePractice.Six,       LevelPractice.Hard),
+                new CardInfo( 94, "秘宝「聖徳太子のオーパーツ」",         StagePractice.Six,       LevelPractice.Lunatic),
+                new CardInfo( 95, "光符「救世観音の光後光」",             StagePractice.Six,       LevelPractice.Easy),
+                new CardInfo( 96, "光符「救世観音の光後光」",             StagePractice.Six,       LevelPractice.Normal),
+                new CardInfo( 97, "光符「グセフラッシュ」",               StagePractice.Six,       LevelPractice.Hard),
+                new CardInfo( 98, "光符「グセフラッシュ」",               StagePractice.Six,       LevelPractice.Lunatic),
+                new CardInfo( 99, "眼光「十七条のレーザー」",             StagePractice.Six,       LevelPractice.Easy),
+                new CardInfo(100, "眼光「十七条のレーザー」",             StagePractice.Six,       LevelPractice.Normal),
+                new CardInfo(101, "神光「逆らう事なきを宗とせよ」",       StagePractice.Six,       LevelPractice.Hard),
+                new CardInfo(102, "神光「逆らう事なきを宗とせよ」",       StagePractice.Six,       LevelPractice.Lunatic),
+                new CardInfo(103, "「星降る神霊廟」",                     StagePractice.Six,       LevelPractice.Easy),
+                new CardInfo(104, "「星降る神霊廟」",                     StagePractice.Six,       LevelPractice.Normal),
+                new CardInfo(105, "「生まれたての神霊」",                 StagePractice.Six,       LevelPractice.Hard),
+                new CardInfo(106, "「生まれたての神霊」",                 StagePractice.Six,       LevelPractice.Lunatic),
                 new CardInfo(107, "アンノウン「軌道不明の鬼火」",         StagePractice.Extra,     LevelPractice.Extra),
                 new CardInfo(108, "アンノウン「姿態不明の空魚」",         StagePractice.Extra,     LevelPractice.Extra),
                 new CardInfo(109, "アンノウン「原理不明の妖怪玉」",       StagePractice.Extra,     LevelPractice.Extra),
@@ -177,82 +176,6 @@ namespace ThScoreFileConverter.Models
             new EnumShortNameParser<CharaWithTotal>();
 
         private AllScoreData allScoreData = null;
-
-        public enum LevelPractice
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("E")] Easy,
-            [EnumAltName("N")] Normal,
-            [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic,
-            [EnumAltName("X")] Extra,
-            [EnumAltName("D", LongName = "Over Drive")] OverDrive,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum LevelPracticeWithTotal
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("E")] Easy,
-            [EnumAltName("N")] Normal,
-            [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic,
-            [EnumAltName("X")] Extra,
-            [EnumAltName("D", LongName = "Over Drive")] OverDrive,
-            [EnumAltName("T")] Total,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum Chara
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("RM")] Reimu,
-            [EnumAltName("MR")] Marisa,
-            [EnumAltName("SN")] Sanae,
-            [EnumAltName("YM")] Youmu,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum CharaWithTotal
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("RM")] Reimu,
-            [EnumAltName("MR")] Marisa,
-            [EnumAltName("SN")] Sanae,
-            [EnumAltName("YM")] Youmu,
-            [EnumAltName("TL")] Total,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum StagePractice
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("1")] St1,
-            [EnumAltName("2")] St2,
-            [EnumAltName("3")] St3,
-            [EnumAltName("4")] St4,
-            [EnumAltName("5")] St5,
-            [EnumAltName("6")] St6,
-            [EnumAltName("X")] Extra,
-            [EnumAltName("D", LongName = "Over Drive")] OverDrive,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum StageProgress
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("-------")]     None,
-            [EnumAltName("Stage 1")]     St1,
-            [EnumAltName("Stage 2")]     St2,
-            [EnumAltName("Stage 3")]     St3,
-            [EnumAltName("Stage 4")]     St4,
-            [EnumAltName("Stage 5")]     St5,
-            [EnumAltName("Stage 6")]     St6,
-            [EnumAltName("Extra Stage")] Extra,
-            [EnumAltName("All Clear")]   Clear,
-            [EnumAltName("Extra Clear")] ExtraClear,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
 
         public override string SupportedVersions
         {

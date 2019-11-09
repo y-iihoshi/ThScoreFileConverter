@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th13;
 using ThScoreFileConverterTests.Models.Th095;
 using ThScoreFileConverterTests.Models.Th125.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
@@ -179,77 +180,77 @@ namespace ThScoreFileConverterTests.Models
         public void Th13AllScoreDataTest()
             => Th13AllScoreDataTestHelper<
                 Th13Converter,
-                Th13Converter.CharaWithTotal,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPracticeWithTotal,
-                Th13Converter.StagePractice,
-                Th13Converter.StageProgress>();
+                CharaWithTotal,
+                LevelPractice,
+                LevelPractice,
+                LevelPracticeWithTotal,
+                StagePractice,
+                StageProgress>();
 
         [TestMethod]
         public void Th13AllScoreDataSetHeaderTest()
             => Th13AllScoreDataSetHeaderTestHelper<
                 Th13Converter,
-                Th13Converter.CharaWithTotal,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPracticeWithTotal,
-                Th13Converter.StagePractice,
-                Th13Converter.StageProgress>();
+                CharaWithTotal,
+                LevelPractice,
+                LevelPractice,
+                LevelPracticeWithTotal,
+                StagePractice,
+                StageProgress>();
 
         [TestMethod]
         public void Th13AllScoreDataSetHeaderTestTwice()
             => Th13AllScoreDataSetHeaderTestTwiceHelper<
                 Th13Converter,
-                Th13Converter.CharaWithTotal,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPracticeWithTotal,
-                Th13Converter.StagePractice,
-                Th13Converter.StageProgress>();
+                CharaWithTotal,
+                LevelPractice,
+                LevelPractice,
+                LevelPracticeWithTotal,
+                StagePractice,
+                StageProgress>();
 
         [TestMethod]
         public void Th13AllScoreDataSetClearDataTest()
             => Th13AllScoreDataSetClearDataTestHelper<
                 Th13Converter,
-                Th13Converter.CharaWithTotal,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPracticeWithTotal,
-                Th13Converter.StagePractice,
-                Th13Converter.StageProgress>(1, 0x56DC, 127);
+                CharaWithTotal,
+                LevelPractice,
+                LevelPractice,
+                LevelPracticeWithTotal,
+                StagePractice,
+                StageProgress>(1, 0x56DC, 127);
 
         [TestMethod]
         public void Th13AllScoreDataSetClearDataTestTwice()
             => Th13AllScoreDataSetClearDataTestTwiceHelper<
                 Th13Converter,
-                Th13Converter.CharaWithTotal,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPracticeWithTotal,
-                Th13Converter.StagePractice,
-                Th13Converter.StageProgress>(1, 0x56DC, 127);
+                CharaWithTotal,
+                LevelPractice,
+                LevelPractice,
+                LevelPracticeWithTotal,
+                StagePractice,
+                StageProgress>(1, 0x56DC, 127);
 
         [TestMethod]
         public void Th13AllScoreDataSetStatusTest()
             => Th13AllScoreDataSetStatusTestHelper<
                 Th13Converter,
-                Th13Converter.CharaWithTotal,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPracticeWithTotal,
-                Th13Converter.StagePractice,
-                Th13Converter.StageProgress>(1, 0x42C, 17, 0x10, 0x11);
+                CharaWithTotal,
+                LevelPractice,
+                LevelPractice,
+                LevelPracticeWithTotal,
+                StagePractice,
+                StageProgress>(1, 0x42C, 17, 0x10, 0x11);
 
         [TestMethod]
         public void Th13AllScoreDataSetStatusTestTwice()
             => Th13AllScoreDataSetStatusTestTwiceHelper<
                 Th13Converter,
-                Th13Converter.CharaWithTotal,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPracticeWithTotal,
-                Th13Converter.StagePractice,
-                Th13Converter.StageProgress>(1, 0x42C, 17, 0x10, 0x11);
+                CharaWithTotal,
+                LevelPractice,
+                LevelPractice,
+                LevelPracticeWithTotal,
+                StagePractice,
+                StageProgress>(1, 0x42C, 17, 0x10, 0x11);
     }
 }

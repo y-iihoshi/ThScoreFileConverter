@@ -1,17 +1,16 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th13;
 using ThScoreFileConverterTests.Models.Th10.Stubs;
-using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13Converter.StageProgress>;
+using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>;
 
 namespace ThScoreFileConverterTests.Models.Th13
 {
     [TestClass]
     public class ScoreDataTests
     {
-        internal static ScoreDataStub<Th13Converter.StageProgress> ValidStub { get; }
-            = Th10.ScoreDataTests.MakeValidStub<Th13Converter.StageProgress>();
+        internal static ScoreDataStub<StageProgress> ValidStub { get; }
+            = Th10.ScoreDataTests.MakeValidStub<StageProgress>();
 
         internal static byte[] MakeByteArray(IScoreData scoreData)
             => Th10.ScoreDataTests.MakeByteArray(scoreData, 4);

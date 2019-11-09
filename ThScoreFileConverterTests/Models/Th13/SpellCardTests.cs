@@ -169,7 +169,7 @@ namespace ThScoreFileConverterTests.Models.Th13
             => Th13SpellCardReadFromTestInvalidLevelHelper<TParent, Level>(level);
 
         public static IEnumerable<object[]> InvalidTh13LevelPractices
-            => TestUtils.GetInvalidEnumerators(typeof(Th13Converter.LevelPractice));
+            => TestUtils.GetInvalidEnumerators(typeof(LevelPractice));
 
         public static IEnumerable<object[]> InvalidLevels
             => TestUtils.GetInvalidEnumerators(typeof(Level));
@@ -178,33 +178,33 @@ namespace ThScoreFileConverterTests.Models.Th13
 
         [TestMethod]
         public void Th13SpellCardTest()
-            => Th13SpellCardTestHelper<Th13Converter, Th13Converter.LevelPractice>();
+            => Th13SpellCardTestHelper<Th13Converter, LevelPractice>();
 
         [TestMethod]
         public void Th13SpellCardReadFromTest()
-            => Th13SpellCardReadFromTestHelper<Th13Converter, Th13Converter.LevelPractice>();
+            => Th13SpellCardReadFromTestHelper<Th13Converter, LevelPractice>();
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th13SpellCardReadFromTestNull()
-            => Th13SpellCardReadFromTestNullHelper<Th13Converter, Th13Converter.LevelPractice>();
+            => Th13SpellCardReadFromTestNullHelper<Th13Converter, LevelPractice>();
 
         [TestMethod]
         [ExpectedException(typeof(InvalidCastException))]
         public void Th13SpellCardReadFromTestShortenedName()
-            => Th13SpellCardReadFromTestShortenedNameHelper<Th13Converter, Th13Converter.LevelPractice>();
+            => Th13SpellCardReadFromTestShortenedNameHelper<Th13Converter, LevelPractice>();
 
         [TestMethod]
         [ExpectedException(typeof(InvalidCastException))]
         public void Th13SpellCardReadFromTestExceededName()
-            => Th13SpellCardReadFromTestExceededNameHelper<Th13Converter, Th13Converter.LevelPractice>();
+            => Th13SpellCardReadFromTestExceededNameHelper<Th13Converter, LevelPractice>();
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidTh13LevelPractices))]
         [ExpectedException(typeof(InvalidCastException))]
         public void Th13SpellCardReadFromTestInvalidLevel(int level)
-            => Th13SpellCardReadFromTestInvalidLevelHelper<Th13Converter, Th13Converter.LevelPractice>(level);
+            => Th13SpellCardReadFromTestInvalidLevelHelper<Th13Converter, LevelPractice>(level);
 
         #endregion
 
