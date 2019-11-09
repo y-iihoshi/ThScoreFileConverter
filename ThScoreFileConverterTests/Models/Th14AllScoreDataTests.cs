@@ -10,7 +10,7 @@ using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
 namespace ThScoreFileConverterTests.Models
 {
     [TestClass]
-    public class Th13AllScoreDataTests
+    public class Th14AllScoreDataTests
     {
         internal static void Th13AllScoreDataTestHelper<
             TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>()
@@ -87,9 +87,9 @@ namespace ThScoreFileConverterTests.Models
             where TStProg : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var stub = Th13ClearDataTests.GetValidStub<
+                var stub = Th14ClearDataTests.GetValidStub<
                     TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(version, size, numCards);
-                var chapter = ChapterWrapper.Create(Th13ClearDataTests.MakeByteArray<
+                var chapter = ChapterWrapper.Create(Th14ClearDataTests.MakeByteArray<
                     TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(stub));
                 var clearData =
                     new Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(chapter);
@@ -112,9 +112,9 @@ namespace ThScoreFileConverterTests.Models
             where TStProg : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var stub = Th13ClearDataTests.GetValidStub<
+                var stub = Th14ClearDataTests.GetValidStub<
                     TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(version, size, numCards);
-                var chapter = ChapterWrapper.Create(Th13ClearDataTests.MakeByteArray<
+                var chapter = ChapterWrapper.Create(Th14ClearDataTests.MakeByteArray<
                     TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(stub));
                 var clearData1 =
                     new Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac, TStProg>(chapter);
@@ -176,80 +176,80 @@ namespace ThScoreFileConverterTests.Models
             });
 
         [TestMethod]
-        public void Th13AllScoreDataTest()
+        public void Th14AllScoreDataTest()
             => Th13AllScoreDataTestHelper<
-                Th13Converter,
-                Th13Converter.CharaWithTotal,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPracticeWithTotal,
-                Th13Converter.StagePractice,
-                Th13Converter.StageProgress>();
+                Th14Converter,
+                Th14Converter.CharaWithTotal,
+                Level,
+                Th14Converter.LevelPractice,
+                Th14Converter.LevelPracticeWithTotal,
+                Th14Converter.StagePractice,
+                Th14Converter.StageProgress>();
 
         [TestMethod]
-        public void Th13AllScoreDataSetHeaderTest()
+        public void Th14AllScoreDataSetHeaderTest()
             => Th13AllScoreDataSetHeaderTestHelper<
-                Th13Converter,
-                Th13Converter.CharaWithTotal,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPracticeWithTotal,
-                Th13Converter.StagePractice,
-                Th13Converter.StageProgress>();
+                Th14Converter,
+                Th14Converter.CharaWithTotal,
+                Level,
+                Th14Converter.LevelPractice,
+                Th14Converter.LevelPracticeWithTotal,
+                Th14Converter.StagePractice,
+                Th14Converter.StageProgress>();
 
         [TestMethod]
-        public void Th13AllScoreDataSetHeaderTestTwice()
+        public void Th14AllScoreDataSetHeaderTestTwice()
             => Th13AllScoreDataSetHeaderTestTwiceHelper<
-                Th13Converter,
-                Th13Converter.CharaWithTotal,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPracticeWithTotal,
-                Th13Converter.StagePractice,
-                Th13Converter.StageProgress>();
+                Th14Converter,
+                Th14Converter.CharaWithTotal,
+                Level,
+                Th14Converter.LevelPractice,
+                Th14Converter.LevelPracticeWithTotal,
+                Th14Converter.StagePractice,
+                Th14Converter.StageProgress>();
 
         [TestMethod]
-        public void Th13AllScoreDataSetClearDataTest()
+        public void Th14AllScoreDataSetClearDataTest()
             => Th13AllScoreDataSetClearDataTestHelper<
-                Th13Converter,
-                Th13Converter.CharaWithTotal,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPracticeWithTotal,
-                Th13Converter.StagePractice,
-                Th13Converter.StageProgress>(1, 0x56DC, 127);
+                Th14Converter,
+                Th14Converter.CharaWithTotal,
+                Level,
+                Th14Converter.LevelPractice,
+                Th14Converter.LevelPracticeWithTotal,
+                Th14Converter.StagePractice,
+                Th14Converter.StageProgress>(1, 0x5298, 120);
 
         [TestMethod]
-        public void Th13AllScoreDataSetClearDataTestTwice()
+        public void Th14AllScoreDataSetClearDataTestTwice()
             => Th13AllScoreDataSetClearDataTestTwiceHelper<
-                Th13Converter,
-                Th13Converter.CharaWithTotal,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPracticeWithTotal,
-                Th13Converter.StagePractice,
-                Th13Converter.StageProgress>(1, 0x56DC, 127);
+                Th14Converter,
+                Th14Converter.CharaWithTotal,
+                Level,
+                Th14Converter.LevelPractice,
+                Th14Converter.LevelPracticeWithTotal,
+                Th14Converter.StagePractice,
+                Th14Converter.StageProgress>(1, 0x5298, 120);
 
         [TestMethod]
-        public void Th13AllScoreDataSetStatusTest()
+        public void Th14AllScoreDataSetStatusTest()
             => Th13AllScoreDataSetStatusTestHelper<
-                Th13Converter,
-                Th13Converter.CharaWithTotal,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPracticeWithTotal,
-                Th13Converter.StagePractice,
-                Th13Converter.StageProgress>(1, 0x42C, 17, 0x10, 0x11);
+                Th14Converter,
+                Th14Converter.CharaWithTotal,
+                Level,
+                Th14Converter.LevelPractice,
+                Th14Converter.LevelPracticeWithTotal,
+                Th14Converter.StagePractice,
+                Th14Converter.StageProgress>(1, 0x42C, 17, 0x10, 0x11);
 
         [TestMethod]
-        public void Th13AllScoreDataSetStatusTestTwice()
+        public void Th14AllScoreDataSetStatusTestTwice()
             => Th13AllScoreDataSetStatusTestTwiceHelper<
-                Th13Converter,
-                Th13Converter.CharaWithTotal,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPractice,
-                Th13Converter.LevelPracticeWithTotal,
-                Th13Converter.StagePractice,
-                Th13Converter.StageProgress>(1, 0x42C, 17, 0x10, 0x11);
+                Th14Converter,
+                Th14Converter.CharaWithTotal,
+                Level,
+                Th14Converter.LevelPractice,
+                Th14Converter.LevelPracticeWithTotal,
+                Th14Converter.StagePractice,
+                Th14Converter.StageProgress>(1, 0x42C, 17, 0x10, 0x11);
     }
 }
