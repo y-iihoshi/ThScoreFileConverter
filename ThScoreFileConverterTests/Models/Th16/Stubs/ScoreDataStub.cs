@@ -2,6 +2,7 @@
 using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th16;
+using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 
 namespace ThScoreFileConverterTests.Models.Th16.Stubs
 {
@@ -33,6 +34,6 @@ namespace ThScoreFileConverterTests.Models.Th16.Stubs
 
         public float SlowRate { get; set; }
 
-        public Th16Converter.StageProgress StageProgress { get; set; }
+        public StageProgress StageProgress { get; set; }
     }
 }

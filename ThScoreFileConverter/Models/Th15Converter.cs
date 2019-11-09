@@ -206,22 +206,6 @@ namespace ThScoreFileConverter.Models
 #pragma warning restore SA1134 // Attributes should not share line
         }
 
-        public enum StageProgress
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("-------")]     None,
-            [EnumAltName("Stage 1")]     St1,
-            [EnumAltName("Stage 2")]     St2,
-            [EnumAltName("Stage 3")]     St3,
-            [EnumAltName("Stage 4")]     St4,
-            [EnumAltName("Stage 5")]     St5,
-            [EnumAltName("Stage 6")]     St6,
-            [EnumAltName("Extra Stage")] Extra,
-            [EnumAltName("All Clear")]   Clear,
-            [EnumAltName("Extra Clear")] ExtraClear,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
         public override string SupportedVersions
         {
             get { return "1.00b"; }
@@ -414,11 +398,11 @@ namespace ThScoreFileConverter.Models
                             return Utils.ToNumberString((ranking.Score * 10) + ranking.ContinueCount);
                         case 3:     // stage
                             if (ranking.DateTime == 0)
-                                return StageProgress.None.ToShortName();
-                            if (ranking.StageProgress == StageProgress.Extra)
+                                return Th13.StageProgress.None.ToShortName();
+                            if (ranking.StageProgress == Th13.StageProgress.Extra)
                                 return "Not Clear";
-                            if (ranking.StageProgress == StageProgress.ExtraClear)
-                                return StageProgress.Clear.ToShortName();
+                            if (ranking.StageProgress == Th13.StageProgress.ExtraClear)
+                                return Th13.StageProgress.Clear.ToShortName();
                             return ranking.StageProgress.ToShortName();
                         case 4:     // date & time
                             if (ranking.DateTime == 0)
@@ -633,12 +617,12 @@ namespace ThScoreFileConverter.Models
                     var rankings = parent.allScoreData.ClearData[chara].GameModeData[mode].Rankings[level]
                         .Where(ranking => ranking.DateTime > 0);
                     var stageProgress = rankings.Any()
-                        ? rankings.Max(ranking => ranking.StageProgress) : StageProgress.None;
+                        ? rankings.Max(ranking => ranking.StageProgress) : Th13.StageProgress.None;
 
-                    if (stageProgress == StageProgress.Extra)
+                    if (stageProgress == Th13.StageProgress.Extra)
                         return "Not Clear";
-                    else if (stageProgress == StageProgress.ExtraClear)
-                        return StageProgress.Clear.ToShortName();
+                    else if (stageProgress == Th13.StageProgress.ExtraClear)
+                        return Th13.StageProgress.Clear.ToShortName();
                     else
                         return stageProgress.ToShortName();
                 });

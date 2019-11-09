@@ -9,6 +9,7 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th16;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th16.Stubs;
+using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 
 namespace ThScoreFileConverterTests.Models.Th16
 {
@@ -18,7 +19,7 @@ namespace ThScoreFileConverterTests.Models.Th16
         internal static ScoreDataStub ValidStub { get; } = new ScoreDataStub()
         {
             Score = 12u,
-            StageProgress = Th16Converter.StageProgress.St3,
+            StageProgress = StageProgress.Three,
             ContinueCount = 4,
             Name = TestUtils.MakeRandomArray<byte>(10),
             DateTime = 567u,
@@ -78,7 +79,7 @@ namespace ThScoreFileConverterTests.Models.Th16
         });
 
         public static IEnumerable<object[]> InvalidStageProgresses
-            => TestUtils.GetInvalidEnumerators(typeof(Th16Converter.StageProgress));
+            => TestUtils.GetInvalidEnumerators(typeof(StageProgress));
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
@@ -88,7 +89,7 @@ namespace ThScoreFileConverterTests.Models.Th16
         {
             var stub = new ScoreDataStub(ValidStub)
             {
-                StageProgress = TestUtils.Cast<Th16Converter.StageProgress>(stageProgress),
+                StageProgress = TestUtils.Cast<StageProgress>(stageProgress),
             };
 
             _ = TestUtils.Create<ScoreData>(MakeByteArray(stub));

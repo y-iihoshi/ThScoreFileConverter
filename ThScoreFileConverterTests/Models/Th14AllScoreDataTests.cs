@@ -6,6 +6,7 @@ using ThScoreFileConverterTests.Models.Th125.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 using ChapterWrapper = ThScoreFileConverterTests.Models.Th10.Wrappers.ChapterWrapper;
 using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
+using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -184,7 +185,7 @@ namespace ThScoreFileConverterTests.Models
                 Th14Converter.LevelPractice,
                 Th14Converter.LevelPracticeWithTotal,
                 Th14Converter.StagePractice,
-                Th14Converter.StageProgress>();
+                StageProgress>();
 
         [TestMethod]
         public void Th14AllScoreDataSetHeaderTest()
@@ -195,7 +196,7 @@ namespace ThScoreFileConverterTests.Models
                 Th14Converter.LevelPractice,
                 Th14Converter.LevelPracticeWithTotal,
                 Th14Converter.StagePractice,
-                Th14Converter.StageProgress>();
+                StageProgress>();
 
         [TestMethod]
         public void Th14AllScoreDataSetHeaderTestTwice()
@@ -206,7 +207,7 @@ namespace ThScoreFileConverterTests.Models
                 Th14Converter.LevelPractice,
                 Th14Converter.LevelPracticeWithTotal,
                 Th14Converter.StagePractice,
-                Th14Converter.StageProgress>();
+                StageProgress>();
 
         [TestMethod]
         public void Th14AllScoreDataSetClearDataTest()
@@ -217,7 +218,7 @@ namespace ThScoreFileConverterTests.Models
                 Th14Converter.LevelPractice,
                 Th14Converter.LevelPracticeWithTotal,
                 Th14Converter.StagePractice,
-                Th14Converter.StageProgress>(1, 0x5298, 120);
+                StageProgress>(1, 0x5298, 120);
 
         [TestMethod]
         public void Th14AllScoreDataSetClearDataTestTwice()
@@ -228,7 +229,7 @@ namespace ThScoreFileConverterTests.Models
                 Th14Converter.LevelPractice,
                 Th14Converter.LevelPracticeWithTotal,
                 Th14Converter.StagePractice,
-                Th14Converter.StageProgress>(1, 0x5298, 120);
+                StageProgress>(1, 0x5298, 120);
 
         [TestMethod]
         public void Th14AllScoreDataSetStatusTest()
@@ -239,7 +240,7 @@ namespace ThScoreFileConverterTests.Models
                 Th14Converter.LevelPractice,
                 Th14Converter.LevelPracticeWithTotal,
                 Th14Converter.StagePractice,
-                Th14Converter.StageProgress>(1, 0x42C, 17, 0x10, 0x11);
+                StageProgress>(1, 0x42C, 17, 0x10, 0x11);
 
         [TestMethod]
         public void Th14AllScoreDataSetStatusTestTwice()
@@ -250,6 +251,6 @@ namespace ThScoreFileConverterTests.Models
                 Th14Converter.LevelPractice,
                 Th14Converter.LevelPracticeWithTotal,
                 Th14Converter.StagePractice,
-                Th14Converter.StageProgress>(1, 0x42C, 17, 0x10, 0x11);
+                StageProgress>(1, 0x42C, 17, 0x10, 0x11);
     }
 }

@@ -9,7 +9,7 @@
 
 namespace ThScoreFileConverter.Models.Th15
 {
-    internal interface IScoreData : Th10.IScoreData<Th15Converter.StageProgress>
+    internal interface IScoreData : Th10.IScoreData<Th13.StageProgress>
     {
         uint RetryCount { get; }
     }

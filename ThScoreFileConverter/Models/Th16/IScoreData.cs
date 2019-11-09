@@ -9,7 +9,7 @@
 
 namespace ThScoreFileConverter.Models.Th16
 {
-    internal interface IScoreData : Th10.IScoreData<Th16Converter.StageProgress>
+    internal interface IScoreData : Th10.IScoreData<Th13.StageProgress>
     {
         Th16Converter.Season Season { get; }
     }

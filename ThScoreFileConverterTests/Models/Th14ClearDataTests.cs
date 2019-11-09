@@ -14,6 +14,7 @@ using ThScoreFileConverterTests.Models.Th13.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 using PracticeStub = ThScoreFileConverterTests.Models.Th13.Stubs.PracticeStub;
 using ScoreDataTests = ThScoreFileConverterTests.Models.Th10.ScoreDataTests;
+using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -309,7 +310,7 @@ namespace ThScoreFileConverterTests.Models
                 Th14Converter.LevelPractice,
                 Th14Converter.LevelPracticeWithTotal,
                 Th14Converter.StagePractice,
-                Th14Converter.StageProgress>(1, 0x5298, 120);
+                StageProgress>(1, 0x5298, 120);
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -321,7 +322,7 @@ namespace ThScoreFileConverterTests.Models
                 Th14Converter.LevelPractice,
                 Th14Converter.LevelPracticeWithTotal,
                 Th14Converter.StagePractice,
-                Th14Converter.StageProgress>();
+                StageProgress>();
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
@@ -333,7 +334,7 @@ namespace ThScoreFileConverterTests.Models
                 Th14Converter.LevelPractice,
                 Th14Converter.LevelPracticeWithTotal,
                 Th14Converter.StagePractice,
-                Th14Converter.StageProgress>(1, 0x5298, 120);
+                StageProgress>(1, 0x5298, 120);
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
@@ -345,7 +346,7 @@ namespace ThScoreFileConverterTests.Models
                 Th14Converter.LevelPractice,
                 Th14Converter.LevelPracticeWithTotal,
                 Th14Converter.StagePractice,
-                Th14Converter.StageProgress>(1, 0x5298, 120);
+                StageProgress>(1, 0x5298, 120);
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
@@ -357,7 +358,7 @@ namespace ThScoreFileConverterTests.Models
                 Th14Converter.LevelPractice,
                 Th14Converter.LevelPracticeWithTotal,
                 Th14Converter.StagePractice,
-                Th14Converter.StageProgress>(1, 0x5298, 120);
+                StageProgress>(1, 0x5298, 120);
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
@@ -373,7 +374,6 @@ namespace ThScoreFileConverterTests.Models
                 Th14Converter.LevelPractice,
                 Th14Converter.LevelPracticeWithTotal,
                 Th14Converter.StagePractice,
-                Th14Converter.StageProgress>(
-                signature, version, size, expected);
+                StageProgress>(signature, version, size, expected);
     }
 }
