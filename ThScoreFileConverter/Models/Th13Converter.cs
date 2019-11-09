@@ -703,7 +703,7 @@ namespace ThScoreFileConverter.Models
 
                     this.Cards = Enumerable.Range(0, Definitions.CardTable.Count).Select(_ =>
                     {
-                        var card = new SpellCard();
+                        var card = new SpellCard<LevelPractice>();
                         card.ReadFrom(reader);
                         return card as ISpellCard<LevelPractice>;
                     }).ToDictionary(card => card.Id);
@@ -732,10 +732,6 @@ namespace ThScoreFileConverter.Models
                     && (chapter.Version == ValidVersion)
                     && (chapter.Size == ValidSize);
             }
-        }
-
-        private class SpellCard : SpellCard<LevelPractice>
-        {
         }
     }
 }

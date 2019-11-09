@@ -6,7 +6,6 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th13;
 using ThScoreFileConverter.Models.Th16;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
-using ThScoreFileConverterTests.Models.Th13.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -55,15 +54,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public IReadOnlyDictionary<(Level, Th16Converter.StagePractice), IPractice> Practices
             => this.pobj.GetProperty(nameof(this.Practices))
                 as IReadOnlyDictionary<(Level, Th16Converter.StagePractice), IPractice>;
-
-        // NOTE: Th16Converter.SpellCard is a private class.
-        // public IReadOnlyDictionary<int, SpellCard> Cards
-        //     => this.pobj.GetProperty(nameof(this.Cards)) as IReadOnlyDictionary<int, SpellCard>;
-        public object Cards
-            => this.pobj.GetProperty(nameof(this.Cards));
-        public SpellCardWrapper<Th16Converter, Level> CardsItem(int id)
-            => new SpellCardWrapper<Th16Converter, Level>(
-                this.Cards.GetType().GetProperty("Item").GetValue(this.Cards, new object[] { id }));
+        public IReadOnlyDictionary<int, ISpellCard<Level>> Cards
+            => this.pobj.GetProperty(nameof(this.Cards)) as IReadOnlyDictionary<int, ISpellCard<Level>>;
 
         public static bool CanInitialize(ChapterWrapper chapter)
             => (bool)PrivateType.InvokeStatic(

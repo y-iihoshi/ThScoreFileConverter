@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th13;
 
 namespace ThScoreFileConverterTests.Models.Th13.Wrappers
 {
@@ -47,8 +48,8 @@ namespace ThScoreFileConverterTests.Models.Th13.Wrappers
         public SpellCardWrapper(object original)
             => this.pobj = new PrivateObject(original);
 
-        public object Target
-            => this.pobj.Target;
+        public ISpellCard<TLevel> Target
+            => this.pobj.Target as ISpellCard<TLevel>;
         public IReadOnlyCollection<byte> Name
             => this.pobj.GetProperty(nameof(this.Name)) as byte[];
         public int? ClearCount

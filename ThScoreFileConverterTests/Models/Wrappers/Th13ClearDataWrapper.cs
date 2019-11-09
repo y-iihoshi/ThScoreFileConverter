@@ -3,10 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Models.Th10;
+using ThScoreFileConverter.Models.Th13;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
-using ThScoreFileConverterTests.Models.Th13.Wrappers;
-using IPractice = ThScoreFileConverter.Models.Th13.IPractice;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -49,9 +47,13 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.Data)) as byte[];
         public TCharaWithTotal? Chara
             => this.pobj.GetProperty(nameof(this.Chara)) as TCharaWithTotal?;
-        public IReadOnlyDictionary<TLevelPracticeWithTotal, IReadOnlyList<IScoreData<TStageProgress>>> Rankings
+        public IReadOnlyDictionary<
+            TLevelPracticeWithTotal,
+            IReadOnlyList<ThScoreFileConverter.Models.Th10.IScoreData<TStageProgress>>> Rankings
             => this.pobj.GetProperty(nameof(this.Rankings))
-                as IReadOnlyDictionary<TLevelPracticeWithTotal, IReadOnlyList<IScoreData<TStageProgress>>>;
+                as IReadOnlyDictionary<
+                    TLevelPracticeWithTotal,
+                    IReadOnlyList<ThScoreFileConverter.Models.Th10.IScoreData<TStageProgress>>>;
         public int? TotalPlayCount
             => this.pobj.GetProperty(nameof(this.TotalPlayCount)) as int?;
         public int? PlayTime
@@ -63,15 +65,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public IReadOnlyDictionary<(TLevelPractice, TStagePractice), IPractice> Practices
             => this.pobj.GetProperty(nameof(this.Practices))
                 as IReadOnlyDictionary<(TLevelPractice, TStagePractice), IPractice>;
-
-        // NOTE: Th13Converter.SpellCard is a private class.
-        // public IReadOnlyDictionary<int, SpellCard> Cards
-        //     => this.pobj.GetProperty(nameof(this.Cards)) as IReadOnlyDictionary<int, SpellCard>;
-        public object Cards
-            => this.pobj.GetProperty(nameof(this.Cards));
-        public SpellCardWrapper<TParent, TLevel> CardsItem(int id)
-            => new SpellCardWrapper<TParent, TLevel>(
-                this.Cards.GetType().GetProperty("Item").GetValue(this.Cards, new object[] { id }));
+        public IReadOnlyDictionary<int, ISpellCard<TLevel>> Cards
+            => this.pobj.GetProperty(nameof(this.Cards)) as IReadOnlyDictionary<int, ISpellCard<TLevel>>;
 
         public static bool CanInitialize(ChapterWrapper chapter)
             => (bool)PrivateType.InvokeStatic(
