@@ -7,6 +7,7 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
 using System.Text.RegularExpressions;
 
 namespace ThScoreFileConverter.Models.Th128
@@ -19,7 +20,12 @@ namespace ThScoreFileConverter.Models.Th128
         private readonly MatchEvaluator evaluator;
 
         public TimeReplacer(Th125.IStatus status)
-            => this.evaluator = new MatchEvaluator(match => new Time(status.TotalPlayTime * 10, false).ToLongString());
+        {
+            if (status is null)
+                throw new ArgumentNullException(nameof(status));
+
+            this.evaluator = new MatchEvaluator(match => new Time(status.TotalPlayTime * 10, false).ToLongString());
+        }
 
         public string Replace(string input) => Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
     }
