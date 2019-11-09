@@ -170,7 +170,7 @@ namespace ThScoreFileConverterTests.Models.Th128
         }
 
         [TestMethod]
-        public void ReplaceTestInvalidChara()
+        public void ReplaceTestInvalidRoute()
         {
             var replacer = new ScoreReplacer(ClearDataDictionary);
             Assert.AreEqual("%T128SCRHXX21", replacer.Replace("%T128SCRHXX21"));
