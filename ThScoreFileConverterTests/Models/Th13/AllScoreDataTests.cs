@@ -1,20 +1,17 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th13;
 using ThScoreFileConverterTests.Models.Th095;
 using ThScoreFileConverterTests.Models.Th125.Stubs;
 using ThScoreFileConverterTests.Models.Th13.Stubs;
-using ThScoreFileConverterTests.Models.Wrappers;
 using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th13
 {
     [TestClass]
-    public class Th13AllScoreDataTests
+    public class AllScoreDataTests
     {
-        internal static void Th13AllScoreDataTestHelper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>()
-            where TParent : ThConverter
+        internal static void AllScoreDataTestHelper<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>()
             where TChWithT : struct, Enum       // TCharaWithTotal
             where TLv : struct, Enum            // TLevel
             where TLvPrac : struct, Enum        // TLevelPractice
@@ -22,17 +19,14 @@ namespace ThScoreFileConverterTests.Models
             where TStPrac : struct, Enum        // TStagePractice
             => TestUtils.Wrap(() =>
             {
-                var allScoreData =
-                    new Th13AllScoreDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>();
+                var allScoreData = new AllScoreData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>();
 
                 Assert.IsNull(allScoreData.Header);
                 Assert.AreEqual(0, allScoreData.ClearData.Count);
                 Assert.IsNull(allScoreData.Status);
             });
 
-        internal static void Th13AllScoreDataSetHeaderTestHelper<
-            TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>()
-            where TParent : ThConverter
+        internal static void AllScoreDataSetHeaderTestHelper<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>()
             where TChWithT : struct, Enum
             where TLv : struct, Enum
             where TLvPrac : struct, Enum
@@ -43,16 +37,13 @@ namespace ThScoreFileConverterTests.Models
                 var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.ValidProperties);
                 var header = TestUtils.Create<HeaderBase>(array);
 
-                var allScoreData =
-                    new Th13AllScoreDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>();
+                var allScoreData = new AllScoreData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>();
                 allScoreData.Set(header);
 
                 Assert.AreSame(header, allScoreData.Header);
             });
 
-        internal static void Th13AllScoreDataSetHeaderTestTwiceHelper<
-            TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>()
-            where TParent : ThConverter
+        internal static void AllScoreDataSetHeaderTestTwiceHelper<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>()
             where TChWithT : struct, Enum
             where TLv : struct, Enum
             where TLvPrac : struct, Enum
@@ -64,8 +55,7 @@ namespace ThScoreFileConverterTests.Models
                 var header1 = TestUtils.Create<HeaderBase>(array);
                 var header2 = TestUtils.Create<HeaderBase>(array);
 
-                var allScoreData =
-                    new Th13AllScoreDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>();
+                var allScoreData = new AllScoreData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>();
                 allScoreData.Set(header1);
                 allScoreData.Set(header2);
 
@@ -73,9 +63,7 @@ namespace ThScoreFileConverterTests.Models
                 Assert.AreSame(header2, allScoreData.Header);
             });
 
-        internal static void Th13AllScoreDataSetClearDataTestHelper<
-            TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>()
-            where TParent : ThConverter
+        internal static void AllScoreDataSetClearDataTestHelper<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>()
             where TChWithT : struct, Enum
             where TLv : struct, Enum
             where TLvPrac : struct, Enum
@@ -86,16 +74,13 @@ namespace ThScoreFileConverterTests.Models
                 var chara = TestUtils.Cast<TChWithT>(1);
                 var clearData = new ClearDataStub<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac> { Chara = chara };
 
-                var allScoreData =
-                    new Th13AllScoreDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>();
+                var allScoreData = new AllScoreData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>();
                 allScoreData.Set(clearData);
 
                 Assert.AreSame(clearData, allScoreData.ClearData[TestUtils.Cast<TChWithT>(chara)]);
             });
 
-        internal static void Th13AllScoreDataSetClearDataTestTwiceHelper<
-            TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>()
-            where TParent : ThConverter
+        internal static void AllScoreDataSetClearDataTestTwiceHelper<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>()
             where TChWithT : struct, Enum
             where TLv : struct, Enum
             where TLvPrac : struct, Enum
@@ -107,8 +92,7 @@ namespace ThScoreFileConverterTests.Models
                 var clearData1 = new ClearDataStub<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac> { Chara = chara };
                 var clearData2 = new ClearDataStub<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac> { Chara = chara };
 
-                var allScoreData =
-                    new Th13AllScoreDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>();
+                var allScoreData = new AllScoreData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>();
                 allScoreData.Set(clearData1);
                 allScoreData.Set(clearData2);
 
@@ -116,9 +100,7 @@ namespace ThScoreFileConverterTests.Models
                 Assert.AreNotSame(clearData2, allScoreData.ClearData[TestUtils.Cast<TChWithT>(chara)]);
             });
 
-        internal static void Th13AllScoreDataSetStatusTestHelper<
-            TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>()
-            where TParent : ThConverter
+        internal static void AllScoreDataSetStatusTestHelper<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>()
             where TChWithT : struct, Enum
             where TLv : struct, Enum
             where TLvPrac : struct, Enum
@@ -128,16 +110,13 @@ namespace ThScoreFileConverterTests.Models
             {
                 var status = new StatusStub();
 
-                var allScoreData =
-                    new Th13AllScoreDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>();
+                var allScoreData = new AllScoreData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>();
                 allScoreData.Set(status);
 
                 Assert.AreSame(status, allScoreData.Status);
             });
 
-        internal static void Th13AllScoreDataSetStatusTestTwiceHelper<
-            TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>()
-            where TParent : ThConverter
+        internal static void AllScoreDataSetStatusTestTwiceHelper<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>()
             where TChWithT : struct, Enum
             where TLv : struct, Enum
             where TLvPrac : struct, Enum
@@ -148,8 +127,7 @@ namespace ThScoreFileConverterTests.Models
                 var status1 = new StatusStub();
                 var status2 = new StatusStub();
 
-                var allScoreData =
-                    new Th13AllScoreDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>();
+                var allScoreData = new AllScoreData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>();
                 allScoreData.Set(status1);
                 allScoreData.Set(status2);
 
@@ -158,73 +136,38 @@ namespace ThScoreFileConverterTests.Models
             });
 
         [TestMethod]
-        public void Th13AllScoreDataTest()
-            => Th13AllScoreDataTestHelper<
-                Th13Converter,
-                CharaWithTotal,
-                LevelPractice,
-                LevelPractice,
-                LevelPracticeWithTotal,
-                StagePractice>();
+        public void AllScoreDataTest()
+            => AllScoreDataTestHelper<
+                CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice>();
 
         [TestMethod]
-        public void Th13AllScoreDataSetHeaderTest()
-            => Th13AllScoreDataSetHeaderTestHelper<
-                Th13Converter,
-                CharaWithTotal,
-                LevelPractice,
-                LevelPractice,
-                LevelPracticeWithTotal,
-                StagePractice>();
+        public void AllScoreDataSetHeaderTest()
+            => AllScoreDataSetHeaderTestHelper<
+                CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice>();
 
         [TestMethod]
-        public void Th13AllScoreDataSetHeaderTestTwice()
-            => Th13AllScoreDataSetHeaderTestTwiceHelper<
-                Th13Converter,
-                CharaWithTotal,
-                LevelPractice,
-                LevelPractice,
-                LevelPracticeWithTotal,
-                StagePractice>();
+        public void AllScoreDataSetHeaderTestTwice()
+            => AllScoreDataSetHeaderTestTwiceHelper<
+                CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice>();
 
         [TestMethod]
-        public void Th13AllScoreDataSetClearDataTest()
-            => Th13AllScoreDataSetClearDataTestHelper<
-                Th13Converter,
-                CharaWithTotal,
-                LevelPractice,
-                LevelPractice,
-                LevelPracticeWithTotal,
-                StagePractice>();
+        public void AllScoreDataSetClearDataTest()
+            => AllScoreDataSetClearDataTestHelper<
+                CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice>();
 
         [TestMethod]
-        public void Th13AllScoreDataSetClearDataTestTwice()
-            => Th13AllScoreDataSetClearDataTestTwiceHelper<
-                Th13Converter,
-                CharaWithTotal,
-                LevelPractice,
-                LevelPractice,
-                LevelPracticeWithTotal,
-                StagePractice>();
+        public void AllScoreDataSetClearDataTestTwice()
+            => AllScoreDataSetClearDataTestTwiceHelper<
+                CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice>();
 
         [TestMethod]
-        public void Th13AllScoreDataSetStatusTest()
-            => Th13AllScoreDataSetStatusTestHelper<
-                Th13Converter,
-                CharaWithTotal,
-                LevelPractice,
-                LevelPractice,
-                LevelPracticeWithTotal,
-                StagePractice>();
+        public void AllScoreDataSetStatusTest()
+            => AllScoreDataSetStatusTestHelper<
+                CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice>();
 
         [TestMethod]
-        public void Th13AllScoreDataSetStatusTestTwice()
-            => Th13AllScoreDataSetStatusTestTwiceHelper<
-                Th13Converter,
-                CharaWithTotal,
-                LevelPractice,
-                LevelPractice,
-                LevelPracticeWithTotal,
-                StagePractice>();
+        public void AllScoreDataSetStatusTestTwice()
+            => AllScoreDataSetStatusTestTwiceHelper<
+                CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice>();
     }
 }
