@@ -31,6 +31,9 @@ namespace ThScoreFileConverter.Models.Th13
 
         public CareerReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
         {
+            if (clearDataDictionary is null)
+                throw new ArgumentNullException(nameof(clearDataDictionary));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var kind = match.Groups[1].Value.ToUpperInvariant();
@@ -57,7 +60,8 @@ namespace ThScoreFileConverter.Models.Th13
                         getCount = card => card.PracticeTrialCount;
                 }
 
-                var cards = clearDataDictionary[chara].Cards;
+                var cards = clearDataDictionary.TryGetValue(chara, out var clearData)
+                    ? clearData.Cards : new Dictionary<int, ISpellCard<LevelPractice>>();
                 if (number == 0)
                 {
                     return Utils.ToNumberString(cards.Values.Where(isValidLevel).Sum(getCount));
