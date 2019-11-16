@@ -7,6 +7,7 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -29,27 +30,31 @@ namespace ThScoreFileConverter.Models.Th13
 
         public CardReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, bool hideUntriedCards)
         {
+            if (clearDataDictionary is null)
+                throw new ArgumentNullException(nameof(clearDataDictionary));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
                 var type = match.Groups[2].Value.ToUpperInvariant();
 
-                if (Definitions.CardTable.ContainsKey(number))
+                if (Definitions.CardTable.TryGetValue(number, out var cardInfo))
                 {
                     if (type == "N")
                     {
                         if (hideUntriedCards)
                         {
-                            var cards = clearDataDictionary[CharaWithTotal.Total].Cards;
-                            if (!cards.TryGetValue(number, out var card) || !card.HasTried)
+                            if (!clearDataDictionary.TryGetValue(CharaWithTotal.Total, out var clearData)
+                                || !clearData.Cards.TryGetValue(number, out var card)
+                                || !card.HasTried)
                                 return "??????????";
                         }
 
-                        return Definitions.CardTable[number].Name;
+                        return cardInfo.Name;
                     }
                     else
                     {
-                        var level = Definitions.CardTable[number].Level;
+                        var level = cardInfo.Level;
                         var levelName = level.ToLongName();
                         return (levelName.Length > 0) ? levelName : level.ToString();
                     }
