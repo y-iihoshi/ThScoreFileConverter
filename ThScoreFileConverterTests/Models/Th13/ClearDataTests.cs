@@ -7,7 +7,6 @@ using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th13;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th10.Stubs;
 using ThScoreFileConverterTests.Models.Th13.Stubs;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 using ClearDataStub = ThScoreFileConverterTests.Models.Th13.Stubs.ClearDataStub<
@@ -22,15 +21,15 @@ using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th13.LevelPractice,
     ThScoreFileConverter.Models.Th13.LevelPracticeWithTotal,
     ThScoreFileConverter.Models.Th13.StagePractice>;
-using PracticeStub = ThScoreFileConverterTests.Models.Th13.Stubs.PracticeStub;
+using ScoreDataStub = ThScoreFileConverterTests.Models.Th10.Stubs.ScoreDataStub<
+    ThScoreFileConverter.Models.Th13.StageProgress>;
 
 namespace ThScoreFileConverterTests.Models.Th13
 {
     [TestClass]
     public class ClearDataTests
     {
-        internal static ClearDataStub
-            GetValidStub(ushort version, int size, int numCards)
+        internal static ClearDataStub MakeValidStub()
         {
             var levels = Utils.GetEnumerator<LevelPractice>();
             var levelsWithTotal = Utils.GetEnumerator<LevelPracticeWithTotal>();
@@ -39,14 +38,14 @@ namespace ThScoreFileConverterTests.Models.Th13
             return new ClearDataStub
             {
                 Signature = "CR",
-                Version = version,
+                Version = 0x0001,
                 Checksum = 0u,
-                Size = size,
+                Size = 0x56DC,
                 Chara = CharaWithTotal.Marisa,
                 Rankings = levelsWithTotal.ToDictionary(
                     level => level,
                     level => Enumerable.Range(0, 10).Select(
-                        index => new ScoreDataStub<StageProgress>()
+                        index => new ScoreDataStub()
                         {
                             Score = 12345670u - (uint)index * 1000u,
                             StageProgress = StageProgress.Five,
@@ -69,7 +68,7 @@ namespace ThScoreFileConverterTests.Models.Th13
                             ClearFlag = (byte)(TestUtils.Cast<int>(pair.stage) % 2),
                             EnableFlag = (byte)(TestUtils.Cast<int>(pair.level) % 2)
                         } as IPractice),
-                Cards = Enumerable.Range(1, numCards).ToDictionary(
+                Cards = Enumerable.Range(1, 127).ToDictionary(
                     index => index,
                     index => new SpellCardStub<LevelPractice>()
                     {
@@ -140,7 +139,7 @@ namespace ThScoreFileConverterTests.Models.Th13
         [TestMethod]
         public void ClearDataTestChapter() => TestUtils.Wrap(() =>
         {
-            var stub = GetValidStub(0x0001, 0x56DC, 127);
+            var stub = MakeValidStub();
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
             var clearData = new ClearData(chapter);
@@ -163,7 +162,7 @@ namespace ThScoreFileConverterTests.Models.Th13
         [ExpectedException(typeof(InvalidDataException))]
         public void ClearDataTestInvalidSignature() => TestUtils.Wrap(() =>
         {
-            var stub = GetValidStub(0x0001, 0x56DC, 127);
+            var stub = MakeValidStub();
             stub.Signature = stub.Signature.ToLowerInvariant();
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
@@ -176,7 +175,7 @@ namespace ThScoreFileConverterTests.Models.Th13
         [ExpectedException(typeof(InvalidDataException))]
         public void ClearDataTestInvalidVersion() => TestUtils.Wrap(() =>
         {
-            var stub = GetValidStub(0x0001, 0x56DC, 127);
+            var stub = MakeValidStub();
             ++stub.Version;
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
@@ -189,7 +188,7 @@ namespace ThScoreFileConverterTests.Models.Th13
         [ExpectedException(typeof(InvalidDataException))]
         public void ClearDataTestInvalidSize() => TestUtils.Wrap(() =>
         {
-            var stub = GetValidStub(0x0001, 0x56DC, 127);
+            var stub = MakeValidStub();
             --stub.Size;
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
