@@ -7,6 +7,7 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -30,14 +31,19 @@ namespace ThScoreFileConverter.Models.Th13
 
         public ClearReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
         {
+            if (clearDataDictionary is null)
+                throw new ArgumentNullException(nameof(clearDataDictionary));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var level = (LevelPracticeWithTotal)Parsers.LevelParser.Parse(match.Groups[1].Value);
                 var chara = (CharaWithTotal)Parsers.CharaParser.Parse(match.Groups[2].Value);
 
-                var rankings = clearDataDictionary[chara].Rankings[level].Where(ranking => ranking.DateTime > 0);
-                var stageProgress = rankings.Any()
-                    ? rankings.Max(ranking => ranking.StageProgress) : StageProgress.None;
+                var scores = clearDataDictionary.TryGetValue(chara, out var clearData)
+                    && clearData.Rankings.TryGetValue(level, out var ranking)
+                    ? ranking.Where(score => score.DateTime > 0)
+                    : new List<Th10.IScoreData<StageProgress>>();
+                var stageProgress = scores.Any() ? scores.Max(score => score.StageProgress) : StageProgress.None;
 
                 if (stageProgress == StageProgress.Extra)
                     return "Not Clear";
