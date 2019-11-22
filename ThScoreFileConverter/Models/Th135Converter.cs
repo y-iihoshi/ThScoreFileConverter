@@ -22,12 +22,6 @@ namespace ThScoreFileConverter.Models
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th135Converter : ThConverter
     {
-        private static new readonly EnumShortNameParser<Th135.Level> LevelParser =
-            new EnumShortNameParser<Th135.Level>();
-
-        private static readonly EnumShortNameParser<Chara> CharaParser =
-            new EnumShortNameParser<Chara>();
-
         private AllScoreData allScoreData = null;
 
         public override string SupportedVersions
@@ -131,7 +125,7 @@ namespace ThScoreFileConverter.Models
         private class ClearReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T135CLEAR({0})({1})", LevelParser.Pattern, CharaParser.Pattern);
+                @"%T135CLEAR({0})({1})", Parsers.LevelParser.Pattern, Parsers.CharaParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -140,8 +134,8 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var level = LevelParser.Parse(match.Groups[1].Value);
-                    var chara = CharaParser.Parse(match.Groups[2].Value);
+                    var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+                    var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
 
                     var cleared = false;
                     var flags = LevelFlags.None;
