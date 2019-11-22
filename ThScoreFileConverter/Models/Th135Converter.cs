@@ -15,7 +15,6 @@ using System.IO.Compression;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Models.Th135;
-using ThScoreFileConverter.Squirrel;
 
 namespace ThScoreFileConverter.Models
 {
@@ -167,106 +166,6 @@ namespace ThScoreFileConverter.Models
             public string Replace(string input)
             {
                 return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-            }
-        }
-
-        private class AllScoreData : IBinaryReadable
-        {
-            private SQTable allData;
-
-            public AllScoreData()
-            {
-                this.allData = new SQTable();
-                this.StoryClearFlags = null;
-                this.BgmFlags = null;
-            }
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public int StoryProgress => this.GetValue<int>("story_progress");
-
-            public Dictionary<Chara, LevelFlags> StoryClearFlags { get; private set; }
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public int EndingCount => this.GetValue<int>("ed_count");
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public int Ending2Count => this.GetValue<int>("ed2_count");
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public bool IsEnabledStageTanuki1 => this.GetValue<bool>("enable_stage_tanuki1");
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public bool IsEnabledStageTanuki2 => this.GetValue<bool>("enable_stage_tanuki2");
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public bool IsEnabledStageKokoro => this.GetValue<bool>("enable_stage_kokoro");
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public bool IsPlayableMamizou => this.GetValue<bool>("enable_mamizou");
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public bool IsPlayableKokoro => this.GetValue<bool>("enable_kokoro");
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public Dictionary<int, bool> BgmFlags { get; private set; }
-
-            public void ReadFrom(BinaryReader reader)
-            {
-                this.allData = SQTable.Create(reader, true);
-
-                this.ParseStoryClear();
-                this.ParseEnableBgm();
-            }
-
-            private void ParseStoryClear()
-            {
-                if (this.allData.Value.TryGetValue(new SQString("story_clear"), out var counts))
-                {
-                    if (counts is SQArray storyClearFlags)
-                    {
-                        this.StoryClearFlags = storyClearFlags.Value
-                            .Select((flag, index) => (flag, index))
-                            .Where(pair => pair.flag is SQInteger)
-                            .ToDictionary(pair => (Chara)pair.index, pair => (LevelFlags)(int)(pair.flag as SQInteger));
-                    }
-                }
-            }
-
-            private void ParseEnableBgm()
-            {
-                if (this.allData.Value.TryGetValue(new SQString("enable_bgm"), out var flags))
-                {
-                    if (flags is SQTable bgmFlags)
-                    {
-                        this.BgmFlags = bgmFlags.Value
-                            .Where(pair => (pair.Key is SQInteger) && (pair.Value is SQBool))
-                            .ToDictionary(pair => (int)(pair.Key as SQInteger), pair => (bool)(pair.Value as SQBool));
-                    }
-                }
-            }
-
-            [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            private T GetValue<T>(string key)
-                where T : struct
-            {
-                T result = default;
-
-                if (this.allData.Value.TryGetValue(new SQString(key), out var value))
-                {
-                    switch (value)
-                    {
-                        case SQBool sqbool:
-                            if (result is bool)
-                                result = (T)(object)(bool)sqbool;
-                            break;
-                        case SQInteger sqinteger:
-                            if (result is int)
-                                result = (T)(object)(int)sqinteger;
-                            break;
-                    }
-                }
-
-                return result;
             }
         }
     }

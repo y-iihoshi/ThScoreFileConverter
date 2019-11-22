@@ -6,14 +6,13 @@ using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th135;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Wrappers;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th135
 {
     using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
 
     [TestClass]
-    public class Th135AllScoreDataTests
+    public class AllScoreDataTests
     {
         internal struct Properties
         {
@@ -61,54 +60,54 @@ namespace ThScoreFileConverterTests.Models
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray();
 
-        internal static void Validate(in Th135AllScoreDataWrapper allScoreData, in Properties properties)
+        internal static void Validate(in Properties expected, in AllScoreData actual)
         {
-            Assert.AreEqual(properties.storyProgress, allScoreData.StoryProgress);
-            CollectionAssert.That.AreEqual(properties.storyClearFlags.Keys, allScoreData.StoryClearFlags.Keys);
-            CollectionAssert.That.AreEqual(properties.storyClearFlags.Values, allScoreData.StoryClearFlags.Values);
-            Assert.AreEqual(properties.endingCount, allScoreData.EndingCount);
-            Assert.AreEqual(properties.ending2Count, allScoreData.Ending2Count);
-            Assert.AreEqual(properties.isEnabledStageTanuki1, allScoreData.IsEnabledStageTanuki1);
-            Assert.AreEqual(properties.isEnabledStageTanuki2, allScoreData.IsEnabledStageTanuki2);
-            Assert.AreEqual(properties.isEnabledStageKokoro, allScoreData.IsEnabledStageKokoro);
-            Assert.AreEqual(properties.isPlayableMamizou, allScoreData.IsPlayableMamizou);
-            Assert.AreEqual(properties.isPlayableKokoro, allScoreData.IsPlayableKokoro);
-            CollectionAssert.That.AreEqual(properties.bgmFlags.Keys, allScoreData.BgmFlags.Keys);
-            CollectionAssert.That.AreEqual(properties.bgmFlags.Values, allScoreData.BgmFlags.Values);
+            Assert.AreEqual(expected.storyProgress, actual.StoryProgress);
+            CollectionAssert.That.AreEqual(expected.storyClearFlags.Keys, actual.StoryClearFlags.Keys);
+            CollectionAssert.That.AreEqual(expected.storyClearFlags.Values, actual.StoryClearFlags.Values);
+            Assert.AreEqual(expected.endingCount, actual.EndingCount);
+            Assert.AreEqual(expected.ending2Count, actual.Ending2Count);
+            Assert.AreEqual(expected.isEnabledStageTanuki1, actual.IsEnabledStageTanuki1);
+            Assert.AreEqual(expected.isEnabledStageTanuki2, actual.IsEnabledStageTanuki2);
+            Assert.AreEqual(expected.isEnabledStageKokoro, actual.IsEnabledStageKokoro);
+            Assert.AreEqual(expected.isPlayableMamizou, actual.IsPlayableMamizou);
+            Assert.AreEqual(expected.isPlayableKokoro, actual.IsPlayableKokoro);
+            CollectionAssert.That.AreEqual(expected.bgmFlags.Keys, actual.BgmFlags.Keys);
+            CollectionAssert.That.AreEqual(expected.bgmFlags.Values, actual.BgmFlags.Values);
         }
 
         [TestMethod]
-        public void Th135AllScoreDataTest() => TestUtils.Wrap(() =>
+        public void AllScoreDataTest() => TestUtils.Wrap(() =>
         {
-            var allScoreData = new Th135AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
 
-            Assert.AreEqual(default, allScoreData.StoryProgress.Value);
+            Assert.AreEqual(default, allScoreData.StoryProgress);
             Assert.IsNull(allScoreData.StoryClearFlags);
-            Assert.AreEqual(default, allScoreData.EndingCount.Value);
-            Assert.AreEqual(default, allScoreData.Ending2Count.Value);
-            Assert.AreEqual(default, allScoreData.IsEnabledStageTanuki1.Value);
-            Assert.AreEqual(default, allScoreData.IsEnabledStageTanuki2.Value);
-            Assert.AreEqual(default, allScoreData.IsEnabledStageKokoro.Value);
-            Assert.AreEqual(default, allScoreData.IsPlayableMamizou.Value);
-            Assert.AreEqual(default, allScoreData.IsPlayableKokoro.Value);
+            Assert.AreEqual(default, allScoreData.EndingCount);
+            Assert.AreEqual(default, allScoreData.Ending2Count);
+            Assert.AreEqual(default, allScoreData.IsEnabledStageTanuki1);
+            Assert.AreEqual(default, allScoreData.IsEnabledStageTanuki2);
+            Assert.AreEqual(default, allScoreData.IsEnabledStageKokoro);
+            Assert.AreEqual(default, allScoreData.IsPlayableMamizou);
+            Assert.AreEqual(default, allScoreData.IsPlayableKokoro);
             Assert.IsNull(allScoreData.BgmFlags);
         });
 
         [TestMethod]
-        public void Th135AllScoreDataReadFromTest() => TestUtils.Wrap(() =>
+        public void ReadFromTest() => TestUtils.Wrap(() =>
         {
             var properties = GetValidProperties();
 
-            var allScoreData = Th135AllScoreDataWrapper.Create(MakeByteArray(properties));
+            var allScoreData = TestUtils.Create<AllScoreData>(MakeByteArray(properties));
 
-            Validate(allScoreData, properties);
+            Validate(properties, allScoreData);
         });
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th135AllScoreDataReadFromTestNull() => TestUtils.Wrap(() =>
+        public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
-            var allScoreData = new Th135AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.ReadFrom(null);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -116,36 +115,36 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th135AllScoreDataReadFromTestEmpty() => TestUtils.Wrap(() =>
+        public void ReadFromTestEmpty() => TestUtils.Wrap(() =>
         {
-            Th135AllScoreDataWrapper.Create(new byte[0]);
+            TestUtils.Create<AllScoreData>(new byte[0]);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
-        public void Th135AllScoreDataReadFromTestNoKey() => TestUtils.Wrap(() =>
+        public void ReadFromTestNoKey() => TestUtils.Wrap(() =>
         {
-            var allScoreData = Th135AllScoreDataWrapper.Create(TestUtils.MakeByteArray((int)SQOT.Null));
+            var allScoreData = TestUtils.Create<AllScoreData>(TestUtils.MakeByteArray((int)SQOT.Null));
 
-            Assert.AreEqual(default, allScoreData.StoryProgress.Value);
+            Assert.AreEqual(default, allScoreData.StoryProgress);
             Assert.IsNull(allScoreData.StoryClearFlags);
-            Assert.AreEqual(default, allScoreData.EndingCount.Value);
-            Assert.AreEqual(default, allScoreData.Ending2Count.Value);
-            Assert.AreEqual(default, allScoreData.IsEnabledStageTanuki1.Value);
-            Assert.AreEqual(default, allScoreData.IsEnabledStageTanuki2.Value);
-            Assert.AreEqual(default, allScoreData.IsEnabledStageKokoro.Value);
-            Assert.AreEqual(default, allScoreData.IsPlayableMamizou.Value);
-            Assert.AreEqual(default, allScoreData.IsPlayableKokoro.Value);
+            Assert.AreEqual(default, allScoreData.EndingCount);
+            Assert.AreEqual(default, allScoreData.Ending2Count);
+            Assert.AreEqual(default, allScoreData.IsEnabledStageTanuki1);
+            Assert.AreEqual(default, allScoreData.IsEnabledStageTanuki2);
+            Assert.AreEqual(default, allScoreData.IsEnabledStageKokoro);
+            Assert.AreEqual(default, allScoreData.IsPlayableMamizou);
+            Assert.AreEqual(default, allScoreData.IsPlayableKokoro);
             Assert.IsNull(allScoreData.BgmFlags);
         });
 
         [TestMethod]
-        public void Th135AllScoreDataReadFromTestNoTables() => TestUtils.Wrap(() =>
+        public void ReadFromTestNoTables() => TestUtils.Wrap(() =>
         {
             var storyProgressValue = 1;
 
-            var allScoreData = Th135AllScoreDataWrapper.Create(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
                 .Concat(TestUtils.MakeSQByteArray("story_progress", storyProgressValue))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -157,9 +156,9 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th135AllScoreDataReadFromTestInvalidStoryClear() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidStoryClear() => TestUtils.Wrap(() =>
         {
-            var allScoreData = Th135AllScoreDataWrapper.Create(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
                 .Concat(TestUtils.MakeSQByteArray("story_clear", 1))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -169,9 +168,9 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th135AllScoreDataReadFromTestInvalidStoryClearValue() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidStoryClearValue() => TestUtils.Wrap(() =>
         {
-            var allScoreData = Th135AllScoreDataWrapper.Create(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
                 .Concat(TestUtils.MakeSQByteArray("story_clear", new float[] { 123f }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -182,9 +181,9 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th135AllScoreDataReadFromTestInvalidEnableBgm() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidEnableBgm() => TestUtils.Wrap(() =>
         {
-            var allScoreData = Th135AllScoreDataWrapper.Create(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
                 .Concat(TestUtils.MakeSQByteArray("enable_bgm", 1))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
