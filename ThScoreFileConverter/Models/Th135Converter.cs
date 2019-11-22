@@ -56,7 +56,7 @@ namespace ThScoreFileConverter.Models
         {
             return new List<IStringReplaceable>
             {
-                new ClearReplacer(this),
+                new ClearReplacer(this.allScoreData.StoryClearFlags),
             };
         }
 
@@ -129,7 +129,7 @@ namespace ThScoreFileConverter.Models
             private readonly MatchEvaluator evaluator;
 
             [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-            public ClearReplacer(Th135Converter parent)
+            public ClearReplacer(IReadOnlyDictionary<Chara, LevelFlags> storyClearFlags)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -138,7 +138,7 @@ namespace ThScoreFileConverter.Models
 
                     var cleared = false;
                     var flags = LevelFlags.None;
-                    if (parent.allScoreData.StoryClearFlags.TryGetValue(chara, out flags))
+                    if (storyClearFlags.TryGetValue(chara, out flags))
                     {
                         switch (level)
                         {
