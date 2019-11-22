@@ -13,7 +13,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Text.RegularExpressions;
 using ThScoreFileConverter.Models.Th135;
 
 namespace ThScoreFileConverter.Models
@@ -117,55 +116,6 @@ namespace ThScoreFileConverter.Models
                 }
 
                 return allScoreData;
-            }
-        }
-
-        // %T135CLEAR[x][yy]
-        private class ClearReplacer : IStringReplaceable
-        {
-            private static readonly string Pattern = Utils.Format(
-                @"%T135CLEAR({0})({1})", Parsers.LevelParser.Pattern, Parsers.CharaParser.Pattern);
-
-            private readonly MatchEvaluator evaluator;
-
-            [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-            public ClearReplacer(IReadOnlyDictionary<Chara, LevelFlags> storyClearFlags)
-            {
-                this.evaluator = new MatchEvaluator(match =>
-                {
-                    var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-                    var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
-
-                    var cleared = false;
-                    var flags = LevelFlags.None;
-                    if (storyClearFlags.TryGetValue(chara, out flags))
-                    {
-                        switch (level)
-                        {
-                            case Th135.Level.Easy:
-                                cleared = (flags & LevelFlags.Easy) == LevelFlags.Easy;
-                                break;
-                            case Th135.Level.Normal:
-                                cleared = (flags & LevelFlags.Normal) == LevelFlags.Normal;
-                                break;
-                            case Th135.Level.Hard:
-                                cleared = (flags & LevelFlags.Hard) == LevelFlags.Hard;
-                                break;
-                            case Th135.Level.Lunatic:
-                                cleared = (flags & LevelFlags.Lunatic) == LevelFlags.Lunatic;
-                                break;
-                            default:    // unreachable
-                                break;
-                        }
-                    }
-
-                    return cleared ? "Clear" : "Not Clear";
-                });
-            }
-
-            public string Replace(string input)
-            {
-                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
             }
         }
     }
