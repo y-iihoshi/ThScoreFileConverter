@@ -49,8 +49,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         public int? StoryProgress
             => this.pobj.GetProperty(nameof(this.StoryProgress)) as int?;
-        public IReadOnlyDictionary<Chara, LevelFlag> StoryClearFlags
-            => this.pobj.GetProperty(nameof(this.StoryClearFlags)) as Dictionary<Chara, LevelFlag>;
+        public IReadOnlyDictionary<Chara, LevelFlags> StoryClearFlags
+            => this.pobj.GetProperty(nameof(this.StoryClearFlags)) as Dictionary<Chara, LevelFlags>;
         public int? EndingCount
             => this.pobj.GetProperty(nameof(this.EndingCount)) as int?;
         public int? Ending2Count

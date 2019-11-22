@@ -13,7 +13,7 @@ namespace ThScoreFileConverter.Models.Th135
     /// Represents bit flags of levels.
     /// </summary>
     [Flags]
-    public enum LevelFlag
+    public enum LevelFlags
     {
         /// <summary>
         /// Represents that any level is not related.

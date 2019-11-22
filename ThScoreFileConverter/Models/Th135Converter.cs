@@ -144,22 +144,22 @@ namespace ThScoreFileConverter.Models
                     var chara = CharaParser.Parse(match.Groups[2].Value);
 
                     var cleared = false;
-                    var flags = LevelFlag.None;
+                    var flags = LevelFlags.None;
                     if (parent.allScoreData.StoryClearFlags.TryGetValue(chara, out flags))
                     {
                         switch (level)
                         {
                             case Th135.Level.Easy:
-                                cleared = (flags & LevelFlag.Easy) == LevelFlag.Easy;
+                                cleared = (flags & LevelFlags.Easy) == LevelFlags.Easy;
                                 break;
                             case Th135.Level.Normal:
-                                cleared = (flags & LevelFlag.Normal) == LevelFlag.Normal;
+                                cleared = (flags & LevelFlags.Normal) == LevelFlags.Normal;
                                 break;
                             case Th135.Level.Hard:
-                                cleared = (flags & LevelFlag.Hard) == LevelFlag.Hard;
+                                cleared = (flags & LevelFlags.Hard) == LevelFlags.Hard;
                                 break;
                             case Th135.Level.Lunatic:
-                                cleared = (flags & LevelFlag.Lunatic) == LevelFlag.Lunatic;
+                                cleared = (flags & LevelFlags.Lunatic) == LevelFlags.Lunatic;
                                 break;
                             default:    // unreachable
                                 break;
@@ -190,7 +190,7 @@ namespace ThScoreFileConverter.Models
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public int StoryProgress => this.GetValue<int>("story_progress");
 
-            public Dictionary<Chara, LevelFlag> StoryClearFlags { get; private set; }
+            public Dictionary<Chara, LevelFlags> StoryClearFlags { get; private set; }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public int EndingCount => this.GetValue<int>("ed_count");
@@ -233,7 +233,7 @@ namespace ThScoreFileConverter.Models
                         this.StoryClearFlags = storyClearFlags.Value
                             .Select((flag, index) => (flag, index))
                             .Where(pair => pair.flag is SQInteger)
-                            .ToDictionary(pair => (Chara)pair.index, pair => (LevelFlag)(int)(pair.flag as SQInteger));
+                            .ToDictionary(pair => (Chara)pair.index, pair => (LevelFlags)(int)(pair.flag as SQInteger));
                     }
                 }
             }
