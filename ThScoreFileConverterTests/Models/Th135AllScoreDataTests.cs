@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th135;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Wrappers;
 
@@ -17,7 +18,7 @@ namespace ThScoreFileConverterTests.Models
         internal struct Properties
         {
             public int storyProgress;
-            public Dictionary<Th135Converter.Chara, Th135Converter.LevelFlag> storyClearFlags;
+            public Dictionary<Chara, LevelFlag> storyClearFlags;
             public int endingCount;
             public int ending2Count;
             public bool isEnabledStageTanuki1;
@@ -31,8 +32,8 @@ namespace ThScoreFileConverterTests.Models
         internal static Properties GetValidProperties() => new Properties()
         {
             storyProgress = 1,
-            storyClearFlags = Utils.GetEnumerator<Th135Converter.Chara>().ToDictionary(
-                chara => chara, chara => TestUtils.Cast<Th135Converter.LevelFlag>(30 - (int)chara)),
+            storyClearFlags = Utils.GetEnumerator<Chara>().ToDictionary(
+                chara => chara, chara => TestUtils.Cast<LevelFlag>(30 - (int)chara)),
             endingCount = 2,
             ending2Count = 3,
             isEnabledStageTanuki1 = true,

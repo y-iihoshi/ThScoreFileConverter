@@ -7,15 +7,14 @@
 
 #pragma warning disable 1591
 #pragma warning disable SA1600 // ElementsMustBeDocumented
-#pragma warning disable SA1602 // EnumerationItemsMustBeDocumented
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Models.Th135;
 using ThScoreFileConverter.Squirrel;
 
 namespace ThScoreFileConverter.Models
@@ -23,49 +22,13 @@ namespace ThScoreFileConverter.Models
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th135Converter : ThConverter
     {
-        private static new readonly EnumShortNameParser<Level> LevelParser =
-            new EnumShortNameParser<Level>();
+        private static new readonly EnumShortNameParser<Th135.Level> LevelParser =
+            new EnumShortNameParser<Th135.Level>();
 
         private static readonly EnumShortNameParser<Chara> CharaParser =
             new EnumShortNameParser<Chara>();
 
         private AllScoreData allScoreData = null;
-
-        public enum Level
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("E")] Easy,
-            [EnumAltName("N")] Normal,
-            [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        [Flags]
-        public enum LevelFlag
-        {
-            None = 0,
-            Easy = 1,
-            Normal = 2,
-            Hard = 4,
-            Lunatic = 8,
-        }
-
-        public enum Chara
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("RM")] Reimu,
-            [EnumAltName("MR")] Marisa,
-            [EnumAltName("IU")] IchirinUnzan,
-            [EnumAltName("BY")] Byakuren,
-            [EnumAltName("FT")] Futo,
-            [EnumAltName("MK")] Miko,
-            [EnumAltName("NT")] Nitori,
-            [EnumAltName("KO")] Koishi,
-            [EnumAltName("MM")] Mamizou,
-            [EnumAltName("KK")] Kokoro,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
 
         public override string SupportedVersions
         {
@@ -182,20 +145,20 @@ namespace ThScoreFileConverter.Models
 
                     var cleared = false;
                     var flags = LevelFlag.None;
-                    if (parent.allScoreData.StoryClearFlags.TryGetValue((Chara)chara, out flags))
+                    if (parent.allScoreData.StoryClearFlags.TryGetValue(chara, out flags))
                     {
                         switch (level)
                         {
-                            case Level.Easy:
+                            case Th135.Level.Easy:
                                 cleared = (flags & LevelFlag.Easy) == LevelFlag.Easy;
                                 break;
-                            case Level.Normal:
+                            case Th135.Level.Normal:
                                 cleared = (flags & LevelFlag.Normal) == LevelFlag.Normal;
                                 break;
-                            case Level.Hard:
+                            case Th135.Level.Hard:
                                 cleared = (flags & LevelFlag.Hard) == LevelFlag.Hard;
                                 break;
-                            case Level.Lunatic:
+                            case Th135.Level.Lunatic:
                                 cleared = (flags & LevelFlag.Lunatic) == LevelFlag.Lunatic;
                                 break;
                             default:    // unreachable

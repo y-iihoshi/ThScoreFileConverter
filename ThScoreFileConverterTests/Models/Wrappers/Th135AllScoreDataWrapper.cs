@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th135;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -48,9 +49,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         public int? StoryProgress
             => this.pobj.GetProperty(nameof(this.StoryProgress)) as int?;
-        public IReadOnlyDictionary<Th135Converter.Chara, Th135Converter.LevelFlag> StoryClearFlags
-            => this.pobj.GetProperty(nameof(this.StoryClearFlags))
-                as Dictionary<Th135Converter.Chara, Th135Converter.LevelFlag>;
+        public IReadOnlyDictionary<Chara, LevelFlag> StoryClearFlags
+            => this.pobj.GetProperty(nameof(this.StoryClearFlags)) as Dictionary<Chara, LevelFlag>;
         public int? EndingCount
             => this.pobj.GetProperty(nameof(this.EndingCount)) as int?;
         public int? Ending2Count
