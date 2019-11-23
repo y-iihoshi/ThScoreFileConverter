@@ -30,15 +30,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.Scores)) as IReadOnlyList<IScore>;
         public IReadOnlyDictionary<ItemWithTotal, IItemStatus> ItemStatuses
             => this.pobj.GetProperty(nameof(this.ItemStatuses)) as IReadOnlyDictionary<ItemWithTotal, IItemStatus>;
-
-        public Th143StatusWrapper Status
-        {
-            get
-            {
-                var status = this.pobj.GetProperty(nameof(this.Status));
-                return (status != null) ? new Th143StatusWrapper(status) : null;
-            }
-        }
+        public IStatus Status
+            => this.pobj.GetProperty(nameof(this.Status)) as IStatus;
 
         public void Set(HeaderBase header)
             => this.pobj.Invoke(nameof(Set), new object[] { header }, CultureInfo.InvariantCulture);
@@ -46,7 +39,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.Invoke(nameof(Set), new object[] { score }, CultureInfo.InvariantCulture);
         public void Set(IItemStatus item)
             => this.pobj.Invoke(nameof(Set), new object[] { item }, CultureInfo.InvariantCulture);
-        public void Set(Th143StatusWrapper status)
-            => this.pobj.Invoke(nameof(Set), new object[] { status.Target }, CultureInfo.InvariantCulture);
+        public void Set(IStatus status)
+            => this.pobj.Invoke(nameof(Set), new object[] { status }, CultureInfo.InvariantCulture);
     }
 }
