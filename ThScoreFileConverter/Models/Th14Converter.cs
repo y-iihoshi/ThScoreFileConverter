@@ -74,14 +74,14 @@ namespace ThScoreFileConverter.Models
         {
             return new List<IStringReplaceable>
             {
-                new ScoreReplacer(this),
-                new CareerReplacer(this),
-                new CardReplacer(this, hideUntriedCards),
-                new CollectRateReplacer(this),
-                new ClearReplacer(this),
-                new CharaReplacer(this),
-                new CharaExReplacer(this),
-                new PracticeReplacer(this),
+                new ScoreReplacer(this.allScoreData.ClearData),
+                new CareerReplacer(this.allScoreData.ClearData),
+                new CardReplacer(this.allScoreData.ClearData, hideUntriedCards),
+                new CollectRateReplacer(this.allScoreData.ClearData),
+                new ClearReplacer(this.allScoreData.ClearData),
+                new CharaReplacer(this.allScoreData.ClearData),
+                new CharaExReplacer(this.allScoreData.ClearData),
+                new PracticeReplacer(this.allScoreData.ClearData),
             };
         }
 
@@ -201,7 +201,7 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public ScoreReplacer(Th14Converter parent)
+            public ScoreReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -211,7 +211,7 @@ namespace ThScoreFileConverter.Models
                         int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
                     var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
-                    var ranking = parent.allScoreData.ClearData[chara].Rankings[level][rank];
+                    var ranking = clearDataDictionary[chara].Rankings[level][rank];
                     switch (type)
                     {
                         case 1:     // name
@@ -256,7 +256,7 @@ namespace ThScoreFileConverter.Models
             private readonly MatchEvaluator evaluator;
 
             [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-            public CareerReplacer(Th14Converter parent)
+            public CareerReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -281,7 +281,7 @@ namespace ThScoreFileConverter.Models
                             getCount = (card => card.PracticeTrialCount);
                     }
 
-                    var cards = parent.allScoreData.ClearData[chara].Cards;
+                    var cards = clearDataDictionary[chara].Cards;
                     if (number == 0)
                     {
                         return Utils.ToNumberString(cards.Values.Sum(getCount));
@@ -313,7 +313,8 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public CardReplacer(Th14Converter parent, bool hideUntriedCards)
+            public CardReplacer(
+                IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, bool hideUntriedCards)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -326,7 +327,7 @@ namespace ThScoreFileConverter.Models
                         {
                             if (hideUntriedCards)
                             {
-                                var cards = parent.allScoreData.ClearData[CharaWithTotal.Total].Cards;
+                                var cards = clearDataDictionary[CharaWithTotal.Total].Cards;
                                 if (!cards.TryGetValue(number, out var card) || !card.HasTried)
                                     return "??????????";
                             }
@@ -382,7 +383,7 @@ namespace ThScoreFileConverter.Models
             private readonly MatchEvaluator evaluator;
 
             [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-            public CollectRateReplacer(Th14Converter parent)
+            public CollectRateReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -417,7 +418,7 @@ namespace ThScoreFileConverter.Models
                             break;
                     }
 
-                    return parent.allScoreData.ClearData[chara].Cards.Values
+                    return clearDataDictionary[chara].Cards.Values
                         .Count(Utils.MakeAndPredicate(findByKindType, findByLevel, findByStage))
                         .ToString(CultureInfo.CurrentCulture);
                 });
@@ -437,14 +438,14 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public ClearReplacer(Th14Converter parent)
+            public ClearReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
                     var level = (LevelPracticeWithTotal)Parsers.LevelParser.Parse(match.Groups[1].Value);
                     var chara = (CharaWithTotal)Parsers.CharaParser.Parse(match.Groups[2].Value);
 
-                    var rankings = parent.allScoreData.ClearData[chara].Rankings[level]
+                    var rankings = clearDataDictionary[chara].Rankings[level]
                         .Where(ranking => ranking.DateTime > 0);
                     var stageProgress = rankings.Any()
                         ? rankings.Max(ranking => ranking.StageProgress) : Th13.StageProgress.None;
@@ -473,7 +474,7 @@ namespace ThScoreFileConverter.Models
             private readonly MatchEvaluator evaluator;
 
             [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-            public CharaReplacer(Th14Converter parent)
+            public CharaReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -484,32 +485,32 @@ namespace ThScoreFileConverter.Models
                     Func<long, string> toString;
                     if (type == 1)
                     {
-                        getValueByType = (data => data.TotalPlayCount);
+                        getValueByType = (clearData => clearData.TotalPlayCount);
                         toString = Utils.ToNumberString;
                     }
                     else if (type == 2)
                     {
-                        getValueByType = (data => data.PlayTime);
+                        getValueByType = (clearData => clearData.PlayTime);
                         toString = (value => new Time(value).ToString());
                     }
                     else
                     {
-                        getValueByType = (data => data.ClearCounts.Values.Sum());
+                        getValueByType = (clearData => clearData.ClearCounts.Values.Sum());
                         toString = Utils.ToNumberString;
                     }
 
-                    Func<AllScoreData, long> getValueByChara;
+                    Func<IReadOnlyDictionary<CharaWithTotal, IClearData>, long> getValueByChara;
                     if (chara == CharaWithTotal.Total)
                     {
-                        getValueByChara = (allData => allData.ClearData.Values
-                            .Where(data => data.Chara != chara).Sum(getValueByType));
+                        getValueByChara = (dictionary => dictionary.Values
+                            .Where(clearData => clearData.Chara != chara).Sum(getValueByType));
                     }
                     else
                     {
-                        getValueByChara = (allData => getValueByType(allData.ClearData[chara]));
+                        getValueByChara = (dictionary => getValueByType(dictionary[chara]));
                     }
 
-                    return toString(getValueByChara(parent.allScoreData));
+                    return toString(getValueByChara(clearDataDictionary));
                 });
             }
 
@@ -530,7 +531,7 @@ namespace ThScoreFileConverter.Models
             private readonly MatchEvaluator evaluator;
 
             [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-            public CharaExReplacer(Th14Converter parent)
+            public CharaExReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -542,35 +543,35 @@ namespace ThScoreFileConverter.Models
                     Func<long, string> toString;
                     if (type == 1)
                     {
-                        getValueByType = (data => data.TotalPlayCount);
+                        getValueByType = (clearData => clearData.TotalPlayCount);
                         toString = Utils.ToNumberString;
                     }
                     else if (type == 2)
                     {
-                        getValueByType = (data => data.PlayTime);
+                        getValueByType = (clearData => clearData.PlayTime);
                         toString = (value => new Time(value).ToString());
                     }
                     else
                     {
                         if (level == LevelWithTotal.Total)
-                            getValueByType = (data => data.ClearCounts.Values.Sum());
+                            getValueByType = (clearData => clearData.ClearCounts.Values.Sum());
                         else
-                            getValueByType = (data => data.ClearCounts[(LevelPracticeWithTotal)level]);
+                            getValueByType = (clearData => clearData.ClearCounts[(LevelPracticeWithTotal)level]);
                         toString = Utils.ToNumberString;
                     }
 
-                    Func<AllScoreData, long> getValueByChara;
+                    Func<IReadOnlyDictionary<CharaWithTotal, IClearData>, long> getValueByChara;
                     if (chara == CharaWithTotal.Total)
                     {
-                        getValueByChara = (allData => allData.ClearData.Values
-                            .Where(data => data.Chara != chara).Sum(getValueByType));
+                        getValueByChara = (dictionary => dictionary.Values
+                            .Where(clearData => clearData.Chara != chara).Sum(getValueByType));
                     }
                     else
                     {
-                        getValueByChara = (allData => getValueByType(allData.ClearData[chara]));
+                        getValueByChara = (dictionary => getValueByType(dictionary[chara]));
                     }
 
-                    return toString(getValueByChara(parent.allScoreData));
+                    return toString(getValueByChara(clearDataDictionary));
                 });
             }
 
@@ -591,7 +592,7 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public PracticeReplacer(Th14Converter parent)
+            public PracticeReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -604,10 +605,10 @@ namespace ThScoreFileConverter.Models
                     if (stage == Stage.Extra)
                         return match.ToString();
 
-                    if (parent.allScoreData.ClearData.ContainsKey(chara))
+                    if (clearDataDictionary.ContainsKey(chara))
                     {
                         var key = ((LevelPractice)level, (StagePractice)stage);
-                        var practices = parent.allScoreData.ClearData[chara].Practices;
+                        var practices = clearDataDictionary[chara].Practices;
                         return practices.ContainsKey(key)
                             ? Utils.ToNumberString(practices[key].Score * 10) : "0";
                     }
