@@ -13,7 +13,7 @@ using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th143
 {
-    internal class BestShotHeader : IBinaryReadable
+    internal class BestShotHeader : IBinaryReadable, IBestShotHeader
     {
         public const string ValidSignature = "BST3";
         public const int SignatureSize = 4;

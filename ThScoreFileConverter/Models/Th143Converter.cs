@@ -30,7 +30,7 @@ namespace ThScoreFileConverter.Models
     {
         private AllScoreData allScoreData = null;
 
-        private Dictionary<(Day Day, int Scene), (string Path, BestShotHeader Header)> bestshots = null;
+        private Dictionary<(Day Day, int Scene), (string Path, IBestShotHeader Header)> bestshots = null;
 
         public override string SupportedVersions
         {
@@ -106,7 +106,7 @@ namespace ThScoreFileConverter.Models
                     if (this.bestshots == null)
                     {
                         this.bestshots =
-                            new Dictionary<(Day, int), (string, BestShotHeader)>(Definitions.SpellCards.Count);
+                            new Dictionary<(Day, int), (string, IBestShotHeader)>(Definitions.SpellCards.Count);
                     }
 
                     var key = (header.Day, header.Scene);

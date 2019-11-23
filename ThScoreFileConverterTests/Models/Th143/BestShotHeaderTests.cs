@@ -3,77 +3,67 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using ThScoreFileConverter.Models.Th143;
+using ThScoreFileConverterTests.Models.Th143.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th143
 {
     [TestClass]
     public class BestShotHeaderTests
     {
-        internal struct Properties
+        internal static IBestShotHeader ValidStub { get; } = new BestShotHeaderStub
         {
-            public string signature;
-            public Day day;
-            public short scene;
-            public short width;
-            public short height;
-            public uint dateTime;
-            public float slowRate;
+            Signature = "BST3",
+            Day = Day.Second,
+            Scene = 3,
+            Width = 4,
+            Height = 5,
+            DateTime = 6,
+            SlowRate = 7f
         };
 
-        internal static Properties ValidProperties { get; } = new Properties()
-        {
-            signature = "BST3",
-            day = Day.Second,
-            scene = 3,
-            width = 4,
-            height = 5,
-            dateTime = 6,
-            slowRate = 7f
-        };
-
-        internal static byte[] MakeByteArray(in Properties properties)
+        internal static byte[] MakeByteArray(IBestShotHeader header)
             => TestUtils.MakeByteArray(
-                properties.signature.ToCharArray(),
+                header.Signature.ToCharArray(),
                 (ushort)0,
-                TestUtils.Cast<short>(properties.day),
-                (short)(properties.scene - 1),
+                TestUtils.Cast<short>(header.Day),
+                (short)(header.Scene - 1),
                 (ushort)0,
-                properties.width,
-                properties.height,
+                header.Width,
+                header.Height,
                 0u,
-                properties.dateTime,
-                properties.slowRate,
+                header.DateTime,
+                header.SlowRate,
                 TestUtils.MakeRandomArray<byte>(0x58));
 
-        internal static void Validate(in Properties expected, in BestShotHeader actual)
+        internal static void Validate(IBestShotHeader expected, IBestShotHeader actual)
         {
             if (actual == null)
                 throw new ArgumentNullException(nameof(actual));
 
-            Assert.AreEqual(expected.signature, actual.Signature);
-            Assert.AreEqual(expected.day, actual.Day);
-            Assert.AreEqual(expected.scene, actual.Scene);
-            Assert.AreEqual(expected.width, actual.Width);
-            Assert.AreEqual(expected.height, actual.Height);
-            Assert.AreEqual(expected.dateTime, actual.DateTime);
-            Assert.AreEqual(expected.slowRate, actual.SlowRate);
+            Assert.AreEqual(expected.Signature, actual.Signature);
+            Assert.AreEqual(expected.Day, actual.Day);
+            Assert.AreEqual(expected.Scene, actual.Scene);
+            Assert.AreEqual(expected.Width, actual.Width);
+            Assert.AreEqual(expected.Height, actual.Height);
+            Assert.AreEqual(expected.DateTime, actual.DateTime);
+            Assert.AreEqual(expected.SlowRate, actual.SlowRate);
         }
 
         [TestMethod]
         public void BestShotHeaderTest() => TestUtils.Wrap(() =>
         {
-            var properties = new Properties();
+            var stub = new BestShotHeaderStub();
             var header = new BestShotHeader();
 
-            Validate(properties, header);
+            Validate(stub, header);
         });
 
         [TestMethod]
         public void ReadFromTest() => TestUtils.Wrap(() =>
         {
-            var header = TestUtils.Create<BestShotHeader>(MakeByteArray(ValidProperties));
+            var header = TestUtils.Create<BestShotHeader>(MakeByteArray(ValidStub));
 
-            Validate(ValidProperties, header);
+            Validate(ValidStub, header);
         });
 
         [TestMethod]
@@ -91,10 +81,12 @@ namespace ThScoreFileConverterTests.Models.Th143
         [ExpectedException(typeof(InvalidDataException))]
         public void ReadFromTestEmptySignature() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.signature = string.Empty;
+            var stub = new BestShotHeaderStub(ValidStub)
+            {
+                Signature = string.Empty,
+            };
 
-            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(properties));
+            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -103,10 +95,10 @@ namespace ThScoreFileConverterTests.Models.Th143
         [ExpectedException(typeof(InvalidDataException))]
         public void ReadFromTestShortenedSignature() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.signature = properties.signature.Substring(0, properties.signature.Length - 1);
+            var stub = new BestShotHeaderStub(ValidStub);
+            stub.Signature = stub.Signature.Substring(0, stub.Signature.Length - 1);
 
-            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(properties));
+            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -115,10 +107,10 @@ namespace ThScoreFileConverterTests.Models.Th143
         [ExpectedException(typeof(InvalidCastException))]
         public void ReadFromTestExceededSignature() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.signature += "E";
+            var stub = new BestShotHeaderStub(ValidStub);
+            stub.Signature += "E";
 
-            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(properties));
+            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -131,10 +123,12 @@ namespace ThScoreFileConverterTests.Models.Th143
         [ExpectedException(typeof(InvalidCastException))]
         public void ReadFromTestInvalidDay(int day) => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.day = TestUtils.Cast<Day>(day);
+            var stub = new BestShotHeaderStub(ValidStub)
+            {
+                Day = TestUtils.Cast<Day>(day),
+            };
 
-            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(properties));
+            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
