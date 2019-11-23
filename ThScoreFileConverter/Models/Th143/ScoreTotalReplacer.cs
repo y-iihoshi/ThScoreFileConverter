@@ -7,6 +7,7 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -25,6 +26,11 @@ namespace ThScoreFileConverter.Models.Th143
         public ScoreTotalReplacer(
             IReadOnlyList<IScore> scores, IReadOnlyDictionary<ItemWithTotal, IItemStatus> itemStatuses)
         {
+            if (scores is null)
+                throw new ArgumentNullException(nameof(scores));
+            if (itemStatuses is null)
+                throw new ArgumentNullException(nameof(itemStatuses));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var item = Parsers.ItemWithTotalParser.Parse(match.Groups[1].Value);
@@ -36,13 +42,27 @@ namespace ThScoreFileConverter.Models.Th143
                         return Utils.ToNumberString(scores.Sum(score => score.HighScore * 10L));
                     case 2:     // total of challenge counts
                         if (item == ItemWithTotal.NoItem)
+                        {
                             return "-";
+                        }
                         else
-                            return Utils.ToNumberString(itemStatuses[item].UseCount);
+                        {
+                            return itemStatuses.TryGetValue(item, out var status)
+                                ? Utils.ToNumberString(status.UseCount) : "0";
+                        }
+
                     case 3:     // total of cleared counts
-                        return Utils.ToNumberString(itemStatuses[item].ClearedCount);
+                        {
+                            return itemStatuses.TryGetValue(item, out var status)
+                                ? Utils.ToNumberString(status.ClearedCount) : "0";
+                        }
+
                     case 4:     // num of cleared scenes
-                        return Utils.ToNumberString(itemStatuses[item].ClearedScenes);
+                        {
+                            return itemStatuses.TryGetValue(item, out var status)
+                                ? Utils.ToNumberString(status.ClearedScenes) : "0";
+                        }
+
                     default:    // unreachable
                         return match.ToString();
                 }
