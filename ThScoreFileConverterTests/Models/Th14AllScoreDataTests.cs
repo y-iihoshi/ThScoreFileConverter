@@ -83,9 +83,8 @@ namespace ThScoreFileConverterTests.Models
             where TStPrac : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var stub = Th14ClearDataTests.MakeValidStub<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>();
-                var chapter = ChapterWrapper.Create(Th14ClearDataTests.MakeByteArray<
-                    TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>(stub));
+                var stub = Th14ClearDataTests.MakeValidStub();
+                var chapter = ChapterWrapper.Create(Th14ClearDataTests.MakeByteArray(stub));
                 var clearData =
                     new Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>(chapter);
 
@@ -93,7 +92,7 @@ namespace ThScoreFileConverterTests.Models
                     new Th13AllScoreDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>();
                 allScoreData.Set(clearData);
 
-                Assert.AreSame(clearData.Target, allScoreData.ClearDataItem(stub.Chara).Target);
+                Assert.AreSame(clearData.Target, allScoreData.ClearDataItem((TChWithT)(object)stub.Chara).Target);
             });
 
         internal static void Th13AllScoreDataSetClearDataTestTwiceHelper<
@@ -106,9 +105,8 @@ namespace ThScoreFileConverterTests.Models
             where TStPrac : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var stub = Th14ClearDataTests.MakeValidStub<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>();
-                var chapter = ChapterWrapper.Create(Th14ClearDataTests.MakeByteArray<
-                    TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>(stub));
+                var stub = Th14ClearDataTests.MakeValidStub();
+                var chapter = ChapterWrapper.Create(Th14ClearDataTests.MakeByteArray(stub));
                 var clearData1 =
                     new Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>(chapter);
                 var clearData2 =
@@ -119,8 +117,8 @@ namespace ThScoreFileConverterTests.Models
                 allScoreData.Set(clearData1);
                 allScoreData.Set(clearData2);
 
-                Assert.AreSame(clearData1.Target, allScoreData.ClearDataItem(stub.Chara).Target);
-                Assert.AreNotSame(clearData2.Target, allScoreData.ClearDataItem(stub.Chara).Target);
+                Assert.AreSame(clearData1.Target, allScoreData.ClearDataItem((TChWithT)(object)stub.Chara).Target);
+                Assert.AreNotSame(clearData2.Target, allScoreData.ClearDataItem((TChWithT)(object)stub.Chara).Target);
             });
 
         internal static void Th13AllScoreDataSetStatusTestHelper<
