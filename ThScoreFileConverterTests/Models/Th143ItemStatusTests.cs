@@ -21,7 +21,7 @@ namespace ThScoreFileConverterTests.Models
             Version = 1,
             Checksum = 0u,
             Size = 0x34,
-            Item = Th143Converter.ItemWithTotal.NoItem,
+            Item = ItemWithTotal.NoItem,
             UseCount = 98,
             ClearedCount = 76,
             ClearedScenes = 54,
@@ -130,7 +130,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         public static IEnumerable<object[]> InvalidItems
-            => TestUtils.GetInvalidEnumerators(typeof(Th143Converter.ItemWithTotal));
+            => TestUtils.GetInvalidEnumerators(typeof(ItemWithTotal));
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
@@ -140,7 +140,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var stub = new ItemStatusStub(ValidStub)
             {
-                Item = TestUtils.Cast<Th143Converter.ItemWithTotal>(item),
+                Item = TestUtils.Cast<ItemWithTotal>(item),
             };
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));

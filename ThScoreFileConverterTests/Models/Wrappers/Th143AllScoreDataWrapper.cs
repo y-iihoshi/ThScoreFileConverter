@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th095;
+using ThScoreFileConverter.Models.Th143;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -43,7 +44,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.ItemStatuses));
         public int? ItemStatusesCount
             => this.ItemStatuses.GetType().GetProperty("Count").GetValue(this.ItemStatuses) as int?;
-        public Th143ItemStatusWrapper ItemStatusesItem(Th143Converter.ItemWithTotal item)
+        public Th143ItemStatusWrapper ItemStatusesItem(ItemWithTotal item)
             => new Th143ItemStatusWrapper(
                 this.ItemStatuses.GetType().GetProperty("Item").GetValue(this.ItemStatuses, new object[] { item }));
 

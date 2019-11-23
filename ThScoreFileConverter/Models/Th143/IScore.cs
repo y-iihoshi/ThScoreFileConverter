@@ -13,9 +13,9 @@ namespace ThScoreFileConverter.Models.Th143
 {
     internal interface IScore : Th095.IChapter
     {
-        IReadOnlyDictionary<Th143Converter.ItemWithTotal, int> ChallengeCounts { get; }
+        IReadOnlyDictionary<ItemWithTotal, int> ChallengeCounts { get; }
 
-        IReadOnlyDictionary<Th143Converter.ItemWithTotal, int> ClearCounts { get; }
+        IReadOnlyDictionary<ItemWithTotal, int> ClearCounts { get; }
 
         int HighScore { get; }
 

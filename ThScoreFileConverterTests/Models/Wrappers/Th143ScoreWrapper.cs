@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th143;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
@@ -38,10 +39,10 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.Data)) as byte[];
         public int? Number
             => this.pobj.GetProperty(nameof(this.Number)) as int?;
-        public IReadOnlyDictionary<Th143Converter.ItemWithTotal, int> ClearCounts
-            => this.pobj.GetProperty(nameof(this.ClearCounts)) as Dictionary<Th143Converter.ItemWithTotal, int>;
-        public IReadOnlyDictionary<Th143Converter.ItemWithTotal, int> ChallengeCounts
-            => this.pobj.GetProperty(nameof(this.ChallengeCounts)) as Dictionary<Th143Converter.ItemWithTotal, int>;
+        public IReadOnlyDictionary<ItemWithTotal, int> ClearCounts
+            => this.pobj.GetProperty(nameof(this.ClearCounts)) as Dictionary<ItemWithTotal, int>;
+        public IReadOnlyDictionary<ItemWithTotal, int> ChallengeCounts
+            => this.pobj.GetProperty(nameof(this.ChallengeCounts)) as Dictionary<ItemWithTotal, int>;
         public int? HighScore
             => this.pobj.GetProperty(nameof(this.HighScore)) as int?;
 

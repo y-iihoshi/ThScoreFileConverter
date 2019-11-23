@@ -13,9 +13,9 @@ namespace ThScoreFileConverter.Models.Th143
 {
     internal interface IStatus : Th125.IStatus
     {
-        Th143Converter.ItemWithTotal LastMainItem { get; }
+        ItemWithTotal LastMainItem { get; }
 
-        Th143Converter.ItemWithTotal LastSubItem { get; }
+        ItemWithTotal LastSubItem { get; }
 
         IEnumerable<byte> NicknameFlags { get; }
     }

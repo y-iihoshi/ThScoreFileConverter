@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th143;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
@@ -42,10 +43,10 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.BgmFlags)) as byte[];
         public int? TotalPlayTime
             => this.pobj.GetProperty(nameof(this.TotalPlayTime)) as int?;
-        public Th143Converter.ItemWithTotal? LastMainItem
-            => this.pobj.GetProperty(nameof(this.LastMainItem)) as Th143Converter.ItemWithTotal?;
-        public Th143Converter.ItemWithTotal? LastSubItem
-            => this.pobj.GetProperty(nameof(this.LastSubItem)) as Th143Converter.ItemWithTotal?;
+        public ItemWithTotal? LastMainItem
+            => this.pobj.GetProperty(nameof(this.LastMainItem)) as ItemWithTotal?;
+        public ItemWithTotal? LastSubItem
+            => this.pobj.GetProperty(nameof(this.LastSubItem)) as ItemWithTotal?;
         public IReadOnlyCollection<byte> NicknameFlags
             => this.pobj.GetProperty(nameof(this.NicknameFlags)) as byte[];
 

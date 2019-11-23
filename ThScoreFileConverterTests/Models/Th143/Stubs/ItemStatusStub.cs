@@ -1,5 +1,4 @@
-﻿using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Models.Th143;
+﻿using ThScoreFileConverter.Models.Th143;
 
 namespace ThScoreFileConverterTests.Models.Th143.Stubs
 {
@@ -32,7 +31,7 @@ namespace ThScoreFileConverterTests.Models.Th143.Stubs
 
         public int FramesOrRanges { get; set; }
 
-        public Th143Converter.ItemWithTotal Item { get; set; }
+        public ItemWithTotal Item { get; set; }
 
         public int ItemLevel { get; set; }
 

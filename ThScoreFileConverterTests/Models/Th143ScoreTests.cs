@@ -22,9 +22,9 @@ namespace ThScoreFileConverterTests.Models
             Checksum = 0u,
             Size = 0x314,
             Number = 123,
-            ClearCounts = Utils.GetEnumerator<Th143Converter.ItemWithTotal>()
+            ClearCounts = Utils.GetEnumerator<ItemWithTotal>()
                 .ToDictionary(item => item, item => (int)item * 10),
-            ChallengeCounts = Utils.GetEnumerator<Th143Converter.ItemWithTotal>()
+            ChallengeCounts = Utils.GetEnumerator<ItemWithTotal>()
                 .ToDictionary(item => item, item => (int)item * 100),
             HighScore = 456789
         };

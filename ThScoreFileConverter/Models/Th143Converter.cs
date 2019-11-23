@@ -7,7 +7,6 @@
 
 #pragma warning disable 1591
 #pragma warning disable SA1600 // ElementsMustBeDocumented
-#pragma warning disable SA1602 // EnumerationItemsMustBeDocumented
 
 using System;
 using System.Collections.Generic;
@@ -197,78 +196,6 @@ namespace ThScoreFileConverter.Models
         private AllScoreData allScoreData = null;
 
         private Dictionary<(Day Day, int Scene), (string Path, BestShotHeader Header)> bestshots = null;
-
-        public enum Day
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("1", LongName = "01")] First,
-            [EnumAltName("2", LongName = "02")] Second,
-            [EnumAltName("3", LongName = "03")] Third,
-            [EnumAltName("4", LongName = "04")] Fourth,
-            [EnumAltName("5", LongName = "05")] Fifth,
-            [EnumAltName("6", LongName = "06")] Sixth,
-            [EnumAltName("7", LongName = "07")] Seventh,
-            [EnumAltName("8", LongName = "08")] Eighth,
-            [EnumAltName("9", LongName = "09")] Ninth,
-            [EnumAltName("L", LongName = "10")] Last,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum Enemy
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("わかさぎ姫",  LongName = "わかさぎ姫")]             Wakasagihime,
-            [EnumAltName("チルノ",      LongName = "チルノ")]                 Cirno,
-            [EnumAltName("響子",        LongName = "幽谷 響子")]              Kyouko,
-            [EnumAltName("赤蛮奇",      LongName = "赤蛮奇")]                 Sekibanki,
-            [EnumAltName("影狼",        LongName = "今泉 影狼")]              Kagerou,
-            [EnumAltName("慧音",        LongName = "上白沢 慧音")]            Keine,
-            [EnumAltName("妹紅",        LongName = "藤原 妹紅")]              Mokou,
-            [EnumAltName("芳香",        LongName = "宮古 芳香")]              Yoshika,
-            [EnumAltName("青娥",        LongName = "霍 青娥")]                Seiga,
-            [EnumAltName("幽々子",      LongName = "西行寺 幽々子")]          Yuyuko,
-            [EnumAltName("八橋",        LongName = "九十九 八橋")]            Yatsuhashi,
-            [EnumAltName("弁々",        LongName = "九十九 弁々")]            Benben,
-            [EnumAltName("雷鼓",        LongName = "堀川 雷鼓")]              Raiko,
-            [EnumAltName("文",          LongName = "射命丸 文")]              Aya,
-            [EnumAltName("はたて",      LongName = "姫海棠 はたて")]          Hatate,
-            [EnumAltName("にとり",      LongName = "河城 にとり")]            Nitori,
-            [EnumAltName("椛",          LongName = "犬走 椛")]                Momiji,
-            [EnumAltName("魔理沙",      LongName = "霧雨 魔理沙")]            Marisa,
-            [EnumAltName("咲夜",        LongName = "十六夜 咲夜")]            Sakuya,
-            [EnumAltName("妖夢",        LongName = "魂魄 妖夢")]              Youmu,
-            [EnumAltName("早苗",        LongName = "東風谷 早苗")]            Sanae,
-            [EnumAltName("霊夢",        LongName = "博麗 霊夢")]              Reimu,
-            [EnumAltName("マミゾウ",    LongName = "二ッ岩 マミゾウ")]        Mamizou,
-            [EnumAltName("針妙丸",      LongName = "少名 針妙丸")]            Shinmyoumaru,
-            [EnumAltName("神奈子",      LongName = "八坂 神奈子")]            Kanako,
-            [EnumAltName("諏訪子",      LongName = "洩矢 諏訪子")]            Suwako,
-            [EnumAltName("布都",        LongName = "物部 布都")]              Futo,
-            [EnumAltName("萃香",        LongName = "伊吹 萃香")]              Suika,
-            [EnumAltName("白蓮",        LongName = "聖 白蓮")]                Byakuren,
-            [EnumAltName("神子",        LongName = "豊聡耳 神子")]            Miko,
-            [EnumAltName("天子",        LongName = "比那名居 天子")]          Tenshi,
-            [EnumAltName("レミリア",    LongName = "レミリア・スカーレット")] Remilia,
-            [EnumAltName("紫",          LongName = "八雲 紫")]                Yukari,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum ItemWithTotal
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("1", LongName = "ひらり布")]                 Fablic,
-            [EnumAltName("2", LongName = "天狗のトイカメラ")]         Camera,
-            [EnumAltName("3", LongName = "隙間の折りたたみ傘")]       Umbrella,
-            [EnumAltName("4", LongName = "亡霊の送り提灯")]           Lantern,
-            [EnumAltName("5", LongName = "血に飢えた陰陽玉")]         Orb,
-            [EnumAltName("6", LongName = "四尺マジックボム")]         Bomb,
-            [EnumAltName("7", LongName = "身代わり地蔵")]             Jizou,
-            [EnumAltName("8", LongName = "呪いのデコイ人形")]         Doll,
-            [EnumAltName("9", LongName = "打ち出の小槌（レプリカ）")] Mallet,
-            [EnumAltName("0", LongName = "ノーアイテム")]             NoItem,
-            [EnumAltName("T", LongName = "合計")]                     Total,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
 
         public override string SupportedVersions
         {

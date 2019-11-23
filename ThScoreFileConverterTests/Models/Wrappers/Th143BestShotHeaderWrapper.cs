@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th143;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -48,8 +49,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.Target;
         public string Signature
             => this.pobj.GetProperty(nameof(this.Signature)) as string;
-        public Th143Converter.Day? Day
-            => this.pobj.GetProperty(nameof(this.Day)) as Th143Converter.Day?;
+        public Day? Day
+            => this.pobj.GetProperty(nameof(this.Day)) as Day?;
         public short? Scene
             => this.pobj.GetProperty(nameof(this.Scene)) as short?;
         public short? Width

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th143;
 
 namespace ThScoreFileConverterTests.Models.Th143.Stubs
@@ -23,9 +22,9 @@ namespace ThScoreFileConverterTests.Models.Th143.Stubs
             this.Version = score.Version;
         }
 
-        public IReadOnlyDictionary<Th143Converter.ItemWithTotal, int> ChallengeCounts { get; set; }
+        public IReadOnlyDictionary<ItemWithTotal, int> ChallengeCounts { get; set; }
 
-        public IReadOnlyDictionary<Th143Converter.ItemWithTotal, int> ClearCounts { get; set; }
+        public IReadOnlyDictionary<ItemWithTotal, int> ClearCounts { get; set; }
 
         public int HighScore { get; set; }
 

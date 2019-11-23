@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th143;
 
 namespace ThScoreFileConverterTests.Models.Th143.Stubs
@@ -25,9 +24,9 @@ namespace ThScoreFileConverterTests.Models.Th143.Stubs
             this.Version = status.Version;
         }
 
-        public Th143Converter.ItemWithTotal LastMainItem { get; set; }
+        public ItemWithTotal LastMainItem { get; set; }
 
-        public Th143Converter.ItemWithTotal LastSubItem { get; set; }
+        public ItemWithTotal LastSubItem { get; set; }
 
         public IEnumerable<byte> NicknameFlags { get; set; }
 

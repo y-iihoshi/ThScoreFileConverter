@@ -25,8 +25,8 @@ namespace ThScoreFileConverterTests.Models
             LastName = TestUtils.CP932Encoding.GetBytes("Player1     \0\0"),
             BgmFlags = TestUtils.MakeRandomArray<byte>(9),
             TotalPlayTime = 12345678,
-            LastMainItem = Th143Converter.ItemWithTotal.Camera,
-            LastSubItem = Th143Converter.ItemWithTotal.Doll,
+            LastMainItem = ItemWithTotal.Camera,
+            LastSubItem = ItemWithTotal.Doll,
             NicknameFlags = TestUtils.MakeRandomArray<byte>(71)
         };
 
@@ -149,7 +149,7 @@ namespace ThScoreFileConverterTests.Models
             });
 
         public static IEnumerable<object[]> InvalidItems
-            => TestUtils.GetInvalidEnumerators(typeof(Th143Converter.ItemWithTotal));
+            => TestUtils.GetInvalidEnumerators(typeof(ItemWithTotal));
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
@@ -159,7 +159,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var stub = new StatusStub(ValidStub)
             {
-                LastMainItem = TestUtils.Cast<Th143Converter.ItemWithTotal>(item),
+                LastMainItem = TestUtils.Cast<ItemWithTotal>(item),
             };
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));
@@ -176,7 +176,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var stub = new StatusStub(ValidStub)
             {
-                LastSubItem = TestUtils.Cast<Th143Converter.ItemWithTotal>(item),
+                LastSubItem = TestUtils.Cast<ItemWithTotal>(item),
             };
 
             var chapter = ChapterWrapper.Create(MakeByteArray(stub));

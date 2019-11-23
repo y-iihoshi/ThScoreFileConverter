@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th143;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
@@ -36,8 +37,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.IsValid)) as bool?;
         public IReadOnlyCollection<byte> Data
             => this.pobj.GetProperty(nameof(this.Data)) as byte[];
-        public Th143Converter.ItemWithTotal? Item
-            => this.pobj.GetProperty(nameof(this.Item)) as Th143Converter.ItemWithTotal?;
+        public ItemWithTotal? Item
+            => this.pobj.GetProperty(nameof(this.Item)) as ItemWithTotal?;
         public int? UseCount
             => this.pobj.GetProperty(nameof(this.UseCount)) as int?;
         public int? ClearedCount

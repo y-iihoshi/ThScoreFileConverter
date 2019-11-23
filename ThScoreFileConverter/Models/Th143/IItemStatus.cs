@@ -19,7 +19,7 @@ namespace ThScoreFileConverter.Models.Th143
 
         int FramesOrRanges { get; }
 
-        Th143Converter.ItemWithTotal Item { get; }
+        ItemWithTotal Item { get; }
 
         int ItemLevel { get; }
 
