@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th095;
+using ThScoreFileConverter.Models.Th143;
 using ThScoreFileConverterTests.Models.Th095;
 using ThScoreFileConverterTests.Models.Th143.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
@@ -17,7 +18,7 @@ namespace ThScoreFileConverterTests.Models
 
             Assert.IsNull(allScoreData.Header);
             Assert.AreEqual(0, allScoreData.Scores.Count);
-            Assert.AreEqual(0, allScoreData.ItemStatusesCount);
+            Assert.AreEqual(0, allScoreData.ItemStatuses.Count);
             Assert.IsNull(allScoreData.Status);
         });
 
@@ -76,30 +77,28 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th143AllScoreDataSetItemStatusTest() => TestUtils.Wrap(() =>
         {
-            var stub = Th143ItemStatusTests.ValidStub;
-            var chapter = ChapterWrapper.Create(Th143ItemStatusTests.MakeByteArray(stub));
-            var status = new Th143ItemStatusWrapper(chapter);
+            var item = ItemWithTotal.Fablic;
+            var status = new ItemStatusStub { Item = item };
 
             var allScoreData = new Th143AllScoreDataWrapper();
             allScoreData.Set(status);
 
-            Assert.AreSame(status.Target, allScoreData.ItemStatusesItem(stub.Item).Target);
+            Assert.AreSame(status, allScoreData.ItemStatuses[item]);
         });
 
         [TestMethod]
         public void Th143AllScoreDataSetItemStatusTestTwice() => TestUtils.Wrap(() =>
         {
-            var stub = Th143ItemStatusTests.ValidStub;
-            var chapter = ChapterWrapper.Create(Th143ItemStatusTests.MakeByteArray(stub));
-            var status1 = new Th143ItemStatusWrapper(chapter);
-            var status2 = new Th143ItemStatusWrapper(chapter);
+            var item = ItemWithTotal.Fablic;
+            var status1 = new ItemStatusStub { Item = item };
+            var status2 = new ItemStatusStub { Item = item };
 
             var allScoreData = new Th143AllScoreDataWrapper();
             allScoreData.Set(status1);
             allScoreData.Set(status2);
 
-            Assert.AreSame(status1.Target, allScoreData.ItemStatusesItem(stub.Item).Target);
-            Assert.AreNotSame(status2.Target, allScoreData.ItemStatusesItem(stub.Item).Target);
+            Assert.AreSame(status1, allScoreData.ItemStatuses[item]);
+            Assert.AreNotSame(status2, allScoreData.ItemStatuses[item]);
         });
 
         [TestMethod]

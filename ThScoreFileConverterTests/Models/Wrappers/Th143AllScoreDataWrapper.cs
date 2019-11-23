@@ -28,17 +28,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.Header)) as HeaderBase;
         public IReadOnlyList<IScore> Scores
             => this.pobj.GetProperty(nameof(this.Scores)) as IReadOnlyList<IScore>;
-
-        // NOTE: Th143Converter.ItemStatus is a private class.
-        // public IReadOnlyDictionary<ItemWithTotal, ItemStatus> ItemStatuses
-        //     => this.pobj.GetProperty(nameof(this.ItemStatuses)) as Dictionary<ItemWithTotal, ItemStatus>;
-        public object ItemStatuses
-            => this.pobj.GetProperty(nameof(this.ItemStatuses));
-        public int? ItemStatusesCount
-            => this.ItemStatuses.GetType().GetProperty("Count").GetValue(this.ItemStatuses) as int?;
-        public Th143ItemStatusWrapper ItemStatusesItem(ItemWithTotal item)
-            => new Th143ItemStatusWrapper(
-                this.ItemStatuses.GetType().GetProperty("Item").GetValue(this.ItemStatuses, new object[] { item }));
+        public IReadOnlyDictionary<ItemWithTotal, IItemStatus> ItemStatuses
+            => this.pobj.GetProperty(nameof(this.ItemStatuses)) as IReadOnlyDictionary<ItemWithTotal, IItemStatus>;
 
         public Th143StatusWrapper Status
         {
@@ -53,8 +44,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.Invoke(nameof(Set), new object[] { header }, CultureInfo.InvariantCulture);
         public void Set(IScore score)
             => this.pobj.Invoke(nameof(Set), new object[] { score }, CultureInfo.InvariantCulture);
-        public void Set(Th143ItemStatusWrapper item)
-            => this.pobj.Invoke(nameof(Set), new object[] { item.Target }, CultureInfo.InvariantCulture);
+        public void Set(IItemStatus item)
+            => this.pobj.Invoke(nameof(Set), new object[] { item }, CultureInfo.InvariantCulture);
         public void Set(Th143StatusWrapper status)
             => this.pobj.Invoke(nameof(Set), new object[] { status.Target }, CultureInfo.InvariantCulture);
     }
