@@ -61,7 +61,7 @@ namespace ThScoreFileConverterTests.Models.Th13
         }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        internal static void Th13SpellCardTestHelper<TLevel>()
+        internal static void SpellCardTestHelper<TLevel>()
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
@@ -73,7 +73,7 @@ namespace ThScoreFileConverterTests.Models.Th13
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        internal static void Th13SpellCardReadFromTestHelper<TLevel>()
+        internal static void ReadFromTestHelper<TLevel>()
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
@@ -86,7 +86,7 @@ namespace ThScoreFileConverterTests.Models.Th13
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        internal static void Th13SpellCardReadFromTestNullHelper<TLevel>()
+        internal static void ReadFromTestNullHelper<TLevel>()
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
@@ -98,7 +98,7 @@ namespace ThScoreFileConverterTests.Models.Th13
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        internal static void Th13SpellCardReadFromTestShortenedNameHelper<TLevel>()
+        internal static void ReadFromTestShortenedNameHelper<TLevel>()
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
@@ -111,7 +111,7 @@ namespace ThScoreFileConverterTests.Models.Th13
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        internal static void Th13SpellCardReadFromTestExceededNameHelper<TLevel>()
+        internal static void ReadFromTestExceededNameHelper<TLevel>()
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
@@ -124,7 +124,7 @@ namespace ThScoreFileConverterTests.Models.Th13
             });
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
-        internal static void Th13SpellCardReadFromTestInvalidLevelHelper<TLevel>(int level)
+        internal static void ReadFromTestInvalidLevelHelper<TLevel>(int level)
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
@@ -146,33 +146,33 @@ namespace ThScoreFileConverterTests.Models.Th13
 
         [TestMethod]
         public void Th13SpellCardTest()
-            => Th13SpellCardTestHelper<LevelPractice>();
+            => SpellCardTestHelper<LevelPractice>();
 
         [TestMethod]
-        public void Th13SpellCardReadFromTest()
-            => Th13SpellCardReadFromTestHelper<LevelPractice>();
+        public void Th13ReadFromTest()
+            => ReadFromTestHelper<LevelPractice>();
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th13SpellCardReadFromTestNull()
-            => Th13SpellCardReadFromTestNullHelper<LevelPractice>();
+        public void Th13ReadFromTestNull()
+            => ReadFromTestNullHelper<LevelPractice>();
 
         [TestMethod]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th13SpellCardReadFromTestShortenedName()
-            => Th13SpellCardReadFromTestShortenedNameHelper<LevelPractice>();
+        public void Th13ReadFromTestShortenedName()
+            => ReadFromTestShortenedNameHelper<LevelPractice>();
 
         [TestMethod]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th13SpellCardReadFromTestExceededName()
-            => Th13SpellCardReadFromTestExceededNameHelper<LevelPractice>();
+        public void Th13ReadFromTestExceededName()
+            => ReadFromTestExceededNameHelper<LevelPractice>();
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidTh13LevelPractices))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th13SpellCardReadFromTestInvalidLevel(int level)
-            => Th13SpellCardReadFromTestInvalidLevelHelper<LevelPractice>(level);
+        public void Th13ReadFromTestInvalidLevel(int level)
+            => ReadFromTestInvalidLevelHelper<LevelPractice>(level);
 
         #endregion
 
@@ -180,33 +180,33 @@ namespace ThScoreFileConverterTests.Models.Th13
 
         [TestMethod]
         public void Th14SpellCardTest()
-            => Th13SpellCardTestHelper<Level>();
+            => SpellCardTestHelper<Level>();
 
         [TestMethod]
-        public void Th14SpellCardReadFromTest()
-            => Th13SpellCardReadFromTestHelper<Level>();
+        public void Th14ReadFromTest()
+            => ReadFromTestHelper<Level>();
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th14SpellCardReadFromTestNull()
-            => Th13SpellCardReadFromTestNullHelper<Level>();
+        public void Th14ReadFromTestNull()
+            => ReadFromTestNullHelper<Level>();
 
         [TestMethod]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th14SpellCardReadFromTestShortenedName()
-            => Th13SpellCardReadFromTestShortenedNameHelper<Level>();
+        public void Th14ReadFromTestShortenedName()
+            => ReadFromTestShortenedNameHelper<Level>();
 
         [TestMethod]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th14SpellCardReadFromTestExceededName()
-            => Th13SpellCardReadFromTestExceededNameHelper<Level>();
+        public void Th14ReadFromTestExceededName()
+            => ReadFromTestExceededNameHelper<Level>();
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th14SpellCardReadFromTestInvalidLevel(int level)
-            => Th13SpellCardReadFromTestInvalidLevelHelper<Level>(level);
+        public void Th14ReadFromTestInvalidLevel(int level)
+            => ReadFromTestInvalidLevelHelper<Level>(level);
 
         #endregion
 
@@ -214,33 +214,33 @@ namespace ThScoreFileConverterTests.Models.Th13
 
         [TestMethod]
         public void Th16SpellCardTest()
-            => Th13SpellCardTestHelper<Level>();
+            => SpellCardTestHelper<Level>();
 
         [TestMethod]
-        public void Th16SpellCardReadFromTest()
-            => Th13SpellCardReadFromTestHelper<Level>();
+        public void Th16ReadFromTest()
+            => ReadFromTestHelper<Level>();
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th16SpellCardReadFromTestNull()
-            => Th13SpellCardReadFromTestNullHelper<Level>();
+        public void Th16ReadFromTestNull()
+            => ReadFromTestNullHelper<Level>();
 
         [TestMethod]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th16SpellCardReadFromTestShortenedName()
-            => Th13SpellCardReadFromTestShortenedNameHelper<Level>();
+        public void Th16ReadFromTestShortenedName()
+            => ReadFromTestShortenedNameHelper<Level>();
 
         [TestMethod]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th16SpellCardReadFromTestExceededName()
-            => Th13SpellCardReadFromTestExceededNameHelper<Level>();
+        public void Th16ReadFromTestExceededName()
+            => ReadFromTestExceededNameHelper<Level>();
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th16SpellCardReadFromTestInvalidLevel(int level)
-            => Th13SpellCardReadFromTestInvalidLevelHelper<Level>(level);
+        public void Th16ReadFromTestInvalidLevel(int level)
+            => ReadFromTestInvalidLevelHelper<Level>(level);
 
         #endregion
     }

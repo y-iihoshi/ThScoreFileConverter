@@ -8,37 +8,37 @@ namespace ThScoreFileConverterTests.Models.Th14
     public class AllScoreDataTests
     {
         [TestMethod]
-        public void Th14AllScoreDataTest()
+        public void AllScoreDataTest()
             => Th13.AllScoreDataTests.AllScoreDataTestHelper<
                 CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice>();
 
         [TestMethod]
-        public void Th14AllScoreDataSetHeaderTest()
+        public void SetHeaderTest()
             => Th13.AllScoreDataTests.SetHeaderTestHelper<
                 CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice>();
 
         [TestMethod]
-        public void Th14AllScoreDataSetHeaderTestTwice()
+        public void SetHeaderTestTwice()
             => Th13.AllScoreDataTests.SetHeaderTestTwiceHelper<
                 CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice>();
 
         [TestMethod]
-        public void Th14AllScoreDataSetClearDataTest()
+        public void SetClearDataTest()
             => Th13.AllScoreDataTests.SetClearDataTestHelper<
                 CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice>();
 
         [TestMethod]
-        public void Th14AllScoreDataSetClearDataTestTwice()
+        public void SetClearDataTestTwice()
             => Th13.AllScoreDataTests.SetClearDataTestTwiceHelper<
                 CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice>();
 
         [TestMethod]
-        public void Th14AllScoreDataSetStatusTest()
+        public void SetStatusTest()
             => Th13.AllScoreDataTests.SetStatusTestHelper<
                 CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice>();
 
         [TestMethod]
-        public void Th14AllScoreDataSetStatusTestTwice()
+        public void SetStatusTestTwice()
             => Th13.AllScoreDataTests.SetStatusTestTwiceHelper<
                 CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice>();
     }

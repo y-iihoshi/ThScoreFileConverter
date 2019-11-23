@@ -141,32 +141,32 @@ namespace ThScoreFileConverterTests.Models.Th13
                 CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice>();
 
         [TestMethod]
-        public void AllScoreDataSetHeaderTest()
+        public void SetHeaderTest()
             => SetHeaderTestHelper<
                 CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice>();
 
         [TestMethod]
-        public void AllScoreDataSetHeaderTestTwice()
+        public void SetHeaderTestTwice()
             => SetHeaderTestTwiceHelper<
                 CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice>();
 
         [TestMethod]
-        public void AllScoreDataSetClearDataTest()
+        public void SetClearDataTest()
             => SetClearDataTestHelper<
                 CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice>();
 
         [TestMethod]
-        public void AllScoreDataSetClearDataTestTwice()
+        public void SetClearDataTestTwice()
             => SetClearDataTestTwiceHelper<
                 CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice>();
 
         [TestMethod]
-        public void AllScoreDataSetStatusTest()
+        public void SetStatusTest()
             => SetStatusTestHelper<
                 CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice>();
 
         [TestMethod]
-        public void AllScoreDataSetStatusTestTwice()
+        public void SetStatusTestTwice()
             => SetStatusTestTwiceHelper<
                 CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice>();
     }
