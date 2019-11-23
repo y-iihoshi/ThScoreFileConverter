@@ -20,7 +20,7 @@ namespace ThScoreFileConverterTests.Models.Th143
             Version = 1,
             Checksum = 0u,
             Size = 0x314,
-            Number = 123,
+            Number = 69,
             ClearCounts = Utils.GetEnumerator<ItemWithTotal>().ToDictionary(item => item, item => (int)item * 10),
             ChallengeCounts = Utils.GetEnumerator<ItemWithTotal>().ToDictionary(item => item, item => (int)item * 100),
             HighScore = 456789

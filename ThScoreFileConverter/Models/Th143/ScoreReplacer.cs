@@ -7,6 +7,7 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -24,6 +25,9 @@ namespace ThScoreFileConverter.Models.Th143
 
         public ScoreReplacer(IReadOnlyList<IScore> scores)
         {
+            if (scores is null)
+                throw new ArgumentNullException(nameof(scores));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var day = Parsers.DayParser.Parse(match.Groups[1].Value);
@@ -37,7 +41,9 @@ namespace ThScoreFileConverter.Models.Th143
                     return match.ToString();
 
                 var score = scores.FirstOrDefault(elem =>
-                    (elem != null) && ((elem.Number > 0) && (elem.Number <= Definitions.SpellCards.Count)) &&
+                    (elem != null) &&
+                    (elem.Number > 0) &&
+                    (elem.Number <= Definitions.SpellCards.Count) &&
                     Definitions.SpellCards.ElementAt(elem.Number - 1).Key.Equals(key));
 
                 switch (type)
@@ -46,11 +52,18 @@ namespace ThScoreFileConverter.Models.Th143
                         return (score != null) ? Utils.ToNumberString(score.HighScore * 10) : "0";
                     case 2:     // challenge count
                         if (item == ItemWithTotal.NoItem)
+                        {
                             return "-";
+                        }
                         else
-                            return (score != null) ? Utils.ToNumberString(score.ChallengeCounts[item]) : "0";
+                        {
+                            return (score != null) && score.ChallengeCounts.TryGetValue(item, out var challengeCount)
+                                ? Utils.ToNumberString(challengeCount) : "0";
+                        }
+
                     case 3:     // cleared count
-                        return (score != null) ? Utils.ToNumberString(score.ClearCounts[item]) : "0";
+                        return (score != null) && score.ClearCounts.TryGetValue(item, out var clearCount)
+                            ? Utils.ToNumberString(clearCount) : "0";
                     default:    // unreachable
                         return match.ToString();
                 }
