@@ -17,12 +17,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th14;
-using ClearDataBase = ThScoreFileConverter.Models.Th13.ClearDataBase<
-    ThScoreFileConverter.Models.Th14.CharaWithTotal,
-    ThScoreFileConverter.Models.Level,
-    ThScoreFileConverter.Models.Th14.LevelPractice,
-    ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal,
-    ThScoreFileConverter.Models.Th14.StagePractice>;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
     ThScoreFileConverter.Models.Th14.CharaWithTotal,
     ThScoreFileConverter.Models.Level,
@@ -649,19 +643,6 @@ namespace ThScoreFileConverter.Models
             }
 
             public void Set(Th125.IStatus status) => this.Status = status;
-        }
-
-        private class ClearData : ClearDataBase // per character
-        {
-            public const int ValidSize = 0x00005298;
-
-            public ClearData(Th10.Chapter chapter)
-                : base(chapter, ValidSize, Definitions.CardTable.Count)
-            {
-            }
-
-            public static new bool CanInitialize(Th10.Chapter chapter)
-                => ClearDataBase.CanInitialize(chapter) && (chapter.Size == ValidSize);
         }
     }
 }

@@ -8,17 +8,17 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using ClearDataBase = ThScoreFileConverter.Models.Th13.ClearDataBase<
-    ThScoreFileConverter.Models.Th13.CharaWithTotal,
-    ThScoreFileConverter.Models.Th13.LevelPractice,
-    ThScoreFileConverter.Models.Th13.LevelPractice,
-    ThScoreFileConverter.Models.Th13.LevelPracticeWithTotal,
-    ThScoreFileConverter.Models.Th13.StagePractice>;
+    ThScoreFileConverter.Models.Th14.CharaWithTotal,
+    ThScoreFileConverter.Models.Level,
+    ThScoreFileConverter.Models.Th14.LevelPractice,
+    ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal,
+    ThScoreFileConverter.Models.Th14.StagePractice>;
 
-namespace ThScoreFileConverter.Models.Th13
+namespace ThScoreFileConverter.Models.Th14
 {
     internal class ClearData : ClearDataBase    // per character
     {
-        public const int ValidSize = 0x000056DC;
+        public const int ValidSize = 0x00005298;
 
         public ClearData(Th10.Chapter chapter)
             : base(chapter, ValidSize, Definitions.CardTable.Count)

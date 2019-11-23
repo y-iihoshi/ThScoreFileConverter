@@ -33,19 +33,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.Target;
         public HeaderBase Header
             => this.pobj.GetProperty(nameof(this.Header)) as HeaderBase;
-
         public IReadOnlyDictionary<TChWithT, IClearData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>> ClearData
             => this.pobj.GetProperty(nameof(this.ClearData))
                 as IReadOnlyDictionary<TChWithT, IClearData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>>;
-        public object ClearDataObject
-            => this.pobj.GetProperty(nameof(this.ClearData));
-        public int? ClearDataCount
-            => this.ClearDataObject.GetType().GetProperty("Count").GetValue(this.ClearDataObject) as int?;
-        public Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>
-            ClearDataItem(TChWithT chara)
-            => new Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>(
-                this.ClearDataObject.GetType().GetProperty("Item").GetValue(this.ClearDataObject, new object[] { chara }));
-
         public IStatus Status
             => this.pobj.GetProperty(nameof(this.Status)) as IStatus;
 
@@ -53,8 +43,6 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.Invoke(nameof(Set), new object[] { header }, CultureInfo.InvariantCulture);
         public void Set(IClearData<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac> data)
             => this.pobj.Invoke(nameof(Set), new object[] { data }, CultureInfo.InvariantCulture);
-        public void Set(Th13ClearDataWrapper<TParent, TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac> data)
-            => this.pobj.Invoke(nameof(Set), new object[] { data.Target }, CultureInfo.InvariantCulture);
         public void Set(IStatus status)
             => this.pobj.Invoke(nameof(Set), new object[] { status }, CultureInfo.InvariantCulture);
     }

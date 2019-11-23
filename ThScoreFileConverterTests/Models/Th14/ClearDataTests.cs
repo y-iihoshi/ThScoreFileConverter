@@ -7,8 +7,7 @@ using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th14;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th10.Wrappers;
-using ThScoreFileConverterTests.Models.Wrappers;
+using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 using ClearDataStub = ThScoreFileConverterTests.Models.Th13.Stubs.ClearDataStub<
     ThScoreFileConverter.Models.Th14.CharaWithTotal,
     ThScoreFileConverter.Models.Level,
@@ -30,10 +29,10 @@ using ScoreDataStub = ThScoreFileConverterTests.Models.Th10.Stubs.ScoreDataStub<
 using SpellCardStub = ThScoreFileConverterTests.Models.Th13.Stubs.SpellCardStub<ThScoreFileConverter.Models.Level>;
 using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th14
 {
     [TestClass]
-    public class Th14ClearDataTests
+    public class ClearDataTests
     {
         internal static ClearDataStub MakeValidStub()
         {
@@ -111,18 +110,12 @@ namespace ThScoreFileConverterTests.Models
                 clearData.Size,
                 MakeData(clearData));
 
-        internal static void Validate(
-            IClearData expected,
-            in Th13ClearDataWrapper<
-                Th14Converter, CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice> actual)
+        internal static void Validate(IClearData expected, IClearData actual)
         {
-            var data = MakeData(expected);
-
             Assert.AreEqual(expected.Signature, actual.Signature);
             Assert.AreEqual(expected.Version, actual.Version);
             Assert.AreEqual(expected.Checksum, actual.Checksum);
             Assert.AreEqual(expected.Size, actual.Size);
-            CollectionAssert.That.AreEqual(data, actual.Data);
             Assert.AreEqual(expected.Chara, actual.Chara);
 
             foreach (var pair in expected.Rankings)
@@ -150,24 +143,22 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        public void Th14ClearDataTestChapter() => TestUtils.Wrap(() =>
+        public void ClearDataTestChapter() => TestUtils.Wrap(() =>
         {
             var stub = MakeValidStub();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            var clearData = new Th13ClearDataWrapper<
-                Th14Converter, CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice>(chapter);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var clearData = new ClearData(chapter);
 
             Validate(stub, clearData);
-            Assert.IsFalse(clearData.IsValid.Value);
+            Assert.IsFalse(clearData.IsValid);
         });
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th14ClearDataTestNullChapter() => TestUtils.Wrap(() =>
+        public void ClearDataTestNullChapter() => TestUtils.Wrap(() =>
         {
-            _ = new Th13ClearDataWrapper<
-                Th14Converter, CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice>(null);
+            _ = new ClearData(null);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -175,42 +166,39 @@ namespace ThScoreFileConverterTests.Models
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th14ClearDataTestInvalidSignature() => TestUtils.Wrap(() =>
+        public void ClearDataTestInvalidSignature() => TestUtils.Wrap(() =>
         {
             var stub = MakeValidStub();
             stub.Signature = stub.Signature.ToLowerInvariant();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th13ClearDataWrapper<
-                Th14Converter, CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice>(chapter);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new ClearData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th14ClearDataTestInvalidVersion() => TestUtils.Wrap(() =>
+        public void ClearDataTestInvalidVersion() => TestUtils.Wrap(() =>
         {
             var stub = MakeValidStub();
             ++stub.Version;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th13ClearDataWrapper<
-                Th14Converter, CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice>(chapter);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new ClearData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th14ClearDataTestInvalidSize() => TestUtils.Wrap(() =>
+        public void ClearDataTestInvalidSize() => TestUtils.Wrap(() =>
         {
             var stub = MakeValidStub();
             --stub.Size;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th13ClearDataWrapper<
-                Th14Converter, CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice>(chapter);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new ClearData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -220,18 +208,15 @@ namespace ThScoreFileConverterTests.Models
         [DataRow("cr", (ushort)1, 0x5298, false)]
         [DataRow("CR", (ushort)0, 0x5298, false)]
         [DataRow("CR", (ushort)1, 0x5299, false)]
-        public void Th14ClearDataCanInitializeTest(string signature, ushort version, int size, bool expected)
-            => TestUtils.Wrap(() =>
-            {
-                var checksum = 0u;
-                var data = new byte[size];
+        public void CanInitializeTest(string signature, ushort version, int size, bool expected) => TestUtils.Wrap(() =>
+        {
+            var checksum = 0u;
+            var data = new byte[size];
 
-                var chapter = ChapterWrapper.Create(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
+            var chapter = TestUtils.Create<Chapter>(
+                TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
 
-                Assert.AreEqual(expected, Th13ClearDataWrapper<
-                    Th14Converter, CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice>
-                    .CanInitialize(chapter));
-            });
+            Assert.AreEqual(expected, ClearData.CanInitialize(chapter));
+        });
     }
 }
