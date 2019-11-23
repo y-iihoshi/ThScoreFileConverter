@@ -7,6 +7,7 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
@@ -31,28 +32,23 @@ namespace ThScoreFileConverter.Models.Th14
 
         public PracticeReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
         {
+            if (clearDataDictionary is null)
+                throw new ArgumentNullException(nameof(clearDataDictionary));
+
             this.evaluator = new MatchEvaluator(match =>
             {
-                var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+                var level = (LevelPractice)Parsers.LevelParser.Parse(match.Groups[1].Value);
                 var chara = (CharaWithTotal)Parsers.CharaParser.Parse(match.Groups[2].Value);
-                var stage = Parsers.StageParser.Parse(match.Groups[3].Value);
+                var stage = (StagePractice)Parsers.StageParser.Parse(match.Groups[3].Value);
 
-                if (level == Level.Extra)
+                if (level == LevelPractice.Extra)
                     return match.ToString();
-                if (stage == Stage.Extra)
+                if (stage == StagePractice.Extra)
                     return match.ToString();
 
-                if (clearDataDictionary.ContainsKey(chara))
-                {
-                    var key = ((LevelPractice)level, (StagePractice)stage);
-                    var practices = clearDataDictionary[chara].Practices;
-                    return practices.ContainsKey(key)
-                        ? Utils.ToNumberString(practices[key].Score * 10) : "0";
-                }
-                else
-                {
-                    return "0";
-                }
+                return clearDataDictionary.TryGetValue(chara, out var clearData)
+                    && clearData.Practices.TryGetValue((level, stage), out var practice)
+                    ? Utils.ToNumberString(practice.Score * 10) : "0";
             });
         }
 

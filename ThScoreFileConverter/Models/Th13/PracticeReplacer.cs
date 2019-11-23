@@ -46,16 +46,9 @@ namespace ThScoreFileConverter.Models.Th13
                 if (stage == StagePractice.Extra)
                     return match.ToString();
 
-                if (clearDataDictionary.ContainsKey(chara))
-                {
-                    var key = (level, stage);
-                    var practices = clearDataDictionary[chara].Practices;
-                    return practices.ContainsKey(key) ? Utils.ToNumberString(practices[key].Score * 10) : "0";
-                }
-                else
-                {
-                    return "0";
-                }
+                return clearDataDictionary.TryGetValue(chara, out var clearData)
+                    && clearData.Practices.TryGetValue((level, stage), out var practice)
+                    ? Utils.ToNumberString(practice.Score * 10) : "0";
             });
         }
 
