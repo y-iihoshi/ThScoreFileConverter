@@ -53,6 +53,9 @@ namespace ThScoreFileConverter.Models.Th14
 
         public CollectRateReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
         {
+            if (clearDataDictionary is null)
+                throw new ArgumentNullException(nameof(clearDataDictionary));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var kind = match.Groups[1].Value.ToUpperInvariant();
@@ -86,9 +89,11 @@ namespace ThScoreFileConverter.Models.Th14
                         break;
                 }
 
-                return clearDataDictionary[chara].Cards.Values
-                    .Count(Utils.MakeAndPredicate(FindByKindType, findByLevel, findByStage))
-                    .ToString(CultureInfo.CurrentCulture);
+                return clearDataDictionary.TryGetValue(chara, out var clearData)
+                    ? clearData.Cards.Values
+                        .Count(Utils.MakeAndPredicate(FindByKindType, findByLevel, findByStage))
+                        .ToString(CultureInfo.CurrentCulture)
+                    : "0";
             });
         }
 
