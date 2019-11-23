@@ -26,7 +26,7 @@ namespace ThScoreFileConverterTests.Models
     public class Th14ClearDataTests
     {
         internal static ClearDataStub<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>
-            GetValidStub<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>(ushort version, int size, int numCards)
+            MakeValidStub<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>()
             where TChWithT : struct, Enum       // TCharaWithTotal
             where TLv : struct, Enum            // TLevel
             where TLvPrac : struct, Enum        // TLevelPractice
@@ -40,9 +40,9 @@ namespace ThScoreFileConverterTests.Models
             return new ClearDataStub<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>
             {
                 Signature = "CR",
-                Version = version,
+                Version = 0x0001,
                 Checksum = 0u,
-                Size = size,
+                Size = 0x5298,
                 Chara = TestUtils.Cast<TChWithT>(1),
                 Rankings = levelsWithTotal.ToDictionary(
                     level => level,
@@ -70,7 +70,7 @@ namespace ThScoreFileConverterTests.Models
                             ClearFlag = (byte)(TestUtils.Cast<int>(pair.stage) % 2),
                             EnableFlag = (byte)(TestUtils.Cast<int>(pair.level) % 2)
                         } as IPractice),
-                Cards = Enumerable.Range(1, numCards).ToDictionary(
+                Cards = Enumerable.Range(1, 120).ToDictionary(
                     index => index,
                     index => new SpellCardStub<TLv>()
                     {
@@ -167,8 +167,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th14ClearDataTestChapter() => TestUtils.Wrap(() =>
         {
-            var stub = GetValidStub<
-                CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice>(0x0001, 0x5298, 120);
+            var stub = MakeValidStub<CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice>();
 
             var chapter = ChapterWrapper.Create(MakeByteArray<
                 Th14Converter, CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice>(stub));
@@ -194,8 +193,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(InvalidDataException))]
         public void Th14ClearDataTestInvalidSignature() => TestUtils.Wrap(() =>
         {
-            var stub = GetValidStub<
-                CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice>(0x0001, 0x5298, 120);
+            var stub = MakeValidStub<CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice>();
             stub.Signature = stub.Signature.ToLowerInvariant();
 
             var chapter = ChapterWrapper.Create(MakeByteArray<
@@ -210,8 +208,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(InvalidDataException))]
         public void Th14ClearDataTestInvalidVersion() => TestUtils.Wrap(() =>
         {
-            var stub = GetValidStub<
-                CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice>(0x0001, 0x5298, 120);
+            var stub = MakeValidStub<CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice>();
             ++stub.Version;
 
             var chapter = ChapterWrapper.Create(MakeByteArray<
@@ -226,8 +223,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(InvalidDataException))]
         public void Th14ClearDataTestInvalidSize() => TestUtils.Wrap(() =>
         {
-            var stub = GetValidStub<
-                CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice>(0x0001, 0x5298, 120);
+            var stub = MakeValidStub<CharaWithTotal, Level, LevelPractice, LevelPracticeWithTotal, StagePractice>();
             --stub.Size;
 
             var chapter = ChapterWrapper.Create(MakeByteArray<
