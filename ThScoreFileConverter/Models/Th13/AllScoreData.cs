@@ -28,7 +28,7 @@ namespace ThScoreFileConverter.Models.Th13
             this.clearData = new Dictionary<
                 TCharaWithTotal,
                 IClearData<TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice>>(
-                Enum.GetValues(typeof(CharaWithTotal)).Length);
+                Enum.GetValues(typeof(TCharaWithTotal)).Length);
         }
 
         public Th095.HeaderBase Header { get; private set; }

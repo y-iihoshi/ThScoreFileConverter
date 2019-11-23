@@ -26,7 +26,7 @@ namespace ThScoreFileConverterTests.Models.Th13
                 Assert.IsNull(allScoreData.Status);
             });
 
-        internal static void AllScoreDataSetHeaderTestHelper<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>()
+        internal static void SetHeaderTestHelper<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>()
             where TChWithT : struct, Enum
             where TLv : struct, Enum
             where TLvPrac : struct, Enum
@@ -43,7 +43,7 @@ namespace ThScoreFileConverterTests.Models.Th13
                 Assert.AreSame(header, allScoreData.Header);
             });
 
-        internal static void AllScoreDataSetHeaderTestTwiceHelper<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>()
+        internal static void SetHeaderTestTwiceHelper<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>()
             where TChWithT : struct, Enum
             where TLv : struct, Enum
             where TLvPrac : struct, Enum
@@ -63,7 +63,7 @@ namespace ThScoreFileConverterTests.Models.Th13
                 Assert.AreSame(header2, allScoreData.Header);
             });
 
-        internal static void AllScoreDataSetClearDataTestHelper<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>()
+        internal static void SetClearDataTestHelper<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>()
             where TChWithT : struct, Enum
             where TLv : struct, Enum
             where TLvPrac : struct, Enum
@@ -80,7 +80,7 @@ namespace ThScoreFileConverterTests.Models.Th13
                 Assert.AreSame(clearData, allScoreData.ClearData[chara]);
             });
 
-        internal static void AllScoreDataSetClearDataTestTwiceHelper<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>()
+        internal static void SetClearDataTestTwiceHelper<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>()
             where TChWithT : struct, Enum
             where TLv : struct, Enum
             where TLvPrac : struct, Enum
@@ -100,7 +100,7 @@ namespace ThScoreFileConverterTests.Models.Th13
                 Assert.AreNotSame(clearData2, allScoreData.ClearData[chara]);
             });
 
-        internal static void AllScoreDataSetStatusTestHelper<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>()
+        internal static void SetStatusTestHelper<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>()
             where TChWithT : struct, Enum
             where TLv : struct, Enum
             where TLvPrac : struct, Enum
@@ -116,7 +116,7 @@ namespace ThScoreFileConverterTests.Models.Th13
                 Assert.AreSame(status, allScoreData.Status);
             });
 
-        internal static void AllScoreDataSetStatusTestTwiceHelper<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>()
+        internal static void SetStatusTestTwiceHelper<TChWithT, TLv, TLvPrac, TLvPracWithT, TStPrac>()
             where TChWithT : struct, Enum
             where TLv : struct, Enum
             where TLvPrac : struct, Enum
@@ -142,32 +142,32 @@ namespace ThScoreFileConverterTests.Models.Th13
 
         [TestMethod]
         public void AllScoreDataSetHeaderTest()
-            => AllScoreDataSetHeaderTestHelper<
+            => SetHeaderTestHelper<
                 CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice>();
 
         [TestMethod]
         public void AllScoreDataSetHeaderTestTwice()
-            => AllScoreDataSetHeaderTestTwiceHelper<
+            => SetHeaderTestTwiceHelper<
                 CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice>();
 
         [TestMethod]
         public void AllScoreDataSetClearDataTest()
-            => AllScoreDataSetClearDataTestHelper<
+            => SetClearDataTestHelper<
                 CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice>();
 
         [TestMethod]
         public void AllScoreDataSetClearDataTestTwice()
-            => AllScoreDataSetClearDataTestTwiceHelper<
+            => SetClearDataTestTwiceHelper<
                 CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice>();
 
         [TestMethod]
         public void AllScoreDataSetStatusTest()
-            => AllScoreDataSetStatusTestHelper<
+            => SetStatusTestHelper<
                 CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice>();
 
         [TestMethod]
         public void AllScoreDataSetStatusTestTwice()
-            => AllScoreDataSetStatusTestTwiceHelper<
+            => SetStatusTestTwiceHelper<
                 CharaWithTotal, LevelPractice, LevelPractice, LevelPracticeWithTotal, StagePractice>();
     }
 }
