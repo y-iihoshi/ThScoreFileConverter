@@ -1,19 +1,18 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverter.Models.Th095;
 using ThScoreFileConverter.Models.Th143;
 using ThScoreFileConverterTests.Models.Th095;
 using ThScoreFileConverterTests.Models.Th143.Stubs;
-using ThScoreFileConverterTests.Models.Wrappers;
+using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th143
 {
     [TestClass]
-    public class Th143AllScoreDataTests
+    public class AllScoreDataTests
     {
         [TestMethod]
         public void Th143AllScoreDataTest() => TestUtils.Wrap(() =>
         {
-            var allScoreData = new Th143AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
 
             Assert.IsNull(allScoreData.Header);
             Assert.AreEqual(0, allScoreData.Scores.Count);
@@ -27,7 +26,7 @@ namespace ThScoreFileConverterTests.Models
             var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.ValidProperties);
             var header = TestUtils.Create<HeaderBase>(array);
 
-            var allScoreData = new Th143AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(header);
 
             Assert.AreSame(header, allScoreData.Header);
@@ -40,7 +39,7 @@ namespace ThScoreFileConverterTests.Models
             var header1 = TestUtils.Create<HeaderBase>(array);
             var header2 = TestUtils.Create<HeaderBase>(array);
 
-            var allScoreData = new Th143AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(header1);
             allScoreData.Set(header2);
 
@@ -53,7 +52,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var score = new ScoreStub();
 
-            var allScoreData = new Th143AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(score);
 
             Assert.AreSame(score, allScoreData.Scores[0]);
@@ -65,7 +64,7 @@ namespace ThScoreFileConverterTests.Models
             var score1 = new ScoreStub();
             var score2 = new ScoreStub();
 
-            var allScoreData = new Th143AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(score1);
             allScoreData.Set(score2);
 
@@ -79,7 +78,7 @@ namespace ThScoreFileConverterTests.Models
             var item = ItemWithTotal.Fablic;
             var status = new ItemStatusStub { Item = item };
 
-            var allScoreData = new Th143AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(status);
 
             Assert.AreSame(status, allScoreData.ItemStatuses[item]);
@@ -92,7 +91,7 @@ namespace ThScoreFileConverterTests.Models
             var status1 = new ItemStatusStub { Item = item };
             var status2 = new ItemStatusStub { Item = item };
 
-            var allScoreData = new Th143AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(status1);
             allScoreData.Set(status2);
 
@@ -105,7 +104,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var status = new StatusStub();
 
-            var allScoreData = new Th143AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(status);
 
             Assert.AreSame(status, allScoreData.Status);
@@ -117,7 +116,7 @@ namespace ThScoreFileConverterTests.Models
             var status1 = new StatusStub();
             var status2 = new StatusStub();
 
-            var allScoreData = new Th143AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(status1);
             allScoreData.Set(status2);
 
