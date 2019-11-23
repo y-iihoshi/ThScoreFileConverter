@@ -1,10 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Models.Th095;
 using ThScoreFileConverter.Models.Th143;
+using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -25,17 +26,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.Target;
         public HeaderBase Header
             => this.pobj.GetProperty(nameof(this.Header)) as HeaderBase;
-
-        // NOTE: Th143Converter.Score is a private class.
-        // public IReadOnlyList<IScore> Scores
-        //     => this.pobj.GetProperty(nameof(this.Scores)) as IReadOnlyList<IScore>;
-        public object Scores
-            => this.pobj.GetProperty(nameof(this.Scores));
-        public int? ScoresCount
-            => this.Scores.GetType().GetProperty("Count").GetValue(this.Scores) as int?;
-        public Th143ScoreWrapper ScoresItem(int index)
-            => new Th143ScoreWrapper(
-                this.Scores.GetType().GetProperty("Item").GetValue(this.Scores, new object[] { index }));
+        public IReadOnlyList<IScore> Scores
+            => this.pobj.GetProperty(nameof(this.Scores)) as IReadOnlyList<IScore>;
 
         // NOTE: Th143Converter.ItemStatus is a private class.
         // public IReadOnlyDictionary<ItemWithTotal, ItemStatus> ItemStatuses
@@ -59,8 +51,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         public void Set(HeaderBase header)
             => this.pobj.Invoke(nameof(Set), new object[] { header }, CultureInfo.InvariantCulture);
-        public void Set(Th143ScoreWrapper score)
-            => this.pobj.Invoke(nameof(Set), new object[] { score.Target }, CultureInfo.InvariantCulture);
+        public void Set(IScore score)
+            => this.pobj.Invoke(nameof(Set), new object[] { score }, CultureInfo.InvariantCulture);
         public void Set(Th143ItemStatusWrapper item)
             => this.pobj.Invoke(nameof(Set), new object[] { item.Target }, CultureInfo.InvariantCulture);
         public void Set(Th143StatusWrapper status)
