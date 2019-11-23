@@ -1,15 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using ThScoreFileConverter.Models.Th143;
-using ThScoreFileConverterTests.Models.Wrappers;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th143
 {
     [TestClass]
-    public class Th143BestShotHeaderTests
+    public class BestShotHeaderTests
     {
         internal struct Properties
         {
@@ -47,49 +45,48 @@ namespace ThScoreFileConverterTests.Models
                 properties.slowRate,
                 TestUtils.MakeRandomArray<byte>(0x58));
 
-        internal static void Validate(in Th143BestShotHeaderWrapper header, in Properties properties)
+        internal static void Validate(in Properties expected, in BestShotHeader actual)
         {
-            if (header == null)
-                throw new ArgumentNullException(nameof(header));
+            if (actual == null)
+                throw new ArgumentNullException(nameof(actual));
 
-            Assert.AreEqual(properties.signature, header.Signature);
-            Assert.AreEqual(properties.day, header.Day);
-            Assert.AreEqual(properties.scene, header.Scene);
-            Assert.AreEqual(properties.width, header.Width);
-            Assert.AreEqual(properties.height, header.Height);
-            Assert.AreEqual(properties.dateTime, header.DateTime);
-            Assert.AreEqual(properties.slowRate, header.SlowRate);
+            Assert.AreEqual(expected.signature, actual.Signature);
+            Assert.AreEqual(expected.day, actual.Day);
+            Assert.AreEqual(expected.scene, actual.Scene);
+            Assert.AreEqual(expected.width, actual.Width);
+            Assert.AreEqual(expected.height, actual.Height);
+            Assert.AreEqual(expected.dateTime, actual.DateTime);
+            Assert.AreEqual(expected.slowRate, actual.SlowRate);
         }
 
         [TestMethod]
-        public void Th143BestShotHeaderTest() => TestUtils.Wrap(() =>
+        public void BestShotHeaderTest() => TestUtils.Wrap(() =>
         {
             var properties = new Properties();
-            var header = new Th143BestShotHeaderWrapper();
+            var header = new BestShotHeader();
 
-            Validate(header, properties);
+            Validate(properties, header);
         });
 
         [TestMethod]
         public void ReadFromTest() => TestUtils.Wrap(() =>
         {
-            var header = Th143BestShotHeaderWrapper.Create(MakeByteArray(ValidProperties));
+            var header = TestUtils.Create<BestShotHeader>(MakeByteArray(ValidProperties));
 
-            Validate(header, ValidProperties);
+            Validate(ValidProperties, header);
         });
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
-            var header = new Th143BestShotHeaderWrapper();
+            var header = new BestShotHeader();
 
             header.ReadFrom(null);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "header")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void ReadFromTestEmptySignature() => TestUtils.Wrap(() =>
@@ -97,12 +94,11 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             properties.signature = string.Empty;
 
-            var header = Th143BestShotHeaderWrapper.Create(MakeByteArray(properties));
+            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "header")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void ReadFromTestShortenedSignature() => TestUtils.Wrap(() =>
@@ -110,12 +106,11 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             properties.signature = properties.signature.Substring(0, properties.signature.Length - 1);
 
-            var header = Th143BestShotHeaderWrapper.Create(MakeByteArray(properties));
+            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "header")]
         [TestMethod]
         [ExpectedException(typeof(InvalidCastException))]
         public void ReadFromTestExceededSignature() => TestUtils.Wrap(() =>
@@ -123,7 +118,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             properties.signature += "E";
 
-            var header = Th143BestShotHeaderWrapper.Create(MakeByteArray(properties));
+            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -131,8 +126,6 @@ namespace ThScoreFileConverterTests.Models
         public static IEnumerable<object[]> InvalidDays
             => TestUtils.GetInvalidEnumerators(typeof(Day));
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "header")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidDays))]
         [ExpectedException(typeof(InvalidCastException))]
@@ -141,7 +134,7 @@ namespace ThScoreFileConverterTests.Models
             var properties = ValidProperties;
             properties.day = TestUtils.Cast<Day>(day);
 
-            var header = Th143BestShotHeaderWrapper.Create(MakeByteArray(properties));
+            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
         });
