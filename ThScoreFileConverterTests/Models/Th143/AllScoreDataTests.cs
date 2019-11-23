@@ -10,7 +10,7 @@ namespace ThScoreFileConverterTests.Models.Th143
     public class AllScoreDataTests
     {
         [TestMethod]
-        public void Th143AllScoreDataTest() => TestUtils.Wrap(() =>
+        public void AllScoreDataTest() => TestUtils.Wrap(() =>
         {
             var allScoreData = new AllScoreData();
 
@@ -21,7 +21,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         });
 
         [TestMethod]
-        public void Th143AllScoreDataSetHeaderTest() => TestUtils.Wrap(() =>
+        public void SetHeaderTest() => TestUtils.Wrap(() =>
         {
             var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.ValidProperties);
             var header = TestUtils.Create<HeaderBase>(array);
@@ -33,7 +33,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         });
 
         [TestMethod]
-        public void Th143AllScoreDataSetHeaderTestTwice() => TestUtils.Wrap(() =>
+        public void SetHeaderTestTwice() => TestUtils.Wrap(() =>
         {
             var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.ValidProperties);
             var header1 = TestUtils.Create<HeaderBase>(array);
@@ -48,7 +48,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         });
 
         [TestMethod]
-        public void Th143AllScoreDataSetScoreTest() => TestUtils.Wrap(() =>
+        public void SetScoreTest() => TestUtils.Wrap(() =>
         {
             var score = new ScoreStub();
 
@@ -59,7 +59,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         });
 
         [TestMethod]
-        public void Th143AllScoreDataSetScoreTestTwice() => TestUtils.Wrap(() =>
+        public void SetScoreTestTwice() => TestUtils.Wrap(() =>
         {
             var score1 = new ScoreStub();
             var score2 = new ScoreStub();
@@ -73,7 +73,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         });
 
         [TestMethod]
-        public void Th143AllScoreDataSetItemStatusTest() => TestUtils.Wrap(() =>
+        public void SetItemStatusTest() => TestUtils.Wrap(() =>
         {
             var item = ItemWithTotal.Fablic;
             var status = new ItemStatusStub { Item = item };
@@ -85,7 +85,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         });
 
         [TestMethod]
-        public void Th143AllScoreDataSetItemStatusTestTwice() => TestUtils.Wrap(() =>
+        public void SetItemStatusTestTwice() => TestUtils.Wrap(() =>
         {
             var item = ItemWithTotal.Fablic;
             var status1 = new ItemStatusStub { Item = item };
@@ -100,7 +100,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         });
 
         [TestMethod]
-        public void Th143AllScoreDataSetStatusTest() => TestUtils.Wrap(() =>
+        public void SetStatusTest() => TestUtils.Wrap(() =>
         {
             var status = new StatusStub();
 
@@ -111,7 +111,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         });
 
         [TestMethod]
-        public void Th143AllScoreDataSetStatusTestTwice() => TestUtils.Wrap(() =>
+        public void SetStatusTestTwice() => TestUtils.Wrap(() =>
         {
             var status1 = new StatusStub();
             var status2 = new StatusStub();
