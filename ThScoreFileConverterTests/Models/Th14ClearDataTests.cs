@@ -12,8 +12,12 @@ using ThScoreFileConverterTests.Models.Th10.Wrappers;
 using ThScoreFileConverterTests.Models.Th13;
 using ThScoreFileConverterTests.Models.Th13.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
+using CharaWithTotal = ThScoreFileConverter.Models.Th14.CharaWithTotal;
+using LevelPractice = ThScoreFileConverter.Models.Th14.LevelPractice;
+using LevelPracticeWithTotal = ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal;
 using PracticeStub = ThScoreFileConverterTests.Models.Th13.Stubs.PracticeStub;
 using ScoreDataTests = ThScoreFileConverterTests.Models.Th10.ScoreDataTests;
+using StagePractice = ThScoreFileConverter.Models.Th14.StagePractice;
 using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 
 namespace ThScoreFileConverterTests.Models
@@ -290,55 +294,55 @@ namespace ThScoreFileConverterTests.Models
         public void Th14ClearDataTestChapter()
             => ClearDataTestChapterHelper<
                 Th14Converter,
-                Th14Converter.CharaWithTotal,
+                CharaWithTotal,
                 Level,
-                Th14Converter.LevelPractice,
-                Th14Converter.LevelPracticeWithTotal,
-                Th14Converter.StagePractice>(1, 0x5298, 120);
+                LevelPractice,
+                LevelPracticeWithTotal,
+                StagePractice>(1, 0x5298, 120);
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Th14ClearDataTestNullChapter()
             => ClearDataTestNullChapterHelper<
                 Th14Converter,
-                Th14Converter.CharaWithTotal,
+                CharaWithTotal,
                 Level,
-                Th14Converter.LevelPractice,
-                Th14Converter.LevelPracticeWithTotal,
-                Th14Converter.StagePractice>();
+                LevelPractice,
+                LevelPracticeWithTotal,
+                StagePractice>();
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th14ClearDataTestInvalidSignature()
             => ClearDataTestInvalidSignatureHelper<
                 Th14Converter,
-                Th14Converter.CharaWithTotal,
+                CharaWithTotal,
                 Level,
-                Th14Converter.LevelPractice,
-                Th14Converter.LevelPracticeWithTotal,
-                Th14Converter.StagePractice>(1, 0x5298, 120);
+                LevelPractice,
+                LevelPracticeWithTotal,
+                StagePractice>(1, 0x5298, 120);
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th14ClearDataTestInvalidVersion()
             => ClearDataTestInvalidVersionHelper<
                 Th14Converter,
-                Th14Converter.CharaWithTotal,
+                CharaWithTotal,
                 Level,
-                Th14Converter.LevelPractice,
-                Th14Converter.LevelPracticeWithTotal,
-                Th14Converter.StagePractice>(1, 0x5298, 120);
+                LevelPractice,
+                LevelPracticeWithTotal,
+                StagePractice>(1, 0x5298, 120);
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void Th14ClearDataTestInvalidSize()
             => ClearDataTestInvalidSizeHelper<
                 Th14Converter,
-                Th14Converter.CharaWithTotal,
+                CharaWithTotal,
                 Level,
-                Th14Converter.LevelPractice,
-                Th14Converter.LevelPracticeWithTotal,
-                Th14Converter.StagePractice>(1, 0x5298, 120);
+                LevelPractice,
+                LevelPracticeWithTotal,
+                StagePractice>(1, 0x5298, 120);
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
@@ -349,10 +353,10 @@ namespace ThScoreFileConverterTests.Models
         public void Th14ClearDataCanInitializeTest(string signature, ushort version, int size, bool expected)
             => CanInitializeTestHelper<
                 Th14Converter,
-                Th14Converter.CharaWithTotal,
+                CharaWithTotal,
                 Level,
-                Th14Converter.LevelPractice,
-                Th14Converter.LevelPracticeWithTotal,
-                Th14Converter.StagePractice>(signature, version, size, expected);
+                LevelPractice,
+                LevelPracticeWithTotal,
+                StagePractice>(signature, version, size, expected);
     }
 }

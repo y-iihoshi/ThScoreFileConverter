@@ -7,7 +7,6 @@
 
 #pragma warning disable 1591
 #pragma warning disable SA1600 // ElementsMustBeDocumented
-#pragma warning disable SA1602 // EnumerationItemsMustBeDocumented
 
 using System;
 using System.Collections.Generic;
@@ -21,17 +20,17 @@ using ThScoreFileConverter.Models.Th14;
 using CardInfo = ThScoreFileConverter.Models.SpellCardInfo<
     ThScoreFileConverter.Models.Stage, ThScoreFileConverter.Models.Level>;
 using ClearDataBase = ThScoreFileConverter.Models.Th13.ClearDataBase<
-    ThScoreFileConverter.Models.Th14Converter.CharaWithTotal,
+    ThScoreFileConverter.Models.Th14.CharaWithTotal,
     ThScoreFileConverter.Models.Level,
-    ThScoreFileConverter.Models.Th14Converter.LevelPractice,
-    ThScoreFileConverter.Models.Th14Converter.LevelPracticeWithTotal,
-    ThScoreFileConverter.Models.Th14Converter.StagePractice>;
+    ThScoreFileConverter.Models.Th14.LevelPractice,
+    ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal,
+    ThScoreFileConverter.Models.Th14.StagePractice>;
 using IClearData = ThScoreFileConverter.Models.Th13.IClearData<
-    ThScoreFileConverter.Models.Th14Converter.CharaWithTotal,
+    ThScoreFileConverter.Models.Th14.CharaWithTotal,
     ThScoreFileConverter.Models.Level,
-    ThScoreFileConverter.Models.Th14Converter.LevelPractice,
-    ThScoreFileConverter.Models.Th14Converter.LevelPracticeWithTotal,
-    ThScoreFileConverter.Models.Th14Converter.StagePractice>;
+    ThScoreFileConverter.Models.Th14.LevelPractice,
+    ThScoreFileConverter.Models.Th14.LevelPracticeWithTotal,
+    ThScoreFileConverter.Models.Th14.StagePractice>;
 
 namespace ThScoreFileConverter.Models
 {
@@ -172,70 +171,6 @@ namespace ThScoreFileConverter.Models
             new EnumShortNameParser<CharaWithTotal>();
 
         private AllScoreData allScoreData = null;
-
-        public enum LevelPractice
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("E")] Easy,
-            [EnumAltName("N")] Normal,
-            [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic,
-            [EnumAltName("X")] Extra,
-            [EnumAltName("-")] NotUsed,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum LevelPracticeWithTotal
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("E")] Easy,
-            [EnumAltName("N")] Normal,
-            [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic,
-            [EnumAltName("X")] Extra,
-            [EnumAltName("-")] NotUsed,
-            [EnumAltName("T")] Total,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum Chara
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("RA")] ReimuA,
-            [EnumAltName("RB")] ReimuB,
-            [EnumAltName("MA")] MarisaA,
-            [EnumAltName("MB")] MarisaB,
-            [EnumAltName("SA")] SakuyaA,
-            [EnumAltName("SB")] SakuyaB,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum CharaWithTotal
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("RA")] ReimuA,
-            [EnumAltName("RB")] ReimuB,
-            [EnumAltName("MA")] MarisaA,
-            [EnumAltName("MB")] MarisaB,
-            [EnumAltName("SA")] SakuyaA,
-            [EnumAltName("SB")] SakuyaB,
-            [EnumAltName("TL")] Total,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum StagePractice
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("1")] St1,
-            [EnumAltName("2")] St2,
-            [EnumAltName("3")] St3,
-            [EnumAltName("4")] St4,
-            [EnumAltName("5")] St5,
-            [EnumAltName("6")] St6,
-            [EnumAltName("X")] Extra,
-            [EnumAltName("-")] NotUsed,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
 
         public override string SupportedVersions
         {

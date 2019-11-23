@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th14;
 using ThScoreFileConverterTests.Models.Th095;
 using ThScoreFileConverterTests.Models.Th125.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
@@ -172,70 +173,70 @@ namespace ThScoreFileConverterTests.Models
         public void Th14AllScoreDataTest()
             => Th13AllScoreDataTestHelper<
                 Th14Converter,
-                Th14Converter.CharaWithTotal,
+                CharaWithTotal,
                 Level,
-                Th14Converter.LevelPractice,
-                Th14Converter.LevelPracticeWithTotal,
-                Th14Converter.StagePractice>();
+                LevelPractice,
+                LevelPracticeWithTotal,
+                StagePractice>();
 
         [TestMethod]
         public void Th14AllScoreDataSetHeaderTest()
             => Th13AllScoreDataSetHeaderTestHelper<
                 Th14Converter,
-                Th14Converter.CharaWithTotal,
+                CharaWithTotal,
                 Level,
-                Th14Converter.LevelPractice,
-                Th14Converter.LevelPracticeWithTotal,
-                Th14Converter.StagePractice>();
+                LevelPractice,
+                LevelPracticeWithTotal,
+                StagePractice>();
 
         [TestMethod]
         public void Th14AllScoreDataSetHeaderTestTwice()
             => Th13AllScoreDataSetHeaderTestTwiceHelper<
                 Th14Converter,
-                Th14Converter.CharaWithTotal,
+                CharaWithTotal,
                 Level,
-                Th14Converter.LevelPractice,
-                Th14Converter.LevelPracticeWithTotal,
-                Th14Converter.StagePractice>();
+                LevelPractice,
+                LevelPracticeWithTotal,
+                StagePractice>();
 
         [TestMethod]
         public void Th14AllScoreDataSetClearDataTest()
             => Th13AllScoreDataSetClearDataTestHelper<
                 Th14Converter,
-                Th14Converter.CharaWithTotal,
+                CharaWithTotal,
                 Level,
-                Th14Converter.LevelPractice,
-                Th14Converter.LevelPracticeWithTotal,
-                Th14Converter.StagePractice>(1, 0x5298, 120);
+                LevelPractice,
+                LevelPracticeWithTotal,
+                StagePractice>(1, 0x5298, 120);
 
         [TestMethod]
         public void Th14AllScoreDataSetClearDataTestTwice()
             => Th13AllScoreDataSetClearDataTestTwiceHelper<
                 Th14Converter,
-                Th14Converter.CharaWithTotal,
+                CharaWithTotal,
                 Level,
-                Th14Converter.LevelPractice,
-                Th14Converter.LevelPracticeWithTotal,
-                Th14Converter.StagePractice>(1, 0x5298, 120);
+                LevelPractice,
+                LevelPracticeWithTotal,
+                StagePractice>(1, 0x5298, 120);
 
         [TestMethod]
         public void Th14AllScoreDataSetStatusTest()
             => Th13AllScoreDataSetStatusTestHelper<
                 Th14Converter,
-                Th14Converter.CharaWithTotal,
+                CharaWithTotal,
                 Level,
-                Th14Converter.LevelPractice,
-                Th14Converter.LevelPracticeWithTotal,
-                Th14Converter.StagePractice>(1, 0x42C, 17, 0x10, 0x11);
+                LevelPractice,
+                LevelPracticeWithTotal,
+                StagePractice>(1, 0x42C, 17, 0x10, 0x11);
 
         [TestMethod]
         public void Th14AllScoreDataSetStatusTestTwice()
             => Th13AllScoreDataSetStatusTestTwiceHelper<
                 Th14Converter,
-                Th14Converter.CharaWithTotal,
+                CharaWithTotal,
                 Level,
-                Th14Converter.LevelPractice,
-                Th14Converter.LevelPracticeWithTotal,
-                Th14Converter.StagePractice>(1, 0x42C, 17, 0x10, 0x11);
+                LevelPractice,
+                LevelPracticeWithTotal,
+                StagePractice>(1, 0x42C, 17, 0x10, 0x11);
     }
 }
