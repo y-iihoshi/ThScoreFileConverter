@@ -184,15 +184,6 @@ namespace ThScoreFileConverter.Models
                 "究極反則生命体",
             };
 
-        private static readonly EnumShortNameParser<Day> DayParser =
-            new EnumShortNameParser<Day>();
-
-        private static readonly EnumShortNameParser<ItemWithTotal> ItemWithTotalParser =
-            new EnumShortNameParser<ItemWithTotal>();
-
-        private static readonly string DayLongPattern =
-            string.Join("|", Utils.GetEnumerator<Day>().Select(day => day.ToLongName()).ToArray());
-
         private AllScoreData allScoreData = null;
 
         private Dictionary<(Day Day, int Scene), (string Path, BestShotHeader Header)> bestshots = null;
@@ -251,7 +242,7 @@ namespace ThScoreFileConverter.Models
 
         protected override string[] FilterBestShotFiles(string[] files)
         {
-            var pattern = Utils.Format(@"sc({0})_\d{{2}}.dat", DayLongPattern);
+            var pattern = Utils.Format(@"sc({0})_\d{{2}}.dat", Parsers.DayLongPattern);
 
             return files.Where(file => Regex.IsMatch(
                 Path.GetFileName(file), pattern, RegexOptions.IgnoreCase)).ToArray();
@@ -422,7 +413,7 @@ namespace ThScoreFileConverter.Models
         private class ScoreReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T143SCR({0})([0-9])({1})([1-3])", DayParser.Pattern, ItemWithTotalParser.Pattern);
+                @"%T143SCR({0})([0-9])({1})([1-3])", Parsers.DayParser.Pattern, Parsers.ItemWithTotalParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -430,10 +421,10 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var day = DayParser.Parse(match.Groups[1].Value);
+                    var day = Parsers.DayParser.Parse(match.Groups[1].Value);
                     var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                     scene = (scene == 0) ? 10 : scene;
-                    var item = ItemWithTotalParser.Parse(match.Groups[3].Value);
+                    var item = Parsers.ItemWithTotalParser.Parse(match.Groups[3].Value);
                     var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
                     var key = (day, scene);
@@ -477,7 +468,7 @@ namespace ThScoreFileConverter.Models
         private class ScoreTotalReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T143SCRTL({0})([1-4])", ItemWithTotalParser.Pattern);
+                @"%T143SCRTL({0})([1-4])", Parsers.ItemWithTotalParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -486,7 +477,7 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var item = ItemWithTotalParser.Parse(match.Groups[1].Value);
+                    var item = Parsers.ItemWithTotalParser.Parse(match.Groups[1].Value);
                     var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
                     switch (type)
@@ -521,7 +512,7 @@ namespace ThScoreFileConverter.Models
         private class CardReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T143CARD({0})([0-9])([12])", DayParser.Pattern);
+                @"%T143CARD({0})([0-9])([12])", Parsers.DayParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -529,7 +520,7 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var day = DayParser.Parse(match.Groups[1].Value);
+                    var day = Parsers.DayParser.Parse(match.Groups[1].Value);
                     var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                     scene = (scene == 0) ? 10 : scene;
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
@@ -621,7 +612,7 @@ namespace ThScoreFileConverter.Models
         private class ShotReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T143SHOT({0})([0-9])", DayParser.Pattern);
+                @"%T143SHOT({0})([0-9])", Parsers.DayParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -629,7 +620,7 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var day = DayParser.Parse(match.Groups[1].Value);
+                    var day = Parsers.DayParser.Parse(match.Groups[1].Value);
                     var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                     scene = (scene == 0) ? 10 : scene;
 
@@ -664,7 +655,7 @@ namespace ThScoreFileConverter.Models
         private class ShotExReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T143SHOTEX({0})([0-9])([1-4])", DayParser.Pattern);
+                @"%T143SHOTEX({0})([0-9])([1-4])", Parsers.DayParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -673,7 +664,7 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var day = DayParser.Parse(match.Groups[1].Value);
+                    var day = Parsers.DayParser.Parse(match.Groups[1].Value);
                     var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                     scene = (scene == 0) ? 10 : scene;
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
