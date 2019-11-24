@@ -52,5 +52,19 @@ namespace ThScoreFileConverterTests.Models.Th143
             var replacer = new NicknameReplacer(Status);
             Assert.AreEqual("%T143NICK71", replacer.Replace("%T143NICK71"));
         }
+
+        [TestMethod]
+        public void ReplaceTestInvalidFormat()
+        {
+            var replacer = new NicknameReplacer(Status);
+            Assert.AreEqual("%T143XXXX70", replacer.Replace("%T143XXXX70"));
+        }
+
+        [TestMethod]
+        public void ReplaceTestInvalidNumber()
+        {
+            var replacer = new NicknameReplacer(Status);
+            Assert.AreEqual("%T143NICKXX", replacer.Replace("%T143NICKXX"));
+        }
     }
 }
