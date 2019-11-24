@@ -14,22 +14,19 @@ namespace ThScoreFileConverterTests.Models.Th15
     [TestClass]
     public class SpellCardTests
     {
-        internal static SpellCardStub<TLevel> GetValidStub<TLevel>()
-            where TLevel : struct, Enum
-            => new SpellCardStub<TLevel>()
-            {
-                Name = TestUtils.MakeRandomArray<byte>(0x80),
-                ClearCount = 1,
-                PracticeClearCount = 2,
-                TrialCount = 3,
-                PracticeTrialCount = 4,
-                Id = 5,
-                Level = TestUtils.Cast<TLevel>(1),
-                PracticeScore = 6789
-            };
+        internal static SpellCardStub<Level> ValidStub { get; } = new SpellCardStub<Level>
+        {
+            Name = TestUtils.MakeRandomArray<byte>(0x80),
+            ClearCount = 1,
+            PracticeClearCount = 2,
+            TrialCount = 3,
+            PracticeTrialCount = 4,
+            Id = 5,
+            Level = Level.Normal,
+            PracticeScore = 6789
+        };
 
-        internal static byte[] MakeByteArray<TLevel>(ISpellCard<TLevel> spellCard)
-            where TLevel : struct, Enum
+        internal static byte[] MakeByteArray(ISpellCard<Level> spellCard)
             => TestUtils.MakeByteArray(
                 spellCard.Name,
                 spellCard.ClearCount,
@@ -40,10 +37,7 @@ namespace ThScoreFileConverterTests.Models.Th15
                 TestUtils.Cast<int>(spellCard.Level),
                 spellCard.PracticeScore);
 
-        internal static void Validate<TParent, TLevel>(
-            ISpellCard<TLevel> expected, in SpellCardWrapper<TParent, TLevel> actual)
-            where TParent : ThConverter
-            where TLevel : struct, Enum
+        internal static void Validate(ISpellCard<Level> expected, in SpellCardWrapper<Th15Converter, Level> actual)
         {
             CollectionAssert.That.AreEqual(expected.Name, actual.Name);
             Assert.AreEqual(expected.ClearCount, actual.ClearCount);
@@ -68,7 +62,7 @@ namespace ThScoreFileConverterTests.Models.Th15
         [TestMethod]
         public void Th15SpellCardReadFromTest() => TestUtils.Wrap(() =>
         {
-            var stub = GetValidStub<Level>();
+            var stub = ValidStub;
 
             var spellCard = SpellCardWrapper<Th15Converter, Level>.Create(MakeByteArray(stub));
 
@@ -91,7 +85,7 @@ namespace ThScoreFileConverterTests.Models.Th15
         [ExpectedException(typeof(InvalidCastException))]
         public void Th15SpellCardReadFromTestShortenedName() => TestUtils.Wrap(() =>
         {
-            var stub = GetValidStub<Level>();
+            var stub = new SpellCardStub<Level>(ValidStub);
             stub.Name = stub.Name.SkipLast(1).ToArray();
 
             _ = SpellCardWrapper<Th15Converter, Level>.Create(MakeByteArray(stub));
@@ -103,7 +97,7 @@ namespace ThScoreFileConverterTests.Models.Th15
         [ExpectedException(typeof(InvalidCastException))]
         public void Th15SpellCardReadFromTestExceededName() => TestUtils.Wrap(() =>
         {
-            var stub = GetValidStub<Level>();
+            var stub = new SpellCardStub<Level>(ValidStub);
             stub.Name = stub.Name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
 
             _ = SpellCardWrapper<Th15Converter, Level>.Create(MakeByteArray(stub));
@@ -119,8 +113,10 @@ namespace ThScoreFileConverterTests.Models.Th15
         [ExpectedException(typeof(InvalidCastException))]
         public void Th15SpellCardReadFromTestInvalidLevel(int level) => TestUtils.Wrap(() =>
         {
-            var stub = GetValidStub<Level>();
-            stub.Level = TestUtils.Cast<Level>(level);
+            var stub = new SpellCardStub<Level>(ValidStub)
+            {
+                Level = TestUtils.Cast<Level>(level),
+            };
 
             _ = SpellCardWrapper<Th15Converter, Level>.Create(MakeByteArray(stub));
 
