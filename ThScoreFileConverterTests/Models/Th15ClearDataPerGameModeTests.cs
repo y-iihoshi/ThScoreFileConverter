@@ -88,7 +88,7 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var pair in expected.Cards)
             {
-                SpellCardTests.Validate(pair.Value, actual.CardsItem(pair.Key));
+                SpellCardTests.Validate(pair.Value, actual.Cards[pair.Key]);
             }
         }
 

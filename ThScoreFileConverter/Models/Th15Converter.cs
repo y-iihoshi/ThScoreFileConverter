@@ -745,10 +745,5 @@ namespace ThScoreFileConverter.Models
                 reader.ReadUInt32();
             }
         }
-
-        private class SpellCard : Th13.SpellCard<Level>
-        {
-            public override bool HasTried => this.TrialCount > 0;
-        }
     }
 }

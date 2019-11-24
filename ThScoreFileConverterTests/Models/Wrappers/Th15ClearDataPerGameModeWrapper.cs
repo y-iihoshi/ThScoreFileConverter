@@ -6,7 +6,7 @@ using System.Globalization;
 using System.IO;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th15;
-using ThScoreFileConverterTests.Models.Th13.Wrappers;
+using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Level>;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -60,15 +60,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.ClearCounts)) as IReadOnlyDictionary<LevelWithTotal, int>;
         public IReadOnlyDictionary<LevelWithTotal, int> ClearFlags
             => this.pobj.GetProperty(nameof(this.ClearFlags)) as IReadOnlyDictionary<LevelWithTotal, int>;
-
-        // NOTE: Th15Converter.SpellCard is a private class.
-        // public IReadOnlyDictionary<int, SpellCard> Cards
-        //     => this.pobj.GetProperty(nameof(this.Cards)) as IReadOnlyDictionary<int, SpellCard>;
-        public object Cards
-            => this.pobj.GetProperty(nameof(this.Cards));
-        public SpellCardWrapper<Th15Converter, Level> CardsItem(int id)
-            => new SpellCardWrapper<Th15Converter, Level>(
-                this.Cards.GetType().GetProperty("Item").GetValue(this.Cards, new object[] { id }));
+        public IReadOnlyDictionary<int, ISpellCard> Cards
+            => this.pobj.GetProperty(nameof(this.Cards)) as IReadOnlyDictionary<int, ISpellCard>;
 
         public void ReadFrom(BinaryReader reader)
             => this.pobj.Invoke(nameof(ReadFrom), new object[] { reader }, CultureInfo.InvariantCulture);

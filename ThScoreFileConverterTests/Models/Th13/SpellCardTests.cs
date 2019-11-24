@@ -8,7 +8,6 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th13;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th13.Stubs;
-using ThScoreFileConverterTests.Models.Th13.Wrappers;
 
 namespace ThScoreFileConverterTests.Models.Th13
 {
@@ -40,12 +39,6 @@ namespace ThScoreFileConverterTests.Models.Th13
                 spellCard.Id - 1,
                 TestUtils.Cast<int>(spellCard.Level),
                 spellCard.PracticeScore);
-
-        internal static void Validate<TParent, TLevel>(
-            ISpellCard<TLevel> expected, in SpellCardWrapper<TParent, TLevel> actual)
-            where TParent : ThConverter
-            where TLevel : struct, Enum
-            => Validate(expected, actual.Target);
 
         internal static void Validate<TLevel>(ISpellCard<TLevel> expected, ISpellCard<TLevel> actual)
             where TLevel : struct, Enum
