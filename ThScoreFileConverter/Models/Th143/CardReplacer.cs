@@ -7,6 +7,7 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -25,6 +26,9 @@ namespace ThScoreFileConverter.Models.Th143
 
         public CardReplacer(IReadOnlyList<IScore> scores, bool hideUntriedCards)
         {
+            if (scores is null)
+                throw new ArgumentNullException(nameof(scores));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var day = Parsers.DayParser.Parse(match.Groups[1].Value);
@@ -33,26 +37,29 @@ namespace ThScoreFileConverter.Models.Th143
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                 var key = (day, scene);
-                if (!Definitions.SpellCards.ContainsKey(key))
+                if (!Definitions.SpellCards.TryGetValue(key, out var enemyCardPair))
                     return match.ToString();
 
                 if (hideUntriedCards)
                 {
                     var score = scores.FirstOrDefault(elem =>
-                        (elem != null) && ((elem.Number > 0) && (elem.Number <= Definitions.SpellCards.Count)) &&
+                        (elem != null) &&
+                        (elem.Number > 0) &&
+                        (elem.Number <= Definitions.SpellCards.Count) &&
                         Definitions.SpellCards.ElementAt(elem.Number - 1).Key.Equals(key));
-                    if ((score == null) || (score.ChallengeCounts[ItemWithTotal.Total] <= 0))
+                    if ((score == null) ||
+                        !score.ChallengeCounts.TryGetValue(ItemWithTotal.Total, out var count) ||
+                        (count <= 0))
                         return "??????????";
                 }
 
                 if (type == 1)
                 {
-                    return string.Join(
-                        " &amp; ", Definitions.SpellCards[key].Enemies.Select(enemy => enemy.ToLongName()).ToArray());
+                    return string.Join(" &amp; ", enemyCardPair.Enemies.Select(enemy => enemy.ToLongName()).ToArray());
                 }
                 else
                 {
-                    return Definitions.SpellCards[key].Card;
+                    return enemyCardPair.Card;
                 }
             });
         }

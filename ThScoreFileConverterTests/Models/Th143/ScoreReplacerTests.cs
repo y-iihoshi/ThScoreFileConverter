@@ -86,7 +86,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         }
 
         [TestMethod]
-        public void ReplaceTestNull()
+        public void ReplaceTestNullScore()
         {
             var scores = new List<IScore> { null };
             var replacer = new ScoreReplacer(scores);
@@ -147,7 +147,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         }
 
         [TestMethod]
-        public void ReplaceTestEmptyChallengeCount()
+        public void ReplaceTestEmptyChallengeCounts()
         {
             var scores = new List<IScore>
             {
@@ -162,7 +162,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         }
 
         [TestMethod]
-        public void ReplaceTestEmptyClearCount()
+        public void ReplaceTestEmptyClearCounts()
         {
             var scores = new List<IScore>
             {
