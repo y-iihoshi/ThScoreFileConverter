@@ -23,9 +23,11 @@ namespace ThScoreFileConverter.Models.Th143
         private readonly MatchEvaluator evaluator;
 
         public ShotExReplacer(
-            IReadOnlyDictionary<(Day Day, int Scene), (string Path, IBestShotHeader Header)> bestshots,
-            string outputFilePath)
+            IReadOnlyDictionary<(Day, int), (string Path, IBestShotHeader Header)> bestshots, string outputFilePath)
         {
+            if (bestshots is null)
+                throw new ArgumentNullException(nameof(bestshots));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var day = Parsers.DayParser.Parse(match.Groups[1].Value);
@@ -37,12 +39,21 @@ namespace ThScoreFileConverter.Models.Th143
                 if (!Definitions.SpellCards.ContainsKey(key))
                     return match.ToString();
 
-                if (!string.IsNullOrEmpty(outputFilePath) && bestshots.TryGetValue(key, out var bestshot))
+                if (bestshots.TryGetValue(key, out var bestshot))
                 {
                     switch (type)
                     {
                         case 1:     // relative path to the bestshot file
-                            return new Uri(outputFilePath).MakeRelativeUri(new Uri(bestshot.Path)).OriginalString;
+                            if (Uri.TryCreate(outputFilePath, UriKind.Absolute, out var outputFileUri) &&
+                                Uri.TryCreate(bestshot.Path, UriKind.Absolute, out var bestshotUri))
+                            {
+                                return outputFileUri.MakeRelativeUri(bestshotUri).OriginalString;
+                            }
+                            else
+                            {
+                                return string.Empty;
+                            }
+
                         case 2:     // width
                             return bestshot.Header.Width.ToString(CultureInfo.InvariantCulture);
                         case 3:     // height

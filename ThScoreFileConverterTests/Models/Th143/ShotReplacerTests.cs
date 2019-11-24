@@ -125,7 +125,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         }
 
         [TestMethod]
-        public void ReplaceTestNonexistentLevel()
+        public void ReplaceTestNonexistentDay()
         {
             var replacer = new ShotReplacer(BestShots, @"C:\path\to\output\");
             Assert.AreEqual(string.Empty, replacer.Replace("%T143SHOT13"));
@@ -142,7 +142,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         public void ReplaceTestNonexistentSpellCard()
         {
             var replacer = new ShotReplacer(BestShots, @"C:\path\to\output\");
-            Assert.AreEqual("%T143SHOT99", replacer.Replace("%T143SHOT99"));
+            Assert.AreEqual("%T143SHOT17", replacer.Replace("%T143SHOT17"));
         }
 
         [TestMethod]
