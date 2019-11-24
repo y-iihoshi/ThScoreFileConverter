@@ -23,18 +23,6 @@ namespace ThScoreFileConverter.Models
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th145Converter : ThConverter
     {
-        private static new readonly EnumShortNameParser<Th145.Level> LevelParser =
-            new EnumShortNameParser<Th145.Level>();
-
-        private static new readonly EnumShortNameParser<Th145.LevelWithTotal> LevelWithTotalParser =
-            new EnumShortNameParser<Th145.LevelWithTotal>();
-
-        private static readonly EnumShortNameParser<Chara> CharaParser =
-            new EnumShortNameParser<Chara>();
-
-        private static readonly EnumShortNameParser<CharaWithTotal> CharaWithTotalParser =
-            new EnumShortNameParser<CharaWithTotal>();
-
         private AllScoreData allScoreData = null;
 
         public override string SupportedVersions
@@ -139,7 +127,7 @@ namespace ThScoreFileConverter.Models
         private class ClearRankReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T145CLEAR({0})({1})", LevelParser.Pattern, CharaParser.Pattern);
+                @"%T145CLEAR({0})({1})", Parsers.LevelParser.Pattern, Parsers.CharaParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -147,8 +135,8 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var level = LevelParser.Parse(match.Groups[1].Value);
-                    var chara = CharaParser.Parse(match.Groups[2].Value);
+                    var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+                    var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
 
                     // FIXME
                     switch (parent.allScoreData.ClearRanks[level][chara])
@@ -175,7 +163,7 @@ namespace ThScoreFileConverter.Models
         private class ClearTimeReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T145TIMECLR({0})({1})", LevelWithTotalParser.Pattern, CharaWithTotalParser.Pattern);
+                @"%T145TIMECLR({0})({1})", Parsers.LevelWithTotalParser.Pattern, Parsers.CharaWithTotalParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -184,8 +172,8 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var level = LevelWithTotalParser.Parse(match.Groups[1].Value);
-                    var chara = CharaWithTotalParser.Parse(match.Groups[2].Value);
+                    var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
+                    var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[2].Value);
 
                     Func<Dictionary<Chara, int>, int> getValueByChara;
                     if (chara == CharaWithTotal.Total)
