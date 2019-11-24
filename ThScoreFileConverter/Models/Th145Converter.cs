@@ -7,7 +7,6 @@
 
 #pragma warning disable 1591
 #pragma warning disable SA1600 // ElementsMustBeDocumented
-#pragma warning disable SA1602 // EnumerationItemsMustBeDocumented
 
 using System;
 using System.Collections.Generic;
@@ -16,6 +15,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Models.Th145;
 using ThScoreFileConverter.Squirrel;
 
 namespace ThScoreFileConverter.Models
@@ -23,11 +23,11 @@ namespace ThScoreFileConverter.Models
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th145Converter : ThConverter
     {
-        private static new readonly EnumShortNameParser<Level> LevelParser =
-            new EnumShortNameParser<Level>();
+        private static new readonly EnumShortNameParser<Th145.Level> LevelParser =
+            new EnumShortNameParser<Th145.Level>();
 
-        private static new readonly EnumShortNameParser<LevelWithTotal> LevelWithTotalParser =
-            new EnumShortNameParser<LevelWithTotal>();
+        private static new readonly EnumShortNameParser<Th145.LevelWithTotal> LevelWithTotalParser =
+            new EnumShortNameParser<Th145.LevelWithTotal>();
 
         private static readonly EnumShortNameParser<Chara> CharaParser =
             new EnumShortNameParser<Chara>();
@@ -36,80 +36,6 @@ namespace ThScoreFileConverter.Models
             new EnumShortNameParser<CharaWithTotal>();
 
         private AllScoreData allScoreData = null;
-
-        public enum Level
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("E")] Easy,
-            [EnumAltName("N")] Normal,
-            [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum LevelWithTotal
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("E")] Easy,
-            [EnumAltName("N")] Normal,
-            [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic,
-            [EnumAltName("T")] Total,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        [Flags]
-        public enum LevelFlag
-        {
-            None = 0,
-            Easy = 1,
-            Normal = 2,
-            Hard = 4,
-            Lunatic = 8,
-        }
-
-        public enum Chara
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("RA")] ReimuA,
-            [EnumAltName("MR")] Marisa,
-            [EnumAltName("IU")] IchirinUnzan,
-            [EnumAltName("BY")] Byakuren,
-            [EnumAltName("FT")] Futo,
-            [EnumAltName("MK")] Miko,
-            [EnumAltName("NT")] Nitori,
-            [EnumAltName("KO")] Koishi,
-            [EnumAltName("MM")] Mamizou,
-            [EnumAltName("KK")] Kokoro,
-            [EnumAltName("KS")] Kasen,
-            [EnumAltName("MO")] Mokou,
-            [EnumAltName("SN")] Shinmyoumaru,
-            [EnumAltName("SM")] Sumireko,
-            [EnumAltName("RB")] ReimuB,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum CharaWithTotal
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("RA")] ReimuA,
-            [EnumAltName("MR")] Marisa,
-            [EnumAltName("IU")] IchirinUnzan,
-            [EnumAltName("BY")] Byakuren,
-            [EnumAltName("FT")] Futo,
-            [EnumAltName("MK")] Miko,
-            [EnumAltName("NT")] Nitori,
-            [EnumAltName("KO")] Koishi,
-            [EnumAltName("MM")] Mamizou,
-            [EnumAltName("KK")] Kokoro,
-            [EnumAltName("KS")] Kasen,
-            [EnumAltName("MO")] Mokou,
-            [EnumAltName("SN")] Shinmyoumaru,
-            [EnumAltName("SM")] Sumireko,
-            [EnumAltName("RB")] ReimuB,
-            [EnumAltName("TL")] Total,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
 
         public override string SupportedVersions
         {
@@ -267,11 +193,11 @@ namespace ThScoreFileConverter.Models
                     else
                         getValueByChara = (dict => dict[(Chara)chara]);
 
-                    Func<Dictionary<Level, Dictionary<Chara, int>>, int> getValueByLevel;
-                    if (level == LevelWithTotal.Total)
+                    Func<Dictionary<Th145.Level, Dictionary<Chara, int>>, int> getValueByLevel;
+                    if (level == Th145.LevelWithTotal.Total)
                         getValueByLevel = (dict => dict.Values.Sum(getValueByChara));
                     else
-                        getValueByLevel = (dict => getValueByChara(dict[(Level)level]));
+                        getValueByLevel = (dict => getValueByChara(dict[(Th145.Level)level]));
 
                     return new Time(getValueByLevel(parent.allScoreData.ClearTimes)).ToString();
                 });
@@ -298,7 +224,7 @@ namespace ThScoreFileConverter.Models
             public int StoryProgress => this.GetValue<int>("story_progress");
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public Dictionary<Chara, LevelFlag> StoryClearFlags { get; private set; }
+            public Dictionary<Chara, LevelFlags> StoryClearFlags { get; private set; }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public int EndingCount => this.GetValue<int>("ed_count");
@@ -330,9 +256,9 @@ namespace ThScoreFileConverter.Models
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public Dictionary<int, bool> BgmFlags { get; private set; }
 
-            public Dictionary<Level, Dictionary<Chara, int>> ClearRanks { get; private set; }
+            public Dictionary<Th145.Level, Dictionary<Chara, int>> ClearRanks { get; private set; }
 
-            public Dictionary<Level, Dictionary<Chara, int>> ClearTimes { get; private set; }
+            public Dictionary<Th145.Level, Dictionary<Chara, int>> ClearTimes { get; private set; }
 
             public void ReadFrom(BinaryReader reader)
             {
@@ -353,7 +279,7 @@ namespace ThScoreFileConverter.Models
                         this.StoryClearFlags = storyClearFlags.Value
                             .Select((flag, index) => (flag, index))
                             .Where(pair => pair.flag is SQInteger)
-                            .ToDictionary(pair => (Chara)pair.index, pair => (LevelFlag)(int)(pair.flag as SQInteger));
+                            .ToDictionary(pair => (Chara)pair.index, pair => (LevelFlags)(int)(pair.flag as SQInteger));
                     }
                 }
             }
@@ -381,7 +307,7 @@ namespace ThScoreFileConverter.Models
                             .Select((ranksPerChara, index) => (ranksPerChara, index))
                             .Where(levelPair => levelPair.ranksPerChara is SQArray)
                             .ToDictionary(
-                                levelPair => (Level)levelPair.index,
+                                levelPair => (Th145.Level)levelPair.index,
                                 levelPair => (levelPair.ranksPerChara as SQArray).Value
                                     .Select((rank, index) => (rank, index))
                                     .Where(charaPair => charaPair.rank is SQInteger)
@@ -402,7 +328,7 @@ namespace ThScoreFileConverter.Models
                             .Select((timesPerChara, index) => (timesPerChara, index))
                             .Where(levelPair => levelPair.timesPerChara is SQArray)
                             .ToDictionary(
-                                levelPair => (Level)levelPair.index,
+                                levelPair => (Th145.Level)levelPair.index,
                                 levelPair => (levelPair.timesPerChara as SQArray).Value
                                     .Select((time, index) => (time, index))
                                     .Where(charaPair => charaPair.time is SQInteger)

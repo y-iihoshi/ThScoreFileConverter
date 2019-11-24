@@ -5,6 +5,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th145;
+using Level = ThScoreFileConverter.Models.Th145.Level;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -48,9 +50,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         public int? StoryProgress
             => this.pobj.GetProperty(nameof(this.StoryProgress)) as int?;
-        public IReadOnlyDictionary<Th145Converter.Chara, Th145Converter.LevelFlag> StoryClearFlags
-            => this.pobj.GetProperty(nameof(this.StoryClearFlags))
-                as Dictionary<Th145Converter.Chara, Th145Converter.LevelFlag>;
+        public IReadOnlyDictionary<Chara, LevelFlags> StoryClearFlags
+            => this.pobj.GetProperty(nameof(this.StoryClearFlags)) as Dictionary<Chara, LevelFlags>;
         public int? EndingCount
             => this.pobj.GetProperty(nameof(this.EndingCount)) as int?;
         public int? Ending2Count
@@ -71,12 +72,10 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.IsPlayableKokoro)) as bool?;
         public IReadOnlyDictionary<int, bool> BgmFlags
             => this.pobj.GetProperty(nameof(this.BgmFlags)) as Dictionary<int, bool>;
-        public IReadOnlyDictionary<Th145Converter.Level, Dictionary<Th145Converter.Chara, int>> ClearRanks
-            => this.pobj.GetProperty(nameof(this.ClearRanks))
-                as Dictionary<Th145Converter.Level, Dictionary<Th145Converter.Chara, int>>;
-        public IReadOnlyDictionary<Th145Converter.Level, Dictionary<Th145Converter.Chara, int>> ClearTimes
-            => this.pobj.GetProperty(nameof(this.ClearTimes))
-                as Dictionary<Th145Converter.Level, Dictionary<Th145Converter.Chara, int>>;
+        public IReadOnlyDictionary<Level, Dictionary<Chara, int>> ClearRanks
+            => this.pobj.GetProperty(nameof(this.ClearRanks)) as Dictionary<Level, Dictionary<Chara, int>>;
+        public IReadOnlyDictionary<Level, Dictionary<Chara, int>> ClearTimes
+            => this.pobj.GetProperty(nameof(this.ClearTimes)) as Dictionary<Level, Dictionary<Chara, int>>;
 
         public void ReadFrom(BinaryReader reader)
             => this.pobj.Invoke(nameof(ReadFrom), new object[] { reader }, CultureInfo.InvariantCulture);

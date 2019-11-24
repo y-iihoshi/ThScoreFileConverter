@@ -4,20 +4,21 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th145;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Wrappers;
+using Level = ThScoreFileConverter.Models.Th145.Level;
+using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
 
 namespace ThScoreFileConverterTests.Models
 {
-    using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
-
     [TestClass]
     public class Th145AllScoreDataTests
     {
         internal struct Properties
         {
             public int storyProgress;
-            public Dictionary<Th145Converter.Chara, Th145Converter.LevelFlag> storyClearFlags;
+            public Dictionary<Chara, LevelFlags> storyClearFlags;
             public int endingCount;
             public int ending2Count;
             public bool isEnabledStageTanuki1;
@@ -28,20 +29,20 @@ namespace ThScoreFileConverterTests.Models
             public bool isPlayableMamizou;
             public bool isPlayableKokoro;
             public Dictionary<int, bool> bgmFlags;
-            public Dictionary<Th145Converter.Level, Dictionary<Th145Converter.Chara, int>> clearRanks;
-            public Dictionary<Th145Converter.Level, Dictionary<Th145Converter.Chara, int>> clearTimes;
+            public Dictionary<Level, Dictionary<Chara, int>> clearRanks;
+            public Dictionary<Level, Dictionary<Chara, int>> clearTimes;
         };
 
         internal static Properties GetValidProperties()
         {
-            var charas = Utils.GetEnumerator<Th145Converter.Chara>();
-            var levels = Utils.GetEnumerator<Th145Converter.Level>();
+            var charas = Utils.GetEnumerator<Chara>();
+            var levels = Utils.GetEnumerator<Level>();
 
             return new Properties()
             {
                 storyProgress = 1,
                 storyClearFlags = charas.ToDictionary(
-                    chara => chara, chara => TestUtils.Cast<Th145Converter.LevelFlag>(30 - (int)chara)),
+                    chara => chara, chara => TestUtils.Cast<LevelFlags>(30 - (int)chara)),
                 endingCount = 2,
                 ending2Count = 3,
                 isEnabledStageTanuki1 = true,
