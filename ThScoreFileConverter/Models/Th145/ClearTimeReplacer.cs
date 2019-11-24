@@ -24,6 +24,9 @@ namespace ThScoreFileConverter.Models.Th145
 
         public ClearTimeReplacer(IReadOnlyDictionary<Level, IReadOnlyDictionary<Chara, int>> clearTimes)
         {
+            if (clearTimes is null)
+                throw new ArgumentNullException(nameof(clearTimes));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
@@ -31,15 +34,20 @@ namespace ThScoreFileConverter.Models.Th145
 
                 Func<IReadOnlyDictionary<Chara, int>, int> getValueByChara;
                 if (chara == CharaWithTotal.Total)
-                    getValueByChara = dict => dict.Values.Sum();
+                    getValueByChara = dictionary => dictionary.Values.Sum();
                 else
-                    getValueByChara = dict => dict[(Chara)chara];
+                    getValueByChara = dictionary => dictionary.TryGetValue((Chara)chara, out var time) ? time : 0;
 
                 Func<IReadOnlyDictionary<Level, IReadOnlyDictionary<Chara, int>>, int> getValueByLevel;
                 if (level == LevelWithTotal.Total)
-                    getValueByLevel = dict => dict.Values.Sum(getValueByChara);
+                {
+                    getValueByLevel = dictionary => dictionary.Values.Sum(getValueByChara);
+                }
                 else
-                    getValueByLevel = dict => getValueByChara(dict[(Level)level]);
+                {
+                    getValueByLevel = dictionary => dictionary.TryGetValue((Level)level, out var times)
+                        ? getValueByChara(times) : 0;
+                }
 
                 return new Time(getValueByLevel(clearTimes)).ToString();
             });
