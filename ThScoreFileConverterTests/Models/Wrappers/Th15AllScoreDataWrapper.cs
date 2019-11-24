@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using ThScoreFileConverter.Models;
@@ -26,25 +27,15 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.Target;
         public HeaderBase Header
             => this.pobj.GetProperty(nameof(this.Header)) as HeaderBase;
-
-        // NOTE: Th15Converter.ClearData is a private class.
-        // public IReadOnlyDictionary<CharaWithTotal, ClearData> ClearData
-        //     => this.pobj.GetProperty(nameof(this.ClearData)) as Dictionary<CharaWithTotal, ClearData>;
-        public object ClearData
-            => this.pobj.GetProperty(nameof(this.ClearData));
-        public int? ClearDataCount
-            => this.ClearData.GetType().GetProperty("Count").GetValue(this.ClearData) as int?;
-        public Th15ClearDataWrapper ClearDataItem(CharaWithTotal chara)
-            => new Th15ClearDataWrapper(
-                this.ClearData.GetType().GetProperty("Item").GetValue(this.ClearData, new object[] { chara }));
-
+        public IReadOnlyDictionary<CharaWithTotal, IClearData> ClearData
+            => this.pobj.GetProperty(nameof(this.ClearData)) as IReadOnlyDictionary<CharaWithTotal, IClearData>;
         public IStatus Status
             => this.pobj.GetProperty(nameof(this.Status)) as IStatus;
 
         public void Set(HeaderBase header)
             => this.pobj.Invoke(nameof(Set), new object[] { header }, CultureInfo.InvariantCulture);
-        public void Set(Th15ClearDataWrapper data)
-            => this.pobj.Invoke(nameof(Set), new object[] { data.Target }, CultureInfo.InvariantCulture);
+        public void Set(IClearData data)
+            => this.pobj.Invoke(nameof(Set), new object[] { data }, CultureInfo.InvariantCulture);
         public void Set(IStatus status)
             => this.pobj.Invoke(nameof(Set), new object[] { status }, CultureInfo.InvariantCulture);
     }
