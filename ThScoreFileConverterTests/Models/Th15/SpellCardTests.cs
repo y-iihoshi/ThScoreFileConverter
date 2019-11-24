@@ -50,7 +50,7 @@ namespace ThScoreFileConverterTests.Models.Th15
         }
 
         [TestMethod]
-        public void Th15SpellCardTest() => TestUtils.Wrap(() =>
+        public void SpellCardTest() => TestUtils.Wrap(() =>
         {
             var stub = new SpellCardStub<Level>();
             var spellCard = new SpellCard();
@@ -60,7 +60,7 @@ namespace ThScoreFileConverterTests.Models.Th15
         });
 
         [TestMethod]
-        public void Th15SpellCardReadFromTest() => TestUtils.Wrap(() =>
+        public void ReadFromTest() => TestUtils.Wrap(() =>
         {
             var stub = ValidStub;
 
@@ -72,7 +72,7 @@ namespace ThScoreFileConverterTests.Models.Th15
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th15SpellCardReadFromTestNull() => TestUtils.Wrap(() =>
+        public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
             var spellCard = new SpellCard();
 
@@ -83,7 +83,7 @@ namespace ThScoreFileConverterTests.Models.Th15
 
         [TestMethod]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th15SpellCardReadFromTestShortenedName() => TestUtils.Wrap(() =>
+        public void ReadFromTestShortenedName() => TestUtils.Wrap(() =>
         {
             var stub = new SpellCardStub<Level>(ValidStub);
             stub.Name = stub.Name.SkipLast(1).ToArray();
@@ -95,7 +95,7 @@ namespace ThScoreFileConverterTests.Models.Th15
 
         [TestMethod]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th15SpellCardReadFromTestExceededName() => TestUtils.Wrap(() =>
+        public void ReadFromTestExceededName() => TestUtils.Wrap(() =>
         {
             var stub = new SpellCardStub<Level>(ValidStub);
             stub.Name = stub.Name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
@@ -111,7 +111,7 @@ namespace ThScoreFileConverterTests.Models.Th15
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void Th15SpellCardReadFromTestInvalidLevel(int level) => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidLevel(int level) => TestUtils.Wrap(() =>
         {
             var stub = new SpellCardStub<Level>(ValidStub)
             {
