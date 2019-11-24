@@ -151,15 +151,6 @@ namespace ThScoreFileConverter.Models
                 new CardInfo(119, "「最初で最後の無名の弾幕」",           Stage.Extra, Level.Extra),
             }.ToDictionary(card => card.Id);
 
-        private static readonly EnumShortNameParser<GameMode> GameModeParser =
-            new EnumShortNameParser<GameMode>();
-
-        private static readonly EnumShortNameParser<Chara> CharaParser =
-            new EnumShortNameParser<Chara>();
-
-        private static readonly EnumShortNameParser<CharaWithTotal> CharaWithTotalParser =
-            new EnumShortNameParser<CharaWithTotal>();
-
         private AllScoreData allScoreData = null;
 
         public override string SupportedVersions
@@ -323,9 +314,9 @@ namespace ThScoreFileConverter.Models
         {
             private static readonly string Pattern = Utils.Format(
                 @"%T15SCR({0})({1})({2})(\d)([1-6])",
-                GameModeParser.Pattern,
-                LevelParser.Pattern,
-                CharaParser.Pattern);
+                Parsers.GameModeParser.Pattern,
+                Parsers.LevelParser.Pattern,
+                Parsers.CharaParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -333,9 +324,9 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var mode = GameModeParser.Parse(match.Groups[1].Value);
-                    var level = (LevelWithTotal)LevelParser.Parse(match.Groups[2].Value);
-                    var chara = (CharaWithTotal)CharaParser.Parse(match.Groups[3].Value);
+                    var mode = Parsers.GameModeParser.Parse(match.Groups[1].Value);
+                    var level = (LevelWithTotal)Parsers.LevelParser.Parse(match.Groups[2].Value);
+                    var chara = (CharaWithTotal)Parsers.CharaParser.Parse(match.Groups[3].Value);
                     var rank = Utils.ToZeroBased(
                         int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture));
                     var type = int.Parse(match.Groups[5].Value, CultureInfo.InvariantCulture);
@@ -389,7 +380,9 @@ namespace ThScoreFileConverter.Models
         private class CareerReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T15C({0})(\d{{3}})({1})([12])", GameModeParser.Pattern, CharaWithTotalParser.Pattern);
+                @"%T15C({0})(\d{{3}})({1})([12])",
+                Parsers.GameModeParser.Pattern,
+                Parsers.CharaWithTotalParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -398,9 +391,9 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var mode = GameModeParser.Parse(match.Groups[1].Value);
+                    var mode = Parsers.GameModeParser.Parse(match.Groups[1].Value);
                     var number = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
-                    var chara = CharaWithTotalParser.Parse(match.Groups[3].Value);
+                    var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[3].Value);
                     var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
                     Func<Th13.ISpellCard<Level>, int> getCount;
@@ -485,10 +478,10 @@ namespace ThScoreFileConverter.Models
         {
             private static readonly string Pattern = Utils.Format(
                 @"%T15CRG({0})({1})({2})({3})([12])",
-                GameModeParser.Pattern,
-                LevelWithTotalParser.Pattern,
-                CharaWithTotalParser.Pattern,
-                StageWithTotalParser.Pattern);
+                Parsers.GameModeParser.Pattern,
+                Parsers.LevelWithTotalParser.Pattern,
+                Parsers.CharaWithTotalParser.Pattern,
+                Parsers.StageWithTotalParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -497,10 +490,10 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var mode = GameModeParser.Parse(match.Groups[1].Value);
-                    var level = LevelWithTotalParser.Parse(match.Groups[2].Value);
-                    var chara = CharaWithTotalParser.Parse(match.Groups[3].Value);
-                    var stage = StageWithTotalParser.Parse(match.Groups[4].Value);
+                    var mode = Parsers.GameModeParser.Parse(match.Groups[1].Value);
+                    var level = Parsers.LevelWithTotalParser.Parse(match.Groups[2].Value);
+                    var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[3].Value);
+                    var stage = Parsers.StageWithTotalParser.Parse(match.Groups[4].Value);
                     var type = int.Parse(match.Groups[5].Value, CultureInfo.InvariantCulture);
 
                     if (stage == StageWithTotal.Extra)
@@ -553,7 +546,10 @@ namespace ThScoreFileConverter.Models
         private class ClearReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T15CLEAR({0})({1})({2})", GameModeParser.Pattern, LevelParser.Pattern, CharaParser.Pattern);
+                @"%T15CLEAR({0})({1})({2})",
+                Parsers.GameModeParser.Pattern,
+                Parsers.LevelParser.Pattern,
+                Parsers.CharaParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -561,9 +557,9 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var mode = GameModeParser.Parse(match.Groups[1].Value);
-                    var level = (LevelWithTotal)LevelParser.Parse(match.Groups[2].Value);
-                    var chara = (CharaWithTotal)CharaParser.Parse(match.Groups[3].Value);
+                    var mode = Parsers.GameModeParser.Parse(match.Groups[1].Value);
+                    var level = (LevelWithTotal)Parsers.LevelParser.Parse(match.Groups[2].Value);
+                    var chara = (CharaWithTotal)Parsers.CharaParser.Parse(match.Groups[3].Value);
 
 #if false   // FIXME
                     if (level == LevelWithTotal.Extra)
@@ -594,7 +590,7 @@ namespace ThScoreFileConverter.Models
         private class CharaReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T15CHARA({0})({1})([1-3])", GameModeParser.Pattern, CharaWithTotalParser.Pattern);
+                @"%T15CHARA({0})({1})([1-3])", Parsers.GameModeParser.Pattern, Parsers.CharaWithTotalParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -603,8 +599,8 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var mode = GameModeParser.Parse(match.Groups[1].Value);
-                    var chara = CharaWithTotalParser.Parse(match.Groups[2].Value);
+                    var mode = Parsers.GameModeParser.Parse(match.Groups[1].Value);
+                    var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[2].Value);
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                     Func<IClearData, long> getValueByType;
@@ -651,9 +647,9 @@ namespace ThScoreFileConverter.Models
         {
             private static readonly string Pattern = Utils.Format(
                 @"%T15CHARAEX({0})({1})({2})([1-3])",
-                GameModeParser.Pattern,
-                LevelWithTotalParser.Pattern,
-                CharaWithTotalParser.Pattern);
+                Parsers.GameModeParser.Pattern,
+                Parsers.LevelWithTotalParser.Pattern,
+                Parsers.CharaWithTotalParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -662,9 +658,9 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var mode = GameModeParser.Parse(match.Groups[1].Value);
-                    var level = LevelWithTotalParser.Parse(match.Groups[2].Value);
-                    var chara = CharaWithTotalParser.Parse(match.Groups[3].Value);
+                    var mode = Parsers.GameModeParser.Parse(match.Groups[1].Value);
+                    var level = Parsers.LevelWithTotalParser.Parse(match.Groups[2].Value);
+                    var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[3].Value);
                     var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
                     Func<IClearData, long> getValueByType;
@@ -713,7 +709,10 @@ namespace ThScoreFileConverter.Models
         private class PracticeReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T15PRAC({0})({1})({2})", LevelParser.Pattern, CharaParser.Pattern, StageParser.Pattern);
+                @"%T15PRAC({0})({1})({2})",
+                Parsers.LevelParser.Pattern,
+                Parsers.CharaParser.Pattern,
+                Parsers.StageParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -721,9 +720,9 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var level = LevelParser.Parse(match.Groups[1].Value);
-                    var chara = (CharaWithTotal)CharaParser.Parse(match.Groups[2].Value);
-                    var stage = StageParser.Parse(match.Groups[3].Value);
+                    var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+                    var chara = (CharaWithTotal)Parsers.CharaParser.Parse(match.Groups[2].Value);
+                    var stage = Parsers.StageParser.Parse(match.Groups[3].Value);
 
                     if (level == Level.Extra)
                         return match.ToString();
