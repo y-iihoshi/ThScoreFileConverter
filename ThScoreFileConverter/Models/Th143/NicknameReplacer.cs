@@ -7,6 +7,7 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -22,6 +23,9 @@ namespace ThScoreFileConverter.Models.Th143
 
         public NicknameReplacer(IStatus status)
         {
+            if (status is null)
+                throw new ArgumentNullException(nameof(status));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);

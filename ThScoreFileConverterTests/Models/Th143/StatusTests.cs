@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using ThScoreFileConverter.Models.Th143;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th143.Stubs;
@@ -25,7 +26,7 @@ namespace ThScoreFileConverterTests.Models.Th143
             TotalPlayTime = 12345678,
             LastMainItem = ItemWithTotal.Camera,
             LastSubItem = ItemWithTotal.Doll,
-            NicknameFlags = TestUtils.MakeRandomArray<byte>(71)
+            NicknameFlags = Enumerable.Range(0, 71).Select(value => (byte)((value % 3 == 0) ? 0 : 1)).ToArray()
         };
 
         internal static byte[] MakeData(IStatus status)
