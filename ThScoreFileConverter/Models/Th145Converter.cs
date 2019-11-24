@@ -175,13 +175,13 @@ namespace ThScoreFileConverter.Models
                     var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
                     var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[2].Value);
 
-                    Func<Dictionary<Chara, int>, int> getValueByChara;
+                    Func<IReadOnlyDictionary<Chara, int>, int> getValueByChara;
                     if (chara == CharaWithTotal.Total)
                         getValueByChara = (dict => dict.Values.Sum());
                     else
                         getValueByChara = (dict => dict[(Chara)chara]);
 
-                    Func<Dictionary<Th145.Level, Dictionary<Chara, int>>, int> getValueByLevel;
+                    Func<IReadOnlyDictionary<Th145.Level, IReadOnlyDictionary<Chara, int>>, int> getValueByLevel;
                     if (level == Th145.LevelWithTotal.Total)
                         getValueByLevel = (dict => dict.Values.Sum(getValueByChara));
                     else
@@ -212,7 +212,7 @@ namespace ThScoreFileConverter.Models
             public int StoryProgress => this.GetValue<int>("story_progress");
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public Dictionary<Chara, LevelFlags> StoryClearFlags { get; private set; }
+            public IReadOnlyDictionary<Chara, LevelFlags> StoryClearFlags { get; private set; }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public int EndingCount => this.GetValue<int>("ed_count");
@@ -242,11 +242,11 @@ namespace ThScoreFileConverter.Models
             public bool IsPlayableKokoro => this.GetValue<bool>("enable_kokoro");
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public Dictionary<int, bool> BgmFlags { get; private set; }
+            public IReadOnlyDictionary<int, bool> BgmFlags { get; private set; }
 
-            public Dictionary<Th145.Level, Dictionary<Chara, int>> ClearRanks { get; private set; }
+            public IReadOnlyDictionary<Th145.Level, IReadOnlyDictionary<Chara, int>> ClearRanks { get; private set; }
 
-            public Dictionary<Th145.Level, Dictionary<Chara, int>> ClearTimes { get; private set; }
+            public IReadOnlyDictionary<Th145.Level, IReadOnlyDictionary<Chara, int>> ClearTimes { get; private set; }
 
             public void ReadFrom(BinaryReader reader)
             {
@@ -301,7 +301,8 @@ namespace ThScoreFileConverter.Models
                                     .Where(charaPair => charaPair.rank is SQInteger)
                                     .ToDictionary(
                                         charaPair => (Chara)charaPair.index,
-                                        charaPair => (int)(charaPair.rank as SQInteger)));
+                                        charaPair => (int)(charaPair.rank as SQInteger))
+                                    as IReadOnlyDictionary<Chara, int>);
                     }
                 }
             }
@@ -322,7 +323,8 @@ namespace ThScoreFileConverter.Models
                                     .Where(charaPair => charaPair.time is SQInteger)
                                     .ToDictionary(
                                         charaPair => (Chara)charaPair.index,
-                                        charaPair => (int)(charaPair.time as SQInteger)));
+                                        charaPair => (int)(charaPair.time as SQInteger))
+                                    as IReadOnlyDictionary<Chara, int>);
                     }
                 }
             }
