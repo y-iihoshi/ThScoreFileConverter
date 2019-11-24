@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Models.Th13;
 using ThScoreFileConverter.Models.Th15;
 using ThScoreFileConverterTests.Models.Th13.Stubs;
+using IPractice = ThScoreFileConverter.Models.Th13.IPractice;
 
 namespace ThScoreFileConverterTests.Models.Th15.Stubs
 {
@@ -26,11 +26,11 @@ namespace ThScoreFileConverterTests.Models.Th15.Stubs
             this.Version = clearData.Version;
         }
 
-        public Th15Converter.CharaWithTotal Chara { get; set; }
+        public CharaWithTotal Chara { get; set; }
 
-        public IReadOnlyDictionary<Th15Converter.GameMode, IClearDataPerGameMode> GameModeData { get; set; }
+        public IReadOnlyDictionary<GameMode, IClearDataPerGameMode> GameModeData { get; set; }
 
-        public IReadOnlyDictionary<(Level, Th15Converter.StagePractice), IPractice> Practices { get; set; }
+        public IReadOnlyDictionary<(Level, StagePractice), IPractice> Practices { get; set; }
 
         public uint Checksum { get; set; }
 

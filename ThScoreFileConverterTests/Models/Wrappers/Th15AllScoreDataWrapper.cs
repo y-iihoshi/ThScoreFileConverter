@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th15;
 using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
 using IStatus = ThScoreFileConverter.Models.Th125.IStatus;
 
@@ -33,7 +34,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.ClearData));
         public int? ClearDataCount
             => this.ClearData.GetType().GetProperty("Count").GetValue(this.ClearData) as int?;
-        public Th15ClearDataWrapper ClearDataItem(Th15Converter.CharaWithTotal chara)
+        public Th15ClearDataWrapper ClearDataItem(CharaWithTotal chara)
             => new Th15ClearDataWrapper(
                 this.ClearData.GetType().GetProperty("Item").GetValue(this.ClearData, new object[] { chara }));
 

@@ -3,8 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Models.Th13;
+using ThScoreFileConverter.Models.Th15;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
+using IPractice = ThScoreFileConverter.Models.Th13.IPractice;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -37,8 +38,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.IsValid)) as bool?;
         public IReadOnlyCollection<byte> Data
             => this.pobj.GetProperty(nameof(this.Data)) as byte[];
-        public Th15Converter.CharaWithTotal? Chara
-            => this.pobj.GetProperty(nameof(this.Chara)) as Th15Converter.CharaWithTotal?;
+        public CharaWithTotal? Chara
+            => this.pobj.GetProperty(nameof(this.Chara)) as CharaWithTotal?;
 
         // NOTE: Th15Converter.ClearDataPerGameMode is a private class.
         // public IReadOnlyDictionary<GameMode, IClearDataPerGameMode> GameModeData
@@ -46,13 +47,13 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         //         as IReadOnlyDictionary<GameMode, IClearDataPerGameMode>;
         public object GameModeData
             => this.pobj.GetProperty(nameof(this.GameModeData));
-        public Th15ClearDataPerGameModeWrapper GameModeDataItem(Th15Converter.GameMode mode)
+        public Th15ClearDataPerGameModeWrapper GameModeDataItem(GameMode mode)
             => new Th15ClearDataPerGameModeWrapper(
                 this.GameModeData.GetType().GetProperty("Item").GetValue(this.GameModeData, new object[] { mode }));
 
-        public IReadOnlyDictionary<(Level, Th15Converter.StagePractice), IPractice> Practices
+        public IReadOnlyDictionary<(Level, StagePractice), IPractice> Practices
             => this.pobj.GetProperty(nameof(this.Practices))
-                as IReadOnlyDictionary<(Level, Th15Converter.StagePractice), IPractice>;
+                as IReadOnlyDictionary<(Level, StagePractice), IPractice>;
 
         public static bool CanInitialize(ChapterWrapper chapter)
             => (bool)PrivateType.InvokeStatic(

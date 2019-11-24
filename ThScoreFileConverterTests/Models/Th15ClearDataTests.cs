@@ -4,7 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Models.Th13;
 using ThScoreFileConverter.Models.Th15;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
@@ -12,6 +11,7 @@ using ThScoreFileConverterTests.Models.Th13;
 using ThScoreFileConverterTests.Models.Th13.Stubs;
 using ThScoreFileConverterTests.Models.Th15.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
+using IPractice = ThScoreFileConverter.Models.Th13.IPractice;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -20,9 +20,9 @@ namespace ThScoreFileConverterTests.Models
     {
         internal static ClearDataStub GetValidStub()
         {
-            var modes = Utils.GetEnumerator<Th15Converter.GameMode>();
+            var modes = Utils.GetEnumerator<GameMode>();
             var levels = Utils.GetEnumerator<Level>();
-            var stages = Utils.GetEnumerator<Th15Converter.StagePractice>();
+            var stages = Utils.GetEnumerator<StagePractice>();
 
             return new ClearDataStub()
             {
@@ -30,7 +30,7 @@ namespace ThScoreFileConverterTests.Models
                 Version = 1,
                 Checksum = 0u,
                 Size = 0xA4A0,
-                Chara = Th15Converter.CharaWithTotal.Reimu,
+                Chara = CharaWithTotal.Reimu,
                 GameModeData = modes.ToDictionary(
                     mode => mode,
                     _ => Th15ClearDataPerGameModeTests.GetValidStub() as IClearDataPerGameMode),
