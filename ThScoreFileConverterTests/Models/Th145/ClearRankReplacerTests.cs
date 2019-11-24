@@ -83,6 +83,26 @@ namespace ThScoreFileConverterTests.Models.Th145
         }
 
         [TestMethod]
+        public void ReplaceTestEmpty()
+        {
+            var clearRanks = new Dictionary<Level, IReadOnlyDictionary<Chara, int>>();
+            var replacer = new ClearRankReplacer(clearRanks);
+            Assert.AreEqual("Not Clear", replacer.Replace("%T145CLEARHMR"));
+        }
+
+        [TestMethod]
+        public void ReplaceTestEmptyCharacters()
+        {
+            var clearRanks = new Dictionary<Level, IReadOnlyDictionary<Chara, int>>
+            {
+                { Level.Hard, new Dictionary<Chara, int>() },
+            };
+
+            var replacer = new ClearRankReplacer(clearRanks);
+            Assert.AreEqual("Not Clear", replacer.Replace("%T145CLEARHMR"));
+        }
+
+        [TestMethod]
         public void ReplaceTestInvalidFormat()
         {
             var replacer = new ClearRankReplacer(ClearRanks);
