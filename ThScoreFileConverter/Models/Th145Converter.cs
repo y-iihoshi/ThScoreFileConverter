@@ -8,13 +8,11 @@
 #pragma warning disable 1591
 #pragma warning disable SA1600 // ElementsMustBeDocumented
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Text.RegularExpressions;
 using ThScoreFileConverter.Models.Th145;
 
 namespace ThScoreFileConverter.Models
@@ -119,80 +117,6 @@ namespace ThScoreFileConverter.Models
                 }
 
                 return allScoreData;
-            }
-        }
-
-        // %T145CLEAR[x][yy]
-        private class ClearRankReplacer : IStringReplaceable
-        {
-            private static readonly string Pattern = Utils.Format(
-                @"%T145CLEAR({0})({1})", Parsers.LevelParser.Pattern, Parsers.CharaParser.Pattern);
-
-            private readonly MatchEvaluator evaluator;
-
-            public ClearRankReplacer(IReadOnlyDictionary<Th145.Level, IReadOnlyDictionary<Chara, int>> clearRanks)
-            {
-                this.evaluator = new MatchEvaluator(match =>
-                {
-                    var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-                    var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
-
-                    // FIXME
-                    switch (clearRanks[level][chara])
-                    {
-                        case 1:
-                            return "Bronze";
-                        case 2:
-                            return "Silver";
-                        case 3:
-                            return "Gold";
-                        default:
-                            return "Not Clear";
-                    }
-                });
-            }
-
-            public string Replace(string input)
-            {
-                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
-            }
-        }
-
-        // %T145TIMECLR[x][yy]
-        private class ClearTimeReplacer : IStringReplaceable
-        {
-            private static readonly string Pattern = Utils.Format(
-                @"%T145TIMECLR({0})({1})", Parsers.LevelWithTotalParser.Pattern, Parsers.CharaWithTotalParser.Pattern);
-
-            private readonly MatchEvaluator evaluator;
-
-            [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-            public ClearTimeReplacer(IReadOnlyDictionary<Th145.Level, IReadOnlyDictionary<Chara, int>> clearTimes)
-            {
-                this.evaluator = new MatchEvaluator(match =>
-                {
-                    var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
-                    var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[2].Value);
-
-                    Func<IReadOnlyDictionary<Chara, int>, int> getValueByChara;
-                    if (chara == CharaWithTotal.Total)
-                        getValueByChara = (dict => dict.Values.Sum());
-                    else
-                        getValueByChara = (dict => dict[(Chara)chara]);
-
-                    Func<IReadOnlyDictionary<Th145.Level, IReadOnlyDictionary<Chara, int>>, int> getValueByLevel;
-                    if (level == Th145.LevelWithTotal.Total)
-                        getValueByLevel = (dict => dict.Values.Sum(getValueByChara));
-                    else
-                        getValueByLevel = (dict => getValueByChara(dict[(Th145.Level)level]));
-
-                    return new Time(getValueByLevel(clearTimes)).ToString();
-                });
-            }
-
-            public string Replace(string input)
-            {
-                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
             }
         }
     }
