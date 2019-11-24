@@ -57,8 +57,8 @@ namespace ThScoreFileConverter.Models
         {
             return new List<IStringReplaceable>
             {
-                new ClearRankReplacer(this),
-                new ClearTimeReplacer(this),
+                new ClearRankReplacer(this.allScoreData.ClearRanks),
+                new ClearTimeReplacer(this.allScoreData.ClearTimes),
             };
         }
 
@@ -130,7 +130,7 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public ClearRankReplacer(Th145Converter parent)
+            public ClearRankReplacer(IReadOnlyDictionary<Th145.Level, IReadOnlyDictionary<Chara, int>> clearRanks)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -138,7 +138,7 @@ namespace ThScoreFileConverter.Models
                     var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
 
                     // FIXME
-                    switch (parent.allScoreData.ClearRanks[level][chara])
+                    switch (clearRanks[level][chara])
                     {
                         case 1:
                             return "Bronze";
@@ -167,7 +167,7 @@ namespace ThScoreFileConverter.Models
             private readonly MatchEvaluator evaluator;
 
             [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-            public ClearTimeReplacer(Th145Converter parent)
+            public ClearTimeReplacer(IReadOnlyDictionary<Th145.Level, IReadOnlyDictionary<Chara, int>> clearTimes)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -186,7 +186,7 @@ namespace ThScoreFileConverter.Models
                     else
                         getValueByLevel = (dict => getValueByChara(dict[(Th145.Level)level]));
 
-                    return new Time(getValueByLevel(parent.allScoreData.ClearTimes)).ToString();
+                    return new Time(getValueByLevel(clearTimes)).ToString();
                 });
             }
 
