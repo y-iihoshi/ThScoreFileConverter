@@ -16,37 +16,37 @@ namespace ThScoreFileConverter.Models.Th15
         /// Represents stage 1.
         /// </summary>
         [EnumAltName("1")]
-        St1,
+        One,
 
         /// <summary>
         /// Represents stage 2.
         /// </summary>
         [EnumAltName("2")]
-        St2,
+        Two,
 
         /// <summary>
         /// Represents stage 3.
         /// </summary>
         [EnumAltName("3")]
-        St3,
+        Three,
 
         /// <summary>
         /// Represents stage 4.
         /// </summary>
         [EnumAltName("4")]
-        St4,
+        Four,
 
         /// <summary>
         /// Represents stage 5.
         /// </summary>
         [EnumAltName("5")]
-        St5,
+        Five,
 
         /// <summary>
         /// Represents stage 6.
         /// </summary>
         [EnumAltName("6")]
-        St6,
+        Six,
 
         /// <summary>
         /// Represents Extra stage.
