@@ -5,29 +5,28 @@ using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Models.Th13;
 using ThScoreFileConverter.Models.Th15;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th13;
-using ThScoreFileConverterTests.Models.Th13.Stubs;
 using ThScoreFileConverterTests.Models.Th15.Stubs;
-using ThScoreFileConverterTests.Models.Wrappers;
+using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Level>;
+using SpellCardStub = ThScoreFileConverterTests.Models.Th13.Stubs.SpellCardStub<ThScoreFileConverter.Models.Level>;
+using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th15
 {
     [TestClass]
-    public class Th15ClearDataPerGameModeTests
+    public class ClearDataPerGameModeTests
     {
-        internal static ClearDataPerGameModeStub GetValidStub()
+        internal static ClearDataPerGameModeStub MakeValidStub()
         {
             var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();
 
-            return new ClearDataPerGameModeStub()
+            return new ClearDataPerGameModeStub
             {
                 Rankings = levelsWithTotal.ToDictionary(
                     level => level,
                     level => Enumerable.Range(0, 10).Select(
-                        index => new ScoreDataStub()
+                        index => new ScoreDataStub
                         {
                             Score = 12345670u - (uint)index * 1000u,
                             StageProgress = StageProgress.Six,
@@ -43,7 +42,7 @@ namespace ThScoreFileConverterTests.Models
                 ClearFlags = levelsWithTotal.ToDictionary(level => level, level => TestUtils.Cast<int>(level) % 2),
                 Cards = Enumerable.Range(1, 119).ToDictionary(
                     index => index,
-                    index => new SpellCardStub<Level>()
+                    index => new SpellCardStub
                     {
                         Name = TestUtils.MakeRandomArray<byte>(0x80),
                         ClearCount = 12 + index,
@@ -53,14 +52,14 @@ namespace ThScoreFileConverterTests.Models
                         Id = index,
                         Level = Level.Hard,
                         PracticeScore = 90123
-                    } as ISpellCard<Level>)
+                    } as ISpellCard)
             };
         }
 
         internal static byte[] MakeByteArray(IClearDataPerGameMode clearData)
             => TestUtils.MakeByteArray(
                 clearData.Rankings.Values.SelectMany(
-                    ranking => ranking.SelectMany(scoreData => Th15.ScoreDataTests.MakeByteArray(scoreData))).ToArray(),
+                    ranking => ranking.SelectMany(scoreData => ScoreDataTests.MakeByteArray(scoreData))).ToArray(),
                 new byte[0x140],
                 clearData.Cards.Values.SelectMany(card => SpellCardTests.MakeByteArray(card)).ToArray(),
                 clearData.TotalPlayCount,
@@ -71,13 +70,13 @@ namespace ThScoreFileConverterTests.Models
                 clearData.ClearFlags.Values.ToArray(),
                 0u);
 
-        internal static void Validate(IClearDataPerGameMode expected, in Th15ClearDataPerGameModeWrapper actual)
+        internal static void Validate(IClearDataPerGameMode expected, IClearDataPerGameMode actual)
         {
             foreach (var pair in expected.Rankings)
             {
                 for (var index = 0; index < pair.Value.Count(); ++index)
                 {
-                    Th15.ScoreDataTests.Validate(pair.Value[index], actual.Rankings[pair.Key][index]);
+                    ScoreDataTests.Validate(pair.Value[index], actual.Rankings[pair.Key][index]);
                 }
             }
 
@@ -93,33 +92,33 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        public void Th15ClearDataPerGameModeTest() => TestUtils.Wrap(() =>
+        public void ClearDataPerGameModeTest() => TestUtils.Wrap(() =>
         {
-            var clearData = new Th15ClearDataPerGameModeWrapper();
+            var clearData = new ClearDataPerGameMode();
 
             Assert.IsNull(clearData.Rankings);
-            Assert.AreEqual(default, clearData.TotalPlayCount.Value);
-            Assert.AreEqual(default, clearData.PlayTime.Value);
+            Assert.AreEqual(default, clearData.TotalPlayCount);
+            Assert.AreEqual(default, clearData.PlayTime);
             Assert.IsNull(clearData.ClearCounts);
             Assert.IsNull(clearData.ClearFlags);
             Assert.IsNull(clearData.Cards);
         });
 
         [TestMethod]
-        public void Th15ClearDataPerGameModeReadFromTest() => TestUtils.Wrap(() =>
+        public void ReadFromTest() => TestUtils.Wrap(() =>
         {
-            var stub = GetValidStub();
+            var stub = MakeValidStub();
 
-            var clearData = Th15ClearDataPerGameModeWrapper.Create(MakeByteArray(stub));
+            var clearData = TestUtils.Create<ClearDataPerGameMode>(MakeByteArray(stub));
 
             Validate(stub, clearData);
         });
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th15ClearDataPerGameModeReadFromTestNull() => TestUtils.Wrap(() =>
+        public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
-            var clearData = new Th15ClearDataPerGameModeWrapper();
+            var clearData = new ClearDataPerGameMode();
             clearData.ReadFrom(null);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -127,23 +126,23 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th15ClearDataPerGameModeReadFromTestShortened() => TestUtils.Wrap(() =>
+        public void ReadFromTestShortened() => TestUtils.Wrap(() =>
         {
-            var stub = GetValidStub();
+            var stub = MakeValidStub();
             var array = MakeByteArray(stub).SkipLast(1).ToArray();
 
-            _ = Th15ClearDataPerGameModeWrapper.Create(array);
+            _ = TestUtils.Create<ClearDataPerGameMode>(array);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
-        public void Th15ClearDataPerGameModeReadFromTestExceeded() => TestUtils.Wrap(() =>
+        public void ReadFromTestExceeded() => TestUtils.Wrap(() =>
         {
-            var stub = GetValidStub();
+            var stub = MakeValidStub();
             var array = MakeByteArray(stub).Concat(new byte[1] { 1 }).ToArray();
 
-            var clearData = Th15ClearDataPerGameModeWrapper.Create(array);
+            var clearData = TestUtils.Create<ClearDataPerGameMode>(array);
 
             Validate(stub, clearData);
         });

@@ -40,17 +40,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.Data)) as byte[];
         public CharaWithTotal? Chara
             => this.pobj.GetProperty(nameof(this.Chara)) as CharaWithTotal?;
-
-        // NOTE: Th15Converter.ClearDataPerGameMode is a private class.
-        // public IReadOnlyDictionary<GameMode, IClearDataPerGameMode> GameModeData
-        //     => this.pobj.GetProperty(nameof(this.GameModeData))
-        //         as IReadOnlyDictionary<GameMode, IClearDataPerGameMode>;
-        public object GameModeData
-            => this.pobj.GetProperty(nameof(this.GameModeData));
-        public Th15ClearDataPerGameModeWrapper GameModeDataItem(GameMode mode)
-            => new Th15ClearDataPerGameModeWrapper(
-                this.GameModeData.GetType().GetProperty("Item").GetValue(this.GameModeData, new object[] { mode }));
-
+        public IReadOnlyDictionary<GameMode, IClearDataPerGameMode> GameModeData
+            => this.pobj.GetProperty(nameof(this.GameModeData)) as IReadOnlyDictionary<GameMode, IClearDataPerGameMode>;
         public IReadOnlyDictionary<(Level, StagePractice), IPractice> Practices
             => this.pobj.GetProperty(nameof(this.Practices))
                 as IReadOnlyDictionary<(Level, StagePractice), IPractice>;

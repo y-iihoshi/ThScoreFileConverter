@@ -9,6 +9,7 @@ using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
 using ThScoreFileConverterTests.Models.Th13;
 using ThScoreFileConverterTests.Models.Th13.Stubs;
+using ThScoreFileConverterTests.Models.Th15;
 using ThScoreFileConverterTests.Models.Th15.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 using IPractice = ThScoreFileConverter.Models.Th13.IPractice;
@@ -33,7 +34,7 @@ namespace ThScoreFileConverterTests.Models
                 Chara = CharaWithTotal.Reimu,
                 GameModeData = modes.ToDictionary(
                     mode => mode,
-                    _ => Th15ClearDataPerGameModeTests.GetValidStub() as IClearDataPerGameMode),
+                    _ => ClearDataPerGameModeTests.MakeValidStub() as IClearDataPerGameMode),
                 Practices = levels
                     .SelectMany(level => stages.Select(stage => (level, stage)))
                     .ToDictionary(
@@ -51,7 +52,7 @@ namespace ThScoreFileConverterTests.Models
             => TestUtils.MakeByteArray(
                 (int)clearData.Chara,
                 clearData.GameModeData.Values.SelectMany(
-                    data => Th15ClearDataPerGameModeTests.MakeByteArray(data)).ToArray(),
+                    data => ClearDataPerGameModeTests.MakeByteArray(data)).ToArray(),
                 clearData.Practices.Values.SelectMany(
                     practice => PracticeTests.MakeByteArray(practice)).ToArray(),
                 new byte[0x40]);
@@ -77,7 +78,7 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var pair in expected.GameModeData)
             {
-                Th15ClearDataPerGameModeTests.Validate(pair.Value, actual.GameModeDataItem(pair.Key));
+                ClearDataPerGameModeTests.Validate(pair.Value, actual.GameModeData[pair.Key]);
             }
 
             foreach (var pair in expected.Practices)
