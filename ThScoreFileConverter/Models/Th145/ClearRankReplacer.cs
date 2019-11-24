@@ -7,6 +7,7 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
@@ -22,22 +23,32 @@ namespace ThScoreFileConverter.Models.Th145
 
         public ClearRankReplacer(IReadOnlyDictionary<Level, IReadOnlyDictionary<Chara, int>> clearRanks)
         {
+            if (clearRanks is null)
+                throw new ArgumentNullException(nameof(clearRanks));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
                 var chara = Parsers.CharaParser.Parse(match.Groups[2].Value);
 
-                // FIXME
-                switch (clearRanks[level][chara])
+                if (clearRanks.TryGetValue(level, out var ranks) && ranks.TryGetValue(chara, out var rank))
                 {
-                    case 1:
-                        return "Bronze";
-                    case 2:
-                        return "Silver";
-                    case 3:
-                        return "Gold";
-                    default:
-                        return "Not Clear";
+                    // FIXME
+                    switch (rank)
+                    {
+                        case 1:
+                            return "Bronze";
+                        case 2:
+                            return "Silver";
+                        case 3:
+                            return "Gold";
+                        default:
+                            return "Not Clear";
+                    }
+                }
+                else
+                {
+                    return "Not Clear";
                 }
             });
         }
