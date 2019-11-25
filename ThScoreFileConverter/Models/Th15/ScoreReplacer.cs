@@ -29,6 +29,9 @@ namespace ThScoreFileConverter.Models.Th15
 
         public ScoreReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
         {
+            if (clearDataDictionary is null)
+                throw new ArgumentNullException(nameof(clearDataDictionary));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var mode = Parsers.GameModeParser.Parse(match.Groups[1].Value);
@@ -42,11 +45,16 @@ namespace ThScoreFileConverter.Models.Th15
                     mode = GameMode.Pointdevice;
 #endif
 
-                var ranking = clearDataDictionary[chara].GameModeData[mode].Rankings[level][rank];
+                var ranking = clearDataDictionary.TryGetValue(chara, out var clearData)
+                    && clearData.GameModeData.TryGetValue(mode, out var clearDataPerGameMode)
+                    && clearDataPerGameMode.Rankings.TryGetValue(level, out var rankings)
+                    && (rank < rankings.Count)
+                    ? rankings[rank] : new ScoreData();
                 switch (type)
                 {
                     case 1:     // name
-                        return Encoding.Default.GetString(ranking.Name.ToArray()).Split('\0')[0];
+                        return (ranking.Name != null)
+                            ? Encoding.Default.GetString(ranking.Name.ToArray()).Split('\0')[0] : "--------";
                     case 2:     // score
                         return Utils.ToNumberString((ranking.Score * 10) + ranking.ContinueCount);
                     case 3:     // stage

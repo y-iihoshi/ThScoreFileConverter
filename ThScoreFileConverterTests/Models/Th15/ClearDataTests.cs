@@ -28,7 +28,7 @@ namespace ThScoreFileConverterTests.Models.Th15
                 Version = 1,
                 Checksum = 0u,
                 Size = 0xA4A0,
-                Chara = CharaWithTotal.Reimu,
+                Chara = CharaWithTotal.Marisa,
                 GameModeData = modes.ToDictionary(
                     mode => mode,
                     _ => ClearDataPerGameModeTests.MakeValidStub() as IClearDataPerGameMode),

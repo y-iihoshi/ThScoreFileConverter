@@ -29,12 +29,12 @@ namespace ThScoreFileConverterTests.Models.Th15
                         index => new ScoreDataStub
                         {
                             Score = 12345670u - (uint)index * 1000u,
-                            StageProgress = StageProgress.Six,
+                            StageProgress = StageProgress.Five,
                             ContinueCount = (byte)index,
-                            Name = TestUtils.MakeRandomArray<byte>(10),
+                            Name = TestUtils.CP932Encoding.GetBytes($"Player{index}\0\0\0"),
                             DateTime = 34567890u,
                             SlowRate = 1.2f,
-                            RetryCount = (uint)index / 4u
+                            RetryCount = (uint)index % 4u
                         }).ToList() as IReadOnlyList<IScoreData>),
                 TotalPlayCount = 23,
                 PlayTime = 4567890,
