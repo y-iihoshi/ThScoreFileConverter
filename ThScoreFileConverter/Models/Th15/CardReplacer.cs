@@ -7,6 +7,7 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -23,28 +24,32 @@ namespace ThScoreFileConverter.Models.Th15
 
         public CardReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary, bool hideUntriedCards)
         {
+            if (clearDataDictionary is null)
+                throw new ArgumentNullException(nameof(clearDataDictionary));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
                 var type = match.Groups[2].Value.ToUpperInvariant();
 
-                if (Definitions.CardTable.ContainsKey(number))
+                if (Definitions.CardTable.TryGetValue(number, out var cardInfo))
                 {
                     if (type == "N")
                     {
                         if (hideUntriedCards)
                         {
-                            var tried = clearDataDictionary[CharaWithTotal.Total].GameModeData.Any(
-                                data => data.Value.Cards.TryGetValue(number, out var card) && card.HasTried);
+                            var tried = clearDataDictionary.TryGetValue(CharaWithTotal.Total, out var clearData)
+                                && clearData.GameModeData.Any(
+                                    data => data.Value.Cards.TryGetValue(number, out var card) && card.HasTried);
                             if (!tried)
                                 return "??????????";
                         }
 
-                        return Definitions.CardTable[number].Name;
+                        return cardInfo.Name;
                     }
                     else
                     {
-                        return Definitions.CardTable[number].Level.ToString();
+                        return cardInfo.Level.ToString();
                     }
                 }
                 else
