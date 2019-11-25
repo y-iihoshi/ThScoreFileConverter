@@ -11,11 +11,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th15;
 
 namespace ThScoreFileConverter.Models
