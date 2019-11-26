@@ -56,7 +56,7 @@ namespace ThScoreFileConverter.Models
         {
             return new List<IStringReplaceable>
             {
-                new ClearRankReplacer(this),
+                new ClearRankReplacer(this.allScoreData.StoryDictionary),
             };
         }
 
@@ -128,7 +128,7 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public ClearRankReplacer(Th155Converter parent)
+            public ClearRankReplacer(IReadOnlyDictionary<StoryChara, AllScoreData.Story> storyDictionary)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -154,7 +154,7 @@ namespace ThScoreFileConverter.Models
                         }
                     }
 
-                    if (parent.allScoreData.StoryDictionary.TryGetValue(chara, out AllScoreData.Story story)
+                    if (storyDictionary.TryGetValue(chara, out var story)
                         && story.Available
                         && ((story.Ed & ToLevelFlag(level)) != LevelFlags.None))
                         return "Clear";
