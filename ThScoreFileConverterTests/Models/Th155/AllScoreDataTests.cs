@@ -6,18 +6,17 @@ using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th155;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Wrappers;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th155
 {
     using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
 
     [TestClass]
-    public class Th155AllScoreDataTests
+    public class AllScoreDataTests
     {
         internal struct Properties
         {
-            public Dictionary<StoryChara, Th155StoryWrapper> storyDictionary;
+            public Dictionary<StoryChara, AllScoreData.Story> storyDictionary;
             public Dictionary<string, int> characterDictionary;
             public Dictionary<int, bool> bgmDictionary;
             public Dictionary<string, int> endingDictionary;
@@ -31,7 +30,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 storyDictionary = Utils.GetEnumerator<StoryChara>().ToDictionary(
                     chara => chara,
-                    chara => new Th155StoryWrapper()
+                    chara => new AllScoreData.Story
                     {
                         Stage = 1,
                         Ed = LevelFlags.Normal,
@@ -82,14 +81,14 @@ namespace ThScoreFileConverterTests.Models
             return table[chara];
         }
 
-        internal static IEnumerable<byte> MakeSQByteArray(in Th155StoryWrapper story)
+        internal static IEnumerable<byte> MakeSQByteArray(in AllScoreData.Story story)
             => TestUtils.MakeByteArray((int)SQOT.Table)
                 .Concat(TestUtils.MakeSQByteArray(
-                    "stage", story.Stage.Value,
-                    "ed", (int)story.Ed.Value,
-                    "available", story.Available.Value,
-                    "overdrive", story.OverDrive.Value,
-                    "stage_overdrive", story.StageOverDrive.Value))
+                    "stage", story.Stage,
+                    "ed", (int)story.Ed,
+                    "available", story.Available,
+                    "overdrive", story.OverDrive,
+                    "stage_overdrive", story.StageOverDrive))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null));
 
         internal static byte[] MakeByteArray(in Properties properties)
@@ -114,13 +113,13 @@ namespace ThScoreFileConverterTests.Models
                 .ToArray();
         }
 
-        internal static void Validate(in Th155AllScoreDataWrapper allScoreData, in Properties properties)
+        internal static void Validate(in Properties expected, in AllScoreData actual)
         {
-            Assert.AreEqual(properties.storyDictionary.Count, allScoreData.StoryDictionaryCount);
+            Assert.AreEqual(expected.storyDictionary.Count, actual.StoryDictionary.Count);
 
-            foreach (var pair in properties.storyDictionary)
+            foreach (var pair in expected.storyDictionary)
             {
-                var story = allScoreData.StoryDictionaryItem(pair.Key);
+                var story = actual.StoryDictionary[pair.Key];
                 Assert.AreEqual(pair.Value.Stage, story.Stage);
                 Assert.AreEqual(pair.Value.Ed, story.Ed);
                 Assert.AreEqual(pair.Value.Available, story.Available);
@@ -128,46 +127,46 @@ namespace ThScoreFileConverterTests.Models
                 Assert.AreEqual(pair.Value.StageOverDrive, story.StageOverDrive);
             }
 
-            CollectionAssert.That.AreEqual(properties.characterDictionary.Keys, allScoreData.CharacterDictionary.Keys);
+            CollectionAssert.That.AreEqual(expected.characterDictionary.Keys, actual.CharacterDictionary.Keys);
             CollectionAssert.That.AreEqual(
-                properties.characterDictionary.Values, allScoreData.CharacterDictionary.Values);
-            CollectionAssert.That.AreEqual(properties.bgmDictionary.Keys, allScoreData.BgmDictionary.Keys);
-            CollectionAssert.That.AreEqual(properties.bgmDictionary.Values, allScoreData.BgmDictionary.Values);
-            CollectionAssert.That.AreEqual(properties.endingDictionary.Keys, allScoreData.EndingDictionary.Keys);
-            CollectionAssert.That.AreEqual(properties.endingDictionary.Values, allScoreData.EndingDictionary.Values);
-            CollectionAssert.That.AreEqual(properties.stageDictionary.Keys, allScoreData.StageDictionary.Keys);
-            CollectionAssert.That.AreEqual(properties.stageDictionary.Values, allScoreData.StageDictionary.Values);
-            Assert.AreEqual(properties.version, allScoreData.Version);
+                expected.characterDictionary.Values, actual.CharacterDictionary.Values);
+            CollectionAssert.That.AreEqual(expected.bgmDictionary.Keys, actual.BgmDictionary.Keys);
+            CollectionAssert.That.AreEqual(expected.bgmDictionary.Values, actual.BgmDictionary.Values);
+            CollectionAssert.That.AreEqual(expected.endingDictionary.Keys, actual.EndingDictionary.Keys);
+            CollectionAssert.That.AreEqual(expected.endingDictionary.Values, actual.EndingDictionary.Values);
+            CollectionAssert.That.AreEqual(expected.stageDictionary.Keys, actual.StageDictionary.Keys);
+            CollectionAssert.That.AreEqual(expected.stageDictionary.Values, actual.StageDictionary.Values);
+            Assert.AreEqual(expected.version, actual.Version);
         }
 
         [TestMethod]
-        public void Th155AllScoreDataTest() => TestUtils.Wrap(() =>
+        public void AllScoreDataTest() => TestUtils.Wrap(() =>
         {
-            var allScoreData = new Th155AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
 
             Assert.IsNull(allScoreData.StoryDictionary);
             Assert.IsNull(allScoreData.CharacterDictionary);
             Assert.IsNull(allScoreData.BgmDictionary);
             Assert.IsNull(allScoreData.EndingDictionary);
             Assert.IsNull(allScoreData.StageDictionary);
-            Assert.AreEqual(default, allScoreData.Version.Value);
+            Assert.AreEqual(default, allScoreData.Version);
         });
 
         [TestMethod]
-        public void Th155AllScoreDataReadFromTest() => TestUtils.Wrap(() =>
+        public void ReadFromTest() => TestUtils.Wrap(() =>
         {
             var properties = GetValidProperties();
 
-            var allScoreData = Th155AllScoreDataWrapper.Create(MakeByteArray(properties));
+            var allScoreData = TestUtils.Create<AllScoreData>(MakeByteArray(properties));
 
-            Validate(allScoreData, properties);
+            Validate(properties, allScoreData);
         });
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th155AllScoreDataReadFromTestNull() => TestUtils.Wrap(() =>
+        public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
-            var allScoreData = new Th155AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.ReadFrom(null);
 
             Assert.Fail(TestUtils.Unreachable);
@@ -175,32 +174,32 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void Th155AllScoreDataReadFromTestEmpty() => TestUtils.Wrap(() =>
+        public void ReadFromTestEmpty() => TestUtils.Wrap(() =>
         {
-            Th155AllScoreDataWrapper.Create(new byte[0]);
+            TestUtils.Create<AllScoreData>(new byte[0]);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
-        public void Th155AllScoreDataReadFromTestNoKey() => TestUtils.Wrap(() =>
+        public void ReadFromTestNoKey() => TestUtils.Wrap(() =>
         {
-            var allScoreData = Th155AllScoreDataWrapper.Create(TestUtils.MakeByteArray((int)SQOT.Null));
+            var allScoreData = TestUtils.Create<AllScoreData>(TestUtils.MakeByteArray((int)SQOT.Null));
 
             Assert.IsNull(allScoreData.StoryDictionary);
             Assert.IsNull(allScoreData.CharacterDictionary);
             Assert.IsNull(allScoreData.BgmDictionary);
             Assert.IsNull(allScoreData.EndingDictionary);
             Assert.IsNull(allScoreData.StageDictionary);
-            Assert.AreEqual(default, allScoreData.Version.Value);
+            Assert.AreEqual(default, allScoreData.Version);
         });
 
         [TestMethod]
-        public void Th155AllScoreDataReadFromTestNoTables() => TestUtils.Wrap(() =>
+        public void ReadFromTestNoTables() => TestUtils.Wrap(() =>
         {
             var version = 1;
 
-            var allScoreData = Th155AllScoreDataWrapper.Create(TestUtils.MakeByteArray(
+            var allScoreData = TestUtils.Create<AllScoreData>(TestUtils.MakeByteArray(
                 // (int)SQOT.Table,
                 TestUtils.MakeSQByteArray("version", version).ToArray(),
                 (int)SQOT.Null));
@@ -214,9 +213,9 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th155AllScoreDataReadFromTestInvalidStoryDictionary() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidStoryDictionary() => TestUtils.Wrap(() =>
         {
-            var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("story", 123))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -226,35 +225,35 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th155AllScoreDataReadFromTestInvalidStoryKey() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidStoryKey() => TestUtils.Wrap(() =>
         {
-            var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("story", new Dictionary<int, int>() { { 123, 456 } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
             Assert.IsNotNull(allScoreData.StoryDictionary);
-            Assert.AreEqual(0, allScoreData.StoryDictionaryCount);
+            Assert.AreEqual(0, allScoreData.StoryDictionary.Count);
         });
 
         [TestMethod]
-        public void Th155AllScoreDataReadFromTestInvalidStoryChara() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidStoryChara() => TestUtils.Wrap(() =>
         {
-            var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("story", new Dictionary<string, int>() { { "abc", 123 } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
             Assert.IsNotNull(allScoreData.StoryDictionary);
-            Assert.AreEqual(0, allScoreData.StoryDictionaryCount);
+            Assert.AreEqual(0, allScoreData.StoryDictionary.Count);
         });
 
         [TestMethod]
-        public void Th155AllScoreDataReadFromTestInvalidStory() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidStory() => TestUtils.Wrap(() =>
         {
-            var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray(
                     "story",
@@ -266,19 +265,19 @@ namespace ThScoreFileConverterTests.Models
                 .ToArray());
 
             Assert.IsNotNull(allScoreData.StoryDictionary);
-            Assert.AreEqual(1, allScoreData.StoryDictionaryCount);
-            var story = allScoreData.StoryDictionaryItem(StoryChara.ReimuKasen);
-            Assert.AreEqual(default, story.Stage.Value);
-            Assert.AreEqual(default, story.Ed.Value);
-            Assert.AreEqual(default, story.Available.Value);
-            Assert.AreEqual(default, story.OverDrive.Value);
-            Assert.AreEqual(default, story.StageOverDrive.Value);
+            Assert.AreEqual(1, allScoreData.StoryDictionary.Count);
+            var story = allScoreData.StoryDictionary[StoryChara.ReimuKasen];
+            Assert.AreEqual(default, story.Stage);
+            Assert.AreEqual(default, story.Ed);
+            Assert.AreEqual(default, story.Available);
+            Assert.AreEqual(default, story.OverDrive);
+            Assert.AreEqual(default, story.StageOverDrive);
         });
 
         [TestMethod]
-        public void Th155AllScoreDataReadFromTestInvalidStoryFieldName() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidStoryFieldName() => TestUtils.Wrap(() =>
         {
-            var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray(
                     "story",
@@ -293,19 +292,19 @@ namespace ThScoreFileConverterTests.Models
                 .ToArray());
 
             Assert.IsNotNull(allScoreData.StoryDictionary);
-            Assert.AreEqual(1, allScoreData.StoryDictionaryCount);
-            var story = allScoreData.StoryDictionaryItem(StoryChara.ReimuKasen);
-            Assert.AreEqual(default, story.Stage.Value);
-            Assert.AreEqual(default, story.Ed.Value);
-            Assert.AreEqual(default, story.Available.Value);
-            Assert.AreEqual(default, story.OverDrive.Value);
-            Assert.AreEqual(default, story.StageOverDrive.Value);
+            Assert.AreEqual(1, allScoreData.StoryDictionary.Count);
+            var story = allScoreData.StoryDictionary[StoryChara.ReimuKasen];
+            Assert.AreEqual(default, story.Stage);
+            Assert.AreEqual(default, story.Ed);
+            Assert.AreEqual(default, story.Available);
+            Assert.AreEqual(default, story.OverDrive);
+            Assert.AreEqual(default, story.StageOverDrive);
         });
 
         [TestMethod]
-        public void Th155AllScoreDataReadFromTestInvalidStoryFieldValue() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidStoryFieldValue() => TestUtils.Wrap(() =>
         {
-            var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray(
                     "story",
@@ -327,19 +326,19 @@ namespace ThScoreFileConverterTests.Models
                 .ToArray());
 
             Assert.IsNotNull(allScoreData.StoryDictionary);
-            Assert.AreEqual(1, allScoreData.StoryDictionaryCount);
-            var story = allScoreData.StoryDictionaryItem(StoryChara.ReimuKasen);
-            Assert.AreEqual(default, story.Stage.Value);
-            Assert.AreEqual(default, story.Ed.Value);
-            Assert.AreEqual(default, story.Available.Value);
-            Assert.AreEqual(default, story.OverDrive.Value);
-            Assert.AreEqual(default, story.StageOverDrive.Value);
+            Assert.AreEqual(1, allScoreData.StoryDictionary.Count);
+            var story = allScoreData.StoryDictionary[StoryChara.ReimuKasen];
+            Assert.AreEqual(default, story.Stage);
+            Assert.AreEqual(default, story.Ed);
+            Assert.AreEqual(default, story.Available);
+            Assert.AreEqual(default, story.OverDrive);
+            Assert.AreEqual(default, story.StageOverDrive);
         });
 
         [TestMethod]
-        public void Th155AllScoreDataReadFromTestInvalidCharacterDictionary() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidCharacterDictionary() => TestUtils.Wrap(() =>
         {
-            var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("character", 123))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -349,9 +348,9 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th155AllScoreDataReadFromTestInvalidCharacterKey() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidCharacterKey() => TestUtils.Wrap(() =>
         {
-            var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("character", new Dictionary<int, int>() { { 123, 456 } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -362,9 +361,9 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th155AllScoreDataReadFromTestInvalidCharacterValue() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidCharacterValue() => TestUtils.Wrap(() =>
         {
-            var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("character", new Dictionary<string, string>() { { "abc", "def" } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -375,9 +374,9 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th155AllScoreDataReadFromTestInvalidBgmDictionary() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidBgmDictionary() => TestUtils.Wrap(() =>
         {
-            var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("bgm", 123))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -387,9 +386,9 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th155AllScoreDataReadFromTestInvalidBgmKey() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidBgmKey() => TestUtils.Wrap(() =>
         {
-            var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("bgm", new Dictionary<int, int>() { { 123, 456 } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -400,9 +399,9 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th155AllScoreDataReadFromTestInvalidBgmValue() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidBgmValue() => TestUtils.Wrap(() =>
         {
-            var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("bgm", new Dictionary<bool, bool>() { { true, false } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -413,9 +412,9 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th155AllScoreDataReadFromTestInvalidEndingDictionary() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidEndingDictionary() => TestUtils.Wrap(() =>
         {
-            var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("ed", 123))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -425,9 +424,9 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th155AllScoreDataReadFromTestInvalidEndingKey() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidEndingKey() => TestUtils.Wrap(() =>
         {
-            var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("ed", new Dictionary<int, int>() { { 123, 456 } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -438,9 +437,9 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th155AllScoreDataReadFromTestInvalidEndingValue() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidEndingValue() => TestUtils.Wrap(() =>
         {
-            var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("ed", new Dictionary<string, string>() { { "abc", "def" } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -451,9 +450,9 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th155AllScoreDataReadFromTestInvalidStageDictionary() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidStageDictionary() => TestUtils.Wrap(() =>
         {
-            var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("stage", 123))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -463,9 +462,9 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th155AllScoreDataReadFromTestInvalidStageKey() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidStageKey() => TestUtils.Wrap(() =>
         {
-            var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("stage", new Dictionary<string, int>() { { "abc", 123 } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -476,9 +475,9 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th155AllScoreDataReadFromTestInvalidStageValue() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidStageValue() => TestUtils.Wrap(() =>
         {
-            var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("stage", new Dictionary<int, string>() { { 123, "abc" } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -489,15 +488,15 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th155AllScoreDataReadFromTestInvalidVersion() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidVersion() => TestUtils.Wrap(() =>
         {
-            var allScoreData = Th155AllScoreDataWrapper.Create(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("version", 123f))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.AreEqual(default, allScoreData.Version.Value);
+            Assert.AreEqual(default, allScoreData.Version);
         });
     }
 }
