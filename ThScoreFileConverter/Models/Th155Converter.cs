@@ -13,7 +13,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Text.RegularExpressions;
 using ThScoreFileConverter.Models.Th155;
 
 namespace ThScoreFileConverter.Models
@@ -117,55 +116,6 @@ namespace ThScoreFileConverter.Models
                 }
 
                 return allScoreData;
-            }
-        }
-
-        // %T155CLEAR[x][yy]
-        private class ClearRankReplacer : IStringReplaceable
-        {
-            private static readonly string Pattern = Utils.Format(
-                @"%T155CLEAR({0})({1})", Parsers.LevelParser.Pattern, Parsers.StoryCharaParser.Pattern);
-
-            private readonly MatchEvaluator evaluator;
-
-            public ClearRankReplacer(IReadOnlyDictionary<StoryChara, AllScoreData.Story> storyDictionary)
-            {
-                this.evaluator = new MatchEvaluator(match =>
-                {
-                    var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
-                    var chara = Parsers.StoryCharaParser.Parse(match.Groups[2].Value);
-
-                    LevelFlags ToLevelFlag(Th155.Level lv)
-                    {
-                        switch (lv)
-                        {
-                            case Th155.Level.Easy:
-                                return LevelFlags.Easy;
-                            case Th155.Level.Normal:
-                                return LevelFlags.Normal;
-                            case Th155.Level.Hard:
-                                return LevelFlags.Hard;
-                            case Th155.Level.Lunatic:
-                                return LevelFlags.Lunatic;
-                            case Th155.Level.OverDrive:
-                                return LevelFlags.OverDrive;
-                            default:
-                                return LevelFlags.None;
-                        }
-                    }
-
-                    if (storyDictionary.TryGetValue(chara, out var story)
-                        && story.Available
-                        && ((story.Ed & ToLevelFlag(level)) != LevelFlags.None))
-                        return "Clear";
-                    else
-                        return "Not Clear";
-                });
-            }
-
-            public string Replace(string input)
-            {
-                return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
             }
         }
     }
