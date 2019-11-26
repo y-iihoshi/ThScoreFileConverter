@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th155;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Wrappers;
 
@@ -16,7 +17,7 @@ namespace ThScoreFileConverterTests.Models
     {
         internal struct Properties
         {
-            public Dictionary<Th155Converter.StoryChara, Th155StoryWrapper> storyDictionary;
+            public Dictionary<StoryChara, Th155StoryWrapper> storyDictionary;
             public Dictionary<string, int> characterDictionary;
             public Dictionary<int, bool> bgmDictionary;
             public Dictionary<string, int> endingDictionary;
@@ -28,12 +29,12 @@ namespace ThScoreFileConverterTests.Models
         {
             return new Properties()
             {
-                storyDictionary = Utils.GetEnumerator<Th155Converter.StoryChara>().ToDictionary(
+                storyDictionary = Utils.GetEnumerator<StoryChara>().ToDictionary(
                     chara => chara,
                     chara => new Th155StoryWrapper()
                     {
                         Stage = 1,
-                        Ed = Th155Converter.LevelFlag.Normal,
+                        Ed = LevelFlags.Normal,
                         Available = true,
                         OverDrive = 2,
                         StageOverDrive = 3
@@ -62,21 +63,21 @@ namespace ThScoreFileConverterTests.Models
             };
         }
 
-        internal static string ToString(Th155Converter.StoryChara chara)
+        internal static string ToString(StoryChara chara)
         {
-            var table = new Dictionary<Th155Converter.StoryChara, string>()
+            var table = new Dictionary<StoryChara, string>()
             {
-                { Th155Converter.StoryChara.ReimuKasen,         "reimu" },
-                { Th155Converter.StoryChara.MarisaKoishi,       "marisa" },
-                { Th155Converter.StoryChara.NitoriKokoro,       "nitori" },
-                { Th155Converter.StoryChara.SumirekoDoremy,     "usami" },
-                { Th155Converter.StoryChara.TenshiShinmyoumaru, "tenshi" },
-                { Th155Converter.StoryChara.MikoByakuren,       "miko" },
-                { Th155Converter.StoryChara.YukariReimu,        "yukari" },
-                { Th155Converter.StoryChara.MamizouMokou,       "mamizou" },
-                { Th155Converter.StoryChara.ReisenDoremy,       "udonge" },
-                { Th155Converter.StoryChara.FutoIchirin,        "futo" },
-                { Th155Converter.StoryChara.JoonShion,          "jyoon" }
+                { StoryChara.ReimuKasen,         "reimu" },
+                { StoryChara.MarisaKoishi,       "marisa" },
+                { StoryChara.NitoriKokoro,       "nitori" },
+                { StoryChara.SumirekoDoremy,     "usami" },
+                { StoryChara.TenshiShinmyoumaru, "tenshi" },
+                { StoryChara.MikoByakuren,       "miko" },
+                { StoryChara.YukariReimu,        "yukari" },
+                { StoryChara.MamizouMokou,       "mamizou" },
+                { StoryChara.ReisenDoremy,       "udonge" },
+                { StoryChara.FutoIchirin,        "futo" },
+                { StoryChara.JoonShion,          "jyoon" }
             };
             return table[chara];
         }
@@ -259,14 +260,14 @@ namespace ThScoreFileConverterTests.Models
                     "story",
                     new Dictionary<string, int>()
                     {
-                        { ToString(Th155Converter.StoryChara.ReimuKasen), 123 }
+                        { ToString(StoryChara.ReimuKasen), 123 }
                     }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
             Assert.IsNotNull(allScoreData.StoryDictionary);
             Assert.AreEqual(1, allScoreData.StoryDictionaryCount);
-            var story = allScoreData.StoryDictionaryItem(Th155Converter.StoryChara.ReimuKasen);
+            var story = allScoreData.StoryDictionaryItem(StoryChara.ReimuKasen);
             Assert.AreEqual(default, story.Stage.Value);
             Assert.AreEqual(default, story.Ed.Value);
             Assert.AreEqual(default, story.Available.Value);
@@ -284,7 +285,7 @@ namespace ThScoreFileConverterTests.Models
                     new Dictionary<string, Dictionary<int, int>>()
                     {
                         {
-                            ToString(Th155Converter.StoryChara.ReimuKasen),
+                            ToString(StoryChara.ReimuKasen),
                             new Dictionary<int, int>() { { 123, 456 } }
                         }
                     }))
@@ -293,7 +294,7 @@ namespace ThScoreFileConverterTests.Models
 
             Assert.IsNotNull(allScoreData.StoryDictionary);
             Assert.AreEqual(1, allScoreData.StoryDictionaryCount);
-            var story = allScoreData.StoryDictionaryItem(Th155Converter.StoryChara.ReimuKasen);
+            var story = allScoreData.StoryDictionaryItem(StoryChara.ReimuKasen);
             Assert.AreEqual(default, story.Stage.Value);
             Assert.AreEqual(default, story.Ed.Value);
             Assert.AreEqual(default, story.Available.Value);
@@ -311,7 +312,7 @@ namespace ThScoreFileConverterTests.Models
                     new Dictionary<string, Dictionary<string, float>>()
                     {
                         {
-                            ToString(Th155Converter.StoryChara.ReimuKasen),
+                            ToString(StoryChara.ReimuKasen),
                             new Dictionary<string, float>()
                             {
                                 { "stage", 12f },
@@ -327,7 +328,7 @@ namespace ThScoreFileConverterTests.Models
 
             Assert.IsNotNull(allScoreData.StoryDictionary);
             Assert.AreEqual(1, allScoreData.StoryDictionaryCount);
-            var story = allScoreData.StoryDictionaryItem(Th155Converter.StoryChara.ReimuKasen);
+            var story = allScoreData.StoryDictionaryItem(StoryChara.ReimuKasen);
             Assert.AreEqual(default, story.Stage.Value);
             Assert.AreEqual(default, story.Ed.Value);
             Assert.AreEqual(default, story.Available.Value);

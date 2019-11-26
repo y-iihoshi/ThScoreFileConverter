@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th155;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -53,7 +54,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.StoryDictionary));
         public int? StoryDictionaryCount
             => this.StoryDictionary.GetType().GetProperty("Count").GetValue(this.StoryDictionary) as int?;
-        public Th155StoryWrapper StoryDictionaryItem(Th155Converter.StoryChara chara)
+        public Th155StoryWrapper StoryDictionaryItem(StoryChara chara)
             => new Th155StoryWrapper(this.StoryDictionary.GetType().GetProperty("Item").GetValue(
                 this.StoryDictionary, new object[] { chara }));
 

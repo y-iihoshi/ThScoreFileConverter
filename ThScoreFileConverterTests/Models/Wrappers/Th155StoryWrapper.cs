@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th155;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -29,9 +30,9 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             set => this.pobj.SetField(nameof(this.Stage), value.Value);
         }
 
-        public Th155Converter.LevelFlag? Ed
+        public LevelFlags? Ed
         {
-            get => this.pobj.GetField(nameof(this.Ed)) as Th155Converter.LevelFlag?;
+            get => this.pobj.GetField(nameof(this.Ed)) as LevelFlags?;
             set => this.pobj.SetField(nameof(this.Ed), value.Value);
         }
 

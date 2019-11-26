@@ -7,15 +7,14 @@
 
 #pragma warning disable 1591
 #pragma warning disable SA1600 // ElementsMustBeDocumented
-#pragma warning disable SA1602 // EnumerationItemsMustBeDocumented
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Models.Th155;
 using ThScoreFileConverter.Squirrel;
 
 namespace ThScoreFileConverter.Models
@@ -23,8 +22,8 @@ namespace ThScoreFileConverter.Models
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th155Converter : ThConverter
     {
-        private static new readonly EnumShortNameParser<Level> LevelParser =
-            new EnumShortNameParser<Level>();
+        private static new readonly EnumShortNameParser<Th155.Level> LevelParser =
+            new EnumShortNameParser<Th155.Level>();
 
         [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Justification = "For future use.")]
 #pragma warning disable IDE0052 // Remove unread private members
@@ -42,75 +41,6 @@ namespace ThScoreFileConverter.Models
 #pragma warning restore IDE0052 // Remove unread private members
 
         private AllScoreData allScoreData = null;
-
-        public enum Level
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("E")] Easy,
-            [EnumAltName("N")] Normal,
-            [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic,
-            [EnumAltName("D")] OverDrive,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum LevelWithTotal
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("E")] Easy,
-            [EnumAltName("N")] Normal,
-            [EnumAltName("H")] Hard,
-            [EnumAltName("L")] Lunatic,
-            [EnumAltName("D")] OverDrive,
-            [EnumAltName("T")] Total,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        [Flags]
-        public enum LevelFlag
-        {
-            None = 0,
-            Easy = 1,
-            Normal = 2,
-            Hard = 4,
-            Lunatic = 8,
-            OverDrive = 16,
-        }
-
-        public enum StoryChara
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("RK")] ReimuKasen,
-            [EnumAltName("MK")] MarisaKoishi,
-            [EnumAltName("NK")] NitoriKokoro,
-            [EnumAltName("MM")] MamizouMokou,
-            [EnumAltName("MB")] MikoByakuren,
-            [EnumAltName("FI")] FutoIchirin,
-            [EnumAltName("RD")] ReisenDoremy,
-            [EnumAltName("SD")] SumirekoDoremy,
-            [EnumAltName("TS")] TenshiShinmyoumaru,
-            [EnumAltName("YR")] YukariReimu,
-            [EnumAltName("JS")] JoonShion,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum StoryCharaWithTotal
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("RK")] ReimuKasen,
-            [EnumAltName("MK")] MarisaKoishi,
-            [EnumAltName("NK")] NitoriKokoro,
-            [EnumAltName("MM")] MamizouMokou,
-            [EnumAltName("MB")] MikoByakuren,
-            [EnumAltName("FI")] FutoIchirin,
-            [EnumAltName("RD")] ReisenDoremy,
-            [EnumAltName("SD")] SumirekoDoremy,
-            [EnumAltName("TS")] TenshiShinmyoumaru,
-            [EnumAltName("YR")] YukariReimu,
-            [EnumAltName("JS")] JoonShion,
-            [EnumAltName("TL")] Total,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
 
         public override string SupportedVersions
         {
@@ -224,28 +154,28 @@ namespace ThScoreFileConverter.Models
                     var level = LevelParser.Parse(match.Groups[1].Value);
                     var chara = StoryCharaParser.Parse(match.Groups[2].Value);
 
-                    LevelFlag ToLevelFlag(Level lv)
+                    LevelFlags ToLevelFlag(Th155.Level lv)
                     {
                         switch (lv)
                         {
-                            case Level.Easy:
-                                return LevelFlag.Easy;
-                            case Level.Normal:
-                                return LevelFlag.Normal;
-                            case Level.Hard:
-                                return LevelFlag.Hard;
-                            case Level.Lunatic:
-                                return LevelFlag.Lunatic;
-                            case Level.OverDrive:
-                                return LevelFlag.OverDrive;
+                            case Th155.Level.Easy:
+                                return LevelFlags.Easy;
+                            case Th155.Level.Normal:
+                                return LevelFlags.Normal;
+                            case Th155.Level.Hard:
+                                return LevelFlags.Hard;
+                            case Th155.Level.Lunatic:
+                                return LevelFlags.Lunatic;
+                            case Th155.Level.OverDrive:
+                                return LevelFlags.OverDrive;
                             default:
-                                return LevelFlag.None;
+                                return LevelFlags.None;
                         }
                     }
 
                     if (parent.allScoreData.StoryDictionary.TryGetValue(chara, out AllScoreData.Story story)
                         && story.Available
-                        && ((story.Ed & ToLevelFlag(level)) != LevelFlag.None))
+                        && ((story.Ed & ToLevelFlag(level)) != LevelFlags.None))
                         return "Clear";
                     else
                         return "Not Clear";
@@ -351,7 +281,7 @@ namespace ThScoreFileConverter.Models
                             if ((key == "stage") && (pair.Value is SQInteger stage))
                                 story.Stage = stage;
                             if ((key == "ed") && (pair.Value is SQInteger ed))
-                                story.Ed = (LevelFlag)(int)ed;
+                                story.Ed = (LevelFlags)(int)ed;
                             if ((key == "available") && (pair.Value is SQBool available))
                                 story.Available = available;
                             if ((key == "overdrive") && (pair.Value is SQInteger overDrive))
@@ -462,7 +392,7 @@ namespace ThScoreFileConverter.Models
             public struct Story
             {
                 public int Stage;
-                public LevelFlag Ed;
+                public LevelFlags Ed;
                 public bool Available;
                 public int OverDrive;
                 public int StageOverDrive;
