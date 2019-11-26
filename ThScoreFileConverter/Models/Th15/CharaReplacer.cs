@@ -25,27 +25,30 @@ namespace ThScoreFileConverter.Models.Th15
 
         public CharaReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
         {
+            if (clearDataDictionary is null)
+                throw new ArgumentNullException(nameof(clearDataDictionary));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var mode = Parsers.GameModeParser.Parse(match.Groups[1].Value);
                 var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[2].Value);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                Func<IClearData, long> getValueByType;
+                Func<IClearDataPerGameMode, long> getValueByType;
                 Func<long, string> toString;
                 if (type == 1)
                 {
-                    getValueByType = clearData => clearData.GameModeData[mode].TotalPlayCount;
+                    getValueByType = clearData => clearData.TotalPlayCount;
                     toString = Utils.ToNumberString;
                 }
                 else if (type == 2)
                 {
-                    getValueByType = clearData => clearData.GameModeData[mode].PlayTime;
+                    getValueByType = clearData => clearData.PlayTime;
                     toString = value => new Time(value * 10, false).ToString();
                 }
                 else
                 {
-                    getValueByType = clearData => clearData.GameModeData[mode].ClearCounts.Values.Sum();
+                    getValueByType = clearData => clearData.ClearCounts.Values.Sum();
                     toString = Utils.ToNumberString;
                 }
 
@@ -53,11 +56,15 @@ namespace ThScoreFileConverter.Models.Th15
                 if (chara == CharaWithTotal.Total)
                 {
                     getValueByChara = dictionary => dictionary.Values
-                        .Where(clearData => clearData.Chara != chara).Sum(getValueByType);
+                        .Where(clearData => clearData.Chara != chara)
+                        .Sum(clearData => clearData.GameModeData.TryGetValue(mode, out var clearDataPerGameMode)
+                            ? getValueByType(clearDataPerGameMode) : 0);
                 }
                 else
                 {
-                    getValueByChara = dictionary => getValueByType(dictionary[chara]);
+                    getValueByChara = dictionary => dictionary.TryGetValue(chara, out var clearData)
+                        && clearData.GameModeData.TryGetValue(mode, out var clearDataPerGameMode)
+                        ? getValueByType(clearDataPerGameMode) : 0;
                 }
 
                 return toString(getValueByChara(clearDataDictionary));
