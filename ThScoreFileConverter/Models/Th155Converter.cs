@@ -183,19 +183,19 @@ namespace ThScoreFileConverter.Models
                 this.StageDictionary = null;
             }
 
-            public Dictionary<StoryChara, Story> StoryDictionary { get; private set; }
+            public IReadOnlyDictionary<StoryChara, Story> StoryDictionary { get; private set; }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public Dictionary<string, int> CharacterDictionary { get; private set; }
+            public IReadOnlyDictionary<string, int> CharacterDictionary { get; private set; }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public Dictionary<int, bool> BgmDictionary { get; private set; }
+            public IReadOnlyDictionary<int, bool> BgmDictionary { get; private set; }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public Dictionary<string, int> EndingDictionary { get; private set; }
+            public IReadOnlyDictionary<string, int> EndingDictionary { get; private set; }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
-            public Dictionary<int, int> StageDictionary { get; private set; }
+            public IReadOnlyDictionary<int, int> StageDictionary { get; private set; }
 
             [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
             public int Version { get; private set; }
