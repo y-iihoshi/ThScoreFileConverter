@@ -22,24 +22,6 @@ namespace ThScoreFileConverter.Models
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th155Converter : ThConverter
     {
-        private static new readonly EnumShortNameParser<Th155.Level> LevelParser =
-            new EnumShortNameParser<Th155.Level>();
-
-        [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Justification = "For future use.")]
-#pragma warning disable IDE0052 // Remove unread private members
-        private static new readonly EnumShortNameParser<LevelWithTotal> LevelWithTotalParser =
-            new EnumShortNameParser<LevelWithTotal>();
-#pragma warning restore IDE0052 // Remove unread private members
-
-        private static readonly EnumShortNameParser<StoryChara> StoryCharaParser =
-            new EnumShortNameParser<StoryChara>();
-
-        [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Justification = "For future use.")]
-#pragma warning disable IDE0052 // Remove unread private members
-        private static readonly EnumShortNameParser<StoryCharaWithTotal> StoryCharaWithTotalParser =
-            new EnumShortNameParser<StoryCharaWithTotal>();
-#pragma warning restore IDE0052 // Remove unread private members
-
         private AllScoreData allScoreData = null;
 
         public override string SupportedVersions
@@ -143,7 +125,7 @@ namespace ThScoreFileConverter.Models
         private class ClearRankReplacer : IStringReplaceable
         {
             private static readonly string Pattern = Utils.Format(
-                @"%T155CLEAR({0})({1})", LevelParser.Pattern, StoryCharaParser.Pattern);
+                @"%T155CLEAR({0})({1})", Parsers.LevelParser.Pattern, Parsers.StoryCharaParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -151,8 +133,8 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var level = LevelParser.Parse(match.Groups[1].Value);
-                    var chara = StoryCharaParser.Parse(match.Groups[2].Value);
+                    var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+                    var chara = Parsers.StoryCharaParser.Parse(match.Groups[2].Value);
 
                     LevelFlags ToLevelFlag(Th155.Level lv)
                     {
