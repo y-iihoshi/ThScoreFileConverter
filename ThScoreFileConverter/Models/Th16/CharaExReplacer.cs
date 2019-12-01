@@ -27,6 +27,9 @@ namespace ThScoreFileConverter.Models.Th16
 
         public CharaExReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
         {
+            if (clearDataDictionary is null)
+                throw new ArgumentNullException(nameof(clearDataDictionary));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
@@ -48,9 +51,15 @@ namespace ThScoreFileConverter.Models.Th16
                 else
                 {
                     if (level == LevelWithTotal.Total)
+                    {
                         getValueByType = clearData => clearData.ClearCounts.Values.Sum();
+                    }
                     else
-                        getValueByType = clearData => clearData.ClearCounts[level];
+                    {
+                        getValueByType =
+                            clearData => clearData.ClearCounts.TryGetValue(level, out var count) ? count : 0;
+                    }
+
                     toString = Utils.ToNumberString;
                 }
 
@@ -62,7 +71,8 @@ namespace ThScoreFileConverter.Models.Th16
                 }
                 else
                 {
-                    getValueByChara = dictionary => getValueByType(dictionary[chara]);
+                    getValueByChara = dictionary => dictionary.TryGetValue(chara, out var clearData)
+                        ? getValueByType(clearData) : 0;
                 }
 
                 return toString(getValueByChara(clearDataDictionary));
