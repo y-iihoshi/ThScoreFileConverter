@@ -2,11 +2,9 @@
 
 Score file converter for Touhou games
 
-[![License](https://img.shields.io/github/license/y-iihoshi/ThScoreFileConverter.svg)](/LICENSE.txt)
 [![GitHub release](https://img.shields.io/github/release/y-iihoshi/ThScoreFileConverter.svg)](https://github.com/y-iihoshi/ThScoreFileConverter/releases)
+[![License](https://img.shields.io/github/license/y-iihoshi/ThScoreFileConverter.svg)](/LICENSE.txt)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fy-iihoshi%2FThScoreFileConverter.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fy-iihoshi%2FThScoreFileConverter?ref=badge_shield)
-
-
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/58cq4cyakkp0b5lo/branch/master?svg=true)](https://ci.appveyor.com/project/y-iihoshi/thscorefileconverter/branch/master)
 [![AppVeyor test result](https://img.shields.io/appveyor/tests/y-iihoshi/thscorefileconverter/master.svg)](https://ci.appveyor.com/project/y-iihoshi/thscorefileconverter/branch/master)
 [![Codecov](https://codecov.io/gh/y-iihoshi/ThScoreFileConverter/branch/master/graph/badge.svg)](https://codecov.io/gh/y-iihoshi/ThScoreFileConverter/branch/master)
@@ -50,13 +48,19 @@ format from best shot files.
 ## Environments
 
 ### Development environment
-* Windows 10 Pro Version 1903 (64bit)
+* Windows 10 Pro Version 1909 (64bit)
 * .NET Framework 4.8
-* Visual Studio Community 2019 16.3.7
+* Visual Studio Community 2019 16.3.10
 * Python 3.8.0
 
 ### Tested environment
 * Same as above but you can use .NET Framework 4.5 or later.
+
+## License
+
+See: [LICENSE.txt](/LICENSE.txt)
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fy-iihoshi%2FThScoreFileConverter.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fy-iihoshi%2FThScoreFileConverter?ref=badge_large)
 
 ## Installation
 
@@ -71,7 +75,3 @@ See: https://www.colorless-sight.jp/touhou/ThSFC/howtouse.html
 
 Currently, ThSFC has Japanese resource only and does not support localization.
 (Yes, issue #5 is still open...)
-
-
-## License
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fy-iihoshi%2FThScoreFileConverter.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fy-iihoshi%2FThScoreFileConverter?ref=badge_large)
