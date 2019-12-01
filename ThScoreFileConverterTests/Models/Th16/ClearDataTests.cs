@@ -7,21 +7,19 @@ using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th16;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th10.Wrappers;
-using ThScoreFileConverterTests.Models.Th13;
 using ThScoreFileConverterTests.Models.Th13.Stubs;
 using ThScoreFileConverterTests.Models.Th16.Stubs;
-using ThScoreFileConverterTests.Models.Wrappers;
+using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 using IPractice = ThScoreFileConverter.Models.Th13.IPractice;
 using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Level>;
 using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th16
 {
     [TestClass]
-    public class Th16ClearDataTests
+    public class ClearDataTests
     {
-        internal static ClearDataStub GetValidStub()
+        internal static ClearDataStub MakeValidStub()
         {
             var levels = Utils.GetEnumerator<Level>();
             var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();
@@ -81,9 +79,9 @@ namespace ThScoreFileConverterTests.Models
             => TestUtils.MakeByteArray(
                 (int)clearData.Chara,
                 clearData.Rankings.Values.SelectMany(
-                    ranking => ranking.SelectMany(scoreData => Th16.ScoreDataTests.MakeByteArray(scoreData))).ToArray(),
+                    ranking => ranking.SelectMany(scoreData => ScoreDataTests.MakeByteArray(scoreData))).ToArray(),
                 new byte[0x140],
-                clearData.Cards.Values.SelectMany(card => SpellCardTests.MakeByteArray(card)).ToArray(),
+                clearData.Cards.Values.SelectMany(card => Th13.SpellCardTests.MakeByteArray(card)).ToArray(),
                 clearData.TotalPlayCount,
                 clearData.PlayTime,
                 0u,
@@ -91,7 +89,7 @@ namespace ThScoreFileConverterTests.Models
                 0u,
                 clearData.ClearFlags.Values.ToArray(),
                 0u,
-                clearData.Practices.Values.SelectMany(practice => PracticeTests.MakeByteArray(practice)).ToArray(),
+                clearData.Practices.Values.SelectMany(practice => Th13.PracticeTests.MakeByteArray(practice)).ToArray(),
                 new byte[0x40]);
 
         internal static byte[] MakeByteArray(IClearData clearData)
@@ -102,22 +100,19 @@ namespace ThScoreFileConverterTests.Models
                 clearData.Size,
                 MakeData(clearData));
 
-        internal static void Validate(IClearData expected, in Th16ClearDataWrapper actual)
+        internal static void Validate(IClearData expected, IClearData actual)
         {
-            var data = MakeData(expected);
-
             Assert.AreEqual(expected.Signature, actual.Signature);
             Assert.AreEqual(expected.Version, actual.Version);
             Assert.AreEqual(expected.Checksum, actual.Checksum);
             Assert.AreEqual(expected.Size, actual.Size);
-            CollectionAssert.That.AreEqual(data, actual.Data);
             Assert.AreEqual(expected.Chara, actual.Chara);
 
             foreach (var pair in expected.Rankings)
             {
                 for (var index = 0; index < pair.Value.Count(); ++index)
                 {
-                    Th16.ScoreDataTests.Validate(pair.Value[index], actual.Rankings[pair.Key][index]);
+                    ScoreDataTests.Validate(pair.Value[index], actual.Rankings[pair.Key][index]);
                 }
             }
 
@@ -128,32 +123,32 @@ namespace ThScoreFileConverterTests.Models
 
             foreach (var pair in expected.Practices)
             {
-                PracticeTests.Validate(pair.Value, actual.Practices[pair.Key]);
+                Th13.PracticeTests.Validate(pair.Value, actual.Practices[pair.Key]);
             }
 
             foreach (var pair in expected.Cards)
             {
-                SpellCardTests.Validate(pair.Value, actual.Cards[pair.Key]);
+                Th13.SpellCardTests.Validate(pair.Value, actual.Cards[pair.Key]);
             }
         }
 
         [TestMethod]
-        public void Th16ClearDataTestChapter() => TestUtils.Wrap(() =>
+        public void ClearDataTestChapter() => TestUtils.Wrap(() =>
         {
-            var stub = GetValidStub();
+            var stub = MakeValidStub();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            var clearData = new Th16ClearDataWrapper(chapter);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var clearData = new ClearData(chapter);
 
             Validate(stub, clearData);
-            Assert.IsFalse(clearData.IsValid.Value);
+            Assert.IsFalse(clearData.IsValid);
         });
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th16ClearDataTestNullChapter() => TestUtils.Wrap(() =>
+        public void ClearDataTestNullChapter() => TestUtils.Wrap(() =>
         {
-            _ = new Th16ClearDataWrapper(null);
+            _ = new ClearData(null);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -161,59 +156,58 @@ namespace ThScoreFileConverterTests.Models
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th16ClearDataTestInvalidSignature() => TestUtils.Wrap(() =>
+        public void ClearDataTestInvalidSignature() => TestUtils.Wrap(() =>
         {
-            var stub = GetValidStub();
+            var stub = MakeValidStub();
             stub.Signature = stub.Signature.ToLowerInvariant();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th16ClearDataWrapper(chapter);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new ClearData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th16ClearDataTestInvalidVersion() => TestUtils.Wrap(() =>
+        public void ClearDataTestInvalidVersion() => TestUtils.Wrap(() =>
         {
-            var stub = GetValidStub();
+            var stub = MakeValidStub();
             ++stub.Version;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th16ClearDataWrapper(chapter);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new ClearData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th16ClearDataTestInvalidSize() => TestUtils.Wrap(() =>
+        public void ClearDataTestInvalidSize() => TestUtils.Wrap(() =>
         {
-            var stub = GetValidStub();
+            var stub = MakeValidStub();
             --stub.Size;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th16ClearDataWrapper(chapter);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new ClearData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DataRow("CR", (ushort)1, 0x5318, true)]
         [DataRow("cr", (ushort)1, 0x5318, false)]
         [DataRow("CR", (ushort)0, 0x5318, false)]
         [DataRow("CR", (ushort)1, 0x5319, false)]
-        public void Th16ClearDataCanInitializeTest(string signature, ushort version, int size, bool expected)
+        public void CanInitializeTest(string signature, ushort version, int size, bool expected)
             => TestUtils.Wrap(() =>
             {
                 var checksum = 0u;
                 var data = new byte[size];
 
-                var chapter = ChapterWrapper.Create(
+                var chapter = TestUtils.Create<Chapter>(
                     TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
 
-                Assert.AreEqual(expected, Th16ClearDataWrapper.CanInitialize(chapter));
+                Assert.AreEqual(expected, ClearData.CanInitialize(chapter));
             });
     }
 }
