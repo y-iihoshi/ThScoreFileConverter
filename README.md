@@ -4,6 +4,7 @@ Score file converter for Touhou games
 
 [![License](https://img.shields.io/github/license/y-iihoshi/ThScoreFileConverter.svg)](/LICENSE.txt)
 [![GitHub release](https://img.shields.io/github/release/y-iihoshi/ThScoreFileConverter.svg)](https://github.com/y-iihoshi/ThScoreFileConverter/releases)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fy-iihoshi%2FThScoreFileConverter.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fy-iihoshi%2FThScoreFileConverter?ref=badge_shield)
 
 
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/58cq4cyakkp0b5lo/branch/master?svg=true)](https://ci.appveyor.com/project/y-iihoshi/thscorefileconverter/branch/master)
@@ -70,3 +71,7 @@ See: https://www.colorless-sight.jp/touhou/ThSFC/howtouse.html
 
 Currently, ThSFC has Japanese resource only and does not support localization.
 (Yes, issue #5 is still open...)
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fy-iihoshi%2FThScoreFileConverter.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fy-iihoshi%2FThScoreFileConverter?ref=badge_large)
