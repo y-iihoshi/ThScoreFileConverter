@@ -7,7 +7,6 @@
 
 #pragma warning disable 1591
 #pragma warning disable SA1600 // ElementsMustBeDocumented
-#pragma warning disable SA1602 // EnumerationItemsMustBeDocumented
 
 using System;
 using System.Collections.Generic;
@@ -159,52 +158,6 @@ namespace ThScoreFileConverter.Models
             new EnumShortNameParser<CharaWithTotal>();
 
         private AllScoreData allScoreData = null;
-
-        public enum Chara
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("RM")] Reimu,
-            [EnumAltName("CI")] Cirno,
-            [EnumAltName("AY")] Aya,
-            [EnumAltName("MR")] Marisa,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum CharaWithTotal
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("RM")] Reimu,
-            [EnumAltName("CI")] Cirno,
-            [EnumAltName("AY")] Aya,
-            [EnumAltName("MR")] Marisa,
-            [EnumAltName("TL")] Total,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum StagePractice
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("1")] St1,
-            [EnumAltName("2")] St2,
-            [EnumAltName("3")] St3,
-            [EnumAltName("4")] St4,
-            [EnumAltName("5")] St5,
-            [EnumAltName("6")] St6,
-            [EnumAltName("X")] Extra,
-            [EnumAltName("-")] NotUsed,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
-
-        public enum Season
-        {
-#pragma warning disable SA1134 // Attributes should not share line
-            [EnumAltName("春")]   Spring,
-            [EnumAltName("夏")]   Summer,
-            [EnumAltName("秋")]   Autumn,
-            [EnumAltName("冬")]   Winter,
-            [EnumAltName("土用")] Full,
-#pragma warning restore SA1134 // Attributes should not share line
-        }
 
         public override string SupportedVersions
         {

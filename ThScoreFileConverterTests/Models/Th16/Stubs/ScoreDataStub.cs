@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th16;
 using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 
@@ -22,7 +21,7 @@ namespace ThScoreFileConverterTests.Models.Th16.Stubs
             this.StageProgress = scoreData.StageProgress;
         }
 
-        public Th16Converter.Season Season { get; set; }
+        public Season Season { get; set; }
 
         public byte ContinueCount { get; set; }
 

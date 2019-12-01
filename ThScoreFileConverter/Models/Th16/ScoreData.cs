@@ -28,7 +28,7 @@ namespace ThScoreFileConverter.Models.Th16
 
         public float SlowRate { get; private set; }
 
-        public Th16Converter.Season Season { get; private set; }
+        public Season Season { get; private set; }
 
         public void ReadFrom(BinaryReader reader)
         {
@@ -42,7 +42,7 @@ namespace ThScoreFileConverter.Models.Th16
             this.DateTime = reader.ReadUInt32();
             reader.ReadUInt32();
             this.SlowRate = reader.ReadSingle();
-            this.Season = Utils.ToEnum<Th16Converter.Season>(reader.ReadInt32());
+            this.Season = Utils.ToEnum<Season>(reader.ReadInt32());
         }
     }
 }

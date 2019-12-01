@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Models.Th13;
 using ThScoreFileConverter.Models.Th16;
+using IPractice = ThScoreFileConverter.Models.Th13.IPractice;
+using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Level>;
 
 namespace ThScoreFileConverterTests.Models.Th16.Stubs
 {
@@ -14,7 +15,7 @@ namespace ThScoreFileConverterTests.Models.Th16.Stubs
             : this()
         {
             this.Cards = clearData.Cards?.ToDictionary(
-                pair => pair.Key, pair => new Th13.Stubs.SpellCardStub<Level>(pair.Value) as ISpellCard<Level>);
+                pair => pair.Key, pair => new Th13.Stubs.SpellCardStub<Level>(pair.Value) as ISpellCard);
             this.Chara = clearData.Chara;
             this.ClearCounts = clearData.ClearCounts?.ToDictionary(pair => pair.Key, pair => pair.Value);
             this.ClearFlags = clearData.ClearFlags?.ToDictionary(pair => pair.Key, pair => pair.Value);
@@ -32,9 +33,9 @@ namespace ThScoreFileConverterTests.Models.Th16.Stubs
             this.Version = clearData.Version;
         }
 
-        public IReadOnlyDictionary<int, ISpellCard<Level>> Cards { get; set; }
+        public IReadOnlyDictionary<int, ISpellCard> Cards { get; set; }
 
-        public Th16Converter.CharaWithTotal Chara { get; set; }
+        public CharaWithTotal Chara { get; set; }
 
         public IReadOnlyDictionary<LevelWithTotal, int> ClearCounts { get; set; }
 
@@ -42,7 +43,7 @@ namespace ThScoreFileConverterTests.Models.Th16.Stubs
 
         public int PlayTime { get; set; }
 
-        public IReadOnlyDictionary<(Level, Th16Converter.StagePractice), IPractice> Practices { get; set; }
+        public IReadOnlyDictionary<(Level, StagePractice), IPractice> Practices { get; set; }
 
         public IReadOnlyDictionary<LevelWithTotal, IReadOnlyList<IScoreData>> Rankings { get; set; }
 

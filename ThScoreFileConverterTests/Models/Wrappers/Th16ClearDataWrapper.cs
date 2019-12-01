@@ -3,9 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Models.Th13;
 using ThScoreFileConverter.Models.Th16;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
+using IPractice = ThScoreFileConverter.Models.Th13.IPractice;
+using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Level>;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -38,8 +39,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.IsValid)) as bool?;
         public IReadOnlyCollection<byte> Data
             => this.pobj.GetProperty(nameof(this.Data)) as byte[];
-        public Th16Converter.CharaWithTotal? Chara
-            => this.pobj.GetProperty(nameof(this.Chara)) as Th16Converter.CharaWithTotal?;
+        public CharaWithTotal? Chara
+            => this.pobj.GetProperty(nameof(this.Chara)) as CharaWithTotal?;
         public IReadOnlyDictionary<LevelWithTotal, IReadOnlyList<IScoreData>> Rankings
             => this.pobj.GetProperty(nameof(this.Rankings))
                 as IReadOnlyDictionary<LevelWithTotal, IReadOnlyList<IScoreData>>;
@@ -51,11 +52,11 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.ClearCounts)) as IReadOnlyDictionary<LevelWithTotal, int>;
         public IReadOnlyDictionary<LevelWithTotal, int> ClearFlags
             => this.pobj.GetProperty(nameof(this.ClearFlags)) as IReadOnlyDictionary<LevelWithTotal, int>;
-        public IReadOnlyDictionary<(Level, Th16Converter.StagePractice), IPractice> Practices
+        public IReadOnlyDictionary<(Level, StagePractice), IPractice> Practices
             => this.pobj.GetProperty(nameof(this.Practices))
-                as IReadOnlyDictionary<(Level, Th16Converter.StagePractice), IPractice>;
-        public IReadOnlyDictionary<int, ISpellCard<Level>> Cards
-            => this.pobj.GetProperty(nameof(this.Cards)) as IReadOnlyDictionary<int, ISpellCard<Level>>;
+                as IReadOnlyDictionary<(Level, StagePractice), IPractice>;
+        public IReadOnlyDictionary<int, ISpellCard> Cards
+            => this.pobj.GetProperty(nameof(this.Cards)) as IReadOnlyDictionary<int, ISpellCard>;
 
         public static bool CanInitialize(ChapterWrapper chapter)
             => (bool)PrivateType.InvokeStatic(

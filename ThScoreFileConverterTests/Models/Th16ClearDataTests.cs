@@ -5,7 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Models.Th13;
 using ThScoreFileConverter.Models.Th16;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th10.Wrappers;
@@ -13,6 +12,9 @@ using ThScoreFileConverterTests.Models.Th13;
 using ThScoreFileConverterTests.Models.Th13.Stubs;
 using ThScoreFileConverterTests.Models.Th16.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
+using IPractice = ThScoreFileConverter.Models.Th13.IPractice;
+using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Level>;
+using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -23,7 +25,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var levels = Utils.GetEnumerator<Level>();
             var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();
-            var stages = Utils.GetEnumerator<Th16Converter.StagePractice>();
+            var stages = Utils.GetEnumerator<StagePractice>();
 
             return new ClearDataStub()
             {
@@ -31,7 +33,7 @@ namespace ThScoreFileConverterTests.Models
                 Version = 1,
                 Checksum = 0u,
                 Size = 0x5318,
-                Chara = Th16Converter.CharaWithTotal.Aya,
+                Chara = CharaWithTotal.Aya,
                 Rankings = levelsWithTotal.ToDictionary(
                     level => level,
                     level => Enumerable.Range(0, 10).Select(
@@ -43,7 +45,7 @@ namespace ThScoreFileConverterTests.Models
                             Name = TestUtils.MakeRandomArray<byte>(10),
                             DateTime = 34567890u,
                             SlowRate = 1.2f,
-                            Season = Th16Converter.Season.Autumn
+                            Season = Season.Autumn
                         }).ToList() as IReadOnlyList<IScoreData>),
                 TotalPlayCount = 23,
                 PlayTime = 4567890,
@@ -71,7 +73,7 @@ namespace ThScoreFileConverterTests.Models
                         Id = index,
                         Level = Level.Hard,
                         PracticeScore = 90123
-                    } as ISpellCard<Level>)
+                    } as ISpellCard)
             };
         }
 

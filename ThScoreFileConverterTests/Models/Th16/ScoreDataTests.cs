@@ -5,7 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Extensions;
-using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th16;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th16.Stubs;
@@ -24,7 +23,7 @@ namespace ThScoreFileConverterTests.Models.Th16
             Name = TestUtils.MakeRandomArray<byte>(10),
             DateTime = 567u,
             SlowRate = 8.9f,
-            Season = Th16Converter.Season.Full
+            Season = Season.Full
         };
 
         internal static byte[] MakeByteArray(IScoreData scoreData)
@@ -122,7 +121,7 @@ namespace ThScoreFileConverterTests.Models.Th16
         });
 
         public static IEnumerable<object[]> InvalidSeasons
-            => TestUtils.GetInvalidEnumerators(typeof(Th16Converter.Season));
+            => TestUtils.GetInvalidEnumerators(typeof(Season));
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
@@ -132,7 +131,7 @@ namespace ThScoreFileConverterTests.Models.Th16
         {
             var stub = new ScoreDataStub(ValidStub)
             {
-                Season = TestUtils.Cast<Th16Converter.Season>(season),
+                Season = TestUtils.Cast<Season>(season),
             };
 
             _ = TestUtils.Create<ScoreData>(MakeByteArray(stub));
