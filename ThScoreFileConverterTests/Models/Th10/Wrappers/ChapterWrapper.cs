@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using ThScoreFileConverter.Models.Th10;
 
 namespace ThScoreFileConverterTests.Models.Th10.Wrappers
@@ -9,10 +8,6 @@ namespace ThScoreFileConverterTests.Models.Th10.Wrappers
     /// </summary>
     internal sealed class ChapterWrapper : Chapter
     {
-        [Obsolete]
-        public static ChapterWrapper Create(byte[] array)
-            => new ChapterWrapper(TestUtils.Create<Chapter>(array));
-
         public ChapterWrapper()
             : base()
         {
@@ -27,9 +22,6 @@ namespace ThScoreFileConverterTests.Models.Th10.Wrappers
             : base(chapter, expectedSignature, expectedVersion, expectedSize)
         {
         }
-
-        [Obsolete]
-        public Chapter Target => this as Chapter;
 
         public new IReadOnlyCollection<byte> Data => base.Data;
     }

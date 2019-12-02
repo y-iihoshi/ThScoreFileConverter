@@ -1,18 +1,18 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ThScoreFileConverter.Models.Th165;
 using ThScoreFileConverterTests.Models.Th095;
 using ThScoreFileConverterTests.Models.Th165.Stubs;
-using ThScoreFileConverterTests.Models.Wrappers;
 using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th165
 {
     [TestClass]
-    public class Th165AllScoreDataTests
+    public class AllScoreDataTests
     {
         [TestMethod]
-        public void Th165AllScoreDataTest() => TestUtils.Wrap(() =>
+        public void AllScoreDataTest() => TestUtils.Wrap(() =>
         {
-            var allScoreData = new Th165AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
 
             Assert.IsNull(allScoreData.Header);
             Assert.AreEqual(0, allScoreData.Scores.Count);
@@ -20,25 +20,25 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th165AllScoreDataSetHeaderTest() => TestUtils.Wrap(() =>
+        public void SetHeaderTest() => TestUtils.Wrap(() =>
         {
             var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.ValidProperties);
             var header = TestUtils.Create<HeaderBase>(array);
 
-            var allScoreData = new Th165AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(header);
 
             Assert.AreSame(header, allScoreData.Header);
         });
 
         [TestMethod]
-        public void Th165AllScoreDataSetHeaderTestTwice() => TestUtils.Wrap(() =>
+        public void SetHeaderTestTwice() => TestUtils.Wrap(() =>
         {
             var array = HeaderBaseTests.MakeByteArray(HeaderBaseTests.ValidProperties);
             var header1 = TestUtils.Create<HeaderBase>(array);
             var header2 = TestUtils.Create<HeaderBase>(array);
 
-            var allScoreData = new Th165AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(header1);
             allScoreData.Set(header2);
 
@@ -47,23 +47,23 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th165AllScoreDataSetClearDataTest() => TestUtils.Wrap(() =>
+        public void SetClearDataTest() => TestUtils.Wrap(() =>
         {
             var score = new ScoreStub();
 
-            var allScoreData = new Th165AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(score);
 
             Assert.AreSame(score, allScoreData.Scores[0]);
         });
 
         [TestMethod]
-        public void Th165AllScoreDataSetClearDataTestTwice() => TestUtils.Wrap(() =>
+        public void SetClearDataTestTwice() => TestUtils.Wrap(() =>
         {
             var score1 = new ScoreStub();
             var score2 = new ScoreStub();
 
-            var allScoreData = new Th165AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(score1);
             allScoreData.Set(score2);
 
@@ -72,23 +72,23 @@ namespace ThScoreFileConverterTests.Models
         });
 
         [TestMethod]
-        public void Th165AllScoreDataSetStatusTest() => TestUtils.Wrap(() =>
+        public void SetStatusTest() => TestUtils.Wrap(() =>
         {
             var status = new StatusStub();
 
-            var allScoreData = new Th165AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(status);
 
             Assert.AreSame(status, allScoreData.Status);
         });
 
         [TestMethod]
-        public void Th165AllScoreDataSetStatusTestTwice() => TestUtils.Wrap(() =>
+        public void SetStatusTestTwice() => TestUtils.Wrap(() =>
         {
             var status1 = new StatusStub();
             var status2 = new StatusStub();
 
-            var allScoreData = new Th165AllScoreDataWrapper();
+            var allScoreData = new AllScoreData();
             allScoreData.Set(status1);
             allScoreData.Set(status2);
 
