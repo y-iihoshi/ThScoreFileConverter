@@ -160,7 +160,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(properties.dateTime, header.DateTime);
             Assert.AreEqual(properties.angle, header.Angle);
             Assert.AreEqual(properties.score, header.Score);
-            CollectionAssert.That.AreEqual(properties.fields, header.Fields.Data);
+            CollectionAssert.That.AreEqual(properties.fields, header.Fields.Value.Data);
             Assert.AreEqual(properties.score2, header.Score2);
             Assert.AreEqual(properties.basePoint, header.BasePoint);
             Assert.AreEqual(properties.numViewed, header.NumViewed);

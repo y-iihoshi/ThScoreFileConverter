@@ -1,12 +1,12 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverterTests.Models.Wrappers;
+using ThScoreFileConverter.Models.Th165;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th165
 {
     [TestClass]
-    public class Th165HashtagFieldsTests
+    public class HashtagFieldsTests
     {
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
@@ -16,7 +16,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(int.MaxValue, 0, 12345678)]
         public void DataTest(int data1, int data2, int data3) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(data1, fields.Data.ElementAt(0));
             Assert.AreEqual(data2, fields.Data.ElementAt(1));
             Assert.AreEqual(data3, fields.Data.ElementAt(2));
@@ -28,7 +28,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~(1 << 0), ~0, ~0, false)]
         public void EnemyIsInFrameTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.EnemyIsInFrame);
         });
 
@@ -38,7 +38,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~(1 << 1), ~0, ~0, false)]
         public void EnemyIsPartlyInFrameTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.EnemyIsPartlyInFrame);
         });
 
@@ -48,7 +48,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~(1 << 2), ~0, ~0, false)]
         public void WholeEnemyIsInFrameTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.WholeEnemyIsInFrame);
         });
 
@@ -58,7 +58,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~(1 << 3), ~0, ~0, false)]
         public void EnemyIsInMiddleTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.EnemyIsInMiddle);
         });
 
@@ -68,7 +68,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~(1 << 4), ~0, ~0, false)]
         public void IsSelfieTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.IsSelfie);
         });
 
@@ -78,7 +78,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~(1 << 5), ~0, ~0, false)]
         public void IsTwoShotTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.IsTwoShot);
         });
 
@@ -88,7 +88,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~(1 << 7), ~0, ~0, false)]
         public void BitDangerousTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.BitDangerous);
         });
 
@@ -98,7 +98,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~(1 << 8), ~0, ~0, false)]
         public void SeriouslyDangerousTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.SeriouslyDangerous);
         });
 
@@ -108,7 +108,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~(1 << 9), ~0, ~0, false)]
         public void ThoughtGonnaDieTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.ThoughtGonnaDie);
         });
 
@@ -118,7 +118,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~(1 << 10), ~0, ~0, false)]
         public void ManyRedsTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.ManyReds);
         });
 
@@ -128,7 +128,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~(1 << 11), ~0, ~0, false)]
         public void ManyPurplesTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.ManyPurples);
         });
 
@@ -138,7 +138,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~(1 << 12), ~0, ~0, false)]
         public void ManyBluesTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.ManyBlues);
         });
 
@@ -148,7 +148,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~(1 << 13), ~0, ~0, false)]
         public void ManyCyansTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.ManyCyans);
         });
 
@@ -158,7 +158,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~(1 << 14), ~0, ~0, false)]
         public void ManyGreensTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.ManyGreens);
         });
 
@@ -168,7 +168,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~(1 << 15), ~0, ~0, false)]
         public void ManyYellowsTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.ManyYellows);
         });
 
@@ -178,7 +178,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~(1 << 16), ~0, ~0, false)]
         public void ManyOrangesTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.ManyOranges);
         });
 
@@ -188,7 +188,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~(1 << 17), ~0, ~0, false)]
         public void TooColorfulTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.TooColorful);
         });
 
@@ -198,7 +198,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~(1 << 18), ~0, ~0, false)]
         public void SevenColorsTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.SevenColors);
         });
 
@@ -208,7 +208,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~(1 << 19), ~0, ~0, false)]
         public void NoBulletTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.NoBullet);
         });
 
@@ -218,7 +218,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~(1 << 21), ~0, ~0, false)]
         public void IsLandscapePhotoTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.IsLandscapePhoto);
         });
 
@@ -228,7 +228,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~(1 << 26), ~0, ~0, false)]
         public void CloseupTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.Closeup);
         });
 
@@ -238,7 +238,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~(1 << 27), ~0, ~0, false)]
         public void QuiteCloseupTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.QuiteCloseup);
         });
 
@@ -248,7 +248,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~(1 << 28), ~0, ~0, false)]
         public void TooCloseTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.TooClose);
         });
 
@@ -258,7 +258,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~(1 << 1), ~0, false)]
         public void EnemyIsInFullViewTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.EnemyIsInFullView);
         });
 
@@ -268,7 +268,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~(1 << 4), ~0, false)]
         public void TooManyBulletsTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.TooManyBullets);
         });
 
@@ -278,7 +278,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~(1 << 5), ~0, false)]
         public void TooPlayfulBarrageTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.TooPlayfulBarrage);
         });
 
@@ -288,7 +288,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~(1 << 6), ~0, false)]
         public void TooDenseTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.TooDense);
         });
 
@@ -298,7 +298,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~(1 << 7), ~0, false)]
         public void ChasedTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.Chased);
         });
 
@@ -308,7 +308,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~(1 << 8), ~0, false)]
         public void IsSuppositoryTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.IsSuppository);
         });
 
@@ -318,7 +318,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~(1 << 9), ~0, false)]
         public void IsButterflyLikeMothTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.IsButterflyLikeMoth);
         });
 
@@ -328,7 +328,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~(1 << 10), ~0, false)]
         public void EnemyIsUndamagedTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.EnemyIsUndamaged);
         });
 
@@ -338,7 +338,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~(1 << 11), ~0, false)]
         public void EnemyCanAffordTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.EnemyCanAfford);
         });
 
@@ -348,7 +348,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~(1 << 12), ~0, false)]
         public void EnemyIsWeakenedTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.EnemyIsWeakened);
         });
 
@@ -358,7 +358,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~(1 << 13), ~0, false)]
         public void EnemyIsDyingTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.EnemyIsDying);
         });
 
@@ -368,7 +368,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~(1 << 14), ~0, false)]
         public void FinishedTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.Finished);
         });
 
@@ -378,7 +378,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~(1 << 15), ~0, false)]
         public void IsThreeShotTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.IsThreeShot);
         });
 
@@ -388,7 +388,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~(1 << 16), ~0, false)]
         public void TwoEnemiesTogetherTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.TwoEnemiesTogether);
         });
 
@@ -398,7 +398,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~(1 << 17), ~0, false)]
         public void EnemiesAreOverlappingTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.EnemiesAreOverlapping);
         });
 
@@ -408,7 +408,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~(1 << 18), ~0, false)]
         public void PeaceSignAlongsideTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.PeaceSignAlongside);
         });
 
@@ -418,7 +418,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~(1 << 19), ~0, false)]
         public void EnemiesAreTooCloseTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.EnemiesAreTooClose);
         });
 
@@ -428,7 +428,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~(1 << 20), ~0, false)]
         public void ScorchingTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.Scorching);
         });
 
@@ -438,7 +438,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~(1 << 21), ~0, false)]
         public void TooBigBulletTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.TooBigBullet);
         });
 
@@ -448,7 +448,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~(1 << 22), ~0, false)]
         public void ThrowingEdgedToolsTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.ThrowingEdgedTools);
         });
 
@@ -458,7 +458,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~(1 << 23), ~0, false)]
         public void SnakyTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.Snaky);
         });
 
@@ -468,7 +468,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~(1 << 24), ~0, false)]
         public void LightLooksStoppedTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.LightLooksStopped);
         });
 
@@ -478,7 +478,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~(1 << 25), ~0, false)]
         public void IsSuperMoonTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.IsSuperMoon);
         });
 
@@ -488,7 +488,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~(1 << 26), ~0, false)]
         public void DazzlingTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.Dazzling);
         });
 
@@ -498,7 +498,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~(1 << 27), ~0, false)]
         public void MoreDazzlingTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.MoreDazzling);
         });
 
@@ -508,7 +508,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~(1 << 28), ~0, false)]
         public void MostDazzlingTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.MostDazzling);
         });
 
@@ -518,7 +518,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~(1 << 29), ~0, false)]
         public void FinishedTogetherTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.FinishedTogether);
         });
 
@@ -528,7 +528,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~(1 << 30), ~0, false)]
         public void WasDreamTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.WasDream);
         });
 
@@ -538,7 +538,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~(1 << 31), ~0, false)]
         public void IsRockyBarrageTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.IsRockyBarrage);
         });
 
@@ -548,7 +548,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~0, ~(1 << 0), false)]
         public void IsStickDestroyingBarrageTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.IsStickDestroyingBarrage);
         });
 
@@ -558,7 +558,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~0, ~(1 << 1), false)]
         public void FluffyTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.Fluffy);
         });
 
@@ -568,7 +568,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~0, ~(1 << 2), false)]
         public void IsDoggiePhotoTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.IsDoggiePhoto);
         });
 
@@ -578,7 +578,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~0, ~(1 << 3), false)]
         public void IsAnimalPhotoTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.IsAnimalPhoto);
         });
 
@@ -588,7 +588,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~0, ~(1 << 4), false)]
         public void IsZooTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.IsZoo);
         });
 
@@ -598,7 +598,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~0, ~(1 << 5), false)]
         public void IsLovelyHeartTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.IsLovelyHeart);
         });
 
@@ -608,7 +608,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~0, ~(1 << 6), false)]
         public void IsThunderTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.IsThunder);
         });
 
@@ -618,7 +618,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~0, ~(1 << 7), false)]
         public void IsDrumTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.IsDrum);
         });
 
@@ -628,7 +628,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~0, ~(1 << 8), false)]
         public void IsMistyTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.IsMisty);
         });
 
@@ -638,7 +638,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~0, ~(1 << 9), false)]
         public void IsBoringPhotoTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.IsBoringPhoto);
         });
 
@@ -648,7 +648,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~0, ~(1 << 10), false)]
         public void WasScoldedTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.WasScolded);
         });
 
@@ -658,7 +658,7 @@ namespace ThScoreFileConverterTests.Models
         [DataRow(~0, ~0, ~(1 << 11), false)]
         public void IsSumirekoTest(int data1, int data2, int data3, bool expected) => TestUtils.Wrap(() =>
         {
-            var fields = new Th165HashtagFieldsWrapper(data1, data2, data3);
+            var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.IsSumireko);
         });
     }

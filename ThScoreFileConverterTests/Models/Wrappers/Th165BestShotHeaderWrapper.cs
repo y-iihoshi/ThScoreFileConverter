@@ -74,11 +74,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.GetProperty(nameof(this.Angle)) as float?;
         public int? Score
             => this.pobj.GetProperty(nameof(this.Score)) as int?;
-        // NOTE: Th165Converter.BestShotHeader.HashtagFields is a private struct.
-        // public HashtagFields Fields
-        //     => this.pobj.GetProperty(nameof(this.Fields)) as HashtagFields;
-        public Th165HashtagFieldsWrapper Fields
-            => new Th165HashtagFieldsWrapper(this.pobj.GetProperty(nameof(this.Fields)));
+        public HashtagFields? Fields
+            => this.pobj.GetProperty(nameof(this.Fields)) as HashtagFields?;
         public int? Score2
             => this.pobj.GetProperty(nameof(this.Score2)) as int?;
         public int? BasePoint
