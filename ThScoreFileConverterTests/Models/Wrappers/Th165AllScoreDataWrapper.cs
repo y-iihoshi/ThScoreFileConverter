@@ -26,34 +26,16 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.Target;
         public HeaderBase Header
             => this.pobj.GetProperty(nameof(this.Header)) as HeaderBase;
-
-#if true
         public IReadOnlyList<IScore> Scores
             => this.pobj.GetProperty(nameof(this.Scores)) as IReadOnlyList<IScore>;
-#else
-        public object Scores
-            => this.pobj.GetProperty(nameof(this.Scores));
-        public int? ScoresCount
-            => this.Scores.GetType().GetProperty("Count").GetValue(this.Scores) as int?;
-        public Th165ScoreWrapper ScoresItem(int index)
-            => new Th165ScoreWrapper(
-                this.Scores.GetType().GetProperty("Item").GetValue(this.Scores, new object[] { index }));
-#endif
-
-        public Th165StatusWrapper Status
-        {
-            get
-            {
-                var status = this.pobj.GetProperty(nameof(this.Status));
-                return (status != null) ? new Th165StatusWrapper(status) : null;
-            }
-        }
+        public IStatus Status
+            => this.pobj.GetProperty(nameof(this.Status)) as IStatus;
 
         public void Set(HeaderBase header)
             => this.pobj.Invoke(nameof(Set), new object[] { header }, CultureInfo.InvariantCulture);
         public void Set(IScore data)
             => this.pobj.Invoke(nameof(Set), new object[] { data }, CultureInfo.InvariantCulture);
-        public void Set(Th165StatusWrapper status)
-            => this.pobj.Invoke(nameof(Set), new object[] { status.Target }, CultureInfo.InvariantCulture);
+        public void Set(IStatus status)
+            => this.pobj.Invoke(nameof(Set), new object[] { status }, CultureInfo.InvariantCulture);
     }
 }
