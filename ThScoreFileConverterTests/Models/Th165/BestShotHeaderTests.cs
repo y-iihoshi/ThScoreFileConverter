@@ -6,12 +6,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th165;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th165.Stubs;
-using ThScoreFileConverterTests.Models.Wrappers;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th165
 {
     [TestClass]
-    public class Th165BestShotHeaderTests
+    public class BestShotHeaderTests
     {
         internal static BestShotHeaderStub ValidStub { get; } = new BestShotHeaderStub
         {
@@ -103,7 +102,7 @@ namespace ThScoreFileConverterTests.Models
                 header.NumLightBullets,
                 TestUtils.MakeRandomArray<byte>(0x78));
 
-        internal static void Validate(IBestShotHeader expected, in Th165BestShotHeaderWrapper actual)
+        internal static void Validate(IBestShotHeader expected, IBestShotHeader actual)
         {
             if (actual == null)
                 throw new ArgumentNullException(nameof(actual));
@@ -121,7 +120,7 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreEqual(expected.DateTime, actual.DateTime);
             Assert.AreEqual(expected.Angle, actual.Angle);
             Assert.AreEqual(expected.Score, actual.Score);
-            CollectionAssert.That.AreEqual(expected.Fields.Data, actual.Fields.Value.Data);
+            CollectionAssert.That.AreEqual(expected.Fields.Data, actual.Fields.Data);
             Assert.AreEqual(expected.Score2, actual.Score2);
             Assert.AreEqual(expected.BasePoint, actual.BasePoint);
             Assert.AreEqual(expected.NumViewed, actual.NumViewed);
@@ -147,10 +146,10 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        public void Th165BestShotHeaderTest() => TestUtils.Wrap(() =>
+        public void BestShotHeaderTest() => TestUtils.Wrap(() =>
         {
             var stub = new BestShotHeaderStub();
-            var header = new Th165BestShotHeaderWrapper();
+            var header = new BestShotHeader();
 
             Validate(stub, header);
         });
@@ -160,7 +159,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var stub = ValidStub;
 
-            var header = Th165BestShotHeaderWrapper.Create(MakeByteArray(stub));
+            var header = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
 
             Validate(stub, header);
         });
@@ -169,7 +168,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentNullException))]
         public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
-            var header = new Th165BestShotHeaderWrapper();
+            var header = new BestShotHeader();
 
             header.ReadFrom(null);
 
@@ -185,7 +184,7 @@ namespace ThScoreFileConverterTests.Models
                 Signature = string.Empty,
             };
 
-            _ = Th165BestShotHeaderWrapper.Create(MakeByteArray(stub));
+            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -197,7 +196,7 @@ namespace ThScoreFileConverterTests.Models
             var stub = new BestShotHeaderStub(ValidStub);
             stub.Signature = stub.Signature.Substring(0, stub.Signature.Length - 1);
 
-            _ = Th165BestShotHeaderWrapper.Create(MakeByteArray(stub));
+            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -209,7 +208,7 @@ namespace ThScoreFileConverterTests.Models
             var stub = new BestShotHeaderStub(ValidStub);
             stub.Signature += "E";
 
-            _ = Th165BestShotHeaderWrapper.Create(MakeByteArray(stub));
+            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -227,7 +226,7 @@ namespace ThScoreFileConverterTests.Models
                 Weekday = TestUtils.Cast<Day>(day),
             };
 
-            _ = Th165BestShotHeaderWrapper.Create(MakeByteArray(stub));
+            _ = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
