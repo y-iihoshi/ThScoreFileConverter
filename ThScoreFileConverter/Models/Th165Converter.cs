@@ -63,18 +63,17 @@ namespace ThScoreFileConverter.Models
             }
         }
 
-        protected override IEnumerable<IStringReplaceable> CreateReplacers(
-            bool hideUntriedCards, string outputFilePath)
+        protected override IEnumerable<IStringReplaceable> CreateReplacers(bool hideUntriedCards, string outputFilePath)
         {
             return new List<IStringReplaceable>
             {
-                new ScoreReplacer(this),
-                new ScoreTotalReplacer(this),
-                new CardReplacer(this, hideUntriedCards),
-                new NicknameReplacer(this),
-                new TimeReplacer(this),
-                new ShotReplacer(this, outputFilePath),
-                new ShotExReplacer(this, outputFilePath),
+                new ScoreReplacer(this.allScoreData.Scores),
+                new ScoreTotalReplacer(this.allScoreData.Scores, this.allScoreData.Status),
+                new CardReplacer(this.allScoreData.Scores, hideUntriedCards),
+                new NicknameReplacer(this.allScoreData.Status),
+                new TimeReplacer(this.allScoreData.Status),
+                new ShotReplacer(this.bestshots, outputFilePath),
+                new ShotExReplacer(this.bestshots, outputFilePath),
             };
         }
 
@@ -256,7 +255,7 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public ScoreReplacer(Th165Converter parent)
+            public ScoreReplacer(IReadOnlyList<IScore> scores)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -268,7 +267,7 @@ namespace ThScoreFileConverter.Models
                     if (!Definitions.SpellCards.ContainsKey(key))
                         return match.ToString();
 
-                    var score = parent.allScoreData.Scores.FirstOrDefault(elem =>
+                    var score = scores.FirstOrDefault(elem =>
                         (elem != null) && ((elem.Number >= 0) && (elem.Number < Definitions.SpellCards.Count)) &&
                         Definitions.SpellCards.ElementAt(elem.Number).Key.Equals(key));
 
@@ -299,7 +298,7 @@ namespace ThScoreFileConverter.Models
             private readonly MatchEvaluator evaluator;
 
             [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-            public ScoreTotalReplacer(Th165Converter parent)
+            public ScoreTotalReplacer(IReadOnlyList<IScore> scores, IStatus status)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -308,19 +307,17 @@ namespace ThScoreFileConverter.Models
                     switch (type)
                     {
                         case 1:     // total score
-                            return Utils.ToNumberString(parent.allScoreData.Scores.Sum(score => score.HighScore));
+                            return Utils.ToNumberString(scores.Sum(score => score.HighScore));
                         case 2:     // total of challenge counts
-                            return Utils.ToNumberString(parent.allScoreData.Scores.Sum(score => score.ChallengeCount));
+                            return Utils.ToNumberString(scores.Sum(score => score.ChallengeCount));
                         case 3:     // total of cleared counts
-                            return Utils.ToNumberString(parent.allScoreData.Scores.Sum(score => score.ClearCount));
+                            return Utils.ToNumberString(scores.Sum(score => score.ClearCount));
                         case 4:     // num of cleared scenes
-                            return Utils.ToNumberString(
-                                parent.allScoreData.Scores.Count(score => score.ClearCount > 0));
+                            return Utils.ToNumberString(scores.Count(score => score.ClearCount > 0));
                         case 5:     // num of photos
-                            return Utils.ToNumberString(parent.allScoreData.Scores.Sum(score => score.NumPhotos));
+                            return Utils.ToNumberString(scores.Sum(score => score.NumPhotos));
                         case 6:     // num of nicknames
-                            return Utils.ToNumberString(
-                                parent.allScoreData.Status.NicknameFlags.Count(flag => flag > 0));
+                            return Utils.ToNumberString(status.NicknameFlags.Count(flag => flag > 0));
                         default:    // unreachable
                             return match.ToString();
                     }
@@ -338,7 +335,7 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public CardReplacer(Th165Converter parent, bool hideUntriedCards)
+            public CardReplacer(IReadOnlyList<IScore> scores, bool hideUntriedCards)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -352,7 +349,7 @@ namespace ThScoreFileConverter.Models
 
                     if (hideUntriedCards)
                     {
-                        var score = parent.allScoreData.Scores.FirstOrDefault(elem =>
+                        var score = scores.FirstOrDefault(elem =>
                             (elem != null) && ((elem.Number >= 0) && (elem.Number < Definitions.SpellCards.Count)) &&
                             Definitions.SpellCards.ElementAt(elem.Number).Key.Equals(key));
                         if ((score == null) || (score.ChallengeCount <= 0))
@@ -382,7 +379,7 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public NicknameReplacer(Th165Converter parent)
+            public NicknameReplacer(IStatus status)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -390,7 +387,7 @@ namespace ThScoreFileConverter.Models
 
                     if ((number > 0) && (number <= Definitions.Nicknames.Count))
                     {
-                        return (parent.allScoreData.Status.NicknameFlags.ElementAt(number) > 0)
+                        return (status.NicknameFlags.ElementAt(number) > 0)
                             ? Definitions.Nicknames[number - 1] : "??????????";
                     }
                     else
@@ -410,11 +407,11 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public TimeReplacer(Th165Converter parent)
+            public TimeReplacer(IStatus status)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    return new Time(parent.allScoreData.Status.TotalPlayTime * 10, false).ToLongString();
+                    return new Time(status.TotalPlayTime * 10, false).ToLongString();
                 });
             }
 
@@ -429,7 +426,8 @@ namespace ThScoreFileConverter.Models
 
             private readonly MatchEvaluator evaluator;
 
-            public ShotReplacer(Th165Converter parent, string outputFilePath)
+            public ShotReplacer(
+                IReadOnlyDictionary<(Day, int), (string Path, IBestShotHeader Header)> bestshots, string outputFilePath)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -440,8 +438,7 @@ namespace ThScoreFileConverter.Models
                     if (!Definitions.SpellCards.ContainsKey(key))
                         return match.ToString();
 
-                    if (!string.IsNullOrEmpty(outputFilePath) &&
-                        parent.bestshots.TryGetValue(key, out var bestshot))
+                    if (!string.IsNullOrEmpty(outputFilePath) && bestshots.TryGetValue(key, out var bestshot))
                     {
                         var relativePath = new Uri(outputFilePath)
                             .MakeRelativeUri(new Uri(bestshot.Path)).OriginalString;
@@ -467,7 +464,7 @@ namespace ThScoreFileConverter.Models
             private static readonly string Pattern = Utils.Format(
                 @"%T165SHOTEX({0})([1-7])([1-9])", Parsers.DayParser.Pattern);
 
-            private static readonly Func<IBestShotHeader, List<Hashtag>> HashtagList =
+            private static readonly Func<IBestShotHeader, IReadOnlyList<Hashtag>> HashtagList =
                 header => new List<Hashtag>
                 {
                     new Hashtag(header.Fields.IsSelfie, "＃自撮り！"),
@@ -536,7 +533,8 @@ namespace ThScoreFileConverter.Models
             private readonly MatchEvaluator evaluator;
 
             [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1119:StatementMustNotUseUnnecessaryParenthesis", Justification = "Reviewed.")]
-            public ShotExReplacer(Th165Converter parent, string outputFilePath)
+            public ShotExReplacer(
+                IReadOnlyDictionary<(Day, int), (string Path, IBestShotHeader Header)> bestshots, string outputFilePath)
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
@@ -548,8 +546,7 @@ namespace ThScoreFileConverter.Models
                     if (!Definitions.SpellCards.ContainsKey(key))
                         return match.ToString();
 
-                    if (!string.IsNullOrEmpty(outputFilePath) &&
-                        parent.bestshots.TryGetValue(key, out var bestshot))
+                    if (!string.IsNullOrEmpty(outputFilePath) && bestshots.TryGetValue(key, out var bestshot))
                     {
                         switch (type)
                         {
