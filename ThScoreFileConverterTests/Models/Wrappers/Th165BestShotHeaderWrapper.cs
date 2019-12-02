@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th165;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -49,8 +50,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
             => this.pobj.Target;
         public string Signature
             => this.pobj.GetProperty(nameof(this.Signature)) as string;
-        public Th165Converter.Day? Weekday
-            => this.pobj.GetProperty(nameof(this.Weekday)) as Th165Converter.Day?;
+        public Day? Weekday
+            => this.pobj.GetProperty(nameof(this.Weekday)) as Day?;
         public short? Dream
             => this.pobj.GetProperty(nameof(this.Dream)) as short?;
         public short? Width

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Models.Th165;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Wrappers;
 
@@ -15,7 +15,7 @@ namespace ThScoreFileConverterTests.Models
         internal struct Properties
         {
             public string signature;
-            public Th165Converter.Day weekday;
+            public Day weekday;
             public short dream;
             public short width;
             public short height;
@@ -55,7 +55,7 @@ namespace ThScoreFileConverterTests.Models
         internal static Properties ValidProperties { get; } = new Properties()
         {
             signature = "BST4",
-            weekday = Th165Converter.Day.Monday,
+            weekday = Day.Monday,
             dream = 3,
             width = 4,
             height = 5,
@@ -254,7 +254,7 @@ namespace ThScoreFileConverterTests.Models
         });
 
         public static IEnumerable<object[]> InvalidDays
-            => TestUtils.GetInvalidEnumerators(typeof(Th165Converter.Day));
+            => TestUtils.GetInvalidEnumerators(typeof(Day));
 
         [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "header")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
@@ -264,7 +264,7 @@ namespace ThScoreFileConverterTests.Models
         public void ReadFromTestInvalidDay(int day) => TestUtils.Wrap(() =>
         {
             var properties = ValidProperties;
-            properties.weekday = TestUtils.Cast<Th165Converter.Day>(day);
+            properties.weekday = TestUtils.Cast<Day>(day);
 
             var header = Th165BestShotHeaderWrapper.Create(MakeByteArray(properties));
 
