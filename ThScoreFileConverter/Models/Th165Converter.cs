@@ -7,7 +7,6 @@
 
 #pragma warning disable 1591
 #pragma warning disable SA1600 // ElementsMustBeDocumented
-#pragma warning disable SA1602 // EnumerationItemsMustBeDocumented
 
 using System;
 using System.Collections.Generic;
@@ -194,12 +193,6 @@ namespace ThScoreFileConverter.Models
                 "バイオレットドリーマー",
             };
 
-        private static readonly EnumShortNameParser<Day> DayParser =
-            new EnumShortNameParser<Day>();
-
-        private static readonly string DayLongPattern =
-            string.Join("|", Utils.GetEnumerator<Day>().Select(day => day.ToLongName()).ToArray());
-
         private AllScoreData allScoreData = null;
 
         private Dictionary<(Day Day, int Scene), (string Path, BestShotHeader Header)> bestshots = null;
@@ -252,7 +245,7 @@ namespace ThScoreFileConverter.Models
 
         protected override string[] FilterBestShotFiles(string[] files)
         {
-            var pattern = Utils.Format(@"bs({0})_\d{{2}}.dat", DayLongPattern);
+            var pattern = Utils.Format(@"bs({0})_\d{{2}}.dat", Parsers.DayLongPattern);
 
             return files.Where(file => Regex.IsMatch(
                 Path.GetFileName(file), pattern, RegexOptions.IgnoreCase)).ToArray();
@@ -420,7 +413,8 @@ namespace ThScoreFileConverter.Models
         // %T165SCR[xx][y][z]
         private class ScoreReplacer : IStringReplaceable
         {
-            private static readonly string Pattern = Utils.Format(@"%T165SCR({0})([1-7])([1-4])", DayParser.Pattern);
+            private static readonly string Pattern = Utils.Format(
+                @"%T165SCR({0})([1-7])([1-4])", Parsers.DayParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -428,7 +422,7 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var day = DayParser.Parse(match.Groups[1].Value);
+                    var day = Parsers.DayParser.Parse(match.Groups[1].Value);
                     var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
@@ -501,7 +495,8 @@ namespace ThScoreFileConverter.Models
         // %T165CARD[xx][y][z]
         private class CardReplacer : IStringReplaceable
         {
-            private static readonly string Pattern = Utils.Format(@"%T165CARD({0})([1-7])([12])", DayParser.Pattern);
+            private static readonly string Pattern = Utils.Format(
+                @"%T165CARD({0})([1-7])([12])", Parsers.DayParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -509,7 +504,7 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var day = DayParser.Parse(match.Groups[1].Value);
+                    var day = Parsers.DayParser.Parse(match.Groups[1].Value);
                     var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
@@ -590,7 +585,8 @@ namespace ThScoreFileConverter.Models
         // %T165SHOT[xx][y]
         private class ShotReplacer : IStringReplaceable
         {
-            private static readonly string Pattern = Utils.Format(@"%T165SHOT({0})([1-7])", DayParser.Pattern);
+            private static readonly string Pattern = Utils.Format(
+                @"%T165SHOT({0})([1-7])", Parsers.DayParser.Pattern);
 
             private readonly MatchEvaluator evaluator;
 
@@ -598,7 +594,7 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var day = DayParser.Parse(match.Groups[1].Value);
+                    var day = Parsers.DayParser.Parse(match.Groups[1].Value);
                     var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
                     var key = (day, scene);
@@ -629,7 +625,8 @@ namespace ThScoreFileConverter.Models
         // %T165SHOTEX[xx][y][z]
         private class ShotExReplacer : IStringReplaceable
         {
-            private static readonly string Pattern = Utils.Format(@"%T165SHOTEX({0})([1-7])([1-9])", DayParser.Pattern);
+            private static readonly string Pattern = Utils.Format(
+                @"%T165SHOTEX({0})([1-7])([1-9])", Parsers.DayParser.Pattern);
 
             private static readonly Func<BestShotHeader, List<Hashtag>> HashtagList =
                 header => new List<Hashtag>
@@ -704,7 +701,7 @@ namespace ThScoreFileConverter.Models
             {
                 this.evaluator = new MatchEvaluator(match =>
                 {
-                    var day = DayParser.Parse(match.Groups[1].Value);
+                    var day = Parsers.DayParser.Parse(match.Groups[1].Value);
                     var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                     var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
