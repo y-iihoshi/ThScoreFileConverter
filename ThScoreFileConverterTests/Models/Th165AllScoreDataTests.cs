@@ -1,8 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverter.Models.Th095;
 using ThScoreFileConverterTests.Models.Th095;
+using ThScoreFileConverterTests.Models.Th165.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 using ChapterWrapper = ThScoreFileConverterTests.Models.Th10.Wrappers.ChapterWrapper;
+using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -15,7 +16,7 @@ namespace ThScoreFileConverterTests.Models
             var allScoreData = new Th165AllScoreDataWrapper();
 
             Assert.IsNull(allScoreData.Header);
-            Assert.AreEqual(0, allScoreData.ScoresCount);
+            Assert.AreEqual(0, allScoreData.Scores.Count);
             Assert.IsNull(allScoreData.Status);
         });
 
@@ -49,30 +50,26 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void Th165AllScoreDataSetClearDataTest() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(
-                Th165ScoreTests.MakeByteArray(Th165ScoreTests.ValidStub));
-            var clearData = new Th165ScoreWrapper(chapter);
+            var score = new ScoreStub();
 
             var allScoreData = new Th165AllScoreDataWrapper();
-            allScoreData.Set(clearData);
+            allScoreData.Set(score);
 
-            Assert.AreSame(clearData.Target, allScoreData.ScoresItem(0).Target);
+            Assert.AreSame(score, allScoreData.Scores[0]);
         });
 
         [TestMethod]
         public void Th165AllScoreDataSetClearDataTestTwice() => TestUtils.Wrap(() =>
         {
-            var chapter = ChapterWrapper.Create(
-                Th165ScoreTests.MakeByteArray(Th165ScoreTests.ValidStub));
-            var clearData1 = new Th165ScoreWrapper(chapter);
-            var clearData2 = new Th165ScoreWrapper(chapter);
+            var score1 = new ScoreStub();
+            var score2 = new ScoreStub();
 
             var allScoreData = new Th165AllScoreDataWrapper();
-            allScoreData.Set(clearData1);
-            allScoreData.Set(clearData2);
+            allScoreData.Set(score1);
+            allScoreData.Set(score2);
 
-            Assert.AreSame(clearData1.Target, allScoreData.ScoresItem(0).Target);
-            Assert.AreSame(clearData2.Target, allScoreData.ScoresItem(1).Target);
+            Assert.AreSame(score1, allScoreData.Scores[0]);
+            Assert.AreSame(score2, allScoreData.Scores[1]);
         });
 
         [TestMethod]

@@ -622,45 +622,6 @@ namespace ThScoreFileConverter.Models
             public void Set(IStatus status) => this.Status = status;
         }
 
-        private class Score : Th10.Chapter, IScore  // per scene
-        {
-            public const string ValidSignature = "SN";
-            public const ushort ValidVersion = 0x0001;
-            public const int ValidSize = 0x00000234;
-
-            public Score(Th10.Chapter chapter)
-                : base(chapter, ValidSignature, ValidVersion, ValidSize)
-            {
-                using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-                {
-                    this.Number = reader.ReadInt32();
-                    this.ClearCount = reader.ReadInt32();
-                    reader.ReadInt32(); // always same as ClearCount?
-                    this.ChallengeCount = reader.ReadInt32();
-                    this.NumPhotos = reader.ReadInt32();
-                    this.HighScore = reader.ReadInt32();
-                    reader.ReadExactBytes(0x210);   // always all 0x00?
-                }
-            }
-
-            public int Number { get; }
-
-            public int ClearCount { get; }
-
-            public int ChallengeCount { get; }
-
-            public int NumPhotos { get; }
-
-            public int HighScore { get; }
-
-            public static bool CanInitialize(Th10.Chapter chapter)
-            {
-                return chapter.Signature.Equals(ValidSignature, StringComparison.Ordinal)
-                    && (chapter.Version == ValidVersion)
-                    && (chapter.Size == ValidSize);
-            }
-        }
-
         private class Status : Th10.Chapter, IStatus
         {
             public const string ValidSignature = "ST";

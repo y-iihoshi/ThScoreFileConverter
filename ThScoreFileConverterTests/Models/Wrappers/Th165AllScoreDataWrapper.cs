@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Models.Th095;
+using ThScoreFileConverter.Models.Th165;
+using HeaderBase = ThScoreFileConverter.Models.Th095.HeaderBase;
 
 namespace ThScoreFileConverterTests.Models.Wrappers
 {
@@ -25,9 +27,10 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public HeaderBase Header
             => this.pobj.GetProperty(nameof(this.Header)) as HeaderBase;
 
-        // NOTE: Th165Converter.Score is a private class.
-        // public IReadOnlyList<IScore> Scores
-        //     => this.pobj.GetProperty(nameof(this.Scores)) as IReadOnlyList<IScore>;
+#if true
+        public IReadOnlyList<IScore> Scores
+            => this.pobj.GetProperty(nameof(this.Scores)) as IReadOnlyList<IScore>;
+#else
         public object Scores
             => this.pobj.GetProperty(nameof(this.Scores));
         public int? ScoresCount
@@ -35,6 +38,7 @@ namespace ThScoreFileConverterTests.Models.Wrappers
         public Th165ScoreWrapper ScoresItem(int index)
             => new Th165ScoreWrapper(
                 this.Scores.GetType().GetProperty("Item").GetValue(this.Scores, new object[] { index }));
+#endif
 
         public Th165StatusWrapper Status
         {
@@ -47,8 +51,8 @@ namespace ThScoreFileConverterTests.Models.Wrappers
 
         public void Set(HeaderBase header)
             => this.pobj.Invoke(nameof(Set), new object[] { header }, CultureInfo.InvariantCulture);
-        public void Set(Th165ScoreWrapper data)
-            => this.pobj.Invoke(nameof(Set), new object[] { data.Target }, CultureInfo.InvariantCulture);
+        public void Set(IScore data)
+            => this.pobj.Invoke(nameof(Set), new object[] { data }, CultureInfo.InvariantCulture);
         public void Set(Th165StatusWrapper status)
             => this.pobj.Invoke(nameof(Set), new object[] { status.Target }, CultureInfo.InvariantCulture);
     }

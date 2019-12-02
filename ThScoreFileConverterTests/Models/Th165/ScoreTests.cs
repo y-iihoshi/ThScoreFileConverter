@@ -2,16 +2,14 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th165.Stubs;
-using ThScoreFileConverterTests.Models.Th10.Wrappers;
-using ThScoreFileConverterTests.Models.Wrappers;
 using ThScoreFileConverter.Models.Th165;
+using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Models.Th165
 {
     [TestClass]
-    public class Th165ScoreTests
+    public class ScoreTests
     {
         internal static ScoreStub ValidStub { get; } = new ScoreStub()
         {
@@ -44,15 +42,12 @@ namespace ThScoreFileConverterTests.Models
                 score.Size,
                 MakeData(score));
 
-        internal static void Validate(IScore expected, in Th165ScoreWrapper actual)
+        internal static void Validate(IScore expected, IScore actual)
         {
-            var data = MakeData(expected);
-
             Assert.AreEqual(expected.Signature, actual.Signature);
             Assert.AreEqual(expected.Version, actual.Version);
             Assert.AreEqual(expected.Checksum, actual.Checksum);
             Assert.AreEqual(expected.Size, actual.Size);
-            CollectionAssert.That.AreEqual(data, actual.Data);
             Assert.AreEqual(expected.Number, actual.Number);
             Assert.AreEqual(expected.ClearCount, actual.ClearCount);
             Assert.AreEqual(expected.ChallengeCount, actual.ChallengeCount);
@@ -61,22 +56,22 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        public void Th165ScoreTestChapter() => TestUtils.Wrap(() =>
+        public void ScoreTestChapter() => TestUtils.Wrap(() =>
         {
             var stub = ValidStub;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            var score = new Th165ScoreWrapper(chapter);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            var score = new Score(chapter);
 
             Validate(stub, score);
-            Assert.IsFalse(score.IsValid.Value);
+            Assert.IsFalse(score.IsValid);
         });
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Th165ScoreTestNullChapter() => TestUtils.Wrap(() =>
+        public void ScoreTestNullChapter() => TestUtils.Wrap(() =>
         {
-            _ = new Th165ScoreWrapper(null);
+            _ = new Score(null);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -84,59 +79,58 @@ namespace ThScoreFileConverterTests.Models
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th165ScoreTestInvalidSignature() => TestUtils.Wrap(() =>
+        public void ScoreTestInvalidSignature() => TestUtils.Wrap(() =>
         {
             var stub = new ScoreStub(ValidStub);
             stub.Signature = stub.Signature.ToLowerInvariant();
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th165ScoreWrapper(chapter);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new Score(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th165ScoreTestInvalidVersion() => TestUtils.Wrap(() =>
+        public void ScoreTestInvalidVersion() => TestUtils.Wrap(() =>
         {
             var stub = new ScoreStub(ValidStub);
             ++stub.Version;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th165ScoreWrapper(chapter);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new Score(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void Th165ScoreTestInvalidSize() => TestUtils.Wrap(() =>
+        public void ScoreTestInvalidSize() => TestUtils.Wrap(() =>
         {
             var stub = new ScoreStub(ValidStub);
             --stub.Size;
 
-            var chapter = ChapterWrapper.Create(MakeByteArray(stub));
-            _ = new Th165ScoreWrapper(chapter);
+            var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
+            _ = new Score(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DataRow("SN", (ushort)1, 0x234, true)]
         [DataRow("sn", (ushort)1, 0x234, false)]
         [DataRow("SN", (ushort)0, 0x234, false)]
         [DataRow("SN", (ushort)1, 0x235, false)]
-        public void Th165ScoreCanInitializeTest(string signature, ushort version, int size, bool expected)
+        public void CanInitializeTest(string signature, ushort version, int size, bool expected)
             => TestUtils.Wrap(() =>
             {
                 var checksum = 0u;
                 var data = new byte[size];
 
-                var chapter = ChapterWrapper.Create(
+                var chapter = TestUtils.Create<Chapter>(
                     TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
 
-                Assert.AreEqual(expected, Th165ScoreWrapper.CanInitialize(chapter));
+                Assert.AreEqual(expected, Score.CanInitialize(chapter));
             });
     }
 }
