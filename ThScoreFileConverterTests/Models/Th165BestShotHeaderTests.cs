@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th165;
 using ThScoreFileConverterTests.Extensions;
+using ThScoreFileConverterTests.Models.Th165.Stubs;
 using ThScoreFileConverterTests.Models.Wrappers;
 
 namespace ThScoreFileConverterTests.Models
@@ -12,196 +13,156 @@ namespace ThScoreFileConverterTests.Models
     [TestClass]
     public class Th165BestShotHeaderTests
     {
-        internal struct Properties
+        internal static BestShotHeaderStub ValidStub { get; } = new BestShotHeaderStub
         {
-            public string signature;
-            public Day weekday;
-            public short dream;
-            public short width;
-            public short height;
-            public short width2;
-            public short height2;
-            public short halfWidth;
-            public short halfHeight;
-            public float slowRate;
-            public uint dateTime;
-            public float angle;
-            public int score;
-            public int[] fields;
-            public int score2;
-            public int basePoint;
-            public int numViewed;
-            public int numLikes;
-            public int numFavs;
-            public int numBullets;
-            public int numBulletsNearby;
-            public int riskBonus;
-            public float bossShot;
-            public float angleBonus;
-            public int macroBonus;
-            public float likesPerView;
-            public float favsPerView;
-            public int numHashtags;
-            public int numRedBullets;
-            public int numPurpleBullets;
-            public int numBlueBullets;
-            public int numCyanBullets;
-            public int numGreenBullets;
-            public int numYellowBullets;
-            public int numOrangeBullets;
-            public int numLightBullets;
+            Signature = "BST4",
+            Weekday = Day.Monday,
+            Dream = 3,
+            Width = 4,
+            Height = 5,
+            Width2 = 6,
+            Height2 = 7,
+            HalfWidth = 8,
+            HalfHeight = 9,
+            SlowRate = 10f,
+            DateTime = 11u,
+            Angle = 12f,
+            Score = 13,
+            Fields = new HashtagFields(14, 15, 16),
+            Score2 = 17,
+            BasePoint = 18,
+            NumViewed = 19,
+            NumLikes = 20,
+            NumFavs = 21,
+            NumBullets = 22,
+            NumBulletsNearby = 23,
+            RiskBonus = 24,
+            BossShot = 25f,
+            AngleBonus = 26f,
+            MacroBonus = 27,
+            LikesPerView = 28f,
+            FavsPerView = 29f,
+            NumHashtags = 30,
+            NumRedBullets = 31,
+            NumPurpleBullets = 32,
+            NumBlueBullets = 33,
+            NumCyanBullets = 34,
+            NumGreenBullets = 35,
+            NumYellowBullets = 36,
+            NumOrangeBullets = 37,
+            NumLightBullets = 38,
         };
 
-        internal static Properties ValidProperties { get; } = new Properties()
-        {
-            signature = "BST4",
-            weekday = Day.Monday,
-            dream = 3,
-            width = 4,
-            height = 5,
-            width2 = 6,
-            height2 = 7,
-            halfWidth = 8,
-            halfHeight = 9,
-            slowRate = 10f,
-            dateTime = 11u,
-            angle = 12f,
-            score = 13,
-            fields = new int[] { 14, 15, 16 },
-            score2 = 17,
-            basePoint = 18,
-            numViewed = 19,
-            numLikes = 20,
-            numFavs = 21,
-            numBullets = 22,
-            numBulletsNearby = 23,
-            riskBonus = 24,
-            bossShot = 25f,
-            angleBonus = 26f,
-            macroBonus = 27,
-            likesPerView = 28f,
-            favsPerView = 29f,
-            numHashtags = 30,
-            numRedBullets = 31,
-            numPurpleBullets = 32,
-            numBlueBullets = 33,
-            numCyanBullets = 34,
-            numGreenBullets = 35,
-            numYellowBullets = 36,
-            numOrangeBullets = 37,
-            numLightBullets = 38,
-        };
-
-        internal static byte[] MakeByteArray(in Properties properties)
+        internal static byte[] MakeByteArray(IBestShotHeader header)
             => TestUtils.MakeByteArray(
-                properties.signature.ToCharArray(),
+                header.Signature.ToCharArray(),
                 (ushort)0,
-                TestUtils.Cast<short>(properties.weekday),
-                (short)(properties.dream - 1),
+                TestUtils.Cast<short>(header.Weekday),
+                (short)(header.Dream - 1),
                 (ushort)0,
-                properties.width,
-                properties.height,
+                header.Width,
+                header.Height,
                 0u,
-                properties.width2,
-                properties.height2,
-                properties.halfWidth,
-                properties.halfHeight,
+                header.Width2,
+                header.Height2,
+                header.HalfWidth,
+                header.HalfHeight,
                 0u,
-                properties.slowRate,
-                properties.dateTime,
+                header.SlowRate,
+                header.DateTime,
                 0u,
-                properties.angle,
-                properties.score,
+                header.Angle,
+                header.Score,
                 0u,
-                properties.fields,
+                header.Fields.Data.ToArray(),
                 TestUtils.MakeRandomArray<byte>(0x28),
-                properties.score2,
-                properties.basePoint,
-                properties.numViewed,
-                properties.numLikes,
-                properties.numFavs,
-                properties.numBullets,
-                properties.numBulletsNearby,
-                properties.riskBonus,
-                properties.bossShot,
+                header.Score2,
+                header.BasePoint,
+                header.NumViewed,
+                header.NumLikes,
+                header.NumFavs,
+                header.NumBullets,
+                header.NumBulletsNearby,
+                header.RiskBonus,
+                header.BossShot,
                 0u,
-                properties.angleBonus,
-                properties.macroBonus,
+                header.AngleBonus,
+                header.MacroBonus,
                 0u,
                 0u,
-                properties.likesPerView,
-                properties.favsPerView,
-                properties.numHashtags,
-                properties.numRedBullets,
-                properties.numPurpleBullets,
-                properties.numBlueBullets,
-                properties.numCyanBullets,
-                properties.numGreenBullets,
-                properties.numYellowBullets,
-                properties.numOrangeBullets,
-                properties.numLightBullets,
+                header.LikesPerView,
+                header.FavsPerView,
+                header.NumHashtags,
+                header.NumRedBullets,
+                header.NumPurpleBullets,
+                header.NumBlueBullets,
+                header.NumCyanBullets,
+                header.NumGreenBullets,
+                header.NumYellowBullets,
+                header.NumOrangeBullets,
+                header.NumLightBullets,
                 TestUtils.MakeRandomArray<byte>(0x78));
 
-        internal static void Validate(in Th165BestShotHeaderWrapper header, in Properties properties)
+        internal static void Validate(IBestShotHeader expected, in Th165BestShotHeaderWrapper actual)
         {
-            if (header == null)
-                throw new ArgumentNullException(nameof(header));
+            if (actual == null)
+                throw new ArgumentNullException(nameof(actual));
 
-            Assert.AreEqual(properties.signature, header.Signature);
-            Assert.AreEqual(properties.weekday, header.Weekday);
-            Assert.AreEqual(properties.dream, header.Dream);
-            Assert.AreEqual(properties.width, header.Width);
-            Assert.AreEqual(properties.height, header.Height);
-            Assert.AreEqual(properties.width2, header.Width2);
-            Assert.AreEqual(properties.height2, header.Height2);
-            Assert.AreEqual(properties.halfWidth, header.HalfWidth);
-            Assert.AreEqual(properties.halfHeight, header.HalfHeight);
-            Assert.AreEqual(properties.slowRate, header.SlowRate);
-            Assert.AreEqual(properties.dateTime, header.DateTime);
-            Assert.AreEqual(properties.angle, header.Angle);
-            Assert.AreEqual(properties.score, header.Score);
-            CollectionAssert.That.AreEqual(properties.fields, header.Fields.Value.Data);
-            Assert.AreEqual(properties.score2, header.Score2);
-            Assert.AreEqual(properties.basePoint, header.BasePoint);
-            Assert.AreEqual(properties.numViewed, header.NumViewed);
-            Assert.AreEqual(properties.numLikes, header.NumLikes);
-            Assert.AreEqual(properties.numFavs, header.NumFavs);
-            Assert.AreEqual(properties.numBullets, header.NumBullets);
-            Assert.AreEqual(properties.numBulletsNearby, header.NumBulletsNearby);
-            Assert.AreEqual(properties.riskBonus, header.RiskBonus);
-            Assert.AreEqual(properties.bossShot, header.BossShot);
-            Assert.AreEqual(properties.angleBonus, header.AngleBonus);
-            Assert.AreEqual(properties.macroBonus, header.MacroBonus);
-            Assert.AreEqual(properties.likesPerView, header.LikesPerView);
-            Assert.AreEqual(properties.favsPerView, header.FavsPerView);
-            Assert.AreEqual(properties.numHashtags, header.NumHashtags);
-            Assert.AreEqual(properties.numRedBullets, header.NumRedBullets);
-            Assert.AreEqual(properties.numPurpleBullets, header.NumPurpleBullets);
-            Assert.AreEqual(properties.numBlueBullets, header.NumBlueBullets);
-            Assert.AreEqual(properties.numCyanBullets, header.NumCyanBullets);
-            Assert.AreEqual(properties.numGreenBullets, header.NumGreenBullets);
-            Assert.AreEqual(properties.numYellowBullets, header.NumYellowBullets);
-            Assert.AreEqual(properties.numOrangeBullets, header.NumOrangeBullets);
-            Assert.AreEqual(properties.numLightBullets, header.NumLightBullets);
+            Assert.AreEqual(expected.Signature, actual.Signature);
+            Assert.AreEqual(expected.Weekday, actual.Weekday);
+            Assert.AreEqual(expected.Dream, actual.Dream);
+            Assert.AreEqual(expected.Width, actual.Width);
+            Assert.AreEqual(expected.Height, actual.Height);
+            Assert.AreEqual(expected.Width2, actual.Width2);
+            Assert.AreEqual(expected.Height2, actual.Height2);
+            Assert.AreEqual(expected.HalfWidth, actual.HalfWidth);
+            Assert.AreEqual(expected.HalfHeight, actual.HalfHeight);
+            Assert.AreEqual(expected.SlowRate, actual.SlowRate);
+            Assert.AreEqual(expected.DateTime, actual.DateTime);
+            Assert.AreEqual(expected.Angle, actual.Angle);
+            Assert.AreEqual(expected.Score, actual.Score);
+            CollectionAssert.That.AreEqual(expected.Fields.Data, actual.Fields.Value.Data);
+            Assert.AreEqual(expected.Score2, actual.Score2);
+            Assert.AreEqual(expected.BasePoint, actual.BasePoint);
+            Assert.AreEqual(expected.NumViewed, actual.NumViewed);
+            Assert.AreEqual(expected.NumLikes, actual.NumLikes);
+            Assert.AreEqual(expected.NumFavs, actual.NumFavs);
+            Assert.AreEqual(expected.NumBullets, actual.NumBullets);
+            Assert.AreEqual(expected.NumBulletsNearby, actual.NumBulletsNearby);
+            Assert.AreEqual(expected.RiskBonus, actual.RiskBonus);
+            Assert.AreEqual(expected.BossShot, actual.BossShot);
+            Assert.AreEqual(expected.AngleBonus, actual.AngleBonus);
+            Assert.AreEqual(expected.MacroBonus, actual.MacroBonus);
+            Assert.AreEqual(expected.LikesPerView, actual.LikesPerView);
+            Assert.AreEqual(expected.FavsPerView, actual.FavsPerView);
+            Assert.AreEqual(expected.NumHashtags, actual.NumHashtags);
+            Assert.AreEqual(expected.NumRedBullets, actual.NumRedBullets);
+            Assert.AreEqual(expected.NumPurpleBullets, actual.NumPurpleBullets);
+            Assert.AreEqual(expected.NumBlueBullets, actual.NumBlueBullets);
+            Assert.AreEqual(expected.NumCyanBullets, actual.NumCyanBullets);
+            Assert.AreEqual(expected.NumGreenBullets, actual.NumGreenBullets);
+            Assert.AreEqual(expected.NumYellowBullets, actual.NumYellowBullets);
+            Assert.AreEqual(expected.NumOrangeBullets, actual.NumOrangeBullets);
+            Assert.AreEqual(expected.NumLightBullets, actual.NumLightBullets);
         }
 
         [TestMethod]
         public void Th165BestShotHeaderTest() => TestUtils.Wrap(() =>
         {
-            var properties = new Properties();
+            var stub = new BestShotHeaderStub();
             var header = new Th165BestShotHeaderWrapper();
 
-            Validate(header, properties);
+            Validate(stub, header);
         });
 
         [TestMethod]
         public void ReadFromTest() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
+            var stub = ValidStub;
 
-            var header = Th165BestShotHeaderWrapper.Create(MakeByteArray(properties));
+            var header = Th165BestShotHeaderWrapper.Create(MakeByteArray(stub));
 
-            Validate(header, properties);
+            Validate(stub, header);
         });
 
         [TestMethod]
@@ -219,36 +180,36 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(InvalidDataException))]
         public void ReadFromTestEmptySignature() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.signature = string.Empty;
+            var stub = new BestShotHeaderStub(ValidStub)
+            {
+                Signature = string.Empty,
+            };
 
-            _ = Th165BestShotHeaderWrapper.Create(MakeByteArray(properties));
+            _ = Th165BestShotHeaderWrapper.Create(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "header")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
         public void ReadFromTestShortenedSignature() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.signature = properties.signature.Substring(0, properties.signature.Length - 1);
+            var stub = new BestShotHeaderStub(ValidStub);
+            stub.Signature = stub.Signature.Substring(0, stub.Signature.Length - 1);
 
-            var header = Th165BestShotHeaderWrapper.Create(MakeByteArray(properties));
+            _ = Th165BestShotHeaderWrapper.Create(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "header")]
         [TestMethod]
         [ExpectedException(typeof(InvalidCastException))]
         public void ReadFromTestExceededSignature() => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.signature += "E";
+            var stub = new BestShotHeaderStub(ValidStub);
+            stub.Signature += "E";
 
-            var header = Th165BestShotHeaderWrapper.Create(MakeByteArray(properties));
+            _ = Th165BestShotHeaderWrapper.Create(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -256,17 +217,17 @@ namespace ThScoreFileConverterTests.Models
         public static IEnumerable<object[]> InvalidDays
             => TestUtils.GetInvalidEnumerators(typeof(Day));
 
-        [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "header")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidDays))]
         [ExpectedException(typeof(InvalidCastException))]
         public void ReadFromTestInvalidDay(int day) => TestUtils.Wrap(() =>
         {
-            var properties = ValidProperties;
-            properties.weekday = TestUtils.Cast<Day>(day);
+            var stub = new BestShotHeaderStub(ValidStub)
+            {
+                Weekday = TestUtils.Cast<Day>(day),
+            };
 
-            var header = Th165BestShotHeaderWrapper.Create(MakeByteArray(properties));
+            _ = Th165BestShotHeaderWrapper.Create(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         });

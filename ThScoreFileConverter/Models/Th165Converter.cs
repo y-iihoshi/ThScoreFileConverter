@@ -30,7 +30,7 @@ namespace ThScoreFileConverter.Models
     {
         private AllScoreData allScoreData = null;
 
-        private Dictionary<(Day Day, int Scene), (string Path, BestShotHeader Header)> bestshots = null;
+        private Dictionary<(Day Day, int Scene), (string Path, IBestShotHeader Header)> bestshots = null;
 
         public override string SupportedVersions => "1.00a";
 
@@ -100,7 +100,7 @@ namespace ThScoreFileConverter.Models
                     if (this.bestshots == null)
                     {
                         this.bestshots =
-                            new Dictionary<(Day, int), (string, BestShotHeader)>(Definitions.SpellCards.Count);
+                            new Dictionary<(Day, int), (string, IBestShotHeader)>(Definitions.SpellCards.Count);
                     }
 
                     var key = (header.Weekday, header.Dream);
@@ -467,7 +467,7 @@ namespace ThScoreFileConverter.Models
             private static readonly string Pattern = Utils.Format(
                 @"%T165SHOTEX({0})([1-7])([1-9])", Parsers.DayParser.Pattern);
 
-            private static readonly Func<BestShotHeader, List<Hashtag>> HashtagList =
+            private static readonly Func<IBestShotHeader, List<Hashtag>> HashtagList =
                 header => new List<Hashtag>
                 {
                     new Hashtag(header.Fields.IsSelfie, "＃自撮り！"),
@@ -602,7 +602,7 @@ namespace ThScoreFileConverter.Models
             public string Replace(string input) => Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
         }
 
-        private class BestShotHeader : IBinaryReadable
+        private class BestShotHeader : IBinaryReadable, IBestShotHeader
         {
             public const string ValidSignature = "BST4";
             public const int SignatureSize = 4;
