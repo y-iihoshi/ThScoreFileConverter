@@ -26,7 +26,7 @@ build:
   verbosity: minimal
 after_build:
   - cmd: |
-      xcopy ThScoreFileConverter\bin\%CONFIGURATION%\net45 publish /e /i /q
+      xcopy ThScoreFileConverter\bin\%CONFIGURATION%\net48 publish /e /i /q
       xcopy ManualGenerator\_build\html publish\doc /e /i /q
       xcopy ThScoreFileConverter\Templates publish\template /e /i /q
       del publish\template\*.tt* /q
