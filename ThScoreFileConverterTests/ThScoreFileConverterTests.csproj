@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net45</TargetFramework>
+    <TargetFramework>net48</TargetFramework>
     <Authors>IIHOSHI Yoshinori</Authors>
     <Company>None</Company>
     <Description>Unit test project for ThScoreFileConverter.</Description>
