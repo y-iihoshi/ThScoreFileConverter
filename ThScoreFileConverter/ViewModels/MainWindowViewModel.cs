@@ -567,7 +567,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         private void DeleteAllTemplateFiles()
         {
-            this.TemplateFiles = new string[] { };
+            this.TemplateFiles = Array.Empty<string>();
         }
 
         /// <summary>
