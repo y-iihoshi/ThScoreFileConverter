@@ -12,51 +12,55 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using static ThScoreFileConverter.Models.Th17.Parsers;
 
 namespace ThScoreFileConverter.Models.Th17
 {
     // %T17CHARA[xx][y]
     internal class CharaReplacer : IStringReplaceable
     {
-        private static readonly string Pattern = Utils.Format(@"%T17CHARA({0})([1-3])", CharaWithTotalParser.Pattern);
+        private static readonly string Pattern = Utils.Format(
+            @"%T17CHARA({0})([1-3])", Parsers.CharaWithTotalParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 
         public CharaReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
         {
+            if (clearDataDictionary is null)
+                throw new ArgumentNullException(nameof(clearDataDictionary));
+
             this.evaluator = new MatchEvaluator(match =>
             {
-                var chara = CharaWithTotalParser.Parse(match.Groups[1].Value);
+                var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[1].Value);
                 var type = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
                 Func<IClearData, long> getValueByType;
                 Func<long, string> toString;
                 if (type == 1)
                 {
-                    getValueByType = data => data.TotalPlayCount;
+                    getValueByType = clearData => clearData.TotalPlayCount;
                     toString = Utils.ToNumberString;
                 }
                 else if (type == 2)
                 {
-                    getValueByType = data => data.PlayTime;
+                    getValueByType = clearData => clearData.PlayTime;
                     toString = value => new Time(value * 10, false).ToString();
                 }
                 else
                 {
-                    getValueByType = data => data.ClearCounts.Values.Sum();
+                    getValueByType = clearData => clearData.ClearCounts.Values.Sum();
                     toString = Utils.ToNumberString;
                 }
 
                 Func<IReadOnlyDictionary<CharaWithTotal, IClearData>, long> getValueByChara;
                 if (chara == CharaWithTotal.Total)
                 {
-                    getValueByChara = clearDataDict => clearDataDict.Values
-                        .Where(data => data.Chara != chara).Sum(getValueByType);
+                    getValueByChara = dictionary => dictionary.Values
+                        .Where(clearData => clearData.Chara != chara).Sum(getValueByType);
                 }
                 else
                 {
-                    getValueByChara = clearDataDict => getValueByType(clearDataDict[chara]);
+                    getValueByChara = dictionary => dictionary.TryGetValue(chara, out var clearData)
+                        ? getValueByType(clearData) : 0;
                 }
 
                 return toString(getValueByChara(clearDataDictionary));
