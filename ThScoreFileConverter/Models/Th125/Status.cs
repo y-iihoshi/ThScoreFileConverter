@@ -26,11 +26,11 @@ namespace ThScoreFileConverter.Models.Th125
             using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
             {
                 this.LastName = reader.ReadExactBytes(10);
-                reader.ReadExactBytes(2);
+                _ = reader.ReadExactBytes(2);
                 this.BgmFlags = reader.ReadExactBytes(6);
-                reader.ReadExactBytes(0x2E);
+                _ = reader.ReadExactBytes(0x2E);
                 this.TotalPlayTime = reader.ReadInt32();
-                reader.ReadExactBytes(0x424);
+                _ = reader.ReadExactBytes(0x424);
             }
         }
 

@@ -48,7 +48,7 @@ namespace ThScoreFileConverterTests.Models
         public void ParseTestEmpty()
         {
             var parser = new EnumShortNameParser<Level>();
-            parser.Parse(string.Empty);
+            _ = parser.Parse(string.Empty);
             Assert.Fail(TestUtils.Unreachable);
         }
 
@@ -57,7 +57,7 @@ namespace ThScoreFileConverterTests.Models
         public void ParseTestUnknown()
         {
             var parser = new EnumShortNameParser<Level>();
-            parser.Parse("A");
+            _ = parser.Parse("A");
             Assert.Fail(TestUtils.Unreachable);
         }
     }

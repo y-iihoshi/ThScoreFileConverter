@@ -164,10 +164,10 @@ namespace ThScoreFileConverterTests.Models.Th07
                     header.WriteTo(writer);
 
                     writer.Flush();
-                    writer.Seek(0, SeekOrigin.Begin);
+                    _ = writer.Seek(0, SeekOrigin.Begin);
 
                     var actualArray = new byte[writer.BaseStream.Length];
-                    writer.BaseStream.Read(actualArray, 0, actualArray.Length);
+                    _ = writer.BaseStream.Read(actualArray, 0, actualArray.Length);
 
                     CollectionAssert.AreEqual(array, actualArray);
                 }

@@ -76,24 +76,24 @@ namespace ThScoreFileConverter.Models.Th125
             if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
                 throw new InvalidDataException();
 
-            reader.ReadUInt16();    // always 0x0405?
+            _ = reader.ReadUInt16();    // always 0x0405?
             this.Level = Utils.ToEnum<Level>(reader.ReadInt16() - 1);
             this.Scene = reader.ReadInt16();
-            reader.ReadUInt16();    // 0x0100 ... Version?
+            _ = reader.ReadUInt16();    // 0x0100 ... Version?
             this.Width = reader.ReadInt16();
             this.Height = reader.ReadInt16();
-            reader.ReadUInt32();    // always 0x00000000?
+            _ = reader.ReadUInt32();    // always 0x00000000?
             this.Width2 = reader.ReadInt16();
             this.Height2 = reader.ReadInt16();
             this.HalfWidth = reader.ReadInt16();
             this.HalfHeight = reader.ReadInt16();
             this.DateTime = reader.ReadUInt32();
-            reader.ReadUInt32();    // always 0x00000000?
+            _ = reader.ReadUInt32();    // always 0x00000000?
             this.SlowRate = reader.ReadSingle();
             this.Fields = new BonusFields(reader.ReadInt32());
             this.ResultScore = reader.ReadInt32();
             this.BasePoint = reader.ReadInt32();
-            reader.ReadExactBytes(0x08);
+            _ = reader.ReadExactBytes(0x08);
             this.RiskBonus = reader.ReadInt32();
             this.BossShot = reader.ReadSingle();
             this.NiceShot = reader.ReadSingle();
@@ -101,10 +101,10 @@ namespace ThScoreFileConverter.Models.Th125
             this.MacroBonus = reader.ReadInt32();
             this.FrontSideBackShot = reader.ReadInt32();
             this.ClearShot = reader.ReadInt32();
-            reader.ReadExactBytes(0x30);
+            _ = reader.ReadExactBytes(0x30);
             this.Angle = reader.ReadSingle();
             this.ResultScore2 = reader.ReadInt32();
-            reader.ReadUInt32();
+            _ = reader.ReadUInt32();
             this.CardName = reader.ReadExactBytes(0x50);
         }
     }

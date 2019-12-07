@@ -37,9 +37,9 @@ namespace ThScoreFileConverter.Models.Th075
                 .ToDictionary(pair => pair, _ => reader.ReadInt32() - 10);
 
             // FIXME... BGM flags?
-            reader.ReadExactBytes(0x28);
+            _ = reader.ReadExactBytes(0x28);
 
-            reader.ReadExactBytes(0x100);
+            _ = reader.ReadExactBytes(0x100);
         }
     }
 }

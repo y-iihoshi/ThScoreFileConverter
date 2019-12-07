@@ -28,7 +28,7 @@ namespace ThScoreFileConverter.Models.Th08
 
             using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
             {
-                reader.ReadUInt32();    // always 0x00000002?
+                _ = reader.ReadUInt32();    // always 0x00000002?
                 var hours = reader.ReadInt32();
                 var minutes = reader.ReadInt32();
                 var seconds = reader.ReadInt32();
@@ -52,7 +52,7 @@ namespace ThScoreFileConverter.Models.Th08
                 this.TotalPlayCount = playCounts[LevelPracticeWithTotal.Total];
 
                 this.BgmFlags = reader.ReadExactBytes(21);
-                reader.ReadExactBytes(11);
+                _ = reader.ReadExactBytes(11);
             }
         }
 

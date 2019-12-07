@@ -56,14 +56,14 @@ namespace ThScoreFileConverter.Models.Th075
             this.MaxCombo = reader.ReadInt32();
             this.MaxDamage = reader.ReadInt32();
             this.MaxBonuses = numbers.Select(_ => reader.ReadInt32()).ToList();
-            reader.ReadExactBytes(0xC8);
+            _ = reader.ReadExactBytes(0xC8);
             this.CardGotCount = numbers.Select(_ => reader.ReadInt16()).ToList();
-            reader.ReadExactBytes(0x64);
+            _ = reader.ReadExactBytes(0x64);
             this.CardTrialCount = numbers.Select(_ => reader.ReadInt16()).ToList();
-            reader.ReadExactBytes(0x64);
+            _ = reader.ReadExactBytes(0x64);
             this.CardTrulyGot = numbers.Select(_ => reader.ReadByte()).ToList();
-            reader.ReadExactBytes(0x32);
-            reader.ReadExactBytes(6);   // 07 00 00 00 00 00
+            _ = reader.ReadExactBytes(0x32);
+            _ = reader.ReadExactBytes(6);   // 07 00 00 00 00 00
             this.Ranking = Enumerable.Range(1, 10).Select(_ =>
             {
                 var score = new HighScore();

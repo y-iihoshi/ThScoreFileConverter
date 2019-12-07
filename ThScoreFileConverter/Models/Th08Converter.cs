@@ -76,8 +76,8 @@ namespace ThScoreFileConverter.Models
             ThCrypt.Decrypt(input, output, size, 0x59, 0x79, 0x0100, 0x0C00);
 
             var data = new byte[size];
-            output.Seek(0, SeekOrigin.Begin);
-            output.Read(data, 0, size);
+            _ = output.Seek(0, SeekOrigin.Begin);
+            _ = output.Read(data, 0, size);
 
             uint checksum = 0;
             byte temp = 0;
@@ -90,7 +90,7 @@ namespace ThScoreFileConverter.Models
                     checksum += data[index];
             }
 
-            output.Seek(0, SeekOrigin.Begin);
+            _ = output.Seek(0, SeekOrigin.Begin);
             output.Write(data, 0, size);
 
             return (ushort)checksum == BitConverter.ToUInt16(data, 2);
@@ -186,7 +186,7 @@ namespace ThScoreFileConverter.Models
                 var allScoreData = new AllScoreData();
                 var chapter = new Th06.Chapter();
 
-                reader.ReadExactBytes(FileHeader.ValidSize);
+                _ = reader.ReadExactBytes(FileHeader.ValidSize);
 
                 try
                 {

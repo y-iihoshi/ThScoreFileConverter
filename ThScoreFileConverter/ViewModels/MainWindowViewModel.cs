@@ -148,7 +148,7 @@ namespace ThScoreFileConverter.ViewModels
         public bool IsIdle
         {
             get { return this.isIdle; }
-            private set { this.SetProperty(ref this.isIdle, value); }
+            private set { _ = this.SetProperty(ref this.isIdle, value); }
         }
 
         /// <summary>
@@ -377,7 +377,7 @@ namespace ThScoreFileConverter.ViewModels
         public string Log
         {
             get { return this.log; }
-            private set { this.SetProperty(ref this.log, value); }
+            private set { _ = this.SetProperty(ref this.log, value); }
         }
 
         #region Commands

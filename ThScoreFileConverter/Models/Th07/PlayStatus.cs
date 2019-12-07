@@ -23,7 +23,7 @@ namespace ThScoreFileConverter.Models.Th07
         {
             using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
             {
-                reader.ReadUInt32();    // always 0x00000001?
+                _ = reader.ReadUInt32();    // always 0x00000001?
                 var hours = reader.ReadInt32();
                 var minutes = reader.ReadInt32();
                 var seconds = reader.ReadInt32();

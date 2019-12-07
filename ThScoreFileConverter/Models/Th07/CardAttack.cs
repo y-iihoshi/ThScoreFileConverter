@@ -26,12 +26,12 @@ namespace ThScoreFileConverter.Models.Th07
 
             using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
             {
-                reader.ReadUInt32();    // always 0x00000001?
+                _ = reader.ReadUInt32();    // always 0x00000001?
                 this.MaxBonuses = charas.ToDictionary(chara => chara, chara => reader.ReadUInt32());
                 this.CardId = (short)(reader.ReadInt16() + 1);
-                reader.ReadByte();
+                _ = reader.ReadByte();
                 this.CardName = reader.ReadExactBytes(0x30);
-                reader.ReadByte();      // always 0x00?
+                _ = reader.ReadByte();      // always 0x00?
                 this.TrialCounts = charas.ToDictionary(chara => chara, chara => reader.ReadUInt16());
                 this.ClearCounts = charas.ToDictionary(chara => chara, chara => reader.ReadUInt16());
             }

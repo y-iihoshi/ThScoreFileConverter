@@ -40,7 +40,7 @@ namespace ThScoreFileConverter.Models.Th16
             this.ContinueCount = reader.ReadByte();
             this.Name = reader.ReadExactBytes(10);
             this.DateTime = reader.ReadUInt32();
-            reader.ReadUInt32();
+            _ = reader.ReadUInt32();
             this.SlowRate = reader.ReadSingle();
             this.Season = Utils.ToEnum<Season>(reader.ReadInt32());
         }

@@ -32,7 +32,7 @@ namespace ThScoreFileConverter.Models.Th143
                 this.ClearCounts = items.ToDictionary(item => item, _ => reader.ReadInt32());
                 this.ChallengeCounts = items.ToDictionary(item => item, _ => reader.ReadInt32());
                 this.HighScore = reader.ReadInt32();
-                reader.ReadExactBytes(0x2A8);   // always all 0x00?
+                _ = reader.ReadExactBytes(0x2A8);   // always all 0x00?
             }
         }
 

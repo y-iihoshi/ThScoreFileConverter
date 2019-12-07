@@ -44,10 +44,10 @@ namespace ThScoreFileConverter.Models.Th095
             if (!this.Signature.Equals(ValidSignature, StringComparison.Ordinal))
                 throw new InvalidDataException();
 
-            reader.ReadUInt16();
+            _ = reader.ReadUInt16();
             this.Level = Utils.ToEnum<Level>(reader.ReadInt16() - 1);
             this.Scene = reader.ReadInt16();
-            reader.ReadUInt16();    // 0x0102 ... Version?
+            _ = reader.ReadUInt16();    // 0x0102 ... Version?
             this.Width = reader.ReadInt16();
             this.Height = reader.ReadInt16();
             this.ResultScore = reader.ReadInt32();

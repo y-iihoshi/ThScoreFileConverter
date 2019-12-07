@@ -21,13 +21,13 @@ namespace ThScoreFileConverter.Models.Th07
         {
             using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
             {
-                reader.ReadUInt32();    // always 0x00000001?
+                _ = reader.ReadUInt32();    // always 0x00000001?
                 this.TrialCount = reader.ReadInt32();
                 this.HighScore = reader.ReadInt32();
                 this.Chara = Utils.ToEnum<Chara>(reader.ReadByte());
                 this.Level = Utils.ToEnum<Level>(reader.ReadByte());
                 this.Stage = Utils.ToEnum<Stage>(reader.ReadByte());
-                reader.ReadByte();      // always 0x00?
+                _ = reader.ReadByte();      // always 0x00?
             }
         }
 

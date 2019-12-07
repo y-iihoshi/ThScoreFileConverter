@@ -71,9 +71,9 @@ namespace ThScoreFileConverter.Models
                 var size = new byte[sizeof(int)];
                 var header = new byte[validHeader.Length];
 
-                input.Seek(0, SeekOrigin.Begin);
-                input.Read(size, 0, size.Length);
-                input.Read(header, 0, header.Length);
+                _ = input.Seek(0, SeekOrigin.Begin);
+                _ = input.Read(size, 0, size.Length);
+                _ = input.Read(header, 0, header.Length);
 
                 if (Enumerable.SequenceEqual(header, validHeader))
                 {
@@ -83,7 +83,7 @@ namespace ThScoreFileConverter.Models
                     using (var deflate = new DeflateStream(input, CompressionMode.Decompress, true))
                         extractedSize = deflate.Read(extracted, 0, extracted.Length);
 
-                    output.Seek(0, SeekOrigin.Begin);
+                    _ = output.Seek(0, SeekOrigin.Begin);
                     output.Write(extracted, 0, extractedSize);
 
                     succeeded = true;

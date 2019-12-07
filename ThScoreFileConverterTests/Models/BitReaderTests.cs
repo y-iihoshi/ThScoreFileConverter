@@ -120,7 +120,7 @@ namespace ThScoreFileConverterTests.Models
             {
                 var reader = new BitReader(stream);
 
-                reader.ReadBits(-1);
+                _ = reader.ReadBits(-1);
                 Assert.Fail(TestUtils.Unreachable);
             }
         }

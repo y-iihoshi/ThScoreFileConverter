@@ -57,7 +57,7 @@ namespace ThScoreFileConverter.Models.Th075
                 }
             }
 
-            reader.ReadUInt16();    // always 0x0000?
+            _ = reader.ReadUInt16();    // always 0x0000?
             this.Score = reader.ReadInt32();
         }
     }

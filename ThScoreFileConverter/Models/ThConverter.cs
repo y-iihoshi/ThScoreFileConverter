@@ -214,7 +214,7 @@ namespace ThScoreFileConverter.Models
         {
             using (var scr = new FileStream(settings.ScoreFile, FileMode.Open, FileAccess.Read))
             {
-                scr.Seek(0, SeekOrigin.Begin);
+                _ = scr.Seek(0, SeekOrigin.Begin);
                 if (!this.ReadScoreFile(scr))
                     throw new NotSupportedException(Resources.msgErrScoreFileNotSupported);
 
@@ -222,7 +222,7 @@ namespace ThScoreFileConverter.Models
                 {
                     var dir = Path.Combine(settings.OutputDirectory, settings.ImageOutputDirectory);
                     if (!Directory.Exists(dir))
-                        Directory.CreateDirectory(dir);
+                        _ = Directory.CreateDirectory(dir);
                     var files = this.FilterBestShotFiles(
                         Directory.GetFiles(settings.BestShotDirectory, Resources.ptnBestShot));
                     for (var index = 0; index < files.Length; index++)

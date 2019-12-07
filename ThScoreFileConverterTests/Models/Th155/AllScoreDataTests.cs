@@ -176,7 +176,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestEmpty() => TestUtils.Wrap(() =>
         {
-            TestUtils.Create<AllScoreData>(new byte[0]);
+            _ = TestUtils.Create<AllScoreData>(new byte[0]);
 
             Assert.Fail(TestUtils.Unreachable);
         });

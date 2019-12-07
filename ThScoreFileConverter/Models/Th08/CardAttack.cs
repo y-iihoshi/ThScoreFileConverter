@@ -29,16 +29,16 @@ namespace ThScoreFileConverter.Models.Th08
 
             using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
             {
-                reader.ReadUInt32();    // always 0x00000003?
+                _ = reader.ReadUInt32();    // always 0x00000003?
                 this.CardId = (short)(reader.ReadInt16() + 1);
-                reader.ReadByte();
+                _ = reader.ReadByte();
                 this.Level = Utils.ToEnum<LevelPracticeWithTotal>(reader.ReadByte());   // Last Word == Normal...
                 this.CardName = reader.ReadExactBytes(0x30);
                 this.EnemyName = reader.ReadExactBytes(0x30);
                 this.Comment = reader.ReadExactBytes(0x80);
                 this.storyCareer.ReadFrom(reader);
                 this.practiceCareer.ReadFrom(reader);
-                reader.ReadUInt32();    // always 0x00000000?
+                _ = reader.ReadUInt32();    // always 0x00000000?
             }
         }
 

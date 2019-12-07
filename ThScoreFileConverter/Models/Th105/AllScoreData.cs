@@ -40,8 +40,8 @@ namespace ThScoreFileConverter.Models.Th105
 
             var validNumCharas = Enum.GetValues(typeof(Chara)).Length;
 
-            reader.ReadUInt32();            // version? (0x6A == 106 --> ver.1.06?)
-            reader.ReadUInt32();
+            _ = reader.ReadUInt32();            // version? (0x6A == 106 --> ver.1.06?)
+            _ = reader.ReadUInt32();
 
             for (var index = 0; index < 0x14; index++)
             {
@@ -50,16 +50,16 @@ namespace ThScoreFileConverter.Models.Th105
                     this.storyClearCounts.Add((Chara)index, count); // really...?
             }
 
-            reader.ReadExactBytes(0x14);    // flags of story playable characters?
-            reader.ReadExactBytes(0x14);    // flags of versus/arcade playable characters?
+            _ = reader.ReadExactBytes(0x14);    // flags of story playable characters?
+            _ = reader.ReadExactBytes(0x14);    // flags of versus/arcade playable characters?
 
             var numBgmFlags = reader.ReadInt32();
             for (var index = 0; index < numBgmFlags; index++)
-                reader.ReadUInt32();        // signature of an unlocked bgm?
+                _ = reader.ReadUInt32();        // signature of an unlocked bgm?
 
             var num = reader.ReadInt32();   // always 2?
             for (var index = 0; index < num; index++)
-                reader.ReadUInt32();        // always 0x0000000A and 0x0000000B?
+                _ = reader.ReadUInt32();        // always 0x0000000A and 0x0000000B?
 
             var numSystemCards = reader.ReadInt32();
             this.systemCards = new Dictionary<int, ICardForDeck>(numSystemCards);

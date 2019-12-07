@@ -24,7 +24,7 @@ namespace ThScoreFileConverter.Models.Th09
                 throw new ArgumentNullException(nameof(reader));
 
             this.Counts = Utils.GetEnumerator<Level>().ToDictionary(level => level, _ => reader.ReadInt32());
-            reader.ReadUInt32();
+            _ = reader.ReadUInt32();
         }
     }
 }

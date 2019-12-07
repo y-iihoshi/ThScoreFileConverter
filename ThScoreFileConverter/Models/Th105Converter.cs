@@ -68,13 +68,13 @@ namespace ThScoreFileConverter.Models
             var inData = new byte[size];
             var outData = new byte[size];
 
-            input.Seek(0, SeekOrigin.Begin);
-            input.Read(inData, 0, size);
+            _ = input.Seek(0, SeekOrigin.Begin);
+            _ = input.Read(inData, 0, size);
 
             for (var index = 0; index < size; index++)
                 outData[index] = (byte)((index * 7) ^ inData[size - index - 1]);
 
-            output.Seek(0, SeekOrigin.Begin);
+            _ = output.Seek(0, SeekOrigin.Begin);
             output.Write(outData, 0, size);
 
             // See section 2.2 of RFC 1950
@@ -87,12 +87,12 @@ namespace ThScoreFileConverter.Models
             var extractedSize = 0;
 
             // Skip the header bytes of a zlib stream
-            input.Seek(2, SeekOrigin.Begin);
+            _ = input.Seek(2, SeekOrigin.Begin);
 
             using (var deflate = new DeflateStream(input, CompressionMode.Decompress, true))
                 extractedSize = deflate.Read(extracted, 0, extracted.Length);
 
-            output.Seek(0, SeekOrigin.Begin);
+            _ = output.Seek(0, SeekOrigin.Begin);
             output.Write(extracted, 0, extractedSize);
 
             return true;

@@ -33,7 +33,7 @@ namespace ThScoreFileConverter.Models.Th08
 
             this.TotalTrial = reader.ReadInt32();
             this.Trials = Utils.GetEnumerator<Chara>().ToDictionary(chara => chara, _ => reader.ReadInt32());
-            reader.ReadUInt32();    // always 0x00000000?
+            _ = reader.ReadUInt32();    // always 0x00000000?
             this.TotalClear = reader.ReadInt32();
             this.TotalContinue = reader.ReadInt32();
             this.TotalPractice = reader.ReadInt32();

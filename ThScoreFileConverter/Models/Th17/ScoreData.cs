@@ -38,9 +38,9 @@ namespace ThScoreFileConverter.Models.Th17
             this.ContinueCount = reader.ReadByte();
             this.Name = reader.ReadExactBytes(10);
             this.DateTime = reader.ReadUInt32();
-            reader.ReadUInt32();
+            _ = reader.ReadUInt32();
             this.SlowRate = reader.ReadSingle();
-            reader.ReadUInt32();
+            _ = reader.ReadUInt32();
         }
     }
 }

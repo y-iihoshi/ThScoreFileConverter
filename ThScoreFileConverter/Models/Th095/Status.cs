@@ -26,7 +26,7 @@ namespace ThScoreFileConverter.Models.Th095
             using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
             {
                 this.LastName = reader.ReadExactBytes(10);
-                reader.ReadExactBytes(0x0442);
+                _ = reader.ReadExactBytes(0x0442);
             }
         }
 

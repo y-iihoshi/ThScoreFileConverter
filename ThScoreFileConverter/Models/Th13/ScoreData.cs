@@ -20,7 +20,7 @@ namespace ThScoreFileConverter.Models.Th13
                 throw new ArgumentNullException(nameof(reader));
 
             base.ReadFrom(reader);
-            reader.ReadUInt32();
+            _ = reader.ReadUInt32();
         }
     }
 }

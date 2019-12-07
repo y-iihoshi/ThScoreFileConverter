@@ -22,8 +22,8 @@ namespace ThScoreFileConverter.Models.Th09
         {
             using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
             {
-                reader.ReadByte();      // always 0x01?
-                reader.ReadExactBytes(3);
+                _ = reader.ReadByte();      // always 0x01?
+                _ = reader.ReadExactBytes(3);
             }
         }
     }

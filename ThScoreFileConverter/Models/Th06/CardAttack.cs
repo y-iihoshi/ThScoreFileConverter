@@ -24,9 +24,9 @@ namespace ThScoreFileConverter.Models.Th06
         {
             using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
             {
-                reader.ReadExactBytes(8);
+                _ = reader.ReadExactBytes(8);
                 this.CardId = (short)(reader.ReadInt16() + 1);
-                reader.ReadExactBytes(6);
+                _ = reader.ReadExactBytes(6);
                 this.CardName = reader.ReadExactBytes(0x24);
                 this.TrialCount = reader.ReadUInt16();
                 this.ClearCount = reader.ReadUInt16();

@@ -29,13 +29,13 @@ namespace ThScoreFileConverter.Models.Th08
             {
                 //// The fields for Stage.Extra and Level.Extra actually exist...
 
-                reader.ReadUInt32();        // always 0x00000002?
+                _ = reader.ReadUInt32();        // always 0x00000002?
                 this.PlayCounts = stages.SelectMany(stage => levels.Select(level => (stage, level)))
                     .ToDictionary(pair => pair, _ => reader.ReadInt32());
                 this.HighScores = stages.SelectMany(stage => levels.Select(level => (stage, level)))
                     .ToDictionary(pair => pair, _ => reader.ReadInt32());
                 this.Chara = Utils.ToEnum<Chara>(reader.ReadByte());
-                reader.ReadExactBytes(3);   // always 0x000001?
+                _ = reader.ReadExactBytes(3);   // always 0x000001?
             }
         }
 

@@ -28,7 +28,7 @@ namespace ThScoreFileConverter.Models.Th13
             this.Score = reader.ReadUInt32();
             this.ClearFlag = reader.ReadByte();
             this.EnableFlag = reader.ReadByte();
-            reader.ReadUInt16();    // always 0x0000?
+            _ = reader.ReadUInt16();    // always 0x0000?
         }
     }
 }

@@ -23,12 +23,12 @@ namespace ThScoreFileConverter.Models.Th07
         {
             using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
             {
-                reader.ReadUInt16();    // always 0x0001?
-                reader.ReadUInt16();
+                _ = reader.ReadUInt16();    // always 0x0001?
+                _ = reader.ReadUInt16();
                 this.Version = reader.ReadExactBytes(6);
-                reader.ReadExactBytes(3);
-                reader.ReadExactBytes(3);
-                reader.ReadUInt32();
+                _ = reader.ReadExactBytes(3);
+                _ = reader.ReadExactBytes(3);
+                _ = reader.ReadUInt32();
             }
         }
 

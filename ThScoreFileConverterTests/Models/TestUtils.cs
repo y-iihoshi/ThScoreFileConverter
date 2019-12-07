@@ -105,7 +105,7 @@ namespace ThScoreFileConverterTests.Models
 
                     array = new byte[writer.BaseStream.Length];
                     writer.BaseStream.Position = 0;
-                    writer.BaseStream.Read(array, 0, array.Length);
+                    _ = writer.BaseStream.Read(array, 0, array.Length);
                 }
             }
             finally

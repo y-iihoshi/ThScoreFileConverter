@@ -51,7 +51,7 @@ namespace ThScoreFileConverterTests.Models
 
                 var actual = new byte[output.Length];
                 output.Position = 0;
-                output.Read(actual, 0, actual.Length);
+                _ = output.Read(actual, 0, actual.Length);
 
                 Assert.AreEqual(this.decrypted.Length, actual.Length);
                 CollectionAssert.AreEqual(this.decrypted, actual);
@@ -125,7 +125,7 @@ namespace ThScoreFileConverterTests.Models
 
                 var actual = new byte[output.Length];
                 output.Position = 0;
-                output.Read(actual, 0, actual.Length);
+                _ = output.Read(actual, 0, actual.Length);
 
                 Assert.AreNotEqual(this.decrypted.Length, actual.Length);
             }
@@ -145,7 +145,7 @@ namespace ThScoreFileConverterTests.Models
 
                 var actual = new byte[output.Length];
                 output.Position = 0;
-                output.Read(actual, 0, actual.Length);
+                _ = output.Read(actual, 0, actual.Length);
 
                 Assert.AreEqual(this.decrypted.Length, actual.Length);
                 CollectionAssert.AreNotEqual(this.decrypted, actual);
@@ -221,7 +221,7 @@ namespace ThScoreFileConverterTests.Models
 
                 var actual = new byte[output.Length];
                 output.Position = 0;
-                output.Read(actual, 0, actual.Length);
+                _ = output.Read(actual, 0, actual.Length);
 
                 Assert.AreNotEqual(this.decrypted.Length, actual.Length);
             }
@@ -237,7 +237,7 @@ namespace ThScoreFileConverterTests.Models
 
                 var actual = new byte[output.Length];
                 output.Position = 0;
-                output.Read(actual, 0, actual.Length);
+                _ = output.Read(actual, 0, actual.Length);
 
                 CollectionAssert.AreEqual(this.decrypted, actual);
             }
@@ -253,7 +253,7 @@ namespace ThScoreFileConverterTests.Models
 
                 var actual = new byte[output.Length];
                 output.Position = 0;
-                output.Read(actual, 0, actual.Length);
+                _ = output.Read(actual, 0, actual.Length);
 
                 Assert.AreEqual(this.decrypted.Length, actual.Length);
                 CollectionAssert.AreNotEqual(this.decrypted, actual);
@@ -270,7 +270,7 @@ namespace ThScoreFileConverterTests.Models
 
                 var actual = new byte[output.Length];
                 output.Position = 0;
-                output.Read(actual, 0, actual.Length);
+                _ = output.Read(actual, 0, actual.Length);
 
                 Assert.AreEqual(this.decrypted.Length, actual.Length);
                 CollectionAssert.AreNotEqual(this.decrypted, actual);
@@ -287,7 +287,7 @@ namespace ThScoreFileConverterTests.Models
 
                 var actual = new byte[output.Length];
                 output.Position = 0;
-                output.Read(actual, 0, actual.Length);
+                _ = output.Read(actual, 0, actual.Length);
 
                 Assert.AreEqual(this.decrypted.Length, actual.Length);
                 CollectionAssert.AreNotEqual(this.decrypted, actual);
@@ -304,7 +304,7 @@ namespace ThScoreFileConverterTests.Models
 
                 var actual = new byte[output.Length];
                 output.Position = 0;
-                output.Read(actual, 0, actual.Length);
+                _ = output.Read(actual, 0, actual.Length);
 
                 Assert.AreEqual(this.decrypted.Length, actual.Length);
                 CollectionAssert.AreNotEqual(this.decrypted, actual);
@@ -353,7 +353,7 @@ namespace ThScoreFileConverterTests.Models
 
                     var actual = new byte[output.Length];
                     output.Position = 0;
-                    output.Read(actual, 0, actual.Length);
+                    _ = output.Read(actual, 0, actual.Length);
 
                     // We are doing the decryption in a vague atmosphere.
                     Assert.AreEqual(this.decrypted.Length, actual.Length);
@@ -381,7 +381,7 @@ namespace ThScoreFileConverterTests.Models
 
                     var actual = new byte[output.Length];
                     output.Position = 0;
-                    output.Read(actual, 0, actual.Length);
+                    _ = output.Read(actual, 0, actual.Length);
 
                     // We are doing the decryption in a vague atmosphere.
                     if (block >= size)
@@ -420,7 +420,7 @@ namespace ThScoreFileConverterTests.Models
 
                 var actual = new byte[output.Length];
                 output.Position = 0;
-                output.Read(actual, 0, actual.Length);
+                _ = output.Read(actual, 0, actual.Length);
 
                 Assert.AreEqual(this.decrypted.Length, actual.Length);
                 CollectionAssert.AreNotEqual(this.decrypted, actual);
@@ -445,7 +445,7 @@ namespace ThScoreFileConverterTests.Models
 
                     var actual = new byte[output.Length];
                     output.Position = 0;
-                    output.Read(actual, 0, actual.Length);
+                    _ = output.Read(actual, 0, actual.Length);
 
                     // We are doing the decryption in a vague atmosphere.
                     if (limit > SMALL_BLOCK)
@@ -480,7 +480,7 @@ namespace ThScoreFileConverterTests.Models
 
                     var actual = new byte[output.Length];
                     output.Position = 0;
-                    output.Read(actual, 0, actual.Length);
+                    _ = output.Read(actual, 0, actual.Length);
 
                     CollectionAssert.AreEqual(this.decrypted, actual);
                 }

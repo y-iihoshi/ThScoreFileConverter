@@ -39,7 +39,7 @@ namespace ThScoreFileConverterTests.Models
         {
             BinaryReader reader = null;
 
-            reader.ReadExactBytes(1);
+            _ = reader.ReadExactBytes(1);
 
             Assert.Fail(TestUtils.Unreachable);
         }
@@ -56,7 +56,7 @@ namespace ThScoreFileConverterTests.Models
                 {
                     stream = null;
 
-                    reader.ReadExactBytes(1);
+                    _ = reader.ReadExactBytes(1);
 
                     Assert.Fail(TestUtils.Unreachable);
                 }
@@ -80,7 +80,7 @@ namespace ThScoreFileConverterTests.Models
                 {
                     stream = null;
 
-                    reader.ReadExactBytes(-1);
+                    _ = reader.ReadExactBytes(-1);
 
                     Assert.Fail(TestUtils.Unreachable);
                 }
@@ -127,7 +127,7 @@ namespace ThScoreFileConverterTests.Models
                 {
                     stream = null;
 
-                    reader.ReadExactBytes(bytes.Length + 1);
+                    _ = reader.ReadExactBytes(bytes.Length + 1);
 
                     Assert.Fail(TestUtils.Unreachable);
                 }

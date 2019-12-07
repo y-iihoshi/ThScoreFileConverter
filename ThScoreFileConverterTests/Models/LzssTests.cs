@@ -56,7 +56,7 @@ namespace ThScoreFileConverterTests.Models
 
                 var actual = new byte[output.Length];
                 output.Position = 0;
-                output.Read(actual, 0, actual.Length);
+                _ = output.Read(actual, 0, actual.Length);
 
                 CollectionAssert.AreEqual(this.decompressed, actual);
             }
@@ -130,7 +130,7 @@ namespace ThScoreFileConverterTests.Models
 
                 var actual = new byte[output.Length];
                 output.Position = 0;
-                output.Read(actual, 0, actual.Length);
+                _ = output.Read(actual, 0, actual.Length);
 
                 CollectionAssert.AreNotEqual(this.decompressed, actual);
             }
@@ -150,7 +150,7 @@ namespace ThScoreFileConverterTests.Models
 
                 var actual = new byte[output.Length];
                 output.Position = 0;
-                output.Read(actual, 0, actual.Length);
+                _ = output.Read(actual, 0, actual.Length);
 
                 CollectionAssert.AreNotEqual(this.decompressed, actual);
             }

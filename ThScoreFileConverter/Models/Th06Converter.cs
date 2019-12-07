@@ -71,7 +71,7 @@ namespace ThScoreFileConverter.Models
         {
             var size = (int)input.Length;
             var data = new byte[size];
-            input.Read(data, 0, size);
+            _ = input.Read(data, 0, size);
 
             uint checksum = 0;
             byte temp = 0;
@@ -176,7 +176,7 @@ namespace ThScoreFileConverter.Models
                 var allScoreData = new AllScoreData();
                 var chapter = new Chapter();
 
-                reader.ReadExactBytes(FileHeader.ValidSize);
+                _ = reader.ReadExactBytes(FileHeader.ValidSize);
 
                 try
                 {

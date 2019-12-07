@@ -22,7 +22,7 @@ namespace ThScoreFileConverter.Models.Th08
         {
             using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
             {
-                reader.ReadExactBytes(0x18);
+                _ = reader.ReadExactBytes(0x18);
             }
         }
     }

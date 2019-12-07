@@ -27,18 +27,18 @@ namespace ThScoreFileConverter.Models.Th125
                 var number = reader.ReadUInt32();
                 this.LevelScene = (Utils.ToEnum<Level>(number / 10), (int)((number % 10) + 1));
                 this.HighScore = reader.ReadInt32();
-                reader.ReadExactBytes(0x04);
+                _ = reader.ReadExactBytes(0x04);
                 this.Chara = Utils.ToEnum<Chara>(reader.ReadInt32());
-                reader.ReadExactBytes(0x04);
+                _ = reader.ReadExactBytes(0x04);
                 this.TrialCount = reader.ReadInt32();
                 this.FirstSuccess = reader.ReadInt32();
-                reader.ReadUInt32();    // always 0x00000000?
+                _ = reader.ReadUInt32();    // always 0x00000000?
                 this.DateTime = reader.ReadUInt32();
-                reader.ReadUInt32();    // always 0x00000000?
-                reader.ReadUInt32();    // checksum of the bestshot file?
-                reader.ReadUInt32();    // always 0x00000001?
+                _ = reader.ReadUInt32();    // always 0x00000000?
+                _ = reader.ReadUInt32();    // checksum of the bestshot file?
+                _ = reader.ReadUInt32();    // always 0x00000001?
                 this.BestshotScore = reader.ReadInt32();
-                reader.ReadExactBytes(0x08);
+                _ = reader.ReadExactBytes(0x08);
             }
         }
 

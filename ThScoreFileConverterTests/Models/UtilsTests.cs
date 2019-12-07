@@ -28,7 +28,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentException))]
         public void ParseEnumTestInvalidName()
         {
-            Utils.ParseEnum<DayOfWeek>("Sun");
+            _ = Utils.ParseEnum<DayOfWeek>("Sun");
             Assert.Fail(TestUtils.Unreachable);
         }
 
@@ -36,7 +36,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentException))]
         public void ParseEnumTestEmpty()
         {
-            Utils.ParseEnum<DayOfWeek>(string.Empty);
+            _ = Utils.ParseEnum<DayOfWeek>(string.Empty);
             Assert.Fail(TestUtils.Unreachable);
         }
 
@@ -44,7 +44,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentNullException))]
         public void ParseEnumTestNull()
         {
-            Utils.ParseEnum<DayOfWeek>(null);
+            _ = Utils.ParseEnum<DayOfWeek>(null);
             Assert.Fail(TestUtils.Unreachable);
         }
 
@@ -56,7 +56,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentException))]
         public void ParseEnumTestCaseSensitiveInvalidName()
         {
-            Utils.ParseEnum<DayOfWeek>("sunday", false);
+            _ = Utils.ParseEnum<DayOfWeek>("sunday", false);
             Assert.Fail(TestUtils.Unreachable);
         }
 
@@ -93,7 +93,7 @@ namespace ThScoreFileConverterTests.Models
         public void ToNumberStringTestUnset()
         {
             Settings.Instance.OutputNumberGroupSeparator = null;
-            Utils.ToNumberString(1234);
+            _ = Utils.ToNumberString(1234);
             Assert.Fail(TestUtils.Unreachable);
         }
 
@@ -136,7 +136,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ToZeroBasedTestNegative()
         {
-            Utils.ToZeroBased(-1);
+            _ = Utils.ToZeroBased(-1);
             Assert.Fail(TestUtils.Unreachable);
         }
 
@@ -144,7 +144,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ToZeroBasedTestExceeded()
         {
-            Utils.ToZeroBased(10);
+            _ = Utils.ToZeroBased(10);
             Assert.Fail(TestUtils.Unreachable);
         }
 
@@ -161,7 +161,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ToOneBasedTestNegative()
         {
-            Utils.ToOneBased(-1);
+            _ = Utils.ToOneBased(-1);
             Assert.Fail(TestUtils.Unreachable);
         }
 
@@ -169,7 +169,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ToOneBasedTestExceeded()
         {
-            Utils.ToOneBased(10);
+            _ = Utils.ToOneBased(10);
             Assert.Fail(TestUtils.Unreachable);
         }
 

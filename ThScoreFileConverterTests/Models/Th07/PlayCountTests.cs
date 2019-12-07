@@ -102,7 +102,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         public void ReadFromTestShortenedTrials() => TestUtils.Wrap(() =>
         {
             var properties = new Properties(ValidProperties);
-            properties.trials.Remove(Chara.SakuyaB);
+            _ = properties.trials.Remove(Chara.SakuyaB);
 
             _ = TestUtils.Create<PlayCount>(MakeByteArray(properties));
 

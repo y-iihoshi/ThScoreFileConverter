@@ -28,7 +28,7 @@ namespace ThScoreFileConverter.Models.Th08
         {
             using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
             {
-                reader.ReadUInt32();    // always 0x00000004?
+                _ = reader.ReadUInt32();    // always 0x00000004?
                 this.Score = reader.ReadUInt32();
                 this.SlowRate = reader.ReadSingle();
                 this.Chara = Utils.ToEnum<Chara>(reader.ReadByte());
@@ -40,18 +40,18 @@ namespace ThScoreFileConverter.Models.Th08
 
                 // 01 00 00 00 04 00 09 00 FF FF FF FF FF FF FF FF
                 // 05 00 00 00 01 00 08 00 58 02 58 02
-                reader.ReadExactBytes(0x1C);
+                _ = reader.ReadExactBytes(0x1C);
 
                 this.PlayerNum = reader.ReadByte();
 
                 // NN 03 00 01 01 LL 01 00 02 00 00 ** ** 00 00 00
                 // 00 00 00 00 00 00 00 00 00 00 00 00 01 40 00 00
                 // where NN: PlayerNum, LL: level, **: unknown (0x64 or 0x0A; 0x50 or 0x0A)
-                reader.ReadExactBytes(0x1F);
+                _ = reader.ReadExactBytes(0x1F);
 
                 this.PlayTime = reader.ReadUInt32();
                 this.PointItem = reader.ReadInt32();
-                reader.ReadUInt32();    // always 0x00000000?
+                _ = reader.ReadUInt32();    // always 0x00000000?
                 this.MissCount = reader.ReadInt32();
                 this.BombCount = reader.ReadInt32();
                 this.LastSpellCount = reader.ReadInt32();
@@ -59,7 +59,7 @@ namespace ThScoreFileConverter.Models.Th08
                 this.TimePoint = reader.ReadInt32();
                 this.HumanRate = reader.ReadInt32();
                 this.CardFlags = Definitions.CardTable.Keys.ToDictionary(key => key, _ => reader.ReadByte());
-                reader.ReadExactBytes(2);
+                _ = reader.ReadExactBytes(2);
             }
         }
 

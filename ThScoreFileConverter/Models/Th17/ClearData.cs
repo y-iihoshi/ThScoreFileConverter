@@ -41,7 +41,7 @@ namespace ThScoreFileConverter.Models.Th17
                         return score as IScoreData;
                     }).ToList() as IReadOnlyList<IScoreData>);
 
-                reader.ReadExactBytes(0x140);
+                _ = reader.ReadExactBytes(0x140);
 
                 this.Cards = Enumerable.Range(0, Definitions.CardTable.Count).Select(number =>
                 {
@@ -52,11 +52,11 @@ namespace ThScoreFileConverter.Models.Th17
 
                 this.TotalPlayCount = reader.ReadInt32();
                 this.PlayTime = reader.ReadInt32();
-                reader.ReadUInt32();
+                _ = reader.ReadUInt32();
                 this.ClearCounts = levelsWithTotal.ToDictionary(level => level, level => reader.ReadInt32());
-                reader.ReadUInt32();
+                _ = reader.ReadUInt32();
                 this.ClearFlags = levelsWithTotal.ToDictionary(level => level, level => reader.ReadInt32());
-                reader.ReadUInt32();
+                _ = reader.ReadUInt32();
 
                 this.Practices = levels.SelectMany(level => stages.Select(stage => (level, stage)))
                     .ToDictionary(pair => pair, pair =>

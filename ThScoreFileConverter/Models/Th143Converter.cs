@@ -113,7 +113,7 @@ namespace ThScoreFileConverter.Models
 
                     Lzss.Extract(input, decoded);
 
-                    decoded.Seek(0, SeekOrigin.Begin);
+                    _ = decoded.Seek(0, SeekOrigin.Begin);
                     using (var bitmap = new Bitmap(header.Width, header.Height, PixelFormat.Format32bppArgb))
                     {
                         try
