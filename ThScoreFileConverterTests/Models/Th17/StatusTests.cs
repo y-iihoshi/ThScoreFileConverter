@@ -22,7 +22,7 @@ namespace ThScoreFileConverterTests.Models.Th17
             LastName = TestUtils.CP932Encoding.GetBytes("Player1\0\0\0"),
             BgmFlags = TestUtils.MakeRandomArray<byte>(17),
             TotalPlayTime = 12345678,
-            Achievements = TestUtils.MakeRandomArray<byte>(40),
+            Achievements = Enumerable.Range(0, 40).Select(number => (byte)(number % 3)),
         };
 
         internal static byte[] MakeByteArray(IStatus status)
