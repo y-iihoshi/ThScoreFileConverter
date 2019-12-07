@@ -1,0 +1,94 @@
+﻿//-----------------------------------------------------------------------
+// <copyright file="ClearData.cs" company="None">
+// Copyright (c) IIHOSHI Yoshinori.
+// Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
+// </copyright>
+//-----------------------------------------------------------------------
+
+#pragma warning disable SA1600 // Elements should be documented
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using ThScoreFileConverter.Extensions;
+
+namespace ThScoreFileConverter.Models.Th17
+{
+    internal class ClearData : Th10.Chapter, IClearData // per character
+    {
+        public const string ValidSignature = "CR";
+        public const ushort ValidVersion = 0x0002;
+        public const int ValidSize = 0x00004820;
+
+        public ClearData(Th10.Chapter chapter)
+            : base(chapter, ValidSignature, ValidVersion, ValidSize)
+        {
+            var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();
+            var levels = Utils.GetEnumerator<Level>();
+            var stages = Utils.GetEnumerator<StagePractice>();
+
+            using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
+            {
+                this.Chara = (CharaWithTotal)reader.ReadInt32();
+
+                this.Rankings = levelsWithTotal.ToDictionary(
+                    level => level,
+                    level => Enumerable.Range(0, 10).Select(rank =>
+                    {
+                        var score = new ScoreData();
+                        score.ReadFrom(reader);
+                        return score as IScoreData;
+                    }).ToList() as IReadOnlyList<IScoreData>);
+
+                reader.ReadExactBytes(0x140);
+
+                this.Cards = Enumerable.Range(0, Definitions.CardTable.Count).Select(number =>
+                {
+                    var card = new Th13.SpellCard<Level>();
+                    card.ReadFrom(reader);
+                    return card as Th13.ISpellCard<Level>;
+                }).ToDictionary(card => card.Id);
+
+                this.TotalPlayCount = reader.ReadInt32();
+                this.PlayTime = reader.ReadInt32();
+                reader.ReadUInt32();
+                this.ClearCounts = levelsWithTotal.ToDictionary(level => level, level => reader.ReadInt32());
+                reader.ReadUInt32();
+                this.ClearFlags = levelsWithTotal.ToDictionary(level => level, level => reader.ReadInt32());
+                reader.ReadUInt32();
+
+                this.Practices = levels.SelectMany(level => stages.Select(stage => (level, stage)))
+                    .ToDictionary(pair => pair, pair =>
+                    {
+                        var practice = new Th13.Practice();
+                        practice.ReadFrom(reader);
+                        return practice as Th13.IPractice;
+                    });
+            }
+        }
+
+        public CharaWithTotal Chara { get; }
+
+        public IReadOnlyDictionary<LevelWithTotal, IReadOnlyList<IScoreData>> Rankings { get; }
+
+        public int TotalPlayCount { get; }
+
+        public int PlayTime { get; }    // unit: 10ms
+
+        public IReadOnlyDictionary<LevelWithTotal, int> ClearCounts { get; }
+
+        public IReadOnlyDictionary<LevelWithTotal, int> ClearFlags { get; }  // Really...?
+
+        public IReadOnlyDictionary<(Level, StagePractice), Th13.IPractice> Practices { get; }
+
+        public IReadOnlyDictionary<int, Th13.ISpellCard<Level>> Cards { get; }
+
+        public static bool CanInitialize(Th10.Chapter chapter)
+        {
+            return chapter.Signature.Equals(ValidSignature, StringComparison.Ordinal)
+                && (chapter.Version == ValidVersion)
+                && (chapter.Size == ValidSize);
+        }
+    }
+}

@@ -1,0 +1,108 @@
+<#@ assembly name="System.Core" #>
+<#@ assembly name="$(TargetPath)" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="ThScoreFileConverter.Models" #>
+<#@ import namespace="ThScoreFileConverter.Models.Th17" #>
+<#
+    var levels = Utils.GetEnumerator<Level>()
+        .ToDictionary(level => level.ToShortName(), level => level.ToString());
+    var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>()
+        .ToDictionary(level => level.ToShortName(), level => level.ToString());
+
+    var levelKeyTotal = LevelWithTotal.Total.ToShortName();
+    var levelKeyOrderTotalFirst = levelsWithTotal.Keys.TakeLast(1).Concat(levelsWithTotal.Keys.SkipLast(1));
+    var levelKeyOrderTotalLast = levelsWithTotal.Keys;
+
+    var levelsPractice = levels.Where(pair => pair.Key != Level.Extra.ToShortName());
+
+    var characters = new Dictionary<string, string>
+    {
+        { Chara.ReimuA.ToShortName(), "博麗 霊夢 (狼)" },
+        { Chara.ReimuB.ToShortName(), "博麗 霊夢 (獺)" },
+        { Chara.ReimuC.ToShortName(), "博麗 霊夢 (鷲)" },
+        { Chara.MarisaA.ToShortName(), "霧雨 魔理沙 (狼)" },
+        { Chara.MarisaB.ToShortName(), "霧雨 魔理沙 (獺)" },
+        { Chara.MarisaC.ToShortName(), "霧雨 魔理沙 (鷲)" },
+        { Chara.YoumuA.ToShortName(), "魂魄 妖夢 (狼)" },
+        { Chara.YoumuB.ToShortName(), "魂魄 妖夢 (獺)" },
+        { Chara.YoumuC.ToShortName(), "魂魄 妖夢 (鷲)" },
+    };
+
+    var charactersWithTotal = new Dictionary<string, string>
+    {
+        { CharaWithTotal.ReimuA.ToShortName(), "博麗 霊夢 (狼)" },
+        { CharaWithTotal.ReimuB.ToShortName(), "博麗 霊夢 (獺)" },
+        { CharaWithTotal.ReimuC.ToShortName(), "博麗 霊夢 (鷲)" },
+        { CharaWithTotal.MarisaA.ToShortName(), "霧雨 魔理沙 (狼)" },
+        { CharaWithTotal.MarisaB.ToShortName(), "霧雨 魔理沙 (獺)" },
+        { CharaWithTotal.MarisaC.ToShortName(), "霧雨 魔理沙 (鷲)" },
+        { CharaWithTotal.YoumuA.ToShortName(), "魂魄 妖夢 (狼)" },
+        { CharaWithTotal.YoumuB.ToShortName(), "魂魄 妖夢 (獺)" },
+        { CharaWithTotal.YoumuC.ToShortName(), "魂魄 妖夢 (鷲)" },
+        { CharaWithTotal.Total.ToShortName(), "全主人公合計" },
+    };
+
+    var charaKeyTotal = CharaWithTotal.Total.ToShortName();
+    var charaKeyOrderTotalFirst = charactersWithTotal.Keys.TakeLast(1).Concat(charactersWithTotal.Keys.SkipLast(1));
+    var charaKeyOrderTotalLast = charactersWithTotal.Keys;
+
+    var stages = new Dictionary<string, string>
+    {
+        { Stage.One.ToShortName(), "Stage 1" },
+        { Stage.Two.ToShortName(), "Stage 2" },
+        { Stage.Three.ToShortName(), "Stage 3" },
+        { Stage.Four.ToShortName(), "Stage 4" },
+        { Stage.Five.ToShortName(), "Stage 5" },
+        { Stage.Six.ToShortName(), "Stage 6" },
+        { Stage.Extra.ToShortName(), "Extra" },
+    };
+
+    var stagesWithTotal = new Dictionary<string, string>
+    {
+        { StageWithTotal.One.ToShortName(), "Stage 1" },
+        { StageWithTotal.Two.ToShortName(), "Stage 2" },
+        { StageWithTotal.Three.ToShortName(), "Stage 3" },
+        { StageWithTotal.Four.ToShortName(), "Stage 4" },
+        { StageWithTotal.Five.ToShortName(), "Stage 5" },
+        { StageWithTotal.Six.ToShortName(), "Stage 6" },
+        { StageWithTotal.Extra.ToShortName(), "Extra" },
+        { StageWithTotal.Total.ToShortName(), "Total" },
+    };
+
+    var stageKeyTotal = StageWithTotal.Total.ToShortName();
+    var stageKeyOrderTotalFirst = stagesWithTotal.Keys.TakeLast(1).Concat(stagesWithTotal.Keys.SkipLast(1));
+    var stageKeyOrderTotalLast = stagesWithTotal.Keys;
+
+    var stagesPractice = stages.Where(pair => pair.Key != Stage.Extra.ToShortName());
+
+    var cardsPerLevel = new Dictionary<string, int>
+    {
+        { Level.Easy.ToShortName(), 22 },
+        { Level.Normal.ToShortName(), 22 },
+        { Level.Hard.ToShortName(), 22 },
+        { Level.Lunatic.ToShortName(), 22 },
+        { Level.Extra.ToShortName(), 13 },
+    };
+
+    var cardsPerStage = new Dictionary<string, int>
+    {
+        { Stage.One.ToShortName(), 8 },
+        { Stage.Two.ToShortName(), 12 },
+        { Stage.Three.ToShortName(), 12 },
+        { Stage.Four.ToShortName(), 12 },
+        { Stage.Five.ToShortName(), 16 },
+        { Stage.Six.ToShortName(), 28 },
+        { Stage.Extra.ToShortName(), 13 },
+    };
+
+    var numCards = cardsPerLevel.Values.Sum();
+
+    var careerKinds = new Dictionary<string, string>
+    {
+        { "S", "ゲーム本編" },
+        { "P", "スペルプラクティス" },
+    };
+
+    var numAchievements = 40;
+#>

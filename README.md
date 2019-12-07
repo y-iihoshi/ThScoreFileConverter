@@ -40,9 +40,9 @@ format from best shot files.
 * TH15.5 東方憑依華　～ Antinomy of Common Flowers.
 * TH16 東方天空璋　～ Hidden Star in Four Seasons.
 * TH16.5 秘封ナイトメアダイアリー　～ Violet Detector.
+* TH17 東方鬼形獣　～ Wily Beast and Weakest Creature.
 
 ### Will be supported
-* TH17 東方鬼形獣　～ Wily Beast and Weakest Creature.
 * TH17.5 東方剛欲異聞　～ 水没した沈愁地獄 (a.k.a. Touhou Gouyoku Ibun)
 
 ## Environments

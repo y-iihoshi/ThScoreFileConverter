@@ -52,7 +52,7 @@ namespace ThScoreFileConverter.ViewModels
             new Work { Number = "TH15", Title = "東方紺珠伝", IsSupported = true },
             new Work { Number = "TH16", Title = "東方天空璋", IsSupported = true },
             new Work { Number = "TH165", Title = "秘封ナイトメアダイアリー", IsSupported = true },
-            new Work { Number = "TH17", Title = "東方鬼形獣", IsSupported = false },
+            new Work { Number = "TH17", Title = "東方鬼形獣", IsSupported = true },
             new Work { Number = string.Empty, Title = string.Empty, IsSupported = false },
             new Work { Number = "TH075", Title = "東方萃夢想", IsSupported = true },
             new Work { Number = "TH105", Title = "東方緋想天", IsSupported = true },
@@ -60,6 +60,7 @@ namespace ThScoreFileConverter.ViewModels
             new Work { Number = "TH135", Title = "東方心綺楼", IsSupported = true },
             new Work { Number = "TH145", Title = "東方深秘録", IsSupported = true },
             new Work { Number = "TH155", Title = "東方憑依華", IsSupported = true },
+            new Work { Number = "TH175", Title = "東方剛欲異聞", IsSupported = false },
         };
 
         /// <summary>
