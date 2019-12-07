@@ -28,15 +28,15 @@
                Width="48"/>
         <Separator/>
         <TextBlock>
-            <Run Text="{Binding Name}"/>
-            <Run Text="{Binding Version}"/>
+            <Run Text="{Binding Name, Mode=OneWay}"/>
+            <Run Text="{Binding Version, Mode=OneWay}"/>
             <LineBreak/>
-            <Run Text="{Binding Copyright}"/>
+            <Run Text="{Binding Copyright, Mode=OneWay}"/>
             <LineBreak/>
             <Hyperlink x:Name="SupportPageHyperlink"
                        Command="{Binding OpenUriCommand}"
                        CommandParameter="{Binding Uri}">
-                <Run Text="{Binding Uri}"/>
+                <Run Text="{Binding Uri, Mode=OneWay}"/>
             </Hyperlink>
         </TextBlock>
     </StackPanel>
