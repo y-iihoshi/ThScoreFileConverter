@@ -4,7 +4,7 @@
              xmlns:prism="http://prismlibrary.com/"
              xmlns:c="clr-namespace:ThScoreFileConverter.Commands"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             FocusManager.FocusedElement="{Binding ElementName=SupportPageHyperlink}"
+             FocusManager.FocusedElement="{x:Reference Name=SupportPageHyperlink}"
              UseLayoutRounding="True">
 
     <UserControl.InputBindings>

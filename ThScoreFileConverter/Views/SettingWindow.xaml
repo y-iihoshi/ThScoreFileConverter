@@ -6,7 +6,7 @@
         	 xmlns:a="clr-namespace:ThScoreFileConverter.Actions"
         	 xmlns:c="clr-namespace:ThScoreFileConverter.Commands"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             FocusManager.FocusedElement="{Binding ElementName=OkButton}"
+             FocusManager.FocusedElement="{x:Reference Name=OkButton}"
              UseLayoutRounding="True">
 
     <UserControl.InputBindings>
