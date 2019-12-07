@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th165;
 using ThScoreFileConverterTests.Extensions;
@@ -21,7 +22,7 @@ namespace ThScoreFileConverterTests.Models.Th165
             LastName = TestUtils.CP932Encoding.GetBytes("Player1\0\0\0\0\0\0\0"),
             BgmFlags = TestUtils.MakeRandomArray<byte>(8),
             TotalPlayTime = 12345678,
-            NicknameFlags = TestUtils.MakeRandomArray<byte>(51)
+            NicknameFlags = Enumerable.Range(0, 51).Select(num => (byte)(num % 3)).ToArray()
         };
 
         internal static byte[] MakeData(IStatus status)
