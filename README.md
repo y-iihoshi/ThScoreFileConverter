@@ -50,11 +50,11 @@ format from best shot files.
 ### Development environment
 * Windows 10 Pro Version 1909 (64bit)
 * .NET Framework 4.8
-* Visual Studio Community 2019 16.3.10
+* Visual Studio Community 2019 16.4.0
 * Python 3.8.0
 
 ### Tested environment
-* Same as above but you can use .NET Framework 4.5 or later.
+* Same as above.
 
 ## License
 
