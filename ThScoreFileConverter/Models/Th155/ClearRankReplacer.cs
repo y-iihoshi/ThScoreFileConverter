@@ -31,7 +31,7 @@ namespace ThScoreFileConverter.Models.Th155
                 var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
                 var chara = Parsers.StoryCharaParser.Parse(match.Groups[2].Value);
 
-                LevelFlags ToLevelFlag(Level lv)
+                static LevelFlags ToLevelFlag(Level lv)
                 {
                     switch (lv)
                     {

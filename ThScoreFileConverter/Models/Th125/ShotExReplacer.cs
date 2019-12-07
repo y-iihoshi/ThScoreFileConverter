@@ -107,8 +107,8 @@ namespace ThScoreFileConverter.Models.Th125
 
         private static IEnumerable<Detail> MakeDetailList(IBestShotHeader header)
         {
-            string Str(int value) => Utils.ToNumberString(value);
-            string Fmt(string format, object value) => Utils.Format(format, value);
+            static string Str(int value) => Utils.ToNumberString(value);
+            static string Fmt(string format, object value) => Utils.Format(format, value);
 
             return new[]
             {

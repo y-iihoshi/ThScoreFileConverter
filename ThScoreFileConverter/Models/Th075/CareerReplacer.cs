@@ -50,7 +50,7 @@ namespace ThScoreFileConverter.Models.Th075
                     }
                 }
 
-                int ToInteger(short value) => value;
+                static int ToInteger(short value) => value;
                 Func<IClearData, IEnumerable<int>> getValues;
                 if (type == 1)
                     getValues = data => data.MaxBonuses;

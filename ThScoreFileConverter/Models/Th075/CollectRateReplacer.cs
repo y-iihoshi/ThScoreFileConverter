@@ -49,7 +49,7 @@ namespace ThScoreFileConverter.Models.Th075
                     => Definitions.CardIdTable[chara]
                         .Select((id, index) => (id, index))
                         .Where(pair => Definitions.CardTable[pair.id].Level == lv);
-                bool IsPositive(short value) => value > 0;
+                static bool IsPositive(short value) => value > 0;
 
                 if (level == LevelWithTotal.Total)
                 {
