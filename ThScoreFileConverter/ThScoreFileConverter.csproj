@@ -2,6 +2,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net48</TargetFramework>
+    <LangVersion>latest</LangVersion>
     <UseWPF>true</UseWPF>
     <Authors>IIHOSHI Yoshinori</Authors>
     <Company>None</Company>
