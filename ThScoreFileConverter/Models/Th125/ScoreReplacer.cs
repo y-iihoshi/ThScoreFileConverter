@@ -42,24 +42,18 @@ namespace ThScoreFileConverter.Models.Th125
                 var score = scores.FirstOrDefault(elem =>
                     (elem != null) && (elem.Chara == chara) && elem.LevelScene.Equals(key));
 
-                switch (type)
+                return type switch
                 {
-                    case 1:     // high score
-                        return (score != null) ? Utils.ToNumberString(score.HighScore) : "0";
-                    case 2:     // bestshot score
-                        return (score != null) ? Utils.ToNumberString(score.BestshotScore) : "0";
-                    case 3:     // num of shots
-                        return (score != null) ? Utils.ToNumberString(score.TrialCount) : "0";
-                    case 4:     // num of shots for the first success
-                        return (score != null) ? Utils.ToNumberString(score.FirstSuccess) : "0";
-                    case 5:     // date & time
-                        return (score != null)
-                            ? new DateTime(1970, 1, 1).AddSeconds(score.DateTime).ToLocalTime()
-                                .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture)
-                            : "----/--/-- --:--:--";
-                    default:    // unreachable
-                        return match.ToString();
-                }
+                    1 => (score != null) ? Utils.ToNumberString(score.HighScore) : "0",
+                    2 => (score != null) ? Utils.ToNumberString(score.BestshotScore) : "0",
+                    3 => (score != null) ? Utils.ToNumberString(score.TrialCount) : "0",
+                    4 => (score != null) ? Utils.ToNumberString(score.FirstSuccess) : "0",
+                    5 => (score != null)
+                        ? new DateTime(1970, 1, 1).AddSeconds(score.DateTime).ToLocalTime()
+                            .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture)
+                        : "----/--/-- --:--:--",
+                    _ => match.ToString(),  // unreachable
+                };
             });
         }
 

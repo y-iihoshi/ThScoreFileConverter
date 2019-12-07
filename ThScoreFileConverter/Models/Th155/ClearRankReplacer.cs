@@ -33,21 +33,15 @@ namespace ThScoreFileConverter.Models.Th155
 
                 static LevelFlags ToLevelFlag(Level lv)
                 {
-                    switch (lv)
+                    return lv switch
                     {
-                        case Level.Easy:
-                            return LevelFlags.Easy;
-                        case Level.Normal:
-                            return LevelFlags.Normal;
-                        case Level.Hard:
-                            return LevelFlags.Hard;
-                        case Level.Lunatic:
-                            return LevelFlags.Lunatic;
-                        case Level.OverDrive:
-                            return LevelFlags.OverDrive;
-                        default:
-                            return LevelFlags.None;
-                    }
+                        Level.Easy      => LevelFlags.Easy,
+                        Level.Normal    => LevelFlags.Normal,
+                        Level.Hard      => LevelFlags.Hard,
+                        Level.Lunatic   => LevelFlags.Lunatic,
+                        Level.OverDrive => LevelFlags.OverDrive,
+                        _               => LevelFlags.None,
+                    };
                 }
 
                 if (storyDictionary.TryGetValue(chara, out var story)

@@ -31,19 +31,14 @@ namespace ThScoreFileConverter.Models.Th095
             {
                 var type = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
 
-                switch (type)
+                return type switch
                 {
-                    case 1:     // total score
-                        return Utils.ToNumberString(scores.Sum(score => (score != null) ? score.HighScore : 0L));
-                    case 2:     // total of bestshot scores
-                        return Utils.ToNumberString(scores.Sum(score => (score != null) ? score.BestshotScore : 0L));
-                    case 3:     // total of num of shots
-                        return Utils.ToNumberString(scores.Sum(score => (score != null) ? score.TrialCount : 0));
-                    case 4:     // num of succeeded scenes
-                        return scores.Count(score => score?.HighScore > 0).ToString(CultureInfo.CurrentCulture);
-                    default:    // unreachable
-                        return match.ToString();
-                }
+                    1 => Utils.ToNumberString(scores.Sum(score => (score != null) ? score.HighScore : 0L)),
+                    2 => Utils.ToNumberString(scores.Sum(score => (score != null) ? score.BestshotScore : 0L)),
+                    3 => Utils.ToNumberString(scores.Sum(score => (score != null) ? score.TrialCount : 0)),
+                    4 => scores.Count(score => score?.HighScore > 0).ToString(CultureInfo.CurrentCulture),
+                    _ => match.ToString(),  // unreachable
+                };
             });
         }
 

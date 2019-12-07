@@ -38,19 +38,14 @@ namespace ThScoreFileConverter.Models.Th075
 
                 var data = clearData.TryGetValue(((CharaWithReserved)chara, level), out var value)
                     ? value : new ClearData();
-                switch (type)
+                return type switch
                 {
-                    case 1:
-                        return Utils.ToNumberString(data.UseCount);
-                    case 2:
-                        return Utils.ToNumberString(data.ClearCount);
-                    case 3:
-                        return Utils.ToNumberString(data.MaxCombo);
-                    case 4:
-                        return Utils.ToNumberString(data.MaxDamage);
-                    default:
-                        return match.ToString();
-                }
+                    1 => Utils.ToNumberString(data.UseCount),
+                    2 => Utils.ToNumberString(data.ClearCount),
+                    3 => Utils.ToNumberString(data.MaxCombo),
+                    4 => Utils.ToNumberString(data.MaxDamage),
+                    _ => match.ToString(),  // unreachable
+                };
             });
         }
 

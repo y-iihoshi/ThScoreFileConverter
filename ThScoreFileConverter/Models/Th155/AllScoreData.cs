@@ -55,33 +55,21 @@ namespace ThScoreFileConverter.Models.Th155
         {
             if (obj is SQString str)
             {
-                switch (str)
+                return str.Value switch
                 {
-                    case "reimu":
-                        return StoryChara.ReimuKasen;
-                    case "marisa":
-                        return StoryChara.MarisaKoishi;
-                    case "nitori":
-                        return StoryChara.NitoriKokoro;
-                    case "usami":
-                        return StoryChara.SumirekoDoremy;
-                    case "tenshi":
-                        return StoryChara.TenshiShinmyoumaru;
-                    case "miko":
-                        return StoryChara.MikoByakuren;
-                    case "yukari":
-                        return StoryChara.YukariReimu;
-                    case "mamizou":
-                        return StoryChara.MamizouMokou;
-                    case "udonge":
-                        return StoryChara.ReisenDoremy;
-                    case "futo":
-                        return StoryChara.FutoIchirin;
-                    case "jyoon":
-                        return StoryChara.JoonShion;
-                    default:
-                        return null;
-                }
+                    "reimu"   => StoryChara.ReimuKasen,
+                    "marisa"  => StoryChara.MarisaKoishi,
+                    "nitori"  => StoryChara.NitoriKokoro,
+                    "usami"   => StoryChara.SumirekoDoremy,
+                    "tenshi"  => StoryChara.TenshiShinmyoumaru,
+                    "miko"    => StoryChara.MikoByakuren,
+                    "yukari"  => StoryChara.YukariReimu,
+                    "mamizou" => StoryChara.MamizouMokou,
+                    "udonge"  => StoryChara.ReisenDoremy,
+                    "futo"    => StoryChara.FutoIchirin,
+                    "jyoon"   => StoryChara.JoonShion,
+                    _         => null,
+                };
             }
             else
             {

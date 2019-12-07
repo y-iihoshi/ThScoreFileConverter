@@ -68,14 +68,14 @@ namespace ThScoreFileConverter.Models.Th143
                 }
                 else
                 {
-                    switch (type)
+                    return type switch
                     {
-                        case 1: return string.Empty;
-                        case 2: return "0";
-                        case 3: return "0";
-                        case 4: return "----/--/-- --:--:--";
-                        default: return match.ToString();
-                    }
+                        1 => string.Empty,
+                        2 => "0",
+                        3 => "0",
+                        4 => "----/--/-- --:--:--",
+                        _ => match.ToString(),
+                    };
                 }
             });
         }

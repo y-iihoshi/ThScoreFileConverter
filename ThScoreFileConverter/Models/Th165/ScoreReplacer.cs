@@ -44,19 +44,14 @@ namespace ThScoreFileConverter.Models.Th165
                     (elem.Number < Definitions.SpellCards.Count) &&
                     Definitions.SpellCards.ElementAt(elem.Number).Key.Equals(key));
 
-                switch (type)
+                return type switch
                 {
-                    case 1:     // high score
-                        return (score != null) ? Utils.ToNumberString(score.HighScore) : "0";
-                    case 2:     // challenge count
-                        return (score != null) ? Utils.ToNumberString(score.ChallengeCount) : "0";
-                    case 3:     // cleared count
-                        return (score != null) ? Utils.ToNumberString(score.ClearCount) : "0";
-                    case 4:     // num of photos
-                        return (score != null) ? Utils.ToNumberString(score.NumPhotos) : "0";
-                    default:    // unreachable
-                        return match.ToString();
-                }
+                    1 => (score != null) ? Utils.ToNumberString(score.HighScore) : "0",
+                    2 => (score != null) ? Utils.ToNumberString(score.ChallengeCount) : "0",
+                    3 => (score != null) ? Utils.ToNumberString(score.ClearCount) : "0",
+                    4 => (score != null) ? Utils.ToNumberString(score.NumPhotos) : "0",
+                    _ => match.ToString(),  // unreachable
+                };
             });
         }
 

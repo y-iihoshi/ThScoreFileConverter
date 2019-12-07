@@ -33,23 +33,16 @@ namespace ThScoreFileConverter.Models.Th165
             {
                 var type = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
 
-                switch (type)
+                return type switch
                 {
-                    case 1:     // total score
-                        return Utils.ToNumberString(scores.Sum(score => score.HighScore));
-                    case 2:     // total of challenge counts
-                        return Utils.ToNumberString(scores.Sum(score => score.ChallengeCount));
-                    case 3:     // total of cleared counts
-                        return Utils.ToNumberString(scores.Sum(score => score.ClearCount));
-                    case 4:     // num of cleared scenes
-                        return Utils.ToNumberString(scores.Count(score => score.ClearCount > 0));
-                    case 5:     // num of photos
-                        return Utils.ToNumberString(scores.Sum(score => score.NumPhotos));
-                    case 6:     // num of nicknames
-                        return Utils.ToNumberString(status.NicknameFlags.Count(flag => flag > 0));
-                    default:    // unreachable
-                        return match.ToString();
-                }
+                    1 => Utils.ToNumberString(scores.Sum(score => score.HighScore)),
+                    2 => Utils.ToNumberString(scores.Sum(score => score.ChallengeCount)),
+                    3 => Utils.ToNumberString(scores.Sum(score => score.ClearCount)),
+                    4 => Utils.ToNumberString(scores.Count(score => score.ClearCount > 0)),
+                    5 => Utils.ToNumberString(scores.Sum(score => score.NumPhotos)),
+                    6 => Utils.ToNumberString(status.NicknameFlags.Count(flag => flag > 0)),
+                    _ => match.ToString(),  // unreachable
+                };
             });
         }
 

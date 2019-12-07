@@ -34,17 +34,13 @@ namespace ThScoreFileConverter.Models.Th145
                 if (clearRanks.TryGetValue(level, out var ranks) && ranks.TryGetValue(chara, out var rank))
                 {
                     // FIXME
-                    switch (rank)
+                    return rank switch
                     {
-                        case 1:
-                            return "Bronze";
-                        case 2:
-                            return "Silver";
-                        case 3:
-                            return "Gold";
-                        default:
-                            return "Not Clear";
-                    }
+                        1 => "Bronze",
+                        2 => "Silver",
+                        3 => "Gold",
+                        _ => "Not Clear",
+                    };
                 }
                 else
                 {

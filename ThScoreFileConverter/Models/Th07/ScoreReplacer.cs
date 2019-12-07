@@ -45,21 +45,15 @@ namespace ThScoreFileConverter.Models.Th07
                 var score = (rankings.TryGetValue(key, out var ranking) && (rank < ranking.Count))
                     ? ranking[rank] : Definitions.InitialRanking[rank];
 
-                switch (type)
+                return type switch
                 {
-                    case 1:     // name
-                        return Encoding.Default.GetString(score.Name.ToArray()).Split('\0')[0];
-                    case 2:     // score
-                        return Utils.ToNumberString((score.Score * 10) + score.ContinueCount);
-                    case 3:     // stage
-                        return score.StageProgress.ToShortName();
-                    case 4:     // date
-                        return Encoding.Default.GetString(score.Date.ToArray()).TrimEnd('\0');
-                    case 5:     // slow rate
-                        return Utils.Format("{0:F3}%", score.SlowRate);
-                    default:    // unreachable
-                        return match.ToString();
-                }
+                    1 => Encoding.Default.GetString(score.Name.ToArray()).Split('\0')[0],
+                    2 => Utils.ToNumberString((score.Score * 10) + score.ContinueCount),
+                    3 => score.StageProgress.ToShortName(),
+                    4 => Encoding.Default.GetString(score.Date.ToArray()).TrimEnd('\0'),
+                    5 => Utils.Format("{0:F3}%", score.SlowRate),
+                    _ => match.ToString(),  // unreachable
+                };
             });
         }
 

@@ -41,17 +41,13 @@ namespace ThScoreFileConverter.Models.Th075
                 var score = clearData.TryGetValue(key, out var data) && rank < data.Ranking.Count
                     ? data.Ranking[rank] : new HighScore();
 
-                switch (type)
+                return type switch
                 {
-                    case 1:     // name
-                        return score.Name;
-                    case 2:     // score
-                        return Utils.ToNumberString(score.Score);
-                    case 3:     // date
-                        return Utils.Format("{0:D2}/{1:D2}", score.Month, score.Day);
-                    default:    // unreachable
-                        return match.ToString();
-                }
+                    1 => score.Name,
+                    2 => Utils.ToNumberString(score.Score),
+                    3 => Utils.Format("{0:D2}/{1:D2}", score.Month, score.Day),
+                    _ => match.ToString(),  // unreachable
+                };
             });
         }
 

@@ -34,34 +34,26 @@ namespace ThScoreFileConverter.Models.Th125
                 var method = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
+                bool IsTarget(IScore score)
+                    => IsTargetImpl(score, chara, method);
                 bool TriedAndSucceeded(IScore score)
-                    => IsTarget(score, chara, method) && (score.TrialCount > 0) && (score.FirstSuccess > 0);
+                    => IsTarget(score) && (score.TrialCount > 0) && (score.FirstSuccess > 0);
 
-                switch (type)
+                return type switch
                 {
-                    case 1:     // total score
-                        return Utils.ToNumberString(
-                            scores.Sum(score => TriedAndSucceeded(score) ? score.HighScore : 0L));
-                    case 2:     // total of bestshot scores
-                        return Utils.ToNumberString(
-                            scores.Sum(score => IsTarget(score, chara, method) ? score.BestshotScore : 0L));
-                    case 3:     // total of num of shots
-                        return Utils.ToNumberString(
-                            scores.Sum(score => IsTarget(score, chara, method) ? score.TrialCount : 0));
-                    case 4:     // total of num of shots for the first success
-                        return Utils.ToNumberString(
-                            scores.Sum(score => TriedAndSucceeded(score) ? score.FirstSuccess : 0L));
-                    case 5:     // num of succeeded scenes
-                        return scores.Count(TriedAndSucceeded).ToString(CultureInfo.CurrentCulture);
-                    default:    // unreachable
-                        return match.ToString();
-                }
+                    1 => Utils.ToNumberString(scores.Sum(score => TriedAndSucceeded(score) ? score.HighScore : 0L)),
+                    2 => Utils.ToNumberString(scores.Sum(score => IsTarget(score) ? score.BestshotScore : 0L)),
+                    3 => Utils.ToNumberString(scores.Sum(score => IsTarget(score) ? score.TrialCount : 0)),
+                    4 => Utils.ToNumberString(scores.Sum(score => TriedAndSucceeded(score) ? score.FirstSuccess : 0L)),
+                    5 => scores.Count(TriedAndSucceeded).ToString(CultureInfo.CurrentCulture),
+                    _ => match.ToString(),  // unreachable
+                };
             });
         }
 
         public string Replace(string input) => Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
 
-        private static bool IsTarget(IScore score, Chara chara, int method)
+        private static bool IsTargetImpl(IScore score, Chara chara, int method)
         {
             if (score == null)
                 return false;
