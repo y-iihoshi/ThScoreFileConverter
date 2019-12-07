@@ -13,7 +13,7 @@ namespace ThScoreFileConverterTests.Models.Th17
         internal static IReadOnlyDictionary<CharaWithTotal, IClearData> ClearDataDictionary { get; } =
             new List<IClearData>
             {
-                new ClearDataStub(ClearDataTests.GetValidStub()),
+                new ClearDataStub(ClearDataTests.MakeValidStub()),
             }.ToDictionary(data => data.Chara);
 
         [TestMethod]

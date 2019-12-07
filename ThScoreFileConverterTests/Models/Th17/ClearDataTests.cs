@@ -19,7 +19,7 @@ namespace ThScoreFileConverterTests.Models.Th17
     [TestClass]
     public class ClearDataTests
     {
-        internal static ClearDataStub GetValidStub()
+        internal static ClearDataStub MakeValidStub()
         {
             var levels = Utils.GetEnumerator<Level>();
             var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();
@@ -130,7 +130,7 @@ namespace ThScoreFileConverterTests.Models.Th17
         [TestMethod]
         public void ClearDataTestChapter() => TestUtils.Wrap(() =>
         {
-            var stub = GetValidStub();
+            var stub = MakeValidStub();
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
             var clearData = new ClearData(chapter);
@@ -153,7 +153,7 @@ namespace ThScoreFileConverterTests.Models.Th17
         [ExpectedException(typeof(InvalidDataException))]
         public void ClearDataTestInvalidSignature() => TestUtils.Wrap(() =>
         {
-            var stub = GetValidStub();
+            var stub = MakeValidStub();
             stub.Signature = stub.Signature.ToLowerInvariant();
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
@@ -166,7 +166,7 @@ namespace ThScoreFileConverterTests.Models.Th17
         [ExpectedException(typeof(InvalidDataException))]
         public void ClearDataTestInvalidVersion() => TestUtils.Wrap(() =>
         {
-            var stub = GetValidStub();
+            var stub = MakeValidStub();
             ++stub.Version;
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));
@@ -179,7 +179,7 @@ namespace ThScoreFileConverterTests.Models.Th17
         [ExpectedException(typeof(InvalidDataException))]
         public void ClearDataTestInvalidSize() => TestUtils.Wrap(() =>
         {
-            var stub = GetValidStub();
+            var stub = MakeValidStub();
             --stub.Size;
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(stub));

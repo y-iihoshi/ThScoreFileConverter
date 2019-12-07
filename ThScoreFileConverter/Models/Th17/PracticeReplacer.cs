@@ -7,9 +7,9 @@
 
 #pragma warning disable SA1600 // Elements should be documented
 
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using static ThScoreFileConverter.Models.Th17.Parsers;
 
 namespace ThScoreFileConverter.Models.Th17
 {
@@ -17,34 +17,32 @@ namespace ThScoreFileConverter.Models.Th17
     internal class PracticeReplacer : IStringReplaceable
     {
         private static readonly string Pattern = Utils.Format(
-            @"%T17PRAC({0})({1})({2})", LevelParser.Pattern, CharaParser.Pattern, StageParser.Pattern);
+            @"%T17PRAC({0})({1})({2})",
+            Parsers.LevelParser.Pattern,
+            Parsers.CharaParser.Pattern,
+            Parsers.StageParser.Pattern);
 
         private readonly MatchEvaluator evaluator;
 
-        public PracticeReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearData)
+        public PracticeReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
         {
+            if (clearDataDictionary is null)
+                throw new ArgumentNullException(nameof(clearDataDictionary));
+
             this.evaluator = new MatchEvaluator(match =>
             {
-                var level = LevelParser.Parse(match.Groups[1].Value);
-                var chara = (CharaWithTotal)CharaParser.Parse(match.Groups[2].Value);
-                var stage = StageParser.Parse(match.Groups[3].Value);
+                var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
+                var chara = (CharaWithTotal)Parsers.CharaParser.Parse(match.Groups[2].Value);
+                var stage = Parsers.StageParser.Parse(match.Groups[3].Value);
 
                 if (level == Level.Extra)
                     return match.ToString();
                 if (stage == Stage.Extra)
                     return match.ToString();
 
-                if (clearData.ContainsKey(chara))
-                {
-                    var key = (level, (StagePractice)stage);
-                    var practices = clearData[chara].Practices;
-                    return practices.ContainsKey(key)
-                        ? Utils.ToNumberString(practices[key].Score * 10) : "0";
-                }
-                else
-                {
-                    return "0";
-                }
+                return clearDataDictionary.TryGetValue(chara, out var clearData)
+                    && clearData.Practices.TryGetValue((level, (StagePractice)stage), out var practice)
+                    ? Utils.ToNumberString(practice.Score * 10) : "0";
             });
         }
 
