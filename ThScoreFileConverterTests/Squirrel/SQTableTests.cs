@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -40,7 +39,6 @@ namespace ThScoreFileConverterTests.Squirrel
             }
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DataRow(
             new int[] { (int)SQOT.Table, (int)SQOT.Integer, 123, (int)SQOT.Integer, 456, (int)SQOT.Null },
@@ -78,7 +76,6 @@ namespace ThScoreFileConverterTests.Squirrel
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DataRow(new int[] { (int)SQOT.Table, (int)SQOT.Null },
             DisplayName = "empty")]
@@ -90,7 +87,6 @@ namespace ThScoreFileConverterTests.Squirrel
             Assert.AreEqual(0, sqtable.Value.Count());
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DataRow(new int[] { (int)SQOT.Table, (int)SQOT.Integer, 123, (int)SQOT.Integer, (int)SQOT.Null },
             DisplayName = "missing value data")]
@@ -110,7 +106,6 @@ namespace ThScoreFileConverterTests.Squirrel
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DataRow(new int[] { (int)SQOT.Null, (int)SQOT.Integer, 123, (int)SQOT.Integer, 456, (int)SQOT.Null },
             DisplayName = "invalid type")]

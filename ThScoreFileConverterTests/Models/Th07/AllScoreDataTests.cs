@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics.CodeAnalysis;
 using ThScoreFileConverter.Models.Th07;
 using ThScoreFileConverterTests.Models.Th07.Stubs;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
@@ -167,7 +166,6 @@ namespace ThScoreFileConverterTests.Models.Th07
             Assert.AreNotSame(score2, allScoreData.PracticeScores[(score2.Chara, score2.Level, score2.Stage)]);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DataRow(Level.Extra, Stage.Extra)]
         [DataRow(Level.Extra, Stage.Six)]

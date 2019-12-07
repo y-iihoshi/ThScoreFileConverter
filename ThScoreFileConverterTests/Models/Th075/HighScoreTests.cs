@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Extensions;
@@ -90,7 +89,6 @@ namespace ThScoreFileConverterTests.Models.Th075
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DataRow(0, 0)]
         [DataRow(1, 1)]
@@ -131,7 +129,6 @@ namespace ThScoreFileConverterTests.Models.Th075
             Validate(stub, highScore);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DataRow(0, -1)]
         [DataRow(0, 1)]

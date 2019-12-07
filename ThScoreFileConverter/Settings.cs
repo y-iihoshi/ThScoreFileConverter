@@ -6,7 +6,6 @@
 //-----------------------------------------------------------------------
 
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -104,7 +103,6 @@ namespace ThScoreFileConverter
         /// Loads the settings from the specified XML file.
         /// </summary>
         /// <param name="path">The path of the XML file to load.</param>
-        [SuppressMessage("Microsoft.Usage", "CA2202:DoNotDisposeObjectsMultipleTimes", Justification = "Reviewed.")]
         public void Load(string path)
         {
             try
@@ -151,7 +149,6 @@ namespace ThScoreFileConverter
         /// Saves the settings to the specified XML file.
         /// </summary>
         /// <param name="path">The path of the XML file to save.</param>
-        [SuppressMessage("Microsoft.Usage", "CA2202:DoNotDisposeObjectsMultipleTimes", Justification = "Reviewed.")]
         public void Save(string path)
         {
             using (var stream = new FileStream(path, FileMode.Create, FileAccess.Write))

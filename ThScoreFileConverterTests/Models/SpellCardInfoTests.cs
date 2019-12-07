@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverterTests.Extensions;
 
@@ -59,7 +58,6 @@ namespace ThScoreFileConverterTests.Models
         public static IEnumerable<object[]> InvalidStages
             => TestUtils.GetInvalidEnumerators(typeof(Stage));
 
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidStages))]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
@@ -73,7 +71,6 @@ namespace ThScoreFileConverterTests.Models
         public static IEnumerable<object[]> InvalidLevels
             => TestUtils.GetInvalidEnumerators(typeof(Level));
 
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]

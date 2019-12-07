@@ -62,43 +62,36 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets a title of the About window.
         /// </summary>
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For bindings.")]
         public string Title { get; private set; }
 
         /// <summary>
         /// Gets the icon displaying on the About window.
         /// </summary>
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For bindings.")]
         public ImageSource Icon { get; private set; }
 
         /// <summary>
         /// Gets a name of this assembly.
         /// </summary>
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For bindings.")]
         public string Name { get; private set; }
 
         /// <summary>
         /// Gets a version string of this assembly.
         /// </summary>
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For bindings.")]
         public string Version { get; private set; }
 
         /// <summary>
         /// Gets a copyright string of this assembly.
         /// </summary>
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For bindings.")]
         public string Copyright { get; private set; }
 
         /// <summary>
         /// Gets a URI string.
         /// </summary>
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For bindings.")]
         public string Uri { get; private set; }
 
         /// <summary>
         /// Gets a command which opens the specified URI.
         /// </summary>
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For bindings.")]
         public DelegateCommand<object> OpenUriCommand
         {
             get

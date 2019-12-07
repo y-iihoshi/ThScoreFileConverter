@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -40,7 +39,6 @@ namespace ThScoreFileConverterTests.Squirrel
             }
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DataRow("abc")]
         [DataRow("博麗 霊夢")]
@@ -65,7 +63,6 @@ namespace ThScoreFileConverterTests.Squirrel
             Assert.Fail(TestUtils.Unreachable);
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DataRow(0, "")]
         [DataRow(0, "abc")]
@@ -83,7 +80,6 @@ namespace ThScoreFileConverterTests.Squirrel
             Assert.AreEqual(string.Empty, sqstring, false, CultureInfo.InvariantCulture);
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DataRow("abc")]
         [DataRow("博麗 霊夢")]

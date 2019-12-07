@@ -123,7 +123,6 @@ namespace ThScoreFileConverterTests.Models.Th095
         public static IEnumerable<object[]> InvalidLevels
             => TestUtils.GetInvalidEnumerators(typeof(Level));
 
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
         [ExpectedException(typeof(InvalidCastException))]
@@ -138,7 +137,6 @@ namespace ThScoreFileConverterTests.Models.Th095
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DataRow("SC", (ushort)1, 0x60, true)]
         [DataRow("sc", (ushort)1, 0x60, false)]

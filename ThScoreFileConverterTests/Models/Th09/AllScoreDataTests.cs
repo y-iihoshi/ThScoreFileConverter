@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics.CodeAnalysis;
 using ThScoreFileConverter.Models.Th09;
 using ThScoreFileConverterTests.Models.Th09.Stubs;
 using Chapter = ThScoreFileConverter.Models.Th06.Chapter;
@@ -91,7 +90,6 @@ namespace ThScoreFileConverterTests.Models.Th09
             Assert.AreSame(score2, allScoreData.Rankings[(stub.Chara, stub.Level)][stub.Rank]);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DataRow((short)-1)]
         [DataRow((short)5)]

@@ -160,7 +160,6 @@ namespace ThScoreFileConverterTests.Models.Th13
         public void Th13ReadFromTestExceededName()
             => ReadFromTestExceededNameHelper<LevelPractice>();
 
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidTh13LevelPractices))]
         [ExpectedException(typeof(InvalidCastException))]
@@ -194,7 +193,6 @@ namespace ThScoreFileConverterTests.Models.Th13
         public void Th14ReadFromTestExceededName()
             => ReadFromTestExceededNameHelper<Level>();
 
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
         [ExpectedException(typeof(InvalidCastException))]
@@ -228,7 +226,6 @@ namespace ThScoreFileConverterTests.Models.Th13
         public void Th16ReadFromTestExceededName()
             => ReadFromTestExceededNameHelper<Level>();
 
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
         [ExpectedException(typeof(InvalidCastException))]

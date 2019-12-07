@@ -8,7 +8,6 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using ThScoreFileConverter.Extensions;
 
@@ -35,7 +34,6 @@ namespace ThScoreFileConverter.Models.Th06
 
         public short CardId { get; }    // 1-based
 
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
         public IEnumerable<byte> CardName { get; }  // Null-terminated
 
         public ushort TrialCount { get; }

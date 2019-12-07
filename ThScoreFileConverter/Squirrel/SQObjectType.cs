@@ -1,9 +1,11 @@
-﻿// <copyright file="SQObjectType.cs" company="None">
+﻿//-----------------------------------------------------------------------
+// <copyright file="SQObjectType.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
 // </copyright>
+//-----------------------------------------------------------------------
 
-using System.Diagnostics.CodeAnalysis;
+#pragma warning disable CA1720 // Identifiers should not contain type names
 
 namespace ThScoreFileConverter.Squirrel
 {
@@ -11,7 +13,6 @@ namespace ThScoreFileConverter.Squirrel
     /// Represents an object type defined by Squirrel 3.1.
     /// Refer to https://github.com/albertodemichelis/squirrel/blob/master/include/squirrel.h for details.
     /// </summary>
-    [SuppressMessage("Naming", "CA1720:Identifier contains type name", Justification = "Reviewed.")]
     public enum SQObjectType
     {
         /// <summary>

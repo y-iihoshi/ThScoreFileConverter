@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Actions;
 
 namespace ThScoreFileConverterTests.Interactivity
@@ -7,7 +6,6 @@ namespace ThScoreFileConverterTests.Interactivity
     [TestClass]
     public class FolderBrowserDialogActionResultTests
     {
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DataRow(null)]
         [DataRow("")]

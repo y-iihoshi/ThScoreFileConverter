@@ -74,7 +74,6 @@ namespace ThScoreFileConverterTests.Models.Th12
             Assert.Fail(TestUtils.Unreachable);
         });
 
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DataRow("ST", (ushort)2, 0x448, true)]
         [DataRow("st", (ushort)2, 0x448, false)]

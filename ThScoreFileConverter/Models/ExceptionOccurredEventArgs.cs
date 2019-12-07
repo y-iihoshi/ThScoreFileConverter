@@ -6,16 +6,12 @@
 //-----------------------------------------------------------------------
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace ThScoreFileConverter.Models
 {
     /// <summary>
     /// Represents the event data that indicates occurring of an exception.
     /// </summary>
-#if DEBUG
-    [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
-#endif
     internal class ExceptionOccurredEventArgs : EventArgs
     {
         /// <summary>

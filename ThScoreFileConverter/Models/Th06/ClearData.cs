@@ -8,7 +8,6 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 
@@ -33,10 +32,8 @@ namespace ThScoreFileConverter.Models.Th06
             }
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
         public IReadOnlyDictionary<Level, byte> StoryFlags { get; }     // really...?
 
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "For future use.")]
         public IReadOnlyDictionary<Level, byte> PracticeFlags { get; }  // really...?
 
         public Chara Chara { get; }
