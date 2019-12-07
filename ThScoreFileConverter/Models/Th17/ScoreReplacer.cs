@@ -34,12 +34,13 @@ namespace ThScoreFileConverter.Models.Th17
             {
                 var level = (LevelWithTotal)LevelParser.Parse(match.Groups[1].Value);
                 var chara = (CharaWithTotal)CharaParser.Parse(match.Groups[2].Value);
-                var rank = Utils.ToZeroBased(
-                    int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
+                var rank = Utils.ToZeroBased(int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture));
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
                 var ranking = clearDataDictionary.TryGetValue(chara, out var clearData)
-                    ? clearData.Rankings[level][rank] : new ScoreData();
+                    && clearData.Rankings.TryGetValue(level, out var rankings)
+                    && (rank < rankings.Count)
+                    ? rankings[rank] : new ScoreData();
                 switch (type)
                 {
                     case 1:     // name

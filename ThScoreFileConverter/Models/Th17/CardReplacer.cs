@@ -11,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Level>;
 
 namespace ThScoreFileConverter.Models.Th17
 {
@@ -32,23 +31,23 @@ namespace ThScoreFileConverter.Models.Th17
                 var number = int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
                 var type = match.Groups[2].Value.ToUpperInvariant();
 
-                if (Definitions.CardTable.ContainsKey(number))
+                if (Definitions.CardTable.TryGetValue(number, out var cardInfo))
                 {
                     if (type == "N")
                     {
                         if (hideUntriedCards)
                         {
-                            var cards = clearDataDictionary.TryGetValue(CharaWithTotal.Total, out var clearData)
-                                ? clearData.Cards : new Dictionary<int, ISpellCard>();
-                            if (!cards.TryGetValue(number, out var card) || !card.HasTried)
+                            if (!clearDataDictionary.TryGetValue(CharaWithTotal.Total, out var clearData)
+                                || !clearData.Cards.TryGetValue(number, out var card)
+                                || !card.HasTried)
                                 return "??????????";
                         }
 
-                        return Definitions.CardTable[number].Name;
+                        return cardInfo.Name;
                     }
                     else
                     {
-                        return Definitions.CardTable[number].Level.ToString();
+                        return cardInfo.Level.ToString();
                     }
                 }
                 else

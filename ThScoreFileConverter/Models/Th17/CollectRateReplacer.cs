@@ -13,7 +13,6 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using static ThScoreFileConverter.Models.Th17.Parsers;
-using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Level>;
 
 namespace ThScoreFileConverter.Models.Th17
 {
@@ -26,7 +25,7 @@ namespace ThScoreFileConverter.Models.Th17
             CharaWithTotalParser.Pattern,
             StageWithTotalParser.Pattern);
 
-        private static readonly Func<ISpellCard, string, int, bool> FindByKindTypeImpl =
+        private static readonly Func<Th13.ISpellCard<Level>, string, int, bool> FindByKindTypeImpl =
             (card, kind, type) =>
             {
                 if (kind == "S")
@@ -63,15 +62,15 @@ namespace ThScoreFileConverter.Models.Th17
                 if (stage == StageWithTotal.Extra)
                     return match.ToString();
 
-                bool FindByKindType(ISpellCard card) => FindByKindTypeImpl(card, kind, type);
+                bool FindByKindType(Th13.ISpellCard<Level> card) => FindByKindTypeImpl(card, kind, type);
 
-                Func<ISpellCard, bool> findByStage;
+                Func<Th13.ISpellCard<Level>, bool> findByStage;
                 if (stage == StageWithTotal.Total)
                     findByStage = card => true;
                 else
                     findByStage = card => Definitions.CardTable[card.Id].Stage == (Stage)stage;
 
-                Func<ISpellCard, bool> findByLevel = card => true;
+                Func<Th13.ISpellCard<Level>, bool> findByLevel = card => true;
                 switch (level)
                 {
                     case LevelWithTotal.Total:
@@ -85,11 +84,11 @@ namespace ThScoreFileConverter.Models.Th17
                         break;
                 }
 
-                var cards = clearDataDictionary.TryGetValue(chara, out var clearData)
-                    ? clearData.Cards : new Dictionary<int, ISpellCard>();
-                return cards.Values
-                    .Count(Utils.MakeAndPredicate(FindByKindType, findByLevel, findByStage))
-                    .ToString(CultureInfo.CurrentCulture);
+                return clearDataDictionary.TryGetValue(chara, out var clearData)
+                    ? clearData.Cards.Values
+                        .Count(Utils.MakeAndPredicate(FindByKindType, findByLevel, findByStage))
+                        .ToString(CultureInfo.CurrentCulture)
+                    : "0";
             });
         }
 

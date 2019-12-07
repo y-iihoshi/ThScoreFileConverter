@@ -13,7 +13,6 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using static ThScoreFileConverter.Models.Th17.Parsers;
-using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Level>;
 
 namespace ThScoreFileConverter.Models.Th17
 {
@@ -37,7 +36,7 @@ namespace ThScoreFileConverter.Models.Th17
                 var chara = CharaWithTotalParser.Parse(match.Groups[3].Value);
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
-                Func<ISpellCard, int> getCount;
+                Func<Th13.ISpellCard<Level>, int> getCount;
                 if (kind == "S")
                 {
                     if (type == 1)
@@ -54,7 +53,7 @@ namespace ThScoreFileConverter.Models.Th17
                 }
 
                 var cards = clearDataDictionary.TryGetValue(chara, out var clearData)
-                    ? clearData.Cards : new Dictionary<int, ISpellCard>();
+                    ? clearData.Cards : new Dictionary<int, Th13.ISpellCard<Level>>();
                 if (number == 0)
                 {
                     return Utils.ToNumberString(cards.Values.Sum(getCount));
