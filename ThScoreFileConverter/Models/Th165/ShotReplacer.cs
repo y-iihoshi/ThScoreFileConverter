@@ -24,24 +24,26 @@ namespace ThScoreFileConverter.Models.Th165
         public ShotReplacer(
             IReadOnlyDictionary<(Day, int), (string Path, IBestShotHeader Header)> bestshots, string outputFilePath)
         {
+            if (bestshots is null)
+                throw new ArgumentNullException(nameof(bestshots));
+
             this.evaluator = new MatchEvaluator(match =>
             {
                 var day = Parsers.DayParser.Parse(match.Groups[1].Value);
                 var scene = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
 
                 var key = (day, scene);
-                if (!Definitions.SpellCards.ContainsKey(key))
+                if (!Definitions.SpellCards.TryGetValue(key, out var enemyCardPair))
                     return match.ToString();
 
-                if (!string.IsNullOrEmpty(outputFilePath) && bestshots.TryGetValue(key, out var bestshot))
+                if (bestshots.TryGetValue(key, out var bestshot) &&
+                    Uri.TryCreate(outputFilePath, UriKind.Absolute, out var outputFileUri) &&
+                    Uri.TryCreate(bestshot.Path, UriKind.Absolute, out var bestshotUri))
                 {
-                    var relativePath = new Uri(outputFilePath)
-                        .MakeRelativeUri(new Uri(bestshot.Path)).OriginalString;
-                    var alternativeString = Utils.Format("SpellName: {0}", Definitions.SpellCards[key].Card);
+                    var relativePath = outputFileUri.MakeRelativeUri(bestshotUri).OriginalString;
+                    var alternativeString = Utils.Format("SpellName: {0}", enemyCardPair.Card);
                     return Utils.Format(
-                        "<img src=\"{0}\" alt=\"{1}\" title=\"{1}\" border=0>",
-                        relativePath,
-                        alternativeString);
+                        "<img src=\"{0}\" alt=\"{1}\" title=\"{1}\" border=0>", relativePath, alternativeString);
                 }
                 else
                 {
