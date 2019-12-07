@@ -8,6 +8,7 @@ using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th17;
 using ThScoreFileConverterTests.Extensions;
 using ThScoreFileConverterTests.Models.Th17.Stubs;
+using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 
 namespace ThScoreFileConverterTests.Models.Th17
 {

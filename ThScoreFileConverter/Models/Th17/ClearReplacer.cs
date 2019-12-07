@@ -32,12 +32,12 @@ namespace ThScoreFileConverter.Models.Th17
 
                 var rankings = clearDataDictionary[chara].Rankings[level].Where(ranking => ranking.DateTime > 0);
                 var stageProgress = rankings.Any()
-                    ? rankings.Max(ranking => ranking.StageProgress) : StageProgress.None;
+                    ? rankings.Max(ranking => ranking.StageProgress) : Th13.StageProgress.None;
 
-                if (stageProgress == StageProgress.Extra)
+                if (stageProgress == Th13.StageProgress.Extra)
                     return "Not Clear";
-                else if (stageProgress == StageProgress.ExtraClear)
-                    return StageProgress.Clear.ToShortName();
+                else if (stageProgress == Th13.StageProgress.ExtraClear)
+                    return Th13.StageProgress.Clear.ToShortName();
                 else
                     return stageProgress.ToShortName();
             });

@@ -50,11 +50,11 @@ namespace ThScoreFileConverter.Models.Th17
                         return Utils.ToNumberString((ranking.Score * 10) + ranking.ContinueCount);
                     case 3:     // stage
                         if (ranking.DateTime == 0)
-                            return StageProgress.None.ToShortName();
-                        if (ranking.StageProgress == StageProgress.Extra)
+                            return Th13.StageProgress.None.ToShortName();
+                        if (ranking.StageProgress == Th13.StageProgress.Extra)
                             return "Not Clear";
-                        if (ranking.StageProgress == StageProgress.ExtraClear)
-                            return StageProgress.Clear.ToShortName();
+                        if (ranking.StageProgress == Th13.StageProgress.ExtraClear)
+                            return Th13.StageProgress.Clear.ToShortName();
                         return ranking.StageProgress.ToShortName();
                     case 4:     // date & time
                         if (ranking.DateTime == 0)

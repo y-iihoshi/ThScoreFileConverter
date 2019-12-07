@@ -18,7 +18,7 @@ namespace ThScoreFileConverter.Models.Th17
     {
         public uint Score { get; private set; }             // Divided by 10
 
-        public StageProgress StageProgress { get; private set; }
+        public Th13.StageProgress StageProgress { get; private set; }
 
         public byte ContinueCount { get; private set; }
 
@@ -34,7 +34,7 @@ namespace ThScoreFileConverter.Models.Th17
                 throw new ArgumentNullException(nameof(reader));
 
             this.Score = reader.ReadUInt32();
-            this.StageProgress = Utils.ToEnum<StageProgress>(reader.ReadByte());
+            this.StageProgress = Utils.ToEnum<Th13.StageProgress>(reader.ReadByte());
             this.ContinueCount = reader.ReadByte();
             this.Name = reader.ReadExactBytes(10);
             this.DateTime = reader.ReadUInt32();

@@ -7,12 +7,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th17;
 using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverterTests.Models.Th13;
 using ThScoreFileConverterTests.Models.Th13.Stubs;
 using ThScoreFileConverterTests.Models.Th17.Stubs;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 using IPractice = ThScoreFileConverter.Models.Th13.IPractice;
 using ISpellCard = ThScoreFileConverter.Models.Th13.ISpellCard<ThScoreFileConverter.Models.Level>;
+using StageProgress = ThScoreFileConverter.Models.Th13.StageProgress;
 
 namespace ThScoreFileConverterTests.Models.Th17
 {
@@ -92,7 +92,7 @@ namespace ThScoreFileConverterTests.Models.Th17
                 0u,
                 clearData.ClearFlags.Values.ToArray(),
                 0u,
-                clearData.Practices.Values.SelectMany(practice => PracticeTests.MakeByteArray(practice)).ToArray(),
+                clearData.Practices.Values.SelectMany(practice => Th13.PracticeTests.MakeByteArray(practice)).ToArray(),
                 new byte[0x40]);
 
         internal static void Validate(IClearData expected, IClearData actual)
@@ -118,7 +118,7 @@ namespace ThScoreFileConverterTests.Models.Th17
 
             foreach (var pair in expected.Practices)
             {
-                PracticeTests.Validate(pair.Value, actual.Practices[pair.Key]);
+                Th13.PracticeTests.Validate(pair.Value, actual.Practices[pair.Key]);
             }
 
             foreach (var pair in expected.Cards)

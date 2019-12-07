@@ -23,6 +23,6 @@ namespace ThScoreFileConverter.Models.Th17
 
         float SlowRate { get; }
 
-        StageProgress StageProgress { get; }
+        Th13.StageProgress StageProgress { get; }
     }
 }
