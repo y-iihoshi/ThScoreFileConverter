@@ -14,7 +14,7 @@ namespace ThScoreFileConverterTests.Models.Th13
     [TestClass]
     public class SpellCardTests
     {
-        internal static SpellCardStub<TLevel> GetValidStub<TLevel>()
+        internal static SpellCardStub<TLevel> MakeValidStub<TLevel>()
             where TLevel : struct, Enum
             => new SpellCardStub<TLevel>()
             {
@@ -70,7 +70,7 @@ namespace ThScoreFileConverterTests.Models.Th13
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var stub = GetValidStub<TLevel>();
+                var stub = MakeValidStub<TLevel>();
 
                 var spellCard = TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(stub));
 
@@ -95,7 +95,7 @@ namespace ThScoreFileConverterTests.Models.Th13
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var stub = GetValidStub<TLevel>();
+                var stub = MakeValidStub<TLevel>();
                 stub.Name = stub.Name.SkipLast(1).ToArray();
 
                 _ = TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(stub));
@@ -108,7 +108,7 @@ namespace ThScoreFileConverterTests.Models.Th13
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var stub = GetValidStub<TLevel>();
+                var stub = MakeValidStub<TLevel>();
                 stub.Name = stub.Name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
 
                 _ = TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(stub));
@@ -121,7 +121,7 @@ namespace ThScoreFileConverterTests.Models.Th13
             where TLevel : struct, Enum
             => TestUtils.Wrap(() =>
             {
-                var stub = GetValidStub<TLevel>();
+                var stub = MakeValidStub<TLevel>();
                 stub.Level = TestUtils.Cast<TLevel>(level);
 
                 _ = TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(stub));

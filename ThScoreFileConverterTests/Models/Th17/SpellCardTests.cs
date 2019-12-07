@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Extensions;
@@ -17,29 +15,7 @@ namespace ThScoreFileConverterTests.Models.Th17
     [TestClass]
     public class SpellCardTests
     {
-        internal static SpellCardStub<Level> ValidStub { get; } = GetValidStub<Level>();
-
-        internal static SpellCard Create(byte[] array)
-        {
-            var spellCard = new SpellCard();
-
-            MemoryStream stream = null;
-            try
-            {
-                stream = new MemoryStream(array);
-                using (var reader = new BinaryReader(stream))
-                {
-                    stream = null;
-                    spellCard.ReadFrom(reader);
-                }
-            }
-            finally
-            {
-                stream?.Dispose();
-            }
-
-            return spellCard;
-        }
+        internal static SpellCardStub<Level> ValidStub { get; } = MakeValidStub<Level>();
 
         internal static void Validate(ISpellCard expected, ISpellCard actual)
         {
@@ -66,11 +42,11 @@ namespace ThScoreFileConverterTests.Models.Th17
         [TestMethod]
         public void ReadFromTest()
         {
-            var properties = ValidStub;
+            var stub = ValidStub;
 
-            var spellCard = Create(MakeByteArray(properties));
+            var spellCard = TestUtils.Create<SpellCard>(MakeByteArray(stub));
 
-            Validate(properties, spellCard);
+            Validate(stub, spellCard);
             Assert.IsTrue(spellCard.HasTried);
         }
 
@@ -89,10 +65,10 @@ namespace ThScoreFileConverterTests.Models.Th17
         [ExpectedException(typeof(InvalidCastException))]
         public void ReadFromTestShortenedName()
         {
-            var stub = ValidStub;
+            var stub = new SpellCardStub<Level>(ValidStub);
             stub.Name = stub.Name.SkipLast(1).ToArray();
 
-            _ = Create(MakeByteArray(stub));
+            _ = TestUtils.Create<SpellCard>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         }
@@ -101,26 +77,27 @@ namespace ThScoreFileConverterTests.Models.Th17
         [ExpectedException(typeof(InvalidCastException))]
         public void ReadFromTestExceededName()
         {
-            var stub = ValidStub;
+            var stub = new SpellCardStub<Level>(ValidStub);
             stub.Name = stub.Name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
 
-            _ = Create(MakeByteArray(stub));
+            _ = TestUtils.Create<SpellCard>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         }
 
         public static IEnumerable<object[]> InvalidLevels => Th13.SpellCardTests.InvalidLevels;
 
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
         [ExpectedException(typeof(InvalidCastException))]
         public void ReadFromTestInvalidLevel(int level)
         {
-            var stub = ValidStub;
-            stub.Level = TestUtils.Cast<Level>(level);
+            var stub = new SpellCardStub<Level>(ValidStub)
+            {
+                Level = TestUtils.Cast<Level>(level),
+            };
 
-            _ = Create(MakeByteArray(stub));
+            _ = TestUtils.Create<SpellCard>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         }

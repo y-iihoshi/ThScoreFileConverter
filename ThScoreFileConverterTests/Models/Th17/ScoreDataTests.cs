@@ -4,10 +4,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverterTests.Extensions;
-using ThScoreFileConverter.Models.Th17;
-using ThScoreFileConverterTests.Models.Th17.Stubs;
 using ThScoreFileConverter.Extensions;
+using ThScoreFileConverter.Models.Th17;
+using ThScoreFileConverterTests.Extensions;
+using ThScoreFileConverterTests.Models.Th17.Stubs;
 
 namespace ThScoreFileConverterTests.Models.Th17
 {
@@ -35,28 +35,6 @@ namespace ThScoreFileConverterTests.Models.Th17
                 scoreData.SlowRate,
                 0u);
 
-        internal static ScoreData Create(byte[] array)
-        {
-            var scoreData = new ScoreData();
-
-            MemoryStream stream = null;
-            try
-            {
-                stream = new MemoryStream(array);
-                using (var reader = new BinaryReader(stream))
-                {
-                    stream = null;
-                    scoreData.ReadFrom(reader);
-                }
-            }
-            finally
-            {
-                stream?.Dispose();
-            }
-
-            return scoreData;
-        }
-
         internal static void Validate(in IScoreData expected, in IScoreData actual)
         {
             Assert.AreEqual(expected.Score, actual.Score);
@@ -81,7 +59,7 @@ namespace ThScoreFileConverterTests.Models.Th17
         {
             var stub = ValidStub;
 
-            var scoreData = Create(MakeByteArray(stub));
+            var scoreData = TestUtils.Create<ScoreData>(MakeByteArray(stub));
 
             Validate(stub, scoreData);
         }
@@ -106,22 +84,24 @@ namespace ThScoreFileConverterTests.Models.Th17
         [ExpectedException(typeof(InvalidCastException))]
         public void ReadFromTestInvalidStageProgress(int stageProgress)
         {
-            var stub = ValidStub;
-            stub.StageProgress = TestUtils.Cast<StageProgress>(stageProgress);
+            var stub = new ScoreDataStub(ValidStub)
+            {
+                StageProgress = TestUtils.Cast<StageProgress>(stageProgress),
+            };
 
-            _ = Create(MakeByteArray(stub));
+            _ = TestUtils.Create<ScoreData>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidCastException))]
+        [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestShortenedName()
         {
-            var stub = ValidStub;
+            var stub = new ScoreDataStub(ValidStub);
             stub.Name = stub.Name.SkipLast(1).ToArray();
 
-            _ = Create(MakeByteArray(stub));
+            _ = TestUtils.Create<ScoreData>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
         }
@@ -129,11 +109,11 @@ namespace ThScoreFileConverterTests.Models.Th17
         [TestMethod]
         public void ReadFromTestExceededName()
         {
-            var stub = ValidStub;
+            var stub = new ScoreDataStub(ValidStub);
             var validNameLength = stub.Name.Count();
             stub.Name = stub.Name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
 
-            var scoreData = Create(MakeByteArray(stub));
+            var scoreData = TestUtils.Create<ScoreData>(MakeByteArray(stub));
 
             Assert.AreEqual(stub.Score, scoreData.Score);
             Assert.AreEqual(stub.StageProgress, scoreData.StageProgress);
