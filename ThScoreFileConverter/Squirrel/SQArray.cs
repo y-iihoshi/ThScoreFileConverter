@@ -18,7 +18,7 @@ namespace ThScoreFileConverter.Squirrel
     internal sealed class SQArray : SQObject
     {
         public SQArray()
-            : this(new SQObject[] { })
+            : this(Array.Empty<SQObject>())
         {
         }
 

@@ -159,7 +159,7 @@ namespace ThScoreFileConverter.ViewModels
         }
 
         /// <summary>
-        /// Gets a number string indicating the last selected work.
+        /// Gets or sets a number string indicating the last selected work.
         /// </summary>
         public string LastWorkNumber
         {
@@ -168,7 +168,7 @@ namespace ThScoreFileConverter.ViewModels
                 return Settings.Instance.LastTitle;
             }
 
-            private set
+            set
             {
 #if false
                 // Note: The following occurs CS0206.
@@ -320,7 +320,7 @@ namespace ThScoreFileConverter.ViewModels
         }
 
         /// <summary>
-        /// Gets a name of the output directory for image files.
+        /// Gets or sets a name of the output directory for image files.
         /// </summary>
         public string ImageOutputDirectory
         {
@@ -329,7 +329,7 @@ namespace ThScoreFileConverter.ViewModels
                 return CurrentSetting.ImageOutputDirectory;
             }
 
-            private set
+            set
             {
                 if (CurrentSetting.ImageOutputDirectory != value)
                 {
@@ -351,7 +351,7 @@ namespace ThScoreFileConverter.ViewModels
         }
 
         /// <summary>
-        /// Gets a value indicating whether the conversion process hides untried cards.
+        /// Gets or sets a value indicating whether the conversion process hides untried cards.
         /// </summary>
         public bool HidesUntriedCards
         {
@@ -360,7 +360,7 @@ namespace ThScoreFileConverter.ViewModels
                 return CurrentSetting.HideUntriedCards;
             }
 
-            private set
+            set
             {
                 if (CurrentSetting.HideUntriedCards != value)
                 {
@@ -567,7 +567,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         private void DeleteAllTemplateFiles()
         {
-            this.TemplateFiles = new string[] { };
+            this.TemplateFiles = Array.Empty<string>();
         }
 
         /// <summary>

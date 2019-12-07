@@ -22,7 +22,7 @@ namespace ThScoreFileConverter.Models.Th06
             this.Signature = string.Empty;
             this.Size1 = 0;
             this.Size2 = 0;
-            this.Data = new byte[] { };
+            this.Data = Array.Empty<byte>();
         }
 
         protected Chapter(Chapter chapter)

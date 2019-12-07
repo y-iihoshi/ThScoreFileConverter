@@ -25,7 +25,7 @@ namespace ThScoreFileConverter.Models.Th10
             this.Version = 0;
             this.Checksum = 0;
             this.Size = 0;
-            this.Data = new byte[] { };
+            this.Data = Array.Empty<byte>();
         }
 
         protected Chapter(Chapter chapter)

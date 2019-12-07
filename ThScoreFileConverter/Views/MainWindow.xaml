@@ -94,7 +94,7 @@
                      Grid.Column="1"
                      Grid.Row="0"
                      IsReadOnly="True"
-                     Text="{Binding ScoreFile, UpdateSourceTrigger=PropertyChanged}"
+                     Text="{Binding ScoreFile, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                      VerticalAlignment="Center">
                 <i:Interaction.Behaviors>
                     <b:UIElementDropBehavior DropCommand="{Binding DropScoreFileCommand}"
@@ -128,7 +128,7 @@
                      Grid.Row="1"
                      IsEnabled="{Binding CanHandleBestShot}"
                      IsReadOnly="True"
-                     Text="{Binding BestShotDirectory, UpdateSourceTrigger=PropertyChanged}"
+                     Text="{Binding BestShotDirectory, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                      VerticalAlignment="Center">
                 <i:Interaction.Behaviors>
                     <b:UIElementDropBehavior DropCommand="{Binding DropBestShotDirectoryCommand}"
@@ -165,7 +165,7 @@
                      ScrollViewer.VerticalScrollBarVisibility="Auto"
                      AllowDrop="True"
                      Height="100"
-                     ItemsSource="{Binding TemplateFiles, Mode=TwoWay}"
+                     ItemsSource="{Binding TemplateFiles}"
                      SelectionMode="Multiple"
                      VerticalAlignment="Top">
                 <i:Interaction.Behaviors>
@@ -209,7 +209,7 @@
                      Grid.Column="1"
                      Grid.Row="3"
                      IsReadOnly="True"
-                     Text="{Binding OutputDirectory, UpdateSourceTrigger=PropertyChanged}"
+                     Text="{Binding OutputDirectory, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                      VerticalAlignment="Center">
                 <i:Interaction.Behaviors>
                     <b:UIElementDropBehavior DropCommand="{Binding DropOutputDirectoryCommand}"
@@ -267,7 +267,7 @@
                  Height="70"
                  IsReadOnly="True"
                  IsUndoEnabled="False"
-                 Text="{Binding Log, NotifyOnTargetUpdated=True}"
+                 Text="{Binding Log, Mode=OneWay, NotifyOnTargetUpdated=True}"
                  TextWrapping="Wrap"
                  VerticalScrollBarVisibility="Visible">
             <i:Interaction.Behaviors>
