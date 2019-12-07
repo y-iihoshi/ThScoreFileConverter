@@ -55,7 +55,7 @@ namespace ThScoreFileConverter.Models.Th155
         {
             if (obj is SQString str)
             {
-                return str.Value switch
+                var chara = str.Value switch
                 {
                     "reimu"   => StoryChara.ReimuKasen,
                     "marisa"  => StoryChara.MarisaKoishi,
@@ -68,8 +68,9 @@ namespace ThScoreFileConverter.Models.Th155
                     "udonge"  => StoryChara.ReisenDoremy,
                     "futo"    => StoryChara.FutoIchirin,
                     "jyoon"   => StoryChara.JoonShion,
-                    _         => null,
+                    _         => (StoryChara?)null,
                 };
+                return chara;
             }
             else
             {
