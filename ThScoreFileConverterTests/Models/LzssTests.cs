@@ -37,103 +37,95 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(NotImplementedException))]
         public void CompressTest()
         {
-            using (var input = new MemoryStream(this.decompressed))
-            using (var output = new MemoryStream())
-            {
-                Lzss.Compress(input, output);
-                Assert.Fail(TestUtils.Unreachable);
-            }
+            using var input = new MemoryStream(this.decompressed);
+            using var output = new MemoryStream();
+
+            Lzss.Compress(input, output);
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod]
         public void ExtractTest()
         {
-            using (var input = new MemoryStream(this.compressed))
-            using (var output = new MemoryStream())
-            {
-                // FIXME: Should be renamed
-                Lzss.Extract(input, output);
+            using var input = new MemoryStream(this.compressed);
+            using var output = new MemoryStream();
 
-                var actual = new byte[output.Length];
-                output.Position = 0;
-                _ = output.Read(actual, 0, actual.Length);
+            // FIXME: Should be renamed
+            Lzss.Extract(input, output);
 
-                CollectionAssert.AreEqual(this.decompressed, actual);
-            }
+            var actual = new byte[output.Length];
+            output.Position = 0;
+            _ = output.Read(actual, 0, actual.Length);
+
+            CollectionAssert.AreEqual(this.decompressed, actual);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void ExtractTestNullInput()
         {
-            using (var output = new MemoryStream())
-            {
-                Lzss.Extract(null, output);
-                Assert.Fail(TestUtils.Unreachable);
-            }
+            using var output = new MemoryStream();
+
+            Lzss.Extract(null, output);
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod]
         public void ExtractTestNullStreamInput()
         {
-            using (var output = new MemoryStream())
-            {
-                Lzss.Extract(Stream.Null, output);
-                Assert.AreEqual(0, output.Length);
-            }
+            using var output = new MemoryStream();
+
+            Lzss.Extract(Stream.Null, output);
+            Assert.AreEqual(0, output.Length);
         }
 
         [TestMethod]
         public void ExtractTestEmptyInput()
         {
-            using (var input = new MemoryStream())
-            using (var output = new MemoryStream())
-            {
-                Lzss.Extract(input, output);
-                Assert.AreEqual(0, output.Length);
-            }
+            using var input = new MemoryStream();
+            using var output = new MemoryStream();
+
+            Lzss.Extract(input, output);
+            Assert.AreEqual(0, output.Length);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ExtractTestUnreadableInput()
         {
-            using (var input = new UnreadableMemoryStream())
-            using (var output = new MemoryStream())
-            {
-                Lzss.Extract(input, output);
-                Assert.Fail(TestUtils.Unreachable);
-            }
+            using var input = new UnreadableMemoryStream();
+            using var output = new MemoryStream();
+
+            Lzss.Extract(input, output);
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ExtractTestClosedInput()
         {
-            using (var output = new MemoryStream())
-            {
-                var input = new MemoryStream(this.compressed);
-                input.Close();
-                Lzss.Extract(input, output);
-                Assert.Fail(TestUtils.Unreachable);
-            }
+            using var output = new MemoryStream();
+            var input = new MemoryStream(this.compressed);
+            input.Close();
+
+            Lzss.Extract(input, output);
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod]
         public void ExtractTestShortenedInput()
         {
             // Since the last 2 bytes of this.compressed are zero, we should subtract 3 to pass this test.
-            using (var input = new MemoryStream(this.compressed, 0, this.compressed.Length - 3))
-            using (var output = new MemoryStream())
-            {
-                Lzss.Extract(input, output);
+            using var input = new MemoryStream(this.compressed, 0, this.compressed.Length - 3);
+            using var output = new MemoryStream();
 
-                var actual = new byte[output.Length];
-                output.Position = 0;
-                _ = output.Read(actual, 0, actual.Length);
+            Lzss.Extract(input, output);
 
-                CollectionAssert.AreNotEqual(this.decompressed, actual);
-            }
+            var actual = new byte[output.Length];
+            output.Position = 0;
+            _ = output.Read(actual, 0, actual.Length);
+
+            CollectionAssert.AreNotEqual(this.decompressed, actual);
         }
 
         [TestMethod]
@@ -143,53 +135,49 @@ namespace ThScoreFileConverterTests.Models
             this.compressed.CopyTo(invalid, 0);
             invalid[invalid.Length - 1] ^= 0x80;
 
-            using (var input = new MemoryStream(invalid))
-            using (var output = new MemoryStream())
-            {
-                Lzss.Extract(input, output);
+            using var input = new MemoryStream(invalid);
+            using var output = new MemoryStream();
 
-                var actual = new byte[output.Length];
-                output.Position = 0;
-                _ = output.Read(actual, 0, actual.Length);
+            Lzss.Extract(input, output);
 
-                CollectionAssert.AreNotEqual(this.decompressed, actual);
-            }
+            var actual = new byte[output.Length];
+            output.Position = 0;
+            _ = output.Read(actual, 0, actual.Length);
+
+            CollectionAssert.AreNotEqual(this.decompressed, actual);
         }
 
         [TestMethod]
         [ExpectedException(typeof(NullReferenceException))]
         public void ExtractTestNullOutput()
         {
-            using (var input = new MemoryStream(this.compressed))
-            {
-                Lzss.Extract(input, null);
-                Assert.Fail(TestUtils.Unreachable);
-            }
+            using var input = new MemoryStream(this.compressed);
+
+            Lzss.Extract(input, null);
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod]
         [ExpectedException(typeof(NotSupportedException))]
         public void ExtractTestUnwritableOutput()
         {
-            using (var input = new MemoryStream(this.compressed))
-            using (var output = new MemoryStream(new byte[] { }, false))
-            {
-                Lzss.Extract(input, output);
-                Assert.Fail(TestUtils.Unreachable);
-            }
+            using var input = new MemoryStream(this.compressed);
+            using var output = new MemoryStream(new byte[] { }, false);
+
+            Lzss.Extract(input, output);
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ObjectDisposedException))]
         public void ExtractTestClosedOutput()
         {
-            using (var input = new MemoryStream(this.compressed))
-            {
-                var output = new MemoryStream();
-                output.Close();
-                Lzss.Extract(input, output);
-                Assert.Fail(TestUtils.Unreachable);
-            }
+            using var input = new MemoryStream(this.compressed);
+            var output = new MemoryStream();
+            output.Close();
+
+            Lzss.Extract(input, output);
+            Assert.Fail(TestUtils.Unreachable);
         }
     }
 }

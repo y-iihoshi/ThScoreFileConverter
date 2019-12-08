@@ -265,17 +265,15 @@ namespace ThScoreFileConverterTests.Models.Th095
             try
             {
                 stream = new MemoryStream();
-                using (var writer = new BinaryWriter(stream))
-                {
-                    stream = null;
-                    header.WriteTo(writer);
+                using var writer = new BinaryWriter(stream);
+                stream = null;
+                header.WriteTo(writer);
 
-                    var wroteByteArray = new byte[writer.BaseStream.Length];
-                    writer.BaseStream.Position = 0;
-                    _ = writer.BaseStream.Read(wroteByteArray, 0, wroteByteArray.Length);
+                var wroteByteArray = new byte[writer.BaseStream.Length];
+                writer.BaseStream.Position = 0;
+                _ = writer.BaseStream.Read(wroteByteArray, 0, wroteByteArray.Length);
 
-                    CollectionAssert.AreEqual(byteArray, wroteByteArray);
-                }
+                CollectionAssert.AreEqual(byteArray, wroteByteArray);
             }
             finally
             {

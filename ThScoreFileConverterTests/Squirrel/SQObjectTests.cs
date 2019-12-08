@@ -17,12 +17,10 @@ namespace ThScoreFileConverterTests.Squirrel
             try
             {
                 stream = new MemoryStream(bytes);
-                using (var reader = new BinaryReader(stream))
-                {
-                    stream = null;
+                using var reader = new BinaryReader(stream);
+                stream = null;
 
-                    return SQObject.Create(reader);
-                }
+                return SQObject.Create(reader);
             }
             finally
             {

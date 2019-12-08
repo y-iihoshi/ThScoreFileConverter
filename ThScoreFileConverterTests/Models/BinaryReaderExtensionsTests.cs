@@ -18,14 +18,12 @@ namespace ThScoreFileConverterTests.Models
             {
                 var bytes = new byte[] { 1, 2, 3, 4, 5 };
                 stream = new MemoryStream(bytes);
-                using (var reader = new BinaryReader(stream))
-                {
-                    stream = null;
+                using var reader = new BinaryReader(stream);
+                stream = null;
 
-                    var readBytes = reader.ReadExactBytes(bytes.Length);
+                var readBytes = reader.ReadExactBytes(bytes.Length);
 
-                    CollectionAssert.That.AreEqual(bytes, readBytes);
-                }
+                CollectionAssert.That.AreEqual(bytes, readBytes);
             }
             finally
             {
@@ -52,14 +50,12 @@ namespace ThScoreFileConverterTests.Models
             try
             {
                 stream = new MemoryStream();
-                using (var reader = new BinaryReader(stream))
-                {
-                    stream = null;
+                using var reader = new BinaryReader(stream);
+                stream = null;
 
-                    _ = reader.ReadExactBytes(1);
+                _ = reader.ReadExactBytes(1);
 
-                    Assert.Fail(TestUtils.Unreachable);
-                }
+                Assert.Fail(TestUtils.Unreachable);
             }
             finally
             {
@@ -76,14 +72,12 @@ namespace ThScoreFileConverterTests.Models
             {
                 var bytes = new byte[] { 1, 2, 3, 4, 5 };
                 stream = new MemoryStream(bytes);
-                using (var reader = new BinaryReader(stream))
-                {
-                    stream = null;
+                using var reader = new BinaryReader(stream);
+                stream = null;
 
-                    _ = reader.ReadExactBytes(-1);
+                _ = reader.ReadExactBytes(-1);
 
-                    Assert.Fail(TestUtils.Unreachable);
-                }
+                Assert.Fail(TestUtils.Unreachable);
             }
             finally
             {
@@ -99,14 +93,12 @@ namespace ThScoreFileConverterTests.Models
             {
                 var bytes = new byte[] { 1, 2, 3, 4, 5 };
                 stream = new MemoryStream(bytes);
-                using (var reader = new BinaryReader(stream))
-                {
-                    stream = null;
+                using var reader = new BinaryReader(stream);
+                stream = null;
 
-                    var readBytes = reader.ReadExactBytes(0);
+                var readBytes = reader.ReadExactBytes(0);
 
-                    CollectionAssert.That.AreEqual(new byte[] { }, readBytes);
-                }
+                CollectionAssert.That.AreEqual(new byte[] { }, readBytes);
             }
             finally
             {
@@ -123,14 +115,12 @@ namespace ThScoreFileConverterTests.Models
             {
                 var bytes = new byte[] { 1, 2, 3, 4, 5 };
                 stream = new MemoryStream(bytes);
-                using (var reader = new BinaryReader(stream))
-                {
-                    stream = null;
+                using var reader = new BinaryReader(stream);
+                stream = null;
 
-                    _ = reader.ReadExactBytes(bytes.Length + 1);
+                _ = reader.ReadExactBytes(bytes.Length + 1);
 
-                    Assert.Fail(TestUtils.Unreachable);
-                }
+                Assert.Fail(TestUtils.Unreachable);
             }
             finally
             {
@@ -146,15 +136,13 @@ namespace ThScoreFileConverterTests.Models
             {
                 var bytes = new byte[] { 1, 2, 3, 4, 5 };
                 stream = new MemoryStream(bytes);
-                using (var reader = new BinaryReader(stream))
-                {
-                    stream = null;
+                using var reader = new BinaryReader(stream);
+                stream = null;
 
-                    var readBytes = reader.ReadExactBytes(bytes.Length - 1);
+                var readBytes = reader.ReadExactBytes(bytes.Length - 1);
 
-                    CollectionAssert.That.AreNotEqual(bytes, readBytes);
-                    CollectionAssert.That.AreEqual(bytes.Take(readBytes.Length), readBytes);
-                }
+                CollectionAssert.That.AreNotEqual(bytes, readBytes);
+                CollectionAssert.That.AreEqual(bytes.Take(readBytes.Length), readBytes);
             }
             finally
             {
