@@ -23,15 +23,14 @@ namespace ThScoreFileConverter.Models.Th08
         {
             var levels = Utils.GetEnumerator<Level>();
 
-            using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-            {
-                _ = reader.ReadUInt32();    // always 0x00000004?
-                this.StoryFlags = levels.ToDictionary(level => level, _ => (PlayableStages)reader.ReadUInt16());
-                this.PracticeFlags = levels.ToDictionary(level => level, _ => (PlayableStages)reader.ReadUInt16());
-                _ = reader.ReadByte();      // always 0x00?
-                this.Chara = Utils.ToEnum<CharaWithTotal>(reader.ReadByte());
-                _ = reader.ReadUInt16();    // always 0x0000?
-            }
+            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+
+            _ = reader.ReadUInt32();    // always 0x00000004?
+            this.StoryFlags = levels.ToDictionary(level => level, _ => (PlayableStages)reader.ReadUInt16());
+            this.PracticeFlags = levels.ToDictionary(level => level, _ => (PlayableStages)reader.ReadUInt16());
+            _ = reader.ReadByte();      // always 0x00?
+            this.Chara = Utils.ToEnum<CharaWithTotal>(reader.ReadByte());
+            _ = reader.ReadUInt16();    // always 0x0000?
         }
 
         public IReadOnlyDictionary<Level, PlayableStages> StoryFlags { get; }    // really...?

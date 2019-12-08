@@ -27,26 +27,25 @@ namespace ThScoreFileConverter.Models.Th15
             var levels = Utils.GetEnumerator<Level>();
             var stages = Utils.GetEnumerator<StagePractice>();
 
-            using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
+            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+
+            this.Chara = (CharaWithTotal)reader.ReadInt32();
+
+            this.GameModeData = modes.ToDictionary(mode => mode, _ =>
             {
-                this.Chara = (CharaWithTotal)reader.ReadInt32();
+                var data = new ClearDataPerGameMode();
+                data.ReadFrom(reader);
+                return data as IClearDataPerGameMode;
+            });
 
-                this.GameModeData = modes.ToDictionary(mode => mode, _ =>
+            this.Practices = levels
+                .SelectMany(level => stages.Select(stage => (level, stage)))
+                .ToDictionary(pair => pair, _ =>
                 {
-                    var data = new ClearDataPerGameMode();
-                    data.ReadFrom(reader);
-                    return data as IClearDataPerGameMode;
+                    var practice = new Th13.Practice();
+                    practice.ReadFrom(reader);
+                    return practice as Th13.IPractice;
                 });
-
-                this.Practices = levels
-                    .SelectMany(level => stages.Select(stage => (level, stage)))
-                    .ToDictionary(pair => pair, _ =>
-                    {
-                        var practice = new Th13.Practice();
-                        practice.ReadFrom(reader);
-                        return practice as Th13.IPractice;
-                    });
-            }
         }
 
         public CharaWithTotal Chara { get; }

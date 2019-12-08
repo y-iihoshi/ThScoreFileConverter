@@ -25,15 +25,14 @@ namespace ThScoreFileConverter.Models.Th06
         public HighScore(Chapter chapter)
             : base(chapter, ValidSignature, ValidSize)
         {
-            using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-            {
-                _ = reader.ReadUInt32();    // always 0x00000001?
-                this.Score = reader.ReadUInt32();
-                this.Chara = Utils.ToEnum<Chara>(reader.ReadByte());
-                this.Level = Utils.ToEnum<Level>(reader.ReadByte());
-                this.StageProgress = Utils.ToEnum<StageProgress>(reader.ReadByte());
-                this.Name = reader.ReadExactBytes(9);
-            }
+            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+
+            _ = reader.ReadUInt32();    // always 0x00000001?
+            this.Score = reader.ReadUInt32();
+            this.Chara = Utils.ToEnum<Chara>(reader.ReadByte());
+            this.Level = Utils.ToEnum<Level>(reader.ReadByte());
+            this.StageProgress = Utils.ToEnum<StageProgress>(reader.ReadByte());
+            this.Name = reader.ReadExactBytes(9);
         }
 
         public HighScore(uint score)    // for InitialRanking only

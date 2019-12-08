@@ -21,19 +21,18 @@ namespace ThScoreFileConverter.Models.Th09
         public HighScore(Th06.Chapter chapter)
             : base(chapter, ValidSignature, ValidSize)
         {
-            using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-            {
-                _ = reader.ReadUInt32();    // always 0x00000002?
-                this.Score = reader.ReadUInt32();
-                _ = reader.ReadUInt32();    // always 0x00000000?
-                this.Chara = Utils.ToEnum<Chara>(reader.ReadByte());
-                this.Level = Utils.ToEnum<Level>(reader.ReadByte());
-                this.Rank = reader.ReadInt16();
-                this.Name = reader.ReadExactBytes(9);
-                this.Date = reader.ReadExactBytes(9);
-                _ = reader.ReadByte();      // always 0x00?
-                this.ContinueCount = reader.ReadByte();
-            }
+            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+
+            _ = reader.ReadUInt32();    // always 0x00000002?
+            this.Score = reader.ReadUInt32();
+            _ = reader.ReadUInt32();    // always 0x00000000?
+            this.Chara = Utils.ToEnum<Chara>(reader.ReadByte());
+            this.Level = Utils.ToEnum<Level>(reader.ReadByte());
+            this.Rank = reader.ReadInt16();
+            this.Name = reader.ReadExactBytes(9);
+            this.Date = reader.ReadExactBytes(9);
+            _ = reader.ReadByte();      // always 0x00?
+            this.ContinueCount = reader.ReadByte();
         }
 
         public uint Score { get; }  // Divided by 10

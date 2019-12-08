@@ -23,20 +23,19 @@ namespace ThScoreFileConverter.Models.Th143
         public Status(Th10.Chapter chapter)
             : base(chapter, ValidSignature, ValidVersion, ValidSize)
         {
-            using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-            {
-                this.LastName = reader.ReadExactBytes(14);
-                _ = reader.ReadExactBytes(0x12);
-                this.BgmFlags = reader.ReadExactBytes(9);
-                _ = reader.ReadExactBytes(0x17);
-                this.TotalPlayTime = reader.ReadInt32();
-                _ = reader.ReadInt32();
-                this.LastMainItem = Utils.ToEnum<ItemWithTotal>(reader.ReadInt32());
-                this.LastSubItem = Utils.ToEnum<ItemWithTotal>(reader.ReadInt32());
-                _ = reader.ReadExactBytes(0x54);
-                this.NicknameFlags = reader.ReadExactBytes(71);
-                _ = reader.ReadExactBytes(0x12D);
-            }
+            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+
+            this.LastName = reader.ReadExactBytes(14);
+            _ = reader.ReadExactBytes(0x12);
+            this.BgmFlags = reader.ReadExactBytes(9);
+            _ = reader.ReadExactBytes(0x17);
+            this.TotalPlayTime = reader.ReadInt32();
+            _ = reader.ReadInt32();
+            this.LastMainItem = Utils.ToEnum<ItemWithTotal>(reader.ReadInt32());
+            this.LastSubItem = Utils.ToEnum<ItemWithTotal>(reader.ReadInt32());
+            _ = reader.ReadExactBytes(0x54);
+            this.NicknameFlags = reader.ReadExactBytes(71);
+            _ = reader.ReadExactBytes(0x12D);
         }
 
         public IEnumerable<byte> LastName { get; }  // The last 2 bytes are always 0x00 ?

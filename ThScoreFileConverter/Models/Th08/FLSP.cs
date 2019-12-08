@@ -20,10 +20,8 @@ namespace ThScoreFileConverter.Models.Th08
         public FLSP(Th06.Chapter chapter)
             : base(chapter, ValidSignature, ValidSize)
         {
-            using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-            {
-                _ = reader.ReadExactBytes(0x18);
-            }
+            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+            _ = reader.ReadExactBytes(0x18);
         }
     }
 }

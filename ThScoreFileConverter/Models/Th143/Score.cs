@@ -24,16 +24,15 @@ namespace ThScoreFileConverter.Models.Th143
         public Score(Th10.Chapter chapter)
             : base(chapter, ValidSignature, ValidVersion, ValidSize)
         {
-            using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-            {
-                var items = Utils.GetEnumerator<ItemWithTotal>();
+            var items = Utils.GetEnumerator<ItemWithTotal>();
 
-                this.Number = reader.ReadInt32();
-                this.ClearCounts = items.ToDictionary(item => item, _ => reader.ReadInt32());
-                this.ChallengeCounts = items.ToDictionary(item => item, _ => reader.ReadInt32());
-                this.HighScore = reader.ReadInt32();
-                _ = reader.ReadExactBytes(0x2A8);   // always all 0x00?
-            }
+            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+
+            this.Number = reader.ReadInt32();
+            this.ClearCounts = items.ToDictionary(item => item, _ => reader.ReadInt32());
+            this.ChallengeCounts = items.ToDictionary(item => item, _ => reader.ReadInt32());
+            this.HighScore = reader.ReadInt32();
+            _ = reader.ReadExactBytes(0x2A8);   // always all 0x00?
         }
 
         public int Number { get; }

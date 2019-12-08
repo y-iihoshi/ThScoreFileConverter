@@ -28,45 +28,44 @@ namespace ThScoreFileConverter.Models.Th16
             var levels = Utils.GetEnumerator<Level>();
             var stages = Utils.GetEnumerator<StagePractice>();
 
-            using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-            {
-                this.Chara = (CharaWithTotal)reader.ReadInt32();
+            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
 
-                this.Rankings = levelsWithTotal.ToDictionary(
-                    level => level,
-                    _ => Enumerable.Range(0, 10).Select(rank =>
-                    {
-                        var score = new ScoreData();
-                        score.ReadFrom(reader);
-                        return score;
-                    }).ToList() as IReadOnlyList<IScoreData>);
+            this.Chara = (CharaWithTotal)reader.ReadInt32();
 
-                _ = reader.ReadExactBytes(0x140);
-
-                this.Cards = Enumerable.Range(0, Definitions.CardTable.Count).Select(_ =>
+            this.Rankings = levelsWithTotal.ToDictionary(
+                level => level,
+                _ => Enumerable.Range(0, 10).Select(rank =>
                 {
-                    var card = new Th13.SpellCard<Level>();
-                    card.ReadFrom(reader);
-                    return card as Th13.ISpellCard<Level>;
-                }).ToDictionary(card => card.Id);
+                    var score = new ScoreData();
+                    score.ReadFrom(reader);
+                    return score;
+                }).ToList() as IReadOnlyList<IScoreData>);
 
-                this.TotalPlayCount = reader.ReadInt32();
-                this.PlayTime = reader.ReadInt32();
-                _ = reader.ReadUInt32();
-                this.ClearCounts = levelsWithTotal.ToDictionary(level => level, _ => reader.ReadInt32());
-                _ = reader.ReadUInt32();
-                this.ClearFlags = levelsWithTotal.ToDictionary(level => level, _ => reader.ReadInt32());
-                _ = reader.ReadUInt32();
+            _ = reader.ReadExactBytes(0x140);
 
-                this.Practices = levels
-                    .SelectMany(level => stages.Select(stage => (level, stage)))
-                    .ToDictionary(pair => pair, _ =>
-                    {
-                        var practice = new Th13.Practice();
-                        practice.ReadFrom(reader);
-                        return practice as Th13.IPractice;
-                    });
-            }
+            this.Cards = Enumerable.Range(0, Definitions.CardTable.Count).Select(_ =>
+            {
+                var card = new Th13.SpellCard<Level>();
+                card.ReadFrom(reader);
+                return card as Th13.ISpellCard<Level>;
+            }).ToDictionary(card => card.Id);
+
+            this.TotalPlayCount = reader.ReadInt32();
+            this.PlayTime = reader.ReadInt32();
+            _ = reader.ReadUInt32();
+            this.ClearCounts = levelsWithTotal.ToDictionary(level => level, _ => reader.ReadInt32());
+            _ = reader.ReadUInt32();
+            this.ClearFlags = levelsWithTotal.ToDictionary(level => level, _ => reader.ReadInt32());
+            _ = reader.ReadUInt32();
+
+            this.Practices = levels
+                .SelectMany(level => stages.Select(stage => (level, stage)))
+                .ToDictionary(pair => pair, _ =>
+                {
+                    var practice = new Th13.Practice();
+                    practice.ReadFrom(reader);
+                    return practice as Th13.IPractice;
+                });
         }
 
         public CharaWithTotal Chara { get; }

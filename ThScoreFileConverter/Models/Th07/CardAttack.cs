@@ -24,17 +24,16 @@ namespace ThScoreFileConverter.Models.Th07
         {
             var charas = Utils.GetEnumerator<CharaWithTotal>();
 
-            using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-            {
-                _ = reader.ReadUInt32();    // always 0x00000001?
-                this.MaxBonuses = charas.ToDictionary(chara => chara, chara => reader.ReadUInt32());
-                this.CardId = (short)(reader.ReadInt16() + 1);
-                _ = reader.ReadByte();
-                this.CardName = reader.ReadExactBytes(0x30);
-                _ = reader.ReadByte();      // always 0x00?
-                this.TrialCounts = charas.ToDictionary(chara => chara, chara => reader.ReadUInt16());
-                this.ClearCounts = charas.ToDictionary(chara => chara, chara => reader.ReadUInt16());
-            }
+            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+
+            _ = reader.ReadUInt32();    // always 0x00000001?
+            this.MaxBonuses = charas.ToDictionary(chara => chara, chara => reader.ReadUInt32());
+            this.CardId = (short)(reader.ReadInt16() + 1);
+            _ = reader.ReadByte();
+            this.CardName = reader.ReadExactBytes(0x30);
+            _ = reader.ReadByte();      // always 0x00?
+            this.TrialCounts = charas.ToDictionary(chara => chara, chara => reader.ReadUInt16());
+            this.ClearCounts = charas.ToDictionary(chara => chara, chara => reader.ReadUInt16());
         }
 
         public IReadOnlyDictionary<CharaWithTotal, uint> MaxBonuses { get; }

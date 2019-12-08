@@ -27,19 +27,18 @@ namespace ThScoreFileConverter.Models.Th08
             this.storyCareer = new CardAttackCareer();
             this.practiceCareer = new CardAttackCareer();
 
-            using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-            {
-                _ = reader.ReadUInt32();    // always 0x00000003?
-                this.CardId = (short)(reader.ReadInt16() + 1);
-                _ = reader.ReadByte();
-                this.Level = Utils.ToEnum<LevelPracticeWithTotal>(reader.ReadByte());   // Last Word == Normal...
-                this.CardName = reader.ReadExactBytes(0x30);
-                this.EnemyName = reader.ReadExactBytes(0x30);
-                this.Comment = reader.ReadExactBytes(0x80);
-                this.storyCareer.ReadFrom(reader);
-                this.practiceCareer.ReadFrom(reader);
-                _ = reader.ReadUInt32();    // always 0x00000000?
-            }
+            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+
+            _ = reader.ReadUInt32();    // always 0x00000003?
+            this.CardId = (short)(reader.ReadInt16() + 1);
+            _ = reader.ReadByte();
+            this.Level = Utils.ToEnum<LevelPracticeWithTotal>(reader.ReadByte());   // Last Word == Normal...
+            this.CardName = reader.ReadExactBytes(0x30);
+            this.EnemyName = reader.ReadExactBytes(0x30);
+            this.Comment = reader.ReadExactBytes(0x80);
+            this.storyCareer.ReadFrom(reader);
+            this.practiceCareer.ReadFrom(reader);
+            _ = reader.ReadUInt32();    // always 0x00000000?
         }
 
         public short CardId { get; }    // 1-based

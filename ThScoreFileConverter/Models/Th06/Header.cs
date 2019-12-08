@@ -19,10 +19,8 @@ namespace ThScoreFileConverter.Models.Th06
         public Header(Chapter chapter)
             : base(chapter, ValidSignature, ValidSize)
         {
-            using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-            {
-                _ = reader.ReadUInt32();    // always 0x00000010?
-            }
+            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+            _ = reader.ReadUInt32();    // always 0x00000010?
         }
     }
 }

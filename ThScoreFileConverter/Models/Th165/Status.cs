@@ -23,20 +23,19 @@ namespace ThScoreFileConverter.Models.Th165
         public Status(Th10.Chapter chapter)
             : base(chapter, ValidSignature, ValidVersion, ValidSize)
         {
-            using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-            {
-                this.LastName = reader.ReadExactBytes(14);
-                _ = reader.ReadExactBytes(0x12);
-                this.BgmFlags = reader.ReadExactBytes(8);
-                _ = reader.ReadExactBytes(0x18);
-                this.TotalPlayTime = reader.ReadInt32();
-                _ = reader.ReadInt32(); // always 0?
-                _ = reader.ReadInt32(); // 0x15?
-                _ = reader.ReadInt32(); // always 0?
-                _ = reader.ReadExactBytes(0x40);    // story flags?
-                this.NicknameFlags = reader.ReadExactBytes(51);
-                _ = reader.ReadExactBytes(0x155);
-            }
+            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+
+            this.LastName = reader.ReadExactBytes(14);
+            _ = reader.ReadExactBytes(0x12);
+            this.BgmFlags = reader.ReadExactBytes(8);
+            _ = reader.ReadExactBytes(0x18);
+            this.TotalPlayTime = reader.ReadInt32();
+            _ = reader.ReadInt32(); // always 0?
+            _ = reader.ReadInt32(); // 0x15?
+            _ = reader.ReadInt32(); // always 0?
+            _ = reader.ReadExactBytes(0x40);    // story flags?
+            this.NicknameFlags = reader.ReadExactBytes(51);
+            _ = reader.ReadExactBytes(0x155);
         }
 
         public IEnumerable<byte> LastName { get; }  // The last 2 bytes are always 0x00 ?

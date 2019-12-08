@@ -19,16 +19,15 @@ namespace ThScoreFileConverter.Models.Th07
         public PracticeScore(Th06.Chapter chapter)
             : base(chapter, ValidSignature, ValidSize)
         {
-            using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-            {
-                _ = reader.ReadUInt32();    // always 0x00000001?
-                this.TrialCount = reader.ReadInt32();
-                this.HighScore = reader.ReadInt32();
-                this.Chara = Utils.ToEnum<Chara>(reader.ReadByte());
-                this.Level = Utils.ToEnum<Level>(reader.ReadByte());
-                this.Stage = Utils.ToEnum<Stage>(reader.ReadByte());
-                _ = reader.ReadByte();      // always 0x00?
-            }
+            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+
+            _ = reader.ReadUInt32();    // always 0x00000001?
+            this.TrialCount = reader.ReadInt32();
+            this.HighScore = reader.ReadInt32();
+            this.Chara = Utils.ToEnum<Chara>(reader.ReadByte());
+            this.Level = Utils.ToEnum<Level>(reader.ReadByte());
+            this.Stage = Utils.ToEnum<Stage>(reader.ReadByte());
+            _ = reader.ReadByte();      // always 0x00?
         }
 
         public int TrialCount { get; }  // really...?

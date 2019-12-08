@@ -23,13 +23,12 @@ namespace ThScoreFileConverter.Models.Th06
         {
             var levels = Utils.GetEnumerator<Level>();
 
-            using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-            {
-                _ = reader.ReadUInt32();    // always 0x00000010?
-                this.StoryFlags = levels.ToDictionary(level => level, level => reader.ReadByte());
-                this.PracticeFlags = levels.ToDictionary(level => level, level => reader.ReadByte());
-                this.Chara = Utils.ToEnum<Chara>(reader.ReadInt16());
-            }
+            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+
+            _ = reader.ReadUInt32();    // always 0x00000010?
+            this.StoryFlags = levels.ToDictionary(level => level, level => reader.ReadByte());
+            this.PracticeFlags = levels.ToDictionary(level => level, level => reader.ReadByte());
+            this.Chara = Utils.ToEnum<Chara>(reader.ReadInt16());
         }
 
         public IReadOnlyDictionary<Level, byte> StoryFlags { get; }     // really...?

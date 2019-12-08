@@ -25,23 +25,22 @@ namespace ThScoreFileConverter.Models.Th128
         {
             var levels = Utils.GetEnumerator<Level>();
 
-            using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-            {
-                this.Route = (RouteWithTotal)reader.ReadInt32();
+            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
 
-                this.Rankings = levels.ToDictionary(
-                    level => level,
-                    _ => Enumerable.Range(0, 10).Select(rank =>
-                    {
-                        var score = new ScoreData();
-                        score.ReadFrom(reader);
-                        return score;
-                    }).ToList() as IReadOnlyList<Th10.IScoreData<StageProgress>>);
+            this.Route = (RouteWithTotal)reader.ReadInt32();
 
-                this.TotalPlayCount = reader.ReadInt32();
-                this.PlayTime = reader.ReadInt32();
-                this.ClearCounts = levels.ToDictionary(level => level, _ => reader.ReadInt32());
-            }
+            this.Rankings = levels.ToDictionary(
+                level => level,
+                _ => Enumerable.Range(0, 10).Select(rank =>
+                {
+                    var score = new ScoreData();
+                    score.ReadFrom(reader);
+                    return score;
+                }).ToList() as IReadOnlyList<Th10.IScoreData<StageProgress>>);
+
+            this.TotalPlayCount = reader.ReadInt32();
+            this.PlayTime = reader.ReadInt32();
+            this.ClearCounts = levels.ToDictionary(level => level, _ => reader.ReadInt32());
         }
 
         public RouteWithTotal Route { get; }

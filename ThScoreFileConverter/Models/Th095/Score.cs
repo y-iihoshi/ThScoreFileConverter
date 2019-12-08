@@ -22,21 +22,20 @@ namespace ThScoreFileConverter.Models.Th095
         public Score(Chapter chapter)
             : base(chapter, ValidSignature, ValidVersion, ValidSize)
         {
-            using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-            {
-                var number = reader.ReadUInt32();
-                this.LevelScene = (Utils.ToEnum<Level>(number / 10), (int)((number % 10) + 1));
-                this.HighScore = reader.ReadInt32();
-                _ = reader.ReadUInt32();    // always 0x00000000?
-                this.BestshotScore = reader.ReadInt32();
-                _ = reader.ReadExactBytes(0x20);
-                this.DateTime = reader.ReadUInt32();
-                _ = reader.ReadUInt32();    // checksum of the bestshot file?
-                this.TrialCount = reader.ReadInt32();
-                this.SlowRate1 = reader.ReadSingle();
-                this.SlowRate2 = reader.ReadSingle();
-                _ = reader.ReadExactBytes(0x10);
-            }
+            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+
+            var number = reader.ReadUInt32();
+            this.LevelScene = (Utils.ToEnum<Level>(number / 10), (int)((number % 10) + 1));
+            this.HighScore = reader.ReadInt32();
+            _ = reader.ReadUInt32();    // always 0x00000000?
+            this.BestshotScore = reader.ReadInt32();
+            _ = reader.ReadExactBytes(0x20);
+            this.DateTime = reader.ReadUInt32();
+            _ = reader.ReadUInt32();    // checksum of the bestshot file?
+            this.TrialCount = reader.ReadInt32();
+            this.SlowRate1 = reader.ReadSingle();
+            this.SlowRate2 = reader.ReadSingle();
+            _ = reader.ReadExactBytes(0x10);
         }
 
         public (Level Level, int Scene) LevelScene { get; }

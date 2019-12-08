@@ -23,15 +23,14 @@ namespace ThScoreFileConverter.Models.Th128
         public CardData(Th10.Chapter chapter)
             : base(chapter, ValidSignature, ValidVersion, ValidSize)
         {
-            using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
+            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+
+            this.Cards = Enumerable.Range(0, Definitions.CardTable.Count).Select(_ =>
             {
-                this.Cards = Enumerable.Range(0, Definitions.CardTable.Count).Select(_ =>
-                {
-                    var card = new SpellCard();
-                    card.ReadFrom(reader);
-                    return card as ISpellCard;
-                }).ToDictionary(card => card.Id);
-            }
+                var card = new SpellCard();
+                card.ReadFrom(reader);
+                return card as ISpellCard;
+            }).ToDictionary(card => card.Id);
         }
 
         public IReadOnlyDictionary<int, ISpellCard> Cards { get; }

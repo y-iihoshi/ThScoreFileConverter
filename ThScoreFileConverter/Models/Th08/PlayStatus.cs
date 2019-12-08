@@ -26,34 +26,33 @@ namespace ThScoreFileConverter.Models.Th08
             var levels = Utils.GetEnumerator<Level>();
             var numLevels = levels.Count();
 
-            using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
+            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+
+            _ = reader.ReadUInt32();    // always 0x00000002?
+            var hours = reader.ReadInt32();
+            var minutes = reader.ReadInt32();
+            var seconds = reader.ReadInt32();
+            var milliseconds = reader.ReadInt32();
+            this.TotalRunningTime = new Time(hours, minutes, seconds, milliseconds, false);
+            hours = reader.ReadInt32();
+            minutes = reader.ReadInt32();
+            seconds = reader.ReadInt32();
+            milliseconds = reader.ReadInt32();
+            this.TotalPlayTime = new Time(hours, minutes, seconds, milliseconds, false);
+
+            var playCounts = Utils.GetEnumerator<LevelPracticeWithTotal>().ToDictionary(level => level, _ =>
             {
-                _ = reader.ReadUInt32();    // always 0x00000002?
-                var hours = reader.ReadInt32();
-                var minutes = reader.ReadInt32();
-                var seconds = reader.ReadInt32();
-                var milliseconds = reader.ReadInt32();
-                this.TotalRunningTime = new Time(hours, minutes, seconds, milliseconds, false);
-                hours = reader.ReadInt32();
-                minutes = reader.ReadInt32();
-                seconds = reader.ReadInt32();
-                milliseconds = reader.ReadInt32();
-                this.TotalPlayTime = new Time(hours, minutes, seconds, milliseconds, false);
+                var playCount = new PlayCount();
+                playCount.ReadFrom(reader);
+                return playCount as IPlayCount;
+            });
+            this.PlayCounts = playCounts
+                .Where(pair => Enum.IsDefined(typeof(Level), (int)pair.Key))
+                .ToDictionary(pair => (Level)pair.Key, pair => pair.Value);
+            this.TotalPlayCount = playCounts[LevelPracticeWithTotal.Total];
 
-                var playCounts = Utils.GetEnumerator<LevelPracticeWithTotal>().ToDictionary(level => level, _ =>
-                {
-                    var playCount = new PlayCount();
-                    playCount.ReadFrom(reader);
-                    return playCount as IPlayCount;
-                });
-                this.PlayCounts = playCounts
-                    .Where(pair => Enum.IsDefined(typeof(Level), (int)pair.Key))
-                    .ToDictionary(pair => (Level)pair.Key, pair => pair.Value);
-                this.TotalPlayCount = playCounts[LevelPracticeWithTotal.Total];
-
-                this.BgmFlags = reader.ReadExactBytes(21);
-                _ = reader.ReadExactBytes(11);
-            }
+            this.BgmFlags = reader.ReadExactBytes(21);
+            _ = reader.ReadExactBytes(11);
         }
 
         public Time TotalRunningTime { get; }

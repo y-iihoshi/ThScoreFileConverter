@@ -22,16 +22,15 @@ namespace ThScoreFileConverter.Models.Th165
         public Score(Th10.Chapter chapter)
             : base(chapter, ValidSignature, ValidVersion, ValidSize)
         {
-            using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-            {
-                this.Number = reader.ReadInt32();
-                this.ClearCount = reader.ReadInt32();
-                _ = reader.ReadInt32(); // always same as ClearCount?
-                this.ChallengeCount = reader.ReadInt32();
-                this.NumPhotos = reader.ReadInt32();
-                this.HighScore = reader.ReadInt32();
-                _ = reader.ReadExactBytes(0x210);   // always all 0x00?
-            }
+            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+
+            this.Number = reader.ReadInt32();
+            this.ClearCount = reader.ReadInt32();
+            _ = reader.ReadInt32(); // always same as ClearCount?
+            this.ChallengeCount = reader.ReadInt32();
+            this.NumPhotos = reader.ReadInt32();
+            this.HighScore = reader.ReadInt32();
+            _ = reader.ReadExactBytes(0x210);   // always all 0x00?
         }
 
         public int Number { get; }

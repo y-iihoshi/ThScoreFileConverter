@@ -21,26 +21,25 @@ namespace ThScoreFileConverter.Models.Th07
         public PlayStatus(Th06.Chapter chapter)
             : base(chapter, ValidSignature, ValidSize)
         {
-            using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
+            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+
+            _ = reader.ReadUInt32();    // always 0x00000001?
+            var hours = reader.ReadInt32();
+            var minutes = reader.ReadInt32();
+            var seconds = reader.ReadInt32();
+            var milliseconds = reader.ReadInt32();
+            this.TotalRunningTime = new Time(hours, minutes, seconds, milliseconds, false);
+            hours = reader.ReadInt32();
+            minutes = reader.ReadInt32();
+            seconds = reader.ReadInt32();
+            milliseconds = reader.ReadInt32();
+            this.TotalPlayTime = new Time(hours, minutes, seconds, milliseconds, false);
+            this.PlayCounts = Utils.GetEnumerator<LevelWithTotal>().ToDictionary(level => level, level =>
             {
-                _ = reader.ReadUInt32();    // always 0x00000001?
-                var hours = reader.ReadInt32();
-                var minutes = reader.ReadInt32();
-                var seconds = reader.ReadInt32();
-                var milliseconds = reader.ReadInt32();
-                this.TotalRunningTime = new Time(hours, minutes, seconds, milliseconds, false);
-                hours = reader.ReadInt32();
-                minutes = reader.ReadInt32();
-                seconds = reader.ReadInt32();
-                milliseconds = reader.ReadInt32();
-                this.TotalPlayTime = new Time(hours, minutes, seconds, milliseconds, false);
-                this.PlayCounts = Utils.GetEnumerator<LevelWithTotal>().ToDictionary(level => level, level =>
-                {
-                    var playCount = new PlayCount();
-                    playCount.ReadFrom(reader);
-                    return playCount;
-                });
-            }
+                var playCount = new PlayCount();
+                playCount.ReadFrom(reader);
+                return playCount;
+            });
         }
 
         public Time TotalRunningTime { get; }

@@ -30,39 +30,38 @@ namespace ThScoreFileConverter.Models.Th10
             var stages = Utils.GetEnumerator<Stage>();
             var stagesExceptExtra = stages.Where(st => st != Stage.Extra);
 
-            using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-            {
-                this.Chara = Utils.ToEnum<TCharaWithTotal>(reader.ReadInt32());
+            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
 
-                this.Rankings = levels.ToDictionary(
-                    level => level,
-                    _ => Enumerable.Range(0, 10).Select(rank =>
-                    {
-                        var score = new TScoreData();
-                        score.ReadFrom(reader);
-                        return score;
-                    }).ToList() as IReadOnlyList<IScoreData<TStageProgress>>);
+            this.Chara = Utils.ToEnum<TCharaWithTotal>(reader.ReadInt32());
 
-                this.TotalPlayCount = reader.ReadInt32();
-                this.PlayTime = reader.ReadInt32();
-                this.ClearCounts = levels.ToDictionary(level => level, _ => reader.ReadInt32());
-
-                this.Practices = levelsExceptExtra
-                    .SelectMany(level => stagesExceptExtra.Select(stage => (level, stage)))
-                    .ToDictionary(pair => pair, _ =>
-                    {
-                        var practice = new Practice();
-                        practice.ReadFrom(reader);
-                        return practice as IPractice;
-                    });
-
-                this.Cards = Enumerable.Range(0, numCards).Select(_ =>
+            this.Rankings = levels.ToDictionary(
+                level => level,
+                _ => Enumerable.Range(0, 10).Select(rank =>
                 {
-                    var card = new SpellCard();
-                    card.ReadFrom(reader);
-                    return card as ISpellCard<Level>;
-                }).ToDictionary(card => card.Id);
-            }
+                    var score = new TScoreData();
+                    score.ReadFrom(reader);
+                    return score;
+                }).ToList() as IReadOnlyList<IScoreData<TStageProgress>>);
+
+            this.TotalPlayCount = reader.ReadInt32();
+            this.PlayTime = reader.ReadInt32();
+            this.ClearCounts = levels.ToDictionary(level => level, _ => reader.ReadInt32());
+
+            this.Practices = levelsExceptExtra
+                .SelectMany(level => stagesExceptExtra.Select(stage => (level, stage)))
+                .ToDictionary(pair => pair, _ =>
+                {
+                    var practice = new Practice();
+                    practice.ReadFrom(reader);
+                    return practice as IPractice;
+                });
+
+            this.Cards = Enumerable.Range(0, numCards).Select(_ =>
+            {
+                var card = new SpellCard();
+                card.ReadFrom(reader);
+                return card as ISpellCard<Level>;
+            }).ToDictionary(card => card.Id);
         }
 
         public TCharaWithTotal Chara { get; }

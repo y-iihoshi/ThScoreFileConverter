@@ -21,19 +21,18 @@ namespace ThScoreFileConverter.Models.Th143
         public ItemStatus(Th10.Chapter chapter)
             : base(chapter, ValidSignature, ValidVersion, ValidSize)
         {
-            using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-            {
-                this.Item = Utils.ToEnum<ItemWithTotal>(reader.ReadInt32());
-                this.UseCount = reader.ReadInt32();
-                this.ClearedCount = reader.ReadInt32();
-                this.ClearedScenes = reader.ReadInt32();
-                this.ItemLevel = reader.ReadInt32();
-                _ = reader.ReadInt32();
-                this.AvailableCount = reader.ReadInt32();
-                this.FramesOrRanges = reader.ReadInt32();
-                _ = reader.ReadInt32(); // always 0?
-                _ = reader.ReadInt32(); // always 0?
-            }
+            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+
+            this.Item = Utils.ToEnum<ItemWithTotal>(reader.ReadInt32());
+            this.UseCount = reader.ReadInt32();
+            this.ClearedCount = reader.ReadInt32();
+            this.ClearedScenes = reader.ReadInt32();
+            this.ItemLevel = reader.ReadInt32();
+            _ = reader.ReadInt32();
+            this.AvailableCount = reader.ReadInt32();
+            this.FramesOrRanges = reader.ReadInt32();
+            _ = reader.ReadInt32(); // always 0?
+            _ = reader.ReadInt32(); // always 0?
         }
 
         public ItemWithTotal Item { get; }

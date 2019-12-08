@@ -21,15 +21,14 @@ namespace ThScoreFileConverter.Models.Th07
         public VersionInfo(Th06.Chapter chapter)
             : base(chapter, ValidSignature, ValidSize)
         {
-            using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-            {
-                _ = reader.ReadUInt16();    // always 0x0001?
-                _ = reader.ReadUInt16();
-                this.Version = reader.ReadExactBytes(6);
-                _ = reader.ReadExactBytes(3);
-                _ = reader.ReadExactBytes(3);
-                _ = reader.ReadUInt32();
-            }
+            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+
+            _ = reader.ReadUInt16();    // always 0x0001?
+            _ = reader.ReadUInt16();
+            this.Version = reader.ReadExactBytes(6);
+            _ = reader.ReadExactBytes(3);
+            _ = reader.ReadExactBytes(3);
+            _ = reader.ReadUInt32();
         }
 
         public IEnumerable<byte> Version { get; }   // Null-terminated

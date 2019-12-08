@@ -22,15 +22,14 @@ namespace ThScoreFileConverter.Models.Th128
         protected StatusBase(Th10.Chapter chapter, ushort validVersion, int numBgms, int gapSize)
             : base(chapter, ValidSignature, validVersion, ValidSize)
         {
-            using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-            {
-                this.LastName = reader.ReadExactBytes(10);
-                _ = reader.ReadExactBytes(0x10);
-                this.BgmFlags = reader.ReadExactBytes(numBgms);
-                _ = reader.ReadExactBytes(gapSize);
-                this.TotalPlayTime = reader.ReadInt32();
-                _ = reader.ReadExactBytes(0x03E0);
-            }
+            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+
+            this.LastName = reader.ReadExactBytes(10);
+            _ = reader.ReadExactBytes(0x10);
+            this.BgmFlags = reader.ReadExactBytes(numBgms);
+            _ = reader.ReadExactBytes(gapSize);
+            this.TotalPlayTime = reader.ReadInt32();
+            _ = reader.ReadExactBytes(0x03E0);
         }
 
         public IEnumerable<byte> LastName { get; }  // The last 2 bytes are always 0x00 ?

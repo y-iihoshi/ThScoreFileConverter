@@ -25,18 +25,17 @@ namespace ThScoreFileConverter.Models.Th08
             var stages = Utils.GetEnumerator<Stage>();
             var levels = Utils.GetEnumerator<Level>();
 
-            using (var reader = new BinaryReader(new MemoryStream(this.Data, false)))
-            {
-                //// The fields for Stage.Extra and Level.Extra actually exist...
+            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
 
-                _ = reader.ReadUInt32();        // always 0x00000002?
-                this.PlayCounts = stages.SelectMany(stage => levels.Select(level => (stage, level)))
-                    .ToDictionary(pair => pair, _ => reader.ReadInt32());
-                this.HighScores = stages.SelectMany(stage => levels.Select(level => (stage, level)))
-                    .ToDictionary(pair => pair, _ => reader.ReadInt32());
-                this.Chara = Utils.ToEnum<Chara>(reader.ReadByte());
-                _ = reader.ReadExactBytes(3);   // always 0x000001?
-            }
+            //// The fields for Stage.Extra and Level.Extra actually exist...
+
+            _ = reader.ReadUInt32();        // always 0x00000002?
+            this.PlayCounts = stages.SelectMany(stage => levels.Select(level => (stage, level)))
+                .ToDictionary(pair => pair, _ => reader.ReadInt32());
+            this.HighScores = stages.SelectMany(stage => levels.Select(level => (stage, level)))
+                .ToDictionary(pair => pair, _ => reader.ReadInt32());
+            this.Chara = Utils.ToEnum<Chara>(reader.ReadByte());
+            _ = reader.ReadExactBytes(3);   // always 0x000001?
         }
 
         public IReadOnlyDictionary<(Stage, Level), int> PlayCounts { get; }
