@@ -18,11 +18,9 @@
     <DebugType>full</DebugType>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DocumentationFile>bin\Debug\ThScoreFileConverter.xml</DocumentationFile>
-    <CodeAnalysisRuleSet>ThScoreFileConverter.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <CodeAnalysisRuleSet>ThScoreFileConverter.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
