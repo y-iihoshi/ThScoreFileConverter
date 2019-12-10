@@ -5,21 +5,31 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-#pragma warning disable SA1600 // Elements should be documented
-
 using System.Linq;
 using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th143
 {
+    /// <summary>
+    /// Provides the parsers used for ISC.
+    /// </summary>
     internal static class Parsers
     {
+        /// <summary>
+        /// Gets the parser of <see cref="Day"/>.
+        /// </summary>
         public static EnumShortNameParser<Day> DayParser { get; } =
             new EnumShortNameParser<Day>();
 
+        /// <summary>
+        /// Gets the parser of <see cref="ItemWithTotal"/>.
+        /// </summary>
         public static EnumShortNameParser<ItemWithTotal> ItemWithTotalParser { get; } =
             new EnumShortNameParser<ItemWithTotal>();
 
+        /// <summary>
+        /// Gets the pattern used for parsing as a long name of a <see cref="Day"/> enumerator.
+        /// </summary>
         public static string DayLongPattern { get; } =
             string.Join("|", Utils.GetEnumerator<Day>().Select(day => day.ToLongName()).ToArray());
     }

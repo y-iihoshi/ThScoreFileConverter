@@ -5,18 +5,28 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-#pragma warning disable SA1600 // Elements should be documented
-
 namespace ThScoreFileConverter.Models.Th105
 {
+    /// <summary>
+    /// Provides the parsers used for SWR.
+    /// </summary>
     internal static class Parsers
     {
+        /// <summary>
+        /// Gets the parser of <see cref="LevelWithTotal"/>.
+        /// </summary>
         public static EnumShortNameParser<LevelWithTotal> LevelWithTotalParser { get; } =
             new EnumShortNameParser<LevelWithTotal>();
 
+        /// <summary>
+        /// Gets the parser of <see cref="Chara"/>.
+        /// </summary>
         public static EnumShortNameParser<Chara> CharaParser { get; } =
             new EnumShortNameParser<Chara>();
 
+        /// <summary>
+        /// Gets the parser of <see cref="CardType"/>.
+        /// </summary>
         public static EnumShortNameParser<CardType> CardTypeParser { get; } =
             new EnumShortNameParser<CardType>();
     }

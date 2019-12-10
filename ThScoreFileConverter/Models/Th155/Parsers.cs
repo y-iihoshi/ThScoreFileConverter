@@ -5,16 +5,21 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-#pragma warning disable SA1600 // Elements should be documented
-
 namespace ThScoreFileConverter.Models.Th155
 {
+    /// <summary>
+    /// Provides the parsers used for AoCF.
+    /// </summary>
     internal static class Parsers
     {
-        public static EnumShortNameParser<Level> LevelParser { get; } =
-            new EnumShortNameParser<Level>();
+        /// <summary>
+        /// Gets the parser of <see cref="Level"/>.
+        /// </summary>
+        public static EnumShortNameParser<Level> LevelParser { get; } = new EnumShortNameParser<Level>();
 
-        public static EnumShortNameParser<StoryChara> StoryCharaParser { get; } =
-            new EnumShortNameParser<StoryChara>();
+        /// <summary>
+        /// Gets the parser of <see cref="StoryChara"/>.
+        /// </summary>
+        public static EnumShortNameParser<StoryChara> StoryCharaParser { get; } = new EnumShortNameParser<StoryChara>();
     }
 }

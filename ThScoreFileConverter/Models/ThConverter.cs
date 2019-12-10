@@ -19,30 +19,6 @@ namespace ThScoreFileConverter.Models
     internal class ThConverter
     {
         /// <summary>
-        /// Parser of <see cref="Level"/>.
-        /// </summary>
-        protected static readonly EnumShortNameParser<Level> LevelParser =
-            new EnumShortNameParser<Level>();
-
-        /// <summary>
-        /// Parser of <see cref="LevelWithTotal"/>.
-        /// </summary>
-        protected static readonly EnumShortNameParser<LevelWithTotal> LevelWithTotalParser =
-            new EnumShortNameParser<LevelWithTotal>();
-
-        /// <summary>
-        /// Parser of <see cref="Stage"/>.
-        /// </summary>
-        protected static readonly EnumShortNameParser<Stage> StageParser =
-            new EnumShortNameParser<Stage>();
-
-        /// <summary>
-        /// Parser of <see cref="StageWithTotal"/>.
-        /// </summary>
-        protected static readonly EnumShortNameParser<StageWithTotal> StageWithTotalParser =
-            new EnumShortNameParser<StageWithTotal>();
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ThConverter"/> class.
         /// </summary>
         protected ThConverter()

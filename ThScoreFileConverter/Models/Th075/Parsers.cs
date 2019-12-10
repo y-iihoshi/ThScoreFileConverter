@@ -5,18 +5,28 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-#pragma warning disable SA1600 // Elements should be documented
-
 namespace ThScoreFileConverter.Models.Th075
 {
+    /// <summary>
+    /// Provides the parsers used for IMP.
+    /// </summary>
     internal static class Parsers
     {
+        /// <summary>
+        /// Gets the parser of <see cref="Level"/>.
+        /// </summary>
         public static EnumShortNameParser<Level> LevelParser { get; } =
             new EnumShortNameParser<Level>();
 
+        /// <summary>
+        /// Gets the parser of <see cref="LevelWithTotal"/>.
+        /// </summary>
         public static EnumShortNameParser<LevelWithTotal> LevelWithTotalParser { get; } =
             new EnumShortNameParser<LevelWithTotal>();
 
+        /// <summary>
+        /// Gets the parser of <see cref="Chara"/>.
+        /// </summary>
         public static EnumShortNameParser<Chara> CharaParser { get; } =
             new EnumShortNameParser<Chara>();
     }

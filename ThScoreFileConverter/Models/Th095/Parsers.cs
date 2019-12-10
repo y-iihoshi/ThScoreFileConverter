@@ -5,18 +5,25 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-#pragma warning disable SA1600 // Elements should be documented
-
 using System.Linq;
 using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th095
 {
+    /// <summary>
+    /// Provides the parsers used for StB.
+    /// </summary>
     internal static class Parsers
     {
+        /// <summary>
+        /// Gets the parser of <see cref="Level"/>.
+        /// </summary>
         public static EnumShortNameParser<Level> LevelParser { get; } =
             new EnumShortNameParser<Level>();
 
+        /// <summary>
+        /// Gets the pattern used for parsing as a long name of a <see cref="Level"/> enumerator.
+        /// </summary>
         public static string LevelLongPattern { get; } =
             string.Join("|", Utils.GetEnumerator<Level>().Select(level => level.ToLongName()).ToArray());
     }
