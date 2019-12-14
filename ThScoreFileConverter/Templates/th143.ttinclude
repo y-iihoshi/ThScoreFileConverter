@@ -1,59 +1,61 @@
 <#@ assembly name="System.Core" #>
+<#@ assembly name="$(TargetPath)" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
+<#@ import namespace="ThScoreFileConverter.Extensions" #>
+<#@ import namespace="ThScoreFileConverter.Models.Th143" #>
 <#
-    var days = new Dictionary<string, (string Id, string Name)>
+    var days = new List<(Day day, string id, string name)>
     {
-        { "1", ("Day1", "一日目") },
-        { "2", ("Day2", "二日目") },
-        { "3", ("Day3", "三日目") },
-        { "4", ("Day4", "四日目") },
-        { "5", ("Day5", "五日目") },
-        { "6", ("Day6", "六日目") },
-        { "7", ("Day7", "七日目") },
-        { "8", ("Day8", "八日目") },
-        { "9", ("Day9", "九日目") },
-        { "L", ("LastDay", "最終日") },
-    };
+        (Day.First,   "Day1",    "一日目"),
+        (Day.Second,  "Day2",    "二日目"),
+        (Day.Third,   "Day3",    "三日目"),
+        (Day.Fourth,  "Day4",    "四日目"),
+        (Day.Fifth,   "Day5",    "五日目"),
+        (Day.Sixth,   "Day6",    "六日目"),
+        (Day.Seventh, "Day7",    "七日目"),
+        (Day.Eighth,  "Day8",    "八日目"),
+        (Day.Ninth,   "Day9",    "九日目"),
+        (Day.Last,    "LastDay", "最終日"),
+    }.ToDictionary(tuple => tuple.day.ToShortName(), tuple => (Id: tuple.id, Name: tuple.name));
 
-    var scenesPerDay = new Dictionary<string, int>
+    var scenesPerDay = new List<(Day day, int numScenes)>
     {
-        { "1", 6 },
-        { "2", 6 },
-        { "3", 7 },
-        { "4", 7 },
-        { "5", 8 },
-        { "6", 8 },
-        { "7", 8 },
-        { "8", 7 },
-        { "9", 8 },
-        { "L", 10 },
-    };
+        (Day.First,    6),
+        (Day.Second,   6),
+        (Day.Third,    7),
+        (Day.Fourth,   7),
+        (Day.Fifth,    8),
+        (Day.Sixth,    8),
+        (Day.Seventh,  8),
+        (Day.Eighth,   7),
+        (Day.Ninth,    8),
+        (Day.Last,    10),
+    }.ToDictionary(pair => pair.day.ToShortName(), pair => pair.numScenes);
 
     var numScenes = scenesPerDay.Values.Sum();
 
-    var itemKeyTotal = "T";
-
-    var items = new Dictionary<string, (string ShortName, string LongName)>
+    var itemsWithTotal = new List<(ItemWithTotal item, string shortName)>
     {
-        { "1", ("布", "ひらり布") },
-        { "2", ("カメラ", "天狗のトイカメラ") },
-        { "3", ("傘", "隙間の折りたたみ傘") },
-        { "4", ("提灯", "亡霊の送り提灯") },
-        { "5", ("陰陽玉", "血に飢えた陰陽玉") },
-        { "6", ("ボム", "四尺マジックボム") },
-        { "7", ("地蔵", "身代わり地蔵") },
-        { "8", ("人形", "呪いのデコイ人形") },
-        { "9", ("小槌", "打ち出の小槌（レプリカ）") },
-        { "0", ("未使用", "ノーアイテム") },
-    };
+        (ItemWithTotal.Fablic,   "布"),
+        (ItemWithTotal.Camera,   "カメラ"),
+        (ItemWithTotal.Umbrella, "傘"),
+        (ItemWithTotal.Lantern,  "提灯"),
+        (ItemWithTotal.Orb,      "陰陽玉"),
+        (ItemWithTotal.Bomb,     "ボム"),
+        (ItemWithTotal.Jizou,    "地蔵"),
+        (ItemWithTotal.Doll,     "人形"),
+        (ItemWithTotal.Mallet,   "小槌"),
+        (ItemWithTotal.NoItem,   "未使用"),
+        (ItemWithTotal.Total,    "合計"),
+    }.ToDictionary(
+        pair => pair.item.ToShortName(),
+        pair => (ShortName: pair.shortName, LongName: pair.item.ToLongName()));
 
-    var itemsWithTotal = items.Concat(new Dictionary<string, (string ShortName, string LongName)>
-    {
-        { itemKeyTotal, ("合計", "全アイテム合計") },
-    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+    var items = itemsWithTotal.Where(pair => pair.Key != ItemWithTotal.Total.ToShortName());
 
-    var itemKeyOrderTotalFirst = new[] { itemKeyTotal }.Concat(items.Keys);
+    var itemKeyTotal = ItemWithTotal.Total.ToShortName();
+    var itemKeyOrderTotalFirst = itemsWithTotal.Keys.TakeLast(1).Concat(itemsWithTotal.Keys.SkipLast(1));
     var itemKeyOrderTotalLast = itemsWithTotal.Keys;
 
     var numNicknames = 70;

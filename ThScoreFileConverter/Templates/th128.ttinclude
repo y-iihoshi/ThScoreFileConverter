@@ -1,105 +1,120 @@
 <#@ assembly name="System.Core" #>
+<#@ assembly name="$(TargetPath)" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
+<#@ import namespace="ThScoreFileConverter.Extensions" #>
+<#@ import namespace="ThScoreFileConverter.Models.Th128" #>
+<#@ import namespace="Models = ThScoreFileConverter.Models" #>
 <#
-    var levelKeyTotal = "T";
+    var levels = Models.Utils.GetEnumerator<Models.Level>()
+        .ToDictionary(level => level.ToShortName(), level => level.ToString());
+    var levelsWithTotal = Models.Utils.GetEnumerator<Models.LevelWithTotal>()
+        .ToDictionary(level => level.ToShortName(), level => level.ToString());
 
-    var levels = new Dictionary<string, string>
-    {
-        { "E", "Easy" },
-        { "N", "Normal" },
-        { "H", "Hard" },
-        { "L", "Lunatic" },
-        { "X", "Extra" },
-    };
-
-    var levelsWithTotal = levels.Concat(new Dictionary<string, string>
-    {
-        { levelKeyTotal, "Total" },
-    }).ToDictionary(pair => pair.Key, pair => pair.Value);
-
-    var levelKeyOrderTotalFirst = new[] { levelKeyTotal }.Concat(levels.Keys);
+    var levelKeyTotal = Models.LevelWithTotal.Total.ToShortName();
+    var levelKeyOrderTotalFirst = levelsWithTotal.Keys.TakeLast(1).Concat(levelsWithTotal.Keys.SkipLast(1));
     var levelKeyOrderTotalLast = levelsWithTotal.Keys;
 
-    var routeKeyTotal = "TL";
-
-    var routes = new Dictionary<string, string>
+    var routes = new List<(Route route, string name)>
     {
-        { "A1", "ルート A1" },
-        { "A2", "ルート A2" },
-        { "B1", "ルート B1" },
-        { "B2", "ルート B2" },
-        { "C1", "ルート C1" },
-        { "C2", "ルート C2" },
-        { "EX", "ルート EX" },
-    };
+        (Route.A1,    "ルート A1"),
+        (Route.A2,    "ルート A2"),
+        (Route.B1,    "ルート B1"),
+        (Route.B2,    "ルート B2"),
+        (Route.C1,    "ルート C1"),
+        (Route.C2,    "ルート C2"),
+        (Route.Extra, "ルート EX"),
+    }.ToDictionary(pair => pair.route.ToShortName(), pair => pair.name);
 
-    var routesWithTotal = routes.Concat(new Dictionary<string, string>
+    var routesWithTotal = new List<(RouteWithTotal route, string name)>
     {
-        { routeKeyTotal, "全ルート合計" },
-    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+        (RouteWithTotal.A1,    "ルート A1"),
+        (RouteWithTotal.A2,    "ルート A2"),
+        (RouteWithTotal.B1,    "ルート B1"),
+        (RouteWithTotal.B2,    "ルート B2"),
+        (RouteWithTotal.C1,    "ルート C1"),
+        (RouteWithTotal.C2,    "ルート C2"),
+        (RouteWithTotal.Extra, "ルート EX"),
+        (RouteWithTotal.Total, "全ルート合計"),
+    }.ToDictionary(pair => pair.route.ToShortName(), pair => pair.name);
 
-    var routeKeyOrderTotalFirst = new[] { routeKeyTotal }.Concat(routes.Keys);
+    var routeKeyTotal = RouteWithTotal.Total.ToShortName();
+    var routeKeyOrderTotalFirst = routesWithTotal.Keys.TakeLast(1).Concat(routesWithTotal.Keys.SkipLast(1));
     var routeKeyOrderTotalLast = routesWithTotal.Keys;
 
-    var stageKeyTotal = "TTL";
-
-    var stages = new Dictionary<string, string>
+    var stages = new List<(Stage stage, string name)>
     {
-        { "A11", "Stage A-1" },
-        { "A12", "Stage A1-2" },
-        { "A13", "Stage A1-3" },
-        { "A22", "Stage A2-2" },
-        { "A23", "Stage A2-3" },
-        { "B11", "Stage B-1" },
-        { "B12", "Stage B1-2" },
-        { "B13", "Stage B1-3" },
-        { "B22", "Stage B2-2" },
-        { "B23", "Stage B2-3" },
-        { "C11", "Stage C-1" },
-        { "C12", "Stage C1-2" },
-        { "C13", "Stage C1-3" },
-        { "C22", "Stage C2-2" },
-        { "C23", "Stage C2-3" },
-        { "EXT", "Extra" },
-    };
+        (Stage.A_1,   "Stage A-1"),
+        (Stage.A1_2,  "Stage A1-2"),
+        (Stage.A1_3,  "Stage A1-3"),
+        (Stage.A2_2,  "Stage A2-2"),
+        (Stage.A2_3,  "Stage A2-3"),
+        (Stage.B_1,   "Stage B-1"),
+        (Stage.B1_2,  "Stage B1-2"),
+        (Stage.B1_3,  "Stage B1-3"),
+        (Stage.B2_2,  "Stage B2-2"),
+        (Stage.B2_3,  "Stage B2-3"),
+        (Stage.C_1,   "Stage C-1"),
+        (Stage.C1_2,  "Stage C1-2"),
+        (Stage.C1_3,  "Stage C1-3"),
+        (Stage.C2_2,  "Stage C2-2"),
+        (Stage.C2_3,  "Stage C2-3"),
+        (Stage.Extra, "Extra"),
+    }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.name);
 
-    var stagesWithTotal = stages.Concat(new Dictionary<string, string>
+    var stagesWithTotal = new List<(StageWithTotal stage, string name)>
     {
-        { stageKeyTotal, "Total" },
-    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+        (StageWithTotal.A_1,   "Stage A-1"),
+        (StageWithTotal.A1_2,  "Stage A1-2"),
+        (StageWithTotal.A1_3,  "Stage A1-3"),
+        (StageWithTotal.A2_2,  "Stage A2-2"),
+        (StageWithTotal.A2_3,  "Stage A2-3"),
+        (StageWithTotal.B_1,   "Stage B-1"),
+        (StageWithTotal.B1_2,  "Stage B1-2"),
+        (StageWithTotal.B1_3,  "Stage B1-3"),
+        (StageWithTotal.B2_2,  "Stage B2-2"),
+        (StageWithTotal.B2_3,  "Stage B2-3"),
+        (StageWithTotal.C_1,   "Stage C-1"),
+        (StageWithTotal.C1_2,  "Stage C1-2"),
+        (StageWithTotal.C1_3,  "Stage C1-3"),
+        (StageWithTotal.C2_2,  "Stage C2-2"),
+        (StageWithTotal.C2_3,  "Stage C2-3"),
+        (StageWithTotal.Extra, "Extra"),
+        (StageWithTotal.Total, "Total"),
+    }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.name);
 
-    var stageKeyOrderTotalFirst = new[] { stageKeyTotal }.Concat(stages.Keys);
+    var stageKeyTotal = StageWithTotal.Total.ToShortName();
+    var stageKeyOrderTotalFirst = stagesWithTotal.Keys.TakeLast(1).Concat(stagesWithTotal.Keys.SkipLast(1));
     var stageKeyOrderTotalLast = stagesWithTotal.Keys;
 
-    var cardsPerLevel = new Dictionary<string, int>
+    var cardsPerLevel = new List<(Models.Level level, int numCards)>
     {
-        { "E", 60 },
-        { "N", 60 },
-        { "H", 60 },
-        { "L", 60 },
-        { "X", 10 },
-    };
+        (Models.Level.Easy,    60),
+        (Models.Level.Normal,  60),
+        (Models.Level.Hard,    60),
+        (Models.Level.Lunatic, 60),
+        (Models.Level.Extra,   10),
+    }.ToDictionary(pair => pair.level.ToShortName(), pair => pair.numCards);
 
-    var cardsPerStage = new Dictionary<string, int>
+    var cardsPerStage = new List<(Stage stage, int numCards)>
     {
-        { "A11", 8 },
-        { "A12", 12 },
-        { "A13", 24 },
-        { "A22", 12 },
-        { "A23", 24 },
-        { "B11", 8 },
-        { "B12", 12 },
-        { "B13", 24 },
-        { "B22", 12 },
-        { "B23", 24 },
-        { "C11", 8 },
-        { "C12", 12 },
-        { "C13", 24 },
-        { "C22", 12 },
-        { "C23", 24 },
-        { "EXT", 10 },
-    };
+        (Stage.A_1,    8),
+        (Stage.A1_2,  12),
+        (Stage.A1_3,  24),
+        (Stage.A2_2,  12),
+        (Stage.A2_3,  24),
+        (Stage.B_1,    8),
+        (Stage.B1_2,  12),
+        (Stage.B1_3,  24),
+        (Stage.B2_2,  12),
+        (Stage.B2_3,  24),
+        (Stage.C_1,    8),
+        (Stage.C1_2,  12),
+        (Stage.C1_3,  24),
+        (Stage.C2_2,  12),
+        (Stage.C2_3,  24),
+        (Stage.Extra, 10),
+    }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.numCards);
 
     var numCards = cardsPerLevel.Values.Sum();
 #>

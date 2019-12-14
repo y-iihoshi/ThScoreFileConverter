@@ -1,26 +1,25 @@
 <#@ assembly name="System.Core" #>
+<#@ assembly name="$(TargetPath)" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
+<#@ import namespace="ThScoreFileConverter.Extensions" #>
+<#@ import namespace="ThScoreFileConverter.Models.Th135" #>
+<#@ import namespace="Models = ThScoreFileConverter.Models" #>
 <#
-    var levels = new Dictionary<string, string>
-    {
-        { "E", "Easy" },
-        { "N", "Normal" },
-        { "H", "Hard" },
-        { "L", "Lunatic" },
-    };
+    var levels = Models.Utils.GetEnumerator<Level>()
+        .ToDictionary(level => level.ToShortName(), level => level.ToString());
 
-    var characters = new Dictionary<string, string>
+    var characters = new List<(Chara chara, string name)>
     {
-        { "RM", "博麗 霊夢" },
-        { "MR", "霧雨 魔理沙" },
-        { "IU", "雲居 一輪 &amp; 雲山" },
-        { "BY", "聖 白蓮" },
-        { "FT", "物部 布都" },
-        { "MK", "豊聡耳 神子" },
-        { "NT", "河城 にとり" },
-        { "KO", "古明地 こいし" },
-        { "MM", "二ッ岩 マミゾウ" },
-        { "KK", "秦 こころ" },
-    };
+        (Chara.Reimu,        "博麗 霊夢"),
+        (Chara.Marisa,       "霧雨 魔理沙"),
+        (Chara.IchirinUnzan, "雲居 一輪 &amp; 雲山"),
+        (Chara.Byakuren,     "聖 白蓮"),
+        (Chara.Futo,         "物部 布都"),
+        (Chara.Miko,         "豊聡耳 神子"),
+        (Chara.Nitori,       "河城 にとり"),
+        (Chara.Koishi,       "古明地 こいし"),
+        (Chara.Mamizou,      "二ッ岩 マミゾウ"),
+        (Chara.Kokoro,       "秦 こころ"),
+    }.ToDictionary(pair => pair.chara.ToShortName(), pair => pair.name);
 #>

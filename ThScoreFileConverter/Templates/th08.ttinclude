@@ -1,163 +1,170 @@
 <#@ assembly name="System.Core" #>
+<#@ assembly name="$(TargetPath)" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
+<#@ import namespace="ThScoreFileConverter.Extensions" #>
+<#@ import namespace="ThScoreFileConverter.Models.Th08" #>
+<#@ import namespace="Models = ThScoreFileConverter.Models" #>
 <#
-    var levelKeyTotal = "T";
+    var levels = Models.Utils.GetEnumerator<Models.Level>()
+        .ToDictionary(level => level.ToShortName(), level => level.ToString());
+    var levelsWithTotal = Models.Utils.GetEnumerator<Models.LevelWithTotal>()
+        .ToDictionary(level => level.ToShortName(), level => level.ToString());
 
-    var levels = new Dictionary<string, string>
-    {
-        { "E", "Easy" },
-        { "N", "Normal" },
-        { "H", "Hard" },
-        { "L", "Lunatic" },
-        { "X", "Extra" },
-    };
-
-    var levelsWithTotal = levels.Concat(new Dictionary<string, string>
-    {
-        { levelKeyTotal, "Total" },
-    }).ToDictionary(pair => pair.Key, pair => pair.Value);
-
-    var levelKeyOrderTotalFirst = new[] { levelKeyTotal }.Concat(levels.Keys);
+    var levelKeyTotal = Models.LevelWithTotal.Total.ToShortName();
+    var levelKeyOrderTotalFirst = levelsWithTotal.Keys.TakeLast(1).Concat(levelsWithTotal.Keys.SkipLast(1));
     var levelKeyOrderTotalLast = levelsWithTotal.Keys;
 
-    var levelsSpellPractice = levels.Concat(new Dictionary<string, string>
+    var levelsSpellPractice = Models.Utils.GetEnumerator<LevelPractice>().ToDictionary(
+        level => level.ToShortName(),
+        level => (level.ToLongName().Length > 0) ? level.ToLongName() : level.ToString());
+
+    var levelsPractice = levels.Where(pair => pair.Key != Models.Level.Extra.ToShortName());
+
+    var characters = new List<(Chara chara, string shortName, string longName)>
     {
-        { "W", "Last Word" },
-    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+        (Chara.ReimuYukari,   "霊夢 &amp; 紫",       "霊夢 &amp; 紫"),
+        (Chara.MarisaAlice,   "魔理沙 &amp; アリス", "魔理沙 &amp; アリス"),
+        (Chara.SakuyaRemilia, "咲夜 &amp; レミリア", "咲夜 &amp; レミリア"),
+        (Chara.YoumuYuyuko,   "妖夢 &amp; 幽々子",   "妖夢 &amp; 幽々子"),
+        (Chara.Reimu,         "霊夢",                "博麗 霊夢"),
+        (Chara.Yukari,        "紫",                  "八雲 紫"),
+        (Chara.Marisa,        "魔理沙",              "霧雨 魔理沙"),
+        (Chara.Alice,         "アリス",              "アリス・マーガトロイド"),
+        (Chara.Sakuya,        "咲夜",                "十六夜 咲夜"),
+        (Chara.Remilia,       "レミリア",            "レミリア・スカーレット"),
+        (Chara.Youmu,         "妖夢",                "魂魄 妖夢"),
+        (Chara.Yuyuko,        "幽々子",              "西行寺 幽々子"),
+    }.ToDictionary(
+        tuple => tuple.chara.ToShortName(),
+        tuple => (ShortName: tuple.shortName, LongName: tuple.longName));
 
-    var levelsSpellPracticeWithTotal = levelsSpellPractice.Concat(new Dictionary<string, string>
+    var charactersWithTotal = new List<(CharaWithTotal chara, string shortName, string longName)>
     {
-        { levelKeyTotal, "Total" },
-    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+        (CharaWithTotal.ReimuYukari,   "霊夢 &amp; 紫",       "霊夢 &amp; 紫"),
+        (CharaWithTotal.MarisaAlice,   "魔理沙 &amp; アリス", "魔理沙 &amp; アリス"),
+        (CharaWithTotal.SakuyaRemilia, "咲夜 &amp; レミリア", "咲夜 &amp; レミリア"),
+        (CharaWithTotal.YoumuYuyuko,   "妖夢 &amp; 幽々子",   "妖夢 &amp; 幽々子"),
+        (CharaWithTotal.Reimu,         "霊夢",                "博麗 霊夢"),
+        (CharaWithTotal.Yukari,        "紫",                  "八雲 紫"),
+        (CharaWithTotal.Marisa,        "魔理沙",              "霧雨 魔理沙"),
+        (CharaWithTotal.Alice,         "アリス",              "アリス・マーガトロイド"),
+        (CharaWithTotal.Sakuya,        "咲夜",                "十六夜 咲夜"),
+        (CharaWithTotal.Remilia,       "レミリア",            "レミリア・スカーレット"),
+        (CharaWithTotal.Youmu,         "妖夢",                "魂魄 妖夢"),
+        (CharaWithTotal.Yuyuko,        "幽々子",              "西行寺 幽々子"),
+        (CharaWithTotal.Total,         "全主人公合計",        "全主人公合計"),
+    }.ToDictionary(
+        tuple => tuple.chara.ToShortName(),
+        tuple => (ShortName: tuple.shortName, LongName: tuple.longName));
 
-    var levelSpellPracticeKeyOrderTotalFirst = new[] { levelKeyTotal }.Concat(levelsSpellPractice.Keys);
-    var levelSpellPracticeKeyOrderTotalLast = levelsSpellPracticeWithTotal.Keys;
-
-    var levelsPractice = levels.Where(pair => pair.Key != "X");
-
-    var charaKeyTotal = "TL";
-
-    var characters = new Dictionary<string, (string ShortName, string LongName)>
-    {
-        { "RY", ("霊夢 &amp; 紫", "霊夢 &amp; 紫") },
-        { "MA", ("魔理沙 &amp; アリス", "魔理沙 &amp; アリス") },
-        { "SR", ("咲夜 &amp; レミリア", "咲夜 &amp; レミリア") },
-        { "YY", ("妖夢 &amp; 幽々子", "妖夢 &amp; 幽々子") },
-        { "RM", ("霊夢", "博麗 霊夢") },
-        { "YK", ("紫", "八雲 紫") },
-        { "MR", ("魔理沙", "霧雨 魔理沙") },
-        { "AL", ("アリス", "アリス・マーガトロイド") },
-        { "SK", ("咲夜", "十六夜 咲夜") },
-        { "RL", ("レミリア", "レミリア・スカーレット") },
-        { "YM", ("妖夢", "魂魄 妖夢") },
-        { "YU", ("幽々子", "西行寺 幽々子") },
-    };
-
-    var charactersWithTotal = characters
-        .Concat(new Dictionary<string, (string ShortName, string LongName)>
-        {
-            { charaKeyTotal, ("全主人公合計", "全主人公合計") },
-        })
-        .ToDictionary(pair => pair.Key, pair => pair.Value);
-
-    var charaKeyOrderTotalFirst = new[] { charaKeyTotal }.Concat(characters.Keys);
+    var charaKeyTotal = CharaWithTotal.Total.ToShortName();
+    var charaKeyOrderTotalFirst = charactersWithTotal.Keys.TakeLast(1).Concat(charactersWithTotal.Keys.SkipLast(1));
     var charaKeyOrderTotalLast = charactersWithTotal.Keys;
 
-    var stageKeyTotal = "00";
-
-    var stages = new Dictionary<string, string>
+    var stages = new List<(Stage stage, string name)>
     {
-        { "1A", "Stage 1" },
-        { "2A", "Stage 2" },
-        { "3A", "Stage 3" },
-        { "4A", "Stage 4A" },
-        { "4B", "Stage 4B" },
-        { "5A", "Stage 5" },
-        { "6A", "Stage 6A" },
-        { "6B", "Stage 6B" },
-        { "EX", "Extra" },
-    };
+        (Stage.One,          "Stage 1"),
+        (Stage.Two,          "Stage 2"),
+        (Stage.Three,        "Stage 3"),
+        (Stage.FourUncanny,  "Stage 4A"),
+        (Stage.FourPowerful, "Stage 4B"),
+        (Stage.Five,         "Stage 5"),
+        (Stage.FinalA,       "Stage 6A"),
+        (Stage.FinalB,       "Stage 6B"),
+        (Stage.Extra,        "Extra"),
+    }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.name);
 
-    var stagesWithTotal = stages.Concat(new Dictionary<string, string>
+    var stagesWithTotal = new List<(StageWithTotal stage, string name)>
     {
-        { stageKeyTotal, "Total" },
-    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+        (StageWithTotal.One,          "Stage 1"),
+        (StageWithTotal.Two,          "Stage 2"),
+        (StageWithTotal.Three,        "Stage 3"),
+        (StageWithTotal.FourUncanny,  "Stage 4A"),
+        (StageWithTotal.FourPowerful, "Stage 4B"),
+        (StageWithTotal.Five,         "Stage 5"),
+        (StageWithTotal.FinalA,       "Stage 6A"),
+        (StageWithTotal.FinalB,       "Stage 6B"),
+        (StageWithTotal.Extra,        "Extra"),
+        (StageWithTotal.Total,        "Total"),
+    }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.name);
 
-    var stageKeyOrderTotalFirst = new[] { stageKeyTotal }.Concat(stages.Keys);
+    var stageKeyTotal = StageWithTotal.Total.ToShortName();
+    var stageKeyOrderTotalFirst = stagesWithTotal.Keys.TakeLast(1).Concat(stagesWithTotal.Keys.SkipLast(1));
     var stageKeyOrderTotalLast = stagesWithTotal.Keys;
 
-    var stagesSpellPractice = stages.Concat(new Dictionary<string, string>
+    var stagesSpellPractice = new List<(StagePractice stage, string name)>
     {
-        { "LW", "Last Word" },
-    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+        (StagePractice.One,          "Stage 1"),
+        (StagePractice.Two,          "Stage 2"),
+        (StagePractice.Three,        "Stage 3"),
+        (StagePractice.FourUncanny,  "Stage 4A"),
+        (StagePractice.FourPowerful, "Stage 4B"),
+        (StagePractice.Five,         "Stage 5"),
+        (StagePractice.FinalA,       "Stage 6A"),
+        (StagePractice.FinalB,       "Stage 6B"),
+        (StagePractice.Extra,        "Extra"),
+        (StagePractice.LastWord,     "Last Word"),
+    }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.name);
 
-    var stagesSpellPracticeWithTotal = stagesSpellPractice.Concat(new Dictionary<string, string>
+    var stagesPractice = stages.Where(pair => pair.Key != Stage.Extra.ToShortName());
+
+    var cardsPerLevel = new List<(LevelPractice level, int numCards)>
     {
-        { stageKeyTotal, "Total" },
-    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+        (LevelPractice.Easy,     42),
+        (LevelPractice.Normal,   49),
+        (LevelPractice.Hard,     50),
+        (LevelPractice.Lunatic,  50),
+        (LevelPractice.Extra,    14),
+        (LevelPractice.LastWord, 17),
+    }.ToDictionary(pair => pair.level.ToShortName(), pair => pair.numCards);
 
-    var stageSpellPracticeKeyOrderTotalFirst = new[] { stageKeyTotal }.Concat(stagesSpellPractice.Keys);
-    var stageSpellPracticeKeyOrderTotalLast = stagesSpellPracticeWithTotal.Keys;
-
-    var stagesPractice = stages.Where(pair => pair.Key != "EX");
-
-    var cardsPerLevel = new Dictionary<string, int>
+    var cardsPerStage = new List<(StagePractice stage, int numCards)>
     {
-        { "E", 42 },
-        { "N", 49 },
-        { "H", 50 },
-        { "L", 50 },
-        { "X", 14 },
-        { "W", 17 },
-    };
+        (StagePractice.One,          13),
+        (StagePractice.Two,          19),
+        (StagePractice.Three,        22),
+        (StagePractice.FourUncanny,  23),
+        (StagePractice.FourPowerful, 23),
+        (StagePractice.Five,         19),
+        (StagePractice.FinalA,       28),
+        (StagePractice.FinalB,       44),
+        (StagePractice.Extra,        14),
+        (StagePractice.LastWord,     17),
+    }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.numCards);
 
-    var cardsPerStage = new Dictionary<string, int>
+    var cardsPerStage4Level = new List<(StagePractice stage, LevelPractice level, int numCards)>
     {
-        { "1A", 13},
-        { "2A", 19},
-        { "3A", 22},
-        { "4A", 23},
-        { "4B", 23},
-        { "5A", 19},
-        { "6A", 28},
-        { "6B", 44},
-        { "EX", 14},
-        { "LW", 17},
-    };
-
-    var cardsPerStage4Level = new Dictionary<(string stage, string level), int>
-    {
-        { ("4A", "E"), 5 },
-        { ("4A", "N"), 6 },
-        { ("4A", "H"), 6 },
-        { ("4A", "L"), 6 },
-        { ("4A", "X"), 0 },
-        { ("4A", "W"), 0 },
-        { ("4B", "E"), 5 },
-        { ("4B", "N"), 6 },
-        { ("4B", "H"), 6 },
-        { ("4B", "L"), 6 },
-        { ("4B", "X"), 0 },
-        { ("4B", "W"), 0 },
-    };
+        (StagePractice.FourUncanny,  LevelPractice.Easy,     5),
+        (StagePractice.FourUncanny,  LevelPractice.Normal,   6),
+        (StagePractice.FourUncanny,  LevelPractice.Hard,     6),
+        (StagePractice.FourUncanny,  LevelPractice.Lunatic,  6),
+        (StagePractice.FourUncanny,  LevelPractice.Extra,    0),
+        (StagePractice.FourUncanny,  LevelPractice.LastWord, 0),
+        (StagePractice.FourPowerful, LevelPractice.Easy,     5),
+        (StagePractice.FourPowerful, LevelPractice.Normal,   6),
+        (StagePractice.FourPowerful, LevelPractice.Hard,     6),
+        (StagePractice.FourPowerful, LevelPractice.Lunatic,  6),
+        (StagePractice.FourPowerful, LevelPractice.Extra,    0),
+        (StagePractice.FourPowerful, LevelPractice.LastWord, 0),
+    }.ToDictionary(tuple => (tuple.stage.ToShortName(), tuple.level.ToShortName()), tuple => tuple.numCards);
 
     var numCardsSpellPractice = cardsPerLevel.Values.Sum();
-    var numCards = numCardsSpellPractice - cardsPerLevel["W"];
+    var numCards = numCardsSpellPractice - cardsPerLevel[LevelPractice.LastWord.ToShortName()];
 
-    var unreachableStagesPerChara = new Dictionary<string, string>
+    var unreachableStagesPerChara = new List<(Chara chara, Stage stage)>
     {
-        { "RY", "4A" },
-        { "MA", "4B" },
-        { "SR", "4B" },
-        { "YY", "4A" },
-        { "RM", "4A" },
-        { "YK", "4A" },
-        { "MR", "4B" },
-        { "AL", "4B" },
-        { "SK", "4B" },
-        { "RL", "4B" },
-        { "YM", "4A" },
-        { "YU", "4A" },
-    };
+        (Chara.ReimuYukari,   Stage.FourUncanny),
+        (Chara.MarisaAlice,   Stage.FourPowerful),
+        (Chara.SakuyaRemilia, Stage.FourPowerful),
+        (Chara.YoumuYuyuko,   Stage.FourUncanny),
+        (Chara.Reimu,         Stage.FourUncanny),
+        (Chara.Yukari,        Stage.FourUncanny),
+        (Chara.Marisa,        Stage.FourPowerful),
+        (Chara.Alice,         Stage.FourPowerful),
+        (Chara.Sakuya,        Stage.FourPowerful),
+        (Chara.Remilia,       Stage.FourPowerful),
+        (Chara.Youmu,         Stage.FourUncanny),
+        (Chara.Yuyuko,        Stage.FourUncanny),
+    }.ToDictionary(pair => pair.chara.ToShortName(), pair => pair.stage.ToShortName());
 #>

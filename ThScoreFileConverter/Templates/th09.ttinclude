@@ -1,33 +1,32 @@
 <#@ assembly name="System.Core" #>
+<#@ assembly name="$(TargetPath)" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
+<#@ import namespace="ThScoreFileConverter.Extensions" #>
+<#@ import namespace="ThScoreFileConverter.Models" #>
+<#@ import namespace="ThScoreFileConverter.Models.Th09" #>
 <#
-    var levels = new Dictionary<string, string>
-    {
-        { "E", "Easy" },
-        { "N", "Normal" },
-        { "H", "Hard" },
-        { "L", "Lunatic" },
-        { "X", "Extra" },
-    };
+    var levels = Utils.GetEnumerator<Level>().ToDictionary(level => level.ToShortName(), level => level.ToString());
 
-    var characters = new Dictionary<string, (string Id, string ShortName, string LongName)>
+    var characters = new List<(Chara chara, string givenName, string fullName)>
     {
-        { "RM", ("Reimu", "霊夢", "博麗 霊夢") },
-        { "MR", ("Marisa", "魔理沙", "霧雨 魔理沙") },
-        { "SK", ("Sakuya", "咲夜", "十六夜 咲夜") },
-        { "YM", ("Youmu", "妖夢", "魂魄 妖夢") },
-        { "RS", ("Reisen", "鈴仙", "鈴仙・優曇華院・イナバ") },
-        { "CI", ("Cirno", "チルノ", "チルノ") },
-        { "LY", ("Lyrica", "リリカ", "リリカ・プリズムリバー") },
-        { "MY", ("Mystia", "ミスティア", "ミスティア・ローレライ") },
-        { "TW", ("Tewi", "てゐ", "因幡 てゐ") },
-        { "AY", ("Aya", "文", "射命丸 文") },
-        { "MD", ("Medicine", "メディスン", "メディスン・メランコリー") },
-        { "YU", ("Yuka", "幽香", "風見 幽香") },
-        { "KM", ("Komachi", "小町", "小野塚 小町") },
-        { "SI", ("Sikieiki", "四季映姫", "四季映姫・ヤマザナドゥ") },
-    };
+        (Chara.Reimu,     "霊夢",       "博麗 霊夢"),
+        (Chara.Marisa,    "魔理沙",     "霧雨 魔理沙"),
+        (Chara.Sakuya,    "咲夜",       "十六夜 咲夜"),
+        (Chara.Youmu,     "妖夢",       "魂魄 妖夢"),
+        (Chara.Reisen,    "鈴仙",       "鈴仙・優曇華院・イナバ"),
+        (Chara.Cirno,     "チルノ",     "チルノ"),
+        (Chara.Lyrica,    "リリカ",     "リリカ・プリズムリバー"),
+        (Chara.Mystia,    "ミスティア", "ミスティア・ローレライ"),
+        (Chara.Tewi,      "てゐ",       "因幡 てゐ"),
+        (Chara.Aya,       "文",         "射命丸 文"),
+        (Chara.Medicine,  "メディスン", "メディスン・メランコリー"),
+        (Chara.Yuuka,     "幽香",       "風見 幽香"),
+        (Chara.Komachi,   "小町",       "小野塚 小町"),
+        (Chara.Shikieiki, "四季映姫",   "四季映姫・ヤマザナドゥ"),
+    }.ToDictionary(
+        tuple => tuple.chara.ToShortName(),
+        tuple => (Id: tuple.chara.ToString(), ShortName: tuple.givenName, LongName: tuple.fullName));
 
     var rankOrdinals = new[]
     {

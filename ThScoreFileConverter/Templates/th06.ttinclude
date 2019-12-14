@@ -10,53 +10,53 @@
 
     var levelsPractice = levels.Where(pair => pair.Key != Level.Extra.ToShortName());
 
-    var characters = new Dictionary<string, string>
+    var characters = new List<(Chara chara, string name)>
     {
-        { Chara.ReimuA.ToShortName(), "博麗 霊夢（霊）" },
-        { Chara.ReimuB.ToShortName(), "博麗 霊夢（夢）" },
-        { Chara.MarisaA.ToShortName(), "霧雨 魔理沙（魔）" },
-        { Chara.MarisaB.ToShortName(), "霧雨 魔理沙（恋）" },
-    };
+        (Chara.ReimuA,  "博麗 霊夢（霊）"),
+        (Chara.ReimuB,  "博麗 霊夢（夢）"),
+        (Chara.MarisaA, "霧雨 魔理沙（魔）"),
+        (Chara.MarisaB, "霧雨 魔理沙（恋）"),
+    }.ToDictionary(pair => pair.chara.ToShortName(), pair => pair.name);
 
-    var stages = new Dictionary<string, string>
+    var stages = new List<(Stage stage, string name)>
     {
-        { Stage.One.ToShortName(), "Stage 1" },
-        { Stage.Two.ToShortName(), "Stage 2" },
-        { Stage.Three.ToShortName(), "Stage 3" },
-        { Stage.Four.ToShortName(), "Stage 4" },
-        { Stage.Five.ToShortName(), "Stage 5" },
-        { Stage.Six.ToShortName(), "Stage 6" },
-        { Stage.Extra.ToShortName(), "Extra" },
-    };
+        (Stage.One,   "Stage 1"),
+        (Stage.Two,   "Stage 2"),
+        (Stage.Three, "Stage 3"),
+        (Stage.Four,  "Stage 4"),
+        (Stage.Five,  "Stage 5"),
+        (Stage.Six,   "Stage 6"),
+        (Stage.Extra, "Extra"),
+    }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.name);
 
-    var stagesWithTotal = new Dictionary<string, string>
+    var stagesWithTotal = new List<(StageWithTotal stage, string name)>
     {
-        { StageWithTotal.One.ToShortName(), "Stage 1" },
-        { StageWithTotal.Two.ToShortName(), "Stage 2" },
-        { StageWithTotal.Three.ToShortName(), "Stage 3" },
-        { StageWithTotal.Four.ToShortName(), "Stage 4" },
-        { StageWithTotal.Five.ToShortName(), "Stage 5" },
-        { StageWithTotal.Six.ToShortName(), "Stage 6" },
-        { StageWithTotal.Extra.ToShortName(), "Extra" },
-        { StageWithTotal.Total.ToShortName(), "Total" },
-    };
+        (StageWithTotal.One,   "Stage 1"),
+        (StageWithTotal.Two,   "Stage 2"),
+        (StageWithTotal.Three, "Stage 3"),
+        (StageWithTotal.Four,  "Stage 4"),
+        (StageWithTotal.Five,  "Stage 5"),
+        (StageWithTotal.Six,   "Stage 6"),
+        (StageWithTotal.Extra, "Extra"),
+        (StageWithTotal.Total, "Total"),
+    }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.name);
 
-    var stageKeyTotal = stagesWithTotal.Keys.Last();
+    var stageKeyTotal = StageWithTotal.Total.ToShortName();
     var stageKeyOrderTotalFirst = stagesWithTotal.Keys.TakeLast(1).Concat(stagesWithTotal.Keys.SkipLast(1));
     var stageKeyOrderTotalLast = stagesWithTotal.Keys;
 
     var stagesPractice = stages.Where(pair => pair.Key != Stage.Extra.ToShortName());
 
-    var cardsPerStage = new Dictionary<string, int>
+    var cardsPerStage = new List<(Stage stage, int numCards)>
     {
-        { Stage.One.ToShortName(), 3 },
-        { Stage.Two.ToShortName(), 4 },
-        { Stage.Three.ToShortName(), 7 },
-        { Stage.Four.ToShortName(), 18 },
-        { Stage.Five.ToShortName(), 8 },
-        { Stage.Six.ToShortName(), 11 },
-        { Stage.Extra.ToShortName(), 13 },
-    };
+        (Stage.One,    3),
+        (Stage.Two,    4),
+        (Stage.Three,  7),
+        (Stage.Four,  18),
+        (Stage.Five,   8),
+        (Stage.Six,   11),
+        (Stage.Extra, 13),
+    }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.numCards);
 
     var numCards = cardsPerStage.Values.Sum();
 #>

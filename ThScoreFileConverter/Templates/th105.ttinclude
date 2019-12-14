@@ -1,126 +1,121 @@
 <#@ assembly name="System.Core" #>
+<#@ assembly name="$(TargetPath)" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
+<#@ import namespace="ThScoreFileConverter.Extensions" #>
+<#@ import namespace="ThScoreFileConverter.Models.Th105" #>
+<#@ import namespace="Models = ThScoreFileConverter.Models" #>
 <#
-    var levelKeyTotal = "T";
+    var levels = Models.Utils.GetEnumerator<Level>()
+        .ToDictionary(level => level.ToShortName(), level => level.ToString());
+    var levelsWithTotal = Models.Utils.GetEnumerator<LevelWithTotal>()
+        .ToDictionary(level => level.ToShortName(), level => level.ToString());
 
-    var levels = new Dictionary<string, string>
-    {
-        { "E", "Easy" },
-        { "N", "Normal" },
-        { "H", "Hard" },
-        { "L", "Lunatic" },
-    };
-
-    var levelsWithTotal = levels.Concat(new Dictionary<string, string>
-    {
-        { levelKeyTotal, "Total" },
-    }).ToDictionary(pair => pair.Key, pair => pair.Value);
-
-    var levelKeyOrderTotalFirst = new[] { levelKeyTotal }.Concat(levels.Keys);
+    var levelKeyTotal = LevelWithTotal.Total.ToShortName();
+    var levelKeyOrderTotalFirst = levelsWithTotal.Keys.TakeLast(1).Concat(levelsWithTotal.Keys.SkipLast(1));
     var levelKeyOrderTotalLast = levelsWithTotal.Keys;
 
-    var characters = new Dictionary<string, (string Id, string ShortName, string LongName)>
+    var characters = new List<(Chara chara, string givenName, string fullName)>
     {
-        { "RM", ("Reimu", "霊夢", "博麗 霊夢") },
-        { "MR", ("Marisa", "魔理沙", "霧雨 魔理沙") },
-        { "SK", ("Sakuya", "咲夜", "十六夜 咲夜") },
-        { "AL", ("Alice", "アリス", "アリス・マーガトロイド") },
-        { "PC", ("Patchouli", "パチュリー", "パチュリー・ノーレッジ") },
-        { "YM", ("Youmu", "妖夢", "魂魄 妖夢") },
-        { "RL", ("Remilia", "レミリア", "レミリア・スカーレット") },
-        { "YU", ("Yuyuko", "幽々子", "西行寺 幽々子") },
-        { "YK", ("Yukari", "紫", "八雲 紫") },
-        { "SU", ("Suika", "萃香", "伊吹 萃香") },
-        { "RS", ("Reisen", "鈴仙", "鈴仙・優曇華院・イナバ") },
-        { "AY", ("Aya", "文", "射命丸 文") },
-        { "KM", ("Komachi", "小町", "小野塚 小町") },
-        { "IK", ("Iku", "衣玖", "永江 衣玖") },
-        { "TN", ("Tenshi", "天子", "比那名居 天子") },
-    };
+        (Chara.Reimu,     "霊夢",       "博麗 霊夢"),
+        (Chara.Marisa,    "魔理沙",     "霧雨 魔理沙"),
+        (Chara.Sakuya,    "咲夜",       "十六夜 咲夜"),
+        (Chara.Alice,     "アリス",     "アリス・マーガトロイド"),
+        (Chara.Patchouli, "パチュリー", "パチュリー・ノーレッジ"),
+        (Chara.Youmu,     "妖夢",       "魂魄 妖夢"),
+        (Chara.Remilia,   "レミリア",   "レミリア・スカーレット"),
+        (Chara.Yuyuko,    "幽々子",     "西行寺 幽々子"),
+        (Chara.Yukari,    "紫",         "八雲 紫"),
+        (Chara.Suika,     "萃香",       "伊吹 萃香"),
+        (Chara.Reisen,    "鈴仙",       "鈴仙・優曇華院・イナバ"),
+        (Chara.Aya,       "文",         "射命丸 文"),
+        (Chara.Komachi,   "小町",       "小野塚 小町"),
+        (Chara.Iku,       "衣玖",       "永江 衣玖"),
+        (Chara.Tenshi,    "天子",       "比那名居 天子"),
+    }.ToDictionary(
+        tuple => tuple.chara.ToShortName(),
+        tuple => (Id: tuple.chara.ToString(), ShortName: tuple.givenName, LongName: tuple.fullName));
 
-    var cardsPerLevel = new Dictionary<string, int>
+    var cardsPerLevel = new List<(Level level, int numCards)>
     {
-        { "E", 23 },
-        { "N", 24 },
-        { "H", 25 },
-        { "L", 25 },
-    };
+        (Level.Easy,    23),
+        (Level.Normal,  24),
+        (Level.Hard,    25),
+        (Level.Lunatic, 25),
+    }.ToDictionary(pair => pair.level.ToShortName(), pair => pair.numCards);
 
-    var cardsPerChara = new Dictionary<string, int>
+    var cardsPerChara = new List<(Chara chara, int numCards)>
     {
-        { "RM", 76 },
-        { "MR", 76 },
-        { "SK", 76 },
-        { "AL", 76 },
-        { "PC", 76 },
-        { "YM", 76 },
-        { "RL", 96 },
-        { "YU", 76 },
-        { "YK", 76 },
-        { "SU", 52 },
-        { "RS", 60 },
-        { "AY", 60 },
-        { "KM", 76 },
-        { "IK", 76 },
-        { "TN", 100 },
-    };
+        (Chara.Reimu,      76),
+        (Chara.Marisa,     76),
+        (Chara.Sakuya,     76),
+        (Chara.Alice,      76),
+        (Chara.Patchouli,  76),
+        (Chara.Youmu,      76),
+        (Chara.Remilia,    96),
+        (Chara.Yuyuko,     76),
+        (Chara.Yukari,     76),
+        (Chara.Suika,      52),
+        (Chara.Reisen,     60),
+        (Chara.Aya,        60),
+        (Chara.Komachi,    76),
+        (Chara.Iku,        76),
+        (Chara.Tenshi,    100),
+    }.ToDictionary(pair => pair.chara.ToShortName(), pair => pair.numCards);
 
-    var cardTypes = new Dictionary<string, string>
-    {
-        { "Y", "System" },
-        { "K", "Skill" },
-        { "P", "Spell" },
-    };
+    var cardTypes = Models.Utils.GetEnumerator<CardType>()
+        .ToDictionary(cardType => cardType.ToShortName(), cardType => cardType.ToString());
 
-    var cardsPerCharaAndType = new Dictionary<(string Chara, string CardType), int>
+    var cardsPerCharaAndType = new List<(Chara chara, CardType cardType, int numCards)>
     {
-        { ("RM", "Y"), 6 },
-        { ("RM", "K"), 11 },
-        { ("RM", "P"), 8 },
-        { ("MR", "Y"), 6 },
-        { ("MR", "K"), 11 },
-        { ("MR", "P"), 10 },
-        { ("SK", "Y"), 6 },
-        { ("SK", "K"), 8 },
-        { ("SK", "P"), 10 },
-        { ("AL", "Y"), 6 },
-        { ("AL", "K"), 10 },
-        { ("AL", "P"), 10 },
-        { ("PC", "Y"), 6 },
-        { ("PC", "K"), 10 },
-        { ("PC", "P"), 9 },
-        { ("YM", "Y"), 6 },
-        { ("YM", "K"), 10 },
-        { ("YM", "P"), 8 },
-        { ("RL", "Y"), 6 },
-        { ("RL", "K"), 9 },
-        { ("RL", "P"), 8 },
-        { ("YU", "Y"), 6 },
-        { ("YU", "K"), 9 },
-        { ("YU", "P"), 9 },
-        { ("YK", "Y"), 6 },
-        { ("YK", "K"), 9 },
-        { ("YK", "P"), 9 },
-        { ("SU", "Y"), 6 },
-        { ("SU", "K"), 9 },
-        { ("SU", "P"), 9 },
-        { ("RS", "Y"), 6 },
-        { ("RS", "K"), 11 },
-        { ("RS", "P"), 8 },
-        { ("AY", "Y"), 6 },
-        { ("AY", "K"), 10 },
-        { ("AY", "P"), 8 },
-        { ("KM", "Y"), 6 },
-        { ("KM", "K"), 10 },
-        { ("KM", "P"), 8 },
-        { ("IK", "Y"), 6 },
-        { ("IK", "K"), 9 },
-        { ("IK", "P"), 8 },
-        { ("TN", "Y"), 6 },
-        { ("TN", "K"), 8 },
-        { ("TN", "P"), 8 },
-    };
+        (Chara.Reimu,     CardType.System,  6),
+        (Chara.Reimu,     CardType.Skill,  11),
+        (Chara.Reimu,     CardType.Spell,   8),
+        (Chara.Marisa,    CardType.System,  6),
+        (Chara.Marisa,    CardType.Skill,  11),
+        (Chara.Marisa,    CardType.Spell,  10),
+        (Chara.Sakuya,    CardType.System,  6),
+        (Chara.Sakuya,    CardType.Skill,   8),
+        (Chara.Sakuya,    CardType.Spell,  10),
+        (Chara.Alice,     CardType.System,  6),
+        (Chara.Alice,     CardType.Skill,  10),
+        (Chara.Alice,     CardType.Spell,  10),
+        (Chara.Patchouli, CardType.System,  6),
+        (Chara.Patchouli, CardType.Skill,  10),
+        (Chara.Patchouli, CardType.Spell,   9),
+        (Chara.Youmu,     CardType.System,  6),
+        (Chara.Youmu,     CardType.Skill,  10),
+        (Chara.Youmu,     CardType.Spell,   8),
+        (Chara.Remilia,   CardType.System,  6),
+        (Chara.Remilia,   CardType.Skill,   9),
+        (Chara.Remilia,   CardType.Spell,   8),
+        (Chara.Yuyuko,    CardType.System,  6),
+        (Chara.Yuyuko,    CardType.Skill,   9),
+        (Chara.Yuyuko,    CardType.Spell,   9),
+        (Chara.Yukari,    CardType.System,  6),
+        (Chara.Yukari,    CardType.Skill,   9),
+        (Chara.Yukari,    CardType.Spell,   9),
+        (Chara.Suika,     CardType.System,  6),
+        (Chara.Suika,     CardType.Skill,   9),
+        (Chara.Suika,     CardType.Spell,   9),
+        (Chara.Reisen,    CardType.System,  6),
+        (Chara.Reisen,    CardType.Skill,  11),
+        (Chara.Reisen,    CardType.Spell,   8),
+        (Chara.Aya,       CardType.System,  6),
+        (Chara.Aya,       CardType.Skill,  10),
+        (Chara.Aya,       CardType.Spell,   8),
+        (Chara.Komachi,   CardType.System,  6),
+        (Chara.Komachi,   CardType.Skill,  10),
+        (Chara.Komachi,   CardType.Spell,   8),
+        (Chara.Iku,       CardType.System,  6),
+        (Chara.Iku,       CardType.Skill,   9),
+        (Chara.Iku,       CardType.Spell,   8),
+        (Chara.Tenshi,    CardType.System,  6),
+        (Chara.Tenshi,    CardType.Skill,   8),
+        (Chara.Tenshi,    CardType.Spell,   8),
+    }.ToDictionary(
+        tuple => (Chara: tuple.chara.ToShortName(), CardType: tuple.cardType.ToShortName()),
+        tuple => tuple.numCards);
 
     var maxNumCardsPerType = cardTypes.ToDictionary(
         pair => pair.Key,

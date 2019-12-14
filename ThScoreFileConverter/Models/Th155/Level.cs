@@ -39,7 +39,7 @@ namespace ThScoreFileConverter.Models.Th155
         /// <summary>
         /// Represents level OverDrive.
         /// </summary>
-        [EnumAltName("D")]
+        [EnumAltName("D", LongName = "Over Drive")]
         OverDrive,
     }
 }

@@ -1,94 +1,97 @@
 <#@ assembly name="System.Core" #>
+<#@ assembly name="$(TargetPath)" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
+<#@ import namespace="ThScoreFileConverter.Extensions" #>
+<#@ import namespace="ThScoreFileConverter.Models" #>
+<#@ import namespace="ThScoreFileConverter.Models.Th15" #>
 <#
-    var levelKeyTotal = "T";
+    var levels = Utils.GetEnumerator<Level>()
+        .ToDictionary(level => level.ToShortName(), level => level.ToString());
+    var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>()
+        .ToDictionary(level => level.ToShortName(), level => level.ToString());
 
-    var levels = new Dictionary<string, string>
-    {
-        { "E", "Easy" },
-        { "N", "Normal" },
-        { "H", "Hard" },
-        { "L", "Lunatic" },
-        { "X", "Extra" },
-    };
-
-    var levelsWithTotal = levels.Concat(new Dictionary<string, string>
-    {
-        { levelKeyTotal, "Total" },
-    }).ToDictionary(pair => pair.Key, pair => pair.Value);
-
-    var levelKeyOrderTotalFirst = new[] { levelKeyTotal }.Concat(levels.Keys);
+    var levelKeyTotal = LevelWithTotal.Total.ToShortName();
+    var levelKeyOrderTotalFirst = levelsWithTotal.Keys.TakeLast(1).Concat(levelsWithTotal.Keys.SkipLast(1));
     var levelKeyOrderTotalLast = levelsWithTotal.Keys;
 
-    var levelsPractice = levels.Where(pair => pair.Key != "X");
+    var levelsPractice = levels.Where(pair => pair.Key != Level.Extra.ToShortName());
 
-    var charaKeyTotal = "TL";
-
-    var characters = new Dictionary<string, string>
+    var characters = new List<(Chara chara, string name)>
     {
-        { "RM", "博麗 霊夢" },
-        { "MR", "霧雨 魔理沙" },
-        { "SN", "東風谷 早苗" },
-        { "RS", "鈴仙・優曇華院・イナバ" },
-    };
+        (Chara.Reimu,  "博麗 霊夢"),
+        (Chara.Marisa, "霧雨 魔理沙"),
+        (Chara.Sanae,  "東風谷 早苗"),
+        (Chara.Reisen, "鈴仙・優曇華院・イナバ"),
+    }.ToDictionary(pair => pair.chara.ToShortName(), pair => pair.name);
 
-    var charactersWithTotal = characters.Concat(new Dictionary<string, string>
+    var charactersWithTotal = new List<(CharaWithTotal chara, string name)>
     {
-        { charaKeyTotal, "全主人公合計" },
-    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+        (CharaWithTotal.Reimu,  "博麗 霊夢"),
+        (CharaWithTotal.Marisa, "霧雨 魔理沙"),
+        (CharaWithTotal.Sanae,  "東風谷 早苗"),
+        (CharaWithTotal.Reisen, "鈴仙・優曇華院・イナバ"),
+        (CharaWithTotal.Total,  "全主人公合計"),
+    }.ToDictionary(pair => pair.chara.ToShortName(), pair => pair.name);
 
-    var charaKeyOrderTotalFirst = new[] { charaKeyTotal }.Concat(characters.Keys);
+    var charaKeyTotal = CharaWithTotal.Total.ToShortName();
+    var charaKeyOrderTotalFirst = charactersWithTotal.Keys.TakeLast(1).Concat(charactersWithTotal.Keys.SkipLast(1));
     var charaKeyOrderTotalLast = charactersWithTotal.Keys;
 
-    var stageKeyTotal = "0";
-
-    var stages = new Dictionary<string, string>
+    var stages = new List<(Stage stage, string name)>
     {
-        { "1", "Stage 1" },
-        { "2", "Stage 2" },
-        { "3", "Stage 3" },
-        { "4", "Stage 4" },
-        { "5", "Stage 5" },
-        { "6", "Stage 6" },
-        { "X", "Extra" },
-    };
+        (Stage.One,   "Stage 1"),
+        (Stage.Two,   "Stage 2"),
+        (Stage.Three, "Stage 3"),
+        (Stage.Four,  "Stage 4"),
+        (Stage.Five,  "Stage 5"),
+        (Stage.Six,   "Stage 6"),
+        (Stage.Extra, "Extra"),
+    }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.name);
 
-    var stagesWithTotal = stages.Concat(new Dictionary<string, string>
+    var stagesWithTotal = new List<(StageWithTotal stage, string name)>
     {
-        { stageKeyTotal, "Total" },
-    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+        (StageWithTotal.One,   "Stage 1"),
+        (StageWithTotal.Two,   "Stage 2"),
+        (StageWithTotal.Three, "Stage 3"),
+        (StageWithTotal.Four,  "Stage 4"),
+        (StageWithTotal.Five,  "Stage 5"),
+        (StageWithTotal.Six,   "Stage 6"),
+        (StageWithTotal.Extra, "Extra"),
+        (StageWithTotal.Total, "Total"),
+    }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.name);
 
-    var stageKeyOrderTotalFirst = new[] { stageKeyTotal }.Concat(stages.Keys);
+    var stageKeyTotal = StageWithTotal.Total.ToShortName();
+    var stageKeyOrderTotalFirst = stagesWithTotal.Keys.TakeLast(1).Concat(stagesWithTotal.Keys.SkipLast(1));
     var stageKeyOrderTotalLast = stagesWithTotal.Keys;
 
-    var stagesPractice = stages.Where(pair => pair.Key != "X");
+    var stagesPractice = stages.Where(pair => pair.Key != Stage.Extra.ToShortName());
 
-    var cardsPerLevel = new Dictionary<string, int>
+    var cardsPerLevel = new List<(Level level, int numCards)>
     {
-        { "E", 26 },
-        { "N", 26 },
-        { "H", 27 },
-        { "L", 27 },
-        { "X", 13 },
-    };
+        (Level.Easy,    26),
+        (Level.Normal,  26),
+        (Level.Hard,    27),
+        (Level.Lunatic, 27),
+        (Level.Extra,   13),
+    }.ToDictionary(pair => pair.level.ToShortName(), pair => pair.numCards);
 
-    var cardsPerStage = new Dictionary<string, int>
+    var cardsPerStage = new List<(Stage stage, int numCards)>
     {
-        { "1", 10 },
-        { "2", 12 },
-        { "3", 20 },
-        { "4", 16 },
-        { "5", 20 },
-        { "6", 28 },
-        { "X", 13 },
-    };
+        (Stage.One,   10),
+        (Stage.Two,   12),
+        (Stage.Three, 20),
+        (Stage.Four,  16),
+        (Stage.Five,  20),
+        (Stage.Six,   28),
+        (Stage.Extra, 13),
+    }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.numCards);
 
     var numCards = cardsPerLevel.Values.Sum();
 
-    var gameModes = new Dictionary<string, string>
+    var gameModes = new List<(GameMode mode, string name)>
     {
-        { "P", "完全無欠モード" },
-        { "L", "レガシーモード" },
-    };
+        (GameMode.Pointdevice, "完全無欠モード"),
+        (GameMode.Legacy,      "レガシーモード"),
+    }.ToDictionary(pair => pair.mode.ToShortName(), pair => pair.name);
 #>

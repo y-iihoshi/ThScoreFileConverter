@@ -1,63 +1,70 @@
 <#@ assembly name="System.Core" #>
+<#@ assembly name="$(TargetPath)" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
+<#@ import namespace="ThScoreFileConverter.Extensions" #>
+<#@ import namespace="ThScoreFileConverter.Models.Th125" #>
 <#
-    var levels = new Dictionary<string, (string Id, string ShortName, string LongName)>
+    var levels = new List<(Level level, string id, string shortName, string longName)>
     {
-        { "1", ("Level1", "1", "Level 1") },
-        { "2", ("Level2", "2", "Level 2") },
-        { "3", ("Level3", "3", "Level 3") },
-        { "4", ("Level4", "4", "Level 4") },
-        { "5", ("Level5", "5", "Level 5") },
-        { "6", ("Level6", "6", "Level 6") },
-        { "7", ("Level7", "7", "Level 7") },
-        { "8", ("Level8", "8", "Level 8") },
-        { "9", ("Level9", "9", "Level 9") },
-        { "A", ("Level10", "10", "Level 10") },
-        { "B", ("Level11", "11", "Level 11") },
-        { "C", ("Level12", "12", "Level 12") },
-        { "X", ("LevelEX", "EX", "Level EX") },
-        { "S", ("SPOILER", "??", "SPOILER") },
-    };
+        (Level.One,     "Level1",  "1",  "Level 1"),
+        (Level.Two,     "Level2",  "2",  "Level 2"),
+        (Level.Three,   "Level3",  "3",  "Level 3"),
+        (Level.Four,    "Level4",  "4",  "Level 4"),
+        (Level.Five,    "Level5",  "5",  "Level 5"),
+        (Level.Six,     "Level6",  "6",  "Level 6"),
+        (Level.Seven,   "Level7",  "7",  "Level 7"),
+        (Level.Eight,   "Level8",  "8",  "Level 8"),
+        (Level.Nine,    "Level9",  "9",  "Level 9"),
+        (Level.Ten,     "Level10", "10", "Level 10"),
+        (Level.Eleven,  "Level11", "11", "Level 11"),
+        (Level.Twelve,  "Level12", "12", "Level 12"),
+        (Level.Extra,   "LevelEX", "EX", "Level EX"),
+        (Level.Spoiler, "SPOILER", "??", "SPOILER"),
+    }.ToDictionary(
+        tuple => tuple.level.ToShortName(),
+        tuple => (Id: tuple.id, ShortName: tuple.shortName, LongName: tuple.longName));
 
-    var characters = new Dictionary<string, (string Id, string ShortName, string LongName)>
+    var characters = new List<(Chara chara, string givenName, string fullName)>
     {
-        { "A", ("Aya", "文", "射命丸 文") },
-        { "H", ("Hatate", "はたて", "姫海棠 はたて") },
-    };
+        (Chara.Aya,    "文",     "射命丸 文"),
+        (Chara.Hatate, "はたて", "姫海棠 はたて"),
+    }.ToDictionary(
+        tuple => tuple.chara.ToShortName(),
+        tuple => (Id: tuple.chara.ToString(), ShortName: tuple.givenName, LongName: tuple.fullName));
 
-    var spoilerScenesPerChara = new Dictionary<string, IEnumerable<int>>
+    var spoilerScenesPerChara = new List<(Chara chara, IEnumerable<int> scenes)>
     {
-        { "A", Enumerable.Range(start: 1, count: 4) },
-        { "H", Enumerable.Range(start: 5, count: 5) },
-    };
+        (Chara.Aya,    Enumerable.Range(start: 1, count: 4)),
+        (Chara.Hatate, Enumerable.Range(start: 5, count: 5)),
+    }.ToDictionary(pair => pair.chara.ToShortName(), pair => pair.scenes);
 
-    var scenesPerLevel = new Dictionary<string, int>
+    var scenesPerLevel = new List<(Level level, int numScenes)>
     {
-        { "1", 6 },
-        { "2", 6 },
-        { "3", 8 },
-        { "4", 7 },
-        { "5", 8 },
-        { "6", 8 },
-        { "7", 7 },
-        { "8", 8 },
-        { "9", 8 },
-        { "A", 8 },
-        { "B", 8 },
-        { "C", 8 },
-        { "X", 9 },
-        { "S", spoilerScenesPerChara.Sum(pair => pair.Value.Count()) },
-    };
+        (Level.One,     6),
+        (Level.Two,     6),
+        (Level.Three,   8),
+        (Level.Four,    7),
+        (Level.Five,    8),
+        (Level.Six,     8),
+        (Level.Seven,   7),
+        (Level.Eight,   8),
+        (Level.Nine,    8),
+        (Level.Ten,     8),
+        (Level.Eleven,  8),
+        (Level.Twelve,  8),
+        (Level.Extra,   9),
+        (Level.Spoiler, spoilerScenesPerChara.Sum(pair => pair.Value.Count())),
+    }.ToDictionary(pair => pair.level.ToShortName(), pair => pair.numScenes);
 
     var numScenes = scenesPerLevel.Values.Sum();
-    var numScenesExceptSpoiler = numScenes - scenesPerLevel["S"];
+    var numScenesExceptSpoiler = numScenes - scenesPerLevel[Level.Spoiler.ToShortName()];
     var numScenesPerChara = characters.ToDictionary(
         pair => pair.Key,
         pair => numScenesExceptSpoiler + spoilerScenesPerChara[pair.Key].Count());
-    var numScenesPerCharaInGame = new Dictionary<string, int>
+    var numScenesPerCharaInGame = new List<(Chara chara, int scenes)>
     {
-        { "A", numScenes },
-        { "H", numScenesExceptSpoiler },
-    };
+        (Chara.Aya,    numScenes),
+        (Chara.Hatate, numScenesExceptSpoiler),
+    }.ToDictionary(pair => pair.chara.ToShortName(), pair => pair.scenes);
 #>

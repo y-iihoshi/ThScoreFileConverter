@@ -1,51 +1,60 @@
 <#@ assembly name="System.Core" #>
+<#@ assembly name="$(TargetPath)" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
+<#@ import namespace="ThScoreFileConverter.Extensions" #>
+<#@ import namespace="ThScoreFileConverter.Models.Th145" #>
+<#@ import namespace="Models = ThScoreFileConverter.Models" #>
 <#
-    var levelKeyTotal = "T";
+    var levels = Models.Utils.GetEnumerator<Level>()
+        .ToDictionary(level => level.ToShortName(), level => level.ToString());
+    var levelsWithTotal = Models.Utils.GetEnumerator<LevelWithTotal>()
+        .ToDictionary(level => level.ToShortName(), level => level.ToString());
 
-    var levels = new Dictionary<string, string>
-    {
-        { "E", "Easy" },
-        { "N", "Normal" },
-        { "H", "Hard" },
-        { "L", "Lunatic" },
-    };
-
-    var levelsWithTotal = levels.Concat(new Dictionary<string, string>
-    {
-        { levelKeyTotal, "Total" },
-    }).ToDictionary(pair => pair.Key, pair => pair.Value);
-
-    var levelKeyOrderTotalFirst = new[] { levelKeyTotal }.Concat(levels.Keys);
+    var levelKeyTotal = LevelWithTotal.Total.ToShortName();
+    var levelKeyOrderTotalFirst = levelsWithTotal.Keys.TakeLast(1).Concat(levelsWithTotal.Keys.SkipLast(1));
     var levelKeyOrderTotalLast = levelsWithTotal.Keys;
 
-    var charaKeyTotal = "TL";
-
-    var characters = new Dictionary<string, string>
+    var characters = new List<(Chara chara, string name)>
     {
-        { "RA", "博麗 霊夢（序）" },
-        { "MR", "霧雨 魔理沙" },
-        { "IU", "雲居 一輪 &amp; 雲山" },
-        { "BY", "聖 白蓮" },
-        { "FT", "物部 布都" },
-        { "MK", "豊聡耳 神子" },
-        { "NT", "河城 にとり" },
-        { "KO", "古明地 こいし" },
-        { "MM", "二ッ岩 マミゾウ" },
-        { "KK", "秦 こころ" },
-        { "KS", "茨木 華扇" },
-        { "MO", "藤原 妹紅" },
-        { "SN", "少名 針妙丸" },
-        { "SM", "宇佐見 菫子" },
-        { "RB", "博麗 霊夢（終）" },
-    };
+        (Chara.ReimuA,       "博麗 霊夢（序）"),
+        (Chara.Marisa,       "霧雨 魔理沙"),
+        (Chara.IchirinUnzan, "雲居 一輪 &amp; 雲山"),
+        (Chara.Byakuren,     "聖 白蓮"),
+        (Chara.Futo,         "物部 布都"),
+        (Chara.Miko,         "豊聡耳 神子"),
+        (Chara.Nitori,       "河城 にとり"),
+        (Chara.Koishi,       "古明地 こいし"),
+        (Chara.Mamizou,      "二ッ岩 マミゾウ"),
+        (Chara.Kokoro,       "秦 こころ"),
+        (Chara.Kasen,        "茨木 華扇"),
+        (Chara.Mokou,        "藤原 妹紅"),
+        (Chara.Shinmyoumaru, "少名 針妙丸"),
+        (Chara.Sumireko,     "宇佐見 菫子"),
+        (Chara.ReimuB,       "博麗 霊夢（終）"),
+    }.ToDictionary(pair => pair.chara.ToShortName(), pair => pair.name);
 
-    var charactersWithTotal = characters.Concat(new Dictionary<string, string>
+    var charactersWithTotal = new List<(CharaWithTotal chara, string name)>
     {
-        { charaKeyTotal, "全キャラ合計" },
-    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+        (CharaWithTotal.ReimuA,       "博麗 霊夢（序）"),
+        (CharaWithTotal.Marisa,       "霧雨 魔理沙"),
+        (CharaWithTotal.IchirinUnzan, "雲居 一輪 &amp; 雲山"),
+        (CharaWithTotal.Byakuren,     "聖 白蓮"),
+        (CharaWithTotal.Futo,         "物部 布都"),
+        (CharaWithTotal.Miko,         "豊聡耳 神子"),
+        (CharaWithTotal.Nitori,       "河城 にとり"),
+        (CharaWithTotal.Koishi,       "古明地 こいし"),
+        (CharaWithTotal.Mamizou,      "二ッ岩 マミゾウ"),
+        (CharaWithTotal.Kokoro,       "秦 こころ"),
+        (CharaWithTotal.Kasen,        "茨木 華扇"),
+        (CharaWithTotal.Mokou,        "藤原 妹紅"),
+        (CharaWithTotal.Shinmyoumaru, "少名 針妙丸"),
+        (CharaWithTotal.Sumireko,     "宇佐見 菫子"),
+        (CharaWithTotal.ReimuB,       "博麗 霊夢（終）"),
+        (CharaWithTotal.Total,        "全キャラ合計"),
+    }.ToDictionary(pair => pair.chara.ToShortName(), pair => pair.name);
 
-    var charaKeyOrderTotalFirst = new[] { charaKeyTotal }.Concat(characters.Keys);
+    var charaKeyTotal = CharaWithTotal.Total.ToShortName();
+    var charaKeyOrderTotalFirst = charactersWithTotal.Keys.TakeLast(1).Concat(charactersWithTotal.Keys.SkipLast(1));
     var charaKeyOrderTotalLast = charactersWithTotal.Keys;
 #>

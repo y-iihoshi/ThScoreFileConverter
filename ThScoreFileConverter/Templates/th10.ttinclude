@@ -1,90 +1,95 @@
 <#@ assembly name="System.Core" #>
+<#@ assembly name="$(TargetPath)" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
+<#@ import namespace="ThScoreFileConverter.Extensions" #>
+<#@ import namespace="ThScoreFileConverter.Models" #>
+<#@ import namespace="ThScoreFileConverter.Models.Th10" #>
 <#
-    var levelKeyTotal = "T";
+    var levels = Utils.GetEnumerator<Level>()
+        .ToDictionary(level => level.ToShortName(), level => level.ToString());
+    var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>()
+        .ToDictionary(level => level.ToShortName(), level => level.ToString());
 
-    var levels = new Dictionary<string, string>
-    {
-        { "E", "Easy" },
-        { "N", "Normal" },
-        { "H", "Hard" },
-        { "L", "Lunatic" },
-        { "X", "Extra" },
-    };
-
-    var levelsWithTotal = levels.Concat(new Dictionary<string, string>
-    {
-        { levelKeyTotal, "Total" },
-    }).ToDictionary(pair => pair.Key, pair => pair.Value);
-
-    var levelKeyOrderTotalFirst = new[] { levelKeyTotal }.Concat(levels.Keys);
+    var levelKeyTotal = LevelWithTotal.Total.ToShortName();
+    var levelKeyOrderTotalFirst = levelsWithTotal.Keys.TakeLast(1).Concat(levelsWithTotal.Keys.SkipLast(1));
     var levelKeyOrderTotalLast = levelsWithTotal.Keys;
 
-    var levelsPractice = levels.Where(pair => pair.Key != "X");
+    var levelsPractice = levels.Where(pair => pair.Key != Level.Extra.ToShortName());
 
-    var charaKeyTotal = "TL";
-
-    var characters = new Dictionary<string, (string Name, string Equip)>
+    var characters = new List<(Chara chara, string name, string equipment)>
     {
-        { "RA", ("博麗 霊夢", "（誘導装備）") },
-        { "RB", ("博麗 霊夢", "（前方集中装備）") },
-        { "RC", ("博麗 霊夢", "（封印装備）") },
-        { "MA", ("霧雨 魔理沙", "（高威力装備）") },
-        { "MB", ("霧雨 魔理沙", "（貫通装備）") },
-        { "MC", ("霧雨 魔理沙", "（魔法使い装備）") },
-    };
+        (Chara.ReimuA,  "博麗 霊夢",   "（誘導装備）"),
+        (Chara.ReimuB,  "博麗 霊夢",   "（前方集中装備）"),
+        (Chara.ReimuC,  "博麗 霊夢",   "（封印装備）"),
+        (Chara.MarisaA, "霧雨 魔理沙", "（高威力装備）"),
+        (Chara.MarisaB, "霧雨 魔理沙", "（貫通装備）"),
+        (Chara.MarisaC, "霧雨 魔理沙", "（魔法使い装備）"),
+    }.ToDictionary(tuple => tuple.chara.ToShortName(), tuple => (Name: tuple.name, Equip: tuple.equipment));
 
-    var charactersWithTotal = characters.Concat(new Dictionary<string, (string Name, string Equip)>
+    var charactersWithTotal = new List<(CharaWithTotal chara, string name, string equipment)>
     {
-        { charaKeyTotal, ("全主人公合計", string.Empty) },
-    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+        (CharaWithTotal.ReimuA,  "博麗 霊夢",    "（誘導装備）"),
+        (CharaWithTotal.ReimuB,  "博麗 霊夢",    "（前方集中装備）"),
+        (CharaWithTotal.ReimuC,  "博麗 霊夢",    "（封印装備）"),
+        (CharaWithTotal.MarisaA, "霧雨 魔理沙",  "（高威力装備）"),
+        (CharaWithTotal.MarisaB, "霧雨 魔理沙",  "（貫通装備）"),
+        (CharaWithTotal.MarisaC, "霧雨 魔理沙",  "（魔法使い装備）"),
+        (CharaWithTotal.Total,   "全主人公合計", string.Empty),
+    }.ToDictionary(tuple => tuple.chara.ToShortName(), tuple => (Name: tuple.name, Equip: tuple.equipment));
 
-    var charaKeyOrderTotalFirst = new[] { charaKeyTotal }.Concat(characters.Keys);
+    var charaKeyTotal = CharaWithTotal.Total.ToShortName();
+    var charaKeyOrderTotalFirst = charactersWithTotal.Keys.TakeLast(1).Concat(charactersWithTotal.Keys.SkipLast(1));
     var charaKeyOrderTotalLast = charactersWithTotal.Keys;
 
-    var stageKeyTotal = "0";
-
-    var stages = new Dictionary<string, string>
+    var stages = new List<(Stage stage, string name)>
     {
-        { "1", "Stage 1" },
-        { "2", "Stage 2" },
-        { "3", "Stage 3" },
-        { "4", "Stage 4" },
-        { "5", "Stage 5" },
-        { "6", "Stage 6" },
-        { "X", "Extra" },
-    };
+        (Stage.One,   "Stage 1"),
+        (Stage.Two,   "Stage 2"),
+        (Stage.Three, "Stage 3"),
+        (Stage.Four,  "Stage 4"),
+        (Stage.Five,  "Stage 5"),
+        (Stage.Six,   "Stage 6"),
+        (Stage.Extra, "Extra"),
+    }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.name);
 
-    var stagesWithTotal = stages.Concat(new Dictionary<string, string>
+    var stagesWithTotal = new List<(StageWithTotal stage, string name)>
     {
-        { stageKeyTotal, "Total" },
-    }).ToDictionary(pair => pair.Key, pair => pair.Value);
+        (StageWithTotal.One,   "Stage 1"),
+        (StageWithTotal.Two,   "Stage 2"),
+        (StageWithTotal.Three, "Stage 3"),
+        (StageWithTotal.Four,  "Stage 4"),
+        (StageWithTotal.Five,  "Stage 5"),
+        (StageWithTotal.Six,   "Stage 6"),
+        (StageWithTotal.Extra, "Extra"),
+        (StageWithTotal.Total, "Total"),
+    }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.name);
 
-    var stageKeyOrderTotalFirst = new[] { stageKeyTotal }.Concat(stages.Keys);
+    var stageKeyTotal = StageWithTotal.Total.ToShortName();
+    var stageKeyOrderTotalFirst = stagesWithTotal.Keys.TakeLast(1).Concat(stagesWithTotal.Keys.SkipLast(1));
     var stageKeyOrderTotalLast = stagesWithTotal.Keys;
 
-    var stagesPractice = stages.Where(pair => pair.Key != "X");
+    var stagesPractice = stages.Where(pair => pair.Key != Stage.Extra.ToShortName());
 
-    var cardsPerLevel = new Dictionary<string, int>
+    var cardsPerLevel = new List<(Level level, int numCards)>
     {
-        { "E", 23 },
-        { "N", 24 },
-        { "H", 25 },
-        { "L", 25 },
-        { "X", 13 },
-    };
+        (Level.Easy,    23),
+        (Level.Normal,  24),
+        (Level.Hard,    25),
+        (Level.Lunatic, 25),
+        (Level.Extra,   13),
+    }.ToDictionary(pair => pair.level.ToShortName(), pair => pair.numCards);
 
-    var cardsPerStage = new Dictionary<string, int>
+    var cardsPerStage = new List<(Stage stage, int numCards)>
     {
-        { "1", 10 },
-        { "2", 16 },
-        { "3", 16 },
-        { "4", 15 },
-        { "5", 20 },
-        { "6", 20 },
-        { "X", 13 },
-    };
+        (Stage.One,   10),
+        (Stage.Two,   16),
+        (Stage.Three, 16),
+        (Stage.Four,  15),
+        (Stage.Five,  20),
+        (Stage.Six,   20),
+        (Stage.Extra, 13),
+    }.ToDictionary(pair => pair.stage.ToShortName(), pair => pair.numCards);
 
     var numCards = cardsPerLevel.Values.Sum();
 #>

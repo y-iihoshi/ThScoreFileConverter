@@ -1,36 +1,33 @@
 <#@ assembly name="System.Core" #>
+<#@ assembly name="$(TargetPath)" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
+<#@ import namespace="ThScoreFileConverter.Extensions" #>
+<#@ import namespace="ThScoreFileConverter.Models.Th075" #>
+<#@ import namespace="Models = ThScoreFileConverter.Models" #>
 <#
-    var levelKeyTotal = "T";
+    var levels = Models.Utils.GetEnumerator<Level>()
+        .ToDictionary(level => level.ToShortName(), level => level.ToString());
+    var levelsWithTotal = Models.Utils.GetEnumerator<LevelWithTotal>()
+        .ToDictionary(level => level.ToShortName(), level => level.ToString());
 
-    var levels = new Dictionary<string, string>
-    {
-        { "E", "Easy" },
-        { "N", "Normal" },
-        { "H", "Hard" },
-        { "L", "Lunatic" },
-    };
-
-    var levelsWithTotal = levels.Concat(new Dictionary<string, string>
-    {
-        { levelKeyTotal, "Total" },
-    }).ToDictionary(pair => pair.Key, pair => pair.Value);
-
-    var levelKeyOrderTotalFirst = new[] { levelKeyTotal }.Concat(levels.Keys);
+    var levelKeyTotal = LevelWithTotal.Total.ToShortName();
+    var levelKeyOrderTotalFirst = levelsWithTotal.Keys.TakeLast(1).Concat(levelsWithTotal.Keys.SkipLast(1));
     var levelKeyOrderTotalLast = levelsWithTotal.Keys;
 
-    var characters = new Dictionary<string, (string Id, string ShortName, string LongName)>
+    var characters = new List<(Chara chara, string givenName, string fullName)>
     {
-        { "RM", ("Reimu", "霊夢", "博麗 霊夢") },
-        { "MR", ("Marisa", "魔理沙", "霧雨 魔理沙") },
-        { "SK", ("Sakuya", "咲夜", "十六夜 咲夜") },
-        { "AL", ("Alice", "アリス", "アリス・マーガトロイド") },
-        { "PC", ("Patchouli", "パチュリー", "パチュリー・ノーレッジ") },
-        { "YM", ("Youmu", "妖夢", "魂魄 妖夢") },
-        { "RL", ("Remilia", "レミリア", "レミリア・スカーレット") },
-        { "YU", ("Yuyuko", "幽々子", "西行寺 幽々子") },
-        { "YK", ("Yukari", "紫", "八雲 紫") },
-        { "SU", ("Suika", "萃香", "伊吹 萃香") },
-    };
+        (Chara.Reimu,     "霊夢",       "博麗 霊夢"),
+        (Chara.Marisa,    "魔理沙",     "霧雨 魔理沙"),
+        (Chara.Sakuya,    "咲夜",       "十六夜 咲夜"),
+        (Chara.Alice,     "アリス",     "アリス・マーガトロイド"),
+        (Chara.Patchouli, "パチュリー", "パチュリー・ノーレッジ"),
+        (Chara.Youmu,     "妖夢",       "魂魄 妖夢"),
+        (Chara.Remilia,   "レミリア",   "レミリア・スカーレット"),
+        (Chara.Yuyuko,    "幽々子",     "西行寺 幽々子"),
+        (Chara.Yukari,    "紫",         "八雲 紫"),
+        (Chara.Suika,     "萃香",       "伊吹 萃香"),
+    }.ToDictionary(
+        tuple => tuple.chara.ToShortName(),
+        tuple => (Id: tuple.chara.ToString(), ShortName: tuple.givenName, LongName: tuple.fullName));
 #>

@@ -153,7 +153,7 @@
      </tbody>
      <tfoot>
       <tr>
-       <td><#= levelsSpellPracticeWithTotal[levelKeyTotal] #></td>
+       <td><#= levelsWithTotal[levelKeyTotal] #></td>
 <#
     foreach (var charaKey in charaKeyOrderTotalFirst)
     {
@@ -213,7 +213,7 @@
      </tbody>
      <tfoot>
       <tr>
-       <td><#= stagesSpellPracticeWithTotal[stageKeyTotal] #></td>
+       <td><#= stagesWithTotal[stageKeyTotal] #></td>
 <#
     foreach (var charaKey in charaKeyOrderTotalFirst)
     {
