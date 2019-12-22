@@ -29,7 +29,10 @@ namespace ThScoreFileConverter.Squirrel
             private set => base.Value = value;
         }
 
-        public static implicit operator string(SQString sq) => sq.Value;
+        public static implicit operator string(SQString sq)
+        {
+            return sq.Value;
+        }
 
         public static SQString Create(BinaryReader reader, bool skipType = false)
         {

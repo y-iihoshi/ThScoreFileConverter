@@ -31,7 +31,10 @@ namespace ThScoreFileConverter.Squirrel
             private set => base.Value = value;
         }
 
-        public static implicit operator bool(SQBool sq) => sq.Value;
+        public static implicit operator bool(SQBool sq)
+        {
+            return sq.Value;
+        }
 
         public static SQBool Create(BinaryReader reader, bool skipType = false)
         {

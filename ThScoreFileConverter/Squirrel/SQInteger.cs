@@ -27,7 +27,10 @@ namespace ThScoreFileConverter.Squirrel
             private set => base.Value = value;
         }
 
-        public static implicit operator int(SQInteger sq) => sq.Value;
+        public static implicit operator int(SQInteger sq)
+        {
+            return sq.Value;
+        }
 
         public static SQInteger Create(BinaryReader reader, bool skipType = false)
         {
