@@ -24,7 +24,9 @@ namespace ThScoreFileConverter.Squirrel
 
         public SQArray(IEnumerable<SQObject> enumerable)
             : base(SQObjectType.Array)
-            => this.Value = enumerable;
+        {
+            this.Value = enumerable;
+        }
 
         public new IEnumerable<SQObject> Value
         {

@@ -17,7 +17,9 @@ namespace ThScoreFileConverter.Squirrel
     {
         public SQInteger(int value = default)
             : base(SQObjectType.Integer)
-            => this.Value = value;
+        {
+            this.Value = value;
+        }
 
         public new int Value
         {

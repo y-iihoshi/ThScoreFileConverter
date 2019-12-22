@@ -17,7 +17,9 @@ namespace ThScoreFileConverter.Squirrel
     {
         public SQFloat(float value = default)
             : base(SQObjectType.Float)
-            => this.Value = value;
+        {
+            this.Value = value;
+        }
 
         public new float Value
         {

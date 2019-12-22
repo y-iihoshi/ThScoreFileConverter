@@ -17,7 +17,9 @@ namespace ThScoreFileConverter.Squirrel
     {
         private SQBool(bool value = default)
             : base(SQObjectType.Bool)
-            => this.Value = value;
+        {
+            this.Value = value;
+        }
 
         public static SQBool True { get; } = new SQBool(true);
 

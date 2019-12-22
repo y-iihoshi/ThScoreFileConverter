@@ -24,7 +24,9 @@ namespace ThScoreFileConverter.Squirrel
 
         public SQTable(IReadOnlyDictionary<SQObject, SQObject> pairs)
             : base(SQObjectType.Table)
-            => this.Value = pairs;
+        {
+            this.Value = pairs;
+        }
 
         public new IReadOnlyDictionary<SQObject, SQObject> Value
         {

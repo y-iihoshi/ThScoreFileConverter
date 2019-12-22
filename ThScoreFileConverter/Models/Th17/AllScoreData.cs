@@ -16,8 +16,10 @@ namespace ThScoreFileConverter.Models.Th17
     {
         private readonly Dictionary<CharaWithTotal, IClearData> clearData;
 
-        public AllScoreData() =>
+        public AllScoreData()
+        {
             this.clearData = new Dictionary<CharaWithTotal, IClearData>(Enum.GetValues(typeof(CharaWithTotal)).Length);
+        }
 
         public Th095.HeaderBase Header { get; private set; }
 

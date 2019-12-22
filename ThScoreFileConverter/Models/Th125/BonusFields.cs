@@ -15,7 +15,10 @@ namespace ThScoreFileConverter.Models.Th125
     {
         private BitVector32 data;
 
-        public BonusFields(int data) => this.data = new BitVector32(data);
+        public BonusFields(int data)
+        {
+            this.data = new BitVector32(data);
+        }
 
         public int Data => this.data.Data;
 
