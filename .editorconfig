@@ -74,7 +74,7 @@ csharp_space_between_parentheses = false
 csharp_style_conditional_delegate_call = true:suggestion
 csharp_style_expression_bodied_accessors = when_on_single_line:suggestion
 csharp_style_expression_bodied_constructors = false:suggestion
-csharp_style_expression_bodied_indexers = when_on_single_line:suggestion
+csharp_style_expression_bodied_indexers = true:suggestion
 csharp_style_expression_bodied_methods = false:suggestion
 csharp_style_expression_bodied_operators = false:suggestion
 csharp_style_expression_bodied_properties = true:suggestion
@@ -89,9 +89,7 @@ csharp_style_var_when_type_is_apparent = true:suggestion
 
 # SA1025: Code should not contain multiple whitespace in a row
 dotnet_diagnostic.SA1025.severity = none
-
 # SA1124: Do not use regions
 dotnet_diagnostic.SA1124.severity = none
-
 # SA1503: Braces should not be omitted
 dotnet_diagnostic.SA1503.severity = none
