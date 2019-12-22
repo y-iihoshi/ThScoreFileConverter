@@ -40,7 +40,10 @@ namespace ThScoreFileConverter.Commands
         /// </summary>
         /// <param name="parameter">A <see cref="Window"/> instance which will be closed.</param>
         /// <returns><c>true</c> if this command can be executed; otherwise, <c>false</c>.</returns>
-        public bool CanExecute(object parameter) => parameter is Window;
+        public bool CanExecute(object parameter)
+        {
+            return parameter is Window;
+        }
 
         /// <summary>
         /// Called when the command is invoked.

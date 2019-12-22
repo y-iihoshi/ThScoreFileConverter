@@ -48,9 +48,15 @@ namespace ThScoreFileConverter.Squirrel
             return (reader.ReadByte() != 0x00) ? True : False;
         }
 
-        public override bool Equals(object obj) => this.Equals(obj as SQBool);
+        public override bool Equals(object obj)
+        {
+            return this.Equals(obj as SQBool);
+        }
 
-        public override int GetHashCode() => this.Type.GetHashCode() ^ this.Value.GetHashCode();
+        public override int GetHashCode()
+        {
+            return this.Type.GetHashCode() ^ this.Value.GetHashCode();
+        }
 
         public bool Equals(SQBool other)
         {

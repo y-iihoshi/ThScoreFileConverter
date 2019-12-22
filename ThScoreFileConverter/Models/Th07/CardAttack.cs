@@ -46,6 +46,9 @@ namespace ThScoreFileConverter.Models.Th07
 
         public IReadOnlyDictionary<CharaWithTotal, ushort> ClearCounts { get; }
 
-        public bool HasTried() => this.TrialCounts[CharaWithTotal.Total] > 0;
+        public bool HasTried()
+        {
+            return this.TrialCounts[CharaWithTotal.Total] > 0;
+        }
     }
 }

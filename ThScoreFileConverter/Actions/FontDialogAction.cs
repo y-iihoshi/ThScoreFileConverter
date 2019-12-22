@@ -255,26 +255,29 @@ namespace ThScoreFileConverter.Actions
         /// Creates a new <see cref="WinForms.FontDialog"/> instance.
         /// </summary>
         /// <returns>A created <see cref="WinForms.FontDialog"/> instance.</returns>
-        internal WinForms.FontDialog CreateDialog() => new WinForms.FontDialog
+        internal WinForms.FontDialog CreateDialog()
         {
-            AllowScriptChange = this.AllowScriptChange,
-            AllowSimulations = this.AllowSimulations,
-            AllowVectorFonts = this.AllowVectorFonts,
-            AllowVerticalFonts = this.AllowVerticalFonts,
-            Color = this.Color,
-            FixedPitchOnly = this.FixedPitchOnly,
-            Font = this.Font,
-            FontMustExist = this.FontMustExist,
-            MaxSize = this.MaxSize,
-            MinSize = this.MinSize,
-            ScriptsOnly = this.ScriptsOnly,
-            ShowApply = this.ShowApply,
-            ShowColor = this.ShowColor,
-            ShowEffects = this.ShowEffects,
-            ShowHelp = this.ShowHelp,
-            Site = this.Site,
-            Tag = this.Tag,
-        };
+            return new WinForms.FontDialog
+            {
+                AllowScriptChange = this.AllowScriptChange,
+                AllowSimulations = this.AllowSimulations,
+                AllowVectorFonts = this.AllowVectorFonts,
+                AllowVerticalFonts = this.AllowVerticalFonts,
+                Color = this.Color,
+                FixedPitchOnly = this.FixedPitchOnly,
+                Font = this.Font,
+                FontMustExist = this.FontMustExist,
+                MaxSize = this.MaxSize,
+                MinSize = this.MinSize,
+                ScriptsOnly = this.ScriptsOnly,
+                ShowApply = this.ShowApply,
+                ShowColor = this.ShowColor,
+                ShowEffects = this.ShowEffects,
+                ShowHelp = this.ShowHelp,
+                Site = this.Site,
+                Tag = this.Tag,
+            };
+        }
 
         /// <summary>
         /// Invokes the action.

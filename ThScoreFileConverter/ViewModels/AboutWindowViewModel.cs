@@ -102,7 +102,10 @@ namespace ThScoreFileConverter.ViewModels
         }
 
         /// <inheritdoc/>
-        public bool CanCloseDialog() => true;
+        public bool CanCloseDialog()
+        {
+            return true;
+        }
 
         /// <inheritdoc/>
         public void OnDialogClosed()

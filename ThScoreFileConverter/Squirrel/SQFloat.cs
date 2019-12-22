@@ -44,9 +44,15 @@ namespace ThScoreFileConverter.Squirrel
             return new SQFloat(reader.ReadSingle());
         }
 
-        public override bool Equals(object obj) => this.Equals(obj as SQFloat);
+        public override bool Equals(object obj)
+        {
+            return this.Equals(obj as SQFloat);
+        }
 
-        public override int GetHashCode() => this.Type.GetHashCode() ^ this.Value.GetHashCode();
+        public override int GetHashCode()
+        {
+            return this.Type.GetHashCode() ^ this.Value.GetHashCode();
+        }
 
         public bool Equals(SQFloat other)
         {

@@ -733,13 +733,17 @@ namespace ThScoreFileConverter.ViewModels
         /// Invoked when opening an about window is requested.
         /// </summary>
         private void OpenAboutWindow()
-            => this.DialogService.ShowDialog(nameof(AboutWindowViewModel), new DialogParameters(), result => { });
+        {
+            this.DialogService.ShowDialog(nameof(AboutWindowViewModel), new DialogParameters(), result => { });
+        }
 
         /// <summary>
         /// Invoked when opening a setting window is requested.
         /// </summary>
         private void OpenSettingWindow()
-            => this.DialogService.ShowDialog(nameof(SettingWindowViewModel), new DialogParameters(), result => { });
+        {
+            this.DialogService.ShowDialog(nameof(SettingWindowViewModel), new DialogParameters(), result => { });
+        }
 
         #endregion
 

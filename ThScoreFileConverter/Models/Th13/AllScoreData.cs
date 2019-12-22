@@ -40,7 +40,10 @@ namespace ThScoreFileConverter.Models.Th13
 
         public Th125.IStatus Status { get; private set; }
 
-        public void Set(Th095.HeaderBase header) => this.Header = header;
+        public void Set(Th095.HeaderBase header)
+        {
+            this.Header = header;
+        }
 
         public void Set(
             IClearData<TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice> data)
@@ -49,6 +52,9 @@ namespace ThScoreFileConverter.Models.Th13
                 this.clearData.Add(data.Chara, data);
         }
 
-        public void Set(Th125.IStatus status) => this.Status = status;
+        public void Set(Th125.IStatus status)
+        {
+            this.Status = status;
+        }
     }
 }

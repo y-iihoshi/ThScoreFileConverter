@@ -30,7 +30,10 @@ namespace ThScoreFileConverter.Models.Th128
 
         public Th125.IStatus Status { get; private set; }
 
-        public void Set(Th095.HeaderBase header) => this.Header = header;
+        public void Set(Th095.HeaderBase header)
+        {
+            this.Header = header;
+        }
 
         public void Set(IClearData data)
         {
@@ -38,8 +41,14 @@ namespace ThScoreFileConverter.Models.Th128
                 this.clearData.Add(data.Route, data);
         }
 
-        public void Set(ICardData data) => this.CardData = data;
+        public void Set(ICardData data)
+        {
+            this.CardData = data;
+        }
 
-        public void Set(Th125.IStatus status) => this.Status = status;
+        public void Set(Th125.IStatus status)
+        {
+            this.Status = status;
+        }
     }
 }

@@ -280,29 +280,32 @@ namespace ThScoreFileConverter.Actions
         /// Creates a new <see cref="WinForms.OpenFileDialog"/> instance.
         /// </summary>
         /// <returns>A created <see cref="WinForms.OpenFileDialog"/> instance.</returns>
-        internal WinForms.OpenFileDialog CreateDialog() => new WinForms.OpenFileDialog
+        internal WinForms.OpenFileDialog CreateDialog()
         {
-            AddExtension = this.AddExtension,
-            AutoUpgradeEnabled = this.AutoUpgradeEnabled,
-            CheckFileExists = this.CheckFileExists,
-            CheckPathExists = this.CheckPathExists,
-            DefaultExt = this.DefaultExt,
-            DereferenceLinks = this.DereferenceLinks,
-            FileName = this.FileName,
-            Filter = this.Filter,
-            FilterIndex = this.FilterIndex,
-            InitialDirectory = this.InitialDirectory,
-            Multiselect = this.Multiselect,
-            ReadOnlyChecked = this.ReadOnlyChecked,
-            RestoreDirectory = this.RestoreDirectory,
-            ShowHelp = this.ShowHelp,
-            ShowReadOnly = this.ShowReadOnly,
-            Site = this.Site,
-            SupportMultiDottedExtensions = this.SupportMultiDottedExtensions,
-            Tag = this.Tag,
-            Title = this.Title,
-            ValidateNames = this.ValidateNames,
-        };
+            return new WinForms.OpenFileDialog
+            {
+                AddExtension = this.AddExtension,
+                AutoUpgradeEnabled = this.AutoUpgradeEnabled,
+                CheckFileExists = this.CheckFileExists,
+                CheckPathExists = this.CheckPathExists,
+                DefaultExt = this.DefaultExt,
+                DereferenceLinks = this.DereferenceLinks,
+                FileName = this.FileName,
+                Filter = this.Filter,
+                FilterIndex = this.FilterIndex,
+                InitialDirectory = this.InitialDirectory,
+                Multiselect = this.Multiselect,
+                ReadOnlyChecked = this.ReadOnlyChecked,
+                RestoreDirectory = this.RestoreDirectory,
+                ShowHelp = this.ShowHelp,
+                ShowReadOnly = this.ShowReadOnly,
+                Site = this.Site,
+                SupportMultiDottedExtensions = this.SupportMultiDottedExtensions,
+                Tag = this.Tag,
+                Title = this.Title,
+                ValidateNames = this.ValidateNames,
+            };
+        }
 
         /// <summary>
         /// Invokes the action.

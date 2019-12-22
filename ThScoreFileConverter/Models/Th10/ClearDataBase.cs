@@ -79,6 +79,8 @@ namespace ThScoreFileConverter.Models.Th10
         public IReadOnlyDictionary<int, ISpellCard<Level>> Cards { get; }
 
         protected static bool CanInitialize(Chapter chapter)
-            => chapter.Signature.Equals(ValidSignature, StringComparison.Ordinal);
+        {
+            return chapter.Signature.Equals(ValidSignature, StringComparison.Ordinal);
+        }
     }
 }

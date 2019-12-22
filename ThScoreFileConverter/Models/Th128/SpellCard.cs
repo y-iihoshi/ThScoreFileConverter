@@ -42,6 +42,9 @@ namespace ThScoreFileConverter.Models.Th128
             this.Level = Utils.ToEnum<Level>(reader.ReadInt32());
         }
 
-        public bool HasTried() => this.TrialCount > 0;
+        public bool HasTried()
+        {
+            return this.TrialCount > 0;
+        }
     }
 }

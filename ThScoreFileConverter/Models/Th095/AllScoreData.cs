@@ -26,10 +26,19 @@ namespace ThScoreFileConverter.Models.Th095
 
         public IStatus Status { get; private set; }
 
-        public void Set(HeaderBase header) => this.Header = header;
+        public void Set(HeaderBase header)
+        {
+            this.Header = header;
+        }
 
-        public void Set(IScore score) => this.scores.Add(score);
+        public void Set(IScore score)
+        {
+            this.scores.Add(score);
+        }
 
-        public void Set(IStatus status) => this.Status = status;
+        public void Set(IStatus status)
+        {
+            this.Status = status;
+        }
     }
 }

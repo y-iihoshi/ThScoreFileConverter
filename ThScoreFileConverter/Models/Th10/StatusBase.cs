@@ -35,6 +35,8 @@ namespace ThScoreFileConverter.Models.Th10
         public IEnumerable<byte> BgmFlags { get; }
 
         protected static bool CanInitialize(Chapter chapter)
-            => chapter.Signature.Equals(ValidSignature, StringComparison.Ordinal) && (chapter.Size == ValidSize);
+        {
+            return chapter.Signature.Equals(ValidSignature, StringComparison.Ordinal) && (chapter.Size == ValidSize);
+        }
     }
 }

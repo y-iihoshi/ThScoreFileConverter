@@ -32,9 +32,15 @@ namespace ThScoreFileConverter.Models.Th143
 
         public IStatus Status { get; private set; }
 
-        public void Set(Th095.HeaderBase header) => this.Header = header;
+        public void Set(Th095.HeaderBase header)
+        {
+            this.Header = header;
+        }
 
-        public void Set(IScore score) => this.scores.Add(score);
+        public void Set(IScore score)
+        {
+            this.scores.Add(score);
+        }
 
         public void Set(IItemStatus status)
         {
@@ -42,6 +48,9 @@ namespace ThScoreFileConverter.Models.Th143
                 this.itemStatuses.Add(status.Item, status);
         }
 
-        public void Set(IStatus status) => this.Status = status;
+        public void Set(IStatus status)
+        {
+            this.Status = status;
+        }
     }
 }

@@ -53,7 +53,10 @@ namespace ThScoreFileConverter.Models.Th07
 
         public VersionInfo VersionInfo { get; private set; }
 
-        public void Set(Header header) => this.Header = header;
+        public void Set(Header header)
+        {
+            this.Header = header;
+        }
 
         public void Set(IHighScore score)
         {
@@ -90,10 +93,19 @@ namespace ThScoreFileConverter.Models.Th07
             }
         }
 
-        public void Set(PlayStatus status) => this.PlayStatus = status;
+        public void Set(PlayStatus status)
+        {
+            this.PlayStatus = status;
+        }
 
-        public void Set(LastName name) => this.LastName = name;
+        public void Set(LastName name)
+        {
+            this.LastName = name;
+        }
 
-        public void Set(VersionInfo info) => this.VersionInfo = info;
+        public void Set(VersionInfo info)
+        {
+            this.VersionInfo = info;
+        }
     }
 }

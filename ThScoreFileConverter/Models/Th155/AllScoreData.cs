@@ -174,7 +174,10 @@ namespace ThScoreFileConverter.Models.Th155
             }
         }
 
-        private void ParseVersion() => this.Version = this.GetValue<int>("version");
+        private void ParseVersion()
+        {
+            this.Version = this.GetValue<int>("version");
+        }
 
         private T GetValue<T>(string key)
             where T : struct

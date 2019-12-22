@@ -176,7 +176,10 @@ namespace ThScoreFileConverter.Models
         /// The string is formatted such as <c>hh:mm:ss</c>.
         /// </summary>
         /// <returns>A string that represents the current instance.</returns>
-        public override string ToString() => Utils.Format("{0}:{1:D2}:{2:D2}", this.Hours, this.Minutes, this.Seconds);
+        public override string ToString()
+        {
+            return Utils.Format("{0}:{1:D2}:{2:D2}", this.Hours, this.Minutes, this.Seconds);
+        }
 
         /// <summary>
         /// Returns a string that represents the current instance.

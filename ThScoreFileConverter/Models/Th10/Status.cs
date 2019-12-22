@@ -20,6 +20,8 @@ namespace ThScoreFileConverter.Models.Th10
         }
 
         public static new bool CanInitialize(Chapter chapter)
-            => StatusBase.CanInitialize(chapter) && (chapter.Version == ValidVersion);
+        {
+            return StatusBase.CanInitialize(chapter) && (chapter.Version == ValidVersion);
+        }
     }
 }

@@ -39,6 +39,8 @@ namespace ThScoreFileConverter.Models.Th128
         public int TotalPlayTime { get; }   // unit: 10ms
 
         public static bool CanInitialize(Th10.Chapter chapter)
-            => chapter.Signature.Equals(ValidSignature, StringComparison.Ordinal) && (chapter.Size == ValidSize);
+        {
+            return chapter.Signature.Equals(ValidSignature, StringComparison.Ordinal) && (chapter.Size == ValidSize);
+        }
     }
 }

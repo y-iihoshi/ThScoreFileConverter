@@ -48,7 +48,10 @@ namespace ThScoreFileConverter.Models.Th06
 
         public IReadOnlyDictionary<(Chara, Level, Stage), IPracticeScore> PracticeScores => this.practiceScores;
 
-        public void Set(Header header) => this.Header = header;
+        public void Set(Header header)
+        {
+            this.Header = header;
+        }
 
         public void Set(IHighScore score)
         {

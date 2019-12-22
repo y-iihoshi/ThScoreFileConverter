@@ -61,6 +61,9 @@ namespace ThScoreFileConverter.Models.Th10
             });
         }
 
-        public string Replace(string input) => Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+        public string Replace(string input)
+        {
+            return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+        }
     }
 }

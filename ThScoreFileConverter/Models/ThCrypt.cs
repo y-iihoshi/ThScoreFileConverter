@@ -30,7 +30,9 @@ namespace ThScoreFileConverter.Models
 #pragma warning disable IDE0060 // Remove unused parameter
         public static void Encrypt(
             Stream input, Stream output, int size, byte key, byte step, int block, int limit)
-            => throw new NotImplementedException(Resources.NotImplementedExceptionEncryptionIsNotSupported);
+        {
+            throw new NotImplementedException(Resources.NotImplementedExceptionEncryptionIsNotSupported);
+        }
 #pragma warning restore IDE0060 // Remove unused parameter
 
         /// <summary>

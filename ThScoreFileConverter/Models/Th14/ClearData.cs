@@ -26,6 +26,8 @@ namespace ThScoreFileConverter.Models.Th14
         }
 
         public static new bool CanInitialize(Th10.Chapter chapter)
-            => ClearDataBase.CanInitialize(chapter) && (chapter.Size == ValidSize);
+        {
+            return ClearDataBase.CanInitialize(chapter) && (chapter.Size == ValidSize);
+        }
     }
 }

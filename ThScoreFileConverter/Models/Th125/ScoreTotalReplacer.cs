@@ -51,7 +51,10 @@ namespace ThScoreFileConverter.Models.Th125
             });
         }
 
-        public string Replace(string input) => Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+        public string Replace(string input)
+        {
+            return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+        }
 
         private static bool IsTargetImpl(IScore score, Chara chara, int method)
         {

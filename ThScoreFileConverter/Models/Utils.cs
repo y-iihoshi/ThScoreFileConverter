@@ -30,7 +30,9 @@ namespace ThScoreFileConverter.Models
         [CLSCompliant(false)]
         public static TEnum ParseEnum<TEnum>(string value)
             where TEnum : struct, Enum
-            => ParseEnum<TEnum>(value, false);
+        {
+            return ParseEnum<TEnum>(value, false);
+        }
 
         /// <summary>
         /// Converts the string representation of the name or numeric value of one or more enumerated
@@ -46,7 +48,9 @@ namespace ThScoreFileConverter.Models
         [CLSCompliant(false)]
         public static TEnum ParseEnum<TEnum>(string value, bool ignoreCase)
             where TEnum : struct, Enum
-            => (TEnum)Enum.Parse(typeof(TEnum), value, ignoreCase);
+        {
+            return (TEnum)Enum.Parse(typeof(TEnum), value, ignoreCase);
+        }
 
         /// <summary>
         /// Converts a given integral value to an equivalent enumerated instance.
@@ -78,7 +82,9 @@ namespace ThScoreFileConverter.Models
         [CLSCompliant(false)]
         public static IEnumerable<TEnum> GetEnumerator<TEnum>()
             where TEnum : struct, Enum
-            => Enum.GetValues(typeof(TEnum)).Cast<TEnum>();
+        {
+            return Enum.GetValues(typeof(TEnum)).Cast<TEnum>();
+        }
 
         /// <summary>
         /// Returns a string that represents the specified numeric value.
@@ -88,7 +94,9 @@ namespace ThScoreFileConverter.Models
         /// <returns>A string that represents <paramref name="number"/>.</returns>
         public static string ToNumberString<T>(T number)
             where T : struct
-            => ToNumberString(number, Settings.Instance.OutputNumberGroupSeparator.Value);
+        {
+            return ToNumberString(number, Settings.Instance.OutputNumberGroupSeparator.Value);
+        }
 
         /// <summary>
         /// Returns a string that represents the specified numeric value.
@@ -101,7 +109,9 @@ namespace ThScoreFileConverter.Models
         /// <returns>A string that represents <paramref name="number"/>.</returns>
         public static string ToNumberString<T>(T number, bool outputSeparator)
             where T : struct
-            => outputSeparator ? Format("{0:N0}", number) : number.ToString();
+        {
+            return outputSeparator ? Format("{0:N0}", number) : number.ToString();
+        }
 
         /// <summary>
         /// Wraps the <c>string.Format()</c> method to specify an IFormatProvider instance.
@@ -113,7 +123,9 @@ namespace ThScoreFileConverter.Models
         /// representation of the corresponding objects in <paramref name="args"/>.
         /// </returns>
         public static string Format(string fmt, params object[] args)
-            => string.Format(CultureInfo.CurrentCulture, fmt, args);
+        {
+            return string.Format(CultureInfo.CurrentCulture, fmt, args);
+        }
 
         /// <summary>
         /// Makes a logical-and predicate by one or more predicates.
@@ -122,7 +134,9 @@ namespace ThScoreFileConverter.Models
         /// <param name="predicates">The predicates combined with logical-and operators.</param>
         /// <returns>A logical-and predicate.</returns>
         public static Func<T, bool> MakeAndPredicate<T>(params Func<T, bool>[] predicates)
-            => arg => predicates.All(pred => pred(arg));
+        {
+            return arg => predicates.All(pred => pred(arg));
+        }
 
         /// <summary>
         /// Converts a one digit value from one-based to zero-based.

@@ -98,15 +98,18 @@ namespace ThScoreFileConverter.Actions
         /// Creates a new <see cref="WinForms.FolderBrowserDialog"/> instance.
         /// </summary>
         /// <returns>A created <see cref="WinForms.FolderBrowserDialog"/> instance.</returns>
-        internal WinForms.FolderBrowserDialog CreateDialog() => new WinForms.FolderBrowserDialog
+        internal WinForms.FolderBrowserDialog CreateDialog()
         {
-            Description = this.Description,
-            RootFolder = this.RootFolder,
-            SelectedPath = this.SelectedPath,
-            ShowNewFolderButton = this.ShowNewFolderButton,
-            Site = this.Site,
-            Tag = this.Tag,
-        };
+            return new WinForms.FolderBrowserDialog
+            {
+                Description = this.Description,
+                RootFolder = this.RootFolder,
+                SelectedPath = this.SelectedPath,
+                ShowNewFolderButton = this.ShowNewFolderButton,
+                Site = this.Site,
+                Tag = this.Tag,
+            };
+        }
 
         /// <summary>
         /// Invokes the action.

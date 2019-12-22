@@ -27,6 +27,9 @@ namespace ThScoreFileConverter.Models.Th09
             this.evaluator = new MatchEvaluator(match => playStatus.TotalRunningTime.ToLongString());
         }
 
-        public string Replace(string input) => Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+        public string Replace(string input)
+        {
+            return Regex.Replace(input, Pattern, this.evaluator, RegexOptions.IgnoreCase);
+        }
     }
 }
