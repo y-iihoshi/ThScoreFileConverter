@@ -15,7 +15,10 @@ namespace ThScoreFileConverter.Models.Th165
     {
         private readonly List<IScore> scores;
 
-        public AllScoreData() => this.scores = new List<IScore>(Definitions.SpellCards.Count);
+        public AllScoreData()
+        {
+            this.scores = new List<IScore>(Definitions.SpellCards.Count);
+        }
 
         public Th095.HeaderBase Header { get; private set; }
 
