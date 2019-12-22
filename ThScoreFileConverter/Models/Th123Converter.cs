@@ -22,10 +22,7 @@ namespace ThScoreFileConverter.Models
     {
         private AllScoreData allScoreData = null;
 
-        public override string SupportedVersions
-        {
-            get { return "1.10a"; }
-        }
+        public override string SupportedVersions { get; } = "1.10a";
 
         protected override bool ReadScoreFile(Stream input)
         {

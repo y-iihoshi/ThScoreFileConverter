@@ -36,15 +36,9 @@ namespace ThScoreFileConverter.Models.Th09
 
         public int EncodedBodySize { get; private set; }
 
-        public bool IsValid
-        {
-            get
-            {
-                return (this.Version == ValidVersion)
-                    && (this.Size == ValidSize)
-                    && (this.DecodedAllSize == this.Size + this.DecodedBodySize);
-            }
-        }
+        public bool IsValid => (this.Version == ValidVersion)
+            && (this.Size == ValidSize)
+            && (this.DecodedAllSize == this.Size + this.DecodedBodySize);
 
         public void ReadFrom(BinaryReader reader)
         {

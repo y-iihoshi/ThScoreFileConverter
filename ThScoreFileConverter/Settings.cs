@@ -22,11 +22,6 @@ namespace ThScoreFileConverter
     public sealed class Settings
     {
         /// <summary>
-        /// Valid code page identifiers for this application.
-        /// </summary>
-        private static readonly int[] ValidCodePageIdsImpl = new int[] { 65001, 932, 51932 };
-
-        /// <summary>
         /// Prevents a default instance of the <see cref="Settings" /> class from being created.
         /// </summary>
         private Settings()
@@ -48,13 +43,7 @@ namespace ThScoreFileConverter
         /// <summary>
         /// Gets the valid code page identifiers for this application.
         /// </summary>
-        public static IEnumerable<int> ValidCodePageIds
-        {
-            get
-            {
-                return ValidCodePageIdsImpl;
-            }
-        }
+        public static IEnumerable<int> ValidCodePageIds { get; } = new[] { 65001, 932, 51932 };
 
         /// <summary>
         /// Gets or sets the last selected work.

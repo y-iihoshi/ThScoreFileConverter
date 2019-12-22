@@ -93,13 +93,7 @@ namespace ThScoreFileConverter.ViewModels
         /// Gets a command which opens the specified URI.
         /// </summary>
         public DelegateCommand<object> OpenUriCommand
-        {
-            get
-            {
-                return this.openUriCommand ??
-                    (this.openUriCommand = new DelegateCommand<object>(this.OpenUri));
-            }
-        }
+            => this.openUriCommand ?? (this.openUriCommand = new DelegateCommand<object>(this.OpenUri));
 
         /// <inheritdoc/>
         public bool CanCloseDialog()

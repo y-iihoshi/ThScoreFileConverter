@@ -27,10 +27,7 @@ namespace ThScoreFileConverter.Models
     {
         private AllScoreData allScoreData = null;
 
-        public override string SupportedVersions
-        {
-            get { return "1.00c"; }
-        }
+        public override string SupportedVersions { get; } = "1.00c";
 
         protected override bool ReadScoreFile(Stream input)
         {

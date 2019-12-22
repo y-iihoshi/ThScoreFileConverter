@@ -31,15 +31,9 @@ namespace ThScoreFileConverter.Models
         private Dictionary<
             (Chara, Th125.Level Level, int Scene), (string Path, IBestShotHeader Header)> bestshots = null;
 
-        public override string SupportedVersions
-        {
-            get { return "1.00a"; }
-        }
+        public override string SupportedVersions { get; } = "1.00a";
 
-        public override bool HasBestShotConverter
-        {
-            get { return true; }
-        }
+        public override bool HasBestShotConverter { get; } = true;
 
         protected override bool ReadScoreFile(Stream input)
         {

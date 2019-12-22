@@ -60,15 +60,9 @@ namespace ThScoreFileConverter.ViewModels
         /// Gets the current font.
         /// </summary>
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "For binding.")]
-        public SysDraw.Font Font
-        {
-            get
-            {
-                return new SysDraw.Font(
-                    App.Current.Resources["FontFamilyKey"].ToString(),
-                    Convert.ToSingle(App.Current.Resources["FontSizeKey"], CultureInfo.InvariantCulture));
-            }
-        }
+        public SysDraw.Font Font => new SysDraw.Font(
+            App.Current.Resources["FontFamilyKey"].ToString(),
+            Convert.ToSingle(App.Current.Resources["FontSizeKey"], CultureInfo.InvariantCulture));
 
         /// <summary>
         /// Gets or sets a value indicating whether numeric values is output with thousand separator

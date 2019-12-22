@@ -154,10 +154,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets a value indicating whether the conversion process can handle best shot files.
         /// </summary>
-        public bool CanHandleBestShot
-        {
-            get { return (this.converter != null) && this.converter.HasBestShotConverter; }
-        }
+        public bool CanHandleBestShot => this.converter?.HasBestShotConverter ?? false;
 
         /// <summary>
         /// Gets or sets a number string indicating the last selected work.
@@ -189,15 +186,8 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets a string indicating the supported versions of the score file to convert.
         /// </summary>
-        public string SupportedVersions
-        {
-            get
-            {
-                return (this.converter != null)
-                    ? Resources.strSupportedVersions + this.converter.SupportedVersions
-                    : string.Empty;
-            }
-        }
+        public string SupportedVersions => (this.converter != null)
+            ? Resources.strSupportedVersions + this.converter.SupportedVersions : string.Empty;
 
         /// <summary>
         /// Gets a path of the score file.
@@ -343,13 +333,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets a value indicating whether the conversion process can replace spell card names.
         /// </summary>
-        public bool CanReplaceCardNames
-        {
-            get
-            {
-                return (this.converter != null) && this.converter.HasCardReplacer;
-            }
-        }
+        public bool CanReplaceCardNames => this.converter?.HasCardReplacer ?? false;
 
         /// <summary>
         /// Gets or sets a value indicating whether the conversion process hides untried cards.
@@ -470,10 +454,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets the setting for the currently selected Touhou work.
         /// </summary>
-        private static SettingsPerTitle CurrentSetting
-        {
-            get { return Settings.Instance.Dictionary[Settings.Instance.LastTitle]; }
-        }
+        private static SettingsPerTitle CurrentSetting => Settings.Instance.Dictionary[Settings.Instance.LastTitle];
 
         /// <summary>
         /// Gets the <see cref="IDialogService"/>.

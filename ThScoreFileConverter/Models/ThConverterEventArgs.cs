@@ -70,13 +70,7 @@ namespace ThScoreFileConverter.Models
         /// <summary>
         /// Gets a message string that represents the current instance.
         /// </summary>
-        public string Message
-        {
-            get
-            {
-                return Utils.Format(
-                    "({0}/{1}) {2} ", this.Current, this.Total, System.IO.Path.GetFileName(this.Path));
-            }
-        }
+        public string Message => Utils.Format(
+            "({0}/{1}) {2} ", this.Current, this.Total, System.IO.Path.GetFileName(this.Path));
     }
 }
