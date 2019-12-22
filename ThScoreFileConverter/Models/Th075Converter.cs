@@ -43,8 +43,7 @@ namespace ThScoreFileConverter.Models
             return this.allScoreData != null;
         }
 
-        protected override IEnumerable<IStringReplaceable> CreateReplacers(
-            bool hideUntriedCards, string outputFilePath)
+        protected override IEnumerable<IStringReplaceable> CreateReplacers(bool hideUntriedCards, string outputFilePath)
         {
             return new List<IStringReplaceable>
             {
@@ -58,26 +57,24 @@ namespace ThScoreFileConverter.Models
 
         private static AllScoreData Read(Stream input)
         {
-            using (var reader = new BinaryReader(input, Encoding.UTF8, true))
+            using var reader = new BinaryReader(input, Encoding.UTF8, true);
+            var allScoreData = new AllScoreData();
+
+            try
             {
-                var allScoreData = new AllScoreData();
-
-                try
-                {
-                    allScoreData.ReadFrom(reader);
-                }
-                catch (EndOfStreamException)
-                {
-                }
-
-                var numCharas = Enum.GetValues(typeof(CharaWithReserved)).Length;
-                var numLevels = Enum.GetValues(typeof(Th075.Level)).Length;
-                if ((allScoreData.ClearData.Count == numCharas * numLevels) &&
-                    (allScoreData.Status != null))
-                    return allScoreData;
-                else
-                    return null;
+                allScoreData.ReadFrom(reader);
             }
+            catch (EndOfStreamException)
+            {
+            }
+
+            var numCharas = Enum.GetValues(typeof(CharaWithReserved)).Length;
+            var numLevels = Enum.GetValues(typeof(Th075.Level)).Length;
+            if ((allScoreData.ClearData.Count == numCharas * numLevels) &&
+                (allScoreData.Status != null))
+                return allScoreData;
+            else
+                return null;
         }
     }
 }

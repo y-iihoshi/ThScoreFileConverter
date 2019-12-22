@@ -313,34 +313,32 @@ namespace ThScoreFileConverter.Actions
         /// <param name="parameter">The parameter to the action; but not used.</param>
         protected override void Invoke(object parameter)
         {
-            using (var dialog = this.CreateDialog())
+            using var dialog = this.CreateDialog();
+            var dialogResult = dialog.ShowDialog(new Win32Window(this.Owner));
+
+            switch (dialogResult)
             {
-                var dialogResult = dialog.ShowDialog(new Win32Window(this.Owner));
+                case WinForms.DialogResult.OK:
+                    if (this.OkCommand != null)
+                    {
+                        var result = new OpenFileDialogActionResult(dialog.FileName, dialog.FileNames);
+                        if (this.OkCommand.CanExecute(result))
+                            this.OkCommand.Execute(result);
+                    }
 
-                switch (dialogResult)
-                {
-                    case WinForms.DialogResult.OK:
-                        if (this.OkCommand != null)
-                        {
-                            var result = new OpenFileDialogActionResult(dialog.FileName, dialog.FileNames);
-                            if (this.OkCommand.CanExecute(result))
-                                this.OkCommand.Execute(result);
-                        }
+                    break;
 
-                        break;
+                case WinForms.DialogResult.Cancel:
+                    if (this.CancelCommand != null)
+                    {
+                        if (this.CancelCommand.CanExecute(null))
+                            this.CancelCommand.Execute(null);
+                    }
 
-                    case WinForms.DialogResult.Cancel:
-                        if (this.CancelCommand != null)
-                        {
-                            if (this.CancelCommand.CanExecute(null))
-                                this.CancelCommand.Execute(null);
-                        }
+                    break;
 
-                        break;
-
-                    default:
-                        throw new NotImplementedException(Resources.NotImplementedExceptionShouldNotReachHere);
-                }
+                default:
+                    throw new NotImplementedException(Resources.NotImplementedExceptionShouldNotReachHere);
             }
         }
     }

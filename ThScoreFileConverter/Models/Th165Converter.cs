@@ -36,29 +36,28 @@ namespace ThScoreFileConverter.Models
 
         protected override bool ReadScoreFile(Stream input)
         {
-            using (var decrypted = new MemoryStream())
+            using var decrypted = new MemoryStream();
 #if DEBUG
-            using (var decoded = new FileStream("th165decoded.dat", FileMode.Create, FileAccess.ReadWrite))
+            using var decoded = new FileStream("th165decoded.dat", FileMode.Create, FileAccess.ReadWrite);
 #else
-            using (var decoded = new MemoryStream())
+            using var decoded = new MemoryStream();
 #endif
-            {
-                if (!Decrypt(input, decrypted))
-                    return false;
 
-                decrypted.Seek(0, SeekOrigin.Begin);
-                if (!Extract(decrypted, decoded))
-                    return false;
+            if (!Decrypt(input, decrypted))
+                return false;
 
-                decoded.Seek(0, SeekOrigin.Begin);
-                if (!Validate(decoded))
-                    return false;
+            decrypted.Seek(0, SeekOrigin.Begin);
+            if (!Extract(decrypted, decoded))
+                return false;
 
-                decoded.Seek(0, SeekOrigin.Begin);
-                this.allScoreData = Read(decoded);
+            decoded.Seek(0, SeekOrigin.Begin);
+            if (!Validate(decoded))
+                return false;
 
-                return this.allScoreData != null;
-            }
+            decoded.Seek(0, SeekOrigin.Begin);
+            this.allScoreData = Read(decoded);
+
+            return this.allScoreData != null;
         }
 
         protected override IEnumerable<IStringReplaceable> CreateReplacers(bool hideUntriedCards, string outputFilePath)
@@ -85,124 +84,116 @@ namespace ThScoreFileConverter.Models
 
         protected override void ConvertBestShot(Stream input, Stream output)
         {
-            using (var decoded = new MemoryStream())
+            using var decoded = new MemoryStream();
+            var outputFile = output as FileStream;
+
+            using var reader = new BinaryReader(input, Encoding.UTF8, true);
+            var header = new BestShotHeader();
+            header.ReadFrom(reader);
+
+            if (this.bestshots == null)
             {
-                var outputFile = output as FileStream;
-
-                using (var reader = new BinaryReader(input, Encoding.UTF8, true))
-                {
-                    var header = new BestShotHeader();
-                    header.ReadFrom(reader);
-
-                    if (this.bestshots == null)
-                    {
-                        this.bestshots =
-                            new Dictionary<(Day, int), (string, IBestShotHeader)>(Definitions.SpellCards.Count);
-                    }
-
-                    var key = (header.Weekday, header.Dream);
-                    if (!this.bestshots.ContainsKey(key))
-                        this.bestshots.Add(key, (outputFile.Name, header));
-
-                    Lzss.Extract(input, decoded);
-
-                    _ = decoded.Seek(0, SeekOrigin.Begin);
-                    using (var bitmap = new Bitmap(header.Width, header.Height, PixelFormat.Format32bppArgb))
-                    {
-                        try
-                        {
-                            var permission = new SecurityPermission(SecurityPermissionFlag.UnmanagedCode);
-                            permission.Demand();
-
-                            var bitmapData = bitmap.LockBits(
-                                new Rectangle(0, 0, header.Width, header.Height),
-                                ImageLockMode.WriteOnly,
-                                bitmap.PixelFormat);
-                            var source = decoded.ToArray();
-                            var destination = bitmapData.Scan0;
-                            Marshal.Copy(source, 0, destination, source.Length);
-                            bitmap.UnlockBits(bitmapData);
-                        }
-                        catch (SecurityException e)
-                        {
-                            Console.WriteLine(e.ToString());
-                        }
-
-                        bitmap.Save(output, ImageFormat.Png);
-                        output.Flush();
-                        output.SetLength(output.Position);
-                    }
-                }
+                this.bestshots =
+                    new Dictionary<(Day, int), (string, IBestShotHeader)>(Definitions.SpellCards.Count);
             }
+
+            var key = (header.Weekday, header.Dream);
+            if (!this.bestshots.ContainsKey(key))
+                this.bestshots.Add(key, (outputFile.Name, header));
+
+            Lzss.Extract(input, decoded);
+
+            _ = decoded.Seek(0, SeekOrigin.Begin);
+            using var bitmap = new Bitmap(header.Width, header.Height, PixelFormat.Format32bppArgb);
+
+            try
+            {
+                var permission = new SecurityPermission(SecurityPermissionFlag.UnmanagedCode);
+                permission.Demand();
+
+                var bitmapData = bitmap.LockBits(
+                    new Rectangle(0, 0, header.Width, header.Height),
+                    ImageLockMode.WriteOnly,
+                    bitmap.PixelFormat);
+                var source = decoded.ToArray();
+                var destination = bitmapData.Scan0;
+                Marshal.Copy(source, 0, destination, source.Length);
+                bitmap.UnlockBits(bitmapData);
+            }
+            catch (SecurityException e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+
+            bitmap.Save(output, ImageFormat.Png);
+            output.Flush();
+            output.SetLength(output.Position);
         }
 
         private static bool Decrypt(Stream input, Stream output)
         {
-            using (var reader = new BinaryReader(input, Encoding.UTF8, true))
-            using (var writer = new BinaryWriter(output, Encoding.UTF8, true))
-            {
-                var header = new Header();
-                header.ReadFrom(reader);
-                if (!header.IsValid)
-                    return false;
-                if (header.EncodedAllSize != reader.BaseStream.Length)
-                    return false;
+            using var reader = new BinaryReader(input, Encoding.UTF8, true);
+            using var writer = new BinaryWriter(output, Encoding.UTF8, true);
+            var header = new Header();
 
-                header.WriteTo(writer);
-                ThCrypt.Decrypt(input, output, header.EncodedBodySize, 0xAC, 0x35, 0x10, header.EncodedBodySize);
+            header.ReadFrom(reader);
+            if (!header.IsValid)
+                return false;
+            if (header.EncodedAllSize != reader.BaseStream.Length)
+                return false;
 
-                return true;
-            }
+            header.WriteTo(writer);
+            ThCrypt.Decrypt(input, output, header.EncodedBodySize, 0xAC, 0x35, 0x10, header.EncodedBodySize);
+
+            return true;
         }
 
         private static bool Extract(Stream input, Stream output)
         {
-            using (var reader = new BinaryReader(input, Encoding.UTF8, true))
-            using (var writer = new BinaryWriter(output, Encoding.UTF8, true))
-            {
-                var header = new Header();
-                header.ReadFrom(reader);
-                header.WriteTo(writer);
+            using var reader = new BinaryReader(input, Encoding.UTF8, true);
+            using var writer = new BinaryWriter(output, Encoding.UTF8, true);
 
-                var bodyBeginPos = output.Position;
-                Lzss.Extract(input, output);
-                output.Flush();
-                output.SetLength(output.Position);
+            var header = new Header();
+            header.ReadFrom(reader);
+            header.WriteTo(writer);
 
-                return header.DecodedBodySize == (output.Position - bodyBeginPos);
-            }
+            var bodyBeginPos = output.Position;
+            Lzss.Extract(input, output);
+            output.Flush();
+            output.SetLength(output.Position);
+
+            return header.DecodedBodySize == (output.Position - bodyBeginPos);
         }
 
         private static bool Validate(Stream input)
         {
-            using (var reader = new BinaryReader(input, Encoding.UTF8, true))
+            using var reader = new BinaryReader(input, Encoding.UTF8, true);
+
+            var header = new Header();
+            header.ReadFrom(reader);
+            var remainSize = header.DecodedBodySize;
+            var chapter = new Th10.Chapter();
+
+            try
             {
-                var header = new Header();
-                header.ReadFrom(reader);
-                var remainSize = header.DecodedBodySize;
-                var chapter = new Th10.Chapter();
-
-                try
+                while (remainSize > 0)
                 {
-                    while (remainSize > 0)
-                    {
-                        chapter.ReadFrom(reader);
-                        if (!chapter.IsValid)
-                            return false;
-                        if (!Score.CanInitialize(chapter) &&
-                            !Status.CanInitialize(chapter))
-                            return false;
+                    chapter.ReadFrom(reader);
+                    if (!chapter.IsValid)
+                        return false;
+                    if (!Score.CanInitialize(chapter) &&
+                        !Status.CanInitialize(chapter))
+                        return false;
 
-                        remainSize -= chapter.Size;
-                    }
+                    remainSize -= chapter.Size;
                 }
-                catch (EndOfStreamException)
-                {
-                    // It's OK, do nothing.
-                }
-
-                return remainSize == 0;
             }
+            catch (EndOfStreamException)
+            {
+                // It's OK, do nothing.
+            }
+
+            return remainSize == 0;
         }
 
         private static AllScoreData Read(Stream input)
@@ -213,36 +204,34 @@ namespace ThScoreFileConverter.Models
                 { Status.ValidSignature, (data, ch) => data.Set(new Status(ch)) },
             };
 
-            using (var reader = new BinaryReader(input, Encoding.UTF8, true))
+            using var reader = new BinaryReader(input, Encoding.UTF8, true);
+            var allScoreData = new AllScoreData();
+            var chapter = new Th10.Chapter();
+
+            var header = new Header();
+            header.ReadFrom(reader);
+            allScoreData.Set(header);
+
+            try
             {
-                var allScoreData = new AllScoreData();
-                var chapter = new Th10.Chapter();
-
-                var header = new Header();
-                header.ReadFrom(reader);
-                allScoreData.Set(header);
-
-                try
+                while (true)
                 {
-                    while (true)
-                    {
-                        chapter.ReadFrom(reader);
-                        if (dictionary.TryGetValue(chapter.Signature, out var setChapter))
-                            setChapter(allScoreData, chapter);
-                    }
+                    chapter.ReadFrom(reader);
+                    if (dictionary.TryGetValue(chapter.Signature, out var setChapter))
+                        setChapter(allScoreData, chapter);
                 }
-                catch (EndOfStreamException)
-                {
-                    // It's OK, do nothing.
-                }
-
-                if ((allScoreData.Header != null) &&
-                    //// (allScoreData.scores.Count >= 0) &&
-                    (allScoreData.Status != null))
-                    return allScoreData;
-                else
-                    return null;
             }
+            catch (EndOfStreamException)
+            {
+                // It's OK, do nothing.
+            }
+
+            if ((allScoreData.Header != null) &&
+                //// (allScoreData.scores.Count >= 0) &&
+                (allScoreData.Status != null))
+                return allScoreData;
+            else
+                return null;
         }
     }
 }

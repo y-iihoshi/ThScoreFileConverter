@@ -104,23 +104,22 @@ namespace ThScoreFileConverter.Models
         {
             const int DefaultBufferSize = 1024;
 
-            using (var reader = new StreamReader(
-                input, Utils.GetEncoding(Settings.Instance.InputCodePageId.Value), true, DefaultBufferSize, true))
-            using (var writer = new StreamWriter(
-                output, Utils.GetEncoding(Settings.Instance.OutputCodePageId.Value), DefaultBufferSize, true))
-            {
-                var outputFilePath = (output is FileStream outputFile) ? outputFile.Name : string.Empty;
-                var replacers = this.CreateReplacers(hideUntriedCards, outputFilePath);
+            using var reader = new StreamReader(
+                input, Utils.GetEncoding(Settings.Instance.InputCodePageId.Value), true, DefaultBufferSize, true);
+            using var writer = new StreamWriter(
+                output, Utils.GetEncoding(Settings.Instance.OutputCodePageId.Value), DefaultBufferSize, true);
 
-                var allLines = reader.ReadToEnd();
+            var outputFilePath = (output is FileStream outputFile) ? outputFile.Name : string.Empty;
+            var replacers = this.CreateReplacers(hideUntriedCards, outputFilePath);
 
-                foreach (var replacer in replacers)
-                    allLines = replacer.Replace(allLines);
+            var allLines = reader.ReadToEnd();
 
-                writer.Write(allLines);
-                writer.Flush();
-                writer.BaseStream.SetLength(writer.BaseStream.Position);
-            }
+            foreach (var replacer in replacers)
+                allLines = replacer.Replace(allLines);
+
+            writer.Write(allLines);
+            writer.Flush();
+            writer.BaseStream.SetLength(writer.BaseStream.Position);
         }
 
         /// <summary>
@@ -196,46 +195,40 @@ namespace ThScoreFileConverter.Models
         /// <param name="settings">The settings per work.</param>
         private void Convert(SettingsPerTitle settings)
         {
-            using (var scr = new FileStream(settings.ScoreFile, FileMode.Open, FileAccess.Read))
+            using var scr = new FileStream(settings.ScoreFile, FileMode.Open, FileAccess.Read);
+            _ = scr.Seek(0, SeekOrigin.Begin);
+            if (!this.ReadScoreFile(scr))
+                throw new NotSupportedException(Resources.msgErrScoreFileNotSupported);
+
+            if (this.HasBestShotConverter)
             {
-                _ = scr.Seek(0, SeekOrigin.Begin);
-                if (!this.ReadScoreFile(scr))
-                    throw new NotSupportedException(Resources.msgErrScoreFileNotSupported);
-
-                if (this.HasBestShotConverter)
+                var dir = Path.Combine(settings.OutputDirectory, settings.ImageOutputDirectory);
+                if (!Directory.Exists(dir))
+                    _ = Directory.CreateDirectory(dir);
+                var files = this.FilterBestShotFiles(
+                    Directory.GetFiles(settings.BestShotDirectory, Resources.ptnBestShot));
+                for (var index = 0; index < files.Length; index++)
                 {
-                    var dir = Path.Combine(settings.OutputDirectory, settings.ImageOutputDirectory);
-                    if (!Directory.Exists(dir))
-                        _ = Directory.CreateDirectory(dir);
-                    var files = this.FilterBestShotFiles(
-                        Directory.GetFiles(settings.BestShotDirectory, Resources.ptnBestShot));
-                    for (var index = 0; index < files.Length; index++)
-                    {
-                        var result = GetBestShotFilePath(files[index], dir);
-                        using (var bsts = new FileStream(files[index], FileMode.Open, FileAccess.Read))
-                        using (var rslt = new FileStream(result, FileMode.OpenOrCreate, FileAccess.Write))
-                        {
-                            this.ConvertBestShot(bsts, rslt);
-                            this.OnConvertFinished(new ThConverterEventArgs(result, index + 1, files.Length));
-                        }
-                    }
+                    var result = GetBestShotFilePath(files[index], dir);
+                    using var bsts = new FileStream(files[index], FileMode.Open, FileAccess.Read);
+                    using var rslt = new FileStream(result, FileMode.OpenOrCreate, FileAccess.Write);
+                    this.ConvertBestShot(bsts, rslt);
+                    this.OnConvertFinished(new ThConverterEventArgs(result, index + 1, files.Length));
                 }
-
-                var numFiles = settings.TemplateFiles.Count();
-                for (var index = 0; index < numFiles; index++)
-                {
-                    var template = settings.TemplateFiles.ElementAt(index);
-                    var result = GetOutputFilePath(template, settings.OutputDirectory);
-                    using (var tmpl = new FileStream(template, FileMode.Open, FileAccess.Read))
-                    using (var rslt = new FileStream(result, FileMode.OpenOrCreate, FileAccess.Write))
-                    {
-                        this.Convert(tmpl, rslt, settings.HideUntriedCards);
-                        this.OnConvertFinished(new ThConverterEventArgs(result, index + 1, numFiles));
-                    }
-                }
-
-                this.OnConvertAllFinished(new ThConverterEventArgs());
             }
+
+            var numFiles = settings.TemplateFiles.Count();
+            for (var index = 0; index < numFiles; index++)
+            {
+                var template = settings.TemplateFiles.ElementAt(index);
+                var result = GetOutputFilePath(template, settings.OutputDirectory);
+                using var tmpl = new FileStream(template, FileMode.Open, FileAccess.Read);
+                using var rslt = new FileStream(result, FileMode.OpenOrCreate, FileAccess.Write);
+                this.Convert(tmpl, rslt, settings.HideUntriedCards);
+                this.OnConvertFinished(new ThConverterEventArgs(result, index + 1, numFiles));
+            }
+
+            this.OnConvertAllFinished(new ThConverterEventArgs());
         }
 
         /// <summary>

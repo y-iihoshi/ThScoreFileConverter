@@ -29,23 +29,21 @@ namespace ThScoreFileConverter.Models
         protected override bool ReadScoreFile(Stream input)
         {
 #if DEBUG
-            using (var decoded = new FileStream("th155decoded.dat", FileMode.Create, FileAccess.ReadWrite))
+            using var decoded = new FileStream("th155decoded.dat", FileMode.Create, FileAccess.ReadWrite);
 #else
-            using (var decoded = new MemoryStream())
+            using var decoded = new MemoryStream();
 #endif
-            {
-                if (!Extract(input, decoded))
-                    return false;
 
-                decoded.Seek(0, SeekOrigin.Begin);
-                this.allScoreData = Read(decoded);
+            if (!Extract(input, decoded))
+                return false;
 
-                return this.allScoreData != null;
-            }
+            decoded.Seek(0, SeekOrigin.Begin);
+            this.allScoreData = Read(decoded);
+
+            return this.allScoreData != null;
         }
 
-        protected override IEnumerable<IStringReplaceable> CreateReplacers(
-            bool hideUntriedCards, string outputFilePath)
+        protected override IEnumerable<IStringReplaceable> CreateReplacers(bool hideUntriedCards, string outputFilePath)
         {
             return new List<IStringReplaceable>
             {
@@ -97,20 +95,18 @@ namespace ThScoreFileConverter.Models
 
         private static AllScoreData Read(Stream input)
         {
-            using (var reader = new BinaryReader(input, Encoding.UTF8, true))
+            using var reader = new BinaryReader(input, Encoding.UTF8, true);
+            var allScoreData = new AllScoreData();
+
+            try
             {
-                var allScoreData = new AllScoreData();
-
-                try
-                {
-                    allScoreData.ReadFrom(reader);
-                }
-                catch (EndOfStreamException)
-                {
-                }
-
-                return allScoreData;
+                allScoreData.ReadFrom(reader);
             }
+            catch (EndOfStreamException)
+            {
+            }
+
+            return allScoreData;
         }
     }
 }

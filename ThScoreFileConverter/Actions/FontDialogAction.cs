@@ -285,47 +285,46 @@ namespace ThScoreFileConverter.Actions
         /// <param name="parameter">The parameter to the action; but not used.</param>
         protected override void Invoke(object parameter)
         {
-            using (var dialog = this.CreateDialog())
+            using var dialog = this.CreateDialog();
+
+            if (this.ShowApply && (this.ApplyCommand != null))
             {
-                if (this.ShowApply && (this.ApplyCommand != null))
+                dialog.Apply += (sender, e) =>
                 {
-                    dialog.Apply += (sender, e) =>
+                    var result = new FontDialogActionResult(dialog.Font, dialog.Color);
+                    if (this.ApplyCommand.CanExecute(result))
+                        this.ApplyCommand.Execute(result);
+                };
+            }
+
+            var oldFont = dialog.Font;
+            var oldColor = dialog.Color;
+            var dialogResult = dialog.ShowDialog(new Win32Window(this.Owner));
+
+            switch (dialogResult)
+            {
+                case WinForms.DialogResult.OK:
+                    if (this.OkCommand != null)
                     {
                         var result = new FontDialogActionResult(dialog.Font, dialog.Color);
-                        if (this.ApplyCommand.CanExecute(result))
-                            this.ApplyCommand.Execute(result);
-                    };
-                }
+                        if (this.OkCommand.CanExecute(result))
+                            this.OkCommand.Execute(result);
+                    }
 
-                var oldFont = dialog.Font;
-                var oldColor = dialog.Color;
-                var dialogResult = dialog.ShowDialog(new Win32Window(this.Owner));
+                    break;
 
-                switch (dialogResult)
-                {
-                    case WinForms.DialogResult.OK:
-                        if (this.OkCommand != null)
-                        {
-                            var result = new FontDialogActionResult(dialog.Font, dialog.Color);
-                            if (this.OkCommand.CanExecute(result))
-                                this.OkCommand.Execute(result);
-                        }
+                case WinForms.DialogResult.Cancel:
+                    if (this.CancelCommand != null)
+                    {
+                        var result = new FontDialogActionResult(oldFont, oldColor);
+                        if (this.CancelCommand.CanExecute(result))
+                            this.CancelCommand.Execute(result);
+                    }
 
-                        break;
+                    break;
 
-                    case WinForms.DialogResult.Cancel:
-                        if (this.CancelCommand != null)
-                        {
-                            var result = new FontDialogActionResult(oldFont, oldColor);
-                            if (this.CancelCommand.CanExecute(result))
-                                this.CancelCommand.Execute(result);
-                        }
-
-                        break;
-
-                    default:
-                        throw new NotImplementedException(Resources.NotImplementedExceptionShouldNotReachHere);
-                }
+                default:
+                    throw new NotImplementedException(Resources.NotImplementedExceptionShouldNotReachHere);
             }
         }
     }

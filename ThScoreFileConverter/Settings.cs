@@ -96,28 +96,27 @@ namespace ThScoreFileConverter
         {
             try
             {
-                using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
-                using (var reader = XmlReader.Create(stream, new XmlReaderSettings { CloseInput = false }))
-                {
-                    var serializer = new DataContractSerializer(typeof(Settings));
-                    if (serializer.ReadObject(reader) is Settings settings)
-                    {
-                        this.LastTitle = settings.LastTitle;
-                        this.Dictionary = settings.Dictionary;
+                using var stream = new FileStream(path, FileMode.Open, FileAccess.Read);
+                using var reader = XmlReader.Create(stream, new XmlReaderSettings { CloseInput = false });
+                var serializer = new DataContractSerializer(typeof(Settings));
 
-                        if (!string.IsNullOrEmpty(settings.FontFamilyName))
-                            this.FontFamilyName = settings.FontFamilyName;
-                        if (settings.FontSize.HasValue)
-                            this.FontSize = settings.FontSize.Value;
-                        if (settings.OutputNumberGroupSeparator.HasValue)
-                            this.OutputNumberGroupSeparator = settings.OutputNumberGroupSeparator.Value;
-                        if (settings.InputCodePageId.HasValue &&
-                            ValidCodePageIds.Any(id => id == settings.InputCodePageId.Value))
-                            this.InputCodePageId = settings.InputCodePageId.Value;
-                        if (settings.OutputCodePageId.HasValue &&
-                            ValidCodePageIds.Any(id => id == settings.OutputCodePageId.Value))
-                            this.OutputCodePageId = settings.OutputCodePageId.Value;
-                    }
+                if (serializer.ReadObject(reader) is Settings settings)
+                {
+                    this.LastTitle = settings.LastTitle;
+                    this.Dictionary = settings.Dictionary;
+
+                    if (!string.IsNullOrEmpty(settings.FontFamilyName))
+                        this.FontFamilyName = settings.FontFamilyName;
+                    if (settings.FontSize.HasValue)
+                        this.FontSize = settings.FontSize.Value;
+                    if (settings.OutputNumberGroupSeparator.HasValue)
+                        this.OutputNumberGroupSeparator = settings.OutputNumberGroupSeparator.Value;
+                    if (settings.InputCodePageId.HasValue &&
+                        ValidCodePageIds.Any(id => id == settings.InputCodePageId.Value))
+                        this.InputCodePageId = settings.InputCodePageId.Value;
+                    if (settings.OutputCodePageId.HasValue &&
+                        ValidCodePageIds.Any(id => id == settings.OutputCodePageId.Value))
+                        this.OutputCodePageId = settings.OutputCodePageId.Value;
                 }
             }
             catch (FileNotFoundException)
@@ -140,14 +139,13 @@ namespace ThScoreFileConverter
         /// <param name="path">The path of the XML file to save.</param>
         public void Save(string path)
         {
-            using (var stream = new FileStream(path, FileMode.Create, FileAccess.Write))
-            using (var writer = XmlWriter.Create(stream, new XmlWriterSettings { CloseOutput = false, Indent = true }))
-            {
-                var serializer = new DataContractSerializer(typeof(Settings));
-                serializer.WriteObject(writer, this);
-                writer.WriteWhitespace(writer.Settings.NewLineChars);
-                writer.Flush();
-            }
+            using var stream = new FileStream(path, FileMode.Create, FileAccess.Write);
+            using var writer = XmlWriter.Create(stream, new XmlWriterSettings { CloseOutput = false, Indent = true });
+            var serializer = new DataContractSerializer(typeof(Settings));
+
+            serializer.WriteObject(writer, this);
+            writer.WriteWhitespace(writer.Settings.NewLineChars);
+            writer.Flush();
         }
     }
 }

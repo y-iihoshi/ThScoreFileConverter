@@ -28,33 +28,31 @@ namespace ThScoreFileConverter.Models
 
         protected override bool ReadScoreFile(Stream input)
         {
-            using (var decrypted = new MemoryStream())
+            using var decrypted = new MemoryStream();
 #if DEBUG
-            using (var decoded = new FileStream("th09decoded.dat", FileMode.Create, FileAccess.ReadWrite))
+            using var decoded = new FileStream("th09decoded.dat", FileMode.Create, FileAccess.ReadWrite);
 #else
-            using (var decoded = new MemoryStream())
+            using var decoded = new MemoryStream();
 #endif
-            {
-                if (!Decrypt(input, decrypted))
-                    return false;
 
-                decrypted.Seek(0, SeekOrigin.Begin);
-                if (!Extract(decrypted, decoded))
-                    return false;
+            if (!Decrypt(input, decrypted))
+                return false;
 
-                decoded.Seek(0, SeekOrigin.Begin);
-                if (!Validate(decoded))
-                    return false;
+            decrypted.Seek(0, SeekOrigin.Begin);
+            if (!Extract(decrypted, decoded))
+                return false;
 
-                decoded.Seek(0, SeekOrigin.Begin);
-                this.allScoreData = Read(decoded);
+            decoded.Seek(0, SeekOrigin.Begin);
+            if (!Validate(decoded))
+                return false;
 
-                return this.allScoreData != null;
-            }
+            decoded.Seek(0, SeekOrigin.Begin);
+            this.allScoreData = Read(decoded);
+
+            return this.allScoreData != null;
         }
 
-        protected override IEnumerable<IStringReplaceable> CreateReplacers(
-            bool hideUntriedCards, string outputFilePath)
+        protected override IEnumerable<IStringReplaceable> CreateReplacers(bool hideUntriedCards, string outputFilePath)
         {
             return new List<IStringReplaceable>
             {
@@ -92,67 +90,63 @@ namespace ThScoreFileConverter.Models
 
         private static bool Extract(Stream input, Stream output)
         {
-            using (var reader = new BinaryReader(input, Encoding.UTF8, true))
-            using (var writer = new BinaryWriter(output, Encoding.UTF8, true))
-            {
-                var header = new FileHeader();
+            using var reader = new BinaryReader(input, Encoding.UTF8, true);
+            using var writer = new BinaryWriter(output, Encoding.UTF8, true);
+            var header = new FileHeader();
 
-                header.ReadFrom(reader);
-                if (!header.IsValid)
-                    return false;
-                if (header.Size + header.EncodedBodySize != input.Length)
-                    return false;
+            header.ReadFrom(reader);
+            if (!header.IsValid)
+                return false;
+            if (header.Size + header.EncodedBodySize != input.Length)
+                return false;
 
-                header.WriteTo(writer);
+            header.WriteTo(writer);
 
-                Lzss.Extract(input, output);
-                output.Flush();
-                output.SetLength(output.Position);
+            Lzss.Extract(input, output);
+            output.Flush();
+            output.SetLength(output.Position);
 
-                return output.Position == header.DecodedAllSize;
-            }
+            return output.Position == header.DecodedAllSize;
         }
 
         private static bool Validate(Stream input)
         {
-            using (var reader = new BinaryReader(input, Encoding.UTF8, true))
+            using var reader = new BinaryReader(input, Encoding.UTF8, true);
+            var header = new FileHeader();
+            var chapter = new Th06.Chapter();
+
+            header.ReadFrom(reader);
+            var remainSize = header.DecodedAllSize - header.Size;
+            if (remainSize <= 0)
+                return false;
+
+            try
             {
-                var header = new FileHeader();
-                var chapter = new Th06.Chapter();
-
-                header.ReadFrom(reader);
-                var remainSize = header.DecodedAllSize - header.Size;
-                if (remainSize <= 0)
-                    return false;
-
-                try
+                while (remainSize > 0)
                 {
-                    while (remainSize > 0)
+                    chapter.ReadFrom(reader);
+                    if (chapter.Size1 == 0)
+                        return false;
+
+                    switch (chapter.Signature)
                     {
-                        chapter.ReadFrom(reader);
-                        if (chapter.Size1 == 0)
-                            return false;
-
-                        switch (chapter.Signature)
-                        {
-                            case Header.ValidSignature:
-                                if (chapter.FirstByteOfData != 0x01)
-                                    return false;
-                                break;
-                            default:
-                                break;
-                        }
-
-                        remainSize -= chapter.Size1;
+                        case Header.ValidSignature:
+                            if (chapter.FirstByteOfData != 0x01)
+                                return false;
+                            break;
+                        default:
+                            break;
                     }
-                }
-                catch (EndOfStreamException)
-                {
-                    // It's OK, do nothing.
-                }
 
-                return remainSize == 0;
+                    remainSize -= chapter.Size1;
+                }
             }
+            catch (EndOfStreamException)
+            {
+                // It's OK, do nothing.
+            }
+
+            return remainSize == 0;
         }
 
         private static AllScoreData Read(Stream input)
@@ -166,38 +160,36 @@ namespace ThScoreFileConverter.Models
                 { Th07.VersionInfo.ValidSignature, (data, ch) => data.Set(new Th07.VersionInfo(ch)) },
             };
 
-            using (var reader = new BinaryReader(input, Encoding.UTF8, true))
+            using var reader = new BinaryReader(input, Encoding.UTF8, true);
+            var allScoreData = new AllScoreData();
+            var chapter = new Th06.Chapter();
+
+            _ = reader.ReadExactBytes(FileHeader.ValidSize);
+
+            try
             {
-                var allScoreData = new AllScoreData();
-                var chapter = new Th06.Chapter();
-
-                _ = reader.ReadExactBytes(FileHeader.ValidSize);
-
-                try
+                while (true)
                 {
-                    while (true)
-                    {
-                        chapter.ReadFrom(reader);
-                        if (dictionary.TryGetValue(chapter.Signature, out var setChapter))
-                            setChapter(allScoreData, chapter);
-                    }
+                    chapter.ReadFrom(reader);
+                    if (dictionary.TryGetValue(chapter.Signature, out var setChapter))
+                        setChapter(allScoreData, chapter);
                 }
-                catch (EndOfStreamException)
-                {
-                    // It's OK, do nothing.
-                }
-
-                var numCharas = Enum.GetValues(typeof(Chara)).Length;
-                var numLevels = Enum.GetValues(typeof(Level)).Length;
-                if ((allScoreData.Header != null) &&
-                    (allScoreData.Rankings.Count == numCharas * numLevels) &&
-                    (allScoreData.PlayStatus != null) &&
-                    (allScoreData.LastName != null) &&
-                    (allScoreData.VersionInfo != null))
-                    return allScoreData;
-                else
-                    return null;
             }
+            catch (EndOfStreamException)
+            {
+                // It's OK, do nothing.
+            }
+
+            var numCharas = Enum.GetValues(typeof(Chara)).Length;
+            var numLevels = Enum.GetValues(typeof(Level)).Length;
+            if ((allScoreData.Header != null) &&
+                (allScoreData.Rankings.Count == numCharas * numLevels) &&
+                (allScoreData.PlayStatus != null) &&
+                (allScoreData.LastName != null) &&
+                (allScoreData.VersionInfo != null))
+                return allScoreData;
+            else
+                return null;
         }
     }
 }
