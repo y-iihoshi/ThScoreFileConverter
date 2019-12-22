@@ -147,8 +147,8 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public bool IsIdle
         {
-            get { return this.isIdle; }
-            private set { _ = this.SetProperty(ref this.isIdle, value); }
+            get => this.isIdle;
+            private set => _ = this.SetProperty(ref this.isIdle, value);
         }
 
         /// <summary>
@@ -161,10 +161,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public string LastWorkNumber
         {
-            get
-            {
-                return Settings.Instance.LastTitle;
-            }
+            get => Settings.Instance.LastTitle;
 
             set
             {
@@ -194,10 +191,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public string ScoreFile
         {
-            get
-            {
-                return CurrentSetting.ScoreFile;
-            }
+            get => CurrentSetting.ScoreFile;
 
             private set
             {
@@ -236,10 +230,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public string BestShotDirectory
         {
-            get
-            {
-                return CurrentSetting.BestShotDirectory;
-            }
+            get => CurrentSetting.BestShotDirectory;
 
             private set
             {
@@ -256,10 +247,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public IEnumerable<string> TemplateFiles
         {
-            get
-            {
-                return CurrentSetting.TemplateFiles;
-            }
+            get => CurrentSetting.TemplateFiles;
 
             private set
             {
@@ -295,10 +283,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public string OutputDirectory
         {
-            get
-            {
-                return CurrentSetting.OutputDirectory;
-            }
+            get => CurrentSetting.OutputDirectory;
 
             private set
             {
@@ -315,10 +300,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public string ImageOutputDirectory
         {
-            get
-            {
-                return CurrentSetting.ImageOutputDirectory;
-            }
+            get => CurrentSetting.ImageOutputDirectory;
 
             set
             {
@@ -340,10 +322,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public bool HidesUntriedCards
         {
-            get
-            {
-                return CurrentSetting.HideUntriedCards;
-            }
+            get => CurrentSetting.HideUntriedCards;
 
             set
             {
@@ -360,8 +339,8 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public string Log
         {
-            get { return this.log; }
-            private set { _ = this.SetProperty(ref this.log, value); }
+            get => this.log;
+            private set => _ = this.SetProperty(ref this.log, value);
         }
 
         #region Commands

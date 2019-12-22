@@ -103,8 +103,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public ICommand ApplyCommand
         {
-            get { return this.GetValue(ApplyCommandProperty) as ICommand; }
-            set { this.SetValue(ApplyCommandProperty, value); }
+            get => this.GetValue(ApplyCommandProperty) as ICommand;
+            set => this.SetValue(ApplyCommandProperty, value);
         }
 
         /// <summary>
@@ -113,8 +113,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public bool AllowScriptChange
         {
-            get { return (bool)this.GetValue(AllowScriptChangeProperty); }
-            set { this.SetValue(AllowScriptChangeProperty, value); }
+            get => (bool)this.GetValue(AllowScriptChangeProperty);
+            set => this.SetValue(AllowScriptChangeProperty, value);
         }
 
         /// <summary>
@@ -123,8 +123,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public bool AllowSimulations
         {
-            get { return (bool)this.GetValue(AllowSimulationsProperty); }
-            set { this.SetValue(AllowSimulationsProperty, value); }
+            get => (bool)this.GetValue(AllowSimulationsProperty);
+            set => this.SetValue(AllowSimulationsProperty, value);
         }
 
         /// <summary>
@@ -132,8 +132,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public bool AllowVectorFonts
         {
-            get { return (bool)this.GetValue(AllowVectorFontsProperty); }
-            set { this.SetValue(AllowVectorFontsProperty, value); }
+            get => (bool)this.GetValue(AllowVectorFontsProperty);
+            set => this.SetValue(AllowVectorFontsProperty, value);
         }
 
         /// <summary>
@@ -142,8 +142,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public bool AllowVerticalFonts
         {
-            get { return (bool)this.GetValue(AllowVerticalFontsProperty); }
-            set { this.SetValue(AllowVerticalFontsProperty, value); }
+            get => (bool)this.GetValue(AllowVerticalFontsProperty);
+            set => this.SetValue(AllowVerticalFontsProperty, value);
         }
 
         /// <summary>
@@ -151,8 +151,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public SysDraw.Color Color
         {
-            get { return (SysDraw.Color)this.GetValue(ColorProperty); }
-            set { this.SetValue(ColorProperty, value); }
+            get => (SysDraw.Color)this.GetValue(ColorProperty);
+            set => this.SetValue(ColorProperty, value);
         }
 
         /// <summary>
@@ -161,8 +161,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public bool FixedPitchOnly
         {
-            get { return (bool)this.GetValue(FixedPitchOnlyProperty); }
-            set { this.SetValue(FixedPitchOnlyProperty, value); }
+            get => (bool)this.GetValue(FixedPitchOnlyProperty);
+            set => this.SetValue(FixedPitchOnlyProperty, value);
         }
 
         /// <summary>
@@ -170,8 +170,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public SysDraw.Font Font
         {
-            get { return this.GetValue(FontProperty) as SysDraw.Font; }
-            set { this.SetValue(FontProperty, value); }
+            get => this.GetValue(FontProperty) as SysDraw.Font;
+            set => this.SetValue(FontProperty, value);
         }
 
         /// <summary>
@@ -180,8 +180,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public bool FontMustExist
         {
-            get { return (bool)this.GetValue(FontMustExistProperty); }
-            set { this.SetValue(FontMustExistProperty, value); }
+            get => (bool)this.GetValue(FontMustExistProperty);
+            set => this.SetValue(FontMustExistProperty, value);
         }
 
         /// <summary>
@@ -189,8 +189,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public int MaxSize
         {
-            get { return (int)this.GetValue(MaxSizeProperty); }
-            set { this.SetValue(MaxSizeProperty, value); }
+            get => (int)this.GetValue(MaxSizeProperty);
+            set => this.SetValue(MaxSizeProperty, value);
         }
 
         /// <summary>
@@ -198,8 +198,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public int MinSize
         {
-            get { return (int)this.GetValue(MinSizeProperty); }
-            set { this.SetValue(MinSizeProperty, value); }
+            get => (int)this.GetValue(MinSizeProperty);
+            set => this.SetValue(MinSizeProperty, value);
         }
 
         /// <summary>
@@ -208,8 +208,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public bool ScriptsOnly
         {
-            get { return (bool)this.GetValue(ScriptsOnlyProperty); }
-            set { this.SetValue(ScriptsOnlyProperty, value); }
+            get => (bool)this.GetValue(ScriptsOnlyProperty);
+            set => this.SetValue(ScriptsOnlyProperty, value);
         }
 
         /// <summary>
@@ -217,8 +217,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public bool ShowApply
         {
-            get { return (bool)this.GetValue(ShowApplyProperty); }
-            set { this.SetValue(ShowApplyProperty, value); }
+            get => (bool)this.GetValue(ShowApplyProperty);
+            set => this.SetValue(ShowApplyProperty, value);
         }
 
         /// <summary>
@@ -226,8 +226,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public bool ShowColor
         {
-            get { return (bool)this.GetValue(ShowColorProperty); }
-            set { this.SetValue(ShowColorProperty, value); }
+            get => (bool)this.GetValue(ShowColorProperty);
+            set => this.SetValue(ShowColorProperty, value);
         }
 
         /// <summary>
@@ -236,8 +236,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public bool ShowEffects
         {
-            get { return (bool)this.GetValue(ShowEffectsProperty); }
-            set { this.SetValue(ShowEffectsProperty, value); }
+            get => (bool)this.GetValue(ShowEffectsProperty);
+            set => this.SetValue(ShowEffectsProperty, value);
         }
 
         /// <summary>
@@ -245,8 +245,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public bool ShowHelp
         {
-            get { return (bool)this.GetValue(ShowHelpProperty); }
-            set { this.SetValue(ShowHelpProperty, value); }
+            get => (bool)this.GetValue(ShowHelpProperty);
+            set => this.SetValue(ShowHelpProperty, value);
         }
 
         #endregion

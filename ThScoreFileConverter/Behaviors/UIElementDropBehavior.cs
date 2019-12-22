@@ -70,8 +70,8 @@ namespace ThScoreFileConverter.Behaviors
         /// </summary>
         public ICommand DragEnterCommand
         {
-            get { return this.GetValue(DragEnterCommandProperty) as ICommand; }
-            set { this.SetValue(DragEnterCommandProperty, value); }
+            get => this.GetValue(DragEnterCommandProperty) as ICommand;
+            set => this.SetValue(DragEnterCommandProperty, value);
         }
 
         /// <summary>
@@ -79,8 +79,8 @@ namespace ThScoreFileConverter.Behaviors
         /// </summary>
         public ICommand DragLeaveCommand
         {
-            get { return this.GetValue(DragLeaveCommandProperty) as ICommand; }
-            set { this.SetValue(DragLeaveCommandProperty, value); }
+            get => this.GetValue(DragLeaveCommandProperty) as ICommand;
+            set => this.SetValue(DragLeaveCommandProperty, value);
         }
 
         /// <summary>
@@ -88,8 +88,8 @@ namespace ThScoreFileConverter.Behaviors
         /// </summary>
         public ICommand DragOverCommand
         {
-            get { return this.GetValue(DragOverCommandProperty) as ICommand; }
-            set { this.SetValue(DragOverCommandProperty, value); }
+            get => this.GetValue(DragOverCommandProperty) as ICommand;
+            set => this.SetValue(DragOverCommandProperty, value);
         }
 
         /// <summary>
@@ -97,8 +97,8 @@ namespace ThScoreFileConverter.Behaviors
         /// </summary>
         public ICommand DropCommand
         {
-            get { return this.GetValue(DropCommandProperty) as ICommand; }
-            set { this.SetValue(DropCommandProperty, value); }
+            get => this.GetValue(DropCommandProperty) as ICommand;
+            set => this.SetValue(DropCommandProperty, value);
         }
 
         /// <summary>
@@ -107,8 +107,8 @@ namespace ThScoreFileConverter.Behaviors
         /// </summary>
         public ICommand PreviewDragEnterCommand
         {
-            get { return this.GetValue(PreviewDragEnterCommandProperty) as ICommand; }
-            set { this.SetValue(PreviewDragEnterCommandProperty, value); }
+            get => this.GetValue(PreviewDragEnterCommandProperty) as ICommand;
+            set => this.SetValue(PreviewDragEnterCommandProperty, value);
         }
 
         /// <summary>
@@ -117,8 +117,8 @@ namespace ThScoreFileConverter.Behaviors
         /// </summary>
         public ICommand PreviewDragLeaveCommand
         {
-            get { return this.GetValue(PreviewDragLeaveCommandProperty) as ICommand; }
-            set { this.SetValue(PreviewDragLeaveCommandProperty, value); }
+            get => this.GetValue(PreviewDragLeaveCommandProperty) as ICommand;
+            set => this.SetValue(PreviewDragLeaveCommandProperty, value);
         }
 
         /// <summary>
@@ -127,8 +127,8 @@ namespace ThScoreFileConverter.Behaviors
         /// </summary>
         public ICommand PreviewDragOverCommand
         {
-            get { return this.GetValue(PreviewDragOverCommandProperty) as ICommand; }
-            set { this.SetValue(PreviewDragOverCommandProperty, value); }
+            get => this.GetValue(PreviewDragOverCommandProperty) as ICommand;
+            set => this.SetValue(PreviewDragOverCommandProperty, value);
         }
 
         /// <summary>
@@ -136,8 +136,8 @@ namespace ThScoreFileConverter.Behaviors
         /// </summary>
         public ICommand PreviewDropCommand
         {
-            get { return this.GetValue(PreviewDropCommandProperty) as ICommand; }
-            set { this.SetValue(PreviewDropCommandProperty, value); }
+            get => this.GetValue(PreviewDropCommandProperty) as ICommand;
+            set => this.SetValue(PreviewDropCommandProperty, value);
         }
 
         #endregion

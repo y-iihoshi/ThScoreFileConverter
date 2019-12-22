@@ -48,8 +48,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public ICommand OkCommand
         {
-            get { return this.GetValue(OkCommandProperty) as ICommand; }
-            set { this.SetValue(OkCommandProperty, value); }
+            get => this.GetValue(OkCommandProperty) as ICommand;
+            set => this.SetValue(OkCommandProperty, value);
         }
 
         /// <summary>
@@ -57,8 +57,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public ICommand CancelCommand
         {
-            get { return this.GetValue(CancelCommandProperty) as ICommand; }
-            set { this.SetValue(CancelCommandProperty, value); }
+            get => this.GetValue(CancelCommandProperty) as ICommand;
+            set => this.SetValue(CancelCommandProperty, value);
         }
 
         /// <summary>
@@ -66,8 +66,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public Window Owner
         {
-            get { return this.GetValue(OwnerProperty) as Window; }
-            set { this.SetValue(OwnerProperty, value); }
+            get => this.GetValue(OwnerProperty) as Window;
+            set => this.SetValue(OwnerProperty, value);
         }
 
         /// <summary>
@@ -75,8 +75,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public ISite Site
         {
-            get { return this.GetValue(SiteProperty) as ISite; }
-            set { this.SetValue(SiteProperty, value); }
+            get => this.GetValue(SiteProperty) as ISite;
+            set => this.SetValue(SiteProperty, value);
         }
 
         /// <summary>
@@ -84,8 +84,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public object Tag
         {
-            get { return this.GetValue(TagProperty); }
-            set { this.SetValue(TagProperty, value); }
+            get => this.GetValue(TagProperty);
+            set => this.SetValue(TagProperty, value);
         }
 
         #endregion

@@ -60,8 +60,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public string Description
         {
-            get { return this.GetValue(DescriptionProperty) as string; }
-            set { this.SetValue(DescriptionProperty, value); }
+            get => this.GetValue(DescriptionProperty) as string;
+            set => this.SetValue(DescriptionProperty, value);
         }
 
         /// <summary>
@@ -69,8 +69,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public Environment.SpecialFolder RootFolder
         {
-            get { return (Environment.SpecialFolder)this.GetValue(RootFolderProperty); }
-            set { this.SetValue(RootFolderProperty, value); }
+            get => (Environment.SpecialFolder)this.GetValue(RootFolderProperty);
+            set => this.SetValue(RootFolderProperty, value);
         }
 
         /// <summary>
@@ -78,8 +78,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public string SelectedPath
         {
-            get { return this.GetValue(SelectedPathProperty) as string; }
-            set { this.SetValue(SelectedPathProperty, value); }
+            get => this.GetValue(SelectedPathProperty) as string;
+            set => this.SetValue(SelectedPathProperty, value);
         }
 
         /// <summary>
@@ -88,8 +88,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public bool ShowNewFolderButton
         {
-            get { return (bool)this.GetValue(ShowNewFolderButtonProperty); }
-            set { this.SetValue(ShowNewFolderButtonProperty, value); }
+            get => (bool)this.GetValue(ShowNewFolderButtonProperty);
+            set => this.SetValue(ShowNewFolderButtonProperty, value);
         }
 
         #endregion

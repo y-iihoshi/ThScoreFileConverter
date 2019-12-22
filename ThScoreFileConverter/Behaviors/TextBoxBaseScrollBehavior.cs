@@ -27,8 +27,8 @@ namespace ThScoreFileConverter.Behaviors
         /// </summary>
         public bool AutoScrollToEnd
         {
-            get { return (bool)this.GetValue(AutoScrollToEndProperty); }
-            set { this.SetValue(AutoScrollToEndProperty, value); }
+            get => (bool)this.GetValue(AutoScrollToEndProperty);
+            set => this.SetValue(AutoScrollToEndProperty, value);
         }
 
         /// <summary>

@@ -109,8 +109,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public bool AddExtension
         {
-            get { return (bool)this.GetValue(AddExtensionProperty); }
-            set { this.SetValue(AddExtensionProperty, value); }
+            get => (bool)this.GetValue(AddExtensionProperty);
+            set => this.SetValue(AddExtensionProperty, value);
         }
 
         /// <summary>
@@ -119,8 +119,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public bool AutoUpgradeEnabled
         {
-            get { return (bool)this.GetValue(AutoUpgradeEnabledProperty); }
-            set { this.SetValue(AutoUpgradeEnabledProperty, value); }
+            get => (bool)this.GetValue(AutoUpgradeEnabledProperty);
+            set => this.SetValue(AutoUpgradeEnabledProperty, value);
         }
 
         /// <summary>
@@ -129,8 +129,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public bool CheckFileExists
         {
-            get { return (bool)this.GetValue(CheckFileExistsProperty); }
-            set { this.SetValue(CheckFileExistsProperty, value); }
+            get => (bool)this.GetValue(CheckFileExistsProperty);
+            set => this.SetValue(CheckFileExistsProperty, value);
         }
 
         /// <summary>
@@ -139,8 +139,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public bool CheckPathExists
         {
-            get { return (bool)this.GetValue(CheckPathExistsProperty); }
-            set { this.SetValue(CheckPathExistsProperty, value); }
+            get => (bool)this.GetValue(CheckPathExistsProperty);
+            set => this.SetValue(CheckPathExistsProperty, value);
         }
 
         /// <summary>
@@ -148,8 +148,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public string DefaultExt
         {
-            get { return this.GetValue(DefaultExtProperty) as string; }
-            set { this.SetValue(DefaultExtProperty, value); }
+            get => this.GetValue(DefaultExtProperty) as string;
+            set => this.SetValue(DefaultExtProperty, value);
         }
 
         /// <summary>
@@ -158,8 +158,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public bool DereferenceLinks
         {
-            get { return (bool)this.GetValue(DereferenceLinksProperty); }
-            set { this.SetValue(DereferenceLinksProperty, value); }
+            get => (bool)this.GetValue(DereferenceLinksProperty);
+            set => this.SetValue(DereferenceLinksProperty, value);
         }
 
         /// <summary>
@@ -167,8 +167,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public string FileName
         {
-            get { return this.GetValue(FileNameProperty) as string; }
-            set { this.SetValue(FileNameProperty, value); }
+            get => this.GetValue(FileNameProperty) as string;
+            set => this.SetValue(FileNameProperty, value);
         }
 
         /// <summary>
@@ -177,8 +177,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public string Filter
         {
-            get { return this.GetValue(FilterProperty) as string; }
-            set { this.SetValue(FilterProperty, value); }
+            get => this.GetValue(FilterProperty) as string;
+            set => this.SetValue(FilterProperty, value);
         }
 
         /// <summary>
@@ -186,8 +186,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public int FilterIndex
         {
-            get { return (int)this.GetValue(FilterIndexProperty); }
-            set { this.SetValue(FilterIndexProperty, value); }
+            get => (int)this.GetValue(FilterIndexProperty);
+            set => this.SetValue(FilterIndexProperty, value);
         }
 
         /// <summary>
@@ -195,8 +195,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public string InitialDirectory
         {
-            get { return this.GetValue(InitialDirectoryProperty) as string; }
-            set { this.SetValue(InitialDirectoryProperty, value); }
+            get => this.GetValue(InitialDirectoryProperty) as string;
+            set => this.SetValue(InitialDirectoryProperty, value);
         }
 
         /// <summary>
@@ -204,8 +204,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public bool Multiselect
         {
-            get { return (bool)this.GetValue(MultiselectProperty); }
-            set { this.SetValue(MultiselectProperty, value); }
+            get => (bool)this.GetValue(MultiselectProperty);
+            set => this.SetValue(MultiselectProperty, value);
         }
 
         /// <summary>
@@ -213,8 +213,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public bool ReadOnlyChecked
         {
-            get { return (bool)this.GetValue(ReadOnlyCheckedProperty); }
-            set { this.SetValue(ReadOnlyCheckedProperty, value); }
+            get => (bool)this.GetValue(ReadOnlyCheckedProperty);
+            set => this.SetValue(ReadOnlyCheckedProperty, value);
         }
 
         /// <summary>
@@ -223,8 +223,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public bool RestoreDirectory
         {
-            get { return (bool)this.GetValue(RestoreDirectoryProperty); }
-            set { this.SetValue(RestoreDirectoryProperty, value); }
+            get => (bool)this.GetValue(RestoreDirectoryProperty);
+            set => this.SetValue(RestoreDirectoryProperty, value);
         }
 
         /// <summary>
@@ -233,8 +233,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public bool ShowHelp
         {
-            get { return (bool)this.GetValue(ShowHelpProperty); }
-            set { this.SetValue(ShowHelpProperty, value); }
+            get => (bool)this.GetValue(ShowHelpProperty);
+            set => this.SetValue(ShowHelpProperty, value);
         }
 
         /// <summary>
@@ -242,8 +242,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public bool ShowReadOnly
         {
-            get { return (bool)this.GetValue(ShowReadOnlyProperty); }
-            set { this.SetValue(ShowReadOnlyProperty, value); }
+            get => (bool)this.GetValue(ShowReadOnlyProperty);
+            set => this.SetValue(ShowReadOnlyProperty, value);
         }
 
         /// <summary>
@@ -252,8 +252,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public bool SupportMultiDottedExtensions
         {
-            get { return (bool)this.GetValue(SupportMultiDottedExtensionsProperty); }
-            set { this.SetValue(SupportMultiDottedExtensionsProperty, value); }
+            get => (bool)this.GetValue(SupportMultiDottedExtensionsProperty);
+            set => this.SetValue(SupportMultiDottedExtensionsProperty, value);
         }
 
         /// <summary>
@@ -261,8 +261,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public string Title
         {
-            get { return this.GetValue(TitleProperty) as string; }
-            set { this.SetValue(TitleProperty, value); }
+            get => this.GetValue(TitleProperty) as string;
+            set => this.SetValue(TitleProperty, value);
         }
 
         /// <summary>
@@ -270,8 +270,8 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public bool ValidateNames
         {
-            get { return (bool)this.GetValue(ValidateNamesProperty); }
-            set { this.SetValue(ValidateNamesProperty, value); }
+            get => (bool)this.GetValue(ValidateNamesProperty);
+            set => this.SetValue(ValidateNamesProperty, value);
         }
 
         #endregion
