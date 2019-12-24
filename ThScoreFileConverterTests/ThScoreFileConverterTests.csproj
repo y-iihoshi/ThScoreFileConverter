@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
     <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
     <Authors>IIHOSHI Yoshinori</Authors>
     <Company>None</Company>
     <Description>Unit test project for ThScoreFileConverter.</Description>
