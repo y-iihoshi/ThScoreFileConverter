@@ -46,7 +46,7 @@ namespace ThScoreFileConverter.Actions
         /// <summary>
         /// Gets or sets the command invoked when the user clicks the <c>OK</c> button in the dialog box.
         /// </summary>
-        public ICommand OkCommand
+        public ICommand? OkCommand
         {
             get => this.GetValue(OkCommandProperty) as ICommand;
             set => this.SetValue(OkCommandProperty, value);
@@ -55,7 +55,7 @@ namespace ThScoreFileConverter.Actions
         /// <summary>
         /// Gets or sets the command invoked when the user clicks the <c>Cancel</c> button in the dialog box.
         /// </summary>
-        public ICommand CancelCommand
+        public ICommand? CancelCommand
         {
             get => this.GetValue(CancelCommandProperty) as ICommand;
             set => this.SetValue(CancelCommandProperty, value);
@@ -64,7 +64,7 @@ namespace ThScoreFileConverter.Actions
         /// <summary>
         /// Gets or sets the window which owns the font dialog box.
         /// </summary>
-        public Window Owner
+        public Window? Owner
         {
             get => this.GetValue(OwnerProperty) as Window;
             set => this.SetValue(OwnerProperty, value);
@@ -73,7 +73,7 @@ namespace ThScoreFileConverter.Actions
         /// <summary>
         /// Gets or sets the <see cref="ISite"/> of the <see cref="Component"/>.
         /// </summary>
-        public ISite Site
+        public ISite? Site
         {
             get => this.GetValue(SiteProperty) as ISite;
             set => this.SetValue(SiteProperty, value);
@@ -82,7 +82,7 @@ namespace ThScoreFileConverter.Actions
         /// <summary>
         /// Gets or sets an object that contains data about the control.
         /// </summary>
-        public object Tag
+        public object? Tag
         {
             get => this.GetValue(TagProperty);
             set => this.SetValue(TagProperty, value);

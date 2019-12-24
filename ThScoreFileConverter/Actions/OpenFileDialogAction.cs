@@ -13,7 +13,7 @@ using WinForms = System.Windows.Forms;
 namespace ThScoreFileConverter.Actions
 {
     /// <summary>
-    /// Encapsulates the handling of <see cref="System.Windows.Forms.OpenFileDialog"/>.
+    /// Encapsulates the handling of <see cref="WinForms.OpenFileDialog"/>.
     /// </summary>
     public class OpenFileDialogAction : CommonDialogAction
     {
@@ -148,7 +148,7 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public string DefaultExt
         {
-            get => this.GetValue(DefaultExtProperty) as string;
+            get => (string)this.GetValue(DefaultExtProperty);
             set => this.SetValue(DefaultExtProperty, value);
         }
 
@@ -167,7 +167,7 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public string FileName
         {
-            get => this.GetValue(FileNameProperty) as string;
+            get => (string)this.GetValue(FileNameProperty);
             set => this.SetValue(FileNameProperty, value);
         }
 
@@ -177,7 +177,7 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public string Filter
         {
-            get => this.GetValue(FilterProperty) as string;
+            get => (string)this.GetValue(FilterProperty);
             set => this.SetValue(FilterProperty, value);
         }
 
@@ -195,7 +195,7 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public string InitialDirectory
         {
-            get => this.GetValue(InitialDirectoryProperty) as string;
+            get => (string)this.GetValue(InitialDirectoryProperty);
             set => this.SetValue(InitialDirectoryProperty, value);
         }
 
@@ -261,7 +261,7 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public string Title
         {
-            get => this.GetValue(TitleProperty) as string;
+            get => (string)this.GetValue(TitleProperty);
             set => this.SetValue(TitleProperty, value);
         }
 

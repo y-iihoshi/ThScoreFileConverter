@@ -21,9 +21,9 @@ namespace ThScoreFileConverter.Actions
         /// Initializes a new instance of the <see cref="Win32Window"/> class.
         /// </summary>
         /// <param name="window">The instance of <see cref="Window"/>.</param>
-        public Win32Window(Window window)
+        public Win32Window(Window? window)
         {
-            this.Handle = new WindowInteropHelper(window).Handle;
+            this.Handle = (window is null) ? IntPtr.Zero : new WindowInteropHelper(window).Handle;
         }
 
         /// <summary>
