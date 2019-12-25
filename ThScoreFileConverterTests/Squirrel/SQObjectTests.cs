@@ -13,7 +13,7 @@ namespace ThScoreFileConverterTests.Squirrel
     {
         internal static SQObject CreateTestHelper(byte[] bytes)
         {
-            MemoryStream stream = null;
+            MemoryStream? stream = null;
             try
             {
                 stream = new MemoryStream(bytes);
@@ -34,8 +34,7 @@ namespace ThScoreFileConverterTests.Squirrel
             var sqnull = CreateTestHelper(TestUtils.MakeByteArray((int)SQOT.Null)) as SQNull;
 
             Assert.IsNotNull(sqnull);
-            Assert.AreEqual(SQOT.Null, sqnull.Type);
-            Assert.IsNull(sqnull.Value);
+            Assert.AreEqual(SQOT.Null, sqnull!.Type);
         }
 
         [TestMethod]
@@ -44,7 +43,7 @@ namespace ThScoreFileConverterTests.Squirrel
             var sqbool = CreateTestHelper(TestUtils.MakeByteArray((int)SQOT.Bool, (byte)0x01)) as SQBool;
 
             Assert.IsNotNull(sqbool);
-            Assert.AreEqual(SQOT.Bool, sqbool.Type);
+            Assert.AreEqual(SQOT.Bool, sqbool!.Type);
             Assert.IsTrue(sqbool.Value);
             Assert.IsTrue(sqbool);
         }
@@ -57,7 +56,7 @@ namespace ThScoreFileConverterTests.Squirrel
             var sqinteger = CreateTestHelper(TestUtils.MakeByteArray((int)SQOT.Integer, expected)) as SQInteger;
 
             Assert.IsNotNull(sqinteger);
-            Assert.AreEqual(SQOT.Integer, sqinteger.Type);
+            Assert.AreEqual(SQOT.Integer, sqinteger!.Type);
             Assert.AreEqual(expected, sqinteger.Value);
             Assert.AreEqual(expected, sqinteger);
         }
@@ -70,7 +69,7 @@ namespace ThScoreFileConverterTests.Squirrel
             var sqfloat = CreateTestHelper(TestUtils.MakeByteArray((int)SQOT.Float, expected)) as SQFloat;
 
             Assert.IsNotNull(sqfloat);
-            Assert.AreEqual(SQOT.Float, sqfloat.Type);
+            Assert.AreEqual(SQOT.Float, sqfloat!.Type);
             Assert.AreEqual(expected, sqfloat.Value);
             Assert.AreEqual(expected, sqfloat);
         }
@@ -84,7 +83,7 @@ namespace ThScoreFileConverterTests.Squirrel
             var sqstring = CreateTestHelper(TestUtils.MakeByteArray((int)SQOT.String, bytes.Length, bytes)) as SQString;
 
             Assert.IsNotNull(sqstring);
-            Assert.AreEqual(SQOT.String, sqstring.Type);
+            Assert.AreEqual(SQOT.String, sqstring!.Type);
             Assert.AreEqual(expected, sqstring.Value);
             Assert.AreEqual(expected, sqstring);
         }
@@ -93,7 +92,7 @@ namespace ThScoreFileConverterTests.Squirrel
         public void CreateTestSQArray()
         {
             var expected = 123;
-            var array = new int[]
+            var array = new[]
             {
                 (int)SQOT.Array, 1,
                 (int)SQOT.Integer, 0, (int)SQOT.Integer, expected,
@@ -103,9 +102,10 @@ namespace ThScoreFileConverterTests.Squirrel
             var sqarray = CreateTestHelper(TestUtils.MakeByteArray(array)) as SQArray;
 
             Assert.IsNotNull(sqarray);
-            Assert.AreEqual(SQOT.Array, sqarray.Type);
+            Assert.AreEqual(SQOT.Array, sqarray!.Type);
             Assert.AreEqual(1, sqarray.Value.Count());
-            Assert.AreEqual(expected, sqarray.Value.First() as SQInteger);
+            Assert.IsTrue(sqarray.Value.First() is SQInteger);
+            Assert.AreEqual(expected, (SQInteger)sqarray.Value.First());
         }
 
         [TestMethod]
@@ -113,7 +113,7 @@ namespace ThScoreFileConverterTests.Squirrel
         {
             var expectedKey = 123;
             var expectedValue = 456;
-            var array = new int[]
+            var array = new[]
             {
                 (int)SQOT.Table,
                 (int)SQOT.Integer, expectedKey, (int)SQOT.Integer, expectedValue,
@@ -123,11 +123,13 @@ namespace ThScoreFileConverterTests.Squirrel
             var sqtable = CreateTestHelper(TestUtils.MakeByteArray(array)) as SQTable;
 
             Assert.IsNotNull(sqtable);
-            Assert.AreEqual(SQOT.Table, sqtable.Type);
+            Assert.AreEqual(SQOT.Table, sqtable!.Type);
             Assert.AreEqual(1, sqtable.Value.Count());
 
-            Assert.AreEqual(expectedKey, sqtable.Value.Keys.First() as SQInteger);
-            Assert.AreEqual(expectedValue, sqtable.Value[new SQInteger(expectedKey)] as SQInteger);
+            Assert.IsTrue(sqtable.Value.Keys.First() is SQInteger);
+            Assert.AreEqual(expectedKey, (SQInteger)sqtable.Value.Keys.First());
+            Assert.IsTrue(sqtable.Value[new SQInteger(expectedKey)] is SQInteger);
+            Assert.AreEqual(expectedValue, (SQInteger)sqtable.Value[new SQInteger(expectedKey)]);
         }
 
         [TestMethod]
@@ -136,7 +138,7 @@ namespace ThScoreFileConverterTests.Squirrel
             var sqclosure = CreateTestHelper(TestUtils.MakeByteArray((int)SQOT.Closure)) as SQClosure;
 
             Assert.IsNotNull(sqclosure);
-            Assert.AreEqual(SQOT.Closure, sqclosure.Type);
+            Assert.AreEqual(SQOT.Closure, sqclosure!.Type);
         }
 
         [TestMethod]
@@ -145,14 +147,14 @@ namespace ThScoreFileConverterTests.Squirrel
             var sqinstance = CreateTestHelper(TestUtils.MakeByteArray((int)SQOT.Instance)) as SQInstance;
 
             Assert.IsNotNull(sqinstance);
-            Assert.AreEqual(SQOT.Instance, sqinstance.Type);
+            Assert.AreEqual(SQOT.Instance, sqinstance!.Type);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void CreateTestNull()
         {
-            _ = SQObject.Create(null);
+            _ = SQObject.Create(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         }

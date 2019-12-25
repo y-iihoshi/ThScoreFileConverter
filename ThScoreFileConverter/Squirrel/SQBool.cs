@@ -53,7 +53,7 @@ namespace ThScoreFileConverter.Squirrel
 
         public override bool Equals(object obj)
         {
-            return this.Equals(obj as SQBool);
+            return (obj is SQBool value) && this.Equals(value);
         }
 
         public override int GetHashCode()

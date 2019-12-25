@@ -15,12 +15,11 @@ namespace ThScoreFileConverterTests.Squirrel
             var sqnull = SQNull.Instance;
 
             Assert.AreEqual(SQObjectType.Null, sqnull.Type);
-            Assert.IsNull(sqnull.Value);
         }
 
         internal static SQNull CreateTestHelper(byte[] bytes)
         {
-            MemoryStream stream = null;
+            MemoryStream? stream = null;
             try
             {
                 stream = new MemoryStream(bytes);
@@ -41,14 +40,13 @@ namespace ThScoreFileConverterTests.Squirrel
             var sqnull = CreateTestHelper(TestUtils.MakeByteArray((int)SQObjectType.Null));
 
             Assert.AreEqual(SQObjectType.Null, sqnull.Type);
-            Assert.IsNull(sqnull.Value);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void CreateTestNull()
         {
-            _ = SQNull.Create(null);
+            _ = SQNull.Create(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         }
@@ -63,10 +61,10 @@ namespace ThScoreFileConverterTests.Squirrel
         }
 
         [TestMethod]
-        public void EqualsTestNull() => Assert.IsFalse(SQNull.Instance.Equals(null));
+        public void EqualsTestNull() => Assert.IsFalse(SQNull.Instance.Equals(null!));
 
         [TestMethod]
-        public void EqualsTestNullObject() => Assert.IsFalse(SQNull.Instance.Equals(null as object));
+        public void EqualsTestNullObject() => Assert.IsFalse(SQNull.Instance.Equals((object)null!));
 
         [TestMethod]
         public void EqualsTestInvalidType() => Assert.IsFalse(SQNull.Instance.Equals(SQBool.True));
