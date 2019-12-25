@@ -55,9 +55,9 @@ namespace ThScoreFileConverter.ViewModels
         }
 
         /// <inheritdoc/>
-#pragma warning disable 0067
-        public event Action<IDialogResult> RequestClose;
-#pragma warning restore 0067
+#pragma warning disable CS0067
+        public event Action<IDialogResult>? RequestClose;
+#pragma warning restore CS0067
 
         /// <summary>
         /// Gets a title of the About window.

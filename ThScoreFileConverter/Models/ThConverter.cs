@@ -28,17 +28,17 @@ namespace ThScoreFileConverter.Models
         /// <summary>
         /// Represents the event that the conversion process per file has finished.
         /// </summary>
-        public event EventHandler<ThConverterEventArgs> ConvertFinished;
+        public event EventHandler<ThConverterEventArgs>? ConvertFinished;
 
         /// <summary>
         /// Represents the event that all conversion process has finished.
         /// </summary>
-        public event EventHandler<ThConverterEventArgs> ConvertAllFinished;
+        public event EventHandler<ThConverterEventArgs>? ConvertAllFinished;
 
         /// <summary>
         /// Represents the event that an exception has occurred.
         /// </summary>
-        public event EventHandler<ExceptionOccurredEventArgs> ExceptionOccurred;
+        public event EventHandler<ExceptionOccurredEventArgs>? ExceptionOccurred;
 
         /// <summary>
         /// Gets the string indicating the supported versions of the score file to convert.
