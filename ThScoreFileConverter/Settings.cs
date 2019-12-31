@@ -47,6 +47,11 @@ namespace ThScoreFileConverter
         public static IEnumerable<int> ValidCodePageIds { get; } = new[] { 65001, 932, 51932 };
 
         /// <summary>
+        /// Gets the maximum font size for this application.
+        /// </summary>
+        public static double MaxFontSize { get; } = 72;
+
+        /// <summary>
         /// Gets or sets the last selected work.
         /// </summary>
         [DataMember(Order = 0)]
@@ -117,8 +122,15 @@ namespace ThScoreFileConverter
 
                     if (!string.IsNullOrEmpty(settings.FontFamilyName))
                         this.FontFamilyName = settings.FontFamilyName;
+
                     if (settings.FontSize.HasValue)
+                    {
+                        if ((settings.FontSize.Value <= 0) || (settings.FontSize.Value > MaxFontSize))
+                            throw NewFileMayBeBrokenException(path);
+
                         this.FontSize = settings.FontSize.Value;
+                    }
+
                     if (settings.OutputNumberGroupSeparator.HasValue)
                         this.OutputNumberGroupSeparator = settings.OutputNumberGroupSeparator.Value;
                     if (settings.InputCodePageId.HasValue &&
