@@ -5,6 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -102,6 +103,15 @@ namespace ThScoreFileConverter
 
                 if (serializer.ReadObject(reader) is Settings settings)
                 {
+                    if (settings.LastTitle is null)
+                        throw NewFileMayBeBrokenException(path);
+                    if (ThConverterFactory.Create(settings.LastTitle) is null)
+                        throw NewFileMayBeBrokenException(path);
+                    if (settings.Dictionary is null)
+                        throw NewFileMayBeBrokenException(path);
+                    if (!settings.Dictionary.ContainsKey(settings.LastTitle))
+                        throw NewFileMayBeBrokenException(path);
+
                     this.LastTitle = settings.LastTitle;
                     this.Dictionary = settings.Dictionary;
 
@@ -125,11 +135,11 @@ namespace ThScoreFileConverter
             }
             catch (SerializationException e)
             {
-                throw new InvalidDataException(Utils.Format("{0} may be broken.", path), e);
+                throw NewFileMayBeBrokenException(path, e);
             }
             catch (XmlException e)
             {
-                throw new InvalidDataException(Utils.Format("{0} may be broken.", path), e);
+                throw NewFileMayBeBrokenException(path, e);
             }
         }
 
@@ -146,6 +156,17 @@ namespace ThScoreFileConverter
             serializer.WriteObject(writer, this);
             writer.WriteWhitespace(writer.Settings.NewLineChars);
             writer.Flush();
+        }
+
+        /// <summary>
+        /// Creates a new exception object indicating the file may be broken.
+        /// </summary>
+        /// <param name="file">A path of the file that may be broken.</param>
+        /// <param name="innerException">The exception that is the cause of the current exception.</param>
+        /// <returns>A new <see cref="Exception"/> object.</returns>
+        private static Exception NewFileMayBeBrokenException(string file, Exception innerException = null)
+        {
+            return new InvalidDataException(Utils.Format($"{file} may be broken."), innerException);
         }
     }
 }
