@@ -113,6 +113,15 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
+        [DeploymentItem(@"TestData\no-last-title.xml", @"TestData")]
+        [ExpectedException(typeof(InvalidDataException))]
+        public void LoadTestNoLastTitle()
+        {
+            Settings.Instance.Load(@"TestData\no-last-title.xml");
+            Assert.Fail(TestUtils.Unreachable);
+        }
+
+        [TestMethod]
         [DeploymentItem(@"TestData\empty-last-title.xml", @"TestData")]
         [ExpectedException(typeof(InvalidDataException))]
         public void LoadTestEmptyLastTitle()
@@ -127,6 +136,15 @@ namespace ThScoreFileConverterTests
         public void LoadTestNonexistentLastTitle()
         {
             Settings.Instance.Load(@"TestData\nonexistent-last-title.xml");
+            Assert.Fail(TestUtils.Unreachable);
+        }
+
+        [TestMethod]
+        [DeploymentItem(@"TestData\no-dictionary.xml", @"TestData")]
+        [ExpectedException(typeof(InvalidDataException))]
+        public void LoadTestNoDictionary()
+        {
+            Settings.Instance.Load(@"TestData\no-dictionary.xml");
             Assert.Fail(TestUtils.Unreachable);
         }
 
@@ -200,12 +218,30 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
+        [DeploymentItem(@"TestData\no-best-shot-directory.xml", @"TestData")]
+        public void LoadTestNoBestShotDirectory()
+        {
+            Settings.Instance.Load(@"TestData\no-best-shot-directory.xml");
+            Assert.AreEqual(1, Settings.Instance.Dictionary.Count);
+            Assert.AreEqual(string.Empty, Settings.Instance.Dictionary.First().Value.BestShotDirectory);
+        }
+
+        [TestMethod]
         [DeploymentItem(@"TestData\empty-best-shot-directory.xml", @"TestData")]
         public void LoadTestEmptyBestShotDirectory()
         {
             Settings.Instance.Load(@"TestData\empty-best-shot-directory.xml");
             Assert.AreEqual(1, Settings.Instance.Dictionary.Count);
             Assert.AreEqual(string.Empty, Settings.Instance.Dictionary.First().Value.BestShotDirectory);
+        }
+
+        [TestMethod]
+        [DeploymentItem(@"TestData\no-hide-untried-cards.xml", @"TestData")]
+        public void LoadTestNoHideUntriedCards()
+        {
+            Settings.Instance.Load(@"TestData\no-hide-untried-cards.xml");
+            Assert.AreEqual(1, Settings.Instance.Dictionary.Count);
+            Assert.IsTrue(Settings.Instance.Dictionary.First().Value.HideUntriedCards);
         }
 
         [TestMethod]
@@ -227,12 +263,30 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
+        [DeploymentItem(@"TestData\no-image-output-directory.xml", @"TestData")]
+        public void LoadTestNoImageOutputDirectory()
+        {
+            Settings.Instance.Load(@"TestData\no-image-output-directory.xml");
+            Assert.AreEqual(1, Settings.Instance.Dictionary.Count);
+            Assert.AreEqual(string.Empty, Settings.Instance.Dictionary.First().Value.ImageOutputDirectory);
+        }
+
+        [TestMethod]
         [DeploymentItem(@"TestData\empty-image-output-directory.xml", @"TestData")]
         public void LoadTestEmptyImageOutputDirectory()
         {
             Settings.Instance.Load(@"TestData\empty-image-output-directory.xml");
             Assert.AreEqual(1, Settings.Instance.Dictionary.Count);
             Assert.AreEqual(string.Empty, Settings.Instance.Dictionary.First().Value.ImageOutputDirectory);
+        }
+
+        [TestMethod]
+        [DeploymentItem(@"TestData\no-output-directory.xml", @"TestData")]
+        public void LoadTestNoOutputDirectory()
+        {
+            Settings.Instance.Load(@"TestData\no-output-directory.xml");
+            Assert.AreEqual(1, Settings.Instance.Dictionary.Count);
+            Assert.AreEqual(string.Empty, Settings.Instance.Dictionary.First().Value.OutputDirectory);
         }
 
         [TestMethod]
@@ -245,12 +299,31 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
+        [DeploymentItem(@"TestData\no-score-file.xml", @"TestData")]
+        public void LoadTestNoScoreFile()
+        {
+            Settings.Instance.Load(@"TestData\no-score-file.xml");
+            Assert.AreEqual(1, Settings.Instance.Dictionary.Count);
+            Assert.AreEqual(string.Empty, Settings.Instance.Dictionary.First().Value.ScoreFile);
+        }
+
+        [TestMethod]
         [DeploymentItem(@"TestData\empty-score-file.xml", @"TestData")]
         public void LoadTestEmptyScoreFile()
         {
             Settings.Instance.Load(@"TestData\empty-score-file.xml");
             Assert.AreEqual(1, Settings.Instance.Dictionary.Count);
             Assert.AreEqual(string.Empty, Settings.Instance.Dictionary.First().Value.ScoreFile);
+        }
+
+        [TestMethod]
+        [DeploymentItem(@"TestData\no-template-files.xml", @"TestData")]
+        public void LoadTestNoTemplateFiles()
+        {
+            Settings.Instance.Load(@"TestData\no-template-files.xml");
+            Assert.AreEqual(1, Settings.Instance.Dictionary.Count);
+            CollectionAssert.That.AreEqual(
+                Array.Empty<string>(), Settings.Instance.Dictionary.First().Value.TemplateFiles);
         }
 
         [TestMethod]
@@ -274,11 +347,27 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
+        [DeploymentItem(@"TestData\no-font-family-name.xml", @"TestData")]
+        public void LoadTestNoFontFamilyName()
+        {
+            Settings.Instance.Load(@"TestData\no-font-family-name.xml");
+            Assert.AreEqual(SystemFonts.MessageFontFamily.Source, Settings.Instance.FontFamilyName);
+        }
+
+        [TestMethod]
         [DeploymentItem(@"TestData\empty-font-family-name.xml", @"TestData")]
         public void LoadTestEmptyFontFamilyName()
         {
             Settings.Instance.Load(@"TestData\empty-font-family-name.xml");
             Assert.AreEqual(SystemFonts.MessageFontFamily.Source, Settings.Instance.FontFamilyName);
+        }
+
+        [TestMethod]
+        [DeploymentItem(@"TestData\no-font-size.xml", @"TestData")]
+        public void LoadTestNoFontSize()
+        {
+            Settings.Instance.Load(@"TestData\no-font-size.xml");
+            Assert.AreEqual(SystemFonts.MessageFontSize, Settings.Instance.FontSize);
         }
 
         [TestMethod]
@@ -327,6 +416,14 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
+        [DeploymentItem(@"TestData\no-output-number-group-separator.xml", @"TestData")]
+        public void LoadTestNoOutputNumberGroupSeparator()
+        {
+            Settings.Instance.Load(@"TestData\no-output-number-group-separator.xml");
+            Assert.IsTrue(Settings.Instance.OutputNumberGroupSeparator.Value);
+        }
+
+        [TestMethod]
         [DeploymentItem(@"TestData\empty-output-number-group-separator.xml", @"TestData")]
         [ExpectedException(typeof(InvalidDataException))]
         public void LoadTestEmptyOutputNumberGroupSeparator()
@@ -342,6 +439,14 @@ namespace ThScoreFileConverterTests
         {
             Settings.Instance.Load(@"TestData\invalid-output-number-group-separator.xml");
             Assert.Fail(TestUtils.Unreachable);
+        }
+
+        [TestMethod]
+        [DeploymentItem(@"TestData\no-input-code-page-id.xml", @"TestData")]
+        public void LoadTestNoInputCodePageId()
+        {
+            Settings.Instance.Load(@"TestData\no-input-code-page-id.xml");
+            Assert.AreEqual(65001, Settings.Instance.InputCodePageId);
         }
 
         [TestMethod]
@@ -371,6 +476,14 @@ namespace ThScoreFileConverterTests
         }
 
         [TestMethod]
+        [DeploymentItem(@"TestData\no-output-code-page-id.xml", @"TestData")]
+        public void LoadTestNoOutputCodePageId()
+        {
+            Settings.Instance.Load(@"TestData\no-output-code-page-id.xml");
+            Assert.AreEqual(65001, Settings.Instance.OutputCodePageId);
+        }
+
+        [TestMethod]
         [DeploymentItem(@"TestData\empty-output-code-page-id.xml", @"TestData")]
         [ExpectedException(typeof(InvalidDataException))]
         public void LoadTestEmptyOutputCodePageId()
@@ -394,6 +507,15 @@ namespace ThScoreFileConverterTests
         {
             Settings.Instance.Load(@"TestData\unsupported-output-code-page-id.xml");
             Assert.AreEqual(65001, Settings.Instance.OutputCodePageId);
+        }
+
+        [TestMethod]
+        [DeploymentItem(@"TestData\invalid-character.xml", @"TestData")]
+        [ExpectedException(typeof(InvalidDataException))]
+        public void LoadTestInvalidCharacter()
+        {
+            Settings.Instance.Load(@"TestData\invalid-character.xml");
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod]
