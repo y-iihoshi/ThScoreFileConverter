@@ -26,7 +26,7 @@ using ThScoreFileConverter.Properties;
 namespace ThScoreFileConverter.ViewModels
 {
     /// <summary>
-    /// The view model class for <see cref="ThScoreFileConverter.Views.MainWindow"/>.
+    /// The view model class for <see cref="Views.MainWindow"/>.
     /// </summary>
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "For binding.")]
     internal class MainWindowViewModel : BindableBase
@@ -53,7 +53,7 @@ namespace ThScoreFileConverter.ViewModels
             new Work { Number = "TH16", Title = "東方天空璋", IsSupported = true },
             new Work { Number = "TH165", Title = "秘封ナイトメアダイアリー", IsSupported = true },
             new Work { Number = "TH17", Title = "東方鬼形獣", IsSupported = true },
-            new Work { Number = string.Empty, Title = string.Empty, IsSupported = false },
+            new Work { },
             new Work { Number = "TH075", Title = "東方萃夢想", IsSupported = true },
             new Work { Number = "TH105", Title = "東方緋想天", IsSupported = true },
             new Work { Number = "TH123", Title = "東方非想天則", IsSupported = true },
@@ -66,7 +66,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// The instance that executes a conversion process.
         /// </summary>
-        private ThConverter converter;
+        private ThConverter? converter;
 
         /// <summary>
         /// Indicates whether a conversion process is idle.
@@ -87,6 +87,8 @@ namespace ThScoreFileConverter.ViewModels
             this.DialogService = dialogService;
 
             this.converter = null;
+            this.isIdle = false;
+            this.log = string.Empty;
 
             this.Title = Assembly.GetExecutingAssembly().GetName().Name;
             this.Works = WorksImpl;
@@ -444,9 +446,9 @@ namespace ThScoreFileConverter.ViewModels
         /// Overrides the mouse cursor for the entire application.
         /// </summary>
         /// <param name="cursor">The new cursor or <c>null</c>.</param>
-        private void OverrideCursor(Cursor cursor)
+        private void OverrideCursor(Cursor? cursor)
         {
-            var dispatcher = App.Current.Dispatcher;
+            var dispatcher = Application.Current.Dispatcher;
             if (dispatcher.CheckAccess())
                 Mouse.OverrideCursor = cursor;
             else
@@ -560,9 +562,18 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         private void Convert()
         {
-            this.IsIdle = false;
-            this.Log = Resources.msgStartConversion + Environment.NewLine;
-            new Thread(new ParameterizedThreadStart(this.converter.Convert)).Start(CurrentSetting);
+            if (!(this.converter is null))
+            {
+                this.IsIdle = false;
+                this.Log = Resources.msgStartConversion + Environment.NewLine;
+                new Thread(new ParameterizedThreadStart(this.converter.Convert)).Start(CurrentSetting);
+            }
+#if DEBUG
+            else
+            {
+                this.Log = "converter is null" + Environment.NewLine;
+            }
+#endif
         }
 
         /// <summary>
@@ -718,11 +729,11 @@ namespace ThScoreFileConverter.ViewModels
         {
             switch (e.PropertyName)
             {
-                case "IsIdle":
+                case nameof(this.IsIdle):
                     this.OverrideCursor(this.IsIdle ? null : Cursors.Wait);
                     break;
 
-                case "LastWorkNumber":
+                case nameof(this.LastWorkNumber):
                     this.converter = ThConverterFactory.Create(Settings.Instance.LastTitle);
                     this.converter.ConvertFinished += this.OnConvertFinished;
                     this.converter.ConvertAllFinished += this.OnConvertAllFinished;
@@ -743,27 +754,27 @@ namespace ThScoreFileConverter.ViewModels
                     this.ConvertCommand.RaiseCanExecuteChanged();
                     break;
 
-                case "ScoreFile":
+                case nameof(this.ScoreFile):
                     this.RaisePropertyChanged(nameof(this.OpenScoreFileDialogInitialDirectory));
                     this.ConvertCommand.RaiseCanExecuteChanged();
                     break;
 
-                case "BestShotDirectory":
+                case nameof(this.BestShotDirectory):
                     this.ConvertCommand.RaiseCanExecuteChanged();
                     break;
 
-                case "TemplateFiles":
+                case nameof(this.TemplateFiles):
                     this.RaisePropertyChanged(nameof(this.OpenTemplateFilesDialogInitialDirectory));
                     this.DeleteTemplateFilesCommand.RaiseCanExecuteChanged();
                     this.DeleteAllTemplateFilesCommand.RaiseCanExecuteChanged();
                     this.ConvertCommand.RaiseCanExecuteChanged();
                     break;
 
-                case "OutputDirectory":
+                case nameof(this.OutputDirectory):
                     this.ConvertCommand.RaiseCanExecuteChanged();
                     break;
 
-                case "ImageOutputDirectory":
+                case nameof(this.ImageOutputDirectory):
                     this.ConvertCommand.RaiseCanExecuteChanged();
                     break;
             }

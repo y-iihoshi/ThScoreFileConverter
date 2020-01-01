@@ -28,11 +28,6 @@ namespace ThScoreFileConverter.ViewModels
     internal class AboutWindowViewModel : BindableBase, IDialogAware
     {
         /// <summary>
-        /// The command which opens the specified URI.
-        /// </summary>
-        private DelegateCommand<object> openUriCommand;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="AboutWindowViewModel"/> class.
         /// </summary>
         public AboutWindowViewModel()
@@ -92,8 +87,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets a command which opens the specified URI.
         /// </summary>
-        public DelegateCommand<object> OpenUriCommand
-            => this.openUriCommand ?? (this.openUriCommand = new DelegateCommand<object>(this.OpenUri));
+        public DelegateCommand<object> OpenUriCommand { get; } = new DelegateCommand<object>(OpenUri);
 
         /// <inheritdoc/>
         public bool CanCloseDialog()
@@ -115,7 +109,7 @@ namespace ThScoreFileConverter.ViewModels
         /// Opens the specified URI.
         /// </summary>
         /// <param name="uri">A URI to open.</param>
-        private void OpenUri(object uri)
+        private static void OpenUri(object uri)
         {
             using var process = Process.Start(uri as string);
         }
