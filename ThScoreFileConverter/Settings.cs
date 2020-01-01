@@ -5,6 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -44,6 +45,11 @@ namespace ThScoreFileConverter
         /// Gets the valid code page identifiers for this application.
         /// </summary>
         public static IEnumerable<int> ValidCodePageIds { get; } = new[] { 65001, 932, 51932 };
+
+        /// <summary>
+        /// Gets the maximum font size for this application.
+        /// </summary>
+        public static double MaxFontSize { get; } = 72;
 
         /// <summary>
         /// Gets or sets the last selected work.
@@ -100,24 +106,39 @@ namespace ThScoreFileConverter
                 using var reader = XmlReader.Create(stream, new XmlReaderSettings { CloseInput = false });
                 var serializer = new DataContractSerializer(typeof(Settings));
 
-                if (serializer.ReadObject(reader) is Settings settings)
-                {
-                    this.LastTitle = settings.LastTitle;
-                    this.Dictionary = settings.Dictionary;
+                var settings = (Settings)serializer.ReadObject(reader);
 
-                    if (!string.IsNullOrEmpty(settings.FontFamilyName))
-                        this.FontFamilyName = settings.FontFamilyName;
-                    if (settings.FontSize.HasValue)
-                        this.FontSize = settings.FontSize.Value;
-                    if (settings.OutputNumberGroupSeparator.HasValue)
-                        this.OutputNumberGroupSeparator = settings.OutputNumberGroupSeparator.Value;
-                    if (settings.InputCodePageId.HasValue &&
-                        ValidCodePageIds.Any(id => id == settings.InputCodePageId.Value))
-                        this.InputCodePageId = settings.InputCodePageId.Value;
-                    if (settings.OutputCodePageId.HasValue &&
-                        ValidCodePageIds.Any(id => id == settings.OutputCodePageId.Value))
-                        this.OutputCodePageId = settings.OutputCodePageId.Value;
+                if (settings.LastTitle is null)
+                    throw NewFileMayBeBrokenException(path);
+                if (ThConverterFactory.Create(settings.LastTitle) is null)
+                    throw NewFileMayBeBrokenException(path);
+                if (settings.Dictionary is null)
+                    throw NewFileMayBeBrokenException(path);
+                if (!settings.Dictionary.ContainsKey(settings.LastTitle))
+                    throw NewFileMayBeBrokenException(path);
+
+                this.LastTitle = settings.LastTitle;
+                this.Dictionary = settings.Dictionary;
+
+                if (!string.IsNullOrEmpty(settings.FontFamilyName))
+                    this.FontFamilyName = settings.FontFamilyName;
+
+                if (settings.FontSize.HasValue)
+                {
+                    if ((settings.FontSize.Value <= 0) || (settings.FontSize.Value > MaxFontSize))
+                        throw NewFileMayBeBrokenException(path);
+
+                    this.FontSize = settings.FontSize.Value;
                 }
+
+                if (settings.OutputNumberGroupSeparator.HasValue)
+                    this.OutputNumberGroupSeparator = settings.OutputNumberGroupSeparator.Value;
+                if (settings.InputCodePageId.HasValue &&
+                    ValidCodePageIds.Any(id => id == settings.InputCodePageId.Value))
+                    this.InputCodePageId = settings.InputCodePageId.Value;
+                if (settings.OutputCodePageId.HasValue &&
+                    ValidCodePageIds.Any(id => id == settings.OutputCodePageId.Value))
+                    this.OutputCodePageId = settings.OutputCodePageId.Value;
             }
             catch (FileNotFoundException)
             {
@@ -125,11 +146,7 @@ namespace ThScoreFileConverter
             }
             catch (SerializationException e)
             {
-                throw new InvalidDataException(Utils.Format("{0} may be broken.", path), e);
-            }
-            catch (XmlException e)
-            {
-                throw new InvalidDataException(Utils.Format("{0} may be broken.", path), e);
+                throw NewFileMayBeBrokenException(path, e);
             }
         }
 
@@ -146,6 +163,17 @@ namespace ThScoreFileConverter
             serializer.WriteObject(writer, this);
             writer.WriteWhitespace(writer.Settings.NewLineChars);
             writer.Flush();
+        }
+
+        /// <summary>
+        /// Creates a new exception object indicating the file may be broken.
+        /// </summary>
+        /// <param name="file">A path of the file that may be broken.</param>
+        /// <param name="innerException">The exception that is the cause of the current exception.</param>
+        /// <returns>A new <see cref="Exception"/> object.</returns>
+        private static Exception NewFileMayBeBrokenException(string file, Exception innerException = null)
+        {
+            return new InvalidDataException(Utils.Format($"{file} may be broken."), innerException);
         }
     }
 }

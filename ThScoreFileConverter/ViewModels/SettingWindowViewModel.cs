@@ -65,6 +65,12 @@ namespace ThScoreFileConverter.ViewModels
             Convert.ToSingle(App.Current.Resources["FontSizeKey"], CultureInfo.InvariantCulture));
 
         /// <summary>
+        /// Gets the maximum font size.
+        /// </summary>
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "For binding.")]
+        public int MaxFontSize => (int)Settings.MaxFontSize;
+
+        /// <summary>
         /// Gets or sets a value indicating whether numeric values is output with thousand separator
         /// characters.
         /// </summary>
