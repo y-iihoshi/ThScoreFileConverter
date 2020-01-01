@@ -70,7 +70,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public bool OutputNumberGroupSeparator
         {
-            get => Settings.Instance.OutputNumberGroupSeparator.Value;
+            get => Settings.Instance.OutputNumberGroupSeparator!.Value;
 
             set
             {
@@ -93,7 +93,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public int InputCodePageId
         {
-            get => Settings.Instance.InputCodePageId.Value;
+            get => Settings.Instance.InputCodePageId!.Value;
 
             set
             {
@@ -116,7 +116,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public int OutputCodePageId
         {
-            get => Settings.Instance.OutputCodePageId.Value;
+            get => Settings.Instance.OutputCodePageId!.Value;
 
             set
             {

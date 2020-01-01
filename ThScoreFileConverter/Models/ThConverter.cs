@@ -105,9 +105,9 @@ namespace ThScoreFileConverter.Models
             const int DefaultBufferSize = 1024;
 
             using var reader = new StreamReader(
-                input, Utils.GetEncoding(Settings.Instance.InputCodePageId.Value), true, DefaultBufferSize, true);
+                input, Utils.GetEncoding(Settings.Instance.InputCodePageId!.Value), true, DefaultBufferSize, true);
             using var writer = new StreamWriter(
-                output, Utils.GetEncoding(Settings.Instance.OutputCodePageId.Value), DefaultBufferSize, true);
+                output, Utils.GetEncoding(Settings.Instance.OutputCodePageId!.Value), DefaultBufferSize, true);
 
             var outputFilePath = (output is FileStream outputFile) ? outputFile.Name : string.Empty;
             var replacers = this.CreateReplacers(hideUntriedCards, outputFilePath);

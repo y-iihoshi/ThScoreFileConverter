@@ -95,7 +95,7 @@ namespace ThScoreFileConverter.Models
         public static string ToNumberString<T>(T number)
             where T : struct
         {
-            return ToNumberString(number, Settings.Instance.OutputNumberGroupSeparator.Value);
+            return ToNumberString(number, Settings.Instance.OutputNumberGroupSeparator!.Value);
         }
 
         /// <summary>

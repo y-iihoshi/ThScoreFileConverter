@@ -89,15 +89,6 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void ToNumberStringTestUnset()
-        {
-            Settings.Instance.OutputNumberGroupSeparator = null;
-            _ = Utils.ToNumberString(1234);
-            Assert.Fail(TestUtils.Unreachable);
-        }
-
-        [TestMethod]
         public void ToNumberStringTestWithSeparator()
             => Assert.AreEqual("12,345,678", Utils.ToNumberString(12345678, true));
 
