@@ -106,50 +106,45 @@ namespace ThScoreFileConverter
                 using var reader = XmlReader.Create(stream, new XmlReaderSettings { CloseInput = false });
                 var serializer = new DataContractSerializer(typeof(Settings));
 
-                if (serializer.ReadObject(reader) is Settings settings)
+                var settings = (Settings)serializer.ReadObject(reader);
+
+                if (settings.LastTitle is null)
+                    throw NewFileMayBeBrokenException(path);
+                if (ThConverterFactory.Create(settings.LastTitle) is null)
+                    throw NewFileMayBeBrokenException(path);
+                if (settings.Dictionary is null)
+                    throw NewFileMayBeBrokenException(path);
+                if (!settings.Dictionary.ContainsKey(settings.LastTitle))
+                    throw NewFileMayBeBrokenException(path);
+
+                this.LastTitle = settings.LastTitle;
+                this.Dictionary = settings.Dictionary;
+
+                if (!string.IsNullOrEmpty(settings.FontFamilyName))
+                    this.FontFamilyName = settings.FontFamilyName;
+
+                if (settings.FontSize.HasValue)
                 {
-                    if (settings.LastTitle is null)
-                        throw NewFileMayBeBrokenException(path);
-                    if (ThConverterFactory.Create(settings.LastTitle) is null)
-                        throw NewFileMayBeBrokenException(path);
-                    if (settings.Dictionary is null)
-                        throw NewFileMayBeBrokenException(path);
-                    if (!settings.Dictionary.ContainsKey(settings.LastTitle))
+                    if ((settings.FontSize.Value <= 0) || (settings.FontSize.Value > MaxFontSize))
                         throw NewFileMayBeBrokenException(path);
 
-                    this.LastTitle = settings.LastTitle;
-                    this.Dictionary = settings.Dictionary;
-
-                    if (!string.IsNullOrEmpty(settings.FontFamilyName))
-                        this.FontFamilyName = settings.FontFamilyName;
-
-                    if (settings.FontSize.HasValue)
-                    {
-                        if ((settings.FontSize.Value <= 0) || (settings.FontSize.Value > MaxFontSize))
-                            throw NewFileMayBeBrokenException(path);
-
-                        this.FontSize = settings.FontSize.Value;
-                    }
-
-                    if (settings.OutputNumberGroupSeparator.HasValue)
-                        this.OutputNumberGroupSeparator = settings.OutputNumberGroupSeparator.Value;
-                    if (settings.InputCodePageId.HasValue &&
-                        ValidCodePageIds.Any(id => id == settings.InputCodePageId.Value))
-                        this.InputCodePageId = settings.InputCodePageId.Value;
-                    if (settings.OutputCodePageId.HasValue &&
-                        ValidCodePageIds.Any(id => id == settings.OutputCodePageId.Value))
-                        this.OutputCodePageId = settings.OutputCodePageId.Value;
+                    this.FontSize = settings.FontSize.Value;
                 }
+
+                if (settings.OutputNumberGroupSeparator.HasValue)
+                    this.OutputNumberGroupSeparator = settings.OutputNumberGroupSeparator.Value;
+                if (settings.InputCodePageId.HasValue &&
+                    ValidCodePageIds.Any(id => id == settings.InputCodePageId.Value))
+                    this.InputCodePageId = settings.InputCodePageId.Value;
+                if (settings.OutputCodePageId.HasValue &&
+                    ValidCodePageIds.Any(id => id == settings.OutputCodePageId.Value))
+                    this.OutputCodePageId = settings.OutputCodePageId.Value;
             }
             catch (FileNotFoundException)
             {
                 // It's OK, do nothing.
             }
             catch (SerializationException e)
-            {
-                throw NewFileMayBeBrokenException(path, e);
-            }
-            catch (XmlException e)
             {
                 throw NewFileMayBeBrokenException(path, e);
             }
