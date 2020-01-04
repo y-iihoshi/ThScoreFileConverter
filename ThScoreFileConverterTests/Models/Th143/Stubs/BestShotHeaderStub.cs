@@ -4,10 +4,12 @@ namespace ThScoreFileConverterTests.Models.Th143.Stubs
 {
     internal class BestShotHeaderStub : IBestShotHeader
     {
-        public BestShotHeaderStub() { }
+        public BestShotHeaderStub()
+        {
+            this.Signature = string.Empty;
+        }
 
         public BestShotHeaderStub(IBestShotHeader header)
-            : base()
         {
             this.DateTime = header.DateTime;
             this.Day = header.Day;

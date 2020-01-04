@@ -4,10 +4,12 @@ namespace ThScoreFileConverterTests.Models.Th165.Stubs
 {
     internal class BestShotHeaderStub : IBestShotHeader
     {
-        public BestShotHeaderStub() { }
+        public BestShotHeaderStub()
+        {
+            this.Signature = string.Empty;
+        }
 
         public BestShotHeaderStub(IBestShotHeader header)
-            : base()
         {
             this.Angle = header.Angle;
             this.AngleBonus = header.AngleBonus;

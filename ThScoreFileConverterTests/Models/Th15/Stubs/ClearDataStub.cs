@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th15;
@@ -9,15 +10,19 @@ namespace ThScoreFileConverterTests.Models.Th15.Stubs
 {
     internal class ClearDataStub : IClearData
     {
-        public ClearDataStub() { }
+        public ClearDataStub()
+        {
+            this.GameModeData = ImmutableDictionary<GameMode, IClearDataPerGameMode>.Empty;
+            this.Practices = ImmutableDictionary<(Level, StagePractice), IPractice>.Empty;
+            this.Signature = string.Empty;
+        }
 
         public ClearDataStub(IClearData clearData)
-            : this()
         {
             this.Chara = clearData.Chara;
-            this.GameModeData = clearData.GameModeData?.ToDictionary(
+            this.GameModeData = clearData.GameModeData.ToDictionary(
                 pair => pair.Key, pair => new ClearDataPerGameModeStub(pair.Value) as IClearDataPerGameMode);
-            this.Practices = clearData.Practices?.ToDictionary(
+            this.Practices = clearData.Practices.ToDictionary(
                 pair => pair.Key, pair => new PracticeStub(pair.Value) as IPractice);
             this.Checksum = clearData.Checksum;
             this.IsValid = clearData.IsValid;

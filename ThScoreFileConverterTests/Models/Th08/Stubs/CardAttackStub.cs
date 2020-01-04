@@ -6,15 +6,22 @@ namespace ThScoreFileConverterTests.Models.Th08.Stubs
 {
     internal class CardAttackStub : ICardAttack
     {
-        public CardAttackStub() { }
+        public CardAttackStub()
+        {
+            this.CardName = Enumerable.Empty<byte>();
+            this.Comment = Enumerable.Empty<byte>();
+            this.EnemyName = Enumerable.Empty<byte>();
+            this.Signature = string.Empty;
+            this.PracticeCareer = new CardAttackCareerStub();
+            this.StoryCareer = new CardAttackCareerStub();
+        }
 
         public CardAttackStub(ICardAttack attack)
-            : this()
         {
             this.CardId = attack.CardId;
-            this.CardName = attack.CardName?.ToArray();
-            this.Comment = attack.Comment?.ToArray();
-            this.EnemyName = attack.EnemyName?.ToArray();
+            this.CardName = attack.CardName.ToArray();
+            this.Comment = attack.Comment.ToArray();
+            this.EnemyName = attack.EnemyName.ToArray();
             this.Level = attack.Level;
             this.PracticeCareer = new CardAttackCareerStub(attack.PracticeCareer);
             this.StoryCareer = new CardAttackCareerStub(attack.StoryCareer);

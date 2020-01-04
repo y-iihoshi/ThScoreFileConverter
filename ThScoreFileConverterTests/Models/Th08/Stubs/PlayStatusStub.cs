@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
@@ -7,13 +8,20 @@ namespace ThScoreFileConverterTests.Models.Th08.Stubs
 {
     internal class PlayStatusStub : IPlayStatus
     {
-        public PlayStatusStub() { }
+        public PlayStatusStub()
+        {
+            this.BgmFlags = Enumerable.Empty<byte>();
+            this.PlayCounts = ImmutableDictionary<Level, IPlayCount>.Empty;
+            this.TotalPlayCount = new PlayCountStub();
+            this.TotalPlayTime = new Time(0);
+            this.TotalRunningTime = new Time(0);
+            this.Signature = string.Empty;
+        }
 
         public PlayStatusStub(IPlayStatus playStatus)
-            : this()
         {
-            this.BgmFlags = playStatus.BgmFlags?.ToArray();
-            this.PlayCounts = playStatus.PlayCounts?.ToDictionary(
+            this.BgmFlags = playStatus.BgmFlags.ToArray();
+            this.PlayCounts = playStatus.PlayCounts.ToDictionary(
                 pair => pair.Key, pair => new PlayCountStub(pair.Value) as IPlayCount);
             this.TotalPlayCount = new PlayCountStub(playStatus.TotalPlayCount);
             this.TotalPlayTime = playStatus.TotalPlayTime;

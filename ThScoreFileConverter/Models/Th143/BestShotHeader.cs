@@ -18,7 +18,7 @@ namespace ThScoreFileConverter.Models.Th143
         public const string ValidSignature = "BST3";
         public const int SignatureSize = 4;
 
-        public string Signature { get; private set; }
+        public string Signature { get; private set; } = string.Empty;
 
         public Day Day { get; private set; }
 

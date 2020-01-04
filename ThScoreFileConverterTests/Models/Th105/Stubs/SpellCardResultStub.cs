@@ -9,7 +9,6 @@ namespace ThScoreFileConverterTests.Models.Th105.Stubs
         public SpellCardResultStub() { }
 
         public SpellCardResultStub(ISpellCardResult<TChara> result)
-            : base()
         {
             this.Enemy = result.Enemy;
             this.Frames = result.Frames;

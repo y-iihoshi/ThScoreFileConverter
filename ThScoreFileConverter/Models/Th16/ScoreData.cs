@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th16
@@ -22,7 +23,8 @@ namespace ThScoreFileConverter.Models.Th16
 
         public byte ContinueCount { get; private set; }
 
-        public IEnumerable<byte> Name { get; private set; } // The last 2 bytes are always 0x00 ?
+        // The last 2 bytes are always 0x00 ?
+        public IEnumerable<byte> Name { get; private set; } = Enumerable.Empty<byte>();
 
         public uint DateTime { get; private set; }  // UNIX time
 

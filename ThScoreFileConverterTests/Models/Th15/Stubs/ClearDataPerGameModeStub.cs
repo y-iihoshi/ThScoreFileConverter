@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th13;
@@ -8,20 +9,25 @@ namespace ThScoreFileConverterTests.Models.Th15.Stubs
 {
     internal class ClearDataPerGameModeStub : IClearDataPerGameMode
     {
-        public ClearDataPerGameModeStub() { }
+        public ClearDataPerGameModeStub()
+        {
+            this.Cards = ImmutableDictionary<int, ISpellCard<Level>>.Empty;
+            this.ClearCounts = ImmutableDictionary<LevelWithTotal, int>.Empty;
+            this.ClearFlags = ImmutableDictionary<LevelWithTotal, int>.Empty;
+            this.Rankings = ImmutableDictionary<LevelWithTotal, IReadOnlyList<IScoreData>>.Empty;
+        }
 
         public ClearDataPerGameModeStub(IClearDataPerGameMode clearData)
-            : this()
         {
-            this.Cards = clearData.Cards?.ToDictionary(
+            this.Cards = clearData.Cards.ToDictionary(
                 pair => pair.Key,
                 pair => new Th13.Stubs.SpellCardStub<Level>(pair.Value) as ISpellCard<Level>);
-            this.ClearCounts = clearData.ClearCounts?.ToDictionary(pair => pair.Key, pair => pair.Value);
-            this.ClearFlags = clearData.ClearFlags?.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.ClearCounts = clearData.ClearCounts.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.ClearFlags = clearData.ClearFlags.ToDictionary(pair => pair.Key, pair => pair.Value);
             this.PlayTime = clearData.PlayTime;
-            this.Rankings = clearData.Rankings?.ToDictionary(
+            this.Rankings = clearData.Rankings.ToDictionary(
                 pair => pair.Key,
-                pair => pair.Value?.Select(score => new ScoreDataStub(score))?.ToList() as IReadOnlyList<IScoreData>);
+                pair => pair.Value.Select(score => new ScoreDataStub(score)).ToList() as IReadOnlyList<IScoreData>);
             this.TotalPlayCount = clearData.TotalPlayCount;
         }
 

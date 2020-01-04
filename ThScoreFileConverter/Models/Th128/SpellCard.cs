@@ -10,13 +10,14 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th128
 {
     internal class SpellCard : IBinaryReadable, ISpellCard
     {
-        public IEnumerable<byte> Name { get; private set; }
+        public IEnumerable<byte> Name { get; private set; } = Enumerable.Empty<byte>();
 
         public int NoMissCount { get; private set; }
 

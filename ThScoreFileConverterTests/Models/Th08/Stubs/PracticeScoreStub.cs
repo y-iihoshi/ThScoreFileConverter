@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
@@ -8,14 +9,18 @@ namespace ThScoreFileConverterTests.Models.Th08.Stubs
 {
     internal class PracticeScoreStub : IPracticeScore
     {
-        public PracticeScoreStub() { }
+        public PracticeScoreStub()
+        {
+            this.HighScores = ImmutableDictionary<(Stage, Level), int>.Empty;
+            this.PlayCounts = ImmutableDictionary<(Stage, Level), int>.Empty;
+            this.Signature = string.Empty;
+        }
 
         public PracticeScoreStub(IPracticeScore score)
-            : this()
         {
             this.Chara = score.Chara;
-            this.HighScores = score.HighScores?.ToDictionary(pair => pair.Key, pair => pair.Value);
-            this.PlayCounts = score.PlayCounts?.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.HighScores = score.HighScores.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.PlayCounts = score.PlayCounts.ToDictionary(pair => pair.Key, pair => pair.Value);
             this.FirstByteOfData = score.FirstByteOfData;
             this.Signature = score.Signature;
             this.Size1 = score.Size1;

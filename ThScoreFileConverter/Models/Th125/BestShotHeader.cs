@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th125
@@ -19,7 +20,7 @@ namespace ThScoreFileConverter.Models.Th125
         public const string ValidSignature = "BST2";
         public const int SignatureSize = 4;
 
-        public string Signature { get; private set; }
+        public string Signature { get; private set; } = string.Empty;
 
         public Level Level { get; private set; }
 
@@ -65,7 +66,7 @@ namespace ThScoreFileConverter.Models.Th125
 
         public int ResultScore2 { get; private set; }   // ???
 
-        public IEnumerable<byte> CardName { get; private set; }
+        public IEnumerable<byte> CardName { get; private set; } = Enumerable.Empty<byte>();
 
         public void ReadFrom(BinaryReader reader)
         {

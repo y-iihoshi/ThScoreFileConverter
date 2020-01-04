@@ -7,7 +7,6 @@ namespace ThScoreFileConverterTests.Models.Th13.Stubs
         public PracticeStub() { }
 
         public PracticeStub(IPractice practice)
-            : this()
         {
             this.ClearFlag = practice.ClearFlag;
             this.EnableFlag = practice.EnableFlag;

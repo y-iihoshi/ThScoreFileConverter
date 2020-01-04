@@ -4,10 +4,12 @@ namespace ThScoreFileConverterTests.Models.Th165.Stubs
 {
     internal class ScoreStub : IScore
     {
-        public ScoreStub() { }
+        public ScoreStub()
+        {
+            this.Signature = string.Empty;
+        }
 
         public ScoreStub(IScore score)
-            : this()
         {
             this.ChallengeCount = score.ChallengeCount;
             this.ClearCount = score.ClearCount;

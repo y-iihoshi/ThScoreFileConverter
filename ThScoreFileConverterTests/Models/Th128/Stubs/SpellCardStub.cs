@@ -7,14 +7,16 @@ namespace ThScoreFileConverterTests.Models.Th128.Stubs
 {
     internal class SpellCardStub : ISpellCard
     {
-        public SpellCardStub() { }
+        public SpellCardStub()
+        {
+            this.Name = Enumerable.Empty<byte>();
+        }
 
         public SpellCardStub(ISpellCard spellCard)
-            : this()
         {
             this.Id = spellCard.Id;
             this.Level = spellCard.Level;
-            this.Name = spellCard.Name?.ToArray();
+            this.Name = spellCard.Name.ToArray();
             this.NoIceCount = spellCard.NoIceCount;
             this.NoMissCount = spellCard.NoMissCount;
             this.TrialCount = spellCard.TrialCount;

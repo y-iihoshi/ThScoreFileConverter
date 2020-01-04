@@ -7,14 +7,16 @@ namespace ThScoreFileConverterTests.Models.Th17.Stubs
 {
     internal class ScoreDataStub : IScoreData
     {
-        public ScoreDataStub() { }
+        public ScoreDataStub()
+        {
+            this.Name = Enumerable.Empty<byte>();
+        }
 
         public ScoreDataStub(IScoreData scoreData)
-            : this()
         {
             this.ContinueCount = scoreData.ContinueCount;
             this.DateTime = scoreData.DateTime;
-            this.Name = scoreData.Name?.ToArray();
+            this.Name = scoreData.Name.ToArray();
             this.Score = scoreData.Score;
             this.SlowRate = scoreData.SlowRate;
             this.StageProgress = scoreData.StageProgress;

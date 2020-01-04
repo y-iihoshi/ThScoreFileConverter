@@ -6,12 +6,15 @@ namespace ThScoreFileConverterTests.Models.Th075.Stubs
 {
     internal class HighScoreStub : IHighScore
     {
-        public HighScoreStub() { }
+        public HighScoreStub()
+        {
+            this.EncodedName = Enumerable.Empty<byte>();
+            this.Name = string.Empty;
+        }
 
         public HighScoreStub(in HighScoreStub stub)
-            : this()
         {
-            this.EncodedName = stub.EncodedName?.ToArray();
+            this.EncodedName = stub.EncodedName.ToArray();
             this.Day = stub.Day;
             this.Month = stub.Month;
             this.Name = stub.Name;

@@ -44,7 +44,7 @@ namespace ThScoreFileConverter.Models.Th17
                 switch (type)
                 {
                     case 1:     // name
-                        if (ranking.Name is null)
+                        if (!ranking.Name.Any())
                             return "--------";
                         return Encoding.Default.GetString(ranking.Name.ToArray()).Split('\0')[0];
                     case 2:     // score

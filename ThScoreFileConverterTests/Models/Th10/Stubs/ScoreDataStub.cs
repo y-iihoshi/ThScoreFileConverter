@@ -8,14 +8,16 @@ namespace ThScoreFileConverterTests.Models.Th10.Stubs
     internal class ScoreDataStub<TStageProgress> : IScoreData<TStageProgress>
         where TStageProgress : struct, Enum
     {
-        public ScoreDataStub() { }
+        public ScoreDataStub()
+        {
+            this.Name = Enumerable.Empty<byte>();
+        }
 
         public ScoreDataStub(IScoreData<TStageProgress> scoreData)
-            : this()
         {
             this.ContinueCount = scoreData.ContinueCount;
             this.DateTime = scoreData.DateTime;
-            this.Name = scoreData.Name?.ToArray();
+            this.Name = scoreData.Name.ToArray();
             this.Score = scoreData.Score;
             this.SlowRate = scoreData.SlowRate;
             this.StageProgress = scoreData.StageProgress;
