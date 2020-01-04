@@ -1,6 +1,8 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Actions;
+using ThScoreFileConverterTests.Models;
 
 namespace ThScoreFileConverterTests.Interactivity
 {
@@ -19,11 +21,12 @@ namespace ThScoreFileConverterTests.Interactivity
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void FontDialogActionResultTestNullFont()
         {
-            var result = new FontDialogActionResult(null, Color.Black);
+            _ = new FontDialogActionResult(null!, Color.Black);
 
-            Assert.IsNull(result.Font);
+            Assert.Fail(TestUtils.Unreachable);
         }
     }
 }

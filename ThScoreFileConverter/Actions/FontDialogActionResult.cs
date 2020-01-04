@@ -5,6 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
 using System.Drawing;
 
 namespace ThScoreFileConverter.Actions
@@ -21,7 +22,7 @@ namespace ThScoreFileConverter.Actions
         /// <param name="color">A color.</param>
         public FontDialogActionResult(Font font, Color color)
         {
-            this.Font = font;
+            this.Font = font ?? throw new ArgumentNullException(nameof(font));
             this.Color = color;
         }
 
