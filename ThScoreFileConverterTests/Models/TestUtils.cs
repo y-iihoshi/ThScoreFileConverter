@@ -24,7 +24,7 @@ namespace ThScoreFileConverterTests.Models
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            byte[] array = null;
+            var array = Array.Empty<byte>();
 
             MemoryStream? stream = null;
             try
@@ -112,7 +112,7 @@ namespace ThScoreFileConverterTests.Models
             return array;
         }
 
-        public static IEnumerable<byte> MakeSQByteArray(params object[] args)
+        public static IEnumerable<byte> MakeSQByteArray(params object?[] args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
@@ -122,7 +122,7 @@ namespace ThScoreFileConverterTests.Models
             var fromArray = currentType.GetMethod(nameof(MakeSQByteArrayFromArray), bindingAttributes);
             var fromDictonary = currentType.GetMethod(nameof(MakeSQByteArrayFromDictionary), bindingAttributes);
 
-            IEnumerable<byte> byteArray = new byte[0];
+            IEnumerable<byte> byteArray = Array.Empty<byte>();
 
             foreach (var arg in args)
             {
@@ -151,6 +151,8 @@ namespace ThScoreFileConverterTests.Models
                                 fromArray.MakeGenericMethod(array.GetType().GetElementType())
                                     .Invoke(null, new object[] { array }) as IEnumerable<byte>);
                         }
+                        break;
+                    case null:
                         break;
                     default:
                         {
