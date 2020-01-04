@@ -33,7 +33,7 @@ namespace ThScoreFileConverterTests.Models
                 (sender, e) => Console.WriteLine(
                     Utils.Format("{0}: {1}", nameof(converter.ExceptionOccurred), e.Exception.ToString()));
 
-            converter.Convert(null);
+            converter.Convert(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         }

@@ -62,7 +62,7 @@ namespace ThScoreFileConverterTests.Models
         {
             using var output = new MemoryStream();
 
-            ThCrypt.Decrypt(null, output, this.encryptedBySmallBlock.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
+            ThCrypt.Decrypt(null!, output, this.encryptedBySmallBlock.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
             Assert.Fail(TestUtils.Unreachable);
         }
 
@@ -149,7 +149,7 @@ namespace ThScoreFileConverterTests.Models
         {
             using var input = new MemoryStream(this.encryptedBySmallBlock);
 
-            ThCrypt.Decrypt(input, null, (int)input.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
+            ThCrypt.Decrypt(input, null!, (int)input.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
             Assert.Fail(TestUtils.Unreachable);
         }
 

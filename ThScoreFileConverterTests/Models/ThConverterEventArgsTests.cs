@@ -37,7 +37,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentNullException))]
         public void ThConverterEventArgsTestNullPath()
         {
-            _ = new ThConverterEventArgs(null, 2, 5);
+            _ = new ThConverterEventArgs(null!, 2, 5);
             Assert.Fail(TestUtils.Unreachable);
         }
 

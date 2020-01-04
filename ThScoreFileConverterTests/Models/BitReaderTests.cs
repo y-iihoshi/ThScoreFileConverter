@@ -23,7 +23,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentNullException))]
         public void BitReaderTestNoStream()
         {
-            _ = new BitReader(null);
+            _ = new BitReader(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         }

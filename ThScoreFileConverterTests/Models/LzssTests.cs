@@ -66,7 +66,7 @@ namespace ThScoreFileConverterTests.Models
         {
             using var output = new MemoryStream();
 
-            Lzss.Extract(null, output);
+            Lzss.Extract(null!, output);
             Assert.Fail(TestUtils.Unreachable);
         }
 
@@ -153,7 +153,7 @@ namespace ThScoreFileConverterTests.Models
         {
             using var input = new MemoryStream(this.compressed);
 
-            Lzss.Extract(input, null);
+            Lzss.Extract(input, null!);
             Assert.Fail(TestUtils.Unreachable);
         }
 

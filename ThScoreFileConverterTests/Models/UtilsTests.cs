@@ -44,7 +44,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentNullException))]
         public void ParseEnumTestNull()
         {
-            _ = Utils.ParseEnum<DayOfWeek>(null);
+            _ = Utils.ParseEnum<DayOfWeek>(null!);
             Assert.Fail(TestUtils.Unreachable);
         }
 

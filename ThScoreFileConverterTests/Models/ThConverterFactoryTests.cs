@@ -20,7 +20,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentNullException))]
         public void CreateTestNull()
         {
-            _ = ThConverterFactory.Create(null);
+            _ = ThConverterFactory.Create(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         }

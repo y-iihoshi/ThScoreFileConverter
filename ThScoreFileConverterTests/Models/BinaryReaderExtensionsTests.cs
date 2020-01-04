@@ -35,7 +35,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentNullException))]
         public void ReadExactBytesTestNull()
         {
-            BinaryReader reader = null;
+            BinaryReader reader = null!;
 
             _ = reader.ReadExactBytes(1);
 

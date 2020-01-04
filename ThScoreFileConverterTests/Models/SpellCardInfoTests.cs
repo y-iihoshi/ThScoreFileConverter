@@ -43,7 +43,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentNullException))]
         public void SpellCardInfoTestNullName()
         {
-            _ = new CardInfo(1, null, Stage.One, Level.Hard, Level.Lunatic);
+            _ = new CardInfo(1, null!, Stage.One, Level.Hard, Level.Lunatic);
             Assert.Fail(TestUtils.Unreachable);
         }
 
@@ -105,7 +105,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentNullException))]
         public void SpellCardInfoTestNullLevels()
         {
-            _ = new CardInfo(1, "霜符「フロストコラムス」", Stage.One, null);
+            _ = new CardInfo(1, "霜符「フロストコラムス」", Stage.One, null!);
             Assert.Fail(TestUtils.Unreachable);
         }
     }

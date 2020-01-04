@@ -22,7 +22,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentNullException))]
         public void SkipLastTestNull()
         {
-            int[] array = null;
+            int[] array = null!;
             _ = array.SkipLast(2);
             Assert.Fail(TestUtils.Unreachable);
         }
@@ -65,7 +65,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentNullException))]
         public void TakeLastTestNull()
         {
-            int[] array = null;
+            int[] array = null!;
             _ = array.TakeLast(2);
             Assert.Fail(TestUtils.Unreachable);
         }
