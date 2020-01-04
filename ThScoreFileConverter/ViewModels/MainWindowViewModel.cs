@@ -185,8 +185,8 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets a string indicating the supported versions of the score file to convert.
         /// </summary>
-        public string SupportedVersions => (this.converter != null)
-            ? Resources.strSupportedVersions + this.converter.SupportedVersions : string.Empty;
+        public string SupportedVersions => this.converter is null
+            ? string.Empty : Resources.strSupportedVersions + this.converter.SupportedVersions;
 
         /// <summary>
         /// Gets a path of the score file.
@@ -550,11 +550,12 @@ namespace ThScoreFileConverter.ViewModels
         /// </returns>
         private bool CanConvert()
         {
-            return !string.IsNullOrEmpty(this.ScoreFile) &&
-                   this.TemplateFiles.Any() &&
-                   !string.IsNullOrEmpty(this.OutputDirectory) &&
-                   !(this.CanHandleBestShot && string.IsNullOrEmpty(this.BestShotDirectory)) &&
-                   !(this.CanHandleBestShot && string.IsNullOrEmpty(this.ImageOutputDirectory));
+            return !(this.converter is null)
+                && !string.IsNullOrEmpty(this.ScoreFile)
+                && this.TemplateFiles.Any()
+                && !string.IsNullOrEmpty(this.OutputDirectory)
+                && !(this.CanHandleBestShot && string.IsNullOrEmpty(this.BestShotDirectory))
+                && !(this.CanHandleBestShot && string.IsNullOrEmpty(this.ImageOutputDirectory));
         }
 
         /// <summary>
@@ -562,18 +563,18 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         private void Convert()
         {
-            if (!(this.converter is null))
+            if (this.converter is null)
+            {
+#if DEBUG
+                this.Log = "converter is null" + Environment.NewLine;
+#endif
+            }
+            else
             {
                 this.IsIdle = false;
                 this.Log = Resources.msgStartConversion + Environment.NewLine;
                 new Thread(new ParameterizedThreadStart(this.converter.Convert)).Start(CurrentSetting);
             }
-#if DEBUG
-            else
-            {
-                this.Log = "converter is null" + Environment.NewLine;
-            }
-#endif
         }
 
         /// <summary>
@@ -735,11 +736,21 @@ namespace ThScoreFileConverter.ViewModels
 
                 case nameof(this.LastWorkNumber):
                     this.converter = ThConverterFactory.Create(Settings.Instance.LastTitle);
-                    this.converter.ConvertFinished += this.OnConvertFinished;
-                    this.converter.ConvertAllFinished += this.OnConvertAllFinished;
-                    this.converter.ExceptionOccurred += this.OnExceptionOccurred;
+                    if (this.converter is null)
+                    {
+                        this.Log = "Failed to create a converter: "
+                            + $"{nameof(Settings.Instance.LastTitle)} = {Settings.Instance.LastTitle}"
+                            + Environment.NewLine;
+                    }
+                    else
+                    {
+                        this.converter.ConvertFinished += this.OnConvertFinished;
+                        this.converter.ConvertAllFinished += this.OnConvertAllFinished;
+                        this.converter.ExceptionOccurred += this.OnExceptionOccurred;
+                        this.Log = string.Empty;
+                    }
+
                     this.IsIdle = true;
-                    this.Log = string.Empty;
 
                     this.RaisePropertyChanged(nameof(this.SupportedVersions));
                     this.RaisePropertyChanged(nameof(this.ScoreFile));

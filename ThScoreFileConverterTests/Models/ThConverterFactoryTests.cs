@@ -13,7 +13,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var converter = ThConverterFactory.Create(Resources.keyTh06);
 
-            Assert.AreEqual(typeof(Th06Converter), converter.GetType());
+            Assert.AreEqual(typeof(Th06Converter), converter?.GetType());
         }
 
         [TestMethod]
