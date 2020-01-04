@@ -76,8 +76,7 @@ namespace ThScoreFileConverter.Extensions
                         (field, attr) => (enumValue: (TEnum)field.GetValue(null), attr))
                     .ToLookup(pair => pair.attr.GetType());
 
-                return lookup[typeof(TAttribute)]
-                    .ToDictionary(pair => pair.enumValue, pair => pair.attr as TAttribute);
+                return lookup[typeof(TAttribute)].ToDictionary(pair => pair.enumValue, pair => (TAttribute)pair.attr);
             }
         }
     }
