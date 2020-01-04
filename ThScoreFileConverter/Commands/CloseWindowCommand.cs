@@ -53,7 +53,7 @@ namespace ThScoreFileConverter.Commands
         {
 #pragma warning disable CA1062 // Validate arguments of public methods
             if (this.CanExecute(parameter))
-                (parameter as Window).Close();
+                ((Window)parameter).Close();
 #pragma warning restore CA1062 // Validate arguments of public methods
         }
     }
