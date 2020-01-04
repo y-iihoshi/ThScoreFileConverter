@@ -26,7 +26,7 @@ namespace ThScoreFileConverterTests.Models
 
             byte[] array = null;
 
-            MemoryStream stream = null;
+            MemoryStream? stream = null;
             try
             {
                 stream = new MemoryStream();
@@ -221,7 +221,7 @@ namespace ThScoreFileConverterTests.Models
         {
             var instance = new T();
 
-            MemoryStream stream = null;
+            MemoryStream? stream = null;
             try
             {
                 stream = new MemoryStream(array);

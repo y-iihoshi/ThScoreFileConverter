@@ -261,7 +261,7 @@ namespace ThScoreFileConverterTests.Models.Th095
 
             var header = TestUtils.Create<HeaderBase>(byteArray);
 
-            MemoryStream stream = null;
+            MemoryStream? stream = null;
             try
             {
                 stream = new MemoryStream();

@@ -149,7 +149,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void WriteToTest() => TestUtils.Wrap(() =>
         {
-            MemoryStream stream = null;
+            MemoryStream? stream = null;
             try
             {
                 stream = new MemoryStream();
