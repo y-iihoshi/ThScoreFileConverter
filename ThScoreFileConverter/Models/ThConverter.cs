@@ -44,7 +44,7 @@ namespace ThScoreFileConverter.Models
         /// Gets the string indicating the supported versions of the score file to convert.
         /// </summary>
         /// <remarks>It is required to override this property by a subclass.</remarks>
-        public virtual string SupportedVersions { get; } = null;
+        public virtual string SupportedVersions { get; } = string.Empty;
 
         /// <summary>
         /// Gets a value indicating whether the current instance has the conversion method for best-shot
@@ -73,7 +73,13 @@ namespace ThScoreFileConverter.Models
         {
             try
             {
-                this.Convert(threadArg as SettingsPerTitle);
+                if (threadArg is null)
+                    throw new ArgumentNullException(nameof(threadArg));
+
+                if (threadArg is SettingsPerTitle settings)
+                    this.Convert(settings);
+                else
+                    throw new ArgumentException(Resources.ArgumentExceptionWrongType, nameof(threadArg));
             }
             catch (Exception e)
             {

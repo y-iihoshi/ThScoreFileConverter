@@ -14,13 +14,13 @@ namespace ThScoreFileConverterTests.Models
         {
             var converter = new ThConverterWrapper() as ThConverter;
 
-            Assert.IsNull(converter.SupportedVersions);
+            Assert.AreEqual(string.Empty, converter.SupportedVersions);
             Assert.IsFalse(converter.HasBestShotConverter);
             Assert.IsTrue(converter.HasCardReplacer);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void ConvertTestNull()
         {
             var converter = new ThConverterWrapper() as ThConverter;
@@ -39,7 +39,7 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void ConvertTestInvalidType()
         {
             var converter = new ThConverterWrapper() as ThConverter;
