@@ -29,13 +29,12 @@ namespace ThScoreFileConverter.Models.Th08
             var numCharas = Enum.GetValues(typeof(Chara)).Length;
             var numPairs = numCharas * Enum.GetValues(typeof(Level)).Length;
             this.rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>(numPairs);
-            this.clearData =
-                new Dictionary<CharaWithTotal, IClearData>(Enum.GetValues(typeof(CharaWithTotal)).Length);
+            this.clearData = new Dictionary<CharaWithTotal, IClearData>(Enum.GetValues(typeof(CharaWithTotal)).Length);
             this.cardAttacks = new Dictionary<int, ICardAttack>(Definitions.CardTable.Count);
             this.practiceScores = new Dictionary<Chara, IPracticeScore>(numCharas);
         }
 
-        public Header Header { get; private set; }
+        public Header? Header { get; private set; }
 
         public IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> Rankings => this.rankings;
 
@@ -45,13 +44,13 @@ namespace ThScoreFileConverter.Models.Th08
 
         public IReadOnlyDictionary<Chara, IPracticeScore> PracticeScores => this.practiceScores;
 
-        public FLSP Flsp { get; private set; }
+        public FLSP? Flsp { get; private set; }
 
-        public IPlayStatus PlayStatus { get; private set; }
+        public IPlayStatus? PlayStatus { get; private set; }
 
-        public Th07.LastName LastName { get; private set; }
+        public Th07.LastName? LastName { get; private set; }
 
-        public Th07.VersionInfo VersionInfo { get; private set; }
+        public Th07.VersionInfo? VersionInfo { get; private set; }
 
         public void Set(Header header)
         {

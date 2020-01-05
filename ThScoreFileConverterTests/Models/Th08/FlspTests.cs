@@ -56,7 +56,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         [ExpectedException(typeof(ArgumentNullException))]
         public void FlspTestNullChapter() => TestUtils.Wrap(() =>
         {
-            _ = new FLSP(null);
+            _ = new FLSP(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });
