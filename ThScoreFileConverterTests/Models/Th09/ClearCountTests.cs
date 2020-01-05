@@ -28,6 +28,16 @@ namespace ThScoreFileConverterTests.Models.Th09
             => CollectionAssert.That.AreEqual(expected.Counts.Values, actual.Counts.Values);
 
         [TestMethod]
+        public void ClearCountTest()
+        {
+            var stub = new ClearCountStub();
+
+            var clearCount = new ClearCount();
+
+            Validate(stub, clearCount);
+        }
+
+        [TestMethod]
         public void ReadFromTest() => TestUtils.Wrap(() =>
         {
             var stub = ValidStub;
@@ -42,7 +52,7 @@ namespace ThScoreFileConverterTests.Models.Th09
         public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
             var clearCount = new ClearCount();
-            clearCount.ReadFrom(null);
+            clearCount.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });

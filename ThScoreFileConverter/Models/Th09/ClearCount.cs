@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 
@@ -16,6 +17,11 @@ namespace ThScoreFileConverter.Models.Th09
 {
     internal class ClearCount : IBinaryReadable, IClearCount
     {
+        public ClearCount()
+        {
+            this.Counts = ImmutableDictionary<Level, int>.Empty;
+        }
+
         public IReadOnlyDictionary<Level, int> Counts { get; private set; }
 
         public void ReadFrom(BinaryReader reader)
