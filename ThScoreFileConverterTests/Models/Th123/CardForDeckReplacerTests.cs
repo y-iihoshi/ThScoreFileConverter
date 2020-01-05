@@ -49,7 +49,7 @@ namespace ThScoreFileConverterTests.Models.Th123
         [ExpectedException(typeof(ArgumentNullException))]
         public void CardForDeckReplacerTestNullSystemCards()
         {
-            _ = new CardForDeckReplacer(null, ClearDataDictionary, false);
+            _ = new CardForDeckReplacer(null!, ClearDataDictionary, false);
             Assert.Fail(TestUtils.Unreachable);
         }
 
@@ -57,7 +57,7 @@ namespace ThScoreFileConverterTests.Models.Th123
         [ExpectedException(typeof(ArgumentNullException))]
         public void CardForDeckReplacerTestNullClearDataDictionary()
         {
-            _ = new CardForDeckReplacer(SystemCards, null, false);
+            _ = new CardForDeckReplacer(SystemCards, null!, false);
             Assert.Fail(TestUtils.Unreachable);
         }
 

@@ -78,8 +78,8 @@ namespace ThScoreFileConverterTests.Models.Th123
             var allScoreData = new AllScoreData();
 
             Assert.AreEqual(0, allScoreData.StoryClearCounts.Count);
-            Assert.IsNull(allScoreData.SystemCards);
-            Assert.IsNull(allScoreData.ClearData);
+            Assert.AreEqual(0, allScoreData.SystemCards.Count);
+            Assert.AreEqual(0, allScoreData.ClearData.Count);
         });
 
         [TestMethod]
@@ -97,7 +97,7 @@ namespace ThScoreFileConverterTests.Models.Th123
         public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
             var allScoreData = new AllScoreData();
-            allScoreData.ReadFrom(null);
+            allScoreData.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });
