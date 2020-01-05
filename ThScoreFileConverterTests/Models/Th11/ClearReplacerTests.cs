@@ -44,7 +44,7 @@ namespace ThScoreFileConverterTests.Models.Th11
         [ExpectedException(typeof(ArgumentNullException))]
         public void ClearReplacerTestNull()
         {
-            _ = new ClearReplacer(null);
+            _ = new ClearReplacer(null!);
             Assert.Fail(TestUtils.Unreachable);
         }
 

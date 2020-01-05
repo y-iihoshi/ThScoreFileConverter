@@ -33,7 +33,7 @@ namespace ThScoreFileConverterTests.Models.Th11
         [ExpectedException(typeof(ArgumentNullException))]
         public void PracticeReplacerTestNull()
         {
-            _ = new PracticeReplacer(null);
+            _ = new PracticeReplacer(null!);
             Assert.Fail(TestUtils.Unreachable);
         }
 
