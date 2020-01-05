@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------
+﻿//-----------------------------------------------------------------------
 // <copyright file="Settings.cs" company="None">
 // Copyright (c) IIHOSHI Yoshinori.
 // Licensed under the BSD-2-Clause license. See LICENSE.txt file in the project root for full license information.
@@ -217,7 +217,7 @@ namespace ThScoreFileConverter
         /// <param name="file">A path of the file that may be broken.</param>
         /// <param name="innerException">The exception that is the cause of the current exception.</param>
         /// <returns>A new <see cref="Exception"/> object.</returns>
-        private static Exception NewFileMayBeBrokenException(string file, Exception innerException = null)
+        private static Exception NewFileMayBeBrokenException(string file, Exception? innerException = null)
         {
             return new InvalidDataException(Utils.Format($"{file} may be broken."), innerException);
         }
