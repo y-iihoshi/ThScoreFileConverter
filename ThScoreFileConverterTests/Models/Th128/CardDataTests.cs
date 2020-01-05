@@ -73,7 +73,7 @@ namespace ThScoreFileConverterTests.Models.Th128
         [ExpectedException(typeof(ArgumentNullException))]
         public void CardDataTestNullChapter() => TestUtils.Wrap(() =>
         {
-            _ = new CardData(null);
+            _ = new CardData(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });

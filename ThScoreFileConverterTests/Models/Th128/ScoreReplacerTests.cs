@@ -30,7 +30,7 @@ namespace ThScoreFileConverterTests.Models.Th128
         [ExpectedException(typeof(ArgumentNullException))]
         public void ScoreReplacerTestNull()
         {
-            _ = new ScoreReplacer(null);
+            _ = new ScoreReplacer(null!);
             Assert.Fail(TestUtils.Unreachable);
         }
 

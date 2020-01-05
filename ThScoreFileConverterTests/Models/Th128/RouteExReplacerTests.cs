@@ -41,7 +41,7 @@ namespace ThScoreFileConverterTests.Models.Th128
         [ExpectedException(typeof(ArgumentNullException))]
         public void RouteExReplacerTestNull()
         {
-            _ = new RouteExReplacer(null);
+            _ = new RouteExReplacer(null!);
             Assert.Fail(TestUtils.Unreachable);
         }
 

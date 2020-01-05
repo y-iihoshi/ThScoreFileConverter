@@ -29,7 +29,7 @@ namespace ThScoreFileConverterTests.Models.Th128
         public void ReadFromTestNull()
         {
             var scoreData = new ScoreData();
-            scoreData.ReadFrom(null);
+            scoreData.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         }
