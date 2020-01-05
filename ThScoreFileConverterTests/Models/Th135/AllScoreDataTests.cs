@@ -82,7 +82,7 @@ namespace ThScoreFileConverterTests.Models.Th135
             var allScoreData = new AllScoreData();
 
             Assert.AreEqual(default, allScoreData.StoryProgress);
-            Assert.IsNull(allScoreData.StoryClearFlags);
+            Assert.AreEqual(0, allScoreData.StoryClearFlags.Count);
             Assert.AreEqual(default, allScoreData.EndingCount);
             Assert.AreEqual(default, allScoreData.Ending2Count);
             Assert.AreEqual(default, allScoreData.IsEnabledStageTanuki1);
@@ -90,7 +90,7 @@ namespace ThScoreFileConverterTests.Models.Th135
             Assert.AreEqual(default, allScoreData.IsEnabledStageKokoro);
             Assert.AreEqual(default, allScoreData.IsPlayableMamizou);
             Assert.AreEqual(default, allScoreData.IsPlayableKokoro);
-            Assert.IsNull(allScoreData.BgmFlags);
+            Assert.AreEqual(0, allScoreData.BgmFlags.Count);
         });
 
         [TestMethod]
@@ -108,7 +108,7 @@ namespace ThScoreFileConverterTests.Models.Th135
         public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
             var allScoreData = new AllScoreData();
-            allScoreData.ReadFrom(null);
+            allScoreData.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -128,7 +128,7 @@ namespace ThScoreFileConverterTests.Models.Th135
             var allScoreData = TestUtils.Create<AllScoreData>(TestUtils.MakeByteArray((int)SQOT.Null));
 
             Assert.AreEqual(default, allScoreData.StoryProgress);
-            Assert.IsNull(allScoreData.StoryClearFlags);
+            Assert.AreEqual(0, allScoreData.StoryClearFlags.Count);
             Assert.AreEqual(default, allScoreData.EndingCount);
             Assert.AreEqual(default, allScoreData.Ending2Count);
             Assert.AreEqual(default, allScoreData.IsEnabledStageTanuki1);
@@ -136,7 +136,7 @@ namespace ThScoreFileConverterTests.Models.Th135
             Assert.AreEqual(default, allScoreData.IsEnabledStageKokoro);
             Assert.AreEqual(default, allScoreData.IsPlayableMamizou);
             Assert.AreEqual(default, allScoreData.IsPlayableKokoro);
-            Assert.IsNull(allScoreData.BgmFlags);
+            Assert.AreEqual(0, allScoreData.BgmFlags.Count);
         });
 
         [TestMethod]
@@ -151,8 +151,8 @@ namespace ThScoreFileConverterTests.Models.Th135
                 .ToArray());
 
             Assert.AreEqual(storyProgressValue, allScoreData.StoryProgress);
-            Assert.IsNull(allScoreData.StoryClearFlags);
-            Assert.IsNull(allScoreData.BgmFlags);
+            Assert.AreEqual(0, allScoreData.StoryClearFlags.Count);
+            Assert.AreEqual(0, allScoreData.BgmFlags.Count);
         });
 
         [TestMethod]
@@ -164,7 +164,7 @@ namespace ThScoreFileConverterTests.Models.Th135
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.IsNull(allScoreData.StoryClearFlags);
+            Assert.AreEqual(0, allScoreData.StoryClearFlags.Count);
         });
 
         [TestMethod]
@@ -176,7 +176,6 @@ namespace ThScoreFileConverterTests.Models.Th135
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.IsNotNull(allScoreData.StoryClearFlags);
             Assert.AreEqual(0, allScoreData.StoryClearFlags.Count);
         });
 
@@ -189,7 +188,7 @@ namespace ThScoreFileConverterTests.Models.Th135
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.IsNull(allScoreData.BgmFlags);
+            Assert.AreEqual(0, allScoreData.BgmFlags.Count);
         });
     }
 }

@@ -8,6 +8,7 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Squirrel;
@@ -21,8 +22,8 @@ namespace ThScoreFileConverter.Models.Th135
         public AllScoreData()
         {
             this.allData = new SQTable();
-            this.StoryClearFlags = null;
-            this.BgmFlags = null;
+            this.StoryClearFlags = ImmutableDictionary<Chara, LevelFlags>.Empty;
+            this.BgmFlags = ImmutableDictionary<int, bool>.Empty;
         }
 
         public int StoryProgress => this.GetValue<int>("story_progress");
@@ -62,7 +63,7 @@ namespace ThScoreFileConverter.Models.Th135
                     this.StoryClearFlags = storyClearFlags.Value
                         .Select((flag, index) => (flag, index))
                         .Where(pair => pair.flag is SQInteger)
-                        .ToDictionary(pair => (Chara)pair.index, pair => (LevelFlags)(int)(pair.flag as SQInteger));
+                        .ToDictionary(pair => (Chara)pair.index, pair => (LevelFlags)(int)(SQInteger)pair.flag);
                 }
             }
         }
@@ -75,7 +76,7 @@ namespace ThScoreFileConverter.Models.Th135
                 {
                     this.BgmFlags = bgmFlags.Value
                         .Where(pair => (pair.Key is SQInteger) && (pair.Value is SQBool))
-                        .ToDictionary(pair => (int)(pair.Key as SQInteger), pair => (bool)(pair.Value as SQBool));
+                        .ToDictionary(pair => (int)(SQInteger)pair.Key, pair => (bool)(SQBool)pair.Value);
                 }
             }
         }
