@@ -56,7 +56,7 @@ namespace ThScoreFileConverterTests.Models.Th17
         {
             var spellCard = new SpellCard();
 
-            spellCard.ReadFrom(null);
+            spellCard.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         }

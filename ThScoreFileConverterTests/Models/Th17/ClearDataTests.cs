@@ -143,7 +143,7 @@ namespace ThScoreFileConverterTests.Models.Th17
         [ExpectedException(typeof(ArgumentNullException))]
         public void ClearDataTestNullChapter() => TestUtils.Wrap(() =>
         {
-            var clearData = new ClearData(null);
+            var clearData = new ClearData(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });
