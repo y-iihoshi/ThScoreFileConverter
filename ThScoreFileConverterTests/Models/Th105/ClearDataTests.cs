@@ -68,8 +68,8 @@ namespace ThScoreFileConverterTests.Models.Th105
             {
                 var clearData = new ClearData<TChara>();
 
-                Assert.IsNull(clearData.CardsForDeck);
-                Assert.IsNull(clearData.SpellCardResults);
+                Assert.AreEqual(0, clearData.CardsForDeck.Count);
+                Assert.AreEqual(0, clearData.SpellCardResults.Count);
             });
 
         internal static void ReadFromTestHelper<TChara>()
@@ -88,7 +88,7 @@ namespace ThScoreFileConverterTests.Models.Th105
             => TestUtils.Wrap(() =>
             {
                 var clearData = new ClearData<TChara>();
-                clearData.ReadFrom(null);
+                clearData.ReadFrom(null!);
 
                 Assert.Fail(TestUtils.Unreachable);
             });

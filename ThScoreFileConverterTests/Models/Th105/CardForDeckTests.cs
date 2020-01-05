@@ -51,7 +51,7 @@ namespace ThScoreFileConverterTests.Models.Th105
         public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
             var cardForDeck = new CardForDeck();
-            cardForDeck.ReadFrom(null);
+            cardForDeck.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });
