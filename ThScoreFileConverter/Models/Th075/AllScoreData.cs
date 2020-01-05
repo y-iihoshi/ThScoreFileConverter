@@ -25,7 +25,7 @@ namespace ThScoreFileConverter.Models.Th075
 
         public IReadOnlyDictionary<(CharaWithReserved chara, Level level), IClearData> ClearData { get; private set; }
 
-        public Status Status { get; private set; }
+        public Status? Status { get; private set; }
 
         public void ReadFrom(BinaryReader reader)
         {

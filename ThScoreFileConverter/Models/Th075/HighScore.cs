@@ -19,6 +19,7 @@ namespace ThScoreFileConverter.Models.Th075
     {
         public HighScore()
         {
+            this.Name = string.Empty;
         }
 
         public string Name { get; private set; }

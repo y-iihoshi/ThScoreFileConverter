@@ -37,7 +37,8 @@ namespace ThScoreFileConverterTests.Models.Th075
                 ClearDataTests.Validate(pair.Value, allScoreData.ClearData[pair.Key]);
             }
 
-            StatusTests.Validate(properties.status, allScoreData.Status);
+            Assert.IsNotNull(allScoreData.Status);
+            StatusTests.Validate(properties.status, allScoreData.Status!);
         }
 
         [TestMethod]
@@ -64,7 +65,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
             var allScoreData = new AllScoreData();
-            allScoreData.ReadFrom(null);
+            allScoreData.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });
