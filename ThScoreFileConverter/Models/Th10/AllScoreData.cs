@@ -24,12 +24,12 @@ namespace ThScoreFileConverter.Models.Th10
                 Enum.GetValues(typeof(TCharaWithTotal)).Length);
         }
 
-        public Th095.HeaderBase Header { get; private set; }
+        public Th095.HeaderBase? Header { get; private set; }
 
         public IReadOnlyDictionary<TCharaWithTotal, IClearData<TCharaWithTotal, TStageProgress>> ClearData
             => this.clearData;
 
-        public IStatus Status { get; private set; }
+        public IStatus? Status { get; private set; }
 
         public void Set(Th095.HeaderBase header)
         {
