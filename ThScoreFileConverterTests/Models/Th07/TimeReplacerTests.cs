@@ -22,7 +22,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         [ExpectedException(typeof(ArgumentNullException))]
         public void TimeReplacerTestNull()
         {
-            _ = new TimeReplacer(null);
+            _ = new TimeReplacer(null!);
             Assert.Fail(TestUtils.Unreachable);
         }
 

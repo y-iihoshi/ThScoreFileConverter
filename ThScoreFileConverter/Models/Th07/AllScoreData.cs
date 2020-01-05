@@ -37,7 +37,7 @@ namespace ThScoreFileConverter.Models.Th07
             this.practiceScores = new Dictionary<(Chara, Level, Stage), IPracticeScore>(numPairs);
         }
 
-        public Header Header { get; private set; }
+        public Header? Header { get; private set; }
 
         public IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> Rankings => this.rankings;
 
@@ -47,11 +47,11 @@ namespace ThScoreFileConverter.Models.Th07
 
         public IReadOnlyDictionary<(Chara, Level, Stage), IPracticeScore> PracticeScores => this.practiceScores;
 
-        public PlayStatus PlayStatus { get; private set; }
+        public PlayStatus? PlayStatus { get; private set; }
 
-        public LastName LastName { get; private set; }
+        public LastName? LastName { get; private set; }
 
-        public VersionInfo VersionInfo { get; private set; }
+        public VersionInfo? VersionInfo { get; private set; }
 
         public void Set(Header header)
         {

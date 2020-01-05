@@ -94,7 +94,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         [ExpectedException(typeof(ArgumentNullException))]
         public void PlayStatusTestNullChapter() => TestUtils.Wrap(() =>
         {
-            _ = new PlayStatus(null);
+            _ = new PlayStatus(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });
