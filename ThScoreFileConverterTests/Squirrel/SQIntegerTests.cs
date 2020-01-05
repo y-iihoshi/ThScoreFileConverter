@@ -21,7 +21,7 @@ namespace ThScoreFileConverterTests.Squirrel
 
         internal static SQInteger CreateTestHelper(byte[] bytes)
         {
-            MemoryStream stream = null;
+            MemoryStream? stream = null;
             try
             {
                 stream = new MemoryStream(bytes);
@@ -55,7 +55,7 @@ namespace ThScoreFileConverterTests.Squirrel
         [ExpectedException(typeof(ArgumentNullException))]
         public void CreateTestNull()
         {
-            _ = SQInteger.Create(null);
+            _ = SQInteger.Create(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         }
@@ -79,10 +79,10 @@ namespace ThScoreFileConverterTests.Squirrel
         }
 
         [TestMethod]
-        public void EqualsTestNull() => Assert.IsFalse(new SQInteger().Equals(null));
+        public void EqualsTestNull() => Assert.IsFalse(new SQInteger().Equals(null!));
 
         [TestMethod]
-        public void EqualsTestNullObject() => Assert.IsFalse(new SQInteger().Equals(null as object));
+        public void EqualsTestNullObject() => Assert.IsFalse(new SQInteger().Equals((object)null!));
 
         [TestMethod]
         public void EqualsTestInvalidType() => Assert.IsFalse(new SQInteger().Equals(SQNull.Instance));

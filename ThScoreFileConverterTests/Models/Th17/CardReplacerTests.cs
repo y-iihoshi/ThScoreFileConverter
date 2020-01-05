@@ -27,7 +27,7 @@ namespace ThScoreFileConverterTests.Models.Th17
         [ExpectedException(typeof(ArgumentNullException))]
         public void CardReplacerTestNull()
         {
-            _ = new CardReplacer(null, true);
+            _ = new CardReplacer(null!, true);
             Assert.Fail(TestUtils.Unreachable);
         }
 

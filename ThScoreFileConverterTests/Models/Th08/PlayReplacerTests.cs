@@ -21,7 +21,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         [ExpectedException(typeof(ArgumentNullException))]
         public void PlayReplacerTestNull()
         {
-            _ = new PlayReplacer(null);
+            _ = new PlayReplacer(null!);
             Assert.Fail(TestUtils.Unreachable);
         }
 

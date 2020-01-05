@@ -4,10 +4,12 @@ namespace ThScoreFileConverterTests.Models.Th125.Stubs
 {
     internal class ScoreStub : IScore
     {
-        public ScoreStub() { }
+        public ScoreStub()
+        {
+            this.Signature = string.Empty;
+        }
 
         public ScoreStub(IScore score)
-            : this()
         {
             this.BestshotScore = score.BestshotScore;
             this.Chara = score.Chara;

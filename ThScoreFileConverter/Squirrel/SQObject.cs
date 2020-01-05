@@ -33,7 +33,7 @@ namespace ThScoreFileConverter.Squirrel
         protected SQObject(SQObjectType type)
         {
             this.Type = type;
-            this.Value = default;
+            this.Value = new object();
         }
 
         public SQObjectType Type { get; }

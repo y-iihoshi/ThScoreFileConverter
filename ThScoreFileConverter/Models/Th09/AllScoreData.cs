@@ -23,15 +23,15 @@ namespace ThScoreFileConverter.Models.Th09
             this.rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>(numPairs);
         }
 
-        public Header Header { get; private set; }
+        public Header? Header { get; private set; }
 
         public IReadOnlyDictionary<(Chara, Level), IReadOnlyList<IHighScore>> Rankings => this.rankings;
 
-        public IPlayStatus PlayStatus { get; private set; }
+        public IPlayStatus? PlayStatus { get; private set; }
 
-        public Th07.LastName LastName { get; private set; }
+        public Th07.LastName? LastName { get; private set; }
 
-        public Th07.VersionInfo VersionInfo { get; private set; }
+        public Th07.VersionInfo? VersionInfo { get; private set; }
 
         public void Set(Header header)
         {
@@ -45,7 +45,7 @@ namespace ThScoreFileConverter.Models.Th09
                 this.rankings.Add(key, new IHighScore[5].ToList());
             if ((score.Rank >= 0) && (score.Rank < 5))
             {
-                var ranking = this.rankings[key] as List<IHighScore>;
+                var ranking = (List<IHighScore>)this.rankings[key];
                 ranking[score.Rank] = score;
             }
         }

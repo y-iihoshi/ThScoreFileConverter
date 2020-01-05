@@ -8,10 +8,12 @@ namespace ThScoreFileConverterTests.Models.Th13.Stubs
     internal class SpellCardStub<TLevel> : ISpellCard<TLevel>
         where TLevel : struct, Enum
     {
-        public SpellCardStub() { }
+        public SpellCardStub()
+        {
+            this.Name = Enumerable.Empty<byte>();
+        }
 
         public SpellCardStub(ISpellCard<TLevel> spellCard)
-            : this()
         {
             this.PracticeClearCount = spellCard.PracticeClearCount;
             this.PracticeScore = spellCard.PracticeScore;
@@ -20,7 +22,7 @@ namespace ThScoreFileConverterTests.Models.Th13.Stubs
             this.HasTried = spellCard.HasTried;
             this.Id = spellCard.Id;
             this.Level = spellCard.Level;
-            this.Name = spellCard.Name?.ToArray();
+            this.Name = spellCard.Name.ToArray();
             this.TrialCount = spellCard.TrialCount;
         }
 

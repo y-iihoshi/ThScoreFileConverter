@@ -94,14 +94,11 @@ namespace ThScoreFileConverterTests.Models.Th15
         [TestMethod]
         public void ClearDataPerGameModeTest() => TestUtils.Wrap(() =>
         {
+            var stub = new ClearDataPerGameModeStub();
+
             var clearData = new ClearDataPerGameMode();
 
-            Assert.IsNull(clearData.Rankings);
-            Assert.AreEqual(default, clearData.TotalPlayCount);
-            Assert.AreEqual(default, clearData.PlayTime);
-            Assert.IsNull(clearData.ClearCounts);
-            Assert.IsNull(clearData.ClearFlags);
-            Assert.IsNull(clearData.Cards);
+            Validate(stub, clearData);
         });
 
         [TestMethod]
@@ -119,7 +116,7 @@ namespace ThScoreFileConverterTests.Models.Th15
         public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
             var clearData = new ClearDataPerGameMode();
-            clearData.ReadFrom(null);
+            clearData.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });

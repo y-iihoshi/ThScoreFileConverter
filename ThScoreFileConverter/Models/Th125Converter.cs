@@ -20,16 +20,19 @@ using System.Security;
 using System.Security.Permissions;
 using System.Text.RegularExpressions;
 using ThScoreFileConverter.Models.Th125;
+using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.Models
 {
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th125Converter : ThConverter
     {
-        private AllScoreData allScoreData = null;
+        private readonly Dictionary<
+            (Chara, Th125.Level Level, int Scene), (string Path, IBestShotHeader Header)> bestshots =
+            new Dictionary<(Chara, Th125.Level, int), (string, IBestShotHeader)>(
+                Enum.GetValues(typeof(Chara)).Length * Definitions.SpellCards.Count);
 
-        private Dictionary<
-            (Chara, Th125.Level Level, int Scene), (string Path, IBestShotHeader Header)> bestshots = null;
+        private AllScoreData? allScoreData = null;
 
         public override string SupportedVersions { get; } = "1.00a";
 
@@ -63,6 +66,9 @@ namespace ThScoreFileConverter.Models
 
         protected override IEnumerable<IStringReplaceable> CreateReplacers(bool hideUntriedCards, string outputFilePath)
         {
+            if ((this.allScoreData is null) || (this.allScoreData.Status is null))
+                throw new InvalidDataException(Utils.Format($"Invoke {nameof(this.ReadScoreFile)} first."));
+
             return new List<IStringReplaceable>
             {
                 new ScoreReplacer(this.allScoreData.Scores),
@@ -86,7 +92,8 @@ namespace ThScoreFileConverter.Models
         {
             using var decoded = new MemoryStream();
 
-            var outputFile = output as FileStream;
+            if (!(output is FileStream outputFile))
+                throw new ArgumentException(Resources.ArgumentExceptionWrongType, nameof(output));
             var chara = Path.GetFileName(outputFile.Name)
                 .StartsWith("bs2_", StringComparison.CurrentCultureIgnoreCase)
                 ? Chara.Hatate : Chara.Aya;
@@ -94,13 +101,6 @@ namespace ThScoreFileConverter.Models
             using var reader = new BinaryReader(input, Encoding.UTF8, true);
             var header = new BestShotHeader();
             header.ReadFrom(reader);
-
-            if (this.bestshots == null)
-            {
-                this.bestshots =
-                    new Dictionary<(Chara, Th125.Level, int), (string, IBestShotHeader)>(
-                        Enum.GetValues(typeof(Chara)).Length * Definitions.SpellCards.Count);
-            }
 
             var key = (chara, header.Level, header.Scene);
             if (!this.bestshots.ContainsKey(key))
@@ -200,7 +200,7 @@ namespace ThScoreFileConverter.Models
             return remainSize == 0;
         }
 
-        private static AllScoreData Read(Stream input)
+        private static AllScoreData? Read(Stream input)
         {
             var dictionary = new Dictionary<string, Action<AllScoreData, Th095.Chapter>>
             {

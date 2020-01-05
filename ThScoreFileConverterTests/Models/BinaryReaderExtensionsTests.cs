@@ -13,7 +13,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void ReadExactBytesTest()
         {
-            MemoryStream stream = null;
+            MemoryStream? stream = null;
             try
             {
                 var bytes = new byte[] { 1, 2, 3, 4, 5 };
@@ -35,7 +35,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentNullException))]
         public void ReadExactBytesTestNull()
         {
-            BinaryReader reader = null;
+            BinaryReader reader = null!;
 
             _ = reader.ReadExactBytes(1);
 
@@ -46,7 +46,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(EndOfStreamException))]
         public void ReadExactBytesTestEmptyStream()
         {
-            MemoryStream stream = null;
+            MemoryStream? stream = null;
             try
             {
                 stream = new MemoryStream();
@@ -67,7 +67,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ReadExactBytesTestNegative()
         {
-            MemoryStream stream = null;
+            MemoryStream? stream = null;
             try
             {
                 var bytes = new byte[] { 1, 2, 3, 4, 5 };
@@ -88,7 +88,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void ReadExactBytesTestZero()
         {
-            MemoryStream stream = null;
+            MemoryStream? stream = null;
             try
             {
                 var bytes = new byte[] { 1, 2, 3, 4, 5 };
@@ -110,7 +110,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(EndOfStreamException))]
         public void ReadExactBytesTestShortened()
         {
-            MemoryStream stream = null;
+            MemoryStream? stream = null;
             try
             {
                 var bytes = new byte[] { 1, 2, 3, 4, 5 };
@@ -131,7 +131,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void ReadExactBytesTestExceeded()
         {
-            MemoryStream stream = null;
+            MemoryStream? stream = null;
             try
             {
                 var bytes = new byte[] { 1, 2, 3, 4, 5 };

@@ -44,6 +44,16 @@ namespace ThScoreFileConverterTests.Models.Th08
         }
 
         [TestMethod]
+        public void PlayCountTest()
+        {
+            var stub = new PlayCountStub();
+
+            var playCount = new PlayCount();
+
+            Validate(stub, playCount);
+        }
+
+        [TestMethod]
         public void ReadFromTest() => TestUtils.Wrap(() =>
         {
             var stub = ValidStub;
@@ -58,7 +68,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
             var playCount = new PlayCount();
-            playCount.ReadFrom(null);
+            playCount.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });

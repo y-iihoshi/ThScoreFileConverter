@@ -70,7 +70,7 @@ namespace ThScoreFileConverterTests.Models.Th17
         {
             var scoreData = new ScoreData();
 
-            scoreData.ReadFrom(null);
+            scoreData.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         }

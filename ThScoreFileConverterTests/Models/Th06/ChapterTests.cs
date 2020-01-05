@@ -77,7 +77,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [ExpectedException(typeof(ArgumentNullException))]
         public void ChapterTestNull() => TestUtils.Wrap(() =>
         {
-            _ = new ChapterWrapper(null);
+            _ = new ChapterWrapper(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -96,7 +96,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         public void ChapterTestNullWithExpected()
         {
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(ValidProperties));
-            _ = new ChapterWrapper(null, chapter.Signature.ToLowerInvariant(), chapter.Size1);
+            _ = new ChapterWrapper(null!, chapter.Signature.ToLowerInvariant(), chapter.Size1);
 
             Assert.Fail(TestUtils.Unreachable);
         }
@@ -134,7 +134,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
             var chapter = new Chapter();
-            chapter.ReadFrom(null);
+            chapter.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });

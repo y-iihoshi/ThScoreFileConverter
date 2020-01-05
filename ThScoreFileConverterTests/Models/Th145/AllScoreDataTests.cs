@@ -125,7 +125,7 @@ namespace ThScoreFileConverterTests.Models.Th145
             var allScoreData = new AllScoreData();
 
             Assert.AreEqual(default, allScoreData.StoryProgress);
-            Assert.IsNull(allScoreData.StoryClearFlags);
+            Assert.AreEqual(0, allScoreData.StoryClearFlags.Count);
             Assert.AreEqual(default, allScoreData.EndingCount);
             Assert.AreEqual(default, allScoreData.Ending2Count);
             Assert.AreEqual(default, allScoreData.IsEnabledStageTanuki1);
@@ -133,7 +133,9 @@ namespace ThScoreFileConverterTests.Models.Th145
             Assert.AreEqual(default, allScoreData.IsEnabledStageKokoro);
             Assert.AreEqual(default, allScoreData.IsPlayableMamizou);
             Assert.AreEqual(default, allScoreData.IsPlayableKokoro);
-            Assert.IsNull(allScoreData.BgmFlags);
+            Assert.AreEqual(0, allScoreData.BgmFlags.Count);
+            Assert.AreEqual(0, allScoreData.ClearRanks.Count);
+            Assert.AreEqual(0, allScoreData.ClearTimes.Count);
         });
 
         [TestMethod]
@@ -151,7 +153,7 @@ namespace ThScoreFileConverterTests.Models.Th145
         public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
             var allScoreData = new AllScoreData();
-            allScoreData.ReadFrom(null);
+            allScoreData.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -171,7 +173,7 @@ namespace ThScoreFileConverterTests.Models.Th145
             var allScoreData = TestUtils.Create<AllScoreData>(TestUtils.MakeByteArray((int)SQOT.Null));
 
             Assert.AreEqual(default, allScoreData.StoryProgress);
-            Assert.IsNull(allScoreData.StoryClearFlags);
+            Assert.AreEqual(0, allScoreData.StoryClearFlags.Count);
             Assert.AreEqual(default, allScoreData.EndingCount);
             Assert.AreEqual(default, allScoreData.Ending2Count);
             Assert.AreEqual(default, allScoreData.IsEnabledStageTanuki1);
@@ -181,9 +183,9 @@ namespace ThScoreFileConverterTests.Models.Th145
             Assert.AreEqual(default, allScoreData.IsEnabledSt28);
             Assert.AreEqual(default, allScoreData.IsPlayableMamizou);
             Assert.AreEqual(default, allScoreData.IsPlayableKokoro);
-            Assert.IsNull(allScoreData.BgmFlags);
-            Assert.IsNull(allScoreData.ClearRanks);
-            Assert.IsNull(allScoreData.ClearTimes);
+            Assert.AreEqual(0, allScoreData.BgmFlags.Count);
+            Assert.AreEqual(0, allScoreData.ClearRanks.Count);
+            Assert.AreEqual(0, allScoreData.ClearTimes.Count);
         });
 
         [TestMethod]
@@ -198,10 +200,10 @@ namespace ThScoreFileConverterTests.Models.Th145
                 .ToArray());
 
             Assert.AreEqual(storyProgressValue, allScoreData.StoryProgress);
-            Assert.IsNull(allScoreData.StoryClearFlags);
-            Assert.IsNull(allScoreData.BgmFlags);
-            Assert.IsNull(allScoreData.ClearRanks);
-            Assert.IsNull(allScoreData.ClearTimes);
+            Assert.AreEqual(0, allScoreData.StoryClearFlags.Count);
+            Assert.AreEqual(0, allScoreData.BgmFlags.Count);
+            Assert.AreEqual(0, allScoreData.ClearRanks.Count);
+            Assert.AreEqual(0, allScoreData.ClearTimes.Count);
         });
 
         [TestMethod]
@@ -213,7 +215,7 @@ namespace ThScoreFileConverterTests.Models.Th145
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.IsNull(allScoreData.StoryClearFlags);
+            Assert.AreEqual(0, allScoreData.StoryClearFlags.Count);
         });
 
         [TestMethod]
@@ -225,7 +227,6 @@ namespace ThScoreFileConverterTests.Models.Th145
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.IsNotNull(allScoreData.StoryClearFlags);
             Assert.AreEqual(0, allScoreData.StoryClearFlags.Count);
         });
 
@@ -238,7 +239,7 @@ namespace ThScoreFileConverterTests.Models.Th145
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.IsNull(allScoreData.BgmFlags);
+            Assert.AreEqual(0, allScoreData.BgmFlags.Count);
         });
 
         [TestMethod]
@@ -250,7 +251,7 @@ namespace ThScoreFileConverterTests.Models.Th145
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.IsNull(allScoreData.ClearRanks);
+            Assert.AreEqual(0, allScoreData.ClearRanks.Count);
         });
 
         [TestMethod]
@@ -262,7 +263,6 @@ namespace ThScoreFileConverterTests.Models.Th145
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.IsNotNull(allScoreData.ClearRanks);
             Assert.AreEqual(0, allScoreData.ClearRanks.Count);
         });
 
@@ -275,7 +275,6 @@ namespace ThScoreFileConverterTests.Models.Th145
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.IsNotNull(allScoreData.ClearRanks);
             Assert.AreEqual(1, allScoreData.ClearRanks.Count);
             Assert.IsNotNull(allScoreData.ClearRanks.First().Value);
             Assert.AreEqual(0, allScoreData.ClearRanks.First().Value.Count);
@@ -290,7 +289,7 @@ namespace ThScoreFileConverterTests.Models.Th145
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.IsNull(allScoreData.ClearTimes);
+            Assert.AreEqual(0, allScoreData.ClearTimes.Count);
         });
 
         [TestMethod]
@@ -302,7 +301,6 @@ namespace ThScoreFileConverterTests.Models.Th145
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.IsNotNull(allScoreData.ClearTimes);
             Assert.AreEqual(0, allScoreData.ClearTimes.Count);
         });
 
@@ -315,7 +313,6 @@ namespace ThScoreFileConverterTests.Models.Th145
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.IsNotNull(allScoreData.ClearTimes);
             Assert.AreEqual(1, allScoreData.ClearTimes.Count);
             Assert.IsNotNull(allScoreData.ClearTimes.First().Value);
             Assert.AreEqual(0, allScoreData.ClearTimes.First().Value.Count);

@@ -21,7 +21,7 @@ namespace ThScoreFileConverterTests.Models.Th17
         [ExpectedException(typeof(ArgumentNullException))]
         public void AchievementReplacerTestNull()
         {
-            _ = new AchievementReplacer(null);
+            _ = new AchievementReplacer(null!);
             Assert.Fail(TestUtils.Unreachable);
         }
 

@@ -24,13 +24,13 @@ namespace ThScoreFileConverter.Models.Th143
                 Enum.GetValues(typeof(ItemWithTotal)).Length);
         }
 
-        public Th095.HeaderBase Header { get; private set; }
+        public Th095.HeaderBase? Header { get; private set; }
 
         public IReadOnlyList<IScore> Scores => this.scores;
 
         public IReadOnlyDictionary<ItemWithTotal, IItemStatus> ItemStatuses => this.itemStatuses;
 
-        public IStatus Status { get; private set; }
+        public IStatus? Status { get; private set; }
 
         public void Set(Th095.HeaderBase header)
         {

@@ -13,14 +13,14 @@ namespace ThScoreFileConverterTests.Models
         {
             var converter = ThConverterFactory.Create(Resources.keyTh06);
 
-            Assert.AreEqual(typeof(Th06Converter), converter.GetType());
+            Assert.AreEqual(typeof(Th06Converter), converter?.GetType());
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void CreateTestNull()
         {
-            _ = ThConverterFactory.Create(null);
+            _ = ThConverterFactory.Create(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         }

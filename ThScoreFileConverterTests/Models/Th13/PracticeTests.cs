@@ -48,7 +48,7 @@ namespace ThScoreFileConverterTests.Models.Th13
         {
             var practice = new Practice();
 
-            practice.ReadFrom(null);
+            practice.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });

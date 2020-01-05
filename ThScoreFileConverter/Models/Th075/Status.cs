@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Extensions;
@@ -19,6 +20,8 @@ namespace ThScoreFileConverter.Models.Th075
     {
         public Status()
         {
+            this.LastName = string.Empty;
+            this.ArcadeScores = ImmutableDictionary<(CharaWithReserved, CharaWithReserved), int>.Empty;
         }
 
         public string LastName { get; private set; }

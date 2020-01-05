@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using ThScoreFileConverter.Models.Th13;
+using IScoreData = ThScoreFileConverter.Models.Th10.IScoreData<ThScoreFileConverter.Models.Th13.StageProgress>;
 
 namespace ThScoreFileConverterTests.Models.Th13.Stubs
 {
@@ -13,25 +15,31 @@ namespace ThScoreFileConverterTests.Models.Th13.Stubs
         where TLevelPracticeWithTotal : struct, Enum
         where TStagePractice : struct, Enum
     {
-        public ClearDataStub() { }
+        public ClearDataStub()
+        {
+            this.Cards = ImmutableDictionary<int, ISpellCard<TLevel>>.Empty;
+            this.ClearCounts = ImmutableDictionary<TLevelPracticeWithTotal, int>.Empty;
+            this.ClearFlags = ImmutableDictionary<TLevelPracticeWithTotal, int>.Empty;
+            this.Practices = ImmutableDictionary<(TLevelPractice, TStagePractice), IPractice>.Empty;
+            this.Rankings = ImmutableDictionary<TLevelPracticeWithTotal, IReadOnlyList<IScoreData>>.Empty;
+            this.Signature = string.Empty;
+        }
 
         public ClearDataStub(
-            IClearData<TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice>
-                clearData)
-            : this()
+            IClearData<TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice> clearData)
         {
-            this.Cards = clearData.Cards?.ToDictionary(
+            this.Cards = clearData.Cards.ToDictionary(
                 pair => pair.Key, pair => new SpellCardStub<TLevel>(pair.Value) as ISpellCard<TLevel>);
             this.Chara = clearData.Chara;
-            this.ClearCounts = clearData.ClearCounts?.ToDictionary(pair => pair.Key, pair => pair.Value);
-            this.ClearFlags = clearData.ClearFlags?.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.ClearCounts = clearData.ClearCounts.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.ClearFlags = clearData.ClearFlags.ToDictionary(pair => pair.Key, pair => pair.Value);
             this.PlayTime = clearData.PlayTime;
-            this.Practices = clearData.Practices?.ToDictionary(
+            this.Practices = clearData.Practices.ToDictionary(
                 pair => pair.Key, pair => new PracticeStub(pair.Value) as IPractice);
-            this.Rankings = clearData.Rankings?.ToDictionary(
+            this.Rankings = clearData.Rankings.ToDictionary(
                 pair => pair.Key,
-                pair => pair.Value?.Select(score => new Th10.Stubs.ScoreDataStub<StageProgress>(score))?.ToList()
-                    as IReadOnlyList<ThScoreFileConverter.Models.Th10.IScoreData<StageProgress>>);
+                pair => pair.Value.Select(score => new Th10.Stubs.ScoreDataStub<StageProgress>(score)).ToList()
+                    as IReadOnlyList<IScoreData>);
             this.TotalPlayCount = clearData.TotalPlayCount;
             this.Checksum = clearData.Checksum;
             this.IsValid = clearData.IsValid;
@@ -52,9 +60,7 @@ namespace ThScoreFileConverterTests.Models.Th13.Stubs
 
         public IReadOnlyDictionary<(TLevelPractice, TStagePractice), IPractice> Practices { get; set; }
 
-        public IReadOnlyDictionary<
-            TLevelPracticeWithTotal,
-            IReadOnlyList<ThScoreFileConverter.Models.Th10.IScoreData<StageProgress>>> Rankings { get; set; }
+        public IReadOnlyDictionary<TLevelPracticeWithTotal, IReadOnlyList<IScoreData>> Rankings { get; set; }
 
         public int TotalPlayCount { get; set; }
 

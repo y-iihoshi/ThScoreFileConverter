@@ -28,23 +28,23 @@ namespace ThScoreFileConverter.Models
         /// <summary>
         /// Represents the event that the conversion process per file has finished.
         /// </summary>
-        public event EventHandler<ThConverterEventArgs> ConvertFinished;
+        public event EventHandler<ThConverterEventArgs>? ConvertFinished;
 
         /// <summary>
         /// Represents the event that all conversion process has finished.
         /// </summary>
-        public event EventHandler<ThConverterEventArgs> ConvertAllFinished;
+        public event EventHandler<ThConverterEventArgs>? ConvertAllFinished;
 
         /// <summary>
         /// Represents the event that an exception has occurred.
         /// </summary>
-        public event EventHandler<ExceptionOccurredEventArgs> ExceptionOccurred;
+        public event EventHandler<ExceptionOccurredEventArgs>? ExceptionOccurred;
 
         /// <summary>
         /// Gets the string indicating the supported versions of the score file to convert.
         /// </summary>
         /// <remarks>It is required to override this property by a subclass.</remarks>
-        public virtual string SupportedVersions { get; } = null;
+        public virtual string SupportedVersions { get; } = string.Empty;
 
         /// <summary>
         /// Gets a value indicating whether the current instance has the conversion method for best-shot
@@ -73,7 +73,13 @@ namespace ThScoreFileConverter.Models
         {
             try
             {
-                this.Convert(threadArg as SettingsPerTitle);
+                if (threadArg is null)
+                    throw new ArgumentNullException(nameof(threadArg));
+
+                if (threadArg is SettingsPerTitle settings)
+                    this.Convert(settings);
+                else
+                    throw new ArgumentException(Resources.ArgumentExceptionWrongType, nameof(threadArg));
             }
             catch (Exception e)
             {
@@ -105,9 +111,9 @@ namespace ThScoreFileConverter.Models
             const int DefaultBufferSize = 1024;
 
             using var reader = new StreamReader(
-                input, Utils.GetEncoding(Settings.Instance.InputCodePageId.Value), true, DefaultBufferSize, true);
+                input, Utils.GetEncoding(Settings.Instance.InputCodePageId!.Value), true, DefaultBufferSize, true);
             using var writer = new StreamWriter(
-                output, Utils.GetEncoding(Settings.Instance.OutputCodePageId.Value), DefaultBufferSize, true);
+                output, Utils.GetEncoding(Settings.Instance.OutputCodePageId!.Value), DefaultBufferSize, true);
 
             var outputFilePath = (output is FileStream outputFile) ? outputFile.Name : string.Empty;
             var replacers = this.CreateReplacers(hideUntriedCards, outputFilePath);

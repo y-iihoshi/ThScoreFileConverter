@@ -35,7 +35,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         [ExpectedException(typeof(ArgumentNullException))]
         public void ScoreTotalReplacerTestNull()
         {
-            _ = new ScoreTotalReplacer(null);
+            _ = new ScoreTotalReplacer(null!);
             Assert.Fail(TestUtils.Unreachable);
         }
 
@@ -222,7 +222,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         [TestMethod]
         public void ReplaceTestNullScore()
         {
-            var scores = new List<IScore>() { null };
+            var scores = new List<IScore>() { null! };
             var replacer = new ScoreTotalReplacer(scores);
             Assert.AreEqual("0", replacer.Replace("%T125SCRTLH11"));
             Assert.AreEqual("0", replacer.Replace("%T125SCRTLH12"));

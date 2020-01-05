@@ -77,7 +77,7 @@ namespace ThScoreFileConverterTests.Models.Th09
         public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
             var header = new FileHeader();
-            header.ReadFrom(null);
+            header.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -158,7 +158,7 @@ namespace ThScoreFileConverterTests.Models.Th09
         [TestMethod]
         public void WriteToTest() => TestUtils.Wrap(() =>
         {
-            MemoryStream stream = null;
+            MemoryStream? stream = null;
             try
             {
                 stream = new MemoryStream();
@@ -190,7 +190,7 @@ namespace ThScoreFileConverterTests.Models.Th09
         public void WriteToTestNull() => TestUtils.Wrap(() =>
         {
             var header = new FileHeader();
-            header.WriteTo(null);
+            header.WriteTo(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });

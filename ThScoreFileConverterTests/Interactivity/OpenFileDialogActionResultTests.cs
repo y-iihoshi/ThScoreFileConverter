@@ -1,6 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Actions;
 using ThScoreFileConverterTests.Extensions;
+using ThScoreFileConverterTests.Models;
 
 namespace ThScoreFileConverterTests.Interactivity
 {
@@ -19,6 +21,26 @@ namespace ThScoreFileConverterTests.Interactivity
 
             filenames[0] = "bs02_1.dat";
             CollectionAssert.That.AreNotEqual(filenames, result.FileNames);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void OpenFileDialogActionResultTestNullFilename()
+        {
+            var filenames = new string[] { "bs01_1.dat", "bs01_2.dat" };
+            _ = new OpenFileDialogActionResult(null!, filenames);
+
+            Assert.Fail(TestUtils.Unreachable);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void OpenFileDialogActionResultTestNullFilenames()
+        {
+            var filename = "score.dat";
+            _ = new OpenFileDialogActionResult(filename, null!);
+
+            Assert.Fail(TestUtils.Unreachable);
         }
     }
 }

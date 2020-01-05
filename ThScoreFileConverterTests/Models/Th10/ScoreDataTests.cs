@@ -100,7 +100,7 @@ namespace ThScoreFileConverterTests.Models.Th10
         public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
             var scoreData = new ScoreData();
-            scoreData.ReadFrom(null);
+            scoreData.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });

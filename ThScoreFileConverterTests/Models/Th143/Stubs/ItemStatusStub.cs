@@ -4,10 +4,12 @@ namespace ThScoreFileConverterTests.Models.Th143.Stubs
 {
     internal class ItemStatusStub : IItemStatus
     {
-        public ItemStatusStub() { }
+        public ItemStatusStub()
+        {
+            this.Signature = string.Empty;
+        }
 
         public ItemStatusStub(IItemStatus itemStatus)
-            : this()
         {
             this.AvailableCount = itemStatus.AvailableCount;
             this.ClearedCount = itemStatus.ClearedCount;

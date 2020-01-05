@@ -68,7 +68,7 @@ namespace ThScoreFileConverter.Behaviors
         /// <summary>
         /// Gets or sets the command invoked when the <see cref="UIElement.DragEnter"/> event is occurred.
         /// </summary>
-        public ICommand DragEnterCommand
+        public ICommand? DragEnterCommand
         {
             get => this.GetValue(DragEnterCommandProperty) as ICommand;
             set => this.SetValue(DragEnterCommandProperty, value);
@@ -77,7 +77,7 @@ namespace ThScoreFileConverter.Behaviors
         /// <summary>
         /// Gets or sets the command invoked when the <see cref="UIElement.DragLeave"/> event is occurred.
         /// </summary>
-        public ICommand DragLeaveCommand
+        public ICommand? DragLeaveCommand
         {
             get => this.GetValue(DragLeaveCommandProperty) as ICommand;
             set => this.SetValue(DragLeaveCommandProperty, value);
@@ -86,7 +86,7 @@ namespace ThScoreFileConverter.Behaviors
         /// <summary>
         /// Gets or sets the command invoked when the <see cref="UIElement.DragOver"/> event is occurred.
         /// </summary>
-        public ICommand DragOverCommand
+        public ICommand? DragOverCommand
         {
             get => this.GetValue(DragOverCommandProperty) as ICommand;
             set => this.SetValue(DragOverCommandProperty, value);
@@ -95,7 +95,7 @@ namespace ThScoreFileConverter.Behaviors
         /// <summary>
         /// Gets or sets the command invoked when the <see cref="UIElement.Drop"/> event is occurred.
         /// </summary>
-        public ICommand DropCommand
+        public ICommand? DropCommand
         {
             get => this.GetValue(DropCommandProperty) as ICommand;
             set => this.SetValue(DropCommandProperty, value);
@@ -105,7 +105,7 @@ namespace ThScoreFileConverter.Behaviors
         /// Gets or sets the command invoked when the <see cref="UIElement.PreviewDragEnter"/> event is
         /// occurred.
         /// </summary>
-        public ICommand PreviewDragEnterCommand
+        public ICommand? PreviewDragEnterCommand
         {
             get => this.GetValue(PreviewDragEnterCommandProperty) as ICommand;
             set => this.SetValue(PreviewDragEnterCommandProperty, value);
@@ -115,7 +115,7 @@ namespace ThScoreFileConverter.Behaviors
         /// Gets or sets the command invoked when the <see cref="UIElement.PreviewDragLeave"/> event is
         /// occurred.
         /// </summary>
-        public ICommand PreviewDragLeaveCommand
+        public ICommand? PreviewDragLeaveCommand
         {
             get => this.GetValue(PreviewDragLeaveCommandProperty) as ICommand;
             set => this.SetValue(PreviewDragLeaveCommandProperty, value);
@@ -125,7 +125,7 @@ namespace ThScoreFileConverter.Behaviors
         /// Gets or sets the command invoked when the <see cref="UIElement.PreviewDragOver"/> event is
         /// occurred.
         /// </summary>
-        public ICommand PreviewDragOverCommand
+        public ICommand? PreviewDragOverCommand
         {
             get => this.GetValue(PreviewDragOverCommandProperty) as ICommand;
             set => this.SetValue(PreviewDragOverCommandProperty, value);
@@ -134,7 +134,7 @@ namespace ThScoreFileConverter.Behaviors
         /// <summary>
         /// Gets or sets the command invoked when the <see cref="UIElement.PreviewDrop"/> event is occurred.
         /// </summary>
-        public ICommand PreviewDropCommand
+        public ICommand? PreviewDropCommand
         {
             get => this.GetValue(PreviewDropCommandProperty) as ICommand;
             set => this.SetValue(PreviewDropCommandProperty, value);
@@ -187,14 +187,14 @@ namespace ThScoreFileConverter.Behaviors
         /// </param>
         /// <param name="sender">The object where the event handler is attached.</param>
         /// <param name="e">The event data.</param>
-        private static void OnDragDropEvent(ICommand command, object sender, DragEventArgs e)
+        private static void OnDragDropEvent(ICommand? command, object sender, DragEventArgs e)
         {
-            if (command != null)
+            if (!(command is null))
             {
                 if (!(sender is UIElement))
                     throw new ArgumentException(Resources.ArgumentExceptionWrongType, nameof(sender));
 
-                if (e == null)
+                if (e is null)
                     throw new ArgumentNullException(nameof(e));
 
                 command.Execute(e);

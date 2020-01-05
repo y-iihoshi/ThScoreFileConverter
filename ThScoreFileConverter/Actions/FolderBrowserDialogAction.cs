@@ -13,7 +13,7 @@ using WinForms = System.Windows.Forms;
 namespace ThScoreFileConverter.Actions
 {
     /// <summary>
-    /// Encapsulates the handling of <see cref="System.Windows.Forms.FolderBrowserDialog"/>.
+    /// Encapsulates the handling of <see cref="WinForms.FolderBrowserDialog"/>.
     /// </summary>
     public class FolderBrowserDialogAction : CommonDialogAction
     {
@@ -60,7 +60,7 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public string Description
         {
-            get => this.GetValue(DescriptionProperty) as string;
+            get => (string)this.GetValue(DescriptionProperty);
             set => this.SetValue(DescriptionProperty, value);
         }
 
@@ -78,7 +78,7 @@ namespace ThScoreFileConverter.Actions
         /// </summary>
         public string SelectedPath
         {
-            get => this.GetValue(SelectedPathProperty) as string;
+            get => (string)this.GetValue(SelectedPathProperty);
             set => this.SetValue(SelectedPathProperty, value);
         }
 

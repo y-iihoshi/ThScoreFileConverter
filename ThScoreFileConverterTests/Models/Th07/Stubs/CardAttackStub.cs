@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using ThScoreFileConverter.Models.Th07;
 
@@ -6,16 +7,22 @@ namespace ThScoreFileConverterTests.Models.Th07.Stubs
 {
     internal class CardAttackStub : ICardAttack
     {
-        public CardAttackStub() { }
+        public CardAttackStub()
+        {
+            this.CardName = Enumerable.Empty<byte>();
+            this.ClearCounts = ImmutableDictionary<CharaWithTotal, ushort>.Empty;
+            this.MaxBonuses = ImmutableDictionary<CharaWithTotal, uint>.Empty;
+            this.TrialCounts = ImmutableDictionary<CharaWithTotal, ushort>.Empty;
+            this.Signature = string.Empty;
+        }
 
         public CardAttackStub(ICardAttack cardAttack)
-            : this()
         {
             this.CardId = cardAttack.CardId;
-            this.CardName = cardAttack.CardName?.ToArray();
-            this.ClearCounts = cardAttack.ClearCounts?.ToDictionary(pair => pair.Key, pair => pair.Value);
-            this.MaxBonuses = cardAttack.MaxBonuses?.ToDictionary(pair => pair.Key, pair => pair.Value);
-            this.TrialCounts = cardAttack.TrialCounts?.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.CardName = cardAttack.CardName.ToArray();
+            this.ClearCounts = cardAttack.ClearCounts.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.MaxBonuses = cardAttack.MaxBonuses.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.TrialCounts = cardAttack.TrialCounts.ToDictionary(pair => pair.Key, pair => pair.Value);
             this.FirstByteOfData = cardAttack.FirstByteOfData;
             this.Signature = cardAttack.Signature;
             this.Size1 = cardAttack.Size1;

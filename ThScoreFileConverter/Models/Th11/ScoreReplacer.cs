@@ -45,7 +45,7 @@ namespace ThScoreFileConverter.Models.Th11
                 switch (type)
                 {
                     case 1:     // name
-                        return (ranking.Name != null)
+                        return ranking.Name.Any()
                             ? Encoding.Default.GetString(ranking.Name.ToArray()).Split('\0')[0] : "--------";
                     case 2:     // score
                         return Utils.ToNumberString((ranking.Score * 10) + ranking.ContinueCount);

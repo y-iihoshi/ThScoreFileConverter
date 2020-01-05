@@ -71,7 +71,7 @@ namespace ThScoreFileConverterTests.Models.Th105
             => TestUtils.Wrap(() =>
             {
                 var spellCardResult = new SpellCardResult<TChara>();
-                spellCardResult.ReadFrom(null);
+                spellCardResult.ReadFrom(null!);
 
                 Assert.Fail(TestUtils.Unreachable);
             });

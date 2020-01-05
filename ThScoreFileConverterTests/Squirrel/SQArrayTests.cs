@@ -22,7 +22,7 @@ namespace ThScoreFileConverterTests.Squirrel
 
         internal static SQArray CreateTestHelper(byte[] bytes)
         {
-            MemoryStream stream = null;
+            MemoryStream? stream = null;
             try
             {
                 stream = new MemoryStream(bytes);
@@ -39,25 +39,27 @@ namespace ThScoreFileConverterTests.Squirrel
 
         [DataTestMethod]
         [DataRow(
-            new int[] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
-            new int[] { 123 },
+            new[] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
+            new[] { 123 },
             DisplayName = "one element")]
         [DataRow(
-            new int[] {
+            new[] {
                 (int)SQOT.Array, 2,
                 (int)SQOT.Integer, 0, (int)SQOT.Integer, 123,
                 (int)SQOT.Integer, 1, (int)SQOT.Integer, 456,
                 (int)SQOT.Null },
-            new int[] { 123, 456 },
+            new[] { 123, 456 },
             DisplayName = "two elements")]
         public void CreateTest(int[] array, int[] expected)
         {
             var sqarray = CreateTestHelper(TestUtils.MakeByteArray(array));
 
             Assert.AreEqual(SQOT.Array, sqarray.Type);
-            for (var index = 0; index < expected?.Length; ++index)
+            for (var index = 0; index < (expected?.Length ?? 0); ++index)
             {
-                Assert.AreEqual(expected?[index], sqarray.Value.ElementAt(index) as SQInteger);
+                var element = sqarray.Value.ElementAt(index);
+                Assert.IsTrue(element is SQInteger);
+                Assert.AreEqual(expected?[index], (SQInteger)element);
             }
         }
 
@@ -65,13 +67,13 @@ namespace ThScoreFileConverterTests.Squirrel
         [ExpectedException(typeof(ArgumentNullException))]
         public void CreateTestNull()
         {
-            _ = SQArray.Create(null);
+            _ = SQArray.Create(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         }
 
         [DataTestMethod]
-        [DataRow(new int[] { (int)SQOT.Array, 0, (int)SQOT.Null },
+        [DataRow(new[] { (int)SQOT.Array, 0, (int)SQOT.Null },
             DisplayName = "empty")]
         public void CreateTestEmpty(int[] array)
         {
@@ -82,23 +84,23 @@ namespace ThScoreFileConverterTests.Squirrel
         }
 
         [DataTestMethod]
-        [DataRow(new int[] { (int)SQOT.Array, 999, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
+        [DataRow(new[] { (int)SQOT.Array, 999, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
             DisplayName = "invalid size")]
-        [DataRow(new int[] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, (int)SQOT.Integer, (int)SQOT.Null },
+        [DataRow(new[] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, (int)SQOT.Integer, (int)SQOT.Null },
             DisplayName = "missing value data")]
-        [DataRow(new int[] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123 },
+        [DataRow(new[] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123 },
             DisplayName = "missing sentinel")]
-        [DataRow(new int[] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, (int)SQOT.Null },
+        [DataRow(new[] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, (int)SQOT.Null },
             DisplayName = "missing value")]
-        [DataRow(new int[] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, (int)SQOT.Integer },
+        [DataRow(new[] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, (int)SQOT.Integer },
             DisplayName = "missing value data and sentinel")]
-        [DataRow(new int[] { (int)SQOT.Array, 999, (int)SQOT.Null },
+        [DataRow(new[] { (int)SQOT.Array, 999, (int)SQOT.Null },
             DisplayName = "empty and invalid number of elements")]
-        [DataRow(new int[] { (int)SQOT.Array, (int)SQOT.Null },
+        [DataRow(new[] { (int)SQOT.Array, (int)SQOT.Null },
             DisplayName = "empty and missing number of elements")]
-        [DataRow(new int[] { (int)SQOT.Array, 0 },
+        [DataRow(new[] { (int)SQOT.Array, 0 },
             DisplayName = "empty and missing sentinel")]
-        [DataRow(new int[] { (int)SQOT.Array },
+        [DataRow(new[] { (int)SQOT.Array },
             DisplayName = "empty and only array type")]
         [ExpectedException(typeof(EndOfStreamException))]
         public void CreateTestShortened(int[] array)
@@ -109,43 +111,43 @@ namespace ThScoreFileConverterTests.Squirrel
         }
 
         [DataTestMethod]
-        [DataRow(new int[] { (int)SQOT.Null, 2, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
+        [DataRow(new[] { (int)SQOT.Null, 2, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
             DisplayName = "invalid type")]
-        [DataRow(new int[] { (int)SQOT.Array, -1, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
+        [DataRow(new[] { (int)SQOT.Array, -1, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
             DisplayName = "negative size")]
-        [DataRow(new int[] { (int)SQOT.Array, 0, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
+        [DataRow(new[] { (int)SQOT.Array, 0, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
             DisplayName = "zero size and one element")]
-        [DataRow(new int[] { (int)SQOT.Array, 1, (int)SQOT.Float, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
+        [DataRow(new[] { (int)SQOT.Array, 1, (int)SQOT.Float, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
             DisplayName = "invalid index type")]
-        [DataRow(new int[] { (int)SQOT.Array, 1, (int)SQOT.Integer, 999, (int)SQOT.Integer, 123, (int)SQOT.Null },
+        [DataRow(new[] { (int)SQOT.Array, 1, (int)SQOT.Integer, 999, (int)SQOT.Integer, 123, (int)SQOT.Null },
             DisplayName = "invalid index data")]
-        [DataRow(new int[] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, 999, 123, (int)SQOT.Null },
+        [DataRow(new[] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, 999, 123, (int)SQOT.Null },
             DisplayName = "invalid value type")]
-        [DataRow(new int[] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123, 999 },
+        [DataRow(new[] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123, 999 },
             DisplayName = "invalid sentinel")]
-        [DataRow(new int[] { (int)SQOT.Array, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
+        [DataRow(new[] { (int)SQOT.Array, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
             DisplayName = "missing number of elements")]
-        [DataRow(new int[] { (int)SQOT.Array, 1, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
+        [DataRow(new[] { (int)SQOT.Array, 1, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
             DisplayName = "missing index type")]
-        [DataRow(new int[] { (int)SQOT.Array, 1, (int)SQOT.Integer, (int)SQOT.Integer, 123, (int)SQOT.Null },
+        [DataRow(new[] { (int)SQOT.Array, 1, (int)SQOT.Integer, (int)SQOT.Integer, 123, (int)SQOT.Null },
             DisplayName = "missing index data")]
-        [DataRow(new int[] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, 123, (int)SQOT.Null },
+        [DataRow(new[] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, 123, (int)SQOT.Null },
             DisplayName = "missing value type")]
-        [DataRow(new int[] { (int)SQOT.Array, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
+        [DataRow(new[] { (int)SQOT.Array, 0, (int)SQOT.Integer, 123, (int)SQOT.Null },
             DisplayName = "missing number of elements and index type")]
-        [DataRow(new int[] { (int)SQOT.Array, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123 },
+        [DataRow(new[] { (int)SQOT.Array, (int)SQOT.Integer, 0, (int)SQOT.Integer, 123 },
             DisplayName = "missing number of elements and sentinel")]
-        [DataRow(new int[] { (int)SQOT.Array, 1, (int)SQOT.Integer, 123, (int)SQOT.Null },
+        [DataRow(new[] { (int)SQOT.Array, 1, (int)SQOT.Integer, 123, (int)SQOT.Null },
             DisplayName = "missing index")]
-        [DataRow(new int[] { (int)SQOT.Array, 1, 0, (int)SQOT.Integer, (int)SQOT.Null },
+        [DataRow(new[] { (int)SQOT.Array, 1, 0, (int)SQOT.Integer, (int)SQOT.Null },
             DisplayName = "missing index type and value data")]
-        [DataRow(new int[] { (int)SQOT.Array, 1, 0, (int)SQOT.Integer, 123 },
+        [DataRow(new[] { (int)SQOT.Array, 1, 0, (int)SQOT.Integer, 123 },
             DisplayName = "missing index type and sentinel")]
-        [DataRow(new int[] { (int)SQOT.Array, 1, (int)SQOT.Integer, (int)SQOT.Integer, 123 },
+        [DataRow(new[] { (int)SQOT.Array, 1, (int)SQOT.Integer, (int)SQOT.Integer, 123 },
             DisplayName = "missing index data and sentinel")]
-        [DataRow(new int[] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, 123 },
+        [DataRow(new[] { (int)SQOT.Array, 1, (int)SQOT.Integer, 0, 123 },
             DisplayName = "missing value type and sentinel")]
-        [DataRow(new int[] { (int)SQOT.Array, 0, 999 },
+        [DataRow(new[] { (int)SQOT.Array, 0, 999 },
             DisplayName = "empty and invalid sentinel")]
         [ExpectedException(typeof(InvalidDataException))]
         public void CreateTestInvalid(int[] array)

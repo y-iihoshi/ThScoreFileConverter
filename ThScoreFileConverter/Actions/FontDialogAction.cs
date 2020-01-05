@@ -15,7 +15,7 @@ using WinForms = System.Windows.Forms;
 namespace ThScoreFileConverter.Actions
 {
     /// <summary>
-    /// Encapsulates the handling of <see cref="System.Windows.Forms.FontDialog"/>.
+    /// Encapsulates the handling of <see cref="WinForms.FontDialog"/>.
     /// </summary>
     public class FontDialogAction : CommonDialogAction
     {
@@ -101,7 +101,7 @@ namespace ThScoreFileConverter.Actions
         /// Gets or sets the command invoked when the user clicks the <c>Apply</c> button in the font dialog
         /// box.
         /// </summary>
-        public ICommand ApplyCommand
+        public ICommand? ApplyCommand
         {
             get => this.GetValue(ApplyCommandProperty) as ICommand;
             set => this.SetValue(ApplyCommandProperty, value);
@@ -168,7 +168,7 @@ namespace ThScoreFileConverter.Actions
         /// <summary>
         /// Gets or sets the selected font.
         /// </summary>
-        public SysDraw.Font Font
+        public SysDraw.Font? Font
         {
             get => this.GetValue(FontProperty) as SysDraw.Font;
             set => this.SetValue(FontProperty, value);

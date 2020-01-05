@@ -30,7 +30,7 @@ namespace ThScoreFileConverter.Squirrel
 
         public new IEnumerable<SQObject> Value
         {
-            get => base.Value as IEnumerable<SQObject>;
+            get => (IEnumerable<SQObject>)base.Value;
             private set => base.Value = value.ToArray();
         }
 
@@ -62,7 +62,7 @@ namespace ThScoreFileConverter.Squirrel
                 if (i >= num)
                     throw new InvalidDataException(Resources.InvalidDataExceptionIndexIsOutOfRange);
 
-                ((array as SQObject).Value as SQObject[])[i] = value;
+                ((SQObject[])((SQObject)array).Value)[i] = value;
             }
 
             var sentinel = SQObject.Create(reader);

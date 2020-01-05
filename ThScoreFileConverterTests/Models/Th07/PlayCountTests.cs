@@ -92,7 +92,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
             var playCount = new PlayCount();
-            playCount.ReadFrom(null);
+            playCount.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });

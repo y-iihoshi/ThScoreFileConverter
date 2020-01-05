@@ -30,7 +30,7 @@ namespace ThScoreFileConverter.Squirrel
 
         public new IReadOnlyDictionary<SQObject, SQObject> Value
         {
-            get => base.Value as IReadOnlyDictionary<SQObject, SQObject>;
+            get => (IReadOnlyDictionary<SQObject, SQObject>)base.Value;
             private set => base.Value = value.ToDictionary(pair => pair.Key, pair => pair.Value);
         }
 
@@ -56,7 +56,7 @@ namespace ThScoreFileConverter.Squirrel
 
                 var value = SQObject.Create(reader);
 
-                ((table as SQObject).Value as Dictionary<SQObject, SQObject>).Add(key, value);
+                ((Dictionary<SQObject, SQObject>)((SQObject)table).Value).Add(key, value);
             }
 
             return table;

@@ -22,6 +22,12 @@ namespace ThScoreFileConverter
     [DataContract]
     public sealed class Settings
     {
+        private string fontFamilyName;
+        private double? fontSize;
+        private bool? outputNumberGroupSeparator;
+        private int? inputCodePageId;
+        private int? outputCodePageId;
+
         /// <summary>
         /// Prevents a default instance of the <see cref="Settings" /> class from being created.
         /// </summary>
@@ -29,11 +35,11 @@ namespace ThScoreFileConverter
         {
             this.LastTitle = string.Empty;
             this.Dictionary = new Dictionary<string, SettingsPerTitle>();
-            this.FontFamilyName = SystemFonts.MessageFontFamily.Source;
-            this.FontSize = SystemFonts.MessageFontSize;
-            this.OutputNumberGroupSeparator = true;
-            this.InputCodePageId = 65001;
-            this.OutputCodePageId = 65001;
+            this.fontFamilyName = SystemFonts.MessageFontFamily.Source;
+            this.fontSize = SystemFonts.MessageFontSize;
+            this.outputNumberGroupSeparator = true;
+            this.inputCodePageId = 65001;
+            this.outputCodePageId = 65001;
         }
 
         /// <summary>
@@ -67,32 +73,72 @@ namespace ThScoreFileConverter
         /// Gets or sets the font family name used for the UI of this application.
         /// </summary>
         [DataMember(Order = 2)]
-        public string FontFamilyName { get; set; }
+        public string FontFamilyName
+        {
+            get => this.fontFamilyName;
+            set
+            {
+                this.OnNullablePropertyChanging(value);
+                this.fontFamilyName = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the font size used for the UI of this application.
         /// </summary>
         [DataMember(Order = 3)]
-        public double? FontSize { get; set; }
+        public double? FontSize
+        {
+            get => this.fontSize;
+            set
+            {
+                this.OnNullablePropertyChanging(value);
+                this.fontSize = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether numeric values is output with thousand separator
         /// characters.
         /// </summary>
         [DataMember(Order = 4)]
-        public bool? OutputNumberGroupSeparator { get; set; }
+        public bool? OutputNumberGroupSeparator
+        {
+            get => this.outputNumberGroupSeparator;
+            set
+            {
+                this.OnNullablePropertyChanging(value);
+                this.outputNumberGroupSeparator = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the code page identifier for input files.
         /// </summary>
         [DataMember(Order = 5)]
-        public int? InputCodePageId { get; set; }
+        public int? InputCodePageId
+        {
+            get => this.inputCodePageId;
+            set
+            {
+                this.OnNullablePropertyChanging(value);
+                this.inputCodePageId = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the code page identifier for output files.
         /// </summary>
         [DataMember(Order = 6)]
-        public int? OutputCodePageId { get; set; }
+        public int? OutputCodePageId
+        {
+            get => this.outputCodePageId;
+            set
+            {
+                this.OnNullablePropertyChanging(value);
+                this.outputCodePageId = value;
+            }
+        }
 
         /// <summary>
         /// Loads the settings from the specified XML file.
@@ -171,9 +217,15 @@ namespace ThScoreFileConverter
         /// <param name="file">A path of the file that may be broken.</param>
         /// <param name="innerException">The exception that is the cause of the current exception.</param>
         /// <returns>A new <see cref="Exception"/> object.</returns>
-        private static Exception NewFileMayBeBrokenException(string file, Exception innerException = null)
+        private static Exception NewFileMayBeBrokenException(string file, Exception? innerException = null)
         {
             return new InvalidDataException(Utils.Format($"{file} may be broken."), innerException);
+        }
+
+        private void OnNullablePropertyChanging<T>(T value)
+        {
+            if (ReferenceEquals(this, Instance) && (value is null))
+                throw new ArgumentNullException(nameof(value));
         }
     }
 }

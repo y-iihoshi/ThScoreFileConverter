@@ -595,5 +595,17 @@ namespace ThScoreFileConverterTests.Models.Th165
             var fields = new HashtagFields(data1, data2, data3);
             Assert.AreEqual(expected, fields.IsSumireko);
         });
+
+        [TestMethod]
+        public void DefaultConstructorTest()
+        {
+            var fields = (new HashtagFields[1])[0];
+
+            Assert.AreEqual(0, fields.Data.Count());
+            foreach (var prop in fields.GetType().GetProperties().Where(prop => prop.PropertyType == typeof(bool)))
+            {
+                Assert.IsFalse((bool)prop.GetValue(fields, null));
+            }
+        }
     }
 }

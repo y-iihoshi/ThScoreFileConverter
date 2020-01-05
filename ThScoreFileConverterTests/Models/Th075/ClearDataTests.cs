@@ -61,7 +61,7 @@ namespace ThScoreFileConverterTests.Models.Th075
                 clearData.CardTrulyGot.ToArray(),
                 new byte[0x38],
                 clearData.Ranking.SelectMany(
-                    element => HighScoreTests.MakeByteArray(element as HighScoreStub)).ToArray());
+                    element => HighScoreTests.MakeByteArray((HighScoreStub)element)).ToArray());
 
         internal static void Validate(IClearData expected, IClearData actual)
         {
@@ -106,7 +106,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
             var clearData = new ClearData();
-            clearData.ReadFrom(null);
+            clearData.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });

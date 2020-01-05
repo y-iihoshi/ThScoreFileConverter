@@ -6,13 +6,16 @@ namespace ThScoreFileConverterTests.Models.Th06.Stubs
 {
     internal class CardAttackStub : ICardAttack
     {
-        public CardAttackStub() { }
+        public CardAttackStub()
+        {
+            this.CardName = Enumerable.Empty<byte>();
+            this.Signature = string.Empty;
+        }
 
         public CardAttackStub(ICardAttack cardAttack)
-            : this()
         {
             this.CardId = cardAttack.CardId;
-            this.CardName = cardAttack.CardName?.ToArray();
+            this.CardName = cardAttack.CardName.ToArray();
             this.ClearCount = cardAttack.ClearCount;
             this.TrialCount = cardAttack.TrialCount;
             this.FirstByteOfData = cardAttack.FirstByteOfData;

@@ -144,11 +144,11 @@ namespace ThScoreFileConverterTests.Models.Th155
         {
             var allScoreData = new AllScoreData();
 
-            Assert.IsNull(allScoreData.StoryDictionary);
-            Assert.IsNull(allScoreData.CharacterDictionary);
-            Assert.IsNull(allScoreData.BgmDictionary);
-            Assert.IsNull(allScoreData.EndingDictionary);
-            Assert.IsNull(allScoreData.StageDictionary);
+            Assert.AreEqual(0, allScoreData.StoryDictionary.Count);
+            Assert.AreEqual(0, allScoreData.CharacterDictionary.Count);
+            Assert.AreEqual(0, allScoreData.BgmDictionary.Count);
+            Assert.AreEqual(0, allScoreData.EndingDictionary.Count);
+            Assert.AreEqual(0, allScoreData.StageDictionary.Count);
             Assert.AreEqual(default, allScoreData.Version);
         });
 
@@ -167,7 +167,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
             var allScoreData = new AllScoreData();
-            allScoreData.ReadFrom(null);
+            allScoreData.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -186,11 +186,11 @@ namespace ThScoreFileConverterTests.Models.Th155
         {
             var allScoreData = TestUtils.Create<AllScoreData>(TestUtils.MakeByteArray((int)SQOT.Null));
 
-            Assert.IsNull(allScoreData.StoryDictionary);
-            Assert.IsNull(allScoreData.CharacterDictionary);
-            Assert.IsNull(allScoreData.BgmDictionary);
-            Assert.IsNull(allScoreData.EndingDictionary);
-            Assert.IsNull(allScoreData.StageDictionary);
+            Assert.AreEqual(0, allScoreData.StoryDictionary.Count);
+            Assert.AreEqual(0, allScoreData.CharacterDictionary.Count);
+            Assert.AreEqual(0, allScoreData.BgmDictionary.Count);
+            Assert.AreEqual(0, allScoreData.EndingDictionary.Count);
+            Assert.AreEqual(0, allScoreData.StageDictionary.Count);
             Assert.AreEqual(default, allScoreData.Version);
         });
 
@@ -204,11 +204,11 @@ namespace ThScoreFileConverterTests.Models.Th155
                 TestUtils.MakeSQByteArray("version", version).ToArray(),
                 (int)SQOT.Null));
 
-            Assert.IsNull(allScoreData.StoryDictionary);
-            Assert.IsNull(allScoreData.CharacterDictionary);
-            Assert.IsNull(allScoreData.BgmDictionary);
-            Assert.IsNull(allScoreData.EndingDictionary);
-            Assert.IsNull(allScoreData.StageDictionary);
+            Assert.AreEqual(0, allScoreData.StoryDictionary.Count);
+            Assert.AreEqual(0, allScoreData.CharacterDictionary.Count);
+            Assert.AreEqual(0, allScoreData.BgmDictionary.Count);
+            Assert.AreEqual(0, allScoreData.EndingDictionary.Count);
+            Assert.AreEqual(0, allScoreData.StageDictionary.Count);
             Assert.AreEqual(version, allScoreData.Version);
         });
 
@@ -221,7 +221,7 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.IsNull(allScoreData.StoryDictionary);
+            Assert.AreEqual(0, allScoreData.StoryDictionary.Count);
         });
 
         [TestMethod]
@@ -233,7 +233,6 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.IsNotNull(allScoreData.StoryDictionary);
             Assert.AreEqual(0, allScoreData.StoryDictionary.Count);
         });
 
@@ -246,7 +245,6 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.IsNotNull(allScoreData.StoryDictionary);
             Assert.AreEqual(0, allScoreData.StoryDictionary.Count);
         });
 
@@ -264,7 +262,6 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.IsNotNull(allScoreData.StoryDictionary);
             Assert.AreEqual(1, allScoreData.StoryDictionary.Count);
             var story = allScoreData.StoryDictionary[StoryChara.ReimuKasen];
             Assert.AreEqual(default, story.Stage);
@@ -291,7 +288,6 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.IsNotNull(allScoreData.StoryDictionary);
             Assert.AreEqual(1, allScoreData.StoryDictionary.Count);
             var story = allScoreData.StoryDictionary[StoryChara.ReimuKasen];
             Assert.AreEqual(default, story.Stage);
@@ -325,7 +321,6 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.IsNotNull(allScoreData.StoryDictionary);
             Assert.AreEqual(1, allScoreData.StoryDictionary.Count);
             var story = allScoreData.StoryDictionary[StoryChara.ReimuKasen];
             Assert.AreEqual(default, story.Stage);
@@ -344,7 +339,7 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.IsNull(allScoreData.CharacterDictionary);
+            Assert.AreEqual(0, allScoreData.CharacterDictionary.Count);
         });
 
         [TestMethod]
@@ -356,7 +351,6 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.IsNotNull(allScoreData.CharacterDictionary);
             Assert.AreEqual(0, allScoreData.CharacterDictionary.Count);
         });
 
@@ -369,7 +363,6 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.IsNotNull(allScoreData.CharacterDictionary);
             Assert.AreEqual(0, allScoreData.CharacterDictionary.Count);
         });
 
@@ -382,7 +375,7 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.IsNull(allScoreData.BgmDictionary);
+            Assert.AreEqual(0, allScoreData.BgmDictionary.Count);
         });
 
         [TestMethod]
@@ -394,7 +387,6 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.IsNotNull(allScoreData.BgmDictionary);
             Assert.AreEqual(0, allScoreData.BgmDictionary.Count);
         });
 
@@ -407,7 +399,6 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.IsNotNull(allScoreData.BgmDictionary);
             Assert.AreEqual(0, allScoreData.BgmDictionary.Count);
         });
 
@@ -420,7 +411,7 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.IsNull(allScoreData.EndingDictionary);
+            Assert.AreEqual(0, allScoreData.EndingDictionary.Count);
         });
 
         [TestMethod]
@@ -432,7 +423,6 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.IsNotNull(allScoreData.EndingDictionary);
             Assert.AreEqual(0, allScoreData.EndingDictionary.Count);
         });
 
@@ -445,7 +435,6 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.IsNotNull(allScoreData.EndingDictionary);
             Assert.AreEqual(0, allScoreData.EndingDictionary.Count);
         });
 
@@ -458,7 +447,7 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.IsNull(allScoreData.StageDictionary);
+            Assert.AreEqual(0, allScoreData.StageDictionary.Count);
         });
 
         [TestMethod]
@@ -470,7 +459,6 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.IsNotNull(allScoreData.StageDictionary);
             Assert.AreEqual(0, allScoreData.StageDictionary.Count);
         });
 
@@ -483,7 +471,6 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
 
-            Assert.IsNotNull(allScoreData.StageDictionary);
             Assert.AreEqual(0, allScoreData.StageDictionary.Count);
         });
 

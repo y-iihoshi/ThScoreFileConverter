@@ -75,7 +75,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         [ExpectedException(typeof(ArgumentNullException))]
         public void CardAttackTestNullChapter() => TestUtils.Wrap(() =>
         {
-            _ = new CardAttack(null);
+            _ = new CardAttack(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });

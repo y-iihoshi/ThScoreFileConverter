@@ -25,7 +25,7 @@ namespace ThScoreFileConverter.Squirrel
 
         public new string Value
         {
-            get => base.Value as string;
+            get => (string)base.Value;
             private set => base.Value = value;
         }
 
@@ -53,7 +53,7 @@ namespace ThScoreFileConverter.Squirrel
 
         public override bool Equals(object obj)
         {
-            return this.Equals(obj as SQString);
+            return (obj is SQString value) && this.Equals(value);
         }
 
         public override int GetHashCode()

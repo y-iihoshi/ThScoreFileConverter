@@ -42,7 +42,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         [ExpectedException(typeof(ArgumentNullException))]
         public void ScoreTotalReplacerTestNullScores()
         {
-            _ = new ScoreTotalReplacer(null, ItemStatuses);
+            _ = new ScoreTotalReplacer(null!, ItemStatuses);
             Assert.Fail(TestUtils.Unreachable);
         }
 
@@ -58,7 +58,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         [ExpectedException(typeof(ArgumentNullException))]
         public void ScoreTotalReplacerTestNullItemStatuses()
         {
-            _ = new ScoreTotalReplacer(Scores, null);
+            _ = new ScoreTotalReplacer(Scores, null!);
             Assert.Fail(TestUtils.Unreachable);
         }
 

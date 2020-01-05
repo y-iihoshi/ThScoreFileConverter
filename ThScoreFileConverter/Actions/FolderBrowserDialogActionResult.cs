@@ -5,6 +5,8 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System;
+
 namespace ThScoreFileConverter.Actions
 {
     /// <summary>
@@ -18,7 +20,7 @@ namespace ThScoreFileConverter.Actions
         /// <param name="selectedPath">A path string.</param>
         public FolderBrowserDialogActionResult(string selectedPath)
         {
-            this.SelectedPath = selectedPath;
+            this.SelectedPath = selectedPath ?? throw new ArgumentNullException(nameof(selectedPath));
         }
 
         /// <summary>

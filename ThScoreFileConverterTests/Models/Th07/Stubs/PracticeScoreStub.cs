@@ -4,10 +4,12 @@ namespace ThScoreFileConverterTests.Models.Th07.Stubs
 {
     internal class PracticeScoreStub : IPracticeScore
     {
-        public PracticeScoreStub() { }
+        public PracticeScoreStub()
+        {
+            this.Signature = string.Empty;
+        }
 
         public PracticeScoreStub(IPracticeScore score)
-            : this()
         {
             this.Chara = score.Chara;
             this.HighScore = score.HighScore;

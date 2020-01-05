@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th16;
@@ -9,22 +10,29 @@ namespace ThScoreFileConverterTests.Models.Th16.Stubs
 {
     internal class ClearDataStub : IClearData
     {
-        public ClearDataStub() { }
+        public ClearDataStub()
+        {
+            this.Cards = ImmutableDictionary<int, ISpellCard>.Empty;
+            this.ClearCounts = ImmutableDictionary<LevelWithTotal, int>.Empty;
+            this.ClearFlags = ImmutableDictionary<LevelWithTotal, int>.Empty;
+            this.Practices = ImmutableDictionary<(Level, StagePractice), IPractice>.Empty;
+            this.Rankings = ImmutableDictionary<LevelWithTotal, IReadOnlyList<IScoreData>>.Empty;
+            this.Signature = string.Empty;
+        }
 
         public ClearDataStub(IClearData clearData)
-            : this()
         {
-            this.Cards = clearData.Cards?.ToDictionary(
+            this.Cards = clearData.Cards.ToDictionary(
                 pair => pair.Key, pair => new Th13.Stubs.SpellCardStub<Level>(pair.Value) as ISpellCard);
             this.Chara = clearData.Chara;
-            this.ClearCounts = clearData.ClearCounts?.ToDictionary(pair => pair.Key, pair => pair.Value);
-            this.ClearFlags = clearData.ClearFlags?.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.ClearCounts = clearData.ClearCounts.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.ClearFlags = clearData.ClearFlags.ToDictionary(pair => pair.Key, pair => pair.Value);
             this.PlayTime = clearData.PlayTime;
-            this.Practices = clearData.Practices?.ToDictionary(
+            this.Practices = clearData.Practices.ToDictionary(
                 pair => pair.Key, pair => new Th13.Stubs.PracticeStub(pair.Value) as IPractice);
-            this.Rankings = clearData.Rankings?.ToDictionary(
+            this.Rankings = clearData.Rankings.ToDictionary(
                 pair => pair.Key,
-                pair => pair.Value?.Select(score => new ScoreDataStub(score))?.ToList() as IReadOnlyList<IScoreData>);
+                pair => pair.Value.Select(score => new ScoreDataStub(score)).ToList() as IReadOnlyList<IScoreData>);
             this.TotalPlayCount = clearData.TotalPlayCount;
             this.Checksum = clearData.Checksum;
             this.IsValid = clearData.IsValid;

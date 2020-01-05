@@ -130,7 +130,7 @@ namespace ThScoreFileConverterTests.Models.Th125
         {
             var header = new BestShotHeader();
 
-            header.ReadFrom(null);
+            header.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });

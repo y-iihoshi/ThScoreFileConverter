@@ -44,7 +44,7 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(ArgumentNullException))]
         public void ParseEnumTestNull()
         {
-            _ = Utils.ParseEnum<DayOfWeek>(null);
+            _ = Utils.ParseEnum<DayOfWeek>(null!);
             Assert.Fail(TestUtils.Unreachable);
         }
 
@@ -86,15 +86,6 @@ namespace ThScoreFileConverterTests.Models
 
             Settings.Instance.OutputNumberGroupSeparator = false;
             Assert.AreEqual("12345678", Utils.ToNumberString(12345678));
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void ToNumberStringTestUnset()
-        {
-            Settings.Instance.OutputNumberGroupSeparator = null;
-            _ = Utils.ToNumberString(1234);
-            Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod]

@@ -76,7 +76,7 @@ namespace ThScoreFileConverterTests.Models.Th095
         public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
             var header = new HeaderBase();
-            header.ReadFrom(null);
+            header.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });
@@ -261,7 +261,7 @@ namespace ThScoreFileConverterTests.Models.Th095
 
             var header = TestUtils.Create<HeaderBase>(byteArray);
 
-            MemoryStream stream = null;
+            MemoryStream? stream = null;
             try
             {
                 stream = new MemoryStream();
@@ -289,7 +289,7 @@ namespace ThScoreFileConverterTests.Models.Th095
             var byteArray = MakeByteArray(properties);
 
             var header = TestUtils.Create<HeaderBase>(byteArray);
-            header.WriteTo(null);
+            header.WriteTo(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });

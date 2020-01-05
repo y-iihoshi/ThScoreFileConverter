@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using ThScoreFileConverter.Models.Th06;
 
@@ -9,14 +10,18 @@ namespace ThScoreFileConverterTests.Models.Th06.Stubs
         where TChara : struct, Enum
         where TLevel : struct, Enum
     {
-        public ClearDataStub() { }
+        public ClearDataStub()
+        {
+            this.PracticeFlags = ImmutableDictionary<TLevel, byte>.Empty;
+            this.StoryFlags = ImmutableDictionary<TLevel, byte>.Empty;
+            this.Signature = string.Empty;
+        }
 
         public ClearDataStub(IClearData<TChara, TLevel> clearData)
-            : this()
         {
             this.Chara = clearData.Chara;
-            this.PracticeFlags = clearData.PracticeFlags?.ToDictionary(pair => pair.Key, pair => pair.Value);
-            this.StoryFlags = clearData.StoryFlags?.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.PracticeFlags = clearData.PracticeFlags.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.StoryFlags = clearData.StoryFlags.ToDictionary(pair => pair.Key, pair => pair.Value);
             this.FirstByteOfData = clearData.FirstByteOfData;
             this.Signature = clearData.Signature;
             this.Size1 = clearData.Size1;

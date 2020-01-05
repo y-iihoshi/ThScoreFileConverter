@@ -72,7 +72,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         {
             var header = new BestShotHeader();
 
-            header.ReadFrom(null);
+            header.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });

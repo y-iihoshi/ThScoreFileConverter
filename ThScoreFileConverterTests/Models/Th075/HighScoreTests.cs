@@ -41,7 +41,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         {
             var highScore = new HighScore();
 
-            Assert.IsNull(highScore.Name);
+            Assert.AreEqual(string.Empty, highScore.Name);
             Assert.AreEqual(default, highScore.Month);
             Assert.AreEqual(default, highScore.Day);
             Assert.AreEqual(default, highScore.Score);
@@ -60,7 +60,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
             var highScore = new HighScore();
-            highScore.ReadFrom(null);
+            highScore.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });

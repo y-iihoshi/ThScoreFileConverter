@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ThScoreFileConverter.Models.Th075;
 
@@ -6,19 +7,25 @@ namespace ThScoreFileConverterTests.Models.Th075.Stubs
 {
     internal class ClearDataStub : IClearData
     {
-        public ClearDataStub() { }
+        public ClearDataStub()
+        {
+            this.CardGotCount = Array.Empty<short>();
+            this.CardTrialCount = Array.Empty<short>();
+            this.CardTrulyGot = Array.Empty<byte>();
+            this.MaxBonuses = Array.Empty<int>();
+            this.Ranking = Array.Empty<IHighScore>();
+        }
 
         public ClearDataStub(IClearData clearData)
-            : this()
         {
-            this.CardGotCount = clearData.CardGotCount?.ToList();
-            this.CardTrialCount = clearData.CardTrialCount?.ToList();
-            this.CardTrulyGot = clearData.CardTrulyGot?.ToList();
+            this.CardGotCount = clearData.CardGotCount.ToList();
+            this.CardTrialCount = clearData.CardTrialCount.ToList();
+            this.CardTrulyGot = clearData.CardTrulyGot.ToList();
             this.ClearCount = clearData.ClearCount;
-            this.MaxBonuses = clearData.MaxBonuses?.ToList();
+            this.MaxBonuses = clearData.MaxBonuses.ToList();
             this.MaxCombo = clearData.MaxCombo;
             this.MaxDamage = clearData.MaxDamage;
-            this.Ranking = clearData.Ranking?.ToList();
+            this.Ranking = clearData.Ranking.ToList();
             this.UseCount = clearData.UseCount;
         }
 

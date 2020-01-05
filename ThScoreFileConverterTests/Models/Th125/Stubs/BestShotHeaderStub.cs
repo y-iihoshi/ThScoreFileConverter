@@ -6,10 +6,13 @@ namespace ThScoreFileConverterTests.Models.Th125.Stubs
 {
     internal class BestShotHeaderStub : IBestShotHeader
     {
-        public BestShotHeaderStub() { }
+        public BestShotHeaderStub()
+        {
+            this.CardName = Enumerable.Empty<byte>();
+            this.Signature = string.Empty;
+        }
 
         public BestShotHeaderStub(IBestShotHeader header)
-            : this()
         {
             this.Angle = header.Angle;
             this.AngleBonus = header.AngleBonus;
@@ -27,7 +30,7 @@ namespace ThScoreFileConverterTests.Models.Th125.Stubs
             this.ResultScore2 = header.ResultScore2;
             this.RiskBonus = header.RiskBonus;
             this.Width2 = header.Width2;
-            this.CardName = header.CardName?.ToArray();
+            this.CardName = header.CardName.ToArray();
             this.Height = header.Height;
             this.Level = header.Level;
             this.ResultScore = header.ResultScore;

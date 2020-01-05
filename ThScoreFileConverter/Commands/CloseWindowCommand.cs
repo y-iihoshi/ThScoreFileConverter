@@ -27,7 +27,7 @@ namespace ThScoreFileConverter.Commands
         /// Occurs when changes occur that affect whether or not the command should execute.
         /// </summary>
 #pragma warning disable CS0067
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler? CanExecuteChanged;
 #pragma warning restore CS0067
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace ThScoreFileConverter.Commands
         {
 #pragma warning disable CA1062 // Validate arguments of public methods
             if (this.CanExecute(parameter))
-                (parameter as Window).Close();
+                ((Window)parameter).Close();
 #pragma warning restore CA1062 // Validate arguments of public methods
         }
     }

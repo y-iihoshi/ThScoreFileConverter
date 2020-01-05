@@ -17,14 +17,15 @@ namespace ThScoreFileConverter.Models.Th105
     internal class AllScoreData : IBinaryReadable
     {
         private readonly Dictionary<Chara, byte> storyClearCounts;
-        private Dictionary<int, ICardForDeck> systemCards;
-        private Dictionary<Chara, IClearData<Chara>> clearData;
+        private readonly Dictionary<int, ICardForDeck> systemCards;
+        private readonly Dictionary<Chara, IClearData<Chara>> clearData;
 
         public AllScoreData()
         {
-            this.storyClearCounts = new Dictionary<Chara, byte>(Enum.GetValues(typeof(Chara)).Length);
-            this.systemCards = null;
-            this.clearData = null;
+            var numCharas = Enum.GetValues(typeof(Chara)).Length;
+            this.storyClearCounts = new Dictionary<Chara, byte>(numCharas);
+            this.systemCards = new Dictionary<int, ICardForDeck>(Definitions.SystemCardNameTable.Count);
+            this.clearData = new Dictionary<Chara, IClearData<Chara>>(numCharas);
         }
 
         public IReadOnlyDictionary<Chara, byte> StoryClearCounts => this.storyClearCounts;
@@ -62,7 +63,6 @@ namespace ThScoreFileConverter.Models.Th105
                 _ = reader.ReadUInt32();        // always 0x0000000A and 0x0000000B?
 
             var numSystemCards = reader.ReadInt32();
-            this.systemCards = new Dictionary<int, ICardForDeck>(numSystemCards);
             for (var index = 0; index < numSystemCards; index++)
             {
                 var card = new CardForDeck();
@@ -71,7 +71,6 @@ namespace ThScoreFileConverter.Models.Th105
                     this.systemCards.Add(card.Id, card);
             }
 
-            this.clearData = new Dictionary<Chara, IClearData<Chara>>(validNumCharas);
             var numCharas = reader.ReadInt32();
             for (var index = 0; index < numCharas; index++)
             {

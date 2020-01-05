@@ -22,13 +22,13 @@ namespace ThScoreFileConverter.Models.Th128
                 new Dictionary<RouteWithTotal, IClearData>(Enum.GetValues(typeof(RouteWithTotal)).Length);
         }
 
-        public Th095.HeaderBase Header { get; private set; }
+        public Th095.HeaderBase? Header { get; private set; }
 
         public IReadOnlyDictionary<RouteWithTotal, IClearData> ClearData => this.clearData;
 
-        public ICardData CardData { get; private set; }
+        public ICardData? CardData { get; private set; }
 
-        public Th125.IStatus Status { get; private set; }
+        public Th125.IStatus? Status { get; private set; }
 
         public void Set(Th095.HeaderBase header)
         {

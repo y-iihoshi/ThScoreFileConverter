@@ -60,7 +60,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         [ExpectedException(typeof(ArgumentNullException))]
         public void VersionInfoTestNullChapter() => TestUtils.Wrap(() =>
         {
-            _ = new VersionInfo(null);
+            _ = new VersionInfo(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });

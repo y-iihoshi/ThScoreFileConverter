@@ -48,7 +48,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         [ExpectedException(typeof(ArgumentNullException))]
         public void ClearReplacerTestNullRankings()
         {
-            _ = new ClearReplacer(null, ClearData);
+            _ = new ClearReplacer(null!, ClearData);
             Assert.Fail(TestUtils.Unreachable);
         }
 
@@ -56,7 +56,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         [ExpectedException(typeof(ArgumentNullException))]
         public void ClearReplacerTestNullClearData()
         {
-            _ = new ClearReplacer(Rankings, null);
+            _ = new ClearReplacer(Rankings, null!);
             Assert.Fail(TestUtils.Unreachable);
         }
 

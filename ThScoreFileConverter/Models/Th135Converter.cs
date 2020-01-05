@@ -20,7 +20,7 @@ namespace ThScoreFileConverter.Models
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th135Converter : ThConverter
     {
-        private AllScoreData allScoreData = null;
+        private AllScoreData? allScoreData = null;
 
         public override string SupportedVersions { get; } = "1.34b";
 
@@ -45,6 +45,9 @@ namespace ThScoreFileConverter.Models
 
         protected override IEnumerable<IStringReplaceable> CreateReplacers(bool hideUntriedCards, string outputFilePath)
         {
+            if (this.allScoreData is null)
+                throw new InvalidDataException(Utils.Format($"Invoke {nameof(this.ReadScoreFile)} first."));
+
             return new List<IStringReplaceable>
             {
                 new ClearReplacer(this.allScoreData.StoryClearFlags),
@@ -93,7 +96,7 @@ namespace ThScoreFileConverter.Models
             return succeeded;
         }
 
-        private static AllScoreData Read(Stream input)
+        private static AllScoreData? Read(Stream input)
         {
             using var reader = new BinaryReader(input, Encoding.UTF8, true);
             var allScoreData = new AllScoreData();

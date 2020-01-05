@@ -6,15 +6,20 @@ namespace ThScoreFileConverterTests.Models.Th165.Stubs
 {
     internal class StatusStub : IStatus
     {
-        public StatusStub() { }
+        public StatusStub()
+        {
+            this.NicknameFlags = Enumerable.Empty<byte>();
+            this.BgmFlags = Enumerable.Empty<byte>();
+            this.LastName = Enumerable.Empty<byte>();
+            this.Signature = string.Empty;
+        }
 
         public StatusStub(IStatus status)
-            : this()
         {
-            this.NicknameFlags = status.NicknameFlags?.ToArray();
+            this.NicknameFlags = status.NicknameFlags.ToArray();
             this.TotalPlayTime = status.TotalPlayTime;
-            this.BgmFlags = status.BgmFlags?.ToArray();
-            this.LastName = status.LastName?.ToArray();
+            this.BgmFlags = status.BgmFlags.ToArray();
+            this.LastName = status.LastName.ToArray();
             this.Checksum = status.Checksum;
             this.IsValid = status.IsValid;
             this.Signature = status.Signature;

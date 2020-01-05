@@ -50,11 +50,10 @@ namespace ThScoreFileConverter.Models
         /// Creates a new instance of the subclass of the <see cref="ThConverter"/> class.
         /// </summary>
         /// <param name="key">The string to specify the subclass.</param>
-        /// <returns>An instance of the subclass specified by <paramref name="key"/>.</returns>
-        public static ThConverter Create(string key)
+        /// <returns>An instance of the subclass specified by <paramref name="key"/>, otherwise <c>null</c>.</returns>
+        public static ThConverter? Create(string key)
         {
-            return ConverterTypes.TryGetValue(key, out var type)
-                ? Activator.CreateInstance(type) as ThConverter : null;
+            return ConverterTypes.TryGetValue(key, out var type) ? Activator.CreateInstance(type) as ThConverter : null;
         }
     }
 }

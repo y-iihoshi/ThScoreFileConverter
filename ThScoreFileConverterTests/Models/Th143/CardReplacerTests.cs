@@ -25,7 +25,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         [ExpectedException(typeof(ArgumentNullException))]
         public void CardReplacerTestNull()
         {
-            _ = new CardReplacer(null, true);
+            _ = new CardReplacer(null!, true);
             Assert.Fail(TestUtils.Unreachable);
         }
 
@@ -72,7 +72,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         [TestMethod]
         public void ReplaceTestNullScore()
         {
-            var scores = new List<IScore> { null };
+            var scores = new List<IScore> { null! };
             var replacer = new CardReplacer(scores, true);
             Assert.AreEqual("??????????", replacer.Replace("%T143CARDL41"));
         }

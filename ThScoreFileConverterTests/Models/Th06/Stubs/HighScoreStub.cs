@@ -11,14 +11,17 @@ namespace ThScoreFileConverterTests.Models.Th06.Stubs
 {
     internal class HighScoreStub : IHighScore
     {
-        public HighScoreStub() { }
+        public HighScoreStub()
+        {
+            this.Name = Enumerable.Empty<byte>();
+            this.Signature = string.Empty;
+        }
 
         public HighScoreStub(IHighScore highScore)
-            : this()
         {
             this.Chara = highScore.Chara;
             this.Level = highScore.Level;
-            this.Name = highScore.Name?.ToArray();
+            this.Name = highScore.Name.ToArray();
             this.Score = highScore.Score;
             this.StageProgress = highScore.StageProgress;
             this.FirstByteOfData = highScore.FirstByteOfData;

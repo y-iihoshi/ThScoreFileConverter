@@ -15,16 +15,16 @@ namespace ThScoreFileConverter.Models
         /// <summary>
         /// Gets or sets a number string (e.g. <c>"TH06"</c>).
         /// </summary>
-        public string Number { get; set; }
+        public string Number { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets a title string.
         /// </summary>
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets a value indicating whether the work is supported by this tool.
         /// </summary>
-        public bool IsSupported { get; set; }
+        public bool IsSupported { get; set; } = false;
     }
 }

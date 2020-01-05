@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 
@@ -16,6 +17,11 @@ namespace ThScoreFileConverter.Models.Th08
 {
     internal class PlayCount : IBinaryReadable, IPlayCount  // per level-with-total
     {
+        public PlayCount()
+        {
+            this.Trials = ImmutableDictionary<Chara, int>.Empty;
+        }
+
         public int TotalTrial { get; private set; }
 
         public IReadOnlyDictionary<Chara, int> Trials { get; private set; }

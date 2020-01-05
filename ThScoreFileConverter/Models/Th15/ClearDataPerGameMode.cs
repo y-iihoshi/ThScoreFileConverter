@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 
@@ -16,6 +17,14 @@ namespace ThScoreFileConverter.Models.Th15
 {
     internal class ClearDataPerGameMode : IBinaryReadable, IClearDataPerGameMode
     {
+        public ClearDataPerGameMode()
+        {
+            this.Rankings = ImmutableDictionary<LevelWithTotal, IReadOnlyList<IScoreData>>.Empty;
+            this.ClearCounts = ImmutableDictionary<LevelWithTotal, int>.Empty;
+            this.ClearFlags = ImmutableDictionary<LevelWithTotal, int>.Empty;
+            this.Cards = ImmutableDictionary<int, Th13.ISpellCard<Level>>.Empty;
+        }
+
         public IReadOnlyDictionary<LevelWithTotal, IReadOnlyList<IScoreData>> Rankings { get; private set; }
 
         public int TotalPlayCount { get; private set; }

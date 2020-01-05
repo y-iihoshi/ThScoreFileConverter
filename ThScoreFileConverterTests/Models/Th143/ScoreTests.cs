@@ -70,7 +70,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         [ExpectedException(typeof(ArgumentNullException))]
         public void ScoreTestNullChapter() => TestUtils.Wrap(() =>
         {
-            _ = new Score(null);
+            _ = new Score(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });

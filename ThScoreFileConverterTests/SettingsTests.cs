@@ -420,7 +420,7 @@ namespace ThScoreFileConverterTests
         public void LoadTestNoOutputNumberGroupSeparator()
         {
             Settings.Instance.Load(@"TestData\no-output-number-group-separator.xml");
-            Assert.IsTrue(Settings.Instance.OutputNumberGroupSeparator.Value);
+            Assert.AreEqual(true, Settings.Instance.OutputNumberGroupSeparator);
         }
 
         [TestMethod]

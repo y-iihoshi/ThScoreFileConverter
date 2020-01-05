@@ -47,8 +47,8 @@ namespace ThScoreFileConverterTests.Models.Th06
             Assert.AreEqual(expected.Size1, actual.Size1);
             Assert.AreEqual(expected.Size2, actual.Size2);
             Assert.AreEqual(expected.FirstByteOfData, actual.FirstByteOfData);
-            CollectionAssert.That.AreEqual(expected.StoryFlags?.Values, actual.StoryFlags?.Values);
-            CollectionAssert.That.AreEqual(expected.PracticeFlags?.Values, actual.PracticeFlags?.Values);
+            CollectionAssert.That.AreEqual(expected.StoryFlags.Values, actual.StoryFlags.Values);
+            CollectionAssert.That.AreEqual(expected.PracticeFlags.Values, actual.PracticeFlags.Values);
             Assert.AreEqual(expected.Chara, actual.Chara);
         }
 
@@ -65,7 +65,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [ExpectedException(typeof(ArgumentNullException))]
         public void ClearDataTestNullChapter() => TestUtils.Wrap(() =>
         {
-            _ = new ClearData(null);
+            _ = new ClearData(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });

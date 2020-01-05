@@ -3,7 +3,6 @@ using System.Windows;
 using System.Windows.Interop;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Actions;
-using ThScoreFileConverterTests.Models;
 
 namespace ThScoreFileConverterTests.Interactivity
 {
@@ -33,12 +32,11 @@ namespace ThScoreFileConverterTests.Interactivity
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Win32WindowTestNull()
         {
-            _ = new Win32Window(null);
+            var win32window = new Win32Window(null);
 
-            Assert.Fail(TestUtils.Unreachable);
+            Assert.AreEqual(IntPtr.Zero, win32window.Handle);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace ThScoreFileConverterTests.Squirrel
 
         internal static SQClosure CreateTestHelper(byte[] bytes)
         {
-            MemoryStream stream = null;
+            MemoryStream? stream = null;
             try
             {
                 stream = new MemoryStream(bytes);
@@ -46,7 +46,7 @@ namespace ThScoreFileConverterTests.Squirrel
         [ExpectedException(typeof(ArgumentNullException))]
         public void CreateTestNull()
         {
-            _ = SQClosure.Create(null);
+            _ = SQClosure.Create(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         }

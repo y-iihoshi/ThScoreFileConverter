@@ -26,9 +26,10 @@ namespace ThScoreFileConverter.Models
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th095Converter : ThConverter
     {
-        private AllScoreData allScoreData = null;
+        private readonly Dictionary<(Th095.Level Level, int Scene), (string Path, IBestShotHeader Header)> bestshots =
+            new Dictionary<(Th095.Level, int), (string, IBestShotHeader)>(Definitions.SpellCards.Count);
 
-        private Dictionary<(Th095.Level Level, int Scene), (string Path, IBestShotHeader Header)> bestshots = null;
+        private AllScoreData? allScoreData = null;
 
         public override string SupportedVersions { get; } = "1.02a";
 
@@ -62,6 +63,9 @@ namespace ThScoreFileConverter.Models
 
         protected override IEnumerable<IStringReplaceable> CreateReplacers(bool hideUntriedCards, string outputFilePath)
         {
+            if (this.allScoreData is null)
+                throw new InvalidDataException(Utils.Format($"Invoke {nameof(this.ReadScoreFile)} first."));
+
             return new List<IStringReplaceable>
             {
                 new ScoreReplacer(this.allScoreData.Scores),
@@ -90,12 +94,6 @@ namespace ThScoreFileConverter.Models
             header.ReadFrom(reader);
 
             var key = (header.Level, header.Scene);
-            if (this.bestshots == null)
-            {
-                this.bestshots =
-                    new Dictionary<(Th095.Level, int), (string, IBestShotHeader)>(Definitions.SpellCards.Count);
-            }
-
             if (!this.bestshots.ContainsKey(key))
                 this.bestshots.Add(key, (outputFile.Name, header));
 
@@ -200,7 +198,7 @@ namespace ThScoreFileConverter.Models
             return remainSize == 0;
         }
 
-        private static AllScoreData Read(Stream input)
+        private static AllScoreData? Read(Stream input)
         {
             var dictionary = new Dictionary<string, Action<AllScoreData, Chapter>>
             {

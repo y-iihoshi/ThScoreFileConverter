@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th13
@@ -17,7 +18,7 @@ namespace ThScoreFileConverter.Models.Th13
     internal class SpellCard<TLevel> : IBinaryReadable, ISpellCard<TLevel>
         where TLevel : struct, Enum
     {
-        public IEnumerable<byte> Name { get; private set; }
+        public IEnumerable<byte> Name { get; private set; } = Enumerable.Empty<byte>();
 
         public int ClearCount { get; private set; }
 

@@ -72,7 +72,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         [ExpectedException(typeof(ArgumentNullException))]
         public void ClearRankReplacerTestNull()
         {
-            _ = new ClearRankReplacer(null);
+            _ = new ClearRankReplacer(null!);
             Assert.Fail(TestUtils.Unreachable);
         }
 

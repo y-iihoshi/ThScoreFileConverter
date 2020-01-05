@@ -7,7 +7,6 @@ namespace ThScoreFileConverterTests.Models.Th105.Stubs
         public CardForDeckStub() { }
 
         public CardForDeckStub(ICardForDeck cardForDeck)
-            : base()
         {
             this.Id = cardForDeck.Id;
             this.MaxNumber = cardForDeck.MaxNumber;

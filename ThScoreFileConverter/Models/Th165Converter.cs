@@ -26,9 +26,10 @@ namespace ThScoreFileConverter.Models
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Reviewed.")]
     internal class Th165Converter : ThConverter
     {
-        private AllScoreData allScoreData = null;
+        private readonly Dictionary<(Day Day, int Scene), (string Path, IBestShotHeader Header)> bestshots =
+            new Dictionary<(Day, int), (string, IBestShotHeader)>(Definitions.SpellCards.Count);
 
-        private Dictionary<(Day Day, int Scene), (string Path, IBestShotHeader Header)> bestshots = null;
+        private AllScoreData? allScoreData = null;
 
         public override string SupportedVersions => "1.00a";
 
@@ -62,6 +63,9 @@ namespace ThScoreFileConverter.Models
 
         protected override IEnumerable<IStringReplaceable> CreateReplacers(bool hideUntriedCards, string outputFilePath)
         {
+            if ((this.allScoreData is null) || (this.allScoreData.Status is null))
+                throw new InvalidDataException(Utils.Format($"Invoke {nameof(this.ReadScoreFile)} first."));
+
             return new List<IStringReplaceable>
             {
                 new ScoreReplacer(this.allScoreData.Scores),
@@ -90,12 +94,6 @@ namespace ThScoreFileConverter.Models
             using var reader = new BinaryReader(input, Encoding.UTF8, true);
             var header = new BestShotHeader();
             header.ReadFrom(reader);
-
-            if (this.bestshots == null)
-            {
-                this.bestshots =
-                    new Dictionary<(Day, int), (string, IBestShotHeader)>(Definitions.SpellCards.Count);
-            }
 
             var key = (header.Weekday, header.Dream);
             if (!this.bestshots.ContainsKey(key))
@@ -196,7 +194,7 @@ namespace ThScoreFileConverter.Models
             return remainSize == 0;
         }
 
-        private static AllScoreData Read(Stream input)
+        private static AllScoreData? Read(Stream input)
         {
             var dictionary = new Dictionary<string, Action<AllScoreData, Th10.Chapter>>
             {

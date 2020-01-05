@@ -17,10 +17,11 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void ExceptionOccurredEventArgsTestNull()
         {
-            var args = new ExceptionOccurredEventArgs(null);
-            Assert.IsNull(args.Exception);
+            _ = new ExceptionOccurredEventArgs(null!);
+            Assert.Fail(TestUtils.Unreachable);
         }
     }
 }

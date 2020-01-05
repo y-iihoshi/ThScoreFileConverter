@@ -41,6 +41,16 @@ namespace ThScoreFileConverterTests.Models.Th08
         }
 
         [TestMethod]
+        public void CardAttackCareerTest()
+        {
+            var stub = new CardAttackCareerStub();
+
+            var career = new CardAttackCareer();
+
+            Validate(stub, career);
+        }
+
+        [TestMethod]
         public void ReadFromTest() => TestUtils.Wrap(() =>
         {
             var stub = ValidStub;
@@ -55,7 +65,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
             var career = new CardAttackCareer();
-            career.ReadFrom(null);
+            career.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });

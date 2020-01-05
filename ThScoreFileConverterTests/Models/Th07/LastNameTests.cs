@@ -60,7 +60,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         [ExpectedException(typeof(ArgumentNullException))]
         public void LastNameTestNullChapter() => TestUtils.Wrap(() =>
         {
-            _ = new LastName(null);
+            _ = new LastName(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });

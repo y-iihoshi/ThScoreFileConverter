@@ -52,8 +52,8 @@ namespace ThScoreFileConverterTests.Models.Th075
         {
             var status = new Status();
 
-            Assert.IsNull(status.LastName);
-            Assert.IsNull(status.ArcadeScores);
+            Assert.AreEqual(string.Empty, status.LastName);
+            Assert.AreEqual(0, status.ArcadeScores.Count());
         });
 
         [TestMethod]
@@ -71,7 +71,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         public void ReadFromTestNull() => TestUtils.Wrap(() =>
         {
             var status = new Status();
-            status.ReadFrom(null);
+            status.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });

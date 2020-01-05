@@ -76,7 +76,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         [ExpectedException(typeof(ArgumentNullException))]
         public void HighScoreTestNullChapter() => TestUtils.Wrap(() =>
         {
-            _ = new HighScore(null);
+            _ = new HighScore(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });

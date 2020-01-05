@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using ThScoreFileConverter.Models.Th143;
 
@@ -6,13 +7,17 @@ namespace ThScoreFileConverterTests.Models.Th143.Stubs
 {
     internal class ScoreStub : IScore
     {
-        public ScoreStub() { }
+        public ScoreStub()
+        {
+            this.ChallengeCounts = ImmutableDictionary<ItemWithTotal, int>.Empty;
+            this.ClearCounts = ImmutableDictionary<ItemWithTotal, int>.Empty;
+            this.Signature = string.Empty;
+        }
 
         public ScoreStub(IScore score)
-            : this()
         {
-            this.ChallengeCounts = score.ChallengeCounts?.ToDictionary(pair => pair.Key, pair => pair.Value);
-            this.ClearCounts = score.ClearCounts?.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.ChallengeCounts = score.ChallengeCounts.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.ClearCounts = score.ClearCounts.ToDictionary(pair => pair.Key, pair => pair.Value);
             this.HighScore = score.HighScore;
             this.Number = score.Number;
             this.Checksum = score.Checksum;

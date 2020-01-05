@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 
@@ -16,6 +17,13 @@ namespace ThScoreFileConverter.Models.Th08
 {
     internal class CardAttackCareer : IBinaryReadable, ICardAttackCareer    // per story or practice
     {
+        public CardAttackCareer()
+        {
+            this.MaxBonuses = ImmutableDictionary<CharaWithTotal, uint>.Empty;
+            this.TrialCounts = ImmutableDictionary<CharaWithTotal, int>.Empty;
+            this.ClearCounts = ImmutableDictionary<CharaWithTotal, int>.Empty;
+        }
+
         public IReadOnlyDictionary<CharaWithTotal, uint> MaxBonuses { get; private set; }
 
         public IReadOnlyDictionary<CharaWithTotal, int> TrialCounts { get; private set; }

@@ -45,9 +45,9 @@ namespace ThScoreFileConverter.ViewModels
         }
 
         /// <inheritdoc/>
-#pragma warning disable 0067
-        public event Action<IDialogResult> RequestClose;
-#pragma warning restore 0067
+#pragma warning disable CS0067
+        public event Action<IDialogResult>? RequestClose;
+#pragma warning restore CS0067
 
         #region Properties to bind a view
 
@@ -76,7 +76,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public bool OutputNumberGroupSeparator
         {
-            get => Settings.Instance.OutputNumberGroupSeparator.Value;
+            get => Settings.Instance.OutputNumberGroupSeparator!.Value;
 
             set
             {
@@ -99,7 +99,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public int InputCodePageId
         {
-            get => Settings.Instance.InputCodePageId.Value;
+            get => Settings.Instance.InputCodePageId!.Value;
 
             set
             {
@@ -122,7 +122,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public int OutputCodePageId
         {
-            get => Settings.Instance.OutputCodePageId.Value;
+            get => Settings.Instance.OutputCodePageId!.Value;
 
             set
             {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th08;
@@ -11,13 +12,18 @@ namespace ThScoreFileConverterTests.Models.Th08.Stubs
 {
     internal class HighScoreStub : IHighScore
     {
-        public HighScoreStub() { }
+        public HighScoreStub()
+        {
+            this.CardFlags = ImmutableDictionary<int, byte>.Empty;
+            this.Date = Enumerable.Empty<byte>();
+            this.Name = Enumerable.Empty<byte>();
+            this.Signature = string.Empty;
+        }
 
         public HighScoreStub(IHighScore highScore)
-            : this()
         {
             this.BombCount = highScore.BombCount;
-            this.CardFlags = highScore.CardFlags?.ToDictionary(pair => pair.Key, pair => pair.Value);
+            this.CardFlags = highScore.CardFlags.ToDictionary(pair => pair.Key, pair => pair.Value);
             this.HumanRate = highScore.HumanRate;
             this.LastSpellCount = highScore.LastSpellCount;
             this.MissCount = highScore.MissCount;
@@ -27,11 +33,11 @@ namespace ThScoreFileConverterTests.Models.Th08.Stubs
             this.PointItem = highScore.PointItem;
             this.TimePoint = highScore.TimePoint;
             this.ContinueCount = highScore.ContinueCount;
-            this.Date = highScore.Date?.ToArray();
+            this.Date = highScore.Date.ToArray();
             this.SlowRate = highScore.SlowRate;
             this.Chara = highScore.Chara;
             this.Level = highScore.Level;
-            this.Name = highScore.Name?.ToArray();
+            this.Name = highScore.Name.ToArray();
             this.Score = highScore.Score;
             this.StageProgress = highScore.StageProgress;
             this.FirstByteOfData = highScore.FirstByteOfData;
