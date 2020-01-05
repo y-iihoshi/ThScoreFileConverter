@@ -40,7 +40,7 @@ namespace ThScoreFileConverterTests.Models.Th145
         [ExpectedException(typeof(ArgumentNullException))]
         public void ClearTimeReplacerTestNull()
         {
-            _ = new ClearTimeReplacer(null);
+            _ = new ClearTimeReplacer(null!);
             Assert.Fail(TestUtils.Unreachable);
         }
 

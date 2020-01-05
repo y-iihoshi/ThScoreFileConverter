@@ -8,6 +8,7 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Squirrel;
@@ -21,8 +22,10 @@ namespace ThScoreFileConverter.Models.Th145
         public AllScoreData()
         {
             this.allData = new SQTable();
-            this.StoryClearFlags = null;
-            this.BgmFlags = null;
+            this.StoryClearFlags = ImmutableDictionary<Chara, LevelFlags>.Empty;
+            this.BgmFlags = ImmutableDictionary<int, bool>.Empty;
+            this.ClearRanks = ImmutableDictionary<Level, IReadOnlyDictionary<Chara, int>>.Empty;
+            this.ClearTimes = ImmutableDictionary<Level, IReadOnlyDictionary<Chara, int>>.Empty;
         }
 
         public int StoryProgress => this.GetValue<int>("story_progress");
@@ -72,7 +75,7 @@ namespace ThScoreFileConverter.Models.Th145
                     this.StoryClearFlags = storyClearFlags.Value
                         .Select((flag, index) => (flag, index))
                         .Where(pair => pair.flag is SQInteger)
-                        .ToDictionary(pair => (Chara)pair.index, pair => (LevelFlags)(int)(pair.flag as SQInteger));
+                        .ToDictionary(pair => (Chara)pair.index, pair => (LevelFlags)(int)(SQInteger)pair.flag);
                 }
             }
         }
@@ -85,7 +88,7 @@ namespace ThScoreFileConverter.Models.Th145
                 {
                     this.BgmFlags = bgmFlags.Value
                         .Where(pair => (pair.Key is SQInteger) && (pair.Value is SQBool))
-                        .ToDictionary(pair => (int)(pair.Key as SQInteger), pair => (bool)(pair.Value as SQBool));
+                        .ToDictionary(pair => (int)(SQInteger)pair.Key, pair => (bool)(SQBool)pair.Value);
                 }
             }
         }
@@ -101,12 +104,12 @@ namespace ThScoreFileConverter.Models.Th145
                         .Where(levelPair => levelPair.ranksPerChara is SQArray)
                         .ToDictionary(
                             levelPair => (Level)levelPair.index,
-                            levelPair => (levelPair.ranksPerChara as SQArray).Value
+                            levelPair => ((SQArray)levelPair.ranksPerChara).Value
                                 .Select((rank, index) => (rank, index))
                                 .Where(charaPair => charaPair.rank is SQInteger)
                                 .ToDictionary(
                                     charaPair => (Chara)charaPair.index,
-                                    charaPair => (int)(charaPair.rank as SQInteger))
+                                    charaPair => (int)(SQInteger)charaPair.rank)
                                 as IReadOnlyDictionary<Chara, int>);
                 }
             }
@@ -123,12 +126,12 @@ namespace ThScoreFileConverter.Models.Th145
                         .Where(levelPair => levelPair.timesPerChara is SQArray)
                         .ToDictionary(
                             levelPair => (Level)levelPair.index,
-                            levelPair => (levelPair.timesPerChara as SQArray).Value
+                            levelPair => ((SQArray)levelPair.timesPerChara).Value
                                 .Select((time, index) => (time, index))
                                 .Where(charaPair => charaPair.time is SQInteger)
                                 .ToDictionary(
                                     charaPair => (Chara)charaPair.index,
-                                    charaPair => (int)(charaPair.time as SQInteger))
+                                    charaPair => (int)(SQInteger)charaPair.time)
                                 as IReadOnlyDictionary<Chara, int>);
                 }
             }
