@@ -8,6 +8,7 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Squirrel;
@@ -20,11 +21,12 @@ namespace ThScoreFileConverter.Models.Th155
 
         public AllScoreData()
         {
-            this.allData = null;
-            this.StoryDictionary = null;
-            this.BgmDictionary = null;
-            this.EndingDictionary = null;
-            this.StageDictionary = null;
+            this.allData = new SQTable();
+            this.StoryDictionary = ImmutableDictionary<StoryChara, Story>.Empty;
+            this.CharacterDictionary = ImmutableDictionary<string, int>.Empty;
+            this.BgmDictionary = ImmutableDictionary<int, bool>.Empty;
+            this.EndingDictionary = ImmutableDictionary<string, int>.Empty;
+            this.StageDictionary = ImmutableDictionary<int, int>.Empty;
         }
 
         public IReadOnlyDictionary<StoryChara, Story> StoryDictionary { get; private set; }
@@ -111,9 +113,11 @@ namespace ThScoreFileConverter.Models.Th155
             {
                 if (story is SQTable table)
                 {
+#pragma warning disable SA1009 // Closing parenthesis should be spaced correctly
                     this.StoryDictionary = table.Value
                         .Where(pair => ParseStoryChara(pair.Key) != null)
-                        .ToDictionary(pair => ParseStoryChara(pair.Key).Value, pair => ParseStory(pair.Value));
+                        .ToDictionary(pair => ParseStoryChara(pair.Key)!.Value, pair => ParseStory(pair.Value));
+#pragma warning restore SA1009 // Closing parenthesis should be spaced correctly
                 }
             }
         }
@@ -126,9 +130,7 @@ namespace ThScoreFileConverter.Models.Th155
                 {
                     this.CharacterDictionary = table.Value
                         .Where(pair => (pair.Key is SQString) && (pair.Value is SQInteger))
-                        .ToDictionary(
-                            pair => (string)(pair.Key as SQString),
-                            pair => (int)(pair.Value as SQInteger));
+                        .ToDictionary(pair => (string)(SQString)pair.Key, pair => (int)(SQInteger)pair.Value);
                 }
             }
         }
@@ -141,7 +143,7 @@ namespace ThScoreFileConverter.Models.Th155
                 {
                     this.BgmDictionary = table.Value
                         .Where(pair => (pair.Key is SQInteger) && (pair.Value is SQBool))
-                        .ToDictionary(pair => (int)(pair.Key as SQInteger), pair => (bool)(pair.Value as SQBool));
+                        .ToDictionary(pair => (int)(SQInteger)pair.Key, pair => (bool)(SQBool)pair.Value);
                 }
             }
         }
@@ -154,9 +156,7 @@ namespace ThScoreFileConverter.Models.Th155
                 {
                     this.EndingDictionary = table.Value
                         .Where(pair => (pair.Key is SQString) && (pair.Value is SQInteger))
-                        .ToDictionary(
-                            pair => (string)(pair.Key as SQString),
-                            pair => (int)(pair.Value as SQInteger));
+                        .ToDictionary(pair => (string)(SQString)pair.Key, pair => (int)(SQInteger)pair.Value);
                 }
             }
         }
@@ -169,7 +169,7 @@ namespace ThScoreFileConverter.Models.Th155
                 {
                     this.StageDictionary = table.Value
                         .Where(pair => (pair.Key is SQInteger) && (pair.Value is SQInteger))
-                        .ToDictionary(pair => (int)(pair.Key as SQInteger), pair => (int)(pair.Value as SQInteger));
+                        .ToDictionary(pair => (int)(SQInteger)pair.Key, pair => (int)(SQInteger)pair.Value);
                 }
             }
         }
