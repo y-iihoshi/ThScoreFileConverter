@@ -22,11 +22,11 @@ namespace ThScoreFileConverter.Models.Th16
                 new Dictionary<CharaWithTotal, IClearData>(Enum.GetValues(typeof(CharaWithTotal)).Length);
         }
 
-        public Th095.HeaderBase Header { get; private set; }
+        public Th095.HeaderBase? Header { get; private set; }
 
         public IReadOnlyDictionary<CharaWithTotal, IClearData> ClearData => this.clearData;
 
-        public Th125.IStatus Status { get; private set; }
+        public Th125.IStatus? Status { get; private set; }
 
         public void Set(Th095.HeaderBase header)
         {
