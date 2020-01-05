@@ -55,7 +55,7 @@ namespace ThScoreFileConverterTests.Models.Th14
         [ExpectedException(typeof(ArgumentNullException))]
         public void CharaExReplacerTestNull()
         {
-            _ = new CharaExReplacer(null);
+            _ = new CharaExReplacer(null!);
             Assert.Fail(TestUtils.Unreachable);
         }
 
