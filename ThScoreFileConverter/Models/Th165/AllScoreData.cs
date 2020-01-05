@@ -20,11 +20,11 @@ namespace ThScoreFileConverter.Models.Th165
             this.scores = new List<IScore>(Definitions.SpellCards.Count);
         }
 
-        public Th095.HeaderBase Header { get; private set; }
+        public Th095.HeaderBase? Header { get; private set; }
 
         public IReadOnlyList<IScore> Scores => this.scores;
 
-        public IStatus Status { get; private set; }
+        public IStatus? Status { get; private set; }
 
         public void Set(Th095.HeaderBase header)
         {
