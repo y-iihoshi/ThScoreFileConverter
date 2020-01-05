@@ -81,7 +81,7 @@ namespace ThScoreFileConverterTests.Models.Th13
         [ExpectedException(typeof(ArgumentNullException))]
         public void StatusTestNullChapter() => TestUtils.Wrap(() =>
         {
-            _ = new Status(null);
+            _ = new Status(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });

@@ -31,14 +31,14 @@ namespace ThScoreFileConverter.Models.Th13
                 Enum.GetValues(typeof(TCharaWithTotal)).Length);
         }
 
-        public Th095.HeaderBase Header { get; private set; }
+        public Th095.HeaderBase? Header { get; private set; }
 
         public IReadOnlyDictionary<
             TCharaWithTotal,
             IClearData<TCharaWithTotal, TLevel, TLevelPractice, TLevelPracticeWithTotal, TStagePractice>> ClearData
             => this.clearData;
 
-        public Th125.IStatus Status { get; private set; }
+        public Th125.IStatus? Status { get; private set; }
 
         public void Set(Th095.HeaderBase header)
         {

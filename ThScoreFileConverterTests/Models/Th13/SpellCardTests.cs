@@ -85,7 +85,7 @@ namespace ThScoreFileConverterTests.Models.Th13
             {
                 var spellCard = new SpellCard<TLevel>();
 
-                spellCard.ReadFrom(null);
+                spellCard.ReadFrom(null!);
 
                 Assert.Fail(TestUtils.Unreachable);
             });
