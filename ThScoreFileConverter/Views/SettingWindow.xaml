@@ -37,6 +37,7 @@
                                                 CancelCommand="{Binding FontDialogCancelCommand}"
                                                 Font="{Binding Font}"
                                                 FontMustExist="True"
+                                                MaxSize="{Binding MaxFontSize}"
                                                 OkCommand="{Binding FontDialogOkCommand}"
                                                 Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
                                                 ShowApply="True"

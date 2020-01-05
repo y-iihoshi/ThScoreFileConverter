@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Settings xmlns="http://schemas.datacontract.org/2004/07/ThScoreFileConverter">
+  <LastTitle>TH06</LastTitle>
+  <Dictionary xmlns:d2p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+    <d2p1:KeyValueOfstringSettingsPerTitlewSAbBC2S>
+      <d2p1:Key>TH06</d2p1:Key>
+      <d2p1:Value>
+        <BestShotDirectory />
+        <HideUntriedCards>false</HideUntriedCards>
+        <ImageOutputDirectory />
+        <OutputDirectory />
+        <ScoreFile />
+        <TemplateFiles />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSettingsPerTitlewSAbBC2S>
+    <d2p1:KeyValueOfanyTypeanyType>
+      <d2p1:Key>123</d2p1:Key>
+      <d2p1:Value>987</d2p1:Value>
+    </d2p1:KeyValueOfanyTypeanyType>
+    <d2p1:KeyValueOfintint>
+      <d2p1:Key>234</d2p1:Key>
+      <d2p1:Value>876</d2p1:Value>
+    </d2p1:KeyValueOfintint>
+    <d2p1:KeyValueOfintSettingsPerTitlewSAbBC2S>
+      <d2p1:Key>345</d2p1:Key>
+      <d2p1:Value>
+        <BestShotDirectory />
+        <HideUntriedCards>false</HideUntriedCards>
+        <ImageOutputDirectory />
+        <OutputDirectory />
+        <ScoreFile />
+        <TemplateFiles />
+      </d2p1:Value>
+    </d2p1:KeyValueOfintSettingsPerTitlewSAbBC2S>
+    <d2p1:KeyValueOfstringint>
+      <d2p1:Key>456</d2p1:Key>
+      <d2p1:Value>765</d2p1:Value>
+    </d2p1:KeyValueOfstringint>
+    <d2p1:KeyValueOfstringSettingsPerTitle>
+      <d2p1:Key>567</d2p1:Key>
+      <d2p1:Value>
+        <BestShotDirectory />
+        <HideUntriedCards>false</HideUntriedCards>
+        <ImageOutputDirectory />
+        <OutputDirectory />
+        <ScoreFile />
+        <TemplateFiles />
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringSettingsPerTitle>
+  </Dictionary>
+</Settings>
