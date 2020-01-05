@@ -31,7 +31,7 @@ namespace ThScoreFileConverterTests.Models.Th095
         [ExpectedException(typeof(ArgumentNullException))]
         public void ScoreTotalReplacerTestNull()
         {
-            _ = new ScoreTotalReplacer(null);
+            _ = new ScoreTotalReplacer(null!);
             Assert.Fail(TestUtils.Unreachable);
         }
 

@@ -26,7 +26,7 @@ namespace ThScoreFileConverterTests.Models.Th095
         [ExpectedException(typeof(ArgumentNullException))]
         public void ShotReplacerTestNullBestShots()
         {
-            _ = new ShotReplacer(null, @"C:\path\to\output\");
+            _ = new ShotReplacer(null!, @"C:\path\to\output\");
             Assert.Fail(TestUtils.Unreachable);
         }
 
@@ -52,7 +52,7 @@ namespace ThScoreFileConverterTests.Models.Th095
         [TestMethod]
         public void ShotReplacerTestNullOutputFilePath()
         {
-            var replacer = new ShotReplacer(BestShots, null);
+            var replacer = new ShotReplacer(BestShots, null!);
             Assert.IsNotNull(replacer);
         }
 
@@ -108,7 +108,7 @@ namespace ThScoreFileConverterTests.Models.Th095
         [TestMethod]
         public void ReplaceTestNullOutputFilePath()
         {
-            var replacer = new ShotReplacer(BestShots, null);
+            var replacer = new ShotReplacer(BestShots, null!);
             Assert.AreEqual(string.Empty, replacer.Replace("%T95SHOT23"));
         }
 

@@ -35,7 +35,7 @@ namespace ThScoreFileConverterTests.Models.Th095
         [ExpectedException(typeof(ArgumentNullException))]
         public void ShotExReplacerTestNullBestShots()
         {
-            _ = new ShotExReplacer(null, Scores, @"C:\path\to\output\");
+            _ = new ShotExReplacer(null!, Scores, @"C:\path\to\output\");
             Assert.Fail(TestUtils.Unreachable);
         }
 
@@ -62,7 +62,7 @@ namespace ThScoreFileConverterTests.Models.Th095
         [ExpectedException(typeof(ArgumentNullException))]
         public void ShotExReplacerTestNullScores()
         {
-            _ = new ShotExReplacer(BestShots, null, @"C:\path\to\output\");
+            _ = new ShotExReplacer(BestShots, null!, @"C:\path\to\output\");
             Assert.Fail(TestUtils.Unreachable);
         }
 
@@ -77,7 +77,7 @@ namespace ThScoreFileConverterTests.Models.Th095
         [TestMethod]
         public void ShotExReplacerTestNullOutputFilePath()
         {
-            var replacer = new ShotExReplacer(BestShots, Scores, null);
+            var replacer = new ShotExReplacer(BestShots, Scores, null!);
             Assert.IsNotNull(replacer);
         }
 
@@ -173,7 +173,7 @@ namespace ThScoreFileConverterTests.Models.Th095
         [TestMethod]
         public void ReplaceTestNullOutputFilePath()
         {
-            var replacer = new ShotExReplacer(BestShots, Scores, null);
+            var replacer = new ShotExReplacer(BestShots, Scores, null!);
             Assert.AreEqual(string.Empty, replacer.Replace("%T95SHOTEX231"));
         }
 
