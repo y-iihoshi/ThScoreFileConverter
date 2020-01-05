@@ -53,7 +53,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [ExpectedException(typeof(ArgumentNullException))]
         public void HeaderTestNull() => TestUtils.Wrap(() =>
         {
-            _ = new Header(null);
+            _ = new Header(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });

@@ -41,7 +41,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [ExpectedException(typeof(ArgumentNullException))]
         public void CollectRateReplacerTestNull()
         {
-            _ = new CollectRateReplacer(null);
+            _ = new CollectRateReplacer(null!);
             Assert.Fail(TestUtils.Unreachable);
         }
 

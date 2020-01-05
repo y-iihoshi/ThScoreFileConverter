@@ -35,7 +35,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [ExpectedException(typeof(ArgumentNullException))]
         public void CareerReplacerTestNull()
         {
-            _ = new CareerReplacer(null);
+            _ = new CareerReplacer(null!);
             Assert.Fail(TestUtils.Unreachable);
         }
 

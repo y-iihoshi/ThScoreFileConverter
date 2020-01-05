@@ -60,7 +60,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [ExpectedException(typeof(ArgumentNullException))]
         public void PracticeScoreTestNullChapter() => TestUtils.Wrap(() =>
         {
-            _ = new PracticeScore(null);
+            _ = new PracticeScore(null!);
 
             Assert.Fail(TestUtils.Unreachable);
         });
