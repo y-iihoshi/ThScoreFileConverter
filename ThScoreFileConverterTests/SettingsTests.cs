@@ -323,7 +323,7 @@ namespace ThScoreFileConverterTests
             Settings.Instance.Load(@"TestData\no-template-files.xml");
             Assert.AreEqual(1, Settings.Instance.Dictionary.Count);
             CollectionAssert.That.AreEqual(
-                Array.Empty<string>(), Settings.Instance.Dictionary.First().Value.TemplateFiles);
+                Enumerable.Empty<string>(), Settings.Instance.Dictionary.First().Value.TemplateFiles);
         }
 
         [TestMethod]
@@ -333,7 +333,7 @@ namespace ThScoreFileConverterTests
             Settings.Instance.Load(@"TestData\empty-template-files.xml");
             Assert.AreEqual(1, Settings.Instance.Dictionary.Count);
             CollectionAssert.That.AreEqual(
-                Array.Empty<string>(), Settings.Instance.Dictionary.First().Value.TemplateFiles);
+                Enumerable.Empty<string>(), Settings.Instance.Dictionary.First().Value.TemplateFiles);
         }
 
         [TestMethod]
@@ -343,7 +343,7 @@ namespace ThScoreFileConverterTests
             Settings.Instance.Load(@"TestData\invalid-template-files.xml");
             Assert.AreEqual(1, Settings.Instance.Dictionary.Count);
             CollectionAssert.That.AreEqual(
-                Array.Empty<string>(), Settings.Instance.Dictionary.First().Value.TemplateFiles);
+                Enumerable.Empty<string>(), Settings.Instance.Dictionary.First().Value.TemplateFiles);
         }
 
         [TestMethod]

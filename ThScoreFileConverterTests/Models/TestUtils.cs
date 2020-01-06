@@ -122,7 +122,7 @@ namespace ThScoreFileConverterTests.Models
             var fromArray = currentType.GetMethod(nameof(MakeSQByteArrayFromArray), bindingAttributes);
             var fromDictonary = currentType.GetMethod(nameof(MakeSQByteArrayFromDictionary), bindingAttributes);
 
-            IEnumerable<byte> byteArray = Array.Empty<byte>();
+            var byteArray = Enumerable.Empty<byte>();
 
             foreach (var arg in args)
             {
