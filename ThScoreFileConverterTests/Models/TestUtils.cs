@@ -24,90 +24,79 @@ namespace ThScoreFileConverterTests.Models
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
-            var array = Array.Empty<byte>();
+            using var stream = new MemoryStream();
+            using var writer = new BinaryWriter(stream, CP932Encoding);
 
-            MemoryStream? stream = null;
-            try
+            foreach (var arg in args)
             {
-                stream = new MemoryStream();
-                using var writer = new BinaryWriter(stream, CP932Encoding);
-                stream = null;
-
-                foreach (var arg in args)
+                switch (arg)
                 {
-                    switch (arg)
-                    {
-                        case byte[] bytesArg:
-                            writer.Write(bytesArg);
-                            break;
-                        case char[] charsArg:
-                            writer.Write(charsArg);
-                            break;
-                        case sbyte sbyteArg:
-                            writer.Write(sbyteArg);
-                            break;
-                        case byte byteArg:
-                            writer.Write(byteArg);
-                            break;
-                        case char charArg:
-                            writer.Write(charArg);
-                            break;
-                        case short shortArg:
-                            writer.Write(shortArg);
-                            break;
-                        case ushort ushortArg:
-                            writer.Write(ushortArg);
-                            break;
-                        case int intArg:
-                            writer.Write(intArg);
-                            break;
-                        case uint uintArg:
-                            writer.Write(uintArg);
-                            break;
-                        case long longArg:
-                            writer.Write(longArg);
-                            break;
-                        case ulong ulongArg:
-                            writer.Write(ulongArg);
-                            break;
-                        case ushort[] ushortsArg:
-                            foreach (var val in ushortsArg)
-                                writer.Write(val);
-                            break;
-                        case int[] intsArg:
-                            foreach (var val in intsArg)
-                                writer.Write(val);
-                            break;
-                        case bool boolArg:
-                            writer.Write(boolArg);
-                            break;
-                        case double doubleArg:
-                            writer.Write(doubleArg);
-                            break;
-                        case float floatArg:
-                            writer.Write(floatArg);
-                            break;
-                        case string stringArg:
-                            writer.Write(stringArg);
-                            break;
-                        case decimal decimalArg:
-                            writer.Write(decimalArg);
-                            break;
-                        default:
-                            throw new NotImplementedException();
-                    }
+                    case byte[] bytesArg:
+                        writer.Write(bytesArg);
+                        break;
+                    case char[] charsArg:
+                        writer.Write(charsArg);
+                        break;
+                    case sbyte sbyteArg:
+                        writer.Write(sbyteArg);
+                        break;
+                    case byte byteArg:
+                        writer.Write(byteArg);
+                        break;
+                    case char charArg:
+                        writer.Write(charArg);
+                        break;
+                    case short shortArg:
+                        writer.Write(shortArg);
+                        break;
+                    case ushort ushortArg:
+                        writer.Write(ushortArg);
+                        break;
+                    case int intArg:
+                        writer.Write(intArg);
+                        break;
+                    case uint uintArg:
+                        writer.Write(uintArg);
+                        break;
+                    case long longArg:
+                        writer.Write(longArg);
+                        break;
+                    case ulong ulongArg:
+                        writer.Write(ulongArg);
+                        break;
+                    case ushort[] ushortsArg:
+                        foreach (var val in ushortsArg)
+                            writer.Write(val);
+                        break;
+                    case int[] intsArg:
+                        foreach (var val in intsArg)
+                            writer.Write(val);
+                        break;
+                    case bool boolArg:
+                        writer.Write(boolArg);
+                        break;
+                    case double doubleArg:
+                        writer.Write(doubleArg);
+                        break;
+                    case float floatArg:
+                        writer.Write(floatArg);
+                        break;
+                    case string stringArg:
+                        writer.Write(stringArg);
+                        break;
+                    case decimal decimalArg:
+                        writer.Write(decimalArg);
+                        break;
+                    default:
+                        throw new NotImplementedException();
                 }
-
-                writer.Flush();
-
-                array = new byte[writer.BaseStream.Length];
-                writer.BaseStream.Position = 0;
-                _ = writer.BaseStream.Read(array, 0, array.Length);
             }
-            finally
-            {
-                stream?.Dispose();
-            }
+
+            writer.Flush();
+
+            var array = new byte[writer.BaseStream.Length];
+            writer.BaseStream.Position = 0;
+            _ = writer.BaseStream.Read(array, 0, array.Length);
 
             return array;
         }
@@ -223,18 +212,9 @@ namespace ThScoreFileConverterTests.Models
         {
             var instance = new T();
 
-            MemoryStream? stream = null;
-            try
-            {
-                stream = new MemoryStream(array);
-                using var reader = new BinaryReader(stream);
-                stream = null;
-                instance.ReadFrom(reader);
-            }
-            finally
-            {
-                stream?.Dispose();
-            }
+            using var stream = new MemoryStream(array);
+            using var reader = new BinaryReader(stream);
+            instance.ReadFrom(reader);
 
             return instance;
         }

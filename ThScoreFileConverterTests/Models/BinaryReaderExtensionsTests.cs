@@ -13,22 +13,13 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void ReadExactBytesTest()
         {
-            MemoryStream? stream = null;
-            try
-            {
-                var bytes = new byte[] { 1, 2, 3, 4, 5 };
-                stream = new MemoryStream(bytes);
-                using var reader = new BinaryReader(stream);
-                stream = null;
+            var bytes = new byte[] { 1, 2, 3, 4, 5 };
+            using var stream = new MemoryStream(bytes);
+            using var reader = new BinaryReader(stream);
 
-                var readBytes = reader.ReadExactBytes(bytes.Length);
+            var readBytes = reader.ReadExactBytes(bytes.Length);
 
-                CollectionAssert.That.AreEqual(bytes, readBytes);
-            }
-            finally
-            {
-                stream?.Dispose();
-            }
+            CollectionAssert.That.AreEqual(bytes, readBytes);
         }
 
         [TestMethod]
@@ -46,108 +37,63 @@ namespace ThScoreFileConverterTests.Models
         [ExpectedException(typeof(EndOfStreamException))]
         public void ReadExactBytesTestEmptyStream()
         {
-            MemoryStream? stream = null;
-            try
-            {
-                stream = new MemoryStream();
-                using var reader = new BinaryReader(stream);
-                stream = null;
+            using var stream = new MemoryStream();
+            using var reader = new BinaryReader(stream);
 
-                _ = reader.ReadExactBytes(1);
+            _ = reader.ReadExactBytes(1);
 
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            finally
-            {
-                stream?.Dispose();
-            }
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void ReadExactBytesTestNegative()
         {
-            MemoryStream? stream = null;
-            try
-            {
-                var bytes = new byte[] { 1, 2, 3, 4, 5 };
-                stream = new MemoryStream(bytes);
-                using var reader = new BinaryReader(stream);
-                stream = null;
+            var bytes = new byte[] { 1, 2, 3, 4, 5 };
+            using var stream = new MemoryStream(bytes);
+            using var reader = new BinaryReader(stream);
 
-                _ = reader.ReadExactBytes(-1);
+            _ = reader.ReadExactBytes(-1);
 
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            finally
-            {
-                stream?.Dispose();
-            }
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod]
         public void ReadExactBytesTestZero()
         {
-            MemoryStream? stream = null;
-            try
-            {
-                var bytes = new byte[] { 1, 2, 3, 4, 5 };
-                stream = new MemoryStream(bytes);
-                using var reader = new BinaryReader(stream);
-                stream = null;
+            var bytes = new byte[] { 1, 2, 3, 4, 5 };
+            using var stream = new MemoryStream(bytes);
+            using var reader = new BinaryReader(stream);
 
-                var readBytes = reader.ReadExactBytes(0);
+            var readBytes = reader.ReadExactBytes(0);
 
-                CollectionAssert.That.AreEqual(new byte[] { }, readBytes);
-            }
-            finally
-            {
-                stream?.Dispose();
-            }
+            CollectionAssert.That.AreEqual(new byte[] { }, readBytes);
         }
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
         public void ReadExactBytesTestShortened()
         {
-            MemoryStream? stream = null;
-            try
-            {
-                var bytes = new byte[] { 1, 2, 3, 4, 5 };
-                stream = new MemoryStream(bytes);
-                using var reader = new BinaryReader(stream);
-                stream = null;
+            var bytes = new byte[] { 1, 2, 3, 4, 5 };
+            using var stream = new MemoryStream(bytes);
+            using var reader = new BinaryReader(stream);
 
-                _ = reader.ReadExactBytes(bytes.Length + 1);
+            _ = reader.ReadExactBytes(bytes.Length + 1);
 
-                Assert.Fail(TestUtils.Unreachable);
-            }
-            finally
-            {
-                stream?.Dispose();
-            }
+            Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod]
         public void ReadExactBytesTestExceeded()
         {
-            MemoryStream? stream = null;
-            try
-            {
-                var bytes = new byte[] { 1, 2, 3, 4, 5 };
-                stream = new MemoryStream(bytes);
-                using var reader = new BinaryReader(stream);
-                stream = null;
+            var bytes = new byte[] { 1, 2, 3, 4, 5 };
+            using var stream = new MemoryStream(bytes);
+            using var reader = new BinaryReader(stream);
 
-                var readBytes = reader.ReadExactBytes(bytes.Length - 1);
+            var readBytes = reader.ReadExactBytes(bytes.Length - 1);
 
-                CollectionAssert.That.AreNotEqual(bytes, readBytes);
-                CollectionAssert.That.AreEqual(bytes.Take(readBytes.Length), readBytes);
-            }
-            finally
-            {
-                stream?.Dispose();
-            }
+            CollectionAssert.That.AreNotEqual(bytes, readBytes);
+            CollectionAssert.That.AreEqual(bytes.Take(readBytes.Length), readBytes);
         }
     }
 }

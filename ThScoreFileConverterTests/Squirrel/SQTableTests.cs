@@ -22,19 +22,10 @@ namespace ThScoreFileConverterTests.Squirrel
 
         internal static SQTable CreateTestHelper(byte[] bytes)
         {
-            MemoryStream? stream = null;
-            try
-            {
-                stream = new MemoryStream(bytes);
-                using var reader = new BinaryReader(stream);
-                stream = null;
+            using var stream = new MemoryStream(bytes);
+            using var reader = new BinaryReader(stream);
 
-                return SQTable.Create(reader);
-            }
-            finally
-            {
-                stream?.Dispose();
-            }
+            return SQTable.Create(reader);
         }
 
         [DataTestMethod]

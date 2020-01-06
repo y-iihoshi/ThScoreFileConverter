@@ -19,19 +19,10 @@ namespace ThScoreFileConverterTests.Squirrel
 
         internal static SQNull CreateTestHelper(byte[] bytes)
         {
-            MemoryStream? stream = null;
-            try
-            {
-                stream = new MemoryStream(bytes);
-                using var reader = new BinaryReader(stream);
-                stream = null;
+            using var stream = new MemoryStream(bytes);
+            using var reader = new BinaryReader(stream);
 
-                return SQNull.Create(reader);
-            }
-            finally
-            {
-                stream?.Dispose();
-            }
+            return SQNull.Create(reader);
         }
 
         [TestMethod]

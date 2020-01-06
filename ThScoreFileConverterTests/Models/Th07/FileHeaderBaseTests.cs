@@ -149,31 +149,22 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void WriteToTest() => TestUtils.Wrap(() =>
         {
-            MemoryStream? stream = null;
-            try
-            {
-                stream = new MemoryStream();
-                using var writer = new BinaryWriter(stream);
-                stream = null;
+            using var stream = new MemoryStream();
+            using var writer = new BinaryWriter(stream);
 
-                var properties = ValidProperties;
-                var array = MakeByteArray(properties);
+            var properties = ValidProperties;
+            var array = MakeByteArray(properties);
 
-                var header = TestUtils.Create<FileHeaderBase>(array);
-                header.WriteTo(writer);
+            var header = TestUtils.Create<FileHeaderBase>(array);
+            header.WriteTo(writer);
 
-                writer.Flush();
-                _ = writer.Seek(0, SeekOrigin.Begin);
+            writer.Flush();
+            _ = writer.Seek(0, SeekOrigin.Begin);
 
-                var actualArray = new byte[writer.BaseStream.Length];
-                _ = writer.BaseStream.Read(actualArray, 0, actualArray.Length);
+            var actualArray = new byte[writer.BaseStream.Length];
+            _ = writer.BaseStream.Read(actualArray, 0, actualArray.Length);
 
-                CollectionAssert.AreEqual(array, actualArray);
-            }
-            finally
-            {
-                stream?.Dispose();
-            }
+            CollectionAssert.AreEqual(array, actualArray);
         });
 
         [TestMethod]
