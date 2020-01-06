@@ -80,7 +80,7 @@ namespace ThScoreFileConverter.Models.Th095
                     .ToArray();
                 if (sigVer.Length < sizeof(uint))
                     return false;
-                long sum = BitConverter.ToUInt32(sigVer, 0) + this.Size;
+                var sum = BitConverter.ToUInt32(sigVer, 0) + this.Size;
                 if (this.Data.Length % sizeof(uint) != 0)
                     return false;
                 for (var index = 0; index < this.Data.Length; index += sizeof(uint))
