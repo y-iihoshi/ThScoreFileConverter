@@ -21,7 +21,8 @@ namespace ThScoreFileConverter.Models.Th06
         public CardAttack(Chapter chapter)
             : base(chapter, ValidSignature, ValidSize)
         {
-            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+            using var stream = new MemoryStream(this.Data, false);
+            using var reader = new BinaryReader(stream);
 
             _ = reader.ReadExactBytes(8);
             this.CardId = (short)(reader.ReadInt16() + 1);

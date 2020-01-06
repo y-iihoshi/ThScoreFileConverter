@@ -22,7 +22,8 @@ namespace ThScoreFileConverter.Models.Th10
         protected StatusBase(Chapter chapter, ushort validVersion, int numBgms)
             : base(chapter, ValidSignature, validVersion, ValidSize)
         {
-            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+            using var stream = new MemoryStream(this.Data, false);
+            using var reader = new BinaryReader(stream);
 
             this.LastName = reader.ReadExactBytes(10);
             _ = reader.ReadExactBytes(0x10);

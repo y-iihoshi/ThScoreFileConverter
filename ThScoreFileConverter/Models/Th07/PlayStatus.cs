@@ -21,7 +21,8 @@ namespace ThScoreFileConverter.Models.Th07
         public PlayStatus(Th06.Chapter chapter)
             : base(chapter, ValidSignature, ValidSize)
         {
-            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+            using var stream = new MemoryStream(this.Data, false);
+            using var reader = new BinaryReader(stream);
 
             _ = reader.ReadUInt32();    // always 0x00000001?
             var hours = reader.ReadInt32();

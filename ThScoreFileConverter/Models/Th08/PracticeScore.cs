@@ -25,7 +25,8 @@ namespace ThScoreFileConverter.Models.Th08
             var stages = Utils.GetEnumerator<Stage>();
             var levels = Utils.GetEnumerator<Level>();
 
-            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+            using var stream = new MemoryStream(this.Data, false);
+            using var reader = new BinaryReader(stream);
 
             //// The fields for Stage.Extra and Level.Extra actually exist...
 

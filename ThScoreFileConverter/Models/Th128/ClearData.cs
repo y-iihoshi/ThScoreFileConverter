@@ -25,7 +25,8 @@ namespace ThScoreFileConverter.Models.Th128
         {
             var levels = Utils.GetEnumerator<Level>();
 
-            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+            using var stream = new MemoryStream(this.Data, false);
+            using var reader = new BinaryReader(stream);
 
             this.Route = (RouteWithTotal)reader.ReadInt32();
 

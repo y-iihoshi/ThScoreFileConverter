@@ -23,7 +23,8 @@ namespace ThScoreFileConverter.Models.Th08
         {
             var levels = Utils.GetEnumerator<Level>();
 
-            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+            using var stream = new MemoryStream(this.Data, false);
+            using var reader = new BinaryReader(stream);
 
             _ = reader.ReadUInt32();    // always 0x00000004?
             this.StoryFlags = levels.ToDictionary(level => level, _ => (PlayableStages)reader.ReadUInt16());

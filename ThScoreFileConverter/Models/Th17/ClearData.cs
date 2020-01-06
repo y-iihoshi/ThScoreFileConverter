@@ -28,7 +28,8 @@ namespace ThScoreFileConverter.Models.Th17
             var levels = Utils.GetEnumerator<Level>();
             var stages = Utils.GetEnumerator<StagePractice>();
 
-            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+            using var stream = new MemoryStream(this.Data, false);
+            using var reader = new BinaryReader(stream);
 
             this.Chara = (CharaWithTotal)reader.ReadInt32();
 

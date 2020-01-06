@@ -24,7 +24,8 @@ namespace ThScoreFileConverter.Models.Th09
         {
             var charas = Utils.GetEnumerator<Chara>();
 
-            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+            using var stream = new MemoryStream(this.Data, false);
+            using var reader = new BinaryReader(stream);
 
             _ = reader.ReadUInt32();    // always 0x00000003?
             var hours = reader.ReadInt32();

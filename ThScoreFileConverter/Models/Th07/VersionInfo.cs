@@ -21,7 +21,8 @@ namespace ThScoreFileConverter.Models.Th07
         public VersionInfo(Th06.Chapter chapter)
             : base(chapter, ValidSignature, ValidSize)
         {
-            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+            using var stream = new MemoryStream(this.Data, false);
+            using var reader = new BinaryReader(stream);
 
             _ = reader.ReadUInt16();    // always 0x0001?
             _ = reader.ReadUInt16();

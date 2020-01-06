@@ -22,7 +22,8 @@ namespace ThScoreFileConverter.Models.Th095
         public Score(Chapter chapter)
             : base(chapter, ValidSignature, ValidVersion, ValidSize)
         {
-            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+            using var stream = new MemoryStream(this.Data, false);
+            using var reader = new BinaryReader(stream);
 
             var number = reader.ReadUInt32();
             this.LevelScene = (Utils.ToEnum<Level>(number / 10), (int)((number % 10) + 1));

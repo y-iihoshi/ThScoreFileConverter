@@ -30,7 +30,8 @@ namespace ThScoreFileConverter.Models.Th10
             var stages = Utils.GetEnumerator<Stage>();
             var stagesExceptExtra = stages.Where(st => st != Stage.Extra);
 
-            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+            using var stream = new MemoryStream(this.Data, false);
+            using var reader = new BinaryReader(stream);
 
             this.Chara = Utils.ToEnum<TCharaWithTotal>(reader.ReadInt32());
 

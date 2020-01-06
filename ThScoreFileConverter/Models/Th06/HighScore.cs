@@ -25,7 +25,8 @@ namespace ThScoreFileConverter.Models.Th06
         public HighScore(Chapter chapter)
             : base(chapter, ValidSignature, ValidSize)
         {
-            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+            using var stream = new MemoryStream(this.Data, false);
+            using var reader = new BinaryReader(stream);
 
             _ = reader.ReadUInt32();    // always 0x00000001?
             this.Score = reader.ReadUInt32();

@@ -26,7 +26,8 @@ namespace ThScoreFileConverter.Models.Th143
         {
             var items = Utils.GetEnumerator<ItemWithTotal>();
 
-            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+            using var stream = new MemoryStream(this.Data, false);
+            using var reader = new BinaryReader(stream);
 
             this.Number = reader.ReadInt32();
             this.ClearCounts = items.ToDictionary(item => item, _ => reader.ReadInt32());

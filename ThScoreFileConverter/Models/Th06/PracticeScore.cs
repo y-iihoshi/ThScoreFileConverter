@@ -19,7 +19,8 @@ namespace ThScoreFileConverter.Models.Th06
         public PracticeScore(Chapter chapter)
             : base(chapter, ValidSignature, ValidSize)
         {
-            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+            using var stream = new MemoryStream(this.Data, false);
+            using var reader = new BinaryReader(stream);
 
             _ = reader.ReadUInt32();    // always 0x00000010?
             this.HighScore = reader.ReadInt32();

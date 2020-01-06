@@ -21,7 +21,8 @@ namespace ThScoreFileConverter.Models.Th143
         public ItemStatus(Th10.Chapter chapter)
             : base(chapter, ValidSignature, ValidVersion, ValidSize)
         {
-            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+            using var stream = new MemoryStream(this.Data, false);
+            using var reader = new BinaryReader(stream);
 
             this.Item = Utils.ToEnum<ItemWithTotal>(reader.ReadInt32());
             this.UseCount = reader.ReadInt32();

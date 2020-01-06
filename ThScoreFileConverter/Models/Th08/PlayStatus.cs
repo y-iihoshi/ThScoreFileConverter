@@ -26,7 +26,8 @@ namespace ThScoreFileConverter.Models.Th08
             var levels = Utils.GetEnumerator<Level>();
             var numLevels = levels.Count();
 
-            using var reader = new BinaryReader(new MemoryStream(this.Data, false));
+            using var stream = new MemoryStream(this.Data, false);
+            using var reader = new BinaryReader(stream);
 
             _ = reader.ReadUInt32();    // always 0x00000002?
             var hours = reader.ReadInt32();
