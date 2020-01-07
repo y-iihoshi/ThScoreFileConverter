@@ -7,7 +7,7 @@
     <UseWPF>true</UseWPF>
     <Authors>IIHOSHI Yoshinori</Authors>
     <Company>None</Company>
-    <Copyright>© 2013-2019 IIHOSHI Yoshinori</Copyright>
+    <Copyright>© 2013-2020 IIHOSHI Yoshinori</Copyright>
     <Description>Touhou Project's score files converter</Description>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <RepositoryUrl>https://github.com/y-iihoshi/ThScoreFileConverter</RepositoryUrl>

@@ -1,4 +1,4 @@
-Copyright (c) 2013-2019, IIHOSHI Yoshinori
+Copyright (c) 2013-2020, IIHOSHI Yoshinori
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
