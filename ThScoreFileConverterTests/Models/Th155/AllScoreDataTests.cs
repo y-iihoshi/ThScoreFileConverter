@@ -140,7 +140,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         }
 
         [TestMethod]
-        public void AllScoreDataTest() => TestUtils.Wrap(() =>
+        public void AllScoreDataTest()
         {
             var allScoreData = new AllScoreData();
 
@@ -150,39 +150,39 @@ namespace ThScoreFileConverterTests.Models.Th155
             Assert.AreEqual(0, allScoreData.EndingDictionary.Count);
             Assert.AreEqual(0, allScoreData.StageDictionary.Count);
             Assert.AreEqual(default, allScoreData.Version);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTest() => TestUtils.Wrap(() =>
+        public void ReadFromTest()
         {
             var properties = GetValidProperties();
 
             var allScoreData = TestUtils.Create<AllScoreData>(MakeByteArray(properties));
 
             Validate(properties, allScoreData);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ReadFromTestNull() => TestUtils.Wrap(() =>
+        public void ReadFromTestNull()
         {
             var allScoreData = new AllScoreData();
             allScoreData.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void ReadFromTestEmpty() => TestUtils.Wrap(() =>
+        public void ReadFromTestEmpty()
         {
             _ = TestUtils.Create<AllScoreData>(new byte[0]);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestNoKey() => TestUtils.Wrap(() =>
+        public void ReadFromTestNoKey()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(TestUtils.MakeByteArray((int)SQOT.Null));
 
@@ -192,10 +192,10 @@ namespace ThScoreFileConverterTests.Models.Th155
             Assert.AreEqual(0, allScoreData.EndingDictionary.Count);
             Assert.AreEqual(0, allScoreData.StageDictionary.Count);
             Assert.AreEqual(default, allScoreData.Version);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestNoTables() => TestUtils.Wrap(() =>
+        public void ReadFromTestNoTables()
         {
             var version = 1;
 
@@ -210,10 +210,10 @@ namespace ThScoreFileConverterTests.Models.Th155
             Assert.AreEqual(0, allScoreData.EndingDictionary.Count);
             Assert.AreEqual(0, allScoreData.StageDictionary.Count);
             Assert.AreEqual(version, allScoreData.Version);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidStoryDictionary() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidStoryDictionary()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
@@ -222,10 +222,10 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .ToArray());
 
             Assert.AreEqual(0, allScoreData.StoryDictionary.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidStoryKey() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidStoryKey()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
@@ -234,10 +234,10 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .ToArray());
 
             Assert.AreEqual(0, allScoreData.StoryDictionary.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidStoryChara() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidStoryChara()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
@@ -246,10 +246,10 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .ToArray());
 
             Assert.AreEqual(0, allScoreData.StoryDictionary.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidStory() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidStory()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
@@ -269,10 +269,10 @@ namespace ThScoreFileConverterTests.Models.Th155
             Assert.AreEqual(default, story.Available);
             Assert.AreEqual(default, story.OverDrive);
             Assert.AreEqual(default, story.StageOverDrive);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidStoryFieldName() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidStoryFieldName()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
@@ -295,10 +295,10 @@ namespace ThScoreFileConverterTests.Models.Th155
             Assert.AreEqual(default, story.Available);
             Assert.AreEqual(default, story.OverDrive);
             Assert.AreEqual(default, story.StageOverDrive);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidStoryFieldValue() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidStoryFieldValue()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
@@ -328,10 +328,10 @@ namespace ThScoreFileConverterTests.Models.Th155
             Assert.AreEqual(default, story.Available);
             Assert.AreEqual(default, story.OverDrive);
             Assert.AreEqual(default, story.StageOverDrive);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidCharacterDictionary() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidCharacterDictionary()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
@@ -340,10 +340,10 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .ToArray());
 
             Assert.AreEqual(0, allScoreData.CharacterDictionary.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidCharacterKey() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidCharacterKey()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
@@ -352,10 +352,10 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .ToArray());
 
             Assert.AreEqual(0, allScoreData.CharacterDictionary.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidCharacterValue() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidCharacterValue()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
@@ -364,10 +364,10 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .ToArray());
 
             Assert.AreEqual(0, allScoreData.CharacterDictionary.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidBgmDictionary() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidBgmDictionary()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
@@ -376,10 +376,10 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .ToArray());
 
             Assert.AreEqual(0, allScoreData.BgmDictionary.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidBgmKey() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidBgmKey()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
@@ -388,10 +388,10 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .ToArray());
 
             Assert.AreEqual(0, allScoreData.BgmDictionary.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidBgmValue() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidBgmValue()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
@@ -400,10 +400,10 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .ToArray());
 
             Assert.AreEqual(0, allScoreData.BgmDictionary.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidEndingDictionary() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidEndingDictionary()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
@@ -412,10 +412,10 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .ToArray());
 
             Assert.AreEqual(0, allScoreData.EndingDictionary.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidEndingKey() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidEndingKey()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
@@ -424,10 +424,10 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .ToArray());
 
             Assert.AreEqual(0, allScoreData.EndingDictionary.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidEndingValue() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidEndingValue()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
@@ -436,10 +436,10 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .ToArray());
 
             Assert.AreEqual(0, allScoreData.EndingDictionary.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidStageDictionary() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidStageDictionary()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
@@ -448,10 +448,10 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .ToArray());
 
             Assert.AreEqual(0, allScoreData.StageDictionary.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidStageKey() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidStageKey()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
@@ -460,10 +460,10 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .ToArray());
 
             Assert.AreEqual(0, allScoreData.StageDictionary.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidStageValue() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidStageValue()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
@@ -472,10 +472,10 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .ToArray());
 
             Assert.AreEqual(0, allScoreData.StageDictionary.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidVersion() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidVersion()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
@@ -484,6 +484,6 @@ namespace ThScoreFileConverterTests.Models.Th155
                 .ToArray());
 
             Assert.AreEqual(default, allScoreData.Version);
-        });
+        }
     }
 }

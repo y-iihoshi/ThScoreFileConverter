@@ -65,7 +65,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         }
 
         [TestMethod]
-        public void PlayCountTest() => TestUtils.Wrap(() =>
+        public void PlayCountTest()
         {
             var playCount = new PlayCount();
 
@@ -75,31 +75,31 @@ namespace ThScoreFileConverterTests.Models.Th07
             Assert.AreEqual(default, playCount.TotalClear);
             Assert.AreEqual(default, playCount.TotalContinue);
             Assert.AreEqual(default, playCount.TotalPractice);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTest() => TestUtils.Wrap(() =>
+        public void ReadFromTest()
         {
             var properties = ValidProperties;
 
             var playCount = TestUtils.Create<PlayCount>(MakeByteArray(properties));
 
             Validate(playCount, properties);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ReadFromTestNull() => TestUtils.Wrap(() =>
+        public void ReadFromTestNull()
         {
             var playCount = new PlayCount();
             playCount.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void ReadFromTestShortenedTrials() => TestUtils.Wrap(() =>
+        public void ReadFromTestShortenedTrials()
         {
             var properties = new Properties(ValidProperties);
             _ = properties.trials.Remove(Chara.SakuyaB);
@@ -107,10 +107,10 @@ namespace ThScoreFileConverterTests.Models.Th07
             _ = TestUtils.Create<PlayCount>(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestExceededTrials() => TestUtils.Wrap(() =>
+        public void ReadFromTestExceededTrials()
         {
             var properties = new Properties(ValidProperties);
             properties.trials.Add(TestUtils.Cast<Chara>(99), 99);
@@ -124,6 +124,6 @@ namespace ThScoreFileConverterTests.Models.Th07
             Assert.AreNotEqual(properties.totalClear, playCount.TotalClear);
             Assert.AreNotEqual(properties.totalContinue, playCount.TotalContinue);
             Assert.AreNotEqual(properties.totalPractice, playCount.TotalPractice);
-        });
+        }
     }
 }

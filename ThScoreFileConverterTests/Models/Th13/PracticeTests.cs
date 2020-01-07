@@ -26,31 +26,31 @@ namespace ThScoreFileConverterTests.Models.Th13
         }
 
         [TestMethod]
-        public void PracticeTest() => TestUtils.Wrap(() =>
+        public void PracticeTest()
         {
             var stub = new PracticeStub();
             var practice = new Practice();
 
             Validate(stub, practice);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTest() => TestUtils.Wrap(() =>
+        public void ReadFromTest()
         {
             var practice = TestUtils.Create<Practice>(MakeByteArray(ValidStub));
 
             Validate(ValidStub, practice);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ReadFromTestNull() => TestUtils.Wrap(() =>
+        public void ReadFromTestNull()
         {
             var practice = new Practice();
 
             practice.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
     }
 }

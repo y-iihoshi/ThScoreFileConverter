@@ -61,32 +61,32 @@ namespace ThScoreFileConverterTests.Models.Th095
         }
 
         [TestMethod]
-        public void ChapterTest() => TestUtils.Wrap(() =>
+        public void ChapterTest()
         {
             var chapter = new ChapterWrapper();
 
             Validate(DefaultProperties, chapter);
             Assert.IsFalse(chapter.IsValid);
-        });
+        }
 
         [TestMethod]
-        public void ChapterTestCopy() => TestUtils.Wrap(() =>
+        public void ChapterTestCopy()
         {
             var chapter1 = new Chapter();
             var chapter2 = new ChapterWrapper(chapter1);
 
             Validate(DefaultProperties, chapter2);
             Assert.IsFalse(chapter2.IsValid);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ChapterTestNull() => TestUtils.Wrap(() =>
+        public void ChapterTestNull()
         {
             _ = new ChapterWrapper(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         public void ChapterTestCopyWithExpected()
@@ -139,27 +139,27 @@ namespace ThScoreFileConverterTests.Models.Th095
         }
 
         [TestMethod]
-        public void ReadFromTest() => TestUtils.Wrap(() =>
+        public void ReadFromTest()
         {
             var chapter = TestUtils.Create<ChapterWrapper>(MakeByteArray(ValidProperties));
 
             Validate(ValidProperties, chapter);
             Assert.IsTrue(chapter.IsValid);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ReadFromTestNull() => TestUtils.Wrap(() =>
+        public void ReadFromTestNull()
         {
             var chapter = new Chapter();
             chapter.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void ReadFromTestEmptySignature() => TestUtils.Wrap(() =>
+        public void ReadFromTestEmptySignature()
         {
             var properties = ValidProperties;
             properties.signature = string.Empty;
@@ -173,11 +173,11 @@ namespace ThScoreFileConverterTests.Models.Th095
             _ = TestUtils.Create<Chapter>(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void ReadFromTestShortenedSignature() => TestUtils.Wrap(() =>
+        public void ReadFromTestShortenedSignature()
         {
             var properties = ValidProperties;
             properties.signature = properties.signature.Substring(0, properties.signature.Length - 1);
@@ -191,11 +191,11 @@ namespace ThScoreFileConverterTests.Models.Th095
             _ = TestUtils.Create<Chapter>(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void ReadFromTestExceededSignature() => TestUtils.Wrap(() =>
+        public void ReadFromTestExceededSignature()
         {
             var properties = ValidProperties;
             properties.signature += "C";
@@ -209,11 +209,11 @@ namespace ThScoreFileConverterTests.Models.Th095
             _ = TestUtils.Create<Chapter>(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void ReadFromTestNegativeSize() => TestUtils.Wrap(() =>
+        public void ReadFromTestNegativeSize()
         {
             var properties = ValidProperties;
             properties.size = -1;
@@ -221,11 +221,11 @@ namespace ThScoreFileConverterTests.Models.Th095
             _ = TestUtils.Create<Chapter>(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void ReadFromTestZeroSize() => TestUtils.Wrap(() =>
+        public void ReadFromTestZeroSize()
         {
             var properties = ValidProperties;
             properties.size = 0;
@@ -233,10 +233,10 @@ namespace ThScoreFileConverterTests.Models.Th095
             _ = TestUtils.Create<Chapter>(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestShortenedSize() => TestUtils.Wrap(() =>
+        public void ReadFromTestShortenedSize()
         {
             var properties = ValidProperties;
             --properties.size;
@@ -246,11 +246,11 @@ namespace ThScoreFileConverterTests.Models.Th095
             Validate(properties, chapter as IChapter);
             CollectionAssert.That.AreNotEqual(properties.data, chapter.Data);
             Assert.IsFalse(chapter.IsValid);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void ReadFromTestExceededSize() => TestUtils.Wrap(() =>
+        public void ReadFromTestExceededSize()
         {
             var properties = ValidProperties;
             ++properties.size;
@@ -258,10 +258,10 @@ namespace ThScoreFileConverterTests.Models.Th095
             _ = TestUtils.Create<Chapter>(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidChecksum() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidChecksum()
         {
             var properties = ValidProperties;
             --properties.checksum;
@@ -270,11 +270,11 @@ namespace ThScoreFileConverterTests.Models.Th095
 
             Validate(properties, chapter);
             Assert.IsFalse(chapter.IsValid);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void ReadFromTestEmptyData() => TestUtils.Wrap(() =>
+        public void ReadFromTestEmptyData()
         {
             var properties = ValidProperties;
             properties.data = new byte[] { };
@@ -282,10 +282,10 @@ namespace ThScoreFileConverterTests.Models.Th095
             _ = TestUtils.Create<Chapter>(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestMisalignedData() => TestUtils.Wrap(() =>
+        public void ReadFromTestMisalignedData()
         {
             var properties = ValidProperties;
             --properties.size;
@@ -295,6 +295,6 @@ namespace ThScoreFileConverterTests.Models.Th095
 
             Validate(properties, chapter);
             Assert.IsFalse(chapter.IsValid);
-        });
+        }
     }
 }

@@ -53,7 +53,7 @@ namespace ThScoreFileConverterTests.Models.Th17
         }
 
         [TestMethod]
-        public void StatusTest() => TestUtils.Wrap(() =>
+        public void StatusTest()
         {
             var stub = new StatusStub(ValidStub);
 
@@ -62,21 +62,21 @@ namespace ThScoreFileConverterTests.Models.Th17
 
             Validate(stub, status);
             Assert.IsFalse(status.IsValid);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void StatusTestNull() => TestUtils.Wrap(() =>
+        public void StatusTestNull()
         {
             _ = new Status(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void StatusTestInvalidSignature() => TestUtils.Wrap(() =>
+        public void StatusTestInvalidSignature()
         {
             var stub = new StatusStub(ValidStub);
             stub.Signature = stub.Signature.ToLowerInvariant();
@@ -86,11 +86,11 @@ namespace ThScoreFileConverterTests.Models.Th17
             _ = new Status(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void StatusTestInvalidVersion() => TestUtils.Wrap(() =>
+        public void StatusTestInvalidVersion()
         {
             var stub = new StatusStub(ValidStub);
             ++stub.Version;
@@ -100,11 +100,11 @@ namespace ThScoreFileConverterTests.Models.Th17
             _ = new Status(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void StatusTestInvalidSize() => TestUtils.Wrap(() =>
+        public void StatusTestInvalidSize()
         {
             var stub = new StatusStub(ValidStub);
             --stub.Size;
@@ -114,14 +114,14 @@ namespace ThScoreFileConverterTests.Models.Th17
             _ = new Status(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [DataTestMethod]
         [DataRow("ST", (ushort)2, 0x4B0, true)]
         [DataRow("st", (ushort)2, 0x4B0, false)]
         [DataRow("ST", (ushort)1, 0x4B0, false)]
         [DataRow("ST", (ushort)2, 0x4B1, false)]
-        public void CanInitializeTest(string signature, ushort version, int size, bool expected) => TestUtils.Wrap(() =>
+        public void CanInitializeTest(string signature, ushort version, int size, bool expected)
         {
             var checksum = 0u;
             var data = new byte[size];
@@ -130,6 +130,6 @@ namespace ThScoreFileConverterTests.Models.Th17
                 TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
 
             Assert.AreEqual(expected, Status.CanInitialize(chapter));
-        });
+        }
     }
 }

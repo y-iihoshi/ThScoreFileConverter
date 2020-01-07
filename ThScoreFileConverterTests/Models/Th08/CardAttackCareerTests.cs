@@ -51,28 +51,28 @@ namespace ThScoreFileConverterTests.Models.Th08
         }
 
         [TestMethod]
-        public void ReadFromTest() => TestUtils.Wrap(() =>
+        public void ReadFromTest()
         {
             var stub = ValidStub;
 
             var career = TestUtils.Create<CardAttackCareer>(MakeByteArray(stub));
 
             Validate(stub, career);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ReadFromTestNull() => TestUtils.Wrap(() =>
+        public void ReadFromTestNull()
         {
             var career = new CardAttackCareer();
             career.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void ReadFromTestShortenedMaxBonuses() => TestUtils.Wrap(() =>
+        public void ReadFromTestShortenedMaxBonuses()
         {
             var stub = new CardAttackCareerStub(ValidStub);
             stub.MaxBonuses = stub.MaxBonuses.Where(pair => pair.Key != CharaWithTotal.Total)
@@ -81,10 +81,10 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = TestUtils.Create<CardAttackCareer>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestExceededMaxBonuses() => TestUtils.Wrap(() =>
+        public void ReadFromTestExceededMaxBonuses()
         {
             var stub = new CardAttackCareerStub(ValidStub);
             stub.MaxBonuses = stub.MaxBonuses.Concat(new Dictionary<CharaWithTotal, uint>
@@ -98,11 +98,11 @@ namespace ThScoreFileConverterTests.Models.Th08
             CollectionAssert.That.AreEqual(stub.MaxBonuses.Values.SkipLast(1), career.MaxBonuses.Values);
             CollectionAssert.That.AreNotEqual(stub.TrialCounts.Values, career.TrialCounts.Values);
             CollectionAssert.That.AreNotEqual(stub.ClearCounts.Values, career.ClearCounts.Values);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void ReadFromTestShortenedTrialCounts() => TestUtils.Wrap(() =>
+        public void ReadFromTestShortenedTrialCounts()
         {
             var stub = new CardAttackCareerStub(ValidStub);
             stub.TrialCounts = stub.TrialCounts.Where(pair => pair.Key != CharaWithTotal.Total)
@@ -111,10 +111,10 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = TestUtils.Create<CardAttackCareer>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestExceededTrialCounts() => TestUtils.Wrap(() =>
+        public void ReadFromTestExceededTrialCounts()
         {
             var stub = new CardAttackCareerStub(ValidStub);
             stub.TrialCounts = stub.TrialCounts.Concat(new Dictionary<CharaWithTotal, int>
@@ -128,11 +128,11 @@ namespace ThScoreFileConverterTests.Models.Th08
             CollectionAssert.That.AreNotEqual(stub.TrialCounts.Values, career.TrialCounts.Values);
             CollectionAssert.That.AreEqual(stub.TrialCounts.Values.SkipLast(1), career.TrialCounts.Values);
             CollectionAssert.That.AreNotEqual(stub.ClearCounts.Values, career.ClearCounts.Values);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void ReadFromTestShortenedClearCounts() => TestUtils.Wrap(() =>
+        public void ReadFromTestShortenedClearCounts()
         {
             var stub = new CardAttackCareerStub(ValidStub);
             stub.ClearCounts = stub.ClearCounts.Where(pair => pair.Key != CharaWithTotal.Total)
@@ -141,10 +141,10 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = TestUtils.Create<CardAttackCareer>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestExceededClearCounts() => TestUtils.Wrap(() =>
+        public void ReadFromTestExceededClearCounts()
         {
             var stub = new CardAttackCareerStub(ValidStub);
             stub.ClearCounts = stub.ClearCounts.Concat(new Dictionary<CharaWithTotal, int>
@@ -158,6 +158,6 @@ namespace ThScoreFileConverterTests.Models.Th08
             CollectionAssert.That.AreEqual(stub.TrialCounts.Values, career.TrialCounts.Values);
             CollectionAssert.That.AreNotEqual(stub.ClearCounts.Values, career.ClearCounts.Values);
             CollectionAssert.That.AreEqual(stub.ClearCounts.Values.SkipLast(1), career.ClearCounts.Values);
-        });
+        }
     }
 }

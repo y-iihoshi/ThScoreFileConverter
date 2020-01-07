@@ -71,37 +71,37 @@ namespace ThScoreFileConverterTests.Models.Th105
         }
 
         [TestMethod]
-        public void AllScoreDataTest() => TestUtils.Wrap(() =>
+        public void AllScoreDataTest()
         {
             var allScoreData = new AllScoreData();
 
             Assert.AreEqual(0, allScoreData.StoryClearCounts.Count);
             Assert.AreEqual(0, allScoreData.SystemCards.Count);
             Assert.AreEqual(0, allScoreData.ClearData.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTest() => TestUtils.Wrap(() =>
+        public void ReadFromTest()
         {
             var properties = MakeValidProperties();
 
             var allScoreData = TestUtils.Create<AllScoreData>(MakeByteArray(properties));
 
             Validate(properties, allScoreData);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ReadFromTestNull() => TestUtils.Wrap(() =>
+        public void ReadFromTestNull()
         {
             var allScoreData = new AllScoreData();
             allScoreData.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestDuplicatedSystemCard() => TestUtils.Wrap(() =>
+        public void ReadFromTestDuplicatedSystemCard()
         {
             var properties = MakeValidProperties();
             var array = TestUtils.MakeByteArray(
@@ -122,10 +122,10 @@ namespace ThScoreFileConverterTests.Models.Th105
             var allScoreData = TestUtils.Create<AllScoreData>(array);
 
             Validate(properties, allScoreData);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestExceededClearData() => TestUtils.Wrap(() =>
+        public void ReadFromTestExceededClearData()
         {
             var properties = MakeValidProperties();
             var array = TestUtils.MakeByteArray(
@@ -146,6 +146,6 @@ namespace ThScoreFileConverterTests.Models.Th105
             var allScoreData = TestUtils.Create<AllScoreData>(array);
 
             Validate(properties, allScoreData);
-        });
+        }
     }
 }

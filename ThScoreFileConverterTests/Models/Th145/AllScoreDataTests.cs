@@ -120,7 +120,7 @@ namespace ThScoreFileConverterTests.Models.Th145
         }
 
         [TestMethod]
-        public void AllScoreDataTest() => TestUtils.Wrap(() =>
+        public void AllScoreDataTest()
         {
             var allScoreData = new AllScoreData();
 
@@ -136,39 +136,39 @@ namespace ThScoreFileConverterTests.Models.Th145
             Assert.AreEqual(0, allScoreData.BgmFlags.Count);
             Assert.AreEqual(0, allScoreData.ClearRanks.Count);
             Assert.AreEqual(0, allScoreData.ClearTimes.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTest() => TestUtils.Wrap(() =>
+        public void ReadFromTest()
         {
             var properties = MakeValidProperties();
 
             var allScoreData = TestUtils.Create<AllScoreData>(MakeByteArray(properties));
 
             Validate(properties, allScoreData);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ReadFromTestNull() => TestUtils.Wrap(() =>
+        public void ReadFromTestNull()
         {
             var allScoreData = new AllScoreData();
             allScoreData.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void ReadFromTestEmpty() => TestUtils.Wrap(() =>
+        public void ReadFromTestEmpty()
         {
             _ = TestUtils.Create<AllScoreData>(new byte[0]);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestNoKey() => TestUtils.Wrap(() =>
+        public void ReadFromTestNoKey()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(TestUtils.MakeByteArray((int)SQOT.Null));
 
@@ -186,10 +186,10 @@ namespace ThScoreFileConverterTests.Models.Th145
             Assert.AreEqual(0, allScoreData.BgmFlags.Count);
             Assert.AreEqual(0, allScoreData.ClearRanks.Count);
             Assert.AreEqual(0, allScoreData.ClearTimes.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestNoTables() => TestUtils.Wrap(() =>
+        public void ReadFromTestNoTables()
         {
             var storyProgressValue = 1;
 
@@ -204,10 +204,10 @@ namespace ThScoreFileConverterTests.Models.Th145
             Assert.AreEqual(0, allScoreData.BgmFlags.Count);
             Assert.AreEqual(0, allScoreData.ClearRanks.Count);
             Assert.AreEqual(0, allScoreData.ClearTimes.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidStoryClear() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidStoryClear()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
@@ -216,10 +216,10 @@ namespace ThScoreFileConverterTests.Models.Th145
                 .ToArray());
 
             Assert.AreEqual(0, allScoreData.StoryClearFlags.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidStoryClearValue() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidStoryClearValue()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
@@ -228,10 +228,10 @@ namespace ThScoreFileConverterTests.Models.Th145
                 .ToArray());
 
             Assert.AreEqual(0, allScoreData.StoryClearFlags.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidEnableBgm() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidEnableBgm()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
@@ -240,10 +240,10 @@ namespace ThScoreFileConverterTests.Models.Th145
                 .ToArray());
 
             Assert.AreEqual(0, allScoreData.BgmFlags.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidClearRank() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidClearRank()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
@@ -252,10 +252,10 @@ namespace ThScoreFileConverterTests.Models.Th145
                 .ToArray());
 
             Assert.AreEqual(0, allScoreData.ClearRanks.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidClearRankValuePerLevel() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidClearRankValuePerLevel()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
@@ -264,10 +264,10 @@ namespace ThScoreFileConverterTests.Models.Th145
                 .ToArray());
 
             Assert.AreEqual(0, allScoreData.ClearRanks.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidClearRankValuePerChara() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidClearRankValuePerChara()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
@@ -278,10 +278,10 @@ namespace ThScoreFileConverterTests.Models.Th145
             Assert.AreEqual(1, allScoreData.ClearRanks.Count);
             Assert.IsNotNull(allScoreData.ClearRanks.First().Value);
             Assert.AreEqual(0, allScoreData.ClearRanks.First().Value.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidClearTime() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidClearTime()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
@@ -290,10 +290,10 @@ namespace ThScoreFileConverterTests.Models.Th145
                 .ToArray());
 
             Assert.AreEqual(0, allScoreData.ClearTimes.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidClearTimeValuePerLevel() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidClearTimeValuePerLevel()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
@@ -302,10 +302,10 @@ namespace ThScoreFileConverterTests.Models.Th145
                 .ToArray());
 
             Assert.AreEqual(0, allScoreData.ClearTimes.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidClearTimeValuePerChara() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidClearTimeValuePerChara()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
@@ -316,6 +316,6 @@ namespace ThScoreFileConverterTests.Models.Th145
             Assert.AreEqual(1, allScoreData.ClearTimes.Count);
             Assert.IsNotNull(allScoreData.ClearTimes.First().Value);
             Assert.AreEqual(0, allScoreData.ClearTimes.First().Value.Count);
-        });
+        }
     }
 }

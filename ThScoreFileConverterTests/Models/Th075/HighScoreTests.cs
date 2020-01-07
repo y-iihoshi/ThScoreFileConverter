@@ -37,7 +37,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         }
 
         [TestMethod]
-        public void HighScoreTest() => TestUtils.Wrap(() =>
+        public void HighScoreTest()
         {
             var highScore = new HighScore();
 
@@ -45,29 +45,29 @@ namespace ThScoreFileConverterTests.Models.Th075
             Assert.AreEqual(default, highScore.Month);
             Assert.AreEqual(default, highScore.Day);
             Assert.AreEqual(default, highScore.Score);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTest() => TestUtils.Wrap(() =>
+        public void ReadFromTest()
         {
             var highScore = TestUtils.Create<HighScore>(MakeByteArray(ValidStub));
 
             Validate(ValidStub, highScore);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ReadFromTestNull() => TestUtils.Wrap(() =>
+        public void ReadFromTestNull()
         {
             var highScore = new HighScore();
             highScore.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void ReadFromTestShortenedName() => TestUtils.Wrap(() =>
+        public void ReadFromTestShortenedName()
         {
             var stub = new HighScoreStub(ValidStub);
             stub.EncodedName = stub.EncodedName.SkipLast(1).ToArray();
@@ -75,11 +75,11 @@ namespace ThScoreFileConverterTests.Models.Th075
             _ = TestUtils.Create<HighScore>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void ReadFromTestExceededName() => TestUtils.Wrap(() =>
+        public void ReadFromTestExceededName()
         {
             var stub = new HighScoreStub(ValidStub);
             stub.EncodedName = stub.EncodedName.Concat(new byte[] { default }).ToArray();
@@ -87,7 +87,7 @@ namespace ThScoreFileConverterTests.Models.Th075
             _ = TestUtils.Create<HighScore>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [DataTestMethod]
         [DataRow(0, 0)]
@@ -116,7 +116,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         [DataRow(11, 30)]
         [DataRow(12, 1)]
         [DataRow(12, 31)]
-        public void ReadFromTestValidMonthDay(int month, int day) => TestUtils.Wrap(() =>
+        public void ReadFromTestValidMonthDay(int month, int day)
         {
             var stub = new HighScoreStub(ValidStub)
             {
@@ -127,7 +127,7 @@ namespace ThScoreFileConverterTests.Models.Th075
             var highScore = TestUtils.Create<HighScore>(MakeByteArray(stub));
 
             Validate(stub, highScore);
-        });
+        }
 
         [DataTestMethod]
         [DataRow(0, -1)]
@@ -157,7 +157,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         [DataRow(12, 0)]
         [DataRow(12, 32)]
         [ExpectedException(typeof(InvalidDataException))]
-        public void ReadFromTestInvalidMonthDay(int month, int day) => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidMonthDay(int month, int day)
         {
             var properties = new HighScoreStub(ValidStub)
             {
@@ -168,6 +168,6 @@ namespace ThScoreFileConverterTests.Models.Th075
             _ = TestUtils.Create<HighScore>(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
     }
 }

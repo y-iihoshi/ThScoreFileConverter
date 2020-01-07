@@ -42,7 +42,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         }
 
         [TestMethod]
-        public void FlspTestChapter() => TestUtils.Wrap(() =>
+        public void FlspTestChapter()
         {
             var properties = ValidProperties;
 
@@ -50,21 +50,21 @@ namespace ThScoreFileConverterTests.Models.Th08
             var flsp = new FLSP(chapter);
 
             Validate(properties, flsp);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void FlspTestNullChapter() => TestUtils.Wrap(() =>
+        public void FlspTestNullChapter()
         {
             _ = new FLSP(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void FlspTestInvalidSignature() => TestUtils.Wrap(() =>
+        public void FlspTestInvalidSignature()
         {
             var properties = ValidProperties;
             properties.signature = properties.signature.ToLowerInvariant();
@@ -73,19 +73,19 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = new FLSP(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void FlspTestInvalidSize1() => TestUtils.Wrap(() =>
+        public void FlspTestInvalidSize1()
         {
             var properties = ValidProperties;
             --properties.size1;
 
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(properties));
-            var flsp = new FLSP(chapter);
+            _ = new FLSP(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
     }
 }

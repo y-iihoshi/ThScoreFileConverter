@@ -56,78 +56,72 @@ namespace ThScoreFileConverterTests.Models.Th13
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void SpellCardTestHelper<TLevel>()
             where TLevel : struct, Enum
-            => TestUtils.Wrap(() =>
-            {
-                var stub = new SpellCardStub<TLevel>();
-                var spellCard = new SpellCard<TLevel>();
+        {
+            var stub = new SpellCardStub<TLevel>();
+            var spellCard = new SpellCard<TLevel>();
 
-                Validate(stub, spellCard);
-                Assert.IsFalse(spellCard.HasTried);
-            });
+            Validate(stub, spellCard);
+            Assert.IsFalse(spellCard.HasTried);
+        }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestHelper<TLevel>()
             where TLevel : struct, Enum
-            => TestUtils.Wrap(() =>
-            {
-                var stub = MakeValidStub<TLevel>();
+        {
+            var stub = MakeValidStub<TLevel>();
 
-                var spellCard = TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(stub));
+            var spellCard = TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(stub));
 
-                Validate(stub, spellCard);
-                Assert.IsTrue(spellCard.HasTried);
-            });
+            Validate(stub, spellCard);
+            Assert.IsTrue(spellCard.HasTried);
+        }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestNullHelper<TLevel>()
             where TLevel : struct, Enum
-            => TestUtils.Wrap(() =>
-            {
-                var spellCard = new SpellCard<TLevel>();
+        {
+            var spellCard = new SpellCard<TLevel>();
 
-                spellCard.ReadFrom(null!);
+            spellCard.ReadFrom(null!);
 
-                Assert.Fail(TestUtils.Unreachable);
-            });
+            Assert.Fail(TestUtils.Unreachable);
+        }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestShortenedNameHelper<TLevel>()
             where TLevel : struct, Enum
-            => TestUtils.Wrap(() =>
-            {
-                var stub = MakeValidStub<TLevel>();
-                stub.Name = stub.Name.SkipLast(1).ToArray();
+        {
+            var stub = MakeValidStub<TLevel>();
+            stub.Name = stub.Name.SkipLast(1).ToArray();
 
-                _ = TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(stub));
+            _ = TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(stub));
 
-                Assert.Fail(TestUtils.Unreachable);
-            });
+            Assert.Fail(TestUtils.Unreachable);
+        }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestExceededNameHelper<TLevel>()
             where TLevel : struct, Enum
-            => TestUtils.Wrap(() =>
-            {
-                var stub = MakeValidStub<TLevel>();
-                stub.Name = stub.Name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
+        {
+            var stub = MakeValidStub<TLevel>();
+            stub.Name = stub.Name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
 
-                _ = TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(stub));
+            _ = TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(stub));
 
-                Assert.Fail(TestUtils.Unreachable);
-            });
+            Assert.Fail(TestUtils.Unreachable);
+        }
 
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter")]
         internal static void ReadFromTestInvalidLevelHelper<TLevel>(int level)
             where TLevel : struct, Enum
-            => TestUtils.Wrap(() =>
-            {
-                var stub = MakeValidStub<TLevel>();
-                stub.Level = TestUtils.Cast<TLevel>(level);
+        {
+            var stub = MakeValidStub<TLevel>();
+            stub.Level = TestUtils.Cast<TLevel>(level);
 
-                _ = TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(stub));
+            _ = TestUtils.Create<SpellCard<TLevel>>(MakeByteArray(stub));
 
-                Assert.Fail(TestUtils.Unreachable);
-            });
+            Assert.Fail(TestUtils.Unreachable);
+        }
 
         public static IEnumerable<object[]> InvalidTh13LevelPractices
             => TestUtils.GetInvalidEnumerators(typeof(LevelPractice));

@@ -86,7 +86,7 @@ namespace ThScoreFileConverterTests.Models.Th09
         }
 
         [TestMethod]
-        public void PlayStatusTestChapter() => TestUtils.Wrap(() =>
+        public void PlayStatusTestChapter()
         {
             var stub = ValidStub;
 
@@ -94,21 +94,21 @@ namespace ThScoreFileConverterTests.Models.Th09
             var playStatus = new PlayStatus(chapter);
 
             Validate(stub, playStatus);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void PlayStatusTestNullChapter() => TestUtils.Wrap(() =>
+        public void PlayStatusTestNullChapter()
         {
             _ = new PlayStatus(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void PlayStatusTestInvalidSignature() => TestUtils.Wrap(() =>
+        public void PlayStatusTestInvalidSignature()
         {
             var stub = new PlayStatusStub(ValidStub);
             stub.Signature = stub.Signature.ToLowerInvariant();
@@ -117,11 +117,11 @@ namespace ThScoreFileConverterTests.Models.Th09
             _ = new PlayStatus(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void PlayStatusTestInvalidSize1() => TestUtils.Wrap(() =>
+        public void PlayStatusTestInvalidSize1()
         {
             var stub = new PlayStatusStub(ValidStub);
             --stub.Size1;
@@ -130,6 +130,6 @@ namespace ThScoreFileConverterTests.Models.Th09
             _ = new PlayStatus(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
     }
 }

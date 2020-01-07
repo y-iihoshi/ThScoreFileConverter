@@ -60,28 +60,28 @@ namespace ThScoreFileConverterTests.Models.Th07
         }
 
         [TestMethod]
-        public void CardAttackTestChapter() => TestUtils.Wrap(() =>
+        public void CardAttackTestChapter()
         {
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(ValidStub));
             var cardAttack = new CardAttack(chapter);
 
             Validate(ValidStub, cardAttack);
             Assert.IsTrue(cardAttack.HasTried());
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void CardAttackTestNullChapter() => TestUtils.Wrap(() =>
+        public void CardAttackTestNullChapter()
         {
             _ = new CardAttack(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void CardAttackTestInvalidSignature() => TestUtils.Wrap(() =>
+        public void CardAttackTestInvalidSignature()
         {
             var stub = new CardAttackStub(ValidStub);
             stub.Signature = stub.Signature.ToLowerInvariant();
@@ -90,11 +90,11 @@ namespace ThScoreFileConverterTests.Models.Th07
             _ = new CardAttack(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void CardAttackTestInvalidSize1() => TestUtils.Wrap(() =>
+        public void CardAttackTestInvalidSize1()
         {
             var stub = new CardAttackStub(ValidStub);
             --stub.Size1;
@@ -103,10 +103,10 @@ namespace ThScoreFileConverterTests.Models.Th07
             _ = new CardAttack(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
-        public void CardAttackTestNotTried() => TestUtils.Wrap(() =>
+        public void CardAttackTestNotTried()
         {
             var stub = new CardAttackStub(ValidStub)
             {
@@ -120,6 +120,6 @@ namespace ThScoreFileConverterTests.Models.Th07
 
             Validate(stub, cardAttack);
             Assert.IsFalse(cardAttack.HasTried());
-        });
+        }
     }
 }

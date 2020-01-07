@@ -42,32 +42,32 @@ namespace ThScoreFileConverterTests.Models.Th075
         }
 
         [TestMethod]
-        public void AllScoreDataTest() => TestUtils.Wrap(() =>
+        public void AllScoreDataTest()
         {
             var allScoreData = new AllScoreData();
 
             Assert.AreEqual(0, allScoreData.ClearData.Count);
             Assert.IsNull(allScoreData.Status);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTest() => TestUtils.Wrap(() =>
+        public void ReadFromTest()
         {
             var properties = ValidProperties;
 
             var allScoreData = TestUtils.Create<AllScoreData>(MakeByteArray(properties));
 
             Validate(properties, allScoreData);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ReadFromTestNull() => TestUtils.Wrap(() =>
+        public void ReadFromTestNull()
         {
             var allScoreData = new AllScoreData();
             allScoreData.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
     }
 }

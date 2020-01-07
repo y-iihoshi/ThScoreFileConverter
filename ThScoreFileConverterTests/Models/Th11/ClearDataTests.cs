@@ -75,7 +75,7 @@ namespace ThScoreFileConverterTests.Models.Th11
             => Th10.ClearDataTests.MakeByteArray(clearData, 4);
 
         [TestMethod]
-        public void ClearDataTestChapter() => TestUtils.Wrap(() =>
+        public void ClearDataTestChapter()
         {
             var stub = MakeValidStub();
 
@@ -84,21 +84,21 @@ namespace ThScoreFileConverterTests.Models.Th11
 
             Th10.ClearDataTests.Validate(stub, clearData);
             Assert.IsFalse(clearData.IsValid);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ClearDataTestNullChapter() => TestUtils.Wrap(() =>
+        public void ClearDataTestNullChapter()
         {
             _ = new ClearData(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void ClearDataTestInvalidSignature() => TestUtils.Wrap(() =>
+        public void ClearDataTestInvalidSignature()
         {
             var stub = MakeValidStub();
             stub.Signature = stub.Signature.ToLowerInvariant();
@@ -107,11 +107,11 @@ namespace ThScoreFileConverterTests.Models.Th11
             _ = new ClearData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void ClearDataTestInvalidVersion() => TestUtils.Wrap(() =>
+        public void ClearDataTestInvalidVersion()
         {
             var stub = MakeValidStub();
             ++stub.Version;
@@ -120,11 +120,11 @@ namespace ThScoreFileConverterTests.Models.Th11
             _ = new ClearData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void ClearDataTestInvalidSize() => TestUtils.Wrap(() =>
+        public void ClearDataTestInvalidSize()
         {
             var stub = MakeValidStub();
             --stub.Size;
@@ -133,14 +133,14 @@ namespace ThScoreFileConverterTests.Models.Th11
             _ = new ClearData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [DataTestMethod]
         [DataRow("CR", (ushort)0, 0x68D4, true)]
         [DataRow("cr", (ushort)0, 0x68D4, false)]
         [DataRow("CR", (ushort)1, 0x68D4, false)]
         [DataRow("CR", (ushort)0, 0x68D5, false)]
-        public void CanInitializeTest(string signature, ushort version, int size, bool expected) => TestUtils.Wrap(() =>
+        public void CanInitializeTest(string signature, ushort version, int size, bool expected)
         {
             var checksum = 0u;
             var data = new byte[size];
@@ -149,6 +149,6 @@ namespace ThScoreFileConverterTests.Models.Th11
                 TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
 
             Assert.AreEqual(expected, ClearData.CanInitialize(chapter));
-        });
+        }
     }
 }

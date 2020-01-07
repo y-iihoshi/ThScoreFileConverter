@@ -46,59 +46,54 @@ namespace ThScoreFileConverterTests.Models.Th105
 
         internal static void SpellCardResultTestHelper<TChara>()
             where TChara : struct, Enum
-            => TestUtils.Wrap(() =>
-            {
-                var stub = new SpellCardResultStub<TChara>();
+        {
+            var stub = new SpellCardResultStub<TChara>();
 
-                var spellCardResult = new SpellCardResult<TChara>();
+            var spellCardResult = new SpellCardResult<TChara>();
 
-                Validate(stub, spellCardResult);
-            });
+            Validate(stub, spellCardResult);
+        }
 
         internal static void ReadFromTestHelper<TChara>()
             where TChara : struct, Enum
-            => TestUtils.Wrap(() =>
-            {
-                var stub = MakeValidStub<TChara>();
+        {
+            var stub = MakeValidStub<TChara>();
 
-                var spellCardResult = TestUtils.Create<SpellCardResult<TChara>>(MakeByteArray(stub));
+            var spellCardResult = TestUtils.Create<SpellCardResult<TChara>>(MakeByteArray(stub));
 
-                Validate(stub, spellCardResult);
-            });
+            Validate(stub, spellCardResult);
+        }
 
         internal static void ReadFromTestNullHelper<TChara>()
             where TChara : struct, Enum
-            => TestUtils.Wrap(() =>
-            {
-                var spellCardResult = new SpellCardResult<TChara>();
-                spellCardResult.ReadFrom(null!);
+        {
+            var spellCardResult = new SpellCardResult<TChara>();
+            spellCardResult.ReadFrom(null!);
 
-                Assert.Fail(TestUtils.Unreachable);
-            });
+            Assert.Fail(TestUtils.Unreachable);
+        }
 
         internal static void ReadFromTestShortenedHelper<TChara>()
             where TChara : struct, Enum
-            => TestUtils.Wrap(() =>
-            {
-                var stub = MakeValidStub<TChara>();
-                var array = MakeByteArray(stub).SkipLast(1).ToArray();
+        {
+            var stub = MakeValidStub<TChara>();
+            var array = MakeByteArray(stub).SkipLast(1).ToArray();
 
-                _ = TestUtils.Create<SpellCardResult<TChara>>(array);
+            _ = TestUtils.Create<SpellCardResult<TChara>>(array);
 
-                Assert.Fail(TestUtils.Unreachable);
-            });
+            Assert.Fail(TestUtils.Unreachable);
+        }
 
         internal static void ReadFromTestExceededHelper<TChara>()
             where TChara : struct, Enum
-            => TestUtils.Wrap(() =>
-            {
-                var stub = MakeValidStub<TChara>();
-                var array = MakeByteArray(stub).Concat(new byte[1] { 1 }).ToArray();
+        {
+            var stub = MakeValidStub<TChara>();
+            var array = MakeByteArray(stub).Concat(new byte[1] { 1 }).ToArray();
 
-                var spellCardResult = TestUtils.Create<SpellCardResult<TChara>>(array);
+            var spellCardResult = TestUtils.Create<SpellCardResult<TChara>>(array);
 
-                Validate(stub, spellCardResult);
-            });
+            Validate(stub, spellCardResult);
+        }
 
         [TestMethod]
         public void SpellCardResultTest() => SpellCardResultTestHelper<Chara>();

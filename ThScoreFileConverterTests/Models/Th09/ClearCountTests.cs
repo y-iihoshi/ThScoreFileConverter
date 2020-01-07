@@ -38,28 +38,28 @@ namespace ThScoreFileConverterTests.Models.Th09
         }
 
         [TestMethod]
-        public void ReadFromTest() => TestUtils.Wrap(() =>
+        public void ReadFromTest()
         {
             var stub = ValidStub;
 
             var clearCount = TestUtils.Create<ClearCount>(MakeByteArray(stub));
 
             Validate(stub, clearCount);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ReadFromTestNull() => TestUtils.Wrap(() =>
+        public void ReadFromTestNull()
         {
             var clearCount = new ClearCount();
             clearCount.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void ReadFromTestShortenedTrials() => TestUtils.Wrap(() =>
+        public void ReadFromTestShortenedTrials()
         {
             var stub = new ClearCountStub(ValidStub);
             stub.Counts = stub.Counts.Where(pair => pair.Key == Level.Extra)
@@ -68,10 +68,10 @@ namespace ThScoreFileConverterTests.Models.Th09
             _ = TestUtils.Create<ClearCount>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestExceededTrials() => TestUtils.Wrap(() =>
+        public void ReadFromTestExceededTrials()
         {
             var stub = new ClearCountStub(ValidStub);
             stub.Counts = stub.Counts.Concat(new Dictionary<Level, int>
@@ -83,6 +83,6 @@ namespace ThScoreFileConverterTests.Models.Th09
 
             CollectionAssert.That.AreNotEqual(stub.Counts.Values, clearCount.Counts.Values);
             CollectionAssert.That.AreEqual(stub.Counts.Values.SkipLast(1), clearCount.Counts.Values);
-        });
+        }
     }
 }

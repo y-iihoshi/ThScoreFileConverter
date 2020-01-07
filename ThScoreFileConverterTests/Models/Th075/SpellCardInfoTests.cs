@@ -28,13 +28,13 @@ namespace ThScoreFileConverterTests.Models.Th075
         }
 
         [TestMethod]
-        public void SpellCardInfoTest() => TestUtils.Wrap(() =>
+        public void SpellCardInfoTest()
         {
             var properties = ValidProperties;
 
             var spellCardInfo = new SpellCardInfo(properties.name, properties.enemy, properties.level);
 
             Validate(properties, spellCardInfo);
-        });
+        }
     }
 }

@@ -86,29 +86,29 @@ namespace ThScoreFileConverterTests.Models.Th075
         }
 
         [TestMethod]
-        public void ClearDataTest() => TestUtils.Wrap(() =>
+        public void ClearDataTest()
         {
             var clearData = new ClearData();
 
             Validate(DefaultStub, clearData);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTest() => TestUtils.Wrap(() =>
+        public void ReadFromTest()
         {
             var clearData = TestUtils.Create<ClearData>(MakeByteArray(ValidStub));
 
             Validate(ValidStub, clearData);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ReadFromTestNull() => TestUtils.Wrap(() =>
+        public void ReadFromTestNull()
         {
             var clearData = new ClearData();
             clearData.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
     }
 }

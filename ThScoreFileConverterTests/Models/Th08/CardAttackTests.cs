@@ -60,7 +60,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         }
 
         [TestMethod]
-        public void CardAttackTestChapter() => TestUtils.Wrap(() =>
+        public void CardAttackTestChapter()
         {
             var stub = ValidStub;
 
@@ -69,21 +69,21 @@ namespace ThScoreFileConverterTests.Models.Th08
 
             Validate(stub, cardAttack);
             Assert.IsTrue(cardAttack.HasTried());
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void CardAttackTestNullChapter() => TestUtils.Wrap(() =>
+        public void CardAttackTestNullChapter()
         {
             _ = new CardAttack(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void CardAttackTestInvalidSignature() => TestUtils.Wrap(() =>
+        public void CardAttackTestInvalidSignature()
         {
             var stub = new CardAttackStub(ValidStub);
             stub.Signature = stub.Signature.ToLowerInvariant();
@@ -92,11 +92,11 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = new CardAttack(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void CardAttackTestInvalidSize1() => TestUtils.Wrap(() =>
+        public void CardAttackTestInvalidSize1()
         {
             var stub = new CardAttackStub(ValidStub);
             --stub.Size1;
@@ -105,7 +105,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = new CardAttack(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         public static IEnumerable<object[]> InvalidLevels
             => TestUtils.GetInvalidEnumerators(typeof(LevelPracticeWithTotal));
@@ -113,7 +113,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void CardAttackTestInvalidLevel(int level) => TestUtils.Wrap(() =>
+        public void CardAttackTestInvalidLevel(int level)
         {
             var stub = new CardAttackStub(ValidStub)
             {
@@ -124,10 +124,10 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = new CardAttack(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
-        public void CardAttackTestNotTried() => TestUtils.Wrap(() =>
+        public void CardAttackTestNotTried()
         {
             var stub = new CardAttackStub(ValidStub)
             {
@@ -150,6 +150,6 @@ namespace ThScoreFileConverterTests.Models.Th08
 
             Validate(stub, cardAttack);
             Assert.IsFalse(cardAttack.HasTried());
-        });
+        }
     }
 }

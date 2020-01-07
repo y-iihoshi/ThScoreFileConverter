@@ -53,7 +53,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         }
 
         [TestMethod]
-        public void PracticeScoreTestChapter() => TestUtils.Wrap(() =>
+        public void PracticeScoreTestChapter()
         {
             var stub = ValidStub;
 
@@ -61,21 +61,21 @@ namespace ThScoreFileConverterTests.Models.Th08
             var score = new PracticeScore(chapter);
 
             Validate(stub, score);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void PracticeScoreTestNullChapter() => TestUtils.Wrap(() =>
+        public void PracticeScoreTestNullChapter()
         {
             _ = new PracticeScore(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void PracticeScoreTestInvalidSignature() => TestUtils.Wrap(() =>
+        public void PracticeScoreTestInvalidSignature()
         {
             var stub = new PracticeScoreStub(ValidStub);
             stub.Signature = stub.Signature.ToLowerInvariant();
@@ -84,11 +84,11 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = new PracticeScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void PracticeScoreTestInvalidSize1() => TestUtils.Wrap(() =>
+        public void PracticeScoreTestInvalidSize1()
         {
             var stub = new PracticeScoreStub(ValidStub);
             --stub.Size1;
@@ -97,7 +97,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = new PracticeScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         public static IEnumerable<object[]> InvalidCharacters
             => TestUtils.GetInvalidEnumerators(typeof(Chara));
@@ -105,7 +105,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         [DataTestMethod]
         [DynamicData(nameof(InvalidCharacters))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void PracticeScoreTestInvalidChara(int chara) => TestUtils.Wrap(() =>
+        public void PracticeScoreTestInvalidChara(int chara)
         {
             var stub = new PracticeScoreStub(ValidStub)
             {
@@ -116,6 +116,6 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = new PracticeScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
     }
 }

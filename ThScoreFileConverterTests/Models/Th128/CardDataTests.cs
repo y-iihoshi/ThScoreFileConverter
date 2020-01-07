@@ -58,7 +58,7 @@ namespace ThScoreFileConverterTests.Models.Th128
         }
 
         [TestMethod]
-        public void CardDataTestChapter() => TestUtils.Wrap(() =>
+        public void CardDataTestChapter()
         {
             var stub = ValidStub;
 
@@ -67,21 +67,21 @@ namespace ThScoreFileConverterTests.Models.Th128
 
             Validate(stub, clearData);
             Assert.IsFalse(clearData.IsValid);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void CardDataTestNullChapter() => TestUtils.Wrap(() =>
+        public void CardDataTestNullChapter()
         {
             _ = new CardData(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void CardDataTestInvalidSignature() => TestUtils.Wrap(() =>
+        public void CardDataTestInvalidSignature()
         {
             var stub = new CardDataStub(ValidStub);
             stub.Signature = stub.Signature.ToLowerInvariant();
@@ -90,11 +90,11 @@ namespace ThScoreFileConverterTests.Models.Th128
             _ = new CardData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void CardDataTestInvalidVersion() => TestUtils.Wrap(() =>
+        public void CardDataTestInvalidVersion()
         {
             var stub = new CardDataStub(ValidStub);
             ++stub.Version;
@@ -103,11 +103,11 @@ namespace ThScoreFileConverterTests.Models.Th128
             _ = new CardData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void CardDataTestInvalidSize() => TestUtils.Wrap(() =>
+        public void CardDataTestInvalidSize()
         {
             var stub = new CardDataStub(ValidStub);
             --stub.Size;
@@ -116,14 +116,14 @@ namespace ThScoreFileConverterTests.Models.Th128
             _ = new CardData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [DataTestMethod]
         [DataRow("CD", (ushort)1, 0x947C, true)]
         [DataRow("cd", (ushort)1, 0x947C, false)]
         [DataRow("CD", (ushort)0, 0x947C, false)]
         [DataRow("CD", (ushort)1, 0x947D, false)]
-        public void CanInitializeTest(string signature, ushort version, int size, bool expected) => TestUtils.Wrap(() =>
+        public void CanInitializeTest(string signature, ushort version, int size, bool expected)
         {
             var checksum = 0u;
             var data = new byte[size];
@@ -133,6 +133,6 @@ namespace ThScoreFileConverterTests.Models.Th128
 
             Assert.AreEqual(
                 expected, CardData.CanInitialize(chapter));
-        });
+        }
     }
 }

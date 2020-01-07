@@ -11,7 +11,7 @@ namespace ThScoreFileConverterTests.Models.Th06
     public class AllScoreDataTests
     {
         [TestMethod]
-        public void AllScoreDataTest() => TestUtils.Wrap(() =>
+        public void AllScoreDataTest()
         {
             var allScoreData = new AllScoreData();
 
@@ -20,10 +20,10 @@ namespace ThScoreFileConverterTests.Models.Th06
             Assert.AreEqual(0, allScoreData.ClearData.Count);
             Assert.AreEqual(0, allScoreData.CardAttacks.Count);
             Assert.AreEqual(0, allScoreData.PracticeScores.Count);
-        });
+        }
 
         [TestMethod]
-        public void SetHeaderTest() => TestUtils.Wrap(() =>
+        public void SetHeaderTest()
         {
             var chapter = TestUtils.Create<Chapter>(HeaderTests.MakeByteArray(HeaderTests.ValidProperties));
             var header = new Header(chapter);
@@ -32,10 +32,10 @@ namespace ThScoreFileConverterTests.Models.Th06
             allScoreData.Set(header);
 
             Assert.AreSame(header, allScoreData.Header);
-        });
+        }
 
         [TestMethod]
-        public void SetHeaderTestTwice() => TestUtils.Wrap(() =>
+        public void SetHeaderTestTwice()
         {
             var chapter = TestUtils.Create<Chapter>(HeaderTests.MakeByteArray(HeaderTests.ValidProperties));
             var header1 = new Header(chapter);
@@ -47,10 +47,10 @@ namespace ThScoreFileConverterTests.Models.Th06
 
             Assert.AreNotSame(header1, allScoreData.Header);
             Assert.AreSame(header2, allScoreData.Header);
-        });
+        }
 
         [TestMethod]
-        public void SetHighScoreTest() => TestUtils.Wrap(() =>
+        public void SetHighScoreTest()
         {
             var score = new HighScoreStub(HighScoreTests.ValidStub)
             {
@@ -61,10 +61,10 @@ namespace ThScoreFileConverterTests.Models.Th06
             allScoreData.Set(score);
 
             Assert.AreSame(score, allScoreData.Rankings[(score.Chara, score.Level)][2]);
-        });
+        }
 
         [TestMethod]
-        public void SetHighScoreTestTwice() => TestUtils.Wrap(() =>
+        public void SetHighScoreTestTwice()
         {
             var score1 = new HighScoreStub(HighScoreTests.ValidStub)
             {
@@ -78,10 +78,10 @@ namespace ThScoreFileConverterTests.Models.Th06
 
             Assert.AreSame(score1, allScoreData.Rankings[(score1.Chara, score1.Level)][2]);
             Assert.AreSame(score2, allScoreData.Rankings[(score2.Chara, score2.Level)][3]);
-        });
+        }
 
         [TestMethod]
-        public void SetClearDataTest() => TestUtils.Wrap(() =>
+        public void SetClearDataTest()
         {
             var clearData = new ClearDataStub(ClearDataTests.ValidStub);
 
@@ -89,10 +89,10 @@ namespace ThScoreFileConverterTests.Models.Th06
             allScoreData.Set(clearData);
 
             Assert.AreSame(clearData, allScoreData.ClearData[clearData.Chara]);
-        });
+        }
 
         [TestMethod]
-        public void SetClearDataTestTwice() => TestUtils.Wrap(() =>
+        public void SetClearDataTestTwice()
         {
             var clearData1 = new ClearDataStub(ClearDataTests.ValidStub);
             var clearData2 = new ClearDataStub(clearData1);
@@ -103,10 +103,10 @@ namespace ThScoreFileConverterTests.Models.Th06
 
             Assert.AreSame(clearData1, allScoreData.ClearData[clearData1.Chara]);
             Assert.AreNotSame(clearData2, allScoreData.ClearData[clearData2.Chara]);
-        });
+        }
 
         [TestMethod]
-        public void SetCardAttackTest() => TestUtils.Wrap(() =>
+        public void SetCardAttackTest()
         {
             var attack = new CardAttackStub(CardAttackTests.ValidStub);
 
@@ -114,10 +114,10 @@ namespace ThScoreFileConverterTests.Models.Th06
             allScoreData.Set(attack);
 
             Assert.AreSame(attack, allScoreData.CardAttacks[attack.CardId]);
-        });
+        }
 
         [TestMethod]
-        public void SetCardAttackTestTwice() => TestUtils.Wrap(() =>
+        public void SetCardAttackTestTwice()
         {
             var attack1 = new CardAttackStub(CardAttackTests.ValidStub);
             var attack2 = new CardAttackStub(attack1);
@@ -128,10 +128,10 @@ namespace ThScoreFileConverterTests.Models.Th06
 
             Assert.AreSame(attack1, allScoreData.CardAttacks[attack1.CardId]);
             Assert.AreNotSame(attack2, allScoreData.CardAttacks[attack2.CardId]);
-        });
+        }
 
         [TestMethod]
-        public void SetPracticeScoreTest() => TestUtils.Wrap(() =>
+        public void SetPracticeScoreTest()
         {
             var score = new PracticeScoreStub(PracticeScoreTests.ValidStub)
             {
@@ -143,10 +143,10 @@ namespace ThScoreFileConverterTests.Models.Th06
             allScoreData.Set(score);
 
             Assert.AreSame(score, allScoreData.PracticeScores[(score.Chara, score.Level, score.Stage)]);
-        });
+        }
 
         [TestMethod]
-        public void SetPracticeScoreTestTwice() => TestUtils.Wrap(() =>
+        public void SetPracticeScoreTestTwice()
         {
             var score1 = new PracticeScoreStub(PracticeScoreTests.ValidStub)
             {
@@ -161,14 +161,14 @@ namespace ThScoreFileConverterTests.Models.Th06
 
             Assert.AreSame(score1, allScoreData.PracticeScores[(score1.Chara, score1.Level, score1.Stage)]);
             Assert.AreNotSame(score2, allScoreData.PracticeScores[(score2.Chara, score2.Level, score2.Stage)]);
-        });
+        }
 
         [DataTestMethod]
         [DataRow(Level.Easy, Stage.Six)]
         [DataRow(Level.Extra, Stage.Extra)]
         [DataRow(Level.Extra, Stage.Six)]
         [DataRow(Level.Normal, Stage.Extra)]
-        public void SetPracticeScoreTestInvalidPracticeStage(int level, int stage) => TestUtils.Wrap(() =>
+        public void SetPracticeScoreTestInvalidPracticeStage(int level, int stage)
         {
             var score = new PracticeScoreStub(PracticeScoreTests.ValidStub)
             {
@@ -180,6 +180,6 @@ namespace ThScoreFileConverterTests.Models.Th06
             allScoreData.Set(score);
 
             Assert.AreEqual(0, allScoreData.PracticeScores.Count);
-        });
+        }
     }
 }

@@ -50,36 +50,36 @@ namespace ThScoreFileConverterTests.Models.Th143
         }
 
         [TestMethod]
-        public void BestShotHeaderTest() => TestUtils.Wrap(() =>
+        public void BestShotHeaderTest()
         {
             var stub = new BestShotHeaderStub();
             var header = new BestShotHeader();
 
             Validate(stub, header);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTest() => TestUtils.Wrap(() =>
+        public void ReadFromTest()
         {
             var header = TestUtils.Create<BestShotHeader>(MakeByteArray(ValidStub));
 
             Validate(ValidStub, header);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ReadFromTestNull() => TestUtils.Wrap(() =>
+        public void ReadFromTestNull()
         {
             var header = new BestShotHeader();
 
             header.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void ReadFromTestEmptySignature() => TestUtils.Wrap(() =>
+        public void ReadFromTestEmptySignature()
         {
             var stub = new BestShotHeaderStub(ValidStub)
             {
@@ -89,11 +89,11 @@ namespace ThScoreFileConverterTests.Models.Th143
             _ = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void ReadFromTestShortenedSignature() => TestUtils.Wrap(() =>
+        public void ReadFromTestShortenedSignature()
         {
             var stub = new BestShotHeaderStub(ValidStub);
             stub.Signature = stub.Signature.Substring(0, stub.Signature.Length - 1);
@@ -101,11 +101,11 @@ namespace ThScoreFileConverterTests.Models.Th143
             _ = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidCastException))]
-        public void ReadFromTestExceededSignature() => TestUtils.Wrap(() =>
+        public void ReadFromTestExceededSignature()
         {
             var stub = new BestShotHeaderStub(ValidStub);
             stub.Signature += "E";
@@ -113,7 +113,7 @@ namespace ThScoreFileConverterTests.Models.Th143
             _ = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         public static IEnumerable<object[]> InvalidDays
             => TestUtils.GetInvalidEnumerators(typeof(Day));
@@ -121,7 +121,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         [DataTestMethod]
         [DynamicData(nameof(InvalidDays))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void ReadFromTestInvalidDay(int day) => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidDay(int day)
         {
             var stub = new BestShotHeaderStub(ValidStub)
             {
@@ -131,6 +131,6 @@ namespace ThScoreFileConverterTests.Models.Th143
             _ = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
     }
 }

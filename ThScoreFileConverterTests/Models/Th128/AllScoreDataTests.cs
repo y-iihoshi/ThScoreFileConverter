@@ -10,7 +10,7 @@ namespace ThScoreFileConverterTests.Models.Th128
     public class AllScoreDataTests
     {
         [TestMethod]
-        public void AllScoreDataTest() => TestUtils.Wrap(() =>
+        public void AllScoreDataTest()
         {
             var allScoreData = new AllScoreData();
 
@@ -18,10 +18,10 @@ namespace ThScoreFileConverterTests.Models.Th128
             Assert.AreEqual(0, allScoreData.ClearData.Count);
             Assert.IsNull(allScoreData.CardData);
             Assert.IsNull(allScoreData.Status);
-        });
+        }
 
         [TestMethod]
-        public void SetHeaderTest() => TestUtils.Wrap(() =>
+        public void SetHeaderTest()
         {
             var array = Th095.HeaderBaseTests.MakeByteArray(Th095.HeaderBaseTests.ValidProperties);
             var header = TestUtils.Create<HeaderBase>(array);
@@ -30,10 +30,10 @@ namespace ThScoreFileConverterTests.Models.Th128
             allScoreData.Set(header);
 
             Assert.AreSame(header, allScoreData.Header);
-        });
+        }
 
         [TestMethod]
-        public void SetHeaderTestTwice() => TestUtils.Wrap(() =>
+        public void SetHeaderTestTwice()
         {
             var array = Th095.HeaderBaseTests.MakeByteArray(Th095.HeaderBaseTests.ValidProperties);
             var header1 = TestUtils.Create<HeaderBase>(array);
@@ -45,10 +45,10 @@ namespace ThScoreFileConverterTests.Models.Th128
 
             Assert.AreNotSame(header1, allScoreData.Header);
             Assert.AreSame(header2, allScoreData.Header);
-        });
+        }
 
         [TestMethod]
-        public void SetClearDataTest() => TestUtils.Wrap(() =>
+        public void SetClearDataTest()
         {
             var route = RouteWithTotal.A2;
             var clearData = new ClearDataStub { Route = route };
@@ -57,10 +57,10 @@ namespace ThScoreFileConverterTests.Models.Th128
             allScoreData.Set(clearData);
 
             Assert.AreSame(clearData, allScoreData.ClearData[route]);
-        });
+        }
 
         [TestMethod]
-        public void SetClearDataTestTwice() => TestUtils.Wrap(() =>
+        public void SetClearDataTestTwice()
         {
             var route = RouteWithTotal.A2;
             var clearData1 = new ClearDataStub { Route = route };
@@ -72,10 +72,10 @@ namespace ThScoreFileConverterTests.Models.Th128
 
             Assert.AreSame(clearData1, allScoreData.ClearData[route]);
             Assert.AreNotSame(clearData2, allScoreData.ClearData[route]);
-        });
+        }
 
         [TestMethod]
-        public void SetCardDataTest() => TestUtils.Wrap(() =>
+        public void SetCardDataTest()
         {
             var cardData = new CardDataStub();
 
@@ -83,10 +83,10 @@ namespace ThScoreFileConverterTests.Models.Th128
             allScoreData.Set(cardData);
 
             Assert.AreSame(cardData, allScoreData.CardData);
-        });
+        }
 
         [TestMethod]
-        public void SetCardDataTestTwice() => TestUtils.Wrap(() =>
+        public void SetCardDataTestTwice()
         {
             var cardData1 = new CardDataStub();
             var cardData2 = new CardDataStub();
@@ -97,10 +97,10 @@ namespace ThScoreFileConverterTests.Models.Th128
 
             Assert.AreNotSame(cardData1, allScoreData.CardData);
             Assert.AreSame(cardData2, allScoreData.CardData);
-        });
+        }
 
         [TestMethod]
-        public void SetStatusTest() => TestUtils.Wrap(() =>
+        public void SetStatusTest()
         {
             var status = new StatusStub();
 
@@ -108,10 +108,10 @@ namespace ThScoreFileConverterTests.Models.Th128
             allScoreData.Set(status);
 
             Assert.AreSame(status, allScoreData.Status);
-        });
+        }
 
         [TestMethod]
-        public void SetStatusTestTwice() => TestUtils.Wrap(() =>
+        public void SetStatusTestTwice()
         {
             var status1 = new StatusStub();
             var status2 = new StatusStub();
@@ -122,6 +122,6 @@ namespace ThScoreFileConverterTests.Models.Th128
 
             Assert.AreNotSame(status1, allScoreData.Status);
             Assert.AreSame(status2, allScoreData.Status);
-        });
+        }
     }
 }

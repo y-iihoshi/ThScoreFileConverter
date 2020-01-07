@@ -27,38 +27,38 @@ namespace ThScoreFileConverterTests.Models.Th105
         }
 
         [TestMethod]
-        public void CardForDeckTest() => TestUtils.Wrap(() =>
+        public void CardForDeckTest()
         {
             var stub = new CardForDeckStub();
 
             var cardForDeck = new CardForDeck();
 
             Validate(stub, cardForDeck);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTest() => TestUtils.Wrap(() =>
+        public void ReadFromTest()
         {
             var stub = ValidStub;
 
             var cardForDeck = TestUtils.Create<CardForDeck>(MakeByteArray(stub));
 
             Validate(stub, cardForDeck);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ReadFromTestNull() => TestUtils.Wrap(() =>
+        public void ReadFromTestNull()
         {
             var cardForDeck = new CardForDeck();
             cardForDeck.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void ReadFromTestShortened() => TestUtils.Wrap(() =>
+        public void ReadFromTestShortened()
         {
             var stub = ValidStub;
             var array = MakeByteArray(stub).SkipLast(1).ToArray();
@@ -66,10 +66,10 @@ namespace ThScoreFileConverterTests.Models.Th105
             _ = TestUtils.Create<CardForDeck>(array);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestExceeded() => TestUtils.Wrap(() =>
+        public void ReadFromTestExceeded()
         {
             var stub = ValidStub;
             var array = MakeByteArray(stub).Concat(new byte[1] { 1 }).ToArray();
@@ -77,6 +77,6 @@ namespace ThScoreFileConverterTests.Models.Th105
             var cardForDeck = TestUtils.Create<CardForDeck>(array);
 
             Validate(stub, cardForDeck);
-        });
+        }
     }
 }

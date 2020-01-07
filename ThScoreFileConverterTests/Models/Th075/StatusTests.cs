@@ -48,37 +48,37 @@ namespace ThScoreFileConverterTests.Models.Th075
         }
 
         [TestMethod]
-        public void StatusTest() => TestUtils.Wrap(() =>
+        public void StatusTest()
         {
             var status = new Status();
 
             Assert.AreEqual(string.Empty, status.LastName);
             Assert.AreEqual(0, status.ArcadeScores.Count());
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTest() => TestUtils.Wrap(() =>
+        public void ReadFromTest()
         {
             var properties = ValidProperties;
 
             var status = TestUtils.Create<Status>(MakeByteArray(properties));
 
             Validate(properties, status);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ReadFromTestNull() => TestUtils.Wrap(() =>
+        public void ReadFromTestNull()
         {
             var status = new Status();
             status.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void ReadFromTestShortenedName() => TestUtils.Wrap(() =>
+        public void ReadFromTestShortenedName()
         {
             var properties = ValidProperties;
             properties.encodedLastName =
@@ -87,10 +87,10 @@ namespace ThScoreFileConverterTests.Models.Th075
             _ = TestUtils.Create<Status>(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestExceededName() => TestUtils.Wrap(() =>
+        public void ReadFromTestExceededName()
         {
             var properties = ValidProperties;
             properties.encodedLastName = properties.encodedLastName.Concat(new byte[1] { 1 }).ToArray();
@@ -99,11 +99,11 @@ namespace ThScoreFileConverterTests.Models.Th075
 
             Assert.AreEqual("Player1 ", status.LastName);
             CollectionAssert.That.AreNotEqual(properties.arcadeScores.Values, status.ArcadeScores.Values);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void ReadFromTestShortenedArcadeScores() => TestUtils.Wrap(() =>
+        public void ReadFromTestShortenedArcadeScores()
         {
             var properties = new Properties(ValidProperties);
             var scores = properties.arcadeScores
@@ -114,10 +114,10 @@ namespace ThScoreFileConverterTests.Models.Th075
             _ = TestUtils.Create<Status>(MakeByteArray(properties));
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestExceededArcadeScores() => TestUtils.Wrap(() =>
+        public void ReadFromTestExceededArcadeScores()
         {
             var properties = new Properties(ValidProperties);
             var scores = properties.arcadeScores.ToDictionary(pair => pair.Key, pair => pair.Value);
@@ -127,6 +127,6 @@ namespace ThScoreFileConverterTests.Models.Th075
             var status = TestUtils.Create<Status>(MakeByteArray(properties));
 
             Validate(ValidProperties, status);
-        });
+        }
     }
 }

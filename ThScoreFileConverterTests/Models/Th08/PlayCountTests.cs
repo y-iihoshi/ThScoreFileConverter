@@ -54,28 +54,28 @@ namespace ThScoreFileConverterTests.Models.Th08
         }
 
         [TestMethod]
-        public void ReadFromTest() => TestUtils.Wrap(() =>
+        public void ReadFromTest()
         {
             var stub = ValidStub;
 
             var playCount = TestUtils.Create<PlayCount>(MakeByteArray(stub));
 
             Validate(stub, playCount);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ReadFromTestNull() => TestUtils.Wrap(() =>
+        public void ReadFromTestNull()
         {
             var playCount = new PlayCount();
             playCount.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void ReadFromTestShortenedTrials() => TestUtils.Wrap(() =>
+        public void ReadFromTestShortenedTrials()
         {
             var stub = new PlayCountStub(ValidStub);
             stub.Trials = stub.Trials.Where(pair => pair.Key != Chara.Yuyuko)
@@ -84,10 +84,10 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = TestUtils.Create<PlayCount>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestExceededTrials() => TestUtils.Wrap(() =>
+        public void ReadFromTestExceededTrials()
         {
             var stub = new PlayCountStub(ValidStub);
             stub.Trials = stub.Trials.Concat(new Dictionary<Chara, int>
@@ -103,6 +103,6 @@ namespace ThScoreFileConverterTests.Models.Th08
             Assert.AreNotEqual(stub.TotalClear, playCount.TotalClear);
             Assert.AreNotEqual(stub.TotalContinue, playCount.TotalContinue);
             Assert.AreNotEqual(stub.TotalPractice, playCount.TotalPractice);
-        });
+        }
     }
 }

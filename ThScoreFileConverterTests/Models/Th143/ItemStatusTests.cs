@@ -63,7 +63,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         }
 
         [TestMethod]
-        public void ItemStatusTestChapter() => TestUtils.Wrap(() =>
+        public void ItemStatusTestChapter()
         {
             var stub = ValidStub;
 
@@ -72,21 +72,21 @@ namespace ThScoreFileConverterTests.Models.Th143
 
             Validate(stub, itemStatus);
             Assert.IsFalse(itemStatus.IsValid);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ItemStatusTestNullChapter() => TestUtils.Wrap(() =>
+        public void ItemStatusTestNullChapter()
         {
             _ = new ItemStatus(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void ItemStatusTestInvalidSignature() => TestUtils.Wrap(() =>
+        public void ItemStatusTestInvalidSignature()
         {
             var stub = new ItemStatusStub(ValidStub);
             stub.Signature = stub.Signature.ToLowerInvariant();
@@ -95,11 +95,11 @@ namespace ThScoreFileConverterTests.Models.Th143
             _ = new ItemStatus(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void ItemStatusTestInvalidVersion() => TestUtils.Wrap(() =>
+        public void ItemStatusTestInvalidVersion()
         {
             var stub = new ItemStatusStub(ValidStub);
             ++stub.Version;
@@ -108,11 +108,11 @@ namespace ThScoreFileConverterTests.Models.Th143
             _ = new ItemStatus(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void ItemStatusTestInvalidSize() => TestUtils.Wrap(() =>
+        public void ItemStatusTestInvalidSize()
         {
             var stub = new ItemStatusStub(ValidStub);
             --stub.Size;
@@ -121,7 +121,7 @@ namespace ThScoreFileConverterTests.Models.Th143
             _ = new ItemStatus(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         public static IEnumerable<object[]> InvalidItems
             => TestUtils.GetInvalidEnumerators(typeof(ItemWithTotal));
@@ -129,7 +129,7 @@ namespace ThScoreFileConverterTests.Models.Th143
         [DataTestMethod]
         [DynamicData(nameof(InvalidItems))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void ItemStatusTestInvalidItems(int item) => TestUtils.Wrap(() =>
+        public void ItemStatusTestInvalidItems(int item)
         {
             var stub = new ItemStatusStub(ValidStub)
             {
@@ -140,7 +140,7 @@ namespace ThScoreFileConverterTests.Models.Th143
             _ = new ItemStatus(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [DataTestMethod]
         [DataRow("TI", (ushort)1, 0x34, true)]
@@ -148,15 +148,14 @@ namespace ThScoreFileConverterTests.Models.Th143
         [DataRow("TI", (ushort)0, 0x34, false)]
         [DataRow("TI", (ushort)1, 0x35, false)]
         public void CanInitializeTest(string signature, ushort version, int size, bool expected)
-            => TestUtils.Wrap(() =>
-            {
-                var checksum = 0u;
-                var data = new byte[size];
+        {
+            var checksum = 0u;
+            var data = new byte[size];
 
-                var chapter = TestUtils.Create<Chapter>(
-                    TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
+            var chapter = TestUtils.Create<Chapter>(
+                TestUtils.MakeByteArray(signature.ToCharArray(), version, checksum, size, data));
 
-                Assert.AreEqual(expected, ItemStatus.CanInitialize(chapter));
-            });
+            Assert.AreEqual(expected, ItemStatus.CanInitialize(chapter));
+        }
     }
 }

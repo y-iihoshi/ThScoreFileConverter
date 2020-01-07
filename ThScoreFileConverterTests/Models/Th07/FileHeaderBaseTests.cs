@@ -54,7 +54,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         }
 
         [TestMethod]
-        public void FileHeaderBaseTest() => TestUtils.Wrap(() =>
+        public void FileHeaderBaseTest()
         {
             var properties = new Properties();
 
@@ -62,10 +62,10 @@ namespace ThScoreFileConverterTests.Models.Th07
 
             Validate(properties, header);
             Assert.IsTrue(header.IsValid);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTest() => TestUtils.Wrap(() =>
+        public void ReadFromTest()
         {
             var properties = ValidProperties;
 
@@ -73,21 +73,21 @@ namespace ThScoreFileConverterTests.Models.Th07
 
             Validate(properties, header);
             Assert.IsTrue(header.IsValid);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ReadFromTestNull() => TestUtils.Wrap(() =>
+        public void ReadFromTestNull()
         {
             var header = new FileHeaderBase();
             header.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void ReadFromTestShortened() => TestUtils.Wrap(() =>
+        public void ReadFromTestShortened()
         {
             var properties = ValidProperties;
             var array = MakeByteArray(properties);
@@ -96,10 +96,10 @@ namespace ThScoreFileConverterTests.Models.Th07
             _ = TestUtils.Create<FileHeaderBase>(array);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestExceeded() => TestUtils.Wrap(() =>
+        public void ReadFromTestExceeded()
         {
             var properties = ValidProperties;
             var array = MakeByteArray(properties).Concat(new byte[] { 1 }).ToArray();
@@ -108,10 +108,10 @@ namespace ThScoreFileConverterTests.Models.Th07
 
             Validate(properties, header);
             Assert.IsTrue(header.IsValid);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidSize() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidSize()
         {
             var properties = ValidProperties;
             ++properties.size;
@@ -120,10 +120,10 @@ namespace ThScoreFileConverterTests.Models.Th07
 
             Validate(properties, header);
             Assert.IsFalse(header.IsValid);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidDecodedAllSize() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidDecodedAllSize()
         {
             var properties = ValidProperties;
             ++properties.decodedAllSize;
@@ -132,10 +132,10 @@ namespace ThScoreFileConverterTests.Models.Th07
 
             Validate(properties, header);
             Assert.IsFalse(header.IsValid);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidDecodedBodySize() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidDecodedBodySize()
         {
             var properties = ValidProperties;
             ++properties.decodedBodySize;
@@ -144,10 +144,10 @@ namespace ThScoreFileConverterTests.Models.Th07
 
             Validate(properties, header);
             Assert.IsFalse(header.IsValid);
-        });
+        }
 
         [TestMethod]
-        public void WriteToTest() => TestUtils.Wrap(() =>
+        public void WriteToTest()
         {
             using var stream = new MemoryStream();
             using var writer = new BinaryWriter(stream);
@@ -165,16 +165,16 @@ namespace ThScoreFileConverterTests.Models.Th07
             _ = writer.BaseStream.Read(actualArray, 0, actualArray.Length);
 
             CollectionAssert.AreEqual(array, actualArray);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void WriteToTestNull() => TestUtils.Wrap(() =>
+        public void WriteToTestNull()
         {
             var header = new FileHeaderBase();
             header.WriteTo(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
     }
 }

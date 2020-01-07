@@ -56,25 +56,25 @@ namespace ThScoreFileConverterTests.Models.Th06
         }
 
         [TestMethod]
-        public void HighScoreTestChapter() => TestUtils.Wrap(() =>
+        public void HighScoreTestChapter()
         {
             var chapter = TestUtils.Create<Chapter>(MakeByteArray(ValidStub));
             var highScore = new HighScore(chapter);
 
             Validate(ValidStub, highScore);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void HighScoreTestNullChapter() => TestUtils.Wrap(() =>
+        public void HighScoreTestNullChapter()
         {
             _ = new HighScore(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
-        public void HighScoreTestScore() => TestUtils.Wrap(() =>
+        public void HighScoreTestScore()
         {
             var score = 1234567u;
             var name = "Nanashi\0\0";
@@ -83,10 +83,10 @@ namespace ThScoreFileConverterTests.Models.Th06
 
             Assert.AreEqual(score, highScore.Score);
             CollectionAssert.That.AreEqual(TestUtils.CP932Encoding.GetBytes(name), highScore.Name);
-        });
+        }
 
         [TestMethod]
-        public void HighScoreTestZeroScore() => TestUtils.Wrap(() =>
+        public void HighScoreTestZeroScore()
         {
             var score = 0u;
             var name = "Nanashi\0\0";
@@ -95,12 +95,12 @@ namespace ThScoreFileConverterTests.Models.Th06
 
             Assert.AreEqual(score, highScore.Score);
             CollectionAssert.That.AreEqual(TestUtils.CP932Encoding.GetBytes(name), highScore.Name);
-        });
+        }
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void HighScoreTestInvalidSignature() => TestUtils.Wrap(() =>
+        public void HighScoreTestInvalidSignature()
         {
             var stub = new HighScoreStub(ValidStub);
             stub.Signature = stub.Signature.ToLowerInvariant();
@@ -109,11 +109,11 @@ namespace ThScoreFileConverterTests.Models.Th06
             _ = new HighScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void HighScoreTestInvalidSize1() => TestUtils.Wrap(() =>
+        public void HighScoreTestInvalidSize1()
         {
             var stub = new HighScoreStub(ValidStub);
             --stub.Size1;
@@ -122,7 +122,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             _ = new HighScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         public static IEnumerable<object[]> InvalidCharacters
             => TestUtils.GetInvalidEnumerators(typeof(Chara));
@@ -130,7 +130,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [DataTestMethod]
         [DynamicData(nameof(InvalidCharacters))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void HighScoreTestInvalidChara(int chara) => TestUtils.Wrap(() =>
+        public void HighScoreTestInvalidChara(int chara)
         {
             var stub = new HighScoreStub(ValidStub)
             {
@@ -141,7 +141,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             _ = new HighScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         public static IEnumerable<object[]> InvalidLevels
             => TestUtils.GetInvalidEnumerators(typeof(Level));
@@ -149,7 +149,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [DataTestMethod]
         [DynamicData(nameof(InvalidLevels))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void HighScoreTestInvalidLevel(int level) => TestUtils.Wrap(() =>
+        public void HighScoreTestInvalidLevel(int level)
         {
             var stub = new HighScoreStub(ValidStub)
             {
@@ -160,7 +160,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             _ = new HighScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         public static IEnumerable<object[]> InvalidStageProgresses
             => TestUtils.GetInvalidEnumerators(typeof(StageProgress));
@@ -168,7 +168,7 @@ namespace ThScoreFileConverterTests.Models.Th06
         [DataTestMethod]
         [DynamicData(nameof(InvalidStageProgresses))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void HighScoreTestInvalidStageProgress(int stageProgress) => TestUtils.Wrap(() =>
+        public void HighScoreTestInvalidStageProgress(int stageProgress)
         {
             var stub = new HighScoreStub(ValidStub)
             {
@@ -179,6 +179,6 @@ namespace ThScoreFileConverterTests.Models.Th06
             _ = new HighScore(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
     }
 }

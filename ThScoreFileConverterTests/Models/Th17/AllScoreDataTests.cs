@@ -8,17 +8,17 @@ namespace ThScoreFileConverterTests.Models.Th17
     public class AllScoreDataTests
     {
         [TestMethod]
-        public void AllScoreDataTest() => TestUtils.Wrap(() =>
+        public void AllScoreDataTest()
         {
             var allScoreData = new AllScoreData();
 
             Assert.IsNull(allScoreData.Header);
             Assert.AreEqual(0, allScoreData.ClearData.Count);
             Assert.IsNull(allScoreData.Status);
-        });
+        }
 
         [TestMethod]
-        public void SetHeaderTest() => TestUtils.Wrap(() =>
+        public void SetHeaderTest()
         {
             var array = Th095.HeaderBaseTests.MakeByteArray(Th095.HeaderBaseTests.ValidProperties);
             var header = TestUtils.Create<ThScoreFileConverter.Models.Th095.HeaderBase>(array);
@@ -27,10 +27,10 @@ namespace ThScoreFileConverterTests.Models.Th17
             allScoreData.Set(header);
 
             Assert.AreSame(header, allScoreData.Header);
-        });
+        }
 
         [TestMethod]
-        public void SetHeaderTestTwice() => TestUtils.Wrap(() =>
+        public void SetHeaderTestTwice()
         {
             var array = Th095.HeaderBaseTests.MakeByteArray(Th095.HeaderBaseTests.ValidProperties);
             var header1 = TestUtils.Create<ThScoreFileConverter.Models.Th095.HeaderBase>(array);
@@ -42,10 +42,10 @@ namespace ThScoreFileConverterTests.Models.Th17
 
             Assert.AreNotSame(header1, allScoreData.Header);
             Assert.AreSame(header2, allScoreData.Header);
-        });
+        }
 
         [TestMethod]
-        public void SetClearDataTest() => TestUtils.Wrap(() =>
+        public void SetClearDataTest()
         {
             var chara = CharaWithTotal.ReimuB;
             var clearData = new ClearDataStub { Chara = chara };
@@ -54,10 +54,10 @@ namespace ThScoreFileConverterTests.Models.Th17
             allScoreData.Set(clearData);
 
             Assert.AreSame(clearData, allScoreData.ClearData[chara]);
-        });
+        }
 
         [TestMethod]
-        public void SetClearDataTestTwice() => TestUtils.Wrap(() =>
+        public void SetClearDataTestTwice()
         {
             var chara = CharaWithTotal.ReimuB;
             var clearData1 = new ClearDataStub { Chara = chara };
@@ -69,10 +69,10 @@ namespace ThScoreFileConverterTests.Models.Th17
 
             Assert.AreSame(clearData1, allScoreData.ClearData[chara]);
             Assert.AreNotSame(clearData2, allScoreData.ClearData[chara]);
-        });
+        }
 
         [TestMethod]
-        public void SetStatusTest() => TestUtils.Wrap(() =>
+        public void SetStatusTest()
         {
             var status = new StatusStub(StatusTests.ValidStub);
 
@@ -80,10 +80,10 @@ namespace ThScoreFileConverterTests.Models.Th17
             allScoreData.Set(status);
 
             Assert.AreSame(status, allScoreData.Status);
-        });
+        }
 
         [TestMethod]
-        public void SetStatusTestTwice() => TestUtils.Wrap(() =>
+        public void SetStatusTestTwice()
         {
             var status1 = new StatusStub(StatusTests.ValidStub);
             var status2 = new StatusStub(status1);
@@ -94,6 +94,6 @@ namespace ThScoreFileConverterTests.Models.Th17
 
             Assert.AreNotSame(status1, allScoreData.Status);
             Assert.AreSame(status2, allScoreData.Status);
-        });
+        }
     }
 }

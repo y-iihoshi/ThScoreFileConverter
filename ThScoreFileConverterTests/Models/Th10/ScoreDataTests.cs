@@ -77,37 +77,37 @@ namespace ThScoreFileConverterTests.Models.Th10
         }
 
         [TestMethod]
-        public void ScoreDataTest() => TestUtils.Wrap(() =>
+        public void ScoreDataTest()
         {
             var stub = new ScoreDataStub<StageProgress>();
             var scoreData = new ScoreData();
 
             Validate(stub, scoreData);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTest() => TestUtils.Wrap(() =>
+        public void ReadFromTest()
         {
             var stub = ValidStub;
 
             var scoreData = TestUtils.Create<ScoreData>(MakeByteArray(stub));
 
             Validate(stub, scoreData);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ReadFromTestNull() => TestUtils.Wrap(() =>
+        public void ReadFromTestNull()
         {
             var scoreData = new ScoreData();
             scoreData.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void ReadFromTestShortenedName() => TestUtils.Wrap(() =>
+        public void ReadFromTestShortenedName()
         {
             var stub = new ScoreDataStub<StageProgress>(ValidStub);
             stub.Name = stub.Name.SkipLast(1).ToArray();
@@ -115,10 +115,10 @@ namespace ThScoreFileConverterTests.Models.Th10
             _ = TestUtils.Create<ScoreData>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestExceededName() => TestUtils.Wrap(() =>
+        public void ReadFromTestExceededName()
         {
             var stub = new ScoreDataStub<StageProgress>(ValidStub);
             stub.Name = stub.Name.Concat(TestUtils.MakeRandomArray<byte>(1)).ToArray();
@@ -132,7 +132,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             CollectionAssert.That.AreEqual(stub.Name.SkipLast(1), scoreData.Name);
             Assert.AreNotEqual(stub.DateTime, scoreData.DateTime);
             Assert.AreNotEqual(stub.SlowRate, scoreData.SlowRate);
-        });
+        }
 
         public static IEnumerable<object[]> InvalidStageProgresses
             => TestUtils.GetInvalidEnumerators(typeof(StageProgress));
@@ -140,7 +140,7 @@ namespace ThScoreFileConverterTests.Models.Th10
         [DataTestMethod]
         [DynamicData(nameof(InvalidStageProgresses))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void ReadFromTestInvalidStageProgress(int stageProgress) => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidStageProgress(int stageProgress)
         {
             var stub = new ScoreDataStub<StageProgress>(ValidStub)
             {
@@ -150,6 +150,6 @@ namespace ThScoreFileConverterTests.Models.Th10
             _ = TestUtils.Create<ScoreData>(MakeByteArray(stub));
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
     }
 }

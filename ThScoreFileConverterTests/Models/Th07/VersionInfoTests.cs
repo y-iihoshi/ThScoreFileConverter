@@ -46,7 +46,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         }
 
         [TestMethod]
-        public void VersionInfoTestChapter() => TestUtils.Wrap(() =>
+        public void VersionInfoTestChapter()
         {
             var properties = ValidProperties;
 
@@ -54,21 +54,21 @@ namespace ThScoreFileConverterTests.Models.Th07
             var versionInfo = new VersionInfo(chapter);
 
             Validate(properties, versionInfo);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void VersionInfoTestNullChapter() => TestUtils.Wrap(() =>
+        public void VersionInfoTestNullChapter()
         {
             _ = new VersionInfo(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void VersionInfoTestInvalidSignature() => TestUtils.Wrap(() =>
+        public void VersionInfoTestInvalidSignature()
         {
             var properties = ValidProperties;
             properties.signature = properties.signature.ToLowerInvariant();
@@ -77,11 +77,11 @@ namespace ThScoreFileConverterTests.Models.Th07
             _ = new VersionInfo(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void VersionInfoTestInvalidSize1() => TestUtils.Wrap(() =>
+        public void VersionInfoTestInvalidSize1()
         {
             var properties = ValidProperties;
             --properties.size1;
@@ -90,6 +90,6 @@ namespace ThScoreFileConverterTests.Models.Th07
             _ = new VersionInfo(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
     }
 }

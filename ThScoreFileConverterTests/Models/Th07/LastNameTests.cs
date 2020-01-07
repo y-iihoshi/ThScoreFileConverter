@@ -46,7 +46,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         }
 
         [TestMethod]
-        public void LastNameTestChapter() => TestUtils.Wrap(() =>
+        public void LastNameTestChapter()
         {
             var properties = ValidProperties;
 
@@ -54,21 +54,21 @@ namespace ThScoreFileConverterTests.Models.Th07
             var lastName = new LastName(chapter);
 
             Validate(properties, lastName);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void LastNameTestNullChapter() => TestUtils.Wrap(() =>
+        public void LastNameTestNullChapter()
         {
             _ = new LastName(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void LastNameTestInvalidSignature() => TestUtils.Wrap(() =>
+        public void LastNameTestInvalidSignature()
         {
             var properties = ValidProperties;
             properties.signature = properties.signature.ToLowerInvariant();
@@ -77,11 +77,11 @@ namespace ThScoreFileConverterTests.Models.Th07
             _ = new LastName(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void LastNameTestInvalidSize1() => TestUtils.Wrap(() =>
+        public void LastNameTestInvalidSize1()
         {
             var properties = ValidProperties;
             --properties.size1;
@@ -90,6 +90,6 @@ namespace ThScoreFileConverterTests.Models.Th07
             _ = new LastName(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
     }
 }

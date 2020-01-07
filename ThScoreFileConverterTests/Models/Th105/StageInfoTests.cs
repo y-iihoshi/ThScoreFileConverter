@@ -36,14 +36,13 @@ namespace ThScoreFileConverterTests.Models.Th105
 
         internal static void StageInfoTestHelper<TChara>()
             where TChara : struct, Enum
-            => TestUtils.Wrap(() =>
-            {
-                var properties = MakeValidProperties<TChara>();
+        {
+            var properties = MakeValidProperties<TChara>();
 
-                var spellCardInfo = new StageInfo<TChara>(properties.stage, properties.enemy, properties.cardIds);
+            var spellCardInfo = new StageInfo<TChara>(properties.stage, properties.enemy, properties.cardIds);
 
-                Validate(properties, spellCardInfo);
-            });
+            Validate(properties, spellCardInfo);
+        }
 
         [TestMethod]
         public void StageInfoTest() => StageInfoTestHelper<Chara>();

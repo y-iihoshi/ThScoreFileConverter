@@ -53,7 +53,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         }
 
         [TestMethod]
-        public void ClearDataTestChapter() => TestUtils.Wrap(() =>
+        public void ClearDataTestChapter()
         {
             var stub = ValidStub;
 
@@ -61,21 +61,21 @@ namespace ThScoreFileConverterTests.Models.Th08
             var clearData = new ClearData(chapter);
 
             Validate(stub, clearData);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ClearDataTestNullChapter() => TestUtils.Wrap(() =>
+        public void ClearDataTestNullChapter()
         {
             _ = new ClearData(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase")]
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void ClearDataTestInvalidSignature() => TestUtils.Wrap(() =>
+        public void ClearDataTestInvalidSignature()
         {
             var stub = new ClearDataStub(ValidStub);
             stub.Signature = stub.Signature.ToLowerInvariant();
@@ -84,11 +84,11 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = new ClearData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidDataException))]
-        public void ClearDataTestInvalidSize1() => TestUtils.Wrap(() =>
+        public void ClearDataTestInvalidSize1()
         {
             var stub = new ClearDataStub(ValidStub);
             --stub.Size1;
@@ -97,7 +97,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = new ClearData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         public static IEnumerable<object[]> InvalidCharacters
             => TestUtils.GetInvalidEnumerators(typeof(CharaWithTotal));
@@ -105,7 +105,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         [DataTestMethod]
         [DynamicData(nameof(InvalidCharacters))]
         [ExpectedException(typeof(InvalidCastException))]
-        public void ClearDataTestInvalidChara(int chara) => TestUtils.Wrap(() =>
+        public void ClearDataTestInvalidChara(int chara)
         {
             var stub = new ClearDataStub(ValidStub)
             {
@@ -116,6 +116,6 @@ namespace ThScoreFileConverterTests.Models.Th08
             _ = new ClearData(chapter);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
     }
 }

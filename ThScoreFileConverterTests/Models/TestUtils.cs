@@ -235,18 +235,5 @@ namespace ThScoreFileConverterTests.Models
             yield return new object[] { values.Min() - 1 };
             yield return new object[] { values.Max() + 1 };
         }
-
-        public static Action<Action> Wrap => (action) =>
-        {
-            try
-            {
-                action();
-            }
-            catch (TargetInvocationException ex)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        };
     }
 }

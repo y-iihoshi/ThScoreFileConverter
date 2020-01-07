@@ -77,7 +77,7 @@ namespace ThScoreFileConverterTests.Models.Th135
         }
 
         [TestMethod]
-        public void AllScoreDataTest() => TestUtils.Wrap(() =>
+        public void AllScoreDataTest()
         {
             var allScoreData = new AllScoreData();
 
@@ -91,39 +91,39 @@ namespace ThScoreFileConverterTests.Models.Th135
             Assert.AreEqual(default, allScoreData.IsPlayableMamizou);
             Assert.AreEqual(default, allScoreData.IsPlayableKokoro);
             Assert.AreEqual(0, allScoreData.BgmFlags.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTest() => TestUtils.Wrap(() =>
+        public void ReadFromTest()
         {
             var properties = GetValidProperties();
 
             var allScoreData = TestUtils.Create<AllScoreData>(MakeByteArray(properties));
 
             Validate(properties, allScoreData);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ReadFromTestNull() => TestUtils.Wrap(() =>
+        public void ReadFromTestNull()
         {
             var allScoreData = new AllScoreData();
             allScoreData.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void ReadFromTestEmpty() => TestUtils.Wrap(() =>
+        public void ReadFromTestEmpty()
         {
             _ = TestUtils.Create<AllScoreData>(new byte[0]);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestNoKey() => TestUtils.Wrap(() =>
+        public void ReadFromTestNoKey()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(TestUtils.MakeByteArray((int)SQOT.Null));
 
@@ -137,10 +137,10 @@ namespace ThScoreFileConverterTests.Models.Th135
             Assert.AreEqual(default, allScoreData.IsPlayableMamizou);
             Assert.AreEqual(default, allScoreData.IsPlayableKokoro);
             Assert.AreEqual(0, allScoreData.BgmFlags.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestNoTables() => TestUtils.Wrap(() =>
+        public void ReadFromTestNoTables()
         {
             var storyProgressValue = 1;
 
@@ -153,10 +153,10 @@ namespace ThScoreFileConverterTests.Models.Th135
             Assert.AreEqual(storyProgressValue, allScoreData.StoryProgress);
             Assert.AreEqual(0, allScoreData.StoryClearFlags.Count);
             Assert.AreEqual(0, allScoreData.BgmFlags.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidStoryClear() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidStoryClear()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
@@ -165,10 +165,10 @@ namespace ThScoreFileConverterTests.Models.Th135
                 .ToArray());
 
             Assert.AreEqual(0, allScoreData.StoryClearFlags.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidStoryClearValue() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidStoryClearValue()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
@@ -177,10 +177,10 @@ namespace ThScoreFileConverterTests.Models.Th135
                 .ToArray());
 
             Assert.AreEqual(0, allScoreData.StoryClearFlags.Count);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestInvalidEnableBgm() => TestUtils.Wrap(() =>
+        public void ReadFromTestInvalidEnableBgm()
         {
             var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
@@ -189,6 +189,6 @@ namespace ThScoreFileConverterTests.Models.Th135
                 .ToArray());
 
             Assert.AreEqual(0, allScoreData.BgmFlags.Count);
-        });
+        }
     }
 }

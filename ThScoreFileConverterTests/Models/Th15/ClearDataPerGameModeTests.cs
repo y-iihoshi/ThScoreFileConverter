@@ -92,38 +92,38 @@ namespace ThScoreFileConverterTests.Models.Th15
         }
 
         [TestMethod]
-        public void ClearDataPerGameModeTest() => TestUtils.Wrap(() =>
+        public void ClearDataPerGameModeTest()
         {
             var stub = new ClearDataPerGameModeStub();
 
             var clearData = new ClearDataPerGameMode();
 
             Validate(stub, clearData);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTest() => TestUtils.Wrap(() =>
+        public void ReadFromTest()
         {
             var stub = MakeValidStub();
 
             var clearData = TestUtils.Create<ClearDataPerGameMode>(MakeByteArray(stub));
 
             Validate(stub, clearData);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ReadFromTestNull() => TestUtils.Wrap(() =>
+        public void ReadFromTestNull()
         {
             var clearData = new ClearDataPerGameMode();
             clearData.ReadFrom(null!);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
         [ExpectedException(typeof(EndOfStreamException))]
-        public void ReadFromTestShortened() => TestUtils.Wrap(() =>
+        public void ReadFromTestShortened()
         {
             var stub = MakeValidStub();
             var array = MakeByteArray(stub).SkipLast(1).ToArray();
@@ -131,10 +131,10 @@ namespace ThScoreFileConverterTests.Models.Th15
             _ = TestUtils.Create<ClearDataPerGameMode>(array);
 
             Assert.Fail(TestUtils.Unreachable);
-        });
+        }
 
         [TestMethod]
-        public void ReadFromTestExceeded() => TestUtils.Wrap(() =>
+        public void ReadFromTestExceeded()
         {
             var stub = MakeValidStub();
             var array = MakeByteArray(stub).Concat(new byte[1] { 1 }).ToArray();
@@ -142,6 +142,6 @@ namespace ThScoreFileConverterTests.Models.Th15
             var clearData = TestUtils.Create<ClearDataPerGameMode>(array);
 
             Validate(stub, clearData);
-        });
+        }
     }
 }
