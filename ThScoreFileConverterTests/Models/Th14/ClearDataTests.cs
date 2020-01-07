@@ -120,7 +120,7 @@ namespace ThScoreFileConverterTests.Models.Th14
 
             foreach (var pair in expected.Rankings)
             {
-                for (var index = 0; index < pair.Value.Count(); ++index)
+                for (var index = 0; index < pair.Value.Count; ++index)
                 {
                     Th10.ScoreDataTests.Validate(pair.Value[index], actual.Rankings[pair.Key][index]);
                 }

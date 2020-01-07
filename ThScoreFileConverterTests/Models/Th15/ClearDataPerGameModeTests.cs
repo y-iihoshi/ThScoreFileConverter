@@ -74,7 +74,7 @@ namespace ThScoreFileConverterTests.Models.Th15
         {
             foreach (var pair in expected.Rankings)
             {
-                for (var index = 0; index < pair.Value.Count(); ++index)
+                for (var index = 0; index < pair.Value.Count; ++index)
                 {
                     ScoreDataTests.Validate(pair.Value[index], actual.Rankings[pair.Key][index]);
                 }
