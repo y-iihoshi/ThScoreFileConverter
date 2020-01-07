@@ -32,7 +32,7 @@ namespace ThScoreFileConverterTests.Models.Th105
                     id => new CardForDeckStub
                     {
                         Id = id,
-                        MaxNumber = id % 4 + 1,
+                        MaxNumber = (id % 4) + 1,
                     } as ICardForDeck),
                 clearData = charas.ToDictionary(
                     chara => chara,

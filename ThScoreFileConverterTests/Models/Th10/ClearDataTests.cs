@@ -33,7 +33,7 @@ namespace ThScoreFileConverterTests.Models.Th10
                     level => Enumerable.Range(0, 10).Select(
                         index => new ScoreDataStub<StageProgress>()
                         {
-                            Score = 12345670u - (uint)index * 1000u,
+                            Score = 12345670u - ((uint)index * 1000u),
                             StageProgress = StageProgress.Five,
                             ContinueCount = (byte)index,
                             Name = TestUtils.CP932Encoding.GetBytes($"Player{index}\0\0\0"),
@@ -49,7 +49,7 @@ namespace ThScoreFileConverterTests.Models.Th10
                         pair => pair,
                         pair => new PracticeStub()
                         {
-                            Score = 123456u - (uint)pair.level * 10u,
+                            Score = 123456u - ((uint)pair.level * 10u),
                             StageFlag = (uint)pair.stage % 2u,
                         } as IPractice),
                 Cards = Enumerable.Range(1, 110).ToDictionary(

@@ -32,7 +32,7 @@ namespace ThScoreFileConverterTests.Models.Th075
             decodedLastName = "Player1 ",
             arcadeScores = Utils.GetEnumerator<CharaWithReserved>()
                 .SelectMany(player => Utils.GetEnumerator<CharaWithReserved>().Select(enemy => (player, enemy)))
-                .ToDictionary(pair => pair, pair => (int)pair.player * 100 + (int)pair.enemy),
+                .ToDictionary(pair => pair, pair => ((int)pair.player * 100) + (int)pair.enemy),
         };
 
         internal static byte[] MakeByteArray(in Properties properties)

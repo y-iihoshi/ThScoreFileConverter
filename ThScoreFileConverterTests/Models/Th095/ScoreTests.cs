@@ -32,7 +32,7 @@ namespace ThScoreFileConverterTests.Models.Th095
                 score.Version,
                 score.Size,
                 score.Checksum,
-                (int)score.LevelScene.Level * 10 + score.LevelScene.Scene - 1,
+                ((int)score.LevelScene.Level * 10) + score.LevelScene.Scene - 1,
                 score.HighScore,
                 0u,
                 score.BestshotScore,

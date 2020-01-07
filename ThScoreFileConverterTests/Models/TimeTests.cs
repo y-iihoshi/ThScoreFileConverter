@@ -31,7 +31,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void TimeTestMillionAndOne()
         {
-            var time = new Time(1000 * 1000 + 1);
+            var time = new Time((1000 * 1000) + 1);
 
             Assert.AreEqual(4, time.Hours);
             Assert.AreEqual(37, time.Minutes);
@@ -65,7 +65,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void TimeTestMillionAndOneFrames()
         {
-            var time = new Time(1000 * 1000 + 1, true);
+            var time = new Time((1000 * 1000) + 1, true);
 
             Assert.AreEqual(4, time.Hours);
             Assert.AreEqual(37, time.Minutes);
@@ -99,7 +99,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void TimeTestMillionAndOneMilliseconds()
         {
-            var time = new Time(1000 * 1000 + 1, false);
+            var time = new Time((1000 * 1000) + 1, false);
 
             Assert.AreEqual(0, time.Hours);
             Assert.AreEqual(16, time.Minutes);

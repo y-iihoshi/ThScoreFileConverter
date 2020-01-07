@@ -28,7 +28,7 @@ namespace ThScoreFileConverterTests.Models.Th15
                     level => Enumerable.Range(0, 10).Select(
                         index => new ScoreDataStub
                         {
-                            Score = 12345670u - (uint)index * 1000u,
+                            Score = 12345670u - ((uint)index * 1000u),
                             StageProgress = StageProgress.Five,
                             ContinueCount = (byte)index,
                             Name = TestUtils.CP932Encoding.GetBytes($"Player{index}\0\0\0"),

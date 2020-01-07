@@ -23,10 +23,10 @@ namespace ThScoreFileConverterTests.Models.Th08
             Size2 = 0x178,
             PlayCounts = Utils.GetEnumerator<Stage>()
                 .SelectMany(stage => Utils.GetEnumerator<Level>().Select(level => (stage, level)))
-                .ToDictionary(pair => pair, pair => (int)pair.stage * 10 + (int)pair.level),
+                .ToDictionary(pair => pair, pair => ((int)pair.stage * 10) + (int)pair.level),
             HighScores = Utils.GetEnumerator<Stage>()
                 .SelectMany(stage => Utils.GetEnumerator<Level>().Select(level => (stage, level)))
-                .ToDictionary(pair => pair, pair => (int)pair.level * 10 + (int)pair.stage),
+                .ToDictionary(pair => pair, pair => ((int)pair.level * 10) + (int)pair.stage),
             Chara = Chara.MarisaAlice,
         };
 

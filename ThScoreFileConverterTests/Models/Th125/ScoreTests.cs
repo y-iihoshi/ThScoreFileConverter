@@ -29,7 +29,7 @@ namespace ThScoreFileConverterTests.Models.Th125
 
         internal static byte[] MakeData(IScore score)
             => TestUtils.MakeByteArray(
-                (int)score.LevelScene.Level * 10 + score.LevelScene.Scene - 1,
+                ((int)score.LevelScene.Level * 10) + score.LevelScene.Scene - 1,
                 score.HighScore,
                 new byte[4],
                 (int)score.Chara,
