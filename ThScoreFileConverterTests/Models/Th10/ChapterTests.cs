@@ -236,7 +236,6 @@ namespace ThScoreFileConverterTests.Models.Th10
             Assert.Fail(TestUtils.Unreachable);
         }
 
-
         [TestMethod]
         public void ReadFromTestShortenedSize()
         {

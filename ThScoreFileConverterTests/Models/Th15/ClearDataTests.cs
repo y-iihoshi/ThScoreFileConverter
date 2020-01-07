@@ -81,7 +81,6 @@ namespace ThScoreFileConverterTests.Models.Th15
             }
         }
 
-
         [TestMethod]
         public void ClearDataTestChapter()
         {
