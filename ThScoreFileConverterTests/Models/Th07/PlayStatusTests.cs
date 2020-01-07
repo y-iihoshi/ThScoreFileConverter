@@ -34,7 +34,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             playCounts = Utils.GetEnumerator<LevelWithTotal>()
                 .ToDictionary(
                     level => level,
-                    level => new PlayCountTests.Properties(PlayCountTests.ValidProperties))
+                    level => new PlayCountTests.Properties(PlayCountTests.ValidProperties)),
         };
 
         internal static byte[] MakeData(in Properties properties)

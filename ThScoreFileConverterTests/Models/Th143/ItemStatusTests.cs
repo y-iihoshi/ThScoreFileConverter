@@ -24,7 +24,7 @@ namespace ThScoreFileConverterTests.Models.Th143
             ClearedScenes = 54,
             ItemLevel = 3,
             AvailableCount = 2,
-            FramesOrRanges = 1
+            FramesOrRanges = 1,
         };
 
         internal static byte[] MakeData(IItemStatus itemStatus)

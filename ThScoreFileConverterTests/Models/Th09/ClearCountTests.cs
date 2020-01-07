@@ -18,7 +18,7 @@ namespace ThScoreFileConverterTests.Models.Th09
         {
             Counts = Utils.GetEnumerator<Level>()
                 .Select((level, index) => new { level, index })
-                .ToDictionary(pair => pair.level, pair => pair.index)
+                .ToDictionary(pair => pair.level, pair => pair.index),
         };
 
         internal static byte[] MakeByteArray(IClearCount clearCount)

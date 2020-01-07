@@ -11,7 +11,7 @@ namespace ThScoreFileConverterTests.Models.Th10
         internal static PracticeStub ValidStub { get; } = new PracticeStub()
         {
             Score = 123456u,
-            StageFlag = 789u
+            StageFlag = 789u,
         };
 
         internal static byte[] MakeByteArray(IPractice practice)

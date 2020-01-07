@@ -24,7 +24,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             signature = string.Empty,
             size1 = default,
             size2 = default,
-            data = Array.Empty<byte>()
+            data = Array.Empty<byte>(),
         };
 
         internal static Properties ValidProperties { get; } = new Properties()
@@ -32,7 +32,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             signature = "ABCD",
             size1 = 12,
             size2 = 34,
-            data = new byte[] { 0x56, 0x78, 0x9A, 0xBC }
+            data = new byte[] { 0x56, 0x78, 0x9A, 0xBC },
         };
 
         internal static byte[] MakeByteArray(in Properties properties)

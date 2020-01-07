@@ -28,8 +28,8 @@ namespace ThScoreFileConverterTests.Models.Th128
                     NoIceCount = 456 + index,
                     TrialCount = 789 + index,
                     Id = index,
-                    Level = Level.Hard
-                } as ISpellCard)
+                    Level = Level.Hard,
+                } as ISpellCard),
         };
 
         internal static byte[] MakeData(ICardData cardData)

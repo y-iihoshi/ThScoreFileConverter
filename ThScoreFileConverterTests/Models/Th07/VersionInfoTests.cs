@@ -24,7 +24,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             signature = "VRSM",
             size1 = 0x1C,
             size2 = 0x1C,
-            version = TestUtils.MakeRandomArray<byte>(6)
+            version = TestUtils.MakeRandomArray<byte>(6),
         };
 
         internal static byte[] MakeData(in Properties properties)

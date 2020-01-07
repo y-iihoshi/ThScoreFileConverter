@@ -23,7 +23,7 @@ namespace ThScoreFileConverterTests.Models.Th095
             DateTime = 34567890,
             TrialCount = 9876,
             SlowRate1 = 1.23f,
-            SlowRate2 = 2.34f
+            SlowRate2 = 2.34f,
         };
 
         internal static byte[] MakeByteArray(IScore score)

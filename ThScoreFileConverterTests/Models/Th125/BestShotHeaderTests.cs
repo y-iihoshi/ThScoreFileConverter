@@ -38,7 +38,7 @@ namespace ThScoreFileConverterTests.Models.Th125
             ClearShot = 21,
             Angle = 22f,
             ResultScore2 = 23,
-            CardName = TestUtils.CP932Encoding.GetBytes("abcde").Concat(Enumerable.Repeat((byte)'\0', 75)).ToArray()
+            CardName = TestUtils.CP932Encoding.GetBytes("abcde").Concat(Enumerable.Repeat((byte)'\0', 75)).ToArray(),
         };
 
         internal static byte[] MakeByteArray(IBestShotHeader header)

@@ -87,7 +87,7 @@ namespace ThScoreFileConverterTests.Squirrel
             {
                 (int)SQOT.Array, 1,
                 (int)SQOT.Integer, 0, (int)SQOT.Integer, expected,
-                (int)SQOT.Null
+                (int)SQOT.Null,
             };
 
             var sqarray = CreateTestHelper(TestUtils.MakeByteArray(array)) as SQArray;
@@ -108,7 +108,7 @@ namespace ThScoreFileConverterTests.Squirrel
             {
                 (int)SQOT.Table,
                 (int)SQOT.Integer, expectedKey, (int)SQOT.Integer, expectedValue,
-                (int)SQOT.Null
+                (int)SQOT.Null,
             };
 
             var sqtable = CreateTestHelper(TestUtils.MakeByteArray(array)) as SQTable;

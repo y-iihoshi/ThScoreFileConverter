@@ -57,7 +57,7 @@ namespace ThScoreFileConverterTests.Models.Th145
                         chara => chara, chara => (int)level * 100 + (int)chara)),
                 clearTimes = levels.ToDictionary(
                     level => level, level => charas.ToDictionary(
-                        chara => chara, chara => (int)chara * 100 + (int)level))
+                        chara => chara, chara => (int)chara * 100 + (int)level)),
             };
         }
 

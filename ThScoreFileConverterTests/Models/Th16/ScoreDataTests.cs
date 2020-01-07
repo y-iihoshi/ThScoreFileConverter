@@ -22,7 +22,7 @@ namespace ThScoreFileConverterTests.Models.Th16
             Name = TestUtils.MakeRandomArray<byte>(10),
             DateTime = 567u,
             SlowRate = 8.9f,
-            Season = Season.Full
+            Season = Season.Full,
         };
 
         internal static byte[] MakeByteArray(IScoreData scoreData)

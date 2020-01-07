@@ -29,7 +29,7 @@ namespace ThScoreFileConverterTests.Models.Th17
                             TrialCount = pair.Key % 3,
                             PracticeClearCount = pair.Key % 4,
                             PracticeTrialCount = pair.Key % 5,
-                        } as ISpellCard)
+                        } as ISpellCard),
                 },
                 new ClearDataStub()
                 {
@@ -44,7 +44,7 @@ namespace ThScoreFileConverterTests.Models.Th17
                             TrialCount = pair.Key % 7,
                             PracticeClearCount = pair.Key % 8,
                             PracticeTrialCount = pair.Key,
-                        } as ISpellCard)
+                        } as ISpellCard),
                 },
             }.ToDictionary(clearData => clearData.Chara);
 

@@ -122,7 +122,7 @@ namespace ThScoreFileConverterTests.Models
                 0b_1100_1010,
                 0b_1010_1100,
                 0b_0011_0101,
-                0b_0101_1010
+                0b_0101_1010,
             };
 
             using var stream = new MemoryStream(buffer);

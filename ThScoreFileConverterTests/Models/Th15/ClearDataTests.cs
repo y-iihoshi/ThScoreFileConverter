@@ -40,8 +40,8 @@ namespace ThScoreFileConverterTests.Models.Th15
                         {
                             Score = 123456u - TestUtils.Cast<uint>(pair.level) * 10u,
                             ClearFlag = (byte)(TestUtils.Cast<int>(pair.stage) % 2),
-                            EnableFlag = (byte)(TestUtils.Cast<int>(pair.level) % 2)
-                        } as IPractice)
+                            EnableFlag = (byte)(TestUtils.Cast<int>(pair.level) % 2),
+                        } as IPractice),
             };
         }
 

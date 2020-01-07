@@ -21,7 +21,7 @@ namespace ThScoreFileConverterTests.Models.Th105
                     .Select(value => new CardForDeckStub
                     {
                         Id = value,
-                        MaxNumber = (value % 4) + 1
+                        MaxNumber = (value % 4) + 1,
                     } as ICardForDeck)
                     .ToDictionary(card => card.Id),
                 SpellCardResults = Utils.GetEnumerator<TChara>()
@@ -32,9 +32,9 @@ namespace ThScoreFileConverterTests.Models.Th105
                         Id = index + 1,
                         TrialCount = index * 100,
                         GotCount = index * 50,
-                        Frames = 8901u - (uint)index
+                        Frames = 8901u - (uint)index,
                     } as ISpellCardResult<TChara>)
-                    .ToDictionary(result => (result.Enemy, result.Id))
+                    .ToDictionary(result => (result.Enemy, result.Id)),
             };
 
         internal static byte[] MakeByteArray<TChara>(IClearData<TChara> properties)

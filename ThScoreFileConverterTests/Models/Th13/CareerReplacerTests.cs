@@ -179,7 +179,7 @@ namespace ThScoreFileConverterTests.Models.Th13
                     Chara = CharaWithTotal.Marisa,
                     Cards = new Dictionary<int, ISpellCard>
                     {
-                        { 120, new SpellCardStub<LevelPractice>() { Level = LevelPractice.OverDrive } }
+                        { 120, new SpellCardStub<LevelPractice>() { Level = LevelPractice.OverDrive } },
                     },
                 },
             }.ToDictionary(element => element.Chara);

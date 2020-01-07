@@ -29,7 +29,7 @@ namespace ThScoreFileConverterTests.Models.Th07
                 .ToDictionary(pair => pair.chara, pair => (ushort)(10 + pair.index)),
             ClearCounts = Utils.GetEnumerator<CharaWithTotal>()
                 .Select((chara, index) => new { chara, index })
-                .ToDictionary(pair => pair.chara, pair => (ushort)(10 - pair.index))
+                .ToDictionary(pair => pair.chara, pair => (ushort)(10 - pair.index)),
         };
 
         internal static byte[] MakeByteArray(ICardAttack cardAttack)

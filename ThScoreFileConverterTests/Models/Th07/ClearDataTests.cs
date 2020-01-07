@@ -30,7 +30,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             PracticeFlags = Utils.GetEnumerator<Level>()
                 .Select((level, index) => new { level, index })
                 .ToDictionary(pair => pair.level, pair => (byte)(10 - pair.index)),
-            Chara = Chara.ReimuB
+            Chara = Chara.ReimuB,
         };
 
         internal static byte[] MakeByteArray(IClearData clearData)

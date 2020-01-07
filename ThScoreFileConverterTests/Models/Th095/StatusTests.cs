@@ -17,7 +17,7 @@ namespace ThScoreFileConverterTests.Models.Th095
             Version = 0,
             Size = 0x458,
             Checksum = 0u,
-            LastName = TestUtils.CP932Encoding.GetBytes("Player1\0\0\0")
+            LastName = TestUtils.CP932Encoding.GetBytes("Player1\0\0\0"),
         };
 
         internal static byte[] MakeByteArray(IStatus status)

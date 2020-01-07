@@ -42,7 +42,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             totalRetry = 2,
             totalClear = 3,
             totalContinue = 4,
-            totalPractice = 5
+            totalPractice = 5,
         };
 
         internal static byte[] MakeByteArray(in Properties properties)

@@ -26,7 +26,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             PracticeFlags = Utils.GetEnumerator<Level>()
                 .Select((level, index) => (level, index))
                 .ToDictionary(pair => pair.level, pair => (PlayableStages)(10 - pair.index)),
-            Chara = CharaWithTotal.MarisaAlice
+            Chara = CharaWithTotal.MarisaAlice,
         };
 
         internal static byte[] MakeByteArray(IClearData clearData)

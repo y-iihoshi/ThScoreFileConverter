@@ -34,11 +34,11 @@ namespace ThScoreFileConverterTests.Models.Th123
                     id => new CardForDeckStub
                     {
                         Id = id,
-                        MaxNumber = id % 4 + 1
+                        MaxNumber = id % 4 + 1,
                     } as ICardForDeck),
                 clearData = charas.ToDictionary(
                     chara => chara,
-                    chara => Th105.ClearDataTests.MakeValidStub<Chara>() as IClearData)
+                    chara => Th105.ClearDataTests.MakeValidStub<Chara>() as IClearData),
             };
         }
 

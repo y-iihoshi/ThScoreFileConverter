@@ -22,7 +22,7 @@ namespace ThScoreFileConverterTests.Models.Th075
             CardGotCount = new List<short>(),
             CardTrialCount = new List<short>(),
             CardTrulyGot = new List<byte>(),
-            Ranking = new List<IHighScore>()
+            Ranking = new List<IHighScore>(),
         };
 
         internal static ClearDataStub ValidStub { get; } = new ClearDataStub()
@@ -42,8 +42,8 @@ namespace ThScoreFileConverterTests.Models.Th075
                     Name = Utils.Format("Player{0} ", index),
                     Month = (byte)(1 + index),
                     Day = (byte)(10 + index),
-                    Score = 1234567 + index
-                } as IHighScore).ToList()
+                    Score = 1234567 + index,
+                } as IHighScore).ToList(),
         };
 
         internal static byte[] MakeByteArray(IClearData clearData)

@@ -26,7 +26,7 @@ namespace ThScoreFileConverterTests.Models.Th08
                     level => level,
                     level => new PlayCountStub(PlayCountTests.ValidStub) as IPlayCount),
             TotalPlayCount = new PlayCountStub(PlayCountTests.ValidStub),
-            BgmFlags = TestUtils.MakeRandomArray<byte>(21)
+            BgmFlags = TestUtils.MakeRandomArray<byte>(21),
         };
 
         internal static byte[] MakeByteArray(IPlayStatus status)

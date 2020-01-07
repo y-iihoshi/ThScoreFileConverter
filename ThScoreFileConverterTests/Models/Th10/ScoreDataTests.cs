@@ -25,7 +25,7 @@ namespace ThScoreFileConverterTests.Models.Th10
                 ContinueCount = 4,
                 Name = TestUtils.MakeRandomArray<byte>(10),
                 DateTime = 567u,
-                SlowRate = 8.9f
+                SlowRate = 8.9f,
             };
 
         internal static byte[] MakeByteArray<TParent, TStageProgress>(IScoreData<TStageProgress> scoreData)

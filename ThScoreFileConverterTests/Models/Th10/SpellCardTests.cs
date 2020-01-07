@@ -20,7 +20,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             ClearCount = 123,
             TrialCount = 456,
             Id = 789,
-            Level = Level.Normal
+            Level = Level.Normal,
         };
 
         internal static byte[] MakeByteArray(ISpellCard<Level> spellCard)

@@ -21,7 +21,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         {
             signature = "FLSP",
             size1 = 0x20,
-            size2 = 0x20
+            size2 = 0x20,
         };
 
         internal static byte[] MakeData(in Properties _)

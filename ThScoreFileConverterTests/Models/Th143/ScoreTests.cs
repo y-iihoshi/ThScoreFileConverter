@@ -23,7 +23,7 @@ namespace ThScoreFileConverterTests.Models.Th143
             Number = 69,
             ClearCounts = Utils.GetEnumerator<ItemWithTotal>().ToDictionary(item => item, item => (int)item * 10),
             ChallengeCounts = Utils.GetEnumerator<ItemWithTotal>().ToDictionary(item => item, item => (int)item * 100),
-            HighScore = 456789
+            HighScore = 456789,
         };
 
         internal static byte[] MakeData(IScore score)

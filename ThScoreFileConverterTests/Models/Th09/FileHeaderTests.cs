@@ -26,7 +26,7 @@ namespace ThScoreFileConverterTests.Models.Th09
             size = 0x18,
             decodedAllSize = 78 + 0x18,
             decodedBodySize = 78,
-            encodedBodySize = 90
+            encodedBodySize = 90,
         };
 
         internal static byte[] MakeByteArray(in Properties properties)

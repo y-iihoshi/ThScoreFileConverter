@@ -21,7 +21,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             Checksum = 0u,
             Size = 0x448,
             LastName = TestUtils.CP932Encoding.GetBytes("Player1\0\0\0"),
-            BgmFlags = TestUtils.MakeRandomArray<byte>(numBgms)
+            BgmFlags = TestUtils.MakeRandomArray<byte>(numBgms),
         };
 
         internal static byte[] MakeData(IStatus status)

@@ -11,7 +11,7 @@ namespace ThScoreFileConverterTests.Models
         // "AbcAbc"
         private readonly byte[] decompressed = new byte[]
         {
-            0x41, 0x62, 0x63, 0x41, 0x62, 0x63
+            0x41, 0x62, 0x63, 0x41, 0x62, 0x63,
         };
 
         // f <- ch -->
@@ -30,7 +30,7 @@ namespace ThScoreFileConverterTests.Models
             0b_0000_0000,
             0b_1000_0000,
             0b_0000_0000,
-            0b_0000_0000
+            0b_0000_0000,
         };
 
         [TestMethod]

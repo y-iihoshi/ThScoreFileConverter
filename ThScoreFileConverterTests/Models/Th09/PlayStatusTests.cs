@@ -34,7 +34,7 @@ namespace ThScoreFileConverterTests.Models.Th09
             ClearCounts = Utils.GetEnumerator<Chara>()
                 .ToDictionary(
                     level => level,
-                    level => new ClearCountStub(ClearCountTests.ValidStub) as IClearCount)
+                    level => new ClearCountStub(ClearCountTests.ValidStub) as IClearCount),
         };
 
         internal static byte[] MakeByteArray(IPlayStatus playStatus)

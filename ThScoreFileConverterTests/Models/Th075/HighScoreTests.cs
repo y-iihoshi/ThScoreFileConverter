@@ -17,7 +17,7 @@ namespace ThScoreFileConverterTests.Models.Th075
             Name = "Player1 ",
             Month = 6,
             Day = 15,
-            Score = 1234567
+            Score = 1234567,
         };
 
         internal static byte[] MakeByteArray(in HighScoreStub stub)

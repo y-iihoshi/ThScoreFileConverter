@@ -56,7 +56,7 @@ namespace ThScoreFileConverterTests.Models.Th17
                         {
                             Score = 123456u - TestUtils.Cast<uint>(pair.level) * 10u,
                             ClearFlag = (byte)(TestUtils.Cast<int>(pair.stage) % 2),
-                            EnableFlag = (byte)(TestUtils.Cast<int>(pair.level) % 2)
+                            EnableFlag = (byte)(TestUtils.Cast<int>(pair.level) % 2),
                         } as IPractice),
                 Cards = Definitions.CardTable.ToDictionary(
                     pair => pair.Key,
@@ -69,8 +69,8 @@ namespace ThScoreFileConverterTests.Models.Th17
                         PracticeTrialCount = (pair.Key % 5 == 0) ? 0 : 78 + pair.Key,
                         Id = pair.Value.Id,
                         Level = pair.Value.Level,
-                        PracticeScore = 90123
-                    } as ISpellCard)
+                        PracticeScore = 90123,
+                    } as ISpellCard),
             };
         }
 

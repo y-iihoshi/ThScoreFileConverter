@@ -21,7 +21,7 @@ namespace ThScoreFileConverterTests.Models.Th095
             signature = string.Empty,
             encodedAllSize = default,
             encodedBodySize = default,
-            decodedBodySize = default
+            decodedBodySize = default,
         };
 
         internal static Properties ValidProperties { get; } = MakeProperties("abcd");
@@ -31,7 +31,7 @@ namespace ThScoreFileConverterTests.Models.Th095
             signature = signature,
             encodedAllSize = 36,
             encodedBodySize = 12,
-            decodedBodySize = 56
+            decodedBodySize = 56,
         };
 
         internal static byte[] MakeByteArray(in Properties properties)

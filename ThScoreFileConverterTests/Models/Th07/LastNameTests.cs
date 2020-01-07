@@ -24,7 +24,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             signature = "LSNM",
             size1 = 0x18,
             size2 = 0x18,
-            name = TestUtils.MakeRandomArray<byte>(12)
+            name = TestUtils.MakeRandomArray<byte>(12),
         };
 
         internal static byte[] MakeData(in Properties properties)

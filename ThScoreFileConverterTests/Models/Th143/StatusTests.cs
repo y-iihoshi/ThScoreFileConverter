@@ -26,7 +26,7 @@ namespace ThScoreFileConverterTests.Models.Th143
             TotalPlayTime = 12345678,
             LastMainItem = ItemWithTotal.Camera,
             LastSubItem = ItemWithTotal.Doll,
-            NicknameFlags = Enumerable.Range(0, 71).Select(value => (byte)((value % 3 == 0) ? 0 : 1)).ToArray()
+            NicknameFlags = Enumerable.Range(0, 71).Select(value => (byte)((value % 3 == 0) ? 0 : 1)).ToArray(),
         };
 
         internal static byte[] MakeData(IStatus status)

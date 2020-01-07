@@ -12,7 +12,7 @@ namespace ThScoreFileConverterTests.Models.Th13
         {
             Score = 123456u,
             ClearFlag = 7,
-            EnableFlag = 8
+            EnableFlag = 8,
         };
 
         internal static byte[] MakeByteArray(IPractice practice)

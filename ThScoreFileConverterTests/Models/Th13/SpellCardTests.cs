@@ -25,7 +25,7 @@ namespace ThScoreFileConverterTests.Models.Th13
                 PracticeTrialCount = 4,
                 Id = 5,
                 Level = TestUtils.Cast<TLevel>(1),
-                PracticeScore = 6789
+                PracticeScore = 6789,
             };
 
         internal static byte[] MakeByteArray<TLevel>(ISpellCard<TLevel> spellCard)

@@ -38,11 +38,11 @@ namespace ThScoreFileConverterTests.Models.Th128
                             ContinueCount = (byte)index,
                             Name = TestUtils.CP932Encoding.GetBytes($"Player{index}\0\0\0"),
                             DateTime = 34567890u,
-                            SlowRate = 1.2f
+                            SlowRate = 1.2f,
                         }).ToList() as IReadOnlyList<IScoreData>),
                 TotalPlayCount = 23,
                 PlayTime = 4567890,
-                ClearCounts = levels.ToDictionary(level => level, level => 100 - (int)level)
+                ClearCounts = levels.ToDictionary(level => level, level => 100 - (int)level),
             };
         }
 

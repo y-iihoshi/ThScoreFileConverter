@@ -8,14 +8,14 @@ namespace ThScoreFileConverterTests.Models
     public enum Protagonist
     {
         [EnumAltName("RM", LongName = "博麗 霊夢")] Reimu,
-        [EnumAltName("MR", LongName = "霧雨 魔理沙")] Marisa
+        [EnumAltName("MR", LongName = "霧雨 魔理沙")] Marisa,
     }
 
     public enum UnnamedCharacter
     {
         [EnumAltName("Dai")] 大妖精,
         [EnumAltName("Koa")] 小悪魔,
-        [EnumAltName("Tokiko")] 名無しの本読み妖怪
+        [EnumAltName("Tokiko")] 名無しの本読み妖怪,
     }
 
     [TestClass]

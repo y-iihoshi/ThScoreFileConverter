@@ -21,7 +21,7 @@ namespace ThScoreFileConverterTests.Models.Th128
             NoIceCount = 34,
             TrialCount = 56,
             Id = 78,
-            Level = Level.Normal
+            Level = Level.Normal,
         };
 
         internal static byte[] MakeByteArray(ISpellCard spellCard)

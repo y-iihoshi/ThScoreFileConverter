@@ -23,7 +23,7 @@ namespace ThScoreFileConverterTests.Models.Th105
             {
                 stage = Stage.Two,
                 enemy = TestUtils.Cast<TChara>(2),
-                cardIds = new List<int>() { 3, 4, 5 }
+                cardIds = new List<int>() { 3, 4, 5 },
             };
 
         internal static void Validate<TChara>(in Properties<TChara> expected, in StageInfo<TChara> actual)

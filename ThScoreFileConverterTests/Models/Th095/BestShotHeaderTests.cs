@@ -22,7 +22,7 @@ namespace ThScoreFileConverterTests.Models.Th095
             Height = 5,
             ResultScore = 6,
             SlowRate = 7f,
-            CardName = TestUtils.CP932Encoding.GetBytes("abcde").Concat(Enumerable.Repeat((byte)'\0', 75)).ToArray()
+            CardName = TestUtils.CP932Encoding.GetBytes("abcde").Concat(Enumerable.Repeat((byte)'\0', 75)).ToArray(),
         };
 
         internal static byte[] MakeByteArray(IBestShotHeader header)

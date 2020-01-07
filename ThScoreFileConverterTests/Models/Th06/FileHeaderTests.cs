@@ -22,7 +22,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             checksum = 12,
             version = 0x10,
             size = 0x14,
-            decodedAllSize = 78
+            decodedAllSize = 78,
         };
 
         internal static byte[] MakeByteArray(in Properties properties)

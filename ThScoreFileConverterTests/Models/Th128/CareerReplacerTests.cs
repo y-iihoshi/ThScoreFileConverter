@@ -17,7 +17,7 @@ namespace ThScoreFileConverterTests.Models.Th128
                 new SpellCardStub(SpellCardTests.ValidStub)
                 {
                     Id = SpellCardTests.ValidStub.Id + 1,
-                }
+                },
             }.ToDictionary(element => element.Id);
 
         [TestMethod]

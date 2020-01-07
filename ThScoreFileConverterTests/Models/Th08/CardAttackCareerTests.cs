@@ -24,7 +24,7 @@ namespace ThScoreFileConverterTests.Models.Th08
                 .ToDictionary(pair => pair.chara, pair => 20 + pair.index),
             ClearCounts = Utils.GetEnumerator<CharaWithTotal>()
                 .Select((chara, index) => (chara, index))
-                .ToDictionary(pair => pair.chara, pair => 20 - pair.index)
+                .ToDictionary(pair => pair.chara, pair => 20 - pair.index),
         };
 
         internal static byte[] MakeByteArray(ICardAttackCareer career)

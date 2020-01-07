@@ -40,7 +40,7 @@ namespace ThScoreFileConverterTests.Models.Th135
             isEnabledStageKokoro = false,
             isPlayableMamizou = true,
             isPlayableKokoro = false,
-            bgmFlags = Enumerable.Range(1, 10).ToDictionary(id => id, id => id % 2 == 0)
+            bgmFlags = Enumerable.Range(1, 10).ToDictionary(id => id, id => id % 2 == 0),
         };
 
         internal static byte[] MakeByteArray(in Properties properties)

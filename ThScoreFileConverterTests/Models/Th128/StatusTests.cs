@@ -22,7 +22,7 @@ namespace ThScoreFileConverterTests.Models.Th128
             Size = 0x42C,
             LastName = TestUtils.CP932Encoding.GetBytes("Player1\0\0\0"),
             BgmFlags = TestUtils.MakeRandomArray<byte>(10),
-            TotalPlayTime = 12345678
+            TotalPlayTime = 12345678,
         };
 
         internal static byte[] MakeData(IStatus status)

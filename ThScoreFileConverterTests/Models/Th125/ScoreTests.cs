@@ -24,7 +24,7 @@ namespace ThScoreFileConverterTests.Models.Th125
             TrialCount = 9876,
             FirstSuccess = 5432,
             DateTime = 34567890,
-            BestshotScore = 23456
+            BestshotScore = 23456,
         };
 
         internal static byte[] MakeData(IScore score)

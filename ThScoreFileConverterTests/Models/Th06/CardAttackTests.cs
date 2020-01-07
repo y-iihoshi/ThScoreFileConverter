@@ -20,7 +20,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             CardId = 23,
             CardName = TestUtils.MakeRandomArray<byte>(0x24),
             TrialCount = 789,
-            ClearCount = 456
+            ClearCount = 456,
         };
 
         internal static byte[] MakeByteArray(ICardAttack cardAttack)

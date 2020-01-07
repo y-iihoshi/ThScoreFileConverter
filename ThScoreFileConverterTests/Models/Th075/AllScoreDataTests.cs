@@ -22,7 +22,7 @@ namespace ThScoreFileConverterTests.Models.Th075
             clearData = Utils.GetEnumerator<CharaWithReserved>()
                 .SelectMany(chara => Utils.GetEnumerator<Level>().Select(level => (chara, level)))
                 .ToDictionary(pair => pair, _ => ClearDataTests.ValidStub as IClearData),
-            status = StatusTests.ValidProperties
+            status = StatusTests.ValidProperties,
         };
 
         internal static byte[] MakeByteArray(in Properties properties)

@@ -36,29 +36,29 @@ namespace ThScoreFileConverterTests.Models.Th155
                         Ed = LevelFlags.Normal,
                         Available = true,
                         OverDrive = 2,
-                        StageOverDrive = 3
+                        StageOverDrive = 3,
                     }),
                 characterDictionary = new Dictionary<string, int>()
                 {
                     { "reimu", 1 },
-                    { "marisa", 2 }
+                    { "marisa", 2 },
                 },
                 bgmDictionary = new Dictionary<int, bool>()
                 {
                     { 101, true },
-                    { 102, false }
+                    { 102, false },
                 },
                 endingDictionary = new Dictionary<string, int>()
                 {
                     { "ed1", 3 },
-                    { "ed2", 4 }
+                    { "ed2", 4 },
                 },
                 stageDictionary = new Dictionary<int, int>()
                 {
                     { 201, 5 },
-                    { 202, 6 }
+                    { 202, 6 },
                 },
-                version = 7
+                version = 7,
             };
         }
 
@@ -76,7 +76,7 @@ namespace ThScoreFileConverterTests.Models.Th155
                 { StoryChara.MamizouMokou,       "mamizou" },
                 { StoryChara.ReisenDoremy,       "udonge" },
                 { StoryChara.FutoIchirin,        "futo" },
-                { StoryChara.JoonShion,          "jyoon" }
+                { StoryChara.JoonShion,          "jyoon" },
             };
             return table[chara];
         }
@@ -257,7 +257,7 @@ namespace ThScoreFileConverterTests.Models.Th155
                     "story",
                     new Dictionary<string, int>()
                     {
-                        { ToString(StoryChara.ReimuKasen), 123 }
+                        { ToString(StoryChara.ReimuKasen), 123 },
                     }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
@@ -283,7 +283,7 @@ namespace ThScoreFileConverterTests.Models.Th155
                         {
                             ToString(StoryChara.ReimuKasen),
                             new Dictionary<int, int>() { { 123, 456 } }
-                        }
+                        },
                     }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());
@@ -314,9 +314,9 @@ namespace ThScoreFileConverterTests.Models.Th155
                                 { "ed", 34f },
                                 { "available", 56f },
                                 { "overdrive", 78f },
-                                { "stage_overdrive", 90f }
+                                { "stage_overdrive", 90f },
                             }
-                        }
+                        },
                     }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
                 .ToArray());

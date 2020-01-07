@@ -29,7 +29,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             StageProgress = StageProgress.Three,
             Name = TestUtils.CP932Encoding.GetBytes("Player1\0\0"),
             Date = TestUtils.CP932Encoding.GetBytes("01/23\0"),
-            ContinueCount = 2
+            ContinueCount = 2,
         };
 
         internal static byte[] MakeByteArray(IHighScore highScore)

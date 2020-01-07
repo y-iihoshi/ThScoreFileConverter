@@ -36,7 +36,7 @@ namespace ThScoreFileConverterTests.Models.Th09
                     HighScoreTests.ValidStub.Chara,
                     new ClearCountStub()
                     {
-                        Counts = Utils.GetEnumerator<Level>().ToDictionary(level => level, _ => 0)
+                        Counts = Utils.GetEnumerator<Level>().ToDictionary(level => level, _ => 0),
                     }
                 },
             };
@@ -119,7 +119,7 @@ namespace ThScoreFileConverterTests.Models.Th09
                         new HighScoreStub(HighScoreTests.ValidStub)
                         {
                             Date = TestUtils.CP932Encoding.GetBytes("--/--\0"),
-                        }
+                        },
                     }
                 },
             };
@@ -159,7 +159,7 @@ namespace ThScoreFileConverterTests.Models.Th09
                     new ClearCountStub()
                     {
                         Counts = ClearCountTests.ValidStub.Counts.Where(pair => pair.Key != Level.Normal)
-                            .ToDictionary(pair => pair.Key, pair => pair.Value)
+                            .ToDictionary(pair => pair.Key, pair => pair.Value),
                     }
                 },
             };

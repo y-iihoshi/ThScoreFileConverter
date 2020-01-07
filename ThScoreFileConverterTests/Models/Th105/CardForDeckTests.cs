@@ -14,7 +14,7 @@ namespace ThScoreFileConverterTests.Models.Th105
         internal static CardForDeckStub ValidStub { get; } = new CardForDeckStub
         {
             Id = 1,
-            MaxNumber = 2
+            MaxNumber = 2,
         };
 
         internal static byte[] MakeByteArray(ICardForDeck cardForDeck)

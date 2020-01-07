@@ -26,7 +26,7 @@ namespace ThScoreFileConverterTests.Models.Th095
             version = default,
             size = default,
             checksum = default,
-            data = Array.Empty<byte>()
+            data = Array.Empty<byte>(),
         };
 
         internal static Properties ValidProperties { get; } = new Properties()
@@ -35,7 +35,7 @@ namespace ThScoreFileConverterTests.Models.Th095
             version = 1234,
             size = 16,
             checksum = 0xC16CBAA7u,
-            data = new byte[] { 0x56, 0x78, 0x9A, 0xBC }
+            data = new byte[] { 0x56, 0x78, 0x9A, 0xBC },
         };
 
         internal static byte[] MakeByteArray(in Properties properties)

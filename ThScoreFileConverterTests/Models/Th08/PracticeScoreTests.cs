@@ -27,7 +27,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             HighScores = Utils.GetEnumerator<Stage>()
                 .SelectMany(stage => Utils.GetEnumerator<Level>().Select(level => (stage, level)))
                 .ToDictionary(pair => pair, pair => (int)pair.level * 10 + (int)pair.stage),
-            Chara = Chara.MarisaAlice
+            Chara = Chara.MarisaAlice,
         };
 
         internal static byte[] MakeByteArray(IPracticeScore score)

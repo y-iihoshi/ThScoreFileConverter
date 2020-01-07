@@ -18,7 +18,7 @@ namespace ThScoreFileConverterTests.Models.Th143
             Width = 4,
             Height = 5,
             DateTime = 6,
-            SlowRate = 7f
+            SlowRate = 7f,
         };
 
         internal static byte[] MakeByteArray(IBestShotHeader header)

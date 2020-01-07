@@ -27,7 +27,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             Chara = Chara.ReimuB,
             Level = Level.Hard,
             StageProgress = StageProgress.Three,
-            Name = TestUtils.CP932Encoding.GetBytes("Player1\0\0")
+            Name = TestUtils.CP932Encoding.GetBytes("Player1\0\0"),
         };
 
         internal static byte[] MakeByteArray(IHighScore highScore)

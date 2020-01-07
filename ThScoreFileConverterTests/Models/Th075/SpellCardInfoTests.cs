@@ -17,7 +17,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         {
             name = "「百万鬼夜行」",
             enemy = Chara.Suika,
-            level = Level.Normal
+            level = Level.Normal,
         };
 
         internal static void Validate(in Properties properties, in SpellCardInfo spellCardInfo)

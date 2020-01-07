@@ -20,7 +20,7 @@ namespace ThScoreFileConverterTests.Models.Th105
                 Id = 3,
                 TrialCount = 67,
                 GotCount = 45,
-                Frames = 8901
+                Frames = 8901,
             };
 
         internal static byte[] MakeByteArray<TChara>(ISpellCardResult<TChara> properties)

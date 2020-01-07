@@ -154,7 +154,7 @@ namespace ThScoreFileConverterTests.Models.Th143
                 new ScoreStub(ScoreTests.ValidStub)
                 {
                     ChallengeCounts = new Dictionary<ItemWithTotal, int>(),
-                }
+                },
             };
 
             var replacer = new ScoreReplacer(scores);
@@ -169,7 +169,7 @@ namespace ThScoreFileConverterTests.Models.Th143
                 new ScoreStub(ScoreTests.ValidStub)
                 {
                     ClearCounts = new Dictionary<ItemWithTotal, int>(),
-                }
+                },
             };
 
             var replacer = new ScoreReplacer(scores);

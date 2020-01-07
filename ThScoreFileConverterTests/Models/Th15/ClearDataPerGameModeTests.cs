@@ -34,7 +34,7 @@ namespace ThScoreFileConverterTests.Models.Th15
                             Name = TestUtils.CP932Encoding.GetBytes($"Player{index}\0\0\0"),
                             DateTime = 34567890u,
                             SlowRate = 1.2f,
-                            RetryCount = (uint)index % 4u
+                            RetryCount = (uint)index % 4u,
                         }).ToList() as IReadOnlyList<IScoreData>),
                 TotalPlayCount = 23,
                 PlayTime = 4567890,
@@ -51,8 +51,8 @@ namespace ThScoreFileConverterTests.Models.Th15
                         PracticeTrialCount = 78 + index,
                         Id = index,
                         Level = Level.Hard,
-                        PracticeScore = 90123
-                    } as ISpellCard)
+                        PracticeScore = 90123,
+                    } as ISpellCard),
             };
         }
 

@@ -52,7 +52,7 @@ namespace ThScoreFileConverterTests.Models.Th13
                             ContinueCount = (byte)index,
                             Name = TestUtils.CP932Encoding.GetBytes($"Player{index}\0\0\0"),
                             DateTime = 34567890u,
-                            SlowRate = 1.2f
+                            SlowRate = 1.2f,
                         }).ToList() as IReadOnlyList<ThScoreFileConverter.Models.Th10.IScoreData<StageProgress>>),
                 TotalPlayCount = 23,
                 PlayTime = 4567890,
@@ -66,7 +66,7 @@ namespace ThScoreFileConverterTests.Models.Th13
                         {
                             Score = 123456u - TestUtils.Cast<uint>(pair.level) * 10u,
                             ClearFlag = (byte)(TestUtils.Cast<int>(pair.stage) % 2),
-                            EnableFlag = (byte)(TestUtils.Cast<int>(pair.level) % 2)
+                            EnableFlag = (byte)(TestUtils.Cast<int>(pair.level) % 2),
                         } as IPractice),
                 Cards = Enumerable.Range(1, 127).ToDictionary(
                     index => index,
@@ -79,8 +79,8 @@ namespace ThScoreFileConverterTests.Models.Th13
                         PracticeTrialCount = 78 + index,
                         Id = index,
                         Level = LevelPractice.Hard,
-                        PracticeScore = 90123
-                    } as ISpellCard<LevelPractice>)
+                        PracticeScore = 90123,
+                    } as ISpellCard<LevelPractice>),
             };
         }
 
