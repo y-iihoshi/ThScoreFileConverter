@@ -47,7 +47,7 @@ namespace ThScoreFileConverterTests.Models
         public void SkipLastTestExceeded()
         {
             var array = new int[] { 1, 2, 3, 4, 5 };
-            var expected = new int[] { };
+            var expected = Array.Empty<int>();
             var actual = array.SkipLast(array.Length + 1);
             CollectionAssert.That.AreEqual(expected, actual);
         }
@@ -74,7 +74,7 @@ namespace ThScoreFileConverterTests.Models
         public void TakeLastTestNegative()
         {
             var array = new int[] { 1, 2, 3, 4, 5 };
-            var expected = new int[] { };
+            var expected = Array.Empty<int>();
             var actual = array.TakeLast(-1);
             CollectionAssert.That.AreEqual(expected, actual);
         }
@@ -83,7 +83,7 @@ namespace ThScoreFileConverterTests.Models
         public void TakeLastTestZero()
         {
             var array = new int[] { 1, 2, 3, 4, 5 };
-            var expected = new int[] { };
+            var expected = Array.Empty<int>();
             var actual = array.TakeLast(0);
             CollectionAssert.That.AreEqual(expected, actual);
         }

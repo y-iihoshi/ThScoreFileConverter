@@ -158,7 +158,7 @@ namespace ThScoreFileConverterTests.Models
         public void DecryptTestUnwritableOutput()
         {
             using var input = new MemoryStream(this.encryptedBySmallBlock);
-            using var output = new MemoryStream(new byte[] { }, false);
+            using var output = new MemoryStream(Array.Empty<byte>(), false);
 
             ThCrypt.Decrypt(input, output, (int)input.Length, KEY, STEP, SMALL_BLOCK, LIMIT);
             Assert.Fail(TestUtils.Unreachable);

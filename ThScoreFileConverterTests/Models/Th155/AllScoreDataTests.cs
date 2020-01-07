@@ -96,7 +96,7 @@ namespace ThScoreFileConverterTests.Models.Th155
             var sqTable = TestUtils.MakeByteArray((int)SQOT.Table);
             var sqNull = TestUtils.MakeByteArray((int)SQOT.Null);
 
-            return new byte[0]
+            return Array.Empty<byte>()
                 // .Concat(sqTable)
                 .Concat(TestUtils.MakeSQByteArray("story"))
                 .Concat(sqTable)
@@ -176,7 +176,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestEmpty()
         {
-            _ = TestUtils.Create<AllScoreData>(new byte[0]);
+            _ = TestUtils.Create<AllScoreData>(Array.Empty<byte>());
 
             Assert.Fail(TestUtils.Unreachable);
         }
@@ -215,7 +215,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         [TestMethod]
         public void ReadFromTestInvalidStoryDictionary()
         {
-            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("story", 123))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -227,7 +227,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         [TestMethod]
         public void ReadFromTestInvalidStoryKey()
         {
-            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("story", new Dictionary<int, int>() { { 123, 456 } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -239,7 +239,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         [TestMethod]
         public void ReadFromTestInvalidStoryChara()
         {
-            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("story", new Dictionary<string, int>() { { "abc", 123 } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -251,7 +251,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         [TestMethod]
         public void ReadFromTestInvalidStory()
         {
-            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray(
                     "story",
@@ -274,7 +274,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         [TestMethod]
         public void ReadFromTestInvalidStoryFieldName()
         {
-            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray(
                     "story",
@@ -300,7 +300,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         [TestMethod]
         public void ReadFromTestInvalidStoryFieldValue()
         {
-            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray(
                     "story",
@@ -333,7 +333,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         [TestMethod]
         public void ReadFromTestInvalidCharacterDictionary()
         {
-            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("character", 123))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -345,7 +345,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         [TestMethod]
         public void ReadFromTestInvalidCharacterKey()
         {
-            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("character", new Dictionary<int, int>() { { 123, 456 } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -357,7 +357,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         [TestMethod]
         public void ReadFromTestInvalidCharacterValue()
         {
-            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("character", new Dictionary<string, string>() { { "abc", "def" } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -369,7 +369,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         [TestMethod]
         public void ReadFromTestInvalidBgmDictionary()
         {
-            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("bgm", 123))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -381,7 +381,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         [TestMethod]
         public void ReadFromTestInvalidBgmKey()
         {
-            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("bgm", new Dictionary<int, int>() { { 123, 456 } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -393,7 +393,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         [TestMethod]
         public void ReadFromTestInvalidBgmValue()
         {
-            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("bgm", new Dictionary<bool, bool>() { { true, false } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -405,7 +405,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         [TestMethod]
         public void ReadFromTestInvalidEndingDictionary()
         {
-            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("ed", 123))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -417,7 +417,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         [TestMethod]
         public void ReadFromTestInvalidEndingKey()
         {
-            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("ed", new Dictionary<int, int>() { { 123, 456 } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -429,7 +429,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         [TestMethod]
         public void ReadFromTestInvalidEndingValue()
         {
-            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("ed", new Dictionary<string, string>() { { "abc", "def" } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -441,7 +441,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         [TestMethod]
         public void ReadFromTestInvalidStageDictionary()
         {
-            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("stage", 123))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -453,7 +453,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         [TestMethod]
         public void ReadFromTestInvalidStageKey()
         {
-            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("stage", new Dictionary<string, int>() { { "abc", 123 } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -465,7 +465,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         [TestMethod]
         public void ReadFromTestInvalidStageValue()
         {
-            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("stage", new Dictionary<int, string>() { { 123, "abc" } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -477,7 +477,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         [TestMethod]
         public void ReadFromTestInvalidVersion()
         {
-            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray("version", 123f))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))

@@ -125,7 +125,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             var score = 1234567u;
             var name = "--------\0";
             var date = "--/--\0";
-            var cardFlags = new byte[] { };
+            var cardFlags = Enumerable.Empty<byte>();
 
             var highScore = new HighScore(score);
 
@@ -141,7 +141,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             var score = 0u;
             var name = "--------\0";
             var date = "--/--\0";
-            var cardFlags = new byte[] { };
+            var cardFlags = Enumerable.Empty<byte>();
 
             var highScore = new HighScore(score);
 

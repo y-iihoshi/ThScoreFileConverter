@@ -67,7 +67,7 @@ namespace ThScoreFileConverterTests.Models
 
             var readBytes = reader.ReadExactBytes(0);
 
-            CollectionAssert.That.AreEqual(new byte[] { }, readBytes);
+            CollectionAssert.That.AreEqual(Array.Empty<byte>(), readBytes);
         }
 
         [TestMethod]

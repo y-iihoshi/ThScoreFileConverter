@@ -62,7 +62,7 @@ namespace ThScoreFileConverterTests.Models.Th145
         }
 
         internal static byte[] MakeByteArray(in Properties properties)
-            => new byte[0]
+            => Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table))
                 .Concat(TestUtils.MakeSQByteArray(
                     "story_progress", properties.storyProgress,
@@ -162,7 +162,7 @@ namespace ThScoreFileConverterTests.Models.Th145
         [ExpectedException(typeof(EndOfStreamException))]
         public void ReadFromTestEmpty()
         {
-            _ = TestUtils.Create<AllScoreData>(new byte[0]);
+            _ = TestUtils.Create<AllScoreData>(Array.Empty<byte>());
 
             Assert.Fail(TestUtils.Unreachable);
         }
@@ -193,7 +193,7 @@ namespace ThScoreFileConverterTests.Models.Th145
         {
             var storyProgressValue = 1;
 
-            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
                 .Concat(TestUtils.MakeSQByteArray("story_progress", storyProgressValue))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -209,7 +209,7 @@ namespace ThScoreFileConverterTests.Models.Th145
         [TestMethod]
         public void ReadFromTestInvalidStoryClear()
         {
-            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
                 .Concat(TestUtils.MakeSQByteArray("story_clear", 1))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -221,7 +221,7 @@ namespace ThScoreFileConverterTests.Models.Th145
         [TestMethod]
         public void ReadFromTestInvalidStoryClearValue()
         {
-            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
                 .Concat(TestUtils.MakeSQByteArray("story_clear", new float[] { 123f }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -233,7 +233,7 @@ namespace ThScoreFileConverterTests.Models.Th145
         [TestMethod]
         public void ReadFromTestInvalidEnableBgm()
         {
-            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
                 .Concat(TestUtils.MakeSQByteArray("enable_bgm", 1))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -245,7 +245,7 @@ namespace ThScoreFileConverterTests.Models.Th145
         [TestMethod]
         public void ReadFromTestInvalidClearRank()
         {
-            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
                 .Concat(TestUtils.MakeSQByteArray("clear_rank", 1))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -257,7 +257,7 @@ namespace ThScoreFileConverterTests.Models.Th145
         [TestMethod]
         public void ReadFromTestInvalidClearRankValuePerLevel()
         {
-            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
                 .Concat(TestUtils.MakeSQByteArray("clear_rank", new float[] { 123f }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -269,7 +269,7 @@ namespace ThScoreFileConverterTests.Models.Th145
         [TestMethod]
         public void ReadFromTestInvalidClearRankValuePerChara()
         {
-            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
                 .Concat(TestUtils.MakeSQByteArray("clear_rank", new float[][] { new float[] { 123f } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -283,7 +283,7 @@ namespace ThScoreFileConverterTests.Models.Th145
         [TestMethod]
         public void ReadFromTestInvalidClearTime()
         {
-            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
                 .Concat(TestUtils.MakeSQByteArray("clear_time", 1))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -295,7 +295,7 @@ namespace ThScoreFileConverterTests.Models.Th145
         [TestMethod]
         public void ReadFromTestInvalidClearTimeValuePerLevel()
         {
-            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
                 .Concat(TestUtils.MakeSQByteArray("clear_time", new float[] { 123f }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))
@@ -307,7 +307,7 @@ namespace ThScoreFileConverterTests.Models.Th145
         [TestMethod]
         public void ReadFromTestInvalidClearTimeValuePerChara()
         {
-            var allScoreData = TestUtils.Create<AllScoreData>(new byte[0]
+            var allScoreData = TestUtils.Create<AllScoreData>(Array.Empty<byte>()
                 // .Concat(TestUtils.MakeByteArray((int)SQOT.Table)
                 .Concat(TestUtils.MakeSQByteArray("clear_time", new float[][] { new float[] { 123f } }))
                 .Concat(TestUtils.MakeByteArray((int)SQOT.Null))

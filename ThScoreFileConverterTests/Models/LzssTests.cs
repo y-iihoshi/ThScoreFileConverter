@@ -162,7 +162,7 @@ namespace ThScoreFileConverterTests.Models
         public void ExtractTestUnwritableOutput()
         {
             using var input = new MemoryStream(this.compressed);
-            using var output = new MemoryStream(new byte[] { }, false);
+            using var output = new MemoryStream(Array.Empty<byte>(), false);
 
             Lzss.Extract(input, output);
             Assert.Fail(TestUtils.Unreachable);
