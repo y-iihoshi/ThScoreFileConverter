@@ -15,7 +15,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         {
             public Dictionary<(CharaWithReserved, Level), IClearData> clearData;
             public StatusTests.Properties status;
-        };
+        }
 
         internal static Properties ValidProperties { get; } = new Properties()
         {

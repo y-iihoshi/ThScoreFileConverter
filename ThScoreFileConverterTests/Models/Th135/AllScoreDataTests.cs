@@ -26,7 +26,7 @@ namespace ThScoreFileConverterTests.Models.Th135
             public bool isPlayableMamizou;
             public bool isPlayableKokoro;
             public Dictionary<int, bool> bgmFlags;
-        };
+        }
 
         internal static Properties GetValidProperties() => new Properties()
         {

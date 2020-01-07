@@ -17,7 +17,7 @@ namespace ThScoreFileConverterTests.Models.Th105
             public IReadOnlyDictionary<Chara, byte> storyClearCounts;
             public IReadOnlyDictionary<int, ICardForDeck> systemCards;
             public IReadOnlyDictionary<Chara, IClearData<Chara>> clearData;
-        };
+        }
 
         internal static Properties MakeValidProperties()
         {

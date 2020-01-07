@@ -30,7 +30,7 @@ namespace ThScoreFileConverterTests.Models.Th145
             public Dictionary<int, bool> bgmFlags;
             public Dictionary<Level, Dictionary<Chara, int>> clearRanks;
             public Dictionary<Level, Dictionary<Chara, int>> clearTimes;
-        };
+        }
 
         internal static Properties MakeValidProperties()
         {

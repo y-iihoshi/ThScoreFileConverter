@@ -24,7 +24,7 @@ namespace ThScoreFileConverterTests.Models.Th075
                 this.decodedLastName = properties.decodedLastName;
                 this.arcadeScores = properties.arcadeScores.ToDictionary(pair => pair.Key, pair => pair.Value);
             }
-        };
+        }
 
         internal static Properties ValidProperties { get; } = new Properties()
         {

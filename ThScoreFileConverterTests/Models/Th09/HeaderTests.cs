@@ -17,7 +17,7 @@ namespace ThScoreFileConverterTests.Models.Th09
             public short size1;
             public short size2;
             public byte[] data;
-        };
+        }
 
         internal static Properties ValidProperties { get; } = new Properties()
         {

@@ -18,7 +18,7 @@ namespace ThScoreFileConverterTests.Models.Th095
             public int size;
             public uint checksum;
             public byte[] data;
-        };
+        }
 
         internal static Properties DefaultProperties { get; } = new Properties()
         {

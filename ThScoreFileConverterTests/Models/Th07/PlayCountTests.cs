@@ -31,7 +31,7 @@ namespace ThScoreFileConverterTests.Models.Th07
                 this.totalContinue = properties.totalContinue;
                 this.totalPractice = properties.totalPractice;
             }
-        };
+        }
 
         internal static Properties ValidProperties { get; } = new Properties()
         {

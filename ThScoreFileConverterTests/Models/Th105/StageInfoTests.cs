@@ -15,7 +15,7 @@ namespace ThScoreFileConverterTests.Models.Th105
             public Stage stage;
             public TChara enemy;
             public IEnumerable<int> cardIds;
-        };
+        }
 
         internal static Properties<TChara> MakeValidProperties<TChara>()
             where TChara : struct, Enum

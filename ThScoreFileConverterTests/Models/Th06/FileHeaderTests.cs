@@ -15,7 +15,7 @@ namespace ThScoreFileConverterTests.Models.Th06
             public short version;
             public int size;
             public int decodedAllSize;
-        };
+        }
 
         internal static Properties ValidProperties { get; } = new Properties()
         {

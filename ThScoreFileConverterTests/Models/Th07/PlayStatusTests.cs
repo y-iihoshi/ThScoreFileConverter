@@ -22,7 +22,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             public Time totalRunningTime;
             public Time totalPlayTime;
             public Dictionary<LevelWithTotal, PlayCountTests.Properties> playCounts;
-        };
+        }
 
         internal static Properties ValidProperties { get; } = new Properties()
         {

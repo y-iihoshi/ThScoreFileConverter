@@ -14,7 +14,7 @@ namespace ThScoreFileConverterTests.Models.Th095
             public int encodedAllSize;
             public int encodedBodySize;
             public int decodedBodySize;
-        };
+        }
 
         internal static Properties DefaultProperties { get; } = new Properties()
         {

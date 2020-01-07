@@ -11,7 +11,7 @@ namespace ThScoreFileConverterTests.Models.Th075
             public string name;
             public Chara enemy;
             public Level level;
-        };
+        }
 
         internal static Properties ValidProperties { get; } = new Properties()
         {

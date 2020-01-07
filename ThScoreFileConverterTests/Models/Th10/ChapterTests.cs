@@ -19,7 +19,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             public uint checksum;
             public int size;
             public byte[] data;
-        };
+        }
 
         internal static Properties DefaultProperties { get; } = new Properties()
         {

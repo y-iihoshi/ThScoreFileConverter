@@ -22,7 +22,7 @@ namespace ThScoreFileConverterTests.Models.Th155
             public Dictionary<string, int> endingDictionary;
             public Dictionary<int, int> stageDictionary;
             public int version;
-        };
+        }
 
         internal static Properties GetValidProperties()
         {
