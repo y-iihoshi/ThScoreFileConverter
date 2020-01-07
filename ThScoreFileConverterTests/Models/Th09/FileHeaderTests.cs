@@ -53,7 +53,7 @@ namespace ThScoreFileConverterTests.Models.Th09
         [TestMethod]
         public void FileHeaderTest()
         {
-            var properties = new Properties();
+            var properties = default(Properties);
 
             var header = new FileHeader();
 

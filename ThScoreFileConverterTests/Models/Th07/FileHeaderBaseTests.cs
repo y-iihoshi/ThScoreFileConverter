@@ -56,7 +56,7 @@ namespace ThScoreFileConverterTests.Models.Th07
         [TestMethod]
         public void FileHeaderBaseTest()
         {
-            var properties = new Properties();
+            var properties = default(Properties);
 
             var header = new FileHeaderBase();
 
