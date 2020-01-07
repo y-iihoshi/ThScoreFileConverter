@@ -10,7 +10,7 @@ using ThScoreFileConverterTests.Models;
 
 namespace ThScoreFileConverterTests
 {
-    [TestClass()]
+    [TestClass]
     public class SettingsTests
     {
         internal static string GetBackingFieldName(string propertyName) => $"<{propertyName}>k__BackingField";
@@ -38,7 +38,7 @@ namespace ThScoreFileConverterTests
             Assert.AreSame(instance1, instance2);
         }
 
-        [TestMethod()]
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void LoadTestNullPath()
         {
