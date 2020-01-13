@@ -6,7 +6,7 @@
 <#@ import namespace="ThScoreFileConverter.Models" #>
 <#@ import namespace="ThScoreFileConverter.Models.Th09" #>
 <#
-    var levels = Utils.GetEnumerator<Level>().ToDictionary(level => level.ToShortName(), level => level.ToString());
+    var levels = Utils.GetEnumerable<Level>().ToDictionary(level => level.ToShortName(), level => level.ToString());
 
     var characters = new List<(Chara chara, string givenName, string fullName)>
     {

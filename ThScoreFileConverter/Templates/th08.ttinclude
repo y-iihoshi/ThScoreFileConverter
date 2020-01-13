@@ -6,16 +6,16 @@
 <#@ import namespace="ThScoreFileConverter.Models.Th08" #>
 <#@ import namespace="Models = ThScoreFileConverter.Models" #>
 <#
-    var levels = Models.Utils.GetEnumerator<Models.Level>()
+    var levels = Models.Utils.GetEnumerable<Models.Level>()
         .ToDictionary(level => level.ToShortName(), level => level.ToString());
-    var levelsWithTotal = Models.Utils.GetEnumerator<Models.LevelWithTotal>()
+    var levelsWithTotal = Models.Utils.GetEnumerable<Models.LevelWithTotal>()
         .ToDictionary(level => level.ToShortName(), level => level.ToString());
 
     var levelKeyTotal = Models.LevelWithTotal.Total.ToShortName();
     var levelKeyOrderTotalFirst = levelsWithTotal.Keys.TakeLast(1).Concat(levelsWithTotal.Keys.SkipLast(1));
     var levelKeyOrderTotalLast = levelsWithTotal.Keys;
 
-    var levelsSpellPractice = Models.Utils.GetEnumerator<LevelPractice>().ToDictionary(
+    var levelsSpellPractice = Models.Utils.GetEnumerable<LevelPractice>().ToDictionary(
         level => level.ToShortName(),
         level => (level.ToLongName().Length > 0) ? level.ToLongName() : level.ToString());
 

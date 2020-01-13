@@ -6,9 +6,9 @@
 <#@ import namespace="ThScoreFileConverter.Models.Th075" #>
 <#@ import namespace="Models = ThScoreFileConverter.Models" #>
 <#
-    var levels = Models.Utils.GetEnumerator<Level>()
+    var levels = Models.Utils.GetEnumerable<Level>()
         .ToDictionary(level => level.ToShortName(), level => level.ToString());
-    var levelsWithTotal = Models.Utils.GetEnumerator<LevelWithTotal>()
+    var levelsWithTotal = Models.Utils.GetEnumerable<LevelWithTotal>()
         .ToDictionary(level => level.ToShortName(), level => level.ToString());
 
     var levelKeyTotal = LevelWithTotal.Total.ToShortName();

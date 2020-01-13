@@ -6,9 +6,9 @@
 <#@ import namespace="ThScoreFileConverter.Models.Th105" #>
 <#@ import namespace="Models = ThScoreFileConverter.Models" #>
 <#
-    var levels = Models.Utils.GetEnumerator<Level>()
+    var levels = Models.Utils.GetEnumerable<Level>()
         .ToDictionary(level => level.ToShortName(), level => level.ToString());
-    var levelsWithTotal = Models.Utils.GetEnumerator<LevelWithTotal>()
+    var levelsWithTotal = Models.Utils.GetEnumerable<LevelWithTotal>()
         .ToDictionary(level => level.ToShortName(), level => level.ToString());
 
     var levelKeyTotal = LevelWithTotal.Total.ToShortName();
@@ -63,7 +63,7 @@
         (Chara.Tenshi,    100),
     }.ToDictionary(pair => pair.chara.ToShortName(), pair => pair.numCards);
 
-    var cardTypes = Models.Utils.GetEnumerator<CardType>()
+    var cardTypes = Models.Utils.GetEnumerable<CardType>()
         .ToDictionary(cardType => cardType.ToShortName(), cardType => cardType.ToString());
 
     var cardsPerCharaAndType = new List<(Chara chara, CardType cardType, int numCards)>
