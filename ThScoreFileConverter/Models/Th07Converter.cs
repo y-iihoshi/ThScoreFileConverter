@@ -103,7 +103,7 @@ namespace ThScoreFileConverter.Models
 
             header.WriteTo(writer);
 
-            Lzss.Extract(input, output);
+            Lzss.Decompress(input, output);
             output.Flush();
             output.SetLength(output.Position);
 

@@ -101,7 +101,7 @@ namespace ThScoreFileConverter.Models
             header.WriteTo(writer);
 
             var bodyBeginPos = output.Position;
-            Lzss.Extract(input, output);
+            Lzss.Decompress(input, output);
             output.Flush();
             output.SetLength(output.Position);
 

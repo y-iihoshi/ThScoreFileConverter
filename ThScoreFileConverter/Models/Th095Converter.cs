@@ -97,7 +97,7 @@ namespace ThScoreFileConverter.Models
             if (!this.bestshots.ContainsKey(key))
                 this.bestshots.Add(key, (outputFile.Name, header));
 
-            Lzss.Extract(input, decoded);
+            Lzss.Decompress(input, decoded);
 
             _ = decoded.Seek(0, SeekOrigin.Begin);
             using var bitmap = new Bitmap(header.Width, header.Height, PixelFormat.Format24bppRgb);
@@ -161,7 +161,7 @@ namespace ThScoreFileConverter.Models
             header.WriteTo(writer);
 
             var bodyBeginPos = output.Position;
-            Lzss.Extract(input, output);
+            Lzss.Decompress(input, output);
             output.Flush();
             output.SetLength(output.Position);
 

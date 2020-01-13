@@ -38,7 +38,7 @@ namespace ThScoreFileConverter.Models
         /// </summary>
         /// <param name="input">The stream to input data.</param>
         /// <param name="output">The stream that is output the decompressed data.</param>
-        public static void Extract(Stream input, Stream output)
+        public static void Decompress(Stream input, Stream output)
         {
             var reader = new BitReader(input);
             var dictionary = new byte[DicSize];

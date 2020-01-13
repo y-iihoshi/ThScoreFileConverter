@@ -45,13 +45,12 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        public void ExtractTest()
+        public void DecompressTest()
         {
             using var input = new MemoryStream(this.compressed);
             using var output = new MemoryStream();
 
-            // FIXME: Should be renamed
-            Lzss.Extract(input, output);
+            Lzss.Decompress(input, output);
 
             var actual = new byte[output.Length];
             output.Position = 0;
@@ -62,64 +61,64 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ExtractTestNullInput()
+        public void DecompressTestNullInput()
         {
             using var output = new MemoryStream();
 
-            Lzss.Extract(null!, output);
+            Lzss.Decompress(null!, output);
             Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod]
-        public void ExtractTestNullStreamInput()
+        public void DecompressTestNullStreamInput()
         {
             using var output = new MemoryStream();
 
-            Lzss.Extract(Stream.Null, output);
+            Lzss.Decompress(Stream.Null, output);
             Assert.AreEqual(0, output.Length);
         }
 
         [TestMethod]
-        public void ExtractTestEmptyInput()
+        public void DecompressTestEmptyInput()
         {
             using var input = new MemoryStream();
             using var output = new MemoryStream();
 
-            Lzss.Extract(input, output);
+            Lzss.Decompress(input, output);
             Assert.AreEqual(0, output.Length);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void ExtractTestUnreadableInput()
+        public void DecompressTestUnreadableInput()
         {
             using var input = new UnreadableMemoryStream();
             using var output = new MemoryStream();
 
-            Lzss.Extract(input, output);
+            Lzss.Decompress(input, output);
             Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void ExtractTestClosedInput()
+        public void DecompressTestClosedInput()
         {
             using var output = new MemoryStream();
             var input = new MemoryStream(this.compressed);
             input.Close();
 
-            Lzss.Extract(input, output);
+            Lzss.Decompress(input, output);
             Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod]
-        public void ExtractTestShortenedInput()
+        public void DecompressTestShortenedInput()
         {
             // Since the last 2 bytes of this.compressed are zero, we should subtract 3 to pass this test.
             using var input = new MemoryStream(this.compressed, 0, this.compressed.Length - 3);
             using var output = new MemoryStream();
 
-            Lzss.Extract(input, output);
+            Lzss.Decompress(input, output);
 
             var actual = new byte[output.Length];
             output.Position = 0;
@@ -129,7 +128,7 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        public void ExtractTestInvalidInput()
+        public void DecompressTestInvalidInput()
         {
             var invalid = new byte[this.compressed.Length];
             this.compressed.CopyTo(invalid, 0);
@@ -138,7 +137,7 @@ namespace ThScoreFileConverterTests.Models
             using var input = new MemoryStream(invalid);
             using var output = new MemoryStream();
 
-            Lzss.Extract(input, output);
+            Lzss.Decompress(input, output);
 
             var actual = new byte[output.Length];
             output.Position = 0;
@@ -149,34 +148,34 @@ namespace ThScoreFileConverterTests.Models
 
         [TestMethod]
         [ExpectedException(typeof(NullReferenceException))]
-        public void ExtractTestNullOutput()
+        public void DecompressTestNullOutput()
         {
             using var input = new MemoryStream(this.compressed);
 
-            Lzss.Extract(input, null!);
+            Lzss.Decompress(input, null!);
             Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod]
         [ExpectedException(typeof(NotSupportedException))]
-        public void ExtractTestUnwritableOutput()
+        public void DecompressTestUnwritableOutput()
         {
             using var input = new MemoryStream(this.compressed);
             using var output = new MemoryStream(Array.Empty<byte>(), false);
 
-            Lzss.Extract(input, output);
+            Lzss.Decompress(input, output);
             Assert.Fail(TestUtils.Unreachable);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ObjectDisposedException))]
-        public void ExtractTestClosedOutput()
+        public void DecompressTestClosedOutput()
         {
             using var input = new MemoryStream(this.compressed);
             var output = new MemoryStream();
             output.Close();
 
-            Lzss.Extract(input, output);
+            Lzss.Decompress(input, output);
             Assert.Fail(TestUtils.Unreachable);
         }
     }
