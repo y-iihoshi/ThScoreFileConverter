@@ -61,6 +61,15 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
+        ///   About this tool に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string AboutWindowTitle {
+            get {
+                return ResourceManager.GetString("AboutWindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Must not be empty. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string ArgumentExceptionMustNotBeEmpty {
@@ -485,11 +494,29 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
+        ///   https://www.colorless-sight.jp/thsfc/ に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ProjectUrl {
+            get {
+                return ResourceManager.GetString("ProjectUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   *.dat に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string ptnBestShot {
             get {
                 return ResourceManager.GetString("ptnBestShot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Settings に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string SettingWindowTitle {
+            get {
+                return ResourceManager.GetString("SettingWindowTitle", resourceCulture);
             }
         }
         

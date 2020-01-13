@@ -16,6 +16,7 @@ using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using ThScoreFileConverter.Actions;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Properties;
 using SysDraw = System.Drawing;
 
 namespace ThScoreFileConverter.ViewModels
@@ -37,7 +38,7 @@ namespace ThScoreFileConverter.ViewModels
             this.disposed = false;
             this.font = null;
 
-            this.Title = "Settings";    // FIXME
+            this.Title = Resources.SettingWindowTitle;
 
             var encodings = Settings.ValidCodePageIds
                 .ToDictionary(id => id, id => Utils.GetEncoding(id).EncodingName);

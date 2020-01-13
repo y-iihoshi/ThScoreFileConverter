@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
+using ThScoreFileConverter.Properties;
 using Prop = ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.ViewModels
@@ -32,7 +33,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public AboutWindowViewModel()
         {
-            this.Title = "About this tool";     // FIXME
+            this.Title = Resources.AboutWindowTitle;
 
             this.Icon = Imaging.CreateBitmapSourceFromHIcon(
                 SystemIcons.Application.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
@@ -46,7 +47,7 @@ namespace ThScoreFileConverter.ViewModels
             this.Name = asmName.Name;
             this.Version = Prop.Resources.strVersionPrefix + verField.GetValue(null);
             this.Copyright = (attrs[0] is AssemblyCopyrightAttribute attr) ? attr.Copyright : string.Empty;
-            this.Uri = "https://www.colorless-sight.jp/thsfc/"; // FIXME
+            this.Uri = Resources.ProjectUrl;
         }
 
         /// <inheritdoc/>

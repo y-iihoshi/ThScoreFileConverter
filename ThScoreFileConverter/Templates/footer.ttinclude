@@ -1,0 +1,5 @@
+<#@ assembly name="$(TargetPath)" #>
+<#
+    var projectName = nameof(ThScoreFileConverter);
+    var projectUrl = ThScoreFileConverter.Properties.Resources.ProjectUrl;
+#>

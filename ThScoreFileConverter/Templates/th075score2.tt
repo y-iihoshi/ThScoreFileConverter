@@ -105,7 +105,7 @@
 
   <footer>
    <p>
-    Data output by <a href="https://www.colorless-sight.jp/thsfc/">ThScoreFileConverter</a>.
+    Data output by <a href="<#= projectUrl #>"><#= projectName #></a>.
 <script>
 // <![CDATA[
     document.write("Last updated: ", document.lastModified, ".");

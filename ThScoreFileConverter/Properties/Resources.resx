@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AboutWindowTitle" xml:space="preserve">
+    <value>About this tool</value>
+  </data>
   <data name="ArgumentExceptionMustNotBeEmpty" xml:space="preserve">
     <value>Must not be empty.</value>
   </data>
@@ -259,8 +262,14 @@
   <data name="NotImplementedExceptionShouldNotReachHere" xml:space="preserve">
     <value>Should not reach here.</value>
   </data>
+  <data name="ProjectUrl" xml:space="preserve">
+    <value>https://www.colorless-sight.jp/thsfc/</value>
+  </data>
   <data name="ptnBestShot" xml:space="preserve">
     <value>*.dat</value>
+  </data>
+  <data name="SettingWindowTitle" xml:space="preserve">
+    <value>Settings</value>
   </data>
   <data name="strBackupFileExtension" xml:space="preserve">
     <value>.bak</value>
