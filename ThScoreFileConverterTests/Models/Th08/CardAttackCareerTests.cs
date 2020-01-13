@@ -16,13 +16,13 @@ namespace ThScoreFileConverterTests.Models.Th08
     {
         internal static CardAttackCareerStub ValidStub { get; } = new CardAttackCareerStub()
         {
-            MaxBonuses = Utils.GetEnumerator<CharaWithTotal>()
+            MaxBonuses = Utils.GetEnumerable<CharaWithTotal>()
                 .Select((chara, index) => (chara, index))
                 .ToDictionary(pair => pair.chara, pair => (uint)pair.index),
-            TrialCounts = Utils.GetEnumerator<CharaWithTotal>()
+            TrialCounts = Utils.GetEnumerable<CharaWithTotal>()
                 .Select((chara, index) => (chara, index))
                 .ToDictionary(pair => pair.chara, pair => 20 + pair.index),
-            ClearCounts = Utils.GetEnumerator<CharaWithTotal>()
+            ClearCounts = Utils.GetEnumerable<CharaWithTotal>()
                 .Select((chara, index) => (chara, index))
                 .ToDictionary(pair => pair.chara, pair => 20 - pair.index),
         };

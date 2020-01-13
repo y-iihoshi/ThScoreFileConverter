@@ -24,7 +24,7 @@ namespace ThScoreFileConverter.Models.Th143
         public Score(Th10.Chapter chapter)
             : base(chapter, ValidSignature, ValidVersion, ValidSize)
         {
-            var items = Utils.GetEnumerator<ItemWithTotal>();
+            var items = Utils.GetEnumerable<ItemWithTotal>();
 
             using var stream = new MemoryStream(this.Data, false);
             using var reader = new BinaryReader(stream);

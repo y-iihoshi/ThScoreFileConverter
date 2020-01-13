@@ -19,14 +19,14 @@ namespace ThScoreFileConverterTests.Models.Th128
                     Route = RouteWithTotal.A2,
                     TotalPlayCount = 23,
                     PlayTime = 4567890,
-                    ClearCounts = Utils.GetEnumerator<Level>().ToDictionary(level => level, level => 100 - (int)level),
+                    ClearCounts = Utils.GetEnumerable<Level>().ToDictionary(level => level, level => 100 - (int)level),
                 },
                 new ClearDataStub
                 {
                     Route = RouteWithTotal.B1,
                     TotalPlayCount = 12,
                     PlayTime = 3456789,
-                    ClearCounts = Utils.GetEnumerator<Level>().ToDictionary(level => level, level => 50 - (int)level),
+                    ClearCounts = Utils.GetEnumerable<Level>().ToDictionary(level => level, level => 50 - (int)level),
                 },
             }.ToDictionary(element => element.Route);
 

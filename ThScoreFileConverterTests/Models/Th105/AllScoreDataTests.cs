@@ -21,7 +21,7 @@ namespace ThScoreFileConverterTests.Models.Th105
 
         internal static Properties MakeValidProperties()
         {
-            var charas = Utils.GetEnumerator<Chara>();
+            var charas = Utils.GetEnumerable<Chara>();
             return new Properties()
             {
                 storyClearCounts = charas.ToDictionary(

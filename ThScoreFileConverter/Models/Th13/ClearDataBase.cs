@@ -30,9 +30,9 @@ namespace ThScoreFileConverter.Models.Th13
         protected ClearDataBase(Th10.Chapter chapter, int validSize, int numCards)
             : base(chapter, ValidSignature, ValidVersion, validSize)
         {
-            var levelsWithTotal = Utils.GetEnumerator<TLevelPracticeWithTotal>();
-            var levels = Utils.GetEnumerator<TLevelPractice>();
-            var stages = Utils.GetEnumerator<TStagePractice>();
+            var levelsWithTotal = Utils.GetEnumerable<TLevelPracticeWithTotal>();
+            var levels = Utils.GetEnumerable<TLevelPractice>();
+            var stages = Utils.GetEnumerable<TStagePractice>();
 
             using var stream = new MemoryStream(this.Data, false);
             using var reader = new BinaryReader(stream);

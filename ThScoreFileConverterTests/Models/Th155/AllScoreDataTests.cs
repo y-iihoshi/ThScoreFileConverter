@@ -28,7 +28,7 @@ namespace ThScoreFileConverterTests.Models.Th155
         {
             return new Properties()
             {
-                storyDictionary = Utils.GetEnumerator<StoryChara>().ToDictionary(
+                storyDictionary = Utils.GetEnumerable<StoryChara>().ToDictionary(
                     chara => chara,
                     chara => new AllScoreData.Story
                     {

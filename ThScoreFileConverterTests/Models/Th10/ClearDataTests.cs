@@ -16,9 +16,9 @@ namespace ThScoreFileConverterTests.Models.Th10
     {
         internal static ClearDataStub<CharaWithTotal, StageProgress> MakeValidStub()
         {
-            var levels = Utils.GetEnumerator<Level>();
+            var levels = Utils.GetEnumerable<Level>();
             var levelsExceptExtra = levels.Where(level => level != Level.Extra);
-            var stages = Utils.GetEnumerator<Stage>();
+            var stages = Utils.GetEnumerable<Stage>();
             var stagesExceptExtra = stages.Where(stage => stage != Stage.Extra);
 
             return new ClearDataStub<CharaWithTotal, StageProgress>()

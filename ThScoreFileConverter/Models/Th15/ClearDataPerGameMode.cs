@@ -42,7 +42,7 @@ namespace ThScoreFileConverter.Models.Th15
             if (reader == null)
                 throw new ArgumentNullException(nameof(reader));
 
-            var levelsWithTotal = Utils.GetEnumerator<LevelWithTotal>();
+            var levelsWithTotal = Utils.GetEnumerable<LevelWithTotal>();
 
             this.Rankings = levelsWithTotal.ToDictionary(
                 level => level,

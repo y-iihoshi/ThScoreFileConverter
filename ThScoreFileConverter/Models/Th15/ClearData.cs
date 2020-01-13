@@ -23,9 +23,9 @@ namespace ThScoreFileConverter.Models.Th15
         public ClearData(Th10.Chapter chapter)
             : base(chapter, ValidSignature, ValidVersion, ValidSize)
         {
-            var modes = Utils.GetEnumerator<GameMode>();
-            var levels = Utils.GetEnumerator<Level>();
-            var stages = Utils.GetEnumerator<StagePractice>();
+            var modes = Utils.GetEnumerable<GameMode>();
+            var levels = Utils.GetEnumerable<Level>();
+            var stages = Utils.GetEnumerable<StagePractice>();
 
             using var stream = new MemoryStream(this.Data, false);
             using var reader = new BinaryReader(stream);

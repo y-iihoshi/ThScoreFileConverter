@@ -61,7 +61,7 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// Handles the <c>Startup</c> event of this application.
+        /// Handles the <see cref="Application.Startup"/> event of this application.
         /// </summary>
         /// <param name="sender">The instance where the event handler is attached.</param>
         /// <param name="e">The event data.</param>
@@ -87,7 +87,7 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
-        /// Handles the <c>Exit</c> event of this application.
+        /// Handles the <see cref="Application.Exit"/> event of this application.
         /// </summary>
         /// <param name="sender">The instance where the event handler is attached.</param>
         /// <param name="e">The event data.</param>

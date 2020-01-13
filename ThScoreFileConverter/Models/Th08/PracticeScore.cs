@@ -22,8 +22,8 @@ namespace ThScoreFileConverter.Models.Th08
         public PracticeScore(Th06.Chapter chapter)
             : base(chapter, ValidSignature, ValidSize)
         {
-            var stages = Utils.GetEnumerator<Stage>();
-            var levels = Utils.GetEnumerator<Level>();
+            var stages = Utils.GetEnumerable<Stage>();
+            var levels = Utils.GetEnumerable<Level>();
 
             using var stream = new MemoryStream(this.Data, false);
             using var reader = new BinaryReader(stream);

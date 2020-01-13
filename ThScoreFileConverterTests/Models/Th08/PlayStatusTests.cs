@@ -21,7 +21,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             Size2 = 0x228,
             TotalRunningTime = new Time(12, 34, 56, 789, false),
             TotalPlayTime = new Time(23, 45, 19, 876, false),
-            PlayCounts = Utils.GetEnumerator<Level>()
+            PlayCounts = Utils.GetEnumerable<Level>()
                 .ToDictionary(
                     level => level,
                     level => new PlayCountStub(PlayCountTests.ValidStub) as IPlayCount),

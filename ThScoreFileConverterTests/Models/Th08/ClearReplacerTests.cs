@@ -169,7 +169,7 @@ namespace ThScoreFileConverterTests.Models.Th08
             {
                 new ClearDataStub(ClearDataTests.ValidStub)
                 {
-                    StoryFlags = Utils.GetEnumerator<Level>().ToDictionary(level => level, _ => PlayableStages.Stage6B),
+                    StoryFlags = Utils.GetEnumerable<Level>().ToDictionary(level => level, _ => PlayableStages.Stage6B),
                 },
             }.ToDictionary(entry => entry.Chara);
             var replacer = new ClearReplacer(rankings, clearData);

@@ -68,10 +68,9 @@ namespace ThScoreFileConverterTests.Models
         }
 
         [TestMethod]
-        public void GetEnumeratorTest()
+        public void GetEnumerableTest()
         {
-            // FIXME: The method to be tested should be renamed.
-            var enumerable = Utils.GetEnumerator<DayOfWeek>();
+            var enumerable = Utils.GetEnumerable<DayOfWeek>();
             var i = (int)DayOfWeek.Sunday;
             foreach (var value in enumerable)
                 Assert.AreEqual((DayOfWeek)i++, value);

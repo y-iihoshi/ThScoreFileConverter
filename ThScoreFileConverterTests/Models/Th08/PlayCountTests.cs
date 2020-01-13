@@ -17,7 +17,7 @@ namespace ThScoreFileConverterTests.Models.Th08
         internal static PlayCountStub ValidStub { get; } = new PlayCountStub()
         {
             TotalTrial = 1,
-            Trials = Utils.GetEnumerator<Chara>()
+            Trials = Utils.GetEnumerable<Chara>()
                 .Select((chara, index) => (chara, index))
                 .ToDictionary(pair => pair.chara, pair => pair.index),
             TotalClear = 3,

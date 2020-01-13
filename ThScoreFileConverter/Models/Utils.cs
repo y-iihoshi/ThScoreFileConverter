@@ -72,15 +72,15 @@ namespace ThScoreFileConverter.Models
         }
 
         /// <summary>
-        /// Gets the <c>IEnumerable{T}</c> instance to enumerate values of the <typeparamref name="TEnum"/>
+        /// Gets the <see cref="IEnumerable{T}"/> instance to enumerate values of the <typeparamref name="TEnum"/>
         /// type.
         /// </summary>
         /// <typeparam name="TEnum">The enumeration type.</typeparam>
         /// <returns>
-        /// The <c>IEnumerable{T}</c> instance to enumerate values of the <typeparamref name="TEnum"/> type.
+        /// The <see cref="IEnumerable{T}"/> instance to enumerate values of the <typeparamref name="TEnum"/> type.
         /// </returns>
         [CLSCompliant(false)]
-        public static IEnumerable<TEnum> GetEnumerator<TEnum>()
+        public static IEnumerable<TEnum> GetEnumerable<TEnum>()
             where TEnum : struct, Enum
         {
             return Enum.GetValues(typeof(TEnum)).Cast<TEnum>();
@@ -117,7 +117,7 @@ namespace ThScoreFileConverter.Models
         /// Wraps the <c>string.Format()</c> method to specify an IFormatProvider instance.
         /// </summary>
         /// <param name="fmt">A composite format string.</param>
-        /// <param name="args">An <c>Object</c> array containing zero or more objects to format.</param>
+        /// <param name="args">An <see cref="object"/> array containing zero or more objects to format.</param>
         /// <returns>
         /// A copy of <paramref name="fmt"/> in which the format items have been replaced by the string
         /// representation of the corresponding objects in <paramref name="args"/>.
@@ -168,7 +168,7 @@ namespace ThScoreFileConverter.Models
         /// Returns the encoding associated with the specified code page identifier.
         /// </summary>
         /// <param name="codePage">The code page identifier of the preferred encoding.</param>
-        /// <returns>The <c>Encoding</c> associated with <paramref name="codePage"/>.</returns>
+        /// <returns>The <see cref="System.Text.Encoding"/> associated with <paramref name="codePage"/>.</returns>
         public static System.Text.Encoding GetEncoding(int codePage)
         {
             // To prevent BOM output for UTF-8

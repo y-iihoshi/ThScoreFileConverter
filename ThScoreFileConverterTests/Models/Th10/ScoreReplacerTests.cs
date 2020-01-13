@@ -128,7 +128,7 @@ namespace ThScoreFileConverterTests.Models.Th10
                 new ClearDataStub<CharaWithTotal, StageProgress>()
                 {
                     Chara = CharaWithTotal.ReimuB,
-                    Rankings = Utils.GetEnumerator<Level>().ToDictionary(
+                    Rankings = Utils.GetEnumerable<Level>().ToDictionary(
                         level => level,
                         level => new List<IScoreData<StageProgress>>() as IReadOnlyList<IScoreData<StageProgress>>),
                 },
@@ -150,7 +150,7 @@ namespace ThScoreFileConverterTests.Models.Th10
                 new ClearDataStub<CharaWithTotal, StageProgress>()
                 {
                     Chara = CharaWithTotal.ReimuB,
-                    Rankings = Utils.GetEnumerator<Level>().ToDictionary(
+                    Rankings = Utils.GetEnumerable<Level>().ToDictionary(
                         level => level,
                         level => Enumerable.Range(0, 10).Select(
                             index => new ScoreDataStub<StageProgress>()

@@ -31,7 +31,7 @@ namespace ThScoreFileConverterTests.Models.Th13
                     Chara = CharaWithTotal.Marisa,
                     TotalPlayCount = 23,
                     PlayTime = 4567890,
-                    ClearCounts = Utils.GetEnumerator<LevelPracticeWithTotal>()
+                    ClearCounts = Utils.GetEnumerable<LevelPracticeWithTotal>()
                         .ToDictionary(level => level, level => 100 - (int)level),
                 },
                 new ClearDataStub
@@ -39,7 +39,7 @@ namespace ThScoreFileConverterTests.Models.Th13
                     Chara = CharaWithTotal.Sanae,
                     TotalPlayCount = 12,
                     PlayTime = 3456789,
-                    ClearCounts = Utils.GetEnumerator<LevelPracticeWithTotal>()
+                    ClearCounts = Utils.GetEnumerable<LevelPracticeWithTotal>()
                         .ToDictionary(level => level, level => 50 - (int)level),
                 },
             }.ToDictionary(element => element.Chara);

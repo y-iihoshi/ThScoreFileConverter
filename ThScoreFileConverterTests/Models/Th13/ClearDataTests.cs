@@ -31,9 +31,9 @@ namespace ThScoreFileConverterTests.Models.Th13
     {
         internal static ClearDataStub MakeValidStub()
         {
-            var levels = Utils.GetEnumerator<LevelPractice>();
-            var levelsWithTotal = Utils.GetEnumerator<LevelPracticeWithTotal>();
-            var stages = Utils.GetEnumerator<StagePractice>();
+            var levels = Utils.GetEnumerable<LevelPractice>();
+            var levelsWithTotal = Utils.GetEnumerable<LevelPracticeWithTotal>();
+            var stages = Utils.GetEnumerable<StagePractice>();
 
             return new ClearDataStub
             {

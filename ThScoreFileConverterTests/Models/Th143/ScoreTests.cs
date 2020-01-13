@@ -21,8 +21,8 @@ namespace ThScoreFileConverterTests.Models.Th143
             Checksum = 0u,
             Size = 0x314,
             Number = 69,
-            ClearCounts = Utils.GetEnumerator<ItemWithTotal>().ToDictionary(item => item, item => (int)item * 10),
-            ChallengeCounts = Utils.GetEnumerator<ItemWithTotal>().ToDictionary(item => item, item => (int)item * 100),
+            ClearCounts = Utils.GetEnumerable<ItemWithTotal>().ToDictionary(item => item, item => (int)item * 10),
+            ChallengeCounts = Utils.GetEnumerable<ItemWithTotal>().ToDictionary(item => item, item => (int)item * 100),
             HighScore = 456789,
         };
 

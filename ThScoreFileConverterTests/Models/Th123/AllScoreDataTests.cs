@@ -23,7 +23,7 @@ namespace ThScoreFileConverterTests.Models.Th123
 
         internal static Properties MakeValidProperties()
         {
-            var charas = Utils.GetEnumerator<Chara>().Where(chara => chara != Chara.Oonamazu);
+            var charas = Utils.GetEnumerable<Chara>().Where(chara => chara != Chara.Oonamazu);
             return new Properties()
             {
                 storyClearCounts = charas.ToDictionary(

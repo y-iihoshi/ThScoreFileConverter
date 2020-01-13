@@ -23,7 +23,7 @@ namespace ThScoreFileConverter.Models
         /// <summary>
         /// Elements of <typeparamref name="TEnum"/>.
         /// </summary>
-        private static readonly IEnumerable<TEnum> Elements = Utils.GetEnumerator<TEnum>();
+        private static readonly IEnumerable<TEnum> Elements = Utils.GetEnumerable<TEnum>();
 
         /// <summary>
         /// A regular expression of the short names of <typeparamref name="TEnum"/>.

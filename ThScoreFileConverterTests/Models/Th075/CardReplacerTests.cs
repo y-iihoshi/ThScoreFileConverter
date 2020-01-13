@@ -13,10 +13,10 @@ namespace ThScoreFileConverterTests.Models.Th075
     public class CardReplacerTests
     {
         internal static IReadOnlyDictionary<(CharaWithReserved, Level), IClearData> ClearData { get; } =
-            Utils.GetEnumerator<Level>().ToDictionary(
+            Utils.GetEnumerable<Level>().ToDictionary(
                 level => (CharaWithReserved.Reimu, level),
                 level => new ClearDataStub(ClearDataTests.ValidStub) as IClearData)
-            .Concat(Utils.GetEnumerator<Level>().ToDictionary(
+            .Concat(Utils.GetEnumerable<Level>().ToDictionary(
                 level => (CharaWithReserved.Marisa, level),
                 level => new ClearDataStub(ClearDataTests.ValidStub)
                 {

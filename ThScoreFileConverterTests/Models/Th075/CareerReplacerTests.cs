@@ -14,7 +14,7 @@ namespace ThScoreFileConverterTests.Models.Th075
     public class CareerReplacerTests
     {
         internal static IReadOnlyDictionary<(CharaWithReserved, Level), IClearData> ClearData { get; } =
-            Utils.GetEnumerator<Level>().ToDictionary(
+            Utils.GetEnumerable<Level>().ToDictionary(
                 level => (CharaWithReserved.Reimu, level),
                 level => new ClearDataStub(ClearDataTests.ValidStub) as IClearData);
 
@@ -72,7 +72,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         [TestMethod]
         public void ReplaceTestNotStar()
         {
-            var clearData = Utils.GetEnumerator<Level>().ToDictionary(
+            var clearData = Utils.GetEnumerable<Level>().ToDictionary(
                 level => (CharaWithReserved.Reimu, level),
                 level => new ClearDataStub(ClearDataTests.ValidStub)
                 {

@@ -21,11 +21,11 @@ namespace ThScoreFileConverterTests.Models.Th08
             Signature = "PSCR",
             Size1 = 0x178,
             Size2 = 0x178,
-            PlayCounts = Utils.GetEnumerator<Stage>()
-                .SelectMany(stage => Utils.GetEnumerator<Level>().Select(level => (stage, level)))
+            PlayCounts = Utils.GetEnumerable<Stage>()
+                .SelectMany(stage => Utils.GetEnumerable<Level>().Select(level => (stage, level)))
                 .ToDictionary(pair => pair, pair => ((int)pair.stage * 10) + (int)pair.level),
-            HighScores = Utils.GetEnumerator<Stage>()
-                .SelectMany(stage => Utils.GetEnumerator<Level>().Select(level => (stage, level)))
+            HighScores = Utils.GetEnumerable<Stage>()
+                .SelectMany(stage => Utils.GetEnumerable<Level>().Select(level => (stage, level)))
                 .ToDictionary(pair => pair, pair => ((int)pair.level * 10) + (int)pair.stage),
             Chara = Chara.MarisaAlice,
         };

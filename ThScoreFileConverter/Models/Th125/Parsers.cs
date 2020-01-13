@@ -31,6 +31,6 @@ namespace ThScoreFileConverter.Models.Th125
         /// Gets the pattern used for parsing as a long name of a <see cref="Level"/> enumerator.
         /// </summary>
         public static string LevelLongPattern { get; } =
-            string.Join("|", Utils.GetEnumerator<Level>().Select(lv => lv.ToLongName()).ToArray());
+            string.Join("|", Utils.GetEnumerable<Level>().Select(lv => lv.ToLongName()).ToArray());
     }
 }

@@ -127,7 +127,7 @@ namespace ThScoreFileConverterTests.Models.Th128
                 new ClearDataStub()
                 {
                     Route = RouteWithTotal.A2,
-                    Rankings = Utils.GetEnumerator<Level>().ToDictionary(
+                    Rankings = Utils.GetEnumerable<Level>().ToDictionary(
                         level => level,
                         level => new List<IScoreData>() as IReadOnlyList<IScoreData>),
                 },

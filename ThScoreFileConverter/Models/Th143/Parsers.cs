@@ -31,6 +31,6 @@ namespace ThScoreFileConverter.Models.Th143
         /// Gets the pattern used for parsing as a long name of a <see cref="Day"/> enumerator.
         /// </summary>
         public static string DayLongPattern { get; } =
-            string.Join("|", Utils.GetEnumerator<Day>().Select(day => day.ToLongName()).ToArray());
+            string.Join("|", Utils.GetEnumerable<Day>().Select(day => day.ToLongName()).ToArray());
     }
 }

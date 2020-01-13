@@ -24,7 +24,7 @@ namespace ThScoreFileConverterTests.Models.Th105
                         MaxNumber = (value % 4) + 1,
                     } as ICardForDeck)
                     .ToDictionary(card => card.Id),
-                SpellCardResults = Utils.GetEnumerator<TChara>()
+                SpellCardResults = Utils.GetEnumerable<TChara>()
                     .Select((chara, index) => new SpellCardResultStub<TChara>()
                     {
                         Enemy = chara,

@@ -22,10 +22,10 @@ namespace ThScoreFileConverterTests.Models.Th06
             Signature = "CLRD",
             Size1 = 0x18,
             Size2 = 0x18,
-            StoryFlags = Utils.GetEnumerator<Level>()
+            StoryFlags = Utils.GetEnumerable<Level>()
                 .Select((level, index) => new { level, index })
                 .ToDictionary(pair => pair.level, pair => (byte)pair.index),
-            PracticeFlags = Utils.GetEnumerator<Level>()
+            PracticeFlags = Utils.GetEnumerable<Level>()
                 .Select((level, index) => new { level, index })
                 .ToDictionary(pair => pair.level, pair => (byte)(10 - pair.index)),
             Chara = Chara.ReimuB,

@@ -16,7 +16,7 @@ namespace ThScoreFileConverterTests.Models.Th09
     {
         internal static ClearCountStub ValidStub { get; } = new ClearCountStub()
         {
-            Counts = Utils.GetEnumerator<Level>()
+            Counts = Utils.GetEnumerable<Level>()
                 .Select((level, index) => new { level, index })
                 .ToDictionary(pair => pair.level, pair => pair.index),
         };

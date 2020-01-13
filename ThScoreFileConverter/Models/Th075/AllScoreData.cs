@@ -29,9 +29,9 @@ namespace ThScoreFileConverter.Models.Th075
 
         public void ReadFrom(BinaryReader reader)
         {
-            var levels = Utils.GetEnumerator<Level>();
+            var levels = Utils.GetEnumerable<Level>();
 
-            this.ClearData = Utils.GetEnumerator<CharaWithReserved>()
+            this.ClearData = Utils.GetEnumerable<CharaWithReserved>()
                 .SelectMany(chara => levels.Select(level => (chara, level)))
                 .ToDictionary(pair => pair, pair =>
                 {

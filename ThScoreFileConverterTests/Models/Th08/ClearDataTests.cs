@@ -20,10 +20,10 @@ namespace ThScoreFileConverterTests.Models.Th08
             Signature = "CLRD",
             Size1 = 0x24,
             Size2 = 0x24,
-            StoryFlags = Utils.GetEnumerator<Level>()
+            StoryFlags = Utils.GetEnumerable<Level>()
                 .Select((level, index) => (level, index))
                 .ToDictionary(pair => pair.level, pair => (PlayableStages)pair.index),
-            PracticeFlags = Utils.GetEnumerator<Level>()
+            PracticeFlags = Utils.GetEnumerable<Level>()
                 .Select((level, index) => (level, index))
                 .ToDictionary(pair => pair.level, pair => (PlayableStages)(10 - pair.index)),
             Chara = CharaWithTotal.MarisaAlice,

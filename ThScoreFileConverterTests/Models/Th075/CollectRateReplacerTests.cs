@@ -13,7 +13,7 @@ namespace ThScoreFileConverterTests.Models.Th075
     public class CollectRateReplacerTests
     {
         internal static IReadOnlyDictionary<(CharaWithReserved, Level), IClearData> ClearData { get; } =
-            Utils.GetEnumerator<Level>().ToDictionary(
+            Utils.GetEnumerable<Level>().ToDictionary(
                 level => (CharaWithReserved.Reimu, level),
                 level => new ClearDataStub(ClearDataTests.ValidStub)
                 {

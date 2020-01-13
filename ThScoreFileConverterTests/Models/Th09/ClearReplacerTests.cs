@@ -36,7 +36,7 @@ namespace ThScoreFileConverterTests.Models.Th09
                     HighScoreTests.ValidStub.Chara,
                     new ClearCountStub()
                     {
-                        Counts = Utils.GetEnumerator<Level>().ToDictionary(level => level, _ => 0),
+                        Counts = Utils.GetEnumerable<Level>().ToDictionary(level => level, _ => 0),
                     }
                 },
             };
