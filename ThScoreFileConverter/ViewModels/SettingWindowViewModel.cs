@@ -24,13 +24,19 @@ namespace ThScoreFileConverter.ViewModels
     /// The view model class for <see cref="Views.SettingWindow"/>.
     /// </summary>
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Instantiated via ViewModelLocator.")]
-    internal class SettingWindowViewModel : BindableBase, IDialogAware
+    internal class SettingWindowViewModel : BindableBase, IDialogAware, IDisposable
     {
+        private bool disposed;
+        private SysDraw.Font? font;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SettingWindowViewModel"/> class.
         /// </summary>
         public SettingWindowViewModel()
         {
+            this.disposed = false;
+            this.font = null;
+
             this.Title = "Settings";    // FIXME
 
             var encodings = Settings.ValidCodePageIds
@@ -42,6 +48,14 @@ namespace ThScoreFileConverter.ViewModels
             this.FontDialogApplyCommand = new DelegateCommand<FontDialogActionResult>(this.ApplyFont);
             this.FontDialogCancelCommand = new DelegateCommand<FontDialogActionResult>(this.ApplyFont);
             this.ResetFontCommand = new DelegateCommand(this.ResetFont);
+        }
+
+        /// <summary>
+        /// Finalizes an instance of the <see cref="SettingWindowViewModel"/> class.
+        /// </summary>
+        ~SettingWindowViewModel()
+        {
+            this.Dispose(false);
         }
 
         /// <inheritdoc/>
@@ -59,10 +73,17 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets the current font.
         /// </summary>
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "For binding.")]
-        public SysDraw.Font Font => new SysDraw.Font(
-            App.Current.Resources["FontFamilyKey"].ToString(),
-            Convert.ToSingle(App.Current.Resources["FontSizeKey"], CultureInfo.InvariantCulture));
+        public SysDraw.Font Font
+        {
+            get
+            {
+                this.font?.Dispose();
+                this.font = new SysDraw.Font(
+                    Application.Current.Resources["FontFamilyKey"].ToString(),
+                    Convert.ToSingle(Application.Current.Resources["FontSizeKey"], CultureInfo.InvariantCulture));
+                return this.font;
+            }
+        }
 
         /// <summary>
         /// Gets the maximum font size.
@@ -169,11 +190,51 @@ namespace ThScoreFileConverter.ViewModels
         /// <inheritdoc/>
         public void OnDialogClosed()
         {
+            this.Dispose();
         }
 
         /// <inheritdoc/>
         public void OnDialogOpened(IDialogParameters parameters)
         {
+        }
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Disposes the resources of the current instance.
+        /// </summary>
+        /// <param name="disposing">
+        /// <c>true</c> if calls from the <see cref="Dispose()"/> method; <c>false</c> for the finalizer.
+        /// </param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (this.disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                this.font?.Dispose();
+            }
+
+            this.disposed = true;
+        }
+
+        /// <summary>
+        /// Throws <see cref="ObjectDisposedException"/> if the current instance has already been disposed.
+        /// </summary>
+        protected virtual void ThrowIfDisposed()
+        {
+            if (this.disposed)
+            {
+                throw new ObjectDisposedException(this.GetType().FullName);
+            }
         }
 
         #region Methods for command implementation
@@ -184,7 +245,8 @@ namespace ThScoreFileConverter.ViewModels
         /// <param name="result">A result of <see cref="FontDialogAction"/>.</param>
         private void ApplyFont(FontDialogActionResult result)
         {
-            if (App.Current is App app)
+            this.ThrowIfDisposed();
+            if (Application.Current is App app)
             {
                 app.UpdateResources(result.Font.FontFamily.Name, result.Font.Size);
                 this.RaisePropertyChanged(nameof(this.Font));
@@ -196,7 +258,8 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         private void ResetFont()
         {
-            if (App.Current is App app)
+            this.ThrowIfDisposed();
+            if (Application.Current is App app)
             {
                 app.UpdateResources(SystemFonts.MessageFontFamily, SystemFonts.MessageFontSize);
                 this.RaisePropertyChanged(nameof(this.Font));
