@@ -577,5 +577,45 @@ namespace ThScoreFileConverterTests
             Assert.AreEqual(expectedInputCodePageId, Settings.Instance.InputCodePageId);
             Assert.AreEqual(expectedOutputCodePageId, Settings.Instance.OutputCodePageId);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void FontFamilyNameTestNull()
+        {
+            Settings.Instance.FontFamilyName = null!;
+            Assert.Fail(TestUtils.Unreachable);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void FontSizeTestNull()
+        {
+            Settings.Instance.FontSize = null;
+            Assert.Fail(TestUtils.Unreachable);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void OutputNumberGroupSeparatorTestNull()
+        {
+            Settings.Instance.OutputNumberGroupSeparator = null;
+            Assert.Fail(TestUtils.Unreachable);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void InputCodePageIdTestNull()
+        {
+            Settings.Instance.InputCodePageId = null;
+            Assert.Fail(TestUtils.Unreachable);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void OutputCodePageIdTestNull()
+        {
+            Settings.Instance.OutputCodePageId = null;
+            Assert.Fail(TestUtils.Unreachable);
+        }
     }
 }
