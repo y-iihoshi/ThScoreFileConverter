@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting.STAExtensions;
 using Microsoft.Xaml.Behaviors;
 using ThScoreFileConverter.Behaviors;
 using ThScoreFileConverterTests.Models;
@@ -34,7 +35,7 @@ namespace ThScoreFileConverterTests.Interactivity
     [TestClass]
     public class TextBoxBaseScrollBehaviorTests
     {
-        [TestMethod]
+        [STATestMethod]
         public void AutoScrollToEndTest()
         {
             var logger = new Logger();
@@ -73,7 +74,7 @@ namespace ThScoreFileConverterTests.Interactivity
             BindingOperations.ClearBinding(textbox, TextBox.TextProperty);
         }
 
-        [TestMethod]
+        [STATestMethod]
         public void NotAutoScrollToEndTest()
         {
             var logger = new Logger();

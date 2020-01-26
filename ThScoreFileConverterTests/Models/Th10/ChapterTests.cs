@@ -159,7 +159,11 @@ namespace ThScoreFileConverterTests.Models.Th10
         }
 
         [TestMethod]
+#if NETFRAMEWORK
         [ExpectedException(typeof(EndOfStreamException))]
+#else
+        [ExpectedException(typeof(OutOfMemoryException))]
+#endif
         public void ReadFromTestEmptySignature()
         {
             var properties = ValidProperties;
@@ -177,7 +181,11 @@ namespace ThScoreFileConverterTests.Models.Th10
         }
 
         [TestMethod]
+#if NETFRAMEWORK
         [ExpectedException(typeof(EndOfStreamException))]
+#else
+        [ExpectedException(typeof(OutOfMemoryException))]
+#endif
         public void ReadFromTestShortenedSignature()
         {
             var properties = ValidProperties;
