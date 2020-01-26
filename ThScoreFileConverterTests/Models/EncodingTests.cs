@@ -18,5 +18,19 @@ namespace ThScoreFileConverterTests.Models
             Assert.AreNotEqual(System.Text.Encoding.UTF8, Encoding.UTF8);
             Assert.AreEqual(new System.Text.UTF8Encoding(false), Encoding.UTF8);
         }
+
+        [TestMethod]
+        public void GetEncodingTest()
+        {
+            var utf8 = Encoding.GetEncoding(65001);
+            Assert.AreNotEqual(System.Text.Encoding.GetEncoding(65001), utf8);
+            Assert.AreNotEqual(System.Text.Encoding.UTF8, utf8);
+            Assert.AreEqual(new System.Text.UTF8Encoding(false), utf8);
+            Assert.AreEqual(Encoding.UTF8, utf8);
+
+            var cp932 = Encoding.GetEncoding(932);
+            Assert.AreEqual(System.Text.Encoding.GetEncoding(932), cp932);
+            Assert.AreEqual(Encoding.CP932, cp932);
+        }
     }
 }

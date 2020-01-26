@@ -41,7 +41,7 @@ namespace ThScoreFileConverter.ViewModels
             this.Title = Resources.SettingWindowTitle;
 
             var encodings = Settings.ValidCodePageIds
-                .ToDictionary(id => id, id => Utils.GetEncoding(id).EncodingName);
+                .ToDictionary(id => id, id => Encoding.GetEncoding(id).EncodingName);
             this.InputEncodings = encodings;
             this.OutputEncodings = encodings;
 

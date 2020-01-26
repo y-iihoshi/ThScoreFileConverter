@@ -34,5 +34,17 @@ namespace ThScoreFileConverter.Models
         /// Gets the UTF-8 encoding. The Unicode byte order mark is omitted.
         /// </summary>
         public static System.Text.Encoding UTF8 { get; }
+
+        /// <summary>
+        /// Returns the encoding associated with the specified code page identifier.
+        /// </summary>
+        /// <param name="codePage">The code page identifier of the preferred encoding.</param>
+        /// <returns>The <see cref="System.Text.Encoding"/> associated with <paramref name="codePage"/>.</returns>
+        public static System.Text.Encoding GetEncoding(int codePage)
+        {
+            // To prevent BOM output for UTF-8
+            return (codePage == 65001)
+                ? new System.Text.UTF8Encoding(false) : System.Text.Encoding.GetEncoding(codePage);
+        }
     }
 }
