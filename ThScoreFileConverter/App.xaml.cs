@@ -60,12 +60,8 @@ namespace ThScoreFileConverter
             return this.Container.Resolve<MainWindow>();
         }
 
-        /// <summary>
-        /// Handles the <see cref="Application.Startup"/> event of this application.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void App_Startup(object sender, StartupEventArgs e)
+        /// <inheritdoc/>
+        protected override void OnStartup(StartupEventArgs e)
         {
             try
             {
@@ -84,18 +80,17 @@ namespace ThScoreFileConverter
             }
 
             this.UpdateResources(Settings.Instance.FontFamilyName, Settings.Instance.FontSize);
+
+            base.OnStartup(e);
         }
 
-        /// <summary>
-        /// Handles the <see cref="Application.Exit"/> event of this application.
-        /// </summary>
-        /// <param name="sender">The instance where the event handler is attached.</param>
-        /// <param name="e">The event data.</param>
-        private void App_Exit(object sender, ExitEventArgs e)
+        /// <inheritdoc/>
+        protected override void OnExit(ExitEventArgs e)
         {
+            base.OnExit(e);
+
             Settings.Instance.FontFamilyName = this.Resources["FontFamilyKey"].ToString();
-            Settings.Instance.FontSize =
-                Convert.ToDouble(this.Resources["FontSizeKey"], CultureInfo.InvariantCulture);
+            Settings.Instance.FontSize = Convert.ToDouble(this.Resources["FontSizeKey"], CultureInfo.InvariantCulture);
 
             Settings.Instance.Save(Prop.Resources.strSettingFile);
         }
