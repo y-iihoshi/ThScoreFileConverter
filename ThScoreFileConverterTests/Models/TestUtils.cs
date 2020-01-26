@@ -4,7 +4,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.ExceptionServices;
 using System.Text;
 using IBinaryReadable = ThScoreFileConverter.Models.IBinaryReadable;
 using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
@@ -13,11 +12,20 @@ namespace ThScoreFileConverterTests.Models
 {
     public static class TestUtils
     {
-        public static string Unreachable => nameof(Unreachable);
+        static TestUtils()
+        {
+            Unreachable = nameof(Unreachable);
+            Random = new Random();
 
-        public static Random Random { get; } = new Random();
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            CP932Encoding = Encoding.GetEncoding(932);
+        }
 
-        public static Encoding CP932Encoding => Encoding.GetEncoding(932);
+        public static string Unreachable { get; }
+
+        public static Random Random { get; }
+
+        public static Encoding CP932Encoding { get; }
 
         public static byte[] MakeByteArray(params object[] args)
         {
