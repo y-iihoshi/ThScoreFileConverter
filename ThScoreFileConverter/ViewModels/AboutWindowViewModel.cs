@@ -112,7 +112,13 @@ namespace ThScoreFileConverter.ViewModels
         /// <param name="uri">A URI to open.</param>
         private static void OpenUri(object uri)
         {
-            using var process = Process.Start(uri as string);
+            var info = new ProcessStartInfo
+            {
+                FileName = uri as string,
+                UseShellExecute = true,
+            };
+
+            using var process = Process.Start(info);
         }
     }
 }
