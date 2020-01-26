@@ -58,7 +58,11 @@ namespace ThScoreFileConverter.Squirrel
 
         public override int GetHashCode()
         {
+#if NETFRAMEWORK
             return this.Type.GetHashCode() ^ this.Value.GetHashCode();
+#else
+            return this.Type.GetHashCode() ^ this.Value.GetHashCode(StringComparison.InvariantCulture);
+#endif
         }
 
         public bool Equals(SQString other)
