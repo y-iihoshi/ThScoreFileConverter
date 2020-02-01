@@ -12,6 +12,12 @@ environment:
   matrix:
     - TARGET_FRAMEWORK: net48
     - TARGET_FRAMEWORK: netcoreapp3.1
+
+cache:
+  - '%LocalAppData%\pip\cache -> ManualGenerator\requirements.txt'
+  - '%LocalAppData%\NuGet\v3-cache -> **\*.csproj'
+  - '%USERPROFILE%\.nuget\packages -> **\*.csproj'
+
 install:
   - cmd: |
       curl -LO https://aka.ms/vs/16/release/vs_community.exe
