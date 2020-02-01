@@ -38,8 +38,8 @@ before_test:
   - ps: .\PrintTestEnvironment.ps1
 test_script:
   - ps: |
-      & .\OpenCover.ps1 ThScoreFileConverterTests\bin\%CONFIGURATION%\%TARGET_FRAMEWORK%\coverage.xml
-      & .\Codecov.ps1 ThScoreFileConverterTests\bin\%CONFIGURATION%\%TARGET_FRAMEWORK%\coverage.xml
+      & .\OpenCover.ps1 ThScoreFileConverterTests\bin\$env:CONFIGURATION\$env:TARGET_FRAMEWORK\coverage.xml
+      & .\Codecov.ps1 ThScoreFileConverterTests\bin\$env:CONFIGURATION\$env:TARGET_FRAMEWORK\coverage.xml
 
 artifacts:
   - path: publish\%TARGET_FRAMEWORK%
