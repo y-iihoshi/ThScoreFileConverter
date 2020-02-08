@@ -15,7 +15,7 @@ namespace ThScoreFileConverterTests.Models
         public override int ReadByte()
             => throw new NotSupportedException();
 
-        public override IAsyncResult BeginRead(byte[] buffer, int offset, int count, AsyncCallback callback, object state)
+        public override IAsyncResult BeginRead(byte[] buffer, int offset, int count, AsyncCallback? callback, object? state)
             => throw new NotSupportedException();
 
         public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)

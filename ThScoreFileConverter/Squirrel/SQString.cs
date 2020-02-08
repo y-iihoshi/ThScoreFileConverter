@@ -51,7 +51,7 @@ namespace ThScoreFileConverter.Squirrel
                 (size > 0) ? Encoding.CP932.GetString(reader.ReadExactBytes(size)) : string.Empty);
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return (obj is SQString value) && this.Equals(value);
         }

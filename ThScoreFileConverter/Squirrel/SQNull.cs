@@ -37,7 +37,7 @@ namespace ThScoreFileConverter.Squirrel
             return Instance;
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return (obj is SQNull value) ? this.Equals(value) : false;
         }
