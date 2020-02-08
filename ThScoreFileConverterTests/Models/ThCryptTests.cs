@@ -128,7 +128,11 @@ namespace ThScoreFileConverterTests.Models
         {
             var invalid = new byte[this.encryptedBySmallBlock.Length];
             this.encryptedBySmallBlock.CopyTo(invalid, 0);
+#if NETFRAMEWORK
             ++invalid[invalid.Length - 1];
+#else
+            ++invalid[^1];
+#endif
 
             using var input = new MemoryStream(invalid);
             using var output = new MemoryStream();
