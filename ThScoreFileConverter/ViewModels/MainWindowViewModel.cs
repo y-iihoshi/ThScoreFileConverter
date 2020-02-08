@@ -214,7 +214,7 @@ namespace ThScoreFileConverter.ViewModels
             {
                 try
                 {
-                    return Path.GetDirectoryName(this.ScoreFile);
+                    return Path.GetDirectoryName(this.ScoreFile) ?? string.Empty;
                 }
                 catch (ArgumentException)
                 {
@@ -267,7 +267,7 @@ namespace ThScoreFileConverter.ViewModels
             {
                 try
                 {
-                    return Path.GetDirectoryName(this.TemplateFiles.LastOrDefault());
+                    return Path.GetDirectoryName(this.TemplateFiles.LastOrDefault()) ?? string.Empty;
                 }
                 catch (ArgumentException)
                 {

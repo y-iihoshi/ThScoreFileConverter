@@ -110,7 +110,7 @@ namespace ThScoreFileConverter.Models
         public static string ToNumberString<T>(T number, bool outputSeparator)
             where T : struct
         {
-            return outputSeparator ? Format("{0:N0}", number) : number.ToString();
+            return outputSeparator ? Format("{0:N0}", number) : (number.ToString() ?? string.Empty);
         }
 
         /// <summary>
