@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.Linq;
 using System.Windows;
 using Prism.Commands;
@@ -78,10 +77,9 @@ namespace ThScoreFileConverter.ViewModels
         {
             get
             {
+                var app = (App)Application.Current;
                 this.font?.Dispose();
-                this.font = new SysDraw.Font(
-                    Application.Current.Resources["FontFamilyKey"].ToString(),
-                    Convert.ToSingle(Application.Current.Resources["FontSizeKey"], CultureInfo.InvariantCulture));
+                this.font = new SysDraw.Font(app.FontFamily.ToString(), (float)app.FontSize);
                 return this.font;
             }
         }

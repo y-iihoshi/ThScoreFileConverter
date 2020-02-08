@@ -90,7 +90,7 @@ namespace ThScoreFileConverter.ViewModels
             this.isIdle = false;
             this.log = string.Empty;
 
-            this.Title = Assembly.GetExecutingAssembly().GetName().Name;
+            this.Title = Assembly.GetExecutingAssembly().GetName().Name ?? nameof(ThScoreFileConverter);
             this.Works = WorksImpl;
 
             this.SelectScoreFileCommand =

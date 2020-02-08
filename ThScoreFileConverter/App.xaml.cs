@@ -5,8 +5,6 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System;
-using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Windows.Media;
@@ -25,6 +23,24 @@ namespace ThScoreFileConverter
     public partial class App : PrismApplication
     {
         /// <summary>
+        /// Gets the font family used for the UI of this application.
+        /// </summary>
+        public FontFamily FontFamily
+        {
+            get => (FontFamily)this.Resources["FontFamilyKey"];
+            private set => this.Resources["FontFamilyKey"] = value;
+        }
+
+        /// <summary>
+        /// Gets the font size used for the UI of this application.
+        /// </summary>
+        public double FontSize
+        {
+            get => (double)this.Resources["FontSizeKey"];
+            private set => this.Resources["FontSizeKey"] = value;
+        }
+
+        /// <summary>
         /// Updates the resources of this application.
         /// </summary>
         /// <param name="fontFamily">The font family used for the UI of this application.</param>
@@ -32,9 +48,9 @@ namespace ThScoreFileConverter
         public void UpdateResources(FontFamily fontFamily, double? fontSize)
         {
             if (fontFamily != null)
-                this.Resources["FontFamilyKey"] = fontFamily;
+                this.FontFamily = fontFamily;
             if (fontSize.HasValue)
-                this.Resources["FontSizeKey"] = fontSize.Value;
+                this.FontSize = fontSize.Value;
         }
 
         /// <summary>
@@ -89,8 +105,8 @@ namespace ThScoreFileConverter
         {
             base.OnExit(e);
 
-            Settings.Instance.FontFamilyName = this.Resources["FontFamilyKey"].ToString();
-            Settings.Instance.FontSize = Convert.ToDouble(this.Resources["FontSizeKey"], CultureInfo.InvariantCulture);
+            Settings.Instance.FontFamilyName = this.FontFamily.ToString();
+            Settings.Instance.FontSize = this.FontSize;
 
             Settings.Instance.Save(Prop.Resources.strSettingFile);
         }
