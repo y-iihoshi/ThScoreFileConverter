@@ -69,7 +69,7 @@ namespace ThScoreFileConverter.Models
         /// Converts a score file.
         /// </summary>
         /// <param name="threadArg">An instance of the <see cref="SettingsPerTitle"/> class.</param>
-        public void Convert(object threadArg)
+        public void Convert(object? threadArg)
         {
             try
             {

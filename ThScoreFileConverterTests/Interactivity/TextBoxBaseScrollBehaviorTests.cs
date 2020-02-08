@@ -55,7 +55,7 @@ namespace ThScoreFileConverterTests.Interactivity
             };
             var behaviors = Interaction.GetBehaviors(textbox);
 
-            static void onLayoutUpdated(object sender, EventArgs eventArgs)
+            static void onLayoutUpdated(object? sender, EventArgs eventArgs)
             {
                 Assert.IsTrue(Environment.StackTrace.Contains(
                     $"{typeof(TextBoxBaseScrollBehavior).FullName}.OnTargetUpdated"));
@@ -94,7 +94,7 @@ namespace ThScoreFileConverterTests.Interactivity
             };
             var behaviors = Interaction.GetBehaviors(textbox);
 
-            static void onLayoutUpdated(object sender, EventArgs eventArgs)
+            static void onLayoutUpdated(object? sender, EventArgs eventArgs)
             {
                 Assert.Fail(TestUtils.Unreachable);
             }

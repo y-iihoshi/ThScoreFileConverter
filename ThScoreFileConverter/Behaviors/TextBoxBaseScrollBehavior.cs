@@ -57,7 +57,7 @@ namespace ThScoreFileConverter.Behaviors
         /// </summary>
         /// <param name="sender">The object where the event handler is attached.</param>
         /// <param name="e">The event data.</param>
-        private void OnTargetUpdated(object sender, DataTransferEventArgs e)
+        private void OnTargetUpdated(object? sender, DataTransferEventArgs e)
         {
             if (this.AutoScrollToEnd)
                 this.AssociatedObject.ScrollToEnd();
