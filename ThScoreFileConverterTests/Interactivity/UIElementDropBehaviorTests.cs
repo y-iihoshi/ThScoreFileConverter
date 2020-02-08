@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xaml.Behaviors;
 using ThScoreFileConverter.Behaviors;
-using ThScoreFileConverterTests.Models;
 
 namespace ThScoreFileConverterTests.Interactivity
 {
@@ -53,8 +53,11 @@ namespace ThScoreFileConverterTests.Interactivity
                 default(Point),
             };
 
-            var dragEventArgs = (DragEventArgs)typeof(DragEventArgs)
-                .GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, null, types, null).Invoke(parameters);
+            var constructor = typeof(DragEventArgs)
+                .GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, null, types, null);
+            Debug.Assert(constructor is object);
+
+            var dragEventArgs = (DragEventArgs)constructor.Invoke(parameters);
             dragEventArgs.RoutedEvent = routedEvent;
 
             return dragEventArgs;

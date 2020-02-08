@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -117,7 +118,9 @@ namespace ThScoreFileConverterTests.Models
             var currentType = typeof(TestUtils);
             var bindingAttributes = BindingFlags.NonPublic | BindingFlags.Static;
             var fromArray = currentType.GetMethod(nameof(MakeSQByteArrayFromArray), bindingAttributes);
+            Debug.Assert(fromArray is object);
             var fromDictonary = currentType.GetMethod(nameof(MakeSQByteArrayFromDictionary), bindingAttributes);
+            Debug.Assert(fromDictonary is object);
 
             var byteArray = Enumerable.Empty<byte>();
 
@@ -144,8 +147,10 @@ namespace ThScoreFileConverterTests.Models
                     case Array array:
                         if (array.Rank == 1)
                         {
+                            var elementType = array.GetType().GetElementType();
+                            Debug.Assert(elementType is object);
                             byteArray = byteArray.Concat(
-                                fromArray.MakeGenericMethod(array.GetType().GetElementType())
+                                fromArray.MakeGenericMethod(elementType)
                                     .Invoke(null, new object[] { array }) as IEnumerable<byte>);
                         }
                         break;

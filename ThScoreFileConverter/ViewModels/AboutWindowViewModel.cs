@@ -18,7 +18,6 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using ThScoreFileConverter.Properties;
-using Prop = ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.ViewModels
 {
@@ -41,11 +40,13 @@ namespace ThScoreFileConverter.ViewModels
             var thisAsm = Assembly.GetExecutingAssembly();
             var asmName = thisAsm.GetName();
             var gitVerInfoType = thisAsm.GetType("GitVersionInformation");
+            Debug.Assert(gitVerInfoType is object, "GitVersionInformation is missing");
             var verField = gitVerInfoType.GetField("MajorMinorPatch");
+            Debug.Assert(verField is object, "GitVersionInformation.MajorMinorPatch is missing");
             var attrs = thisAsm.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), true);
 
             this.Name = asmName.Name ?? nameof(ThScoreFileConverter);
-            this.Version = Prop.Resources.strVersionPrefix + verField.GetValue(null);
+            this.Version = Resources.strVersionPrefix + verField.GetValue(null);
             this.Copyright = (attrs[0] is AssemblyCopyrightAttribute attr) ? attr.Copyright : string.Empty;
             this.Uri = Resources.ProjectUrl;
         }
