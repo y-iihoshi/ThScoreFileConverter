@@ -179,7 +179,8 @@ namespace ThScoreFileConverterTests.Models
                 .Concat(MakeByteArray((int)SQOT.Null));
 
         private static IEnumerable<byte> MakeSQByteArrayFromDictionary<TKey, TValue>(
-            in Dictionary<TKey, TValue> dictionary)
+            in IReadOnlyDictionary<TKey, TValue> dictionary)
+            where TKey : notnull
             => MakeByteArray((int)SQOT.Table)
                 .Concat(dictionary.SelectMany(pair => MakeSQByteArray(pair.Key).Concat(MakeSQByteArray(pair.Value))))
                 .Concat(MakeByteArray((int)SQOT.Null));
