@@ -2,9 +2,9 @@
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.VisualStudio.TestTools.UnitTesting.STAExtensions;
 using ThScoreFileConverter.Commands;
 using ThScoreFileConverterTests.Models;
+using ThScoreFileConverterTests.UnitTesting;
 
 namespace ThScoreFileConverterTests.Commands
 {

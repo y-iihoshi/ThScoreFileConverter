@@ -2,8 +2,8 @@
 using System.Windows;
 using System.Windows.Interop;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.VisualStudio.TestTools.UnitTesting.STAExtensions;
 using ThScoreFileConverter.Actions;
+using ThScoreFileConverterTests.UnitTesting;
 
 namespace ThScoreFileConverterTests.Interactivity
 {

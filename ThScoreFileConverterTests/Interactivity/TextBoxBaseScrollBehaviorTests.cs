@@ -5,10 +5,10 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.VisualStudio.TestTools.UnitTesting.STAExtensions;
 using Microsoft.Xaml.Behaviors;
 using ThScoreFileConverter.Behaviors;
 using ThScoreFileConverterTests.Models;
+using ThScoreFileConverterTests.UnitTesting;
 
 namespace ThScoreFileConverterTests.Interactivity
 {
