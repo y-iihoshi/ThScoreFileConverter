@@ -16,7 +16,6 @@ environment:
 cache:
   - '%LocalAppData%\pip\cache -> ManualGenerator\requirements.txt'
   - '%LocalAppData%\NuGet\v3-cache -> **\*.csproj'
-  - '%USERPROFILE%\.nuget\packages -> **\*.csproj'
 
 install:
   - cmd: |
