@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xaml.Behaviors;
 using ThScoreFileConverter.Behaviors;
 using ThScoreFileConverterTests.Models;
+using ThScoreFileConverterTests.UnitTesting;
 
 namespace ThScoreFileConverterTests.Interactivity
 {
@@ -34,7 +35,7 @@ namespace ThScoreFileConverterTests.Interactivity
     [TestClass]
     public class TextBoxBaseScrollBehaviorTests
     {
-        [TestMethod]
+        [STATestMethod]
         public void AutoScrollToEndTest()
         {
             var logger = new Logger();
@@ -54,7 +55,7 @@ namespace ThScoreFileConverterTests.Interactivity
             };
             var behaviors = Interaction.GetBehaviors(textbox);
 
-            static void onLayoutUpdated(object sender, EventArgs eventArgs)
+            static void onLayoutUpdated(object? sender, EventArgs eventArgs)
             {
                 Assert.IsTrue(Environment.StackTrace.Contains(
                     $"{typeof(TextBoxBaseScrollBehavior).FullName}.OnTargetUpdated"));
@@ -73,7 +74,7 @@ namespace ThScoreFileConverterTests.Interactivity
             BindingOperations.ClearBinding(textbox, TextBox.TextProperty);
         }
 
-        [TestMethod]
+        [STATestMethod]
         public void NotAutoScrollToEndTest()
         {
             var logger = new Logger();
@@ -93,7 +94,7 @@ namespace ThScoreFileConverterTests.Interactivity
             };
             var behaviors = Interaction.GetBehaviors(textbox);
 
-            static void onLayoutUpdated(object sender, EventArgs eventArgs)
+            static void onLayoutUpdated(object? sender, EventArgs eventArgs)
             {
                 Assert.Fail(TestUtils.Unreachable);
             }

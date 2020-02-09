@@ -2,8 +2,7 @@
 
 $opencover = (Resolve-Path "$env:USERPROFILE\.nuget\packages\opencover\*\tools\OpenCover.Console.exe").ToString()
 $target = "$env:VSINSTALLDIR\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe"
-$targetArgs = (Resolve-Path -Relative `
-    ".\ThScoreFileConverterTests\bin\$env:CONFIGURATION\*\ThScoreFileConverterTests.dll").ToString()
+$targetArgs = ".\ThScoreFileConverterTests\bin\$env:CONFIGURATION\$env:TARGET_FRAMEWORK\ThScoreFileConverterTests.dll"
 
 $filter = "+[*]* -[ThScoreFileConverterTests]*"
 

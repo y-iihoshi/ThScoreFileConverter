@@ -73,7 +73,7 @@ namespace ThScoreFileConverter.Extensions
                     .Where(field => field.FieldType == type)
                     .SelectMany(
                         field => field.GetCustomAttributes(false),
-                        (field, attr) => (enumValue: (TEnum)field.GetValue(null), attr))
+                        (field, attr) => (enumValue: (field.GetValue(null) is object obj) ? (TEnum)obj : default, attr))
                     .ToLookup(pair => pair.attr.GetType());
 
                 return lookup[typeof(TAttribute)].ToDictionary(pair => pair.enumValue, pair => (TAttribute)pair.attr);

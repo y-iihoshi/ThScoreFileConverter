@@ -5,10 +5,18 @@ configuration:
   - Debug
   - Release
 environment:
-  PYTHON: C:\Python37-x64
+  PYTHON: C:\Python38-x64
   VSINSTALLDIR: C:\Program Files (x86)\Microsoft Visual Studio\2019\Community
   CODECOV_TOKEN:
     secure: yXCs8FBlLFVrjJ3nOjqOVGDV892aCCsBvlT7yF6xEFKC1Opq2mJuOt0gR4A7xBkS
+  matrix:
+    - TARGET_FRAMEWORK: net48
+    - TARGET_FRAMEWORK: netcoreapp3.1
+
+cache:
+  - '%LocalAppData%\pip\cache -> ManualGenerator\requirements.txt'
+  - '%LocalAppData%\NuGet\v3-cache -> **\*.csproj'
+
 install:
   - cmd: |
       curl -LO https://aka.ms/vs/16/release/vs_community.exe
@@ -20,27 +28,27 @@ install:
 
 before_build:
   - cmd: nuget restore
-build:
-  project: ThScoreFileConverter.sln
-  parallel: true
-  verbosity: minimal
+build_script:
+  - cmd: |
+      set LOGGER="C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+      msbuild ThScoreFileConverter.sln /m /verbosity:minimal /p:TargetFrameworks=%TARGET_FRAMEWORK% /logger:%LOGGER%
 after_build:
   - cmd: |
-      xcopy ThScoreFileConverter\bin\%CONFIGURATION%\net48 publish /e /i /q
-      xcopy ManualGenerator\_build\html publish\doc /e /i /q
-      xcopy ThScoreFileConverter\Templates publish\template /e /i /q
-      del publish\template\*.tt* /q
+      xcopy ThScoreFileConverter\bin\%CONFIGURATION%\%TARGET_FRAMEWORK% publish\%TARGET_FRAMEWORK% /e /i /q
+      xcopy ManualGenerator\_build\html publish\%TARGET_FRAMEWORK%\doc /e /i /q
+      xcopy ThScoreFileConverter\Templates publish\%TARGET_FRAMEWORK%\template /e /i /q
+      del publish\%TARGET_FRAMEWORK%\template\*.tt* /q
 
 before_test:
   - ps: .\PrintTestEnvironment.ps1
 test_script:
   - ps: |
-      & .\OpenCover.ps1 coverage.xml
-      & .\Codecov.ps1 coverage.xml
+      & .\OpenCover.ps1 ThScoreFileConverterTests\bin\$env:CONFIGURATION\$env:TARGET_FRAMEWORK\coverage.xml
+      & .\Codecov.ps1 ThScoreFileConverterTests\bin\$env:CONFIGURATION\$env:TARGET_FRAMEWORK\coverage.xml
 
 artifacts:
-  - path: publish
-    name: ThScoreFileConverter
+  - path: publish\%TARGET_FRAMEWORK%
+    name: ThScoreFileConverter.%TARGET_FRAMEWORK%
 
 deploy:
   provider: GitHub

@@ -3,13 +3,14 @@ using System.Windows;
 using System.Windows.Interop;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Actions;
+using ThScoreFileConverterTests.UnitTesting;
 
 namespace ThScoreFileConverterTests.Interactivity
 {
     [TestClass]
     public class Win32WindowTests
     {
-        [TestMethod]
+        [STATestMethod]
         public void Win32WindowTest()
         {
             var window = new Window();
@@ -21,7 +22,7 @@ namespace ThScoreFileConverterTests.Interactivity
             Assert.AreEqual(handle, win32window.Handle);
         }
 
-        [TestMethod]
+        [STATestMethod]
         public void Win32WindowTestDefault()
         {
             var window = new Window();

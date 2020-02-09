@@ -18,7 +18,6 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using ThScoreFileConverter.Properties;
-using Prop = ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.ViewModels
 {
@@ -41,11 +40,13 @@ namespace ThScoreFileConverter.ViewModels
             var thisAsm = Assembly.GetExecutingAssembly();
             var asmName = thisAsm.GetName();
             var gitVerInfoType = thisAsm.GetType("GitVersionInformation");
+            Debug.Assert(gitVerInfoType is object, "GitVersionInformation is missing");
             var verField = gitVerInfoType.GetField("MajorMinorPatch");
+            Debug.Assert(verField is object, "GitVersionInformation.MajorMinorPatch is missing");
             var attrs = thisAsm.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), true);
 
-            this.Name = asmName.Name;
-            this.Version = Prop.Resources.strVersionPrefix + verField.GetValue(null);
+            this.Name = asmName.Name ?? nameof(ThScoreFileConverter);
+            this.Version = Resources.strVersionPrefix + verField.GetValue(null);
             this.Copyright = (attrs[0] is AssemblyCopyrightAttribute attr) ? attr.Copyright : string.Empty;
             this.Uri = Resources.ProjectUrl;
         }
@@ -112,7 +113,13 @@ namespace ThScoreFileConverter.ViewModels
         /// <param name="uri">A URI to open.</param>
         private static void OpenUri(object uri)
         {
-            using var process = Process.Start(uri as string);
+            var info = new ProcessStartInfo
+            {
+                FileName = uri as string,
+                UseShellExecute = true,
+            };
+
+            using var process = Process.Start(info);
         }
     }
 }

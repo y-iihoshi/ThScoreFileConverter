@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.ExceptionServices;
 using System.Text;
 using IBinaryReadable = ThScoreFileConverter.Models.IBinaryReadable;
 using SQOT = ThScoreFileConverter.Squirrel.SQObjectType;
@@ -13,11 +13,20 @@ namespace ThScoreFileConverterTests.Models
 {
     public static class TestUtils
     {
-        public static string Unreachable => nameof(Unreachable);
+        static TestUtils()
+        {
+            Unreachable = nameof(Unreachable);
+            Random = new Random();
 
-        public static Random Random { get; } = new Random();
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            CP932Encoding = Encoding.GetEncoding(932);
+        }
 
-        public static Encoding CP932Encoding => Encoding.GetEncoding(932);
+        public static string Unreachable { get; }
+
+        public static Random Random { get; }
+
+        public static Encoding CP932Encoding { get; }
 
         public static byte[] MakeByteArray(params object[] args)
         {
@@ -109,7 +118,9 @@ namespace ThScoreFileConverterTests.Models
             var currentType = typeof(TestUtils);
             var bindingAttributes = BindingFlags.NonPublic | BindingFlags.Static;
             var fromArray = currentType.GetMethod(nameof(MakeSQByteArrayFromArray), bindingAttributes);
+            Debug.Assert(fromArray is object);
             var fromDictonary = currentType.GetMethod(nameof(MakeSQByteArrayFromDictionary), bindingAttributes);
+            Debug.Assert(fromDictonary is object);
 
             var byteArray = Enumerable.Empty<byte>();
 
@@ -136,8 +147,10 @@ namespace ThScoreFileConverterTests.Models
                     case Array array:
                         if (array.Rank == 1)
                         {
+                            var elementType = array.GetType().GetElementType();
+                            Debug.Assert(elementType is object);
                             byteArray = byteArray.Concat(
-                                fromArray.MakeGenericMethod(array.GetType().GetElementType())
+                                fromArray.MakeGenericMethod(elementType)
                                     .Invoke(null, new object[] { array }) as IEnumerable<byte>);
                         }
                         break;
@@ -166,7 +179,8 @@ namespace ThScoreFileConverterTests.Models
                 .Concat(MakeByteArray((int)SQOT.Null));
 
         private static IEnumerable<byte> MakeSQByteArrayFromDictionary<TKey, TValue>(
-            in Dictionary<TKey, TValue> dictionary)
+            in IReadOnlyDictionary<TKey, TValue> dictionary)
+            where TKey : notnull
             => MakeByteArray((int)SQOT.Table)
                 .Concat(dictionary.SelectMany(pair => MakeSQByteArray(pair.Key).Concat(MakeSQByteArray(pair.Value))))
                 .Concat(MakeByteArray((int)SQOT.Null));

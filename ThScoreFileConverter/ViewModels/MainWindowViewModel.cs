@@ -90,7 +90,7 @@ namespace ThScoreFileConverter.ViewModels
             this.isIdle = false;
             this.log = string.Empty;
 
-            this.Title = Assembly.GetExecutingAssembly().GetName().Name;
+            this.Title = Assembly.GetExecutingAssembly().GetName().Name ?? nameof(ThScoreFileConverter);
             this.Works = WorksImpl;
 
             this.SelectScoreFileCommand =
@@ -214,7 +214,7 @@ namespace ThScoreFileConverter.ViewModels
             {
                 try
                 {
-                    return Path.GetDirectoryName(this.ScoreFile);
+                    return Path.GetDirectoryName(this.ScoreFile) ?? string.Empty;
                 }
                 catch (ArgumentException)
                 {
@@ -267,7 +267,7 @@ namespace ThScoreFileConverter.ViewModels
             {
                 try
                 {
-                    return Path.GetDirectoryName(this.TemplateFiles.LastOrDefault());
+                    return Path.GetDirectoryName(this.TemplateFiles.LastOrDefault()) ?? string.Empty;
                 }
                 catch (ArgumentException)
                 {
@@ -796,7 +796,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         /// <param name="sender">The instance where the event handler is attached.</param>
         /// <param name="e">The event data.</param>
-        private void OnConvertFinished(object sender, ThConverterEventArgs e)
+        private void OnConvertFinished(object? sender, ThConverterEventArgs e)
         {
             this.Log += e.Message + Environment.NewLine;
         }
@@ -806,7 +806,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         /// <param name="sender">The instance where the event handler is attached.</param>
         /// <param name="e">The event data.</param>
-        private void OnConvertAllFinished(object sender, ThConverterEventArgs e)
+        private void OnConvertAllFinished(object? sender, ThConverterEventArgs e)
         {
             this.Log += Resources.msgEndConversion + Environment.NewLine;
             this.IsIdle = true;
@@ -817,7 +817,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         /// <param name="sender">The instance where the event handler is attached.</param>
         /// <param name="e">The event data.</param>
-        private void OnExceptionOccurred(object sender, ExceptionOccurredEventArgs e)
+        private void OnExceptionOccurred(object? sender, ExceptionOccurredEventArgs e)
         {
 #if DEBUG
             this.Log += e.Exception.Message + Environment.NewLine;

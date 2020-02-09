@@ -162,14 +162,5 @@ namespace ThScoreFileConverterTests.Models
             _ = Utils.ToOneBased(10);
             Assert.Fail(TestUtils.Unreachable);
         }
-
-        [TestMethod]
-        public void GetEncodingTest()
-        {
-            var utf8 = Utils.GetEncoding(65001);
-            Assert.AreNotEqual(Encoding.UTF8, utf8);
-            Assert.AreEqual(new UTF8Encoding(false), utf8);
-            Assert.AreEqual(Encoding.GetEncoding(932), Utils.GetEncoding(932));
-        }
     }
 }

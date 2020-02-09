@@ -48,10 +48,11 @@ format from best shot files.
 ## Environments
 
 ### Development environment
-* Windows 10 Pro Version 1909 (64bit)
+* Windows 10 Pro Version 1909 (64 bit)
 * .NET Framework 4.8
-* Visual Studio Community 2019 16.4.2
-* Python 3.8.0
+* .NET Core 3.1
+* Visual Studio Community 2019 16.4.4
+* Python 3.8.1
 
 ### Tested environment
 * Same as above.

@@ -4,6 +4,7 @@ using System.Windows.Input;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Commands;
 using ThScoreFileConverterTests.Models;
+using ThScoreFileConverterTests.UnitTesting;
 
 namespace ThScoreFileConverterTests.Commands
 {
@@ -17,7 +18,7 @@ namespace ThScoreFileConverterTests.Commands
             Assert.IsTrue(instance is ICommand);
         }
 
-        [TestMethod]
+        [STATestMethod]
         public void CanExecuteTest()
         {
             var instance = CloseWindowCommand.Instance;
@@ -39,13 +40,13 @@ namespace ThScoreFileConverterTests.Commands
             Assert.IsFalse(instance.CanExecute(5));
         }
 
-        [TestMethod]
+        [STATestMethod]
         public void ExecuteTest()
         {
             var instance = CloseWindowCommand.Instance;
             var window = new Window();
             var invoked = false;
-            void onClosed(object sender, EventArgs e) { invoked = true; }
+            void onClosed(object? sender, EventArgs e) { invoked = true; }
 
             window.Closed += onClosed;
             instance.Execute(window);
@@ -71,7 +72,7 @@ namespace ThScoreFileConverterTests.Commands
             instance.Execute(5);
         }
 
-        [TestMethod]
+        [STATestMethod]
         public void CanExecuteChangedTest()
         {
             var instance = CloseWindowCommand.Instance;

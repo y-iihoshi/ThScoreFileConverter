@@ -110,7 +110,7 @@ namespace ThScoreFileConverter.Models
         public static string ToNumberString<T>(T number, bool outputSeparator)
             where T : struct
         {
-            return outputSeparator ? Format("{0:N0}", number) : number.ToString();
+            return outputSeparator ? Format("{0:N0}", number) : (number.ToString() ?? string.Empty);
         }
 
         /// <summary>
@@ -162,18 +162,6 @@ namespace ThScoreFileConverter.Models
                 throw new ArgumentOutOfRangeException(nameof(input));
 
             return (input + 1) % 10;
-        }
-
-        /// <summary>
-        /// Returns the encoding associated with the specified code page identifier.
-        /// </summary>
-        /// <param name="codePage">The code page identifier of the preferred encoding.</param>
-        /// <returns>The <see cref="System.Text.Encoding"/> associated with <paramref name="codePage"/>.</returns>
-        public static System.Text.Encoding GetEncoding(int codePage)
-        {
-            // To prevent BOM output for UTF-8
-            return (codePage == 65001)
-                ? new System.Text.UTF8Encoding(false) : System.Text.Encoding.GetEncoding(codePage);
         }
     }
 }

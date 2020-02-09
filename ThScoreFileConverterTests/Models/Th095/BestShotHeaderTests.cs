@@ -100,7 +100,11 @@ namespace ThScoreFileConverterTests.Models.Th095
         public void ReadFromTestShortenedSignature()
         {
             var stub = new BestShotHeaderStub(ValidStub);
+#if NETFRAMEWORK
             stub.Signature = stub.Signature.Substring(0, stub.Signature.Length - 1);
+#else
+            stub.Signature = stub.Signature[0..^1];
+#endif
 
             _ = TestUtils.Create<BestShotHeader>(MakeByteArray(stub));
 

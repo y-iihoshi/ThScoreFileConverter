@@ -47,7 +47,7 @@ namespace ThScoreFileConverter.Squirrel
             return new SQInteger(reader.ReadInt32());
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return (obj is SQInteger value) && this.Equals(value);
         }

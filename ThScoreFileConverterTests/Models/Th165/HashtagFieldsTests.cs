@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th165;
 
@@ -604,7 +605,9 @@ namespace ThScoreFileConverterTests.Models.Th165
             Assert.AreEqual(0, fields.Data.Count());
             foreach (var prop in fields.GetType().GetProperties().Where(prop => prop.PropertyType == typeof(bool)))
             {
-                Assert.IsFalse((bool)prop.GetValue(fields, null));
+                var value = prop.GetValue(fields);
+                Debug.Assert(value is object);
+                Assert.IsFalse((bool)value);
             }
         }
     }
