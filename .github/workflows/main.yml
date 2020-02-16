@@ -30,23 +30,24 @@ jobs:
       uses: warrenbuckley/Setup-MSBuild@v1
     - name: Build
       run: msbuild ${{ github.workspace }}\ThScoreFileConverter.sln /m /verbosity:minimal /p:Configuration=${{ matrix.configuration }} /p:TargetFrameworks=${{ matrix.target-framework }}
-    - name: Generate coverage report
-      run: |
-        & ${{ github.workspace }}\OpenCover.ps1 ${{ github.workspace }}\ThScoreFileConverterTests\bin\${{ matrix.configuration }}\${{ matrix.target-framework }}\coverage.xml
-      shell: powershell
-      if: matrix.configuration == 'Debug'
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1.0.5
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        file: ${{ github.workspace }}\ThScoreFileConverterTests\bin\${{ matrix.configuration }}\${{ matrix.target-framework }}\coverage.xml
-      if: matrix.configuration == 'Debug'
+#    - name: Generate coverage report
+#      run: |
+#        & ${{ github.workspace }}\OpenCover.ps1 ${{ github.workspace }}\ThScoreFileConverterTests\bin\${{ matrix.configuration }}\${{ matrix.target-framework }}\coverage.xml
+#      shell: powershell
+#      if: matrix.configuration == 'Debug'
+#    - name: Upload coverage to Codecov
+#      uses: codecov/codecov-action@v1.0.5
+#      with:
+#        token: ${{ secrets.CODECOV_TOKEN }}
+#        file: ${{ github.workspace }}\ThScoreFileConverterTests\bin\${{ matrix.configuration }}\${{ matrix.target-framework }}\coverage.xml
+#      if: matrix.configuration == 'Debug'
     - name: Collect artifacts
       run: |
         xcopy ${{ github.workspace }}\ThScoreFileConverter\bin\${{ matrix.configuration }}\${{ matrix.target-framework }} publish\${{ matrix.target-framework }} /e /i /q
         xcopy ${{ github.workspace }}\ManualGenerator\_build\html publish\${{ matrix.target-framework }}\doc /e /i /q
         xcopy ${{ github.workspace }}\ThScoreFileConverter\Templates publish\${{ matrix.target-framework }}\template /e /i /q
         del publish\${{ matrix.target-framework }}\template\*.tt* /q
+      shell: cmd
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
       with:
