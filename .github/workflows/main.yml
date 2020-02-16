@@ -32,13 +32,13 @@ jobs:
       run: |
         & ${{ github.workspace }}\OpenCover.ps1 ${{ github.workspace }}\ThScoreFileConverterTests\bin\${{ matrix.configuration }}\${{ matrix.target-framework }}\coverage.xml
       shell: powershell
-      if: ${{ matrix.configuration == 'Debug' }}
+      if: matrix.configuration == 'Debug'
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1.0.5
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         file: ${{ github.workspace }}\ThScoreFileConverterTests\bin\${{ matrix.configuration }}\${{ matrix.target-framework }}\coverage.xml
-      if: ${{ matrix.configuration == 'Debug' }}
+      if: matrix.configuration == 'Debug'
     - name: Collect artifacts
       run: |
         xcopy ${{ github.workspace }}\ThScoreFileConverter\bin\${{ matrix.configuration }}\${{ matrix.target-framework }} publish\${{ matrix.target-framework }} /e /i /q
