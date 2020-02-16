@@ -14,6 +14,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Fetch all history for all tags and branches
+      run: git fetch --prune --unshallow
     - name: Setup Python environment
       uses: actions/setup-python@v1.1.1
     - name: Restore Python packages
