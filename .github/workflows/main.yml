@@ -55,7 +55,7 @@ jobs:
       uses: codecov/codecov-action@v1.0.5
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        file: ThScoreFileConverterTests\coverage.${{ matrix.target-framework }}.xml
+        file: ThScoreFileConverterTests/coverage.${{ matrix.target-framework }}.xml
       if: matrix.configuration == 'Debug'
 
     - name: Collect artifacts
