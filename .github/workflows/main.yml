@@ -14,44 +14,58 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
     - name: Fetch all history for all tags and branches
       run: git fetch --prune --unshallow
+
     - name: Setup Python environment
       uses: actions/setup-python@v1.1.1
+
     - name: Restore Python packages
       run: |
         python -m pip install -U pip
-        python -m pip install -r ${{ github.workspace }}\ManualGenerator\requirements.txt
+        python -m pip install -r ManualGenerator\requirements.txt
+
     - name: Setup NuGet.exe for use with actions
       uses: NuGet/setup-nuget@v1.0.2
+
     - name: Restore NuGet packages
-      run: nuget restore ${{ github.workspace }}\ThScoreFileConverter.sln
+      run: nuget restore ThScoreFileConverter.sln
+
     - name: Setup MSBuild.exe
       uses: warrenbuckley/Setup-MSBuild@v1
+
     - name: Build
-      run: msbuild ${{ github.workspace }}\ThScoreFileConverter.sln /m /verbosity:minimal /p:Configuration=${{ matrix.configuration }} /p:TargetFrameworks=${{ matrix.target-framework }}
+      run: >
+        msbuild ThScoreFileConverter.sln /m /verbosity:minimal
+        /p:Configuration=${{ matrix.configuration }}
+        /p:TargetFrameworks=${{ matrix.target-framework }}
+
     - name: Generate coverage report
       run: >
-        dotnet test ${{ github.workspace }}\ThScoreFileConverterTests
+        dotnet test ThScoreFileConverterTests
         /p:Configuration=${{ matrix.configuration }}
         /p:TargetFrameworks=${{ matrix.target-framework }}
         /p:CollectCoverage=true
         /p:CoverletOutputFormat=opencover
         /p:CoverletOutput=coverage.xml
       if: matrix.configuration == 'Debug'
+
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1.0.5
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        file: ${{ github.workspace }}\ThScoreFileConverterTests\coverage.${{ matrix.target-framework }}.xml
+        file: ThScoreFileConverterTests\coverage.${{ matrix.target-framework }}.xml
       if: matrix.configuration == 'Debug'
+
     - name: Collect artifacts
       run: |
-        xcopy ${{ github.workspace }}\ThScoreFileConverter\bin\${{ matrix.configuration }}\${{ matrix.target-framework }} publish\${{ matrix.target-framework }} /e /i /q
-        xcopy ${{ github.workspace }}\ManualGenerator\_build\html publish\${{ matrix.target-framework }}\doc /e /i /q
-        xcopy ${{ github.workspace }}\ThScoreFileConverter\Templates publish\${{ matrix.target-framework }}\template /e /i /q
+        xcopy ThScoreFileConverter\bin\${{ matrix.configuration }}\${{ matrix.target-framework }} publish\${{ matrix.target-framework }} /e /i /q
+        xcopy ManualGenerator\_build\html publish\${{ matrix.target-framework }}\doc /e /i /q
+        xcopy ThScoreFileConverter\Templates publish\${{ matrix.target-framework }}\template /e /i /q
         del publish\${{ matrix.target-framework }}\template\*.tt* /q
       shell: cmd
+
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
       with:
