@@ -34,9 +34,9 @@ namespace ThScoreFileConverterTests.Models.Th10
         {
             signature = "AB",
             version = 1234,
-            checksum = 0x234u,
+            checksum = 0xE0u,
             size = 16,
-            data = new byte[] { 0x56, 0x78, 0x9A, 0xBC },
+            data = new byte[] { 0x01, 0x23, 0x45, 0x67 },
         };
 
         internal static byte[] MakeByteArray(in Properties properties)
@@ -166,7 +166,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             properties.signature = string.Empty;
 
             // <sig> <ver> < chksum -> <- size --> <- data -->
-            // __ __ d2 04 34 02 00 00 10 00 00 00 56 78 9a bc
+            // __ __ d2 04 E0 00 00 00 10 00 00 00 01 23 45 67
             //       <sig> <ver> < chksum -> <- size --> <dat>
 
             // The actual value of the Size property becomes too large,
@@ -188,7 +188,7 @@ namespace ThScoreFileConverterTests.Models.Th10
 #endif
 
             // <sig> <ver> < chksum -> <- size --> <- data -->
-            // __ 41 d2 04 34 02 00 00 10 00 00 00 56 78 9a bc
+            // __ 41 d2 04 E0 00 00 00 10 00 00 00 01 23 45 67
             //    <sig> <ver> < chksum -> <- size --> < data >
 
             // The actual value of the Size property becomes too large,
@@ -206,7 +206,7 @@ namespace ThScoreFileConverterTests.Models.Th10
             properties.signature += "C";
 
             // < sig -> <ver> < chksum -> <- size --> <- data -->
-            // 41 42 43 d2 04 34 02 00 00 10 00 00 00 56 78 9a bc
+            // 41 42 43 d2 04 E0 00 00 00 10 00 00 00 01 23 45 67
             // <sig> <ver> < chksum -> <- size --> <---- data ---->
 
             // The actual value of the Size property becomes large,
