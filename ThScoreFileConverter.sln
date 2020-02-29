@@ -10,16 +10,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Codecov.ps1 = Codecov.ps1
 		CustomDictionary.xml = CustomDictionary.xml
 		LICENSE.txt = LICENSE.txt
-		OpenCover.ps1 = OpenCover.ps1
 		PrintTestEnvironment.ps1 = PrintTestEnvironment.ps1
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThScoreFileConverter", "ThScoreFileConverter\ThScoreFileConverter.csproj", "{D6E125E5-92D3-48D3-B253-81B6405E9ED6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThScoreFileConverter", "ThScoreFileConverter\ThScoreFileConverter.csproj", "{D6E125E5-92D3-48D3-B253-81B6405E9ED6}"
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ManualGenerator", "ManualGenerator\ManualGenerator.pyproj", "{3FDE820F-B99D-4936-AC8E-11A36697F9D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThScoreFileConverterTests", "ThScoreFileConverterTests\ThScoreFileConverterTests.csproj", "{48809CD9-31FA-46FA-867B-5E8BCC2DED45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThScoreFileConverterTests", "ThScoreFileConverterTests\ThScoreFileConverterTests.csproj", "{48809CD9-31FA-46FA-867B-5E8BCC2DED45}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
