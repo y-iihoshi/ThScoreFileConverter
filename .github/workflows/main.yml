@@ -38,7 +38,6 @@ jobs:
         python -m pip install -r ManualGenerator\requirements.txt
 
     - name: Cache NuGet packages
-      id: cache-nuget
       uses: actions/cache@v1.1.2
       with:
         path: ~/.nuget/packages
@@ -51,7 +50,6 @@ jobs:
       uses: NuGet/setup-nuget@v1.0.2
 
     - name: Restore NuGet packages
-      if: steps.cache-nuget.outputs.cache-hit != 'true'
       run: nuget restore ThScoreFileConverter.sln
 
     - name: Setup MSBuild.exe
