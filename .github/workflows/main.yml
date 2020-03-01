@@ -18,6 +18,15 @@ jobs:
     - name: Fetch all history for all tags and branches
       run: git fetch --prune --unshallow
 
+    - name: Cache Python packages
+      uses: actions/cache@v1.1.2
+      if: startsWith(runner.os, 'Windows')
+      with:
+        path: ~\AppData\Local\pip\Cache
+        key: ${{ runner.os }}-pip-${{ hashFiles('ManualGenerator/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
     - name: Setup Python environment
       uses: actions/setup-python@v1.1.1
 
@@ -25,6 +34,15 @@ jobs:
       run: |
         python -m pip install -U pip
         python -m pip install -r ManualGenerator\requirements.txt
+
+    - name: Cache NuGet packages
+      uses: actions/cache@v1.1.2
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ matrix.target-framework }}-${{ hashFiles('**/*.csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-${{ matrix.target-framework }}-
+          ${{ runner.os }}-nuget-
 
     - name: Setup NuGet.exe for use with actions
       uses: NuGet/setup-nuget@v1.0.2
