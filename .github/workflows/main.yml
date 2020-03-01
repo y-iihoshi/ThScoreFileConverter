@@ -39,9 +39,9 @@ jobs:
       uses: actions/cache@v1.1.2
       with:
         path: ~/.nuget/packages
-        key: ${{ runner.os }}-nuget-${{ target-framework }}-${{ hashFiles('**/*.csproj') }}
+        key: ${{ runner.os }}-nuget-${{ matrix.target-framework }}-${{ hashFiles('**/*.csproj') }}
         restore-keys: |
-          ${{ runner.os }}-nuget-${{ target-framework }}-
+          ${{ runner.os }}-nuget-${{ matrix.target-framework }}-
           ${{ runner.os }}-nuget-
 
     - name: Setup NuGet.exe for use with actions
