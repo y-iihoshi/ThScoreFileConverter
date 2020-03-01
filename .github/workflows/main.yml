@@ -19,6 +19,7 @@ jobs:
       run: git fetch --prune --unshallow
 
     - name: Cache Python packages
+      id: cache-pip
       uses: actions/cache@v1.1.2
       if: startsWith(runner.os, 'Windows')
       with:
@@ -31,11 +32,13 @@ jobs:
       uses: actions/setup-python@v1.1.1
 
     - name: Restore Python packages
+      if: steps.cache-pip.outputs.cache-hit != 'true'
       run: |
         python -m pip install -U pip
         python -m pip install -r ManualGenerator\requirements.txt
 
     - name: Cache NuGet packages
+      id: cache-nuget
       uses: actions/cache@v1.1.2
       with:
         path: ~/.nuget/packages
@@ -48,6 +51,7 @@ jobs:
       uses: NuGet/setup-nuget@v1.0.2
 
     - name: Restore NuGet packages
+      if: steps.cache-nuget.outputs.cache-hit != 'true'
       run: nuget restore ThScoreFileConverter.sln
 
     - name: Setup MSBuild.exe
