@@ -3,7 +3,7 @@ using System;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Extensions
 {
     public enum Protagonist
     {

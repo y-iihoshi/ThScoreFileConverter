@@ -2,9 +2,9 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Extensions;
-using ThScoreFileConverterTests.Extensions;
+using ThScoreFileConverterTests.Models;
 
-namespace ThScoreFileConverterTests.Models
+namespace ThScoreFileConverterTests.Extensions
 {
     [TestClass]
     public class EnumerableExtensionsTests
