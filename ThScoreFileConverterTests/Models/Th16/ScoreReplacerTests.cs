@@ -88,6 +88,13 @@ namespace ThScoreFileConverterTests.Models.Th16
         }
 
         [TestMethod]
+        public void ReplaceTestSeason()
+        {
+            var replacer = new ScoreReplacer(ClearDataDictionary);
+            Assert.AreEqual("秋", replacer.Replace("%T16SCRHAY26"));
+        }
+
+        [TestMethod]
         public void ReplaceTestEmpty()
         {
             var dictionary = new Dictionary<CharaWithTotal, IClearData>();
@@ -97,6 +104,7 @@ namespace ThScoreFileConverterTests.Models.Th16
             Assert.AreEqual("-------", replacer.Replace("%T16SCRHAY23"));
             Assert.AreEqual("----/--/-- --:--:--", replacer.Replace("%T16SCRHAY24"));
             Assert.AreEqual("-----%", replacer.Replace("%T16SCRHAY25"));
+            Assert.AreEqual("-----", replacer.Replace("%T16SCRHAY26"));
         }
 
         [TestMethod]

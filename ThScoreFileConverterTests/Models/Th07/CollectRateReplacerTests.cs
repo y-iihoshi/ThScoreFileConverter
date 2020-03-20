@@ -206,6 +206,8 @@ namespace ThScoreFileConverterTests.Models.Th07
         {
             var replacer = new CollectRateReplacer(CardAttacks);
             Assert.AreEqual("%T07CRGLRBY1", replacer.Replace("%T07CRGLRBY1"));
+            Assert.AreEqual("%T07CRGLRBX1", replacer.Replace("%T07CRGLRBX1"));
+            Assert.AreEqual("%T07CRGLRBP1", replacer.Replace("%T07CRGLRBP1"));
         }
 
         [TestMethod]

@@ -156,6 +156,7 @@ namespace ThScoreFileConverterTests.Models.Th123
         {
             var replacer = new CareerReplacer(ClearDataDictionary);
             Assert.AreEqual("%T123C15XX1", replacer.Replace("%T123C15XX1"));
+            Assert.AreEqual("%T123C15NM1", replacer.Replace("%T123C15NM1"));
         }
 
         [TestMethod]
