@@ -97,7 +97,7 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
-        ///   東方スコアファイル (*.dat)|*.dat|すべてのファイル (*.*)|*.* に類似しているローカライズされた文字列を検索します。
+        ///   Touhou score files (*.dat)|*.dat|All files (*.*)|*.* に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string fltScoreFile {
             get {
@@ -106,7 +106,7 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
-        ///   すべてのファイル (*.*)|*.* に類似しているローカライズされた文字列を検索します。
+        ///   All files (*.*)|*.* に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string fltTemplateFile {
             get {
@@ -385,7 +385,7 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
-        ///   出力が完了しました。 に類似しているローカライズされた文字列を検索します。
+        ///   Conversion finished. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string msgEndConversion {
             get {
@@ -394,7 +394,7 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
-        ///   スコアファイルの読み込みに失敗しました。 に類似しているローカライズされた文字列を検索します。
+        ///   Failed to read the score file. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string msgErrScoreFileNotSupported {
             get {
@@ -403,7 +403,7 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
-        ///   未知の例外が発生しました。 に類似しているローカライズされた文字列を検索します。
+        ///   An unhandled exception occurred. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string msgErrUnhandledException {
             get {
@@ -412,8 +412,8 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
-        ///   設定ファイル: &quot;{0}&quot; は壊れていたようです。
-        ///&quot;{1}&quot; にリネームしました。 に類似しているローカライズされた文字列を検索します。
+        ///   The setting file: &quot;{0}&quot; seems corrupted.
+        ///Renamed to &quot;{1}&quot;. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string msgFmtBrokenSettingFile {
             get {
@@ -422,7 +422,7 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
-        ///   ベストショットファイルが保存されているディレクトリを選択してください。 に類似しているローカライズされた文字列を検索します。
+        ///   Select the directory containing bestshot files. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string msgSelectBestShotDirectory {
             get {
@@ -431,7 +431,7 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
-        ///   変換後のファイルの出力先ディレクトリを選択してください。 に類似しているローカライズされた文字列を検索します。
+        ///   Select the output directory to save converted files. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string msgSelectOutputDirectory {
             get {
@@ -440,7 +440,7 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
-        ///   出力を開始します... に類似しているローカライズされた文字列を検索します。
+        ///   Start conversion... に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string msgStartConversion {
             get {
@@ -449,7 +449,7 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
-        ///   エラー に類似しているローカライズされた文字列を検索します。
+        ///   Error に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string msgTitleError {
             get {
@@ -458,7 +458,7 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
-        ///   警告 に類似しているローカライズされた文字列を検索します。
+        ///   Warning に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string msgTitleWarning {
             get {
@@ -557,7 +557,7 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
-        ///   対応バージョン:  に類似しているローカライズされた文字列を検索します。
+        ///   Supported version:  に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string strSupportedVersions {
             get {

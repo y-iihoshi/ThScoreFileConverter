@@ -117,219 +117,47 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AboutWindowTitle" xml:space="preserve">
-    <value>About this tool</value>
-  </data>
-  <data name="ArgumentExceptionMustNotBeEmpty" xml:space="preserve">
-    <value>Must not be empty.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="ArgumentExceptionStreamMustBeReadable" xml:space="preserve">
-    <value>Stream must be readable.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="ArgumentExceptionWrongType" xml:space="preserve">
-    <value>Wrong type.</value>
-    <comment>@Invariant</comment>
-  </data>
   <data name="fltScoreFile" xml:space="preserve">
-    <value>Touhou score files (*.dat)|*.dat|All files (*.*)|*.*</value>
+    <value>東方スコアファイル (*.dat)|*.dat|すべてのファイル (*.*)|*.*</value>
   </data>
   <data name="fltTemplateFile" xml:space="preserve">
-    <value>All files (*.*)|*.*</value>
-  </data>
-  <data name="InvalidDataExceptionIndexIsOutOfRange" xml:space="preserve">
-    <value>Index is out of range.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="InvalidDataExceptionIndexMustBeAnInteger" xml:space="preserve">
-    <value>Index must be an integer.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="InvalidDataExceptionNumElementsMustNotBeNegative" xml:space="preserve">
-    <value>The number of elements must not be negative.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="InvalidDataExceptionPropertyIsInvalid" xml:space="preserve">
-    <value>Property {0} is invalid.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="InvalidDataExceptionPropertyIsOutOfRange" xml:space="preserve">
-    <value>Property {0} is out of range.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="InvalidDataExceptionWrongSentinel" xml:space="preserve">
-    <value>Sentinel is wrong.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="InvalidDataExceptionWrongType" xml:space="preserve">
-    <value>Wrong type.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="keyTh06" xml:space="preserve">
-    <value>TH06</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="keyTh07" xml:space="preserve">
-    <value>TH07</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="keyTh075" xml:space="preserve">
-    <value>TH075</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="keyTh08" xml:space="preserve">
-    <value>TH08</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="keyTh09" xml:space="preserve">
-    <value>TH09</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="keyTh095" xml:space="preserve">
-    <value>TH095</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="keyTh10" xml:space="preserve">
-    <value>TH10</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="keyTh105" xml:space="preserve">
-    <value>TH105</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="keyTh11" xml:space="preserve">
-    <value>TH11</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="keyTh12" xml:space="preserve">
-    <value>TH12</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="keyTh123" xml:space="preserve">
-    <value>TH123</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="keyTh125" xml:space="preserve">
-    <value>TH125</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="keyTh128" xml:space="preserve">
-    <value>TH128</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="keyTh13" xml:space="preserve">
-    <value>TH13</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="keyTh135" xml:space="preserve">
-    <value>TH135</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="keyTh14" xml:space="preserve">
-    <value>TH14</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="keyTh143" xml:space="preserve">
-    <value>TH143</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="keyTh145" xml:space="preserve">
-    <value>TH145</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="keyTh15" xml:space="preserve">
-    <value>TH15</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="keyTh155" xml:space="preserve">
-    <value>TH155</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="keyTh16" xml:space="preserve">
-    <value>TH16</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="keyTh165" xml:space="preserve">
-    <value>TH165</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="keyTh17" xml:space="preserve">
-    <value>TH17</value>
-    <comment>@Invariant</comment>
+    <value>すべてのファイル (*.*)|*.*</value>
   </data>
   <data name="msgEndConversion" xml:space="preserve">
-    <value>Conversion finished.</value>
+    <value>出力が完了しました。</value>
   </data>
   <data name="msgErrScoreFileNotSupported" xml:space="preserve">
-    <value>Failed to read the score file.</value>
+    <value>スコアファイルの読み込みに失敗しました。</value>
   </data>
   <data name="msgErrUnhandledException" xml:space="preserve">
-    <value>An unhandled exception occurred.</value>
+    <value>未知の例外が発生しました。</value>
   </data>
   <data name="msgFmtBrokenSettingFile" xml:space="preserve">
-    <value>The setting file: "{0}" seems corrupted.
-Renamed to "{1}".</value>
+    <value>設定ファイル: "{0}" は壊れていたようです。
+"{1}" にリネームしました。</value>
   </data>
   <data name="msgSelectBestShotDirectory" xml:space="preserve">
-    <value>Select the directory containing bestshot files.</value>
+    <value>ベストショットファイルが保存されているディレクトリを選択してください。</value>
   </data>
   <data name="msgSelectOutputDirectory" xml:space="preserve">
-    <value>Select the output directory to save converted files.</value>
+    <value>変換後のファイルの出力先ディレクトリを選択してください。</value>
   </data>
   <data name="msgStartConversion" xml:space="preserve">
-    <value>Start conversion...</value>
+    <value>出力を開始します...</value>
   </data>
   <data name="msgTitleError" xml:space="preserve">
-    <value>Error</value>
+    <value>エラー</value>
   </data>
   <data name="msgTitleWarning" xml:space="preserve">
-    <value>Warning</value>
-  </data>
-  <data name="NotImplementedExceptionEncryptionIsNotSupported" xml:space="preserve">
-    <value>Encryption is not supported.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="NotImplementedExceptionLzssCompressionIsNotSupported" xml:space="preserve">
-    <value>LZSS compression is not supported.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="NotImplementedExceptionShouldNotReachHere" xml:space="preserve">
-    <value>Should not reach here.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="ProjectUrl" xml:space="preserve">
-    <value>https://www.colorless-sight.jp/thsfc/</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="ptnBestShot" xml:space="preserve">
-    <value>*.dat</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="SettingWindowTitle" xml:space="preserve">
-    <value>Settings</value>
-  </data>
-  <data name="strBackupFileExtension" xml:space="preserve">
-    <value>.bak</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="strBestShotDirectory" xml:space="preserve">
-    <value>bestshot</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="strBestShotExtension" xml:space="preserve">
-    <value>.png</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="strSettingFile" xml:space="preserve">
-    <value>settings.xml</value>
-    <comment>@Invariant</comment>
+    <value>警告</value>
   </data>
   <data name="strSupportedVersions" xml:space="preserve">
-    <value>Supported version: </value>
+    <value>対応バージョン: </value>
   </data>
-  <data name="strVersionPrefix" xml:space="preserve">
-    <value>ver.</value>
-    <comment>@Invariant</comment>
+  <data name="AboutWindowTitle" xml:space="preserve">
+    <value>このツールについて</value>
+  </data>
+  <data name="SettingWindowTitle" xml:space="preserve">
+    <value>設定</value>
   </data>
 </root>
