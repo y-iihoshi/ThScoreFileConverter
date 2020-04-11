@@ -86,7 +86,7 @@
 
             <Label Grid.Column="0"
                    Grid.Row="0"
-                   Content="スコア(_S):"
+                   Content="{x:Static prop:Resources.ViewsMainWindowLabelScore}"
                    HorizontalAlignment="Left"
                    Target="{Binding ElementName=ScoreTextBox, Mode=OneWay}"
                    VerticalAlignment="Center"/>
@@ -104,7 +104,7 @@
             </TextBox>
             <Button Grid.Column="2"
                     Grid.Row="0"
-                    Content="開く(_O)..."
+                    Content="{x:Static prop:Resources.ViewsMainWindowButtonOpen}"
                     VerticalAlignment="Center">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
@@ -118,7 +118,7 @@
 
             <Label Grid.Column="0"
                    Grid.Row="1"
-                   Content="ベストショット(_B):"
+                   Content="{x:Static prop:Resources.ViewsMainWindowLabelBestShot}"
                    HorizontalAlignment="Left"
                    IsEnabled="{Binding CanHandleBestShot}"
                    Target="{Binding ElementName=BestShotTextBox, Mode=OneWay}"
@@ -138,7 +138,7 @@
             </TextBox>
             <Button Grid.Column="2"
                     Grid.Row="1"
-                    Content="開く(_O)..."
+                    Content="{x:Static prop:Resources.ViewsMainWindowButtonOpen}"
                     IsEnabled="{Binding CanHandleBestShot}"
                     VerticalAlignment="Center">
                 <i:Interaction.Triggers>
@@ -154,7 +154,7 @@
 
             <Label Grid.Column="0"
                    Grid.Row="2"
-                   Content="テンプレート(_T):"
+                   Content="{x:Static prop:Resources.ViewsMainWindowLabelTemplates}"
                    HorizontalAlignment="Left"
                    Target="{Binding ElementName=TemplateListBox, Mode=OneWay}"
                    VerticalAlignment="Top"/>
@@ -181,7 +181,7 @@
             </ListBox>
             <StackPanel Grid.Column="2"
                         Grid.Row="2">
-                <Button Content="追加(_A)...">
+                <Button Content="{x:Static prop:Resources.ViewsMainWindowButtonAdd}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <a:OpenFileDialogAction Filter="{x:Static prop:Resources.fltTemplateFile}"
@@ -194,14 +194,14 @@
                 </Button>
                 <Button Command="{Binding DeleteTemplateFilesCommand}"
                         CommandParameter="{Binding SelectedItems, ElementName=TemplateListBox}"
-                        Content="削除(_C)"/>
+                        Content="{x:Static prop:Resources.ViewsMainWindowButtonRemove}"/>
                 <Button Command="{Binding DeleteAllTemplateFilesCommand}"
-                        Content="全て削除(_L)"/>
+                        Content="{x:Static prop:Resources.ViewsMainWindowButtonRemoveAll}"/>
             </StackPanel>
 
             <Label Grid.Column="0"
                    Grid.Row="3"
-                   Content="出力先(_O):"
+                   Content="{x:Static prop:Resources.ViewsMainWindowLabelOutput}"
                    HorizontalAlignment="Left"
                    Target="{Binding ElementName=OutputTextBox, Mode=OneWay}"
                    VerticalAlignment="Center"/>
@@ -219,7 +219,7 @@
             </TextBox>
             <Button Grid.Column="2"
                     Grid.Row="3"
-                    Content="開く(_O)..."
+                    Content="{x:Static prop:Resources.ViewsMainWindowButtonOpen}"
                     VerticalAlignment="Center">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
@@ -233,7 +233,7 @@
 
             <Label Grid.Column="0"
                    Grid.Row="4"
-                   Content="画像出力先(_I):"
+                   Content="{x:Static prop:Resources.ViewsMainWindowLabelImageOutput}"
                    HorizontalAlignment="Left"
                    IsEnabled="{Binding CanHandleBestShot}"
                    Target="{Binding ElementName=ImageOutputTextBox, Mode=OneWay}"
@@ -247,7 +247,7 @@
             <CheckBox Grid.Column="1"
                       Grid.ColumnSpan="2"
                       Grid.Row="5"
-                      Content="未挑戦のスペルカード名を出力しない(_H)"
+                      Content="{x:Static prop:Resources.ViewsMainWindowCheckBoxHideUntriedCardNames}"
                       IsChecked="{Binding HidesUntriedCards}"
                       IsEnabled="{Binding CanReplaceCardNames}"/>
         </Grid>
@@ -255,7 +255,7 @@
         <Separator/>
 
         <Button Command="{Binding ConvertCommand}"
-                Content="変換(_V)"
+                Content="{x:Static prop:Resources.ViewsMainWindowButtonConvert}"
                 HorizontalAlignment="Center"
                 IsDefault="True"
                 MinWidth="100"/>
@@ -285,10 +285,10 @@
             <StackPanel Grid.Column="1"
                         Style="{StaticResource HorizontalStackPanelStyle}">
                 <Button Command="{Binding OpenSettingWindowCommand}"
-                        Content="設定(_S)..."/>
+                        Content="{x:Static prop:Resources.ViewsMainWindowButtonSetting}"/>
                 <Separator/>
                 <Button Command="{Binding OpenAboutWindowCommand}"
-                        Content="_About..."/>
+                        Content="{x:Static prop:Resources.ViewsMainWindowButtonAbout}"/>
             </StackPanel>
         </Grid>
     </StackPanel>

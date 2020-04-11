@@ -366,5 +366,203 @@ namespace ThScoreFileConverter.Properties {
                 return ResourceManager.GetString("strVersionPrefix", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   _About... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsMainWindowButtonAbout {
+            get {
+                return ResourceManager.GetString("ViewsMainWindowButtonAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   _Add... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsMainWindowButtonAdd {
+            get {
+                return ResourceManager.GetString("ViewsMainWindowButtonAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Con_vert に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsMainWindowButtonConvert {
+            get {
+                return ResourceManager.GetString("ViewsMainWindowButtonConvert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   _Open... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsMainWindowButtonOpen {
+            get {
+                return ResourceManager.GetString("ViewsMainWindowButtonOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   _Remove に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsMainWindowButtonRemove {
+            get {
+                return ResourceManager.GetString("ViewsMainWindowButtonRemove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   R_emove All に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsMainWindowButtonRemoveAll {
+            get {
+                return ResourceManager.GetString("ViewsMainWindowButtonRemoveAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   _Setting... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsMainWindowButtonSetting {
+            get {
+                return ResourceManager.GetString("ViewsMainWindowButtonSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   _Hide untried card names に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsMainWindowCheckBoxHideUntriedCardNames {
+            get {
+                return ResourceManager.GetString("ViewsMainWindowCheckBoxHideUntriedCardNames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   _Best shot: に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsMainWindowLabelBestShot {
+            get {
+                return ResourceManager.GetString("ViewsMainWindowLabelBestShot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   I_mage output: に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsMainWindowLabelImageOutput {
+            get {
+                return ResourceManager.GetString("ViewsMainWindowLabelImageOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   _Output: に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsMainWindowLabelOutput {
+            get {
+                return ResourceManager.GetString("ViewsMainWindowLabelOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   _Score: に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsMainWindowLabelScore {
+            get {
+                return ResourceManager.GetString("ViewsMainWindowLabelScore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   _Templates: に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsMainWindowLabelTemplates {
+            get {
+                return ResourceManager.GetString("ViewsMainWindowLabelTemplates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   _Change... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsSettingWindowButtonChange {
+            get {
+                return ResourceManager.GetString("ViewsSettingWindowButtonChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   O_K に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsSettingWindowButtonOk {
+            get {
+                return ResourceManager.GetString("ViewsSettingWindowButtonOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   _Reset に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsSettingWindowButtonReset {
+            get {
+                return ResourceManager.GetString("ViewsSettingWindowButtonReset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Outputs numeric values with number group _separators に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsSettingWindowCheckBoxOutputNumberGroupSeparator {
+            get {
+                return ResourceManager.GetString("ViewsSettingWindowCheckBoxOutputNumberGroupSeparator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Character encoding に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsSettingWindowGroupBoxCharacterEncoding {
+            get {
+                return ResourceManager.GetString("ViewsSettingWindowGroupBoxCharacterEncoding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Font に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsSettingWindowGroupBoxFont {
+            get {
+                return ResourceManager.GetString("ViewsSettingWindowGroupBoxFont", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Output formatting に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsSettingWindowGroupBoxOutputFormatting {
+            get {
+                return ResourceManager.GetString("ViewsSettingWindowGroupBoxOutputFormatting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   For _input file: に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsSettingWindowLabelInputEncoding {
+            get {
+                return ResourceManager.GetString("ViewsSettingWindowLabelInputEncoding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   For _output file: に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsSettingWindowLabelOutputEncoding {
+            get {
+                return ResourceManager.GetString("ViewsSettingWindowLabelOutputEncoding", resourceCulture);
+            }
+        }
     }
 }

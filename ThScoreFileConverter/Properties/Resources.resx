@@ -132,12 +132,6 @@
     <value>Wrong type.</value>
     <comment>@Invariant</comment>
   </data>
-  <data name="fltScoreFile" xml:space="preserve">
-    <value>Touhou score files (*.dat)|*.dat|All files (*.*)|*.*</value>
-  </data>
-  <data name="fltTemplateFile" xml:space="preserve">
-    <value>All files (*.*)|*.*</value>
-  </data>
   <data name="InvalidDataExceptionIndexIsOutOfRange" xml:space="preserve">
     <value>Index is out of range.</value>
     <comment>@Invariant</comment>
@@ -165,6 +159,98 @@
   <data name="InvalidDataExceptionWrongType" xml:space="preserve">
     <value>Wrong type.</value>
     <comment>@Invariant</comment>
+  </data>
+  <data name="NotImplementedExceptionEncryptionIsNotSupported" xml:space="preserve">
+    <value>Encryption is not supported.</value>
+    <comment>@Invariant</comment>
+  </data>
+  <data name="NotImplementedExceptionLzssCompressionIsNotSupported" xml:space="preserve">
+    <value>LZSS compression is not supported.</value>
+    <comment>@Invariant</comment>
+  </data>
+  <data name="NotImplementedExceptionShouldNotReachHere" xml:space="preserve">
+    <value>Should not reach here.</value>
+    <comment>@Invariant</comment>
+  </data>
+  <data name="ProjectUrl" xml:space="preserve">
+    <value>https://www.colorless-sight.jp/thsfc/</value>
+    <comment>@Invariant</comment>
+  </data>
+  <data name="SettingWindowTitle" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="ViewsMainWindowButtonAbout" xml:space="preserve">
+    <value>_About...</value>
+    
+  </data>
+  <data name="ViewsMainWindowButtonAdd" xml:space="preserve">
+    <value>_Add...</value>
+  </data>
+  <data name="ViewsMainWindowButtonConvert" xml:space="preserve">
+    <value>Con_vert</value>
+  </data>
+  <data name="ViewsMainWindowButtonOpen" xml:space="preserve">
+    <value>_Open...</value>
+  </data>
+  <data name="ViewsMainWindowButtonRemove" xml:space="preserve">
+    <value>_Remove</value>
+  </data>
+  <data name="ViewsMainWindowButtonRemoveAll" xml:space="preserve">
+    <value>R_emove All</value>
+  </data>
+  <data name="ViewsMainWindowButtonSetting" xml:space="preserve">
+    <value>_Setting...</value>
+  </data>
+  <data name="ViewsMainWindowCheckBoxHideUntriedCardNames" xml:space="preserve">
+    <value>_Hide untried card names</value>
+  </data>
+  <data name="ViewsMainWindowLabelBestShot" xml:space="preserve">
+    <value>_Best shot:</value>
+  </data>
+  <data name="ViewsMainWindowLabelImageOutput" xml:space="preserve">
+    <value>I_mage output:</value>
+  </data>
+  <data name="ViewsMainWindowLabelOutput" xml:space="preserve">
+    <value>_Output:</value>
+  </data>
+  <data name="ViewsMainWindowLabelScore" xml:space="preserve">
+    <value>_Score:</value>
+  </data>
+  <data name="ViewsMainWindowLabelTemplates" xml:space="preserve">
+    <value>_Templates:</value>
+  </data>
+  <data name="ViewsSettingWindowButtonChange" xml:space="preserve">
+    <value>_Change...</value>
+  </data>
+  <data name="ViewsSettingWindowButtonOk" xml:space="preserve">
+    <value>O_K</value>
+  </data>
+  <data name="ViewsSettingWindowButtonReset" xml:space="preserve">
+    <value>_Reset</value>
+  </data>
+  <data name="ViewsSettingWindowCheckBoxOutputNumberGroupSeparator" xml:space="preserve">
+    <value>Outputs numeric values with number group _separators</value>
+  </data>
+  <data name="ViewsSettingWindowGroupBoxCharacterEncoding" xml:space="preserve">
+    <value>Character encoding</value>
+  </data>
+  <data name="ViewsSettingWindowGroupBoxFont" xml:space="preserve">
+    <value>Font</value>
+  </data>
+  <data name="ViewsSettingWindowGroupBoxOutputFormatting" xml:space="preserve">
+    <value>Output formatting</value>
+  </data>
+  <data name="ViewsSettingWindowLabelInputEncoding" xml:space="preserve">
+    <value>For _input file:</value>
+  </data>
+  <data name="ViewsSettingWindowLabelOutputEncoding" xml:space="preserve">
+    <value>For _output file:</value>
+  </data>
+  <data name="fltScoreFile" xml:space="preserve">
+    <value>Touhou score files (*.dat)|*.dat|All files (*.*)|*.*</value>
+  </data>
+  <data name="fltTemplateFile" xml:space="preserve">
+    <value>All files (*.*)|*.*</value>
   </data>
   <data name="msgEndConversion" xml:space="preserve">
     <value>Conversion finished.</value>
@@ -194,28 +280,9 @@ Renamed to "{1}".</value>
   <data name="msgTitleWarning" xml:space="preserve">
     <value>Warning</value>
   </data>
-  <data name="NotImplementedExceptionEncryptionIsNotSupported" xml:space="preserve">
-    <value>Encryption is not supported.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="NotImplementedExceptionLzssCompressionIsNotSupported" xml:space="preserve">
-    <value>LZSS compression is not supported.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="NotImplementedExceptionShouldNotReachHere" xml:space="preserve">
-    <value>Should not reach here.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="ProjectUrl" xml:space="preserve">
-    <value>https://www.colorless-sight.jp/thsfc/</value>
-    <comment>@Invariant</comment>
-  </data>
   <data name="ptnBestShot" xml:space="preserve">
     <value>*.dat</value>
     <comment>@Invariant</comment>
-  </data>
-  <data name="SettingWindowTitle" xml:space="preserve">
-    <value>Settings</value>
   </data>
   <data name="strBackupFileExtension" xml:space="preserve">
     <value>.bak</value>

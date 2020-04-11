@@ -117,6 +117,78 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AboutWindowTitle" xml:space="preserve">
+    <value>このツールについて</value>
+  </data>
+  <data name="SettingWindowTitle" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="ViewsMainWindowButtonAbout" xml:space="preserve">
+    <value>_About...</value>
+  </data>
+  <data name="ViewsMainWindowButtonAdd" xml:space="preserve">
+    <value>追加(_A)...</value>
+  </data>
+  <data name="ViewsMainWindowButtonConvert" xml:space="preserve">
+    <value>変換(_V)</value>
+  </data>
+  <data name="ViewsMainWindowButtonOpen" xml:space="preserve">
+    <value>開く(_O)...</value>
+  </data>
+  <data name="ViewsMainWindowButtonRemove" xml:space="preserve">
+    <value>削除(_R)</value>
+  </data>
+  <data name="ViewsMainWindowButtonRemoveAll" xml:space="preserve">
+    <value>全て削除(_E)</value>
+  </data>
+  <data name="ViewsMainWindowButtonSetting" xml:space="preserve">
+    <value>設定(_S)...</value>
+  </data>
+  <data name="ViewsMainWindowCheckBoxHideUntriedCardNames" xml:space="preserve">
+    <value>未挑戦のスペルカード名を出力しない(_H)</value>
+  </data>
+  <data name="ViewsMainWindowLabelBestShot" xml:space="preserve">
+    <value>ベストショット(_B):</value>
+  </data>
+  <data name="ViewsMainWindowLabelImageOutput" xml:space="preserve">
+    <value>画像出力先(_M):</value>
+  </data>
+  <data name="ViewsMainWindowLabelOutput" xml:space="preserve">
+    <value>出力先(_O):</value>
+  </data>
+  <data name="ViewsMainWindowLabelScore" xml:space="preserve">
+    <value>スコア(_S):</value>
+  </data>
+  <data name="ViewsMainWindowLabelTemplates" xml:space="preserve">
+    <value>テンプレート(_T):</value>
+  </data>
+  <data name="ViewsSettingWindowButtonChange" xml:space="preserve">
+    <value>変更(_C)...</value>
+  </data>
+  <data name="ViewsSettingWindowButtonOk" xml:space="preserve">
+    <value>O_K</value>
+  </data>
+  <data name="ViewsSettingWindowButtonReset" xml:space="preserve">
+    <value>リセット(_R)</value>
+  </data>
+  <data name="ViewsSettingWindowCheckBoxOutputNumberGroupSeparator" xml:space="preserve">
+    <value>数値を桁区切り形式で出力する(_S)</value>
+  </data>
+  <data name="ViewsSettingWindowGroupBoxCharacterEncoding" xml:space="preserve">
+    <value>文字エンコーディング設定</value>
+  </data>
+  <data name="ViewsSettingWindowGroupBoxFont" xml:space="preserve">
+    <value>フォント設定</value>
+  </data>
+  <data name="ViewsSettingWindowGroupBoxOutputFormatting" xml:space="preserve">
+    <value>出力書式設定</value>
+  </data>
+  <data name="ViewsSettingWindowLabelInputEncoding" xml:space="preserve">
+    <value>入力ファイル(_I):</value>
+  </data>
+  <data name="ViewsSettingWindowLabelOutputEncoding" xml:space="preserve">
+    <value>出力ファイル(_O):</value>
+  </data>
   <data name="fltScoreFile" xml:space="preserve">
     <value>東方スコアファイル (*.dat)|*.dat|すべてのファイル (*.*)|*.*</value>
   </data>
@@ -153,11 +225,5 @@
   </data>
   <data name="strSupportedVersions" xml:space="preserve">
     <value>対応バージョン: </value>
-  </data>
-  <data name="AboutWindowTitle" xml:space="preserve">
-    <value>このツールについて</value>
-  </data>
-  <data name="SettingWindowTitle" xml:space="preserve">
-    <value>設定</value>
   </data>
 </root>
