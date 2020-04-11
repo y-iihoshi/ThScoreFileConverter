@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using ThScoreFileConverter.Models;
-using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverterTests.Models
 {
@@ -11,7 +10,7 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void CreateTest()
         {
-            var converter = ThConverterFactory.Create(Resources.keyTh06);
+            var converter = ThConverterFactory.Create("TH06");
 
             Assert.AreEqual(typeof(Th06Converter), converter?.GetType());
         }
