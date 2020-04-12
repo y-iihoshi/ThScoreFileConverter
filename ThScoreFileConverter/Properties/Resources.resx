@@ -132,6 +132,18 @@
     <value>Wrong type.</value>
     <comment>@Invariant</comment>
   </data>
+  <data name="BackupFileExtension" xml:space="preserve">
+    <value>.bak</value>
+    <comment>@Invariant</comment>
+  </data>
+  <data name="BestShotFilePattern" xml:space="preserve">
+    <value>*.dat</value>
+    <comment>@Invariant</comment>
+  </data>
+  <data name="ConvertedBestShotFileExtension" xml:space="preserve">
+    <value>.png</value>
+    <comment>@Invariant</comment>
+  </data>
   <data name="InvalidDataExceptionIndexIsOutOfRange" xml:space="preserve">
     <value>Index is out of range.</value>
     <comment>@Invariant</comment>
@@ -160,6 +172,34 @@
     <value>Wrong type.</value>
     <comment>@Invariant</comment>
   </data>
+  <data name="MessageConversionFinished" xml:space="preserve">
+    <value>Conversion finished.</value>
+  </data>
+  <data name="MessageFailedToReadScoreFile" xml:space="preserve">
+    <value>Failed to read the score file.</value>
+  </data>
+  <data name="MessageSelectBestShotDirectory" xml:space="preserve">
+    <value>Select the directory containing best shot files.</value>
+  </data>
+  <data name="MessageSelectOutputDirectory" xml:space="preserve">
+    <value>Select the output directory to save converted files.</value>
+  </data>
+  <data name="MessageSettingFileIsCorrupted" xml:space="preserve">
+    <value>The setting file: "{0}" seems corrupted.
+Renamed to "{1}".</value>
+  </data>
+  <data name="MessageStartConversion" xml:space="preserve">
+    <value>Start conversion...</value>
+  </data>
+  <data name="MessageTitleError" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="MessageTitleWarning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="MessageUnhandledExceptionOccurred" xml:space="preserve">
+    <value>An unhandled exception occurred.</value>
+  </data>
   <data name="NotImplementedExceptionEncryptionIsNotSupported" xml:space="preserve">
     <value>Encryption is not supported.</value>
     <comment>@Invariant</comment>
@@ -176,8 +216,25 @@
     <value>https://www.colorless-sight.jp/thsfc/</value>
     <comment>@Invariant</comment>
   </data>
+  <data name="ScoreFileFilter" xml:space="preserve">
+    <value>Touhou score files (*.dat)|*.dat|All files (*.*)|*.*</value>
+  </data>
+  <data name="SettingFileName" xml:space="preserve">
+    <value>settings.xml</value>
+    <comment>@Invariant</comment>
+  </data>
   <data name="SettingWindowTitle" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="SupportedVersion" xml:space="preserve">
+    <value>Supported version: </value>
+  </data>
+  <data name="TemplateFileFilter" xml:space="preserve">
+    <value>All files (*.*)|*.*</value>
+  </data>
+  <data name="VersionPrefix" xml:space="preserve">
+    <value>ver.</value>
+    <comment>@Invariant</comment>
   </data>
   <data name="ViewsMainWindowButtonAbout" xml:space="preserve">
     <value>_About...</value>
@@ -245,66 +302,5 @@
   </data>
   <data name="ViewsSettingWindowLabelOutputEncoding" xml:space="preserve">
     <value>For _output file:</value>
-  </data>
-  <data name="fltScoreFile" xml:space="preserve">
-    <value>Touhou score files (*.dat)|*.dat|All files (*.*)|*.*</value>
-  </data>
-  <data name="fltTemplateFile" xml:space="preserve">
-    <value>All files (*.*)|*.*</value>
-  </data>
-  <data name="msgEndConversion" xml:space="preserve">
-    <value>Conversion finished.</value>
-  </data>
-  <data name="msgErrScoreFileNotSupported" xml:space="preserve">
-    <value>Failed to read the score file.</value>
-  </data>
-  <data name="msgErrUnhandledException" xml:space="preserve">
-    <value>An unhandled exception occurred.</value>
-  </data>
-  <data name="msgFmtBrokenSettingFile" xml:space="preserve">
-    <value>The setting file: "{0}" seems corrupted.
-Renamed to "{1}".</value>
-  </data>
-  <data name="msgSelectBestShotDirectory" xml:space="preserve">
-    <value>Select the directory containing bestshot files.</value>
-  </data>
-  <data name="msgSelectOutputDirectory" xml:space="preserve">
-    <value>Select the output directory to save converted files.</value>
-  </data>
-  <data name="msgStartConversion" xml:space="preserve">
-    <value>Start conversion...</value>
-  </data>
-  <data name="msgTitleError" xml:space="preserve">
-    <value>Error</value>
-  </data>
-  <data name="msgTitleWarning" xml:space="preserve">
-    <value>Warning</value>
-  </data>
-  <data name="ptnBestShot" xml:space="preserve">
-    <value>*.dat</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="strBackupFileExtension" xml:space="preserve">
-    <value>.bak</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="strBestShotDirectory" xml:space="preserve">
-    <value>bestshot</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="strBestShotExtension" xml:space="preserve">
-    <value>.png</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="strSettingFile" xml:space="preserve">
-    <value>settings.xml</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="strSupportedVersions" xml:space="preserve">
-    <value>Supported version: </value>
-  </data>
-  <data name="strVersionPrefix" xml:space="preserve">
-    <value>ver.</value>
-    <comment>@Invariant</comment>
   </data>
 </root>

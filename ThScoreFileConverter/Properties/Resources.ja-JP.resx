@@ -120,8 +120,45 @@
   <data name="AboutWindowTitle" xml:space="preserve">
     <value>このツールについて</value>
   </data>
+  <data name="MessageConversionFinished" xml:space="preserve">
+    <value>出力が完了しました。</value>
+  </data>
+  <data name="MessageFailedToReadScoreFile" xml:space="preserve">
+    <value>スコアファイルの読み込みに失敗しました。</value>
+  </data>
+  <data name="MessageSelectBestShotDirectory" xml:space="preserve">
+    <value>ベストショットファイルが保存されているディレクトリを選択してください。</value>
+  </data>
+  <data name="MessageSelectOutputDirectory" xml:space="preserve">
+    <value>変換後のファイルの出力先ディレクトリを選択してください。</value>
+  </data>
+  <data name="MessageSettingFileIsCorrupted" xml:space="preserve">
+    <value>設定ファイル: "{0}" は壊れていたようです。
+"{1}" にリネームしました。</value>
+  </data>
+  <data name="MessageStartConversion" xml:space="preserve">
+    <value>出力を開始します...</value>
+  </data>
+  <data name="MessageTitleError" xml:space="preserve">
+    <value>エラー</value>
+  </data>
+  <data name="MessageTitleWarning" xml:space="preserve">
+    <value>警告</value>
+  </data>
+  <data name="MessageUnhandledExceptionOccurred" xml:space="preserve">
+    <value>未知の例外が発生しました。</value>
+  </data>
+  <data name="ScoreFileFilter" xml:space="preserve">
+    <value>東方スコアファイル (*.dat)|*.dat|すべてのファイル (*.*)|*.*</value>
+  </data>
   <data name="SettingWindowTitle" xml:space="preserve">
     <value>設定</value>
+  </data>
+  <data name="SupportedVersion" xml:space="preserve">
+    <value>対応バージョン: </value>
+  </data>
+  <data name="TemplateFileFilter" xml:space="preserve">
+    <value>すべてのファイル (*.*)|*.*</value>
   </data>
   <data name="ViewsMainWindowButtonAbout" xml:space="preserve">
     <value>_About...</value>
@@ -188,42 +225,5 @@
   </data>
   <data name="ViewsSettingWindowLabelOutputEncoding" xml:space="preserve">
     <value>出力ファイル(_O):</value>
-  </data>
-  <data name="fltScoreFile" xml:space="preserve">
-    <value>東方スコアファイル (*.dat)|*.dat|すべてのファイル (*.*)|*.*</value>
-  </data>
-  <data name="fltTemplateFile" xml:space="preserve">
-    <value>すべてのファイル (*.*)|*.*</value>
-  </data>
-  <data name="msgEndConversion" xml:space="preserve">
-    <value>出力が完了しました。</value>
-  </data>
-  <data name="msgErrScoreFileNotSupported" xml:space="preserve">
-    <value>スコアファイルの読み込みに失敗しました。</value>
-  </data>
-  <data name="msgErrUnhandledException" xml:space="preserve">
-    <value>未知の例外が発生しました。</value>
-  </data>
-  <data name="msgFmtBrokenSettingFile" xml:space="preserve">
-    <value>設定ファイル: "{0}" は壊れていたようです。
-"{1}" にリネームしました。</value>
-  </data>
-  <data name="msgSelectBestShotDirectory" xml:space="preserve">
-    <value>ベストショットファイルが保存されているディレクトリを選択してください。</value>
-  </data>
-  <data name="msgSelectOutputDirectory" xml:space="preserve">
-    <value>変換後のファイルの出力先ディレクトリを選択してください。</value>
-  </data>
-  <data name="msgStartConversion" xml:space="preserve">
-    <value>出力を開始します...</value>
-  </data>
-  <data name="msgTitleError" xml:space="preserve">
-    <value>エラー</value>
-  </data>
-  <data name="msgTitleWarning" xml:space="preserve">
-    <value>警告</value>
-  </data>
-  <data name="strSupportedVersions" xml:space="preserve">
-    <value>対応バージョン: </value>
   </data>
 </root>

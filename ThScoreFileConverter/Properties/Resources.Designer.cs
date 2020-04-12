@@ -97,20 +97,29 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
-        ///   Touhou score files (*.dat)|*.dat|All files (*.*)|*.* に類似しているローカライズされた文字列を検索します。
+        ///   .bak に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string fltScoreFile {
+        public static string BackupFileExtension {
             get {
-                return ResourceManager.GetString("fltScoreFile", resourceCulture);
+                return ResourceManager.GetString("BackupFileExtension", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   All files (*.*)|*.* に類似しているローカライズされた文字列を検索します。
+        ///   *.dat に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string fltTemplateFile {
+        public static string BestShotFilePattern {
             get {
-                return ResourceManager.GetString("fltTemplateFile", resourceCulture);
+                return ResourceManager.GetString("BestShotFilePattern", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   .png に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ConvertedBestShotFileExtension {
+            get {
+                return ResourceManager.GetString("ConvertedBestShotFileExtension", resourceCulture);
             }
         }
         
@@ -180,27 +189,36 @@ namespace ThScoreFileConverter.Properties {
         /// <summary>
         ///   Conversion finished. に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string msgEndConversion {
+        public static string MessageConversionFinished {
             get {
-                return ResourceManager.GetString("msgEndConversion", resourceCulture);
+                return ResourceManager.GetString("MessageConversionFinished", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Failed to read the score file. に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string msgErrScoreFileNotSupported {
+        public static string MessageFailedToReadScoreFile {
             get {
-                return ResourceManager.GetString("msgErrScoreFileNotSupported", resourceCulture);
+                return ResourceManager.GetString("MessageFailedToReadScoreFile", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   An unhandled exception occurred. に類似しているローカライズされた文字列を検索します。
+        ///   Select the directory containing best shot files. に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string msgErrUnhandledException {
+        public static string MessageSelectBestShotDirectory {
             get {
-                return ResourceManager.GetString("msgErrUnhandledException", resourceCulture);
+                return ResourceManager.GetString("MessageSelectBestShotDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Select the output directory to save converted files. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MessageSelectOutputDirectory {
+            get {
+                return ResourceManager.GetString("MessageSelectOutputDirectory", resourceCulture);
             }
         }
         
@@ -208,54 +226,45 @@ namespace ThScoreFileConverter.Properties {
         ///   The setting file: &quot;{0}&quot; seems corrupted.
         ///Renamed to &quot;{1}&quot;. に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string msgFmtBrokenSettingFile {
+        public static string MessageSettingFileIsCorrupted {
             get {
-                return ResourceManager.GetString("msgFmtBrokenSettingFile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Select the directory containing bestshot files. に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string msgSelectBestShotDirectory {
-            get {
-                return ResourceManager.GetString("msgSelectBestShotDirectory", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Select the output directory to save converted files. に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string msgSelectOutputDirectory {
-            get {
-                return ResourceManager.GetString("msgSelectOutputDirectory", resourceCulture);
+                return ResourceManager.GetString("MessageSettingFileIsCorrupted", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Start conversion... に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string msgStartConversion {
+        public static string MessageStartConversion {
             get {
-                return ResourceManager.GetString("msgStartConversion", resourceCulture);
+                return ResourceManager.GetString("MessageStartConversion", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Error に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string msgTitleError {
+        public static string MessageTitleError {
             get {
-                return ResourceManager.GetString("msgTitleError", resourceCulture);
+                return ResourceManager.GetString("MessageTitleError", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Warning に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string msgTitleWarning {
+        public static string MessageTitleWarning {
             get {
-                return ResourceManager.GetString("msgTitleWarning", resourceCulture);
+                return ResourceManager.GetString("MessageTitleWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   An unhandled exception occurred. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MessageUnhandledExceptionOccurred {
+            get {
+                return ResourceManager.GetString("MessageUnhandledExceptionOccurred", resourceCulture);
             }
         }
         
@@ -296,11 +305,20 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
-        ///   *.dat に類似しているローカライズされた文字列を検索します。
+        ///   Touhou score files (*.dat)|*.dat|All files (*.*)|*.* に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string ptnBestShot {
+        public static string ScoreFileFilter {
             get {
-                return ResourceManager.GetString("ptnBestShot", resourceCulture);
+                return ResourceManager.GetString("ScoreFileFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   settings.xml に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string SettingFileName {
+            get {
+                return ResourceManager.GetString("SettingFileName", resourceCulture);
             }
         }
         
@@ -314,56 +332,29 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
-        ///   .bak に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string strBackupFileExtension {
-            get {
-                return ResourceManager.GetString("strBackupFileExtension", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   bestshot に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string strBestShotDirectory {
-            get {
-                return ResourceManager.GetString("strBestShotDirectory", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   .png に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string strBestShotExtension {
-            get {
-                return ResourceManager.GetString("strBestShotExtension", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   settings.xml に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string strSettingFile {
-            get {
-                return ResourceManager.GetString("strSettingFile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Supported version:  に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string strSupportedVersions {
+        public static string SupportedVersion {
             get {
-                return ResourceManager.GetString("strSupportedVersions", resourceCulture);
+                return ResourceManager.GetString("SupportedVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   All files (*.*)|*.* に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TemplateFileFilter {
+            get {
+                return ResourceManager.GetString("TemplateFileFilter", resourceCulture);
             }
         }
         
         /// <summary>
         ///   ver. に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string strVersionPrefix {
+        public static string VersionPrefix {
             get {
-                return ResourceManager.GetString("strVersionPrefix", resourceCulture);
+                return ResourceManager.GetString("VersionPrefix", resourceCulture);
             }
         }
         

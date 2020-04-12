@@ -81,18 +81,17 @@ namespace ThScoreFileConverter
         {
             try
             {
-                Settings.Instance.Load(Prop.Resources.strSettingFile);
+                Settings.Instance.Load(Prop.Resources.SettingFileName);
             }
             catch (InvalidDataException)
             {
-                var backup = Path.ChangeExtension(
-                    Prop.Resources.strSettingFile, Prop.Resources.strBackupFileExtension);
+                var backup = Path.ChangeExtension(Prop.Resources.SettingFileName, Prop.Resources.BackupFileExtension);
                 File.Delete(backup);
-                File.Move(Prop.Resources.strSettingFile, backup);
+                File.Move(Prop.Resources.SettingFileName, backup);
                 var message = Utils.Format(
-                    Prop.Resources.msgFmtBrokenSettingFile, Prop.Resources.strSettingFile, backup);
+                    Prop.Resources.MessageSettingFileIsCorrupted, Prop.Resources.SettingFileName, backup);
                 _ = MessageBox.Show(
-                    message, Prop.Resources.msgTitleWarning, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    message, Prop.Resources.MessageTitleWarning, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
 
             this.UpdateResources(Settings.Instance.FontFamilyName, Settings.Instance.FontSize);
@@ -108,7 +107,7 @@ namespace ThScoreFileConverter
             Settings.Instance.FontFamilyName = this.FontFamily.ToString();
             Settings.Instance.FontSize = this.FontSize;
 
-            Settings.Instance.Save(Prop.Resources.strSettingFile);
+            Settings.Instance.Save(Prop.Resources.SettingFileName);
         }
     }
 }

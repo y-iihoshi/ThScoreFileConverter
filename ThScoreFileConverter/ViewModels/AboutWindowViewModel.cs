@@ -46,7 +46,7 @@ namespace ThScoreFileConverter.ViewModels
             var attrs = thisAsm.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), true);
 
             this.Name = asmName.Name ?? nameof(ThScoreFileConverter);
-            this.Version = Resources.strVersionPrefix + verField.GetValue(null);
+            this.Version = Resources.VersionPrefix + verField.GetValue(null);
             this.Copyright = (attrs[0] is AssemblyCopyrightAttribute attr) ? attr.Copyright : string.Empty;
             this.Uri = Resources.ProjectUrl;
         }

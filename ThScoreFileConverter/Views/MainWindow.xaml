@@ -108,7 +108,7 @@
                     VerticalAlignment="Center">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <a:OpenFileDialogAction Filter="{x:Static prop:Resources.fltScoreFile}"
+                        <a:OpenFileDialogAction Filter="{x:Static prop:Resources.ScoreFileFilter}"
                                                 InitialDirectory="{Binding OpenScoreFileDialogInitialDirectory}"
                                                 OkCommand="{Binding SelectScoreFileCommand}"
                                                 Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
@@ -143,7 +143,7 @@
                     VerticalAlignment="Center">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <a:FolderBrowserDialogAction Description="{x:Static prop:Resources.msgSelectBestShotDirectory}"
+                        <a:FolderBrowserDialogAction Description="{x:Static prop:Resources.MessageSelectBestShotDirectory}"
                                                      OkCommand="{Binding SelectBestShotDirectoryCommand}"
                                                      Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
                                                      SelectedPath="{Binding Text, ElementName=BestShotTextBox}"
@@ -184,7 +184,7 @@
                 <Button Content="{x:Static prop:Resources.ViewsMainWindowButtonAdd}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
-                            <a:OpenFileDialogAction Filter="{x:Static prop:Resources.fltTemplateFile}"
+                            <a:OpenFileDialogAction Filter="{x:Static prop:Resources.TemplateFileFilter}"
                                                     InitialDirectory="{Binding OpenTemplateFilesDialogInitialDirectory}"
                                                     Multiselect="True"
                                                     OkCommand="{Binding AddTemplateFilesCommand}"
@@ -223,7 +223,7 @@
                     VerticalAlignment="Center">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <a:FolderBrowserDialogAction Description="{x:Static prop:Resources.msgSelectOutputDirectory}"
+                        <a:FolderBrowserDialogAction Description="{x:Static prop:Resources.MessageSelectOutputDirectory}"
                                                      OkCommand="{Binding SelectOutputDirectoryCommand}"
                                                      Owner="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
                                                      SelectedPath="{Binding Text, ElementName=OutputTextBox}"/>
