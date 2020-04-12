@@ -124,6 +124,15 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
+        ///   {0} may be broken. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string InvalidDataExceptionFileMayBeBroken {
+            get {
+                return ResourceManager.GetString("InvalidDataExceptionFileMayBeBroken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Index is out of range. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string InvalidDataExceptionIndexIsOutOfRange {
@@ -183,6 +192,15 @@ namespace ThScoreFileConverter.Properties {
         public static string InvalidDataExceptionWrongType {
             get {
                 return ResourceManager.GetString("InvalidDataExceptionWrongType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Must be Invoked after {0}. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string InvalidOperationExceptionMustBeInvokedAfter {
+            get {
+                return ResourceManager.GetString("InvalidOperationExceptionMustBeInvokedAfter", resourceCulture);
             }
         }
         

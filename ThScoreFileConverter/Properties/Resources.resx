@@ -144,6 +144,10 @@
     <value>.png</value>
     <comment>@Invariant</comment>
   </data>
+  <data name="InvalidDataExceptionFileMayBeBroken" xml:space="preserve">
+    <value>{0} may be broken.</value>
+    <comment>@Invariant</comment>
+  </data>
   <data name="InvalidDataExceptionIndexIsOutOfRange" xml:space="preserve">
     <value>Index is out of range.</value>
     <comment>@Invariant</comment>
@@ -170,6 +174,10 @@
   </data>
   <data name="InvalidDataExceptionWrongType" xml:space="preserve">
     <value>Wrong type.</value>
+    <comment>@Invariant</comment>
+  </data>
+  <data name="InvalidOperationExceptionMustBeInvokedAfter" xml:space="preserve">
+    <value>Must be Invoked after {0}.</value>
     <comment>@Invariant</comment>
   </data>
   <data name="MessageConversionFinished" xml:space="preserve">
