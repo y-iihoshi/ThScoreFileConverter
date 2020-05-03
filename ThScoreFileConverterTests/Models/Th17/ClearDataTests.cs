@@ -123,7 +123,7 @@ namespace ThScoreFileConverterTests.Models.Th17
 
             foreach (var pair in expected.Cards)
             {
-                SpellCardTests.Validate(pair.Value, actual.Cards[pair.Key]);
+                Th13.SpellCardTests.Validate(pair.Value, actual.Cards[pair.Key]);
             }
         }
 
