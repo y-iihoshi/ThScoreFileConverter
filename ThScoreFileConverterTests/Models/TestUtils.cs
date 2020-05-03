@@ -118,9 +118,7 @@ namespace ThScoreFileConverterTests.Models
             var currentType = typeof(TestUtils);
             var bindingAttributes = BindingFlags.NonPublic | BindingFlags.Static;
             var fromArray = currentType.GetMethod(nameof(MakeSQByteArrayFromArray), bindingAttributes);
-            Debug.Assert(fromArray is object);
             var fromDictonary = currentType.GetMethod(nameof(MakeSQByteArrayFromDictionary), bindingAttributes);
-            Debug.Assert(fromDictonary is object);
 
             var byteArray = Enumerable.Empty<byte>();
 
@@ -147,19 +145,25 @@ namespace ThScoreFileConverterTests.Models
                     case Array array:
                         if (array.Rank == 1)
                         {
-                            var elementType = array.GetType().GetElementType();
-                            Debug.Assert(elementType is object);
-                            byteArray = byteArray.Concat(
-                                fromArray.MakeGenericMethod(elementType)
-                                    .Invoke(null, new object[] { array }) as IEnumerable<byte>);
+                            if (fromArray is object)
+                            {
+                                var elementType = array.GetType().GetElementType();
+                                if (elementType is object)
+                                {
+                                    byteArray = byteArray.Concat(
+                                        fromArray.MakeGenericMethod(elementType)
+                                            .Invoke(null, new object[] { array }) as IEnumerable<byte>);
+                                }
+                            }
                         }
                         break;
                     case null:
                         break;
                     default:
+                        if (fromDictonary is object)
                         {
                             var argType = arg.GetType();
-                            if (argType.IsGenericType && argType.GetGenericTypeDefinition() == typeof(Dictionary<,>))
+                            if (argType.IsGenericType && (argType.GetGenericTypeDefinition() == typeof(Dictionary<,>)))
                             {
                                 byteArray = byteArray.Concat(
                                     fromDictonary.MakeGenericMethod(argType.GetGenericArguments())

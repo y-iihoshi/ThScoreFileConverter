@@ -34,7 +34,7 @@ namespace ThScoreFileConverterTests.Interactivity
     [TestClass]
     public class UIElementDropBehaviorTests
     {
-        private static DragEventArgs CreateDragEventArgs(DependencyObject target, RoutedEvent routedEvent)
+        private static DragEventArgs? CreateDragEventArgs(DependencyObject target, RoutedEvent routedEvent)
         {
             var types = new[]
             {
@@ -55,7 +55,8 @@ namespace ThScoreFileConverterTests.Interactivity
 
             var constructor = typeof(DragEventArgs)
                 .GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, null, types, null);
-            Debug.Assert(constructor is object);
+            if (constructor is null)
+                return null;
 
             var dragEventArgs = (DragEventArgs)constructor.Invoke(parameters);
             dragEventArgs.RoutedEvent = routedEvent;
