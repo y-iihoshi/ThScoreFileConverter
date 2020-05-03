@@ -31,19 +31,6 @@ namespace ThScoreFileConverter.Models.Th155
                 var level = Parsers.LevelParser.Parse(match.Groups[1].Value);
                 var chara = Parsers.StoryCharaParser.Parse(match.Groups[2].Value);
 
-                static LevelFlags ToLevelFlag(Level lv)
-                {
-                    return lv switch
-                    {
-                        Level.Easy      => LevelFlags.Easy,
-                        Level.Normal    => LevelFlags.Normal,
-                        Level.Hard      => LevelFlags.Hard,
-                        Level.Lunatic   => LevelFlags.Lunatic,
-                        Level.OverDrive => LevelFlags.OverDrive,
-                        _               => LevelFlags.None,
-                    };
-                }
-
                 if (storyDictionary.TryGetValue(chara, out var story)
                     && story.Available
                     && ((story.Ed & ToLevelFlag(level)) != LevelFlags.None))
@@ -51,6 +38,19 @@ namespace ThScoreFileConverter.Models.Th155
                 else
                     return "Not Clear";
             });
+
+            static LevelFlags ToLevelFlag(Level level)
+            {
+                return level switch
+                {
+                    Level.Easy      => LevelFlags.Easy,
+                    Level.Normal    => LevelFlags.Normal,
+                    Level.Hard      => LevelFlags.Hard,
+                    Level.Lunatic   => LevelFlags.Lunatic,
+                    Level.OverDrive => LevelFlags.OverDrive,
+                    _               => LevelFlags.None,
+                };
+            }
         }
 
         public string Replace(string input)

@@ -60,22 +60,7 @@ namespace ThScoreFileConverter.Models.Th123
                 }
                 else
                 {
-                    // serialNumber : 0-based
-                    bool TryGetCharaCardIdPair(int serialNumber, out (Chara Chara, int CardId) charaCardIdPair)
-                    {
-                        if (Definitions.CardOrderTable.TryGetValue(chara, out var cardTypeIdDict)
-                            && cardTypeIdDict.TryGetValue(cardType, out var cardIds)
-                            && serialNumber < cardIds.Count)
-                        {
-                            charaCardIdPair = (chara, cardIds[serialNumber]);
-                            return true;
-                        }
-
-                        charaCardIdPair = default;
-                        return false;
-                    }
-
-                    if (TryGetCharaCardIdPair(number - 1, out var key)
+                    if (TryGetCharaCardIdPair(chara, cardType, number - 1, out var key)
                         && Definitions.CardNameTable.TryGetValue(key, out var name))
                     {
                         cardForDeck = clearDataDictionary.TryGetValue(key.Chara, out var clearData)
@@ -104,6 +89,22 @@ namespace ThScoreFileConverter.Models.Th123
                     return Utils.ToNumberString(cardForDeck.MaxNumber);
                 }
             });
+
+            // serialNumber : 0-based
+            static bool TryGetCharaCardIdPair(
+                Chara chara, Th105.CardType cardType, int serialNumber, out (Chara Chara, int CardId) charaCardIdPair)
+            {
+                if (Definitions.CardOrderTable.TryGetValue(chara, out var cardTypeIdDict)
+                    && cardTypeIdDict.TryGetValue(cardType, out var cardIds)
+                    && serialNumber < cardIds.Count)
+                {
+                    charaCardIdPair = (chara, cardIds[serialNumber]);
+                    return true;
+                }
+
+                charaCardIdPair = default;
+                return false;
+            }
         }
 
         public string Replace(string input)

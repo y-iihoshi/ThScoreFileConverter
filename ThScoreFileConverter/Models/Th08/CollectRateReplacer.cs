@@ -53,7 +53,9 @@ namespace ThScoreFileConverter.Models.Th08
             if (cardAttacks is null)
                 throw new ArgumentNullException(nameof(cardAttacks));
 
-            this.evaluator = new MatchEvaluator(match =>
+            this.evaluator = new MatchEvaluator(match => EvaluatorImpl(match, cardAttacks));
+
+            static string EvaluatorImpl(Match match, IReadOnlyDictionary<int, ICardAttack> cardAttacks)
             {
                 var kind = match.Groups[1].Value.ToUpperInvariant();
                 var level = LevelPracticeWithTotalParser.Parse(match.Groups[2].Value);
@@ -101,7 +103,7 @@ namespace ThScoreFileConverter.Models.Th08
                 return cardAttacks.Values
                     .Count(Utils.MakeAndPredicate(FindByKindType, findByLevel, findByStage))
                     .ToString(CultureInfo.CurrentCulture);
-            });
+            }
         }
 
         public string Replace(string input)

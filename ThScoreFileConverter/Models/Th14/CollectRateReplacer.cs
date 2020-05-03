@@ -56,7 +56,10 @@ namespace ThScoreFileConverter.Models.Th14
             if (clearDataDictionary is null)
                 throw new ArgumentNullException(nameof(clearDataDictionary));
 
-            this.evaluator = new MatchEvaluator(match =>
+            this.evaluator = new MatchEvaluator(match => EvaluatorImpl(match, clearDataDictionary));
+
+            static string EvaluatorImpl(
+                Match match, IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
             {
                 var kind = match.Groups[1].Value.ToUpperInvariant();
                 var level = Parsers.LevelWithTotalParser.Parse(match.Groups[2].Value);
@@ -94,7 +97,7 @@ namespace ThScoreFileConverter.Models.Th14
                         .Count(Utils.MakeAndPredicate(FindByKindType, findByLevel, findByStage))
                         .ToString(CultureInfo.CurrentCulture)
                     : "0";
-            });
+            }
         }
 
         public string Replace(string input)

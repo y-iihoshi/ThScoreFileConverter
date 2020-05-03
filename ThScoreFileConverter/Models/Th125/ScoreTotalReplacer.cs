@@ -28,7 +28,9 @@ namespace ThScoreFileConverter.Models.Th125
             if (scores is null)
                 throw new ArgumentNullException(nameof(scores));
 
-            this.evaluator = new MatchEvaluator(match =>
+            this.evaluator = new MatchEvaluator(match => EvaluatorImpl(match, scores));
+
+            static string EvaluatorImpl(Match match, IReadOnlyList<IScore> scores)
             {
                 var chara = Parsers.CharaParser.Parse(match.Groups[1].Value);
                 var method = int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture);
@@ -48,7 +50,7 @@ namespace ThScoreFileConverter.Models.Th125
                     5 => scores.Count(TriedAndSucceeded).ToString(CultureInfo.CurrentCulture),
                     _ => match.ToString(),  // unreachable
                 };
-            });
+            }
         }
 
         public string Replace(string input)

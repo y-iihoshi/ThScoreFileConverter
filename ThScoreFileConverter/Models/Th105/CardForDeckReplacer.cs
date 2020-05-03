@@ -57,23 +57,7 @@ namespace ThScoreFileConverter.Models.Th105
                 }
                 else
                 {
-                    // serialNumber : 0-based
-                    bool TryGetCharaCardIdPair(int serialNumber, out (Chara Chara, int CardId) charaCardIdPair)
-                    {
-                        var charaCardIdPairs = Definitions.CardNameTable.Keys.Where(
-                            pair => (pair.Chara == chara) && (pair.CardId / 100 == (int)cardType));
-
-                        if (serialNumber < charaCardIdPairs.Count())
-                        {
-                            charaCardIdPair = charaCardIdPairs.ElementAt(serialNumber);
-                            return true;
-                        }
-
-                        charaCardIdPair = default;
-                        return false;
-                    }
-
-                    if (TryGetCharaCardIdPair(number - 1, out var key)
+                    if (TryGetCharaCardIdPair(chara, cardType, number - 1, out var key)
                         && Definitions.CardNameTable.TryGetValue(key, out var name))
                     {
                         cardForDeck = clearDataDictionary.TryGetValue(key.Chara, out var clearData)
@@ -102,6 +86,23 @@ namespace ThScoreFileConverter.Models.Th105
                     return Utils.ToNumberString(cardForDeck.MaxNumber);
                 }
             });
+
+            // serialNumber : 0-based
+            static bool TryGetCharaCardIdPair(
+                Chara chara, CardType cardType, int serialNumber, out (Chara Chara, int CardId) charaCardIdPair)
+            {
+                var charaCardIdPairs = Definitions.CardNameTable.Keys.Where(
+                    pair => (pair.Chara == chara) && (pair.CardId / 100 == (int)cardType));
+
+                if (serialNumber < charaCardIdPairs.Count())
+                {
+                    charaCardIdPair = charaCardIdPairs.ElementAt(serialNumber);
+                    return true;
+                }
+
+                charaCardIdPair = default;
+                return false;
+            }
         }
 
         public string Replace(string input)
