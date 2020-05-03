@@ -97,20 +97,38 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
-        ///   東方スコアファイル (*.dat)|*.dat|すべてのファイル (*.*)|*.* に類似しているローカライズされた文字列を検索します。
+        ///   .bak に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string fltScoreFile {
+        public static string BackupFileExtension {
             get {
-                return ResourceManager.GetString("fltScoreFile", resourceCulture);
+                return ResourceManager.GetString("BackupFileExtension", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   すべてのファイル (*.*)|*.* に類似しているローカライズされた文字列を検索します。
+        ///   *.dat に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string fltTemplateFile {
+        public static string BestShotFilePattern {
             get {
-                return ResourceManager.GetString("fltTemplateFile", resourceCulture);
+                return ResourceManager.GetString("BestShotFilePattern", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   .png に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ConvertedBestShotFileExtension {
+            get {
+                return ResourceManager.GetString("ConvertedBestShotFileExtension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   {0} may be broken. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string InvalidDataExceptionFileMayBeBroken {
+            get {
+                return ResourceManager.GetString("InvalidDataExceptionFileMayBeBroken", resourceCulture);
             }
         }
         
@@ -178,291 +196,93 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
-        ///   TH06 に類似しているローカライズされた文字列を検索します。
+        ///   Must be Invoked after {0}. に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string keyTh06 {
+        public static string InvalidOperationExceptionMustBeInvokedAfter {
             get {
-                return ResourceManager.GetString("keyTh06", resourceCulture);
+                return ResourceManager.GetString("InvalidOperationExceptionMustBeInvokedAfter", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   TH07 に類似しているローカライズされた文字列を検索します。
+        ///   Conversion finished. に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string keyTh07 {
+        public static string MessageConversionFinished {
             get {
-                return ResourceManager.GetString("keyTh07", resourceCulture);
+                return ResourceManager.GetString("MessageConversionFinished", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   TH075 に類似しているローカライズされた文字列を検索します。
+        ///   Failed to read the score file. に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string keyTh075 {
+        public static string MessageFailedToReadScoreFile {
             get {
-                return ResourceManager.GetString("keyTh075", resourceCulture);
+                return ResourceManager.GetString("MessageFailedToReadScoreFile", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   TH08 に類似しているローカライズされた文字列を検索します。
+        ///   Select the directory containing best shot files. に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string keyTh08 {
+        public static string MessageSelectBestShotDirectory {
             get {
-                return ResourceManager.GetString("keyTh08", resourceCulture);
+                return ResourceManager.GetString("MessageSelectBestShotDirectory", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   TH09 に類似しているローカライズされた文字列を検索します。
+        ///   Select the output directory to save converted files. に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string keyTh09 {
+        public static string MessageSelectOutputDirectory {
             get {
-                return ResourceManager.GetString("keyTh09", resourceCulture);
+                return ResourceManager.GetString("MessageSelectOutputDirectory", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   TH095 に類似しているローカライズされた文字列を検索します。
+        ///   The setting file: &quot;{0}&quot; seems corrupted.
+        ///Renamed to &quot;{1}&quot;. に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string keyTh095 {
+        public static string MessageSettingFileIsCorrupted {
             get {
-                return ResourceManager.GetString("keyTh095", resourceCulture);
+                return ResourceManager.GetString("MessageSettingFileIsCorrupted", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   TH10 に類似しているローカライズされた文字列を検索します。
+        ///   Start conversion... に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string keyTh10 {
+        public static string MessageStartConversion {
             get {
-                return ResourceManager.GetString("keyTh10", resourceCulture);
+                return ResourceManager.GetString("MessageStartConversion", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   TH105 に類似しているローカライズされた文字列を検索します。
+        ///   Error に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string keyTh105 {
+        public static string MessageTitleError {
             get {
-                return ResourceManager.GetString("keyTh105", resourceCulture);
+                return ResourceManager.GetString("MessageTitleError", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   TH11 に類似しているローカライズされた文字列を検索します。
+        ///   Warning に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string keyTh11 {
+        public static string MessageTitleWarning {
             get {
-                return ResourceManager.GetString("keyTh11", resourceCulture);
+                return ResourceManager.GetString("MessageTitleWarning", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   TH12 に類似しているローカライズされた文字列を検索します。
+        ///   An unhandled exception occurred. に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string keyTh12 {
+        public static string MessageUnhandledExceptionOccurred {
             get {
-                return ResourceManager.GetString("keyTh12", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   TH123 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string keyTh123 {
-            get {
-                return ResourceManager.GetString("keyTh123", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   TH125 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string keyTh125 {
-            get {
-                return ResourceManager.GetString("keyTh125", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   TH128 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string keyTh128 {
-            get {
-                return ResourceManager.GetString("keyTh128", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   TH13 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string keyTh13 {
-            get {
-                return ResourceManager.GetString("keyTh13", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   TH135 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string keyTh135 {
-            get {
-                return ResourceManager.GetString("keyTh135", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   TH14 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string keyTh14 {
-            get {
-                return ResourceManager.GetString("keyTh14", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   TH143 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string keyTh143 {
-            get {
-                return ResourceManager.GetString("keyTh143", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   TH145 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string keyTh145 {
-            get {
-                return ResourceManager.GetString("keyTh145", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   TH15 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string keyTh15 {
-            get {
-                return ResourceManager.GetString("keyTh15", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   TH155 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string keyTh155 {
-            get {
-                return ResourceManager.GetString("keyTh155", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   TH16 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string keyTh16 {
-            get {
-                return ResourceManager.GetString("keyTh16", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   TH165 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string keyTh165 {
-            get {
-                return ResourceManager.GetString("keyTh165", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   TH17 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string keyTh17 {
-            get {
-                return ResourceManager.GetString("keyTh17", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   出力が完了しました。 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string msgEndConversion {
-            get {
-                return ResourceManager.GetString("msgEndConversion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   スコアファイルの読み込みに失敗しました。 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string msgErrScoreFileNotSupported {
-            get {
-                return ResourceManager.GetString("msgErrScoreFileNotSupported", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   未知の例外が発生しました。 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string msgErrUnhandledException {
-            get {
-                return ResourceManager.GetString("msgErrUnhandledException", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   設定ファイル: &quot;{0}&quot; は壊れていたようです。
-        ///&quot;{1}&quot; にリネームしました。 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string msgFmtBrokenSettingFile {
-            get {
-                return ResourceManager.GetString("msgFmtBrokenSettingFile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   ベストショットファイルが保存されているディレクトリを選択してください。 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string msgSelectBestShotDirectory {
-            get {
-                return ResourceManager.GetString("msgSelectBestShotDirectory", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   変換後のファイルの出力先ディレクトリを選択してください。 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string msgSelectOutputDirectory {
-            get {
-                return ResourceManager.GetString("msgSelectOutputDirectory", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   出力を開始します... に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string msgStartConversion {
-            get {
-                return ResourceManager.GetString("msgStartConversion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   エラー に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string msgTitleError {
-            get {
-                return ResourceManager.GetString("msgTitleError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   警告 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string msgTitleWarning {
-            get {
-                return ResourceManager.GetString("msgTitleWarning", resourceCulture);
+                return ResourceManager.GetString("MessageUnhandledExceptionOccurred", resourceCulture);
             }
         }
         
@@ -503,11 +323,20 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
-        ///   *.dat に類似しているローカライズされた文字列を検索します。
+        ///   Touhou score files (*.dat)|*.dat|All files (*.*)|*.* に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string ptnBestShot {
+        public static string ScoreFileFilter {
             get {
-                return ResourceManager.GetString("ptnBestShot", resourceCulture);
+                return ResourceManager.GetString("ScoreFileFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   settings.xml に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string SettingFileName {
+            get {
+                return ResourceManager.GetString("SettingFileName", resourceCulture);
             }
         }
         
@@ -521,56 +350,227 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
-        ///   .bak に類似しているローカライズされた文字列を検索します。
+        ///   Supported version:  に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string strBackupFileExtension {
+        public static string SupportedVersion {
             get {
-                return ResourceManager.GetString("strBackupFileExtension", resourceCulture);
+                return ResourceManager.GetString("SupportedVersion", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   bestshot に類似しているローカライズされた文字列を検索します。
+        ///   All files (*.*)|*.* に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string strBestShotDirectory {
+        public static string TemplateFileFilter {
             get {
-                return ResourceManager.GetString("strBestShotDirectory", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   .png に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string strBestShotExtension {
-            get {
-                return ResourceManager.GetString("strBestShotExtension", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   settings.xml に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string strSettingFile {
-            get {
-                return ResourceManager.GetString("strSettingFile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   対応バージョン:  に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string strSupportedVersions {
-            get {
-                return ResourceManager.GetString("strSupportedVersions", resourceCulture);
+                return ResourceManager.GetString("TemplateFileFilter", resourceCulture);
             }
         }
         
         /// <summary>
         ///   ver. に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string strVersionPrefix {
+        public static string VersionPrefix {
             get {
-                return ResourceManager.GetString("strVersionPrefix", resourceCulture);
+                return ResourceManager.GetString("VersionPrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   _About... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsMainWindowButtonAbout {
+            get {
+                return ResourceManager.GetString("ViewsMainWindowButtonAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   _Add... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsMainWindowButtonAdd {
+            get {
+                return ResourceManager.GetString("ViewsMainWindowButtonAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Con_vert に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsMainWindowButtonConvert {
+            get {
+                return ResourceManager.GetString("ViewsMainWindowButtonConvert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   _Open... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsMainWindowButtonOpen {
+            get {
+                return ResourceManager.GetString("ViewsMainWindowButtonOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   _Remove に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsMainWindowButtonRemove {
+            get {
+                return ResourceManager.GetString("ViewsMainWindowButtonRemove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   R_emove All に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsMainWindowButtonRemoveAll {
+            get {
+                return ResourceManager.GetString("ViewsMainWindowButtonRemoveAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   _Setting... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsMainWindowButtonSetting {
+            get {
+                return ResourceManager.GetString("ViewsMainWindowButtonSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   _Hide untried card names に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsMainWindowCheckBoxHideUntriedCardNames {
+            get {
+                return ResourceManager.GetString("ViewsMainWindowCheckBoxHideUntriedCardNames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   _Best shot: に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsMainWindowLabelBestShot {
+            get {
+                return ResourceManager.GetString("ViewsMainWindowLabelBestShot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   I_mage output: に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsMainWindowLabelImageOutput {
+            get {
+                return ResourceManager.GetString("ViewsMainWindowLabelImageOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   _Output: に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsMainWindowLabelOutput {
+            get {
+                return ResourceManager.GetString("ViewsMainWindowLabelOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   _Score: に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsMainWindowLabelScore {
+            get {
+                return ResourceManager.GetString("ViewsMainWindowLabelScore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   _Templates: に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsMainWindowLabelTemplates {
+            get {
+                return ResourceManager.GetString("ViewsMainWindowLabelTemplates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   _Change... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsSettingWindowButtonChange {
+            get {
+                return ResourceManager.GetString("ViewsSettingWindowButtonChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   O_K に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsSettingWindowButtonOk {
+            get {
+                return ResourceManager.GetString("ViewsSettingWindowButtonOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   _Reset に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsSettingWindowButtonReset {
+            get {
+                return ResourceManager.GetString("ViewsSettingWindowButtonReset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Outputs numeric values with number group _separators に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsSettingWindowCheckBoxOutputNumberGroupSeparator {
+            get {
+                return ResourceManager.GetString("ViewsSettingWindowCheckBoxOutputNumberGroupSeparator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Character encoding に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsSettingWindowGroupBoxCharacterEncoding {
+            get {
+                return ResourceManager.GetString("ViewsSettingWindowGroupBoxCharacterEncoding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Font に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsSettingWindowGroupBoxFont {
+            get {
+                return ResourceManager.GetString("ViewsSettingWindowGroupBoxFont", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Output formatting に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsSettingWindowGroupBoxOutputFormatting {
+            get {
+                return ResourceManager.GetString("ViewsSettingWindowGroupBoxOutputFormatting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   For _input file: に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsSettingWindowLabelInputEncoding {
+            get {
+                return ResourceManager.GetString("ViewsSettingWindowLabelInputEncoding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   For _output file: に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsSettingWindowLabelOutputEncoding {
+            get {
+                return ResourceManager.GetString("ViewsSettingWindowLabelOutputEncoding", resourceCulture);
             }
         }
     }

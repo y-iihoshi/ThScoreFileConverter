@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using ThScoreFileConverter.Models.Th128;
+using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.Models
 {
@@ -54,7 +55,10 @@ namespace ThScoreFileConverter.Models
             if ((this.allScoreData is null)
                 || (this.allScoreData.CardData is null)
                 || (this.allScoreData.Status is null))
-                throw new InvalidDataException(Utils.Format($"Invoke {nameof(this.ReadScoreFile)} first."));
+            {
+                throw new InvalidDataException(
+                    Utils.Format(Resources.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
+            }
 
             return new List<IStringReplaceable>
             {

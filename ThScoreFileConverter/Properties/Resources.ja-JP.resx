@@ -118,197 +118,112 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AboutWindowTitle" xml:space="preserve">
-    <value>About this tool</value>
-  </data>
-  <data name="ArgumentExceptionMustNotBeEmpty" xml:space="preserve">
-    <value>Must not be empty.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="ArgumentExceptionStreamMustBeReadable" xml:space="preserve">
-    <value>Stream must be readable.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="ArgumentExceptionWrongType" xml:space="preserve">
-    <value>Wrong type.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="BackupFileExtension" xml:space="preserve">
-    <value>.bak</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="BestShotFilePattern" xml:space="preserve">
-    <value>*.dat</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="ConvertedBestShotFileExtension" xml:space="preserve">
-    <value>.png</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="InvalidDataExceptionFileMayBeBroken" xml:space="preserve">
-    <value>{0} may be broken.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="InvalidDataExceptionIndexIsOutOfRange" xml:space="preserve">
-    <value>Index is out of range.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="InvalidDataExceptionIndexMustBeAnInteger" xml:space="preserve">
-    <value>Index must be an integer.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="InvalidDataExceptionNumElementsMustNotBeNegative" xml:space="preserve">
-    <value>The number of elements must not be negative.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="InvalidDataExceptionPropertyIsInvalid" xml:space="preserve">
-    <value>Property {0} is invalid.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="InvalidDataExceptionPropertyIsOutOfRange" xml:space="preserve">
-    <value>Property {0} is out of range.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="InvalidDataExceptionWrongSentinel" xml:space="preserve">
-    <value>Sentinel is wrong.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="InvalidDataExceptionWrongType" xml:space="preserve">
-    <value>Wrong type.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="InvalidOperationExceptionMustBeInvokedAfter" xml:space="preserve">
-    <value>Must be Invoked after {0}.</value>
-    <comment>@Invariant</comment>
+    <value>このツールについて</value>
   </data>
   <data name="MessageConversionFinished" xml:space="preserve">
-    <value>Conversion finished.</value>
+    <value>出力が完了しました。</value>
   </data>
   <data name="MessageFailedToReadScoreFile" xml:space="preserve">
-    <value>Failed to read the score file.</value>
+    <value>スコアファイルの読み込みに失敗しました。</value>
   </data>
   <data name="MessageSelectBestShotDirectory" xml:space="preserve">
-    <value>Select the directory containing best shot files.</value>
+    <value>ベストショットファイルが保存されているディレクトリを選択してください。</value>
   </data>
   <data name="MessageSelectOutputDirectory" xml:space="preserve">
-    <value>Select the output directory to save converted files.</value>
+    <value>変換後のファイルの出力先ディレクトリを選択してください。</value>
   </data>
   <data name="MessageSettingFileIsCorrupted" xml:space="preserve">
-    <value>The setting file: "{0}" seems corrupted.
-Renamed to "{1}".</value>
+    <value>設定ファイル: "{0}" は壊れていたようです。
+"{1}" にリネームしました。</value>
   </data>
   <data name="MessageStartConversion" xml:space="preserve">
-    <value>Start conversion...</value>
+    <value>出力を開始します...</value>
   </data>
   <data name="MessageTitleError" xml:space="preserve">
-    <value>Error</value>
+    <value>エラー</value>
   </data>
   <data name="MessageTitleWarning" xml:space="preserve">
-    <value>Warning</value>
+    <value>警告</value>
   </data>
   <data name="MessageUnhandledExceptionOccurred" xml:space="preserve">
-    <value>An unhandled exception occurred.</value>
-  </data>
-  <data name="NotImplementedExceptionEncryptionIsNotSupported" xml:space="preserve">
-    <value>Encryption is not supported.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="NotImplementedExceptionLzssCompressionIsNotSupported" xml:space="preserve">
-    <value>LZSS compression is not supported.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="NotImplementedExceptionShouldNotReachHere" xml:space="preserve">
-    <value>Should not reach here.</value>
-    <comment>@Invariant</comment>
-  </data>
-  <data name="ProjectUrl" xml:space="preserve">
-    <value>https://www.colorless-sight.jp/thsfc/</value>
-    <comment>@Invariant</comment>
+    <value>未知の例外が発生しました。</value>
   </data>
   <data name="ScoreFileFilter" xml:space="preserve">
-    <value>Touhou score files (*.dat)|*.dat|All files (*.*)|*.*</value>
-  </data>
-  <data name="SettingFileName" xml:space="preserve">
-    <value>settings.xml</value>
-    <comment>@Invariant</comment>
+    <value>東方スコアファイル (*.dat)|*.dat|すべてのファイル (*.*)|*.*</value>
   </data>
   <data name="SettingWindowTitle" xml:space="preserve">
-    <value>Settings</value>
+    <value>設定</value>
   </data>
   <data name="SupportedVersion" xml:space="preserve">
-    <value>Supported version: </value>
+    <value>対応バージョン: </value>
   </data>
   <data name="TemplateFileFilter" xml:space="preserve">
-    <value>All files (*.*)|*.*</value>
-  </data>
-  <data name="VersionPrefix" xml:space="preserve">
-    <value>ver.</value>
-    <comment>@Invariant</comment>
+    <value>すべてのファイル (*.*)|*.*</value>
   </data>
   <data name="ViewsMainWindowButtonAbout" xml:space="preserve">
     <value>_About...</value>
-    
   </data>
   <data name="ViewsMainWindowButtonAdd" xml:space="preserve">
-    <value>_Add...</value>
+    <value>追加(_A)...</value>
   </data>
   <data name="ViewsMainWindowButtonConvert" xml:space="preserve">
-    <value>Con_vert</value>
+    <value>変換(_V)</value>
   </data>
   <data name="ViewsMainWindowButtonOpen" xml:space="preserve">
-    <value>_Open...</value>
+    <value>開く(_O)...</value>
   </data>
   <data name="ViewsMainWindowButtonRemove" xml:space="preserve">
-    <value>_Remove</value>
+    <value>削除(_R)</value>
   </data>
   <data name="ViewsMainWindowButtonRemoveAll" xml:space="preserve">
-    <value>R_emove All</value>
+    <value>全て削除(_E)</value>
   </data>
   <data name="ViewsMainWindowButtonSetting" xml:space="preserve">
-    <value>_Setting...</value>
+    <value>設定(_S)...</value>
   </data>
   <data name="ViewsMainWindowCheckBoxHideUntriedCardNames" xml:space="preserve">
-    <value>_Hide untried card names</value>
+    <value>未挑戦のスペルカード名を出力しない(_H)</value>
   </data>
   <data name="ViewsMainWindowLabelBestShot" xml:space="preserve">
-    <value>_Best shot:</value>
+    <value>ベストショット(_B):</value>
   </data>
   <data name="ViewsMainWindowLabelImageOutput" xml:space="preserve">
-    <value>I_mage output:</value>
+    <value>画像出力先(_M):</value>
   </data>
   <data name="ViewsMainWindowLabelOutput" xml:space="preserve">
-    <value>_Output:</value>
+    <value>出力先(_O):</value>
   </data>
   <data name="ViewsMainWindowLabelScore" xml:space="preserve">
-    <value>_Score:</value>
+    <value>スコア(_S):</value>
   </data>
   <data name="ViewsMainWindowLabelTemplates" xml:space="preserve">
-    <value>_Templates:</value>
+    <value>テンプレート(_T):</value>
   </data>
   <data name="ViewsSettingWindowButtonChange" xml:space="preserve">
-    <value>_Change...</value>
+    <value>変更(_C)...</value>
   </data>
   <data name="ViewsSettingWindowButtonOk" xml:space="preserve">
     <value>O_K</value>
   </data>
   <data name="ViewsSettingWindowButtonReset" xml:space="preserve">
-    <value>_Reset</value>
+    <value>リセット(_R)</value>
   </data>
   <data name="ViewsSettingWindowCheckBoxOutputNumberGroupSeparator" xml:space="preserve">
-    <value>Outputs numeric values with number group _separators</value>
+    <value>数値を桁区切り形式で出力する(_S)</value>
   </data>
   <data name="ViewsSettingWindowGroupBoxCharacterEncoding" xml:space="preserve">
-    <value>Character encoding</value>
+    <value>文字エンコーディング設定</value>
   </data>
   <data name="ViewsSettingWindowGroupBoxFont" xml:space="preserve">
-    <value>Font</value>
+    <value>フォント設定</value>
   </data>
   <data name="ViewsSettingWindowGroupBoxOutputFormatting" xml:space="preserve">
-    <value>Output formatting</value>
+    <value>出力書式設定</value>
   </data>
   <data name="ViewsSettingWindowLabelInputEncoding" xml:space="preserve">
-    <value>For _input file:</value>
+    <value>入力ファイル(_I):</value>
   </data>
   <data name="ViewsSettingWindowLabelOutputEncoding" xml:space="preserve">
-    <value>For _output file:</value>
+    <value>出力ファイル(_O):</value>
   </data>
 </root>

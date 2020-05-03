@@ -13,7 +13,7 @@
     <Description>Touhou Project's score files converter</Description>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <RepositoryUrl>https://github.com/y-iihoshi/ThScoreFileConverter</RepositoryUrl>
-    <NeutralLanguage>ja-JP</NeutralLanguage>
+    <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

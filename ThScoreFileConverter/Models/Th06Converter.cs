@@ -13,6 +13,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th06;
+using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.Models
 {
@@ -52,7 +53,10 @@ namespace ThScoreFileConverter.Models
         protected override IEnumerable<IStringReplaceable> CreateReplacers(bool hideUntriedCards, string outputFilePath)
         {
             if (this.allScoreData is null)
-                throw new InvalidOperationException(Utils.Format($"Invoke {nameof(this.ReadScoreFile)} first."));
+            {
+                throw new InvalidOperationException(
+                    Utils.Format(Resources.InvalidOperationExceptionMustBeInvokedAfter, nameof(this.ReadScoreFile)));
+            }
 
             return new List<IStringReplaceable>
             {

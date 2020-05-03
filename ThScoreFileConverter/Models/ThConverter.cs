@@ -190,7 +190,7 @@ namespace ThScoreFileConverter.Models
             var outputFile = Path.Combine(outputDirectory, Path.GetFileNameWithoutExtension(bestshotFile));
             if (outputDirectory == Path.GetDirectoryName(bestshotFile))
                 outputFile += "_";
-            outputFile += Resources.strBestShotExtension;
+            outputFile += Resources.ConvertedBestShotFileExtension;
 
             return outputFile;
         }
@@ -204,7 +204,7 @@ namespace ThScoreFileConverter.Models
             using var scr = new FileStream(settings.ScoreFile, FileMode.Open, FileAccess.Read);
             _ = scr.Seek(0, SeekOrigin.Begin);
             if (!this.ReadScoreFile(scr))
-                throw new NotSupportedException(Resources.msgErrScoreFileNotSupported);
+                throw new NotSupportedException(Resources.MessageFailedToReadScoreFile);
 
             if (this.HasBestShotConverter)
             {
@@ -212,7 +212,7 @@ namespace ThScoreFileConverter.Models
                 if (!Directory.Exists(dir))
                     _ = Directory.CreateDirectory(dir);
                 var files = this.FilterBestShotFiles(
-                    Directory.GetFiles(settings.BestShotDirectory, Resources.ptnBestShot));
+                    Directory.GetFiles(settings.BestShotDirectory, Resources.BestShotFilePattern));
                 for (var index = 0; index < files.Length; index++)
                 {
                     var result = GetBestShotFilePath(files[index], dir);

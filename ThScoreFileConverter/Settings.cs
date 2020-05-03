@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using System.Windows;
 using System.Xml;
 using ThScoreFileConverter.Models;
+using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter
 {
@@ -219,7 +220,8 @@ namespace ThScoreFileConverter
         /// <returns>A new <see cref="Exception"/> object.</returns>
         private static Exception NewFileMayBeBrokenException(string file, Exception? innerException = null)
         {
-            return new InvalidDataException(Utils.Format($"{file} may be broken."), innerException);
+            return new InvalidDataException(
+                Utils.Format(Resources.InvalidDataExceptionFileMayBeBroken, file), innerException);
         }
 
         private void OnNullablePropertyChanging<T>(T value)
