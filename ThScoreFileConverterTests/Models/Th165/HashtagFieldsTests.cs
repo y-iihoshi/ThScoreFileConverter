@@ -606,8 +606,7 @@ namespace ThScoreFileConverterTests.Models.Th165
             foreach (var prop in fields.GetType().GetProperties().Where(prop => prop.PropertyType == typeof(bool)))
             {
                 var value = prop.GetValue(fields);
-                Debug.Assert(value is object);
-                Assert.IsFalse((bool)value);
+                Assert.IsTrue((value is bool) && !(bool)value);
             }
         }
     }
