@@ -70,6 +70,14 @@ namespace ThScoreFileConverterTests.Models.Th143
         }
 
         [TestMethod]
+        public void ReplaceTestScene10()
+        {
+            var replacer = new CardReplacer(Scores, false);
+            Assert.AreEqual("八雲 紫", replacer.Replace("%T143CARDL01"));
+            Assert.AreEqual("「運鈍根の捕物帖」", replacer.Replace("%T143CARDL02"));
+        }
+
+        [TestMethod]
         public void ReplaceTestNullScore()
         {
             var scores = new List<IScore> { null! };

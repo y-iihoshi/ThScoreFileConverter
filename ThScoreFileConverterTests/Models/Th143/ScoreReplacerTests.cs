@@ -76,6 +76,15 @@ namespace ThScoreFileConverterTests.Models.Th143
         }
 
         [TestMethod]
+        public void ReplaceTestScene10()
+        {
+            var replacer = new ScoreReplacer(Scores);
+            Assert.AreEqual("0", replacer.Replace("%T143SCRL041"));
+            Assert.AreEqual("0", replacer.Replace("%T143SCRL042"));
+            Assert.AreEqual("0", replacer.Replace("%T143SCRL043"));
+        }
+
+        [TestMethod]
         public void ReplaceTestEmpty()
         {
             var scores = new List<IScore>();

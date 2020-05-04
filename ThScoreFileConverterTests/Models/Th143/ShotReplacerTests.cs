@@ -85,6 +85,13 @@ namespace ThScoreFileConverterTests.Models.Th143
         }
 
         [TestMethod]
+        public void ReplaceTestScene10()
+        {
+            var replacer = new ShotReplacer(BestShots, @"C:\path\to\output\");
+            Assert.AreEqual(string.Empty, replacer.Replace("%T143SHOTL0"));
+        }
+
+        [TestMethod]
         public void ReplaceTestEmptyBestShots()
         {
             var bestshots = new Dictionary<(Day, int), (string, IBestShotHeader)>();
