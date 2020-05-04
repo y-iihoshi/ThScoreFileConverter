@@ -111,6 +111,7 @@ namespace ThScoreFileConverterTests.Models.Th075
         public void ReplaceTestInvalidNumber()
         {
             var replacer = new CardReplacer(ClearData, true);
+            Assert.AreEqual("%T75CARD000RMN", replacer.Replace("%T75CARD000RMN"));
             Assert.AreEqual("%T75CARD101RMN", replacer.Replace("%T75CARD101RMN"));
         }
 
