@@ -123,6 +123,18 @@ namespace ThScoreFileConverterTests.Models.Th125
         }
 
         [TestMethod]
+        public void ReplaceTestNullScore()
+        {
+            var scores = new List<IScore> { null! };
+            var replacer = new ScoreReplacer(scores);
+            Assert.AreEqual("0", replacer.Replace("%T125SCRH971"));
+            Assert.AreEqual("0", replacer.Replace("%T125SCRH972"));
+            Assert.AreEqual("0", replacer.Replace("%T125SCRH973"));
+            Assert.AreEqual("0", replacer.Replace("%T125SCRH974"));
+            Assert.AreEqual("----/--/-- --:--:--", replacer.Replace("%T125SCRH975"));
+        }
+
+        [TestMethod]
         public void ReplaceTestNonexistentLevel()
         {
             var replacer = new ScoreReplacer(Scores);
