@@ -29,6 +29,16 @@ namespace ThScoreFileConverterTests.Models.Th15
                                     .ToDictionary(level => level, level => 100 - (int)level),
                             }
                         },
+                        {
+                            GameMode.Legacy,
+                            new ClearDataPerGameModeStub
+                            {
+                                TotalPlayCount = 34,
+                                PlayTime = 5678901,
+                                ClearCounts = Utils.GetEnumerable<LevelWithTotal>()
+                                    .ToDictionary(level => level, level => 150 - (int)level),
+                            }
+                        },
                     },
                 },
                 new ClearDataStub
@@ -74,87 +84,171 @@ namespace ThScoreFileConverterTests.Models.Th15
         }
 
         [TestMethod]
-        public void ReplaceTestTotalPlayCount()
+        public void ReplaceTestPointdeviceTotalPlayCount()
         {
             var replacer = new CharaExReplacer(ClearDataDictionary);
             Assert.AreEqual("23", replacer.Replace("%T15CHARAEXPHMR1"));
         }
 
         [TestMethod]
-        public void ReplaceTestPlayTime()
+        public void ReplaceTestPointdevicePlayTime()
         {
             var replacer = new CharaExReplacer(ClearDataDictionary);
             Assert.AreEqual("12:41:18", replacer.Replace("%T15CHARAEXPHMR2"));
         }
 
         [TestMethod]
-        public void ReplaceTestClearCount()
+        public void ReplaceTestPointdeviceClearCount()
         {
             var replacer = new CharaExReplacer(ClearDataDictionary);
             Assert.AreEqual("98", replacer.Replace("%T15CHARAEXPHMR3"));
         }
 
         [TestMethod]
-        public void ReplaceTestLevelTotalTotalPlayCount()
+        public void ReplaceTestPointdeviceLevelTotalTotalPlayCount()
         {
             var replacer = new CharaExReplacer(ClearDataDictionary);
             Assert.AreEqual("23", replacer.Replace("%T15CHARAEXPTMR1"));
         }
 
         [TestMethod]
-        public void ReplaceTestLevelTotalPlayTime()
+        public void ReplaceTestPointdeviceLevelTotalPlayTime()
         {
             var replacer = new CharaExReplacer(ClearDataDictionary);
             Assert.AreEqual("12:41:18", replacer.Replace("%T15CHARAEXPTMR2"));
         }
 
         [TestMethod]
-        public void ReplaceTestLevelTotalClearCount()
+        public void ReplaceTestPointdeviceLevelTotalClearCount()
         {
             var replacer = new CharaExReplacer(ClearDataDictionary);
             Assert.AreEqual("585", replacer.Replace("%T15CHARAEXPTMR3"));
         }
 
         [TestMethod]
-        public void ReplaceTestCharaTotalTotalPlayCount()
+        public void ReplaceTestPointdeviceCharaTotalTotalPlayCount()
         {
             var replacer = new CharaExReplacer(ClearDataDictionary);
             Assert.AreEqual("35", replacer.Replace("%T15CHARAEXPHTL1"));
         }
 
         [TestMethod]
-        public void ReplaceTestCharaTotalPlayTime()
+        public void ReplaceTestPointdeviceCharaTotalPlayTime()
         {
             var replacer = new CharaExReplacer(ClearDataDictionary);
             Assert.AreEqual("22:17:26", replacer.Replace("%T15CHARAEXPHTL2"));
         }
 
         [TestMethod]
-        public void ReplaceTestCharaTotalClearCount()
+        public void ReplaceTestPointdeviceCharaTotalClearCount()
         {
             var replacer = new CharaExReplacer(ClearDataDictionary);
             Assert.AreEqual("146", replacer.Replace("%T15CHARAEXPHTL3"));
         }
 
         [TestMethod]
-        public void ReplaceTestTotalTotalPlayCount()
+        public void ReplaceTestPointdeviceTotalTotalPlayCount()
         {
             var replacer = new CharaExReplacer(ClearDataDictionary);
             Assert.AreEqual("35", replacer.Replace("%T15CHARAEXPTTL1"));
         }
 
         [TestMethod]
-        public void ReplaceTestTotalPlayTime()
+        public void ReplaceTestPointdeviceTotalPlayTime()
         {
             var replacer = new CharaExReplacer(ClearDataDictionary);
             Assert.AreEqual("22:17:26", replacer.Replace("%T15CHARAEXPTTL2"));
         }
 
         [TestMethod]
-        public void ReplaceTestTotalClearCount()
+        public void ReplaceTestPointdeviceTotalClearCount()
         {
             var replacer = new CharaExReplacer(ClearDataDictionary);
             Assert.AreEqual("870", replacer.Replace("%T15CHARAEXPTTL3"));
+        }
+
+        [TestMethod]
+        public void ReplaceTestLegacyTotalPlayCount()
+        {
+            var replacer = new CharaExReplacer(ClearDataDictionary);
+            Assert.AreEqual("34", replacer.Replace("%T15CHARAEXLHMR1"));
+        }
+
+        [TestMethod]
+        public void ReplaceTestLegacyPlayTime()
+        {
+            var replacer = new CharaExReplacer(ClearDataDictionary);
+            Assert.AreEqual("15:46:29", replacer.Replace("%T15CHARAEXLHMR2"));
+        }
+
+        [TestMethod]
+        public void ReplaceTestLegacyClearCount()
+        {
+            var replacer = new CharaExReplacer(ClearDataDictionary);
+            Assert.AreEqual("148", replacer.Replace("%T15CHARAEXLHMR3"));
+        }
+
+        [TestMethod]
+        public void ReplaceTestLegacyLevelTotalTotalPlayCount()
+        {
+            var replacer = new CharaExReplacer(ClearDataDictionary);
+            Assert.AreEqual("34", replacer.Replace("%T15CHARAEXLTMR1"));
+        }
+
+        [TestMethod]
+        public void ReplaceTestLegacyLevelTotalPlayTime()
+        {
+            var replacer = new CharaExReplacer(ClearDataDictionary);
+            Assert.AreEqual("15:46:29", replacer.Replace("%T15CHARAEXLTMR2"));
+        }
+
+        [TestMethod]
+        public void ReplaceTestLegacyLevelTotalClearCount()
+        {
+            var replacer = new CharaExReplacer(ClearDataDictionary);
+            Assert.AreEqual("885", replacer.Replace("%T15CHARAEXLTMR3"));
+        }
+
+        [TestMethod]
+        public void ReplaceTestLegacyCharaTotalTotalPlayCount()
+        {
+            var replacer = new CharaExReplacer(ClearDataDictionary);
+            Assert.AreEqual("34", replacer.Replace("%T15CHARAEXLHTL1"));
+        }
+
+        [TestMethod]
+        public void ReplaceTestLegacyCharaTotalPlayTime()
+        {
+            var replacer = new CharaExReplacer(ClearDataDictionary);
+            Assert.AreEqual("15:46:29", replacer.Replace("%T15CHARAEXLHTL2"));
+        }
+
+        [TestMethod]
+        public void ReplaceTestLegacyCharaTotalClearCount()
+        {
+            var replacer = new CharaExReplacer(ClearDataDictionary);
+            Assert.AreEqual("148", replacer.Replace("%T15CHARAEXLHTL3"));
+        }
+
+        [TestMethod]
+        public void ReplaceTestLegacyTotalTotalPlayCount()
+        {
+            var replacer = new CharaExReplacer(ClearDataDictionary);
+            Assert.AreEqual("34", replacer.Replace("%T15CHARAEXLTTL1"));
+        }
+
+        [TestMethod]
+        public void ReplaceTestLegacyTotalPlayTime()
+        {
+            var replacer = new CharaExReplacer(ClearDataDictionary);
+            Assert.AreEqual("15:46:29", replacer.Replace("%T15CHARAEXLTTL2"));
+        }
+
+        [TestMethod]
+        public void ReplaceTestLegacyTotalClearCount()
+        {
+            var replacer = new CharaExReplacer(ClearDataDictionary);
+            Assert.AreEqual("885", replacer.Replace("%T15CHARAEXLTTL3"));
         }
 
         [TestMethod]

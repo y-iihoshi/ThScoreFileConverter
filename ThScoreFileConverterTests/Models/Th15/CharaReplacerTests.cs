@@ -29,6 +29,16 @@ namespace ThScoreFileConverterTests.Models.Th15
                                     .ToDictionary(level => level, level => 100 - (int)level),
                             }
                         },
+                        {
+                            GameMode.Legacy,
+                            new ClearDataPerGameModeStub
+                            {
+                                TotalPlayCount = 34,
+                                PlayTime = 5678901,
+                                ClearCounts = Utils.GetEnumerable<LevelWithTotal>()
+                                    .ToDictionary(level => level, level => 150 - (int)level),
+                            }
+                        },
                     },
                 },
                 new ClearDataStub
@@ -74,45 +84,87 @@ namespace ThScoreFileConverterTests.Models.Th15
         }
 
         [TestMethod]
-        public void ReplaceTestTotalPlayCount()
+        public void ReplaceTestPointdeviceTotalPlayCount()
         {
             var replacer = new CharaReplacer(ClearDataDictionary);
             Assert.AreEqual("23", replacer.Replace("%T15CHARAPMR1"));
         }
 
         [TestMethod]
-        public void ReplaceTestPlayTime()
+        public void ReplaceTestPointdevicePlayTime()
         {
             var replacer = new CharaReplacer(ClearDataDictionary);
             Assert.AreEqual("12:41:18", replacer.Replace("%T15CHARAPMR2"));
         }
 
         [TestMethod]
-        public void ReplaceTestClearCount()
+        public void ReplaceTestPointdeviceClearCount()
         {
             var replacer = new CharaReplacer(ClearDataDictionary);
             Assert.AreEqual("585", replacer.Replace("%T15CHARAPMR3"));
         }
 
         [TestMethod]
-        public void ReplaceTestCharaTotalTotalPlayCount()
+        public void ReplaceTestPointdeviceCharaTotalTotalPlayCount()
         {
             var replacer = new CharaReplacer(ClearDataDictionary);
             Assert.AreEqual("35", replacer.Replace("%T15CHARAPTL1"));
         }
 
         [TestMethod]
-        public void ReplaceTestCharaTotalPlayTime()
+        public void ReplaceTestPointdeviceCharaTotalPlayTime()
         {
             var replacer = new CharaReplacer(ClearDataDictionary);
             Assert.AreEqual("22:17:26", replacer.Replace("%T15CHARAPTL2"));
         }
 
         [TestMethod]
-        public void ReplaceTestCharaTotalClearCount()
+        public void ReplaceTestPointdeviceCharaTotalClearCount()
         {
             var replacer = new CharaReplacer(ClearDataDictionary);
             Assert.AreEqual("870", replacer.Replace("%T15CHARAPTL3"));
+        }
+
+        [TestMethod]
+        public void ReplaceTestLegacyTotalPlayCount()
+        {
+            var replacer = new CharaReplacer(ClearDataDictionary);
+            Assert.AreEqual("34", replacer.Replace("%T15CHARALMR1"));
+        }
+
+        [TestMethod]
+        public void ReplaceTestLegacyPlayTime()
+        {
+            var replacer = new CharaReplacer(ClearDataDictionary);
+            Assert.AreEqual("15:46:29", replacer.Replace("%T15CHARALMR2"));
+        }
+
+        [TestMethod]
+        public void ReplaceTestLegacyClearCount()
+        {
+            var replacer = new CharaReplacer(ClearDataDictionary);
+            Assert.AreEqual("885", replacer.Replace("%T15CHARALMR3"));
+        }
+
+        [TestMethod]
+        public void ReplaceTestLegacyCharaTotalTotalPlayCount()
+        {
+            var replacer = new CharaReplacer(ClearDataDictionary);
+            Assert.AreEqual("34", replacer.Replace("%T15CHARALTL1"));
+        }
+
+        [TestMethod]
+        public void ReplaceTestLegacyCharaTotalPlayTime()
+        {
+            var replacer = new CharaReplacer(ClearDataDictionary);
+            Assert.AreEqual("15:46:29", replacer.Replace("%T15CHARALTL2"));
+        }
+
+        [TestMethod]
+        public void ReplaceTestLegacyCharaTotalClearCount()
+        {
+            var replacer = new CharaReplacer(ClearDataDictionary);
+            Assert.AreEqual("885", replacer.Replace("%T15CHARALTL3"));
         }
 
         [TestMethod]
