@@ -198,6 +198,27 @@ namespace ThScoreFileConverterTests.Models.Th08
         }
 
         [TestMethod]
+        public void ReplaceTestExtraClear()
+        {
+            var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>
+            {
+                {
+                    (HighScoreTests.ValidStub.Chara, Level.Extra),
+                    new List<IHighScore>
+                    {
+                        new HighScoreStub(HighScoreTests.ValidStub)
+                        {
+                            Level = Level.Extra,
+                            StageProgress = StageProgress.Clear,
+                        },
+                    }
+                },
+            };
+            var replacer = new ClearReplacer(rankings, ClearData);
+            Assert.AreEqual(StageProgress.Clear.ToShortName(), replacer.Replace("%T08CLEARXMA"));
+        }
+
+        [TestMethod]
         public void ReplaceTestEmptyRankings()
         {
             var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>();

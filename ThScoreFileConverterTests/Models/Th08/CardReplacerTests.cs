@@ -73,6 +73,13 @@ namespace ThScoreFileConverterTests.Models.Th08
         }
 
         [TestMethod]
+        public void ReplaceTestRankLastWord()
+        {
+            var replacer = new CardReplacer(CardAttacks, false);
+            Assert.AreEqual("Last Word", replacer.Replace("%T08CARD206R"));
+        }
+
+        [TestMethod]
         public void ReplaceTestHiddenName()
         {
             var replacer = new CardReplacer(CardAttacks, true);

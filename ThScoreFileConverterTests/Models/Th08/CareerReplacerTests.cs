@@ -118,6 +118,21 @@ namespace ThScoreFileConverterTests.Models.Th08
         }
 
         [TestMethod]
+        public void ReplaceTestStoryLastWord()
+        {
+            var cardAttacks = new List<ICardAttack>
+            {
+                new CardAttackStub(CardAttackTests.ValidStub)
+                {
+                    CardId = 206,
+                },
+            }.ToDictionary(element => (int)element.CardId);
+
+            var replacer = new CareerReplacer(cardAttacks);
+            Assert.AreEqual("%T08CS206MA1", replacer.Replace("%T08CS206MA1"));
+        }
+
+        [TestMethod]
         public void ReplaceTestPracticeMaxBonus()
         {
             var replacer = new CareerReplacer(CardAttacks);

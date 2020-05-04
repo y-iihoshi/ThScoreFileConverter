@@ -64,6 +64,36 @@ namespace ThScoreFileConverterTests.Models.Th08
         }
 
         [TestMethod]
+        public void ReplaceTestEmptyHighScores()
+        {
+            var practiceScores = new List<IPracticeScore>
+            {
+                new PracticeScoreStub(PracticeScoreTests.ValidStub)
+                {
+                    HighScores = new Dictionary<(Stage, Level), int>(),
+                },
+            }.ToDictionary(element => element.Chara);
+
+            var replacer = new PracticeReplacer(practiceScores);
+            Assert.AreEqual("0", replacer.Replace("%T08PRACHMA6A1"));
+        }
+
+        [TestMethod]
+        public void ReplaceTestEmptyPlayCounts()
+        {
+            var practiceScores = new List<IPracticeScore>
+            {
+                new PracticeScoreStub(PracticeScoreTests.ValidStub)
+                {
+                    PlayCounts = new Dictionary<(Stage, Level), int>(),
+                },
+            }.ToDictionary(element => element.Chara);
+
+            var replacer = new PracticeReplacer(practiceScores);
+            Assert.AreEqual("0", replacer.Replace("%T08PRACHMA6A2"));
+        }
+
+        [TestMethod]
         public void ReplaceTestLevelExtra()
         {
             var replacer = new PracticeReplacer(PracticeScores);

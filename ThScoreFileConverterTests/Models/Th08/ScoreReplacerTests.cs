@@ -235,6 +235,26 @@ namespace ThScoreFileConverterTests.Models.Th08
         }
 
         [TestMethod]
+        public void ReplaceTestGotNonexistentSpellCards()
+        {
+            var rankings = new Dictionary<(Chara, Level), IReadOnlyList<IHighScore>>
+            {
+                {
+                    (HighScoreTests.ValidStub.Chara, HighScoreTests.ValidStub.Level),
+                    new List<IHighScore>
+                    {
+                        new HighScoreStub(HighScoreTests.ValidStub)
+                        {
+                            CardFlags = new Dictionary<int, byte> { { 223, 1 } },
+                        },
+                    }
+                },
+            };
+            var replacer = new ScoreReplacer(rankings);
+            Assert.AreEqual(string.Empty, replacer.Replace("%T08SCRHMA1F"));
+        }
+
+        [TestMethod]
         public void ReplaceTestNumGotSpellCards()
         {
             var replacer = new ScoreReplacer(Rankings);
