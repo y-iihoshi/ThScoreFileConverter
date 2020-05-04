@@ -72,7 +72,10 @@ namespace ThScoreFileConverter.Models.Th13
                 if ((kind == "S") && (level == LevelPracticeWithTotal.OverDrive))
                     return match.ToString();
 
-                bool FindByKindType(ISpellCard<LevelPractice> card) => FindByKindTypeImpl(card, kind, type);
+                bool FindByKindType(ISpellCard<LevelPractice> card)
+                {
+                    return FindByKindTypeImpl(card, kind, type);
+                }
 
                 Func<ISpellCard<LevelPractice>, bool> findByStage;
                 if (stage == StageWithTotal.Total)

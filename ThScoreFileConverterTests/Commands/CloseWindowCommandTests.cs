@@ -46,14 +46,18 @@ namespace ThScoreFileConverterTests.Commands
             var instance = CloseWindowCommand.Instance;
             var window = new Window();
             var invoked = false;
-            void onClosed(object? sender, EventArgs e) { invoked = true; }
 
-            window.Closed += onClosed;
+            void OnClosed(object? sender, EventArgs e)
+            {
+                invoked = true;
+            }
+
+            window.Closed += OnClosed;
             instance.Execute(window);
             Assert.IsTrue(invoked);
 
             invoked = false;
-            window.Closed -= onClosed;
+            window.Closed -= OnClosed;
             instance.Execute(window);
             Assert.IsFalse(invoked);
         }

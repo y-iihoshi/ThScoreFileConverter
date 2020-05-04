@@ -68,7 +68,10 @@ namespace ThScoreFileConverter.Models.Th08
                 if ((kind == "S") && (level == LevelPracticeWithTotal.LastWord))
                     return match.ToString();
 
-                bool FindByKindType(ICardAttack attack) => FindByKindTypeImpl(attack, chara, kind, type);
+                bool FindByKindType(ICardAttack attack)
+                {
+                    return FindByKindTypeImpl(attack, chara, kind, type);
+                }
 
                 Func<ICardAttack, bool> findByStage;
                 if (stage == StageWithTotal.Total)

@@ -70,7 +70,10 @@ namespace ThScoreFileConverter.Models.Th14
                 if (stage == StageWithTotal.Extra)
                     return match.ToString();
 
-                bool FindByKindType(Th13.ISpellCard<Level> card) => FindByKindTypeImpl(card, kind, type);
+                bool FindByKindType(Th13.ISpellCard<Level> card)
+                {
+                    return FindByKindTypeImpl(card, kind, type);
+                }
 
                 Func<Th13.ISpellCard<Level>, bool> findByStage;
                 if (stage == StageWithTotal.Total)

@@ -49,10 +49,16 @@ namespace ThScoreFileConverter.Models.Th075
                     getValues = data => data.CardTrulyGot.Select(got => (short)got);
 
                 IEnumerable<(int cardId, int cardIndex)> MakeCardIdIndexPairs(Level lv)
-                    => Definitions.CardIdTable[chara]
+                {
+                    return Definitions.CardIdTable[chara]
                         .Select((id, index) => (id, index))
                         .Where(pair => Definitions.CardTable[pair.id].Level == lv);
-                static bool IsPositive(short value) => value > 0;
+                }
+
+                static bool IsPositive(short value)
+                {
+                    return value > 0;
+                }
 
                 if (level == LevelWithTotal.Total)
                 {

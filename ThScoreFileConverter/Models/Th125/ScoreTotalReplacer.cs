@@ -37,9 +37,14 @@ namespace ThScoreFileConverter.Models.Th125
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                 bool IsTarget(IScore score)
-                    => IsTargetImpl(score, chara, method);
+                {
+                    return IsTargetImpl(score, chara, method);
+                }
+
                 bool TriedAndSucceeded(IScore score)
-                    => IsTarget(score) && (score.TrialCount > 0) && (score.FirstSuccess > 0);
+                {
+                    return IsTarget(score) && (score.TrialCount > 0) && (score.FirstSuccess > 0);
+                }
 
                 return type switch
                 {
