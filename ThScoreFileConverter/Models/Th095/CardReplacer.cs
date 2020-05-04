@@ -41,7 +41,7 @@ namespace ThScoreFileConverter.Models.Th095
 
                 if (hideUntriedCards)
                 {
-                    var score = scores.FirstOrDefault(elem => (elem != null) && elem.LevelScene.Equals(key));
+                    var score = scores.FirstOrDefault(elem => elem.LevelScene.Equals(key));
                     if (score == null)
                         return "??????????";
                 }
