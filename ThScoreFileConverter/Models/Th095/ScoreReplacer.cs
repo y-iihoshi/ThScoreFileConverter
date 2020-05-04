@@ -38,7 +38,7 @@ namespace ThScoreFileConverter.Models.Th095
                 if (!Definitions.SpellCards.ContainsKey(key))
                     return match.ToString();
 
-                var score = scores.FirstOrDefault(elem => elem.LevelScene.Equals(key));
+                var score = scores.FirstOrDefault(elem => (elem != null) && elem.LevelScene.Equals(key));
 
                 return type switch
                 {

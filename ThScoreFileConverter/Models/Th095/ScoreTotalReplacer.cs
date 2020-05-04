@@ -33,10 +33,10 @@ namespace ThScoreFileConverter.Models.Th095
 
                 return type switch
                 {
-                    1 => Utils.ToNumberString(scores.Sum(score => score.HighScore)),
-                    2 => Utils.ToNumberString(scores.Sum(score => score.BestshotScore)),
-                    3 => Utils.ToNumberString(scores.Sum(score => score.TrialCount)),
-                    4 => scores.Count(score => score.HighScore > 0).ToString(CultureInfo.CurrentCulture),
+                    1 => Utils.ToNumberString(scores.Sum(score => (score != null) ? score.HighScore : 0L)),
+                    2 => Utils.ToNumberString(scores.Sum(score => (score != null) ? score.BestshotScore : 0L)),
+                    3 => Utils.ToNumberString(scores.Sum(score => (score != null) ? score.TrialCount : 0)),
+                    4 => scores.Count(score => score?.HighScore > 0).ToString(CultureInfo.CurrentCulture),
                     _ => match.ToString(),  // unreachable
                 };
             });

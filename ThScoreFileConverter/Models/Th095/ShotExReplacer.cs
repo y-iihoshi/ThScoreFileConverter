@@ -68,7 +68,8 @@ namespace ThScoreFileConverter.Models.Th095
                             return Utils.Format("{0:F6}%", bestshot.Header.SlowRate);
                         case 6:     // date & time
                             {
-                                var score = scores.FirstOrDefault(elem => elem.LevelScene.Equals(key));
+                                var score = scores.FirstOrDefault(
+                                    elem => (elem != null) && elem.LevelScene.Equals(key));
                                 if (score != null)
                                 {
                                     return new DateTime(1970, 1, 1)
