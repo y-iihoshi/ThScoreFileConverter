@@ -171,6 +171,14 @@ namespace ThScoreFileConverterTests.Models.Th095
         }
 
         [TestMethod]
+        public void ReplaceTestNullScore()
+        {
+            var scores = new List<IScore> { null! };
+            var replacer = new ShotExReplacer(BestShots, scores, @"C:\path\to\output\");
+            Assert.AreEqual("----/--/-- --:--:--", replacer.Replace("%T95SHOTEX236"));
+        }
+
+        [TestMethod]
         public void ReplaceTestNullOutputFilePath()
         {
             var replacer = new ShotExReplacer(BestShots, Scores, null!);

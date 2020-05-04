@@ -110,6 +110,17 @@ namespace ThScoreFileConverterTests.Models.Th095
         }
 
         [TestMethod]
+        public void ReplaceTestNullScore()
+        {
+            var scores = new List<IScore>() { null! };
+            var replacer = new ScoreTotalReplacer(scores);
+            Assert.AreEqual("0", replacer.Replace("%T95SCRTL1"));
+            Assert.AreEqual("0", replacer.Replace("%T95SCRTL2"));
+            Assert.AreEqual("0", replacer.Replace("%T95SCRTL3"));
+            Assert.AreEqual("0", replacer.Replace("%T95SCRTL4"));
+        }
+
+        [TestMethod]
         public void ReplaceTestInvalidFormat()
         {
             var replacer = new ScoreTotalReplacer(Scores);

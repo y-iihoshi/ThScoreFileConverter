@@ -105,6 +105,17 @@ namespace ThScoreFileConverterTests.Models.Th095
         }
 
         [TestMethod]
+        public void ReplaceTestNullScore()
+        {
+            var scores = new List<IScore> { null! };
+            var replacer = new ScoreReplacer(scores);
+            Assert.AreEqual("0", replacer.Replace("%T95SCR961"));
+            Assert.AreEqual("0", replacer.Replace("%T95SCR962"));
+            Assert.AreEqual("0", replacer.Replace("%T95SCR963"));
+            Assert.AreEqual("-----%", replacer.Replace("%T95SCR964"));
+        }
+
+        [TestMethod]
         public void ReplaceTestNonexistentLevel()
         {
             var replacer = new ScoreReplacer(Scores);

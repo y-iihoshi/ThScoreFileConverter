@@ -70,6 +70,24 @@ namespace ThScoreFileConverterTests.Models.Th095
         }
 
         [TestMethod]
+        public void ReplaceTestEmpty()
+        {
+            var scores = new List<IScore>();
+            var replacer = new CardReplacer(scores, true);
+            Assert.AreEqual("??????????", replacer.Replace("%T95CARD961"));
+            Assert.AreEqual("??????????", replacer.Replace("%T95CARD962"));
+        }
+
+        [TestMethod]
+        public void ReplaceTestNullScore()
+        {
+            var scores = new List<IScore> { null! };
+            var replacer = new CardReplacer(scores, true);
+            Assert.AreEqual("??????????", replacer.Replace("%T95CARD961"));
+            Assert.AreEqual("??????????", replacer.Replace("%T95CARD962"));
+        }
+
+        [TestMethod]
         public void ReplaceTestNonexistentSpellCard()
         {
             var replacer = new CardReplacer(Scores, true);
