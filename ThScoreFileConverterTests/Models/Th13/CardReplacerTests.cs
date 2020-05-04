@@ -77,6 +77,13 @@ namespace ThScoreFileConverterTests.Models.Th13
         }
 
         [TestMethod]
+        public void ReplaceTestRankOverDrive()
+        {
+            var replacer = new CardReplacer(ClearDataDictionary, false);
+            Assert.AreEqual("Over Drive", replacer.Replace("%T13CARD120R"));
+        }
+
+        [TestMethod]
         public void ReplaceTestHiddenName()
         {
             var replacer = new CardReplacer(ClearDataDictionary, true);
