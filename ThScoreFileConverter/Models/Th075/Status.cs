@@ -30,7 +30,7 @@ namespace ThScoreFileConverter.Models.Th075
 
         public void ReadFrom(BinaryReader reader)
         {
-            if (reader == null)
+            if (reader is null)
                 throw new ArgumentNullException(nameof(reader));
 
             var charas = Utils.GetEnumerable<CharaWithReserved>();

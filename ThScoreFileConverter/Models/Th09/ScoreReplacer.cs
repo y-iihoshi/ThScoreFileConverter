@@ -43,13 +43,13 @@ namespace ThScoreFileConverter.Models.Th09
                 switch (type)
                 {
                     case 1:     // name
-                        return (score != null)
+                        return (score is IHighScore)
                             ? Encoding.Default.GetString(score.Name.ToArray()).Split('\0')[0] : "--------";
                     case 2:     // score
-                        return (score != null)
+                        return (score is IHighScore)
                             ? Utils.ToNumberString((score.Score * 10) + score.ContinueCount) : "0";
                     case 3:     // date
-                        date = (score != null)
+                        date = (score is IHighScore)
                             ? Encoding.Default.GetString(score.Date.ToArray()).Split('\0')[0] : "--/--";
                         return (date != "--/--") ? date : "--/--/--";
                     default:    // unreachable

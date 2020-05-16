@@ -39,7 +39,7 @@ namespace ThScoreFileConverter.Models.Th15
 
         public void ReadFrom(BinaryReader reader)
         {
-            if (reader == null)
+            if (reader is null)
                 throw new ArgumentNullException(nameof(reader));
 
             var levelsWithTotal = Utils.GetEnumerable<LevelWithTotal>();

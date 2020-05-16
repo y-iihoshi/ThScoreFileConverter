@@ -26,7 +26,7 @@ namespace ThScoreFileConverter.Models.Th09
 
         public void ReadFrom(BinaryReader reader)
         {
-            if (reader == null)
+            if (reader is null)
                 throw new ArgumentNullException(nameof(reader));
 
             this.Counts = Utils.GetEnumerable<Level>().ToDictionary(level => level, _ => reader.ReadInt32());

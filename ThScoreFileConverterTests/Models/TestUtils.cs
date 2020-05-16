@@ -29,7 +29,7 @@ namespace ThScoreFileConverterTests.Models
 
         public static byte[] MakeByteArray(params object[] args)
         {
-            if (args == null)
+            if (args is null)
                 throw new ArgumentNullException(nameof(args));
 
             using var stream = new MemoryStream();
@@ -111,7 +111,7 @@ namespace ThScoreFileConverterTests.Models
 
         public static IEnumerable<byte> MakeSQByteArray(params object?[] args)
         {
-            if (args == null)
+            if (args is null)
                 throw new ArgumentNullException(nameof(args));
 
             var currentType = typeof(TestUtils);

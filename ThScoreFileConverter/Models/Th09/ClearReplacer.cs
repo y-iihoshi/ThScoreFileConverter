@@ -56,7 +56,7 @@ namespace ThScoreFileConverter.Models.Th09
                     {
                         var score = rankings.TryGetValue((chara, level), out var ranking) && (ranking.Count > 0)
                             ? ranking[0] : null;
-                        var date = (score != null)
+                        var date = (score is IHighScore)
                             ? Encoding.Default.GetString(score.Date.ToArray()).TrimEnd('\0') : "--/--";
                         return (date != "--/--") ? "Not Cleared" : "-------";
                     }

@@ -44,7 +44,7 @@ namespace ThScoreFileConverter.Models
             decoded.Seek(0, SeekOrigin.Begin);
             this.allScoreData = Read(decoded);
 
-            return this.allScoreData != null;
+            return this.allScoreData is AllScoreData;
         }
 
         protected override IEnumerable<IStringReplaceable> CreateReplacers(bool hideUntriedCards, string outputFilePath)

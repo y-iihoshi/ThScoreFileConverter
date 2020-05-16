@@ -40,15 +40,15 @@ namespace ThScoreFileConverter.Models.Th125
                     return match.ToString();
 
                 var score = scores.FirstOrDefault(elem =>
-                    (elem != null) && (elem.Chara == chara) && elem.LevelScene.Equals(key));
+                    (elem is IScore) && (elem.Chara == chara) && elem.LevelScene.Equals(key));
 
                 return type switch
                 {
-                    1 => (score != null) ? Utils.ToNumberString(score.HighScore) : "0",
-                    2 => (score != null) ? Utils.ToNumberString(score.BestshotScore) : "0",
-                    3 => (score != null) ? Utils.ToNumberString(score.TrialCount) : "0",
-                    4 => (score != null) ? Utils.ToNumberString(score.FirstSuccess) : "0",
-                    5 => (score != null)
+                    1 => (score is IScore) ? Utils.ToNumberString(score.HighScore) : "0",
+                    2 => (score is IScore) ? Utils.ToNumberString(score.BestshotScore) : "0",
+                    3 => (score is IScore) ? Utils.ToNumberString(score.TrialCount) : "0",
+                    4 => (score is IScore) ? Utils.ToNumberString(score.FirstSuccess) : "0",
+                    5 => (score is IScore)
                         ? new DateTime(1970, 1, 1).AddSeconds(score.DateTime).ToLocalTime()
                             .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture)
                         : "----/--/-- --:--:--",

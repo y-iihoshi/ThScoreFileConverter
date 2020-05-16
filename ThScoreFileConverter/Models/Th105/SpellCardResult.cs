@@ -33,7 +33,7 @@ namespace ThScoreFileConverter.Models.Th105
 
         public void ReadFrom(BinaryReader reader)
         {
-            if (reader == null)
+            if (reader is null)
                 throw new ArgumentNullException(nameof(reader));
 
             this.Enemy = Utils.ToEnum<TChara>(reader.ReadInt32());

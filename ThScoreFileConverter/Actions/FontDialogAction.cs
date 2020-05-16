@@ -287,7 +287,7 @@ namespace ThScoreFileConverter.Actions
         {
             using var dialog = this.CreateDialog();
 
-            if (this.ShowApply && (this.ApplyCommand != null))
+            if (this.ShowApply && (this.ApplyCommand is ICommand))
             {
                 dialog.Apply += (sender, e) =>
                 {
@@ -304,7 +304,7 @@ namespace ThScoreFileConverter.Actions
             switch (dialogResult)
             {
                 case WinForms.DialogResult.OK:
-                    if (this.OkCommand != null)
+                    if (this.OkCommand is ICommand)
                     {
                         var result = new FontDialogActionResult(dialog.Font, dialog.Color);
                         if (this.OkCommand.CanExecute(result))
@@ -314,7 +314,7 @@ namespace ThScoreFileConverter.Actions
                     break;
 
                 case WinForms.DialogResult.Cancel:
-                    if (this.CancelCommand != null)
+                    if (this.CancelCommand is ICommand)
                     {
                         var result = new FontDialogActionResult(oldFont, oldColor);
                         if (this.CancelCommand.CanExecute(result))

@@ -41,7 +41,7 @@ namespace ThScoreFileConverter.Models
             input.Seek(0, SeekOrigin.Begin);
             this.allScoreData = Read(input);
 
-            return this.allScoreData != null;
+            return this.allScoreData is AllScoreData;
         }
 
         protected override IEnumerable<IStringReplaceable> CreateReplacers(bool hideUntriedCards, string outputFilePath)
@@ -78,7 +78,7 @@ namespace ThScoreFileConverter.Models
             var numCharas = Enum.GetValues(typeof(CharaWithReserved)).Length;
             var numLevels = Enum.GetValues(typeof(Th075.Level)).Length;
             if ((allScoreData.ClearData.Count == numCharas * numLevels) &&
-                (allScoreData.Status != null))
+                (allScoreData.Status is Status))
                 return allScoreData;
             else
                 return null;

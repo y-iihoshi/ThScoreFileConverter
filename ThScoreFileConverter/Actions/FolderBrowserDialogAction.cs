@@ -7,6 +7,7 @@
 
 using System;
 using System.Windows;
+using System.Windows.Input;
 using ThScoreFileConverter.Properties;
 using WinForms = System.Windows.Forms;
 
@@ -123,7 +124,7 @@ namespace ThScoreFileConverter.Actions
             switch (dialogResult)
             {
                 case WinForms.DialogResult.OK:
-                    if (this.OkCommand != null)
+                    if (this.OkCommand is ICommand)
                     {
                         var result = new FolderBrowserDialogActionResult(dialog.SelectedPath);
                         if (this.OkCommand.CanExecute(result))
@@ -133,7 +134,7 @@ namespace ThScoreFileConverter.Actions
                     break;
 
                 case WinForms.DialogResult.Cancel:
-                    if (this.CancelCommand != null)
+                    if (this.CancelCommand is ICommand)
                     {
                         if (this.CancelCommand.CanExecute(null))
                             this.CancelCommand.Execute(null);

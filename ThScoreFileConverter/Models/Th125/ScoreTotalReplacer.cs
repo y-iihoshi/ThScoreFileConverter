@@ -65,7 +65,7 @@ namespace ThScoreFileConverter.Models.Th125
 
         private static bool IsTargetImpl(IScore score, Chara chara, int method)
         {
-            if (score == null)
+            if (score is null)
                 return false;
 
             if (method == 2)

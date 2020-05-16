@@ -39,17 +39,17 @@ namespace ThScoreFileConverter.Models.Th165
                     return match.ToString();
 
                 var score = scores.FirstOrDefault(elem =>
-                    (elem != null) &&
+                    (elem is IScore) &&
                     (elem.Number >= 0) &&
                     (elem.Number < Definitions.SpellCards.Count) &&
                     Definitions.SpellCards.ElementAt(elem.Number).Key.Equals(key));
 
                 return type switch
                 {
-                    1 => (score != null) ? Utils.ToNumberString(score.HighScore) : "0",
-                    2 => (score != null) ? Utils.ToNumberString(score.ChallengeCount) : "0",
-                    3 => (score != null) ? Utils.ToNumberString(score.ClearCount) : "0",
-                    4 => (score != null) ? Utils.ToNumberString(score.NumPhotos) : "0",
+                    1 => (score is IScore) ? Utils.ToNumberString(score.HighScore) : "0",
+                    2 => (score is IScore) ? Utils.ToNumberString(score.ChallengeCount) : "0",
+                    3 => (score is IScore) ? Utils.ToNumberString(score.ClearCount) : "0",
+                    4 => (score is IScore) ? Utils.ToNumberString(score.NumPhotos) : "0",
                     _ => match.ToString(),  // unreachable
                 };
             });

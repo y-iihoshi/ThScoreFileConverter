@@ -59,7 +59,7 @@ namespace ThScoreFileConverter.Models
             decoded.Seek(0, SeekOrigin.Begin);
             this.allScoreData = Read(decoded);
 
-            return this.allScoreData != null;
+            return this.allScoreData is AllScoreData;
         }
 
         protected override IEnumerable<IStringReplaceable> CreateReplacers(bool hideUntriedCards, string outputFilePath)
@@ -232,9 +232,9 @@ namespace ThScoreFileConverter.Models
                 // It's OK, do nothing.
             }
 
-            if ((allScoreData.Header != null) &&
+            if ((allScoreData.Header is Header) &&
                 //// (allScoreData.scores.Count >= 0) &&
-                (allScoreData.Status != null))
+                (allScoreData.Status is Status))
                 return allScoreData;
             else
                 return null;

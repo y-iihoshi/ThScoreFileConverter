@@ -189,7 +189,7 @@ namespace ThScoreFileConverter.Behaviors
         /// <param name="e">The event data.</param>
         private static void OnDragDropEvent(ICommand? command, object sender, DragEventArgs e)
         {
-            if (!(command is null))
+            if (command is ICommand)
             {
                 if (!(sender is UIElement))
                     throw new ArgumentException(Resources.ArgumentExceptionWrongType, nameof(sender));

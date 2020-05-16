@@ -42,7 +42,7 @@ namespace ThScoreFileConverter.Models
         /// <exception cref="ArgumentException"><paramref name="stream"/> is not readable.</exception>
         public BitReader(Stream stream)
         {
-            if (stream == null)
+            if (stream is null)
                 throw new ArgumentNullException(nameof(stream));
             if (!stream.CanRead)
                 throw new ArgumentException(Resources.ArgumentExceptionStreamMustBeReadable, nameof(stream));

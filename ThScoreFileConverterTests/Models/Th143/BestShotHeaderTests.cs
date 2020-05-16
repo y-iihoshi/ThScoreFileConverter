@@ -37,7 +37,7 @@ namespace ThScoreFileConverterTests.Models.Th143
 
         internal static void Validate(IBestShotHeader expected, IBestShotHeader actual)
         {
-            if (actual == null)
+            if (actual is null)
                 throw new ArgumentNullException(nameof(actual));
 
             Assert.AreEqual(expected.Signature, actual.Signature);

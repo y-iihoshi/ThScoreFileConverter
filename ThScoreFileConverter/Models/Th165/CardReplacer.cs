@@ -42,11 +42,11 @@ namespace ThScoreFileConverter.Models.Th165
                 if (hideUntriedCards)
                 {
                     var score = scores.FirstOrDefault(elem =>
-                        (elem != null) &&
+                        (elem is IScore) &&
                         (elem.Number >= 0) &&
                         (elem.Number < Definitions.SpellCards.Count) &&
                         Definitions.SpellCards.ElementAt(elem.Number).Key.Equals(key));
-                    if ((score == null) || (score.ChallengeCount <= 0))
+                    if ((score is null) || (score.ChallengeCount <= 0))
                         return "??????????";
                 }
 

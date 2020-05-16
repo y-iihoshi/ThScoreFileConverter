@@ -42,7 +42,7 @@ namespace ThScoreFileConverter.Models.Th09
 
         public void ReadFrom(BinaryReader reader)
         {
-            if (reader == null)
+            if (reader is null)
                 throw new ArgumentNullException(nameof(reader));
 
             this.unknown1 = reader.ReadUInt16();
@@ -57,7 +57,7 @@ namespace ThScoreFileConverter.Models.Th09
 
         public void WriteTo(BinaryWriter writer)
         {
-            if (writer == null)
+            if (writer is null)
                 throw new ArgumentNullException(nameof(writer));
 
             writer.Write(this.unknown1);

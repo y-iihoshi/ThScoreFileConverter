@@ -24,7 +24,7 @@ namespace ThScoreFileConverter.Models.Th105
 
         public void ReadFrom(BinaryReader reader)
         {
-            if (reader == null)
+            if (reader is null)
                 throw new ArgumentNullException(nameof(reader));
 
             this.Id = reader.ReadInt32();

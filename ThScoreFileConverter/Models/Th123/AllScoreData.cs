@@ -37,7 +37,7 @@ namespace ThScoreFileConverter.Models.Th123
 
         public void ReadFrom(BinaryReader reader)
         {
-            if (reader == null)
+            if (reader is null)
                 throw new ArgumentNullException(nameof(reader));
 
             var validNumCharas = Utils.GetEnumerable<Chara>().Where(chara => chara != Chara.Oonamazu).Count();
