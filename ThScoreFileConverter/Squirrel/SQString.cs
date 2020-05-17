@@ -61,7 +61,7 @@ namespace ThScoreFileConverter.Squirrel
 #if NETFRAMEWORK
             return this.Type.GetHashCode() ^ this.Value.GetHashCode();
 #else
-            return this.Type.GetHashCode() ^ this.Value.GetHashCode(StringComparison.InvariantCulture);
+            return HashCode.Combine(this.Type, this.Value);
 #endif
         }
 
