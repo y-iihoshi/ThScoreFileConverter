@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if NETFRAMEWORK
+
+using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Extensions;
@@ -97,3 +99,5 @@ namespace ThScoreFileConverterTests.Extensions
         }
     }
 }
+
+#endif
