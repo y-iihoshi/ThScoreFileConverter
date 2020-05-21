@@ -93,7 +93,9 @@ namespace ThScoreFileConverter.Models
         protected override void ConvertBestShot(Stream input, Stream output)
         {
             using var decoded = new MemoryStream();
-            var outputFile = output as FileStream;
+
+            if (!(output is FileStream outputFile))
+                throw new ArgumentException(Resources.ArgumentExceptionWrongType, nameof(output));
 
             using var reader = new BinaryReader(input, Encoding.UTF8, true);
             var header = new BestShotHeader();
