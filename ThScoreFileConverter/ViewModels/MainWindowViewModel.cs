@@ -102,7 +102,7 @@ namespace ThScoreFileConverter.ViewModels
             this.AddTemplateFilesCommand =
                 new DelegateCommand<OpenFileDialogActionResult>(this.AddTemplateFiles);
             this.DeleteTemplateFilesCommand =
-                new DelegateCommand<IList>(this.DeleteTemplateFiles, this.CanDeleteTemplateFiles);
+                new DelegateCommand<IList?>(this.DeleteTemplateFiles, this.CanDeleteTemplateFiles);
             this.DeleteAllTemplateFilesCommand =
                 new DelegateCommand(this.DeleteAllTemplateFiles, this.CanDeleteAllTemplateFiles);
             this.SelectOutputDirectoryCommand =
@@ -373,7 +373,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets the command to delete some files from the list of template files.
         /// </summary>
-        public DelegateCommand<IList> DeleteTemplateFilesCommand { get; private set; }
+        public DelegateCommand<IList?> DeleteTemplateFilesCommand { get; private set; }
 
         /// <summary>
         /// Gets the command to delete all files from the list of template files.
@@ -499,18 +499,18 @@ namespace ThScoreFileConverter.ViewModels
         /// <returns>
         /// <c>true</c> if <see cref="DeleteTemplateFiles"/> can be invoked; otherwise, <c>false</c>.
         /// </returns>
-        private bool CanDeleteTemplateFiles(IList selectedItems)
+        private bool CanDeleteTemplateFiles(IList? selectedItems)
         {
-            return selectedItems.Count > 0;
+            return (selectedItems is IList) && (selectedItems.Count > 0);
         }
 
         /// <summary>
         /// Deletes some files from the list of template files.
         /// </summary>
         /// <param name="selectedItems">A list indicating the path strings which are deleted.</param>
-        private void DeleteTemplateFiles(IList selectedItems)
+        private void DeleteTemplateFiles(IList? selectedItems)
         {
-            if (selectedItems.Count > 0)
+            if (selectedItems is IList)
                 this.TemplateFiles = this.TemplateFiles.Except(selectedItems.Cast<string>());
         }
 
