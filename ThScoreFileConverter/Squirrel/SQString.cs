@@ -65,7 +65,7 @@ namespace ThScoreFileConverter.Squirrel
 #endif
         }
 
-        public bool Equals(SQString other)
+        public bool Equals(SQString? other)
         {
             if (other is null)
                 return false;
