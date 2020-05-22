@@ -42,9 +42,9 @@ namespace ThScoreFileConverter.Models.Th095
 
                 return type switch
                 {
-                    1 => (score is IScore) ? Utils.ToNumberString(score.HighScore) : "0",
-                    2 => (score is IScore) ? Utils.ToNumberString(score.BestshotScore) : "0",
-                    3 => (score is IScore) ? Utils.ToNumberString(score.TrialCount) : "0",
+                    1 => Utils.ToNumberString(score?.HighScore ?? default),
+                    2 => Utils.ToNumberString(score?.BestshotScore ?? default),
+                    3 => Utils.ToNumberString(score?.TrialCount ?? default),
                     4 => (score is IScore) ? Utils.Format("{0:F3}%", score.SlowRate2) : "-----%",
                     _ => match.ToString(),  // unreachable
                 };

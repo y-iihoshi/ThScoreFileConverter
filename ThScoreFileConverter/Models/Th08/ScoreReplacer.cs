@@ -65,21 +65,21 @@ namespace ThScoreFileConverter.Models.Th08
                     case "6":   // play time
                         return new Time(score.PlayTime).ToString();
                     case "7":   // initial number of players
-                        return (score.PlayerNum + 1).ToString(CultureInfo.CurrentCulture);
+                        return Utils.ToNumberString(score.PlayerNum + 1);
                     case "8":   // point items
                         return Utils.ToNumberString(score.PointItem);
                     case "9":   // time point
                         return Utils.ToNumberString(score.TimePoint);
                     case "0":   // miss count
-                        return score.MissCount.ToString(CultureInfo.CurrentCulture);
+                        return Utils.ToNumberString(score.MissCount);
                     case "A":   // bomb count
-                        return score.BombCount.ToString(CultureInfo.CurrentCulture);
+                        return Utils.ToNumberString(score.BombCount);
                     case "B":   // last spell count
-                        return score.LastSpellCount.ToString(CultureInfo.CurrentCulture);
+                        return Utils.ToNumberString(score.LastSpellCount);
                     case "C":   // pause count
                         return Utils.ToNumberString(score.PauseCount);
                     case "D":   // continue count
-                        return score.ContinueCount.ToString(CultureInfo.CurrentCulture);
+                        return Utils.ToNumberString(score.ContinueCount);
                     case "E":   // human rate
                         return Utils.Format("{0:F2}%", score.HumanRate / 100.0);
                     case "F":   // got spell cards
@@ -90,7 +90,7 @@ namespace ThScoreFileConverter.Models.Th08
                         });
                         return string.Join(Environment.NewLine, cardStrings.ToArray());
                     case "G":   // number of got spell cards
-                        return score.CardFlags.Values.Count(flag => flag > 0).ToString(CultureInfo.CurrentCulture);
+                        return Utils.ToNumberString(score.CardFlags.Values.Count(flag => flag > 0));
                     default:    // unreachable
                         return match.ToString();
                 }

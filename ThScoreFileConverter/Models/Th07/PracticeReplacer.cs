@@ -41,14 +41,15 @@ namespace ThScoreFileConverter.Models.Th07
                     return match.ToString();
 
                 var key = (chara, level, stage);
-                if (practiceScores.TryGetValue(key, out var score))
+                if (type == 1)
                 {
-                    return (type == 1)
-                        ? Utils.ToNumberString(score.HighScore * 10) : Utils.ToNumberString(score.TrialCount);
+                    return Utils.ToNumberString(
+                        practiceScores.TryGetValue(key, out var score) ? (score.HighScore * 10) : default);
                 }
                 else
                 {
-                    return "0";
+                    return Utils.ToNumberString(
+                        practiceScores.TryGetValue(key, out var score) ? score.TrialCount : default);
                 }
             });
         }

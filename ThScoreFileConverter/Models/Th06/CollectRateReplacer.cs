@@ -50,9 +50,7 @@ namespace ThScoreFileConverter.Models.Th06
                 else
                     findByType = attack => attack.TrialCount > 0;
 
-                return cardAttacks.Values
-                    .Count(Utils.MakeAndPredicate(findByStage, findByType))
-                    .ToString(CultureInfo.CurrentCulture);
+                return Utils.ToNumberString(cardAttacks.Values.Count(Utils.MakeAndPredicate(findByStage, findByType)));
             });
         }
 

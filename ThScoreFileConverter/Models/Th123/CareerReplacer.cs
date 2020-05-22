@@ -78,7 +78,7 @@ namespace ThScoreFileConverter.Models.Th123
                     {
                         var (enemy, cardId) = enemyCardIdPairs.ElementAt(index);
                         var key = (enemy, (cardId * numLevels) + ((number - 1) % numLevels));
-                        return toString(spellCardResults.TryGetValue(key, out var result) ? getValue(result) : 0);
+                        return toString(spellCardResults.TryGetValue(key, out var result) ? getValue(result) : default);
                     }
                     else
                     {

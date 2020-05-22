@@ -45,18 +45,18 @@ namespace ThScoreFileConverter.Models.Th08
                     var key = (stage, level);
                     if (type == 1)
                     {
-                        return practiceScore.HighScores.TryGetValue(key, out var highScore)
-                            ? Utils.ToNumberString(highScore * 10) : "0";
+                        return Utils.ToNumberString(
+                            practiceScore.HighScores.TryGetValue(key, out var highScore) ? (highScore * 10) : default);
                     }
                     else
                     {
-                        return practiceScore.PlayCounts.TryGetValue(key, out var playCount)
-                            ? Utils.ToNumberString(playCount) : "0";
+                        return Utils.ToNumberString(
+                            practiceScore.PlayCounts.TryGetValue(key, out var playCount) ? playCount : default);
                     }
                 }
                 else
                 {
-                    return "0";
+                    return Utils.ToNumberString(default(int));
                 }
             });
         }

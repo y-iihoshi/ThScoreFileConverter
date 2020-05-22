@@ -68,9 +68,8 @@ namespace ThScoreFileConverter.Models.Th128
                 else
                     findByType = card => card.TrialCount > 0;
 
-                return spellCards.Values
-                    .Count(Utils.MakeAndPredicate(findByLevel, findByStage, findByType))
-                    .ToString(CultureInfo.CurrentCulture);
+                return Utils.ToNumberString(
+                    spellCards.Values.Count(Utils.MakeAndPredicate(findByLevel, findByStage, findByType)));
             });
         }
 

@@ -44,10 +44,10 @@ namespace ThScoreFileConverter.Models.Th125
 
                 return type switch
                 {
-                    1 => (score is IScore) ? Utils.ToNumberString(score.HighScore) : "0",
-                    2 => (score is IScore) ? Utils.ToNumberString(score.BestshotScore) : "0",
-                    3 => (score is IScore) ? Utils.ToNumberString(score.TrialCount) : "0",
-                    4 => (score is IScore) ? Utils.ToNumberString(score.FirstSuccess) : "0",
+                    1 => Utils.ToNumberString(score?.HighScore ?? default),
+                    2 => Utils.ToNumberString(score?.BestshotScore ?? default),
+                    3 => Utils.ToNumberString(score?.TrialCount ?? default),
+                    4 => Utils.ToNumberString(score?.FirstSuccess ?? default),
                     5 => (score is IScore)
                         ? new DateTime(1970, 1, 1).AddSeconds(score.DateTime).ToLocalTime()
                             .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture)

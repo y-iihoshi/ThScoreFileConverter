@@ -60,7 +60,7 @@ namespace ThScoreFileConverter.Models.Th17
                 else
                 {
                     getValueByChara = dictionary => dictionary.TryGetValue(chara, out var clearData)
-                        ? getValueByType(clearData) : 0;
+                        ? getValueByType(clearData) : default;
                 }
 
                 return toString(getValueByChara(clearDataDictionary));

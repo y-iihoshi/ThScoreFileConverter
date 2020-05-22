@@ -46,10 +46,8 @@ namespace ThScoreFileConverter.Models.Th128
                 }
                 else if (Definitions.CardTable.ContainsKey(number))
                 {
-                    if (spellCards.TryGetValue(number, out var card))
-                        return Utils.ToNumberString(getCount(card));
-                    else
-                        return "0";
+                    return Utils.ToNumberString(
+                        spellCards.TryGetValue(number, out var card) ? getCount(card) : default);
                 }
                 else
                 {

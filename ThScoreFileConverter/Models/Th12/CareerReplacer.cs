@@ -50,10 +50,7 @@ namespace ThScoreFileConverter.Models.Th12
                 }
                 else if (Definitions.CardTable.ContainsKey(number))
                 {
-                    if (cards.TryGetValue(number, out var card))
-                        return Utils.ToNumberString(getCount(card));
-                    else
-                        return "0";
+                    return Utils.ToNumberString(cards.TryGetValue(number, out var card) ? getCount(card) : default);
                 }
                 else
                 {

@@ -58,13 +58,13 @@ namespace ThScoreFileConverter.Models.Th15
                     getValueByChara = dictionary => dictionary.Values
                         .Where(clearData => clearData.Chara != chara)
                         .Sum(clearData => clearData.GameModeData.TryGetValue(mode, out var clearDataPerGameMode)
-                            ? getValueByType(clearDataPerGameMode) : 0);
+                            ? getValueByType(clearDataPerGameMode) : default);
                 }
                 else
                 {
                     getValueByChara = dictionary => dictionary.TryGetValue(chara, out var clearData)
                         && clearData.GameModeData.TryGetValue(mode, out var clearDataPerGameMode)
-                        ? getValueByType(clearDataPerGameMode) : 0;
+                        ? getValueByType(clearDataPerGameMode) : default;
                 }
 
                 return toString(getValueByChara(clearDataDictionary));

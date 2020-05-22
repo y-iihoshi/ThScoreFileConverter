@@ -74,12 +74,12 @@ namespace ThScoreFileConverter.Models.Th15
                         break;
                 }
 
-                return clearDataDictionary.TryGetValue(chara, out var clearData)
+                return Utils.ToNumberString(
+                    clearDataDictionary.TryGetValue(chara, out var clearData)
                     && clearData.GameModeData.TryGetValue(mode, out var clearDataPerGameMode)
                     ? clearDataPerGameMode.Cards.Values
                         .Count(Utils.MakeAndPredicate(findByType, findByLevel, findByStage))
-                        .ToString(CultureInfo.CurrentCulture)
-                    : "0";
+                    : default);
             });
         }
 

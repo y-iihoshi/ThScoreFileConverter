@@ -103,9 +103,8 @@ namespace ThScoreFileConverter.Models.Th08
                         break;
                 }
 
-                return cardAttacks.Values
-                    .Count(Utils.MakeAndPredicate(FindByKindType, findByLevel, findByStage))
-                    .ToString(CultureInfo.CurrentCulture);
+                return Utils.ToNumberString(
+                    cardAttacks.Values.Count(Utils.MakeAndPredicate(FindByKindType, findByLevel, findByStage)));
             }
         }
 

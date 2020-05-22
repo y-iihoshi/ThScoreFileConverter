@@ -79,9 +79,8 @@ namespace ThScoreFileConverter.Models.Th07
                 else
                     findByType = attack => attack.TrialCounts[chara] > 0;
 
-                return cardAttacks.Values
-                    .Count(Utils.MakeAndPredicate(findByLevel, findByStage, findByType))
-                    .ToString(CultureInfo.CurrentCulture);
+                return Utils.ToNumberString(
+                    cardAttacks.Values.Count(Utils.MakeAndPredicate(findByLevel, findByStage, findByType)));
             });
         }
 

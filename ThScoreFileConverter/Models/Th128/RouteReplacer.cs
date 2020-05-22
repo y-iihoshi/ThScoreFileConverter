@@ -60,7 +60,7 @@ namespace ThScoreFileConverter.Models.Th128
                 else
                 {
                     getValueByRoute = dictionary => dictionary.TryGetValue(route, out var clearData)
-                        ? getValueByType(clearData) : 0;
+                        ? getValueByType(clearData) : default;
                 }
 
                 return toString(getValueByRoute(clearDataDictionary));

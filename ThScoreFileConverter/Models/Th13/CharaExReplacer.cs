@@ -63,7 +63,7 @@ namespace ThScoreFileConverter.Models.Th13
                     else
                     {
                         getValueByType = clearData => clearData.ClearCounts
-                            .TryGetValue((LevelPracticeWithTotal)level, out var count) ? count : 0;
+                            .TryGetValue((LevelPracticeWithTotal)level, out var count) ? count : default;
                     }
 
                     toString = Utils.ToNumberString;
@@ -78,7 +78,7 @@ namespace ThScoreFileConverter.Models.Th13
                 else
                 {
                     getValueByChara = dictionary => dictionary.TryGetValue(chara, out var clearData)
-                        ? getValueByType(clearData) : 0;
+                        ? getValueByType(clearData) : default;
                 }
 
                 return toString(getValueByChara(clearDataDictionary));

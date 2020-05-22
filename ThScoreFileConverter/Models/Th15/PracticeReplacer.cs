@@ -44,11 +44,11 @@ namespace ThScoreFileConverter.Models.Th15
                 {
                     var key = (level, (StagePractice)stage);
                     var practices = clearDataDictionary[chara].Practices;
-                    return practices.ContainsKey(key) ? Utils.ToNumberString(practices[key].Score * 10) : "0";
+                    return Utils.ToNumberString(practices.ContainsKey(key) ? (practices[key].Score * 10) : default);
                 }
                 else
                 {
-                    return "0";
+                    return Utils.ToNumberString(default(uint));
                 }
             });
         }

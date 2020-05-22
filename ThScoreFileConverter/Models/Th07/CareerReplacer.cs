@@ -49,8 +49,8 @@ namespace ThScoreFileConverter.Models.Th07
                 }
                 else if (Definitions.CardTable.ContainsKey(number))
                 {
-                    return cardAttacks.TryGetValue(number, out var attack)
-                        ? Utils.ToNumberString(getValue(attack)) : "0";
+                    return Utils.ToNumberString(
+                        cardAttacks.TryGetValue(number, out var attack) ? getValue(attack) : default);
                 }
                 else
                 {

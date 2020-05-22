@@ -48,11 +48,15 @@ namespace ThScoreFileConverter.Models.Th125
 
                 return type switch
                 {
-                    1 => Utils.ToNumberString(scores.Sum(score => TriedAndSucceeded(score) ? score.HighScore : 0L)),
-                    2 => Utils.ToNumberString(scores.Sum(score => IsTarget(score) ? score.BestshotScore : 0L)),
-                    3 => Utils.ToNumberString(scores.Sum(score => IsTarget(score) ? score.TrialCount : 0)),
-                    4 => Utils.ToNumberString(scores.Sum(score => TriedAndSucceeded(score) ? score.FirstSuccess : 0L)),
-                    5 => scores.Count(TriedAndSucceeded).ToString(CultureInfo.CurrentCulture),
+                    1 => Utils.ToNumberString(
+                        scores.Sum(score => (long)(TriedAndSucceeded(score) ? score.HighScore : default))),
+                    2 => Utils.ToNumberString(
+                        scores.Sum(score => (long)(IsTarget(score) ? score.BestshotScore : default))),
+                    3 => Utils.ToNumberString(
+                        scores.Sum(score => (long)(IsTarget(score) ? score.TrialCount : default))),
+                    4 => Utils.ToNumberString(
+                        scores.Sum(score => (long)(TriedAndSucceeded(score) ? score.FirstSuccess : default))),
+                    5 => Utils.ToNumberString(scores.Count(TriedAndSucceeded)),
                     _ => match.ToString(),  // unreachable
                 };
             }

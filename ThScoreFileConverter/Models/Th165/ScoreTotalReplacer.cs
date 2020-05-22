@@ -35,11 +35,11 @@ namespace ThScoreFileConverter.Models.Th165
 
                 return type switch
                 {
-                    1 => Utils.ToNumberString(scores.Sum(score => score.HighScore)),
-                    2 => Utils.ToNumberString(scores.Sum(score => score.ChallengeCount)),
-                    3 => Utils.ToNumberString(scores.Sum(score => score.ClearCount)),
-                    4 => Utils.ToNumberString(scores.Count(score => score.ClearCount > 0)),
-                    5 => Utils.ToNumberString(scores.Sum(score => score.NumPhotos)),
+                    1 => Utils.ToNumberString(scores.Sum(score => (long)(score?.HighScore ?? default))),
+                    2 => Utils.ToNumberString(scores.Sum(score => (long)(score?.ChallengeCount ?? default))),
+                    3 => Utils.ToNumberString(scores.Sum(score => (long)(score?.ClearCount ?? default))),
+                    4 => Utils.ToNumberString(scores.Count(score => score?.ClearCount > 0)),
+                    5 => Utils.ToNumberString(scores.Sum(score => (long)(score?.NumPhotos ?? default))),
                     6 => Utils.ToNumberString(status.NicknameFlags.Count(flag => flag > 0)),
                     _ => match.ToString(),  // unreachable
                 };

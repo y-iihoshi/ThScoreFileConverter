@@ -69,11 +69,10 @@ namespace ThScoreFileConverter.Models.Th12
                 else
                     findByType = card => card.TrialCount > 0;
 
-                return clearDataDictionary.TryGetValue(chara, out var clearData)
-                    ? clearData.Cards.Values
-                        .Count(Utils.MakeAndPredicate(findByLevel, findByStage, findByType))
-                        .ToString(CultureInfo.CurrentCulture)
-                    : "0";
+                return Utils.ToNumberString(
+                    clearDataDictionary.TryGetValue(chara, out var clearData)
+                    ? clearData.Cards.Values.Count(Utils.MakeAndPredicate(findByLevel, findByStage, findByType))
+                    : default);
             });
         }
 

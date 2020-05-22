@@ -40,7 +40,7 @@ namespace ThScoreFileConverter.Models.Th09
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
                 var count = clearCounts.TryGetValue(chara, out var clearCount)
-                    && clearCount.Counts.TryGetValue(level, out var c) ? c : 0;
+                    && clearCount.Counts.TryGetValue(level, out var c) ? c : default;
 
                 if (type == 1)
                 {

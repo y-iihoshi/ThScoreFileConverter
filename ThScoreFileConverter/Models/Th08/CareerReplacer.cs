@@ -65,12 +65,11 @@ namespace ThScoreFileConverter.Models.Th08
                 {
                     if (cardAttacks.TryGetValue(number, out var attack))
                     {
-                        return isValidLevel(attack)
-                            ? Utils.ToNumberString(getValue(attack)) : match.ToString();
+                        return isValidLevel(attack) ? Utils.ToNumberString(getValue(attack)) : match.ToString();
                     }
                     else
                     {
-                        return "0";
+                        return Utils.ToNumberString(default(long));
                     }
                 }
                 else

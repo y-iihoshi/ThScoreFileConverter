@@ -36,7 +36,7 @@ namespace ThScoreFileConverter.Models.Th145
                 if (chara == CharaWithTotal.Total)
                     getValueByChara = dictionary => dictionary.Values.Sum();
                 else
-                    getValueByChara = dictionary => dictionary.TryGetValue((Chara)chara, out var time) ? time : 0;
+                    getValueByChara = dictionary => dictionary.TryGetValue((Chara)chara, out var time) ? time : default;
 
                 Func<IReadOnlyDictionary<Level, IReadOnlyDictionary<Chara, int>>, int> getValueByLevel;
                 if (level == LevelWithTotal.Total)
@@ -46,7 +46,7 @@ namespace ThScoreFileConverter.Models.Th145
                 else
                 {
                     getValueByLevel = dictionary => dictionary.TryGetValue((Level)level, out var times)
-                        ? getValueByChara(times) : 0;
+                        ? getValueByChara(times) : default;
                 }
 
                 return new Time(getValueByLevel(clearTimes)).ToString();

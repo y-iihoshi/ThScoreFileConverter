@@ -63,8 +63,8 @@ namespace ThScoreFileConverter.Models.Th128
                     }
                     else
                     {
-                        getValueByType =
-                            clearData => clearData.ClearCounts.TryGetValue((Level)level, out var count) ? count : 0;
+                        getValueByType = clearData => clearData.ClearCounts.TryGetValue((Level)level, out var count)
+                            ? count : default;
                     }
 
                     toString = Utils.ToNumberString;
@@ -79,7 +79,7 @@ namespace ThScoreFileConverter.Models.Th128
                 else
                 {
                     getValueByRoute = dictionary => dictionary.TryGetValue(route, out var clearData)
-                        ? getValueByType(clearData) : 0;
+                        ? getValueByType(clearData) : default;
                 }
 
                 return toString(getValueByRoute(clearDataDictionary));

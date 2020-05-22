@@ -39,7 +39,7 @@ namespace ThScoreFileConverter.Models.Th06
                     return match.ToString();
 
                 var key = (chara, level, stage);
-                return practiceScores.TryGetValue(key, out var score) ? Utils.ToNumberString(score.HighScore) : "0";
+                return Utils.ToNumberString(practiceScores.TryGetValue(key, out var score) ? score.HighScore : default);
             });
         }
 

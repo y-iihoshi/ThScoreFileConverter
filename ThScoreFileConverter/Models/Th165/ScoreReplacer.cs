@@ -46,10 +46,10 @@ namespace ThScoreFileConverter.Models.Th165
 
                 return type switch
                 {
-                    1 => (score is IScore) ? Utils.ToNumberString(score.HighScore) : "0",
-                    2 => (score is IScore) ? Utils.ToNumberString(score.ChallengeCount) : "0",
-                    3 => (score is IScore) ? Utils.ToNumberString(score.ClearCount) : "0",
-                    4 => (score is IScore) ? Utils.ToNumberString(score.NumPhotos) : "0",
+                    1 => Utils.ToNumberString(score?.HighScore ?? default),
+                    2 => Utils.ToNumberString(score?.ChallengeCount ?? default),
+                    3 => Utils.ToNumberString(score?.ClearCount ?? default),
+                    4 => Utils.ToNumberString(score?.NumPhotos ?? default),
                     _ => match.ToString(),  // unreachable
                 };
             });

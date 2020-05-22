@@ -46,8 +46,8 @@ namespace ThScoreFileConverter.Models.Th09
                         return (score is IHighScore)
                             ? Encoding.Default.GetString(score.Name.ToArray()).Split('\0')[0] : "--------";
                     case 2:     // score
-                        return (score is IHighScore)
-                            ? Utils.ToNumberString((score.Score * 10) + score.ContinueCount) : "0";
+                        return Utils.ToNumberString(
+                            (score is IHighScore) ? ((score.Score * 10) + score.ContinueCount) : default);
                     case 3:     // date
                         date = (score is IHighScore)
                             ? Encoding.Default.GetString(score.Date.ToArray()).Split('\0')[0] : "--/--";

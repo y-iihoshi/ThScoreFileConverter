@@ -49,7 +49,7 @@ namespace ThScoreFileConverter.Models.Th143
                 switch (type)
                 {
                     case 1:     // high score
-                        return (score is IScore) ? Utils.ToNumberString(score.HighScore * 10) : "0";
+                        return Utils.ToNumberString((score?.HighScore * 10) ?? default);
                     case 2:     // challenge count
                         if (item == ItemWithTotal.NoItem)
                         {
@@ -57,13 +57,15 @@ namespace ThScoreFileConverter.Models.Th143
                         }
                         else
                         {
-                            return (score is IScore) && score.ChallengeCounts.TryGetValue(item, out var challengeCount)
-                                ? Utils.ToNumberString(challengeCount) : "0";
+                            return Utils.ToNumberString(
+                                (score is IScore) && score.ChallengeCounts.TryGetValue(item, out var challengeCount)
+                                ? challengeCount : default);
                         }
 
                     case 3:     // cleared count
-                        return (score is IScore) && score.ClearCounts.TryGetValue(item, out var clearCount)
-                            ? Utils.ToNumberString(clearCount) : "0";
+                        return Utils.ToNumberString(
+                            (score is IScore) && score.ClearCounts.TryGetValue(item, out var clearCount)
+                            ? clearCount : default);
                     default:    // unreachable
                         return match.ToString();
                 }

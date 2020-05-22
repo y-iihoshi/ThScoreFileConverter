@@ -36,7 +36,7 @@ namespace ThScoreFileConverter.Models.Th095
                     1 => Utils.ToNumberString(scores.Sum(score => (long)(score?.HighScore ?? default))),
                     2 => Utils.ToNumberString(scores.Sum(score => (long)(score?.BestshotScore ?? default))),
                     3 => Utils.ToNumberString(scores.Sum(score => (long)(score?.TrialCount ?? default))),
-                    4 => scores.Count(score => score?.HighScore > 0).ToString(CultureInfo.CurrentCulture),
+                    4 => Utils.ToNumberString(scores.Count(score => score?.HighScore > 0)),
                     _ => match.ToString(),  // unreachable
                 };
             });

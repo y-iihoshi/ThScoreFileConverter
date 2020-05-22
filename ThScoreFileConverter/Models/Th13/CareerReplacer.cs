@@ -74,7 +74,7 @@ namespace ThScoreFileConverter.Models.Th13
                     }
                     else
                     {
-                        return "0";
+                        return Utils.ToNumberString(default(int));
                     }
                 }
                 else

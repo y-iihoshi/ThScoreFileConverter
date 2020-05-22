@@ -90,11 +90,10 @@ namespace ThScoreFileConverter.Models.Th17
                         break;
                 }
 
-                return clearDataDictionary.TryGetValue(chara, out var clearData)
-                    ? clearData.Cards.Values
-                        .Count(Utils.MakeAndPredicate(FindByKindType, findByLevel, findByStage))
-                        .ToString(CultureInfo.CurrentCulture)
-                    : "0";
+                return Utils.ToNumberString(
+                    clearDataDictionary.TryGetValue(chara, out var clearData)
+                    ? clearData.Cards.Values.Count(Utils.MakeAndPredicate(FindByKindType, findByLevel, findByStage))
+                    : default);
             }
         }
 
