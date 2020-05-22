@@ -69,6 +69,7 @@ namespace ThScoreFileConverterTests.Models.Th07
             var practiceScores = new Dictionary<(Chara, Level, Stage), IPracticeScore>();
             var replacer = new PracticeReplacer(practiceScores);
             Assert.AreEqual("0", replacer.Replace("%T07PRACHRB61"));
+            Assert.AreEqual("0", replacer.Replace("%T07PRACHRB62"));
         }
 
         [TestMethod]

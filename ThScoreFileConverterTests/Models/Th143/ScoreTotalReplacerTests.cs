@@ -123,6 +123,14 @@ namespace ThScoreFileConverterTests.Models.Th143
         }
 
         [TestMethod]
+        public void ReplaceTestNullScore()
+        {
+            var scores = new List<IScore> { null! };
+            var replacer = new ScoreTotalReplacer(scores, ItemStatuses);
+            Assert.AreEqual("0", replacer.Replace("%T143SCRTL11"));
+        }
+
+        [TestMethod]
         public void ReplaceTestEmptyItemStatuses()
         {
             var statuses = new Dictionary<ItemWithTotal, IItemStatus>();

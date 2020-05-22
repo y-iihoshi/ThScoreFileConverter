@@ -109,6 +109,22 @@ namespace ThScoreFileConverterTests.Models.Th165
             var scores = new List<IScore>();
             var replacer = new ScoreTotalReplacer(scores, Status);
             Assert.AreEqual("0", replacer.Replace("%T165SCRTL1"));
+            Assert.AreEqual("0", replacer.Replace("%T165SCRTL2"));
+            Assert.AreEqual("0", replacer.Replace("%T165SCRTL3"));
+            Assert.AreEqual("0", replacer.Replace("%T165SCRTL4"));
+            Assert.AreEqual("0", replacer.Replace("%T165SCRTL5"));
+        }
+
+        [TestMethod]
+        public void ReplaceTestNullScore()
+        {
+            var scores = new List<IScore> { null! };
+            var replacer = new ScoreTotalReplacer(scores, Status);
+            Assert.AreEqual("0", replacer.Replace("%T165SCRTL1"));
+            Assert.AreEqual("0", replacer.Replace("%T165SCRTL2"));
+            Assert.AreEqual("0", replacer.Replace("%T165SCRTL3"));
+            Assert.AreEqual("0", replacer.Replace("%T165SCRTL4"));
+            Assert.AreEqual("0", replacer.Replace("%T165SCRTL5"));
         }
 
         [TestMethod]
