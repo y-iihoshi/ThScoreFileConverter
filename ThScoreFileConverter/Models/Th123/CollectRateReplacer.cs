@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -50,7 +51,8 @@ namespace ThScoreFileConverter.Models.Th123
                     countByType = pair => pair.Value.TrialCount > 0;
 
                 var spellCardResults = clearDataDictionary.TryGetValue(chara, out var clearData)
-                    ? clearData.SpellCardResults : new Dictionary<(Chara, int), Th105.ISpellCardResult<Chara>>();
+                    ? clearData.SpellCardResults
+                    : ImmutableDictionary<(Chara, int), Th105.ISpellCardResult<Chara>>.Empty;
                 return Utils.ToNumberString(spellCardResults.Where(findByLevel).Count(countByType));
             });
         }

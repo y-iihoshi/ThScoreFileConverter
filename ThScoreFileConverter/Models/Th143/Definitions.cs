@@ -15,7 +15,7 @@ namespace ThScoreFileConverter.Models.Th143
     {
         // Thanks to thwiki.info
         public static IReadOnlyDictionary<(Day Day, int Scene), (Enemy[] Enemies, string Card)> SpellCards { get; } =
-            new Dictionary<(Day, int), (Enemy[], string)>()
+            new Dictionary<(Day, int), (Enemy[], string)>
             {
                 { (Day.First,   1), (new[] { Enemy.Yatsuhashi },   string.Empty) },
                 { (Day.First,   2), (new[] { Enemy.Wakasagihime }, "水符「ルナティックレッドスラップ」") },

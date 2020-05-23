@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -43,7 +44,7 @@ namespace ThScoreFileConverter.Models.Th12
                     getCount = card => card.TrialCount;
 
                 var cards = clearDataDictionary.TryGetValue(chara, out var clearData)
-                    ? clearData.Cards : new Dictionary<int, Th10.ISpellCard<Level>>();
+                    ? clearData.Cards : ImmutableDictionary<int, Th10.ISpellCard<Level>>.Empty;
                 if (number == 0)
                 {
                     return Utils.ToNumberString(cards.Values.Sum(getCount));

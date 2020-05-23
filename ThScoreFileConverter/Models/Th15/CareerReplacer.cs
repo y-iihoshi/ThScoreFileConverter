@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -43,7 +44,7 @@ namespace ThScoreFileConverter.Models.Th15
 
                 var cards = clearDataDictionary.TryGetValue(chara, out var clearData)
                     && clearData.GameModeData.TryGetValue(mode, out var clearDataPerGameMode)
-                    ? clearDataPerGameMode.Cards : new Dictionary<int, Th13.ISpellCard<Level>>();
+                    ? clearDataPerGameMode.Cards : ImmutableDictionary<int, Th13.ISpellCard<Level>>.Empty;
                 if (number == 0)
                 {
                     return Utils.ToNumberString(cards.Values.Sum(getCount));

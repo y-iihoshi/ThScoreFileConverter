@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Properties;
@@ -18,7 +19,7 @@ namespace ThScoreFileConverter.Squirrel
     internal sealed class SQTable : SQObject
     {
         public SQTable()
-            : this(new Dictionary<SQObject, SQObject>())
+            : this(ImmutableDictionary<SQObject, SQObject>.Empty)
         {
         }
 

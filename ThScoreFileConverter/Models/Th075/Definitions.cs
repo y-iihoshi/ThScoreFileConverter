@@ -21,7 +21,7 @@ namespace ThScoreFileConverter.Models.Th075
             @"(){}[]<>&\|~^             ";
 
         // Thanks to thwiki.info
-        public static IReadOnlyDictionary<int, SpellCardInfo> CardTable { get; } = new Dictionary<int, SpellCardInfo>()
+        public static IReadOnlyDictionary<int, SpellCardInfo> CardTable { get; } = new Dictionary<int, SpellCardInfo>
         {
             {   1, new SpellCardInfo("符の壱「夢想妙珠連」-Easy-",                        Chara.Reimu,     Level.Easy) },
             {   2, new SpellCardInfo("符の壱「夢想妙珠連」",                              Chara.Reimu,     Level.Normal) },

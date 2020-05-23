@@ -16,17 +16,13 @@ namespace ThScoreFileConverter.Models.Th105
     internal class ClearData<TChara> : IBinaryReadable, IClearData<TChara>  // per character
         where TChara : struct, Enum
     {
-        private static readonly Dictionary<int, ICardForDeck> InitialCardForDeck = new Dictionary<int, ICardForDeck>();
-        private static readonly Dictionary<(TChara, int), ISpellCardResult<TChara>> InitialSpellCardResults =
-            new Dictionary<(TChara, int), ISpellCardResult<TChara>>();
-
         private Dictionary<int, ICardForDeck> cardsForDeck;
         private Dictionary<(TChara Chara, int CardId), ISpellCardResult<TChara>> spellCardResults;
 
         public ClearData()
         {
-            this.cardsForDeck = InitialCardForDeck;
-            this.spellCardResults = InitialSpellCardResults;
+            this.cardsForDeck = new Dictionary<int, ICardForDeck>();
+            this.spellCardResults = new Dictionary<(TChara Chara, int CardId), ISpellCardResult<TChara>>();
         }
 
         public IReadOnlyDictionary<int, ICardForDeck> CardsForDeck => this.cardsForDeck;

@@ -15,7 +15,7 @@ namespace ThScoreFileConverter.Models.Th165
     {
         // Thanks to thwiki.info
         public static IReadOnlyDictionary<(Day Day, int Scene), (Enemy[] Enemies, string Card)> SpellCards { get; } =
-            new Dictionary<(Day, int), (Enemy[], string)>()
+            new Dictionary<(Day, int), (Enemy[], string)>
             {
                 { (Day.Sunday,             1), (new[] { Enemy.Reimu },      string.Empty) },
                 { (Day.Sunday,             2), (new[] { Enemy.Reimu },      string.Empty) },

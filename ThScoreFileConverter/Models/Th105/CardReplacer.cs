@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -47,7 +48,8 @@ namespace ThScoreFileConverter.Models.Th105
                     if (hideUntriedCards)
                     {
                         var spellCardResults = clearDataDictionary.TryGetValue(chara, out var clearData)
-                            ? clearData.SpellCardResults : new Dictionary<(Chara, int), ISpellCardResult<Chara>>();
+                            ? clearData.SpellCardResults
+                            : ImmutableDictionary<(Chara, int), ISpellCardResult<Chara>>.Empty;
                         var key = (enemyCardIdPair.Enemy, (enemyCardIdPair.CardId * numLevels) + (int)level);
                         if (!spellCardResults.TryGetValue(key, out var result) || (result.TrialCount <= 0))
                             return (type == "N") ? "??????????" : "?????";

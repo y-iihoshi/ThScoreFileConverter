@@ -15,7 +15,7 @@ namespace ThScoreFileConverter.Models.Th125
     {
         // Thanks to thwiki.info
         public static IReadOnlyDictionary<(Level Level, int Scene), (Enemy Enemy, string Card)> SpellCards { get; } =
-            new Dictionary<(Level, int), (Enemy, string)>()
+            new Dictionary<(Level, int), (Enemy, string)>
             {
                 { (Level.One,     1), (Enemy.Minoriko,  string.Empty) },
                 { (Level.One,     2), (Enemy.Minoriko,  string.Empty) },

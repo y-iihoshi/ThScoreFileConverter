@@ -8,6 +8,7 @@
 #pragma warning disable SA1600 // Elements should be documented
 
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using ThScoreFileConverter.Extensions;
@@ -69,7 +70,7 @@ namespace ThScoreFileConverter.Models.Th08
             this.Score = score;
             this.Name = Encoding.Default.GetBytes("--------\0");
             this.Date = Encoding.Default.GetBytes("--/--\0");
-            this.CardFlags = new Dictionary<int, byte>();
+            this.CardFlags = ImmutableDictionary<int, byte>.Empty;
         }
 
         public uint Score { get; }      // Divided by 10
