@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th10
 {
@@ -38,8 +39,7 @@ namespace ThScoreFileConverter.Models.Th10
 
         public void Set(IClearData<TCharaWithTotal, TStageProgress> data)
         {
-            if (!this.clearData.ContainsKey(data.Chara))
-                this.clearData.Add(data.Chara, data);
+            _ = this.clearData.TryAdd(data.Chara, data);
         }
 
         public void Set(IStatus status)

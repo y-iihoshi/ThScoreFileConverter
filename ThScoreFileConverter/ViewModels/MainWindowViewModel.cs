@@ -20,6 +20,7 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using ThScoreFileConverter.Actions;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Properties;
 
@@ -174,8 +175,7 @@ namespace ThScoreFileConverter.ViewModels
                 if (Settings.Instance.LastTitle != value)
                 {
                     Settings.Instance.LastTitle = value;
-                    if (!Settings.Instance.Dictionary.ContainsKey(value))
-                        Settings.Instance.Dictionary.Add(value, new SettingsPerTitle());
+                    _ = Settings.Instance.Dictionary.TryAdd(value, new SettingsPerTitle());
                     this.RaisePropertyChanged(nameof(this.LastWorkNumber));
                 }
 #endif

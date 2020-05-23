@@ -19,6 +19,7 @@ using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.Permissions;
 using System.Text.RegularExpressions;
+using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models.Th095;
 using ThScoreFileConverter.Properties;
 
@@ -100,8 +101,7 @@ namespace ThScoreFileConverter.Models
             header.ReadFrom(reader);
 
             var key = (header.Level, header.Scene);
-            if (!this.bestshots.ContainsKey(key))
-                this.bestshots.Add(key, (outputFile.Name, header));
+            _ = this.bestshots.TryAdd(key, (outputFile.Name, header));
 
             Lzss.Decompress(input, decoded);
 

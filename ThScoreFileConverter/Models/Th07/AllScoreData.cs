@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ThScoreFileConverter.Extensions;
 using IClearData = ThScoreFileConverter.Models.Th06.IClearData<
     ThScoreFileConverter.Models.Th07.Chara,
     ThScoreFileConverter.Models.Th07.Level>;
@@ -61,8 +62,7 @@ namespace ThScoreFileConverter.Models.Th07
         public void Set(IHighScore score)
         {
             var key = (score.Chara, score.Level);
-            if (!this.rankings.ContainsKey(key))
-                this.rankings.Add(key, new List<IHighScore>(Definitions.InitialRanking));
+            _ = this.rankings.TryAdd(key, new List<IHighScore>(Definitions.InitialRanking));
             var ranking = this.rankings[key].ToList();
             ranking.Add(score);
             ranking.Sort((lhs, rhs) => rhs.Score.CompareTo(lhs.Score));
@@ -72,14 +72,12 @@ namespace ThScoreFileConverter.Models.Th07
 
         public void Set(IClearData data)
         {
-            if (!this.clearData.ContainsKey(data.Chara))
-                this.clearData.Add(data.Chara, data);
+            _ = this.clearData.TryAdd(data.Chara, data);
         }
 
         public void Set(ICardAttack attack)
         {
-            if (!this.cardAttacks.ContainsKey(attack.CardId))
-                this.cardAttacks.Add(attack.CardId, attack);
+            _ = this.cardAttacks.TryAdd(attack.CardId, attack);
         }
 
         public void Set(IPracticeScore score)
@@ -88,8 +86,7 @@ namespace ThScoreFileConverter.Models.Th07
                 (score.Stage != Stage.Extra) && (score.Stage != Stage.Phantasm))
             {
                 var key = (score.Chara, score.Level, score.Stage);
-                if (!this.practiceScores.ContainsKey(key))
-                    this.practiceScores.Add(key, score);
+                _ = this.practiceScores.TryAdd(key, score);
             }
         }
 

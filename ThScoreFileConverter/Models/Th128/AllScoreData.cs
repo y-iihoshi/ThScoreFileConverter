@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th128
 {
@@ -37,8 +38,7 @@ namespace ThScoreFileConverter.Models.Th128
 
         public void Set(IClearData data)
         {
-            if (!this.clearData.ContainsKey(data.Route))
-                this.clearData.Add(data.Route, data);
+            _ = this.clearData.TryAdd(data.Route, data);
         }
 
         public void Set(ICardData data)

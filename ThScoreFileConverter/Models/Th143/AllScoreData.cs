@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th143
 {
@@ -44,8 +45,7 @@ namespace ThScoreFileConverter.Models.Th143
 
         public void Set(IItemStatus status)
         {
-            if (!this.itemStatuses.ContainsKey(status.Item))
-                this.itemStatuses.Add(status.Item, status);
+            _ = this.itemStatuses.TryAdd(status.Item, status);
         }
 
         public void Set(IStatus status)

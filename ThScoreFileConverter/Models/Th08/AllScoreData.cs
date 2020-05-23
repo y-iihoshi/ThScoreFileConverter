@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ThScoreFileConverter.Extensions;
 using IHighScore = ThScoreFileConverter.Models.Th08.IHighScore<
     ThScoreFileConverter.Models.Th08.Chara,
     ThScoreFileConverter.Models.Level,
@@ -60,8 +61,7 @@ namespace ThScoreFileConverter.Models.Th08
         public void Set(IHighScore score)
         {
             var key = (score.Chara, score.Level);
-            if (!this.rankings.ContainsKey(key))
-                this.rankings.Add(key, new List<IHighScore>(Definitions.InitialRanking));
+            _ = this.rankings.TryAdd(key, new List<IHighScore>(Definitions.InitialRanking));
             var ranking = this.rankings[key].ToList();
             ranking.Add(score);
             ranking.Sort((lhs, rhs) => rhs.Score.CompareTo(lhs.Score));
@@ -71,20 +71,17 @@ namespace ThScoreFileConverter.Models.Th08
 
         public void Set(IClearData data)
         {
-            if (!this.clearData.ContainsKey(data.Chara))
-                this.clearData.Add(data.Chara, data);
+            _ = this.clearData.TryAdd(data.Chara, data);
         }
 
         public void Set(ICardAttack attack)
         {
-            if (!this.cardAttacks.ContainsKey(attack.CardId))
-                this.cardAttacks.Add(attack.CardId, attack);
+            _ = this.cardAttacks.TryAdd(attack.CardId, attack);
         }
 
         public void Set(IPracticeScore score)
         {
-            if (!this.practiceScores.ContainsKey(score.Chara))
-                this.practiceScores.Add(score.Chara, score);
+            _ = this.practiceScores.TryAdd(score.Chara, score);
         }
 
         public void Set(FLSP flsp)

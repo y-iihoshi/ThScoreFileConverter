@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th105
 {
@@ -41,8 +42,7 @@ namespace ThScoreFileConverter.Models.Th105
             {
                 var card = new CardForDeck();
                 card.ReadFrom(reader);
-                if (!this.cardsForDeck.ContainsKey(card.Id))
-                    this.cardsForDeck.Add(card.Id, card);
+                _ = this.cardsForDeck.TryAdd(card.Id, card);
             }
 
             var numResults = reader.ReadInt32();
@@ -52,8 +52,7 @@ namespace ThScoreFileConverter.Models.Th105
                 var result = new SpellCardResult<TChara>();
                 result.ReadFrom(reader);
                 var key = (result.Enemy, result.Id);
-                if (!this.spellCardResults.ContainsKey(key))
-                    this.spellCardResults.Add(key, result);
+                _ = this.spellCardResults.TryAdd(key, result);
             }
         }
     }

@@ -67,8 +67,7 @@ namespace ThScoreFileConverter.Models.Th105
             {
                 var card = new CardForDeck();
                 card.ReadFrom(reader);
-                if (!this.systemCards.ContainsKey(card.Id))
-                    this.systemCards.Add(card.Id, card);
+                _ = this.systemCards.TryAdd(card.Id, card);
             }
 
             var numCharas = reader.ReadInt32();

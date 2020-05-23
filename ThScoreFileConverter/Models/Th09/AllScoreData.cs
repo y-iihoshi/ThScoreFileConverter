@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ThScoreFileConverter.Extensions;
 
 namespace ThScoreFileConverter.Models.Th09
 {
@@ -41,8 +42,7 @@ namespace ThScoreFileConverter.Models.Th09
         public void Set(IHighScore score)
         {
             var key = (score.Chara, score.Level);
-            if (!this.rankings.ContainsKey(key))
-                this.rankings.Add(key, new IHighScore[5].ToList());
+            _ = this.rankings.TryAdd(key, new IHighScore[5].ToList());
             if ((score.Rank >= 0) && (score.Rank < 5))
             {
                 var ranking = (List<IHighScore>)this.rankings[key];
