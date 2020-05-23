@@ -115,7 +115,7 @@ namespace ThScoreFileConverter.Models.Th155
                 {
 #pragma warning disable SA1009 // Closing parenthesis should be spaced correctly
                     this.StoryDictionary = table.Value
-                        .Where(pair => ParseStoryChara(pair.Key) is StoryChara)
+                        .Where(pair => ParseStoryChara(pair.Key) is { })
                         .ToDictionary(pair => ParseStoryChara(pair.Key)!.Value, pair => ParseStory(pair.Value));
 #pragma warning restore SA1009 // Closing parenthesis should be spaced correctly
                 }

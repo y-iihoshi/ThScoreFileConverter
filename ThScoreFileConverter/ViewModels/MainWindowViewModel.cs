@@ -501,7 +501,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </returns>
         private bool CanDeleteTemplateFiles(IList? selectedItems)
         {
-            return (selectedItems is IList) && (selectedItems.Count > 0);
+            return selectedItems?.Count > 0;
         }
 
         /// <summary>
@@ -510,7 +510,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <param name="selectedItems">A list indicating the path strings which are deleted.</param>
         private void DeleteTemplateFiles(IList? selectedItems)
         {
-            if (selectedItems is IList)
+            if (selectedItems is { })
                 this.TemplateFiles = this.TemplateFiles.Except(selectedItems.Cast<string>());
         }
 
@@ -550,7 +550,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </returns>
         private bool CanConvert()
         {
-            return (this.converter is ThConverter)
+            return (this.converter is { })
                 && !string.IsNullOrEmpty(this.ScoreFile)
                 && this.TemplateFiles.Any()
                 && !string.IsNullOrEmpty(this.OutputDirectory)
@@ -615,7 +615,7 @@ namespace ThScoreFileConverter.ViewModels
                     if (e.Data.GetData(DataFormats.FileDrop) is string[] droppedPaths)
                     {
                         var filePath = droppedPaths.FirstOrDefault(path => File.Exists(path));
-                        if (filePath is string)
+                        if (filePath is { })
                             this.ScoreFile = filePath;
                     }
                 }
@@ -640,7 +640,7 @@ namespace ThScoreFileConverter.ViewModels
                     if (e.Data.GetData(DataFormats.FileDrop) is string[] droppedPaths)
                     {
                         var dirPath = droppedPaths.FirstOrDefault(path => Directory.Exists(path));
-                        if (dirPath is string)
+                        if (dirPath is { })
                             this.BestShotDirectory = dirPath;
                     }
                 }
@@ -689,7 +689,7 @@ namespace ThScoreFileConverter.ViewModels
                     if (e.Data.GetData(DataFormats.FileDrop) is string[] droppedPaths)
                     {
                         var dirPath = droppedPaths.FirstOrDefault(path => Directory.Exists(path));
-                        if (dirPath is string)
+                        if (dirPath is { })
                             this.OutputDirectory = dirPath;
                     }
                 }

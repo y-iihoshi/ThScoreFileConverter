@@ -15,7 +15,7 @@ namespace ThScoreFileConverterTests.Commands
         public void InstanceTest()
         {
             var instance = CloseWindowCommand.Instance;
-            Assert.IsTrue(instance is ICommand);
+            Assert.IsTrue(instance is { });
         }
 
         [STATestMethod]

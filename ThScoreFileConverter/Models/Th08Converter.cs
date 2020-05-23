@@ -48,7 +48,7 @@ namespace ThScoreFileConverter.Models
             decoded.Seek(0, SeekOrigin.Begin);
             this.allScoreData = Read(decoded);
 
-            return this.allScoreData is AllScoreData;
+            return this.allScoreData is { };
         }
 
         protected override IEnumerable<IStringReplaceable> CreateReplacers(bool hideUntriedCards, string outputFilePath)
@@ -199,15 +199,15 @@ namespace ThScoreFileConverter.Models
                 // It's OK, do nothing.
             }
 
-            if ((allScoreData.Header is Header) &&
+            if ((allScoreData.Header is { }) &&
                 //// (allScoreData.rankings.Count >= 0) &&
                 (allScoreData.ClearData.Count == Enum.GetValues(typeof(CharaWithTotal)).Length) &&
                 //// (allScoreData.cardAttacks.Length == NumCards) &&
                 //// (allScoreData.practiceScores.Count >= 0) &&
-                (allScoreData.Flsp is FLSP) &&
-                (allScoreData.PlayStatus is PlayStatus) &&
-                (allScoreData.LastName is Th07.LastName) &&
-                (allScoreData.VersionInfo is Th07.VersionInfo))
+                (allScoreData.Flsp is { }) &&
+                (allScoreData.PlayStatus is { }) &&
+                (allScoreData.LastName is { }) &&
+                (allScoreData.VersionInfo is { }))
                 return allScoreData;
             else
                 return null;

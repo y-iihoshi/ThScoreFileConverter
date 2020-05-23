@@ -43,8 +43,7 @@ namespace ThScoreFileConverter.Models.Th143
                 if (hideUntriedCards)
                 {
                     var score = scores.FirstOrDefault(elem =>
-                        (elem is IScore) &&
-                        (elem.Number > 0) &&
+                        (elem?.Number > 0) &&
                         (elem.Number <= Definitions.SpellCards.Count) &&
                         Definitions.SpellCards.ElementAt(elem.Number - 1).Key.Equals(key));
                     if ((score is null) ||

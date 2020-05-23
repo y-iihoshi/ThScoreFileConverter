@@ -39,8 +39,7 @@ namespace ThScoreFileConverter.Models.Th125
                 if (!Definitions.SpellCards.ContainsKey(key))
                     return match.ToString();
 
-                var score = scores.FirstOrDefault(elem =>
-                    (elem is IScore) && (elem.Chara == chara) && elem.LevelScene.Equals(key));
+                var score = scores.FirstOrDefault(elem => (elem?.Chara == chara) && elem.LevelScene.Equals(key));
 
                 return type switch
                 {
@@ -48,7 +47,7 @@ namespace ThScoreFileConverter.Models.Th125
                     2 => Utils.ToNumberString(score?.BestshotScore ?? default),
                     3 => Utils.ToNumberString(score?.TrialCount ?? default),
                     4 => Utils.ToNumberString(score?.FirstSuccess ?? default),
-                    5 => (score is IScore)
+                    5 => (score is { })
                         ? new DateTime(1970, 1, 1).AddSeconds(score.DateTime).ToLocalTime()
                             .ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.CurrentCulture)
                         : "----/--/-- --:--:--",

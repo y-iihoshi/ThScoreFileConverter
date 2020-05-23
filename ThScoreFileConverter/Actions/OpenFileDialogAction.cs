@@ -320,7 +320,7 @@ namespace ThScoreFileConverter.Actions
             switch (dialogResult)
             {
                 case WinForms.DialogResult.OK:
-                    if (this.OkCommand is ICommand)
+                    if (this.OkCommand is { })
                     {
                         var result = new OpenFileDialogActionResult(dialog.FileName, dialog.FileNames);
                         if (this.OkCommand.CanExecute(result))
@@ -330,7 +330,7 @@ namespace ThScoreFileConverter.Actions
                     break;
 
                 case WinForms.DialogResult.Cancel:
-                    if (this.CancelCommand is ICommand)
+                    if (this.CancelCommand is { })
                     {
                         if (this.CancelCommand.CanExecute(null))
                             this.CancelCommand.Execute(null);

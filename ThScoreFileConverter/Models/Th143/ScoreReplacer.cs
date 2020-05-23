@@ -41,8 +41,7 @@ namespace ThScoreFileConverter.Models.Th143
                     return match.ToString();
 
                 var score = scores.FirstOrDefault(elem =>
-                    (elem is IScore) &&
-                    (elem.Number > 0) &&
+                    (elem?.Number > 0) &&
                     (elem.Number <= Definitions.SpellCards.Count) &&
                     Definitions.SpellCards.ElementAt(elem.Number - 1).Key.Equals(key));
 
@@ -58,13 +57,13 @@ namespace ThScoreFileConverter.Models.Th143
                         else
                         {
                             return Utils.ToNumberString(
-                                (score is IScore) && score.ChallengeCounts.TryGetValue(item, out var challengeCount)
+                                (score is { }) && score.ChallengeCounts.TryGetValue(item, out var challengeCount)
                                 ? challengeCount : default);
                         }
 
                     case 3:     // cleared count
                         return Utils.ToNumberString(
-                            (score is IScore) && score.ClearCounts.TryGetValue(item, out var clearCount)
+                            (score is { }) && score.ClearCounts.TryGetValue(item, out var clearCount)
                             ? clearCount : default);
                     default:    // unreachable
                         return match.ToString();

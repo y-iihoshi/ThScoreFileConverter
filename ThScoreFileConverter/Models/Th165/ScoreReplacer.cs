@@ -39,8 +39,7 @@ namespace ThScoreFileConverter.Models.Th165
                     return match.ToString();
 
                 var score = scores.FirstOrDefault(elem =>
-                    (elem is IScore) &&
-                    (elem.Number >= 0) &&
+                    (elem?.Number >= 0) &&
                     (elem.Number < Definitions.SpellCards.Count) &&
                     Definitions.SpellCards.ElementAt(elem.Number).Key.Equals(key));
 

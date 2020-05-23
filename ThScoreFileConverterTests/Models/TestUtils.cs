@@ -144,10 +144,10 @@ namespace ThScoreFileConverterTests.Models
                     case Array array:
                         if (array.Rank == 1)
                         {
-                            if (fromArray is object)
+                            if (fromArray is { })
                             {
                                 var elementType = array.GetType().GetElementType();
-                                if (elementType is object)
+                                if (elementType is { })
                                 {
                                     byteArray = byteArray.Concat(
                                         fromArray.MakeGenericMethod(elementType)
@@ -159,7 +159,7 @@ namespace ThScoreFileConverterTests.Models
                     case null:
                         break;
                     default:
-                        if (fromDictonary is object)
+                        if (fromDictonary is { })
                         {
                             var argType = arg.GetType();
                             if (argType.IsGenericType && (argType.GetGenericTypeDefinition() == typeof(Dictionary<,>)))
