@@ -38,7 +38,7 @@ namespace ThScoreFileConverter.Models.Th105
 #pragma warning disable IDE0007 // Use implicit type
                 Func<KeyValuePair<(Chara, int), ISpellCardResult<Chara>>, bool> findByLevel = level switch
                 {
-                    LevelWithTotal.Total => pair => true,
+                    LevelWithTotal.Total => Utils.True,
                     _ => pair => pair.Value.Level == (Level)level,
                 };
 

@@ -36,7 +36,7 @@ namespace ThScoreFileConverter.Models.Th06
 #pragma warning disable IDE0007 // Use implicit type
                 Func<ICardAttack, bool> findByStage = stage switch
                 {
-                    StageWithTotal.Total => attack => true,
+                    StageWithTotal.Total => Utils.True,
                     _ => attack => Definitions.CardTable.Any(
                         pair => (pair.Key == attack.CardId) && (pair.Value.Stage == (Stage)stage)),
                 };

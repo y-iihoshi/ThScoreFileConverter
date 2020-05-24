@@ -40,7 +40,7 @@ namespace ThScoreFileConverter.Models.Th08
                 Func<ICardAttack, bool> isValidLevel = kind switch
                 {
                     "S" => attack => Definitions.CardTable[attack.CardId].Level != LevelPractice.LastWord,
-                    _ => attack => true,
+                    _ => Utils.True,
                 };
 
                 Func<ICardAttack, ICardAttackCareer> getCareer = kind switch
