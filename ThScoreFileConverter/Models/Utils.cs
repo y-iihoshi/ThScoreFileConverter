@@ -128,6 +128,18 @@ namespace ThScoreFileConverter.Models
         }
 
         /// <summary>
+        /// Always returns <c>true</c>.
+        /// </summary>
+        /// <typeparam name="T">The type of the argument.</typeparam>
+        /// <param name="arg">An argument. Not used.</param>
+        /// <returns>Always <c>true</c>.</returns>
+        public static bool True<T>(T arg)
+        {
+            _ = arg;
+            return true;
+        }
+
+        /// <summary>
         /// Makes a logical-and predicate by one or more predicates.
         /// </summary>
         /// <typeparam name="T">The type of the instance to evaluate.</typeparam>

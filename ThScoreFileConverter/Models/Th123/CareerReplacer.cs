@@ -38,22 +38,17 @@ namespace ThScoreFileConverter.Models.Th123
                 if ((chara != Chara.Sanae) && (chara != Chara.Cirno) && (chara != Chara.Meiling))
                     return match.ToString();
 
-                Func<Th105.ISpellCardResult<Chara>, long> getValue;
-                Func<long, string> toString;
-                if (type == 1)
+#pragma warning disable IDE0007 // Use implicit type
+                Func<Th105.ISpellCardResult<Chara>, long> getValue = type switch
                 {
-                    getValue = result => result.GotCount;
-                    toString = Utils.ToNumberString;
-                }
-                else if (type == 2)
+                    1 => result => result.GotCount,
+                    2 => result => result.TrialCount,
+                    _ => result => result.Frames,
+                };
+
+                Func<long, string> toString = type switch
                 {
-                    getValue = result => result.TrialCount;
-                    toString = Utils.ToNumberString;
-                }
-                else
-                {
-                    getValue = result => result.Frames;
-                    toString = value =>
+                    3 => value =>
                     {
                         var time = new Time(value);
                         return Utils.Format(
@@ -61,8 +56,10 @@ namespace ThScoreFileConverter.Models.Th123
                             (time.Hours * 60) + time.Minutes,
                             time.Seconds,
                             time.Frames * 1000 / 60);
-                    };
-                }
+                    },
+                    _ => Utils.ToNumberString,
+                };
+#pragma warning restore IDE0007 // Use implicit type
 
                 var spellCardResults = clearDataDictionary.TryGetValue(chara, out var clearData)
                     ? clearData.SpellCardResults

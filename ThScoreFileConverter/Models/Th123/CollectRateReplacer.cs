@@ -38,17 +38,19 @@ namespace ThScoreFileConverter.Models.Th123
                 if ((chara != Chara.Sanae) && (chara != Chara.Cirno) && (chara != Chara.Meiling))
                     return match.ToString();
 
-                Func<KeyValuePair<(Chara, int), Th105.ISpellCardResult<Chara>>, bool> findByLevel;
-                if (level == Th105.LevelWithTotal.Total)
-                    findByLevel = pair => true;
-                else
-                    findByLevel = pair => pair.Value.Level == (Th105.Level)level;
+#pragma warning disable IDE0007 // Use implicit type
+                Func<KeyValuePair<(Chara, int), Th105.ISpellCardResult<Chara>>, bool> findByLevel = level switch
+                {
+                    Th105.LevelWithTotal.Total => Utils.True,
+                    _ => pair => pair.Value.Level == (Th105.Level)level,
+                };
 
-                Func<KeyValuePair<(Chara, int), Th105.ISpellCardResult<Chara>>, bool> countByType;
-                if (type == 1)
-                    countByType = pair => pair.Value.GotCount > 0;
-                else
-                    countByType = pair => pair.Value.TrialCount > 0;
+                Func<KeyValuePair<(Chara, int), Th105.ISpellCardResult<Chara>>, bool> countByType = type switch
+                {
+                    1 => pair => pair.Value.GotCount > 0,
+                    _ => pair => pair.Value.TrialCount > 0,
+                };
+#pragma warning restore IDE0007 // Use implicit type
 
                 var spellCardResults = clearDataDictionary.TryGetValue(chara, out var clearData)
                     ? clearData.SpellCardResults

@@ -35,13 +35,14 @@ namespace ThScoreFileConverter.Models.Th07
                 var chara = CharaWithTotalParser.Parse(match.Groups[2].Value);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                Func<ICardAttack, long> getValue;
-                if (type == 1)
-                    getValue = attack => attack.MaxBonuses[chara];
-                else if (type == 2)
-                    getValue = attack => attack.ClearCounts[chara];
-                else
-                    getValue = attack => attack.TrialCounts[chara];
+#pragma warning disable IDE0007 // Use implicit type
+                Func<ICardAttack, long> getValue = type switch
+                {
+                    1 => attack => attack.MaxBonuses[chara],
+                    2 => attack => attack.ClearCounts[chara],
+                    _ => attack => attack.TrialCounts[chara],
+                };
+#pragma warning restore IDE0007 // Use implicit type
 
                 if (number == 0)
                 {

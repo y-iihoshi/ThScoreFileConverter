@@ -42,42 +42,33 @@ namespace ThScoreFileConverter.Models.Th07
                 if ((stage == StageWithTotal.Extra) || (stage == StageWithTotal.Phantasm))
                     return match.ToString();
 
-                Func<ICardAttack, bool> findByStage;
-                if (stage == StageWithTotal.Total)
+#pragma warning disable IDE0007 // Use implicit type
+                Func<ICardAttack, bool> findByLevel = level switch
                 {
-                    findByStage = attack => true;
-                }
-                else
-                {
-                    findByStage = attack => Definitions.CardTable.Any(
-                        pair => (pair.Key == attack.CardId) && (pair.Value.Stage == (Stage)stage));
-                }
+                    LevelWithTotal.Total => Utils.True,
+                    LevelWithTotal.Extra => Utils.True,
+                    LevelWithTotal.Phantasm => Utils.True,
+                    _ => attack => Definitions.CardTable.Any(
+                        pair => (pair.Key == attack.CardId) && (pair.Value.Level == (Level)level)),
+                };
 
-                Func<ICardAttack, bool> findByLevel = attack => true;
-                switch (level)
+                Func<ICardAttack, bool> findByStage = (level, stage) switch
                 {
-                    case LevelWithTotal.Total:
-                        // Do nothing
-                        break;
-                    case LevelWithTotal.Extra:
-                        findByStage = attack => Definitions.CardTable.Any(
-                            pair => (pair.Key == attack.CardId) && (pair.Value.Stage == Stage.Extra));
-                        break;
-                    case LevelWithTotal.Phantasm:
-                        findByStage = attack => Definitions.CardTable.Any(
-                            pair => (pair.Key == attack.CardId) && (pair.Value.Stage == Stage.Phantasm));
-                        break;
-                    default:
-                        findByLevel = attack => Definitions.CardTable.Any(
-                            pair => (pair.Key == attack.CardId) && (pair.Value.Level == (Level)level));
-                        break;
-                }
+                    (LevelWithTotal.Extra, _) => attack => Definitions.CardTable.Any(
+                        pair => (pair.Key == attack.CardId) && (pair.Value.Stage == Stage.Extra)),
+                    (LevelWithTotal.Phantasm, _) => attack => Definitions.CardTable.Any(
+                        pair => (pair.Key == attack.CardId) && (pair.Value.Stage == Stage.Phantasm)),
+                    (_, StageWithTotal.Total) => Utils.True,
+                    _ => attack => Definitions.CardTable.Any(
+                        pair => (pair.Key == attack.CardId) && (pair.Value.Stage == (Stage)stage)),
+                };
 
-                Func<ICardAttack, bool> findByType;
-                if (type == 1)
-                    findByType = attack => attack.ClearCounts[chara] > 0;
-                else
-                    findByType = attack => attack.TrialCounts[chara] > 0;
+                Func<ICardAttack, bool> findByType = type switch
+                {
+                    1 => attack => attack.ClearCounts[chara] > 0,
+                    _ => attack => attack.TrialCounts[chara] > 0,
+                };
+#pragma warning restore IDE0007 // Use implicit type
 
                 return Utils.ToNumberString(
                     cardAttacks.Values.Count(Utils.MakeAndPredicate(findByLevel, findByStage, findByType)));

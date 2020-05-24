@@ -42,24 +42,21 @@ namespace ThScoreFileConverter.Models.Th13
                 var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[3].Value);
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
-                Func<ISpellCard<LevelPractice>, bool> isValidLevel;
-                Func<ISpellCard<LevelPractice>, int> getCount;
-                if (kind == "S")
+#pragma warning disable IDE0007 // Use implicit type
+                Func<ISpellCard<LevelPractice>, bool> isValidLevel = kind switch
                 {
-                    isValidLevel = card => card.Level != LevelPractice.OverDrive;
-                    if (type == 1)
-                        getCount = card => card.ClearCount;
-                    else
-                        getCount = card => card.TrialCount;
-                }
-                else
+                    "S" => card => card.Level != LevelPractice.OverDrive,
+                    _ => Utils.True,
+                };
+
+                Func<ISpellCard<LevelPractice>, int> getCount = (kind, type) switch
                 {
-                    isValidLevel = card => true;
-                    if (type == 1)
-                        getCount = card => card.PracticeClearCount;
-                    else
-                        getCount = card => card.PracticeTrialCount;
-                }
+                    ("S", 1) => card => card.ClearCount,
+                    ("S", _) => card => card.TrialCount,
+                    (_, 1) => card => card.PracticeClearCount,
+                    _ => card => card.PracticeTrialCount,
+                };
+#pragma warning restore IDE0007 // Use implicit type
 
                 var cards = clearDataDictionary.TryGetValue(chara, out var clearData)
                     ? clearData.Cards : ImmutableDictionary<int, ISpellCard<LevelPractice>>.Empty;

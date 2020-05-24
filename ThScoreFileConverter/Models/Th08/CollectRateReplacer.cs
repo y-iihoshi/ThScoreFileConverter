@@ -25,27 +25,6 @@ namespace ThScoreFileConverter.Models.Th08
             CharaWithTotalParser.Pattern,
             StageWithTotalParser.Pattern);
 
-        private static readonly Func<ICardAttack, CharaWithTotal, string, int, bool> FindByKindTypeImpl =
-            (attack, chara, kind, type) =>
-            {
-                Func<ICardAttackCareer, int> getCount;
-                if (type == 1)
-                    getCount = career => career.ClearCounts[chara];
-                else
-                    getCount = career => career.TrialCounts[chara];
-
-                if (kind == "S")
-                {
-                    return Definitions.CardTable.Any(
-                        pair => (pair.Key == attack.CardId) && (pair.Value.Level != LevelPractice.LastWord))
-                        && (getCount(attack.StoryCareer) > 0);
-                }
-                else
-                {
-                    return getCount(attack.PracticeCareer) > 0;
-                }
-            };
-
         private readonly MatchEvaluator evaluator;
 
         public CollectRateReplacer(IReadOnlyDictionary<int, ICardAttack> cardAttacks)
@@ -68,43 +47,43 @@ namespace ThScoreFileConverter.Models.Th08
                 if ((kind == "S") && (level == LevelPracticeWithTotal.LastWord))
                     return match.ToString();
 
-                bool FindByKindType(ICardAttack attack)
+#pragma warning disable IDE0007 // Use implicit type
+                Func<ICardAttackCareer, bool> findByType = type switch
                 {
-                    return FindByKindTypeImpl(attack, chara, kind, type);
-                }
+                    1 => career => career.ClearCounts[chara] > 0,
+                    _ => career => career.TrialCounts[chara] > 0,
+                };
 
-                Func<ICardAttack, bool> findByStage;
-                if (stage == StageWithTotal.Total)
+                Func<ICardAttack, bool> findByKind = kind switch
                 {
-                    findByStage = attack => true;
-                }
-                else
-                {
-                    findByStage = attack => Definitions.CardTable.Any(
-                        pair => (pair.Key == attack.CardId) && (pair.Value.Stage == (StagePractice)stage));
-                }
+                    "S" => attack => Definitions.CardTable.Any(
+                        pair => (pair.Key == attack.CardId) && (pair.Value.Level != LevelPractice.LastWord))
+                        && findByType(attack.StoryCareer),
+                    _ => attack => findByType(attack.PracticeCareer),
+                };
 
-                Func<ICardAttack, bool> findByLevel = attack => true;
-                switch (level)
+                Func<ICardAttack, bool> findByLevel = level switch
                 {
-                    case LevelPracticeWithTotal.Total:
-                        // Do nothing
-                        break;
-                    case LevelPracticeWithTotal.Extra:
-                        findByStage = attack => Definitions.CardTable.Any(
-                            pair => (pair.Key == attack.CardId) && (pair.Value.Stage == StagePractice.Extra));
-                        break;
-                    case LevelPracticeWithTotal.LastWord:
-                        findByStage = attack => Definitions.CardTable.Any(
-                            pair => (pair.Key == attack.CardId) && (pair.Value.Stage == StagePractice.LastWord));
-                        break;
-                    default:
-                        findByLevel = attack => attack.Level == level;
-                        break;
-                }
+                    LevelPracticeWithTotal.Total => Utils.True,
+                    LevelPracticeWithTotal.Extra => Utils.True,
+                    LevelPracticeWithTotal.LastWord => Utils.True,
+                    _ => attack => attack.Level == level,
+                };
+
+                Func<ICardAttack, bool> findByStage = (level, stage) switch
+                {
+                    (LevelPracticeWithTotal.Extra, _) => attack => Definitions.CardTable.Any(
+                        pair => (pair.Key == attack.CardId) && (pair.Value.Stage == StagePractice.Extra)),
+                    (LevelPracticeWithTotal.LastWord, _) => attack => Definitions.CardTable.Any(
+                        pair => (pair.Key == attack.CardId) && (pair.Value.Stage == StagePractice.LastWord)),
+                    (_, StageWithTotal.Total) => Utils.True,
+                    _ => attack => Definitions.CardTable.Any(
+                        pair => (pair.Key == attack.CardId) && (pair.Value.Stage == (StagePractice)stage)),
+                };
+#pragma warning restore IDE0007 // Use implicit type
 
                 return Utils.ToNumberString(
-                    cardAttacks.Values.Count(Utils.MakeAndPredicate(FindByKindType, findByLevel, findByStage)));
+                    cardAttacks.Values.Count(Utils.MakeAndPredicate(findByKind, findByLevel, findByStage)));
             }
         }
 

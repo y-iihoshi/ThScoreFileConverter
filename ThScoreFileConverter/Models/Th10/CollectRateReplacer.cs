@@ -42,31 +42,27 @@ namespace ThScoreFileConverter.Models.Th10
                 if (stage == StageWithTotal.Extra)
                     return match.ToString();
 
-                Func<ISpellCard<Level>, bool> findByStage;
-                if (stage == StageWithTotal.Total)
-                    findByStage = card => true;
-                else
-                    findByStage = card => Definitions.CardTable[card.Id].Stage == (Stage)stage;
-
-                Func<ISpellCard<Level>, bool> findByLevel = card => true;
-                switch (level)
+#pragma warning disable IDE0007 // Use implicit type
+                Func<ISpellCard<Level>, bool> findByLevel = level switch
                 {
-                    case LevelWithTotal.Total:
-                        // Do nothing
-                        break;
-                    case LevelWithTotal.Extra:
-                        findByStage = card => Definitions.CardTable[card.Id].Stage == Stage.Extra;
-                        break;
-                    default:
-                        findByLevel = card => card.Level == (Level)level;
-                        break;
-                }
+                    LevelWithTotal.Total => Utils.True,
+                    LevelWithTotal.Extra => Utils.True,
+                    _ => card => card.Level == (Level)level,
+                };
 
-                Func<ISpellCard<Level>, bool> findByType;
-                if (type == 1)
-                    findByType = card => card.ClearCount > 0;
-                else
-                    findByType = card => card.TrialCount > 0;
+                Func<ISpellCard<Level>, bool> findByStage = (level, stage) switch
+                {
+                    (LevelWithTotal.Extra, _) => card => Definitions.CardTable[card.Id].Stage == Stage.Extra,
+                    (_, StageWithTotal.Total) => Utils.True,
+                    _ => card => Definitions.CardTable[card.Id].Stage == (Stage)stage,
+                };
+
+                Func<ISpellCard<Level>, bool> findByType = type switch
+                {
+                    1 => card => card.ClearCount > 0,
+                    _ => card => card.TrialCount > 0,
+                };
+#pragma warning restore IDE0007 // Use implicit type
 
                 return Utils.ToNumberString(
                     clearDataDictionary.TryGetValue(chara, out var clearData)

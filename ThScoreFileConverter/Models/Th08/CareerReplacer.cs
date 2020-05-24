@@ -36,26 +36,26 @@ namespace ThScoreFileConverter.Models.Th08
                 var chara = CharaWithTotalParser.Parse(match.Groups[3].Value);
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
-                Func<ICardAttack, bool> isValidLevel;
-                Func<ICardAttack, ICardAttackCareer> getCareer;
-                if (kind == "S")
+#pragma warning disable IDE0007 // Use implicit type
+                Func<ICardAttack, bool> isValidLevel = kind switch
                 {
-                    isValidLevel = attack => Definitions.CardTable[attack.CardId].Level != LevelPractice.LastWord;
-                    getCareer = attack => attack.StoryCareer;
-                }
-                else
-                {
-                    isValidLevel = attack => true;
-                    getCareer = attack => attack.PracticeCareer;
-                }
+                    "S" => attack => Definitions.CardTable[attack.CardId].Level != LevelPractice.LastWord,
+                    _ => attack => true,
+                };
 
-                Func<ICardAttack, long> getValue;
-                if (type == 1)
-                    getValue = attack => getCareer(attack).MaxBonuses[chara];
-                else if (type == 2)
-                    getValue = attack => getCareer(attack).ClearCounts[chara];
-                else
-                    getValue = attack => getCareer(attack).TrialCounts[chara];
+                Func<ICardAttack, ICardAttackCareer> getCareer = kind switch
+                {
+                    "S" => attack => attack.StoryCareer,
+                    _ => attack => attack.PracticeCareer,
+                };
+
+                Func<ICardAttack, long> getValue = type switch
+                {
+                    1 => attack => getCareer(attack).MaxBonuses[chara],
+                    2 => attack => getCareer(attack).ClearCounts[chara],
+                    _ => attack => getCareer(attack).TrialCounts[chara],
+                };
+#pragma warning restore IDE0007 // Use implicit type
 
                 if (number == 0)
                 {

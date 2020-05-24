@@ -43,44 +43,29 @@ namespace ThScoreFileConverter.Models.Th128
                     (level != LevelWithTotal.Extra) && (level != LevelWithTotal.Total))
                     return match.ToString();
 
-                Func<IClearData, long> getValueByType;
-                Func<long, string> toString;
-                if (type == 1)
+#pragma warning disable IDE0007 // Use implicit type
+                Func<IClearData, long> getValueByType = (level, type) switch
                 {
-                    getValueByType = clearData => clearData.TotalPlayCount;
-                    toString = Utils.ToNumberString;
-                }
-                else if (type == 2)
-                {
-                    getValueByType = clearData => clearData.PlayTime;
-                    toString = value => new Time(value).ToString();
-                }
-                else
-                {
-                    if (level == LevelWithTotal.Total)
-                    {
-                        getValueByType = clearData => clearData.ClearCounts.Values.Sum();
-                    }
-                    else
-                    {
-                        getValueByType = clearData => clearData.ClearCounts.TryGetValue((Level)level, out var count)
-                            ? count : default;
-                    }
+                    (_, 1) => clearData => clearData.TotalPlayCount,
+                    (_, 2) => clearData => clearData.PlayTime,
+                    (LevelWithTotal.Total, _) => clearData => clearData.ClearCounts.Values.Sum(),
+                    _ => clearData => clearData.ClearCounts.TryGetValue((Level)level, out var count) ? count : default,
+                };
 
-                    toString = Utils.ToNumberString;
-                }
+                Func<IReadOnlyDictionary<RouteWithTotal, IClearData>, long> getValueByRoute = route switch
+                {
+                    RouteWithTotal.Total => dictionary => dictionary.Values
+                        .Where(clearData => clearData.Route != route).Sum(getValueByType),
+                    _ => dictionary => dictionary.TryGetValue(route, out var clearData)
+                        ? getValueByType(clearData) : default,
+                };
 
-                Func<IReadOnlyDictionary<RouteWithTotal, IClearData>, long> getValueByRoute;
-                if (route == RouteWithTotal.Total)
+                Func<long, string> toString = type switch
                 {
-                    getValueByRoute = dictionary => dictionary.Values
-                        .Where(clearData => clearData.Route != route).Sum(getValueByType);
-                }
-                else
-                {
-                    getValueByRoute = dictionary => dictionary.TryGetValue(route, out var clearData)
-                        ? getValueByType(clearData) : default;
-                }
+                    2 => value => new Time(value).ToString(),
+                    _ => Utils.ToNumberString,
+                };
+#pragma warning restore IDE0007 // Use implicit type
 
                 return toString(getValueByRoute(clearDataDictionary));
             });

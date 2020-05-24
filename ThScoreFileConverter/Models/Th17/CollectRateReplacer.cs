@@ -25,25 +25,6 @@ namespace ThScoreFileConverter.Models.Th17
             CharaWithTotalParser.Pattern,
             StageWithTotalParser.Pattern);
 
-        private static readonly Func<Th13.ISpellCard<Level>, string, int, bool> FindByKindTypeImpl =
-            (card, kind, type) =>
-            {
-                if (kind == "S")
-                {
-                    if (type == 1)
-                        return card.ClearCount > 0;
-                    else
-                        return card.TrialCount > 0;
-                }
-                else
-                {
-                    if (type == 1)
-                        return card.PracticeClearCount > 0;
-                    else
-                        return card.PracticeTrialCount > 0;
-                }
-            };
-
         private readonly MatchEvaluator evaluator;
 
         public CollectRateReplacer(IReadOnlyDictionary<CharaWithTotal, IClearData> clearDataDictionary)
@@ -65,34 +46,33 @@ namespace ThScoreFileConverter.Models.Th17
                 if (stage == StageWithTotal.Extra)
                     return match.ToString();
 
-                bool FindByKindType(Th13.ISpellCard<Level> card)
+#pragma warning disable IDE0007 // Use implicit type
+                Func<Th13.ISpellCard<Level>, bool> findByKindType = (kind, type) switch
                 {
-                    return FindByKindTypeImpl(card, kind, type);
-                }
+                    ("S", 1) => card => card.ClearCount > 0,
+                    ("S", _) => card => card.TrialCount > 0,
+                    (_, 1) => card => card.PracticeClearCount > 0,
+                    _ => card => card.PracticeTrialCount > 0,
+                };
 
-                Func<Th13.ISpellCard<Level>, bool> findByStage;
-                if (stage == StageWithTotal.Total)
-                    findByStage = card => true;
-                else
-                    findByStage = card => Definitions.CardTable[card.Id].Stage == (Stage)stage;
-
-                Func<Th13.ISpellCard<Level>, bool> findByLevel = card => true;
-                switch (level)
+                Func<Th13.ISpellCard<Level>, bool> findByLevel = level switch
                 {
-                    case LevelWithTotal.Total:
-                        // Do nothing
-                        break;
-                    case LevelWithTotal.Extra:
-                        findByStage = card => Definitions.CardTable[card.Id].Stage == Stage.Extra;
-                        break;
-                    default:
-                        findByLevel = card => card.Level == (Level)level;
-                        break;
-                }
+                    LevelWithTotal.Total => Utils.True,
+                    LevelWithTotal.Extra => Utils.True,
+                    _ => card => card.Level == (Level)level,
+                };
+
+                Func<Th13.ISpellCard<Level>, bool> findByStage = (level, stage) switch
+                {
+                    (LevelWithTotal.Extra, _) => card => Definitions.CardTable[card.Id].Stage == Stage.Extra,
+                    (_, StageWithTotal.Total) => Utils.True,
+                    _ => card => Definitions.CardTable[card.Id].Stage == (Stage)stage,
+                };
+#pragma warning restore IDE0007 // Use implicit type
 
                 return Utils.ToNumberString(
                     clearDataDictionary.TryGetValue(chara, out var clearData)
-                    ? clearData.Cards.Values.Count(Utils.MakeAndPredicate(FindByKindType, findByLevel, findByStage))
+                    ? clearData.Cards.Values.Count(Utils.MakeAndPredicate(findByKindType, findByLevel, findByStage))
                     : default);
             }
         }

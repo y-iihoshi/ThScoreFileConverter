@@ -192,31 +192,26 @@ namespace ThScoreFileConverterTests.Models
             where TResult : struct
         {
             var defaultValue = default(TResult);
-            var maxValue = 0;
-            Func<object> getNextValue;
 
-            switch (defaultValue)
+#pragma warning disable IDE0007 // Use implicit type
+            Func<object> getNextValue = defaultValue switch
             {
-                case byte _:
-                    getNextValue = () => Random.Next(byte.MaxValue + 1);
-                    break;
-                case short _:
-                    getNextValue = () => Random.Next(short.MaxValue + 1);
-                    break;
-                case ushort _:
-                    getNextValue = () => Random.Next(ushort.MaxValue + 1);
-                    break;
-                case int _:
-                    maxValue = ushort.MaxValue + 1;
-                    getNextValue = () => ((Random.Next(maxValue) << 16) | Random.Next(maxValue));
-                    break;
-                case uint _:
-                    maxValue = ushort.MaxValue + 1;
-                    getNextValue = () => (((uint)Random.Next(maxValue) << 16) | (uint)Random.Next(maxValue));
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
+                byte _ => () => Random.Next(byte.MaxValue + 1),
+                short _ => () => Random.Next(short.MaxValue + 1),
+                ushort _ => () => Random.Next(ushort.MaxValue + 1),
+                int _ => () =>
+                {
+                    var maxValue = ushort.MaxValue + 1;
+                    return (Random.Next(maxValue) << 16) | Random.Next(maxValue);
+                },
+                uint _ => () =>
+                {
+                    var maxValue = ushort.MaxValue + 1;
+                    return ((uint)Random.Next(maxValue) << 16) | (uint)Random.Next(maxValue);
+                },
+                _ => throw new NotImplementedException(),
+            };
+#pragma warning restore IDE0007 // Use implicit type
 
             return Enumerable
                 .Repeat(defaultValue, length)

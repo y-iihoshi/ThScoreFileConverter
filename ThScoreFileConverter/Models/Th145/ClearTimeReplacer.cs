@@ -32,22 +32,20 @@ namespace ThScoreFileConverter.Models.Th145
                 var level = Parsers.LevelWithTotalParser.Parse(match.Groups[1].Value);
                 var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[2].Value);
 
-                Func<IReadOnlyDictionary<Chara, int>, int> getValueByChara;
-                if (chara == CharaWithTotal.Total)
-                    getValueByChara = dictionary => dictionary.Values.Sum();
-                else
-                    getValueByChara = dictionary => dictionary.TryGetValue((Chara)chara, out var time) ? time : default;
+#pragma warning disable IDE0007 // Use implicit type
+                Func<IReadOnlyDictionary<Chara, int>, int> getValueByChara = chara switch
+                {
+                    CharaWithTotal.Total => dictionary => dictionary.Values.Sum(),
+                    _ => dictionary => dictionary.TryGetValue((Chara)chara, out var time) ? time : default,
+                };
 
-                Func<IReadOnlyDictionary<Level, IReadOnlyDictionary<Chara, int>>, int> getValueByLevel;
-                if (level == LevelWithTotal.Total)
+                Func<IReadOnlyDictionary<Level, IReadOnlyDictionary<Chara, int>>, int> getValueByLevel = level switch
                 {
-                    getValueByLevel = dictionary => dictionary.Values.Sum(getValueByChara);
-                }
-                else
-                {
-                    getValueByLevel = dictionary => dictionary.TryGetValue((Level)level, out var times)
-                        ? getValueByChara(times) : default;
-                }
+                    LevelWithTotal.Total => dictionary => dictionary.Values.Sum(getValueByChara),
+                    _ => dictionary => dictionary.TryGetValue((Level)level, out var times)
+                        ? getValueByChara(times) : default,
+                };
+#pragma warning restore IDE0007 // Use implicit type
 
                 return new Time(getValueByLevel(clearTimes)).ToString();
             });

@@ -55,13 +55,14 @@ namespace ThScoreFileConverter.Models.Th075
                     return value;
                 }
 
-                Func<IClearData, IEnumerable<int>> getValues;
-                if (type == 1)
-                    getValues = data => data.MaxBonuses;
-                else if (type == 2)
-                    getValues = data => data.CardGotCount.Select(ToInteger);
-                else
-                    getValues = data => data.CardTrialCount.Select(ToInteger);
+#pragma warning disable IDE0007 // Use implicit type
+                Func<IClearData, IEnumerable<int>> getValues = type switch
+                {
+                    1 => data => data.MaxBonuses,
+                    2 => data => data.CardGotCount.Select(ToInteger),
+                    _ => data => data.CardTrialCount.Select(ToInteger),
+                };
+#pragma warning restore IDE0007 // Use implicit type
 
                 if (number == 0)
                 {

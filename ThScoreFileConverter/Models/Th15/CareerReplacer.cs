@@ -36,11 +36,13 @@ namespace ThScoreFileConverter.Models.Th15
                 var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[3].Value);
                 var type = int.Parse(match.Groups[4].Value, CultureInfo.InvariantCulture);
 
-                Func<Th13.ISpellCard<Level>, int> getCount;
-                if (type == 1)
-                    getCount = card => card.ClearCount;
-                else
-                    getCount = card => card.TrialCount;
+#pragma warning disable IDE0007 // Use implicit type
+                Func<Th13.ISpellCard<Level>, int> getCount = type switch
+                {
+                    1 => card => card.ClearCount,
+                    _ => card => card.TrialCount,
+                };
+#pragma warning restore IDE0007 // Use implicit type
 
                 var cards = clearDataDictionary.TryGetValue(chara, out var clearData)
                     && clearData.GameModeData.TryGetValue(mode, out var clearDataPerGameMode)

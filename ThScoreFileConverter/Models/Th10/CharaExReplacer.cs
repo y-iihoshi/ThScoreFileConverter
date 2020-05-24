@@ -38,44 +38,29 @@ namespace ThScoreFileConverter.Models.Th10
                 var chara = Parsers.CharaWithTotalParser.Parse(match.Groups[2].Value);
                 var type = int.Parse(match.Groups[3].Value, CultureInfo.InvariantCulture);
 
-                Func<IClearData, long> getValueByType;
-                Func<long, string> toString;
-                if (type == 1)
+#pragma warning disable IDE0007 // Use implicit type
+                Func<IClearData, long> getValueByType = (level, type) switch
                 {
-                    getValueByType = clearData => clearData.TotalPlayCount;
-                    toString = Utils.ToNumberString;
-                }
-                else if (type == 2)
-                {
-                    getValueByType = clearData => clearData.PlayTime;
-                    toString = value => new Time(value).ToString();
-                }
-                else
-                {
-                    if (level == LevelWithTotal.Total)
-                    {
-                        getValueByType = clearData => clearData.ClearCounts.Values.Sum();
-                    }
-                    else
-                    {
-                        getValueByType = clearData => clearData.ClearCounts.TryGetValue((Level)level, out var count)
-                            ? count : default;
-                    }
+                    (_, 1) => clearData => clearData.TotalPlayCount,
+                    (_, 2) => clearData => clearData.PlayTime,
+                    (LevelWithTotal.Total, _) => clearData => clearData.ClearCounts.Values.Sum(),
+                    _ => clearData => clearData.ClearCounts.TryGetValue((Level)level, out var count) ? count : default,
+                };
 
-                    toString = Utils.ToNumberString;
-                }
+                Func<IReadOnlyDictionary<CharaWithTotal, IClearData>, long> getValueByChara = chara switch
+                {
+                    CharaWithTotal.Total => dictionary => dictionary.Values
+                        .Where(clearData => clearData.Chara != chara).Sum(getValueByType),
+                    _ => dictionary => dictionary.TryGetValue(chara, out var clearData)
+                        ? getValueByType(clearData) : default,
+                };
 
-                Func<IReadOnlyDictionary<CharaWithTotal, IClearData>, long> getValueByChara;
-                if (chara == CharaWithTotal.Total)
+                Func<long, string> toString = type switch
                 {
-                    getValueByChara = dictionary => dictionary.Values
-                        .Where(clearData => clearData.Chara != chara).Sum(getValueByType);
-                }
-                else
-                {
-                    getValueByChara = dictionary => dictionary.TryGetValue(chara, out var clearData)
-                        ? getValueByType(clearData) : default;
-                }
+                    2 => value => new Time(value).ToString(),
+                    _ => Utils.ToNumberString,
+                };
+#pragma warning restore IDE0007 // Use implicit type
 
                 return toString(getValueByChara(clearDataDictionary));
             });
