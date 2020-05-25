@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using ThScoreFileConverter.Models;
 
 namespace ThScoreFileConverter.Extensions
@@ -69,14 +70,29 @@ namespace ThScoreFileConverter.Extensions
                 var type = typeof(TEnum);
                 Debug.Assert(type.IsEnum, $"{nameof(TEnum)} must be an enum type.");
 
-                var lookup = type.GetFields()
-                    .Where(field => field.FieldType == type)
-                    .SelectMany(
-                        field => field.GetCustomAttributes(false),
-                        (field, attr) => (enumValue: (field.GetValue(null) is object obj) ? (TEnum)obj : default, attr))
-                    .ToLookup(pair => pair.attr.GetType());
+                static TAttr? GetAttribute<TAttr>(MemberInfo memberInfo, bool inherit)
+                    where TAttr : Attribute
+                {
+                    return memberInfo.GetCustomAttribute(typeof(TAttr), inherit) is TAttr attr ? attr : default;
+                }
 
-                return lookup[typeof(TAttribute)].ToDictionary(pair => pair.enumValue, pair => (TAttribute)pair.attr);
+                static bool IsAllowedMultiple(MemberInfo memberInfo)
+                {
+                    return GetAttribute<AttributeUsageAttribute>(memberInfo, false) is { } usage
+                        && usage.AllowMultiple;
+                }
+
+                Debug.Assert(
+                    !IsAllowedMultiple(typeof(TAttribute)),
+                    $"{nameof(TAttribute)} must not be allowed multiple instances.");
+
+                return type.GetFields()
+                    .Where(field => field.FieldType == type)
+                    .Select(field =>
+                        (enumValue: field.GetValue(null) is TEnum value ? value : default,
+                            attr: GetAttribute<TAttribute>(field, false)))
+                    .Where(pair => pair.attr is { })
+                    .ToDictionary(pair => pair.enumValue, pair => pair.attr!);
             }
         }
     }
