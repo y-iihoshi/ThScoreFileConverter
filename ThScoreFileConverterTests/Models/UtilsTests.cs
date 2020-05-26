@@ -2,6 +2,7 @@
 using System;
 using System.Globalization;
 using ThScoreFileConverter;
+using WPFLocalizeExtension.Engine;
 using Utils = ThScoreFileConverter.Models.Utils;
 
 namespace ThScoreFileConverterTests.Models
@@ -172,6 +173,20 @@ namespace ThScoreFileConverterTests.Models
         {
             _ = Utils.ToOneBased(10);
             Assert.Fail(TestUtils.Unreachable);
+        }
+
+        [TestMethod]
+        public void GetLocalizedValueTest()
+        {
+            var key = "SettingWindowTitle";
+            LocalizeDictionary.Instance.Culture = new CultureInfo("en-US");
+            Assert.AreEqual("Settings", Utils.GetLocalizedValues<string>(key));
+
+            LocalizeDictionary.Instance.Culture = new CultureInfo("ja-JP");
+            Assert.AreEqual("設定", Utils.GetLocalizedValues<string>(key));
+
+            LocalizeDictionary.Instance.Culture = CultureInfo.InvariantCulture;
+            Assert.AreEqual("Settings", Utils.GetLocalizedValues<string>(key));
         }
     }
 }

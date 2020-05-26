@@ -83,6 +83,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="WPFLocalizeExtension" Version="3.6.1" />
   </ItemGroup>
 
   <ItemGroup>

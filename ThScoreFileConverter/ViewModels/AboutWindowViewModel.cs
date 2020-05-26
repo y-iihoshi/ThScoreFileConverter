@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
+using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.ViewModels
@@ -32,7 +33,7 @@ namespace ThScoreFileConverter.ViewModels
         /// </summary>
         public AboutWindowViewModel()
         {
-            this.Title = Resources.AboutWindowTitle;
+            this.Title = Utils.GetLocalizedValues<string>(nameof(Resources.AboutWindowTitle));
 
             this.Icon = Imaging.CreateBitmapSourceFromHIcon(
                 SystemIcons.Application.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
@@ -44,7 +45,8 @@ namespace ThScoreFileConverter.ViewModels
             var attrs = thisAsm.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), true);
 
             this.Name = asmName.Name ?? nameof(ThScoreFileConverter);
-            this.Version = Resources.VersionPrefix + (verField?.GetValue(null) ?? string.Empty);
+            this.Version = Utils.GetLocalizedValues<string>(nameof(Resources.VersionPrefix))
+                + (verField?.GetValue(null) ?? string.Empty);
             this.Copyright = (attrs[0] is AssemblyCopyrightAttribute attr) ? attr.Copyright : string.Empty;
             this.Uri = Resources.ProjectUrl;
         }

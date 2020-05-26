@@ -186,7 +186,8 @@ namespace ThScoreFileConverter.ViewModels
         /// Gets a string indicating the supported versions of the score file to convert.
         /// </summary>
         public string SupportedVersions => this.converter is null
-            ? string.Empty : Resources.SupportedVersion + this.converter.SupportedVersions;
+            ? string.Empty
+            : Utils.GetLocalizedValues<string>(nameof(Resources.SupportedVersion)) + this.converter.SupportedVersions;
 
         /// <summary>
         /// Gets a path of the score file.
@@ -572,7 +573,8 @@ namespace ThScoreFileConverter.ViewModels
             else
             {
                 this.IsIdle = false;
-                this.Log = Resources.MessageStartConversion + Environment.NewLine;
+                this.Log = Utils.GetLocalizedValues<string>(nameof(Resources.MessageStartConversion))
+                    + Environment.NewLine;
                 new Thread(new ParameterizedThreadStart(this.converter.Convert)).Start(CurrentSetting);
             }
         }
@@ -808,7 +810,8 @@ namespace ThScoreFileConverter.ViewModels
         /// <param name="e">The event data.</param>
         private void OnConvertAllFinished(object? sender, ThConverterEventArgs e)
         {
-            this.Log += Resources.MessageConversionFinished + Environment.NewLine;
+            this.Log += Utils.GetLocalizedValues<string>(nameof(Resources.MessageConversionFinished))
+                + Environment.NewLine;
             this.IsIdle = true;
         }
 
@@ -822,7 +825,8 @@ namespace ThScoreFileConverter.ViewModels
 #if DEBUG
             this.Log += e.Exception.Message + Environment.NewLine;
 #endif
-            this.Log += Resources.MessageUnhandledExceptionOccurred + Environment.NewLine;
+            this.Log += Utils.GetLocalizedValues<string>(nameof(Resources.MessageUnhandledExceptionOccurred))
+                + Environment.NewLine;
             this.IsIdle = true;
         }
 

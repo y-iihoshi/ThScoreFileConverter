@@ -5,6 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Windows.Media;
@@ -13,6 +14,7 @@ using Prism.Unity;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.ViewModels;
 using ThScoreFileConverter.Views;
+using WPFLocalizeExtension.Engine;
 using Prop = ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter
@@ -89,12 +91,20 @@ namespace ThScoreFileConverter
                 File.Delete(backup);
                 File.Move(Prop.Resources.SettingFileName, backup);
                 var message = Utils.Format(
-                    Prop.Resources.MessageSettingFileIsCorrupted, Prop.Resources.SettingFileName, backup);
+                    Utils.GetLocalizedValues<string>(nameof(Prop.Resources.MessageSettingFileIsCorrupted)),
+                    Prop.Resources.SettingFileName,
+                    backup);
                 _ = MessageBox.Show(
-                    message, Prop.Resources.MessageTitleWarning, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    message,
+                    Utils.GetLocalizedValues<string>(nameof(Prop.Resources.MessageTitleWarning)),
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
             }
 
             this.UpdateResources(Settings.Instance.FontFamilyName, Settings.Instance.FontSize);
+
+            LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
+            LocalizeDictionary.Instance.Culture = CultureInfo.CurrentCulture;
 
             base.OnStartup(e);
         }

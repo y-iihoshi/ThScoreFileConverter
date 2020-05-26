@@ -37,7 +37,7 @@ namespace ThScoreFileConverter.ViewModels
             this.disposed = false;
             this.font = null;
 
-            this.Title = Resources.SettingWindowTitle;
+            this.Title = Utils.GetLocalizedValues<string>(nameof(Resources.SettingWindowTitle));
 
             var encodings = Settings.ValidCodePageIds
                 .ToDictionary(id => id, id => Encoding.GetEncoding(id).EncodingName);
