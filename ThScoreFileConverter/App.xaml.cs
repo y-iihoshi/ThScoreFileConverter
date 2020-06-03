@@ -103,6 +103,7 @@ namespace ThScoreFileConverter
 
             this.UpdateResources(Settings.Instance.FontFamilyName, Settings.Instance.FontSize);
 
+            LocalizeDictionary.Instance.SetCurrentValue(LocalizeDictionary.IncludeInvariantCultureProperty, false);
             LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
             LocalizeDictionary.Instance.Culture = CultureInfo.CurrentCulture;
 

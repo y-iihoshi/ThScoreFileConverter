@@ -548,6 +548,15 @@ namespace ThScoreFileConverter.Properties {
         }
         
         /// <summary>
+        ///   Language に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ViewsSettingWindowGroupBoxLanguage {
+            get {
+                return ResourceManager.GetString("ViewsSettingWindowGroupBoxLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Output formatting に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string ViewsSettingWindowGroupBoxOutputFormatting {

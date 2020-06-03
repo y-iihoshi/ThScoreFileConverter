@@ -23,6 +23,7 @@ using ThScoreFileConverter.Actions;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Properties;
+using WPFLocalizeExtension.Engine;
 
 namespace ThScoreFileConverter.ViewModels
 {
@@ -126,6 +127,7 @@ namespace ThScoreFileConverter.ViewModels
             this.OpenSettingWindowCommand = new DelegateCommand(this.OpenSettingWindow);
 
             this.PropertyChanged += this.OnPropertyChanged;
+            LocalizeDictionary.Instance.PropertyChanged += this.OnLocalizeDictionaryPropertyChanged;
 
             if (string.IsNullOrEmpty(this.LastWorkNumber))
                 this.LastWorkNumber = WorksImpl.First().Number;
@@ -790,6 +792,19 @@ namespace ThScoreFileConverter.ViewModels
                 case nameof(this.ImageOutputDirectory):
                     this.ConvertCommand.RaiseCanExecuteChanged();
                     break;
+            }
+        }
+
+        /// <summary>
+        /// Handles the event indicating a property value of <see cref="LocalizeDictionary.Instance"/> is changed.
+        /// </summary>
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void OnLocalizeDictionaryPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(LocalizeDictionary.Instance.Culture))
+            {
+                this.RaisePropertyChanged(nameof(this.SupportedVersions));
             }
         }
 

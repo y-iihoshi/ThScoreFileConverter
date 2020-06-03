@@ -217,6 +217,9 @@
   <data name="ViewsSettingWindowGroupBoxFont" xml:space="preserve">
     <value>フォント設定</value>
   </data>
+  <data name="ViewsSettingWindowGroupBoxLanguage" xml:space="preserve">
+    <value>言語設定</value>
+  </data>
   <data name="ViewsSettingWindowGroupBoxOutputFormatting" xml:space="preserve">
     <value>出力書式設定</value>
   </data>

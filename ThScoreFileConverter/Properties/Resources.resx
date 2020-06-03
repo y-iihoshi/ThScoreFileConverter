@@ -302,6 +302,9 @@ Renamed to "{1}".</value>
   <data name="ViewsSettingWindowGroupBoxFont" xml:space="preserve">
     <value>Font</value>
   </data>
+  <data name="ViewsSettingWindowGroupBoxLanguage" xml:space="preserve">
+    <value>Language</value>
+  </data>
   <data name="ViewsSettingWindowGroupBoxOutputFormatting" xml:space="preserve">
     <value>Output formatting</value>
   </data>
