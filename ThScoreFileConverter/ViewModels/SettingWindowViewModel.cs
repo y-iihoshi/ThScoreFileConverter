@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Windows;
@@ -16,6 +17,7 @@ using Prism.Services.Dialogs;
 using ThScoreFileConverter.Actions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Properties;
+using WPFLocalizeExtension.Engine;
 using SysDraw = System.Drawing;
 
 namespace ThScoreFileConverter.ViewModels
@@ -37,8 +39,6 @@ namespace ThScoreFileConverter.ViewModels
             this.disposed = false;
             this.font = null;
 
-            this.Title = Utils.GetLocalizedValues<string>(nameof(Resources.SettingWindowTitle));
-
             var encodings = Settings.ValidCodePageIds
                 .ToDictionary(id => id, id => Encoding.GetEncoding(id).EncodingName);
             this.InputEncodings = encodings;
@@ -48,6 +48,8 @@ namespace ThScoreFileConverter.ViewModels
             this.FontDialogApplyCommand = new DelegateCommand<FontDialogActionResult>(this.ApplyFont);
             this.FontDialogCancelCommand = new DelegateCommand<FontDialogActionResult>(this.ApplyFont);
             this.ResetFontCommand = new DelegateCommand(this.ResetFont);
+
+            LocalizeDictionary.Instance.PropertyChanged += this.OnLocalizeDictionaryPropertyChanged;
         }
 
         /// <summary>
@@ -68,7 +70,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets a title of the Settings window.
         /// </summary>
-        public string Title { get; private set; }
+        public string Title => Utils.GetLocalizedValues<string>(nameof(Resources.SettingWindowTitle));
 
         /// <summary>
         /// Gets the current font.
@@ -266,5 +268,18 @@ namespace ThScoreFileConverter.ViewModels
         }
 
         #endregion
+
+        /// <summary>
+        /// Handles the event indicating a property value of <see cref="LocalizeDictionary.Instance"/> is changed.
+        /// </summary>
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void OnLocalizeDictionaryPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(LocalizeDictionary.Instance.Culture))
+            {
+                this.RaisePropertyChanged(nameof(this.Title));
+            }
+        }
     }
 }

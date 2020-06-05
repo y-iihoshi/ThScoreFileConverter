@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -24,11 +25,11 @@ namespace ThScoreFileConverterTests.Interactivity
             set
             {
                 this.log = value;
-                this.OnPropertyChanged(nameof(this.Log));
+                this.RaisePropertyChanged();
             }
         }
 
-        private void OnPropertyChanged(string propertyName)
+        private void RaisePropertyChanged([CallerMemberName] string propertyName = "")
             => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
