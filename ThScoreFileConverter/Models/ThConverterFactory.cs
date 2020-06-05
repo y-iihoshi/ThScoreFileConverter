@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter.Models
 {
@@ -20,29 +21,29 @@ namespace ThScoreFileConverter.Models
         /// </summary>
         private static readonly IReadOnlyDictionary<string, Type> ConverterTypes = new Dictionary<string, Type>
         {
-            { "TH06",  typeof(Th06Converter)  },
-            { "TH07",  typeof(Th07Converter)  },
-            { "TH08",  typeof(Th08Converter)  },
-            { "TH09",  typeof(Th09Converter)  },
-            { "TH095", typeof(Th095Converter) },
-            { "TH10",  typeof(Th10Converter)  },
-            { "TH11",  typeof(Th11Converter)  },
-            { "TH12",  typeof(Th12Converter)  },
-            { "TH125", typeof(Th125Converter) },
-            { "TH128", typeof(Th128Converter) },
-            { "TH13",  typeof(Th13Converter)  },
-            { "TH14",  typeof(Th14Converter)  },
-            { "TH143", typeof(Th143Converter) },
-            { "TH15",  typeof(Th15Converter)  },
-            { "TH16",  typeof(Th16Converter)  },
-            { "TH165", typeof(Th165Converter) },
-            { "TH17",  typeof(Th17Converter)  },
-            { "TH075", typeof(Th075Converter) },
-            { "TH105", typeof(Th105Converter) },
-            { "TH123", typeof(Th123Converter) },
-            { "TH135", typeof(Th135Converter) },
-            { "TH145", typeof(Th145Converter) },
-            { "TH155", typeof(Th155Converter) },
+            { nameof(Resources.TH06),  typeof(Th06Converter)  },
+            { nameof(Resources.TH07),  typeof(Th07Converter)  },
+            { nameof(Resources.TH08),  typeof(Th08Converter)  },
+            { nameof(Resources.TH09),  typeof(Th09Converter)  },
+            { nameof(Resources.TH095), typeof(Th095Converter) },
+            { nameof(Resources.TH10),  typeof(Th10Converter)  },
+            { nameof(Resources.TH11),  typeof(Th11Converter)  },
+            { nameof(Resources.TH12),  typeof(Th12Converter)  },
+            { nameof(Resources.TH125), typeof(Th125Converter) },
+            { nameof(Resources.TH128), typeof(Th128Converter) },
+            { nameof(Resources.TH13),  typeof(Th13Converter)  },
+            { nameof(Resources.TH14),  typeof(Th14Converter)  },
+            { nameof(Resources.TH143), typeof(Th143Converter) },
+            { nameof(Resources.TH15),  typeof(Th15Converter)  },
+            { nameof(Resources.TH16),  typeof(Th16Converter)  },
+            { nameof(Resources.TH165), typeof(Th165Converter) },
+            { nameof(Resources.TH17),  typeof(Th17Converter)  },
+            { nameof(Resources.TH075), typeof(Th075Converter) },
+            { nameof(Resources.TH105), typeof(Th105Converter) },
+            { nameof(Resources.TH123), typeof(Th123Converter) },
+            { nameof(Resources.TH135), typeof(Th135Converter) },
+            { nameof(Resources.TH145), typeof(Th145Converter) },
+            { nameof(Resources.TH155), typeof(Th155Converter) },
         };
 
         /// <summary>

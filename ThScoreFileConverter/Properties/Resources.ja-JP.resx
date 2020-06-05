@@ -157,6 +157,78 @@
   <data name="SupportedVersion" xml:space="preserve">
     <value>対応バージョン: </value>
   </data>
+  <data name="TH06" xml:space="preserve">
+    <value>東方紅魔郷</value>
+  </data>
+  <data name="TH07" xml:space="preserve">
+    <value>東方妖々夢</value>
+  </data>
+  <data name="TH075" xml:space="preserve">
+    <value>東方萃夢想</value>
+  </data>
+  <data name="TH08" xml:space="preserve">
+    <value>東方永夜抄</value>
+  </data>
+  <data name="TH09" xml:space="preserve">
+    <value>東方花映塚</value>
+  </data>
+  <data name="TH095" xml:space="preserve">
+    <value>東方文花帖</value>
+  </data>
+  <data name="TH10" xml:space="preserve">
+    <value>東方風神録</value>
+  </data>
+  <data name="TH105" xml:space="preserve">
+    <value>東方緋想天</value>
+  </data>
+  <data name="TH11" xml:space="preserve">
+    <value>東方地霊殿</value>
+  </data>
+  <data name="TH12" xml:space="preserve">
+    <value>東方星蓮船</value>
+  </data>
+  <data name="TH123" xml:space="preserve">
+    <value>東方非想天則</value>
+  </data>
+  <data name="TH125" xml:space="preserve">
+    <value>ダブルスポイラー</value>
+  </data>
+  <data name="TH128" xml:space="preserve">
+    <value>妖精大戦争</value>
+  </data>
+  <data name="TH13" xml:space="preserve">
+    <value>東方神霊廟</value>
+  </data>
+  <data name="TH135" xml:space="preserve">
+    <value>東方心綺楼</value>
+  </data>
+  <data name="TH14" xml:space="preserve">
+    <value>東方輝針城</value>
+  </data>
+  <data name="TH143" xml:space="preserve">
+    <value>弾幕アマノジャク</value>
+  </data>
+  <data name="TH145" xml:space="preserve">
+    <value>東方深秘録</value>
+  </data>
+  <data name="TH15" xml:space="preserve">
+    <value>東方紺珠伝</value>
+  </data>
+  <data name="TH155" xml:space="preserve">
+    <value>東方憑依華</value>
+  </data>
+  <data name="TH16" xml:space="preserve">
+    <value>東方天空璋</value>
+  </data>
+  <data name="TH165" xml:space="preserve">
+    <value>秘封ナイトメアダイアリー</value>
+  </data>
+  <data name="TH17" xml:space="preserve">
+    <value>東方鬼形獣</value>
+  </data>
+  <data name="TH175" xml:space="preserve">
+    <value>東方強欲異聞</value>
+  </data>
   <data name="TemplateFileFilter" xml:space="preserve">
     <value>すべてのファイル (*.*)|*.*</value>
   </data>
