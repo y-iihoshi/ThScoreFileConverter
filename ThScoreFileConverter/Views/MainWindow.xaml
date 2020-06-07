@@ -19,10 +19,15 @@
 
     <StackPanel Margin="10"
                 Style="{StaticResource VerticalStackPanelStyle}">
-        <StackPanel Style="{StaticResource HorizontalStackPanelStyle}">
-            <ComboBox DisplayMemberPath="Title"
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <ComboBox Grid.Column="0"
+                      DisplayMemberPath="Title"
                       ItemsSource="{Binding Works}"
-                      MinWidth="150"
                       SelectedValue="{Binding LastWorkNumber, Mode=TwoWay}"
                       SelectedValuePath="Number"
                       VerticalAlignment="Center">
@@ -48,9 +53,9 @@
                     </Style>
                 </ComboBox.ItemContainerStyle>
             </ComboBox>
-            <Separator/>
-            <Label Content="{Binding SupportedVersions}"/>
-        </StackPanel>
+            <Label Grid.Column="1"
+                   Content="{Binding SupportedVersions}"/>
+        </Grid>
 
         <Separator/>
 
