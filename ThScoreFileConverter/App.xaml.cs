@@ -7,6 +7,7 @@
 
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using Prism.Ioc;
@@ -15,6 +16,7 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverter.ViewModels;
 using ThScoreFileConverter.Views;
 using WPFLocalizeExtension.Engine;
+using WPFLocalizeExtension.Providers;
 using Prop = ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter
@@ -105,7 +107,12 @@ namespace ThScoreFileConverter
 
             LocalizeDictionary.Instance.SetCurrentValue(LocalizeDictionary.IncludeInvariantCultureProperty, false);
             LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
-            LocalizeDictionary.Instance.Culture = CultureInfo.CurrentCulture;
+            if (LocalizeDictionary.Instance.DefaultProvider is ResxLocalizationProvider provider)
+            {
+                provider.UpdateCultureList(nameof(ThScoreFileConverter), nameof(Prop.Resources));
+                if (provider.AvailableCultures.Any(culture => culture.Name == Settings.Instance.Language))
+                    LocalizeDictionary.Instance.Culture = CultureInfo.GetCultureInfo(Settings.Instance.Language!);
+            }
 
             base.OnStartup(e);
         }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -28,6 +29,7 @@ namespace ThScoreFileConverter
         private bool? outputNumberGroupSeparator;
         private int? inputCodePageId;
         private int? outputCodePageId;
+        private string? language;
 
         /// <summary>
         /// Prevents a default instance of the <see cref="Settings" /> class from being created.
@@ -41,6 +43,7 @@ namespace ThScoreFileConverter
             this.outputNumberGroupSeparator = true;
             this.inputCodePageId = 65001;
             this.outputCodePageId = 65001;
+            this.language = CultureInfo.InvariantCulture.Name;
         }
 
         /// <summary>
@@ -142,6 +145,28 @@ namespace ThScoreFileConverter
         }
 
         /// <summary>
+        /// Gets or sets the culture name.
+        /// </summary>
+        [DataMember(Order = 7)]
+        public string? Language
+        {
+            get => this.language;
+            set
+            {
+                this.OnNullablePropertyChanging(value);
+
+                try
+                {
+                    _ = CultureInfo.GetCultureInfo(value!);
+                    this.language = value;
+                }
+                catch (CultureNotFoundException)
+                {
+                }
+            }
+        }
+
+        /// <summary>
         /// Loads the settings from the specified XML file.
         /// </summary>
         /// <param name="path">The path of the XML file to load.</param>
@@ -186,6 +211,8 @@ namespace ThScoreFileConverter
                 if (settings.OutputCodePageId.HasValue &&
                     ValidCodePageIds.Any(id => id == settings.OutputCodePageId.Value))
                     this.OutputCodePageId = settings.OutputCodePageId.Value;
+                if (settings.Language is { })
+                    this.Language = settings.Language;
             }
             catch (FileNotFoundException)
             {

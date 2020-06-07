@@ -7,6 +7,7 @@
       <d2p1:Value>
         <BestShotDirectory />
         <HideUntriedCards>false</HideUntriedCards>
+        <ImageOutputDirectory />
         <OutputDirectory />
         <ScoreFile />
         <TemplateFiles />
@@ -18,5 +19,4 @@
   <OutputNumberGroupSeparator>false</OutputNumberGroupSeparator>
   <InputCodePageId>65001</InputCodePageId>
   <OutputCodePageId>65001</OutputCodePageId>
-  <Language />
 </Settings>

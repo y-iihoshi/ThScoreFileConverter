@@ -31,7 +31,7 @@
         <GroupBox Header="{lex:Loc ViewsSettingWindowGroupBoxLanguage}">
             <ComboBox DisplayMemberPath="NativeName"
                       ItemsSource="{Binding MergedAvailableCultures, Source={x:Static lex:LocalizeDictionary.Instance}}"
-                      SelectedItem="{Binding Culture, Source={x:Static lex:LocalizeDictionary.Instance}}"/>
+                      SelectedItem="{Binding Culture}"/>
         </GroupBox>
 
         <Separator/>

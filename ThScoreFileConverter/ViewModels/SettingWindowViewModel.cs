@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using Prism.Commands;
@@ -152,6 +153,24 @@ namespace ThScoreFileConverter.ViewModels
                 {
                     Settings.Instance.OutputCodePageId = value;
                     this.RaisePropertyChanged(nameof(this.OutputCodePageId));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the culture.
+        /// </summary>
+        public CultureInfo Culture
+        {
+            get => LocalizeDictionary.Instance.Culture;
+
+            set
+            {
+                if (Settings.Instance.Language != value.Name)
+                {
+                    Settings.Instance.Language = value.Name;
+                    LocalizeDictionary.Instance.Culture = value;
+                    this.RaisePropertyChanged(nameof(this.Culture));
                 }
             }
         }
