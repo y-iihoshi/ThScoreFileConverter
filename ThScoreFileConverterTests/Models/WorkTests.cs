@@ -11,16 +11,24 @@ namespace ThScoreFileConverterTests.Models
         [TestMethod]
         public void WorkTest()
         {
-            var work = new Work { Number = "TH06", IsSupported = true };
+            var work = new Work { Number = "TH06" };
+            var culture = LocalizeDictionary.Instance.Culture;
 
-            LocalizeDictionary.Instance.Culture = new CultureInfo("en-US");
-            Assert.AreEqual("the Embodiment of Scarlet Devil", work.Title);
+            try
+            {
+                LocalizeDictionary.Instance.Culture = CultureInfo.GetCultureInfo("en-US");
+                Assert.AreEqual("the Embodiment of Scarlet Devil", work.Title);
 
-            LocalizeDictionary.Instance.Culture = new CultureInfo("ja-JP");
-            Assert.AreEqual("東方紅魔郷", work.Title);
+                LocalizeDictionary.Instance.Culture = CultureInfo.GetCultureInfo("ja-JP");
+                Assert.AreEqual("東方紅魔郷", work.Title);
 
-            LocalizeDictionary.Instance.Culture = CultureInfo.InvariantCulture;
-            Assert.AreEqual("the Embodiment of Scarlet Devil", work.Title);
+                LocalizeDictionary.Instance.Culture = CultureInfo.InvariantCulture;
+                Assert.AreEqual("the Embodiment of Scarlet Devil", work.Title);
+            }
+            finally
+            {
+                LocalizeDictionary.Instance.Culture = culture;
+            }
         }
 
         [TestMethod]
@@ -37,12 +45,22 @@ namespace ThScoreFileConverterTests.Models
         public void LocalizeDictionaryPropertyChangedTest()
         {
             var work = new Work { Number = "TH06" };
+            var culture = LocalizeDictionary.Instance.Culture;
+            var includes = LocalizeDictionary.Instance.IncludeInvariantCulture;
 
-            LocalizeDictionary.Instance.Culture = new CultureInfo("ja-JP");
-            Assert.AreEqual("東方紅魔郷", work.Title);
+            try
+            {
+                LocalizeDictionary.Instance.Culture = CultureInfo.GetCultureInfo("ja-JP");
+                Assert.AreEqual("東方紅魔郷", work.Title);
 
-            LocalizeDictionary.Instance.IncludeInvariantCulture = false;
-            Assert.AreEqual("東方紅魔郷", work.Title);
+                LocalizeDictionary.Instance.IncludeInvariantCulture = false;
+                Assert.AreEqual("東方紅魔郷", work.Title);
+            }
+            finally
+            {
+                LocalizeDictionary.Instance.IncludeInvariantCulture = includes;
+                LocalizeDictionary.Instance.Culture = culture;
+            }
         }
     }
 }

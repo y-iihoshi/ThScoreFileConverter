@@ -2,6 +2,7 @@
 using System;
 using System.Globalization;
 using ThScoreFileConverter;
+using ThScoreFileConverter.Models;
 using WPFLocalizeExtension.Engine;
 using Utils = ThScoreFileConverter.Models.Utils;
 
@@ -179,14 +180,36 @@ namespace ThScoreFileConverterTests.Models
         public void GetLocalizedValueTest()
         {
             var key = "SettingWindowTitle";
-            LocalizeDictionary.Instance.Culture = new CultureInfo("en-US");
-            Assert.AreEqual("Settings", Utils.GetLocalizedValues<string>(key));
+            var culture = LocalizeDictionary.Instance.Culture;
+            var provider = LocalizeDictionary.Instance.DefaultProvider;
 
-            LocalizeDictionary.Instance.Culture = new CultureInfo("ja-JP");
-            Assert.AreEqual("設定", Utils.GetLocalizedValues<string>(key));
+            try
+            {
+                LocalizeDictionary.Instance.Culture = CultureInfo.GetCultureInfo("en-US");
+                Assert.AreEqual("Settings", Utils.GetLocalizedValues<string>(key));
 
-            LocalizeDictionary.Instance.Culture = CultureInfo.InvariantCulture;
-            Assert.AreEqual("Settings", Utils.GetLocalizedValues<string>(key));
+                LocalizeDictionary.Instance.Culture = CultureInfo.GetCultureInfo("ja-JP");
+                Assert.AreEqual("設定", Utils.GetLocalizedValues<string>(key));
+
+                LocalizeDictionary.Instance.Culture = CultureInfo.InvariantCulture;
+                Assert.AreEqual("Settings", Utils.GetLocalizedValues<string>(key));
+
+                LocalizeDictionary.Instance.DefaultProvider = LocalizationProvider.Instance;
+
+                LocalizeDictionary.Instance.Culture = CultureInfo.GetCultureInfo("en-US");
+                Assert.AreEqual("Settings", Utils.GetLocalizedValues<string>(key));
+
+                LocalizeDictionary.Instance.Culture = CultureInfo.GetCultureInfo("ja-JP");
+                Assert.AreEqual("設定", Utils.GetLocalizedValues<string>(key));
+
+                LocalizeDictionary.Instance.Culture = CultureInfo.InvariantCulture;
+                Assert.AreEqual("Settings", Utils.GetLocalizedValues<string>(key));
+            }
+            finally
+            {
+                LocalizeDictionary.Instance.DefaultProvider = provider;
+                LocalizeDictionary.Instance.Culture = culture;
+            }
         }
     }
 }

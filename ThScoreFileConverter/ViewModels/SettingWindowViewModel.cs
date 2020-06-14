@@ -166,9 +166,8 @@ namespace ThScoreFileConverter.ViewModels
 
             set
             {
-                if (Settings.Instance.Language != value.Name)
+                if (!LocalizeDictionary.Instance.Culture.Equals(value))
                 {
-                    Settings.Instance.Language = value.Name;
                     LocalizeDictionary.Instance.Culture = value;
                     this.RaisePropertyChanged(nameof(this.Culture));
                 }

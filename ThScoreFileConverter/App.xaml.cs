@@ -16,7 +16,6 @@ using ThScoreFileConverter.Models;
 using ThScoreFileConverter.ViewModels;
 using ThScoreFileConverter.Views;
 using WPFLocalizeExtension.Engine;
-using WPFLocalizeExtension.Providers;
 using Prop = ThScoreFileConverter.Properties;
 
 namespace ThScoreFileConverter
@@ -105,14 +104,16 @@ namespace ThScoreFileConverter
 
             this.UpdateResources(Settings.Instance.FontFamilyName, Settings.Instance.FontSize);
 
+            var provider = LocalizationProvider.Instance;
+            LocalizeDictionary.Instance.SetCurrentValue(LocalizeDictionary.DefaultProviderProperty, provider);
             LocalizeDictionary.Instance.SetCurrentValue(LocalizeDictionary.IncludeInvariantCultureProperty, false);
             LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
-            if (LocalizeDictionary.Instance.DefaultProvider is ResxLocalizationProvider provider)
-            {
-                provider.UpdateCultureList(nameof(ThScoreFileConverter), nameof(Prop.Resources));
-                if (provider.AvailableCultures.Any(culture => culture.Name == Settings.Instance.Language))
-                    LocalizeDictionary.Instance.Culture = CultureInfo.GetCultureInfo(Settings.Instance.Language!);
-            }
+            if (provider.AvailableCultures.Any(culture => culture.Name == Settings.Instance.Language))
+                LocalizeDictionary.Instance.Culture = CultureInfo.GetCultureInfo(Settings.Instance.Language!);
+            else if (provider.AvailableCultures.Any(culture => culture.Equals(CultureInfo.CurrentCulture)))
+                LocalizeDictionary.Instance.Culture = CultureInfo.CurrentCulture;
+            else
+                LocalizeDictionary.Instance.Culture = provider.AvailableCultures.First();
 
             base.OnStartup(e);
         }
@@ -122,6 +123,7 @@ namespace ThScoreFileConverter
         {
             base.OnExit(e);
 
+            Settings.Instance.Language = LocalizeDictionary.Instance.Culture.Name;
             Settings.Instance.FontFamilyName = this.FontFamily.ToString();
             Settings.Instance.FontSize = this.FontSize;
 
