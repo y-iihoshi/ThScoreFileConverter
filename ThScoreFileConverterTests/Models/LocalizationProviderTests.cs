@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -95,6 +96,54 @@ namespace ThScoreFileConverterTests.Models
             var obj = LocalizationProvider.Instance.GetLocalizedObject(
                 key, new DependencyObject(), CultureInfo.GetCultureInfo("de"));
             Assert.AreEqual(Resources.ResourceManager.GetObject(key, CultureInfo.InvariantCulture), obj);
+        }
+
+        [TestMethod]
+        public void ProviderErrorTest()
+        {
+            var invoked = false;
+
+            void OnError(object sender, ProviderErrorEventArgs args)
+            {
+                invoked = true;
+            }
+
+            LocalizationProvider.Instance.ProviderError += OnError;
+            try
+            {
+                _ = LocalizationProvider.Instance.GetLocalizedObject(
+                    "TH01", new DependencyObject(), CultureInfo.GetCultureInfo("ja-JP"));
+                Assert.IsTrue(invoked);
+            }
+            finally
+            {
+                LocalizationProvider.Instance.ProviderError -= OnError;
+            }
+        }
+
+        [TestMethod]
+        public void ProviderErrorTestException()
+        {
+            var numInvoked = 0;
+
+            void OnError(object sender, ProviderErrorEventArgs args)
+            {
+                ++numInvoked;
+                if (numInvoked == 1)
+                    throw new Exception(nameof(OnError));
+            }
+
+            LocalizationProvider.Instance.ProviderError += OnError;
+            try
+            {
+                _ = LocalizationProvider.Instance.GetLocalizedObject(
+                    "TH01", new DependencyObject(), CultureInfo.GetCultureInfo("ja-JP"));
+                Assert.AreEqual(2, numInvoked);
+            }
+            finally
+            {
+                LocalizationProvider.Instance.ProviderError -= OnError;
+            }
         }
     }
 }
