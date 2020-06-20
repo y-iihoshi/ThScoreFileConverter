@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -23,6 +24,7 @@ using ThScoreFileConverter.Actions;
 using ThScoreFileConverter.Extensions;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Properties;
+using WPFLocalizeExtension.Engine;
 
 namespace ThScoreFileConverter.ViewModels
 {
@@ -35,33 +37,33 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// A list of the Touhou works.
         /// </summary>
-        public static readonly Work[] WorksImpl = new Work[]
+        private static readonly ObservableCollection<Work> WorksImpl = new ObservableCollection<Work>
         {
-            new Work { Number = "TH06", Title = "東方紅魔郷", IsSupported = true },
-            new Work { Number = "TH07", Title = "東方妖々夢", IsSupported = true },
-            new Work { Number = "TH08", Title = "東方永夜抄", IsSupported = true },
-            new Work { Number = "TH09", Title = "東方花映塚", IsSupported = true },
-            new Work { Number = "TH095", Title = "東方文花帖", IsSupported = true },
-            new Work { Number = "TH10", Title = "東方風神録", IsSupported = true },
-            new Work { Number = "TH11", Title = "東方地霊殿", IsSupported = true },
-            new Work { Number = "TH12", Title = "東方星蓮船", IsSupported = true },
-            new Work { Number = "TH125", Title = "ダブルスポイラー", IsSupported = true },
-            new Work { Number = "TH128", Title = "妖精大戦争", IsSupported = true },
-            new Work { Number = "TH13", Title = "東方神霊廟", IsSupported = true },
-            new Work { Number = "TH14", Title = "東方輝針城", IsSupported = true },
-            new Work { Number = "TH143", Title = "弾幕アマノジャク", IsSupported = true },
-            new Work { Number = "TH15", Title = "東方紺珠伝", IsSupported = true },
-            new Work { Number = "TH16", Title = "東方天空璋", IsSupported = true },
-            new Work { Number = "TH165", Title = "秘封ナイトメアダイアリー", IsSupported = true },
-            new Work { Number = "TH17", Title = "東方鬼形獣", IsSupported = true },
+            new Work { Number = nameof(Resources.TH06),  IsSupported = true },
+            new Work { Number = nameof(Resources.TH07),  IsSupported = true },
+            new Work { Number = nameof(Resources.TH08),  IsSupported = true },
+            new Work { Number = nameof(Resources.TH09),  IsSupported = true },
+            new Work { Number = nameof(Resources.TH095), IsSupported = true },
+            new Work { Number = nameof(Resources.TH10),  IsSupported = true },
+            new Work { Number = nameof(Resources.TH11),  IsSupported = true },
+            new Work { Number = nameof(Resources.TH12),  IsSupported = true },
+            new Work { Number = nameof(Resources.TH125), IsSupported = true },
+            new Work { Number = nameof(Resources.TH128), IsSupported = true },
+            new Work { Number = nameof(Resources.TH13),  IsSupported = true },
+            new Work { Number = nameof(Resources.TH14),  IsSupported = true },
+            new Work { Number = nameof(Resources.TH143), IsSupported = true },
+            new Work { Number = nameof(Resources.TH15),  IsSupported = true },
+            new Work { Number = nameof(Resources.TH16),  IsSupported = true },
+            new Work { Number = nameof(Resources.TH165), IsSupported = true },
+            new Work { Number = nameof(Resources.TH17),  IsSupported = true },
             new Work { },
-            new Work { Number = "TH075", Title = "東方萃夢想", IsSupported = true },
-            new Work { Number = "TH105", Title = "東方緋想天", IsSupported = true },
-            new Work { Number = "TH123", Title = "東方非想天則", IsSupported = true },
-            new Work { Number = "TH135", Title = "東方心綺楼", IsSupported = true },
-            new Work { Number = "TH145", Title = "東方深秘録", IsSupported = true },
-            new Work { Number = "TH155", Title = "東方憑依華", IsSupported = true },
-            new Work { Number = "TH175", Title = "東方剛欲異聞", IsSupported = false },
+            new Work { Number = nameof(Resources.TH075), IsSupported = true },
+            new Work { Number = nameof(Resources.TH105), IsSupported = true },
+            new Work { Number = nameof(Resources.TH123), IsSupported = true },
+            new Work { Number = nameof(Resources.TH135), IsSupported = true },
+            new Work { Number = nameof(Resources.TH145), IsSupported = true },
+            new Work { Number = nameof(Resources.TH155), IsSupported = true },
+            new Work { Number = nameof(Resources.TH175), IsSupported = false },
         };
 
         /// <summary>
@@ -126,6 +128,7 @@ namespace ThScoreFileConverter.ViewModels
             this.OpenSettingWindowCommand = new DelegateCommand(this.OpenSettingWindow);
 
             this.PropertyChanged += this.OnPropertyChanged;
+            LocalizeDictionary.Instance.PropertyChanged += this.OnLocalizeDictionaryPropertyChanged;
 
             if (string.IsNullOrEmpty(this.LastWorkNumber))
                 this.LastWorkNumber = WorksImpl.First().Number;
@@ -143,7 +146,7 @@ namespace ThScoreFileConverter.ViewModels
         /// <summary>
         /// Gets a list of the Touhou works.
         /// </summary>
-        public IEnumerable<Work> Works { get; private set; }
+        public ObservableCollection<Work> Works { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether the conversion process is idle.
@@ -186,7 +189,8 @@ namespace ThScoreFileConverter.ViewModels
         /// Gets a string indicating the supported versions of the score file to convert.
         /// </summary>
         public string SupportedVersions => this.converter is null
-            ? string.Empty : Resources.SupportedVersion + this.converter.SupportedVersions;
+            ? string.Empty
+            : Utils.GetLocalizedValues<string>(nameof(Resources.SupportedVersion)) + this.converter.SupportedVersions;
 
         /// <summary>
         /// Gets a path of the score file.
@@ -572,7 +576,8 @@ namespace ThScoreFileConverter.ViewModels
             else
             {
                 this.IsIdle = false;
-                this.Log = Resources.MessageStartConversion + Environment.NewLine;
+                this.Log = Utils.GetLocalizedValues<string>(nameof(Resources.MessageStartConversion))
+                    + Environment.NewLine;
                 new Thread(new ParameterizedThreadStart(this.converter.Convert)).Start(CurrentSetting);
             }
         }
@@ -792,6 +797,19 @@ namespace ThScoreFileConverter.ViewModels
         }
 
         /// <summary>
+        /// Handles the event indicating a property value of <see cref="LocalizeDictionary.Instance"/> is changed.
+        /// </summary>
+        /// <param name="sender">The instance where the event handler is attached.</param>
+        /// <param name="e">The event data.</param>
+        private void OnLocalizeDictionaryPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(LocalizeDictionary.Instance.Culture))
+            {
+                this.RaisePropertyChanged(nameof(this.SupportedVersions));
+            }
+        }
+
+        /// <summary>
         /// Handles the event indicating the conversion process per file has finished.
         /// </summary>
         /// <param name="sender">The instance where the event handler is attached.</param>
@@ -808,7 +826,8 @@ namespace ThScoreFileConverter.ViewModels
         /// <param name="e">The event data.</param>
         private void OnConvertAllFinished(object? sender, ThConverterEventArgs e)
         {
-            this.Log += Resources.MessageConversionFinished + Environment.NewLine;
+            this.Log += Utils.GetLocalizedValues<string>(nameof(Resources.MessageConversionFinished))
+                + Environment.NewLine;
             this.IsIdle = true;
         }
 
@@ -822,7 +841,8 @@ namespace ThScoreFileConverter.ViewModels
 #if DEBUG
             this.Log += e.Exception.Message + Environment.NewLine;
 #endif
-            this.Log += Resources.MessageUnhandledExceptionOccurred + Environment.NewLine;
+            this.Log += Utils.GetLocalizedValues<string>(nameof(Resources.MessageUnhandledExceptionOccurred))
+                + Environment.NewLine;
             this.IsIdle = true;
         }
 

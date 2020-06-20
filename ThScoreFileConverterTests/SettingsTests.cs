@@ -1,6 +1,7 @@
 ﻿#if NETFRAMEWORK
 
 using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -67,6 +68,7 @@ namespace ThScoreFileConverterTests
             Assert.AreEqual(true, Settings.Instance.OutputNumberGroupSeparator);
             Assert.AreEqual(65001, Settings.Instance.InputCodePageId);
             Assert.AreEqual(65001, Settings.Instance.OutputCodePageId);
+            Assert.AreEqual(CultureInfo.InvariantCulture.Name, Settings.Instance.Language);
         }
 
         [TestMethod]
@@ -509,6 +511,38 @@ namespace ThScoreFileConverterTests
         {
             Settings.Instance.Load(@"TestData\unsupported-output-code-page-id.xml");
             Assert.AreEqual(65001, Settings.Instance.OutputCodePageId);
+        }
+
+        [TestMethod]
+        [DeploymentItem(@"TestData\no-language.xml", @"TestData")]
+        public void LoadTestNoLanguage()
+        {
+            Settings.Instance.Load(@"TestData\no-language.xml");
+            Assert.AreEqual(CultureInfo.InvariantCulture.Name, Settings.Instance.Language);
+        }
+
+        [TestMethod]
+        [DeploymentItem(@"TestData\empty-language.xml", @"TestData")]
+        public void LoadTestEmptyLanguage()
+        {
+            Settings.Instance.Load(@"TestData\empty-language.xml");
+            Assert.AreEqual(CultureInfo.InvariantCulture.Name, Settings.Instance.Language);
+        }
+
+        [TestMethod]
+        [DeploymentItem(@"TestData\invalid-language.xml", @"TestData")]
+        public void LoadTestInvalidLanguage()
+        {
+            Settings.Instance.Load(@"TestData\invalid-language.xml");
+            Assert.AreEqual(CultureInfo.InvariantCulture.Name, Settings.Instance.Language);
+        }
+
+        [TestMethod]
+        [DeploymentItem(@"TestData\valid-language-ja-JP.xml", @"TestData")]
+        public void LoadTestValidLanguageJaJp()
+        {
+            Settings.Instance.Load(@"TestData\valid-language-ja-JP.xml");
+            Assert.AreEqual("ja-JP", Settings.Instance.Language);
         }
 
         [TestMethod]

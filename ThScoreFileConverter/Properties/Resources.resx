@@ -237,6 +237,78 @@ Renamed to "{1}".</value>
   <data name="SupportedVersion" xml:space="preserve">
     <value>Supported version: </value>
   </data>
+  <data name="TH06" xml:space="preserve">
+    <value>the Embodiment of Scarlet Devil</value>
+  </data>
+  <data name="TH07" xml:space="preserve">
+    <value>Perfect Cherry Blossom</value>
+  </data>
+  <data name="TH075" xml:space="preserve">
+    <value>Immaterial and Missing Power</value>
+  </data>
+  <data name="TH08" xml:space="preserve">
+    <value>Imperishable Night</value>
+  </data>
+  <data name="TH09" xml:space="preserve">
+    <value>Phantasmagoria of Flower View</value>
+  </data>
+  <data name="TH095" xml:space="preserve">
+    <value>Shoot the Bullet</value>
+  </data>
+  <data name="TH10" xml:space="preserve">
+    <value>Mountain of Faith</value>
+  </data>
+  <data name="TH105" xml:space="preserve">
+    <value>Scarlet Weather Rhapsody</value>
+  </data>
+  <data name="TH11" xml:space="preserve">
+    <value>Subterranean Animism</value>
+  </data>
+  <data name="TH12" xml:space="preserve">
+    <value>Undefined Fantastic Object</value>
+  </data>
+  <data name="TH123" xml:space="preserve">
+    <value>Touhou Hisoutensoku</value>
+  </data>
+  <data name="TH125" xml:space="preserve">
+    <value>Double Spoiler</value>
+  </data>
+  <data name="TH128" xml:space="preserve">
+    <value>Fairy Wars</value>
+  </data>
+  <data name="TH13" xml:space="preserve">
+    <value>Ten Desires</value>
+  </data>
+  <data name="TH135" xml:space="preserve">
+    <value>Hopeless Masquerade</value>
+  </data>
+  <data name="TH14" xml:space="preserve">
+    <value>Double Dealing Character</value>
+  </data>
+  <data name="TH143" xml:space="preserve">
+    <value>Impossible Spell Card</value>
+  </data>
+  <data name="TH145" xml:space="preserve">
+    <value>Urban Legend in Limbo</value>
+  </data>
+  <data name="TH15" xml:space="preserve">
+    <value>Legacy of Lunatic Kingdom</value>
+  </data>
+  <data name="TH155" xml:space="preserve">
+    <value>Antinomy of Common Flowers</value>
+  </data>
+  <data name="TH16" xml:space="preserve">
+    <value>Hidden Star in Four Seasons</value>
+  </data>
+  <data name="TH165" xml:space="preserve">
+    <value>Violet Detector</value>
+  </data>
+  <data name="TH17" xml:space="preserve">
+    <value>Wily Beast and Weakest Creature</value>
+  </data>
+  <data name="TH175" xml:space="preserve">
+    <value>Touhou Gouyoku Ibun</value>
+  </data>
   <data name="TemplateFileFilter" xml:space="preserve">
     <value>All files (*.*)|*.*</value>
   </data>
@@ -301,6 +373,9 @@ Renamed to "{1}".</value>
   </data>
   <data name="ViewsSettingWindowGroupBoxFont" xml:space="preserve">
     <value>Font</value>
+  </data>
+  <data name="ViewsSettingWindowGroupBoxLanguage" xml:space="preserve">
+    <value>Language</value>
   </data>
   <data name="ViewsSettingWindowGroupBoxOutputFormatting" xml:space="preserve">
     <value>Output formatting</value>

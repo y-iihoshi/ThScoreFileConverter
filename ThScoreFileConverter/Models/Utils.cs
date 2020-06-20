@@ -9,6 +9,10 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using ThScoreFileConverter.Properties;
+using WPFLocalizeExtension.Engine;
+using WPFLocalizeExtension.Extensions;
+using WPFLocalizeExtension.Providers;
 
 namespace ThScoreFileConverter.Models
 {
@@ -174,6 +178,19 @@ namespace ThScoreFileConverter.Models
                 throw new ArgumentOutOfRangeException(nameof(input));
 
             return (input + 1) % 10;
+        }
+
+        /// <summary>
+        /// Gets a localized value.
+        /// </summary>
+        /// <typeparam name="T">The type of the returned value.</typeparam>
+        /// <param name="key">The key.</param>
+        /// <returns>The resolved localized object.</returns>
+        public static T GetLocalizedValues<T>(string key)
+        {
+            return LocalizeDictionary.Instance.DefaultProvider is ResxLocalizationProvider
+                ? LocExtension.GetLocalizedValue<T>($"{nameof(ThScoreFileConverter)}:{nameof(Resources)}:{key}")
+                : LocExtension.GetLocalizedValue<T>(key);
         }
     }
 }
