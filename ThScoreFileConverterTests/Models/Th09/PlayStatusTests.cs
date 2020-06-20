@@ -1,8 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Models.Th09;
 using ThScoreFileConverterTests.Extensions;

@@ -45,10 +45,10 @@ namespace ThScoreFileConverter.Models.Th12
 
                 Func<IReadOnlyDictionary<CharaWithTotal, IClearData>, long> getValueByChara = chara switch
                 {
-                    CharaWithTotal.Total =>  dictionary => dictionary.Values
-                        .Where(clearData => clearData.Chara != chara).Sum(getValueByType),
-                    _ =>  dictionary => dictionary.TryGetValue(chara, out var clearData)
-                        ? getValueByType(clearData) : default,
+                    CharaWithTotal.Total => dictionary => dictionary.Values
+                       .Where(clearData => clearData.Chara != chara).Sum(getValueByType),
+                    _ => dictionary => dictionary.TryGetValue(chara, out var clearData)
+                       ? getValueByType(clearData) : default,
                 };
 
                 Func<long, string> toString = type switch

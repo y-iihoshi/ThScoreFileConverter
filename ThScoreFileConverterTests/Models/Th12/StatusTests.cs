@@ -1,7 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models.Th12;
 using ThScoreFileConverterTests.Models.Th10.Stubs;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;

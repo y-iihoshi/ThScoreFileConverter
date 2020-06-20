@@ -1,7 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Globalization;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter.Models;
 using WPFLocalizeExtension.Engine;
-using System.Globalization;
 
 namespace ThScoreFileConverterTests.Models
 {

@@ -1,5 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverterTests.Models.Wrappers;

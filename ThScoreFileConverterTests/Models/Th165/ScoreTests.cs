@@ -2,8 +2,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ThScoreFileConverterTests.Models.Th165.Stubs;
 using ThScoreFileConverter.Models.Th165;
+using ThScoreFileConverterTests.Models.Th165.Stubs;
 using Chapter = ThScoreFileConverter.Models.Th10.Chapter;
 
 namespace ThScoreFileConverterTests.Models.Th165

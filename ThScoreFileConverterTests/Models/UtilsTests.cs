@@ -1,6 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 using System.Globalization;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ThScoreFileConverter;
 using ThScoreFileConverter.Models;
 using WPFLocalizeExtension.Engine;

@@ -7,7 +7,6 @@
 
 using System;
 using System.Windows;
-using System.Windows.Input;
 using ThScoreFileConverter.Properties;
 using WinForms = System.Windows.Forms;
 
