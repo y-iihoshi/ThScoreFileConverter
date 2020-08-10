@@ -25,8 +25,8 @@ ThSFC を利用するには .NET Framework 4.8 または .NET Core 3.1 が必要
 * Windows 10 Pro Version 1909 (64 bit)
 * .NET Framework 4.8
 * .NET Core 3.1
-* Visual Studio Community 2019 Version 16.5.4
-* Python 3.8.2
+* Visual Studio Community 2019 Version 16.7.0
+* Python 3.8.3
 
 免責事項
 --------

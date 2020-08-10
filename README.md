@@ -50,8 +50,8 @@ format from best shot files.
 * Windows 10 Pro Version 1909 (64 bit)
 * .NET Framework 4.8
 * .NET Core 3.1
-* Visual Studio Community 2019 16.5.4
-* Python 3.8.2
+* Visual Studio Community 2019 16.7.0
+* Python 3.8.3
 
 ### Tested environment
 * Same as above.
