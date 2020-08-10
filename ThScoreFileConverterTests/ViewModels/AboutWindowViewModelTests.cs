@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.ComponentModel;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Prism.Services.Dialogs;
 using ThScoreFileConverter.Models;
 using ThScoreFileConverter.Properties;
 using ThScoreFileConverter.ViewModels;
@@ -65,6 +67,31 @@ namespace ThScoreFileConverterTests.ViewModels
         {
             var window = new AboutWindowViewModel();
             Assert.IsTrue(window.CanCloseDialog());
+        }
+
+        [TestMethod]
+        public void OnDialogClosedTest()
+        {
+            var window = new AboutWindowViewModel();
+            window.OnDialogClosed();
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        public void OnDialogOpenedTest()
+        {
+            var parameters = new DialogParameters();
+            var window = new AboutWindowViewModel();
+            window.OnDialogOpened(parameters);
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        public void OnDialogOpenedTestNull()
+        {
+            var window = new AboutWindowViewModel();
+            window.OnDialogOpened(null!);
+            Assert.IsTrue(true);
         }
     }
 }
