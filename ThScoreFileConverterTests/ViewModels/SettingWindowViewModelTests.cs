@@ -218,7 +218,6 @@ namespace ThScoreFileConverterTests.ViewModels
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ObjectDisposedException))]
         public void FontDialogOkCommandTestDisposed()
         {
             if (Application.Current is null)
@@ -229,7 +228,7 @@ namespace ThScoreFileConverterTests.ViewModels
                 Assert.IsNotNull(command);
 
                 var numChanged = 0;
-                using var _ = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
+                using var disposable = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
 
                 window.Dispose();
 
@@ -239,8 +238,7 @@ namespace ThScoreFileConverterTests.ViewModels
                 Assert.IsTrue(command.CanExecute(result));
                 Assert.AreEqual(0, numChanged);
 
-                command.Execute(result);
-                Assert.Fail(TestUtils.Unreachable);
+                _ = Assert.ThrowsException<ObjectDisposedException>(() => command.Execute(result));
             }
         }
 
@@ -327,7 +325,6 @@ namespace ThScoreFileConverterTests.ViewModels
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ObjectDisposedException))]
         public void FontDialogApplyCommandTestDisposed()
         {
             if (Application.Current is null)
@@ -338,7 +335,7 @@ namespace ThScoreFileConverterTests.ViewModels
                 Assert.IsNotNull(command);
 
                 var numChanged = 0;
-                using var _ = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
+                using var disposable = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
 
                 window.Dispose();
 
@@ -348,8 +345,7 @@ namespace ThScoreFileConverterTests.ViewModels
                 Assert.IsTrue(command.CanExecute(result));
                 Assert.AreEqual(0, numChanged);
 
-                command.Execute(result);
-                Assert.Fail(TestUtils.Unreachable);
+                _ = Assert.ThrowsException<ObjectDisposedException>(() => command.Execute(result));
             }
         }
 
@@ -436,7 +432,6 @@ namespace ThScoreFileConverterTests.ViewModels
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ObjectDisposedException))]
         public void FontDialogCancelCommandTestDisposed()
         {
             if (Application.Current is null)
@@ -447,7 +442,7 @@ namespace ThScoreFileConverterTests.ViewModels
                 Assert.IsNotNull(command);
 
                 var numChanged = 0;
-                using var _ = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
+                using var disposable = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
 
                 window.Dispose();
 
@@ -457,8 +452,7 @@ namespace ThScoreFileConverterTests.ViewModels
                 Assert.IsTrue(command.CanExecute(result));
                 Assert.AreEqual(0, numChanged);
 
-                command.Execute(result);
-                Assert.Fail(TestUtils.Unreachable);
+                _ = Assert.ThrowsException<ObjectDisposedException>(() => command.Execute(result));
             }
         }
 
@@ -542,7 +536,6 @@ namespace ThScoreFileConverterTests.ViewModels
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ObjectDisposedException))]
         public void ResetFontCommandTestDisposed()
         {
             if (Application.Current is null)
@@ -553,15 +546,14 @@ namespace ThScoreFileConverterTests.ViewModels
                 Assert.IsNotNull(command);
 
                 var numChanged = 0;
-                using var _ = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
+                using var disposable = window.ObserveProperty(w => w.Font, false).Subscribe(_ => ++numChanged);
 
                 window.Dispose();
 
                 Assert.IsTrue(command.CanExecute());
                 Assert.AreEqual(0, numChanged);
 
-                command.Execute();
-                Assert.Fail(TestUtils.Unreachable);
+                Assert.ThrowsException<ObjectDisposedException>(() => command.Execute());
             }
         }
 
